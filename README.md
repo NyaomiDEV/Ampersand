@@ -1,9 +1,18 @@
-# Vue 3 + TypeScript + Vite
+# Ampersand
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## To Do
 
-## Recommended Setup
+- [ ] Database tests
+- [ ] Storage permission check and request
+- [ ] The ENTIRE user interface
+- [ ] The ENTIRE translation (english)
+- [ ] Italian?
+- [ ] Deployment on Android (everything is missing currently)
+- [ ] Deployment on iOS (oh god)
+- [ ] Import / Export, all of it
+- [ ] Asset handling (logos anyone?)
+- [ ] TESTING TESTING TESTING
 
-- [VS Code](https://code.visualstudio.com/) + [Vue - Official](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (previously Volar) and disable Vetur
+## Days since last incident, but in reverse
 
-- Use [vue-tsc](https://github.com/vuejs/language-tools/tree/master/packages/tsc) for performing the same type checking from the command line, or for generating d.ts files for SFCs.
+April 29, 2024
