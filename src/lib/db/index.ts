@@ -43,7 +43,5 @@ export class AmpersandDatabase extends Dexie {
 export const db = new AmpersandDatabase();
 
 export function toObservable(databaseCall: () => PromiseExtended){
-	return useObservable(
-		from(liveQuery(databaseCall))
-	);
+	return useObservable(from(liveQuery(databaseCall)));
 }
