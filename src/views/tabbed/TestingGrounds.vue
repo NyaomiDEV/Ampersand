@@ -1,14 +1,14 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonInput, IonItem, IonLabel, IonList, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
-	import { makeUUIDv5 } from '../lib/util/uuid';
+	import { makeUUIDv5 } from '../../lib/util/uuid';
 	import { computed, ref } from 'vue';
-	import { isIOSMode } from '../lib/util/misc';
+	import { isIOSMode } from '../../lib/util/misc';
 
 	const text = ref("");
 
 	const isIOS = computed(isIOSMode);
 
-	function onInput(ev){
+	function onInput(ev: any){
 		text.value = makeUUIDv5(ev.detail.value);
 		console.log(text.value);
 	}
@@ -24,7 +24,7 @@
 			</IonToolbar>
 		</IonHeader>
 		
-		<IonContent color="light">
+		<IonContent>
 			<IonList :inset="isIOS">
 				<IonItem>
 					<IonInput label="AO" labelPlacement="floating" @ionInput="onInput" />

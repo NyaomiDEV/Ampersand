@@ -1,17 +1,27 @@
 import { createRouter, createWebHistory } from "@ionic/vue-router";
 import { RouteRecordRaw } from "vue-router";
-import TestingGrounds from "../views/TestingGrounds.vue";
+import TestingGrounds from "../views/tabbed/TestingGrounds.vue";
+import TabbedHomeView from "../views/TabbedHomeView.vue";
+import Dashboard from "../views/tabbed/Dashboard.vue";
 
 const routes: Array<RouteRecordRaw> = [
 	{
 		path: '/',
-		redirect: '/testingGrounds', // TODO: make it home
-	},
-	{
-		path: '/testingGrounds',
-		name: 'testingGrounds',
-		component: TestingGrounds,
-	},
+		name: "TabbedHomeView",
+		component: TabbedHomeView,
+		children: [
+			{
+				path: '/dashboard',
+				name: 'Dashboard',
+				component: Dashboard,
+			},
+			{
+				path: '/testingGrounds',
+				name: 'testingGrounds',
+				component: TestingGrounds,
+			},
+		]
+	}
 ];
 
 const router = createRouter({
