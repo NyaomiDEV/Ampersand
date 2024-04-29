@@ -27,7 +27,7 @@
 		<IonContent>
 			<IonList :inset="isIOS">
 				<IonItem>
-					<IonInput label="AO" labelPlacement="floating" @ionInput="onInput" />
+					<IonInput label="Name" labelPlacement="floating" @ionInput="onInput" />
 				</IonItem>
 				<IonItem>
 					<IonLabel>{{ text }}</IonLabel>

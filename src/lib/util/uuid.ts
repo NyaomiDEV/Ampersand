@@ -1,6 +1,6 @@
 import sha1 from "./sha1";
 
-const Namespace = "db130dfe-e83d-4b87-85e9-729fefbc5def";
+export const AppNamespace = "db130dfe-e83d-4b87-85e9-729fefbc5def";
 
 export function parseUUIDintoBytes(uuid: string) {
 	const chunks = uuid.replace(/\-/g, "").match(/(.{1,2})/g)!;
@@ -10,10 +10,10 @@ export function parseUUIDintoBytes(uuid: string) {
 	return bytes;
 }
 
-export function makeUUIDv5(name: string){
+export function makeUUIDv5(namespace: string, name: string){
 	const te = new TextEncoder();
 	const nameBuffer = te.encode(name);
-	const namespaceBuffer = parseUUIDintoBytes(Namespace);
+	const namespaceBuffer = parseUUIDintoBytes(namespace);
 
 	const buffer = new Uint8Array(namespaceBuffer.length + nameBuffer.length);
 	buffer.set(namespaceBuffer);

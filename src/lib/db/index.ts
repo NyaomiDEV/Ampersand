@@ -7,6 +7,7 @@ import { Member } from './entities/member';
 import { EventReminder, PeriodicReminder } from './entities/reminders';
 import { System } from './entities/system';
 import { Tag } from './entities/tag';
+import { makeUUIDv5 } from '../util/uuid';
 
 export class AmpersandDatabase extends Dexie {
 
@@ -53,3 +54,9 @@ export class AmpersandDatabase extends Dexie {
 }
 
 export const db = new AmpersandDatabase();
+
+export async function computeUUID(name: string){
+	const systemEntry = await db.system.toCollection().first();
+	if(!systemEntry) throw new Error("WTF");
+	return makeUUIDv5(systemEntry.uuid, name);
+}
