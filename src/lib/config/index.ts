@@ -22,7 +22,7 @@ export const defaultConfig: Config = {
 };
 
 export function getConfig(): Config {
-	return getCompound("config");
+	return Object.assign({}, defaultConfig, getCompound("config"));
 }
 
 export function saveConfig(config: Partial<Config>) {
