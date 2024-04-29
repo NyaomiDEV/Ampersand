@@ -1,14 +1,17 @@
 <script setup lang="ts">
-import { IonContent, IonHeader, IonInput, IonItem, IonLabel, IonList, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
-import { makeUUIDv5 } from '../lib/util/uuid';
-import { ref } from 'vue';
+	import { IonContent, IonHeader, IonInput, IonItem, IonLabel, IonList, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+	import { makeUUIDv5 } from '../lib/util/uuid';
+	import { computed, ref } from 'vue';
+	import { isIOSMode } from '../lib/util/misc';
 
-const text = ref("");
+	const text = ref("");
 
-function onInput(ev){
-	text.value = makeUUIDv5(ev.detail.value);
-	console.log(text.value);
-}
+	const isIOS = computed(isIOSMode);
+
+	function onInput(ev){
+		text.value = makeUUIDv5(ev.detail.value);
+		console.log(text.value);
+	}
 </script>
 
 <template>
@@ -16,18 +19,18 @@ function onInput(ev){
 		<IonHeader>
 			<IonToolbar>
 				<IonTitle>
-					SHA1 test
+					{{ $t("testingGrounds:header") }}
 				</IonTitle>
 			</IonToolbar>
 		</IonHeader>
 		
 		<IonContent color="light">
-			<IonList :inset="true">
+			<IonList :inset="isIOS">
 				<IonItem>
-					<IonInput @ionInput="onInput" />
+					<IonInput label="AO" labelPlacement="floating" @ionInput="onInput" />
 				</IonItem>
 				<IonItem>
-      				<IonLabel>{{ text }}</IonLabel>
+					<IonLabel>{{ text }}</IonLabel>
 				</IonItem>
 			</IonList>
 		</IonContent>

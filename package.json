@@ -2,6 +2,7 @@
   "name": "ampersand",
   "version": "0.0.1",
   "type": "module",
+  "license": "AGPL-3.0-only",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
@@ -10,6 +11,8 @@
   "dependencies": {
     "@ionic/vue": "^8.0.0",
     "@ionic/vue-router": "^8.0.0",
+    "i18next": "^23.11.3",
+    "i18next-vue": "^4.0.0",
     "vue": "^3.4.21",
     "vue-router": "^4.3.2"
   },

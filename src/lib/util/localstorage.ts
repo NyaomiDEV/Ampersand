@@ -35,8 +35,8 @@ export function setCompound(rootKey: string, value: any) {
 	}
 }
 
-export function getCompound(rootKey: string){
-	const obj = {};
+export function getCompound(rootKey: string): any {
+	const obj: any = {};
 	for(let i = 0; i < window.localStorage.length; i++){
 		const key = window.localStorage.key(i);
 		const keyArray = key?.split(".");
@@ -45,7 +45,7 @@ export function getCompound(rootKey: string){
 
 		const value = get(key);
 		
-		let a: any = obj;
+		let a = obj;
 		for(let i = 0; i < keyArray.length; i++){
 			if(i < keyArray.length - 1){
 				if (!a[keyArray[i]])
