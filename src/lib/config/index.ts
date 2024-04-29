@@ -1,7 +1,8 @@
-import { getCompound, setCompound } from "../util/localstorage";
+import { get, getCompound, setCompound } from "../util/localstorage";
 import { Config } from "./types";
 
 export const defaultConfig: Config = {
+	currentSystemUUID: undefined,
 	app: {
 		language: "en",
 		view: "dashboard",
@@ -23,6 +24,12 @@ export const defaultConfig: Config = {
 
 export function getConfig(): Config {
 	return Object.assign({}, defaultConfig, getCompound("config"));
+}
+
+export function getConfigEntry(entryKey: keyof Config): any {
+	if(entryKey.length)
+		return get("config." + entryKey);
+	return undefined;
 }
 
 export function saveConfig(config: Partial<Config>) {

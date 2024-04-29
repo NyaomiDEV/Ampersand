@@ -1,22 +1,25 @@
+import { db } from "..";
+import { makeUUIDv5 } from "../../util/uuid";
 import { UUIDable } from "../types";
+import { getSystemUUID } from "./system";
 
-export type Reminder = UUIDable & {
+type ReminderBase = UUIDable & {
 	name: string,
 	title: string,
 	message: string,
 	type: "event" | "periodic"
 }
 
-export type EventReminder = Reminder & {
-	triggeringEvent: {
+export type EventReminder = ReminderBase & {
+	triggeringEvent?: {
 		type: "memberAdded" | "memberRemoved",
 		filterQuery?: string
 	},
-	delay: number // seconds
+	delay?: number // seconds
 }
 
-export type PeriodicReminder = Reminder & {
-	scheduleOn: {
+export type PeriodicReminder = ReminderBase & {
+	scheduleOn?: {
 		year?: number,
 		month?: number,
 		day?: number,
@@ -25,4 +28,22 @@ export type PeriodicReminder = Reminder & {
 		minute?: number,
 		second?: number
 	}
+}
+
+export type Reminder = EventReminder | PeriodicReminder;
+
+export function getTable() {
+	return db.reminders;
+}
+
+function genid(name: string) {
+	return makeUUIDv5(getSystemUUID(), `reminders\0${name}`);
+}
+
+export async function newReminder(reminder: Omit<Reminder, keyof UUIDable>) {
+	const uuid = genid(reminder.name);
+	return await getTable().add({
+		...reminder,
+		uuid
+	});
 }

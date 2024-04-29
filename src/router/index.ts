@@ -11,6 +11,10 @@ const routes: Array<RouteRecordRaw> = [
 		component: TabbedHomeView,
 		children: [
 			{
+				path: "/",
+				redirect: "/dashboard"
+			},
+			{
 				path: '/dashboard',
 				name: 'Dashboard',
 				component: Dashboard,
