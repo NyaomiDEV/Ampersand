@@ -25,6 +25,14 @@ import App from "./App.vue";
 // Router
 import router from "./router";
 
+// Storage Manager
+if (!await navigator.storage.persisted()) {
+	console.log("Storage is not persisted, trying to persist now");
+	if (!await navigator.storage.persist()) {
+		console.error("Storage cannot be made persistent, data will be lost!");
+	}
+}
+
 // Localizations
 import i18next from "i18next";
 import I18NextVue from "i18next-vue";

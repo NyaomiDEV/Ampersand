@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from "@ionic/vue-router";
 import { RouteRecordRaw } from "vue-router";
-import TestingGrounds from "../views/tabbed/TestingGrounds.vue";
-import TabbedHomeView from "../views/TabbedHomeView.vue";
-import Dashboard from "../views/tabbed/Dashboard.vue";
+import TestingGrounds from "./views/tabbed/TestingGrounds.vue";
+import TabbedHomeView from "./views/TabbedHomeView.vue";
+import Dashboard from "./views/tabbed/Dashboard.vue";
 
 const routes: Array<RouteRecordRaw> = [
 	{
