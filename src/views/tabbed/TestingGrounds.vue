@@ -1,13 +1,18 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonInput, IonItem, IonItemDivider, IonItemOptions, IonItemOption, IonItemSliding, IonLabel, IonList, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
 	import { computed, ref } from 'vue';
-	import { isIOSMode } from '../../lib/util/misc';
+	import { getFiles, isIOSMode } from '../../lib/util/misc';
 	import { toObservable } from '../../lib/db';
 	import { Member, getTable, newMember } from '../../lib/db/entities/members';
 
 	const isIOS = computed(isIOSMode);
 
 	const name = ref("");
+
+	async function testFile() {
+		const files = await getFiles();
+		console.log(files);
+	}
 
 	async function addToDatabase(){
 		newMember({
@@ -37,6 +42,9 @@
 		
 		<IonContent>
 			<IonList :inset="isIOS">
+				<IonItem button @click="testFile">
+					<IonLabel>test file interaction</IonLabel>
+				</IonItem>
 				<IonItem>
 					<IonInput label="Name" labelPlacement="floating" v-model="name" />
 				</IonItem>
