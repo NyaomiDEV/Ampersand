@@ -1,13 +1,12 @@
 import { createRouter, createWebHistory } from "@ionic/vue-router";
 import { RouteRecordRaw } from "vue-router";
-import TabbedHomeView from "../views/TabbedHomeView.vue";
 import tabbedRoutes from "./tabbedRoutes";
 
 const routes: Array<RouteRecordRaw> = [
 	{
 		path: '/',
 		name: "TabbedHomeView",
-		component: TabbedHomeView,
+		component: (await import("../views/TabbedHomeView.vue")).default,
 		children: [
 			{
 				path: "/",
@@ -17,6 +16,8 @@ const routes: Array<RouteRecordRaw> = [
 		]
 	}
 ];
+
+console.log(routes);
 
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
