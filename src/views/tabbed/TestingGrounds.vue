@@ -32,6 +32,7 @@
 	}
 
 	const members = toObservable<Member[]>(() => getTable().toArray());
+	console.log(members);
 </script>
 
 <template>
