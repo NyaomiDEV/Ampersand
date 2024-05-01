@@ -33,9 +33,13 @@ export async function getTagFromName(name: string){
 export async function getTagsFromFilterQuery(filterQuery: string){
 	const parsed = await parseTagFilterQuery(filterQuery);
 
-	return getTable().toCollection().filter(x => 
-		(typeof parsed.type === "undefined" && x.type === parsed.type) ||
-		x.name.includes(parsed.query) ||
-		false
-	);
+	return getTable().where("name").startsWithIgnoreCase(parsed.query).filter(x => {
+
+		if (parsed.type) {
+			if (x.type !== parsed.type.toLowerCase())
+				return false;
+		}
+
+		return true;
+	});
 }

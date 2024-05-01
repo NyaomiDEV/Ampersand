@@ -1,19 +1,15 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonInput, IonItem, IonItemDivider, IonItemOptions, IonItemOption, IonItemSliding, IonLabel, IonList, IonPage, IonTitle, IonToolbar, IonImg, IonAvatar } from '@ionic/vue';
+	import { IonContent, IonHeader, IonInput, IonItem, IonItemDivider, IonItemOptions, IonItemOption, IonItemSliding, IonLabel, IonList, IonPage, IonTitle, IonToolbar, IonAvatar } from '@ionic/vue';
 	import { computed, ref } from 'vue';
 	import { getFiles, isIOSMode } from '../../lib/util/misc';
-	import { toObservable } from '../../lib/db';
-	import { Member, getTable, newMember } from '../../lib/db/entities/members';
+	import { Member, getMembersFromFilterQuery, getTable, newMember } from '../../lib/db/entities/members';
 	import { getBlobURL } from '../../lib/util/blob';
+	import { useDexieLiveQueryWithDeps } from '../../lib/util/livequery';
 
 	const isIOS = computed(isIOSMode);
 
 	const name = ref("");
-
-	async function testFile() {
-		const files = await getFiles();
-		console.log(files);
-	}
+	const search = ref("");
 
 	async function addToDatabase(){
 		const files = await getFiles();
@@ -31,8 +27,7 @@
 		await getTable().delete(uuid);
 	}
 
-	const members = toObservable<Member[]>(() => getTable().toArray());
-	console.log(members);
+	const members = useDexieLiveQueryWithDeps(search, async (search: string) => (await getMembersFromFilterQuery(search)).toArray())
 </script>
 
 <template>
@@ -47,9 +42,6 @@
 		
 		<IonContent>
 			<IonList :inset="isIOS">
-				<IonItem button @click="testFile">
-					<IonLabel>test file interaction</IonLabel>
-				</IonItem>
 				<IonItem>
 					<IonInput label="Name" labelPlacement="floating" v-model="name" />
 				</IonItem>
@@ -61,6 +53,9 @@
 						members
 					</IonLabel>
 				</IonItemDivider>
+				<IonItem>
+					<IonInput label="Search" labelPlacement="floating" v-model="search" />
+				</IonItem>
 				<IonItemSliding v-for="member of members" :key="member.uuid">
 					<IonItem>
 						<IonAvatar slot="start" v-if="member.image">

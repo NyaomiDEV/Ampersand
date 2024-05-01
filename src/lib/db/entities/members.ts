@@ -35,17 +35,28 @@ export async function newMember(member: Omit<Member, keyof UUIDable>) {
 export async function getMembersFromFilterQuery(filterQuery: string) {
 	const parsed = await parseMemberFilterQuery(filterQuery);
 
-	return getTable().toCollection().filter(x =>
-		(typeof parsed.archived !== "undefined" && x.isArchived === parsed.archived) ||
-		(typeof parsed.customFront !== "undefined" && x.isCustomFront === parsed.customFront) ||
-		parsed.tags.reduce(
-			(v, y) => 
-				(v && x.tags)
-					? x.tags.includes(y)
-					: v,
-					true
-		) ||
-		x.name.includes(parsed.query) ||
-		false
-	);
+	return getTable().where("name").startsWithIgnoreCase(parsed.query).filter(x => {
+
+		if(parsed.pronouns){
+			if (!x.pronouns || x.pronouns.toLowerCase() !== parsed.pronouns.toLowerCase())
+				return false;
+		}
+
+		if (parsed.role) {
+			if (!x.role || x.role.toLowerCase() !== parsed.role.toLowerCase())
+				return false;
+		}
+
+		if(parsed.isArchived !== undefined){
+			if(x.isArchived !== parsed.isArchived)
+				return false;
+		}
+
+		if (parsed.isCustomFront !== undefined) {
+			if (x.isCustomFront !== parsed.isCustomFront)
+				return false;
+		}
+
+		return true;
+	});
 }

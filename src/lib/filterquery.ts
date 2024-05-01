@@ -3,8 +3,10 @@ import { Tag, getTagFromName } from "./db/entities/tags";
 export type MemberFilterQuery = {
 	query: string,
 	tags: string[],
-	archived?: boolean,
-	customFront?: boolean
+	isArchived?: boolean,
+	isCustomFront?: boolean,
+	pronouns?: string,
+	role?: string
 };
 
 export type TagFilterQuery = {
@@ -16,9 +18,11 @@ export async function parseMemberFilterQuery(search: string): Promise<MemberFilt
 	const tokens = search.split(" ");
 
 	const queryTokens: string[] = [];
-	const tags: string[] = [];
 
-	let archived, customFront;
+	const result: MemberFilterQuery = {
+		query: "",
+		tags: []
+	};
 
 	for(const token of tokens){
 		switch(token.charAt(0)){
@@ -30,18 +34,18 @@ export async function parseMemberFilterQuery(search: string): Promise<MemberFilt
 							switch (tokenParts[1].toLowerCase()) {
 								case "yes":
 								case "true":
-									archived = true;
+									result.isArchived = true;
 									break;
 								case "no":
 								case "false":
-									archived = false;
+									result.isArchived = false;
 									break;
 								default:
 									queryTokens.push(token);
 									break;
 							}
 						} else
-							archived = true;
+							result.isArchived = true;
 						
 						break;
 					case "customfront":
@@ -49,19 +53,25 @@ export async function parseMemberFilterQuery(search: string): Promise<MemberFilt
 							switch (tokenParts[1]?.toLowerCase()) {
 								case "yes":
 								case "true":
-									customFront = true;
+									result.isCustomFront = true;
 									break;
 								case "no":
 								case "false":
-									customFront = false;
+									result.isCustomFront = false;
 									break;
 								default:
 									queryTokens.push(token);
 									break;
 							}
 						} else
-							customFront = true;
+							result.isCustomFront = true;
 						
+						break;
+					case "pronouns":
+						result.pronouns = tokenParts[1];
+						break;
+					case "role":
+						result.role = tokenParts[1];
 						break;
 					default:
 						queryTokens.push(token);
@@ -72,7 +82,7 @@ export async function parseMemberFilterQuery(search: string): Promise<MemberFilt
 				const probableTag = token.slice(1);
 				const tag = await getTagFromName(probableTag);
 				if(tag)
-					tags.push(tag.uuid)
+					result.tags.push(tag.uuid)
 				else
 					queryTokens.push(token);
 				
@@ -83,12 +93,8 @@ export async function parseMemberFilterQuery(search: string): Promise<MemberFilt
 		}
 	}
 
-	return {
-		query: queryTokens.join(" "),
-		tags,
-		archived,
-		customFront
-	};
+	result.query = queryTokens.filter(Boolean).join(" ");
+	return result;
 }
 
 
@@ -97,7 +103,9 @@ export function parseTagFilterQuery(search: string): TagFilterQuery {
 
 	const queryTokens: string[] = [];
 
-	let type: TagFilterQuery["type"];
+	const result: TagFilterQuery = {
+		query: ""
+	};
 
 	for (const token of tokens) {
 		switch (token.charAt(0)) {
@@ -107,10 +115,10 @@ export function parseTagFilterQuery(search: string): TagFilterQuery {
 					case "type":
 						switch (tokenParts[1]?.toLowerCase()){
 							case "journal":
-								type = "journal";
+								result.type = "journal";
 								break;
 							case "member":
-								type = "member";
+								result.type = "member";
 								break;
 							default:
 								queryTokens.push(token);
@@ -128,8 +136,6 @@ export function parseTagFilterQuery(search: string): TagFilterQuery {
 		}
 	}
 
-	return {
-		query: queryTokens.join(" "),
-		type
-	};
+	result.query = queryTokens.filter(Boolean).join(" ");
+	return result;
 }
