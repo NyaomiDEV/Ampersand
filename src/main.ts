@@ -22,6 +22,9 @@ import '@ionic/vue/css/display.css';
 // Dark mode CSS class
 import '@ionic/vue/css/palettes/dark.class.css';
 
+// Our CSS overrides
+import "./styles/override.css";
+
 // Dark mode init
 import { updateDarkMode } from "./lib/darkMode";
 

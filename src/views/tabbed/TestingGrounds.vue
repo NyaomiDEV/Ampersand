@@ -1,5 +1,22 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonInput, IonItem, IonItemDivider, IonItemOptions, IonItemOption, IonItemSliding, IonLabel, IonList, IonListHeader, IonPage, IonTitle, IonToolbar, IonAvatar } from '@ionic/vue';
+	import {
+		IonContent,
+		IonHeader,
+		IonInput,
+		IonItem,
+		IonItemDivider,
+		IonItemOptions,
+		IonItemOption,
+		IonItemSliding,
+		IonItemGroup,
+		IonLabel,
+		IonList,
+		IonListHeader,
+		IonPage,
+		IonTitle,
+		IonToolbar,
+		IonAvatar
+	} from '@ionic/vue';
 	import { computed, ref } from 'vue';
 	import { getFiles, isIOSMode } from '../../lib/util/misc';
 	import { Member, getMembersFromFilterQuery, getTable, newMember } from '../../lib/db/entities/members';
@@ -43,19 +60,19 @@
 		<IonContent>
 			<IonList :inset="isIOS">
 				<IonItem>
-					<IonInput label="Name" labelPlacement="floating" v-model="name" />
+					<IonInput label="Name" labelPlacement="stacked" v-model="name" />
 				</IonItem>
 				<IonItem button @click="addToDatabase">
 					<IonLabel>Create test member</IonLabel>
 				</IonItem>
 			</IonList>
 
+			<IonListHeader>
+				<IonLabel>Members</IonLabel>
+			</IonListHeader>
 			<IonList :inset="isIOS">
-				<IonListHeader>
-					<IonLabel>Members</IonLabel>
-				</IonListHeader>
 				<IonItem>
-					<IonInput label="Search" labelPlacement="floating" v-model="search" />
+					<IonInput label="Search" labelPlacement="stacked" v-model="search" />
 				</IonItem>
 				<IonItemSliding v-for="member of members" :key="member.uuid">
 					<IonItem>
