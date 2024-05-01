@@ -9,6 +9,7 @@ import { Reminder } from './entities/reminders';
 import { System } from './entities/system';
 import { Tag } from './entities/tags';
 import { from, useObservable } from '@vueuse/rxjs';
+import { Ref } from 'vue';
 
 export class AmpersandDatabase extends Dexie {
 
@@ -42,6 +43,6 @@ export class AmpersandDatabase extends Dexie {
 
 export const db = new AmpersandDatabase();
 
-export function toObservable(databaseCall: () => PromiseExtended){
+export function toObservable<T>(databaseCall: () => PromiseExtended): Readonly<Ref<T>> {
 	return useObservable(from(liveQuery(databaseCall)));
 }

@@ -1,9 +1,10 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonInput, IonItem, IonItemDivider, IonItemOptions, IonItemOption, IonItemSliding, IonLabel, IonList, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+	import { IonContent, IonHeader, IonInput, IonItem, IonItemDivider, IonItemOptions, IonItemOption, IonItemSliding, IonLabel, IonList, IonPage, IonTitle, IonToolbar, IonImg, IonAvatar } from '@ionic/vue';
 	import { computed, ref } from 'vue';
 	import { getFiles, isIOSMode } from '../../lib/util/misc';
 	import { toObservable } from '../../lib/db';
 	import { Member, getTable, newMember } from '../../lib/db/entities/members';
+	import { getBlobURL } from '../../lib/util/blob';
 
 	const isIOS = computed(isIOSMode);
 
@@ -15,8 +16,11 @@
 	}
 
 	async function addToDatabase(){
+		const files = await getFiles();
+		console.log(files);
 		newMember({
 			name: name.value,
+			image: files[0]!,
 			isArchived: false,
 			isCustomFront: false
 		});
@@ -27,7 +31,7 @@
 		await getTable().delete(uuid);
 	}
 
-	const members = toObservable(() => getTable().toArray());
+	const members = toObservable<Member[]>(() => getTable().toArray());
 </script>
 
 <template>
@@ -58,6 +62,9 @@
 				</IonItemDivider>
 				<IonItemSliding v-for="member of members" :key="member.uuid">
 					<IonItem>
+						<IonAvatar slot="start" v-if="member.image">
+							<img aria-hidden="true" :src="getBlobURL(member.image)"
+						</IonAvatar>
 						<IonLabel>{{ member.name }}</IonLabel>
 					</IonItem>
 					<IonItemOptions>
