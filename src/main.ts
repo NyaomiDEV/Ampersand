@@ -19,6 +19,12 @@ import '@ionic/vue/css/text-transformation.css';
 import '@ionic/vue/css/flex-utils.css';
 import '@ionic/vue/css/display.css';
 
+// Dark mode CSS class
+import '@ionic/vue/css/palettes/dark.class.css';
+
+// Dark mode init
+updateDarkMode();
+
 // App init
 import App from "./App.vue";
 
@@ -36,6 +42,7 @@ if (!await navigator.storage.persisted()) {
 // Localizations
 import i18next from "i18next";
 import I18NextVue from "i18next-vue";
+import { updateDarkMode } from "./lib/darkmode";
 
 await i18next.init({
 	fallbackLng: "en",
