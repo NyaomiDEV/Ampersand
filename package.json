@@ -12,6 +12,7 @@
     "@ionic/vue": "^8.1.0",
     "@ionic/vue-router": "^8.1.0",
     "@material-design-icons/svg": "^0.14.13",
+    "@material/material-color-utilities": "^0.2.7",
     "@vueuse/rxjs": "^10.9.0",
     "dexie": "^4.0.4",
     "i18next": "^23.11.3",

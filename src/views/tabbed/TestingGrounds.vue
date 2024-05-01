@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonInput, IonItem, IonItemDivider, IonItemOptions, IonItemOption, IonItemSliding, IonLabel, IonList, IonPage, IonTitle, IonToolbar, IonAvatar } from '@ionic/vue';
+	import { IonContent, IonHeader, IonInput, IonItem, IonItemDivider, IonItemOptions, IonItemOption, IonItemSliding, IonLabel, IonList, IonListHeader, IonPage, IonTitle, IonToolbar, IonAvatar } from '@ionic/vue';
 	import { computed, ref } from 'vue';
 	import { getFiles, isIOSMode } from '../../lib/util/misc';
 	import { Member, getMembersFromFilterQuery, getTable, newMember } from '../../lib/db/entities/members';
@@ -39,7 +39,7 @@
 				</IonTitle>
 			</IonToolbar>
 		</IonHeader>
-		
+
 		<IonContent>
 			<IonList :inset="isIOS">
 				<IonItem>
@@ -48,20 +48,20 @@
 				<IonItem button @click="addToDatabase">
 					<IonLabel>Create test member</IonLabel>
 				</IonItem>
-				<IonItemDivider>
-					<IonLabel>
-						members
-					</IonLabel>
-				</IonItemDivider>
+			</IonList>
+
+			<IonList :inset="isIOS">
+				<IonListHeader>
+					<IonLabel>Members</IonLabel>
+				</IonListHeader>
 				<IonItem>
 					<IonInput label="Search" labelPlacement="floating" v-model="search" />
 				</IonItem>
 				<IonItemSliding v-for="member of members" :key="member.uuid">
 					<IonItem>
 						<IonAvatar slot="start" v-if="member.image">
-							<img aria-hidden="true" :src="getBlobURL(member.image)"
-						</IonAvatar>
-						<IonLabel>{{ member.name }}</IonLabel>
+							<img aria-hidden="true" :src="getBlobURL(member.image)" </IonAvatar>
+							<IonLabel>{{ member.name }}</IonLabel>
 					</IonItem>
 					<IonItemOptions>
 						<IonItemOption color="danger" @click="removeFromDatabase(member)">Delete</IonItemOption>
