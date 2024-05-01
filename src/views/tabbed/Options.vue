@@ -40,59 +40,60 @@
 				</IonTitle>
 			</IonToolbar>
 		</IonHeader>
-		
+
 		<IonContent>
+
+			<IonListHeader>
+				<IonLabel>Management</IonLabel>
+			</IonListHeader>
+
 			<IonList :inset="isIOS">
-
-				<IonListHeader>
-					<IonLabel>Management</IonLabel>
-				</IonListHeader>
-
+				
 				<IonItem href="/options/system">
-					<IonIcon :ios="SystemIOS" :md="SystemMD" slot="start" aria-hidden="true"/>
+					<IonIcon :ios="SystemIOS" :md="SystemMD" slot="start" aria-hidden="true" />
 					<IonLabel>System name and photo</IonLabel>
 				</IonItem>
 
 				<IonItem href="/options/front_history">
-					<IonIcon :ios="FrontHistoryIOS" :md="FrontHistoryMD" slot="start" aria-hidden="true"/>
+					<IonIcon :ios="FrontHistoryIOS" :md="FrontHistoryMD" slot="start" aria-hidden="true" />
 					<IonLabel>Front history</IonLabel>
 				</IonItem>
 
 				<IonItem href="/options/message_board">
-					<IonIcon :ios="MessageBoardIOS" :md="MessageBoardMD" slot="start" aria-hidden="true"/>
+					<IonIcon :ios="MessageBoardIOS" :md="MessageBoardMD" slot="start" aria-hidden="true" />
 					<IonLabel>Message board</IonLabel>
 				</IonItem>
 
 				<IonItem href="/options/tag_management">
-					<IonIcon :ios="TagIOS" :md="TagMD" slot="start" aria-hidden="true"/>
+					<IonIcon :ios="TagIOS" :md="TagMD" slot="start" aria-hidden="true" />
 					<IonLabel>Tag management</IonLabel>
 				</IonItem>
 
 				<IonItem href="/options/reminders">
-					<IonIcon :ios="RemindersIOS" :md="RemindersMD" slot="start" aria-hidden="true"/>
+					<IonIcon :ios="RemindersIOS" :md="RemindersMD" slot="start" aria-hidden="true" />
 					<IonLabel>Reminders</IonLabel>
 				</IonItem>
 
 			</IonList>
 
+			<IonListHeader>
+				<IonLabel>Settings</IonLabel>
+			</IonListHeader>
+
 			<IonList :inset="isIOS">
 
-				<IonListHeader>
-					<IonLabel>Settings</IonLabel>
-				</IonListHeader>
-
 				<IonItem href="/options/app_settings">
-					<IonIcon :ios="SettingsIOS" :md="SettingsMD" slot="start" aria-hidden="true"/>
+					<IonIcon :ios="SettingsIOS" :md="SettingsMD" slot="start" aria-hidden="true" />
 					<IonLabel>App settings</IonLabel>
 				</IonItem>
 
 				<IonItem href="/options/security">
-					<IonIcon :ios="SecurityIOS" :md="SecurityMD" slot="start" aria-hidden="true"/>
+					<IonIcon :ios="SecurityIOS" :md="SecurityMD" slot="start" aria-hidden="true" />
 					<IonLabel>Security</IonLabel>
 				</IonItem>
 
 				<IonItem href="/options/accessibility">
-					<IonIcon :ios="AccessibilityIOS" :md="AccessibilityMD" slot="start" aria-hidden="true"/>
+					<IonIcon :ios="AccessibilityIOS" :md="AccessibilityMD" slot="start" aria-hidden="true" />
 					<IonLabel>Accessibility</IonLabel>
 				</IonItem>
 
