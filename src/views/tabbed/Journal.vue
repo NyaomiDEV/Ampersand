@@ -11,7 +11,7 @@
 		<IonHeader>
 			<IonToolbar>
 				<IonTitle>
-					Dashboard
+					Journal
 				</IonTitle>
 			</IonToolbar>
 		</IonHeader>

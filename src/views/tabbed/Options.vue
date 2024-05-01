@@ -11,7 +11,7 @@
 		<IonHeader>
 			<IonToolbar>
 				<IonTitle>
-					Dashboard
+					Options
 				</IonTitle>
 			</IonToolbar>
 		</IonHeader>

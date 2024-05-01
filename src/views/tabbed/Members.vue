@@ -11,7 +11,7 @@
 		<IonHeader>
 			<IonToolbar>
 				<IonTitle>
-					Dashboard
+					Members
 				</IonTitle>
 			</IonToolbar>
 		</IonHeader>

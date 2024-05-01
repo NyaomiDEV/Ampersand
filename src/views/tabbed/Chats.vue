@@ -11,7 +11,7 @@
 		<IonHeader>
 			<IonToolbar>
 				<IonTitle>
-					Dashboard
+					Chats
 				</IonTitle>
 			</IonToolbar>
 		</IonHeader>

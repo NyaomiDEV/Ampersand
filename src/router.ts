@@ -3,6 +3,10 @@ import { RouteRecordRaw } from "vue-router";
 import TestingGrounds from "./views/tabbed/TestingGrounds.vue";
 import TabbedHomeView from "./views/TabbedHomeView.vue";
 import Dashboard from "./views/tabbed/Dashboard.vue";
+import Members from "./views/tabbed/Members.vue";
+import Journal from "./views/tabbed/Journal.vue";
+import Chats from "./views/tabbed/Chats.vue";
+import Options from "./views/tabbed/Options.vue";
 
 const routes: Array<RouteRecordRaw> = [
 	{
@@ -15,9 +19,29 @@ const routes: Array<RouteRecordRaw> = [
 				redirect: "/dashboard"
 			},
 			{
+				path: '/members',
+				name: 'Members',
+				component: Members,
+			},
+			{
+				path: '/journal',
+				name: 'Journal',
+				component: Journal,
+			},
+			{
 				path: '/dashboard',
 				name: 'Dashboard',
 				component: Dashboard,
+			},
+			{
+				path: '/chats',
+				name: 'Chats',
+				component: Chats,
+			},
+			{
+				path: '/options',
+				name: 'Options',
+				component: Options,
 			},
 			{
 				path: '/testingGrounds',
