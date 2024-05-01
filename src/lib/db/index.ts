@@ -1,4 +1,4 @@
-import Dexie, { PromiseExtended, Table, liveQuery } from 'dexie';
+import Dexie, { Table } from 'dexie';
 import { BoardMessage } from './entities/boardMessages';
 import { Chat } from './entities/chats';
 import { ChatMessage } from './entities/chatMessages';
@@ -8,8 +8,6 @@ import { Member } from './entities/members';
 import { Reminder } from './entities/reminders';
 import { System } from './entities/system';
 import { Tag } from './entities/tags';
-import { from, useObservable } from '@vueuse/rxjs';
-import { Ref } from 'vue';
 
 export class AmpersandDatabase extends Dexie {
 
