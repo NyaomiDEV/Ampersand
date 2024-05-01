@@ -1,7 +1,13 @@
 <script setup lang="ts">
 	import { IonPage, IonTabs, IonTabBar, IonRouterOutlet, IonTabButton, IonIcon } from "@ionic/vue";
 
-	import { home, sparkles } from "ionicons/icons";
+	import {
+		home as HomeIOS,
+		sparkles as SparklesIOS
+	} from "ionicons/icons";
+
+	import HomeMD from '@material-design-icons/svg/filled/home.svg';
+	import SparklesMD from '@material-design-icons/svg/filled/star.svg';
 </script>
 
 <template>
@@ -15,12 +21,12 @@
 			>
 
 				<IonTabButton tab="dashboard" href="/dashboard">
-					<IonIcon :icon="home" />
+					<IonIcon :ios="HomeIOS" :md="HomeMD" />
 					Dashboard
 				</IonTabButton>
 			
 				<IonTabButton tab="testingGrounds" href="/testingGrounds">
-					<IonIcon :icon="sparkles" />
+					<IonIcon :ios="SparklesIOS" :md="SparklesMD" />
 					Testing grounds
 				</IonTabButton>
 

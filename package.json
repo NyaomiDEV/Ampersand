@@ -11,6 +11,7 @@
   "dependencies": {
     "@ionic/vue": "^8.0.0",
     "@ionic/vue-router": "^8.0.0",
+    "@material-design-icons/svg": "^0.14.13",
     "@vueuse/rxjs": "^10.9.0",
     "dexie": "^4.0.4",
     "i18next": "^23.11.3",
@@ -23,6 +24,7 @@
     "@vitejs/plugin-vue": "^5.0.4",
     "typescript": "^5.2.2",
     "vite": "^5.2.0",
+    "vite-svg-loader": "^5.1.0",
     "vue-tsc": "^2.0.6"
   }
 }
