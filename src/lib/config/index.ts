@@ -26,9 +26,9 @@ export function getConfig(): Config {
 	return Object.assign({}, defaultConfig, getCompound("config"));
 }
 
-export function getConfigEntry(entryKey: keyof Config): any {
+export function getConfigEntry(entryKey: keyof Config): Config[keyof Config] {
 	if(entryKey.length)
-		return get("config." + entryKey);
+		return get("config." + entryKey) || defaultConfig[entryKey];
 	return undefined;
 }
 

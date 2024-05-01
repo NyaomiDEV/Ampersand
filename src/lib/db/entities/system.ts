@@ -36,7 +36,7 @@ export function getSystem(){
 }
 
 export function getSystemUUID(){
-	return getConfigEntry("currentSystemUUID");
+	return getConfigEntry("currentSystemUUID") as string;
 }
 
 export function modifySystem(system: Partial<System>) {
