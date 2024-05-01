@@ -1,4 +1,5 @@
 import { db } from "..";
+import { parseTagFilterQuery } from "../../filterquery";
 import { makeUUIDv5 } from "../../util/uuid";
 import { UUIDable } from "../types";
 import { getSystemUUID } from "./system";
@@ -23,4 +24,18 @@ export async function newTag(tag: Omit<Tag, keyof UUIDable>) {
 		...tag,
 		uuid
 	});
+}
+
+export async function getTagFromName(name: string){
+	return await getTable().get({ name });
+}
+
+export async function getTagsFromFilterQuery(filterQuery: string){
+	const parsed = await parseTagFilterQuery(filterQuery);
+
+	return getTable().toCollection().filter(x => 
+		(typeof parsed.type === "undefined" && x.type === parsed.type) ||
+		x.name.includes(parsed.query) ||
+		false
+	);
 }

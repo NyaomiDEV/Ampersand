@@ -1,3 +1,5 @@
+import { Tag, getTagFromName } from "./db/entities/tags";
+
 export type MemberFilterQuery = {
 	query: string,
 	tags: string[],
@@ -7,10 +9,10 @@ export type MemberFilterQuery = {
 
 export type TagFilterQuery = {
 	query: string,
-	type?: string
-}
+	type?: Tag["type"]
+};
 
-export function parseMemberFilterQuery(search: string): MemberFilterQuery {
+export async function parseMemberFilterQuery(search: string): Promise<MemberFilterQuery> {
 	const tokens = search.split(" ");
 
 	const queryTokens: string[] = [];
@@ -38,9 +40,9 @@ export function parseMemberFilterQuery(search: string): MemberFilterQuery {
 									queryTokens.push(token);
 									break;
 							}
-						} else {
+						} else
 							archived = true;
-						}
+						
 						break;
 					case "customfront":
 						if(tokenParts[1]){
@@ -57,9 +59,9 @@ export function parseMemberFilterQuery(search: string): MemberFilterQuery {
 									queryTokens.push(token);
 									break;
 							}
-						} else {
+						} else
 							customFront = true;
-						}
+						
 						break;
 					default:
 						queryTokens.push(token);
@@ -67,7 +69,13 @@ export function parseMemberFilterQuery(search: string): MemberFilterQuery {
 				}
 				break;
 			case "#":
-				tags.push(token.slice(1));
+				const probableTag = token.slice(1);
+				const tag = await getTagFromName(probableTag);
+				if(tag)
+					tags.push(tag.uuid)
+				else
+					queryTokens.push(token);
+				
 				break;
 			default:
 				queryTokens.push(token);
@@ -89,7 +97,7 @@ export function parseTagFilterQuery(search: string): TagFilterQuery {
 
 	const queryTokens: string[] = [];
 
-	let type;
+	let type: TagFilterQuery["type"];
 
 	for (const token of tokens) {
 		switch (token.charAt(0)) {
