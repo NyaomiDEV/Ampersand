@@ -4,7 +4,7 @@
 	import { getFiles, isIOSMode } from '../../lib/util/misc';
 	import { Member, getMembersFromFilterQuery, getTable, newMember } from '../../lib/db/entities/members';
 	import { getBlobURL } from '../../lib/util/blob';
-	import { useDexieLiveQueryWithDeps } from '../../lib/util/livequery';
+	import { useDexieLiveQueryWithDeps } from '../../lib/util/liveQuery';
 
 	const isIOS = computed(isIOSMode);
 

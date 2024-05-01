@@ -23,6 +23,8 @@ import '@ionic/vue/css/display.css';
 import '@ionic/vue/css/palettes/dark.class.css';
 
 // Dark mode init
+import { updateDarkMode } from "./lib/darkMode";
+
 updateDarkMode();
 
 // App init
@@ -42,7 +44,6 @@ if (!await navigator.storage.persisted()) {
 // Localizations
 import i18next from "i18next";
 import I18NextVue from "i18next-vue";
-import { updateDarkMode } from "./lib/darkmode";
 
 await i18next.init({
 	fallbackLng: "en",

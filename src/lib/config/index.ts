@@ -1,4 +1,4 @@
-import { get, getCompound, setCompound } from "../util/localstorage";
+import { get, getCompound, setCompound } from "../util/localStorage";
 import { Config } from "./types";
 
 export const defaultConfig: Config = {

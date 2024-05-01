@@ -1,5 +1,5 @@
 import { db } from "..";
-import { parseMemberFilterQuery } from "../../filterquery";
+import { parseMemberFilterQuery } from "../../filterQuery";
 import { makeUUIDv5 } from "../../util/uuid";
 import { UUID, UUIDable } from "../types";
 import { getSystemUUID } from "./system";
