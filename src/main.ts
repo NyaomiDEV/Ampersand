@@ -1,7 +1,19 @@
+// Vue and Ionic
 import { createApp } from "vue";
-
-// Ionic
 import { IonicVue } from "@ionic/vue";
+
+// Router
+import router from "./router";
+
+// Localizations
+import i18next from "i18next";
+import I18NextVue from "i18next-vue";
+
+// Dark mode
+import { updateDarkMode } from "./lib/darkMode";
+
+// App
+import App from "./App.vue";
 
 // Core CSS required for Ionic components to work properly
 import '@ionic/vue/css/core.css';
@@ -25,16 +37,11 @@ import '@ionic/vue/css/palettes/dark.class.css';
 // Our CSS overrides
 import "./styles/override.css";
 
-// Dark mode init
-import { updateDarkMode } from "./lib/darkMode";
-
-updateDarkMode();
-
-// App init
-import App from "./App.vue";
-
-// Router
-import router from "./router";
+async function loadLanguageIn(lang: string) {
+	const lng = await import(`../translations/${lang}.json`);
+	for (const ns of Object.getOwnPropertyNames(lng))
+		i18next.addResourceBundle(lang, ns, lng[ns as keyof typeof lng]);
+}
 
 // Storage Manager
 if (!await navigator.storage.persisted()) {
@@ -44,20 +51,12 @@ if (!await navigator.storage.persisted()) {
 	}
 }
 
-// Localizations
-import i18next from "i18next";
-import I18NextVue from "i18next-vue";
+updateDarkMode();
 
 await i18next.init({
 	fallbackLng: "en",
 	lowerCaseLng: true,
 });
-
-async function loadLanguageIn(lang: string){
-	const lng = await import(`../translations/${lang}.json`);
-	for (const ns of Object.getOwnPropertyNames(lng))
-		i18next.addResourceBundle(lang, ns, lng[ns as keyof typeof lng]);
-}
 
 await loadLanguageIn("en");
 
