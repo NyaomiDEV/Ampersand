@@ -2,6 +2,7 @@ import { Typeson } from "typeson";
 import { db } from ".";
 import { blob, file, filelist, imagebitmap, imagedata, map, set, typedArrays, undef } from "typeson-registry";
 import { decode, encode } from "@msgpack/msgpack";
+import { compressGzip, decompressGzip } from "../util/misc";
 
 const typeson = new Typeson({
 	sync: false,
@@ -24,11 +25,11 @@ export async function exportDatabaseToBinary(){
 		theEntireDatabase[x.name] = await typeson.encapsulate(await x.toArray());
 	}
 
-	return encode(theEntireDatabase);
+	return await compressGzip(encode(theEntireDatabase));
 }
 
 export async function importDatabaseFromBinary(data: Uint8Array) {
-	const theEntireDatabase = decode(data) as Record<string, any>;
+	const theEntireDatabase = decode(await decompressGzip(data)) as Record<string, any>;
 
 	for(const key of Object.getOwnPropertyNames(theEntireDatabase)){
 		const table = db.tables.find((x) => x.name === key);

@@ -47,3 +47,49 @@ export function downloadBlob(data: Uint8Array, fileName: string) {
 	a.click();
 	setTimeout(() => window.URL.revokeObjectURL(url), 1000);
 };
+
+export async function compressGzip(data: Uint8Array) {
+	const reader = new Blob([data])
+		.stream()
+		.pipeThrough<Uint8Array>(new CompressionStream("gzip"))
+		.getReader();
+
+	let result = new Uint8Array();
+
+	for(;;){
+		const { done, value } = await reader.read();
+		if (done) break;
+
+		if (value) {
+			const _new = new Uint8Array(result.length + value.length);
+			_new.set(result);
+			_new.set(value, result.length);
+			result = _new;
+		}
+	}
+
+	return result;
+}
+
+export async function decompressGzip(data: Uint8Array) {
+	const reader = new Blob([data])
+		.stream()
+		.pipeThrough<Uint8Array>(new DecompressionStream("gzip"))
+		.getReader();
+
+	let result = new Uint8Array();
+
+	for (;;) {
+		const { done, value } = await reader.read();
+		if (done) break;
+
+		if (value) {
+			const _new = new Uint8Array(result.length + value.length);
+			_new.set(result);
+			_new.set(value, result.length);
+			result = _new;
+		}
+	}
+
+	return result;
+}
