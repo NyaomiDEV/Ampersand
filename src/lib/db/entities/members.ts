@@ -9,7 +9,7 @@ export type Member = UUIDable & {
 	pronouns?: string,
 	description?: string,
 	role?: string,
-	image?: Blob,
+	image?: File,
 	color?: string, // todo
 	isArchived: boolean,
 	isCustomFront: boolean, // todo

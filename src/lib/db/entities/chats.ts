@@ -5,7 +5,7 @@ import { getSystemUUID } from "./system";
 
 export type Chat = UUIDable & {
 	name: string,
-	image?: Blob
+	image?: File
 }
 
 export function getTable(){

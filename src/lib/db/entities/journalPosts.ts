@@ -8,13 +8,13 @@ export type JournalPost = UUIDable & {
 	date: Date,
 	title: string,
 	body: string,
-	cover?: Blob,
+	cover?: File,
 	attachments?: Attachment[]
 }
 
 export type Attachment = UUIDable & {
 	name: string,
-	data: Blob
+	file: File
 }
 
 export function getTable() {
