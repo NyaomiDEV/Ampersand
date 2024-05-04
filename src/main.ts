@@ -6,7 +6,7 @@ import { IonicVue } from "@ionic/vue";
 import router from "./router";
 
 // Localizations
-import i18next from "i18next";
+import i18n from "./lib/i18n";
 import I18NextVue from "i18next-vue";
 
 // Dark mode
@@ -37,12 +37,6 @@ import '@ionic/vue/css/palettes/dark.class.css';
 // Our CSS overrides
 import "./styles/override.css";
 
-async function loadLanguageIn(lang: string) {
-	const lng = await import(`../translations/${lang}.json`);
-	for (const ns of Object.getOwnPropertyNames(lng))
-		i18next.addResourceBundle(lang, ns, lng[ns as keyof typeof lng]);
-}
-
 // Storage Manager
 if (!await navigator.storage.persisted()) {
 	console.log("Storage is not persisted, trying to persist now");
@@ -54,14 +48,7 @@ if (!await navigator.storage.persisted()) {
 const darkMode = window.matchMedia("(prefers-color-scheme: dark)");
 darkMode.addEventListener("change", updateDarkMode);
 
-await i18next.init({
-	fallbackLng: "en",
-	lowerCaseLng: true,
-});
-
-await loadLanguageIn("en");
-
-const app = createApp(App).use(IonicVue).use(router).use(I18NextVue, { i18next });
+const app = createApp(App).use(IonicVue).use(router).use(I18NextVue, { i18next: i18n });
 
 await router.isReady();
 app.mount(document.body);

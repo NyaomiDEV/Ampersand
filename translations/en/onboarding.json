@@ -1,0 +1,25 @@
+{
+	"welcomeScreen": {
+		"header": "Welcome to {{appName}}!",
+		"start": "Start your journey!"
+	},
+	"importScreen": {
+		"header": "Would you want to import your data?",
+		"prevInstall": "Previous installation",
+		"simplyPlural": "Simply Plural",
+		"pluralKit": "PluralKit",
+		"startFromScratch": "No, I'll start from scratch",
+		"pleaseWait": "Please wait while we import your data"
+	},
+	"systemInfo": {
+		"header": "Tell us about your system!"
+	},
+	"memberInfo": {
+		"header": "Tell us more about you!",
+		"invitation": "Keep editing your profile card after you’re done with the onboarding!"
+	},
+	"endScreen": {
+		"header": "Thanks for choosing {{appName}}!",
+		"startButton": "Let's start!"
+	}
+}
