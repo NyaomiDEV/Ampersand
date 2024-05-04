@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "@ionic/vue-router";
 import { RouteRecordRaw } from "vue-router";
 import tabbedRoutes from "./tabbedRoutes";
+import settings from "./settings";
 
 const routes: Array<RouteRecordRaw> = [
 	{
@@ -14,7 +15,8 @@ const routes: Array<RouteRecordRaw> = [
 			},
 			...tabbedRoutes
 		]
-	}
+	}, 
+	...settings,
 ];
 
 console.log(routes);

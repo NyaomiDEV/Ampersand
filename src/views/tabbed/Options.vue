@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonList, IonItem, IonListHeader, IonLabel, IonPage, IonTitle, IonToolbar, IonIcon } from '@ionic/vue';
-	import { computed, defineComponent } from 'vue';
+	import { computed } from 'vue';
 	import { isIOSMode } from '../../lib/util/misc';
 
 	import {
@@ -49,27 +49,27 @@
 
 			<IonList :inset="isIOS">
 				
-				<IonItem href="/options/system">
+				<IonItem button routerLink="/options/system">
 					<IonIcon :ios="SystemIOS" :md="SystemMD" slot="start" aria-hidden="true" />
 					<IonLabel>System name and photo</IonLabel>
 				</IonItem>
 
-				<IonItem href="/options/front_history">
+				<IonItem button routerLink="/options/front_history">
 					<IonIcon :ios="FrontHistoryIOS" :md="FrontHistoryMD" slot="start" aria-hidden="true" />
 					<IonLabel>Front history</IonLabel>
 				</IonItem>
 
-				<IonItem href="/options/message_board">
+				<IonItem button routerLink="/options/message_board">
 					<IonIcon :ios="MessageBoardIOS" :md="MessageBoardMD" slot="start" aria-hidden="true" />
 					<IonLabel>Message board</IonLabel>
 				</IonItem>
 
-				<IonItem href="/options/tag_management">
+				<IonItem button routerLink="/options/tag_management">
 					<IonIcon :ios="TagIOS" :md="TagMD" slot="start" aria-hidden="true" />
 					<IonLabel>Tag management</IonLabel>
 				</IonItem>
 
-				<IonItem href="/options/reminders">
+				<IonItem button routerLink="/options/reminders">
 					<IonIcon :ios="RemindersIOS" :md="RemindersMD" slot="start" aria-hidden="true" />
 					<IonLabel>Reminders</IonLabel>
 				</IonItem>
@@ -82,27 +82,27 @@
 
 			<IonList :inset="isIOS">
 
-				<IonItem href="/options/app_settings">
+				<IonItem button routerLink="/options/app_settings">
 					<IonIcon :ios="SettingsIOS" :md="SettingsMD" slot="start" aria-hidden="true" />
 					<IonLabel>App settings</IonLabel>
 				</IonItem>
 
-				<IonItem href="/options/security">
+				<IonItem button routerLink="/options/security">
 					<IonIcon :ios="SecurityIOS" :md="SecurityMD" slot="start" aria-hidden="true" />
 					<IonLabel>Security</IonLabel>
 				</IonItem>
 
-				<IonItem href="/options/accessibility">
+				<IonItem button routerLink="/options/accessibility">
 					<IonIcon :ios="AccessibilityIOS" :md="AccessibilityMD" slot="start" aria-hidden="true" />
 					<IonLabel>Accessibility</IonLabel>
 				</IonItem>
 
-				<IonItem href="/options/import_export">
+				<IonItem button routerLink="/options/import_export">
 					<IonIcon :ios="ImportExportIOS" :md="ImportExportMD" slot="start" aria-hidden="true" />
 					<IonLabel>Import / Export</IonLabel>
 				</IonItem>
 
-				<IonItem href="/options/about">
+				<IonItem button routerLink="/options/about">
 					<IonIcon :ios="AboutIOS" :md="AboutMD" slot="start" aria-hidden="true" />
 					<IonLabel>About</IonLabel>
 				</IonItem>
