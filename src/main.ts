@@ -36,6 +36,8 @@ import '@ionic/vue/css/palettes/dark.class.css';
 
 // Our CSS overrides
 import "./styles/override.css";
+import { getConfigEntry } from "./lib/config";
+import { AccessibilityConfig } from "./lib/config/types";
 
 // Storage Manager
 if (!await navigator.storage.persisted()) {
@@ -47,6 +49,10 @@ if (!await navigator.storage.persisted()) {
 
 const darkMode = window.matchMedia("(prefers-color-scheme: dark)");
 darkMode.addEventListener("change", updateDarkMode);
+
+const fontScale = (getConfigEntry("accessibility") as AccessibilityConfig).fontScale;
+if (fontScale !== 1)
+	document.documentElement.style.setProperty("font-size", `${fontScale}em`)
 
 const app = createApp(App).use(IonicVue).use(router).use(I18NextVue, { i18next: i18n });
 
