@@ -1,9 +1,25 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonList, IonItem, IonLabel, IonPage, IonTitle, IonToolbar, IonBackButton} from '@ionic/vue';
 	import { inject } from 'vue';
-	import { importDatabaseFromBinary, exportDatabaseFromBinary } from '../../db/ioutils';
+	import { importDatabaseFromBinary, exportDatabaseToBinary } from '../../lib/db/ioutils';
+	import { downloadBlob, getFiles } from '../../lib/util/misc';
+	import dayjs from 'dayjs';
 
 	const isIOS = inject<boolean>("isIOS");
+
+	async function importDb(){
+		const files = await getFiles(undefined, false);
+		if(files.length){
+			const file = files[0];
+			await importDatabaseFromBinary(new Uint8Array(await file.arrayBuffer()))
+		}
+	}
+
+	async function exportDb(){
+		const data = await exportDatabaseToBinary();
+		const date = dayjs().format("YYYY-MM-DD");
+		downloadBlob(data,`ampersand-backup-${date}.ampdb`);
+	}
 </script>
 
 <template>
