@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonList, IonItem, IonListHeader, IonLabel, IonPage, IonTitle, IonToolbar, IonIcon } from '@ionic/vue';
 	import { computed } from 'vue';
-	import { isIOSMode } from '../../lib/util/misc';
+	import { isIOSMode } from '../../lib/mode';
 
 	import {
 		person as SystemIOS,

@@ -16,7 +16,8 @@
 		IonAvatar
 	} from '@ionic/vue';
 	import { computed, ref } from 'vue';
-	import { getFiles, isIOSMode } from '../../lib/util/misc';
+	import { getFiles } from '../../lib/util/misc';
+	import { isIOSMode } from '../../lib/mode';
 	import { Member, getTable, newMember } from '../../lib/db/entities/members';
 	import { getBlobURL } from '../../lib/util/blob';
 	import { resizeImage } from '../../lib/util/image';
