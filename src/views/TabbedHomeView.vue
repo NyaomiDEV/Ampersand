@@ -2,12 +2,12 @@
 	import { IonPage, IonTabs, IonTabBar, IonRouterOutlet, IonTabButton, IonIcon } from "@ionic/vue";
 
 	import {
-		home as HomeIOS,
-		sparkles as SparklesIOS,
-		people as PeopleIOS,
-		book as JournalIOS,
-		chatboxEllipses as ChatIOS,
-		menu as OptionsIOS
+		homeOutline as HomeIOS,
+		sparklesOutline as SparklesIOS,
+		peopleOutline as PeopleIOS,
+		bookOutline as JournalIOS,
+		chatboxEllipsesOutline as ChatIOS,
+		menuOutline as OptionsIOS
 	} 
 	from "ionicons/icons";
 

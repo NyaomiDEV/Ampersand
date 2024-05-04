@@ -4,16 +4,16 @@
 	import { isIOSIonicMode } from '../../lib/mode';
 
 	import {
-		person as SystemIOS,
-		analytics as FrontHistoryIOS,
-		newspaper as MessageBoardIOS,
-		pricetag as TagIOS,
-		notifications as RemindersIOS,
+		personOutline as SystemIOS,
+		analyticsOutline as FrontHistoryIOS,
+		newspaperOutline as MessageBoardIOS,
+		pricetagOutline as TagIOS,
+		notificationsOutline as RemindersIOS,
 		cog as SettingsIOS,
-		lockClosed as SecurityIOS,
-		accessibility as AccessibilityIOS,
-		swapVertical as ImportExportIOS,
-		informationCircle as AboutIOS,
+		lockClosedOutline as SecurityIOS,
+		accessibilityOutline as AccessibilityIOS,
+		swapVerticalOutline as ImportExportIOS,
+		informationCircleOutline as AboutIOS,
 	} from "ionicons/icons";
 
 	import SystemMD from '@material-design-icons/svg/outlined/person.svg';
