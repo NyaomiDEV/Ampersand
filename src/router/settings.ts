@@ -4,32 +4,42 @@ const settings: Array<RouteRecordRaw> = [
 	{
 		path: '/options/system',
 		name: 'System',
-		component: (await import("../views/options/System.vue")).default,
+		component: () => import("../views/options/System.vue"),
 	},
 	{
 		path: '/options/front_history',
 		name: 'Front History',
-		component: (await import("../views/options/FrontHistory.vue")).default,
+		component: () => import("../views/options/FrontHistory.vue"),
 	},
 	{
 		path: '/options/message_board',
 		name: 'Message Board',
-		component: (await import("../views/options/MessageBoard.vue")).default,
+		component: () => import("../views/options/MessageBoard.vue"),
 	},
 	{
 		path: '/options/tag_management',
 		name: 'Message Board',
-		component: (await import("../views/options/TagManagement.vue")).default,
+		component: () => import("../views/options/TagManagement.vue"),
 	},
 	{
 		path: '/options/reminders',
 		name: 'Reminders',
-		component: (await import("../views/options/Reminders.vue")).default,
+		component: () => import("../views/options/Reminders.vue"),
+	},
+	{
+		path: '/options/app_settings',
+		name: 'App Settings',
+		component: () => import("../views/options/AppSettings.vue"),
+	},
+	{
+		path: '/options/security',
+		name: 'Security',
+		component: () => import("../views/options/Security.vue"),
 	},
 	{
 		path: '/options/accessibility',
 		name: 'Accessibility',
-		component: (await import("../views/options/Accessibility.vue")).default,
+		component: () => import("../views/options/Accessibility.vue"),
 	},
 	{
 		path: '/options/about',
