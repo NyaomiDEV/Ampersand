@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonNavLink, IonBackButton} from '@ionic/vue';
+	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonButton, IonBackButton} from '@ionic/vue';
 	import { computed } from 'vue';
 	import { isIOSIonicMode } from '../../lib/mode';
 
