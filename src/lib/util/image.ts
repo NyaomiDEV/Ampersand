@@ -1,14 +1,21 @@
-export async function resizeImage(image: File){
+export async function resizeImage(image: File, maxWidthHeight = 512){
 	const bitmap = await createImageBitmap(image);
-
 	let width = 0, height = 0;
-	if (bitmap.width > bitmap.height) {
-		width = 256;
-		height = (bitmap.height / bitmap.width) * 256;
+
+	if(bitmap.width <= maxWidthHeight && bitmap.height <= maxWidthHeight){
+		if (image.type === "image/webp")
+			return image; // we don't really need to do anything here
+
+		// or else we just go through everything just to convert to WEBP
+		width = bitmap.width;
+		height = bitmap.height;
+	} else if (bitmap.width > bitmap.height) {
+		width = maxWidthHeight;
+		height = (bitmap.height / bitmap.width) * maxWidthHeight;
 	} else {
-		width = (bitmap.width / bitmap.height) * 256;
-		height = 256;
-	}
+		width = (bitmap.width / bitmap.height) * maxWidthHeight;
+		height = maxWidthHeight;
+	} 
 
 	const canvas = new OffscreenCanvas(width, height);
 	const ctx = canvas.getContext("2d");
