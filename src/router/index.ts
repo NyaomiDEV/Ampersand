@@ -6,7 +6,7 @@ const routes: Array<RouteRecordRaw> = [
 	{
 		path: '/',
 		name: "TabbedHomeView",
-		component: (await import("../views/TabbedHomeView.vue")).default,
+		component: () => import("../views/TabbedHomeView.vue"),
 		children: [
 			{
 				path: "/",
