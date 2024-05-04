@@ -40,4 +40,7 @@ export function defineMaterialTheme(hex: string){
 		const color = rgbFromArgb(theme.palettes.neutral.tone(i));
 		document.documentElement.style.setProperty(`--md3-shade-${i}`, color);
 	}
+
+	// add md3 to root class
+	document.documentElement.classList.add("md3");
 }

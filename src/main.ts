@@ -51,7 +51,8 @@ if (!await navigator.storage.persisted()) {
 	}
 }
 
-updateDarkMode();
+const darkMode = window.matchMedia("(prefers-color-scheme: dark)");
+darkMode.addEventListener("change", updateDarkMode);
 
 await i18next.init({
 	fallbackLng: "en",
