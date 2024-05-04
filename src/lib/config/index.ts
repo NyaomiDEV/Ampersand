@@ -14,7 +14,8 @@ export const defaultConfig: Config = {
 		theme: "auto",
 		accentColor: undefined,
 		reducedMotion: false,
-		uiScale: 1
+		fontScale: 1,
+		chatFontScale: 1
 	},
 	security: {
 		pinCode: undefined,

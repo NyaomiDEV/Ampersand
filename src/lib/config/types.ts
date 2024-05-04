@@ -19,7 +19,8 @@ export type AccessibilityConfig = {
 	theme: "auto" | "dark" | "light",
 	accentColor?: string,
 	reducedMotion: boolean,
-	uiScale: number
+	fontScale: number,
+	chatFontScale: number
 }
 
 export type SecurityConfig = {
