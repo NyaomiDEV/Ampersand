@@ -42,6 +42,11 @@ const settings: Array<RouteRecordRaw> = [
 		component: () => import("../views/options/Accessibility.vue"),
 	},
 	{
+		path: '/options/importExport',
+		name: 'Accessibility',
+		component: () => import("../views/options/ImportExport.vue"),
+	},
+	{
 		path: '/options/about',
 		name: 'About',
 		component: () => import("../views/options/About.vue"),
