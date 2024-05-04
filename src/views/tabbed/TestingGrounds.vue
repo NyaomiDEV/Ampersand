@@ -15,15 +15,14 @@
 		IonToolbar,
 		IonAvatar
 	} from '@ionic/vue';
-	import { computed, ref } from 'vue';
+	import { inject, ref } from 'vue';
 	import { getFiles } from '../../lib/util/misc';
-	import { isIOSIonicMode } from '../../lib/mode';
 	import { Member, getTable, newMember } from '../../lib/db/entities/members';
 	import { getBlobURL } from '../../lib/util/blob';
 	import { resizeImage } from '../../lib/util/image';
 	import { getFilteredMembers } from '../../lib/db/liveQueries';
 
-	const isIOS = computed(isIOSIonicMode);
+	const isIOS = inject<boolean>("isIOS");
 
 	const name = ref("");
 	const search = ref("");

@@ -2,23 +2,23 @@ import { RouteRecordRaw } from "vue-router";
 
 const settings: Array<RouteRecordRaw> = [
 	{
-		path: '/options/system',
-		name: 'System',
-		component: () => import("../views/options/System.vue"),
+		path: '/options/systemSettings',
+		name: 'System Settings',
+		component: () => import("../views/options/SystemSettings.vue"),
 	},
 	{
-		path: '/options/front_history',
+		path: '/options/frontHistory',
 		name: 'Front History',
 		component: () => import("../views/options/FrontHistory.vue"),
 	},
 	{
-		path: '/options/message_board',
+		path: '/options/messageBoard',
 		name: 'Message Board',
 		component: () => import("../views/options/MessageBoard.vue"),
 	},
 	{
-		path: '/options/tag_management',
-		name: 'Message Board',
+		path: '/options/tagManagement',
+		name: 'Tag Management',
 		component: () => import("../views/options/TagManagement.vue"),
 	},
 	{
@@ -27,7 +27,7 @@ const settings: Array<RouteRecordRaw> = [
 		component: () => import("../views/options/Reminders.vue"),
 	},
 	{
-		path: '/options/app_settings',
+		path: '/options/appSettings',
 		name: 'App Settings',
 		component: () => import("../views/options/AppSettings.vue"),
 	},

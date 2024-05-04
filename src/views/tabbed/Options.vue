@@ -1,7 +1,6 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonList, IonItem, IonListHeader, IonLabel, IonPage, IonTitle, IonToolbar, IonIcon } from '@ionic/vue';
-	import { computed } from 'vue';
-	import { isIOSIonicMode } from '../../lib/mode';
+	import { inject } from 'vue';
 
 	import {
 		personOutline as SystemIOS,
@@ -27,7 +26,7 @@
 	import ImportExportMD from '@material-design-icons/svg/outlined/import_export.svg';
 	import AboutMD from '@material-design-icons/svg/outlined/info.svg';
 
-	const isIOS = computed(isIOSIonicMode);
+	const isIOS = inject<boolean>("isIOS");
 </script>
 
 <template>
@@ -48,22 +47,22 @@
 
 			<IonList :inset="isIOS">
 				
-				<IonItem button routerLink="/options/system">
+				<IonItem button routerLink="/options/systemSettings">
 					<IonIcon :ios="SystemIOS" :md="SystemMD" slot="start" aria-hidden="true" />
 					<IonLabel>System name and photo</IonLabel>
 				</IonItem>
 
-				<IonItem button routerLink="/options/front_history">
+				<IonItem button routerLink="/options/frontHistory">
 					<IonIcon :ios="FrontHistoryIOS" :md="FrontHistoryMD" slot="start" aria-hidden="true" />
 					<IonLabel>Front history</IonLabel>
 				</IonItem>
 
-				<IonItem button routerLink="/options/message_board">
+				<IonItem button routerLink="/options/messageBoard">
 					<IonIcon :ios="MessageBoardIOS" :md="MessageBoardMD" slot="start" aria-hidden="true" />
 					<IonLabel>Message board</IonLabel>
 				</IonItem>
 
-				<IonItem button routerLink="/options/tag_management">
+				<IonItem button routerLink="/options/tagManagement">
 					<IonIcon :ios="TagIOS" :md="TagMD" slot="start" aria-hidden="true" />
 					<IonLabel>Tag management</IonLabel>
 				</IonItem>
@@ -81,7 +80,7 @@
 
 			<IonList :inset="isIOS">
 
-				<IonItem button routerLink="/options/app_settings">
+				<IonItem button routerLink="/options/appSettings">
 					<IonIcon :ios="SettingsIOS" :md="SettingsMD" slot="start" aria-hidden="true" />
 					<IonLabel>App settings</IonLabel>
 				</IonItem>
@@ -96,7 +95,7 @@
 					<IonLabel>Accessibility</IonLabel>
 				</IonItem>
 
-				<IonItem button routerLink="/options/import_export">
+				<IonItem button routerLink="/options/importExport">
 					<IonIcon :ios="ImportExportIOS" :md="ImportExportMD" slot="start" aria-hidden="true" />
 					<IonLabel>Import / Export</IonLabel>
 				</IonItem>

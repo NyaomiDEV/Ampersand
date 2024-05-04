@@ -1,18 +1,15 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonButton, IonBackButton} from '@ionic/vue';
-	import { computed } from 'vue';
-	import { isIOSIonicMode } from '../../lib/mode';
+	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton} from '@ionic/vue';
+	import { inject } from 'vue';
 
-	const isIOS = computed(isIOSIonicMode);
+	const isIOS = inject<boolean>("isIOS");
 </script>
 
 <template>
 	<IonPage>
 		<IonHeader>
 			<IonToolbar>
-				<IonButton slot="start">
-					<IonBackButton />
-				</IonButton>
+				<IonBackButton slot="start" />
 				<IonTitle>
 					About
 				</IonTitle>

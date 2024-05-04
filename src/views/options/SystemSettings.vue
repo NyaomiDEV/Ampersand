@@ -9,9 +9,9 @@
 	<IonPage>
 		<IonHeader>
 			<IonToolbar>
-				<IonBackButton slot="start"/>
+				<IonBackButton slot="start" />
 				<IonTitle>
-					Message board
+					System name and photo
 				</IonTitle>
 			</IonToolbar>
 		</IonHeader>

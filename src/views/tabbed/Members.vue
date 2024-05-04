@@ -1,9 +1,8 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
-	import { computed } from 'vue';
-	import { isIOSIonicMode } from '../../lib/mode';
+	import { inject } from 'vue';
 
-	const isIOS = computed(isIOSIonicMode);
+	const isIOS = inject<boolean>("isIOS");
 </script>
 
 <template>
