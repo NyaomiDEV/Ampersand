@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonList, IonItem, IonListHeader, IonLabel, IonPage, IonTitle, IonToolbar, IonIcon } from '@ionic/vue';
 	import { computed } from 'vue';
-	import { isIOSMode } from '../../lib/mode';
+	import { isIOSIonicMode } from '../../lib/mode';
 
 	import {
 		person as SystemIOS,
@@ -14,8 +14,7 @@
 		accessibility as AccessibilityIOS,
 		swapVertical as ImportExportIOS,
 		informationCircle as AboutIOS,
-	} 
-	from "ionicons/icons";
+	} from "ionicons/icons";
 
 	import SystemMD from '@material-design-icons/svg/outlined/person.svg';
 	import FrontHistoryMD from '@material-design-icons/svg/outlined/show_chart.svg';
@@ -28,7 +27,7 @@
 	import ImportExportMD from '@material-design-icons/svg/outlined/import_export.svg';
 	import AboutMD from '@material-design-icons/svg/outlined/info.svg';
 
-	const isIOS = computed(isIOSMode);
+	const isIOS = computed(isIOSIonicMode);
 </script>
 
 <template>

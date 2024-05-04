@@ -10,7 +10,7 @@ import i18n from "./lib/i18n";
 import I18NextVue from "i18next-vue";
 
 // Dark mode
-import { updateDarkMode } from "./lib/darkMode";
+import { updateDarkMode } from "./lib/mode";
 
 // App
 import App from "./App.vue";

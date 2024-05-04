@@ -1,4 +1,4 @@
-import { Tag, getTagFromName } from "./db/entities/tags";
+import { Tag, getTagFromName } from "../db/entities/tags";
 
 export type MemberFilterQuery = {
 	query: string,

@@ -17,13 +17,13 @@
 	} from '@ionic/vue';
 	import { computed, ref } from 'vue';
 	import { getFiles } from '../../lib/util/misc';
-	import { isIOSMode } from '../../lib/mode';
+	import { isIOSIonicMode } from '../../lib/mode';
 	import { Member, getTable, newMember } from '../../lib/db/entities/members';
 	import { getBlobURL } from '../../lib/util/blob';
 	import { resizeImage } from '../../lib/util/image';
-	import { getFilteredMembers } from '../../lib/liveQueries';
+	import { getFilteredMembers } from '../../lib/db/liveQueries';
 
-	const isIOS = computed(isIOSMode);
+	const isIOS = computed(isIOSIonicMode);
 
 	const name = ref("");
 	const search = ref("");
