@@ -5,3 +5,7 @@ ion-list-header + ion-list.md {
 ion-item.md ion-icon[slot="start"] {
 	margin-inline-end: 24px;
 }
+
+ion-list.md {
+	padding-bottom: 0;
+}
