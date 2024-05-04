@@ -41,5 +41,5 @@ export async function getTagsFromFilterQuery(filterQuery: string){
 		}
 
 		return true;
-	});
+	}).toArray();
 }

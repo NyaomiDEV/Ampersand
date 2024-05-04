@@ -4,11 +4,9 @@
 		IonHeader,
 		IonInput,
 		IonItem,
-		IonItemDivider,
 		IonItemOptions,
 		IonItemOption,
 		IonItemSliding,
-		IonItemGroup,
 		IonLabel,
 		IonList,
 		IonListHeader,
@@ -19,9 +17,10 @@
 	} from '@ionic/vue';
 	import { computed, ref } from 'vue';
 	import { getFiles, isIOSMode } from '../../lib/util/misc';
-	import { Member, getMembersFromFilterQuery, getTable, newMember } from '../../lib/db/entities/members';
+	import { Member, getTable, newMember } from '../../lib/db/entities/members';
 	import { getBlobURL } from '../../lib/util/blob';
-	import { useDexieLiveQueryWithDeps } from '../../lib/util/liveQuery';
+	import { resizeImage } from '../../lib/util/image';
+	import { getFilteredMembers } from '../../lib/liveQueries';
 
 	const isIOS = computed(isIOSMode);
 
@@ -33,7 +32,7 @@
 		console.log(files);
 		newMember({
 			name: name.value,
-			image: files[0]!,
+			image: await resizeImage(files[0]!)!,
 			isArchived: false,
 			isCustomFront: false
 		});
@@ -44,7 +43,7 @@
 		await getTable().delete(uuid);
 	}
 
-	const members = useDexieLiveQueryWithDeps(search, async (search: string) => (await getMembersFromFilterQuery(search)).toArray())
+	const members = getFilteredMembers(search);
 </script>
 
 <template>

@@ -58,5 +58,5 @@ export async function getMembersFromFilterQuery(filterQuery: string) {
 		}
 
 		return true;
-	});
+	}).toArray();
 }
