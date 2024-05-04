@@ -4,7 +4,7 @@ const settings: Array<RouteRecordRaw> = [
 	{
 		path: '/options/about',
 		name: 'About',
-		component: (await import("../views/options/About.vue")).default,
+		component: () => import("../views/options/About.vue"),
 	},
 ];
 

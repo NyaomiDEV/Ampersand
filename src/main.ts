@@ -50,5 +50,4 @@ darkMode.addEventListener("change", updateDarkMode);
 
 const app = createApp(App).use(IonicVue).use(router).use(I18NextVue, { i18next: i18n });
 
-await router.isReady();
 app.mount(document.body);
