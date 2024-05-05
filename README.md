@@ -2,6 +2,8 @@
 
 Welcome to Ampersand.
 
+[Join our Discord](https://discord.gg/xCptGJKeKc)
+
 ## Days since last incident, but in reverse
 
 May 4, 2024
