@@ -10,6 +10,8 @@ function f(s: number, x: number, y: number, z: number): number | undefined {
 			return (x & y) ^ (x & z) ^ (y & z);
 		case 3:
 			return x ^ y ^ z;
+		default:
+			return undefined;
 	}
 }
 
