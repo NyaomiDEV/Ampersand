@@ -18,9 +18,15 @@
 </script>
 
 <style scoped>
+<<<<<<< HEAD
 	ion-list ion-item:nth-child(2), ion-list ion-item:nth-child(5), ion-list ion-item:last-child {
 		text-align: center;
 	}
+=======
+.centered-text {
+	text-align: center;
+}
+>>>>>>> f9d6a51 (I really overengined this for no reason)
 
 	ion-segment, ion-range {
 		margin-top: 8px;
@@ -51,7 +57,7 @@
 
 				<IonItem>
 					<IonLabel>
-						<h3>UI variant</h3>
+						<h3 class="centered-text">UI variant</h3>
 						<IonSegment value="ui-variant" v-model="config.theme">
 
 							<IonSegmentButton value="auto">
@@ -71,7 +77,7 @@
 
 				<IonItem button :detail="true">
 					<IonLabel>
-						<h3>Accent color</h3>
+						<h3 >Accent color</h3>
 						<p>Use a custom accent color</p>
 					</IonLabel>
 				</IonItem>
@@ -87,6 +93,7 @@
 
 				<IonItem>
 					<IonLabel>
+<<<<<<< HEAD
 						<h3>UI size</h3>
 						<IonRange
 							v-model="config.fontScale"
@@ -98,11 +105,16 @@
 							:snaps="true"
 							:ticks="true"
 						/>
+=======
+						<h3 class="centered-text">UI size</h3>
+						<IonRange />
+>>>>>>> f9d6a51 (I really overengined this for no reason)
 					</IonLabel>
 				</IonItem>
 
 				<IonItem>
 					<IonLabel>
+<<<<<<< HEAD
 						<h3>Chat UI size</h3>
 						<IonRange
 							v-model="config.chatFontScale"
@@ -114,6 +126,10 @@
 							:snaps="true"
 							:ticks="true"
 						/>
+=======
+						<h3 class="centered-text">Chat UI size</h3>
+						<IonRange />
+>>>>>>> f9d6a51 (I really overengined this for no reason)
 					</IonLabel>
 				</IonItem>
 
