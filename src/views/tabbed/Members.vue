@@ -39,7 +39,7 @@
 					TODO: Member add/edit modal. If you want to test this view, add a member through Testing Grounds
 				</IonLabel>
 
-				<MemberInList v-for="member in members" :member />
+				<MemberInList v-for="member in members" :member :canDelete="true" />
 			</IonList>
 		</IonContent>
 	</IonPage>

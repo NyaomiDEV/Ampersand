@@ -11,8 +11,9 @@
 	import { Member, getTable } from '../lib/db/entities/members';
 	import { getBlobURL } from '../lib/util/blob';
 
-	const { member } = defineProps<{
-		member: Member
+	const { member, canDelete } = defineProps<{
+		member: Member,
+		canDelete: boolean
 	}>();
 
 	async function removeFromDatabase() {
@@ -30,7 +31,7 @@
 			<!-- TODO: Add tags as chips -> @mecha-cat -->
 		</IonItem>
 		<IonItemOptions>
-			<IonItemOption color="danger" @click="removeFromDatabase()">Delete</IonItemOption>
+			<IonItemOption v-if="canDelete" color="danger" @click="removeFromDatabase()">Delete</IonItemOption>
 		</IonItemOptions>
 	</IonItemSliding>
 </template>
