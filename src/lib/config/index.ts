@@ -1,4 +1,4 @@
-import { get, getCompound, setCompound } from "../util/localStorage";
+import { getCompound, setCompound } from "../util/localStorage";
 import { Config } from "./types";
 
 export const defaultConfig: Config = {
@@ -28,9 +28,7 @@ export function getConfig(): Config {
 }
 
 export function getConfigEntry(entryKey: keyof Config): Config[keyof Config] {
-	if(entryKey.length)
-		return get("config." + entryKey) || defaultConfig[entryKey];
-	return undefined;
+	return getConfig()[entryKey];
 }
 
 export function saveConfig(config: Partial<Config>) {

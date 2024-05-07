@@ -25,7 +25,7 @@ export function get(key: string): any {
 	try{
 		if (value !== "undefined" && value !== null) {
 			const obj = JSON.parse(value);
-			return typeson.parse(obj);
+			return typeson.revive(obj);
 		}
 	}catch(e){
 		console.error(e, value?.split(""));
