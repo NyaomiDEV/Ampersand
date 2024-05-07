@@ -88,14 +88,32 @@
 				<IonItem>
 					<IonLabel>
 						<h3>UI size</h3>
-						<IonRange v-model="config.fontScale"/>
+						<IonRange
+							v-model="config.fontScale"
+							:label="config.fontScale.toString()"
+							labelPlacement="end"
+							:min="0.5"
+							:max="1.5"
+							:step="0.1"
+							:snaps="true"
+							:ticks="true"
+						/>
 					</IonLabel>
 				</IonItem>
 
 				<IonItem>
 					<IonLabel>
 						<h3>Chat UI size</h3>
-						<IonRange v-model="config.chatFontScale" />
+						<IonRange
+							v-model="config.chatFontScale"
+							:label="config.chatFontScale.toString()"
+							labelPlacement="end"
+							:min="0.5"
+							:max="1.5"
+							:step="0.1"
+							:snaps="true"
+							:ticks="true"
+						/>
 					</IonLabel>
 				</IonItem>
 
