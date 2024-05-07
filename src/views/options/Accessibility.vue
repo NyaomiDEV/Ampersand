@@ -16,7 +16,7 @@ ion-list ion-item:nth-child(2), ion-list ion-item:nth-child(5), ion-list ion-ite
 	text-align: center;
 }
 
-ion-segment {
+ion-segment, ion-range {
 	margin-top: 8px;
 }
 </style>
