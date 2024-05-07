@@ -41,10 +41,10 @@ import "./styles/fonts.css";
 import "./styles/override.css";
 
 // Branding theme
-import { defineMaterialTheme, updateMaterialTheme } from "./lib/theme";
+import { updateMaterialTheme } from "./lib/theme";
 import "./lib/theme/style.css";
 
-// Libraries
+// Config
 import { getConfigEntry } from "./lib/config";
 import { AccessibilityConfig } from "./lib/config/types";
 
