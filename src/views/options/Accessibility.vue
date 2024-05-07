@@ -18,13 +18,11 @@
 </script>
 
 <style scoped>
-.centered-text {
-	text-align: center;
-}
 
 	ion-segment, ion-range {
 		margin-top: 8px;
 	}
+
 </style>
 
 <template>
@@ -71,7 +69,7 @@
 
 				<IonItem button :detail="true">
 					<IonLabel>
-						<h3 >Accent color</h3>
+						<h3 class="centered-text">Accent color</h3>
 						<p>Use a custom accent color</p>
 					</IonLabel>
 				</IonItem>
@@ -87,8 +85,7 @@
 
 				<IonItem>
 					<IonLabel>
-<<<<<<< HEAD
-						<h3>UI size</h3>
+						<h3 class="centered-text">UI size</h3>
 						<IonRange
 							v-model="config.fontScale"
 							:label="config.fontScale.toString()"
@@ -99,17 +96,12 @@
 							:snaps="true"
 							:ticks="true"
 						/>
-=======
-						<h3 class="centered-text">UI size</h3>
-						<IonRange />
->>>>>>> f9d6a51 (I really overengined this for no reason)
 					</IonLabel>
 				</IonItem>
 
 				<IonItem>
 					<IonLabel>
-<<<<<<< HEAD
-						<h3>Chat UI size</h3>
+						<h3 class="centered-text">Chat UI size</h3>
 						<IonRange
 							v-model="config.chatFontScale"
 							:label="config.chatFontScale.toString()"
@@ -120,10 +112,6 @@
 							:snaps="true"
 							:ticks="true"
 						/>
-=======
-						<h3 class="centered-text">Chat UI size</h3>
-						<IonRange />
->>>>>>> f9d6a51 (I really overengined this for no reason)
 					</IonLabel>
 				</IonItem>
 
