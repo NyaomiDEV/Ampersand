@@ -43,7 +43,7 @@ const settings: Array<RouteRecordRaw> = [
 	},
 	{
 		path: '/options/importExport',
-		name: 'Accessibility',
+		name: 'Import / Export',
 		component: () => import("../views/options/ImportExport.vue"),
 	},
 	{
