@@ -120,16 +120,16 @@
 
 		<IonList v-if="isEditing" :inset="true">
 				<IonItem lines="none">
-					<IonInput fill="outline" :label="$t('members:edit.name')" labelPlacement="floating" v-model="member.name" />
+					<IonInput mode="md" fill="outline" :label="$t('members:edit.name')" labelPlacement="floating" v-model="member.name" />
 				</IonItem>
 				<IonItem lines="none">
-					<IonInput fill="outline" :label="$t('members:edit.pronouns')" labelPlacement="floating" v-model="member.pronouns" />
+					<IonInput mode="md" fill="outline" :label="$t('members:edit.pronouns')" labelPlacement="floating" v-model="member.pronouns" />
 				</IonItem>
 				<IonItem lines="none">
-					<IonInput fill="outline" :label="$t('members:edit.role')" labelPlacement="floating" v-model="member.role" />
+					<IonInput mode="md" fill="outline" :label="$t('members:edit.role')" labelPlacement="floating" v-model="member.role" />
 				</IonItem>
 				<IonItem lines="none">
-					<IonTextarea fill="outline" auto-grow :label="$t('members:edit.description')" labelPlacement="floating" v-model="member.description" />
+					<IonTextarea mode="md" fill="outline" auto-grow :label="$t('members:edit.description')" labelPlacement="floating" v-model="member.description" />
 				</IonItem>
 		</IonList>
 
