@@ -27,16 +27,14 @@
 		<IonHeader>
 			<IonToolbar>
 				<IonBackButton slot="start" />
-				<IonTitle>
-					Import / Export
-				</IonTitle>
+				<IonTitle>Import / Export</IonTitle>
 			</IonToolbar>
 		</IonHeader>
 		
 		<IonContent>
 			<IonList :inset="isIOS">
 
-				<IonItem button @click="exportDb" :detail="true">
+				<IonItem button @click="importDb" :detail="true">
 					<IonLabel>
 						<h3>Export your data</h3>
 						<p>Backup your current data to a file you can store somewhere else</p>
@@ -47,7 +45,7 @@
 					<IonLabel>
 						<h3>Import your data from a backup file</h3>
 						<p>Warning! It will override any existing data</p>
-					</IonLabel>
+					</IonLabel>				
 				</IonItem>
 
 			</IonList>

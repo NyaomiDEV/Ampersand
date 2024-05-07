@@ -9,3 +9,7 @@ ion-item.md ion-icon[slot="start"] {
 ion-list.md {
 	padding-bottom: 0;
 }
+
+p {
+	text-wrap: wrap;
+}
