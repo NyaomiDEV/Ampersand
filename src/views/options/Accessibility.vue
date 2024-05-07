@@ -69,7 +69,7 @@
 
 				<IonItem button :detail="true">
 					<IonLabel>
-						<h3 class="centered-text">Accent color</h3>
+						<h3>Accent color</h3>
 						<p>Use a custom accent color</p>
 					</IonLabel>
 				</IonItem>
@@ -114,7 +114,6 @@
 						/>
 					</IonLabel>
 				</IonItem>
-
 			</IonList>
 		</IonContent>
 	</IonPage>
