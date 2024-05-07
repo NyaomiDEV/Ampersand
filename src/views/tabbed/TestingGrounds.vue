@@ -61,27 +61,6 @@
 					<IonLabel>BEFORE EVERYTHING ELSE PLEASE CLICK HERE TO CREATE A TEST SYSTEM</IonLabel>
 				</IonItem>
 			</IonList>
-
-			<IonList :inset="isIOS" v-if="getSystemUUID()">
-				<IonListHeader>
-					Member test creation page
-				</IonListHeader>
-				<IonItem>
-					<IonInput label="Name" labelPlacement="stacked" v-model="name" />
-				</IonItem>
-				<IonItem>
-					<IonInput label="Pronouns" labelPlacement="stacked" v-model="pronouns" />
-				</IonItem>
-				<IonItem>
-					<IonInput label="Role" labelPlacement="stacked" v-model="role" />
-				</IonItem>
-				<IonItem>
-					<IonTextarea label="Description" labelPlacement="stacked" v-model="description" />
-				</IonItem>
-				<IonItem button @click="addToDatabase">
-					<IonLabel>Create test member - you'll be prompted to select a member image</IonLabel>
-				</IonItem>
-			</IonList>
 		</IonContent>
 	</IonPage>
 </template>
