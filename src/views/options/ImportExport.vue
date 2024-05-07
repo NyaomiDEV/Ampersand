@@ -34,7 +34,7 @@
 		<IonContent>
 			<IonList :inset="isIOS">
 
-				<IonItem button @click="importDb" :detail="true">
+				<IonItem button @click="exportDb" :detail="true">
 					<IonLabel>
 						<h3>Export your data</h3>
 						<p>Backup your current data to a file you can store somewhere else</p>
