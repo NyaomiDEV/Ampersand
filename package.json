@@ -19,9 +19,13 @@
     "dexie": "^4.0.4",
     "i18next": "^23.11.3",
     "i18next-vue": "^4.0.0",
+    "rehype-stringify": "^10.0.0",
+    "remark-parse": "^11.0.0",
+    "remark-rehype": "^11.1.0",
     "rxjs": "^7.8.1",
     "typeson": "^9.0.3",
     "typeson-registry": "^9.2.1",
+    "unified": "^11.0.4",
     "vue": "^3.4.26",
     "vue-router": "^4.3.2"
   },
