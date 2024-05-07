@@ -40,6 +40,10 @@ import "./styles/fonts.css";
 // Our CSS overrides
 import "./styles/override.css";
 
+// Branding theme
+import { defineMaterialTheme, updateMaterialTheme } from "./lib/theme";
+import "./lib/theme/style.css";
+
 // Libraries
 import { getConfigEntry } from "./lib/config";
 import { AccessibilityConfig } from "./lib/config/types";
@@ -55,6 +59,8 @@ if (!await navigator.storage.persisted()) {
 const darkMode = window.matchMedia("(prefers-color-scheme: dark)");
 darkMode.addEventListener("change", updateDarkMode);
 updateDarkMode();
+
+updateMaterialTheme();
 
 const fontScale = (getConfigEntry("accessibility") as AccessibilityConfig).fontScale;
 if (fontScale !== 1)

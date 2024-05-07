@@ -4,14 +4,18 @@
 	import { AccessibilityConfig } from '../../lib/config/types';
 	import { getConfigEntry, saveConfig } from '../../lib/config';
 	import { updateDarkMode } from '../../lib/mode';
+	import Color from '../../components/Color.vue';
+import { updateMaterialTheme } from '../../lib/theme';
 
 	const config = reactive(getConfigEntry("accessibility") as AccessibilityConfig);
 	watch(config, () => {
+		console.log(config);
 		saveConfig({
 			accessibility: { ...config }
 		});
 
 		updateDarkMode();
+		updateMaterialTheme();
 	});
 
 	const isIOS = inject<boolean>("isIOS");
@@ -67,11 +71,13 @@
 					</IonLabel>
 				</IonItem>
 
-				<IonItem button :detail="true">
-					<IonLabel>
-						<h3>Accent color</h3>
-						<p>Use a custom accent color</p>
-					</IonLabel>
+				<IonItem button>
+					<Color v-model="config.accentColor">
+						<IonLabel>
+							<h3>Accent color</h3>
+							<p>Use a custom accent color</p>
+						</IonLabel>
+					</Color>
 				</IonItem>
 
 				<IonItem>

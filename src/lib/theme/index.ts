@@ -1,4 +1,6 @@
 import { argbFromHex, blueFromArgb, greenFromArgb, redFromArgb, themeFromSourceColor } from "@material/material-color-utilities";
+import { getConfigEntry } from "../config";
+import { AccessibilityConfig } from "../config/types";
 
 function rgbFromArgb(argb: number){
 	return [
@@ -6,6 +8,14 @@ function rgbFromArgb(argb: number){
 		greenFromArgb(argb),
 		blueFromArgb(argb)
 	].join(", ");
+}
+
+export function updateMaterialTheme(){
+	const accentColor = (getConfigEntry("accessibility") as AccessibilityConfig).accentColor;
+	if (accentColor)
+		defineMaterialTheme(accentColor);
+	else
+		defineMaterialTheme("#7E5700");
 }
 
 export function unsetMaterialTheme(){
