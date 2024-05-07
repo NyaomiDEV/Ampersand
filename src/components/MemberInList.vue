@@ -27,7 +27,10 @@
 			<IonAvatar slot="start" v-if="member.image">
 				<img aria-hidden="true" :src="getBlobURL(member.image)" />
 			</IonAvatar>
-			<IonLabel>{{ member.name }}</IonLabel>
+			<IonLabel>
+				<p>{{ member.role }}</p>
+				<h2>{{ member.name }}</h2>
+			</IonLabel>
 			<!-- TODO: Add tags as chips -> @mecha-cat -->
 		</IonItem>
 		<IonItemOptions>
@@ -35,3 +38,7 @@
 		</IonItemOptions>
 	</IonItemSliding>
 </template>
+
+<style>
+
+</style>
