@@ -54,6 +54,7 @@ if (!await navigator.storage.persisted()) {
 
 const darkMode = window.matchMedia("(prefers-color-scheme: dark)");
 darkMode.addEventListener("change", updateDarkMode);
+updateDarkMode();
 
 const fontScale = (getConfigEntry("accessibility") as AccessibilityConfig).fontScale;
 if (fontScale !== 1)
