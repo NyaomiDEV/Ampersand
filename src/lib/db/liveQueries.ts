@@ -1,11 +1,11 @@
 import { from, useObservable } from "@vueuse/rxjs";
 import { liveQuery } from "dexie";
-import { Ref, shallowRef, watch } from "vue";
+import { Ref, ref, watch } from "vue";
 import { Member, getMembersFromFilterQuery, getTable as getMembersTable } from "./entities/members";
 import { Tag, getTagsFromFilterQuery, getTable as getTagsTable } from "./entities/tags";
 
 export function getFilteredMembers(search: Ref<string>){
-	const members = shallowRef<Member[]>();
+	const members = ref<Member[]>();
 
 	watch([
 		search,
@@ -18,7 +18,7 @@ export function getFilteredMembers(search: Ref<string>){
 }
 
 export function getFilteredTags(search: Ref<string>) {
-	const tags = shallowRef<Tag[]>();
+	const tags = ref<Tag[]>();
 
 	watch([
 		search,
