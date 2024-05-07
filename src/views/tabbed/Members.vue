@@ -1,13 +1,40 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonLabel, IonList, IonPage, IonSearchbar, IonTitle, IonToolbar } from '@ionic/vue';
+	import {
+		IonContent,
+		IonHeader,
+		IonLabel,
+		IonList,
+		IonPage,
+		IonSearchbar,
+		IonTitle,
+		IonToolbar,
+		modalController,
+		IonFab,
+		IonFabButton,
+		IonIcon
+	} from '@ionic/vue';
 	import { inject, ref } from 'vue';
 	import { getFilteredMembers } from '../../lib/db/liveQueries';
+	import { addOutline as addIOS } from "ionicons/icons";
+	import addMD from "@material-design-icons/svg/outlined/add.svg";
+	import MemberEdit from '../../modals/MemberEdit.vue';
 	import MemberInList from '../../components/MemberInList.vue';
 
 	const isIOS = inject<boolean>("isIOS");
 
 	const search = ref("");
 	const members = getFilteredMembers(search);
+
+	async function addNew(){
+		const modal = await modalController.create({
+			component: MemberEdit,
+			componentProps: {
+				add: true
+			}
+		});
+
+		await modal.present();
+	}
 </script>
 
 <template>
@@ -33,13 +60,14 @@
 		<IonContent>
 			<IonList :inset="isIOS">
 
-				<!-- FIXME: Remove this when modal is done -->
-				<IonLabel>
-					TODO: Member add/edit modal. If you want to test this view, add a member through Testing Grounds
-				</IonLabel>
-
-				<MemberInList v-for="member in members" :member :canDelete="true" />
+				<MemberInList v-for="member in members" :member :canDelete="true" :key="member.uuid"/>
 			</IonList>
+
+			<IonFab slot="fixed" vertical="bottom" horizontal="end">
+				<IonFabButton @click="addNew">
+					<IonIcon :ios="addIOS" :md="addMD" />
+				</IonFabButton>
+			</IonFab>
 		</IonContent>
 	</IonPage>
 </template>
