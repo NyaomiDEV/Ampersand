@@ -11,7 +11,7 @@
 	const isIOS = inject<boolean>("isIOS");
 </script>
 
-<style>
+<style scoped>
 ion-list ion-item:nth-child(2), ion-list ion-item:nth-child(5), ion-list ion-item:last-child {
 	text-align: center;
 }
