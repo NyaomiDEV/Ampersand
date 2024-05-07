@@ -20,7 +20,6 @@
 			</IonToolbar>
 			<IonToolbar>
 				<IonSearchbar
-					:debounce="1000"
 					:animated="true"
 					:placeholder="$t('members:searchPlaceholder')"
 					showCancelButton="focus"
