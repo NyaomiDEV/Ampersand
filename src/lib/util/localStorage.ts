@@ -1,9 +1,37 @@
+import { Typeson } from "typeson";
+import { blob, file, filelist, map, typedArrays, undef, set as Tset, imagebitmap, imagedata } from "typeson-registry";
+
+const typeson = new Typeson({
+	sync: true
+}).register([
+	file,
+	filelist,
+	blob,
+	typedArrays,
+	undef,
+	map,
+	Tset,
+	imagebitmap,
+	imagedata
+]);
+
 export function set(key: string, value: any){
-	return window.localStorage.setItem(key, JSON.stringify(value));
+	return window.localStorage.setItem(key, JSON.stringify(typeson.encapsulate(value)));
 }
 
 export function get(key: string): any {
-	return JSON.parse(window.localStorage.getItem(key) ?? "null");
+	const value = window.localStorage.getItem(key);
+
+	try{
+		if (value !== "undefined" && value !== null) {
+			const obj = JSON.parse(value);
+			return typeson.parse(obj);
+		}
+	}catch(e){
+		console.error(e, value?.split(""));
+	}
+
+	return undefined;
 }
 
 export function keyFromIndex(index: number): any {
@@ -31,7 +59,7 @@ export function setCompound(rootKey: string, value: any) {
 			continue;
 		}
 
-		set(currentKey, value);
+		set(currentKey, value[key]);
 	}
 }
 
