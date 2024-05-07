@@ -1,4 +1,14 @@
 {
 	"header": "Members",
-	"searchPlaceholder": "Search members..."
+	"searchPlaceholder": "Search members...",
+	"edit": {
+		"headerAdd": "Add member",
+		"headerEdit": "Edit member",
+		"name": "Name",
+		"pronouns": "Pronouns",
+		"role": "Role",
+		"color": "Preferred color",
+		"description": "Description",
+		"isArchived": "Archived?"
+	}
 }
