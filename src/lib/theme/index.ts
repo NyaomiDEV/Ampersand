@@ -8,12 +8,17 @@ function rgbFromArgb(argb: number){
 	].join(", ");
 }
 
-export function defineMaterialTheme(hex: string){
+export function unsetMaterialTheme(){
 	// Clean up
 	Array.from(document.documentElement.style)
 		.filter(x => x.startsWith("--md3"))
 		.forEach(x => document.documentElement.style.removeProperty(x));
+}
 
+export function defineMaterialTheme(hex: string){
+	// Clean up
+	unsetMaterialTheme();
+	
 	// Generate new theme
 	const theme = themeFromSourceColor(argbFromHex(hex));
 
