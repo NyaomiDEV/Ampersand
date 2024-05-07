@@ -34,8 +34,13 @@ import '@ionic/vue/css/display.css';
 // Dark mode CSS class
 import '@ionic/vue/css/palettes/dark.class.css';
 
+// Import fonts
+import "./styles/fonts.css";
+
 // Our CSS overrides
 import "./styles/override.css";
+
+// Libraries
 import { getConfigEntry } from "./lib/config";
 import { AccessibilityConfig } from "./lib/config/types";
 
