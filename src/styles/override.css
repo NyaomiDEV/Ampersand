@@ -10,6 +10,10 @@ ion-list.md {
 	padding-bottom: 0;
 }
 
+.centered-text {
+	text-align: center;
+}
+
 p {
 	text-wrap: wrap;
 }

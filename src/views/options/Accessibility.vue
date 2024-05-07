@@ -18,15 +18,9 @@
 </script>
 
 <style scoped>
-<<<<<<< HEAD
-	ion-list ion-item:nth-child(2), ion-list ion-item:nth-child(5), ion-list ion-item:last-child {
-		text-align: center;
-	}
-=======
 .centered-text {
 	text-align: center;
 }
->>>>>>> f9d6a51 (I really overengined this for no reason)
 
 	ion-segment, ion-range {
 		margin-top: 8px;
