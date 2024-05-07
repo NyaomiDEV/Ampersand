@@ -1,24 +1,30 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonItem, IonRange, IonLabel, IonToggle, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonSegment, IonSegmentButton} from '@ionic/vue';
-	import { inject, ref } from 'vue';
+	import { inject, reactive, watch } from 'vue';
 	import { AccessibilityConfig } from '../../lib/config/types';
-	import { getConfigEntry } from '../../lib/config';
+	import { getConfigEntry, saveConfig } from '../../lib/config';
+	import { updateDarkMode } from '../../lib/mode';
 
-	const config = ref(getConfigEntry("accessibility") as AccessibilityConfig);
+	const config = reactive(getConfigEntry("accessibility") as AccessibilityConfig);
+	watch(config, () => {
+		saveConfig({
+			accessibility: { ...config }
+		});
 
-	console.log(config)
+		updateDarkMode();
+	});
 
 	const isIOS = inject<boolean>("isIOS");
 </script>
 
 <style scoped>
-ion-list ion-item:nth-child(2), ion-list ion-item:nth-child(5), ion-list ion-item:last-child {
-	text-align: center;
-}
+	ion-list ion-item:nth-child(2), ion-list ion-item:nth-child(5), ion-list ion-item:last-child {
+		text-align: center;
+	}
 
-ion-segment, ion-range {
-	margin-top: 8px;
-}
+	ion-segment, ion-range {
+		margin-top: 8px;
+	}
 </style>
 
 <template>
@@ -34,8 +40,8 @@ ion-segment, ion-range {
 		
 		<IonContent>
 			<IonList :inset="isIOS">
-				<IonItem v-model="config.highLegibility">
-					<IonToggle>
+				<IonItem>
+					<IonToggle v-model="config.highLegibility">
 						<IonLabel>
 							<h3>High legibility font</h3>
 							<p>Use OpenDyslexic instead of the standard device font</p>
@@ -63,15 +69,15 @@ ion-segment, ion-range {
 					</IonLabel>
 				</IonItem>
 
-				<IonItem button v-model="config.accentColor" :detail="true">
+				<IonItem button :detail="true">
 					<IonLabel>
 						<h3>Accent color</h3>
 						<p>Use a custom accent color</p>
 					</IonLabel>
 				</IonItem>
 
-				<IonItem v-model="config.reducedMotion">
-					<IonToggle>
+				<IonItem>
+					<IonToggle v-model="config.reducedMotion">
 						<IonLabel>
 							<h3>Reduced motion</h3>
 							<p>Disable in-app animations</p>
@@ -79,17 +85,17 @@ ion-segment, ion-range {
 					</IonToggle>
 				</IonItem>
 
-				<IonItem v-model="config.fontScale">
+				<IonItem>
 					<IonLabel>
 						<h3>UI size</h3>
-						<IonRange />
+						<IonRange v-model="config.fontScale"/>
 					</IonLabel>
 				</IonItem>
 
-				<IonItem v-model="config.chatFontScale">
+				<IonItem>
 					<IonLabel>
 						<h3>Chat UI size</h3>
-						<IonRange />
+						<IonRange v-model="config.chatFontScale" />
 					</IonLabel>
 				</IonItem>
 
