@@ -6,8 +6,7 @@ import { compressGzip, decompressGzip } from "../util/misc";
 import { EncryptedPayload, decrypt, encrypt } from "../util/crypto";
 
 const typeson = new Typeson({
-	sync: false,
-
+	sync: false
 }).register([
 	file,
 	filelist,
