@@ -31,7 +31,7 @@
 	import { getBlobURL } from '../lib/util/blob';
 	import { getFiles } from "../lib/util/misc";
 	import { resizeImage } from "../lib/util/image";
-	import { inject, ref, toRaw } from "vue";
+	import { Ref, inject, ref } from "vue";
 	import rehypeStringify from 'rehype-stringify';
 	import remarkParse from 'remark-parse';
 	import remarkRehype from 'remark-rehype';
@@ -39,8 +39,10 @@
 
 	type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
 	const props = defineProps<{
+		self: Ref<HTMLIonModalElement>,
 		member?: PartialBy<Member, "uuid">,
-		add: boolean
+		add: boolean,
+		edit?: boolean
 	}>();
 
 	const isIOS = inject<boolean>("isIOS");
@@ -52,7 +54,7 @@
 		...props.member || {}
 	} as PartialBy<Member, "uuid">);
 
-	const isEditing = ref(props.add);
+	const isEditing = ref(props.add || props.edit);
 
 	async function toggleEditing(){
 		if(isEditing.value){

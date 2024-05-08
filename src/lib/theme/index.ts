@@ -10,52 +10,56 @@ function rgbFromArgb(argb: number){
 	].join(", ");
 }
 
-export function updateMaterialTheme(){
+export function updateMaterialColors(target?: HTMLElement){
 	const accentColor = (getConfigEntry("accessibility") as AccessibilityConfig).accentColor;
 	if (accentColor)
-		defineMaterialTheme(accentColor);
+		addMaterialColors(accentColor, target);
 	else
-		defineMaterialTheme("#7E5700");
+		addMaterialColors("#7E5700", target);
 }
 
-export function unsetMaterialTheme(){
+export function activateMaterialTheme() {
+	// add md3 to root class
+	document.documentElement.classList.add("md3");
+}
+
+export function deactivateMaterialTheme() {
+	// remove md3 to root class
+	document.documentElement.classList.remove("md3");
+}
+
+export function unsetMaterialColors(target?: HTMLElement){
 	// Clean up
-	Array.from(document.documentElement.style)
+	Array.from((target ?? document.documentElement).style)
 		.filter(x => x.startsWith("--md3"))
-		.forEach(x => document.documentElement.style.removeProperty(x));
+		.forEach(x => (target ?? document.documentElement).style.removeProperty(x));
 }
 
-export function defineMaterialTheme(hex: string){
-	// Clean up
-	unsetMaterialTheme();
-	
+export function addMaterialColors(hex: string, target?: HTMLElement){
 	// Generate new theme
 	const theme = themeFromSourceColor(argbFromHex(hex));
 
 	for (const [key, value] of Object.entries(theme.schemes.dark.toJSON())) {
 		const token = key.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
 		const color = rgbFromArgb(value);
-		document.documentElement.style.setProperty(`--md3-dark-${token}`, color);
+		(target ?? document.documentElement).style.setProperty(`--md3-dark-${token}`, color);
 	}
 
 	for (const [key, value] of Object.entries(theme.schemes.light.toJSON())) {
 		const token = key.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
 		const color = rgbFromArgb(value);
-		document.documentElement.style.setProperty(`--md3-light-${token}`, color);
+		(target ?? document.documentElement).style.setProperty(`--md3-light-${token}`, color);
 	}
 
 	const extraTones = [99, 98, 11, 12];
 
 	for (let i = 0; i <= 100; i += 5) {
 		const color = rgbFromArgb(theme.palettes.neutral.tone(i));
-		document.documentElement.style.setProperty(`--md3-shade-${i}`, color);
+		(target ?? document.documentElement).style.setProperty(`--md3-shade-${i}`, color);
 	}
 
 	for (const i of extraTones){
 		const color = rgbFromArgb(theme.palettes.neutral.tone(i));
-		document.documentElement.style.setProperty(`--md3-shade-${i}`, color);
+		(target ?? document.documentElement).style.setProperty(`--md3-shade-${i}`, color);
 	}
-
-	// add md3 to root class
-	document.documentElement.classList.add("md3");
 }

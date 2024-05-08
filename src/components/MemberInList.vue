@@ -12,6 +12,7 @@
 	import { Member, getTable } from '../lib/db/entities/members';
 	import { getBlobURL } from '../lib/util/blob';
 	import MemberEdit from "../modals/MemberEdit.vue";
+	import { ref } from "vue";
 
 	const props = defineProps<{
 		member: Member,
@@ -26,15 +27,18 @@
 	}
 
 	async function showEditModal() {
-		const modal = await modalController.create({
+		const modal = ref<HTMLIonModalElement>();
+		modal.value = await modalController.create({
 			component: MemberEdit,
 			componentProps: {
+				self: modal,
 				member,
-				add: false
+				add: false,
+				edit: false
 			}
 		});
 
-		await modal.present();
+		await modal.value.present();
 	}
 
 	console.log(member);

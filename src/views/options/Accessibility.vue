@@ -5,7 +5,7 @@
 	import { getConfigEntry, saveConfig } from '../../lib/config';
 	import { updateDarkMode } from '../../lib/mode';
 	import Color from '../../components/Color.vue';
-import { updateMaterialTheme } from '../../lib/theme';
+	import { updateMaterialColors } from '../../lib/theme';
 
 	const config = reactive(getConfigEntry("accessibility") as AccessibilityConfig);
 	watch(config, () => {
@@ -15,7 +15,7 @@ import { updateMaterialTheme } from '../../lib/theme';
 		});
 
 		updateDarkMode();
-		updateMaterialTheme();
+		updateMaterialColors();
 	});
 
 	const isIOS = inject<boolean>("isIOS");

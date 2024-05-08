@@ -2,7 +2,6 @@
 	import {
 		IonContent,
 		IonHeader,
-		IonLabel,
 		IonList,
 		IonPage,
 		IonSearchbar,
@@ -26,14 +25,17 @@
 	const members = getFilteredMembers(search);
 
 	async function addNew(){
-		const modal = await modalController.create({
+		const modal = ref<HTMLIonModalElement>();
+		modal.value = await modalController.create({
 			component: MemberEdit,
 			componentProps: {
-				add: true
+				add: true,
+				edit: true,
+				self: modal
 			}
 		});
 
-		await modal.present();
+		await modal.value.present();
 	}
 </script>
 

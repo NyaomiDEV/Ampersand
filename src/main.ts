@@ -41,7 +41,7 @@ import "./styles/fonts.css";
 import "./styles/override.css";
 
 // Branding theme
-import { updateMaterialTheme } from "./lib/theme";
+import { activateMaterialTheme, updateMaterialColors } from "./lib/theme";
 import "./lib/theme/style.css";
 
 // Config
@@ -60,7 +60,8 @@ const darkMode = window.matchMedia("(prefers-color-scheme: dark)");
 darkMode.addEventListener("change", updateDarkMode);
 updateDarkMode();
 
-updateMaterialTheme();
+activateMaterialTheme();
+updateMaterialColors();
 
 const fontScale = (getConfigEntry("accessibility") as AccessibilityConfig).fontScale;
 if (fontScale !== 1)
