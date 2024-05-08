@@ -32,10 +32,8 @@
 	import { getFiles } from "../lib/util/misc";
 	import { resizeImage } from "../lib/util/image";
 	import { Ref, inject, ref } from "vue";
-	import rehypeStringify from 'rehype-stringify';
-	import remarkParse from 'remark-parse';
-	import remarkRehype from 'remark-rehype';
-	import { unified } from 'unified';
+	import { getMarkdownFor } from "../lib/markdown";
+
 
 	type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
 	const props = defineProps<{
@@ -81,14 +79,6 @@
 		if(files.length){
 			member.value.image = await resizeImage(files[0]);
 		}
-	}
-
-	function getMarkdownFor(text: string){
-		return unified()
-			.use(remarkParse)
-			.use(remarkRehype)
-			.use(rehypeStringify)
-			.processSync(text).toString()
 	}
 </script>
 
