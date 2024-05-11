@@ -26,7 +26,7 @@
 	<IonPage>
 		<IonHeader>
 			<IonToolbar>
-				<IonBackButton slot="start" />
+				<IonBackButton slot="start" defaultHref="/options/" />
 				<IonTitle>Import / Export</IonTitle>
 			</IonToolbar>
 		</IonHeader>

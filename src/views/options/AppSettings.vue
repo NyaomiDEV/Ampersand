@@ -9,7 +9,7 @@
 	<IonPage>
 		<IonHeader>
 			<IonToolbar>
-				<IonBackButton slot="start" />
+				<IonBackButton slot="start" defaultHref="/options/" />
 				<IonTitle>
 					App settings
 				</IonTitle>

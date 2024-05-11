@@ -1,11 +1,13 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonItem, IonRange, IonLabel, IonToggle, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonSegment, IonSegmentButton} from '@ionic/vue';
+	import { IonContent, IonHeader, IonItem, IonIcon, IonRange, IonLabel, IonToggle, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonSegment, IonSegmentButton} from '@ionic/vue';
 	import { inject, reactive, watch } from 'vue';
 	import { AccessibilityConfig } from '../../lib/config/types';
 	import { getConfigEntry, saveConfig } from '../../lib/config';
 	import { updateDarkMode } from '../../lib/mode';
 	import Color from '../../components/Color.vue';
 	import { updateMaterialColors } from '../../lib/theme';
+
+	import CheckMD from '@material-design-icons/svg/outlined/check.svg';
 
 	const config = reactive(getConfigEntry("accessibility") as AccessibilityConfig);
 	watch(config, () => {
@@ -16,24 +18,17 @@
 
 		updateDarkMode();
 		updateMaterialColors();
+
 	});
 
 	const isIOS = inject<boolean>("isIOS");
 </script>
 
-<style scoped>
-
-	ion-segment, ion-range {
-		margin-top: 8px;
-	}
-
-</style>
-
 <template>
 	<IonPage>
 		<IonHeader>
 			<IonToolbar>
-				<IonBackButton slot="start" />
+				<IonBackButton slot="start" defaultHref="/options/" />
 				<IonTitle>
 					Accessibility
 				</IonTitle>
@@ -56,15 +51,18 @@
 						<h3 class="centered-text">UI variant</h3>
 						<IonSegment value="ui-variant" v-model="config.theme">
 
-							<IonSegmentButton value="auto">
+							<IonSegmentButton value="auto" layout="icon-start">
+								<IonIcon v-if="config.theme == 'auto'" :md="CheckMD" aria-hidden="true"/>
 								<IonLabel>Auto</IonLabel>
 							</IonSegmentButton>
 
-							<IonSegmentButton value="light">
+							<IonSegmentButton value="light" layout="icon-start">
+								<IonIcon v-if="config.theme == 'light'" :md="CheckMD" aria-hidden="true"/>
 								<IonLabel>Light</IonLabel>
 							</IonSegmentButton>
 
-							<IonSegmentButton value="dark">
+							<IonSegmentButton value="dark" layout="icon-start">
+								<IonIcon v-if="config.theme == 'dark'" :md="CheckMD" aria-hidden="true"/>
 								<IonLabel>Dark</IonLabel>
 							</IonSegmentButton>
 						</IonSegment>
