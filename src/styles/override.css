@@ -1,4 +1,3 @@
-
 ion-list-header + ion-list.md {
 	padding-top: unset;
 }
@@ -21,7 +20,6 @@ p {
 }
 
 /* Segment Buttons */
-
 ion-segment-button.md::part(native) {
 	border: 1px solid var(--color);
 	text-transform: none;
@@ -49,12 +47,35 @@ ion-segment-button.md::part(indicator-background) {
 }
 
 /* Toggles */
-
-ion-toggle.md::part(track), ion-toggle.toggle-checked.md::part(track) {
-	background-color: aqua;
-	width: 52px;
+ion-toggle.md::part(track) {
+	background-color: var(--ion-toolbar-background);
+	width: 56px;
 	height: 32px;
-	border: 4px solid red;
 	border-radius: 100px;
+}
+
+ion-toggle.md::part(track) {
+	border: 2px solid var(--ion-text-color-step-400);
+}
+
+ion-toggle.md::part(handle) {
+	background-color: var(--ion-text-color-step-400);
+	width: 18px;
+	height: 18px;
+
+	--handle-spacing: 8px;
+}
+
+ion-toggle.toggle-checked.md::part(track) {
+	background-color: var(--ion-color-primary);
+	border: 2px solid var(--ion-color-primary);
+}
+
+ion-toggle.toggle-checked.md::part(handle) {
+	background-color: var(--ion-toolbar-background);
+	width: 24px;
+	height: 24px;
+
+	--handle-spacing: 6px;
 
 }
