@@ -15,18 +15,26 @@
 		IonLabel,
 		IonItem,
 		modalController,
-		IonModal
+		IonModal,
+		IonButtons
 	} from "@ionic/vue";
+	import Color from "../components/Color.vue";
 
 	import {
 		pencilOutline as pencilIOS,
 		saveOutline as saveIOS,
-		personOutline as personIOS
+		personOutline as personIOS,
+		chevronBack as backIOS,
+		newspaperOutline as newspaperIOS,
+		journalOutline as journalIOS
 	} from "ionicons/icons";
 
 	import pencilMD from "@material-design-icons/svg/outlined/edit.svg";
 	import saveMD from "@material-design-icons/svg/outlined/save.svg";
 	import personMD from "@material-design-icons/svg/outlined/person.svg";
+	import backMD from "@material-design-icons/svg/outlined/arrow_back.svg";
+	import newspaperMD from "@material-design-icons/svg/outlined/newspaper.svg";
+	import journalMD from "@material-design-icons/svg/outlined/book.svg";
 
 	import { Member, getTable, newMember } from '../lib/db/entities/members';
 	import { getBlobURL } from '../lib/util/blob';
@@ -34,6 +42,7 @@
 	import { resizeImage } from "../lib/util/image";
 	import { Ref, inject, onMounted, ref } from "vue";
 	import { getMarkdownFor } from "../lib/markdown";
+import { activateMaterialTheme, addMaterialColors } from "../lib/theme";
 
 	type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
 	const isOpen = inject<Ref<boolean>>("isOpen");
@@ -79,12 +88,31 @@
 			member.value.image = await resizeImage(files[0]);
 		}
 	}
+
+	function dismiss(){
+		if(isOpen)
+			isOpen.value = false;
+	}
+
+	const self = ref();
+	function setAccent() {
+		if(member.value.color){
+			addMaterialColors(member.value.color, self.value.$el);
+			activateMaterialTheme(self.value.$el);
+		}
+		console.log(self.value.$el);
+	}
 </script>
 
 <template>
-	<IonModal :isOpen @didDismiss="isOpen = false">
+	<IonModal ref="self" :isOpen @didPresent="setAccent" @didDismiss="isOpen = false">
 		<IonHeader>
 			<IonToolbar>
+				<IonButtons slot="start">
+					<IonButton shape="round" fill="clear" @click="dismiss">
+						<IonIcon slot="icon-only" :md="backMD" :ios="backIOS"></IonIcon>
+					</IonButton>
+				</IonButtons>
 				<IonTitle>{{ props.add ? $t("members:edit.headerAdd") : $t("members:edit.headerEdit") }}</IonTitle>
 			</IonToolbar>
 		</IonHeader>
@@ -105,10 +133,25 @@
 				<p>{{ member.role }}</p>
 			</div>
 
+			<div class="member-tags" v-if="!isEditing">
+				<!-- TODO: Tags -->
+			</div>
+
 			<div class="member-description" v-if="!isEditing">
 				<IonLabel>{{ $t("members:edit.description") }}</IonLabel>
 				<div class="markdown-content" v-html="getMarkdownFor(member.description || $t('members:edit.noDescription'))"></div>
 			</div>
+
+			<IonList class="member-actions" v-if="!isEditing">
+				<IonItem :button="true" :detail="true">
+					<IonIcon :ios="newspaperIOS" :md="newspaperMD" slot="start" aria-hidden="true" />
+					<IonLabel>{{ $t("members:edit.showBoardEntries") }}</IonLabel>
+				</IonItem>
+				<IonItem :button="true" :detail="true">
+					<IonIcon :ios="journalIOS" :md="journalMD" slot="start" aria-hidden="true" />
+					<IonLabel>{{ $t("members:edit.showJournalEntries") }}</IonLabel>
+				</IonItem>
+			</IonList>
 
 			<IonList v-if="isEditing" :inset="true">
 					<IonItem lines="none">
@@ -123,6 +166,13 @@
 					<IonItem lines="none">
 						<IonTextarea mode="md" fill="outline" auto-grow :label="$t('members:edit.description')" labelPlacement="floating" v-model="member.description" />
 					</IonItem>
+					<IonItem button lines="none">
+					<Color v-model="member.color">
+						<IonLabel>
+							{{ $t("members:edit.color") }}
+						</IonLabel>
+					</Color>
+				</IonItem>
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
@@ -135,6 +185,11 @@
 </template>
 
 <style scoped>
+	ion-modal {
+		--width: 100%;
+		--height: 100%;
+	}
+
 	div.avatar-container {
 		position: relative;
 		width: fit-content;

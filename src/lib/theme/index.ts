@@ -18,14 +18,12 @@ export function updateMaterialColors(target?: HTMLElement){
 		addMaterialColors("#7E5700", target);
 }
 
-export function activateMaterialTheme() {
-	// add md3 to root class
-	document.documentElement.classList.add("md3");
+export function activateMaterialTheme(target?: HTMLElement) {
+	(target ?? document.documentElement).classList.add("md3");
 }
 
-export function deactivateMaterialTheme() {
-	// remove md3 to root class
-	document.documentElement.classList.remove("md3");
+export function deactivateMaterialTheme(target?: HTMLElement) {
+	(target ?? document.documentElement).classList.remove("md3");
 }
 
 export function unsetMaterialColors(target?: HTMLElement){

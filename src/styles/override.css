@@ -20,62 +20,59 @@ p {
 }
 
 /* Segment Buttons */
-ion-segment-button.md::part(native) {
+.md3 ion-segment-button.md::part(native) {
 	border: 1px solid var(--color);
 	text-transform: none;
 	letter-spacing: normal;
 	font-size: unset;
 }
 
-ion-segment-button.md.segment-button-checked::part(native) {
+.md3 ion-segment-button.md.segment-button-checked::part(native) {
 	background-color: rgba(var(--ion-color-primary-rgb), 0.2);
 	color: var(--ion-text-color);
 }
 
-ion-segment-button.md:first-child::part(native) {
+.md3 ion-segment-button.md:first-child::part(native) {
 	border-right: 0;
 	border-radius: 48px 0 0 48px;
 }
 
-ion-segment-button.md:last-child::part(native) {
+.md3 ion-segment-button.md:last-child::part(native) {
 	border-left: 0;
 	border-radius: 0 48px 48px 0;
 }
 
-ion-segment-button.md::part(indicator-background) {
+.md3 ion-segment-button.md::part(indicator-background) {
 	height: 0px;
 }
 
 /* Toggles */
-ion-toggle.md::part(track) {
+.md3 ion-toggle.md::part(track) {
 	background-color: var(--ion-toolbar-background);
 	width: 56px;
 	height: 32px;
 	border-radius: 100px;
 }
 
-ion-toggle.md::part(track) {
+.md3 ion-toggle.md::part(track) {
 	border: 2px solid var(--ion-text-color-step-400);
 }
 
-ion-toggle.md::part(handle) {
+.md3 ion-toggle.md::part(handle) {
 	background-color: var(--ion-text-color-step-400);
 	width: 18px;
 	height: 18px;
-
+	box-shadow: unset;
 	--handle-spacing: 8px;
 }
 
-ion-toggle.toggle-checked.md::part(track) {
+.md3 ion-toggle.toggle-checked.md::part(track) {
 	background-color: var(--ion-color-primary);
 	border: 2px solid var(--ion-color-primary);
 }
 
-ion-toggle.toggle-checked.md::part(handle) {
+.md3 ion-toggle.toggle-checked.md::part(handle) {
 	background-color: var(--ion-toolbar-background);
 	width: 24px;
 	height: 24px;
-
-	--handle-spacing: 6px;
-
 }

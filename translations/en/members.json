@@ -8,8 +8,11 @@
 		"pronouns": "Pronouns",
 		"role": "Role",
 		"color": "Preferred color",
+		"tags": "Tags",
 		"description": "Description",
 		"noDescription": "No description",
-		"isArchived": "Archived?"
+		"isArchived": "Archived?",
+		"showBoardEntries": "Show board entries",
+		"showJournalEntries": "Show journal entries"
 	}
 }
