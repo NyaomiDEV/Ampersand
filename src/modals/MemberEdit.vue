@@ -43,6 +43,7 @@
 	import { Ref, inject, onMounted, ref } from "vue";
 	import { getMarkdownFor } from "../lib/markdown";
 import { activateMaterialTheme, addMaterialColors } from "../lib/theme";
+import { isDarkMode } from "../lib/mode";
 
 	type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
 	const isOpen = inject<Ref<boolean>>("isOpen");
@@ -99,8 +100,8 @@ import { activateMaterialTheme, addMaterialColors } from "../lib/theme";
 		if(member.value.color){
 			addMaterialColors(member.value.color, self.value.$el);
 			activateMaterialTheme(self.value.$el);
+			self.value.$el.classList.toggle("ion-palette-dark", isDarkMode());
 		}
-		console.log(self.value.$el);
 	}
 </script>
 
@@ -167,7 +168,7 @@ import { activateMaterialTheme, addMaterialColors } from "../lib/theme";
 						<IonTextarea mode="md" fill="outline" auto-grow :label="$t('members:edit.description')" labelPlacement="floating" v-model="member.description" />
 					</IonItem>
 					<IonItem button lines="none">
-					<Color v-model="member.color">
+					<Color v-model="member.color" @update:model-value="setAccent">
 						<IonLabel>
 							{{ $t("members:edit.color") }}
 						</IonLabel>
