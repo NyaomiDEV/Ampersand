@@ -7,5 +7,5 @@ export default defineConfig({
     target: "esnext"
   },
   plugins: [vue()],
-  base: "/Ampersand/" // for now
+  base: process.env.IS_CAPACITOR ? "" : "/Ampersand/" // for now
 })
