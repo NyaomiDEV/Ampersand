@@ -99,14 +99,12 @@ import { isDarkMode } from "../lib/mode";
 	function setAccent() {
 		if(member.value.color){
 			addMaterialColors(member.value.color, self.value.$el);
-			activateMaterialTheme(self.value.$el);
-			self.value.$el.classList.toggle("ion-palette-dark", isDarkMode());
 		}
 	}
 </script>
 
 <template>
-	<IonModal ref="self" :isOpen @didPresent="setAccent" @didDismiss="isOpen = false">
+	<IonModal ref="self" :isOpen @didPresent="setAccent" @didDismiss="dismiss">
 		<IonHeader>
 			<IonToolbar>
 				<IonButtons slot="start">
@@ -144,17 +142,17 @@ import { isDarkMode } from "../lib/mode";
 			</div>
 
 			<IonList class="member-actions" v-if="!isEditing">
-				<IonItem :button="true" :detail="true">
+				<IonItem button detail>
 					<IonIcon :ios="newspaperIOS" :md="newspaperMD" slot="start" aria-hidden="true" />
 					<IonLabel>{{ $t("members:edit.showBoardEntries") }}</IonLabel>
 				</IonItem>
-				<IonItem :button="true" :detail="true">
+				<IonItem button detail>
 					<IonIcon :ios="journalIOS" :md="journalMD" slot="start" aria-hidden="true" />
 					<IonLabel>{{ $t("members:edit.showJournalEntries") }}</IonLabel>
 				</IonItem>
 			</IonList>
 
-			<IonList v-if="isEditing" :inset="true">
+			<IonList v-if="isEditing" inset>
 					<IonItem lines="none">
 						<IonInput mode="md" fill="outline" :label="$t('members:edit.name')" labelPlacement="floating" v-model="member.name" />
 					</IonItem>
@@ -189,6 +187,10 @@ import { isDarkMode } from "../lib/mode";
 	ion-modal {
 		--width: 100%;
 		--height: 100%;
+	}
+
+	ion-content {
+		--padding-bottom: 80px;
 	}
 
 	div.avatar-container {
