@@ -47,3 +47,14 @@ ion-segment-button.md:last-child::part(native) {
 ion-segment-button.md::part(indicator-background) {
 	height: 0px;
 }
+
+/* Toggles */
+
+ion-toggle.md::part(track), ion-toggle.toggle-checked.md::part(track) {
+	background-color: aqua;
+	width: 52px;
+	height: 32px;
+	border: 4px solid red;
+	border-radius: 100px;
+
+}

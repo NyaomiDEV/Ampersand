@@ -51,7 +51,7 @@ import { AccessibilityConfig } from "./lib/config/types";
 // Storage Manager
 if (!await navigator.storage.persisted()) {
 	console.log("Storage is not persisted, trying to persist now");
-	if (!await navigator.storage.persist()) {
+		if (!await navigator.storage.persist()) {
 		console.error("Storage cannot be made persistent, data will be lost!");
 	}
 }
