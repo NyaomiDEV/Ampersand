@@ -5,14 +5,13 @@
 		IonAvatar,
 		IonLabel,
 		IonItemOptions,
-		IonItemOption,
-		modalController
+		IonItemOption
 	} from "@ionic/vue";
 
 	import { Member, getTable } from '../lib/db/entities/members';
 	import { getBlobURL } from '../lib/util/blob';
 	import MemberEdit from "../modals/MemberEdit.vue";
-	import { ref } from "vue";
+	import { provide, ref } from "vue";
 
 	const props = defineProps<{
 		member: Member,
@@ -21,32 +20,17 @@
 
 	const member = props.member;
 	const canDelete = props.canDelete;
+	const isOpen = ref(false);
+	provide("isOpen", isOpen);
 
 	async function removeFromDatabase() {
 		await getTable().delete(member.uuid);
 	}
-
-	async function showEditModal() {
-		const modal = ref<HTMLIonModalElement>();
-		modal.value = await modalController.create({
-			component: MemberEdit,
-			componentProps: {
-				self: modal,
-				member,
-				add: false,
-				edit: false
-			}
-		});
-
-		await modal.value.present();
-	}
-
-	console.log(member);
 </script>
 
 <template>
 	<IonItemSliding>
-		<IonItem button @click="showEditModal">
+		<IonItem button @click="isOpen = true">
 			<IonAvatar slot="start" v-if="member.image">
 				<img aria-hidden="true" :src="getBlobURL(member.image)" />
 			</IonAvatar>
@@ -60,4 +44,6 @@
 			<IonItemOption v-if="canDelete" color="danger" @click="removeFromDatabase()">Delete</IonItemOption>
 		</IonItemOptions>
 	</IonItemSliding>
+
+	<MemberEdit :add="false" :edit="false" :member="member" />
 </template>

@@ -9,6 +9,7 @@
 		"role": "Role",
 		"color": "Preferred color",
 		"description": "Description",
+		"noDescription": "No description",
 		"isArchived": "Archived?"
 	}
 }

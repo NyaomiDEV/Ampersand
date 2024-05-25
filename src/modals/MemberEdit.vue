@@ -14,7 +14,8 @@
 		IonFabButton,
 		IonLabel,
 		IonItem,
-		modalController
+		modalController,
+		IonModal
 	} from "@ionic/vue";
 
 	import {
@@ -31,18 +32,16 @@
 	import { getBlobURL } from '../lib/util/blob';
 	import { getFiles } from "../lib/util/misc";
 	import { resizeImage } from "../lib/util/image";
-	import { Ref, inject, ref } from "vue";
+	import { Ref, inject, onMounted, ref } from "vue";
 	import { getMarkdownFor } from "../lib/markdown";
 
-
 	type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
+	const isOpen = inject<Ref<boolean>>("isOpen");
 	const props = defineProps<{
-		self: Ref<HTMLIonModalElement>,
 		member?: PartialBy<Member, "uuid">,
 		add: boolean,
 		edit?: boolean
 	}>();
-
 	const isIOS = inject<boolean>("isIOS");
 	
 	const member = ref({
@@ -83,54 +82,56 @@
 </script>
 
 <template>
-	<IonHeader>
-		<IonToolbar>
-			<IonTitle>{{ props.add ? $t("members:edit.headerAdd") : $t("members:edit.headerEdit") }}</IonTitle>
-		</IonToolbar>
-	</IonHeader>
+	<IonModal :isOpen @didDismiss="isOpen = false">
+		<IonHeader>
+			<IonToolbar>
+				<IonTitle>{{ props.add ? $t("members:edit.headerAdd") : $t("members:edit.headerEdit") }}</IonTitle>
+			</IonToolbar>
+		</IonHeader>
 
-	<IonContent>
-		<div class="avatar-container">
-			<IonAvatar>
-				<img aria-hidden="true" :src="member.image ? getBlobURL(member.image) : (isIOS ? personIOS : personMD)" />
-			</IonAvatar>
-			<IonButton shape="round" @click="modifyPicture" v-if="isEditing">
-				<IonIcon slot="icon-only" :ios="pencilIOS" :md="pencilMD" />
-			</IonButton>
-		</div>
+		<IonContent>
+			<div class="avatar-container">
+				<IonAvatar>
+					<img aria-hidden="true" :src="member.image ? getBlobURL(member.image) : (isIOS ? personIOS : personMD)" />
+				</IonAvatar>
+				<IonButton shape="round" @click="modifyPicture" v-if="isEditing">
+					<IonIcon slot="icon-only" :ios="pencilIOS" :md="pencilMD" />
+				</IonButton>
+			</div>
 
-		<div class="member-info" v-if="!isEditing">
-			<h1>{{ member.name }}</h1>
-			<p>{{ member.pronouns }}</p>
-			<p>{{ member.role }}</p>
-		</div>
+			<div class="member-info" v-if="!isEditing">
+				<h1>{{ member.name }}</h1>
+				<p>{{ member.pronouns }}</p>
+				<p>{{ member.role }}</p>
+			</div>
 
-		<div class="member-description" v-if="!isEditing">
-			<IonLabel>Description</IonLabel>
-			<div class="markdown-content" v-html="getMarkdownFor(member.description || '')"></div>
-		</div>
+			<div class="member-description" v-if="!isEditing">
+				<IonLabel>{{ $t("members:edit.description") }}</IonLabel>
+				<div class="markdown-content" v-html="getMarkdownFor(member.description || $t('members:edit.noDescription'))"></div>
+			</div>
 
-		<IonList v-if="isEditing" :inset="true">
-				<IonItem lines="none">
-					<IonInput mode="md" fill="outline" :label="$t('members:edit.name')" labelPlacement="floating" v-model="member.name" />
-				</IonItem>
-				<IonItem lines="none">
-					<IonInput mode="md" fill="outline" :label="$t('members:edit.pronouns')" labelPlacement="floating" v-model="member.pronouns" />
-				</IonItem>
-				<IonItem lines="none">
-					<IonInput mode="md" fill="outline" :label="$t('members:edit.role')" labelPlacement="floating" v-model="member.role" />
-				</IonItem>
-				<IonItem lines="none">
-					<IonTextarea mode="md" fill="outline" auto-grow :label="$t('members:edit.description')" labelPlacement="floating" v-model="member.description" />
-				</IonItem>
-		</IonList>
+			<IonList v-if="isEditing" :inset="true">
+					<IonItem lines="none">
+						<IonInput mode="md" fill="outline" :label="$t('members:edit.name')" labelPlacement="floating" v-model="member.name" />
+					</IonItem>
+					<IonItem lines="none">
+						<IonInput mode="md" fill="outline" :label="$t('members:edit.pronouns')" labelPlacement="floating" v-model="member.pronouns" />
+					</IonItem>
+					<IonItem lines="none">
+						<IonInput mode="md" fill="outline" :label="$t('members:edit.role')" labelPlacement="floating" v-model="member.role" />
+					</IonItem>
+					<IonItem lines="none">
+						<IonTextarea mode="md" fill="outline" auto-grow :label="$t('members:edit.description')" labelPlacement="floating" v-model="member.description" />
+					</IonItem>
+			</IonList>
 
-		<IonFab slot="fixed" vertical="bottom" horizontal="end">
-			<IonFabButton @click="toggleEditing" v-if="member.name.length > 0">
-				<IonIcon :ios="isEditing ? saveIOS : pencilIOS" :md="isEditing ? saveMD : pencilMD" />
-			</IonFabButton>
-		</IonFab>
-	</IonContent>
+			<IonFab slot="fixed" vertical="bottom" horizontal="end">
+				<IonFabButton @click="toggleEditing" v-if="member.name.length > 0">
+					<IonIcon :ios="isEditing ? saveIOS : pencilIOS" :md="isEditing ? saveMD : pencilMD" />
+				</IonFabButton>
+			</IonFab>
+		</IonContent>
+	</IonModal>
 </template>
 
 <style scoped>

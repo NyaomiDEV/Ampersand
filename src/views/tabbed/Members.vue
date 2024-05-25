@@ -7,12 +7,11 @@
 		IonSearchbar,
 		IonTitle,
 		IonToolbar,
-		modalController,
 		IonFab,
 		IonFabButton,
 		IonIcon
 	} from '@ionic/vue';
-	import { inject, ref } from 'vue';
+	import { inject, provide, ref } from 'vue';
 	import { getFilteredMembers } from '../../lib/db/liveQueries';
 	import { addOutline as addIOS } from "ionicons/icons";
 	import addMD from "@material-design-icons/svg/outlined/add.svg";
@@ -24,19 +23,8 @@
 	const search = ref("");
 	const members = getFilteredMembers(search);
 
-	async function addNew(){
-		const modal = ref<HTMLIonModalElement>();
-		modal.value = await modalController.create({
-			component: MemberEdit,
-			componentProps: {
-				add: true,
-				edit: true,
-				self: modal
-			}
-		});
-
-		await modal.value.present();
-	}
+	const isOpen = ref(false);
+	provide("isOpen", isOpen);
 </script>
 
 <template>
@@ -66,10 +54,12 @@
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton @click="addNew">
+				<IonFabButton @click="isOpen = true">
 					<IonIcon :ios="addIOS" :md="addMD" />
 				</IonFabButton>
 			</IonFab>
 		</IonContent>
+
+		<MemberEdit :edit="true" :add="true" />
 	</IonPage>
 </template>
