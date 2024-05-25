@@ -40,10 +40,9 @@
 	import { getBlobURL } from '../lib/util/blob';
 	import { getFiles } from "../lib/util/misc";
 	import { resizeImage } from "../lib/util/image";
-	import { Ref, inject, onMounted, ref } from "vue";
+	import { Ref, inject, ref } from "vue";
 	import { getMarkdownFor } from "../lib/markdown";
-import { activateMaterialTheme, addMaterialColors } from "../lib/theme";
-import { isDarkMode } from "../lib/mode";
+	import { addMaterialColors } from "../lib/theme";
 
 	type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
 	const isOpen = inject<Ref<boolean>>("isOpen");
