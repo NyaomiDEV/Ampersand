@@ -103,7 +103,7 @@
 </script>
 
 <template>
-	<IonModal ref="self" :isOpen @didPresent="setAccent" @didDismiss="dismiss">
+	<IonModal ref="self" :isOpen @willPresent="setAccent" @didDismiss="dismiss">
 		<IonHeader>
 			<IonToolbar>
 				<IonButtons slot="start">
