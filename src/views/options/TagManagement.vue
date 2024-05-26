@@ -11,7 +11,7 @@
 			<IonToolbar>
 				<IonBackButton slot="start" defaultHref="/options/" />
 				<IonTitle>
-					Tag management
+					{{ $t("options:tagManagement.header") }}
 				</IonTitle>
 			</IonToolbar>
 		</IonHeader>

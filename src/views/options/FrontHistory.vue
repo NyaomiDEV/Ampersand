@@ -11,7 +11,7 @@
 			<IonToolbar>
 				<IonBackButton slot="start" defaultHref="/options/" />
 				<IonTitle>
-					Front history
+					{{ $t("options:frontHistory.header") }}
 				</IonTitle>
 			</IonToolbar>
 		</IonHeader>

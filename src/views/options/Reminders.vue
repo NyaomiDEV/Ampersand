@@ -11,7 +11,7 @@
 			<IonToolbar>
 				<IonBackButton slot="start" defaultHref="/options/" />
 				<IonTitle>
-					Reminders
+					{{ $t("options:reminders.header") }}
 				</IonTitle>
 			</IonToolbar>
 		</IonHeader>

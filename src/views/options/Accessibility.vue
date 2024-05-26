@@ -30,7 +30,7 @@
 			<IonToolbar>
 				<IonBackButton slot="start" defaultHref="/options/" />
 				<IonTitle>
-					Accessibility
+					{{ $t("options:accessibility.header") }}
 				</IonTitle>
 			</IonToolbar>
 		</IonHeader>
@@ -40,30 +40,30 @@
 				<IonItem>
 					<IonToggle v-model="config.highLegibility">
 						<IonLabel>
-							<h3>High legibility font</h3>
-							<p>Use OpenDyslexic instead of the standard device font</p>
+							<h3>{{ $t("options:accessibility.highLegibilityFont.title") }}</h3>
+							<p>{{ $t("options:accessibility.highLegibilityFont.desc") }}</p>
 						</IonLabel>
 					</IonToggle>
 				</IonItem>
 
 				<IonItem>
 					<IonLabel>
-						<h3 class="centered-text">UI variant</h3>
+						<h3 class="centered-text">{{ $t("options:accessibility.uiVariant.title") }}</h3>
 						<IonSegment value="ui-variant" v-model="config.theme">
 
 							<IonSegmentButton value="auto" layout="icon-start">
 								<IonIcon v-if="config.theme == 'auto'" :md="CheckMD" aria-hidden="true"/>
-								<IonLabel>Auto</IonLabel>
+								<IonLabel>{{ $t("options:accessibility.uiVariant.auto") }}</IonLabel>
 							</IonSegmentButton>
 
 							<IonSegmentButton value="light" layout="icon-start">
 								<IonIcon v-if="config.theme == 'light'" :md="CheckMD" aria-hidden="true"/>
-								<IonLabel>Light</IonLabel>
+								<IonLabel>{{ $t("options:accessibility.uiVariant.light") }}</IonLabel>
 							</IonSegmentButton>
 
 							<IonSegmentButton value="dark" layout="icon-start">
 								<IonIcon v-if="config.theme == 'dark'" :md="CheckMD" aria-hidden="true"/>
-								<IonLabel>Dark</IonLabel>
+								<IonLabel>{{ $t("options:accessibility.uiVariant.dark") }}</IonLabel>
 							</IonSegmentButton>
 						</IonSegment>
 					</IonLabel>
@@ -72,8 +72,8 @@
 				<IonItem button>
 					<Color v-model="config.accentColor">
 						<IonLabel>
-							<h3>Accent color</h3>
-							<p>Use a custom accent color</p>
+							<h3>{{ $t("options:accessibility.accentColor.title") }}</h3>
+							<p>{{ $t("options:accessibility.accentColor.desc") }}</p>
 						</IonLabel>
 					</Color>
 				</IonItem>
@@ -81,15 +81,15 @@
 				<IonItem>
 					<IonToggle v-model="config.reducedMotion">
 						<IonLabel>
-							<h3>Reduced motion</h3>
-							<p>Disable in-app animations</p>
+							<h3>{{ $t("options:accessibility.reducedMotion.title") }}</h3>
+							<p>{{ $t("options:accessibility.reducedMotion.desc") }}</p>
 						</IonLabel>
 					</IonToggle>
 				</IonItem>
 
 				<IonItem>
 					<IonLabel>
-						<h3 class="centered-text">UI size</h3>
+						<h3 class="centered-text">{{ $t("options:accessibility.fontScale.title") }}</h3>
 						<IonRange
 							v-model="config.fontScale"
 							:label="config.fontScale.toString()"
@@ -105,7 +105,7 @@
 
 				<IonItem>
 					<IonLabel>
-						<h3 class="centered-text">Chat UI size</h3>
+						<h3 class="centered-text">{{ $t("options:accessibility.chatFontScale.title") }}</h3>
 						<IonRange
 							v-model="config.chatFontScale"
 							:label="config.chatFontScale.toString()"

@@ -10,7 +10,7 @@
 		<IonHeader>
 			<IonToolbar>
 				<IonTitle>
-					Chats
+					{{ $t("chats:header") }}
 				</IonTitle>
 			</IonToolbar>
 		</IonHeader>

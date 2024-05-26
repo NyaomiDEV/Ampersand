@@ -10,7 +10,7 @@
 		<IonHeader>
 			<IonToolbar>
 				<IonTitle>
-					Dashboard
+					{{ $t("dashboard:header") }}
 				</IonTitle>
 			</IonToolbar>
 		</IonHeader>

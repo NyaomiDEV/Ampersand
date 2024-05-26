@@ -1,0 +1,70 @@
+{
+	"options": {
+		"header": "Options",
+		"managementLabel": "Management",
+		"settingsLabel": "Settings"
+	},
+	"systemSettings": {
+		"header": "System name and photo",
+		"systemName": "System name"
+	},
+	"frontHistory": {
+		"header": "Front history"
+	},
+	"messageBoard": {
+		"header": "Message board"
+	},
+	"tagManagement": {
+		"header": "Tag management"
+	},
+	"reminders": {
+		"header": "Reminders"
+	},
+	"appSettings": {
+		"header": "App settings"
+	},
+	"security": {
+		"header": "Security"
+	},
+	"accessibility": {
+		"header": "Accessibility",
+		"highLegibilityFont": {
+			"title": "High legibility font",
+			"desc": "Use OpenDyslexic instead of the standard device font"
+		},
+		"uiVariant": {
+			"title": "UI variant",
+			"auto": "Auto",
+			"light": "Light",
+			"dark": "Dark"
+		},
+		"accentColor": {
+			"title": "Accent color",
+			"desc": "Use a custom accent color"
+		},
+		"reducedMotion": {
+			"title": "Reduced motion",
+			"desc": "Disable in-app animations"
+		},
+		"fontScale": {
+			"title": "UI size"
+		},
+		"chatFontScale": {
+			"title": "Chat UI size"
+		}
+	},
+	"importExport": {
+		"header": "Import / Export",
+		"import": {
+			"title": "Import your data from a backup file",
+			"desc": "Warning! It will override any existing data"
+		},
+		"export": {
+			"title": "Export your data",
+			"desc": "Backup your current data to a file you can store somewhere else"
+		}
+	},
+	"about": {
+		"header": "About"
+	}
+}

@@ -11,7 +11,7 @@
 			<IonToolbar>
 				<IonBackButton slot="start" defaultHref="/options/" />
 				<IonTitle>
-					App settings
+					{{ $t("options:appSettings.header") }}
 				</IonTitle>
 			</IonToolbar>
 		</IonHeader>

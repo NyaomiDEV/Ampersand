@@ -11,7 +11,7 @@
 			<IonToolbar>
 				<IonBackButton slot="start" defaultHref="/options/" />
 				<IonTitle>
-					Security
+					{{ $t("options:security.header") }}
 				</IonTitle>
 			</IonToolbar>
 		</IonHeader>

@@ -47,7 +47,7 @@
 			<IonToolbar>
 				<IonBackButton slot="start" defaultHref="/options/" />
 				<IonTitle>
-					System name and photo
+					{{ $t("options:systemSettings.header") }}
 				</IonTitle>
 			</IonToolbar>
 		</IonHeader>

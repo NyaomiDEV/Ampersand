@@ -28,32 +28,32 @@
 
 				<IonTabButton tab="members" href="/members">
 					<IonIcon :ios="PeopleIOS" :md="PeopleMD" />
-					Members
+					{{ $t("members:header") }}
 				</IonTabButton>
 
 				<IonTabButton tab="journal" href="/journal">
 					<IonIcon :ios="JournalIOS" :md="JournalMD" />
-					Journal
+					{{ $t("journal:header") }}
 				</IonTabButton>
 
 				<IonTabButton tab="dashboard" href="/dashboard">
 					<IonIcon :ios="HomeIOS" :md="HomeMD" />
-					Dashboard
+					{{ $t("dashboard:header") }}
 				</IonTabButton>
 
 				<IonTabButton tab="chats" href="/chats">
 					<IonIcon :ios="ChatIOS" :md="ChatMD" />
-					Chats
+					{{ $t("chats:header") }}
 				</IonTabButton>
 
 				<IonTabButton tab="options" href="/options">
 					<IonIcon :ios="OptionsIOS" :md="OptionsMD" />
-					Options
+					{{ $t("options:options.header") }}
 				</IonTabButton>
 			
 				<IonTabButton tab="testingGrounds" href="/testingGrounds">
 					<IonIcon :ios="SparklesIOS" :md="SparklesMD" />
-					Testing grounds
+					{{ $t("testingGrounds:header") }}
 				</IonTabButton>
 
 			</IonTabBar>

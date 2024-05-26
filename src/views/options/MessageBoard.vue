@@ -11,7 +11,7 @@
 			<IonToolbar>
 				<IonBackButton slot="start" defaultHref="/options/" />
 				<IonTitle>
-					Message board
+					{{ $t("options:messageBoard.header") }}
 				</IonTitle>
 			</IonToolbar>
 		</IonHeader>

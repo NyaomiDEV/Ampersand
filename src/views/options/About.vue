@@ -11,7 +11,7 @@
 			<IonToolbar>
 				<IonBackButton slot="start" defaultHref="/options/" />
 				<IonTitle>
-					About
+					{{ $t("options:about.header") }}
 				</IonTitle>
 			</IonToolbar>
 		</IonHeader>

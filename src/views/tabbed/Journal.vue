@@ -10,7 +10,7 @@
 		<IonHeader>
 			<IonToolbar>
 				<IonTitle>
-					Journal
+					{{ $t("journal:header") }}
 				</IonTitle>
 			</IonToolbar>
 		</IonHeader>
