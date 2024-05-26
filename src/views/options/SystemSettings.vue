@@ -20,8 +20,6 @@
 
 	const system = ref<System>({uuid: "", name: ""});
 
-	const router = useIonRouter();
-
 	onMounted(async () => {
 		const s = await getSystem();
 		if(s) system.value = s;
@@ -34,14 +32,11 @@
 		}
 	}
 
+	const router: any = inject("navManager");
+
 	async function save() {
 		await modifySystem(system.value);
-		if(window.history.length > 1) {
-			router.back();
-		} else {
-			router.navigate("/options/", "back");
-		}
-
+		router.handleNavigateBack("/options/");
 	}
 
 </script>

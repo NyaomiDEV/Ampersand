@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from "@ionic/vue-router";
+import { createRouter, createWebHashHistory } from "@ionic/vue-router";
 import { RouteRecordRaw } from "vue-router";
 import tabbedRoutes from "./tabbedRoutes";
 import settings from "./settings";
@@ -20,7 +20,7 @@ const routes: Array<RouteRecordRaw> = [
 ];
 
 const router = createRouter({
-	history: createWebHistory(import.meta.env.BASE_URL),
+	history: createWebHashHistory(import.meta.env.BASE_URL),
 	routes,
 });
 
