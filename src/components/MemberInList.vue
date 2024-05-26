@@ -35,7 +35,15 @@
 				<img aria-hidden="true" :src="getBlobURL(member.image)" />
 			</IonAvatar>
 			<IonLabel>
-				<p>{{ member.role }}</p>
+				<p>
+					{{
+						[
+							member.role,
+							member.isCustomFront ? $t("members:edit.customFront") : null,
+							member.isArchived ? $t("members:edit.archived") : null
+						].filter(Boolean).join(" - ")
+					}}
+				</p>
 				<h2>{{ member.name }}</h2>
 			</IonLabel>
 			<!-- TODO: Add tags as chips -> @mecha-cat -->

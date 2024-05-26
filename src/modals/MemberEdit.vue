@@ -9,6 +9,7 @@
 		IonIcon,
 		IonList,
 		IonInput,
+		IonToggle,
 		IonTextarea,
 		IonFab,
 		IonFabButton,
@@ -129,6 +130,8 @@
 				<h1>{{ member.name }}</h1>
 				<p>{{ member.pronouns }}</p>
 				<p>{{ member.role }}</p>
+				<p v-if="member.isCustomFront">{{ $t("members:edit.customFront") }}</p>
+				<p v-if="member.isArchived">{{ $t("members:edit.archived") }}</p>
 			</div>
 
 			<div class="member-tags" v-if="!isEditing">
@@ -151,7 +154,7 @@
 				</IonItem>
 			</IonList>
 
-			<IonList v-if="isEditing" inset>
+			<IonList class="member-edit" v-if="isEditing" inset>
 					<IonItem lines="none">
 						<IonInput mode="md" fill="outline" :label="$t('members:edit.name')" labelPlacement="floating" v-model="member.name" />
 					</IonItem>
@@ -165,12 +168,26 @@
 						<IonTextarea mode="md" fill="outline" auto-grow :label="$t('members:edit.description')" labelPlacement="floating" v-model="member.description" />
 					</IonItem>
 					<IonItem button lines="none">
-					<Color v-model="member.color" @update:model-value="setAccent">
-						<IonLabel>
-							{{ $t("members:edit.color") }}
-						</IonLabel>
-					</Color>
-				</IonItem>
+						<Color v-model="member.color" @update:model-value="setAccent">
+							<IonLabel>
+								{{ $t("members:edit.color") }}
+							</IonLabel>
+						</Color>
+					</IonItem>
+					<IonItem button lines="none">
+						<IonToggle v-model="member.isCustomFront">
+							<IonLabel>
+								{{ $t("members:edit.isCustomFront") }}
+							</IonLabel>
+						</IonToggle>
+					</IonItem>
+					<IonItem button lines="none">
+						<IonToggle v-model="member.isArchived">
+							<IonLabel>
+								{{ $t("members:edit.isArchived") }}
+							</IonLabel>
+						</IonToggle>
+					</IonItem>
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
@@ -251,6 +268,9 @@
 
 	ion-input, ion-textarea {
 		margin-top: 16px;
+	}
+
+	.member-edit ion-item {
 		margin-bottom: 16px;
 	}
 </style>

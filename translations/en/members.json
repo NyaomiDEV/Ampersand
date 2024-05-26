@@ -11,7 +11,10 @@
 		"tags": "Tags",
 		"description": "Description",
 		"noDescription": "No description",
-		"isArchived": "Archived?",
+		"customFront": "Custom front",
+		"isCustomFront": "Set as custom front",
+		"archived": "Archived",
+		"isArchived": "Set as archived",
 		"showBoardEntries": "Show board entries",
 		"showJournalEntries": "Show journal entries"
 	}
