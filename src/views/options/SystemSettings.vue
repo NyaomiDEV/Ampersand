@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonAvatar, IonButton, IonIcon, IonFab, IonFabButton, IonItem, useIonRouter} from '@ionic/vue';
+	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonAvatar, IonButton, IonIcon, IonInput, IonFab, IonFabButton, IonItem, useIonRouter} from '@ionic/vue';
 	import { inject, onMounted, ref } from 'vue';
 	import { getBlobURL } from '../../lib/util/blob';
 	import { getFiles } from '../../lib/util/misc';
@@ -70,8 +70,8 @@
 			</IonFab>
 			<IonList :inset="isIOS">
 				<IonItem>
+					<IonInput fill="outline" labelPlacement="floating" :label="$t('options:systemSettings.systemName')" v-model="system.name" />
 				</IonItem>
-
 			</IonList>
 		</IonContent>
 	</IonPage>
@@ -99,6 +99,10 @@ div.avatar-container {
 		position: absolute;
 		bottom: 8px;
 		right: 8px;
+	}
+
+	ion-input {
+		margin-top: 16px;
 	}
 
 </style>
