@@ -52,7 +52,9 @@ Of course you can! And if you're not able to contribute code, you can still hang
 
 ## Can I fund you?
 
-We'd be very glad to receive funds, but right now we don't have anything set up to collect them properly. If you want to send money our way, you can donate on [nao's Ko-fi](https://ko-fi.com/nyaomipic).
+We'd be very glad to receive funds, and we've set [Liberapay](https://liberapay.com/Ampersand/) to collect them. Please donate!
+
+If you want to send money specifically to the main developer, you can donate on [nao's Ko-fi](https://ko-fi.com/nyaomipic).
 
 Our beloved Cataclysm is also running a GoFundMe, so please fund him first and foremost. [link](https://gofund.me/d721a140)
 
