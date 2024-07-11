@@ -56,8 +56,6 @@ We'd be very glad to receive funds, and we've set [Liberapay](https://liberapay.
 
 If you want to send money specifically to the main developer, you can donate on [nao's Ko-fi](https://ko-fi.com/nyaomipic).
 
-Our beloved Cataclysm is also running a GoFundMe, so please fund him first and foremost. [link](https://gofund.me/d721a140)
-
 ## Who's developing this app for now?
 
 @NyaomiDEV at the "back end" and @mecha-cat at the "front end", except that it all runs on your browser so it's unclear if we can use those terms as broadly understood.
