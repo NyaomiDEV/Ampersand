@@ -88,7 +88,7 @@
 				</IonItem>
 
 				<IonItem>
-					<IonLabel>
+					<IonLabel class="more-padding">
 						<h3 class="centered-text">{{ $t("options:accessibility.fontScale.title") }}</h3>
 						<IonRange
 							v-model="config.fontScale"
@@ -98,13 +98,12 @@
 							:max="1.5"
 							:step="0.1"
 							:snaps="true"
-							:ticks="true"
 						/>
 					</IonLabel>
 				</IonItem>
 
 				<IonItem>
-					<IonLabel>
+					<IonLabel class="more-padding">
 						<h3 class="centered-text">{{ $t("options:accessibility.chatFontScale.title") }}</h3>
 						<IonRange
 							v-model="config.chatFontScale"
@@ -114,7 +113,7 @@
 							:max="1.5"
 							:step="0.1"
 							:snaps="true"
-							:ticks="true"
+							:ticks="false"
 						/>
 					</IonLabel>
 				</IonItem>

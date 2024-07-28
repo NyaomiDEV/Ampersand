@@ -15,14 +15,20 @@ ion-list.md {
 	padding: 1em;
 }
 
+.more-padding {
+	padding-bottom: 2em;
+}
+
 p {
 	text-wrap: wrap;
 }
 
-.m3 ion-header.md{
+.md3 ion-header.md{
 	box-shadow: unset;
 	-webkit-box-shadow: unset;
 }
+
+
 
 /* Segment Buttons */
 .md3 ion-segment.segment-alt ion-segment-button.md::part(native) {
@@ -50,6 +56,9 @@ p {
 .md3 ion-segment.segment-alt ion-segment-button.md::part(indicator-background) {
 	height: 0px;
 }
+
+
+
 
 /* Toggles */
 .md3 ion-toggle.md::part(track) {
@@ -80,4 +89,29 @@ p {
 	background-color: var(--ion-toolbar-background);
 	width: 24px;
 	height: 24px;
+}
+
+
+/* Ranges */
+.md3 ion-range::part(bar), .md3 ion-range::part(bar-active) {
+	height: 24px;
+	border-radius: 24px;
+	box-sizing: border-box;
+}
+
+.md3 ion-range::part(bar-active) {
+	transform:translateY(22px)
+}
+
+.md3 ion-range::part(knob) {
+	background-color: var(--ion-color-primary);
+	height: 64px;
+	width: 6px;
+	border-radius: 24npx;
+	border: 12px solid var(--ion-background-color);
+	transform: translateY(-24px);
+}
+
+.md3 ion-range::part(knob)::before {
+	display: none;
 }
