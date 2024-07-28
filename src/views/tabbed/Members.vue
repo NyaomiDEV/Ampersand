@@ -11,14 +11,23 @@
 		IonFabButton,
 		IonIcon
 	} from '@ionic/vue';
-	import { inject, provide, ref } from 'vue';
+	import { inject, onMounted, provide, ref } from 'vue';
 	import { getFilteredMembers } from '../../lib/db/liveQueries';
 	import { addOutline as addIOS } from "ionicons/icons";
 	import addMD from "@material-design-icons/svg/outlined/add.svg";
 	import MemberEdit from '../../modals/MemberEdit.vue';
 	import MemberInList from '../../components/MemberInList.vue';
+	import { Tag, getTable as getTagsTable } from '../../lib/db/entities/tags';
 
 	const isIOS = inject<boolean>("isIOS");
+
+	const tags = ref<Tag[]>([]);
+	provide("tags", tags);
+
+	onMounted(loadTags);
+	async function loadTags(){
+		tags.value = await getTagsTable().toArray();
+	}
 
 	const search = ref("");
 	const members = getFilteredMembers(search);

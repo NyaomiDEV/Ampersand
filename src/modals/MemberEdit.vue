@@ -17,9 +17,12 @@
 		IonItem,
 		modalController,
 		IonModal,
-		IonButtons
+		IonButtons,
+		IonChip
 	} from "@ionic/vue";
 	import Color from "../components/Color.vue";
+
+	import TagListSelect from "./TagListSelect.vue";
 
 	import {
 		pencilOutline as pencilIOS,
@@ -38,10 +41,11 @@
 	import journalMD from "@material-design-icons/svg/outlined/book.svg";
 
 	import { Member, getTable, newMember } from '../lib/db/entities/members';
+	import { Tag } from "../lib/db/entities/tags";
 	import { getBlobURL } from '../lib/util/blob';
 	import { getFiles } from "../lib/util/misc";
 	import { resizeImage } from "../lib/util/image";
-	import { Ref, inject, ref } from "vue";
+	import { Ref, inject, provide, ref, toRaw } from "vue";
 	import { getMarkdownFor } from "../lib/markdown";
 	import { addMaterialColors, unsetMaterialColors } from "../lib/theme";
 
@@ -53,12 +57,16 @@
 		edit?: boolean
 	}>();
 	const isIOS = inject<boolean>("isIOS");
+
+	const isTagListSelectOpen = ref(false);
+	provide("isTagListSelectionOpen", isTagListSelectOpen);
 	
 	const member = ref({
+		...props.member || {},
 		name: props.member?.name || "",
 		isArchived: props.member?.isArchived || false,
 		isCustomFront: props.member?.isCustomFront || false,
-		...props.member || {}
+		tags: props.member?.tags || [],
 	} as PartialBy<Member, "uuid">);
 
 	const isEditing = ref(props.add || props.edit);
@@ -66,12 +74,17 @@
 	async function toggleEditing(){
 		if(isEditing.value){
 			const { uuid, ...memberWithoutUUID } = member.value;
+
+			// tags will be proxy
+			memberWithoutUUID.tags = toRaw(memberWithoutUUID.tags);
+
+			console.log(memberWithoutUUID);
 			if(!props.add){
-				await getTable().update(member.value.uuid, memberWithoutUUID);
+				await getTable().update(uuid, memberWithoutUUID);
 
 				// update member in props, since it's reactive
-				for(const prop in member.value)
-					props.member![prop] = member.value[prop];
+				for(const prop in memberWithoutUUID)
+					props.member![prop] = memberWithoutUUID[prop];
 				
 				isEditing.value = false;
 			} else {
@@ -94,10 +107,11 @@
 		if(isOpen) {
 			isOpen.value = false;
 			member.value = {
+				...props.member || {},
 				name: props.member?.name || "",
 				isArchived: props.member?.isArchived || false,
 				isCustomFront: props.member?.isCustomFront || false,
-				...props.member || {}
+				tags: props.member?.tags || [],
 			};
 		}
 	}
@@ -110,6 +124,8 @@
 			unsetMaterialColors(self.value.$el);
 		}
 	}
+
+	const tags = inject<Tag[]>("tags");
 </script>
 
 <template>
@@ -144,7 +160,7 @@
 			</div>
 
 			<div class="member-tags" v-if="!isEditing">
-				<!-- TODO: Tags -->
+				<IonChip v-if="tags?.length" v-for="tag in member.tags">{{ tags?.find(x => x.uuid === tag)!.name }}</IonChip>
 			</div>
 
 			<div class="member-description" v-if="!isEditing">
@@ -175,6 +191,16 @@
 					</IonItem>
 					<IonItem lines="none">
 						<IonTextarea mode="md" fill="outline" auto-grow :label="$t('members:edit.description')" labelPlacement="floating" v-model="member.description" />
+					</IonItem>
+					<IonItem button lines="none" @click="isTagListSelectOpen = true">
+						<IonLabel>
+							{{ $t("members:edit.tags") }}
+							<div class="member-tags">
+								<IonChip v-if="tags?.length" v-for="tag in member.tags">{{ tags?.find(x => x.uuid === tag)!.name }}</IonChip>
+							</div>
+						</IonLabel>
+
+						<TagListSelect :tags="member.tags" :isOpen="isTagListSelectOpen" />
 					</IonItem>
 					<IonItem button lines="none">
 						<Color v-model="member.color" @update:model-value="setAccent">
@@ -227,6 +253,19 @@
 		margin-right: auto;
 		margin-top: 24px;
 		margin-bottom: 16px;
+	}
+
+	div.member-tags {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: center;
+		padding: 0 16px;
+	}
+
+	.member-edit div.member-tags {
+		padding: 8px 0 0 0;
+		justify-content: start;
 	}
 
 	ion-avatar {

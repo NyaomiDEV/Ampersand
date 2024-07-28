@@ -5,13 +5,15 @@
 		IonAvatar,
 		IonLabel,
 		IonItemOptions,
-		IonItemOption
+		IonItemOption,
+		IonChip
 	} from "@ionic/vue";
 
 	import { Member, getTable } from '../lib/db/entities/members';
 	import { getBlobURL } from '../lib/util/blob';
 	import MemberEdit from "../modals/MemberEdit.vue";
-	import { provide, ref } from "vue";
+	import { inject, provide, ref } from "vue";
+	import { Tag } from "../lib/db/entities/tags";
 
 	const props = defineProps<{
 		member: Member,
@@ -26,6 +28,8 @@
 	async function removeFromDatabase() {
 		await getTable().delete(member.uuid);
 	}
+
+	const tags = inject<Tag[]>("tags");
 </script>
 
 <template>
@@ -47,8 +51,10 @@
 				<h2>
 					{{ member.name }}
 				</h2>
+				<div class="member-tags">
+					<IonChip v-if="tags?.length" v-for="tag in member.tags">{{ tags.find(x => x.uuid === tag)!.name }}</IonChip>
+				</div>
 			</IonLabel>
-			<!-- TODO: Add tags as chips -> @mecha-cat -->
 		</IonItem>
 		<IonItemOptions>
 			<IonItemOption v-if="canDelete" color="danger" @click="removeFromDatabase()">Delete</IonItemOption>

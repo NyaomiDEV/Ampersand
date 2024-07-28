@@ -43,18 +43,18 @@
 	}>();
 	
 	const tag = ref({
+		...props.tag || {},
 		name: props.tag?.name || "",
 		type: props.tag?.type || "member",
-		...props.tag || {}
 	} as PartialBy<Tag, "uuid">);
 
 	function dismiss(){
 		if(isOpen) {
 			isOpen.value = false;
 			tag.value = {
+				...props.tag || {},
 				name: props.tag?.name || "",
 				type: props.tag?.type || "member",
-				...props.tag || {}
 			};
 		}
 	}
@@ -63,11 +63,11 @@
 		const { uuid, ...tagWithoutUUID } = tag.value;
 
 		if(!props.add){
-			await getTable().update(tag.value.uuid, tagWithoutUUID);
+			await getTable().update(uuid, tagWithoutUUID);
 
 			// update tag in props, since it's reactive
-			for(const prop in tag.value)
-				props.tag![prop] = tag.value[prop];
+			for(const prop in tagWithoutUUID)
+				props.tag![prop] = tagWithoutUUID[prop];
 
 			try{
 				await modalController.dismiss(undefined, "modified");
@@ -83,7 +83,9 @@
 
 	async function deleteTag(){
 		await removeTag(tag.value!.uuid!);
-		await modalController.dismiss(undefined, "deleted");
+		try{
+			await modalController.dismiss(undefined, "deleted");
+		}catch(_){}
 	}
 
 	const self = ref();
