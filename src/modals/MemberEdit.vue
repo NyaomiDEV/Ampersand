@@ -76,7 +76,7 @@
 				isEditing.value = false;
 			} else {
 				await newMember(memberWithoutUUID);
-				modalController.dismiss(null, "added");
+				await modalController.dismiss(null, "added");
 			}
 		} else {
 			isEditing.value = true;

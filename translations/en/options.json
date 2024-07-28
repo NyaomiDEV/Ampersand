@@ -16,9 +16,29 @@
 	},
 	"tagManagement": {
 		"header": "Tag management",
+		"searchPlaceholder": "Search for tags...",
 		"selector": {
 			"member": "Member tags",
 			"journal": "Journal tags"
+		},
+		"edit": {
+			"header": {
+				"member": "Edit member tag",
+				"journal": "Edit journal tag"
+			},
+			"name": "Tag name",
+			"color": "Tag color",
+			"type": {
+				"header": "Tag type",
+				"member": "Member",
+				"journal": "Journal"
+			},
+			"actions": {
+				"delete": {
+					"title": "Delete tag",
+					"desc": "You won't be able to undo this action!"
+				}
+			}
 		}
 	},
 	"reminders": {

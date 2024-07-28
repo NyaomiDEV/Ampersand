@@ -1,13 +1,15 @@
 import { db } from "..";
-import { parseTagFilterQuery } from "../../util/filterQuery";
 import { makeUUIDv5 } from "../../util/uuid";
-import { UUIDable } from "../types";
+import { UUID, UUIDable } from "../types";
 import { getSystemUUID } from "./system";
+
+import { getTable as getMembers } from "./members";
+import { getTable as getJournalPosts } from "./journalPosts";
 
 export type Tag = UUIDable & {
 	name: string,
 	type: "member" | "journal",
-	color: string
+	color?: string
 }
 
 export function getTable() {
@@ -26,20 +28,20 @@ export async function newTag(tag: Omit<Tag, keyof UUIDable>) {
 	});
 }
 
-export async function getTagFromName(name: string){
-	return await getTable().get({ name });
+export async function removeTag(uuid: UUID){
+	const tag = await getTable().get(uuid);
+	if(tag?.type === "member"){
+		getMembers().toCollection().modify(member => {
+			member.tags = member.tags?.filter(tag => tag !== uuid)
+		});
+	} else if(tag?.type === "journal") {
+		getJournalPosts().toCollection().modify(journalPost => {
+			journalPost.tags = journalPost.tags?.filter(tag => tag !== uuid)
+		});
+	}
+	await getTable().delete(uuid);
 }
 
-export async function getTagsFromFilterQuery(filterQuery: string){
-	const parsed = await parseTagFilterQuery(filterQuery);
-
-	return getTable().where("name").startsWithIgnoreCase(parsed.query).filter(x => {
-
-		if (parsed.type) {
-			if (x.type !== parsed.type.toLowerCase())
-				return false;
-		}
-
-		return true;
-	}).toArray();
+export async function getTagFromName(name: string){
+	return await getTable().get({ name });
 }

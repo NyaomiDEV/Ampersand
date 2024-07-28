@@ -9,7 +9,8 @@ export type JournalPost = UUIDable & {
 	title: string,
 	body: string,
 	cover?: File,
-	attachments?: Attachment[]
+	attachments?: Attachment[],
+	tags?: UUID[] // array of UUIDs
 }
 
 export type Attachment = UUIDable & {
