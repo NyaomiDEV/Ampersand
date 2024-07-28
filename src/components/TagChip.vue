@@ -16,7 +16,7 @@
 
 <template>
 	<IonChip>
-		<IonAvatar>
+		<IonAvatar v-if="tags?.find(x => x.uuid === props.tag)!.color">
 			<div :style="{
 				backgroundColor: tags?.find(x => x.uuid === props.tag)!.color
 			}"></div>
