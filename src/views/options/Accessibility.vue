@@ -49,7 +49,7 @@
 				<IonItem>
 					<IonLabel>
 						<h3 class="centered-text">{{ $t("options:accessibility.uiVariant.title") }}</h3>
-						<IonSegment value="ui-variant" v-model="config.theme">
+						<IonSegment class="segment-alt" value="ui-variant" v-model="config.theme">
 
 							<IonSegmentButton value="auto" layout="icon-start">
 								<IonIcon v-if="config.theme == 'auto'" :md="CheckMD" aria-hidden="true"/>

@@ -15,7 +15,11 @@
 		"header": "Message board"
 	},
 	"tagManagement": {
-		"header": "Tag management"
+		"header": "Tag management",
+		"selector": {
+			"member": "Member tags",
+			"journal": "Journal tags"
+		}
 	},
 	"reminders": {
 		"header": "Reminders"

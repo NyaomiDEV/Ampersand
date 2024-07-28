@@ -25,29 +25,29 @@ p {
 }
 
 /* Segment Buttons */
-.md3 ion-segment-button.md::part(native) {
+.md3 ion-segment.segment-alt ion-segment-button.md::part(native) {
 	border: 1px solid var(--color);
 	text-transform: none;
 	letter-spacing: normal;
 	font-size: unset;
 }
 
-.md3 ion-segment-button.md.segment-button-checked::part(native) {
+.md3 ion-segment.segment-alt ion-segment-button.md.segment-button-checked::part(native) {
 	background-color: rgba(var(--ion-color-primary-rgb), 0.2);
 	color: var(--ion-text-color);
 }
 
-.md3 ion-segment-button.md:first-child::part(native) {
+.md3 ion-segment.segment-alt ion-segment-button.md:first-child::part(native) {
 	border-right: 0;
 	border-radius: 48px 0 0 48px;
 }
 
-.md3 ion-segment-button.md:last-child::part(native) {
+.md3 ion-segment.segment-alt ion-segment-button.md:last-child::part(native) {
 	border-left: 0;
 	border-radius: 0 48px 48px 0;
 }
 
-.md3 ion-segment-button.md::part(indicator-background) {
+.md3 ion-segment.segment-alt ion-segment-button.md::part(indicator-background) {
 	height: 0px;
 }
 
