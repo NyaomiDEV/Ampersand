@@ -6,7 +6,6 @@
 		IonLabel,
 		IonItemOptions,
 		IonItemOption,
-		IonChip
 	} from "@ionic/vue";
 
 	import { Member, getTable } from '../lib/db/entities/members';
@@ -14,6 +13,8 @@
 	import MemberEdit from "../modals/MemberEdit.vue";
 	import { inject, provide, ref } from "vue";
 	import { Tag } from "../lib/db/entities/tags";
+
+	import TagChip from "./TagChip.vue";
 
 	const props = defineProps<{
 		member: Member,
@@ -52,7 +53,7 @@
 					{{ member.name }}
 				</h2>
 				<div class="member-tags">
-					<IonChip v-if="tags?.length" v-for="tag in member.tags">{{ tags.find(x => x.uuid === tag)!.name }}</IonChip>
+					<TagChip v-if="tags?.length" v-for="tag in member.tags" :tag />
 				</div>
 			</IonLabel>
 		</IonItem>

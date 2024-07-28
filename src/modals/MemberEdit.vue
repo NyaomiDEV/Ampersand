@@ -21,6 +21,7 @@
 		IonChip
 	} from "@ionic/vue";
 	import Color from "../components/Color.vue";
+	import TagChip from "../components/TagChip.vue";
 
 	import TagListSelect from "./TagListSelect.vue";
 
@@ -160,7 +161,7 @@
 			</div>
 
 			<div class="member-tags" v-if="!isEditing">
-				<IonChip v-if="tags?.length" v-for="tag in member.tags">{{ tags?.find(x => x.uuid === tag)!.name }}</IonChip>
+				<TagChip v-if="tags?.length" v-for="tag in member.tags" :tag />
 			</div>
 
 			<div class="member-description" v-if="!isEditing">
@@ -196,7 +197,7 @@
 						<IonLabel>
 							{{ $t("members:edit.tags") }}
 							<div class="member-tags">
-								<IonChip v-if="tags?.length" v-for="tag in member.tags">{{ tags?.find(x => x.uuid === tag)!.name }}</IonChip>
+								<TagChip v-if="tags?.length" v-for="tag in member.tags" :tag />
 							</div>
 						</IonLabel>
 
