@@ -31,7 +31,8 @@
 			"type": {
 				"header": "Tag type",
 				"member": "Member",
-				"journal": "Journal"
+				"journal": "Journal",
+				"desc": "Note: you can only define the tag type upon creation!"
 			},
 			"actions": {
 				"delete": {

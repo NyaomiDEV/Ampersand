@@ -123,7 +123,7 @@
 						</Color>
 					</IonItem>
 
-					<IonItem lines="none">
+					<IonItem lines="none" v-if="!tag.uuid">
 						<IonLabel>
 							<h3 class="centered-text">{{ $t("options:tagManagement.edit.type.header") }}</h3>
 							<IonSegment class="segment-alt" v-model="tag.type">
@@ -138,6 +138,7 @@
 									</IonLabel>
 								</IonSegmentButton>
 							</IonSegment>
+							<p class="centered-text">{{ $t("options:tagManagement.edit.type.desc") }}</p>
 						</IonLabel>
 					</IonItem>
 
