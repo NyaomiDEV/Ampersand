@@ -13,16 +13,16 @@
 </script>
 
 <template>
-	<amp-color @click="open">
+	<div class="color-container" @click="open">
 		<slot></slot>
 		<div class="color" :style="{backgroundColor: model}" @click="open" slot="end">
 			<input type="color" ref="input" v-model="model">
 		</div>
-	</amp-color>
+	</div>
 </template>
 
 <style scoped>
-	amp-color {
+	div.color-container {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
@@ -37,7 +37,7 @@
 		z-index: 2;
 	}
 
-	amp-color :deep(ion-label) {
+	div.color-container :deep(ion-label) {
 		margin-inline: 0px 16px;
 		margin-top: 10px;
 		margin-bottom: 10px;

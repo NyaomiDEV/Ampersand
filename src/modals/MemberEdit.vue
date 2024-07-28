@@ -43,7 +43,7 @@
 	import { resizeImage } from "../lib/util/image";
 	import { Ref, inject, ref } from "vue";
 	import { getMarkdownFor } from "../lib/markdown";
-	import { addMaterialColors } from "../lib/theme";
+	import { addMaterialColors, unsetMaterialColors } from "../lib/theme";
 
 	type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
 	const isOpen = inject<Ref<boolean>>("isOpen");
@@ -91,14 +91,23 @@
 	}
 
 	function dismiss(){
-		if(isOpen)
+		if(isOpen) {
 			isOpen.value = false;
+			member.value = {
+				name: props.member?.name || "",
+				isArchived: props.member?.isArchived || false,
+				isCustomFront: props.member?.isCustomFront || false,
+				...props.member || {}
+			};
+		}
 	}
 
 	const self = ref();
 	function setAccent() {
-		if(member.value.color){
+		if(member.value.color && member.value.color !== "#000000"){
 			addMaterialColors(member.value.color, self.value.$el);
+		} else {
+			unsetMaterialColors(self.value.$el);
 		}
 	}
 </script>
