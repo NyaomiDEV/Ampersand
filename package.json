@@ -10,35 +10,35 @@
     "capacitor:sync:before": "yarn run build"
   },
   "dependencies": {
-    "@capacitor/android": "^6.1.0",
+    "@capacitor/android": "^6.1.1",
     "@capacitor/app": "^6.0.0",
-    "@capacitor/core": "^6.1.0",
-    "@ionic/vue": "^8.2.2",
-    "@ionic/vue-router": "^8.2.2",
+    "@capacitor/core": "^6.1.1",
+    "@ionic/vue": "^8.2.6",
+    "@ionic/vue-router": "^8.2.6",
     "@material-design-icons/svg": "^0.14.13",
-    "@material/material-color-utilities": "^0.2.7",
+    "@material/material-color-utilities": "^0.3.0",
     "@msgpack/msgpack": "^3.0.0-beta2",
     "@vueuse/rxjs": "^10.11.0",
-    "dayjs": "^1.11.11",
-    "dexie": "^4.0.7",
-    "i18next": "^23.11.5",
+    "dayjs": "^1.11.12",
+    "dexie": "^4.0.8",
+    "i18next": "^23.12.2",
     "i18next-vue": "^4.0.0",
     "rehype-stringify": "^10.0.0",
     "remark-parse": "^11.0.0",
     "remark-rehype": "^11.1.0",
     "rxjs": "^7.8.1",
     "typeson": "^9.0.3",
-    "typeson-registry": "^10.0.0",
-    "unified": "^11.0.4",
-    "vue": "^3.4.29",
-    "vue-router": "^4.3.3"
+    "typeson-registry": "^11.0.0",
+    "unified": "^11.0.5",
+    "vue": "^3.4.34",
+    "vue-router": "^4.4.0"
   },
   "devDependencies": {
-    "@capacitor/cli": "^6.0.0",
-    "@vitejs/plugin-vue": "^5.0.4",
-    "typescript": "^5.2.2",
-    "vite": "^5.2.0",
+    "@capacitor/cli": "^6.1.1",
+    "@vitejs/plugin-vue": "^5.1.1",
+    "typescript": "^5.5.4",
+    "vite": "^5.3.5",
     "vite-svg-loader": "^5.1.0",
-    "vue-tsc": "^2.0.16"
+    "vue-tsc": "^2.0.29"
   }
 }
