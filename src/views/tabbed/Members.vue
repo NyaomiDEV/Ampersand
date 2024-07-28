@@ -11,23 +11,26 @@
 		IonFabButton,
 		IonIcon
 	} from '@ionic/vue';
-	import { inject, onMounted, provide, ref } from 'vue';
+	import { inject, onMounted, provide, ref, watch } from 'vue';
 	import { getFilteredMembers } from '../../lib/db/liveQueries';
 	import { addOutline as addIOS } from "ionicons/icons";
 	import addMD from "@material-design-icons/svg/outlined/add.svg";
 	import MemberEdit from '../../modals/MemberEdit.vue';
 	import MemberInList from '../../components/MemberInList.vue';
 	import { Tag, getTable as getTagsTable } from '../../lib/db/entities/tags';
+import { from, useObservable } from '@vueuse/rxjs';
+import { liveQuery } from 'dexie';
 
 	const isIOS = inject<boolean>("isIOS");
 
 	const tags = ref<Tag[]>([]);
 	provide("tags", tags);
 
-	onMounted(loadTags);
-	async function loadTags(){
+	watch([
+		useObservable(from(liveQuery(() => getTagsTable().toArray())))
+	], async () => {
 		tags.value = await getTagsTable().toArray();
-	}
+	}, { immediate: true });
 
 	const search = ref("");
 	const members = getFilteredMembers(search);

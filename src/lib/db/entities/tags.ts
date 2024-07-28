@@ -30,12 +30,15 @@ export async function newTag(tag: Omit<Tag, keyof UUIDable>) {
 
 export async function removeTag(uuid: UUID){
 	const tag = await getTable().get(uuid);
+	console.log(tag);
 	if(tag?.type === "member"){
-		getMembers().toCollection().modify(member => {
+		await getMembers().toCollection().modify(member => {
+			console.log(member.tags);
 			member.tags = member.tags?.filter(tag => tag !== uuid)
+			console.log(member.tags);
 		});
 	} else if(tag?.type === "journal") {
-		getJournalPosts().toCollection().modify(journalPost => {
+		await getJournalPosts().toCollection().modify(journalPost => {
 			journalPost.tags = journalPost.tags?.filter(tag => tag !== uuid)
 		});
 	}
