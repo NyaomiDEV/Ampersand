@@ -31,7 +31,7 @@
 <template>
 	<IonItemSliding>
 		<IonItem button @click="isOpen = true">
-			<IonAvatar slot="start" v-if="member.image">
+			<IonAvatar class="with-outline" slot="start" :style="{ outlineColor: member.color }" v-if="member.image">
 				<img aria-hidden="true" :src="getBlobURL(member.image)" />
 			</IonAvatar>
 			<IonLabel>
@@ -44,7 +44,9 @@
 						].filter(Boolean).join(" - ")
 					}}
 				</p>
-				<h2>{{ member.name }}</h2>
+				<h2>
+					{{ member.name }}
+				</h2>
 			</IonLabel>
 			<!-- TODO: Add tags as chips -> @mecha-cat -->
 		</IonItem>
@@ -55,3 +57,10 @@
 
 	<MemberEdit :add="false" :edit="false" :member="member" />
 </template>
+
+<style>
+	ion-avatar.with-outline {
+		outline-width: 2px;
+		outline-style: solid;
+	}
+</style>
