@@ -1,11 +1,13 @@
 <script setup lang="ts">
 	import {
+		IonAvatar,
 		IonContent,
 		IonHeader,
 		IonToolbar,
 		IonTitle,
 		IonButton,
 		IonIcon,
+		IonLabel,
 		IonList,
 		IonItem,
 		IonModal,
@@ -67,20 +69,19 @@
 				<IonTitle>Tag select</IonTitle>
 			</IonToolbar>
 			<IonToolbar>
-				<IonSearchbar
-					:animated="true"
-					:placeholder="$t('options:tagManagement.searchPlaceholder')"
-					showCancelButton="focus"
-					showClearButton="focus"
-					:spellcheck="false"
-					v-model="search"
-				/>
+				<IonSearchbar :animated="true" :placeholder="$t('options:tagManagement.searchPlaceholder')"
+					showCancelButton="focus" showClearButton="focus" :spellcheck="false" v-model="search" />
 			</IonToolbar>
 		</IonHeader>
 
 		<IonContent>
 			<IonList inset>
 				<IonItem button v-for="tag in filteredTags" :key="tag.uuid">
+					<IonAvatar slot="start" v-if="tag.color">
+						<div :style="{
+							backgroundColor: tag.color
+						}"></div>
+					</IonAvatar>
 					<IonCheckbox :value="tag.uuid" :checked="selectedTags.includes(tag.uuid)" @ionChange="check">
 						{{ tag.name }}
 					</IonCheckbox>
@@ -89,3 +90,15 @@
 		</IonContent>
 	</IonModal>
 </template>
+
+<style scoped>
+div {
+	position: relative;
+	top: 15%;
+	left: 15%;
+	width: 75%;
+	height: 75%;
+	border-radius: 100%;
+	aspect-ratio: 1;
+}
+</style>
