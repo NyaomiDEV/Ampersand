@@ -55,5 +55,5 @@ export async function removeTag(uuid: UUID){
 }
 
 export function getTagFromNameHashtag(name: string){
-	return tags.value.find(x => x.name.toLowerCase().replace(" ", "") === name.toLowerCase())
+	return tags.value.find(x => x.name.toLowerCase().replace(/\s/g, "") === name.toLowerCase())
 }
