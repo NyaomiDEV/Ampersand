@@ -48,3 +48,46 @@ export async function newFrontingEntry(frontingEntry: Omit<FrontingEntry, keyof 
 		uuid
 	});
 }
+
+export async function removeFronter(member: Member) {
+	const f = getCurrentFrontEntryForMember(member);
+	if(!f) return;
+
+	await getTable().update(f.uuid, {
+		endTime: new Date()
+	});
+}
+
+export async function setMainFronter(member: Member, value: boolean){
+	const f = getCurrentFrontEntryForMember(member);
+	if (!f) return;
+
+	await getTable().update(f.uuid, {
+		isMainFronter: value
+	});
+}
+
+export async function setSoleFronter(member: Member) {
+	const toUpdate = frontingEntries.value.filter(x => !x.endTime && x.member.uuid !== member.uuid).map(x => x.uuid);
+	const endTime = new Date();
+
+	for(const uuid of toUpdate){
+		await getTable().update(uuid, {
+			endTime
+		});
+	}
+
+	if(!getCurrentFrontEntryForMember(member)){
+		await newFrontingEntry({
+			member: member.uuid,
+			startTime: endTime,
+			isMainFronter: false
+		});
+	}
+}
+
+export function getCurrentFrontEntryForMember(member: Member){
+	return frontingEntries.value.find(x => {
+		return x.endTime === undefined && x.member.uuid === member.uuid
+	});
+}

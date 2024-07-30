@@ -1,6 +1,13 @@
 {
 	"header": "Members",
 	"searchPlaceholder": "Search members...",
+	"actions": {
+		"addToFront": "Add to front",
+		"setMainFronter": "Set as main fronter",
+		"unsetMainFronter": "Unset main fronter",
+		"setSoleFronter": "Set as front",
+		"removeFromFront": "Remove from front"
+	},
 	"edit": {
 		"headerAdd": "Add member",
 		"headerEdit": "Edit member",

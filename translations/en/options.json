@@ -9,7 +9,19 @@
 		"systemName": "System name"
 	},
 	"frontHistory": {
-		"header": "Front history"
+		"header": "Front history",
+		"edit": {
+			"header": "Edit fronting entry",
+			"member": "Edit member",
+			"startTime": "Edit start time",
+			"endTime": "Edit end time",
+			"endTimeUnavailable": "To edit the end time, first remove this member from front",
+			"isMainFronter": "Main fronter?",
+			"delete": {
+				"title": "Delete fronting entry",
+				"desc": "You won't be able to undo this action!"
+			}
+		}
 	},
 	"messageBoard": {
 		"header": "Message board"

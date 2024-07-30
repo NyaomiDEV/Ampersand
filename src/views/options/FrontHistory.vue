@@ -1,8 +1,22 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton} from '@ionic/vue';
-	import { inject } from 'vue';
+	import { inject, provide, ref } from 'vue';
+	import FrontingEntryInList from '../../components/FrontingEntryInList.vue';
+	import { frontingEntries, FrontingEntryComplete } from '../../lib/db/entities/frontingEntries';
+	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
 
 	const isIOS = inject<boolean>("isIOS");
+
+	const frontingEntry = ref();
+	provide("frontingEntry", frontingEntry);
+
+	const isOpen = ref(false);
+	provide("isOpen", isOpen);
+
+	function showModal(clickedFrontingEntry: FrontingEntryComplete){
+		frontingEntry.value = clickedFrontingEntry;
+		isOpen.value = true;
+	}
 </script>
 
 <template>
@@ -18,8 +32,10 @@
 		
 		<IonContent>
 			<IonList :inset="isIOS">
-
+				<FrontingEntryInList v-for="entry in frontingEntries" :entry @entryClicked="showModal(entry)" />
 			</IonList>
 		</IonContent>
+
+		<FrontingEntryEdit />
 	</IonPage>
 </template>

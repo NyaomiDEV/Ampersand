@@ -15,13 +15,13 @@
 
 	const props = defineProps<{
 		member: Member,
+		highlight: boolean
 	}>();
-
 </script>
 
 <template>
 	<IonItemSliding>
-		<IonItem button @click="(e) => $emit('memberClicked', e)">
+		<IonItem button @click="(e) => $emit('memberClicked', e)" :style="highlight ? {'--background': 'var(--ion-background-color-step-150)'} : undefined">
 			<IonAvatar class="with-outline" slot="start" :style="{ outlineColor: props.member.color }" v-if="props.member.image">
 				<img aria-hidden="true" :src="getBlobURL(props.member.image)" />
 			</IonAvatar>

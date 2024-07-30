@@ -4,7 +4,6 @@
 		IonHeader,
 		IonToolbar,
 		IonTitle,
-		IonButton,
 		IonIcon,
 		IonList,
 		IonInput,
@@ -14,7 +13,6 @@
 		IonItem,
 		modalController,
 		IonModal,
-		IonButtons,
 		IonSegment,
 		IonSegmentButton
 	} from "@ionic/vue";
@@ -22,12 +20,10 @@
 
 	import {
 		saveOutline as saveIOS,
-		chevronBack as backIOS,
 		trashBinOutline as trashIOS
 	} from "ionicons/icons";
 
 	import saveMD from "@material-design-icons/svg/outlined/save.svg";
-	import backMD from "@material-design-icons/svg/outlined/arrow_back.svg";
 	import trashMD from "@material-design-icons/svg/outlined/delete.svg";
 
 	import { Tag, getTable, newTag, removeTag } from '../lib/db/entities/tags';
@@ -88,14 +84,9 @@
 </script>
 
 <template>
-	<IonModal ref="self" :isOpen @willPresent="present" @didDismiss="dismiss" v-if="tag">
+	<IonModal class="sheet-modal" ref="self" :isOpen @willPresent="present" @didDismiss="dismiss" :breakpoints="[0,1]" initialBreakpoint="1" v-if="tag">
 		<IonHeader>
 			<IonToolbar>
-				<IonButtons slot="start">
-					<IonButton shape="round" fill="clear" @click="dismiss">
-						<IonIcon slot="icon-only" :md="backMD" :ios="backIOS"></IonIcon>
-					</IonButton>
-				</IonButtons>
 				<IonTitle>{{ tag.type === "member" ? $t("options:tagManagement.edit.header.member") : $t("options:tagManagement.edit.header.journal") }}</IonTitle>
 			</IonToolbar>
 		</IonHeader>
@@ -152,20 +143,16 @@
 </template>
 
 <style scoped>
-	ion-modal {
-		--width: 100%;
-		--height: 100%;
+	ion-modal.sheet-modal {
+		--height: 50%;
+		--border-radius: 16px;
 	}
 
 	ion-content {
 		--padding-bottom: 80px;
 	}
 
-	ion-input, ion-textarea {
-		margin-top: 16px;
-	}
-
-	ion-item {
-		margin-bottom: 16px;
+	ion-input {
+		margin: 16px 0;
 	}
 </style>
