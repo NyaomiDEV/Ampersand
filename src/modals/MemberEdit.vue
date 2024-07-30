@@ -17,8 +17,7 @@
 		IonItem,
 		modalController,
 		IonModal,
-		IonButtons,
-		IonChip
+		IonButtons
 	} from "@ionic/vue";
 	import Color from "../components/Color.vue";
 	import TagChip from "../components/TagChip.vue";
@@ -193,16 +192,6 @@
 					<IonItem lines="none">
 						<IonTextarea mode="md" fill="outline" auto-grow :label="$t('members:edit.description')" labelPlacement="floating" v-model="member.description" />
 					</IonItem>
-					<IonItem button lines="none" @click="isTagListSelectOpen = true">
-						<IonLabel>
-							{{ $t("members:edit.tags") }}
-							<div class="member-tags">
-								<TagChip v-if="tags?.length" v-for="tag in member.tags" :tag />
-							</div>
-						</IonLabel>
-
-						<TagListSelect :tags="member.tags" :isOpen="isTagListSelectOpen" />
-					</IonItem>
 					<IonItem button lines="none">
 						<Color v-model="member.color" @update:model-value="setAccent">
 							<IonLabel>
@@ -223,6 +212,16 @@
 								{{ $t("members:edit.isArchived") }}
 							</IonLabel>
 						</IonToggle>
+					</IonItem>
+					<IonItem button lines="none" @click="isTagListSelectOpen = true">
+						<IonLabel>
+							{{ $t("members:edit.tags") }}
+							<div class="member-tags">
+								<TagChip v-if="tags?.length" v-for="tag in member.tags" :tag />
+							</div>
+						</IonLabel>
+
+						<TagListSelect :tags="member.tags" :isOpen="isTagListSelectOpen" />
 					</IonItem>
 			</IonList>
 
