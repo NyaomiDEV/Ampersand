@@ -1,18 +1,41 @@
+import { ref, Ref, watch } from "vue";
 import { db } from "..";
 import { makeUUIDv5 } from "../../util/uuid";
 import { UUID, UUIDable } from "../types";
 import { getSystemUUID } from "./system";
+import { from, useObservable } from "@vueuse/rxjs";
+import { liveQuery } from "dexie";
+import { Member, members } from "./members";
 
 export type FrontingEntry = UUIDable & {
 	member: UUID,
 	startTime: Date,
 	endTime?: Date,
+	isMainFronter: boolean,
 	customStatus?: string
 }
+
+export type FrontingEntryComplete = Omit<FrontingEntry, "member"> & { member: Member }
 
 export function getTable(){
 	return db.frontingEntries;
 }
+
+export const frontingEntries: Ref<FrontingEntryComplete[]> = ref([]);
+
+export async function updateFrontingEntriesRef() {
+	const _frontingEntries = await getTable().toArray();
+	frontingEntries.value = _frontingEntries.map(x => ({
+		...x,
+		member: members.value.find(y => y.uuid === x.member)!
+	}));
+}
+
+watch([
+	useObservable(from(liveQuery(() => getTable().toArray()))),
+	members
+], updateFrontingEntriesRef, { immediate: true });
+
 
 function genid(name: string) {
 	return makeUUIDv5(getSystemUUID(), `frontingEntries\0${name}`);
