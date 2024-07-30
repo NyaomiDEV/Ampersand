@@ -49,7 +49,12 @@
 		"header": "App settings"
 	},
 	"security": {
-		"header": "Security"
+		"header": "Security",
+		"applock": {
+			"title": "App lock",
+			"desc": "Lock the application with a 4-number PIN code"
+		},
+		"pin": "Modify PIN"
 	},
 	"accessibility": {
 		"header": "Accessibility",

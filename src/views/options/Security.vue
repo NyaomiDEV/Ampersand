@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton} from '@ionic/vue';
+	import { IonContent, IonHeader, IonLabel, IonItem, IonList, IonPage, IonTitle, IonToolbar, IonToggle, IonBackButton} from '@ionic/vue';
 	import { inject } from 'vue';
 
 	const isIOS = inject<boolean>("isIOS");
@@ -18,6 +18,21 @@
 		
 		<IonContent>
 			<IonList :inset="isIOS">
+				<IonItem>
+					<IonToggle>
+						<IonLabel>
+							<h3>{{ $t("options:security.applock.title") }}</h3>
+							<p>{{ $t("options:security.applock.desc") }}</p>
+						</IonLabel>
+					</IonToggle>
+				</IonItem>
+
+				<IonItem button :detail="true">
+					<IonLabel>
+						<h3>{{ $t("options:security.pin") }}</h3>
+					</IonLabel>
+
+				</IonItem>
 
 			</IonList>
 		</IonContent>
