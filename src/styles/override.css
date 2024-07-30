@@ -28,6 +28,9 @@ p {
 	-webkit-box-shadow: unset;
 }
 
+.md3 ion-fab-button {
+	--border-radius: 16px;
+}
 
 /* Segment Buttons */
 .md3 ion-segment.segment-alt ion-segment-button.md::part(native) {
