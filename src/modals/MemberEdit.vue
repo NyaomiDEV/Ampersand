@@ -30,7 +30,8 @@
 		personOutline as personIOS,
 		chevronBack as backIOS,
 		newspaperOutline as newspaperIOS,
-		journalOutline as journalIOS
+		journalOutline as journalIOS,
+		trashBinOutline as trashIOS
 	} from "ionicons/icons";
 
 	import pencilMD from "@material-design-icons/svg/outlined/edit.svg";
@@ -39,6 +40,7 @@
 	import backMD from "@material-design-icons/svg/outlined/arrow_back.svg";
 	import newspaperMD from "@material-design-icons/svg/outlined/newspaper.svg";
 	import journalMD from "@material-design-icons/svg/outlined/book.svg";
+	import trashMD from "@material-design-icons/svg/outlined/delete.svg";
 
 	import { Member, getTable, newMember } from '../lib/db/entities/members';
 	import { tags } from "../lib/db/entities/tags";
@@ -76,7 +78,7 @@
 
 		if(!uuid){
 			await newMember(_member);
-			await modalController.dismiss(null, "added");
+			await modalController.dismiss(undefined, "added");
 
 			return;
 		}
@@ -93,6 +95,16 @@
 		if(files.length){
 			member.value.image = await resizeImage(files[0]);
 		}
+	}
+
+	async function deleteMember() {
+		if(!member.value || !member.value.uuid) return;
+
+		await getTable().delete(member.value.uuid);
+		
+		try{
+			await modalController.dismiss(undefined, "deleted");
+		}catch(_){}
 	}
 
 	function dismiss(){
@@ -209,6 +221,13 @@
 						</IonLabel>
 
 						<TagListSelect :tags="member.tags" :isOpen="isTagListSelectOpen" />
+					</IonItem>
+					<IonItem button lines="none" v-if="member.uuid" @click="deleteMember">
+						<IonIcon :ios="trashIOS" :md="trashMD" slot="start" aria-hidden="true" />
+						<IonLabel>
+							<h3>{{ $t("members:edit.delete.title") }}</h3>
+							<p>{{ $t("members:edit.delete.desc") }}</p>
+						</IonLabel>
 					</IonItem>
 			</IonList>
 

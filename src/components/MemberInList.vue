@@ -5,10 +5,9 @@
 		IonAvatar,
 		IonLabel,
 		IonItemOptions,
-		IonItemOption,
 	} from "@ionic/vue";
 
-	import { Member, getTable } from '../lib/db/entities/members';
+	import { Member } from '../lib/db/entities/members';
 	import { getBlobURL } from '../lib/util/blob';
 	import { tags } from "../lib/db/entities/tags";
 
@@ -16,43 +15,36 @@
 
 	const props = defineProps<{
 		member: Member,
-		canDelete: boolean
 	}>();
 
-	const member = props.member;
-	const canDelete = props.canDelete;
-
-	async function removeFromDatabase() {
-		await getTable().delete(member.uuid);
-	}
 </script>
 
 <template>
 	<IonItemSliding>
-		<IonItem button>
-			<IonAvatar class="with-outline" slot="start" :style="{ outlineColor: member.color }" v-if="member.image">
-				<img aria-hidden="true" :src="getBlobURL(member.image)" />
+		<IonItem button @click="(e) => $emit('memberClicked', e)">
+			<IonAvatar class="with-outline" slot="start" :style="{ outlineColor: props.member.color }" v-if="props.member.image">
+				<img aria-hidden="true" :src="getBlobURL(props.member.image)" />
 			</IonAvatar>
 			<IonLabel>
 				<p>
 					{{
 						[
-							member.role,
-							member.isCustomFront ? $t("members:edit.customFront") : null,
-							member.isArchived ? $t("members:edit.archived") : null
+							props.member.role,
+							props.member.isCustomFront ? $t("members:edit.customFront") : null,
+							props.member.isArchived ? $t("members:edit.archived") : null
 						].filter(Boolean).join(" - ")
 					}}
 				</p>
 				<h2>
-					{{ member.name }}
+					{{ props.member.name }}
 				</h2>
 				<div class="member-tags">
-					<TagChip v-if="tags?.length" v-for="tag in member.tags" :tag="tags.find(x => x.uuid === tag)!" />
+					<TagChip v-if="tags?.length" v-for="tag in props.member.tags" :tag="tags.find(x => x.uuid === tag)!" />
 				</div>
 			</IonLabel>
 		</IonItem>
 		<IonItemOptions>
-			<IonItemOption v-if="canDelete" color="danger" @click="removeFromDatabase()">Delete</IonItemOption>
+			<slot name="options"></slot>
 		</IonItemOptions>
 	</IonItemSliding>
 </template>

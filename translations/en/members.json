@@ -16,6 +16,10 @@
 		"archived": "Archived",
 		"isArchived": "Set as archived",
 		"showBoardEntries": "Show board entries",
-		"showJournalEntries": "Show journal entries"
+		"showJournalEntries": "Show journal entries",
+		"delete": {
+			"title": "Delete member",
+			"desc": "You won't be able to undo this action!"
+		}
 	}
 }

@@ -69,7 +69,7 @@
 		
 		<IonContent>
 			<IonList :inset="isIOS">
-				<MemberInList v-for="member in members" :member :canDelete="true" :key="JSON.stringify(member)" @click="showModal(member)"/>
+				<MemberInList v-for="member in members" :member :canDelete="true" :key="JSON.stringify(member)" @memberClicked="showModal(member)"/>
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
