@@ -92,11 +92,12 @@
 						<IonRange
 							v-model="config.fontScale"
 							:label="config.fontScale.toString()"
-							labelPlacement="end"
+							labelPlacement="stacked"
 							:min="0.5"
 							:max="1.5"
 							:step="0.1"
 							:snaps="true"
+							:ticks="false"
 						/>
 					</IonLabel>
 				</IonItem>
@@ -107,7 +108,7 @@
 						<IonRange
 							v-model="config.chatFontScale"
 							:label="config.chatFontScale.toString()"
-							labelPlacement="end"
+							labelPlacement="stacked"
 							:min="0.5"
 							:max="1.5"
 							:step="0.1"
