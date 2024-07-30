@@ -5,24 +5,22 @@
 		IonLabel
 	} from "@ionic/vue";
 
-	import { inject } from "vue";
 	import { Tag } from "../lib/db/entities/tags";
 
-	const tags = inject<Tag[]>("tags");
 	const props = defineProps<{
-		tag: string
+		tag: Tag
 	}>();
 </script>
 
 <template>
 	<IonChip>
-		<IonAvatar v-if="tags?.find(x => x.uuid === props.tag)!.color">
+		<IonAvatar v-if="props.tag.color">
 			<div :style="{
-				backgroundColor: tags?.find(x => x.uuid === props.tag)!.color
+				backgroundColor: props.tag.color
 			}"></div>
 		</IonAvatar>
 		<IonLabel>
-			{{ tags?.find(x => x.uuid === props.tag)!.name }}
+			{{ props.tag.name }}
 		</IonLabel>
 	</IonChip>
 </template>

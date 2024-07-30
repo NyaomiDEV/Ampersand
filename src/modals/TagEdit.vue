@@ -31,65 +31,54 @@
 	import trashMD from "@material-design-icons/svg/outlined/delete.svg";
 
 	import { Tag, getTable, newTag, removeTag } from '../lib/db/entities/tags';
-	import { Ref, inject, ref } from "vue";
+	import { Ref, inject, ref, toRaw } from "vue";
 	import { addMaterialColors, unsetMaterialColors } from "../lib/theme";
+	import { PartialBy } from "../lib/db/types";
 
-	type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
-	const isOpen = inject<Ref<boolean>>("isOpen");
-	const props = defineProps<{
-		tag?: PartialBy<Tag, "uuid">,
-		add: boolean,
-		edit?: boolean
-	}>();
-	
-	const tag = ref({
-		...props.tag || {},
-		name: props.tag?.name || "",
-		type: props.tag?.type || "member",
-	} as PartialBy<Tag, "uuid">);
+	const isOpen = inject<Ref<boolean>>("isOpen")!;
+	const tag = inject<Ref<PartialBy<Tag, "uuid"> | undefined>>("tag")!;
+
+	const self = ref();
 
 	function dismiss(){
-		if(isOpen) {
+		if(isOpen)
 			isOpen.value = false;
-			tag.value = {
-				...props.tag || {},
-				name: props.tag?.name || "",
-				type: props.tag?.type || "member",
-			};
-		}
 	}
 
 	async function save(){
-		const { uuid, ...tagWithoutUUID } = tag.value;
+		if(!tag.value) return;
 
-		if(!props.add){
-			await getTable().update(uuid, tagWithoutUUID);
+		const uuid = tag.value?.uuid;
+		const _tag = toRaw(tag.value);
 
-			// update tag in props, since it's reactive
-			for(const prop in tagWithoutUUID)
-				props.tag![prop] = tagWithoutUUID[prop];
-
-			try{
-				await modalController.dismiss(undefined, "modified");
-			}catch(_){}
-			// catch an error because the type might get changed, causing the parent to be removed from DOM
-			// however it's safe for us to ignore
-
-		} else {
-			await newTag(tagWithoutUUID);
-			await modalController.dismiss(undefined, "added");
+		if(!uuid){
+			await newTag(_tag);
+			await modalController.dismiss(null, "added");
+	
+			return;
 		}
+
+		await getTable().update(uuid, _tag);
+
+		try{
+			await modalController.dismiss(null, "modified");
+		}catch(_){}
+		// catch an error because the type might get changed, causing the parent to be removed from DOM
+		// however it's safe for us to ignore
 	}
 
 	async function deleteTag(){
-		await removeTag(tag.value!.uuid!);
+		if(!tag.value) return;
+
+		await removeTag(tag.value.uuid!);
 		try{
 			await modalController.dismiss(undefined, "deleted");
 		}catch(_){}
 	}
 
-	const self = ref();
-	function setAccent() {
+	function present() {
+		if(!tag.value) return;
+
 		if(tag.value.color && tag.value.color !== "#000000"){
 			addMaterialColors(tag.value.color, self.value.$el);
 		} else {
@@ -99,7 +88,7 @@
 </script>
 
 <template>
-	<IonModal ref="self" :isOpen @willPresent="setAccent" @didDismiss="dismiss">
+	<IonModal ref="self" :isOpen @willPresent="present" @didDismiss="dismiss" v-if="tag">
 		<IonHeader>
 			<IonToolbar>
 				<IonButtons slot="start">
@@ -118,7 +107,7 @@
 					</IonItem>
 
 					<IonItem button lines="none">
-						<Color v-model="tag.color" @update:model-value="setAccent">
+						<Color v-model="tag.color" @update:model-value="present">
 							<IonLabel>
 								{{ $t("options:tagManagement.edit.color") }}
 							</IonLabel>

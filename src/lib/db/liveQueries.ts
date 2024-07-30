@@ -1,35 +1,34 @@
-import { from, useObservable } from "@vueuse/rxjs";
-import { liveQuery } from "dexie";
+
 import { Ref, ref, watch } from "vue";
-import { Member, getMembersFromFilterQuery, getTable as getMembersTable } from "./entities/members";
-import { Tag, getTable as getTagsTable } from "./entities/tags";
+import { Member, getMembersFromFilterQuery, members } from "./entities/members";
+import { Tag, getTable as getTagsTable, tags } from "./entities/tags";
 
 export function getFilteredMembers(search: Ref<string>){
-	const members = ref<Member[]>();
+	const _members = ref<Member[]>();
 
 	watch([
 		search,
-		useObservable(from(liveQuery(() => getMembersTable().toArray())))
+		members,
 	], async () => {
-		members.value = await getMembersFromFilterQuery(search.value);
+		_members.value = await getMembersFromFilterQuery(search.value);
 	}, { immediate: true });
 
-	return members;
+	return _members;
 }
 
 export function getFilteredTags(search: Ref<string>, type: Ref<string>) {
-	const tags = ref<Tag[]>();
+	const _tags = ref<Tag[]>();
 
 	watch([
 		search,
 		type,
-		useObservable(from(liveQuery(() => getTagsTable().toArray())))
+		tags
 	], async () => {
 		if(search.value.length == 0)
-			tags.value = await getTagsTable().filter(x => x.type === type.value).toArray();
+			_tags.value = await getTagsTable().filter(x => x.type === type.value).toArray();
 		else
-			tags.value = await getTagsTable().where("name").startsWithIgnoreCase(search.value).filter(x => x.type === type.value).toArray();
+			_tags.value = await getTagsTable().where("name").startsWithIgnoreCase(search.value).filter(x => x.type === type.value).toArray();
 	}, { immediate: true });
 
-	return tags;
+	return _tags;
 }

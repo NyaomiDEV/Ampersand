@@ -41,62 +41,54 @@
 	import journalMD from "@material-design-icons/svg/outlined/book.svg";
 
 	import { Member, getTable, newMember } from '../lib/db/entities/members';
-	import { Tag } from "../lib/db/entities/tags";
+	import { tags } from "../lib/db/entities/tags";
 	import { getBlobURL } from '../lib/util/blob';
 	import { getFiles } from "../lib/util/misc";
 	import { resizeImage } from "../lib/util/image";
 	import { Ref, inject, provide, ref, toRaw } from "vue";
 	import { getMarkdownFor } from "../lib/markdown";
 	import { addMaterialColors, unsetMaterialColors } from "../lib/theme";
+	import { PartialBy } from "../lib/db/types";
 
-	type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
-	const isOpen = inject<Ref<boolean>>("isOpen");
-	const props = defineProps<{
-		member?: PartialBy<Member, "uuid">,
-		add: boolean,
-		edit?: boolean
-	}>();
-	const isIOS = inject<boolean>("isIOS");
+	const isIOS = inject<boolean>("isIOS")!;
+	const isOpen = inject<Ref<boolean>>("isOpen")!;
+	const member = inject<Ref<PartialBy<Member, "uuid"> | undefined>>("member")!;
 
 	const isTagListSelectOpen = ref(false);
 	provide("isTagListSelectionOpen", isTagListSelectOpen);
-	
-	const member = ref({
-		...props.member || {},
-		name: props.member?.name || "",
-		isArchived: props.member?.isArchived || false,
-		isCustomFront: props.member?.isCustomFront || false,
-		tags: props.member?.tags || [],
-	} as PartialBy<Member, "uuid">);
 
-	const isEditing = ref(props.add || props.edit);
+	const isEditing = ref(false);
+	const self = ref();
 
 	async function toggleEditing(){
-		if(isEditing.value){
-			const { uuid, ...memberWithoutUUID } = member.value;
+		if(!member.value) return;
 
-			// tags will be proxy
-			memberWithoutUUID.tags = toRaw(memberWithoutUUID.tags);
-
-			console.log(memberWithoutUUID);
-			if(!props.add){
-				await getTable().update(uuid, memberWithoutUUID);
-
-				// update member in props, since it's reactive
-				for(const prop in memberWithoutUUID)
-					props.member![prop] = memberWithoutUUID[prop];
-				
-				isEditing.value = false;
-			} else {
-				await newMember(memberWithoutUUID);
-				await modalController.dismiss(null, "added");
-			}
-		} else {
+		if(!isEditing.value){
 			isEditing.value = true;
+			return;
 		}
+
+		const uuid = member.value.uuid;
+		const _member = toRaw(member.value);
+
+		// tags will be proxy
+		_member.tags = toRaw(_member.tags);
+
+		if(!uuid){
+			await newMember(_member);
+			await modalController.dismiss(null, "added");
+
+			return;
+		}
+
+		await getTable().update(uuid, _member);
+			
+		isEditing.value = false;
 	}
 
 	async function modifyPicture(){
+		if(!member.value) return;
+
 		const files = await getFiles();
 		if(files.length){
 			member.value.image = await resizeImage(files[0]);
@@ -104,32 +96,27 @@
 	}
 
 	function dismiss(){
-		if(isOpen) {
+		if(isOpen)
 			isOpen.value = false;
-			member.value = {
-				...props.member || {},
-				name: props.member?.name || "",
-				isArchived: props.member?.isArchived || false,
-				isCustomFront: props.member?.isCustomFront || false,
-				tags: props.member?.tags || [],
-			};
-		}
 	}
 
-	const self = ref();
-	function setAccent() {
+	function present() {
+		if(!member.value) return;
+
+		// are we editing?
+		isEditing.value = !member.value.uuid;
+
+		// set color
 		if(member.value.color && member.value.color !== "#000000"){
 			addMaterialColors(member.value.color, self.value.$el);
 		} else {
 			unsetMaterialColors(self.value.$el);
 		}
 	}
-
-	const tags = inject<Tag[]>("tags");
 </script>
 
 <template>
-	<IonModal ref="self" :isOpen @willPresent="setAccent" @didDismiss="dismiss">
+	<IonModal ref="self" :isOpen @willPresent="present" @didDismiss="dismiss" v-if="member">
 		<IonHeader>
 			<IonToolbar>
 				<IonButtons slot="start">
@@ -137,7 +124,7 @@
 						<IonIcon slot="icon-only" :md="backMD" :ios="backIOS"></IonIcon>
 					</IonButton>
 				</IonButtons>
-				<IonTitle>{{ props.add ? $t("members:edit.headerAdd") : $t("members:edit.headerEdit") }}</IonTitle>
+				<IonTitle>{{ !member.uuid ? $t("members:edit.headerAdd") : $t("members:edit.headerEdit") }}</IonTitle>
 			</IonToolbar>
 		</IonHeader>
 
@@ -160,7 +147,7 @@
 			</div>
 
 			<div class="member-tags" v-if="!isEditing">
-				<TagChip v-if="tags?.length" v-for="tag in member.tags" :tag />
+				<TagChip v-if="tags?.length" v-for="tag in member.tags" :tag="tags.find(x => x.uuid === tag)!" />
 			</div>
 
 			<div class="member-description" v-if="!isEditing">
@@ -193,7 +180,7 @@
 						<IonTextarea mode="md" fill="outline" auto-grow :label="$t('members:edit.description')" labelPlacement="floating" v-model="member.description" />
 					</IonItem>
 					<IonItem button lines="none">
-						<Color v-model="member.color" @update:model-value="setAccent">
+						<Color v-model="member.color" @update:model-value="present">
 							<IonLabel>
 								{{ $t("members:edit.color") }}
 							</IonLabel>
@@ -217,7 +204,7 @@
 						<IonLabel>
 							{{ $t("members:edit.tags") }}
 							<div class="member-tags">
-								<TagChip v-if="tags?.length" v-for="tag in member.tags" :tag />
+								<TagChip v-if="tags?.length" v-for="tag in member.tags" :tag="tags.find(x => x.uuid === tag)!" />
 							</div>
 						</IonLabel>
 

@@ -1,8 +1,11 @@
+import { Ref, ref, watch } from "vue";
 import { db } from "..";
 import { parseMemberFilterQuery } from "../../util/filterQuery";
 import { makeUUIDv5 } from "../../util/uuid";
 import { UUID, UUIDable } from "../types";
 import { getSystemUUID } from "./system";
+import { from, useObservable } from "@vueuse/rxjs";
+import { liveQuery } from "dexie";
 
 export type Member = UUIDable & {
 	name: string,
@@ -13,12 +16,20 @@ export type Member = UUIDable & {
 	color?: string, // todo
 	isArchived: boolean,
 	isCustomFront: boolean, // todo
-	tags?: UUID[] // array of UUIDs
+	tags: UUID[] // array of UUIDs
 }
 
 export function getTable() {
 	return db.members;
 }
+
+export const members: Ref<Member[]> = ref([]);
+
+export async function updateMembersRef(){
+	members.value = await getTable().toArray();
+}
+
+watch([useObservable(from(liveQuery(() => getTable().toArray())))], updateMembersRef, { immediate: true });
 
 function genid(name: string) {
 	return makeUUIDv5(getSystemUUID(), `members\0${name}`);

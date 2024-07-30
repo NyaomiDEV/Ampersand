@@ -1,21 +1,38 @@
 <script setup lang="ts">
 	import { IonContent, IonSearchbar, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonSegment, IonSegmentButton, IonLabel, IonFab, IonFabButton, IonIcon} from '@ionic/vue';
-	import { inject, provide, ref } from 'vue';
+	import { inject, provide, Ref, ref } from 'vue';
 	import { addOutline as addIOS } from "ionicons/icons";
 	import addMD from "@material-design-icons/svg/outlined/add.svg";
 	import TagEdit from "../../modals/TagEdit.vue";
 	import TagInList from "../../components/TagInList.vue";
 	import { getFilteredTags } from '../../lib/db/liveQueries';
+	import { Tag } from '../../lib/db/entities/tags';
+import { PartialBy } from '../../lib/db/types';
 
 	const isIOS = inject<boolean>("isIOS");
+
+	const type = ref("member");
+	const search = ref("");
+	const tags = getFilteredTags(search, type);
 
 	const isOpen = ref(false);
 	provide("isOpen", isOpen);
 
-	const type = ref("member");
+	const tag: Ref<PartialBy<Tag, "uuid"> | undefined> = ref();
+	provide("tag", tag);
 
-	const search = ref("");
-	const tags = getFilteredTags(search, type);
+	function showModal(clickedTag?: Tag){
+		if(clickedTag)
+			tag.value = clickedTag;
+		else {
+			tag.value = {
+				name: "",
+				type: "member"
+			};
+		}
+
+		isOpen.value = true;
+	}
 </script>
 
 <template>
@@ -49,16 +66,16 @@
 				</IonSegmentButton>
 			</IonSegment>
 			<IonList :inset="isIOS">
-				<TagInList v-for="tag in tags" :tag :key="tag.uuid"/>
+				<TagInList v-for="tag in tags" :tag :key="JSON.stringify(tag)" @click="showModal(tag)"/>
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton @click="isOpen = true">
+				<IonFabButton @click="showModal()">
 					<IonIcon :ios="addIOS" :md="addMD" />
 				</IonFabButton>
 			</IonFab>
 		</IonContent>
 
-		<TagEdit :add="true" />
+		<TagEdit />
 	</IonPage>
 </template>

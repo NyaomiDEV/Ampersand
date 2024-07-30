@@ -11,7 +11,6 @@
 
 	const config = reactive(getConfigEntry("accessibility") as AccessibilityConfig);
 	watch(config, () => {
-		console.log(config);
 		saveConfig({
 			accessibility: { ...config }
 		});

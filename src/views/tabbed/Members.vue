@@ -11,32 +11,40 @@
 		IonFabButton,
 		IonIcon
 	} from '@ionic/vue';
-	import { inject, onMounted, provide, ref, watch } from 'vue';
+	import { inject, provide, Ref, ref } from 'vue';
 	import { getFilteredMembers } from '../../lib/db/liveQueries';
 	import { addOutline as addIOS } from "ionicons/icons";
 	import addMD from "@material-design-icons/svg/outlined/add.svg";
 	import MemberEdit from '../../modals/MemberEdit.vue';
 	import MemberInList from '../../components/MemberInList.vue';
-	import { Tag, getTable as getTagsTable } from '../../lib/db/entities/tags';
-import { from, useObservable } from '@vueuse/rxjs';
-import { liveQuery } from 'dexie';
+	import { Member } from '../../lib/db/entities/members';
+	import { PartialBy } from '../../lib/db/types';
 
 	const isIOS = inject<boolean>("isIOS");
-
-	const tags = ref<Tag[]>([]);
-	provide("tags", tags);
-
-	watch([
-		useObservable(from(liveQuery(() => getTagsTable().toArray())))
-	], async () => {
-		tags.value = await getTagsTable().toArray();
-	}, { immediate: true });
 
 	const search = ref("");
 	const members = getFilteredMembers(search);
 
+	const member: Ref<PartialBy<Member, "uuid"> | undefined> = ref();
+	provide("member", member);
+
 	const isOpen = ref(false);
 	provide("isOpen", isOpen);
+
+	function showModal(clickedMember?: Member){
+		if(clickedMember)
+			member.value = clickedMember;
+		else {
+			member.value = {
+				name: "",
+				isArchived: false,
+				isCustomFront: false,
+				tags: []
+			};
+		}
+
+		isOpen.value = true;
+	}
 </script>
 
 <template>
@@ -61,17 +69,16 @@ import { liveQuery } from 'dexie';
 		
 		<IonContent>
 			<IonList :inset="isIOS">
-
-				<MemberInList v-for="member in members" :member :canDelete="true" :key="member.uuid"/>
+				<MemberInList v-for="member in members" :member :canDelete="true" :key="JSON.stringify(member)" @click="showModal(member)"/>
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton @click="isOpen = true">
+				<IonFabButton @click="showModal()">
 					<IonIcon :ios="addIOS" :md="addMD" />
 				</IonFabButton>
 			</IonFab>
 		</IonContent>
 
-		<MemberEdit :edit="true" :add="true" />
+		<MemberEdit />
 	</IonPage>
 </template>
