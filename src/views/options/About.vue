@@ -18,7 +18,9 @@
 		
 		<IonContent>
 			<IonList :inset="isIOS">
-
+				<h1 class="centered-text">Ampersand</h1>
+				<p class="centered-text">{{ $t("options:about.version") }} 0.0.0 </p>
+				<p class="centered-text"> {{ $t("options:about.madein") }}</p>
 			</IonList>
 		</IonContent>
 	</IonPage>

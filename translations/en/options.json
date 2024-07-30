@@ -95,6 +95,8 @@
 		}
 	},
 	"about": {
-		"header": "About"
+		"header": "About",
+		"version": "version",
+		"madein": "Made with love in Italy"
 	}
 }

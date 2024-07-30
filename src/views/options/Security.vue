@@ -31,7 +31,6 @@
 					<IonLabel>
 						<h3>{{ $t("options:security.pin") }}</h3>
 					</IonLabel>
-
 				</IonItem>
 
 			</IonList>

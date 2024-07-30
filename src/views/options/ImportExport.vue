@@ -47,7 +47,6 @@
 						<p>{{ $t("options:importExport.import.desc") }}</p>
 					</IonLabel>				
 				</IonItem>
-
 			</IonList>
 		</IonContent>
 	</IonPage>
