@@ -28,6 +28,12 @@ p {
 	-webkit-box-shadow: unset;
 }
 
+.logo {
+	width: 192px;
+	height: 192px;
+}
+
+
 .md3 ion-fab-button {
 	--border-radius: 16px;
 }
