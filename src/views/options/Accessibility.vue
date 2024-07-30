@@ -91,8 +91,6 @@
 						<h3 class="centered-text">{{ $t("options:accessibility.fontScale.title") }}</h3>
 						<IonRange
 							v-model="config.fontScale"
-							:label="config.fontScale.toString()"
-							labelPlacement="stacked"
 							:min="0.5"
 							:max="1.5"
 							:step="0.1"
@@ -107,8 +105,6 @@
 						<h3 class="centered-text">{{ $t("options:accessibility.chatFontScale.title") }}</h3>
 						<IonRange
 							v-model="config.chatFontScale"
-							:label="config.chatFontScale.toString()"
-							labelPlacement="stacked"
 							:min="0.5"
 							:max="1.5"
 							:step="0.1"
