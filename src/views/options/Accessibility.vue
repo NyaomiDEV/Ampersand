@@ -95,7 +95,7 @@
 							:max="1.5"
 							:step="0.1"
 							:snaps="true"
-							:ticks="false"
+							:ticks="true"
 						/>
 					</IonLabel>
 				</IonItem>

@@ -29,7 +29,6 @@ p {
 }
 
 
-
 /* Segment Buttons */
 .md3 ion-segment.segment-alt ion-segment-button.md::part(native) {
 	border: 1px solid var(--color);
@@ -58,7 +57,7 @@ p {
 }
 
 
-/* Toggles */
+ /* Toggles */ 
 .md3 ion-toggle.md::part(track) {
 	background-color: var(--ion-toolbar-background);
 	width: 56px;
@@ -87,28 +86,30 @@ p {
 	background-color: var(--ion-toolbar-background);
 	width: 24px;
 	height: 24px;
-}
+} 
 
 
-/* Ranges */
-.md3 ion-range::part(bar), .md3 ion-range::part(bar-active) {
-	height: 24px;
-	border-radius: 24px;
-}
-
-.md3 ion-range::part(bar-active) {
-	transform:translateY(22px)
+/* Ranges / Sliders */
+.md3 ion-range {
+    --bar-height: 24px;
+    --bar-border-radius: 24px;
+    --knob-background: var(--ion-color-primary);
+    --knob-size: 64px;
+	--knob-border-radius: 64px;
+	--height: 88px;
 }
 
 .md3 ion-range::part(knob) {
-	background-color: var(--ion-color-primary);
-	height: 64px;
 	width: 6px;
-	border-radius: 64px;
-	border: 12px solid var(--ion-background-color);
-	transform: translateY(-24px);
+	outline: 12px solid var(--ion-background-color);
+	transform: translateX(29px);
 }
 
 .md3 ion-range::part(knob)::before {
 	display: none;
+}
+
+.md3 ion-range::part(tick) {
+	border-radius: 24px;
+	transform: scale(0.5);
 }
