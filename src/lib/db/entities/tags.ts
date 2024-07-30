@@ -54,6 +54,6 @@ export async function removeTag(uuid: UUID){
 	await getTable().delete(uuid);
 }
 
-export async function getTagFromName(name: string){
-	return await getTable().get({ name });
+export function getTagFromNameHashtag(name: string){
+	return tags.value.find(x => x.name.toLowerCase().replace(" ", "") === name.toLowerCase())
 }

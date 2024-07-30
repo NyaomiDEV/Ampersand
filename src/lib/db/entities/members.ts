@@ -43,8 +43,8 @@ export async function newMember(member: Omit<Member, keyof UUIDable>) {
 	});
 }
 
-export async function getMembersFromFilterQuery(filterQuery: string) {
-	const parsed = await parseMemberFilterQuery(filterQuery);
+export function getMembersFromFilterQuery(filterQuery: string) {
+	const parsed = parseMemberFilterQuery(filterQuery);
 
 	return getTable().where("name").startsWithIgnoreCase(parsed.query).filter(x => {
 
@@ -66,6 +66,13 @@ export async function getMembersFromFilterQuery(filterQuery: string) {
 		if (parsed.isCustomFront !== undefined) {
 			if (x.isCustomFront !== parsed.isCustomFront)
 				return false;
+		}
+
+		if (parsed.tags.length) {
+			for(const uuid of parsed.tags){
+				if (!x.tags.includes(uuid))
+					return false;
+			}
 		}
 
 		return true;

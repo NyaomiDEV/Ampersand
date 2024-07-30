@@ -1,4 +1,4 @@
-import { Tag, getTagFromName } from "../db/entities/tags";
+import { Tag, getTagFromNameHashtag } from "../db/entities/tags";
 
 export type MemberFilterQuery = {
 	query: string,
@@ -14,7 +14,7 @@ export type TagFilterQuery = {
 	type?: Tag["type"]
 };
 
-export async function parseMemberFilterQuery(search: string): Promise<MemberFilterQuery> {
+export function parseMemberFilterQuery(search: string): MemberFilterQuery {
 	const tokens = search.split(" ");
 
 	const queryTokens: string[] = [];
@@ -80,7 +80,7 @@ export async function parseMemberFilterQuery(search: string): Promise<MemberFilt
 				break;
 			case "#":
 				const probableTag = token.slice(1);
-				const tag = await getTagFromName(probableTag);
+				const tag = getTagFromNameHashtag(probableTag);
 				if(tag)
 					result.tags.push(tag.uuid)
 				else
