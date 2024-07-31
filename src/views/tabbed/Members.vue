@@ -18,8 +18,23 @@
 	} from '@ionic/vue';
 	import { inject, provide, Ref, ref } from 'vue';
 	import { getFilteredMembers } from '../../lib/db/liveQueries';
-	import { addOutline as addIOS } from "ionicons/icons";
+
+	import {
+		addOutline as addIOS,
+		personAddOutline as addToFrontIOS,
+		personRemoveOutline as removeFromFrontIOS,
+		arrowUpCircleOutline as setMainFronterIOS,
+		arrowDownCircleOutline as unsetMainFronterIOS,
+		personCircleOutline as setAsFrontIOS,
+	} from "ionicons/icons";
+
 	import addMD from "@material-design-icons/svg/outlined/add.svg";
+	import addToFrontMD from "@material-design-icons/svg/outlined/person_add.svg";
+	import removeFromFrontMD from "@material-design-icons/svg/outlined/person_remove.svg";
+	import setMainFronterMD from "@material-design-icons/svg/outlined/arrow_circle_up.svg";
+	import unsetMainFronterMD from "@material-design-icons/svg/outlined/arrow_circle_down.svg";
+	import setAsFrontMD from "@material-design-icons/svg/outlined/person_pin_circle.svg";
+
 	import MemberEdit from '../../modals/MemberEdit.vue';
 	import { Member } from '../../lib/db/entities/members';
 	import { PartialBy } from '../../lib/db/types';
@@ -121,29 +136,19 @@
 					</IonItem>
 					<IonItemOptions>
 						<IonItemOption v-if="!getCurrentFrontEntryForMember(member)" @click="addFrontingEntry(member)">
-							<IonLabel>
-								{{ $t("members:actions.addToFront") }}
-							</IonLabel>
+							<IonIcon slot="icon-only" :md="addToFrontMD" :ios="addToFrontIOS"></IonIcon>
 						</IonItemOption>
 						<IonItemOption v-if="getCurrentFrontEntryForMember(member)" @click="removeFrontingEntry(member)" color="danger">
-							<IonLabel>
-								{{ $t("members:actions.removeFromFront") }}
-							</IonLabel>
+							<IonIcon slot="icon-only" :md="removeFromFrontMD" :ios="removeFromFrontIOS"></IonIcon>
 						</IonItemOption>
 						<IonItemOption v-if="getCurrentFrontEntryForMember(member) && !getCurrentFrontEntryForMember(member)?.isMainFronter" @click="setMainFrontingEntry(member, true)" color="secondary">
-							<IonLabel>
-								{{ $t("members:actions.setMainFronter") }}
-							</IonLabel>
+							<IonIcon slot="icon-only" :md="setMainFronterMD" :ios="setMainFronterIOS"></IonIcon>
 						</IonItemOption>
 						<IonItemOption v-if="getCurrentFrontEntryForMember(member)?.isMainFronter" @click="setMainFrontingEntry(member, false)" color="secondary">
-							<IonLabel>
-								{{ $t("members:actions.unsetMainFronter") }}
-							</IonLabel>
+							<IonIcon slot="icon-only" :md="unsetMainFronterMD" :ios="unsetMainFronterIOS"></IonIcon>
 						</IonItemOption>
 						<IonItemOption @click="setSoleFrontingEntry(member)" color="tertiary">
-							<IonLabel>
-								{{ $t("members:actions.setSoleFronter") }}
-							</IonLabel>
+							<IonIcon slot="icon-only" :md="setAsFrontMD" :ios="setAsFrontIOS"></IonIcon>
 						</IonItemOption>
 					</IonItemOptions>
 				</IonItemSliding>
