@@ -2,7 +2,6 @@ import { getCompound, setCompound } from "../util/localStorage";
 import { Config } from "./types";
 
 export const defaultConfig: Config = {
-	currentSystemUUID: undefined,
 	app: {
 		language: "en",
 		view: "dashboard",

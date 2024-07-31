@@ -1,5 +1,4 @@
 export type Config = {
-	currentSystemUUID?: string,
 	app: AppConfig,
 	accessibility: AccessibilityConfig,
 	security: SecurityConfig,
