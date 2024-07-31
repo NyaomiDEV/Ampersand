@@ -55,8 +55,9 @@ if(!window.isSecureContext){
 	// Storage Manager
 	if (!await navigator.storage?.persisted()) {
 		console.log("Storage is not persisted, trying to persist now");
-		if (!await navigator.storage?.persist()) {
-			console.error("Storage cannot be made persistent, data will be lost!");
+		const persist = await navigator.storage?.persist()
+		if (!persist) {
+			console.error("Storage cannot be made persistent, data will be lost!", persist);
 		}
 	}
 
