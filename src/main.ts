@@ -48,25 +48,32 @@ import "./lib/theme/style.css";
 import { getConfigEntry } from "./lib/config";
 import { AccessibilityConfig } from "./lib/config/types";
 
-// Storage Manager
-if (!await navigator.storage.persisted()) {
-	console.log("Storage is not persisted, trying to persist now");
-		if (!await navigator.storage.persist()) {
-		console.error("Storage cannot be made persistent, data will be lost!");
+if(!window.isSecureContext){
+	console.error("Cannot continue, this is not a safe environment!");
+	document.documentElement.classList.add("hydrated");
+	document.body.innerHTML = "<h1 style='text-align: center;'>Ampersand cannot run on non-HTTPS environments! We're sorry for the trouble.<br>If you think this is an issue, report it on GitHub.</h1>";
+} else {
+	// Storage Manager
+	if (!await navigator.storage?.persisted()) {
+		console.log("Storage is not persisted, trying to persist now");
+		if (!await navigator.storage?.persist()) {
+			console.error("Storage cannot be made persistent, data will be lost!");
+		}
 	}
+
+	const darkMode = window.matchMedia("(prefers-color-scheme: dark)");
+	darkMode.addEventListener("change", updateDarkMode);
+	updateDarkMode();
+
+	activateMaterialTheme();
+	updateMaterialColors();
+
+	const fontScale = (getConfigEntry("accessibility") as AccessibilityConfig).fontScale;
+	if (fontScale !== 1)
+		document.documentElement.style.setProperty("font-size", `${fontScale}em`)
+
+	const app = createApp(App).use(IonicVue).use(router).use(I18NextVue, { i18next: i18n });
+
+	app.mount(document.body);
 }
 
-const darkMode = window.matchMedia("(prefers-color-scheme: dark)");
-darkMode.addEventListener("change", updateDarkMode);
-updateDarkMode();
-
-activateMaterialTheme();
-updateMaterialColors();
-
-const fontScale = (getConfigEntry("accessibility") as AccessibilityConfig).fontScale;
-if (fontScale !== 1)
-	document.documentElement.style.setProperty("font-size", `${fontScale}em`)
-
-const app = createApp(App).use(IonicVue).use(router).use(I18NextVue, { i18next: i18n });
-
-app.mount(document.body);
