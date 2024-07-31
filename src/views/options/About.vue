@@ -55,6 +55,8 @@
 
 	.logo {
 		margin: 32px 0;
+		width: 256px;
+		height: 256px;
 	}
 
 	.buttons {
