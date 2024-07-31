@@ -1,13 +1,14 @@
 <script setup lang="ts">
-	import { IonContent, IonSearchbar, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonSegment, IonSegmentButton, IonLabel, IonFab, IonFabButton, IonIcon} from '@ionic/vue';
+	import { IonContent, IonSearchbar, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonSegment, IonSegmentButton, IonLabel, IonFab, IonFabButton, IonIcon, IonItem} from '@ionic/vue';
 	import { inject, provide, Ref, ref } from 'vue';
 	import { addOutline as addIOS } from "ionicons/icons";
 	import addMD from "@material-design-icons/svg/outlined/add.svg";
 	import TagEdit from "../../modals/TagEdit.vue";
-	import TagInList from "../../components/TagInList.vue";
 	import { getFilteredTags } from '../../lib/db/liveQueries';
 	import { Tag } from '../../lib/db/entities/tags';
-import { PartialBy } from '../../lib/db/types';
+	import { PartialBy } from '../../lib/db/types';
+	import TagColor from '../../components/tag/TagColor.vue';
+	import TagLabel from '../../components/tag/TagLabel.vue';
 
 	const isIOS = inject<boolean>("isIOS");
 
@@ -65,7 +66,10 @@ import { PartialBy } from '../../lib/db/types';
 				</IonSegmentButton>
 			</IonSegment>
 			<IonList :inset="isIOS">
-				<TagInList v-for="tag in tags" :tag :key="JSON.stringify(tag)" @click="showModal(tag)"/>
+				<IonItem button v-for="tag in tags" :key="JSON.stringify(tag)" @click="showModal(tag)">
+					<TagColor slot="start" :tag />
+					<TagLabel :tag />
+				</IonItem>
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">

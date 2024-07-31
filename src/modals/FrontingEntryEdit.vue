@@ -206,7 +206,7 @@
 
 	ion-modal.fronting-entry-edit-modal {
 		--height: 50dvh;
-		--min-height: 512px;
+		--min-height: 600px;
 		--border-radius: 16px;
 	}
 

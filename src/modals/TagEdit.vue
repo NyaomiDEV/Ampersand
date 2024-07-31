@@ -139,6 +139,7 @@
 <style scoped>
 	ion-modal.tag-edit-modal {
 		--height: 50dvh;
+		--min-height: 600px;
 		--border-radius: 16px;
 	}
 

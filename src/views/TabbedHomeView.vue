@@ -3,7 +3,6 @@
 
 	import {
 		homeOutline as HomeIOS,
-		sparklesOutline as SparklesIOS,
 		peopleOutline as PeopleIOS,
 		bookOutline as JournalIOS,
 		chatboxEllipsesOutline as ChatIOS,
@@ -11,7 +10,6 @@
 	} 
 	from "ionicons/icons";
 
-	import SparklesMD from '@material-design-icons/svg/outlined/star.svg';
 	import PeopleMD from '@material-design-icons/svg/outlined/group.svg';
 	import JournalMD from '@material-design-icons/svg/outlined/book.svg';
 	import HomeMD from '@material-design-icons/svg/outlined/home.svg';
@@ -31,17 +29,17 @@
 					{{ $t("members:header") }}
 				</IonTabButton>
 
-				<IonTabButton tab="journal" href="/journal">
+				<IonTabButton tab="journal" href="/journal" v-if="false">
 					<IonIcon :ios="JournalIOS" :md="JournalMD" />
 					{{ $t("journal:header") }}
 				</IonTabButton>
 
-				<IonTabButton tab="dashboard" href="/dashboard">
+				<IonTabButton tab="dashboard" href="/dashboard" v-if="false">
 					<IonIcon :ios="HomeIOS" :md="HomeMD" />
 					{{ $t("dashboard:header") }}
 				</IonTabButton>
 
-				<IonTabButton tab="chats" href="/chats">
+				<IonTabButton tab="chats" href="/chats" v-if="false">
 					<IonIcon :ios="ChatIOS" :md="ChatMD" />
 					{{ $t("chats:header") }}
 				</IonTabButton>
@@ -50,12 +48,6 @@
 					<IonIcon :ios="OptionsIOS" :md="OptionsMD" />
 					{{ $t("options:options.header") }}
 				</IonTabButton>
-			
-				<IonTabButton tab="testingGrounds" href="/testingGrounds">
-					<IonIcon :ios="SparklesIOS" :md="SparklesMD" />
-					{{ $t("testingGrounds:header") }}
-				</IonTabButton>
-
 			</IonTabBar>
 		</IonTabs>
 	</IonPage>

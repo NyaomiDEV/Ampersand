@@ -20,7 +20,7 @@
 		IonButtons
 	} from "@ionic/vue";
 	import Color from "../components/Color.vue";
-	import TagChip from "../components/TagChip.vue";
+	import TagChip from "../components/tag/TagChip.vue";
 
 	import TagListSelect from "./TagListSelect.vue";
 

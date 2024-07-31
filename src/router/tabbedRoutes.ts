@@ -25,12 +25,7 @@ const tabbedRoutes: Array<RouteRecordRaw> = [
 		path: '/options',
 		name: 'Options',
 		component: () => import("../views/tabbed/Options.vue"),
-	},
-	{
-		path: '/testingGrounds',
-		name: 'testingGrounds',
-		component: () => import("../views/tabbed/TestingGrounds.vue"),
-	},
+	}
 ];
 
 export default tabbedRoutes;

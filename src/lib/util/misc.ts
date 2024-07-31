@@ -1,3 +1,7 @@
+import dayjs from "dayjs";
+import Duration from "dayjs/plugin/duration";
+dayjs.extend(Duration);
+
 export function getFiles(contentType?: string, multiple?: boolean): Promise<File[]> {
 	return new Promise(resolve => {
 		const i = document.createElement("input");
@@ -78,4 +82,12 @@ export async function decompressGzip(data: Uint8Array) {
 	}
 
 	return result;
+}
+
+export function formatWrittenTime(dateStart: Date, dateEnd: Date){
+	const duration = dayjs.duration(dayjs(dateStart).diff(dateEnd));
+
+	console.log(duration);
+
+	return duration.format("Y[y] M[M] D[d] H[h] m[m] s[s]").replace(/(?<![1-9])0\w\s?/g, "");
 }

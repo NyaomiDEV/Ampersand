@@ -7,7 +7,8 @@
 		IonList,
 		IonPage,
 		IonTitle,
-		IonToolbar
+		IonToolbar,
+		IonBackButton
 	} from '@ionic/vue';
 	import { inject } from 'vue';
 	import { newSystem, getSystemUUID } from '../../lib/db/entities/system';
@@ -25,6 +26,7 @@
 	<IonPage>
 		<IonHeader>
 			<IonToolbar>
+				<IonBackButton slot="start" defaultHref="/options/" />
 				<IonTitle>
 					{{ $t("testingGrounds:header") }}
 				</IonTitle>

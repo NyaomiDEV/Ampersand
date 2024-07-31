@@ -2,6 +2,11 @@ import { RouteRecordRaw } from "vue-router";
 
 const settings: Array<RouteRecordRaw> = [
 	{
+		path: '/options/testingGrounds',
+		name: 'Testing grounds',
+		component: () => import("../views/options/TestingGrounds.vue"),
+	},
+	{
 		path: '/options/systemSettings',
 		name: 'System Settings',
 		component: () => import("../views/options/SystemSettings.vue"),

@@ -2,6 +2,8 @@
 	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton} from '@ionic/vue';
 	import { inject } from 'vue';
 
+	import NotDoneYet from "../../components/NotDoneYet.vue";
+
 	const isIOS = inject<boolean>("isIOS");
 </script>
 
@@ -17,8 +19,8 @@
 		</IonHeader>
 		
 		<IonContent>
-			<IonList :inset="isIOS">
-
+			<NotDoneYet />
+			<IonList :inset="isIOS" v-if="false">
 			</IonList>
 		</IonContent>
 	</IonPage>

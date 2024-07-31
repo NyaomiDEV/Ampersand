@@ -13,8 +13,10 @@
 		accessibilityOutline as AccessibilityIOS,
 		swapVerticalOutline as ImportExportIOS,
 		informationCircleOutline as AboutIOS,
+		sparklesOutline as SparklesIOS,
 	} from "ionicons/icons";
 
+	import SparklesMD from '@material-design-icons/svg/outlined/star.svg';
 	import SystemMD from '@material-design-icons/svg/outlined/person.svg';
 	import FrontHistoryMD from '@material-design-icons/svg/outlined/show_chart.svg';
 	import MessageBoardMD from '@material-design-icons/svg/outlined/newspaper.svg';
@@ -46,7 +48,6 @@
 			</IonListHeader>
 
 			<IonList :inset="isIOS">
-				
 				<IonItem button routerLink="/options/systemSettings">
 					<IonIcon :ios="SystemIOS" :md="SystemMD" slot="start" aria-hidden="true" />
 					<IonLabel>{{ $t("options:systemSettings.header") }}</IonLabel>
@@ -103,6 +104,11 @@
 				<IonItem button routerLink="/options/about">
 					<IonIcon :ios="AboutIOS" :md="AboutMD" slot="start" aria-hidden="true" />
 					<IonLabel>{{ $t("options:about.header") }}</IonLabel>
+				</IonItem>
+
+				<IonItem button routerLink="/options/testingGrounds">
+					<IonIcon :ios="SparklesIOS" :md="SparklesMD" slot="start" aria-hidden="true" />
+					{{ $t("testingGrounds:header") }}
 				</IonItem>
 			</IonList>
 		</IonContent>

@@ -6,7 +6,7 @@
 	import { Member } from '../../lib/db/entities/members';
 
 	import { tags } from "../../lib/db/entities/tags";
-	import TagChip from "../TagChip.vue";
+	import TagChip from "../tag/TagChip.vue";
 
 	const props = defineProps<{
 		member: Member,

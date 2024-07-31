@@ -1,6 +1,5 @@
 <script setup lang="ts">
 	import {
-		IonAvatar,
 		IonContent,
 		IonHeader,
 		IonToolbar,
@@ -16,6 +15,8 @@
 	import { inject, ref, ShallowReactive } from "vue";
 	import { getFilteredTags } from "../lib/db/liveQueries";
 	import { Tag } from "../lib/db/entities/tags";
+	import TagColor from "../components/tag/TagColor.vue";
+	import TagLabel from "../components/tag/TagLabel.vue";
 
 	const isIOS = inject<boolean>("isIOS");
 	const selectedTags = inject<ShallowReactive<Tag[]>>("selectedTags")!;
@@ -49,13 +50,9 @@
 		<IonContent>
 			<IonList :inset="isIOS">
 				<IonItem button v-for="tag in filteredTags" :key="tag.uuid">
-					<IonAvatar slot="start" v-if="tag.color">
-						<div :style="{
-							backgroundColor: tag.color
-						}"></div>
-					</IonAvatar>
+					<TagColor slot="start" :tag />
 					<IonCheckbox :value="tag.uuid" :checked="!!selectedTags?.find(x => x.uuid === tag.uuid)" @ionChange="check">
-						{{ tag.name }}
+						<TagLabel :tag />
 					</IonCheckbox>
 				</IonItem>
 			</IonList>
