@@ -31,15 +31,9 @@
 	import { addMaterialColors, unsetMaterialColors } from "../lib/theme";
 	import { PartialBy } from "../lib/db/types";
 
-	const isOpen = inject<Ref<boolean>>("isOpen")!;
 	const tag = inject<Ref<PartialBy<Tag, "uuid"> | undefined>>("tag")!;
 
 	const self = ref();
-
-	function dismiss(){
-		if(isOpen)
-			isOpen.value = false;
-	}
 
 	async function save(){
 		if(!tag.value) return;
@@ -84,31 +78,31 @@
 </script>
 
 <template>
-	<IonModal class="sheet-modal" ref="self" :isOpen @willPresent="present" @didDismiss="dismiss" :breakpoints="[0,1]" initialBreakpoint="1" v-if="tag">
+	<IonModal class="tag-edit-modal" ref="self" @willPresent="present" :breakpoints="[0,1]" initialBreakpoint="1">
 		<IonHeader>
 			<IonToolbar>
-				<IonTitle>{{ tag.type === "member" ? $t("options:tagManagement.edit.header.member") : $t("options:tagManagement.edit.header.journal") }}</IonTitle>
+				<IonTitle>{{ tag!.type === "member" ? $t("options:tagManagement.edit.header.member") : $t("options:tagManagement.edit.header.journal") }}</IonTitle>
 			</IonToolbar>
 		</IonHeader>
 
 		<IonContent>
 			<IonList inset>
 					<IonItem lines="none">
-						<IonInput mode="md" fill="outline" :label="$t('options:tagManagement.edit.name')" labelPlacement="floating" v-model="tag.name" />
+						<IonInput mode="md" fill="outline" :label="$t('options:tagManagement.edit.name')" labelPlacement="floating" v-model="tag!.name" />
 					</IonItem>
 
 					<IonItem button lines="none">
-						<Color v-model="tag.color" @update:model-value="present">
+						<Color v-model="tag!.color" @update:model-value="present">
 							<IonLabel>
 								{{ $t("options:tagManagement.edit.color") }}
 							</IonLabel>
 						</Color>
 					</IonItem>
 
-					<IonItem lines="none" v-if="!tag.uuid">
+					<IonItem lines="none" v-if="!tag!.uuid">
 						<IonLabel>
 							<h3 class="centered-text">{{ $t("options:tagManagement.edit.type.header") }}</h3>
-							<IonSegment class="segment-alt" v-model="tag.type">
+							<IonSegment class="segment-alt" v-model="tag!.type">
 								<IonSegmentButton value="member">
 									<IonLabel>
 										{{ $t("options:tagManagement.edit.type.member") }}
@@ -124,7 +118,7 @@
 						</IonLabel>
 					</IonItem>
 
-					<IonItem button lines="none" v-if="tag.uuid" @click="deleteTag">
+					<IonItem button lines="none" v-if="tag!.uuid" @click="deleteTag">
 						<IonIcon :ios="trashIOS" :md="trashMD" slot="start" aria-hidden="true" />
 						<IonLabel>
 							<h3>{{ $t("options:tagManagement.edit.actions.delete.title") }}</h3>
@@ -134,7 +128,7 @@
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton @click="save" v-if="tag.name.length > 0">
+				<IonFabButton @click="save" v-if="tag!.name.length > 0">
 					<IonIcon :ios="saveIOS" :md="saveMD" />
 				</IonFabButton>
 			</IonFab>
@@ -143,8 +137,8 @@
 </template>
 
 <style scoped>
-	ion-modal.sheet-modal {
-		--height: 50%;
+	ion-modal.tag-edit-modal {
+		--height: 50dvh;
 		--border-radius: 16px;
 	}
 

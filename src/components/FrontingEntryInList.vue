@@ -23,14 +23,19 @@
 			<img aria-hidden="true" :src="getBlobURL(props.entry.member.image)" />
 		</IonAvatar>
 		<IonLabel>
-			<h3>
-				{{ dayjs(props.entry.startTime).format("MMMM D, HH:mm") }}
-			</h3>
-			<h3>
+			<h3 style="float: right">
 				{{
 					props.entry.endTime
 					? dayjs(props.entry.startTime).from(props.entry.endTime, true)
 					: dayjs(props.entry.startTime).fromNow(true)
+				}}
+			</h3>
+			<h3>
+				{{ dayjs(props.entry.startTime).format("MMMM D, HH:mm") }}
+				{{
+					props.entry.endTime
+					? " - " + dayjs(props.entry.endTime).format("MMMM D, HH:mm")
+					: ""
 				}}
 			</h3>
 			<h2>

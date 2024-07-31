@@ -10,6 +10,7 @@
 		IonFabButton,
 		IonLabel,
 		IonToggle,
+		IonInput,
 		IonItem,
 		modalController,
 		IonModal,
@@ -26,42 +27,30 @@
 	import trashMD from "@material-design-icons/svg/outlined/delete.svg";
 
 	import { FrontingEntryComplete, getTable } from '../lib/db/entities/frontingEntries';
-	import { Ref, WatchStopHandle, inject, ref, toRaw, watch } from "vue";
+	import { Ref, ShallowReactive, WatchStopHandle, inject, provide, ref, shallowReactive, toRaw, watch } from "vue";
+
+	import MemberSelect from "./MemberSelect.vue";
+	import MemberAvatar from "../components/member/MemberAvatar.vue";
 
 	import dayjs from "dayjs";
 	import UTC from "dayjs/plugin/utc";
 	import Timezone from "dayjs/plugin/timezone";
+	import { Member } from "../lib/db/entities/members";
 	dayjs.extend(UTC);
 	dayjs.extend(Timezone);
 
 	const isOpen = inject<Ref<boolean>>("isOpen")!;
 	const frontingEntry = inject<Ref<FrontingEntryComplete>>("frontingEntry")!;
 
-	const startTime = ref();
-	const endTime = ref();
+	const memberSelectModal = ref();
+
+	const selectedMembers: ShallowReactive<Member[]> = shallowReactive([]);
+	provide("selectedMembers", selectedMembers);
+
+	const startTime: Ref<string | undefined> = ref();
+	const endTime: Ref<string | undefined> = ref();
 
 	const watchStopHandles: WatchStopHandle[] = [];
-	watch(frontingEntry, () => {
-		if(!frontingEntry.value) return;
-		watchStopHandles.forEach(x => x());
-
-		console.log(frontingEntry.value.startTime, dayjs(dayjs(frontingEntry.value.startTime).format("YYYY-MM-DDTHH:mm:ss")).toDate());
-
-		startTime.value = dayjs(frontingEntry.value.startTime).format("YYYY-MM-DDTHH:mm:ss");
-
-		if(frontingEntry.value.endTime)
-			endTime.value = dayjs(frontingEntry.value.endTime).format("YYYY-MM-DDTHH:mm:ss");
-
-		watchStopHandles.push(
-			watch(startTime, () => {
-				frontingEntry.value.startTime = dayjs(startTime.value).toDate();
-			}, {immediate: false}),
-			watch(endTime, () => {
-				if(endTime.value)
-					frontingEntry.value.endTime = dayjs(endTime.value).toDate();
-			}, {immediate: false})
-		);
-	}, {immediate: false});
 
 	function dismiss(){
 		if(isOpen)
@@ -73,6 +62,8 @@
 
 		const uuid = frontingEntry.value?.uuid;
 		const _frontingEntry = toRaw(frontingEntry.value);
+
+		console.log(selectedMembers, _frontingEntry.member.uuid);
 
 		await getTable().update(uuid, {
 			..._frontingEntry,
@@ -96,12 +87,43 @@
 	}
 
 	function present() {
+		watchStopHandles.forEach(x => x());
+		watchStopHandles.length = 0;
+
 		if(!frontingEntry.value) return;
+
+		selectedMembers.push(frontingEntry.value.member);
+
+		startTime.value = dayjs(frontingEntry.value.startTime).format("YYYY-MM-DDTHH:mm:ss");
+
+		if(frontingEntry.value.endTime)
+			endTime.value = dayjs(frontingEntry.value.endTime).format("YYYY-MM-DDTHH:mm:ss");
+
+		watchStopHandles.push(
+			watch(selectedMembers, () => {
+				console.log(selectedMembers, frontingEntry.value.member.uuid);
+				if(selectedMembers.length)
+					frontingEntry.value.member = selectedMembers[0];
+			}, {immediate: false}),
+			watch(startTime, () => {
+				frontingEntry.value.startTime = dayjs(startTime.value).toDate();
+			}, {immediate: false}),
+			watch(endTime, () => {
+				if(endTime.value)
+					frontingEntry.value.endTime = dayjs(endTime.value).toDate();
+			}, {immediate: false})
+		);
+	}
+
+	function didPresent() {
+		setTimeout(() => {
+			console.log()
+		}, 2000);
 	}
 </script>
 
 <template>
-	<IonModal class="sheet-modal" :isOpen @willPresent="present" @didDismiss="dismiss" :breakpoints="[0,1]" initialBreakpoint="1" v-if="frontingEntry">
+	<IonModal class="sheet-modal" :isOpen @willPresent="present" @didPresent="didPresent" @didDismiss="dismiss" :breakpoints="[0,1]" initialBreakpoint="1">
 		<IonHeader>
 			<IonToolbar>
 				<IonTitle>{{ $t("options:frontHistory.edit.header") }}</IonTitle>
@@ -110,6 +132,16 @@
 
 		<IonContent>
 			<IonList inset>
+					<IonItem button lines="none" @click="memberSelectModal.$el.present()">
+						<MemberAvatar slot="start" :member="frontingEntry.member" />
+						<IonLabel>
+							<h2>{{ frontingEntry.member.name }}</h2>
+							<p>{{ $t("options:frontHistory.edit.member") }}</p>
+						</IonLabel>
+					</IonItem>
+					<IonItem lines="none">
+						<IonInput mode="md" fill="outline" :label="$t('options:frontHistory.edit.customStatus')" labelPlacement="floating" v-model="frontingEntry.customStatus" />
+					</IonItem>
 					<IonItem button lines="none">
 						<IonLabel>
 							{{ $t("options:frontHistory.edit.startTime") }}
@@ -156,6 +188,8 @@
 					<IonIcon :ios="saveIOS" :md="saveMD" />
 				</IonFabButton>
 			</IonFab>
+
+			<MemberSelect :onlyOne="true" ref="memberSelectModal" />
 		</IonContent>
 	</IonModal>
 </template>
@@ -167,11 +201,15 @@
 	}
 
 	ion-modal.sheet-modal {
-		--height: 50%;
+		--height: 50dvh;
 		--border-radius: 16px;
 	}
 
 	ion-content {
 		--padding-bottom: 80px;
+	}
+
+	ion-input {
+		margin: 16px 0;
 	}
 </style>

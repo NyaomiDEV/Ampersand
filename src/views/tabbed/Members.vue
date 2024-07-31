@@ -10,6 +10,9 @@
 		IonFab,
 		IonFabButton,
 		IonIcon,
+		IonItem,
+		IonItemSliding,
+		IonItemOptions,
 		IonItemOption,
 		IonLabel
 	} from '@ionic/vue';
@@ -18,10 +21,11 @@
 	import { addOutline as addIOS } from "ionicons/icons";
 	import addMD from "@material-design-icons/svg/outlined/add.svg";
 	import MemberEdit from '../../modals/MemberEdit.vue';
-	import MemberInList from '../../components/MemberInList.vue';
 	import { Member } from '../../lib/db/entities/members';
 	import { PartialBy } from '../../lib/db/types';
 	import { getCurrentFrontEntryForMember, newFrontingEntry, removeFronter, setMainFronter, setSoleFronter } from '../../lib/db/entities/frontingEntries';
+	import MemberAvatar from '../../components/member/MemberAvatar.vue';
+	import MemberLabel from '../../components/member/MemberLabel.vue';
 
 	const isIOS = inject<boolean>("isIOS");
 
@@ -33,12 +37,11 @@
 	const member: Ref<PartialBy<Member, "uuid"> | undefined> = ref();
 	provide("member", member);
 
-	const isOpen = ref(false);
-	provide("isOpen", isOpen);
+	const memberEditModal = ref();
 
-	function showModal(clickedMember?: Member){
+	async function showModal(clickedMember?: Member){
 		if(clickedMember)
-			member.value = clickedMember;
+			member.value = {...clickedMember};
 		else {
 			member.value = {
 				name: "",
@@ -48,7 +51,7 @@
 			};
 		}
 
-		isOpen.value = true;
+		await memberEditModal.value.$el.present();
 	}
 
 	function addFrontingEntry(member: Member) {
@@ -99,8 +102,13 @@
 		
 		<IonContent>
 			<IonList :inset="isIOS" ref="list">
-				<MemberInList v-for="member in members" :member :key="JSON.stringify(member)" @memberClicked="showModal(member)" :highlight="!!getCurrentFrontEntryForMember(member)">
-					<template #options>
+
+				<IonItemSliding v-for="member in members" :key="JSON.stringify(member)">
+					<IonItem button @click="showModal(member)" :style="!!getCurrentFrontEntryForMember(member) ? {'--background': 'var(--ion-background-color-step-150)'} : undefined">
+						<MemberAvatar slot="start" :member />
+						<MemberLabel :member />
+					</IonItem>
+					<IonItemOptions>
 						<IonItemOption v-if="!getCurrentFrontEntryForMember(member)" @click="addFrontingEntry(member)">
 							<IonLabel>
 								{{ $t("members:actions.addToFront") }}
@@ -126,8 +134,8 @@
 								{{ $t("members:actions.setSoleFronter") }}
 							</IonLabel>
 						</IonItemOption>
-					</template>
-				</MemberInList>
+					</IonItemOptions>
+				</IonItemSliding>
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
@@ -137,6 +145,6 @@
 			</IonFab>
 		</IonContent>
 
-		<MemberEdit />
+		<MemberEdit ref="memberEditModal" />
 	</IonPage>
 </template>

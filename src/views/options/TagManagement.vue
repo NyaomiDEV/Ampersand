@@ -15,15 +15,14 @@ import { PartialBy } from '../../lib/db/types';
 	const search = ref("");
 	const tags = getFilteredTags(search, type);
 
-	const isOpen = ref(false);
-	provide("isOpen", isOpen);
+	const tagEditModal = ref();
 
 	const tag: Ref<PartialBy<Tag, "uuid"> | undefined> = ref();
 	provide("tag", tag);
 
-	function showModal(clickedTag?: Tag){
+	async function showModal(clickedTag?: Tag){
 		if(clickedTag)
-			tag.value = clickedTag;
+			tag.value = {...clickedTag};
 		else {
 			tag.value = {
 				name: "",
@@ -31,7 +30,7 @@ import { PartialBy } from '../../lib/db/types';
 			};
 		}
 
-		isOpen.value = true;
+		await tagEditModal.value.$el.present();
 	}
 </script>
 
@@ -76,6 +75,6 @@ import { PartialBy } from '../../lib/db/types';
 			</IonFab>
 		</IonContent>
 
-		<TagEdit />
+		<TagEdit ref="tagEditModal" />
 	</IonPage>
 </template>

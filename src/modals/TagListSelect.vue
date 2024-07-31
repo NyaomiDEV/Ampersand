@@ -5,68 +5,40 @@
 		IonHeader,
 		IonToolbar,
 		IonTitle,
-		IonButton,
-		IonIcon,
-		IonLabel,
 		IonList,
 		IonItem,
 		IonModal,
 		IonSearchbar,
-		IonButtons,
 		IonCheckbox,
 		CheckboxCustomEvent,
 	} from "@ionic/vue";
 
-	import {
-		chevronBack as backIOS,
-	} from "ionicons/icons";
-
-	import backMD from "@material-design-icons/svg/outlined/arrow_back.svg";
-
-	import { inject, Ref, ref, toRaw } from "vue";
+	import { inject, ref, ShallowReactive } from "vue";
 	import { getFilteredTags } from "../lib/db/liveQueries";
-	import { UUID } from "../lib/db/types";
+	import { Tag } from "../lib/db/entities/tags";
 
-	const isTagListSelectionOpen = inject<Ref<boolean>>("isTagListSelectionOpen");
-
-	const props = defineProps<{
-		tags?: UUID[]
-	}>();
+	const isIOS = inject<boolean>("isIOS");
+	const selectedTags = inject<ShallowReactive<Tag[]>>("selectedTags")!;
 	
-	async function dismiss(){
-		if(isTagListSelectionOpen){
-			props.tags!.length = 0;
-			props.tags!.push(...toRaw(selectedTags.value));
-			isTagListSelectionOpen.value = false;
-		}
-	}
-
 	function check(ev: CheckboxCustomEvent){
 		if(ev.detail.checked)
-			selectedTags.value.push(ev.detail.value);
+			selectedTags.push(filteredTags.value?.find(x => x.uuid === ev.detail.value)!);
 		else {
-			const index = selectedTags.value.indexOf(ev.detail.value);
+			const index = selectedTags.findIndex(x => x.uuid === ev.detail.value);
 			if(index > -1)
-				selectedTags.value.splice(index, 1);
+				selectedTags.splice(index, 1);
 		}
 	}
 
 	const search = ref("");
 	const filteredTags = getFilteredTags(search, ref("member"));
-
-	const selectedTags: Ref<UUID[]> = ref([...props.tags || []]);
 </script>
 
 <template>
-	<IonModal @didDismiss="dismiss">
+	<IonModal class="tag-select-modal" :breakpoints="[0,0.25,0.5,1]" initialBreakpoint="0.25">
 		<IonHeader>
 			<IonToolbar>
-				<IonButtons slot="start">
-					<IonButton shape="round" fill="clear" @click="dismiss">
-						<IonIcon slot="icon-only" :md="backMD" :ios="backIOS"></IonIcon>
-					</IonButton>
-				</IonButtons>
-				<IonTitle>Tag select</IonTitle>
+				<IonTitle>{{ $t("other:taglistSelect:header") }}</IonTitle>
 			</IonToolbar>
 			<IonToolbar>
 				<IonSearchbar :animated="true" :placeholder="$t('options:tagManagement.searchPlaceholder')"
@@ -75,14 +47,14 @@
 		</IonHeader>
 
 		<IonContent>
-			<IonList inset>
+			<IonList :inset="isIOS">
 				<IonItem button v-for="tag in filteredTags" :key="tag.uuid">
 					<IonAvatar slot="start" v-if="tag.color">
 						<div :style="{
 							backgroundColor: tag.color
 						}"></div>
 					</IonAvatar>
-					<IonCheckbox :value="tag.uuid" :checked="selectedTags.includes(tag.uuid)" @ionChange="check">
+					<IonCheckbox :value="tag.uuid" :checked="!!selectedTags?.find(x => x.uuid === tag.uuid)" @ionChange="check">
 						{{ tag.name }}
 					</IonCheckbox>
 				</IonItem>
@@ -92,13 +64,18 @@
 </template>
 
 <style scoped>
-div {
-	position: relative;
-	top: 15%;
-	left: 15%;
-	width: 75%;
-	height: 75%;
-	border-radius: 100%;
-	aspect-ratio: 1;
-}
+	ion-modal.tag-select-modal {
+		--height: 100dvh;
+		--border-radius: 16px;
+	}
+
+	div {
+		position: relative;
+		top: 15%;
+		left: 15%;
+		width: 75%;
+		height: 75%;
+		border-radius: 100%;
+		aspect-ratio: 1;
+	}
 </style>

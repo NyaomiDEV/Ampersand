@@ -43,24 +43,26 @@
 	import trashMD from "@material-design-icons/svg/outlined/delete.svg";
 
 	import { Member, getTable, newMember } from '../lib/db/entities/members';
-	import { tags } from "../lib/db/entities/tags";
+	import { Tag, tags } from "../lib/db/entities/tags";
 	import { getBlobURL } from '../lib/util/blob';
 	import { getFiles } from "../lib/util/misc";
 	import { resizeImage } from "../lib/util/image";
-	import { Ref, inject, provide, ref, toRaw } from "vue";
+	import { Ref, ShallowReactive, WatchStopHandle, inject, provide, ref, shallowReactive, toRaw, watch } from "vue";
 	import { getMarkdownFor } from "../lib/markdown";
 	import { addMaterialColors, unsetMaterialColors } from "../lib/theme";
 	import { PartialBy } from "../lib/db/types";
 
 	const isIOS = inject<boolean>("isIOS")!;
-	const isOpen = inject<Ref<boolean>>("isOpen")!;
 	const member = inject<Ref<PartialBy<Member, "uuid"> | undefined>>("member")!;
 
-	const isTagListSelectOpen = ref(false);
-	provide("isTagListSelectionOpen", isTagListSelectOpen);
+	const tagSelectionModal = ref();
+	const selectedTags: ShallowReactive<Tag[]> = shallowReactive([]);
+	provide("selectedTags", selectedTags);
 
 	const isEditing = ref(false);
 	const self = ref();
+
+	const watchStopHandles: WatchStopHandle[] = [];
 
 	async function toggleEditing(){
 		if(!member.value) return;
@@ -78,7 +80,7 @@
 
 		if(!uuid){
 			await newMember(_member);
-			await modalController.dismiss(undefined, "added");
+			await modalController.dismiss();
 
 			return;
 		}
@@ -103,17 +105,25 @@
 		await getTable().delete(member.value.uuid);
 		
 		try{
-			await modalController.dismiss(undefined, "deleted");
+			await modalController.dismiss();
 		}catch(_){}
 	}
 
-	function dismiss(){
-		if(isOpen)
-			isOpen.value = false;
-	}
-
 	function present() {
+		watchStopHandles.forEach(x => x());
+		watchStopHandles.length = 0;
+
 		if(!member.value) return;
+
+		watchStopHandles.push(
+			watch(selectedTags, () => {
+				member.value!.tags = selectedTags.map(x => x.uuid)
+			}, {immediate: false})
+		);
+
+		// push tags inside
+		selectedTags.length = 0;
+		selectedTags.push(...member.value.tags.map(x => tags.value.find(y => y.uuid === x)!))
 
 		// are we editing?
 		isEditing.value = !member.value.uuid;
@@ -128,22 +138,22 @@
 </script>
 
 <template>
-	<IonModal ref="self" :isOpen @willPresent="present" @didDismiss="dismiss" v-if="member">
+	<IonModal class="member-edit-modal" ref="self" @willPresent="present">
 		<IonHeader>
 			<IonToolbar>
 				<IonButtons slot="start">
-					<IonButton shape="round" fill="clear" @click="dismiss">
+					<IonButton shape="round" fill="clear" @click="self.$el.dismiss()">
 						<IonIcon slot="icon-only" :md="backMD" :ios="backIOS"></IonIcon>
 					</IonButton>
 				</IonButtons>
-				<IonTitle>{{ !member.uuid ? $t("members:edit.headerAdd") : $t("members:edit.headerEdit") }}</IonTitle>
+				<IonTitle>{{ !member!.uuid ? $t("members:edit.headerAdd") : $t("members:edit.headerEdit") }}</IonTitle>
 			</IonToolbar>
 		</IonHeader>
 
 		<IonContent>
 			<div class="avatar-container">
 				<IonAvatar>
-					<img aria-hidden="true" :src="member.image ? getBlobURL(member.image) : (isIOS ? personIOS : personMD)" />
+					<img aria-hidden="true" :src="member!.image ? getBlobURL(member!.image) : (isIOS ? personIOS : personMD)" />
 				</IonAvatar>
 				<IonButton shape="round" @click="modifyPicture" v-if="isEditing">
 					<IonIcon slot="icon-only" :ios="pencilIOS" :md="pencilMD" />
@@ -151,20 +161,20 @@
 			</div>
 
 			<div class="member-info" v-if="!isEditing">
-				<h1>{{ member.name }}</h1>
-				<p>{{ member.pronouns }}</p>
-				<p>{{ member.role }}</p>
-				<p v-if="member.isCustomFront">{{ $t("members:edit.customFront") }}</p>
-				<p v-if="member.isArchived">{{ $t("members:edit.archived") }}</p>
+				<h1>{{ member!.name }}</h1>
+				<p>{{ member!.pronouns }}</p>
+				<p>{{ member!.role }}</p>
+				<p v-if="member!.isCustomFront">{{ $t("members:edit.customFront") }}</p>
+				<p v-if="member!.isArchived">{{ $t("members:edit.archived") }}</p>
 			</div>
 
 			<div class="member-tags" v-if="!isEditing">
-				<TagChip v-if="tags?.length" v-for="tag in member.tags" :tag="tags.find(x => x.uuid === tag)!" />
+				<TagChip v-if="tags?.length" v-for="tag in member!.tags" :tag="tags.find(x => x.uuid === tag)!" />
 			</div>
 
 			<div class="member-description" v-if="!isEditing">
 				<IonLabel>{{ $t("members:edit.description") }}</IonLabel>
-				<div class="markdown-content" v-html="getMarkdownFor(member.description || $t('members:edit.noDescription'))"></div>
+				<div class="markdown-content" v-html="getMarkdownFor(member!.description || $t('members:edit.noDescription'))"></div>
 			</div>
 
 			<IonList class="member-actions" v-if="!isEditing">
@@ -180,49 +190,48 @@
 
 			<IonList class="member-edit" v-if="isEditing" inset>
 					<IonItem lines="none">
-						<IonInput mode="md" fill="outline" :label="$t('members:edit.name')" labelPlacement="floating" v-model="member.name" />
+						<IonInput mode="md" fill="outline" :label="$t('members:edit.name')" labelPlacement="floating" v-model="member!.name" />
 					</IonItem>
 					<IonItem lines="none">
-						<IonInput mode="md" fill="outline" :label="$t('members:edit.pronouns')" labelPlacement="floating" v-model="member.pronouns" />
+						<IonInput mode="md" fill="outline" :label="$t('members:edit.pronouns')" labelPlacement="floating" v-model="member!.pronouns" />
 					</IonItem>
 					<IonItem lines="none">
-						<IonInput mode="md" fill="outline" :label="$t('members:edit.role')" labelPlacement="floating" v-model="member.role" />
+						<IonInput mode="md" fill="outline" :label="$t('members:edit.role')" labelPlacement="floating" v-model="member!.role" />
 					</IonItem>
 					<IonItem lines="none">
-						<IonTextarea mode="md" fill="outline" auto-grow :label="$t('members:edit.description')" labelPlacement="floating" v-model="member.description" />
+						<IonTextarea mode="md" fill="outline" auto-grow :label="$t('members:edit.description')" labelPlacement="floating" v-model="member!.description" />
 					</IonItem>
 					<IonItem button lines="none">
-						<Color v-model="member.color" @update:model-value="present">
+						<Color v-model="member!.color" @update:model-value="present">
 							<IonLabel>
 								{{ $t("members:edit.color") }}
 							</IonLabel>
 						</Color>
 					</IonItem>
 					<IonItem button lines="none">
-						<IonToggle v-model="member.isCustomFront">
+						<IonToggle v-model="member!.isCustomFront">
 							<IonLabel>
 								{{ $t("members:edit.isCustomFront") }}
 							</IonLabel>
 						</IonToggle>
 					</IonItem>
 					<IonItem button lines="none">
-						<IonToggle v-model="member.isArchived">
+						<IonToggle v-model="member!.isArchived">
 							<IonLabel>
 								{{ $t("members:edit.isArchived") }}
 							</IonLabel>
 						</IonToggle>
 					</IonItem>
-					<IonItem button lines="none" @click="isTagListSelectOpen = true">
+
+					<IonItem button lines="none" @click="tagSelectionModal.$el.present()">
 						<IonLabel>
 							{{ $t("members:edit.tags") }}
 							<div class="member-tags">
-								<TagChip v-if="tags?.length" v-for="tag in member.tags" :tag="tags.find(x => x.uuid === tag)!" />
+								<TagChip v-if="tags?.length" v-for="tag in member!.tags" :tag="tags.find(x => x.uuid === tag)!" />
 							</div>
 						</IonLabel>
-
-						<TagListSelect :tags="member.tags" :isOpen="isTagListSelectOpen" />
 					</IonItem>
-					<IonItem button lines="none" v-if="member.uuid" @click="deleteMember">
+					<IonItem button lines="none" v-if="member!.uuid" @click="deleteMember">
 						<IonIcon :ios="trashIOS" :md="trashMD" slot="start" aria-hidden="true" />
 						<IonLabel>
 							<h3>{{ $t("members:edit.delete.title") }}</h3>
@@ -232,18 +241,20 @@
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton @click="toggleEditing" v-if="member.name.length > 0">
+				<IonFabButton @click="toggleEditing" v-if="member!.name.length > 0">
 					<IonIcon :ios="isEditing ? saveIOS : pencilIOS" :md="isEditing ? saveMD : pencilMD" />
 				</IonFabButton>
 			</IonFab>
+
+			<TagListSelect ref="tagSelectionModal" />
 		</IonContent>
 	</IonModal>
 </template>
 
 <style scoped>
-	ion-modal {
-		--width: 100%;
-		--height: 100%;
+	ion-modal.member-edit-modal {
+		--width: 100dvw;
+		--height: 100dvh;
 	}
 
 	ion-content {
