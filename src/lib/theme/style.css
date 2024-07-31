@@ -1,3 +1,5 @@
+@import url(components.css);
+
 /* Light */
 .md3 * {
 	--ion-color-primary: rgb(var(--md3-light-primary));
