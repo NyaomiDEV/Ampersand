@@ -44,6 +44,9 @@ import "./styles/override.css";
 import { activateMaterialTheme, updateMaterialColors } from "./lib/theme";
 import "./lib/theme/style.css";
 
+// Capacitor stuff
+import { SplashScreen } from "@capacitor/splash-screen";
+
 if(!window.isSecureContext){
 	console.error("Cannot continue, this is not a safe environment!");
 	document.documentElement.classList.add("hydrated");
@@ -67,10 +70,11 @@ if(!window.isSecureContext){
 
 	const app = createApp(App).use(IonicVue).use(router).use(I18NextVue, { i18next: i18n });
 
-	router.isReady().then(() => {
+	router.isReady().then(async () => {
 		app.mount(document.body);
 		if (router.currentRoute.value.fullPath === "/")
-			router.push("/members");
+			await router.push("/members");
+
+		await SplashScreen.hide();
 	});
 }
-

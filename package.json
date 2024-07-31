@@ -10,6 +10,7 @@
     "capacitor:sync:before": "capacitor-assets generate --android && yarn run build"
   },
   "dependencies": {
+    "@capacitor/splash-screen": "^6.0.1",
     "@ionic/vue": "^8.2.6",
     "@ionic/vue-router": "^8.2.6",
     "@material-design-icons/svg": "^0.14.13",
