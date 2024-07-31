@@ -5,7 +5,11 @@ export type Config = {
 };
 
 export type AppConfig = {
-	language: string,
+	locale: {
+		language: string,
+		firstWeekOfDayIsMonday: boolean,
+		TwelveHourClock: boolean
+	},
 	view: ViewName,
 	filterQueryMembers: string,
 	filterQueryJournal: string

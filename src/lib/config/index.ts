@@ -3,8 +3,12 @@ import { Config } from "./types";
 
 export const defaultConfig: Config = {
 	app: {
-		language: "en",
-		view: "dashboard",
+		locale: {
+			language: "en",
+			firstWeekOfDayIsMonday: true,
+			TwelveHourClock: false,
+		},
+		view: "members",
 		filterQueryMembers: "",
 		filterQueryJournal: ""
 	},
