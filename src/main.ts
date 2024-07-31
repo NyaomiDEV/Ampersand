@@ -44,10 +44,6 @@ import "./styles/override.css";
 import { activateMaterialTheme, updateMaterialColors } from "./lib/theme";
 import "./lib/theme/style.css";
 
-// Config
-import { getConfigEntry } from "./lib/config";
-import { AccessibilityConfig } from "./lib/config/types";
-
 if(!window.isSecureContext){
 	console.error("Cannot continue, this is not a safe environment!");
 	document.documentElement.classList.add("hydrated");
@@ -70,7 +66,11 @@ if(!window.isSecureContext){
 	updateAccessibility();
 
 	const app = createApp(App).use(IonicVue).use(router).use(I18NextVue, { i18next: i18n });
-
 	app.mount(document.body);
+
+	await router.isReady();
+	console.log(router.currentRoute.value)
+	if(router.currentRoute.value.fullPath === "/")
+		router.push("/members");
 }
 

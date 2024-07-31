@@ -13,9 +13,9 @@
 		IonItem,
 		modalController,
 		IonModal,
-		IonSegment,
-		IonSegmentButton
+		IonSegment
 	} from "@ionic/vue";
+	import MD3SegmentButton from "../components/MD3SegmentButton.vue";
 	import Color from "../components/Color.vue";
 
 	import {
@@ -103,16 +103,16 @@
 						<IonLabel>
 							<h3 class="centered-text">{{ $t("options:tagManagement.edit.type.header") }}</h3>
 							<IonSegment class="segment-alt" v-model="tag!.type">
-								<IonSegmentButton value="member">
+								<MD3SegmentButton value="member">
 									<IonLabel>
 										{{ $t("options:tagManagement.edit.type.member") }}
 									</IonLabel>
-								</IonSegmentButton>
-								<IonSegmentButton value="journal">
+								</MD3SegmentButton>
+								<MD3SegmentButton value="journal">
 									<IonLabel>
 										{{ $t("options:tagManagement.edit.type.journal") }}
 									</IonLabel>
-								</IonSegmentButton>
+								</MD3SegmentButton>
 							</IonSegment>
 							<p class="centered-text">{{ $t("options:tagManagement.edit.type.desc") }}</p>
 						</IonLabel>

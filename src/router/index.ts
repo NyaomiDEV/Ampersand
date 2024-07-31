@@ -9,10 +9,6 @@ const routes: Array<RouteRecordRaw> = [
 		name: "TabbedHomeView",
 		component: () => import("../views/TabbedHomeView.vue"),
 		children: [
-			{
-				path: "/",
-				redirect: "/dashboard"
-			},
 			...tabbedRoutes
 		]
 	}, 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonItem, IonIcon, IonRange, IonLabel, IonToggle, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonSegment, IonSegmentButton} from '@ionic/vue';
+	import { IonContent, IonHeader, IonItem, IonRange, IonLabel, IonToggle, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonSegment } from '@ionic/vue';
 	import { inject, reactive, watch } from 'vue';
 	import { AccessibilityConfig } from '../../lib/config/types';
 	import { getConfigEntry, saveConfig } from '../../lib/config';
@@ -7,7 +7,7 @@
 	import Color from '../../components/Color.vue';
 	import { updateMaterialColors } from '../../lib/theme';
 
-	import CheckMD from '@material-design-icons/svg/outlined/check.svg';
+	import MD3SegmentButton from '../../components/MD3SegmentButton.vue';
 
 	const config = reactive(getConfigEntry("accessibility") as AccessibilityConfig);
 	watch(config, () => {
@@ -50,15 +50,13 @@
 						<h3 class="centered-text">{{ $t("options:accessibility.highLegibilityFontType.title") }}</h3>
 						<IonSegment class="segment-alt" value="high-legibility-type" v-model="config.highLegibilityType">
 
-							<IonSegmentButton value="atkinson" layout="icon-start">
-								<IonIcon v-if="config.highLegibilityType == 'atkinson'" :md="CheckMD" aria-hidden="true"/>
+							<MD3SegmentButton value="atkinson">
 								<IonLabel>{{ $t("options:accessibility.highLegibilityFontType.atkinson") }}</IonLabel>
-							</IonSegmentButton>
+							</MD3SegmentButton>
 
-							<IonSegmentButton value="opendyslexic" layout="icon-start">
-								<IonIcon v-if="config.highLegibilityType == 'opendyslexic'" :md="CheckMD" aria-hidden="true"/>
+							<MD3SegmentButton value="opendyslexic">
 								<IonLabel>{{ $t("options:accessibility.highLegibilityFontType.opendyslexic") }}</IonLabel>
-							</IonSegmentButton>
+							</MD3SegmentButton>
 						</IonSegment>
 					</IonLabel>
 				</IonItem>
@@ -68,20 +66,17 @@
 						<h3 class="centered-text">{{ $t("options:accessibility.uiVariant.title") }}</h3>
 						<IonSegment class="segment-alt" value="ui-variant" v-model="config.theme">
 
-							<IonSegmentButton value="auto" layout="icon-start">
-								<IonIcon v-if="config.theme == 'auto'" :md="CheckMD" aria-hidden="true"/>
+							<MD3SegmentButton value="auto">
 								<IonLabel>{{ $t("options:accessibility.uiVariant.auto") }}</IonLabel>
-							</IonSegmentButton>
+							</MD3SegmentButton>
 
-							<IonSegmentButton value="light" layout="icon-start">
-								<IonIcon v-if="config.theme == 'light'" :md="CheckMD" aria-hidden="true"/>
+							<MD3SegmentButton value="light">
 								<IonLabel>{{ $t("options:accessibility.uiVariant.light") }}</IonLabel>
-							</IonSegmentButton>
+							</MD3SegmentButton>
 
-							<IonSegmentButton value="dark" layout="icon-start">
-								<IonIcon v-if="config.theme == 'dark'" :md="CheckMD" aria-hidden="true"/>
+							<MD3SegmentButton value="dark">
 								<IonLabel>{{ $t("options:accessibility.uiVariant.dark") }}</IonLabel>
-							</IonSegmentButton>
+							</MD3SegmentButton>
 						</IonSegment>
 					</IonLabel>
 				</IonItem>
