@@ -7,13 +7,9 @@
     "dev": "vite",
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
-    "capacitor:sync:before": "yarn run build"
+    "capacitor:sync:before": "capacitor-assets generate --android && yarn run build"
   },
   "dependencies": {
-    "@capacitor/android": "^6.1.1",
-    "@capacitor/app": "^6.0.0",
-    "@capacitor/assets": "^3.0.5",
-    "@capacitor/core": "^6.1.1",
     "@ionic/vue": "^8.2.6",
     "@ionic/vue-router": "^8.2.6",
     "@material-design-icons/svg": "^0.14.13",
@@ -35,7 +31,11 @@
     "vue-router": "^4.4.0"
   },
   "devDependencies": {
+    "@capacitor/android": "^6.1.1",
+    "@capacitor/app": "^6.0.0",
+    "@capacitor/assets": "^3.0.5",
     "@capacitor/cli": "^6.1.1",
+    "@capacitor/core": "^6.1.1",
     "@vitejs/plugin-vue": "^5.1.1",
     "typescript": "^5.5.4",
     "vite": "^5.3.5",

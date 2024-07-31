@@ -66,11 +66,11 @@ if(!window.isSecureContext){
 	updateAccessibility();
 
 	const app = createApp(App).use(IonicVue).use(router).use(I18NextVue, { i18next: i18n });
-	app.mount(document.body);
 
-	await router.isReady();
-
-	if(router.currentRoute.value.fullPath === "/")
-		router.push("/members");
+	router.isReady().then(() => {
+		app.mount(document.body);
+		if (router.currentRoute.value.fullPath === "/")
+			router.push("/members");
+	});
 }
 
