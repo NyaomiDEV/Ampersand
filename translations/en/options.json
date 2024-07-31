@@ -118,7 +118,7 @@
 	},
 	"about": {
 		"header": "About",
-		"version": "version",
+		"version": "Version {{version}}",
 		"madein": "Made with love in Italy"
 	}
 }

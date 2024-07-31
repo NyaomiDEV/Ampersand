@@ -1,6 +1,6 @@
 {
 	"welcomeScreen": {
-		"header": "Welcome to {{appName}}!",
+		"header": "Welcome to Ampersand!",
 		"start": "Start your journey!"
 	},
 	"importScreen": {
@@ -19,7 +19,7 @@
 		"invitation": "Keep editing your profile card after you’re done with the onboarding!"
 	},
 	"endScreen": {
-		"header": "Thanks for choosing {{appName}}!",
+		"header": "Thanks for choosing Ampersand!",
 		"startButton": "Let's start!"
 	}
 }
