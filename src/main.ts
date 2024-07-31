@@ -69,7 +69,7 @@ if(!window.isSecureContext){
 	app.mount(document.body);
 
 	await router.isReady();
-	console.log(router.currentRoute.value)
+
 	if(router.currentRoute.value.fullPath === "/")
 		router.push("/members");
 }
