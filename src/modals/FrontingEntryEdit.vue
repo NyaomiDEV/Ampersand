@@ -123,7 +123,7 @@
 </script>
 
 <template>
-	<IonModal class="sheet-modal" :isOpen @willPresent="present" @didPresent="didPresent" @didDismiss="dismiss" :breakpoints="[0,1]" initialBreakpoint="1">
+	<IonModal class="fronting-entry-edit-modal" :isOpen @willPresent="present" @didPresent="didPresent" @didDismiss="dismiss" :breakpoints="[0,1]" initialBreakpoint="1">
 		<IonHeader>
 			<IonToolbar>
 				<IonTitle>{{ $t("options:frontHistory.edit.header") }}</IonTitle>
@@ -147,9 +147,6 @@
 							{{ $t("options:frontHistory.edit.startTime") }}
 						</IonLabel>
 						<IonDatetimeButton slot="end" datetime="startTime"></IonDatetimeButton>
-						<IonModal class="stack-modal" :keep-contents-mounted="true">
-							<IonDatetime id="startTime" v-model="startTime"/>
-						</IonModal>
 					</IonItem>
 					<IonItem lines="none" v-if="!frontingEntry.endTime">
 						<IonLabel>
@@ -163,9 +160,6 @@
 							{{ $t("options:frontHistory.edit.endTime") }}
 						</IonLabel>
 						<IonDatetimeButton slot="end" datetime="endTime"></IonDatetimeButton>
-						<IonModal class="stack-modal" :keep-contents-mounted="true">
-							<IonDatetime id="endTime" v-model="endTime"/>
-						</IonModal>
 					</IonItem>
 					<IonItem button lines="none">
 						<IonToggle v-model="frontingEntry.isMainFronter">
@@ -190,6 +184,16 @@
 			</IonFab>
 
 			<MemberSelect :onlyOne="true" ref="memberSelectModal" />
+			<IonModal class="stack-modal" :keep-contents-mounted="true">
+				<IonDatetime id="startTime" v-model="startTime" :showDefaultButtons="true">
+					<span slot="title">{{ $t("options:frontHistory.edit.startTime") }}</span>
+				</IonDatetime>
+			</IonModal>
+			<IonModal class="stack-modal" :keep-contents-mounted="true">
+				<IonDatetime id="endTime" v-model="endTime" :showDefaultButtons="true">
+					<span slot="title">{{ $t("options:frontHistory.edit.endTime") }}</span>
+				</IonDatetime>
+			</IonModal>
 		</IonContent>
 	</IonModal>
 </template>
@@ -200,8 +204,9 @@
 		--border-radius: 16px;
 	}
 
-	ion-modal.sheet-modal {
+	ion-modal.fronting-entry-edit-modal {
 		--height: 50dvh;
+		--min-height: 512px;
 		--border-radius: 16px;
 	}
 
