@@ -11,8 +11,9 @@ function rgbFromArgb(argb: number){
 }
 
 export function updateMaterialColors(target?: HTMLElement){
+	const useAccentColor = (getConfigEntry("accessibility") as AccessibilityConfig).useAccentColor;
 	const accentColor = (getConfigEntry("accessibility") as AccessibilityConfig).accentColor;
-	if (accentColor)
+	if (useAccentColor && accentColor)
 		addMaterialColors(accentColor, target);
 	else
 		addMaterialColors("#7E5700", target);

@@ -10,7 +10,7 @@ import i18n from "./lib/i18n";
 import I18NextVue from "i18next-vue";
 
 // Dark mode
-import { updateDarkMode } from "./lib/mode";
+import { updateAccessibility, updateDarkMode } from "./lib/mode";
 
 // App
 import App from "./App.vue";
@@ -63,14 +63,11 @@ if(!window.isSecureContext){
 
 	const darkMode = window.matchMedia("(prefers-color-scheme: dark)");
 	darkMode.addEventListener("change", updateDarkMode);
-	updateDarkMode();
 
+	updateDarkMode();
 	activateMaterialTheme();
 	updateMaterialColors();
-
-	const fontScale = (getConfigEntry("accessibility") as AccessibilityConfig).fontScale;
-	if (fontScale !== 1)
-		document.documentElement.style.setProperty("font-size", `${fontScale}em`)
+	updateAccessibility();
 
 	const app = createApp(App).use(IonicVue).use(router).use(I18NextVue, { i18next: i18n });
 

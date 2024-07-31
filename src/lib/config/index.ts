@@ -11,7 +11,9 @@ export const defaultConfig: Config = {
 	},
 	accessibility: {
 		highLegibility: false,
+		highLegibilityType: "atkinson",
 		theme: "auto",
+		useAccentColor: false,
 		accentColor: undefined,
 		reducedMotion: false,
 		fontScale: 1,

@@ -73,7 +73,12 @@
 		"header": "Accessibility",
 		"highLegibilityFont": {
 			"title": "High legibility font",
-			"desc": "Use OpenDyslexic instead of the standard device font"
+			"desc": "Use an high legibility font instead of the standard device font"
+		},
+		"highLegibilityFontType": {
+			"title": "High legibility font family",
+			"atkinson": "Atkinson Hyperlegible",
+			"opendyslexic": "OpenDyslexic"
 		},
 		"uiVariant": {
 			"title": "UI variant",
@@ -81,9 +86,13 @@
 			"light": "Light",
 			"dark": "Dark"
 		},
-		"accentColor": {
+		"useAccentColor": {
 			"title": "Accent color",
 			"desc": "Use a custom accent color"
+		},
+		"accentColor": {
+			"title": "Choose the accent color",
+			"desc": "Don't choose greyscale values!"
 		},
 		"reducedMotion": {
 			"title": "Reduced motion",

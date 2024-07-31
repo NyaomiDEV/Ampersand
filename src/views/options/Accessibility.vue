@@ -3,7 +3,7 @@
 	import { inject, reactive, watch } from 'vue';
 	import { AccessibilityConfig } from '../../lib/config/types';
 	import { getConfigEntry, saveConfig } from '../../lib/config';
-	import { updateDarkMode } from '../../lib/mode';
+	import { updateAccessibility, updateDarkMode } from '../../lib/mode';
 	import Color from '../../components/Color.vue';
 	import { updateMaterialColors } from '../../lib/theme';
 
@@ -17,7 +17,7 @@
 
 		updateDarkMode();
 		updateMaterialColors();
-
+		updateAccessibility();
 	});
 
 	const isIOS = inject<boolean>("isIOS");
@@ -47,6 +47,24 @@
 
 				<IonItem>
 					<IonLabel>
+						<h3 class="centered-text">{{ $t("options:accessibility.highLegibilityFontType.title") }}</h3>
+						<IonSegment class="segment-alt" value="high-legibility-type" v-model="config.highLegibilityType">
+
+							<IonSegmentButton value="atkinson" layout="icon-start">
+								<IonIcon v-if="config.highLegibilityType == 'atkinson'" :md="CheckMD" aria-hidden="true"/>
+								<IonLabel>{{ $t("options:accessibility.highLegibilityFontType.atkinson") }}</IonLabel>
+							</IonSegmentButton>
+
+							<IonSegmentButton value="opendyslexic" layout="icon-start">
+								<IonIcon v-if="config.highLegibilityType == 'opendyslexic'" :md="CheckMD" aria-hidden="true"/>
+								<IonLabel>{{ $t("options:accessibility.highLegibilityFontType.opendyslexic") }}</IonLabel>
+							</IonSegmentButton>
+						</IonSegment>
+					</IonLabel>
+				</IonItem>
+
+				<IonItem>
+					<IonLabel>
 						<h3 class="centered-text">{{ $t("options:accessibility.uiVariant.title") }}</h3>
 						<IonSegment class="segment-alt" value="ui-variant" v-model="config.theme">
 
@@ -68,6 +86,15 @@
 					</IonLabel>
 				</IonItem>
 
+				<IonItem>
+					<IonToggle v-model="config.useAccentColor">
+						<IonLabel>
+							<h3>{{ $t("options:accessibility.useAccentColor.title") }}</h3>
+							<p>{{ $t("options:accessibility.useAccentColor.desc") }}</p>
+						</IonLabel>
+					</IonToggle>
+				</IonItem>
+
 				<IonItem button>
 					<Color v-model="config.accentColor">
 						<IonLabel>
@@ -77,7 +104,7 @@
 					</Color>
 				</IonItem>
 
-				<IonItem>
+				<IonItem v-if="false"> <!-- we don't have anything that warrants us reduced motion yet -->
 					<IonToggle v-model="config.reducedMotion">
 						<IonLabel>
 							<h3>{{ $t("options:accessibility.reducedMotion.title") }}</h3>

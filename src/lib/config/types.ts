@@ -16,7 +16,9 @@ type ViewName = "members" | "journal" | "dashboard" | "chat";
 
 export type AccessibilityConfig = {
 	highLegibility: boolean,
+	highLegibilityType: "atkinson" | "opendyslexic",
 	theme: "auto" | "dark" | "light",
+	useAccentColor: boolean,
 	accentColor?: string,
 	reducedMotion: boolean,
 	fontScale: number,

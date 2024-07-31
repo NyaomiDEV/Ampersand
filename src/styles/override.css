@@ -1,9 +1,11 @@
-.high-legibility.atkinson {
+html.high-legibility.atkinson {
 	font-family: 'Atkinson Hyperlegible', sans-serif;
+	--ion-font-family: 'Atkinson Hyperlegible', sans-serif;
 }
 
-.high-legibility.dyslexic {
+html.high-legibility.opendyslexic {
 	font-family: 'OpenDyslexic', sans-serif;
+	--ion-font-family: 'OpenDyslexic', sans-serif;
 }
 
 ion-list-header + ion-list.md {
@@ -113,7 +115,6 @@ p {
     --knob-background: var(--ion-color-primary);
     --knob-size: 64px;
 	--knob-border-radius: 64px;
-	--height: 88px;
 }
 
 .md3 ion-range::part(knob) {
@@ -122,11 +123,19 @@ p {
 	transform: translateX(29px);
 }
 
+.md3 ion-range:active::part(knob) {
+	transform: translateX(29px) scale(0.75,1);
+}
+
 .md3 ion-range::part(knob)::before {
 	display: none;
 }
 
 .md3 ion-range::part(tick) {
-	border-radius: 24px;
+	border-radius: 100%;
 	transform: scale(0.5);
+}
+
+.md3 ion-range::part(tick-active) {
+	display: none;
 }
