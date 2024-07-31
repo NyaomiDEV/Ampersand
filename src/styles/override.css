@@ -1,3 +1,11 @@
+.high-legibility.atkinson {
+	font-family: 'Atkinson Hyperlegible', sans-serif;
+}
+
+.high-legibility.dyslexic {
+	font-family: 'OpenDyslexic', sans-serif;
+}
+
 ion-list-header + ion-list.md {
 	padding-top: unset;
 }

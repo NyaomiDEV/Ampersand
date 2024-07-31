@@ -2,54 +2,54 @@
     font-family: "Atkinson Hyperlegible";
     font-weight: normal;
     font-style: normal;
-    src: url(../../assets/aktinson-hyperlegible/Atkinson-Hyperlegible-Regular-102.otf);
+    src: url(../assets/aktinson-hyperlegible/Atkinson-Hyperlegible-Regular-102.otf);
 }
 
 @font-face {
     font-family: "Atkinson Hyperlegible";
     font-weight: bold;
     font-style: normal;
-    src: url(../../assets/aktinson-hyperlegible/Atkinson-Hyperlegible-Bold-102.otf);
+    src: url(../assets/aktinson-hyperlegible/Atkinson-Hyperlegible-Bold-102.otf);
 }
 
 @font-face {
     font-family: "Atkinson Hyperlegible";
     font-weight: normal;
     font-style: italic;
-    src: url(../../assets/aktinson-hyperlegible/Atkinson-Hyperlegible-Italic-102.otf);
+    src: url(../assets/aktinson-hyperlegible/Atkinson-Hyperlegible-Italic-102.otf);
 }
 
 @font-face {
     font-family: "Atkinson Hyperlegible";
     font-weight: bold;
     font-style: italic;
-    src: url(../../assets/aktinson-hyperlegible/Atkinson-Hyperlegible-BoldItalic-102.otf);
+    src: url(../assets/aktinson-hyperlegible/Atkinson-Hyperlegible-BoldItalic-102.otf);
 }
 
 @font-face {
-    font-family: "Open Dyslexic";
+    font-family: "OpenDyslexic";
     font-weight: normal;
     font-style: normal;
-    src: url(../../assets/open-dyslexic/OpenDyslexic-Regular.otf);
+    src: url(../assets/open-dyslexic/OpenDyslexic-Regular.otf);
 }
 
 @font-face {
-    font-family: "Open Dyslexic";
+    font-family: "OpenDyslexic";
     font-weight: bold;
     font-style: normal;
-    src: url(../../assets/open-dyslexic/OpenDyslexic-Bold.otf);
+    src: url(../assets/open-dyslexic/OpenDyslexic-Bold.otf);
 }
 
 @font-face {
-    font-family: "Open Dyslexic";
+    font-family: "OpenDyslexic";
     font-weight: normal;
     font-style: italic;
-    src: url(../../assets/open-dyslexic/OpenDyslexic-Italic.otf);
+    src: url(../assets/open-dyslexic/OpenDyslexic-Italic.otf);
 }
 
 @font-face {
-    font-family: "Open Dyslexic";
+    font-family: "OpenDyslexic";
     font-weight: bold;
     font-style: italic;
-    src: url(../../assets/open-dyslexic/OpenDyslexic-BoldItalic.otf);
+    src: url(../assets/open-dyslexic/OpenDyslexic-BoldItalic.otf);
 }

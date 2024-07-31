@@ -96,6 +96,8 @@
 							:step="0.1"
 							:snaps="true"
 							:ticks="true"
+							:pin="true"
+							:pinFormatter="(v) => `${v}`"
 						/>
 					</IonLabel>
 				</IonItem>
@@ -109,7 +111,9 @@
 							:max="1.5"
 							:step="0.1"
 							:snaps="true"
-							:ticks="false"
+							:ticks="true"
+							:pin="true"
+							:pinFormatter="(v) => `${v}`"
 						/>
 					</IonLabel>
 				</IonItem>
