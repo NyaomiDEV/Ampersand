@@ -78,6 +78,17 @@
 		list.value?.$el.closeSlidingItems();
 	}
 
+	function getHighlightLevel(member: Member){
+		const entry = getCurrentFrontEntryForMember(member);
+		if(entry){
+			if(entry.isMainFronter)
+				return {'--background': 'var(--ion-background-color-step-200)'};
+
+			return {'--background': 'var(--ion-background-color-step-150)'}
+		}
+		
+		return undefined
+	}
 </script>
 
 <template>
@@ -104,7 +115,7 @@
 			<IonList :inset="isIOS" ref="list">
 
 				<IonItemSliding v-for="member in members" :key="JSON.stringify(member)">
-					<IonItem button @click="showModal(member)" :style="!!getCurrentFrontEntryForMember(member) ? {'--background': 'var(--ion-background-color-step-150)'} : undefined">
+					<IonItem button @click="showModal(member)" :style="getHighlightLevel(member)">
 						<MemberAvatar slot="start" :member />
 						<MemberLabel :member />
 					</IonItem>
