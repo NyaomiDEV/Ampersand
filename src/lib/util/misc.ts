@@ -87,7 +87,5 @@ export async function decompressGzip(data: Uint8Array) {
 export function formatWrittenTime(dateStart: Date, dateEnd: Date){
 	const duration = dayjs.duration(dayjs(dateStart).diff(dateEnd));
 
-	console.log(duration);
-
 	return duration.format("Y[y] M[M] D[d] H[h] m[m] s[s]").replace(/(?<![1-9])0\w\s?/g, "");
 }

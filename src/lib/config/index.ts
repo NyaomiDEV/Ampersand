@@ -5,7 +5,7 @@ export const defaultConfig: Config = {
 	app: {
 		locale: {
 			language: "en",
-			firstWeekOfDayIsMonday: true,
+			firstWeekOfDayIsSunday: false,
 			TwelveHourClock: false,
 		},
 		view: "members",

@@ -36,8 +36,11 @@
 	import UTC from "dayjs/plugin/utc";
 	import Timezone from "dayjs/plugin/timezone";
 	import { Member } from "../lib/db/entities/members";
+	import { getConfig } from "../lib/config";
 	dayjs.extend(UTC);
 	dayjs.extend(Timezone);
+
+	const twelveHour = getConfig().app.locale.TwelveHourClock;
 
 	const isOpen = inject<Ref<boolean>>("isOpen")!;
 	const frontingEntry = inject<Ref<FrontingEntryComplete>>("frontingEntry")!;
@@ -185,12 +188,12 @@
 
 			<MemberSelect :onlyOne="true" ref="memberSelectModal" />
 			<IonModal class="stack-modal" :keep-contents-mounted="true">
-				<IonDatetime id="startTime" v-model="startTime" :showDefaultButtons="true">
+				<IonDatetime id="startTime" v-model="startTime" :showDefaultButtons="true" :hourCycle="twelveHour ? 'h12' : 'h24'">
 					<span slot="title">{{ $t("options:frontHistory.edit.startTime") }}</span>
 				</IonDatetime>
 			</IonModal>
 			<IonModal class="stack-modal" :keep-contents-mounted="true">
-				<IonDatetime id="endTime" v-model="endTime" :showDefaultButtons="true">
+				<IonDatetime id="endTime" v-model="endTime" :showDefaultButtons="true" :hourCycle="twelveHour ? 'h12' : 'h24'">
 					<span slot="title">{{ $t("options:frontHistory.edit.endTime") }}</span>
 				</IonDatetime>
 			</IonModal>

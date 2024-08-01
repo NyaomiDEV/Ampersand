@@ -7,7 +7,7 @@ export type Config = {
 export type AppConfig = {
 	locale: {
 		language: string,
-		firstWeekOfDayIsMonday: boolean,
+		firstWeekOfDayIsSunday: boolean,
 		TwelveHourClock: boolean
 	},
 	view: ViewName,

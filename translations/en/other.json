@@ -1,4 +1,8 @@
 {
+	"languageName": {
+		"local": "English",
+		"inEnglish": "English"
+	},
 	"taglistSelect": {
 		"header": "Select some tags"
 	},
