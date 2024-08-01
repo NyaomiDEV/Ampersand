@@ -40,7 +40,8 @@
 	dayjs.extend(UTC);
 	dayjs.extend(Timezone);
 
-	const twelveHour = getConfig().app.locale.TwelveHourClock;
+	const twelveHourClock = getConfig().app.locale.TwelveHourClock;
+	const firstWeekOfDayIsSunday = getConfig().app.locale.firstWeekOfDayIsSunday;
 
 	const isOpen = inject<Ref<boolean>>("isOpen")!;
 	const frontingEntry = inject<Ref<FrontingEntryComplete>>("frontingEntry")!;
@@ -188,12 +189,12 @@
 
 			<MemberSelect :onlyOne="true" ref="memberSelectModal" />
 			<IonModal class="stack-modal" :keep-contents-mounted="true">
-				<IonDatetime id="startTime" v-model="startTime" :showDefaultButtons="true" :hourCycle="twelveHour ? 'h12' : 'h24'">
+				<IonDatetime id="startTime" v-model="startTime" :showDefaultButtons="true" :hourCycle="twelveHourClock ? 'h12' : 'h24'" :firstDayOfWeek="firstWeekOfDayIsSunday ? 0 : 1">
 					<span slot="title">{{ $t("options:frontHistory.edit.startTime") }}</span>
 				</IonDatetime>
 			</IonModal>
 			<IonModal class="stack-modal" :keep-contents-mounted="true">
-				<IonDatetime id="endTime" v-model="endTime" :showDefaultButtons="true" :hourCycle="twelveHour ? 'h12' : 'h24'">
+				<IonDatetime id="endTime" v-model="endTime" :showDefaultButtons="true" :hourCycle="twelveHourClock ? 'h12' : 'h24'" :firstDayOfWeek="firstWeekOfDayIsSunday ? 0 : 1">
 					<span slot="title">{{ $t("options:frontHistory.edit.endTime") }}</span>
 				</IonDatetime>
 			</IonModal>
