@@ -1,10 +1,17 @@
+import dayjs from "dayjs";
 import i18next from "i18next";
+
+import "dayjs/locale/en";
 
 const translations = import.meta.glob("../../translations/*/*.json");
 
 const loadTranslations = [
 	"en"
 ];
+
+i18next.on("languageChanged", async (lng) => {
+	dayjs.locale(lng);
+})
 
 await i18next.init({
 	fallbackLng: "en",
