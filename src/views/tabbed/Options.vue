@@ -1,6 +1,8 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonList, IonItem, IonListHeader, IonLabel, IonPage, IonTitle, IonToolbar, IonIcon } from '@ionic/vue';
 	import { inject } from 'vue';
+	import { wasPersisted } from '../../lib/util/storageManager';
+	import StoragePersistenceMissing from "../../components/StoragePersistenceMissing.vue";
 
 	import {
 		personOutline as SystemIOS,
@@ -43,11 +45,14 @@
 
 		<IonContent>
 
+			<StoragePersistenceMissing v-if="!wasPersisted" />
+
 			<IonListHeader>
 				<IonLabel>{{ $t("options:options.managementLabel") }}</IonLabel>
 			</IonListHeader>
 
 			<IonList :inset="isIOS">
+
 				<IonItem button routerLink="/options/systemSettings">
 					<IonIcon :ios="SystemIOS" :md="SystemMD" slot="start" aria-hidden="true" />
 					<IonLabel>{{ $t("options:systemSettings.header") }}</IonLabel>

@@ -46,19 +46,14 @@ import "./lib/theme/style.css";
 
 // Capacitor stuff
 import { SplashScreen } from "@capacitor/splash-screen";
+import { tryPersistStorage } from "./lib/util/storageManager";
 
 if(!window.isSecureContext){
 	console.error("Cannot continue, this is not a safe environment!");
 	document.documentElement.classList.add("hydrated");
 	document.body.innerHTML = "<h1 style='text-align: center;'>Ampersand cannot run on non-HTTPS environments! We're sorry for the trouble.<br>If you think this is an issue, report it on GitHub.</h1>";
 } else {
-	// Storage Manager
-	if (!await navigator.storage?.persisted()) {
-		const persist = await navigator.storage?.persist()
-		if (!persist) {
-			console.error("Storage cannot be made persistent, data will be lost!", persist);
-		}
-	}
+	await tryPersistStorage();
 
 	const darkMode = window.matchMedia("(prefers-color-scheme: dark)");
 	darkMode.addEventListener("change", updateDarkMode);
