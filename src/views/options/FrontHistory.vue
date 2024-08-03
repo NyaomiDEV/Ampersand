@@ -49,7 +49,7 @@
 		<IonContent>
 			<IonList :inset="isIOS">
 				<template v-for="tuple in getGrouped(frontingEntries)" >
-					<IonItemDivider>
+					<IonItemDivider sticky>
 						<IonLabel>{{
 							tuple[0] === "currentlyFronting"
 								? $t("options:frontHistory.currentlyFronting")
