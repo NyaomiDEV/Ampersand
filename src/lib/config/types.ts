@@ -1,14 +1,8 @@
-export type Config = {
-	app: AppConfig,
-	accessibility: AccessibilityConfig,
-	security: SecurityConfig,
-};
-
 export type AppConfig = {
 	locale: {
 		language: string,
 		firstWeekOfDayIsSunday: boolean,
-		TwelveHourClock: boolean
+		twelveHourClock: boolean
 	},
 	view: ViewName,
 	filterQueryMembers: string,
@@ -29,6 +23,7 @@ export type AccessibilityConfig = {
 }
 
 export type SecurityConfig = {
+	usePin: boolean,
 	pinCode?: string,
 	useBiometrics: boolean
 }

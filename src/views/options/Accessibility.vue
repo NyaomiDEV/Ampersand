@@ -1,24 +1,10 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonItem, IonRange, IonLabel, IonToggle, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonSegment, IonSelect, IonSelectOption } from '@ionic/vue';
-	import { inject, reactive, watch } from 'vue';
-	import { AccessibilityConfig } from '../../lib/config/types';
-	import { getConfigEntry, saveConfig } from '../../lib/config';
-	import { updateAccessibility, updateDarkMode } from '../../lib/mode';
+	import { inject } from 'vue';
+	import { accessibilityConfig } from '../../lib/config';
 	import Color from '../../components/Color.vue';
-	import { updateMaterialColors } from '../../lib/theme';
 
 	import MD3SegmentButton from '../../components/MD3SegmentButton.vue';
-
-	const config = reactive(getConfigEntry("accessibility") as AccessibilityConfig);
-	watch(config, () => {
-		saveConfig({
-			accessibility: { ...config }
-		});
-
-		updateDarkMode();
-		updateMaterialColors();
-		updateAccessibility();
-	});
 
 	const isIOS = inject<boolean>("isIOS");
 </script>
@@ -37,7 +23,7 @@
 		<IonContent>
 			<IonList :inset="isIOS">
 				<IonItem>
-					<IonToggle v-model="config.highLegibility">
+					<IonToggle v-model="accessibilityConfig.highLegibility">
 						<IonLabel>
 							<h3>{{ $t("options:accessibility.highLegibilityFont.title") }}</h3>
 							<p>{{ $t("options:accessibility.highLegibilityFont.desc") }}</p>
@@ -47,7 +33,7 @@
 
 				<IonItem>
 					<IonLabel>
-						<IonSelect :label="$t('options:accessibility.highLegibilityFontType.title')" interface="popover" v-model="config.highLegibilityType">
+						<IonSelect :label="$t('options:accessibility.highLegibilityFontType.title')" interface="popover" v-model="accessibilityConfig.highLegibilityType">
 							<IonSelectOption value="atkinson">
 								{{ $t("options:accessibility.highLegibilityFontType.atkinson") }}
 							</IonSelectOption>
@@ -66,7 +52,7 @@
 				<IonItem>
 					<IonLabel>
 						<h3 class="centered-text">{{ $t("options:accessibility.uiVariant.title") }}</h3>
-						<IonSegment class="segment-alt" value="ui-variant" v-model="config.theme">
+						<IonSegment class="segment-alt" value="ui-variant" v-model="accessibilityConfig.theme">
 
 							<MD3SegmentButton value="auto">
 								<IonLabel>{{ $t("options:accessibility.uiVariant.auto") }}</IonLabel>
@@ -84,7 +70,7 @@
 				</IonItem>
 
 				<IonItem>
-					<IonToggle v-model="config.useAccentColor">
+					<IonToggle v-model="accessibilityConfig.useAccentColor">
 						<IonLabel>
 							<h3>{{ $t("options:accessibility.useAccentColor.title") }}</h3>
 							<p>{{ $t("options:accessibility.useAccentColor.desc") }}</p>
@@ -93,7 +79,7 @@
 				</IonItem>
 
 				<IonItem button>
-					<Color v-model="config.accentColor">
+					<Color v-model="accessibilityConfig.accentColor">
 						<IonLabel>
 							<h3>{{ $t("options:accessibility.accentColor.title") }}</h3>
 							<p>{{ $t("options:accessibility.accentColor.desc") }}</p>
@@ -102,7 +88,7 @@
 				</IonItem>
 
 				<IonItem v-if="false"> <!-- we don't have anything that warrants us reduced motion yet -->
-					<IonToggle v-model="config.reducedMotion">
+					<IonToggle v-model="accessibilityConfig.reducedMotion">
 						<IonLabel>
 							<h3>{{ $t("options:accessibility.reducedMotion.title") }}</h3>
 							<p>{{ $t("options:accessibility.reducedMotion.desc") }}</p>
@@ -114,7 +100,7 @@
 					<IonLabel class="more-padding">
 						<h3 class="centered-text">{{ $t("options:accessibility.fontScale.title") }}</h3>
 						<IonRange
-							v-model="config.fontScale"
+							v-model="accessibilityConfig.fontScale"
 							:min="0.5"
 							:max="1.5"
 							:step="0.1"
@@ -130,7 +116,7 @@
 					<IonLabel class="more-padding">
 						<h3 class="centered-text">{{ $t("options:accessibility.chatFontScale.title") }}</h3>
 						<IonRange
-							v-model="config.chatFontScale"
+							v-model="accessibilityConfig.chatFontScale"
 							:min="0.5"
 							:max="1.5"
 							:step="0.1"

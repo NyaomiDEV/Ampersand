@@ -1,5 +1,4 @@
-import { getConfigEntry } from "./config";
-import { AccessibilityConfig } from "./config/types";
+import { accessibilityConfig } from "./config";
 
 export function getIonicMode(): "ios" | "md" {
 	if (typeof (window as any) !== "undefined") {
@@ -16,8 +15,7 @@ export function isIOSIonicMode(): boolean {
 }
 
 export function isDarkMode() {
-	const accessibility = getConfigEntry("accessibility") as AccessibilityConfig;
-	switch (accessibility.theme) {
+	switch (accessibilityConfig.theme) {
 		case "dark":
 			return true;
 		case "light":
@@ -32,18 +30,18 @@ export function updateDarkMode() {
 }
 
 export function updateAccessibility() {
-	const highLegibility = (getConfigEntry("accessibility") as AccessibilityConfig).highLegibility;
+	const highLegibility = accessibilityConfig.highLegibility;
 	if (highLegibility) {
 		document.documentElement.classList.add("high-legibility");
 
-		const highLegibilityType = (getConfigEntry("accessibility") as AccessibilityConfig).highLegibilityType;
+		const highLegibilityType = accessibilityConfig.highLegibilityType;
 
 		document.documentElement.classList.remove(...[...document.documentElement.classList.values()].filter(x => x.startsWith("hl-")));
 		document.documentElement.classList.add("hl-" + highLegibilityType);
 	} else
 		document.documentElement.classList.remove("high-legibility", ...[...document.documentElement.classList.values()].filter(x => x.startsWith("hl-")));
 
-	const fontScale = (getConfigEntry("accessibility") as AccessibilityConfig).fontScale;
+	const fontScale = accessibilityConfig.fontScale;
 	if (fontScale !== 1)
 		document.documentElement.style.setProperty("font-size", `${fontScale}em`);
 	else

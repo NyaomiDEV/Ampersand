@@ -9,7 +9,7 @@
 	import LocalizedFormat from "dayjs/plugin/localizedFormat";
 	import { onMounted, onUnmounted, ref } from "vue";
 	import { formatWrittenTime } from "../../lib/util/misc";
-	import { getConfig } from "../../lib/config";
+	import { appConfig } from "../../lib/config";
 	dayjs.extend(RelativeTime);
 	dayjs.extend(LocalizedFormat);
 
@@ -17,7 +17,7 @@
 		entry: FrontingEntryComplete,
 	}>();
 
-	const twelveHour = getConfig().app.locale.TwelveHourClock;
+	const twelveHour = appConfig.locale.twelveHourClock;
 
 	const interval = ref(props.entry.endTime
 		? formatWrittenTime(props.entry.endTime, props.entry.startTime)

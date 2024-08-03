@@ -3,11 +3,10 @@
 
 	import { computed, provide } from "vue";
 	import { isIOSIonicMode } from "./lib/mode";
-	import { getConfigEntry } from "./lib/config";
-	import { AccessibilityConfig } from "./lib/config/types";
+	import { accessibilityConfig } from "./lib/config";
 
 	provide("isIOS", computed(isIOSIonicMode));
-	provide("reducedMotion", (getConfigEntry("accessibility") as AccessibilityConfig).reducedMotion)
+	provide("reducedMotion", accessibilityConfig.reducedMotion)
 </script>
 
 <template>

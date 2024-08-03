@@ -36,12 +36,12 @@
 	import UTC from "dayjs/plugin/utc";
 	import Timezone from "dayjs/plugin/timezone";
 	import { Member } from "../lib/db/entities/members";
-	import { getConfig } from "../lib/config";
+	import { appConfig } from "../lib/config";
 	dayjs.extend(UTC);
 	dayjs.extend(Timezone);
 
-	const twelveHourClock = getConfig().app.locale.TwelveHourClock;
-	const firstWeekOfDayIsSunday = getConfig().app.locale.firstWeekOfDayIsSunday;
+	const twelveHourClock = appConfig.locale.twelveHourClock;
+	const firstWeekOfDayIsSunday = appConfig.locale.firstWeekOfDayIsSunday;
 
 	const isOpen = inject<Ref<boolean>>("isOpen")!;
 	const frontingEntry = inject<Ref<FrontingEntryComplete>>("frontingEntry")!;

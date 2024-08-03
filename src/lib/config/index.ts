@@ -1,41 +1,46 @@
-import { getCompound, setCompound } from "../util/localStorage";
-import { Config } from "./types";
+import { reactive, watch } from "vue";
+import { get, set } from "./localStorage";
+import { AccessibilityConfig, AppConfig, SecurityConfig } from "./types";
+import { updateAccessibility, updateDarkMode } from "../mode";
+import { updateMaterialColors } from "../theme";
 
-export const defaultConfig: Config = {
-	app: {
-		locale: {
-			language: "en",
-			firstWeekOfDayIsSunday: false,
-			TwelveHourClock: false,
-		},
-		view: "members",
-		filterQueryMembers: "",
-		filterQueryJournal: ""
+const defaultAppConfig: AppConfig = {
+	locale: {
+		language: "en",
+		firstWeekOfDayIsSunday: false,
+		twelveHourClock: false,
 	},
-	accessibility: {
-		highLegibility: false,
-		highLegibilityType: "atkinson",
-		theme: "auto",
-		useAccentColor: false,
-		accentColor: undefined,
-		reducedMotion: false,
-		fontScale: 1,
-		chatFontScale: 1
-	},
-	security: {
-		pinCode: undefined,
-		useBiometrics: false
-	}
+	view: "members",
+	filterQueryMembers: "",
+	filterQueryJournal: ""
 };
 
-export function getConfig(): Config {
-	return Object.assign({}, defaultConfig, getCompound("config"));
+const defaultAccessibilityConfig: AccessibilityConfig = {
+	highLegibility: false,
+	highLegibilityType: "atkinson",
+	theme: "auto",
+	useAccentColor: false,
+	accentColor: undefined,
+	reducedMotion: false,
+	fontScale: 1,
+	chatFontScale: 1
 }
 
-export function getConfigEntry(entryKey: keyof Config): Config[keyof Config] {
-	return getConfig()[entryKey];
+const defaultSecurityConfig: SecurityConfig = {
+	usePin: false,
+	pinCode: undefined,
+	useBiometrics: false
 }
 
-export function saveConfig(config: Partial<Config>) {
-	return setCompound("config", config);
-}
+export const appConfig = reactive<AppConfig>({...defaultAppConfig, ...get("appConfig") });
+export const accessibilityConfig = reactive<AccessibilityConfig>({ ...defaultAccessibilityConfig, ...get("accessibilityConfig") });
+export const securityConfig = reactive<SecurityConfig>({ ...defaultSecurityConfig, ...get("securityConfig") });
+
+watch(appConfig, () => set("appConfig", {...appConfig}));
+watch(accessibilityConfig, () => {
+	set("accessibilityConfig", { ...accessibilityConfig });
+	updateDarkMode();
+	updateMaterialColors();
+	updateAccessibility();
+});
+watch(securityConfig, () => set("securityConfig", { ...securityConfig }));
