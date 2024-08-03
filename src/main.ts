@@ -47,6 +47,7 @@ import "./lib/theme/style.css";
 // Capacitor stuff
 import { SplashScreen } from "@capacitor/splash-screen";
 import { tryPersistStorage } from "./lib/util/storageManager";
+import { getSystem, newSystem } from "./lib/db/entities/system";
 
 if(!window.isSecureContext){
 	console.error("Cannot continue, this is not a safe environment!");
@@ -54,6 +55,12 @@ if(!window.isSecureContext){
 	document.body.innerHTML = "<h1 style='text-align: center;'>Ampersand cannot run on non-HTTPS environments! We're sorry for the trouble.<br>If you think this is an issue, report it on GitHub.</h1>";
 } else {
 	await tryPersistStorage();
+
+	if(!getSystem()){
+		await newSystem({
+			name: ""
+		});
+	}
 
 	const darkMode = window.matchMedia("(prefers-color-scheme: dark)");
 	darkMode.addEventListener("change", updateDarkMode);

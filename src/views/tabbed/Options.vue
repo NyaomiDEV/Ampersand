@@ -31,6 +31,8 @@
 	import AboutMD from '@material-design-icons/svg/outlined/info.svg';
 
 	const isIOS = inject<boolean>("isIOS");
+
+	const isDev = import.meta.env.MODE === 'development';
 </script>
 
 <template>
@@ -111,7 +113,7 @@
 					<IonLabel>{{ $t("options:about.header") }}</IonLabel>
 				</IonItem>
 
-				<IonItem button routerLink="/options/testingGrounds">
+				<IonItem button routerLink="/options/testingGrounds" v-if="isDev">
 					<IonIcon :ios="SparklesIOS" :md="SparklesMD" slot="start" aria-hidden="true" />
 					{{ $t("testingGrounds:header") }}
 				</IonItem>
