@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonItem, IonRange, IonLabel, IonToggle, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonSegment } from '@ionic/vue';
+	import { IonContent, IonHeader, IonItem, IonRange, IonLabel, IonToggle, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonSegment, IonSelect, IonSelectOption } from '@ionic/vue';
 	import { inject, reactive, watch } from 'vue';
 	import { AccessibilityConfig } from '../../lib/config/types';
 	import { getConfigEntry, saveConfig } from '../../lib/config';
@@ -47,21 +47,19 @@
 
 				<IonItem>
 					<IonLabel>
-						<h3 class="centered-text">{{ $t("options:accessibility.highLegibilityFontType.title") }}</h3>
-						<IonSegment class="segment-alt" value="high-legibility-type" v-model="config.highLegibilityType">
+						<IonSelect :label="$t('options:accessibility.highLegibilityFontType.title')" interface="popover" v-model="config.highLegibilityType">
+							<IonSelectOption value="atkinson">
+								{{ $t("options:accessibility.highLegibilityFontType.atkinson") }}
+							</IonSelectOption>
 
-							<MD3SegmentButton value="atkinson">
-								<IonLabel>{{ $t("options:accessibility.highLegibilityFontType.atkinson") }}</IonLabel>
-							</MD3SegmentButton>
+							<IonSelectOption value="opendyslexic">
+								{{ $t("options:accessibility.highLegibilityFontType.opendyslexic") }}
+							</IonSelectOption>
 
-							<MD3SegmentButton value="opendyslexic">
-								<IonLabel>{{ $t("options:accessibility.highLegibilityFontType.opendyslexic") }}</IonLabel>
-							</MD3SegmentButton>
-
-							<MD3SegmentButton value="lexend">
-								<IonLabel>{{ $t("options:accessibility.highLegibilityFontType.lexend") }}</IonLabel>
-							</MD3SegmentButton>
-						</IonSegment>
+							<IonSelectOption value="lexend">
+								{{ $t("options:accessibility.highLegibilityFontType.lexend") }}
+							</IonSelectOption>
+						</IonSelect>
 					</IonLabel>
 				</IonItem>
 
