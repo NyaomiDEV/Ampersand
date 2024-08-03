@@ -14,10 +14,8 @@
 		IonItemSliding,
 		IonItemOptions,
 		IonItemOption,
-		IonLabel,
-		createGesture
 	} from '@ionic/vue';
-	import { ComponentPublicInstance, inject, provide, Ref, ref } from 'vue';
+	import { inject, provide, Ref, ref } from 'vue';
 	import { getFilteredMembers } from '../../lib/db/liveQueries';
 
 	import {
@@ -26,6 +24,7 @@
 		personRemoveOutline as removeFromFrontIOS,
 		arrowUpCircleOutline as setMainFronterIOS,
 		arrowDownCircleOutline as unsetMainFronterIOS,
+		ellipseOutline as mainFronterIOS,
 		personCircleOutline as setAsFrontIOS,
 	} from "ionicons/icons";
 
@@ -34,6 +33,7 @@
 	import removeFromFrontMD from "@material-design-icons/svg/outlined/person_remove.svg";
 	import setMainFronterMD from "@material-design-icons/svg/outlined/arrow_circle_up.svg";
 	import unsetMainFronterMD from "@material-design-icons/svg/outlined/arrow_circle_down.svg";
+	import mainFronterMD from "@material-design-icons/svg/outlined/circle.svg";
 	import setAsFrontMD from "@material-design-icons/svg/outlined/person_pin_circle.svg";
 
 	import MemberEdit from '../../modals/MemberEdit.vue';
@@ -168,6 +168,7 @@
 					<IonItem button @pointerdown="startPress(member)" @pointerup="endPress(member, false)" @pointermove="endPress(member, true)" :style="getHighlightLevel(member)">
 						<MemberAvatar slot="start" :member />
 						<MemberLabel :member />
+						<IonIcon slot="end" :ios="mainFronterIOS" :md="mainFronterMD" v-if="getCurrentFrontEntryForMember(member)?.isMainFronter" />
 					</IonItem>
 					<IonItemOptions @ionSwipe="drag(member)">
 						<IonItemOption v-if="!getCurrentFrontEntryForMember(member)" @click="addFrontingEntry(member)">
