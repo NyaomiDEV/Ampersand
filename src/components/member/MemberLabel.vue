@@ -5,9 +5,6 @@
 
 	import { Member } from '../../lib/db/entities/members';
 
-	import { tags } from "../../lib/db/entities/tags";
-	import TagChip from "../tag/TagChip.vue";
-
 	const props = defineProps<{
 		member: Member,
 	}>();
@@ -27,8 +24,5 @@
 		<h2>
 			{{ props.member.name }}
 		</h2>
-		<div class="member-tags">
-			<TagChip v-if="tags?.length" v-for="tag in props.member.tags" :tag="tags.find(x => x.uuid === tag)!" />
-		</div>
 	</IonLabel>
 </template>
