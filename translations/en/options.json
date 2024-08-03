@@ -92,7 +92,8 @@
 		"highLegibilityFontType": {
 			"title": "High legibility font family",
 			"atkinson": "Atkinson Hyperlegible",
-			"opendyslexic": "OpenDyslexic"
+			"opendyslexic": "OpenDyslexic",
+			"lexend": "Lexend"
 		},
 		"uiVariant": {
 			"title": "UI variant",

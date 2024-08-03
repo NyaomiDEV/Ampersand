@@ -38,19 +38,10 @@ export function updateAccessibility() {
 
 		const highLegibilityType = (getConfigEntry("accessibility") as AccessibilityConfig).highLegibilityType;
 
-		switch(highLegibilityType){
-			default:
-			case "atkinson":
-				document.documentElement.classList.remove("opendyslexic");
-				document.documentElement.classList.add("atkinson");
-				break;
-			case "opendyslexic":
-				document.documentElement.classList.remove("atkinson");
-				document.documentElement.classList.add("opendyslexic");
-				break;
-		}
+		document.documentElement.classList.remove(...[...document.documentElement.classList.values()].filter(x => x.startsWith("hl-")));
+		document.documentElement.classList.add("hl-" + highLegibilityType);
 	} else
-		document.documentElement.classList.remove("high-legibility", "atkinson", "opendyslexic");
+		document.documentElement.classList.remove("high-legibility", ...[...document.documentElement.classList.values()].filter(x => x.startsWith("hl-")));
 
 	const fontScale = (getConfigEntry("accessibility") as AccessibilityConfig).fontScale;
 	if (fontScale !== 1)

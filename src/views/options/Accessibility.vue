@@ -57,6 +57,10 @@
 							<MD3SegmentButton value="opendyslexic">
 								<IonLabel>{{ $t("options:accessibility.highLegibilityFontType.opendyslexic") }}</IonLabel>
 							</MD3SegmentButton>
+
+							<MD3SegmentButton value="lexend">
+								<IonLabel>{{ $t("options:accessibility.highLegibilityFontType.lexend") }}</IonLabel>
+							</MD3SegmentButton>
 						</IonSegment>
 					</IonLabel>
 				</IonItem>

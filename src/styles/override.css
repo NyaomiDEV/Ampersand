@@ -1,11 +1,17 @@
-html.high-legibility.atkinson {
-	font-family: 'Atkinson Hyperlegible', sans-serif;
-	--ion-font-family: 'Atkinson Hyperlegible', sans-serif;
+html {
+	--ion-font-family: 'Inter', var(--ion-default-font);
 }
 
-html.high-legibility.opendyslexic {
-	font-family: 'OpenDyslexic', sans-serif;
-	--ion-font-family: 'OpenDyslexic', sans-serif;
+html.high-legibility.hl-atkinson {
+	--ion-font-family: 'Atkinson Hyperlegible', var(--ion-default-font);
+}
+
+html.high-legibility.hl-opendyslexic {
+	--ion-font-family: 'OpenDyslexic', var(--ion-default-font);
+}
+
+html.high-legibility.hl-lexend {
+	--ion-font-family: 'Lexend', var(--ion-default-font);
 }
 
 ion-list-header + ion-list.md {
