@@ -62,6 +62,16 @@ export async function setMainFronter(member: Member, value: boolean){
 	const f = getCurrentFrontEntryForMember(member);
 	if (!f) return;
 
+	if(value){
+		const toUpdate = frontingEntries.value.filter(x => !x.endTime && x.member.uuid !== member.uuid).map(x => x.uuid);
+
+		for (const uuid of toUpdate) {
+			await getTable().update(uuid, {
+				isMainFronter: false
+			});
+		}
+	}
+
 	await getTable().update(f.uuid, {
 		isMainFronter: value
 	});
