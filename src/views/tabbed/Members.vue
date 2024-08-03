@@ -14,9 +14,10 @@
 		IonItemSliding,
 		IonItemOptions,
 		IonItemOption,
-		IonLabel
+		IonLabel,
+		createGesture
 	} from '@ionic/vue';
-	import { inject, provide, Ref, ref } from 'vue';
+	import { ComponentPublicInstance, inject, provide, Ref, ref } from 'vue';
 	import { getFilteredMembers } from '../../lib/db/liveQueries';
 
 	import {
@@ -104,6 +105,40 @@
 		
 		return undefined
 	}
+
+	function drag(member: Member){
+		const entry = getCurrentFrontEntryForMember(member);
+		if(entry){
+			if(entry.isMainFronter)
+				return setMainFrontingEntry(member, false);
+
+			return setMainFrontingEntry(member, true);
+		}
+	}
+
+	const longPressHandlers = new Map();
+	function startPress(member: Member){
+		longPressHandlers.set(
+			member,
+			setTimeout(() => {
+			const entry = getCurrentFrontEntryForMember(member);
+				if(entry)
+					removeFrontingEntry(member);
+				else
+					addFrontingEntry(member);
+
+				longPressHandlers.delete(member);
+			}, 500)
+		);
+	}
+
+	function endPress(member: Member, dragged: boolean){
+		const timeoutHandler = longPressHandlers.get(member);
+		if(!timeoutHandler) return;
+		clearTimeout(timeoutHandler);
+		longPressHandlers.delete(member);
+		if(!dragged) showModal(member);
+	}
 </script>
 
 <template>
@@ -130,21 +165,21 @@
 			<IonList :inset="isIOS" ref="list">
 
 				<IonItemSliding v-for="member in members" :key="JSON.stringify(member)">
-					<IonItem button @click="showModal(member)" :style="getHighlightLevel(member)">
+					<IonItem button @pointerdown="startPress(member)" @pointerup="endPress(member, false)" @pointermove="endPress(member, true)" :style="getHighlightLevel(member)">
 						<MemberAvatar slot="start" :member />
 						<MemberLabel :member />
 					</IonItem>
-					<IonItemOptions>
+					<IonItemOptions @ionSwipe="drag(member)">
 						<IonItemOption v-if="!getCurrentFrontEntryForMember(member)" @click="addFrontingEntry(member)">
 							<IonIcon slot="icon-only" :md="addToFrontMD" :ios="addToFrontIOS"></IonIcon>
 						</IonItemOption>
 						<IonItemOption v-if="getCurrentFrontEntryForMember(member)" @click="removeFrontingEntry(member)" color="danger">
 							<IonIcon slot="icon-only" :md="removeFromFrontMD" :ios="removeFromFrontIOS"></IonIcon>
 						</IonItemOption>
-						<IonItemOption v-if="getCurrentFrontEntryForMember(member) && !getCurrentFrontEntryForMember(member)?.isMainFronter" @click="setMainFrontingEntry(member, true)" color="secondary">
+						<IonItemOption expandable v-if="getCurrentFrontEntryForMember(member) && !getCurrentFrontEntryForMember(member)?.isMainFronter" @click="setMainFrontingEntry(member, true)" color="secondary">
 							<IonIcon slot="icon-only" :md="setMainFronterMD" :ios="setMainFronterIOS"></IonIcon>
 						</IonItemOption>
-						<IonItemOption v-if="getCurrentFrontEntryForMember(member)?.isMainFronter" @click="setMainFrontingEntry(member, false)" color="secondary">
+						<IonItemOption expandable v-if="getCurrentFrontEntryForMember(member)?.isMainFronter" @click="setMainFrontingEntry(member, false)" color="secondary">
 							<IonIcon slot="icon-only" :md="unsetMainFronterMD" :ios="unsetMainFronterIOS"></IonIcon>
 						</IonItemOption>
 						<IonItemOption @click="setSoleFrontingEntry(member)" color="tertiary">
