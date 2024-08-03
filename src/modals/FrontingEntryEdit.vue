@@ -43,7 +43,6 @@
 	const twelveHourClock = appConfig.locale.twelveHourClock;
 	const firstWeekOfDayIsSunday = appConfig.locale.firstWeekOfDayIsSunday;
 
-	const isOpen = inject<Ref<boolean>>("isOpen")!;
 	const frontingEntry = inject<Ref<FrontingEntryComplete>>("frontingEntry")!;
 
 	const memberSelectModal = ref();
@@ -55,11 +54,6 @@
 	const endTime: Ref<string | undefined> = ref();
 
 	const watchStopHandles: WatchStopHandle[] = [];
-
-	function dismiss(){
-		if(isOpen)
-			isOpen.value = false;
-	}
 
 	async function save(){
 		if(!frontingEntry.value) return;
@@ -127,7 +121,7 @@
 </script>
 
 <template>
-	<IonModal class="fronting-entry-edit-modal" :isOpen @willPresent="present" @didPresent="didPresent" @didDismiss="dismiss" :breakpoints="[0,1]" initialBreakpoint="1">
+	<IonModal class="fronting-entry-edit-modal" @willPresent="present" @didPresent="didPresent" :breakpoints="[0,1]" initialBreakpoint="1">
 		<IonHeader>
 			<IonToolbar>
 				<IonTitle>{{ $t("options:frontHistory.edit.header") }}</IonTitle>

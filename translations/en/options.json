@@ -10,6 +10,7 @@
 	},
 	"frontHistory": {
 		"header": "Front history",
+		"currentlyFronting": "Currently fronting",
 		"edit": {
 			"header": "Edit fronting entry",
 			"member": "Edit fronting member",
