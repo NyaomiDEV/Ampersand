@@ -15,9 +15,8 @@
 		<p>
 			{{
 				[
-					props.member.role,
 					props.member.isCustomFront ? $t("members:edit.customFront") : null,
-					props.member.isArchived ? $t("members:edit.archived") : null
+					props.member.role,
 				].filter(Boolean).join(" - ")
 			}}
 		</p>

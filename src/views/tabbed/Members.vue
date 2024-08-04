@@ -26,6 +26,7 @@
 		arrowDownCircleOutline as unsetMainFronterIOS,
 		ellipseOutline as mainFronterIOS,
 		personCircleOutline as setAsFrontIOS,
+		archiveOutline as archivedIOS
 	} from "ionicons/icons";
 
 	import addMD from "@material-design-icons/svg/outlined/add.svg";
@@ -35,6 +36,7 @@
 	import unsetMainFronterMD from "@material-design-icons/svg/outlined/arrow_circle_down.svg";
 	import mainFronterMD from "@material-design-icons/svg/outlined/circle.svg";
 	import setAsFrontMD from "@material-design-icons/svg/outlined/person_pin_circle.svg";
+	import archivedMD from "@material-design-icons/svg/outlined/archive.svg";
 
 	import MemberEdit from '../../modals/MemberEdit.vue';
 	import { Member } from '../../lib/db/entities/members';
@@ -168,6 +170,7 @@
 					<IonItem button @pointerdown="startPress(member)" @pointerup="endPress(member, false)" @pointermove="endPress(member, true)" :style="getHighlightLevel(member)">
 						<MemberAvatar slot="start" :member />
 						<MemberLabel :member />
+						<IonIcon slot="end" :ios="archivedIOS" :md="archivedMD" v-if="member.isArchived" />
 						<IonIcon slot="end" :ios="mainFronterIOS" :md="mainFronterMD" v-if="getCurrentFrontEntryForMember(member)?.isMainFronter" />
 					</IonItem>
 					<IonItemOptions @ionSwipe="drag(member)">
