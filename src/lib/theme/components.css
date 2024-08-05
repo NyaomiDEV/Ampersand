@@ -1,4 +1,10 @@
 /* Headerbar */
+
+.md.md3 ion-modal.modal-sheet ion-header ion-toolbar:first-of-type {
+	--padding-top: 16px;
+	--min-height: 80px;
+}
+
 .md.md3 ion-toolbar {
 	--min-height: 64px;
 	--padding-start: 16px;
@@ -190,4 +196,9 @@
 
 .ion-palette-dark.md.md3 ion-tab-bar ion-tab-button.tab-selected ion-icon {
 	background: rgb(var(--md3-shade-30));
+}
+
+/* Modal handle */
+.md.md3 ion-modal::part(handle) {
+	top: 16px;
 }
