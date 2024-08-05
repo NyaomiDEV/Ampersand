@@ -58,7 +58,7 @@ import { getMarkdownFor } from '../../lib/markdown';
 		
 		<IonContent>
 			<IonList :inset="isIOS">
-				<IonCard button v-for="boardMessage in boardMessages" :key="JSON.stringify(boardMessage)" @click="showModal(boardMessage)">
+				<IonCard button v-for="boardMessage in boardMessages.sort((a, b) => b.date.getTime() - a.date.getTime())" :key="JSON.stringify(boardMessage)" @click="showModal(boardMessage)">
 					<IonCardHeader>
 						<IonCardSubtitle>{{ dayjs(boardMessage.date).format(`LL, ${twelveHour ? 'hh:mm A' : "HH:mm"}`) }}</IonCardSubtitle>
 						<IonCardTitle>{{ boardMessage.title }}</IonCardTitle>
