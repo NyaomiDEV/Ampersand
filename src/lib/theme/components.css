@@ -1,84 +1,94 @@
 /* Headerbar */
-.md3 ion-toolbar {
+.md.md3 ion-toolbar {
 	--min-height: 64px;
 	--padding-start: 16px;
 	--padding-end: 16px;
 }
 
-.md3 ion-toolbar *[slot=start] {
+.md.md3 ion-toolbar *[slot=start] {
 	color: var(--md3-shade-10);
 }
 
-.ion-palette-dark.md3 ion-toolbar *[slot=start] {
+.ion-palette-dark.md.md3 ion-toolbar *[slot=start] {
 	color: var(--md3-shade-90);
 }
 
-.md3 ion-toolbar *[slot=end] {
+.md.md3 ion-toolbar *[slot=end] {
 	color: var(--md3-shade-30);
 }
 
-.ion-palette-dark.md3 ion-toolbar *[slot=end] {
+.ion-palette-dark.md.md3 ion-toolbar *[slot=end] {
 	color: var(--md3-shade-80);
 }
 
-.md3 ion-header {
+.md.md3 ion-header {
 	box-shadow: 0px 2px 4px -1px rgb(var(--md3-light-shadow) / 0.2),
 		0px 4px 5px 0px rgb(var(--md3-light-shadow) / 0.14),
 		0px 1px 10px 0px rgb(var(--md3-light-shadow) / 0.12);
 }
 
-.ion-palette-dark.md3 ion-header {
+.ion-palette-dark.md.md3 ion-header {
 	box-shadow: 0px 2px 4px -1px rgb(var(--md3-dark-shadow) / 0.2),
 		0px 4px 5px 0px rgb(var(--md3-dark-shadow) / 0.14),
 		0px 1px 10px 0px rgb(var(--md3-dark-shadow) / 0.12);
 }
 
 /* FAB */
-.md3 ion-fab-button.md {
+.md.md3 ion-fab-button {
 	--border-radius: 16px;
+	margin: 16px;
+	--box-shadow: 0px 5px 5px -3px rgb(var(--md3-light-shadow) / 0.2),
+		0px 8px 10px 1px rgb(var(--md3-light-shadow) / 0.14),
+		0px 3px 14px 2px rgb(var(--md3-light-shadow) / 0.12);
+}
+
+.ion-palette-dark.md.md3 ion-fab-button {
+	--box-shadow: 0px 5px 5px -3px rgb(var(--md3-dark-shadow) / 0.2),
+		0px 8px 10px 1px rgb(var(--md3-dark-shadow) / 0.14),
+		0px 3px 14px 2px rgb(var(--md3-dark-shadow) / 0.12);
 }
 
 /* Segment Buttons */
-.md3 ion-segment.md.segment-alt ion-segment-button.md::part(native) {
+.md.md3 ion-segment.segment-alt ion-segment-button::part(native) {
 	border: 1px solid var(--color);
 	text-transform: none;
 	letter-spacing: normal;
 	font-size: unset;
 }
 
-.md3 ion-segment.md.segment-alt ion-segment-button.md.segment-button-checked::part(native) {
+.md.md3 ion-segment.segment-alt ion-segment-button.segment-button-checked::part(native) {
 	background-color: rgba(var(--ion-color-primary-rgb), 0.2);
 	color: var(--ion-text-color);
 }
 
-.md3 ion-segment.md.segment-alt ion-segment-button.md:first-child::part(native) {
+.md.md3 ion-segment.segment-alt ion-segment-button:first-child::part(native) {
 	border-right: 0;
 	border-radius: 48px 0 0 48px;
 }
 
-.md3 ion-segment.md.segment-alt ion-segment-button.md:last-child::part(native) {
+.md.md3 ion-segment.segment-alt ion-segment-button:last-child::part(native) {
 	border-left: 0;
 	border-radius: 0 48px 48px 0;
 }
 
-.md3 ion-segment.md.segment-alt ion-segment-button.md::part(indicator-background) {
+.md.md3 ion-segment.segment-alt ion-segment-button::part(indicator-background) {
 	height: 0px;
 }
 
 
 /* Toggles */
-.md3 ion-toggle.md::part(track) {
+.md.md3 ion-toggle::part(track) {
 	background-color: var(--ion-toolbar-background);
 	width: 56px;
 	height: 32px;
 	border-radius: 100px;
 }
 
-.md3 ion-toggle.md::part(track) {
+.md.md3 ion-toggle::part(track) {
 	border: 2px solid var(--ion-text-color-step-400);
 }
 
-.md3 ion-toggle.md::part(handle) {
+.md.md3 ion-toggle::part(handle) {
 	background-color: var(--ion-text-color-step-400);
 	width: 18px;
 	height: 18px;
@@ -86,12 +96,12 @@
 	--handle-spacing: 8px;
 }
 
-.md3 ion-toggle.toggle-checked.md::part(track) {
+.md.md3 ion-toggle.toggle-checked::part(track) {
 	background-color: var(--ion-color-primary);
 	border: 2px solid var(--ion-color-primary);
 }
 
-.md3 ion-toggle.toggle-checked.md::part(handle) {
+.md.md3 ion-toggle.toggle-checked::part(handle) {
 	background-color: var(--ion-toolbar-background);
 	width: 24px;
 	height: 24px;
@@ -99,7 +109,7 @@
 
 
 /* Ranges / Sliders */
-.md3 ion-range.md {
+.md.md3 ion-range {
 	--bar-height: 24px;
 	--bar-border-radius: 24px;
 	--knob-background: var(--ion-color-primary);
@@ -107,31 +117,31 @@
 	--knob-border-radius: 64px;
 }
 
-.md3 ion-range.md::part(knob) {
+.md.md3 ion-range::part(knob) {
 	width: 6px;
 	outline: 12px solid var(--ion-background-color);
 	transform: translateX(29px);
 }
 
-.md3 ion-range.md:active::part(knob) {
+.md.md3 ion-range:active::part(knob) {
 	transform: translateX(29px) scale(0.75, 1);
 }
 
-.md3 ion-range.md::part(knob)::before {
+.md.md3 ion-range::part(knob)::before {
 	display: none;
 }
 
-.md3 ion-range.md::part(tick) {
+.md.md3 ion-range::part(tick) {
 	border-radius: 100%;
 	transform: scale(0.5);
 }
 
-.md3 ion-range.md::part(tick-active) {
+.md.md3 ion-range::part(tick-active) {
 	display: none;
 }
 
 /* Tab bar - adapted from md3-for-ionic */
-.md3 ion-tab-bar ion-tab-button ion-icon {
+.md.md3 ion-tab-bar ion-tab-button ion-icon {
 	font-size: 24px;
 	margin: 0 0 4px;
 	padding: 4px 20px;
@@ -139,45 +149,45 @@
 	transition: background-color .2s ease-in-out;
 }
 
-.md3 ion-tab-bar ion-tab-button ion-label {
+.md.md3 ion-tab-bar ion-tab-button ion-label {
 	margin: 0;
 }
 
-.md3 ion-tab-bar {
+.md.md3 ion-tab-bar {
 	--background: rgb(var(--md3-shade-94));
 	--color: rgb(var(--md3-shade-10));
 	--border: none;
 	height: 80px;
 }
 
-.ion-palette-dark.md3 ion-tab-bar {
+.ion-palette-dark.md.md3 ion-tab-bar {
 	--background: rgb(var(--md3-shade-12));
 	--color: rgb(var(--md3-shade-90));
 }
 
-.md3 ion-tab-bar ion-tab-button {
+.md.md3 ion-tab-bar ion-tab-button {
 	--padding-top: 12px;
 	--padding-bottom: 16px;
 	--ripple-color: transparent;
 	--color: rgb(var(--md3-shade-30));
 }
 
-.ion-palette-dark.md3 ion-tab-bar ion-tab-button {
+.ion-palette-dark.md.md3 ion-tab-bar ion-tab-button {
 	--color: rgb(var(--md3-shade-80));
 }
 
-.md3 ion-tab-bar ion-tab-button.tab-selected {
+.md.md3 ion-tab-bar ion-tab-button.tab-selected {
 	--color: rgb(var(--md3-shade-10));
 }
 
-.ion-palette-dark.md3 ion-tab-bar ion-tab-button.tab-selected {
+.ion-palette-dark.md.md3 ion-tab-bar ion-tab-button.tab-selected {
 	--color: rgb(var(--md3-shade-90));
 }
 
-.md3 ion-tab-bar ion-tab-button.tab-selected ion-icon {
+.md.md3 ion-tab-bar ion-tab-button.tab-selected ion-icon {
 	background: rgb(var(--md3-shade-90));
 }
 
-.ion-palette-dark.md3 ion-tab-bar ion-tab-button.tab-selected ion-icon {
+.ion-palette-dark.md.md3 ion-tab-bar ion-tab-button.tab-selected ion-icon {
 	background: rgb(var(--md3-shade-30));
 }
