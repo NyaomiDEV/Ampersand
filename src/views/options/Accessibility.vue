@@ -127,6 +127,22 @@
 						/>
 					</IonLabel>
 				</IonItem>
+
+				<IonItem>
+					<IonLabel class="more-padding">
+						<h3 class="centered-text">{{ $t("options:accessibility.longPressDuration.title") }}</h3>
+						<IonRange
+							v-model="accessibilityConfig.longPressDuration"
+							:min="500"
+							:max="1000"
+							:step="50"
+							:snaps="true"
+							:ticks="true"
+							:pin="true"
+							:pinFormatter="(v) => `${v / 1000}`"
+						/>
+					</IonLabel>
+				</IonItem>
 			</IonList>
 		</IonContent>
 	</IonPage>

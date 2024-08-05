@@ -120,6 +120,9 @@
 		},
 		"chatFontScale": {
 			"title": "Chat UI size"
+		},
+		"longPressDuration": {
+			"title": "Long press duration"
 		}
 	},
 	"importExport": {

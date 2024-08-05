@@ -17,6 +17,7 @@
 	} from '@ionic/vue';
 	import { inject, provide, Ref, ref } from 'vue';
 	import { getFilteredMembers } from '../../lib/db/liveQueries';
+	import { accessibilityConfig } from '../../lib/config';
 
 	import {
 		addOutline as addIOS,
@@ -130,7 +131,7 @@
 					addFrontingEntry(member);
 
 				longPressHandlers.delete(member);
-			}, 500)
+			}, accessibilityConfig.longPressDuration)
 		);
 	}
 

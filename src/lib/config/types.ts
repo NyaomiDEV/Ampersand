@@ -19,7 +19,8 @@ export type AccessibilityConfig = {
 	accentColor?: string,
 	reducedMotion: boolean,
 	fontScale: number,
-	chatFontScale: number
+	chatFontScale: number,
+	longPressDuration: number
 }
 
 export type SecurityConfig = {

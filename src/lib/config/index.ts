@@ -23,7 +23,8 @@ const defaultAccessibilityConfig: AccessibilityConfig = {
 	accentColor: undefined,
 	reducedMotion: false,
 	fontScale: 1,
-	chatFontScale: 1
+	chatFontScale: 1,
+	longPressDuration: 750
 }
 
 const defaultSecurityConfig: SecurityConfig = {
