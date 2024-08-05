@@ -54,16 +54,27 @@
 }
 
 /* Segment Buttons */
-.md.md3 ion-segment.segment-alt ion-segment-button::part(native) {
-	border: 1px solid var(--color);
+.md.md3 ion-segment ion-segment-button::part(native) {
 	text-transform: none;
 	letter-spacing: normal;
 	font-size: unset;
 }
 
-.md.md3 ion-segment.segment-alt ion-segment-button.segment-button-checked::part(native) {
-	background-color: rgba(var(--ion-color-primary-rgb), 0.2);
-	color: var(--ion-text-color);
+.md.md3 ion-segment ion-segment-button::part(native) {
+	text-transform: none;
+	letter-spacing: normal;
+	font-size: unset;
+}
+
+.md.md3 ion-segment ion-segment-button::part(indicator-background) {
+	width: 50%;
+	margin: auto;
+	height: 3px;
+	border-radius: 3px 3px 0 0;
+}
+
+.md.md3 ion-segment.segment-alt ion-segment-button::part(native) {
+	border: 1px solid var(--color);
 }
 
 .md.md3 ion-segment.segment-alt ion-segment-button:first-child::part(native) {
@@ -74,6 +85,11 @@
 .md.md3 ion-segment.segment-alt ion-segment-button:last-child::part(native) {
 	border-left: 0;
 	border-radius: 0 48px 48px 0;
+}
+
+.md.md3 ion-segment.segment-alt ion-segment-button.segment-button-checked::part(native) {
+	background-color: rgba(var(--ion-color-primary-rgb), 0.2);
+	color: var(--ion-text-color);
 }
 
 .md.md3 ion-segment.segment-alt ion-segment-button::part(indicator-background) {
