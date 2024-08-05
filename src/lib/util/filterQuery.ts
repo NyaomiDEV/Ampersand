@@ -1,4 +1,5 @@
-import { Tag, getTagFromNameHashtag } from "../db/entities/tags";
+import dayjs from "dayjs";
+import { getTagFromNameHashtag } from "../db/entities/tags";
 
 export type MemberFilterQuery = {
 	query: string,
@@ -7,11 +8,6 @@ export type MemberFilterQuery = {
 	isCustomFront?: boolean,
 	pronouns?: string,
 	role?: string
-};
-
-export type TagFilterQuery = {
-	query: string,
-	type?: Tag["type"]
 };
 
 export function parseMemberFilterQuery(search: string): MemberFilterQuery {
@@ -86,6 +82,59 @@ export function parseMemberFilterQuery(search: string): MemberFilterQuery {
 				else
 					queryTokens.push(token);
 				
+				break;
+			default:
+				queryTokens.push(token);
+				break;
+		}
+	}
+
+	result.query = queryTokens.filter(Boolean).join(" ");
+	return result;
+}
+
+export type FrontingHistoryFilterQuery = {
+	query: string,
+	dateString?: string,
+	day?: number,
+	month?: number,
+	year?: number,
+	currentlyFronting?: boolean
+};
+
+export function parseFrontingHistoryFilterQuery(search: string) {
+	const tokens = search.split(" ");
+
+	const queryTokens: string[] = [];
+
+	const result: FrontingHistoryFilterQuery = {
+		query: "",
+	};
+
+	for (const token of tokens) {
+		switch (token.charAt(0)) {
+			case "@":
+				const tokenParts = token.slice(1).split(":");
+				switch (tokenParts[0].toLowerCase()) {
+					case "current":
+						result.currentlyFronting = true;
+						break;
+					case "date":
+						result.dateString = tokenParts[1];
+						break;
+					case "day":
+						result.day = Number(tokenParts[1]);
+						break;
+					case "month":
+						result.month = Number(tokenParts[1]);
+						break;
+					case "year":
+						result.year = Number(tokenParts[1]);
+						break;
+					default:
+						queryTokens.push(token);
+						break;
+				}
 				break;
 			default:
 				queryTokens.push(token);

@@ -1,9 +1,10 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonLabel, IonToolbar, IonBackButton, IonItem, IonItemDivider, IonDatetime, IonButtons, IonIcon, IonButton} from '@ionic/vue';
+	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonLabel, IonToolbar, IonBackButton, IonItem, IonItemDivider, IonDatetime, IonButtons, IonIcon, IonButton, IonSearchbar} from '@ionic/vue';
 	import { inject, provide, ref } from 'vue';
 	import FrontingEntryAvatar from "../../components/frontingEntry/FrontingEntryAvatar.vue";
 	import FrontingEntryLabel from "../../components/frontingEntry/FrontingEntryLabel.vue";
-	import { frontingEntries, FrontingEntryComplete } from '../../lib/db/entities/frontingEntries';
+	import { FrontingEntryComplete } from '../../lib/db/entities/frontingEntries';
+	import { getFilteredFrontingEntries } from '../../lib/db/liveQueries';
 	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
 	import dayjs from 'dayjs';
 
@@ -19,13 +20,15 @@
 	const isIOS = inject<boolean>("isIOS");
 	const frontingEntryModal = ref();
 	const frontingEntry = ref();
+	provide("frontingEntry", frontingEntry);
 
 	const firstWeekOfDayIsSunday = appConfig.locale.firstWeekOfDayIsSunday;
 
 	const isCalendarView = ref(false);
 	const date = ref(dayjs().toISOString());
 
-	provide("frontingEntry", frontingEntry);
+	const search = ref("");
+	const filteredFrontingEntries = getFilteredFrontingEntries(search);
 
 	async function showModal(clickedFrontingEntry: FrontingEntryComplete){
 		frontingEntry.value = {...clickedFrontingEntry};
@@ -55,11 +58,11 @@
 		const map = new Map<string, FrontingEntryComplete[]>();
 
 		if(date.valueOf() === today.valueOf())
-			map.set("currentlyFronting", frontingEntries.value.filter(x => !x.endTime));
+			map.set("currentlyFronting", filteredFrontingEntries.value?.filter(x => !x.endTime) || []);
 
 		const key = date.toISOString();
 
-		map.set(key, frontingEntries.value.filter(x => x.endTime && dayjs(x.startTime).startOf('day').valueOf() === date.valueOf()));
+		map.set(key, filteredFrontingEntries.value?.filter(x => x.endTime && dayjs(x.startTime).startOf('day').valueOf() === date.valueOf()) || []);
 
 		return map;
 	}
@@ -78,6 +81,16 @@
 						<IonIcon slot="icon-only" :ios="isCalendarView ? listIOS : calendarIOS" :md="isCalendarView ? listMD : calendarMD" />
 					</IonButton>
 				</IonButtons>
+			</IonToolbar>
+			<IonToolbar>
+				<IonSearchbar
+					:animated="true"
+					:placeholder="$t('options:frontHistory.searchPlaceholder')"
+					showCancelButton="focus"
+					showClearButton="focus"
+					:spellcheck="false"
+					v-model="search"
+				/>
 			</IonToolbar>
 		</IonHeader>
 		
@@ -103,7 +116,7 @@
 			</IonList>
 
 			<IonList :inset="isIOS" v-if="!isCalendarView">
-				<template v-for="tuple in getGrouped(frontingEntries)">
+				<template v-for="tuple in getGrouped(filteredFrontingEntries || [])">
 					<IonItemDivider sticky>
 						<IonLabel>{{
 							tuple[0] === "currentlyFronting"

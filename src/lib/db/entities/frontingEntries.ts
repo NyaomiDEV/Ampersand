@@ -6,6 +6,8 @@ import { getSystemUUID } from "./system";
 import { from, useObservable } from "@vueuse/rxjs";
 import { liveQuery } from "dexie";
 import { Member, members } from "./members";
+import { parseFrontingHistoryFilterQuery as parseFrontingEntriesFilterQuery } from "../../util/filterQuery";
+import dayjs from "dayjs";
 
 export type FrontingEntry = UUIDable & {
 	member: UUID,
@@ -99,5 +101,44 @@ export async function setSoleFronter(member: Member) {
 export function getCurrentFrontEntryForMember(member: Member){
 	return frontingEntries.value.find(x => {
 		return x.endTime === undefined && x.member.uuid === member.uuid
+	});
+}
+export function getFrontingEntriesFromFilterQuery(filterQuery: string) {
+	const parsed = parseFrontingEntriesFilterQuery(filterQuery);
+
+	console.log(parsed);
+
+	return frontingEntries.value.filter(x => {
+
+		if (!x.member.name.startsWith(parsed.query))
+			return false;
+
+		if (parsed.currentlyFronting) {
+			if(x.endTime)
+				return false;
+		}
+
+		if (parsed.dateString) {
+			const date = dayjs(parsed.dateString).startOf("day");
+			if (date.valueOf() !== dayjs(x.startTime).startOf("day").valueOf())
+				return false;
+		}
+
+		if (parsed.day) {
+			if (parsed.day !== dayjs(x.startTime).get("date"))
+				return false;
+		}
+
+		if (parsed.month) {
+			if (parsed.month !== dayjs(x.startTime).get("month") + 1)
+				return false;
+		}
+
+		if (parsed.year) {
+			if (parsed.year !== dayjs(x.startTime).get("year"))
+				return false;
+		}
+
+		return true;
 	});
 }

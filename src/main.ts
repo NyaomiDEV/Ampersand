@@ -48,6 +48,7 @@ import "./lib/theme/style.css";
 import { SplashScreen } from "@capacitor/splash-screen";
 import { tryPersistStorage } from "./lib/util/storageManager";
 import { getSystem, newSystem } from "./lib/db/entities/system";
+import dayjs from "dayjs";
 
 if(!window.isSecureContext){
 	console.error("Cannot continue, this is not a safe environment!");
