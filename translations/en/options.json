@@ -6,7 +6,10 @@
 	},
 	"systemSettings": {
 		"header": "System name and photo",
-		"systemName": "System name"
+		"systemName": "System name",
+		"memberCount": "Member count",
+		"memberCountText": "{{memberCount}} member(s)",
+		"tapToShow": "Tap to show"
 	},
 	"frontHistory": {
 		"header": "Front history",

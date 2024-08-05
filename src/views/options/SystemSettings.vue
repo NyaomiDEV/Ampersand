@@ -1,10 +1,10 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonAvatar, IonButton, IonIcon, IonInput, IonFab, IonFabButton, IonItem, useIonRouter} from '@ionic/vue';
-	import { inject, onMounted, ref } from 'vue';
+	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonAvatar, IonButton, IonIcon, IonInput, IonFab, IonFabButton, IonItem, useIonRouter, IonLabel} from '@ionic/vue';
+	import { inject, ref } from 'vue';
 	import { getBlobURL } from '../../lib/util/blob';
 	import { getFiles } from '../../lib/util/misc';
 	import { resizeImage } from '../../lib/util/image';
-	import { System, getSystem, modifySystem } from '../../lib/db/entities/system';
+	import { modifySystem, system } from '../../lib/db/entities/system';
 
 	import {
 		peopleOutline as peopleIOS,
@@ -15,15 +15,11 @@
 	import peopleMD from "@material-design-icons/svg/outlined/groups_2.svg"
 	import pencilMD from "@material-design-icons/svg/outlined/edit.svg"
 	import saveMD from "@material-design-icons/svg/outlined/save.svg"
+import { members } from '../../lib/db/entities/members';
 
 	const isIOS = inject<boolean>("isIOS");
 
-	const system = ref<System>({uuid: "", name: ""});
-
-	onMounted(async () => {
-		const s = await getSystem();
-		if(s) system.value = s;
-	});
+	const membersShowed = ref(false);
 
 	async function modifyPicture(){
 		const files = await getFiles();
@@ -38,7 +34,6 @@
 		await modifySystem(system.value);
 		router.handleNavigateBack("/options/");
 	}
-
 </script>
 
 <template>
@@ -68,9 +63,14 @@
 					<IonIcon :ios="saveIOS" :md="saveMD" />
 				</IonFabButton>
 			</IonFab>
-			<IonList :inset="isIOS">
-				<IonItem>
+			<IonList inset>
+				<IonItem lines="none">
 					<IonInput fill="outline" labelPlacement="floating" :label="$t('options:systemSettings.systemName')" v-model="system.name" />
+				</IonItem>
+				<IonItem lines="none">
+					<IonLabel>{{ $t("options:systemSettings.memberCount") }}</IonLabel>
+					<IonButton slot="end" v-if="!membersShowed" @click="membersShowed = true">{{ $t("options:systemSettings.tapToShow") }}</IonButton>
+					<IonLabel slot="end" v-if="membersShowed">{{ $t("options:systemSettings.memberCountText", { memberCount: members.length }) }}</IonLabel>
 				</IonItem>
 			</IonList>
 		</IonContent>
@@ -79,7 +79,7 @@
 
 <style scoped>
 
-div.avatar-container {
+	div.avatar-container {
 		position: relative;
 		width: fit-content;
 		height: fit-content;
@@ -101,8 +101,11 @@ div.avatar-container {
 		right: 8px;
 	}
 
-	ion-input {
-		margin-top: 16px;
+	ion-content {
+		--padding-bottom: 80px;
 	}
 
+	ion-input {
+		margin: 16px 0;
+	}
 </style>
