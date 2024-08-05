@@ -1,5 +1,62 @@
-import { argbFromHex, blueFromArgb, greenFromArgb, redFromArgb, themeFromSourceColor } from "@material/material-color-utilities";
+import { argbFromHex, blueFromArgb, DynamicColor, greenFromArgb, Hct, MaterialDynamicColors, redFromArgb, SchemeTonalSpot, themeFromSourceColor } from "@material/material-color-utilities";
 import { accessibilityConfig } from "../config";
+
+const dynamicColorsWeWant = [
+	"primaryPaletteKeyColor",
+    "secondaryPaletteKeyColor",
+    "tertiaryPaletteKeyColor",
+    "neutralPaletteKeyColor",
+    "neutralVariantPaletteKeyColor",
+    "background",
+    "onBackground",
+    "surface",
+    "surfaceDim",
+    "surfaceBright",
+    "surfaceContainerLowest",
+    "surfaceContainerLow",
+    "surfaceContainer",
+    "surfaceContainerHigh",
+    "surfaceContainerHighest",
+    "onSurface",
+    "surfaceVariant",
+    "onSurfaceVariant",
+    "inverseSurface",
+    "inverseOnSurface",
+    "outline",
+    "outlineVariant",
+    "shadow",
+    "scrim",
+    "surfaceTint",
+    "primary",
+    "onPrimary",
+    "primaryContainer",
+    "onPrimaryContainer",
+    "inversePrimary",
+    "secondary",
+    "onSecondary",
+    "secondaryContainer",
+    "onSecondaryContainer",
+    "tertiary",
+    "onTertiary",
+    "tertiaryContainer",
+    "onTertiaryContainer",
+    "error",
+    "onError",
+    "errorContainer",
+    "onErrorContainer",
+    "primaryFixed",
+    "primaryFixedDim",
+    "onPrimaryFixed",
+    "onPrimaryFixedVariant",
+    "secondaryFixed",
+    "secondaryFixedDim",
+    "onSecondaryFixed",
+    "onSecondaryFixedVariant",
+    "tertiaryFixed",
+    "tertiaryFixedDim",
+    "onTertiaryFixed",
+    "onTertiaryFixedVariant",
+];
 
 function rgbFromArgb(argb: number){
 	return [
@@ -35,41 +92,49 @@ export function unsetMaterialColors(target?: HTMLElement){
 
 export function addMaterialColors(hex: string, target?: HTMLElement){
 	// Generate new theme
-	const theme = themeFromSourceColor(argbFromHex(hex));
+	const tonalSpotLight = new SchemeTonalSpot(Hct.fromInt(argbFromHex(hex)), false, 0);
+	const tonalSpotDark = new SchemeTonalSpot(Hct.fromInt(argbFromHex(hex)), true, 0);
 
-	console.log(theme);
-
-	for (const [key, value] of Object.entries(theme.schemes.dark.toJSON())) {
+	for (const key of dynamicColorsWeWant) {
 		const token = key.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
-		const color = rgbFromArgb(value);
-		(target ?? document.documentElement).style.setProperty(`--md3-dark-${token}`, color);
-	}
-
-	for (const [key, value] of Object.entries(theme.schemes.light.toJSON())) {
-		const token = key.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
-		const color = rgbFromArgb(value);
+		const color = rgbFromArgb((MaterialDynamicColors[key] as DynamicColor).getArgb(tonalSpotLight));
 		(target ?? document.documentElement).style.setProperty(`--md3-light-${token}`, color);
 	}
 
-	const extraTones = [99, 98, 96, 94, 92, 91, 17, 12, 11, 6, 4];
-
-	for (let i = 0; i <= 100; i += 5) {
-		const color = rgbFromArgb(theme.palettes.neutral.tone(i));
-		(target ?? document.documentElement).style.setProperty(`--md3-shade-${i}`, color);
+	for (const key of dynamicColorsWeWant) {
+		const token = key.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+		const color = rgbFromArgb((MaterialDynamicColors[key] as DynamicColor).getArgb(tonalSpotDark));
+		(target ?? document.documentElement).style.setProperty(`--md3-dark-${token}`, color);
 	}
 
-	for (const i of extraTones){
-		const color = rgbFromArgb(theme.palettes.neutral.tone(i));
-		(target ?? document.documentElement).style.setProperty(`--md3-shade-${i}`, color);
-	}
+	const tones: number[] = [];
+	for(let i = 0; i <= 100; i++) tones.push(i);
+	tones.push(99, 98, 96, 94, 92, 91, 17, 12, 11, 6, 4);
 
-	for (let i = 0; i <= 100; i += 5) {
-		const color = rgbFromArgb(theme.palettes.neutralVariant.tone(i));
-		(target ?? document.documentElement).style.setProperty(`--md3-shade-variant-${i}`, color);
-	}
-
-	for (const i of extraTones) {
-		const color = rgbFromArgb(theme.palettes.neutralVariant.tone(i));
-		(target ?? document.documentElement).style.setProperty(`--md3-shade-variant-${i}`, color);
+	for (const i of tones){
+		(target ?? document.documentElement).style.setProperty(
+			`--md3-primary-palette-tone-${i}`,
+			rgbFromArgb(tonalSpotLight.primaryPalette.tone(i))
+		);
+		(target ?? document.documentElement).style.setProperty(
+			`--md3-secondary-palette-tone-${i}`,
+			rgbFromArgb(tonalSpotLight.secondaryPalette.tone(i))
+		);
+		(target ?? document.documentElement).style.setProperty(
+			`--md3-tertiary-palette-tone-${i}`,
+			rgbFromArgb(tonalSpotLight.tertiaryPalette.tone(i))
+		);
+		(target ?? document.documentElement).style.setProperty(
+			`--md3-neutral-palette-tone-${i}`,
+			rgbFromArgb(tonalSpotLight.neutralPalette.tone(i))
+		);
+		(target ?? document.documentElement).style.setProperty(
+			`--md3-neutral-variant-palette-tone-${i}`,
+			rgbFromArgb(tonalSpotLight.neutralVariantPalette.tone(i))
+		);
+		(target ?? document.documentElement).style.setProperty(
+			`--md3-error-palette-tone-${i}`,
+			rgbFromArgb(tonalSpotLight.errorPalette.tone(i))
+		);
 	}
 }

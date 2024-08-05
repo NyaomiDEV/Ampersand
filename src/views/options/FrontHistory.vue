@@ -132,12 +132,12 @@
 
 <style scoped>
 	.container {
-		background-color: var(--ion-background-color-step-50);
+		background-color: var(--ion-toolbar-background);
 		z-index: 1;
 	}
 
 	ion-datetime {
 		margin: auto;
-		--background: var(--ion-background-color-step-50);
+		--background: var(--ion-toolbar-background);
 	}
 </style>

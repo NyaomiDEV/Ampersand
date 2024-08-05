@@ -14,18 +14,6 @@ html.high-legibility.hl-lexend {
 	--ion-font-family: 'Lexend', var(--ion-default-font);
 }
 
-ion-list-header + ion-list.md {
-	padding-top: unset;
-}
-
-ion-item.md ion-icon[slot="start"] {
-	margin-inline-end: 24px;
-}
-
-ion-list.md {
-	padding-bottom: 0;
-}
-
 .centered-text {
 	text-align: center;
 	padding: 1em;
