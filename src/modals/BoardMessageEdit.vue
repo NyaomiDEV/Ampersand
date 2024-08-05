@@ -17,10 +17,12 @@
 	} from "@ionic/vue";
 
 	import {
-		saveOutline as saveIOS
+		saveOutline as saveIOS,
+		trashBinOutline as trashIOS
 	} from "ionicons/icons";
 
 	import saveMD from "@material-design-icons/svg/outlined/save.svg";
+	import trashMD from "@material-design-icons/svg/outlined/delete.svg";
 
 	import { getTable, BoardMessageComplete, newBoardMessage } from "../lib/db/entities/boardMessages";
 	import { Ref, ShallowReactive, WatchStopHandle, inject, provide, ref, shallowReactive, toRaw, watch } from "vue";
@@ -59,6 +61,16 @@
 		}catch(_){}
 		// catch an error because the type might get changed, causing the parent to be removed from DOM
 		// however it's safe for us to ignore
+	}
+
+	async function deleteBoardMessage(){
+		if(!boardMessage.value) return;
+
+		await getTable().delete(boardMessage.value.uuid);
+
+		try{
+			await modalController.dismiss(null, "deleted");
+		}catch(_){}
 	}
 
 	function present() {
@@ -102,6 +114,14 @@
 
 					<IonItem lines="none">
 						<IonTextarea mode="md" fill="outline" auto-grow :label="$t('options:messageBoard.edit.body')" labelPlacement="floating" v-model="boardMessage!.body" />
+					</IonItem>
+
+					<IonItem button lines="none" @click="deleteBoardMessage">
+						<IonIcon :ios="trashIOS" :md="trashMD" slot="start" aria-hidden="true" />
+						<IonLabel>
+							<h3>{{ $t("options:messageBoard.edit.delete.title") }}</h3>
+							<p>{{ $t("options:messageBoard.edit.delete.desc") }}</p>
+						</IonLabel>
 					</IonItem>
 			</IonList>
 

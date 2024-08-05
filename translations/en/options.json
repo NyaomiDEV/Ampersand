@@ -36,7 +36,11 @@
 			"header": "Edit message",
 			"member": "Edit message author",
 			"title": "Title",
-			"body": "Message body"
+			"body": "Message body",
+			"delete": {
+				"title": "Delete message on board",
+				"desc": "You won't be able to undo this action!"
+			}
 		}
 	},
 	"tagManagement": {
