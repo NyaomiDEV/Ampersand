@@ -14,10 +14,13 @@
 
 	import calendarMD from "@material-design-icons/svg/outlined/calendar_month.svg";
 	import listMD from "@material-design-icons/svg/outlined/list.svg";
+	import { appConfig } from '../../lib/config';
 
 	const isIOS = inject<boolean>("isIOS");
 	const frontingEntryModal = ref();
 	const frontingEntry = ref();
+
+	const firstWeekOfDayIsSunday = appConfig.locale.firstWeekOfDayIsSunday;
 
 	const isCalendarView = ref(false);
 	const date = ref(dayjs().toISOString());
@@ -80,7 +83,7 @@
 		
 		<IonContent>
 			<div class="container">
-				<IonDatetime presentation="date" @ionChange="(e) => date = e.detail.value as string" v-if="isCalendarView" />
+				<IonDatetime presentation="date" :firstDayOfWeek="firstWeekOfDayIsSunday ? 0 : 1" @ionChange="(e) => date = e.detail.value as string" v-if="isCalendarView" />
 			</div>
 
 			<IonList :inset="isIOS" v-if="isCalendarView">

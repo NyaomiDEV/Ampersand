@@ -183,12 +183,12 @@
 
 			<MemberSelect :onlyOne="true" ref="memberSelectModal" />
 			<IonModal class="stack-modal" :keep-contents-mounted="true">
-				<IonDatetime id="startTime" v-model="startTime" :showDefaultButtons="true" :hourCycle="twelveHourClock ? 'h12' : 'h24'" :firstDayOfWeek="firstWeekOfDayIsSunday ? 0 : 1">
+				<IonDatetime id="startTime" v-model="startTime" :showDefaultButtons="true" :hourCycle="twelveHourClock ? 'h12' : 'h23'" :firstDayOfWeek="firstWeekOfDayIsSunday ? 0 : 1">
 					<span slot="title">{{ $t("options:frontHistory.edit.startTime") }}</span>
 				</IonDatetime>
 			</IonModal>
 			<IonModal class="stack-modal" :keep-contents-mounted="true">
-				<IonDatetime id="endTime" v-model="endTime" :showDefaultButtons="true" :hourCycle="twelveHourClock ? 'h12' : 'h24'" :firstDayOfWeek="firstWeekOfDayIsSunday ? 0 : 1">
+				<IonDatetime id="endTime" v-model="endTime" :showDefaultButtons="true" :hourCycle="twelveHourClock ? 'h12' : 'h23'" :firstDayOfWeek="firstWeekOfDayIsSunday ? 0 : 1">
 					<span slot="title">{{ $t("options:frontHistory.edit.endTime") }}</span>
 				</IonDatetime>
 			</IonModal>
