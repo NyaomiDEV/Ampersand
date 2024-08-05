@@ -100,3 +100,55 @@
 .md3 ion-range.md::part(tick-active) {
 	display: none;
 }
+
+/* Tab bar - adapted from md3-for-ionic */
+.md3 ion-tab-bar ion-tab-button ion-icon {
+	font-size: 24px;
+	margin: 0 0 4px;
+	padding: 4px 20px;
+	border-radius: 16px;
+	transition: background-color .2s ease-in-out;
+}
+
+.md3 ion-tab-bar ion-tab-button ion-label {
+	margin: 0;
+}
+
+.md3 ion-tab-bar {
+	--background: rgb(var(--md3-shade-94));
+	--color: rgb(var(--md3-shade-10));
+	--border: none;
+	height: 80px;
+}
+
+.ion-palette-dark.md3 ion-tab-bar {
+	--background: rgb(var(--md3-shade-12));
+	--color: rgb(var(--md3-shade-90));
+}
+
+.md3 ion-tab-bar ion-tab-button {
+	--padding-top: 12px;
+	--padding-bottom: 16px;
+	--ripple-color: transparent;
+	--color: rgb(var(--md3-shade-30));
+}
+
+.ion-palette-dark.md3 ion-tab-bar ion-tab-button {
+	--color: rgb(var(--md3-shade-80));
+}
+
+.md3 ion-tab-bar ion-tab-button.tab-selected {
+	--color: rgb(var(--md3-shade-10));
+}
+
+.ion-palette-dark.md3 ion-tab-bar ion-tab-button.tab-selected {
+	--color: rgb(var(--md3-shade-90));
+}
+
+.md3 ion-tab-bar ion-tab-button.tab-selected ion-icon {
+	background: rgb(var(--md3-shade-90));
+}
+
+.ion-palette-dark.md3 ion-tab-bar ion-tab-button.tab-selected ion-icon {
+	background: rgb(var(--md3-shade-30));
+}

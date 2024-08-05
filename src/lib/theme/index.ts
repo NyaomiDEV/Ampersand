@@ -37,6 +37,8 @@ export function addMaterialColors(hex: string, target?: HTMLElement){
 	// Generate new theme
 	const theme = themeFromSourceColor(argbFromHex(hex));
 
+	console.log(theme);
+
 	for (const [key, value] of Object.entries(theme.schemes.dark.toJSON())) {
 		const token = key.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
 		const color = rgbFromArgb(value);
@@ -49,7 +51,7 @@ export function addMaterialColors(hex: string, target?: HTMLElement){
 		(target ?? document.documentElement).style.setProperty(`--md3-light-${token}`, color);
 	}
 
-	const extraTones = [99, 98, 11, 12];
+	const extraTones = [99, 98, 96, 94, 92, 91, 17, 12, 11, 6, 4];
 
 	for (let i = 0; i <= 100; i += 5) {
 		const color = rgbFromArgb(theme.palettes.neutral.tone(i));
@@ -59,5 +61,15 @@ export function addMaterialColors(hex: string, target?: HTMLElement){
 	for (const i of extraTones){
 		const color = rgbFromArgb(theme.palettes.neutral.tone(i));
 		(target ?? document.documentElement).style.setProperty(`--md3-shade-${i}`, color);
+	}
+
+	for (let i = 0; i <= 100; i += 5) {
+		const color = rgbFromArgb(theme.palettes.neutralVariant.tone(i));
+		(target ?? document.documentElement).style.setProperty(`--md3-shade-variant-${i}`, color);
+	}
+
+	for (const i of extraTones) {
+		const color = rgbFromArgb(theme.palettes.neutralVariant.tone(i));
+		(target ?? document.documentElement).style.setProperty(`--md3-shade-variant-${i}`, color);
 	}
 }
