@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
-    "capacitor:sync:before": "capacitor-assets generate --android && yarn run build"
+    "update-icons": "capacitor-assets generate --android",
+    "capacitor:sync:before": "yarn run build"
   },
   "dependencies": {
     "@capacitor/splash-screen": "^6.0.1",

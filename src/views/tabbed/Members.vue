@@ -166,8 +166,8 @@
 		<IonContent>
 			<IonList :inset="isIOS" ref="list">
 
-				<IonItemSliding v-for="member in members" :key="JSON.stringify(member)">
-					<IonItem button @pointerdown="startPress(member)" @pointerup="endPress(member, false)" @pointermove="endPress(member, true)" :style="getHighlightLevel(member)">
+				<IonItemSliding v-for="member in members" @ionDrag="endPress(member, true)" :key="JSON.stringify(member)">
+					<IonItem button @pointerdown="startPress(member)" @pointerup="endPress(member, false)" :style="getHighlightLevel(member)">
 						<MemberAvatar slot="start" :member />
 						<MemberLabel :member />
 						<IonIcon slot="end" :ios="archivedIOS" :md="archivedMD" v-if="member.isArchived" />
