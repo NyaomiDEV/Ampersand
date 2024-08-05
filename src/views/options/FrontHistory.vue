@@ -78,37 +78,32 @@
 				</IonTitle>
 				<IonButtons slot="secondary">
 					<IonButton @click="isCalendarView = !isCalendarView">
-						<IonIcon slot="icon-only" :ios="isCalendarView ? listIOS : calendarIOS" :md="isCalendarView ? listMD : calendarMD" />
+						<IonIcon slot="icon-only" :ios="isCalendarView ? listIOS : calendarIOS"
+							:md="isCalendarView ? listMD : calendarMD" />
 					</IonButton>
 				</IonButtons>
 			</IonToolbar>
 			<IonToolbar>
-				<IonSearchbar
-					:animated="true"
-					:placeholder="$t('options:frontHistory.searchPlaceholder')"
-					showCancelButton="focus"
-					showClearButton="focus"
-					:spellcheck="false"
-					v-model="search"
-				/>
+				<IonSearchbar :animated="true" :placeholder="$t('options:frontHistory.searchPlaceholder')"
+					showCancelButton="focus" showClearButton="focus" :spellcheck="false" v-model="search" />
 			</IonToolbar>
-		</IonHeader>
-		
-		<IonContent>
 			<div class="container">
-				<IonDatetime presentation="date" :firstDayOfWeek="firstWeekOfDayIsSunday ? 0 : 1" @ionChange="(e) => date = e.detail.value as string" v-if="isCalendarView" />
+				<IonDatetime presentation="date" :firstDayOfWeek="firstWeekOfDayIsSunday ? 0 : 1"
+					@ionChange="(e) => date = e.detail.value as string" v-if="isCalendarView" />
 			</div>
+		</IonHeader>
 
+		<IonContent>
 			<IonList :inset="isIOS" v-if="isCalendarView">
 				<template v-for="tuple in getAtDate(date)">
 					<IonItemDivider sticky v-if="tuple[1].length">
 						<IonLabel>{{
 							tuple[0] === "currentlyFronting"
-								? $t("options:frontHistory.currentlyFronting")
-								: dayjs(tuple[0]).format("LL")
-						}}</IonLabel>
+							? $t("options:frontHistory.currentlyFronting")
+							: dayjs(tuple[0]).format("LL")
+							}}</IonLabel>
 					</IonItemDivider>
-					<IonItem button v-for="entry in tuple[1]" @click="showModal(entry)" >
+					<IonItem button v-for="entry in tuple[1]" @click="showModal(entry)">
 						<FrontingEntryAvatar slot="start" :entry />
 						<FrontingEntryLabel :entry />
 					</IonItem>
@@ -120,11 +115,11 @@
 					<IonItemDivider sticky>
 						<IonLabel>{{
 							tuple[0] === "currentlyFronting"
-								? $t("options:frontHistory.currentlyFronting")
-								: dayjs(tuple[0]).format("LL")
-						}}</IonLabel>
+							? $t("options:frontHistory.currentlyFronting")
+							: dayjs(tuple[0]).format("LL")
+							}}</IonLabel>
 					</IonItemDivider>
-					<IonItem button v-for="entry in tuple[1]" @click="showModal(entry)" >
+					<IonItem button v-for="entry in tuple[1]" @click="showModal(entry)">
 						<FrontingEntryAvatar slot="start" :entry />
 						<FrontingEntryLabel :entry />
 					</IonItem>
@@ -132,7 +127,7 @@
 			</IonList>
 		</IonContent>
 
-		<FrontingEntryEdit ref="frontingEntryModal"/>
+		<FrontingEntryEdit ref="frontingEntryModal" />
 	</IonPage>
 </template>
 
