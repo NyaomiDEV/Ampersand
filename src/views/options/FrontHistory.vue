@@ -38,8 +38,16 @@
 	function getGrouped(entries: FrontingEntryComplete[]){
 		const map = new Map<string, FrontingEntryComplete[]>();
 
-		for(const entry of entries.sort((a, b) => b.startTime.getTime() - a.startTime.getTime())){
-			const key = entry.endTime ? dayjs(entry.startTime).startOf('day').toISOString() : "currentlyFronting";
+		for(const entry of entries.filter(x => !x.endTime).sort((a, b) => b.startTime.getTime() - a.startTime.getTime())){
+			const collection = map.get("currentlyFronting");
+			if(!collection)
+				map.set("currentlyFronting", [entry])
+			else
+				collection.push(entry)
+		}
+
+		for(const entry of entries.filter(x => x.endTime).sort((a, b) => b.startTime.getTime() - a.startTime.getTime())){
+			const key = dayjs(entry.startTime).startOf('day').toISOString();
 			
 			const collection = map.get(key);
 			if(!collection)
@@ -48,7 +56,10 @@
 				collection.push(entry)
 		}
 
-		return map;
+		return [...map.entries()].sort((a, b) => {
+			if(a[0] === "currentlyFronting") return -1;
+			return dayjs(b[0]).valueOf() - dayjs(a[0]).valueOf()
+		});
 	}
 
 	function getAtDate(_date: string){
@@ -64,7 +75,10 @@
 
 		map.set(key, filteredFrontingEntries.value?.filter(x => x.endTime && dayjs(x.startTime).startOf('day').valueOf() === date.valueOf()) || []);
 
-		return map;
+		return [...map.entries()].sort((a, b) => {
+			if(a[0] === "currentlyFronting") return -1;
+			return dayjs(b[0]).valueOf() - dayjs(a[0]).valueOf()
+		});
 	}
 </script>
 
