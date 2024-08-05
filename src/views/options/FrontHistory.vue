@@ -88,8 +88,7 @@
 					showCancelButton="focus" showClearButton="focus" :spellcheck="false" v-model="search" />
 			</IonToolbar>
 			<div class="container" v-if="isCalendarView">
-				<IonDatetime presentation="date" :firstDayOfWeek="firstWeekOfDayIsSunday ? 0 : 1"
-					@ionChange="(e) => date = e.detail.value as string" />
+				<IonDatetime presentation="date" :firstDayOfWeek="firstWeekOfDayIsSunday ? 0 : 1" v-model="date" />
 			</div>
 		</IonHeader>
 
