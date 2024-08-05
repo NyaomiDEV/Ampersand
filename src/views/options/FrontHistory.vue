@@ -87,9 +87,9 @@
 				<IonSearchbar :animated="true" :placeholder="$t('options:frontHistory.searchPlaceholder')"
 					showCancelButton="focus" showClearButton="focus" :spellcheck="false" v-model="search" />
 			</IonToolbar>
-			<div class="container">
+			<div class="container" v-if="isCalendarView">
 				<IonDatetime presentation="date" :firstDayOfWeek="firstWeekOfDayIsSunday ? 0 : 1"
-					@ionChange="(e) => date = e.detail.value as string" v-if="isCalendarView" />
+					@ionChange="(e) => date = e.detail.value as string" />
 			</div>
 		</IonHeader>
 
