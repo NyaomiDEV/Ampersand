@@ -1,10 +1,11 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonAvatar, IonButton, IonIcon, IonInput, IonFab, IonFabButton, IonItem, useIonRouter, IonLabel} from '@ionic/vue';
+	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonAvatar, IonButton, IonIcon, IonInput, IonFab, IonFabButton, IonItem, useIonRouter, IonLabel, IonTextarea} from '@ionic/vue';
 	import { inject, ref } from 'vue';
 	import { getBlobURL } from '../../lib/util/blob';
 	import { getFiles } from '../../lib/util/misc';
 	import { resizeImage } from '../../lib/util/image';
 	import { modifySystem, system } from '../../lib/db/entities/system';
+	import { members } from '../../lib/db/entities/members';
 
 	import {
 		peopleOutline as peopleIOS,
@@ -15,7 +16,6 @@
 	import peopleMD from "@material-design-icons/svg/outlined/groups_2.svg"
 	import pencilMD from "@material-design-icons/svg/outlined/edit.svg"
 	import saveMD from "@material-design-icons/svg/outlined/save.svg"
-import { members } from '../../lib/db/entities/members';
 
 	const isIOS = inject<boolean>("isIOS");
 
@@ -68,6 +68,9 @@ import { members } from '../../lib/db/entities/members';
 					<IonInput fill="outline" labelPlacement="floating" :label="$t('options:systemSettings.systemName')" v-model="system.name" />
 				</IonItem>
 				<IonItem lines="none">
+					<IonTextarea mode="md" fill="outline" auto-grow :label="$t('options:systemSettings.systemDescription')" labelPlacement="floating" v-model="system.description" />
+				</IonItem>
+				<IonItem lines="none">
 					<IonLabel>{{ $t("options:systemSettings.memberCount") }}</IonLabel>
 					<IonButton slot="end" v-if="!membersShowed" @click="membersShowed = true">{{ $t("options:systemSettings.tapToShow") }}</IonButton>
 					<IonLabel slot="end" v-if="membersShowed">{{ $t("options:systemSettings.memberCountText", { memberCount: members.length }) }}</IonLabel>
@@ -105,7 +108,7 @@ import { members } from '../../lib/db/entities/members';
 		--padding-bottom: 80px;
 	}
 
-	ion-input {
+	ion-input, ion-textarea {
 		margin: 16px 0;
 	}
 </style>

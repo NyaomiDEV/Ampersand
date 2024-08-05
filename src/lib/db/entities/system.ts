@@ -7,6 +7,7 @@ import { liveQuery } from "dexie";
 
 export type System = UUIDable & {
 	name: string,
+	description?: string,
 	image?: File
 }
 

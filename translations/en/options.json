@@ -7,6 +7,7 @@
 	"systemSettings": {
 		"header": "System name and photo",
 		"systemName": "System name",
+		"systemDescription": "System description",
 		"memberCount": "Member count",
 		"memberCountText": "{{memberCount}} member(s)",
 		"tapToShow": "Tap to show"
@@ -45,6 +46,7 @@
 				"journal": "Edit journal tag"
 			},
 			"name": "Tag name",
+			"description": "Tag description",
 			"color": "Tag color",
 			"type": {
 				"header": "Tag type",

@@ -13,7 +13,8 @@
 		IonItem,
 		modalController,
 		IonModal,
-		IonSegment
+		IonSegment,
+		IonTextarea
 	} from "@ionic/vue";
 	import MD3SegmentButton from "../components/MD3SegmentButton.vue";
 	import Color from "../components/Color.vue";
@@ -91,6 +92,10 @@
 						<IonInput mode="md" fill="outline" :label="$t('options:tagManagement.edit.name')" labelPlacement="floating" v-model="tag!.name" />
 					</IonItem>
 
+					<IonItem lines="none">
+						<IonTextarea mode="md" fill="outline" auto-grow :label="$t('options:tagManagement.edit.description')" labelPlacement="floating" v-model="tag!.description" />
+					</IonItem>
+
 					<IonItem button lines="none">
 						<Color v-model="tag!.color" @update:model-value="present">
 							<IonLabel>
@@ -147,7 +152,7 @@
 		--padding-bottom: 80px;
 	}
 
-	ion-input {
+	ion-input, ion-textarea {
 		margin: 16px 0;
 	}
 </style>

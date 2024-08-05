@@ -11,6 +11,7 @@ import { ref, Ref, watch } from "vue";
 
 export type Tag = UUIDable & {
 	name: string,
+	description?: string,
 	type: "member" | "journal",
 	color?: string
 }
