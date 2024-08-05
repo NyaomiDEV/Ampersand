@@ -7,6 +7,8 @@
 	import { getFilteredFrontingEntries } from '../../lib/db/liveQueries';
 	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
 	import dayjs from 'dayjs';
+	import LocalizedFormat from "dayjs/plugin/localizedFormat";
+	dayjs.extend(LocalizedFormat);
 
 	import {
 		calendarOutline as calendarIOS,

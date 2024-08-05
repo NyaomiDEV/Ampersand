@@ -103,6 +103,15 @@ export function getCurrentFrontEntryForMember(member: Member){
 		return x.endTime === undefined && x.member.uuid === member.uuid
 	});
 }
+
+export function getMainFronter(){
+	return frontingEntries.value.find(x => x.endTime === undefined && x.isMainFronter)?.member;
+}
+
+export function getFronting() {
+	return frontingEntries.value.filter(x => x.endTime === undefined).map(x => x.member);
+}
+
 export function getFrontingEntriesFromFilterQuery(filterQuery: string) {
 	const parsed = parseFrontingEntriesFilterQuery(filterQuery);
 

@@ -31,7 +31,13 @@
 		}
 	},
 	"messageBoard": {
-		"header": "Message board"
+		"header": "Message board",
+		"edit": {
+			"header": "Edit message",
+			"member": "Edit message author",
+			"title": "Title",
+			"body": "Message body"
+		}
 	},
 	"tagManagement": {
 		"header": "Tag management",

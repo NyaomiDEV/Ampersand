@@ -27,30 +27,14 @@
 }
 
 .md.md3 ion-header {
-	box-shadow: 0px 2px 4px -1px rgb(var(--md3-light-shadow) / 0.2),
-		0px 4px 5px 0px rgb(var(--md3-light-shadow) / 0.14),
-		0px 1px 10px 0px rgb(var(--md3-light-shadow) / 0.12);
-}
-
-.ion-palette-dark.md.md3 ion-header {
-	box-shadow: 0px 2px 4px -1px rgb(var(--md3-dark-shadow) / 0.2),
-		0px 4px 5px 0px rgb(var(--md3-dark-shadow) / 0.14),
-		0px 1px 10px 0px rgb(var(--md3-dark-shadow) / 0.12);
+	box-shadow: var(--md3-elevation-1);
 }
 
 /* FAB */
 .md.md3 ion-fab-button {
 	--border-radius: 16px;
 	margin: 16px;
-	--box-shadow: 0px 5px 5px -3px rgb(var(--md3-light-shadow) / 0.2),
-		0px 8px 10px 1px rgb(var(--md3-light-shadow) / 0.14),
-		0px 3px 14px 2px rgb(var(--md3-light-shadow) / 0.12);
-}
-
-.ion-palette-dark.md.md3 ion-fab-button {
-	--box-shadow: 0px 5px 5px -3px rgb(var(--md3-dark-shadow) / 0.2),
-		0px 8px 10px 1px rgb(var(--md3-dark-shadow) / 0.14),
-		0px 3px 14px 2px rgb(var(--md3-dark-shadow) / 0.12);
+	--box-shadow: var(--md3-elevation-3);
 }
 
 /* Segment Buttons */
@@ -232,4 +216,54 @@
 
 .md.md3 ion-list ion-item ion-icon[slot="start"] {
 	margin-inline-end: 24px;
+}
+
+/* Cards */
+.md.md3 ion-card,
+.md.md3 ion-card.elevated {
+	--background: rgb(var(--md3-light-surface-container-low));
+	--color: rgb(var(--md3-light-on-surface));
+	box-shadow: var(--md3-elevation-1);
+	border-radius: 12px;
+}
+
+.ion-palette-dark.md.md3 ion-card,
+.ion-palette-dark.md.md3 ion-card.elevated {
+	--background: rgb(var(--md3-dark-surface-container-low));
+	--color: rgb(var(--md3-dark-on-surface));
+}
+
+.md.md3 ion-card.filled {
+	--background: rgb(var(--md3-light-surface-container-highest));
+	box-shadow: var(--md3-elevation-0);
+}
+
+.ion-palette-dark.md.md3 ion-card.filled {
+	--background: rgb(var(--md3-dark-surface-container-highest));
+}
+
+.md.md3 ion-card.outlined {
+	--background: rgb(var(--md3-light-surface));
+	box-shadow: var(--md3-elevation-0);
+	outline: 1px solid rgb(var(--md3-light-outline));
+}
+
+.ion-palette-dark.md.md3 ion-card.outlined {
+	--background: rgb(var(--md3-dark-surface));
+	outline: 1px solid rgb(var(--md3-dark-outline));
+}
+
+.md.md3 ion-card ion-card-title,
+.md.md3 ion-card ion-card-subtitle {
+	--color: rgb(var(--md3-light-on-surface));
+}
+
+.ion-palette-dark.md.md3 ion-card ion-card-title,
+.ion-palette-dark.md.md3 ion-card ion-card-subtitle {
+	--color: rgb(var(--md3-dark-on-surface));
+}
+
+.md.md3 ion-card :not(ion-avatar) > img {
+	border-bottom-right-radius: 12px;
+	border-bottom-left-radius: 12px;
 }

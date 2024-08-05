@@ -90,6 +90,7 @@
 
 		if(!frontingEntry.value) return;
 
+		selectedMembers.length = 0;
 		selectedMembers.push(frontingEntry.value.member);
 
 		startTime.value = dayjs(frontingEntry.value.startTime).format("YYYY-MM-DDTHH:mm:ss");
