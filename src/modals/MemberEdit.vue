@@ -129,6 +129,12 @@
 		isEditing.value = !member.value.uuid;
 
 		// set color
+		updateColor();
+	}
+
+	function updateColor(){
+		if(!member.value) return;
+
 		if(member.value.color && member.value.color !== "#000000"){
 			addMaterialColors(member.value.color, self.value.$el);
 		} else {
@@ -202,7 +208,7 @@
 						<IonTextarea mode="md" fill="outline" auto-grow :label="$t('members:edit.description')" labelPlacement="floating" v-model="member!.description" />
 					</IonItem>
 					<IonItem button lines="none">
-						<Color v-model="member!.color" @update:model-value="present">
+						<Color v-model="member!.color" @update:model-value="updateColor">
 							<IonLabel>
 								{{ $t("members:edit.color") }}
 							</IonLabel>
