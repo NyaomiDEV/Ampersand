@@ -12,7 +12,7 @@
 </script>
 
 <template>
-	<IonAvatar class="with-outline" :style="{ outlineColor: props.member.color, opacity: props.member.isArchived ? 0.5 : 1}" v-if="props.member.image">
+	<IonAvatar class="with-outline" :style="{ outlineColor: props.member.color }" v-if="props.member.image">
 		<img aria-hidden="true" :src="getBlobURL(props.member.image)" />
 	</IonAvatar>
 </template>

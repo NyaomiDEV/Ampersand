@@ -97,16 +97,18 @@
 		list.value?.$el.closeSlidingItems();
 	}
 
-	function getHighlightLevel(member: Member){
+	function getStyle(member: Member){
+		const style: Record<string, string> = {};
+
 		const entry = getCurrentFrontEntryForMember(member);
 		if(entry){
 			if(entry.isMainFronter)
-				return {'--background': 'var(--ion-background-color-step-200)'};
-
-			return {'--background': 'var(--ion-background-color-step-150)'}
+				style["--background"] = "var(--ion-background-color-step-200)";
+			else
+				style["--background"] = "var(--ion-background-color-step-150)";
 		}
-		
-		return undefined
+
+		return style;
 	}
 
 	function drag(member: Member){
@@ -168,7 +170,7 @@
 			<IonList :inset="isIOS" ref="list">
 
 				<IonItemSliding v-for="member in members" @ionDrag="endPress(member, true)" :key="JSON.stringify(member)">
-					<IonItem button @pointerdown="startPress(member)" @pointerup="endPress(member, false)" :style="getHighlightLevel(member)">
+					<IonItem button :class="{ archived: member.isArchived }" :style="getStyle(member)" @pointerdown="startPress(member)" @pointerup="endPress(member, false)">
 						<MemberAvatar slot="start" :member />
 						<MemberLabel :member />
 						<IonIcon slot="end" :ios="archivedIOS" :md="archivedMD" v-if="member.isArchived" />
@@ -204,3 +206,9 @@
 		<MemberEdit ref="memberEditModal" />
 	</IonPage>
 </template>
+
+<style scoped>
+	ion-item.archived > *{
+		opacity: 0.5;
+	}
+</style>
