@@ -85,9 +85,14 @@ export function deactivateMaterialTheme(target?: HTMLElement) {
 
 export function unsetMaterialColors(target?: HTMLElement){
 	// Clean up
-	Array.from((target ?? document.documentElement).style)
+	if(target)
+		return Array.from(target.style)
+			.filter(x => x.startsWith("--md3"))
+			.forEach(x => target.style.removeProperty(x));
+
+	return Array.from(document.documentElement.style)
 		.filter(x => x.startsWith("--md3"))
-		.forEach(x => (target ?? document.documentElement).style.removeProperty(x));
+		.forEach(x => document.documentElement.style.removeProperty(x));
 }
 
 export function addMaterialColors(hex: string, target?: HTMLElement){
@@ -95,46 +100,58 @@ export function addMaterialColors(hex: string, target?: HTMLElement){
 	const tonalSpotLight = new SchemeTonalSpot(Hct.fromInt(argbFromHex(hex)), false, 0);
 	const tonalSpotDark = new SchemeTonalSpot(Hct.fromInt(argbFromHex(hex)), true, 0);
 
-	for (const key of dynamicColorsWeWant) {
-		const token = key.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
-		const color = rgbFromArgb((MaterialDynamicColors[key] as DynamicColor).getArgb(tonalSpotLight));
-		(target ?? document.documentElement).style.setProperty(`--md3-light-${token}`, color);
-	}
+	const styleSheet: Map<string, string> = new Map();
 
 	for (const key of dynamicColorsWeWant) {
-		const token = key.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
-		const color = rgbFromArgb((MaterialDynamicColors[key] as DynamicColor).getArgb(tonalSpotDark));
-		(target ?? document.documentElement).style.setProperty(`--md3-dark-${token}`, color);
+		styleSheet.set(
+			`--md3-light-${key.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()}`,
+			rgbFromArgb((MaterialDynamicColors[key] as DynamicColor).getArgb(tonalSpotLight))
+		);
+
+		styleSheet.set(
+			`--md3-dark-${key.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()}`,
+			rgbFromArgb((MaterialDynamicColors[key] as DynamicColor).getArgb(tonalSpotDark))
+		);
 	}
 
 	const tones: number[] = [];
 	for(let i = 0; i <= 100; i++) tones.push(i);
 	tones.push(99, 98, 96, 94, 92, 91, 17, 12, 11, 6, 4);
 
-	for (const i of tones){
-		(target ?? document.documentElement).style.setProperty(
+	for (const i of tones.sort()){
+		styleSheet.set(
 			`--md3-primary-palette-tone-${i}`,
 			rgbFromArgb(tonalSpotLight.primaryPalette.tone(i))
 		);
-		(target ?? document.documentElement).style.setProperty(
+		styleSheet.set(
 			`--md3-secondary-palette-tone-${i}`,
 			rgbFromArgb(tonalSpotLight.secondaryPalette.tone(i))
 		);
-		(target ?? document.documentElement).style.setProperty(
+		styleSheet.set(
 			`--md3-tertiary-palette-tone-${i}`,
 			rgbFromArgb(tonalSpotLight.tertiaryPalette.tone(i))
 		);
-		(target ?? document.documentElement).style.setProperty(
+		styleSheet.set(
 			`--md3-neutral-palette-tone-${i}`,
 			rgbFromArgb(tonalSpotLight.neutralPalette.tone(i))
 		);
-		(target ?? document.documentElement).style.setProperty(
+		styleSheet.set(
 			`--md3-neutral-variant-palette-tone-${i}`,
 			rgbFromArgb(tonalSpotLight.neutralVariantPalette.tone(i))
 		);
-		(target ?? document.documentElement).style.setProperty(
+		styleSheet.set(
 			`--md3-error-palette-tone-${i}`,
 			rgbFromArgb(tonalSpotLight.errorPalette.tone(i))
 		);
 	}
+
+	if(target) {
+		for(const [key, value] of styleSheet)
+			target.style.setProperty(key, value);
+
+		return;
+	}
+
+	for (const [key, value] of styleSheet)
+		document.documentElement.style.setProperty(key, value);
 }
