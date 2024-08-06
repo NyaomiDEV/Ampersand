@@ -32,21 +32,19 @@
 				</IonItem>
 
 				<IonItem>
-					<IonLabel>
-						<IonSelect :label="$t('options:accessibility.highLegibilityFontType.title')" interface="popover" v-model="accessibilityConfig.highLegibilityType">
-							<IonSelectOption value="atkinson">
-								{{ $t("options:accessibility.highLegibilityFontType.atkinson") }}
-							</IonSelectOption>
+					<IonSelect :label="$t('options:accessibility.highLegibilityFontType.title')" interface="popover" v-model="accessibilityConfig.highLegibilityType">
+						<IonSelectOption value="atkinson">
+							{{ $t("options:accessibility.highLegibilityFontType.atkinson") }}
+						</IonSelectOption>
 
-							<IonSelectOption value="opendyslexic">
-								{{ $t("options:accessibility.highLegibilityFontType.opendyslexic") }}
-							</IonSelectOption>
+						<IonSelectOption value="opendyslexic">
+							{{ $t("options:accessibility.highLegibilityFontType.opendyslexic") }}
+						</IonSelectOption>
 
-							<IonSelectOption value="lexend">
-								{{ $t("options:accessibility.highLegibilityFontType.lexend") }}
-							</IonSelectOption>
-						</IonSelect>
-					</IonLabel>
+						<IonSelectOption value="lexend">
+							{{ $t("options:accessibility.highLegibilityFontType.lexend") }}
+						</IonSelectOption>
+					</IonSelect>
 				</IonItem>
 
 				<IonItem>

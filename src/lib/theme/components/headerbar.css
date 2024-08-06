@@ -1,0 +1,18 @@
+/* Headerbar */
+.md.md3 ion-toolbar {
+	--min-height: 64px;
+	--padding-start: 16px;
+	--padding-end: 16px;
+}
+
+.md.md3 ion-toolbar *[slot=start] {
+	color: rgb(var(--md3-on-surface));
+}
+
+.md.md3 ion-toolbar *[slot=end] {
+	color: rgb(var(--md3-on-surface-variant));
+}
+
+.md.md3 ion-header {
+	box-shadow: var(--md3-elevation-1);
+}

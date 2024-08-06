@@ -1,0 +1,9 @@
+/* List */
+.md.md3 ion-list {
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+.md.md3 ion-list ion-item ion-icon[slot="start"] {
+	margin-inline-end: 24px;
+}

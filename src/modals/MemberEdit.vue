@@ -175,7 +175,7 @@
 			</div>
 
 			<div class="member-tags" v-if="!isEditing">
-				<TagChip v-if="tags?.length" v-for="tag in member!.tags" :tag="tags.find(x => x.uuid === tag)!" />
+				<TagChip v-if="tags?.length" v-for="tag in member!.tags" :key="JSON.stringify(tag)" :tag="tags.find(x => x.uuid === tag)!" />
 			</div>
 
 			<div class="member-description" v-if="!isEditing">
@@ -233,7 +233,7 @@
 						<IonLabel>
 							{{ $t("members:edit.tags") }}
 							<div class="member-tags">
-								<TagChip v-if="tags?.length" v-for="tag in member!.tags" :tag="tags.find(x => x.uuid === tag)!" />
+								<TagChip v-if="tags?.length" v-for="tag in member!.tags" :key="JSON.stringify(tag)" :tag="tags.find(x => x.uuid === tag)!" />
 							</div>
 						</IonLabel>
 					</IonItem>

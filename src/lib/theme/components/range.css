@@ -1,0 +1,31 @@
+/* Ranges / Sliders */
+.md.md3 ion-range {
+	--bar-height: 24px;
+	--bar-border-radius: 24px;
+	--knob-background: var(--ion-color-primary);
+	--knob-size: 64px;
+	--knob-border-radius: 64px;
+}
+
+.md.md3 ion-range::part(knob) {
+	width: 6px;
+	outline: 12px solid var(--ion-background-color);
+	transform: translateX(29px);
+}
+
+.md.md3 ion-range:active::part(knob) {
+	transform: translateX(29px) scale(0.75, 1);
+}
+
+.md.md3 ion-range::part(knob)::before {
+	display: none;
+}
+
+.md.md3 ion-range::part(tick) {
+	border-radius: 100%;
+	transform: scale(0.5);
+}
+
+.md.md3 ion-range::part(tick-active) {
+	display: none;
+}

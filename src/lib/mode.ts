@@ -1,4 +1,5 @@
-import { accessibilityConfig } from "./config";
+import { ref } from "vue";
+import { accessibilityConfig, appConfig, securityConfig } from "./config";
 
 export function getIonicMode(): "ios" | "md" {
 	if (typeof (window as any) !== "undefined") {
@@ -48,3 +49,5 @@ export function updateAccessibility() {
 		document.documentElement.style.removeProperty("font-size");
 
 }
+
+export const isAppLocked = ref(securityConfig.usePin);

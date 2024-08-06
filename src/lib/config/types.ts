@@ -5,11 +5,16 @@ export type AppConfig = {
 		twelveHourClock: boolean
 	},
 	view: ViewName,
-	filterQueryMembers: string,
-	filterQueryJournal: string
+	defaultFilterQueries: {
+		members?: string,
+		tags?: string,
+		frontingHistory?: string,
+		messageBoard?: string,
+		journal?: string
+	}
 }
 
-type ViewName = "members" | "journal" | "dashboard" | "chat";
+type ViewName = "members" | "journal" | "dashboard" | "chats";
 
 export type AccessibilityConfig = {
 	highLegibility: boolean,

@@ -11,8 +11,7 @@ const defaultAppConfig: AppConfig = {
 		twelveHourClock: false,
 	},
 	view: "members",
-	filterQueryMembers: "",
-	filterQueryJournal: ""
+	defaultFilterQueries: {}
 };
 
 const defaultAccessibilityConfig: AccessibilityConfig = {

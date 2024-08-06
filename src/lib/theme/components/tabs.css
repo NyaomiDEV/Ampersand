@@ -1,0 +1,35 @@
+/* Tab bar */
+.md.md3 ion-tab-bar ion-tab-button ion-icon {
+	font-size: 24px;
+	margin: 0 0 4px;
+	padding: 4px 4px;
+	border-radius: 16px;
+}
+
+.md.md3 ion-tab-bar ion-tab-button ion-label {
+	margin: 0;
+}
+
+.md.md3 ion-tab-bar {
+	--color: rgb(var(--md3-on-surface));
+	--border: none;
+	height: 80px;
+}
+
+.md.md3 ion-tab-bar ion-tab-button {
+	--padding-top: 12px;
+	--padding-bottom: 16px;
+	--ripple-color: transparent;
+	--color: rgb(var(--md3-on-surface-variant));
+}
+
+.md.md3 ion-tab-bar ion-tab-button.tab-selected {
+	--color: rgb(var(--md3-on-surface));
+}
+
+.md.md3 ion-tab-bar ion-tab-button.tab-selected ion-icon {
+	padding: 4px 20px;
+	transition: background-color .2s ease-in-out,
+		padding .2s ease-in-out;
+	background: rgb(var(--md3-secondary-container));
+}

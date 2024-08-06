@@ -118,7 +118,7 @@
 							: dayjs(tuple[0]).format("LL")
 							}}</IonLabel>
 					</IonItemDivider>
-					<IonItem button v-for="entry in tuple[1]" @click="showModal(entry)">
+					<IonItem button v-for="entry in tuple[1]" :key="JSON.stringify(tuple[1])" @click="showModal(entry)">
 						<FrontingEntryAvatar slot="start" :entry />
 						<FrontingEntryLabel :entry />
 					</IonItem>
@@ -134,7 +134,7 @@
 							: dayjs(tuple[0]).format("LL")
 							}}</IonLabel>
 					</IonItemDivider>
-					<IonItem button v-for="entry in tuple[1]" @click="showModal(entry)">
+					<IonItem button v-for="entry in tuple[1]" :key="JSON.stringify(tuple[1])" @click="showModal(entry)">
 						<FrontingEntryAvatar slot="start" :entry />
 						<FrontingEntryLabel :entry />
 					</IonItem>

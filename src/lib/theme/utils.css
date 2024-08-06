@@ -1,0 +1,24 @@
+/* Corners */
+.md3 * {
+	--md3-corner-none: 0;
+	--md3-corner-extra-small: 4px;
+	--md3-corner-extra-small-top: 4px 4px 0 0;
+	--md3-corner-small: 8px;
+	--md3-corner-large: 16px;
+	--md3-corner-medium: 12px;
+	--md3-corner-large-end: 0 16px 16px 0;
+	--md3-corner-large-top: 16px 16px 0 0;
+	--md3-corner-extra-large: 28px;
+	--md3-corner-extra-large-top: 28px 28px 0 0;
+	--md3-corner-full: 1024px;
+}
+
+/* Elevation */
+.md3 * {
+	--md3-elevation-0: 0px 0px 0px 0px rgb(var(--md3-shadow) / 0.2), 0px 0px 0px 0px rgb(var(--md3-shadow) / 0.14), 0px 0px 0px 0px rgb(var(--md3-shadow) / 0.12);
+	--md3-elevation-1: 0px 3px 1px -2px rgb(var(--md3-shadow) / 0.2), 0px 2px 2px 0px rgb(var(--md3-shadow) / 0.14), 0px 1px 5px 0px rgb(var(--md3-shadow) / 0.12);
+	--md3-elevation-2: 0px 2px 4px -1px rgb(var(--md3-shadow) / 0.2), 0px 4px 5px 0px rgb(var(--md3-shadow) / 0.14), 0px 1px 10px 0px rgb(var(--md3-shadow) / 0.12);
+	--md3-elevation-3: 0px 5px 5px -3px rgb(var(--md3-shadow) / 0.2), 0px 8px 10px 1px rgb(var(--md3-shadow) / 0.14), 0px 3px 14px 2px rgb(var(--md3-shadow) / 0.12);
+	--md3-elevation-4: 0px 5px 5px -3px rgb(var(--md3-shadow) / 0.2), 0px 8px 10px 1px rgb(var(--md3-shadow) / 0.14), 0px 3px 14px 2px rgb(var(--md3-shadow) / 0.12);
+	--md3-elevation-5: 0px 8px 10px -6px rgb(var(--md3-shadow) / 0.2), 0px 16px 24px 2px rgb(var(--md3-shadow) / 0.14), 0px 6px 30px 5px rgb(var(--md3-shadow) / 0.12);
+}

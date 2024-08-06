@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonList, IonPage, IonLabel, IonListHeader, IonTitle, IonToolbar, IonBackButton, IonItem, IonToggle, IonSegment } from '@ionic/vue';
+	import { IonContent, IonHeader, IonList, IonPage, IonLabel, IonListHeader, IonTitle, IonToolbar, IonBackButton, IonItem, IonToggle, IonSegment, IonSelect, IonSelectOption } from '@ionic/vue';
 	import { inject, ref, watch } from 'vue';
 
 	import NotDoneYet from "../../components/NotDoneYet.vue";
@@ -47,32 +47,50 @@
 					</IonLabel>
 				</IonItem>
 
-				<IonLabel>
-					<h3 class="centered-text">{{ $t("options:appSettings.locale.clock.title") }}</h3>
-					<IonSegment class="segment-alt" v-model="twelveHourClock">
-						<MD3SegmentButton value="true">
-							<IonLabel>{{ $t("options:appSettings.locale.clock.12h") }}</IonLabel>
-						</MD3SegmentButton>
+				<IonItem>
+					<IonLabel>
+						<h3 class="centered-text">{{ $t("options:appSettings.locale.clock.title") }}</h3>
+						<IonSegment class="segment-alt" v-model="twelveHourClock">
+							<MD3SegmentButton value="true">
+								<IonLabel>{{ $t("options:appSettings.locale.clock.12h") }}</IonLabel>
+							</MD3SegmentButton>
 
-						<MD3SegmentButton value="false">
-							<IonLabel>{{ $t("options:appSettings.locale.clock.24h") }}</IonLabel>
-						</MD3SegmentButton>
-					</IonSegment>
-				</IonLabel>
+							<MD3SegmentButton value="false">
+								<IonLabel>{{ $t("options:appSettings.locale.clock.24h") }}</IonLabel>
+							</MD3SegmentButton>
+						</IonSegment>
+					</IonLabel>
+				</IonItem>
 
-				<IonLabel>
-					<h3 class="centered-text">{{ $t("options:appSettings.locale.firstDayOfWeek.title") }}</h3>
-					<IonSegment class="segment-alt" v-model="firstWeekOfDayIsSunday">
-						<MD3SegmentButton value="true">
-							<IonLabel>{{ $t("options:appSettings.locale.firstDayOfWeek.sunday") }}</IonLabel>
-						</MD3SegmentButton>
+				<IonItem>
+					<IonLabel>
+						<h3 class="centered-text">{{ $t("options:appSettings.locale.firstDayOfWeek.title") }}</h3>
+						<IonSegment class="segment-alt" v-model="firstWeekOfDayIsSunday">
+							<MD3SegmentButton value="true">
+								<IonLabel>{{ $t("options:appSettings.locale.firstDayOfWeek.sunday") }}</IonLabel>
+							</MD3SegmentButton>
 
-						<MD3SegmentButton value="false">
-							<IonLabel>{{ $t("options:appSettings.locale.firstDayOfWeek.monday") }}</IonLabel>
-						</MD3SegmentButton>
-					</IonSegment>
-				</IonLabel>
+							<MD3SegmentButton value="false">
+								<IonLabel>{{ $t("options:appSettings.locale.firstDayOfWeek.monday") }}</IonLabel>
+							</MD3SegmentButton>
+						</IonSegment>
+					</IonLabel>
+				</IonItem>
 
+			</IonList>
+
+			<IonListHeader>
+				<IonLabel>{{ $t("options:appSettings.behaviorLabel") }}</IonLabel>
+			</IonListHeader>
+
+			<IonList :inset="isIOS">
+				<IonItem>
+					<IonSelect :label="$t('options:appSettings.view.title')" interface="popover" v-model="appConfig.view">
+						<IonSelectOption value="members">
+							{{ $t("options:appSettings.view.members") }}
+						</IonSelectOption>
+					</IonSelect>
+				</IonItem>
 			</IonList>
 
 		</IonContent>

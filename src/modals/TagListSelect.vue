@@ -49,7 +49,7 @@
 
 		<IonContent>
 			<IonList :inset="isIOS">
-				<IonItem button v-for="tag in filteredTags" :key="tag.uuid">
+				<IonItem button v-for="tag in filteredTags" :key="JSON.stringify(tag)">
 					<TagColor slot="start" :tag />
 					<IonCheckbox :value="tag.uuid" :checked="!!selectedTags?.find(x => x.uuid === tag.uuid)" @ionChange="check">
 						<TagLabel :tag />

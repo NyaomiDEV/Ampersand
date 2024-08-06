@@ -90,6 +90,14 @@
 				"sunday": "Sunday",
 				"monday": "Monday"
 			}
+		},
+		"behaviorLabel": "Behavior",
+		"view": {
+			"title": "Default tab",
+			"members": "Member",
+			"journal": "Journal",
+			"dashboard": "Dashboard",
+			"chat": "Chats"
 		}
 	},
 	"security": {

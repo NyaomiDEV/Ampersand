@@ -28,11 +28,11 @@
 				<IonIcon class="logo" :icon="AmpersandLogo" />
 
 				<div class="buttons">
-					<IonButton shape="round" href="https://discord.com/invite/xCptGJKeKc" target="_blank">
+					<IonButton class="tonal" shape="round" href="https://discord.com/invite/xCptGJKeKc" target="_blank">
 						<IonIcon slot="icon-only" :icon="DiscordLogo"></IonIcon>
 					</IonButton>
 
-					<IonButton shape="round" href="https://github.com/NyaomiDEV/Ampersand" target="_blank">
+					<IonButton class="tonal" shape="round" href="https://github.com/NyaomiDEV/Ampersand" target="_blank">
 						<IonIcon slot="icon-only" :icon="GithubLogo" ></IonIcon>
 					</IonButton>
 				</div>
@@ -59,6 +59,7 @@
 		margin: 32px 0;
 		width: 256px;
 		height: 256px;
+		color: var(--ion-color-primary);
 	}
 
 	.buttons {

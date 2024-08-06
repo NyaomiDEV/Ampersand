@@ -10,7 +10,7 @@ import i18n from "./lib/i18n";
 import I18NextVue from "i18next-vue";
 
 // Dark mode
-import { updateAccessibility, updateDarkMode } from "./lib/mode";
+import { isAppLocked, updateAccessibility, updateDarkMode } from "./lib/mode";
 
 // App
 import App from "./App.vue";
@@ -49,6 +49,7 @@ import { SplashScreen } from "@capacitor/splash-screen";
 import { tryPersistStorage } from "./lib/util/storageManager";
 import { getSystem, newSystem } from "./lib/db/entities/system";
 import dayjs from "dayjs";
+import { appConfig } from "./lib/config";
 
 if(!window.isSecureContext){
 	console.error("Cannot continue, this is not a safe environment!");
@@ -73,10 +74,31 @@ if(!window.isSecureContext){
 
 	const app = createApp(App).use(IonicVue).use(router).use(I18NextVue, { i18next: i18n });
 
+	router.beforeEach(() => {
+		// TODO: Pin lock here
+		return true;
+	})
+
 	router.isReady().then(async () => {
 		app.mount(document.body);
-		if (router.currentRoute.value.fullPath === "/")
-			await router.push("/members");
+		if (router.currentRoute.value.fullPath === "/") {
+			// route to default view
+			switch(appConfig.view){
+				case "members":
+					await router.push("/members");
+					break;
+				case "journal":
+					await router.push("/journal");
+					break;
+				case "dashboard":
+				default:
+					await router.push("/dashboard");
+					break;
+				case "chats":
+					await router.push("/chats");
+					break;
+			}
+		}
 
 		await SplashScreen.hide();
 	});
