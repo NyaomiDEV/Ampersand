@@ -42,31 +42,30 @@
 	import journalMD from "@material-design-icons/svg/outlined/book.svg";
 	import trashMD from "@material-design-icons/svg/outlined/delete.svg";
 
-	import { Member, getTable, newMember } from '../lib/db/entities/members';
-	import { Tag, tags } from "../lib/db/entities/tags";
+	import { Member, getMembersTable, newMember } from '../lib/db/entities/members';
+	import { getTagsTable, Tag, tags } from "../lib/db/entities/tags";
 	import { getBlobURL } from '../lib/util/blob';
 	import { getFiles } from "../lib/util/misc";
 	import { resizeImage } from "../lib/util/image";
-	import { Ref, ShallowReactive, WatchStopHandle, inject, provide, ref, shallowReactive, toRaw, watch } from "vue";
+	import { ShallowReactive, inject, ref, shallowReactive, toRaw } from "vue";
 	import { getMarkdownFor } from "../lib/markdown";
 	import { addMaterialColors, unsetMaterialColors } from "../lib/theme";
 	import { PartialBy } from "../lib/db/types";
 
 	const isIOS = inject<boolean>("isIOS")!;
-	const member = inject<Ref<PartialBy<Member, "uuid"> | undefined>>("member")!;
+
+	const props = defineProps<{
+		member: PartialBy<Member, "uuid">
+	}>();
+
+	const member = ref(props.member);
 
 	const tagSelectionModal = ref();
-	const selectedTags: ShallowReactive<Tag[]> = shallowReactive([]);
-	provide("selectedTags", selectedTags);
 
 	const isEditing = ref(false);
 	const self = ref();
 
-	const watchStopHandles: WatchStopHandle[] = [];
-
 	async function toggleEditing(){
-		if(!member.value) return;
-
 		if(!isEditing.value){
 			isEditing.value = true;
 			return;
@@ -75,9 +74,6 @@
 		const uuid = member.value.uuid;
 		const _member = toRaw(member.value);
 
-		// tags will be proxy
-		_member.tags = toRaw(_member.tags);
-
 		if(!uuid){
 			await newMember(_member);
 			await modalController.dismiss();
@@ -85,14 +81,12 @@
 			return;
 		}
 
-		await getTable().update(uuid, _member);
+		await getMembersTable().update(uuid, _member);
 			
 		isEditing.value = false;
 	}
 
 	async function modifyPicture(){
-		if(!member.value) return;
-
 		const files = await getFiles();
 		if(files.length){
 			member.value.image = await resizeImage(files[0]);
@@ -100,30 +94,32 @@
 	}
 
 	async function deleteMember() {
-		if(!member.value || !member.value.uuid) return;
+		if(!member.value.uuid) return;
 
-		await getTable().delete(member.value.uuid);
+		await getMembersTable().delete(member.value.uuid);
 		
 		try{
 			await modalController.dismiss();
 		}catch(_){}
 	}
 
-	function present() {
-		watchStopHandles.forEach(x => x());
-		watchStopHandles.length = 0;
+	const selectedTags: ShallowReactive<Tag[]> = shallowReactive([]);
 
-		if(!member.value) return;
-
-		watchStopHandles.push(
-			watch(selectedTags, () => {
-				member.value!.tags = selectedTags.map(x => x.uuid)
-			}, {immediate: false})
-		);
-
-		// push tags inside
+	async function updateSelectedTags(tags: Tag[]) {
+		member.value.tags = tags.map(x => x.uuid);
 		selectedTags.length = 0;
-		selectedTags.push(...member.value.tags.map(x => tags.value.find(y => y.uuid === x)!))
+		selectedTags.push(...tags);
+		console.log(tags, "and", ...selectedTags, "and", member.value);
+	}
+
+	async function present() {
+		member.value = props.member;
+
+		selectedTags.length = 0;
+		for(const uuid of member.value.tags){
+			const tag = await getTagsTable().get(uuid);
+			selectedTags.push(tag!);
+		}
 
 		// are we editing?
 		isEditing.value = !member.value.uuid;
@@ -252,7 +248,7 @@
 				</IonFabButton>
 			</IonFab>
 
-			<TagListSelect ref="tagSelectionModal" />
+			<TagListSelect ref="tagSelectionModal" :selectedTags @selectedTags="updateSelectedTags"/>
 		</IonContent>
 	</IonModal>
 </template>

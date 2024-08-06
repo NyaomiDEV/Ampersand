@@ -15,7 +15,7 @@
 		IonItemOptions,
 		IonItemOption,
 	} from '@ionic/vue';
-	import { inject, provide, Ref, ref } from 'vue';
+	import { inject, Ref, ref, shallowReactive, shallowRef, watch } from 'vue';
 	import { getFilteredMembers } from '../../lib/db/liveQueries';
 	import { accessibilityConfig } from '../../lib/config';
 
@@ -42,19 +42,39 @@
 	import MemberEdit from '../../modals/MemberEdit.vue';
 	import { Member } from '../../lib/db/entities/members';
 	import { PartialBy } from '../../lib/db/types';
-	import { getCurrentFrontEntryForMember, newFrontingEntry, removeFronter, setMainFronter, setSoleFronter } from '../../lib/db/entities/frontingEntries';
+	import { FrontingEntry, getCurrentFrontEntryForMember, getFrontingEntriesTable, newFrontingEntry, removeFronter, setMainFronter, setSoleFronter } from '../../lib/db/entities/frontingEntries';
 	import MemberAvatar from '../../components/member/MemberAvatar.vue';
 	import MemberLabel from '../../components/member/MemberLabel.vue';
+	import { from, useObservable } from '@vueuse/rxjs';
+	import { liveQuery } from 'dexie';
 
 	const isIOS = inject<boolean>("isIOS");
 
 	const search = ref("");
-	const members = getFilteredMembers(search);
+	const filteredMembers = getFilteredMembers(search);
+	const frontingEntries = shallowReactive(new Map<Member, FrontingEntry | undefined>());
+
+	async function populateFrontingEntriesMap(){
+		frontingEntries.clear();
+		for(const member of filteredMembers.value){
+			frontingEntries.set(member, await getCurrentFrontEntryForMember(member));
+		}
+	}
+
+	watch([
+		filteredMembers,
+		useObservable(from(liveQuery(() => getFrontingEntriesTable().toArray())))
+	], populateFrontingEntriesMap, {immediate: true});
 
 	const list: Ref<typeof IonList | undefined> = ref()
 
-	const member: Ref<PartialBy<Member, "uuid"> | undefined> = ref();
-	provide("member", member);
+	const emptyMember: PartialBy<Member, "uuid"> = {
+		name: "",
+		isArchived: false,
+		isCustomFront: false,
+		tags: []
+	};
+	const member = shallowRef<PartialBy<Member, "uuid">>({...emptyMember});
 
 	const memberEditModal = ref();
 
@@ -62,12 +82,7 @@
 		if(clickedMember)
 			member.value = {...clickedMember};
 		else {
-			member.value = {
-				name: "",
-				isArchived: false,
-				isCustomFront: false,
-				tags: []
-			};
+			member.value = {...emptyMember};
 		}
 
 		await memberEditModal.value.$el.present();
@@ -100,7 +115,7 @@
 	function getStyle(member: Member){
 		const style: Record<string, string> = {};
 
-		const entry = getCurrentFrontEntryForMember(member);
+		const entry = frontingEntries.get(member);
 		if(entry){
 			if(entry.isMainFronter)
 				style["--background"] = "var(--ion-background-color-step-200)";
@@ -111,8 +126,8 @@
 		return style;
 	}
 
-	function drag(member: Member){
-		const entry = getCurrentFrontEntryForMember(member);
+	async function drag(member: Member){
+		const entry = await getCurrentFrontEntryForMember(member);
 		if(entry){
 			if(entry.isMainFronter)
 				return setMainFrontingEntry(member, false);
@@ -121,12 +136,12 @@
 		}
 	}
 
-	const longPressHandlers = new Map();
+	const longPressHandlers = new Map<Member, any>();
 	function startPress(member: Member){
 		longPressHandlers.set(
 			member,
-			setTimeout(() => {
-			const entry = getCurrentFrontEntryForMember(member);
+			setTimeout(async () => {
+			const entry = await getCurrentFrontEntryForMember(member);
 				if(entry)
 					removeFrontingEntry(member);
 				else
@@ -169,24 +184,24 @@
 		<IonContent>
 			<IonList :inset="isIOS" ref="list">
 
-				<IonItemSliding v-for="member in members" @ionDrag="endPress(member, true)" :key="JSON.stringify(member)">
+				<IonItemSliding v-for="member in filteredMembers" @ionDrag="endPress(member, true)" :key="JSON.stringify(member)">
 					<IonItem button :class="{ archived: member.isArchived }" :style="getStyle(member)" @pointerdown="startPress(member)" @pointerup="endPress(member, false)">
 						<MemberAvatar slot="start" :member />
 						<MemberLabel :member />
 						<IonIcon slot="end" :ios="archivedIOS" :md="archivedMD" v-if="member.isArchived" />
-						<IonIcon slot="end" :ios="mainFronterIOS" :md="mainFronterMD" v-if="getCurrentFrontEntryForMember(member)?.isMainFronter" />
+						<IonIcon slot="end" :ios="mainFronterIOS" :md="mainFronterMD" v-if="frontingEntries.get(member)?.isMainFronter" />
 					</IonItem>
 					<IonItemOptions @ionSwipe="drag(member)">
-						<IonItemOption v-if="!getCurrentFrontEntryForMember(member)" @click="addFrontingEntry(member)">
+						<IonItemOption v-if="!frontingEntries.get(member)" @click="addFrontingEntry(member)">
 							<IonIcon slot="icon-only" :md="addToFrontMD" :ios="addToFrontIOS"></IonIcon>
 						</IonItemOption>
-						<IonItemOption v-if="getCurrentFrontEntryForMember(member)" @click="removeFrontingEntry(member)" color="danger">
+						<IonItemOption v-if="frontingEntries.get(member)" @click="removeFrontingEntry(member)" color="danger">
 							<IonIcon slot="icon-only" :md="removeFromFrontMD" :ios="removeFromFrontIOS"></IonIcon>
 						</IonItemOption>
-						<IonItemOption expandable v-if="getCurrentFrontEntryForMember(member) && !getCurrentFrontEntryForMember(member)?.isMainFronter" @click="setMainFrontingEntry(member, true)" color="secondary">
+						<IonItemOption expandable v-if="frontingEntries.get(member) && !frontingEntries.get(member)?.isMainFronter" @click="setMainFrontingEntry(member, true)" color="secondary">
 							<IonIcon slot="icon-only" :md="setMainFronterMD" :ios="setMainFronterIOS"></IonIcon>
 						</IonItemOption>
-						<IonItemOption expandable v-if="getCurrentFrontEntryForMember(member)?.isMainFronter" @click="setMainFrontingEntry(member, false)" color="secondary">
+						<IonItemOption expandable v-if="frontingEntries.get(member)?.isMainFronter" @click="setMainFrontingEntry(member, false)" color="secondary">
 							<IonIcon slot="icon-only" :md="unsetMainFronterMD" :ios="unsetMainFronterIOS"></IonIcon>
 						</IonItemOption>
 						<IonItemOption @click="setSoleFrontingEntry(member)" color="tertiary">
@@ -203,12 +218,12 @@
 			</IonFab>
 		</IonContent>
 
-		<MemberEdit ref="memberEditModal" />
+		<MemberEdit ref="memberEditModal" :member />
 	</IonPage>
 </template>
 
 <style scoped>
-	ion-item.archived > *{
+	ion-item.archived > * {
 		opacity: 0.5;
 	}
 </style>

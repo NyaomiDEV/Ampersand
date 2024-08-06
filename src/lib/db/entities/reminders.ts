@@ -32,7 +32,7 @@ export type PeriodicReminder = ReminderBase & {
 
 export type Reminder = EventReminder | PeriodicReminder;
 
-export function getTable() {
+export function getRemindersTable() {
 	return db.reminders;
 }
 
@@ -42,7 +42,7 @@ function genid(name: string) {
 
 export async function newReminder(reminder: Omit<Reminder, keyof UUIDable>) {
 	const uuid = genid(reminder.name);
-	return await getTable().add({
+	return await getRemindersTable().add({
 		...reminder,
 		uuid
 	});

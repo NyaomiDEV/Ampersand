@@ -26,7 +26,7 @@
 	import saveMD from "@material-design-icons/svg/outlined/save.svg";
 	import trashMD from "@material-design-icons/svg/outlined/delete.svg";
 
-	import { FrontingEntryComplete, getTable } from '../lib/db/entities/frontingEntries';
+	import { FrontingEntryComplete, getFrontingEntriesTable } from '../lib/db/entities/frontingEntries';
 	import { Ref, ShallowReactive, WatchStopHandle, inject, provide, ref, shallowReactive, toRaw, watch } from "vue";
 
 	import MemberSelect from "./MemberSelect.vue";
@@ -43,12 +43,15 @@
 	const twelveHourClock = appConfig.locale.twelveHourClock;
 	const firstWeekOfDayIsSunday = appConfig.locale.firstWeekOfDayIsSunday;
 
-	const frontingEntry = inject<Ref<FrontingEntryComplete>>("frontingEntry")!;
+	const props = defineProps<{
+		frontingEntry: FrontingEntryComplete
+	}>();
+
+	const frontingEntry = ref(props.frontingEntry);
 
 	const memberSelectModal = ref();
 
 	const selectedMembers: ShallowReactive<Member[]> = shallowReactive([]);
-	provide("selectedMembers", selectedMembers);
 
 	const startTime: Ref<string | undefined> = ref();
 	const endTime: Ref<string | undefined> = ref();
@@ -61,9 +64,7 @@
 		const uuid = frontingEntry.value?.uuid;
 		const _frontingEntry = toRaw(frontingEntry.value);
 
-		console.log(selectedMembers, _frontingEntry.member.uuid);
-
-		await getTable().update(uuid, {
+		await getFrontingEntriesTable().update(uuid, {
 			..._frontingEntry,
 			member: _frontingEntry.member.uuid
 		});
@@ -78,17 +79,14 @@
 	async function deleteFrontingEntry(){
 		if(!frontingEntry.value) return;
 
-		await getTable().delete(frontingEntry.value.uuid);
+		await getFrontingEntriesTable().delete(frontingEntry.value.uuid);
 		try{
 			await modalController.dismiss(undefined, "deleted");
 		}catch(_){}
 	}
 
 	function present() {
-		watchStopHandles.forEach(x => x());
-		watchStopHandles.length = 0;
-
-		if(!frontingEntry.value) return;
+		frontingEntry.value = props.frontingEntry;
 
 		selectedMembers.length = 0;
 		selectedMembers.push(frontingEntry.value.member);
@@ -99,11 +97,6 @@
 			endTime.value = dayjs(frontingEntry.value.endTime).format("YYYY-MM-DDTHH:mm:ss");
 
 		watchStopHandles.push(
-			watch(selectedMembers, () => {
-				console.log(selectedMembers, frontingEntry.value.member.uuid);
-				if(selectedMembers.length)
-					frontingEntry.value.member = selectedMembers[0];
-			}, {immediate: false}),
 			watch(startTime, () => {
 				frontingEntry.value.startTime = dayjs(startTime.value).toDate();
 			}, {immediate: false}),
@@ -114,15 +107,18 @@
 		);
 	}
 
-	function didPresent() {
-		setTimeout(() => {
-			console.log()
-		}, 2000);
+	function dismiss(){
+		watchStopHandles.forEach(x => x());
+		watchStopHandles.length = 0;
+	}
+
+	function updateSelectedMember(members: Member[]){
+		frontingEntry.value.member = members[0];
 	}
 </script>
 
 <template>
-	<IonModal class="fronting-entry-edit-modal" @willPresent="present" @didPresent="didPresent" :breakpoints="[0,1]" initialBreakpoint="1">
+	<IonModal class="fronting-entry-edit-modal" @willPresent="present" @willDismiss="dismiss" :breakpoints="[0,1]" initialBreakpoint="1">
 		<IonHeader>
 			<IonToolbar>
 				<IonTitle>{{ $t("options:frontHistory.edit.header") }}</IonTitle>
@@ -182,7 +178,7 @@
 				</IonFabButton>
 			</IonFab>
 
-			<MemberSelect :onlyOne="true" ref="memberSelectModal" />
+			<MemberSelect :selectedMembers :onlyOne="true" @selectedMembers="updateSelectedMember" ref="memberSelectModal" />
 			<IonModal class="stack-modal" :keep-contents-mounted="true">
 				<IonDatetime id="startTime" v-model="startTime" :showDefaultButtons="true" :hourCycle="twelveHourClock ? 'h12' : 'h23'" :firstDayOfWeek="firstWeekOfDayIsSunday ? 0 : 1">
 					<span slot="title">{{ $t("options:frontHistory.edit.startTime") }}</span>

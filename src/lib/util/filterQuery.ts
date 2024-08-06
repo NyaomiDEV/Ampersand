@@ -10,7 +10,7 @@ export type MemberFilterQuery = {
 	role?: string
 };
 
-export function parseMemberFilterQuery(search: string): MemberFilterQuery {
+export async function parseMemberFilterQuery(search: string): Promise<MemberFilterQuery> {
 	const tokens = search.split(" ");
 
 	const queryTokens: string[] = [];
@@ -76,7 +76,7 @@ export function parseMemberFilterQuery(search: string): MemberFilterQuery {
 				break;
 			case "#":
 				const probableTag = token.slice(1);
-				const tag = getTagFromNameHashtag(probableTag);
+				const tag = await getTagFromNameHashtag(probableTag);
 				if(tag)
 					result.tags.push(tag.uuid)
 				else

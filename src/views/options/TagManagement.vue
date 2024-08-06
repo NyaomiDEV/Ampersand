@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { IonContent, IonSearchbar, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonSegment, IonSegmentButton, IonLabel, IonFab, IonFabButton, IonIcon, IonItem} from '@ionic/vue';
-	import { inject, provide, Ref, ref } from 'vue';
+	import { inject, Ref, ref } from 'vue';
 	import { addOutline as addIOS } from "ionicons/icons";
 	import addMD from "@material-design-icons/svg/outlined/add.svg";
 	import TagEdit from "../../modals/TagEdit.vue";
@@ -18,17 +18,18 @@
 
 	const tagEditModal = ref();
 
-	const tag: Ref<PartialBy<Tag, "uuid"> | undefined> = ref();
-	provide("tag", tag);
+	const emptyTag: PartialBy<Tag, "uuid"> = {
+		name: "",
+		type: "member"
+	};
+
+	const tag: Ref<PartialBy<Tag, "uuid">> = ref({...emptyTag});
 
 	async function showModal(clickedTag?: Tag){
 		if(clickedTag)
 			tag.value = {...clickedTag};
 		else {
-			tag.value = {
-				name: "",
-				type: "member"
-			};
+			tag.value = {...emptyTag};
 		}
 
 		await tagEditModal.value.$el.present();
@@ -79,6 +80,6 @@
 			</IonFab>
 		</IonContent>
 
-		<TagEdit ref="tagEditModal" />
+		<TagEdit ref="tagEditModal" :tag />
 	</IonPage>
 </template>

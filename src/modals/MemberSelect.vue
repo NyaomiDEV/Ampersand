@@ -12,17 +12,23 @@
 		CheckboxCustomEvent,
 	} from "@ionic/vue";
 
-	import { inject, ref, ShallowReactive } from "vue";
+	import { inject, ref } from "vue";
 	import { getFilteredMembers } from "../lib/db/liveQueries";
 	import MemberAvatar from "../components/member/MemberAvatar.vue";
 	import MemberLabel from "../components/member/MemberLabel.vue";
 	import { Member } from "../lib/db/entities/members";
 
 	const isIOS = inject<boolean>("isIOS");
-	const selectedMembers = inject<ShallowReactive<Member[]>>("selectedMembers")!;
 
 	const props = defineProps<{
+		selectedMembers: Member[],
 		onlyOne?: boolean
+	}>();
+
+	const selectedMembers = props.selectedMembers;
+
+	const emit = defineEmits<{
+		selectedMembers: [Member[]]
 	}>();
 
 	function check(ev: CheckboxCustomEvent){
@@ -38,12 +44,16 @@
 		}
 	}
 
+	function dismiss(){
+		emit("selectedMembers", [...selectedMembers]);
+	}
+
 	const search = ref("");
 	const filteredMembers = getFilteredMembers(search);
 </script>
 
 <template>
-	<IonModal class="member-select-modal" :breakpoints="[0,0.25,0.5,1]" initialBreakpoint="0.25">
+	<IonModal class="member-select-modal" :breakpoints="[0,0.25,0.5,1]" initialBreakpoint="0.25" @willDismiss="dismiss">
 		<IonHeader>
 			<IonToolbar>
 				<IonTitle>{{ $t("other:memberSelect.header") }}</IonTitle>

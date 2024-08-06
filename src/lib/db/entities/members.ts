@@ -1,4 +1,4 @@
-import { Ref, ref, watch } from "vue";
+import { shallowRef, watch } from "vue";
 import { db } from "..";
 import { parseMemberFilterQuery } from "../../util/filterQuery";
 import { makeUUIDv5 } from "../../util/uuid";
@@ -19,17 +19,17 @@ export type Member = UUIDable & {
 	tags: UUID[] // array of UUIDs
 }
 
-export function getTable() {
+export function getMembersTable() {
 	return db.members;
 }
 
-export const members: Ref<Member[]> = ref([]);
+export const members = shallowRef<Member[]>([]);
 
 export async function updateMembersRef(){
-	members.value = await getTable().toArray();
+	members.value = await getMembersTable().toArray();
 }
 
-watch([useObservable(from(liveQuery(() => getTable().toArray())))], updateMembersRef, { immediate: true });
+watch(useObservable(from(liveQuery(() => getMembersTable().toArray()))), updateMembersRef, { immediate: true });
 
 function genid(name: string) {
 	return makeUUIDv5(getSystemUUID(), `members\0${name}`);
@@ -37,16 +37,16 @@ function genid(name: string) {
 
 export async function newMember(member: Omit<Member, keyof UUIDable>) {
 	const uuid = genid(member.name);
-	return await getTable().add({
+	return await getMembersTable().add({
 		...member,
 		uuid
 	});
 }
 
-export function getMembersFromFilterQuery(filterQuery: string) {
-	const parsed = parseMemberFilterQuery(filterQuery);
+export async function getMembersFromFilterQuery(filterQuery: string) {
+	const parsed = await parseMemberFilterQuery(filterQuery);
 
-	return getTable().where("name").startsWithIgnoreCase(parsed.query).filter(x => {
+	return getMembersTable().where("name").startsWithIgnoreCase(parsed.query).filter(x => {
 
 		if(parsed.pronouns){
 			if (!x.pronouns || x.pronouns.toLowerCase() !== parsed.pronouns.toLowerCase())

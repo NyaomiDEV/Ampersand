@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonLabel, IonToolbar, IonBackButton, IonItem, IonItemDivider, IonDatetime, IonButtons, IonIcon, IonButton, IonSearchbar} from '@ionic/vue';
-	import { inject, provide, ref } from 'vue';
+	import { inject, ref, shallowRef } from 'vue';
 	import FrontingEntryAvatar from "../../components/frontingEntry/FrontingEntryAvatar.vue";
 	import FrontingEntryLabel from "../../components/frontingEntry/FrontingEntryLabel.vue";
 	import { FrontingEntryComplete } from '../../lib/db/entities/frontingEntries';
@@ -21,8 +21,7 @@
 
 	const isIOS = inject<boolean>("isIOS");
 	const frontingEntryModal = ref();
-	const frontingEntry = ref();
-	provide("frontingEntry", frontingEntry);
+	const frontingEntry = shallowRef();
 
 	const firstWeekOfDayIsSunday = appConfig.locale.firstWeekOfDayIsSunday;
 
@@ -118,7 +117,7 @@
 							: dayjs(tuple[0]).format("LL")
 							}}</IonLabel>
 					</IonItemDivider>
-					<IonItem button v-for="entry in tuple[1]" :key="JSON.stringify(tuple[1])" @click="showModal(entry)">
+					<IonItem button v-for="entry in tuple[1]" :key="'calendarview'+JSON.stringify(entry)" @click="showModal(entry)">
 						<FrontingEntryAvatar slot="start" :entry />
 						<FrontingEntryLabel :entry />
 					</IonItem>
@@ -134,7 +133,7 @@
 							: dayjs(tuple[0]).format("LL")
 							}}</IonLabel>
 					</IonItemDivider>
-					<IonItem button v-for="entry in tuple[1]" :key="JSON.stringify(tuple[1])" @click="showModal(entry)">
+					<IonItem button v-for="entry in tuple[1]" :key="JSON.stringify(entry)" @click="showModal(entry)">
 						<FrontingEntryAvatar slot="start" :entry />
 						<FrontingEntryLabel :entry />
 					</IonItem>
@@ -142,7 +141,7 @@
 			</IonList>
 		</IonContent>
 
-		<FrontingEntryEdit ref="frontingEntryModal" />
+		<FrontingEntryEdit :frontingEntry ref="frontingEntryModal" />
 	</IonPage>
 </template>
 

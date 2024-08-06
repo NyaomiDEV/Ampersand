@@ -18,7 +18,7 @@ export type Attachment = UUIDable & {
 	file: File
 }
 
-export function getTable() {
+export function getJournalPostsTable() {
 	return db.journalPosts;
 }
 
@@ -28,7 +28,7 @@ function genid(name: string) {
 
 export async function newJournalPost(journalPost: Omit<JournalPost, keyof UUIDable>) {
 	const uuid = genid(journalPost.member + journalPost.title);
-	return await getTable().add({
+	return await getJournalPostsTable().add({
 		...journalPost,
 		uuid
 	});

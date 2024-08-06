@@ -8,7 +8,7 @@ export type Chat = UUIDable & {
 	image?: File
 }
 
-export function getTable(){
+export function getChatsTable(){
 	return db.chats;
 }
 
@@ -18,7 +18,7 @@ function genid(name: string) {
 
 export async function newChat(chat: Omit<Chat, keyof UUIDable>) {
 	const uuid = genid(chat.name);
-	return await getTable().add({
+	return await getChatsTable().add({
 		...chat,
 		uuid
 	});

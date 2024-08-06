@@ -10,7 +10,7 @@ export type ChatMessage = UUIDable & {
 	message: string,
 }
 
-export function getTable() {
+export function getChatMessagesTable() {
 	return db.chatMessages;
 }
 
@@ -20,7 +20,7 @@ function genid(name: string) {
 
 export async function newChatMessage(chatMessage: Omit<ChatMessage, keyof UUIDable>) {
 	const uuid = genid(chatMessage.member + chatMessage.date.toTimeString());
-	return await getTable().add({
+	return await getChatMessagesTable().add({
 		...chatMessage,
 		uuid
 	});

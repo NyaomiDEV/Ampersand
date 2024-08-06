@@ -11,7 +11,7 @@ export type System = UUIDable & {
 	image?: File
 }
 
-export function getTable(){
+export function getSystemTable(){
 	return db.system;
 }
 
@@ -21,12 +21,12 @@ export const system: Ref<System> = ref({
 });
 
 export async function updateSystemRef() {
-	const _system = await getTable().toArray();
+	const _system = await getSystemTable().toArray();
 	if(_system.length)
 		system.value = _system[0];
 }
 
-watch([useObservable(from(liveQuery(() => getTable().toArray())))], updateSystemRef, { immediate: true });
+watch(useObservable(from(liveQuery(() => getSystemTable().toArray()))), updateSystemRef, { immediate: true });
 
 export function genid(name: string) {
 	return makeUUIDv5(AppNamespace, name);
@@ -34,7 +34,7 @@ export function genid(name: string) {
 
 export async function newSystem(system: Omit<System, keyof UUIDable>){
 	const uuid = genid(system.name);
-	const res = await getTable().add({
+	const res = await getSystemTable().add({
 		...system,
 		uuid
 	});

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonCard, IonCardHeader, IonCardContent, IonFab, IonFabButton, IonCardSubtitle, IonIcon, IonCardTitle, IonItem} from '@ionic/vue';
-	import { inject, provide, ref } from 'vue';
+	import { inject, ref, shallowRef } from 'vue';
 	import { BoardMessageComplete, boardMessages } from '../../lib/db/entities/boardMessages';
 	import BoardMessageEdit from "../../modals/BoardMessageEdit.vue";
 	import { getFronting, getMainFronter } from '../../lib/db/entities/frontingEntries';
@@ -15,32 +15,30 @@
 	import dayjs from 'dayjs';
 	import LocalizedFormat from "dayjs/plugin/localizedFormat";
 	dayjs.extend(LocalizedFormat);
+
 	import { appConfig } from '../../lib/config';
-import MemberAvatar from '../../components/member/MemberAvatar.vue';
-import MemberLabel from '../../components/member/MemberLabel.vue';
-import { getMarkdownFor } from '../../lib/markdown';
+	import MemberAvatar from '../../components/member/MemberAvatar.vue';
+	import MemberLabel from '../../components/member/MemberLabel.vue';
+	import { getMarkdownFor } from '../../lib/markdown';
 
 	const isIOS = inject<boolean>("isIOS");
-	const boardMessage = ref<PartialBy<BoardMessageComplete, "uuid">>();
-	provide("boardMessage", boardMessage);
-
 	const twelveHour = appConfig.locale.twelveHourClock;
+	
+	const emptyBoardMessage: PartialBy<BoardMessageComplete, "uuid" | "member"> = {
+		title: "",
+		body: "",
+		date: new Date()
+	}
+	const boardMessage = shallowRef<PartialBy<BoardMessageComplete, "uuid" | "member">>(emptyBoardMessage);
 
 	const boardMessageEditModal = ref();
 
-	function showModal(_boardMessage?: BoardMessageComplete){
+	async function showModal(_boardMessage?: BoardMessageComplete){
 		if(_boardMessage)
 			boardMessage.value = {..._boardMessage};
 		else {
-			const member = getMainFronter() || getFronting()[0] || members.value[0];
-			boardMessage.value = {
-				title: "",
-				body: "",
-				date: new Date(),
-				member
-			};
+			boardMessage.value = {...emptyBoardMessage};
 		}
-
 		boardMessageEditModal.value.$el.present();
 	}
 </script>
@@ -79,7 +77,7 @@ import { getMarkdownFor } from '../../lib/markdown';
 				</IonFabButton>
 			</IonFab>
 
-			<BoardMessageEdit ref="boardMessageEditModal" />
+			<BoardMessageEdit :boardMessage ref="boardMessageEditModal" />
 		</IonContent>
 	</IonPage>
 </template>
