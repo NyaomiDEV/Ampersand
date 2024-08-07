@@ -88,15 +88,15 @@
 
 		<IonContent>
 			<IonList inset>
-					<IonItem lines="none">
+					<IonItem>
 						<IonInput mode="md" fill="outline" :label="$t('options:tagManagement.edit.name')" labelPlacement="floating" v-model="tag.name" />
 					</IonItem>
 
-					<IonItem lines="none">
+					<IonItem>
 						<IonTextarea mode="md" fill="outline" auto-grow :label="$t('options:tagManagement.edit.description')" labelPlacement="floating" v-model="tag.description" />
 					</IonItem>
 
-					<IonItem button lines="none">
+					<IonItem button>
 						<Color v-model="tag.color" @update:model-value="present">
 							<IonLabel>
 								{{ $t("options:tagManagement.edit.color") }}
@@ -104,7 +104,7 @@
 						</Color>
 					</IonItem>
 
-					<IonItem lines="none" v-if="!tag.uuid">
+					<IonItem v-if="!tag.uuid">
 						<IonLabel>
 							<h3 class="centered-text">{{ $t("options:tagManagement.edit.type.header") }}</h3>
 							<IonSegment class="segment-alt" v-model="tag.type">
@@ -123,7 +123,7 @@
 						</IonLabel>
 					</IonItem>
 
-					<IonItem button lines="none" v-if="tag.uuid" @click="deleteTag">
+					<IonItem button v-if="tag.uuid" @click="deleteTag">
 						<IonIcon :ios="trashIOS" :md="trashMD" slot="start" aria-hidden="true" />
 						<IonLabel>
 							<h3>{{ $t("options:tagManagement.edit.actions.delete.title") }}</h3>

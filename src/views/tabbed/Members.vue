@@ -15,8 +15,8 @@
 		IonItemOptions,
 		IonItemOption,
 	} from '@ionic/vue';
-	import { inject, Ref, ref, shallowReactive, shallowRef, watch } from 'vue';
-	import { getFilteredMembers } from '../../lib/db/liveQueries';
+	import { inject, onMounted, onUnmounted, Ref, ref, shallowReactive, shallowRef, watch, WatchStopHandle } from 'vue';
+	import { getFilteredMembers } from '../../lib/db/search';
 	import { accessibilityConfig } from '../../lib/config';
 
 	import {
@@ -40,7 +40,7 @@
 	import archivedMD from "@material-design-icons/svg/outlined/archive.svg";
 
 	import MemberEdit from '../../modals/MemberEdit.vue';
-	import { Member } from '../../lib/db/entities/members';
+	import { getMembersTable, Member } from '../../lib/db/entities/members';
 	import { PartialBy } from '../../lib/db/types';
 	import { FrontingEntry, getCurrentFrontEntryForMember, getFrontingEntriesTable, newFrontingEntry, removeFronter, setMainFronter, setSoleFronter } from '../../lib/db/entities/frontingEntries';
 	import MemberAvatar from '../../components/member/MemberAvatar.vue';
@@ -51,20 +51,10 @@
 	const isIOS = inject<boolean>("isIOS");
 
 	const search = ref("");
-	const filteredMembers = getFilteredMembers(search);
+	const members = shallowRef<Member[]>([]);
+
+	const filteredMembers = getFilteredMembers(search, members);
 	const frontingEntries = shallowReactive(new Map<Member, FrontingEntry | undefined>());
-
-	async function populateFrontingEntriesMap(){
-		frontingEntries.clear();
-		for(const member of filteredMembers.value){
-			frontingEntries.set(member, await getCurrentFrontEntryForMember(member));
-		}
-	}
-
-	watch([
-		filteredMembers,
-		useObservable(from(liveQuery(() => getFrontingEntriesTable().toArray())))
-	], populateFrontingEntriesMap, {immediate: true});
 
 	const list: Ref<typeof IonList | undefined> = ref()
 
@@ -77,6 +67,34 @@
 	const member = shallowRef<PartialBy<Member, "uuid">>({...emptyMember});
 
 	const memberEditModal = ref();
+
+	const watchStopHandlers: WatchStopHandle[] = [];
+
+	onMounted(() => {
+		watchStopHandlers.push(
+			watch(
+				useObservable(from(liveQuery(() => getMembersTable().toArray()))),
+				async () => members.value = await getMembersTable().toArray(),
+				{ immediate: true }
+			),
+			watch(
+				[
+					filteredMembers,
+					useObservable(from(liveQuery(() => getFrontingEntriesTable().toArray())))
+				], async () => {
+					frontingEntries.clear();
+					for(const member of filteredMembers.value)
+						frontingEntries.set(member, await getCurrentFrontEntryForMember(member));
+				},
+				{ immediate: true }
+			)
+		);
+	});
+
+	onUnmounted(() => {
+		watchStopHandlers.forEach(x => x());
+		watchStopHandlers.length = 0;
+	});
 
 	async function showModal(clickedMember?: Member){
 		if(clickedMember)

@@ -1,10 +1,10 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonLabel, IonToolbar, IonBackButton, IonItem, IonItemDivider, IonDatetime, IonButtons, IonIcon, IonButton, IonSearchbar} from '@ionic/vue';
-	import { inject, ref, shallowRef } from 'vue';
+	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonLabel, IonToolbar, IonBackButton, IonItem, IonItemDivider, IonDatetime, IonButtons, IonIcon, IonButton, IonSearchbar } from '@ionic/vue';
+	import { inject, onMounted, onUnmounted, ref, ShallowRef, shallowRef, watch, WatchStopHandle } from 'vue';
 	import FrontingEntryAvatar from "../../components/frontingEntry/FrontingEntryAvatar.vue";
 	import FrontingEntryLabel from "../../components/frontingEntry/FrontingEntryLabel.vue";
-	import { FrontingEntryComplete } from '../../lib/db/entities/frontingEntries';
-	import { getFilteredFrontingEntries } from '../../lib/db/liveQueries';
+	import { FrontingEntry, FrontingEntryComplete, getFronting, getFrontingEntriesTable, getMainFronter } from '../../lib/db/entities/frontingEntries';
+	import { getFilteredFrontingEntries } from '../../lib/db/search';
 	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
 	import dayjs from 'dayjs';
 	import LocalizedFormat from "dayjs/plugin/localizedFormat";
@@ -18,10 +18,20 @@
 	import calendarMD from "@material-design-icons/svg/outlined/calendar_month.svg";
 	import listMD from "@material-design-icons/svg/outlined/list.svg";
 	import { appConfig } from '../../lib/config';
+	import { from, useObservable } from '@vueuse/rxjs';
+	import { liveQuery } from 'dexie';
+	import { getMembersTable } from '../../lib/db/entities/members';
+	import { PartialBy } from '../../lib/db/types';
 
 	const isIOS = inject<boolean>("isIOS");
 	const frontingEntryModal = ref();
-	const frontingEntry = shallowRef();
+	const emptyFrontingEntry: PartialBy<FrontingEntryComplete, "uuid" | "member"> = {
+		isMainFronter: false,
+		startTime: new Date(),
+		endTime: new Date(),
+	};
+
+	const frontingEntry = shallowRef({...emptyFrontingEntry});
 
 	const firstWeekOfDayIsSunday = appConfig.locale.firstWeekOfDayIsSunday;
 
@@ -29,10 +39,37 @@
 	const date = ref(dayjs().toISOString());
 
 	const search = ref("");
-	const filteredFrontingEntries = getFilteredFrontingEntries(search);
+	const frontingEntries: ShallowRef<FrontingEntry[]> = shallowRef([]);
+	const filteredFrontingEntries = getFilteredFrontingEntries(search, frontingEntries);
+
+	let handle: WatchStopHandle;
+
+	onMounted(async () => {
+		handle = watch([
+			useObservable(from(liveQuery(() => getFrontingEntriesTable().toArray()))),
+			useObservable(from(liveQuery(() => getMembersTable().toArray())))
+		], async () => {
+			frontingEntries.value = await getFrontingEntriesTable().toArray();
+		}, { immediate: true });
+		frontingEntry.value = { ...filteredFrontingEntries.value[0] };
+	});
+
+	onUnmounted(async () => {
+		handle();
+	});
 
 	async function showModal(clickedFrontingEntry: FrontingEntryComplete){
-		frontingEntry.value = {...clickedFrontingEntry};
+		if(clickedFrontingEntry)
+			frontingEntry.value = {...clickedFrontingEntry};
+		else {
+			frontingEntry.value = {
+				...emptyFrontingEntry,
+				startTime: new Date(),
+				endTime: new Date(),
+				member: await getMainFronter() || (await getFronting())[0]
+			};
+		}
+
 		await frontingEntryModal.value.$el.present();
 	}
 

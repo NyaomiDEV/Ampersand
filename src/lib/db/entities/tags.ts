@@ -3,11 +3,8 @@ import { makeUUIDv5 } from "../../util/uuid";
 import { UUID, UUIDable } from "../types";
 import { getSystemUUID } from "./system";
 
-import { getMembersTable as getMembers } from "./members";
-import { getJournalPostsTable as getJournalPosts } from "./journalPosts";
-import { liveQuery } from "dexie";
-import { useObservable, from } from "@vueuse/rxjs";
-import { Ref, shallowRef, watch } from "vue";
+import { getMembersTable } from "./members";
+import { getJournalPostsTable } from "./journalPosts";
 
 export type Tag = UUIDable & {
 	name: string,
@@ -20,21 +17,12 @@ export function getTagsTable() {
 	return db.tags;
 }
 
-export const tags: Ref<Tag[]> = shallowRef([]);
-
-export async function updateTagsRef() {
-	tags.value = await getTagsTable().toArray();
-}
-
-watch(useObservable(from(liveQuery(() => getTagsTable().toArray()))), updateTagsRef, { immediate: true });
-
-
-function genid(name: string) {
-	return makeUUIDv5(getSystemUUID(), `tags\0${name}`);
+async function genid(name: string) {
+	return makeUUIDv5((await getSystemUUID())!, `tags\0${name}`);
 }
 
 export async function newTag(tag: Omit<Tag, keyof UUIDable>) {
-	const uuid = genid(tag.name);
+	const uuid = await genid(tag.name);
 	return await getTagsTable().add({
 		...tag,
 		uuid
@@ -44,11 +32,11 @@ export async function newTag(tag: Omit<Tag, keyof UUIDable>) {
 export async function removeTag(uuid: UUID){
 	const tag = await getTagsTable().get(uuid);
 	if(tag?.type === "member"){
-		await getMembers().toCollection().modify(member => {
+		await getMembersTable().toCollection().modify(member => {
 			member.tags = member.tags?.filter(tag => tag !== uuid)
 		});
 	} else if(tag?.type === "journal") {
-		await getJournalPosts().toCollection().modify(journalPost => {
+		await getJournalPostsTable().toCollection().modify(journalPost => {
 			journalPost.tags = journalPost.tags?.filter(tag => tag !== uuid)
 		});
 	}

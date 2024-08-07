@@ -12,11 +12,13 @@
 		CheckboxCustomEvent,
 	} from "@ionic/vue";
 
-	import { inject, ref } from "vue";
-	import { getFilteredMembers } from "../lib/db/liveQueries";
+	import { inject, onMounted, onUnmounted, ref, shallowRef, watch, WatchStopHandle } from "vue";
+	import { getFilteredMembers } from "../lib/db/search";
 	import MemberAvatar from "../components/member/MemberAvatar.vue";
 	import MemberLabel from "../components/member/MemberLabel.vue";
-	import { Member } from "../lib/db/entities/members";
+	import { getMembersTable, Member } from "../lib/db/entities/members";
+	import { from, useObservable } from "@vueuse/rxjs";
+	import { liveQuery } from "dexie";
 
 	const isIOS = inject<boolean>("isIOS");
 
@@ -49,7 +51,25 @@
 	}
 
 	const search = ref("");
-	const filteredMembers = getFilteredMembers(search);
+	const members = shallowRef<Member[]>([]);
+	const filteredMembers = getFilteredMembers(search, members);
+
+	const watchStopHandlers: WatchStopHandle[] = [];
+
+	onMounted(() => {
+		watchStopHandlers.push(
+			watch(
+				useObservable(from(liveQuery(() => getMembersTable().toArray()))),
+				async () => members.value = await getMembersTable().toArray(),
+				{ immediate: true }
+			)
+		);
+	});
+
+	onUnmounted(() => {
+		watchStopHandlers.forEach(x => x());
+		watchStopHandlers.length = 0;
+	});
 </script>
 
 <template>

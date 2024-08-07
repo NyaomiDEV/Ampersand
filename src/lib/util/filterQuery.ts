@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
 import { getTagFromNameHashtag } from "../db/entities/tags";
+import { UUID } from "../db/types";
 
 export type MemberFilterQuery = {
 	query: string,
@@ -95,11 +96,16 @@ export async function parseMemberFilterQuery(search: string): Promise<MemberFilt
 
 export type FrontingHistoryFilterQuery = {
 	query: string,
-	dateString?: string,
-	day?: number,
-	month?: number,
-	year?: number,
-	currentlyFronting?: boolean
+	startDateString?: string,
+	endDateString?: string,
+	startDay?: number,
+	endDay?: number,
+	startMonth?: number,
+	endMonth?: number,
+	startYear?: number,
+	endYear?: number,
+	currentlyFronting?: boolean,
+	member?: UUID
 };
 
 export function parseFrontingHistoryFilterQuery(search: string) {
@@ -120,6 +126,71 @@ export function parseFrontingHistoryFilterQuery(search: string) {
 						result.currentlyFronting = true;
 						break;
 					case "date":
+						result.startDateString = tokenParts[1];
+						break;
+					case "day":
+						result.startDay = Number(tokenParts[1]);
+						break;
+					case "month":
+						result.startMonth = Number(tokenParts[1]);
+						break;
+					case "year":
+						result.startYear = Number(tokenParts[1]);
+						break;
+					case "enddate":
+						result.endDateString = tokenParts[1];
+						break;
+					case "endday":
+						result.endDay = Number(tokenParts[1]);
+						break;
+					case "endmonth":
+						result.endMonth = Number(tokenParts[1]);
+						break;
+					case "endyear":
+						result.endYear = Number(tokenParts[1]);
+						break;
+					case "member":
+						result.member = tokenParts[1];
+						break;
+					default:
+						queryTokens.push(token);
+						break;
+				}
+				break;
+			default:
+				queryTokens.push(token);
+				break;
+		}
+	}
+
+	result.query = queryTokens.filter(Boolean).join(" ");
+	return result;
+}
+
+export type BoardMessageFilterQuery = {
+	query: string,
+	dateString?: string,
+	day?: number,
+	month?: number,
+	year?: number,
+	member?: UUID
+};
+
+export function parseBoardMessageFilterQuery(search: string) {
+	const tokens = search.split(" ");
+
+	const queryTokens: string[] = [];
+
+	const result: BoardMessageFilterQuery = {
+		query: "",
+	};
+
+	for (const token of tokens) {
+		switch (token.charAt(0)) {
+			case "@":
+				const tokenParts = token.slice(1).split(":");
+				switch (tokenParts[0].toLowerCase()) {
+					case "date":
 						result.dateString = tokenParts[1];
 						break;
 					case "day":
@@ -130,6 +201,9 @@ export function parseFrontingHistoryFilterQuery(search: string) {
 						break;
 					case "year":
 						result.year = Number(tokenParts[1]);
+						break;
+					case "member":
+						result.member = tokenParts[1];
 						break;
 					default:
 						queryTokens.push(token);

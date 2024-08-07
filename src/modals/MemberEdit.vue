@@ -43,11 +43,11 @@
 	import trashMD from "@material-design-icons/svg/outlined/delete.svg";
 
 	import { Member, getMembersTable, newMember } from '../lib/db/entities/members';
-	import { getTagsTable, Tag, tags } from "../lib/db/entities/tags";
+	import { getTagsTable, Tag } from "../lib/db/entities/tags";
 	import { getBlobURL } from '../lib/util/blob';
 	import { getFiles } from "../lib/util/misc";
 	import { resizeImage } from "../lib/util/image";
-	import { ShallowReactive, inject, ref, shallowReactive, toRaw } from "vue";
+	import { ShallowReactive, inject, onMounted, ref, shallowReactive, shallowRef, toRaw } from "vue";
 	import { getMarkdownFor } from "../lib/markdown";
 	import { addMaterialColors, unsetMaterialColors } from "../lib/theme";
 	import { PartialBy } from "../lib/db/types";
@@ -60,10 +60,16 @@
 
 	const member = ref(props.member);
 
+	const tags = shallowRef<Tag[]>([]);
 	const tagSelectionModal = ref();
+	const selectedTags: ShallowReactive<Tag[]> = shallowReactive([]);
 
 	const isEditing = ref(false);
 	const self = ref();
+
+	onMounted(async () => {
+		tags.value = await getTagsTable().toArray();
+	});
 
 	async function toggleEditing(){
 		if(!isEditing.value){
@@ -103,13 +109,10 @@
 		}catch(_){}
 	}
 
-	const selectedTags: ShallowReactive<Tag[]> = shallowReactive([]);
-
 	async function updateSelectedTags(tags: Tag[]) {
 		member.value.tags = tags.map(x => x.uuid);
 		selectedTags.length = 0;
 		selectedTags.push(...tags);
-		console.log(tags, "and", ...selectedTags, "and", member.value);
 	}
 
 	async function present() {
@@ -148,14 +151,14 @@
 						<IonIcon slot="icon-only" :md="backMD" :ios="backIOS"></IonIcon>
 					</IonButton>
 				</IonButtons>
-				<IonTitle>{{ !member!.uuid ? $t("members:edit.headerAdd") : $t("members:edit.headerEdit") }}</IonTitle>
+				<IonTitle>{{ !member.uuid ? $t("members:edit.headerAdd") : $t("members:edit.headerEdit") }}</IonTitle>
 			</IonToolbar>
 		</IonHeader>
 
 		<IonContent>
 			<div class="avatar-container">
 				<IonAvatar>
-					<img aria-hidden="true" :src="member!.image ? getBlobURL(member!.image) : (isIOS ? personIOS : personMD)" />
+					<img aria-hidden="true" :src="member.image ? getBlobURL(member.image) : (isIOS ? personIOS : personMD)" />
 				</IonAvatar>
 				<IonButton shape="round" @click="modifyPicture" v-if="isEditing">
 					<IonIcon slot="icon-only" :ios="pencilIOS" :md="pencilMD" />
@@ -163,20 +166,20 @@
 			</div>
 
 			<div class="member-info" v-if="!isEditing">
-				<h1>{{ member!.name }}</h1>
-				<p>{{ member!.pronouns }}</p>
-				<p>{{ member!.role }}</p>
-				<p v-if="member!.isCustomFront">{{ $t("members:edit.customFront") }}</p>
-				<p v-if="member!.isArchived">{{ $t("members:edit.archived") }}</p>
+				<h1>{{ member.name }}</h1>
+				<p>{{ member.pronouns }}</p>
+				<p>{{ member.role }}</p>
+				<p v-if="member.isCustomFront">{{ $t("members:edit.customFront") }}</p>
+				<p v-if="member.isArchived">{{ $t("members:edit.archived") }}</p>
 			</div>
 
 			<div class="member-tags" v-if="!isEditing">
-				<TagChip v-if="tags?.length" v-for="tag in member!.tags" :key="JSON.stringify(tag)" :tag="tags.find(x => x.uuid === tag)!" />
+				<TagChip v-if="tags?.length" v-for="tag in member.tags" :key="JSON.stringify(tag)" :tag="tags.find(x => x.uuid === tag)!" />
 			</div>
 
 			<div class="member-description" v-if="!isEditing">
 				<IonLabel>{{ $t("members:edit.description") }}</IonLabel>
-				<div class="markdown-content" v-html="getMarkdownFor(member!.description || $t('members:edit.noDescription'))"></div>
+				<div class="markdown-content" v-html="getMarkdownFor(member.description || $t('members:edit.noDescription'))"></div>
 			</div>
 
 			<IonList class="member-actions" v-if="!isEditing">
@@ -191,49 +194,49 @@
 			</IonList>
 
 			<IonList class="member-edit" v-if="isEditing" inset>
-					<IonItem lines="none">
-						<IonInput mode="md" fill="outline" :label="$t('members:edit.name')" labelPlacement="floating" v-model="member!.name" />
+					<IonItem>
+						<IonInput mode="md" fill="outline" :label="$t('members:edit.name')" labelPlacement="floating" v-model="member.name" />
 					</IonItem>
-					<IonItem lines="none">
-						<IonInput mode="md" fill="outline" :label="$t('members:edit.pronouns')" labelPlacement="floating" v-model="member!.pronouns" />
+					<IonItem>
+						<IonInput mode="md" fill="outline" :label="$t('members:edit.pronouns')" labelPlacement="floating" v-model="member.pronouns" />
 					</IonItem>
-					<IonItem lines="none">
-						<IonInput mode="md" fill="outline" :label="$t('members:edit.role')" labelPlacement="floating" v-model="member!.role" />
+					<IonItem>
+						<IonInput mode="md" fill="outline" :label="$t('members:edit.role')" labelPlacement="floating" v-model="member.role" />
 					</IonItem>
-					<IonItem lines="none">
-						<IonTextarea mode="md" fill="outline" auto-grow :label="$t('members:edit.description')" labelPlacement="floating" v-model="member!.description" />
+					<IonItem>
+						<IonTextarea mode="md" fill="outline" auto-grow :label="$t('members:edit.description')" labelPlacement="floating" v-model="member.description" />
 					</IonItem>
-					<IonItem button lines="none">
-						<Color v-model="member!.color" @update:model-value="updateColor">
+					<IonItem button>
+						<Color v-model="member.color" @update:model-value="updateColor">
 							<IonLabel>
 								{{ $t("members:edit.color") }}
 							</IonLabel>
 						</Color>
 					</IonItem>
-					<IonItem button lines="none">
-						<IonToggle v-model="member!.isCustomFront">
+					<IonItem button>
+						<IonToggle v-model="member.isCustomFront">
 							<IonLabel>
 								{{ $t("members:edit.isCustomFront") }}
 							</IonLabel>
 						</IonToggle>
 					</IonItem>
-					<IonItem button lines="none">
-						<IonToggle v-model="member!.isArchived">
+					<IonItem button>
+						<IonToggle v-model="member.isArchived">
 							<IonLabel>
 								{{ $t("members:edit.isArchived") }}
 							</IonLabel>
 						</IonToggle>
 					</IonItem>
 
-					<IonItem button lines="none" @click="tagSelectionModal.$el.present()">
+					<IonItem button @click="tagSelectionModal.$el.present()">
 						<IonLabel>
 							{{ $t("members:edit.tags") }}
 							<div class="member-tags">
-								<TagChip v-if="tags?.length" v-for="tag in member!.tags" :key="JSON.stringify(tag)" :tag="tags.find(x => x.uuid === tag)!" />
+								<TagChip v-if="tags?.length" v-for="tag in member.tags" :key="JSON.stringify(tag)" :tag="tags.find(x => x.uuid === tag)!" />
 							</div>
 						</IonLabel>
 					</IonItem>
-					<IonItem button lines="none" v-if="member!.uuid" @click="deleteMember">
+					<IonItem button v-if="member.uuid" @click="deleteMember">
 						<IonIcon :ios="trashIOS" :md="trashMD" slot="start" aria-hidden="true" />
 						<IonLabel>
 							<h3>{{ $t("members:edit.delete.title") }}</h3>
@@ -243,7 +246,7 @@
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton @click="toggleEditing" v-if="member!.name.length > 0">
+				<IonFabButton @click="toggleEditing" v-if="member.name.length > 0">
 					<IonIcon :ios="isEditing ? saveIOS : pencilIOS" :md="isEditing ? saveMD : pencilMD" />
 				</IonFabButton>
 			</IonFab>

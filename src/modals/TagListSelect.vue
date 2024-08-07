@@ -12,9 +12,9 @@
 		CheckboxCustomEvent,
 	} from "@ionic/vue";
 
-	import { inject, ref } from "vue";
-	import { getFilteredTags } from "../lib/db/liveQueries";
-	import { Tag } from "../lib/db/entities/tags";
+	import { inject, onMounted, ref, shallowRef } from "vue";
+	import { getFilteredTags } from "../lib/db/search";
+	import { getTagsTable, Tag } from "../lib/db/entities/tags";
 	import TagColor from "../components/tag/TagColor.vue";
 	import TagLabel from "../components/tag/TagLabel.vue";
 
@@ -29,10 +29,18 @@
 	}>();
 
 	const selectedTags = props.selectedTags;
-	
+
+	const search = ref("");
+	const tags = shallowRef<Tag[]>([]);
+	const filteredTags = getFilteredTags(search, ref("member"), tags);
+
+	onMounted(async () => {
+		tags.value = await getTagsTable().toArray()
+	});
+
 	function check(ev: CheckboxCustomEvent){
 		if(ev.detail.checked)
-			selectedTags.push(filteredTags.find(x => x.uuid === ev.detail.value)!);
+			selectedTags.push(tags.value.find(x => x.uuid === ev.detail.value)!);
 		else {
 			const index = selectedTags.findIndex(x => x.uuid === ev.detail.value);
 			if(index > -1)
@@ -43,9 +51,6 @@
 	function dismiss(){
 		emit("selectedTags", [...selectedTags]);
 	}
-
-	const search = ref("");
-	const filteredTags = getFilteredTags(search, ref("member"));
 </script>
 
 <template>

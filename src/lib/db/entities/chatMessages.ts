@@ -14,12 +14,12 @@ export function getChatMessagesTable() {
 	return db.chatMessages;
 }
 
-function genid(name: string) {
-	return makeUUIDv5(getSystemUUID(), `chatMessages\0${name}`);
+async function genid(name: string) {
+	return makeUUIDv5((await getSystemUUID())!, `chatMessages\0${name}`);
 }
 
 export async function newChatMessage(chatMessage: Omit<ChatMessage, keyof UUIDable>) {
-	const uuid = genid(chatMessage.member + chatMessage.date.toTimeString());
+	const uuid = await genid(chatMessage.member + chatMessage.date.toTimeString());
 	return await getChatMessagesTable().add({
 		...chatMessage,
 		uuid

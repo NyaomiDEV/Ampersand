@@ -26,8 +26,8 @@
 	import saveMD from "@material-design-icons/svg/outlined/save.svg";
 	import trashMD from "@material-design-icons/svg/outlined/delete.svg";
 
-	import { FrontingEntryComplete, getFrontingEntriesTable } from '../lib/db/entities/frontingEntries';
-	import { Ref, ShallowReactive, WatchStopHandle, inject, provide, ref, shallowReactive, toRaw, watch } from "vue";
+	import { FrontingEntryComplete, getFrontingEntriesTable, newFrontingEntry } from '../lib/db/entities/frontingEntries';
+	import { Ref, ShallowReactive, WatchStopHandle, ref, shallowReactive, toRaw, watch } from "vue";
 
 	import MemberSelect from "./MemberSelect.vue";
 	import MemberAvatar from "../components/member/MemberAvatar.vue";
@@ -37,6 +37,7 @@
 	import Timezone from "dayjs/plugin/timezone";
 	import { Member } from "../lib/db/entities/members";
 	import { appConfig } from "../lib/config";
+	import { PartialBy } from "../lib/db/types";
 	dayjs.extend(UTC);
 	dayjs.extend(Timezone);
 
@@ -44,7 +45,7 @@
 	const firstWeekOfDayIsSunday = appConfig.locale.firstWeekOfDayIsSunday;
 
 	const props = defineProps<{
-		frontingEntry: FrontingEntryComplete
+		frontingEntry: PartialBy<FrontingEntryComplete, "uuid" | "member">
 	}>();
 
 	const frontingEntry = ref(props.frontingEntry);
@@ -59,10 +60,18 @@
 	const watchStopHandles: WatchStopHandle[] = [];
 
 	async function save(){
-		if(!frontingEntry.value) return;
-
 		const uuid = frontingEntry.value?.uuid;
 		const _frontingEntry = toRaw(frontingEntry.value);
+
+		if(!_frontingEntry.member) return;
+
+		if(!uuid) {
+			await newFrontingEntry({..._frontingEntry, member: _frontingEntry.member.uuid });
+
+			await modalController.dismiss(null, "added");
+
+			return;
+		}
 
 		await getFrontingEntriesTable().update(uuid, {
 			..._frontingEntry,
@@ -89,7 +98,8 @@
 		frontingEntry.value = props.frontingEntry;
 
 		selectedMembers.length = 0;
-		selectedMembers.push(frontingEntry.value.member);
+		if(frontingEntry.value.member)
+			selectedMembers.push(frontingEntry.value.member);
 
 		startTime.value = dayjs(frontingEntry.value.startTime).format("YYYY-MM-DDTHH:mm:ss");
 
@@ -127,43 +137,50 @@
 
 		<IonContent>
 			<IonList inset>
-					<IonItem button lines="none" @click="memberSelectModal.$el.present()">
-						<MemberAvatar slot="start" :member="frontingEntry.member" />
-						<IonLabel>
-							<h2>{{ frontingEntry.member.name }}</h2>
-							<p>{{ $t("options:frontHistory.edit.member") }}</p>
-						</IonLabel>
+					<IonItem button @click="memberSelectModal.$el.present()">
+						<template v-if="frontingEntry.member">
+							<MemberAvatar slot="start" :member="frontingEntry.member" />
+							<IonLabel>
+								<h2>{{ frontingEntry.member.name }}</h2>
+								<p>{{ $t("options:frontHistory.edit.member") }}</p>
+							</IonLabel>
+						</template>
+						<template v-else>
+							<IonLabel>
+								<h2>{{ $t("options:frontHistory.edit.member") }}</h2>
+							</IonLabel>
+						</template>
 					</IonItem>
-					<IonItem lines="none">
+					<IonItem>
 						<IonInput mode="md" fill="outline" :label="$t('options:frontHistory.edit.customStatus')" labelPlacement="floating" v-model="frontingEntry.customStatus" />
 					</IonItem>
-					<IonItem button lines="none">
+					<IonItem button>
 						<IonLabel>
 							{{ $t("options:frontHistory.edit.startTime") }}
 						</IonLabel>
 						<IonDatetimeButton slot="end" datetime="startTime"></IonDatetimeButton>
 					</IonItem>
-					<IonItem lines="none" v-if="!frontingEntry.endTime">
+					<IonItem v-if="!frontingEntry.endTime">
 						<IonLabel>
 							<p>
 								{{ $t("options:frontHistory.edit.endTimeUnavailable") }}
 							</p>
 						</IonLabel>
 					</IonItem>
-					<IonItem button lines="none" v-if="frontingEntry.endTime">
+					<IonItem button v-if="frontingEntry.endTime">
 						<IonLabel>
 							{{ $t("options:frontHistory.edit.endTime") }}
 						</IonLabel>
 						<IonDatetimeButton slot="end" datetime="endTime"></IonDatetimeButton>
 					</IonItem>
-					<IonItem button lines="none">
+					<IonItem button>
 						<IonToggle v-model="frontingEntry.isMainFronter">
 							<IonLabel>
 								{{ $t("options:frontHistory.edit.isMainFronter") }}
 							</IonLabel>
 						</IonToggle>
 					</IonItem>
-					<IonItem button lines="none" @click="deleteFrontingEntry">
+					<IonItem button @click="deleteFrontingEntry">
 						<IonIcon :ios="trashIOS" :md="trashMD" slot="start" aria-hidden="true" />
 						<IonLabel>
 							<h3>{{ $t("options:frontHistory.edit.delete.title") }}</h3>

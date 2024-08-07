@@ -1,9 +1,6 @@
-import { ref, Ref, watch } from "vue";
 import { db } from "..";
 import { AppNamespace, makeUUIDv5 } from "../../util/uuid"
 import { UUIDable } from "../types"
-import { from, useObservable } from "@vueuse/rxjs";
-import { liveQuery } from "dexie";
 
 export type System = UUIDable & {
 	name: string,
@@ -14,19 +11,6 @@ export type System = UUIDable & {
 export function getSystemTable(){
 	return db.system;
 }
-
-export const system: Ref<System> = ref({
-	name: "",
-	uuid: ""
-});
-
-export async function updateSystemRef() {
-	const _system = await getSystemTable().toArray();
-	if(_system.length)
-		system.value = _system[0];
-}
-
-watch(useObservable(from(liveQuery(() => getSystemTable().toArray()))), updateSystemRef, { immediate: true });
 
 export function genid(name: string) {
 	return makeUUIDv5(AppNamespace, name);
@@ -43,14 +27,14 @@ export async function newSystem(system: Omit<System, keyof UUIDable>){
 }
 
 // Extra because there shall only be one
-export function getSystem(){
-	return {...system.value}
+export async function getSystem(){
+	return await getSystemTable().toCollection().first();
 }
 
-export function getSystemUUID(){
-	return system.value.uuid;
+export async function getSystemUUID(){
+	return (await getSystemTable().toCollection().first())?.uuid;
 }
 
-export function modifySystem(system: Partial<System>) {
-	return db.system.update(getSystemUUID(), system);
+export async function modifySystem(system: Partial<System>) {
+	return db.system.update(await getSystemUUID(), system);
 }

@@ -48,7 +48,6 @@ import "./lib/theme/style.css";
 import { SplashScreen } from "@capacitor/splash-screen";
 import { tryPersistStorage } from "./lib/util/storageManager";
 import { getSystem, newSystem } from "./lib/db/entities/system";
-import dayjs from "dayjs";
 import { appConfig } from "./lib/config";
 
 if(!window.isSecureContext){
@@ -58,7 +57,7 @@ if(!window.isSecureContext){
 } else {
 	await tryPersistStorage();
 
-	if(!getSystem()){
+	if(!await getSystem()){
 		await newSystem({
 			name: ""
 		});

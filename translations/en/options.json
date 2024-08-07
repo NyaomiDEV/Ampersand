@@ -32,6 +32,7 @@
 	},
 	"messageBoard": {
 		"header": "Message board",
+		"searchPlaceholder": "Search for messages...",
 		"edit": {
 			"header": "Edit message",
 			"member": "Edit message author",

@@ -1,10 +1,9 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonCard, IonCardHeader, IonCardContent, IonFab, IonFabButton, IonCardSubtitle, IonIcon, IonCardTitle, IonItem} from '@ionic/vue';
-	import { inject, ref, shallowRef } from 'vue';
-	import { BoardMessageComplete, boardMessages } from '../../lib/db/entities/boardMessages';
+	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonCard, IonCardHeader, IonCardContent, IonFab, IonFabButton, IonCardSubtitle, IonIcon, IonCardTitle, IonItem, IonSearchbar} from '@ionic/vue';
+	import { inject, onMounted, onUnmounted, ref, shallowRef, watch, WatchStopHandle } from 'vue';
+	import { BoardMessage, BoardMessageComplete, getBoardMessagesTable } from '../../lib/db/entities/boardMessages';
 	import BoardMessageEdit from "../../modals/BoardMessageEdit.vue";
 	import { getFronting, getMainFronter } from '../../lib/db/entities/frontingEntries';
-	import { members } from '../../lib/db/entities/members';
 	import { PartialBy } from '../../lib/db/types';
 
 	import {
@@ -20,6 +19,10 @@
 	import MemberAvatar from '../../components/member/MemberAvatar.vue';
 	import MemberLabel from '../../components/member/MemberLabel.vue';
 	import { getMarkdownFor } from '../../lib/markdown';
+	import { from, useObservable } from '@vueuse/rxjs';
+	import { liveQuery } from 'dexie';
+	import { getMembersTable } from '../../lib/db/entities/members';
+	import { getFilteredBoardMessages } from '../../lib/db/search';
 
 	const isIOS = inject<boolean>("isIOS");
 	const twelveHour = appConfig.locale.twelveHourClock;
@@ -29,17 +32,39 @@
 		body: "",
 		date: new Date()
 	}
-	const boardMessage = shallowRef<PartialBy<BoardMessageComplete, "uuid" | "member">>(emptyBoardMessage);
-
+	const boardMessage = shallowRef<PartialBy<BoardMessageComplete, "uuid" | "member">>({...emptyBoardMessage});
 	const boardMessageEditModal = ref();
+
+	const boardMessages = shallowRef<BoardMessage[]>([]);
+	const search = ref("");
+	const filteredBoardMessages = getFilteredBoardMessages(search, boardMessages);
+
+	let handle: WatchStopHandle;
+
+	onMounted(() => {
+		handle = watch([
+			useObservable(from(liveQuery(() => getBoardMessagesTable().toArray()))),
+			useObservable(from(liveQuery(() => getMembersTable().toArray()))),
+		], async () => {
+			boardMessages.value = await getBoardMessagesTable().toArray();
+		}, { immediate: true });
+	});
+
+	onUnmounted(() => {
+		handle();
+	});
 
 	async function showModal(_boardMessage?: BoardMessageComplete){
 		if(_boardMessage)
 			boardMessage.value = {..._boardMessage};
 		else {
-			boardMessage.value = {...emptyBoardMessage};
+			boardMessage.value = {
+				...emptyBoardMessage,
+				date: new Date(),
+				member: await getMainFronter() || (await getFronting())[0]
+			};
 		}
-		boardMessageEditModal.value.$el.present();
+		await boardMessageEditModal.value.$el.present();
 	}
 </script>
 
@@ -52,16 +77,20 @@
 					{{ $t("options:messageBoard.header") }}
 				</IonTitle>
 			</IonToolbar>
+			<IonToolbar>
+				<IonSearchbar :animated="true" :placeholder="$t('options:messageBoard.searchPlaceholder')"
+					showCancelButton="focus" showClearButton="focus" :spellcheck="false" v-model="search" />
+			</IonToolbar>
 		</IonHeader>
 		
 		<IonContent>
 			<IonList :inset="isIOS">
-				<IonCard button v-for="boardMessage in boardMessages.sort((a, b) => b.date.getTime() - a.date.getTime())" :key="JSON.stringify(boardMessage)" @click="showModal(boardMessage)">
+				<IonCard button v-for="boardMessage in filteredBoardMessages.sort((a, b) => b.date.getTime() - a.date.getTime())" :key="JSON.stringify(boardMessage)" @click="showModal(boardMessage)">
 					<IonCardHeader>
 						<IonCardSubtitle>{{ dayjs(boardMessage.date).format(`LL, ${twelveHour ? 'hh:mm A' : "HH:mm"}`) }}</IonCardSubtitle>
 						<IonCardTitle>{{ boardMessage.title }}</IonCardTitle>
 					</IonCardHeader>
-					<IonItem lines="none">
+					<IonItem>
 						<MemberAvatar slot="start" :member="boardMessage.member" />
 						<MemberLabel :member="boardMessage.member" />
 					</IonItem>

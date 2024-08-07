@@ -5,7 +5,8 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig({
   build: {
     target: "esnext",
-    sourcemap: 'inline'
+    sourcemap: "inline",
+    assetsDir: "assets"
   },
   plugins: [vue()],
   base: process.env.GITHUB_ACTION ? "/Ampersand/" : ""

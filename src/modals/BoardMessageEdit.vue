@@ -104,7 +104,7 @@
 
 		<IonContent>
 			<IonList inset>
-					<IonItem button lines="none" @click="memberSelectModal.$el.present()">
+					<IonItem button @click="memberSelectModal.$el.present()">
 						<template v-if="boardMessage.member">
 							<MemberAvatar slot="start" :member="boardMessage.member" />
 							<IonLabel>
@@ -118,15 +118,15 @@
 							</IonLabel>
 						</template>
 					</IonItem>
-					<IonItem lines="none">
+					<IonItem>
 						<IonInput mode="md" fill="outline" :label="$t('options:messageBoard.edit.title')" labelPlacement="floating" v-model="boardMessage.title" />
 					</IonItem>
 
-					<IonItem lines="none">
+					<IonItem>
 						<IonTextarea mode="md" fill="outline" auto-grow :label="$t('options:messageBoard.edit.body')" labelPlacement="floating" v-model="boardMessage.body" />
 					</IonItem>
 
-					<IonItem button lines="none" @click="deleteBoardMessage">
+					<IonItem button @click="deleteBoardMessage">
 						<IonIcon :ios="trashIOS" :md="trashMD" slot="start" aria-hidden="true" />
 						<IonLabel>
 							<h3>{{ $t("options:messageBoard.edit.delete.title") }}</h3>

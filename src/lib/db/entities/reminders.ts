@@ -36,12 +36,12 @@ export function getRemindersTable() {
 	return db.reminders;
 }
 
-function genid(name: string) {
-	return makeUUIDv5(getSystemUUID(), `reminders\0${name}`);
+async function genid(name: string) {
+	return makeUUIDv5((await getSystemUUID())!, `reminders\0${name}`);
 }
 
 export async function newReminder(reminder: Omit<Reminder, keyof UUIDable>) {
-	const uuid = genid(reminder.name);
+	const uuid = await genid(reminder.name);
 	return await getRemindersTable().add({
 		...reminder,
 		uuid

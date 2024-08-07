@@ -1,20 +1,23 @@
 <script setup lang="ts">
-	import { IonContent, IonSearchbar, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonSegment, IonSegmentButton, IonLabel, IonFab, IonFabButton, IonIcon, IonItem} from '@ionic/vue';
-	import { inject, Ref, ref } from 'vue';
+	import { IonContent, IonSearchbar, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonSegment, IonSegmentButton, IonLabel, IonFab, IonFabButton, IonIcon, IonItem } from '@ionic/vue';
+	import { inject, onMounted, onUnmounted, Ref, ref, shallowRef, watch, WatchStopHandle } from 'vue';
 	import { addOutline as addIOS } from "ionicons/icons";
 	import addMD from "@material-design-icons/svg/outlined/add.svg";
 	import TagEdit from "../../modals/TagEdit.vue";
-	import { getFilteredTags } from '../../lib/db/liveQueries';
-	import { Tag } from '../../lib/db/entities/tags';
+	import { getFilteredTags } from '../../lib/db/search';
+	import { getTagsTable, Tag } from '../../lib/db/entities/tags';
 	import { PartialBy } from '../../lib/db/types';
 	import TagColor from '../../components/tag/TagColor.vue';
 	import TagLabel from '../../components/tag/TagLabel.vue';
+	import { from, useObservable } from '@vueuse/rxjs';
+	import { liveQuery } from 'dexie';
 
 	const isIOS = inject<boolean>("isIOS");
 
 	const type = ref("member");
 	const search = ref("");
-	const tags = getFilteredTags(search, type);
+	const tags = shallowRef<Tag[]>([]);
+	const filteredTags = getFilteredTags(search, type, tags);
 
 	const tagEditModal = ref();
 
@@ -24,6 +27,23 @@
 	};
 
 	const tag: Ref<PartialBy<Tag, "uuid">> = ref({...emptyTag});
+
+	const watchStopHandlers: WatchStopHandle[] = [];
+
+	onMounted(() => {
+		watchStopHandlers.push(
+			watch(
+				useObservable(from(liveQuery(() => getTagsTable().toArray()))),
+				async () => tags.value = await getTagsTable().toArray(),
+				{ immediate: true }
+			)
+		);
+	});
+
+	onUnmounted(() => {
+		watchStopHandlers.forEach(x => x());
+		watchStopHandlers.length = 0;
+	});
 
 	async function showModal(clickedTag?: Tag){
 		if(clickedTag)
@@ -67,7 +87,7 @@
 				</IonSegmentButton>
 			</IonSegment>
 			<IonList :inset="isIOS">
-				<IonItem button v-for="tag in tags" :key="JSON.stringify(tag)" @click="showModal(tag)">
+				<IonItem button v-for="tag in filteredTags" :key="JSON.stringify(tag)" @click="showModal(tag)">
 					<TagColor slot="start" :tag />
 					<TagLabel :tag />
 				</IonItem>
