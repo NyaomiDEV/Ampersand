@@ -125,6 +125,10 @@
 	function updateSelectedMember(members: Member[]){
 		frontingEntry.value.member = members[0];
 	}
+
+	function removeFromFront() {
+		frontingEntry.value.endTime = new Date();
+	}
 </script>
 
 <template>
@@ -160,11 +164,10 @@
 						</IonLabel>
 						<IonDatetimeButton slot="end" datetime="startTime"></IonDatetimeButton>
 					</IonItem>
-					<IonItem v-if="!frontingEntry.endTime">
+					<IonItem button v-if="!frontingEntry.endTime" @click="removeFromFront">
 						<IonLabel>
-							<p>
-								{{ $t("options:frontHistory.edit.endTimeUnavailable") }}
-							</p>
+							<h2>{{ $t("options:frontHistory.edit.removeFromFront.title") }}</h2>
+							<p>{{ $t("options:frontHistory.edit.removeFromFront.desc") }}</p>
 						</IonLabel>
 					</IonItem>
 					<IonItem button v-if="frontingEntry.endTime">
@@ -190,7 +193,7 @@
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton @click="save">
+				<IonFabButton @click="save" v-if="frontingEntry.member">
 					<IonIcon :ios="saveIOS" :md="saveMD" />
 				</IonFabButton>
 			</IonFab>

@@ -22,7 +22,10 @@
 			"customStatus": "Custom status",
 			"startTime": "Start time",
 			"endTime": "End time",
-			"endTimeUnavailable": "To edit the end time, first remove this member from front",
+			"removeFromFront": {
+				"title": "Remove from front",
+				"desc": "You won't be able to undo this action after saving!"
+			},
 			"isMainFronter": "Main fronter?",
 			"delete": {
 				"title": "Delete fronting entry",

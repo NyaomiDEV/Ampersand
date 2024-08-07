@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonLabel, IonToolbar, IonBackButton, IonItem, IonItemDivider, IonDatetime, IonButtons, IonIcon, IonButton, IonSearchbar } from '@ionic/vue';
+	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonLabel, IonToolbar, IonBackButton, IonItem, IonItemDivider, IonDatetime, IonButtons, IonIcon, IonButton, IonSearchbar, IonFabButton, IonFab } from '@ionic/vue';
 	import { inject, onMounted, onUnmounted, ref, ShallowRef, shallowRef, watch, WatchStopHandle } from 'vue';
 	import FrontingEntryAvatar from "../../components/frontingEntry/FrontingEntryAvatar.vue";
 	import FrontingEntryLabel from "../../components/frontingEntry/FrontingEntryLabel.vue";
@@ -12,11 +12,14 @@
 
 	import {
 		calendarOutline as calendarIOS,
-		listOutline as listIOS
+		listOutline as listIOS,
+		addOutline as addIOS
 	} from "ionicons/icons";
 
 	import calendarMD from "@material-design-icons/svg/outlined/calendar_month.svg";
 	import listMD from "@material-design-icons/svg/outlined/list.svg";
+	import addMD from "@material-design-icons/svg/outlined/add.svg";
+
 	import { appConfig } from '../../lib/config';
 	import { from, useObservable } from '@vueuse/rxjs';
 	import { liveQuery } from 'dexie';
@@ -58,7 +61,7 @@
 		handle();
 	});
 
-	async function showModal(clickedFrontingEntry: FrontingEntryComplete){
+	async function showModal(clickedFrontingEntry?: FrontingEntryComplete){
 		if(clickedFrontingEntry)
 			frontingEntry.value = {...clickedFrontingEntry};
 		else {
@@ -176,6 +179,12 @@
 					</IonItem>
 				</template>
 			</IonList>
+
+			<IonFab slot="fixed" vertical="bottom" horizontal="end">
+				<IonFabButton @click="showModal()">
+					<IonIcon :ios="addIOS" :md="addMD" />
+				</IonFabButton>
+			</IonFab>
 		</IonContent>
 
 		<FrontingEntryEdit :frontingEntry ref="frontingEntryModal" />
