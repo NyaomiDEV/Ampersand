@@ -10,7 +10,7 @@ May 4, 2024
 
 ## To Do
 
-Please refer to [this issue](https://github.com/NyaomiDEV/Ampersand/issues/1).
+Please refer to the issue section.
 
 ## What is Ampersand?
 
