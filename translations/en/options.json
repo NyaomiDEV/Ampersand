@@ -102,6 +102,13 @@
 			"journal": "Journal",
 			"dashboard": "Dashboard",
 			"chat": "Chats"
+		},
+		"defaultFilterQueries": {
+			"members": "Default search query for members",
+			"journal": "Default search query for journal",
+			"tags": "Default search query for tags",
+			"frontingHistory": "Default search query for the fronting history",
+			"messageBoard": "Default search query for the message board"
 		}
 	},
 	"security": {

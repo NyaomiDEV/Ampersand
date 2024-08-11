@@ -5,6 +5,7 @@ const tabbedRoutes: Array<RouteRecordRaw> = [
 		path: '/members',
 		name: 'Members',
 		component: () => import("../views/tabbed/Members.vue"),
+		props: route => ({ q: route.query.q })
 	},
 	{
 		path: '/journal',

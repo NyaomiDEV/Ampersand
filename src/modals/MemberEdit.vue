@@ -183,7 +183,7 @@
 			</div>
 
 			<IonList class="member-actions" v-if="!isEditing">
-				<IonItem button detail>
+				<IonItem button detail :router-link="`/options/messageBoard?q=@member:${member.uuid}`" @click="modalController.dismiss()">
 					<IonIcon :ios="newspaperIOS" :md="newspaperMD" slot="start" aria-hidden="true" />
 					<IonLabel>{{ $t("members:edit.showBoardEntries") }}</IonLabel>
 				</IonItem>
@@ -241,6 +241,12 @@
 						<IonLabel>
 							<h3>{{ $t("members:edit.delete.title") }}</h3>
 							<p>{{ $t("members:edit.delete.desc") }}</p>
+						</IonLabel>
+					</IonItem>
+
+					<IonItem v-if="member.uuid">
+						<IonLabel>
+							<p>{{ $t("members:edit.memberID", { memberID: member.uuid }) }}</p>
 						</IonLabel>
 					</IonItem>
 			</IonList>

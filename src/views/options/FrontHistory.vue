@@ -26,7 +26,12 @@
 	import { getMembersTable } from '../../lib/db/entities/members';
 	import { PartialBy } from '../../lib/db/types';
 
+	const props = defineProps<{
+		q?: string
+	}>();
+
 	const isIOS = inject<boolean>("isIOS");
+
 	const frontingEntryModal = ref();
 	const emptyFrontingEntry: PartialBy<FrontingEntryComplete, "uuid" | "member"> = {
 		isMainFronter: false,
@@ -41,7 +46,7 @@
 	const isCalendarView = ref(false);
 	const date = ref(dayjs().toISOString());
 
-	const search = ref("");
+	const search = ref(props.q || "");
 	const frontingEntries: ShallowRef<FrontingEntry[]> = shallowRef([]);
 	const filteredFrontingEntries = getFilteredFrontingEntries(search, frontingEntries);
 

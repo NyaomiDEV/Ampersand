@@ -6,6 +6,7 @@ import { FrontingEntry, FrontingEntryComplete, toFrontingEntryComplete } from ".
 import { parseBoardMessageFilterQuery, parseFrontingHistoryFilterQuery, parseMemberFilterQuery } from "../util/filterQuery";
 import dayjs from "dayjs";
 import { BoardMessage, BoardMessageComplete, toBoardMessageComplete } from "./entities/boardMessages";
+import { appConfig } from "../config";
 
 export function getFilteredMembers(search: Ref<string>, members: ShallowRef<Member[]>){
 	const _members = shallowRef<Member[]>([]);
@@ -14,7 +15,13 @@ export function getFilteredMembers(search: Ref<string>, members: ShallowRef<Memb
 		search,
 		members,
 	], async () => {
-		const parsed = await parseMemberFilterQuery(search.value);
+		let query: string;
+		if(!search.value.length)
+			query = appConfig.defaultFilterQueries.members || "";
+		else
+			query = search.value;
+
+		const parsed = await parseMemberFilterQuery(query);
 
 		_members.value = members.value.filter(x => {
 
@@ -63,10 +70,18 @@ export function getFilteredTags(search: Ref<string>, type: Ref<string>, tags: Sh
 		type,
 		tags
 	], async () => {
-		if(!search.value.length)
+		let query: string;
+
+		if (!search.value.length)
+			query = appConfig.defaultFilterQueries.tags || "";
+		else
+			query = search.value;
+
+
+		if(!query.length)
 			_tags.value = tags.value.filter(x => x.type === type.value);
 		else
-			_tags.value = tags.value.filter(x => x.name.toLowerCase().startsWith(search.value.toLowerCase()) && x.type === type.value);
+			_tags.value = tags.value.filter(x => x.name.toLowerCase().startsWith(query.toLowerCase()) && x.type === type.value);
 	}, { immediate: true });
 
 	return _tags;
@@ -80,12 +95,18 @@ export function getFilteredFrontingEntries(search: Ref<string>, frontingEntries:
 		frontingEntries
 	], async () => {
 		const filtered: FrontingEntryComplete[] = [];
+		let query: string;
 
-		if(!search.value.length){
+		if(!search.value.length)
+			query = appConfig.defaultFilterQueries.frontingHistory || "";
+		else
+			query = search.value;
+
+		if(!query.length){
 			for (const x of frontingEntries.value)
 				filtered.push(await toFrontingEntryComplete(x))
 		} else {
-			const parsed = parseFrontingHistoryFilterQuery(search.value);
+			const parsed = parseFrontingHistoryFilterQuery(query);
 
 			for (const x of frontingEntries.value) {
 				const complete = await toFrontingEntryComplete(x);
@@ -164,11 +185,19 @@ export function getFilteredBoardMessages(search: Ref<string>, boardMessages: Sha
 	], async () => {
 		const filtered: BoardMessageComplete[] = [];
 
-		if (!search.value.length) {
+		let query: string;
+
+		if (!search.value.length)
+			query = appConfig.defaultFilterQueries.messageBoard || "";
+		else
+			query = search.value;
+
+
+		if (!query.length) {
 			for (const x of boardMessages.value)
 				filtered.push(await toBoardMessageComplete(x))
 		} else {
-			const parsed = parseBoardMessageFilterQuery(search.value);
+			const parsed = parseBoardMessageFilterQuery(query);
 
 			for (const x of boardMessages.value) {
 				const complete = await toBoardMessageComplete(x);

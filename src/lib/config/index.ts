@@ -11,7 +11,9 @@ const defaultAppConfig: AppConfig = {
 		twelveHourClock: false,
 	},
 	view: "members",
-	defaultFilterQueries: {}
+	defaultFilterQueries: {
+		members: "@archived:no"
+	}
 };
 
 const defaultAccessibilityConfig: AccessibilityConfig = {

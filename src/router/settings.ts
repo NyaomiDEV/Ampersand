@@ -15,16 +15,19 @@ const settings: Array<RouteRecordRaw> = [
 		path: '/options/frontHistory',
 		name: 'Front History',
 		component: () => import("../views/options/FrontHistory.vue"),
+		props: route => ({ q: route.query.q })
 	},
 	{
 		path: '/options/messageBoard',
 		name: 'Message Board',
 		component: () => import("../views/options/MessageBoard.vue"),
+		props: route => ({ q: route.query.q })
 	},
 	{
 		path: '/options/tagManagement',
 		name: 'Tag Management',
 		component: () => import("../views/options/TagManagement.vue"),
+		props: route => ({ q: route.query.q })
 	},
 	{
 		path: '/options/reminders',

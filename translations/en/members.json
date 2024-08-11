@@ -27,6 +27,7 @@
 		"delete": {
 			"title": "Delete member",
 			"desc": "You won't be able to undo this action!"
-		}
+		},
+		"memberID": "Member ID: {{memberID}}"
 	}
 }

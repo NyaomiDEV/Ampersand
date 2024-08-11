@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonList, IonPage, IonLabel, IonListHeader, IonTitle, IonToolbar, IonBackButton, IonItem, IonToggle, IonSegment, IonSelect, IonSelectOption } from '@ionic/vue';
+	import { IonContent, IonHeader, IonList, IonPage, IonLabel, IonListHeader, IonTitle, IonToolbar, IonBackButton, IonItem, IonToggle, IonSegment, IonSelect, IonSelectOption, IonInput } from '@ionic/vue';
 	import { inject, ref, watch } from 'vue';
 
 	import NotDoneYet from "../../components/NotDoneYet.vue";
@@ -91,8 +91,34 @@
 						</IonSelectOption>
 					</IonSelect>
 				</IonItem>
+
+				<IonItem>
+					<IonInput fill="outline" labelPlacement="floating" :label="$t('options:appSettings.defaultFilterQueries.members')" v-model="appConfig.defaultFilterQueries.members" />
+				</IonItem>
+				
+				<IonItem>
+					<IonInput fill="outline" labelPlacement="floating" :label="$t('options:appSettings.defaultFilterQueries.journal')" v-model="appConfig.defaultFilterQueries.journal" />
+				</IonItem>
+
+				<IonItem>
+					<IonInput fill="outline" labelPlacement="floating" :label="$t('options:appSettings.defaultFilterQueries.tags')" v-model="appConfig.defaultFilterQueries.tags" />
+				</IonItem>
+
+				<IonItem>
+					<IonInput fill="outline" labelPlacement="floating" :label="$t('options:appSettings.defaultFilterQueries.frontingHistory')" v-model="appConfig.defaultFilterQueries.frontingHistory" />
+				</IonItem>
+
+				<IonItem>
+					<IonInput fill="outline" labelPlacement="floating" :label="$t('options:appSettings.defaultFilterQueries.messageBoard')" v-model="appConfig.defaultFilterQueries.messageBoard" />
+				</IonItem>
 			</IonList>
 
 		</IonContent>
 	</IonPage>
 </template>
+
+<style scoped>
+	ion-input {
+		margin: 16px 0;
+	}
+</style>

@@ -14,6 +14,8 @@
 		IonItemSliding,
 		IonItemOptions,
 		IonItemOption,
+		onIonViewWillEnter,
+		onIonViewWillLeave,
 	} from '@ionic/vue';
 	import { inject, onMounted, onUnmounted, Ref, ref, shallowReactive, shallowRef, watch, WatchStopHandle } from 'vue';
 	import { getFilteredMembers } from '../../lib/db/search';
@@ -48,9 +50,13 @@
 	import { from, useObservable } from '@vueuse/rxjs';
 	import { liveQuery } from 'dexie';
 
+	const props = defineProps<{
+		q?: string
+	}>();
+
 	const isIOS = inject<boolean>("isIOS");
 
-	const search = ref("");
+	const search = ref(props.q || "");
 	const members = shallowRef<Member[]>([]);
 
 	const filteredMembers = getFilteredMembers(search, members);
@@ -70,7 +76,9 @@
 
 	const watchStopHandlers: WatchStopHandle[] = [];
 
-	onMounted(() => {
+	onIonViewWillEnter(() => {
+		search.value = props.q || "";
+
 		watchStopHandlers.push(
 			watch(
 				useObservable(from(liveQuery(() => getMembersTable().toArray()))),
@@ -91,7 +99,7 @@
 		);
 	});
 
-	onUnmounted(() => {
+	onIonViewWillLeave(() => {
 		watchStopHandlers.forEach(x => x());
 		watchStopHandlers.length = 0;
 	});

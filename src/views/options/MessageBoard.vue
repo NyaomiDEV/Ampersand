@@ -24,6 +24,10 @@
 	import { getMembersTable } from '../../lib/db/entities/members';
 	import { getFilteredBoardMessages } from '../../lib/db/search';
 
+	const props = defineProps<{
+		q?: string
+	}>();
+
 	const isIOS = inject<boolean>("isIOS");
 	const twelveHour = appConfig.locale.twelveHourClock;
 	
@@ -36,7 +40,7 @@
 	const boardMessageEditModal = ref();
 
 	const boardMessages = shallowRef<BoardMessage[]>([]);
-	const search = ref("");
+	const search = ref(props.q || "");
 	const filteredBoardMessages = getFilteredBoardMessages(search, boardMessages);
 
 	let handle: WatchStopHandle;
