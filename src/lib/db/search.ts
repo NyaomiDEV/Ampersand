@@ -25,6 +25,9 @@ export function getFilteredMembers(search: Ref<string>, members: ShallowRef<Memb
 
 		_members.value = members.value.filter(x => {
 
+			if(parsed.all)
+				return true;
+
 			if (!x.name.toLowerCase().startsWith(parsed.query.toLowerCase()))
 				return false;
 
@@ -110,6 +113,11 @@ export function getFilteredFrontingEntries(search: Ref<string>, frontingEntries:
 
 			for (const x of frontingEntries.value) {
 				const complete = await toFrontingEntryComplete(x);
+
+				if (parsed.all){
+					filtered.push(complete);
+					continue;
+				}
 
 				if (!complete.member.name.toLowerCase().startsWith(parsed.query.toLowerCase()))
 					continue;
@@ -201,6 +209,11 @@ export function getFilteredBoardMessages(search: Ref<string>, boardMessages: Sha
 
 			for (const x of boardMessages.value) {
 				const complete = await toBoardMessageComplete(x);
+
+				if (parsed.all) {
+					filtered.push(complete);
+					continue;
+				}
 
 				if (
 					![

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonCard, IonCardHeader, IonCardContent, IonFab, IonFabButton, IonCardSubtitle, IonIcon, IonCardTitle, IonItem, IonSearchbar} from '@ionic/vue';
+	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonCard, IonCardHeader, IonCardContent, IonFab, IonFabButton, IonCardSubtitle, IonIcon, IonCardTitle, IonItem, IonSearchbar, IonLabel, IonItemDivider, IonButtons, IonButton, IonDatetime} from '@ionic/vue';
 	import { inject, onMounted, onUnmounted, ref, shallowRef, watch, WatchStopHandle } from 'vue';
 	import { BoardMessage, BoardMessageComplete, getBoardMessagesTable } from '../../lib/db/entities/boardMessages';
 	import BoardMessageEdit from "../../modals/BoardMessageEdit.vue";
@@ -7,17 +7,21 @@
 	import { PartialBy } from '../../lib/db/types';
 
 	import {
+		calendarOutline as calendarIOS,
+		listOutline as listIOS,
 		addOutline as addIOS
 	} from "ionicons/icons";
 
+	import calendarMD from "@material-design-icons/svg/outlined/calendar_month.svg";
+	import listMD from "@material-design-icons/svg/outlined/list.svg";
 	import addMD from "@material-design-icons/svg/outlined/add.svg";
+
 	import dayjs from 'dayjs';
 	import LocalizedFormat from "dayjs/plugin/localizedFormat";
 	dayjs.extend(LocalizedFormat);
 
 	import { appConfig } from '../../lib/config';
 	import MemberAvatar from '../../components/member/MemberAvatar.vue';
-	import MemberLabel from '../../components/member/MemberLabel.vue';
 	import { getMarkdownFor } from '../../lib/markdown';
 	import { from, useObservable } from '@vueuse/rxjs';
 	import { liveQuery } from 'dexie';
@@ -43,6 +47,11 @@
 	const search = ref(props.q || "");
 	const filteredBoardMessages = getFilteredBoardMessages(search, boardMessages);
 
+	const firstWeekOfDayIsSunday = appConfig.locale.firstWeekOfDayIsSunday;
+
+	const isCalendarView = ref(false);
+	const date = ref(dayjs().toISOString());
+
 	let handle: WatchStopHandle;
 
 	onMounted(() => {
@@ -57,6 +66,43 @@
 	onUnmounted(() => {
 		handle();
 	});
+
+	function getGrouped(entries: BoardMessageComplete[]){
+		const map = new Map<string, BoardMessageComplete[]>();
+
+		for(const entry of entries.sort((a, b) => b.date.getTime() - a.date.getTime())){
+			const key = dayjs(entry.date).startOf('day').toISOString();
+			
+			const collection = map.get(key);
+			if(!collection)
+				map.set(key, [entry])
+			else
+				collection.push(entry)
+		}
+
+		return [...map.entries()].sort((a, b) => dayjs(b[0]).valueOf() - dayjs(a[0]).valueOf());
+	}
+
+	function getAtDate(_date: string){
+		const date = dayjs(_date).startOf("day");
+		const map = new Map<string, BoardMessageComplete[]>();
+		const key = date.toISOString();
+
+		map.set(key, filteredBoardMessages.value?.filter(x => dayjs(x.date).startOf('day').valueOf() === date.valueOf()) || []);
+
+		return [...map.entries()].sort((a, b) => dayjs(b[0]).valueOf() - dayjs(a[0]).valueOf());
+	}
+
+	function highlightInCalendar(_date: string){
+		const date = dayjs(_date).startOf("day");
+		if(filteredBoardMessages.value?.filter(x => dayjs(x.date).startOf('day').valueOf() === date.valueOf()).length > 0){
+			return {
+				backgroundColor: "var(--ion-background-color-step-200)"
+			};
+		}
+
+		return undefined;
+	}
 
 	async function showModal(_boardMessage?: BoardMessageComplete){
 		if(_boardMessage)
@@ -80,28 +126,63 @@
 				<IonTitle>
 					{{ $t("options:messageBoard.header") }}
 				</IonTitle>
+				<IonButtons slot="secondary">
+					<IonButton @click="isCalendarView = !isCalendarView">
+						<IonIcon slot="icon-only" :ios="isCalendarView ? listIOS : calendarIOS"
+							:md="isCalendarView ? listMD : calendarMD" />
+					</IonButton>
+				</IonButtons>
 			</IonToolbar>
 			<IonToolbar>
 				<IonSearchbar :animated="true" :placeholder="$t('options:messageBoard.searchPlaceholder')"
 					showCancelButton="focus" showClearButton="focus" :spellcheck="false" v-model="search" />
 			</IonToolbar>
+			<div class="container" v-if="isCalendarView">
+				<IonDatetime presentation="date" :firstDayOfWeek="firstWeekOfDayIsSunday ? 0 : 1" :highlightedDates="highlightInCalendar" v-model="date" />
+			</div>
 		</IonHeader>
 		
 		<IonContent>
-			<IonList :inset="isIOS">
-				<IonCard button v-for="boardMessage in filteredBoardMessages.sort((a, b) => b.date.getTime() - a.date.getTime())" :key="JSON.stringify(boardMessage)" @click="showModal(boardMessage)">
-					<IonCardHeader>
-						<IonCardSubtitle>{{ dayjs(boardMessage.date).format(`LL, ${twelveHour ? 'hh:mm A' : "HH:mm"}`) }}</IonCardSubtitle>
-						<IonCardTitle>{{ boardMessage.title }}</IonCardTitle>
-					</IonCardHeader>
-					<IonItem>
-						<MemberAvatar slot="start" :member="boardMessage.member" />
-						<MemberLabel :member="boardMessage.member" />
-					</IonItem>
-					<IonCardContent>
-						<span v-html="getMarkdownFor(boardMessage.body)"></span>
-					</IonCardContent>
-				</IonCard>
+			<IonList :inset="isIOS" v-if="isCalendarView">
+				<template v-for="tuple in getAtDate(date)">
+					<IonItemDivider sticky>
+						<IonLabel>{{ dayjs(tuple[0]).format("LL") }}</IonLabel>
+					</IonItemDivider>
+					<IonCard button v-for="boardMessage in tuple[1]" :key="JSON.stringify(boardMessage)" @click="showModal(boardMessage)">
+						<IonItem>
+							<MemberAvatar slot="start" :member="boardMessage.member" />
+							<IonLabel>
+								<p style="float:right">{{ dayjs(boardMessage.date).format(`LL, ${twelveHour ? 'hh:mm A' : "HH:mm"}`) }}</p>
+								<h3 style="color:var(--ion-text-color-step-400)">{{ boardMessage.member.name }}</h3>
+								<h1>{{ boardMessage.title }}</h1>
+								<h2 style="margin-top: .75rem">
+									<p v-html="getMarkdownFor(boardMessage.body)"></p>
+								</h2>
+							</IonLabel>
+						</IonItem>
+					</IonCard>
+				</template>
+			</IonList>
+
+			<IonList :inset="isIOS" v-if="!isCalendarView">
+				<template v-for="tuple in getGrouped(filteredBoardMessages || [])">
+					<IonItemDivider sticky>
+						<IonLabel>{{ dayjs(tuple[0]).format("LL") }}</IonLabel>
+					</IonItemDivider>
+					<IonCard button v-for="boardMessage in tuple[1]" :key="JSON.stringify(boardMessage)" @click="showModal(boardMessage)">
+						<IonItem>
+							<MemberAvatar slot="start" :member="boardMessage.member" />
+							<IonLabel>
+								<p style="float:right">{{ dayjs(boardMessage.date).format(`LL, ${twelveHour ? 'hh:mm A' : "HH:mm"}`) }}</p>
+								<h3 style="color:var(--ion-text-color-step-400)">{{ boardMessage.member.name }}</h3>
+								<h1>{{ boardMessage.title }}</h1>
+								<h2 style="margin-top: .75rem">
+									<p v-html="getMarkdownFor(boardMessage.body)"></p>
+								</h2>
+							</IonLabel>
+						</IonItem>
+					</IonCard>
+				</template>
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
@@ -119,6 +200,16 @@
 
 	ion-card ion-item {
 		--background: transparent;
+	}
+
+	.container {
+		background-color: var(--ion-toolbar-background);
+		z-index: 1;
+	}
+
+	ion-datetime {
+		margin: auto;
+		--background: var(--ion-toolbar-background);
 	}
 
 </style>

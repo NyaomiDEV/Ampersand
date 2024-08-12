@@ -14,7 +14,7 @@
 	import JournalMD from '@material-design-icons/svg/outlined/book.svg';
 	import HomeMD from '@material-design-icons/svg/outlined/home.svg';
 	import ChatMD from '@material-design-icons/svg/outlined/chat.svg';
-	import OptionsMD from '@material-design-icons/svg/outlined/menu.svg'
+	import OptionsMD from '@material-design-icons/svg/outlined/menu.svg';
 </script>
 
 <template>

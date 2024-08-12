@@ -108,6 +108,17 @@
 		});
 	}
 
+	function highlightInCalendar(_date: string){
+		const date = dayjs(_date).startOf("day");
+		if(filteredFrontingEntries.value?.filter(x => dayjs(x.startTime).startOf('day').valueOf() === date.valueOf()).length > 0){
+			return {
+				backgroundColor: "var(--ion-background-color-step-200)"
+			};
+		}
+
+		return undefined;
+	}
+
 	function getAtDate(_date: string){
 		const today = dayjs().startOf("day");
 		const date = dayjs(_date).startOf("day");
@@ -148,7 +159,7 @@
 					showCancelButton="focus" showClearButton="focus" :spellcheck="false" v-model="search" />
 			</IonToolbar>
 			<div class="container" v-if="isCalendarView">
-				<IonDatetime presentation="date" :firstDayOfWeek="firstWeekOfDayIsSunday ? 0 : 1" v-model="date" />
+				<IonDatetime presentation="date" :firstDayOfWeek="firstWeekOfDayIsSunday ? 0 : 1" :highlightedDates="highlightInCalendar" v-model="date" />
 			</div>
 		</IonHeader>
 

@@ -5,6 +5,7 @@ import { UUID } from "../db/types";
 export type MemberFilterQuery = {
 	query: string,
 	tags: string[],
+	all?: boolean,
 	isArchived?: boolean,
 	isCustomFront?: boolean,
 	pronouns?: string,
@@ -26,6 +27,25 @@ export async function parseMemberFilterQuery(search: string): Promise<MemberFilt
 			case "@":
 				const tokenParts = token.slice(1).split(":");
 				switch(tokenParts[0].toLowerCase()){
+					case "all":
+						if (tokenParts[1]) {
+							switch (tokenParts[1].toLowerCase()) {
+								case "yes":
+								case "true":
+									result.all = true;
+									break;
+								case "no":
+								case "false":
+									result.all = false;
+									break;
+								default:
+									queryTokens.push(token);
+									break;
+							}
+						} else
+							result.all = true;
+
+						break;
 					case "archived":
 						if(tokenParts[1]){
 							switch (tokenParts[1].toLowerCase()) {
@@ -96,6 +116,7 @@ export async function parseMemberFilterQuery(search: string): Promise<MemberFilt
 
 export type FrontingHistoryFilterQuery = {
 	query: string,
+	all?: boolean,
 	startDateString?: string,
 	endDateString?: string,
 	startDay?: number,
@@ -122,6 +143,25 @@ export function parseFrontingHistoryFilterQuery(search: string) {
 			case "@":
 				const tokenParts = token.slice(1).split(":");
 				switch (tokenParts[0].toLowerCase()) {
+					case "all":
+						if (tokenParts[1]) {
+							switch (tokenParts[1].toLowerCase()) {
+								case "yes":
+								case "true":
+									result.all = true;
+									break;
+								case "no":
+								case "false":
+									result.all = false;
+									break;
+								default:
+									queryTokens.push(token);
+									break;
+							}
+						} else
+							result.all = true;
+
+						break;
 					case "current":
 						result.currentlyFronting = true;
 						break;
@@ -169,6 +209,7 @@ export function parseFrontingHistoryFilterQuery(search: string) {
 
 export type BoardMessageFilterQuery = {
 	query: string,
+	all?: boolean,
 	dateString?: string,
 	day?: number,
 	month?: number,
@@ -190,6 +231,25 @@ export function parseBoardMessageFilterQuery(search: string) {
 			case "@":
 				const tokenParts = token.slice(1).split(":");
 				switch (tokenParts[0].toLowerCase()) {
+					case "all":
+						if (tokenParts[1]) {
+							switch (tokenParts[1].toLowerCase()) {
+								case "yes":
+								case "true":
+									result.all = true;
+									break;
+								case "no":
+								case "false":
+									result.all = false;
+									break;
+								default:
+									queryTokens.push(token);
+									break;
+							}
+						} else
+							result.all = true;
+
+						break;
 					case "date":
 						result.dateString = tokenParts[1];
 						break;

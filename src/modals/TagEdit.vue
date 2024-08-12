@@ -14,23 +14,31 @@
 		modalController,
 		IonModal,
 		IonSegment,
-		IonTextarea
+		IonTextarea,
+		useIonRouter
 	} from "@ionic/vue";
 	import MD3SegmentButton from "../components/MD3SegmentButton.vue";
 	import Color from "../components/Color.vue";
 
 	import {
 		saveOutline as saveIOS,
-		trashBinOutline as trashIOS
+		trashBinOutline as trashIOS,
+		personOutline as personIOS,
+		bookOutline as journalIOS
 	} from "ionicons/icons";
 
 	import saveMD from "@material-design-icons/svg/outlined/save.svg";
 	import trashMD from "@material-design-icons/svg/outlined/delete.svg";
+	import personMD from "@material-design-icons/svg/outlined/person.svg";
+	import journalMD from "@material-design-icons/svg/outlined/book.svg";
 
 	import { Tag, getTagsTable, newTag, removeTag } from '../lib/db/entities/tags';
-	import { ref, shallowRef, toRaw } from "vue";
+	import { ref, shallowRef } from "vue";
 	import { addMaterialColors, unsetMaterialColors } from "../lib/theme";
 	import { PartialBy } from "../lib/db/types";
+	import { globalEvents, SearchEvent } from "../lib/globalEvents";
+	import { getMembersTable } from "../lib/db/entities/members";
+	import { getJournalPostsTable } from "../lib/db/entities/journalPosts";
 
 	const props = defineProps<{
 		tag: PartialBy<Tag, "uuid">
@@ -39,6 +47,25 @@
 	const tag = shallowRef(props.tag);
 
 	const self = ref();
+
+	const router = useIonRouter();
+
+	const count = ref(0);
+
+	async function goBackAndSearchInMembers(search: string){
+		router.navigate("/members", "back", "push");
+		await modalController.dismiss();
+		globalEvents.dispatchEvent(new CustomEvent("members:search", { detail: {search} }) as SearchEvent)
+	}
+
+	async function goBackAndSearchInJournal(search: string){
+		// not yet sorry
+		return;
+
+		router.navigate("/journal", "back", "push");
+		await modalController.dismiss();
+		globalEvents.dispatchEvent(new CustomEvent("journal:search", { detail: {search} }))
+	}
 
 	async function save(){
 		const uuid = tag.value.uuid;
@@ -69,6 +96,13 @@
 
 	function present() {
 		tag.value = props.tag;
+
+		if(tag.value.uuid){
+			if(tag.value.type === "member")
+				getMembersTable().filter(x => x.tags.includes(tag.value.uuid!)).count().then(c => count.value = c);
+			else //journal
+				getJournalPostsTable().filter(x => x.tags.includes(tag.value.uuid!)).count().then(c => count.value = c);
+		}
 
 		if(tag.value.color && tag.value.color !== "#000000"){
 			addMaterialColors(tag.value.color, self.value.$el);
@@ -120,6 +154,22 @@
 								</MD3SegmentButton>
 							</IonSegment>
 							<p class="centered-text">{{ $t("options:tagManagement.edit.type.desc") }}</p>
+						</IonLabel>
+					</IonItem>
+
+					<IonItem button v-if="tag.uuid && tag.type === 'member'" @click="goBackAndSearchInMembers(`#${tag.name.toLowerCase().replace(/\s/g, '')}`)">
+						<IonIcon :ios="personIOS" :md="personMD" slot="start" aria-hidden="true" />
+						<IonLabel>
+							<h3>{{ $t("options:tagManagement.edit.actions.showMembers.title") }}</h3>
+							<p>{{ $t("options:tagManagement.edit.actions.showMembers.desc", { count }) }}</p>
+						</IonLabel>
+					</IonItem>
+
+					<IonItem button v-if="tag.uuid && tag.type === 'journal'" @click="goBackAndSearchInJournal(`#${tag.name.toLowerCase().replace(/\s/g, '')}`)">
+						<IonIcon :ios="journalIOS" :md="journalMD" slot="start" aria-hidden="true" />
+						<IonLabel>
+							<h3>{{ $t("options:tagManagement.edit.actions.showJournal.title") }}</h3>
+							<p>{{ $t("options:tagManagement.edit.actions.showJournal.desc", { count }) }}</p>
 						</IonLabel>
 					</IonItem>
 

@@ -17,7 +17,7 @@
 		onIonViewWillEnter,
 		onIonViewWillLeave,
 	} from '@ionic/vue';
-	import { inject, onMounted, onUnmounted, Ref, ref, shallowReactive, shallowRef, watch, WatchStopHandle } from 'vue';
+	import { inject, Ref, ref, shallowReactive, shallowRef, watch, WatchStopHandle } from 'vue';
 	import { getFilteredMembers } from '../../lib/db/search';
 	import { accessibilityConfig } from '../../lib/config';
 
@@ -49,14 +49,11 @@
 	import MemberLabel from '../../components/member/MemberLabel.vue';
 	import { from, useObservable } from '@vueuse/rxjs';
 	import { liveQuery } from 'dexie';
-
-	const props = defineProps<{
-		q?: string
-	}>();
+	import { globalEvents } from '../../lib/globalEvents';
 
 	const isIOS = inject<boolean>("isIOS");
 
-	const search = ref(props.q || "");
+	const search = ref("");
 	const members = shallowRef<Member[]>([]);
 
 	const filteredMembers = getFilteredMembers(search, members);
@@ -74,11 +71,13 @@
 
 	const memberEditModal = ref();
 
+	globalEvents.addEventListener("members:search", (e) => {
+		search.value = e.detail.search;
+	});
+
 	const watchStopHandlers: WatchStopHandle[] = [];
 
 	onIonViewWillEnter(() => {
-		search.value = props.q || "";
-
 		watchStopHandlers.push(
 			watch(
 				useObservable(from(liveQuery(() => getMembersTable().toArray()))),

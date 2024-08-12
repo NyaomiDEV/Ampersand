@@ -69,6 +69,16 @@
 				"desc": "Note: you can only define the tag type upon creation!"
 			},
 			"actions": {
+				"showMembers": {
+					"title": "Show members using this tag",
+					"desc_one": "{{count}} member uses this tag",
+					"desc_other": "{{count}} members use this tag"
+				},
+				"showJournal": {
+					"title": "Show journal posts having this tag",
+					"desc_one": "{{count}} journal post has this tag",
+					"desc_other": "{{count}} journal posts have this tag"
+				},
 				"delete": {
 					"title": "Delete tag",
 					"desc": "You won't be able to undo this action!"
