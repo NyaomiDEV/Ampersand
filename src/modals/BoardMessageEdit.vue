@@ -25,11 +25,13 @@
 	import trashMD from "@material-design-icons/svg/outlined/delete.svg";
 
 	import { getBoardMessagesTable, BoardMessageComplete, newBoardMessage } from "../lib/db/entities/boardMessages";
-	import { ref, shallowReactive, toRaw } from "vue";
+	import { inject, ref, shallowReactive, toRaw } from "vue";
 	import { PartialBy } from "../lib/db/types";
 	import MemberAvatar from "../components/member/MemberAvatar.vue";
 	import MemberSelect from "./MemberSelect.vue";
 	import { Member } from "../lib/db/entities/members";
+
+	const isIOS = inject<boolean>("isIOS");
 
 	const props = defineProps<{
 		boardMessage: PartialBy<BoardMessageComplete, "uuid" | "member">
@@ -119,11 +121,11 @@
 						</template>
 					</IonItem>
 					<IonItem>
-						<IonInput mode="md" fill="outline" :label="$t('options:messageBoard.edit.title')" labelPlacement="floating" v-model="boardMessage.title" />
+						<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('options:messageBoard.edit.title')" labelPlacement="floating" v-model="boardMessage.title" />
 					</IonItem>
 
 					<IonItem>
-						<IonTextarea mode="md" fill="outline" auto-grow :label="$t('options:messageBoard.edit.body')" labelPlacement="floating" v-model="boardMessage.body" />
+						<IonTextarea :fill="!isIOS ? 'outline' : undefined" auto-grow :label="$t('options:messageBoard.edit.body')" labelPlacement="floating" v-model="boardMessage.body" />
 					</IonItem>
 
 					<IonItem button @click="deleteBoardMessage">
@@ -156,7 +158,7 @@
 		--padding-bottom: 80px;
 	}
 
-	ion-input, ion-textarea {
+	.md ion-input, .md ion-textarea {
 		margin: 16px 0;
 	}
 </style>

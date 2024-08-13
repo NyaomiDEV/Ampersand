@@ -93,23 +93,23 @@
 				</IonItem>
 
 				<IonItem>
-					<IonInput fill="outline" labelPlacement="floating" :label="$t('options:appSettings.defaultFilterQueries.members')" v-model="appConfig.defaultFilterQueries.members" />
+					<IonInput :fill="!isIOS ? 'outline' : undefined" labelPlacement="floating" :label="$t('options:appSettings.defaultFilterQueries.members')" v-model="appConfig.defaultFilterQueries.members" />
 				</IonItem>
 				
 				<IonItem>
-					<IonInput fill="outline" labelPlacement="floating" :label="$t('options:appSettings.defaultFilterQueries.journal')" v-model="appConfig.defaultFilterQueries.journal" />
+					<IonInput :fill="!isIOS ? 'outline' : undefined" labelPlacement="floating" :label="$t('options:appSettings.defaultFilterQueries.journal')" v-model="appConfig.defaultFilterQueries.journal" />
 				</IonItem>
 
 				<IonItem>
-					<IonInput fill="outline" labelPlacement="floating" :label="$t('options:appSettings.defaultFilterQueries.tags')" v-model="appConfig.defaultFilterQueries.tags" />
+					<IonInput :fill="!isIOS ? 'outline' : undefined" labelPlacement="floating" :label="$t('options:appSettings.defaultFilterQueries.tags')" v-model="appConfig.defaultFilterQueries.tags" />
 				</IonItem>
 
 				<IonItem>
-					<IonInput fill="outline" labelPlacement="floating" :label="$t('options:appSettings.defaultFilterQueries.frontingHistory')" v-model="appConfig.defaultFilterQueries.frontingHistory" />
+					<IonInput :fill="!isIOS ? 'outline' : undefined" labelPlacement="floating" :label="$t('options:appSettings.defaultFilterQueries.frontingHistory')" v-model="appConfig.defaultFilterQueries.frontingHistory" />
 				</IonItem>
 
 				<IonItem>
-					<IonInput fill="outline" labelPlacement="floating" :label="$t('options:appSettings.defaultFilterQueries.messageBoard')" v-model="appConfig.defaultFilterQueries.messageBoard" />
+					<IonInput :fill="!isIOS ? 'outline' : undefined" labelPlacement="floating" :label="$t('options:appSettings.defaultFilterQueries.messageBoard')" v-model="appConfig.defaultFilterQueries.messageBoard" />
 				</IonItem>
 			</IonList>
 
@@ -118,7 +118,7 @@
 </template>
 
 <style scoped>
-	ion-input {
+	.md ion-input {
 		margin: 16px 0;
 	}
 </style>

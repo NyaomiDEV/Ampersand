@@ -33,12 +33,14 @@
 	import journalMD from "@material-design-icons/svg/outlined/book.svg";
 
 	import { Tag, getTagsTable, newTag, removeTag } from '../lib/db/entities/tags';
-	import { ref, shallowRef } from "vue";
+	import { inject, ref, shallowRef } from "vue";
 	import { addMaterialColors, unsetMaterialColors } from "../lib/theme";
 	import { PartialBy } from "../lib/db/types";
 	import { globalEvents, SearchEvent } from "../lib/globalEvents";
 	import { getMembersTable } from "../lib/db/entities/members";
 	import { getJournalPostsTable } from "../lib/db/entities/journalPosts";
+
+	const isIOS = inject<boolean>("isIOS");
 
 	const props = defineProps<{
 		tag: PartialBy<Tag, "uuid">
@@ -123,11 +125,11 @@
 		<IonContent>
 			<IonList inset>
 					<IonItem>
-						<IonInput mode="md" fill="outline" :label="$t('options:tagManagement.edit.name')" labelPlacement="floating" v-model="tag.name" />
+						<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('options:tagManagement.edit.name')" labelPlacement="floating" v-model="tag.name" />
 					</IonItem>
 
 					<IonItem>
-						<IonTextarea mode="md" fill="outline" auto-grow :label="$t('options:tagManagement.edit.description')" labelPlacement="floating" v-model="tag.description" />
+						<IonTextarea :fill="!isIOS ? 'outline' : undefined" auto-grow :label="$t('options:tagManagement.edit.description')" labelPlacement="floating" v-model="tag.description" />
 					</IonItem>
 
 					<IonItem button>
@@ -202,7 +204,7 @@
 		--padding-bottom: 80px;
 	}
 
-	ion-input, ion-textarea {
+	.md ion-input, .md ion-textarea {
 		margin: 16px 0;
 	}
 </style>

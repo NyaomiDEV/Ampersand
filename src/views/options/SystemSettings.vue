@@ -68,10 +68,10 @@
 
 			<IonList inset v-if="system">
 				<IonItem>
-					<IonInput fill="outline" labelPlacement="floating" :label="$t('options:systemSettings.systemName')" v-model="system.name" />
+					<IonInput :fill="!isIOS ? 'outline' : undefined" labelPlacement="floating" :label="$t('options:systemSettings.systemName')" v-model="system.name" />
 				</IonItem>
 				<IonItem>
-					<IonTextarea mode="md" fill="outline" auto-grow :label="$t('options:systemSettings.systemDescription')" labelPlacement="floating" v-model="system.description" />
+					<IonTextarea :fill="!isIOS ? 'outline' : undefined" auto-grow :label="$t('options:systemSettings.systemDescription')" labelPlacement="floating" v-model="system.description" />
 				</IonItem>
 				<IonItem>
 					<IonLabel>{{ $t("options:systemSettings.memberCount") }}</IonLabel>
@@ -117,7 +117,7 @@
 		--padding-bottom: 80px;
 	}
 
-	ion-input, ion-textarea {
+	.md ion-input, .md ion-textarea {
 		margin: 16px 0;
 	}
 </style>

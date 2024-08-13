@@ -75,17 +75,19 @@
 					v-model="search"
 				/>
 			</IonToolbar>
+			<IonToolbar>
+				<IonSegment v-model="type" value="member">
+					<IonSegmentButton value="member">
+						<IonLabel>{{ $t("options:tagManagement.selector.member") }}</IonLabel>
+					</IonSegmentButton>
+					<IonSegmentButton value="journal">
+						<IonLabel>{{ $t("options:tagManagement.selector.journal") }}</IonLabel>
+					</IonSegmentButton>
+				</IonSegment>
+			</IonToolbar>
 		</IonHeader>
 		
 		<IonContent>
-			<IonSegment v-model="type" value="member">
-				<IonSegmentButton value="member">
-					<IonLabel>{{ $t("options:tagManagement.selector.member") }}</IonLabel>
-				</IonSegmentButton>
-				<IonSegmentButton value="journal">
-					<IonLabel>{{ $t("options:tagManagement.selector.journal") }}</IonLabel>
-				</IonSegmentButton>
-			</IonSegment>
 			<IonList :inset="isIOS">
 				<IonItem button v-for="tag in filteredTags" :key="JSON.stringify(tag)" @click="showModal(tag)">
 					<TagColor slot="start" :tag />

@@ -27,7 +27,7 @@
 	import trashMD from "@material-design-icons/svg/outlined/delete.svg";
 
 	import { FrontingEntryComplete, getFrontingEntriesTable, newFrontingEntry } from '../lib/db/entities/frontingEntries';
-	import { Ref, ShallowReactive, WatchStopHandle, ref, shallowReactive, toRaw, watch } from "vue";
+	import { Ref, ShallowReactive, WatchStopHandle, inject, ref, shallowReactive, toRaw, watch } from "vue";
 
 	import MemberSelect from "./MemberSelect.vue";
 	import MemberAvatar from "../components/member/MemberAvatar.vue";
@@ -40,6 +40,8 @@
 	import { PartialBy } from "../lib/db/types";
 	dayjs.extend(UTC);
 	dayjs.extend(Timezone);
+
+	const isIOS = inject<boolean>("isIOS");
 
 	const twelveHourClock = appConfig.locale.twelveHourClock;
 	const firstWeekOfDayIsSunday = appConfig.locale.firstWeekOfDayIsSunday;
@@ -156,7 +158,7 @@
 						</template>
 					</IonItem>
 					<IonItem>
-						<IonInput mode="md" fill="outline" :label="$t('options:frontHistory.edit.customStatus')" labelPlacement="floating" v-model="frontingEntry.customStatus" />
+						<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('options:frontHistory.edit.customStatus')" labelPlacement="floating" v-model="frontingEntry.customStatus" />
 					</IonItem>
 					<IonItem button>
 						<IonLabel>
@@ -229,7 +231,7 @@
 		--padding-bottom: 80px;
 	}
 
-	ion-input {
+	.md ion-input {
 		margin: 16px 0;
 	}
 </style>

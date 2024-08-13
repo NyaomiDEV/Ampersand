@@ -195,16 +195,16 @@
 
 			<IonList class="member-edit" v-if="isEditing" inset>
 					<IonItem>
-						<IonInput mode="md" fill="outline" :label="$t('members:edit.name')" labelPlacement="floating" v-model="member.name" />
+						<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('members:edit.name')" labelPlacement="floating" v-model="member.name" />
 					</IonItem>
 					<IonItem>
-						<IonInput mode="md" fill="outline" :label="$t('members:edit.pronouns')" labelPlacement="floating" v-model="member.pronouns" />
+						<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('members:edit.pronouns')" labelPlacement="floating" v-model="member.pronouns" />
 					</IonItem>
 					<IonItem>
-						<IonInput mode="md" fill="outline" :label="$t('members:edit.role')" labelPlacement="floating" v-model="member.role" />
+						<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('members:edit.role')" labelPlacement="floating" v-model="member.role" />
 					</IonItem>
 					<IonItem>
-						<IonTextarea mode="md" fill="outline" auto-grow :label="$t('members:edit.description')" labelPlacement="floating" v-model="member.description" />
+						<IonTextarea :fill="!isIOS ? 'outline' : undefined" auto-grow :label="$t('members:edit.description')" labelPlacement="floating" v-model="member.description" />
 					</IonItem>
 					<IonItem button>
 						<Color v-model="member.color" @update:model-value="updateColor">
@@ -342,11 +342,7 @@
 		font-size: 1rem;
 	}
 
-	ion-input, ion-textarea {
-		margin-top: 16px;
-	}
-
-	.member-edit ion-item {
-		margin-bottom: 16px;
+	.md ion-input, .md ion-textarea {
+		margin: 16px 0;
 	}
 </style>

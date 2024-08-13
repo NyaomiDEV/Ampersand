@@ -108,16 +108,6 @@
 	--ion-background-color-step-950: rgb(var(--md3-neutral-palette-tone-5));
 }
 
-.ios.md3 * {
-	--ion-background-color: rgb(var(--md3-neutral-palette-tone-95));
-	--ion-background-color-rgb: var(--md3-neutral-palette-tone-95);
-
-	--ion-item-background: rgb(var(--md3-neutral-palette-tone-99));
-	--ion-toolbar-background: rgb(var(--md3-neutral-palette-tone-99));
-	--ion-tab-bar-background: rgb(var(--md3-neutral-palette-tone-99));
-	--ion-card-background: rgb(var(--md3-neutral-palette-tone-99));
-}
-
 /* Dark */
 .ion-palette-dark.md3 * {
 	--ion-color-light: rgb(var(--md3-neutral-palette-tone-10));
