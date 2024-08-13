@@ -125,9 +125,14 @@
 		"header": "Security",
 		"applock": {
 			"title": "App lock",
-			"desc": "Lock the application with a 4-number PIN code"
+			"desc": "Lock the application with a password"
 		},
-		"pin": "Modify PIN"
+		"editPassword": "Modify password",
+		"inputPassword": {
+			"title": "Enter a password",
+			"hint": "Password"
+		}
+
 	},
 	"accessibility": {
 		"header": "Accessibility",

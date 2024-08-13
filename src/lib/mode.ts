@@ -49,5 +49,3 @@ export function updateAccessibility() {
 		document.documentElement.style.removeProperty("font-size");
 
 }
-
-export const isAppLocked = ref(securityConfig.usePin);

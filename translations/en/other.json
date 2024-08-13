@@ -12,5 +12,9 @@
 	"storagePersistence": {
 		"header": "Warning",
 		"content": "Ampersand cannot store data persistently on your device. If you're on Firefox, please give Ampersand permission to do so. If you're on a Chromium-based browser (such as Chrome, Edge, Opera, Vivaldi, etc...), please install Ampersand as a web app / add it to your Desktop/Home screen. If this message doesn't go away, consider backing up your data often from the Import/Export section."
+	},
+	"alerts": {
+		"ok": "Ok",
+		"cancel": "Cancel"
 	}
 }

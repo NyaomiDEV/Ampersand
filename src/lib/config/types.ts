@@ -29,7 +29,7 @@ export type AccessibilityConfig = {
 }
 
 export type SecurityConfig = {
-	usePin: boolean,
-	pinCode?: string,
+	usePassword: boolean,
+	password?: string,
 	useBiometrics: boolean
 }

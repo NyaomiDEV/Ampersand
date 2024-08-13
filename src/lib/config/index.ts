@@ -29,8 +29,8 @@ const defaultAccessibilityConfig: AccessibilityConfig = {
 }
 
 const defaultSecurityConfig: SecurityConfig = {
-	usePin: false,
-	pinCode: undefined,
+	usePassword: false,
+	password: undefined,
 	useBiometrics: false
 }
 

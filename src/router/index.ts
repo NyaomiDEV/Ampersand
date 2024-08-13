@@ -11,7 +11,12 @@ const routes: Array<RouteRecordRaw> = [
 		children: [
 			...tabbedRoutes
 		]
-	}, 
+	},
+	{
+		path: "/lock",
+		name: "LockView",
+		component: () => import("../views/LockView.vue"),
+	},
 	...settings,
 ];
 
