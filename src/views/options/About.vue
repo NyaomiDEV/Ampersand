@@ -22,8 +22,8 @@
 		<IonContent>
 			<div class="container">
 				<h1>Ampersand</h1>
-				<p> {{ $t("options:about.version", { version }) }}</p>
-				<p> {{ $t("options:about.madein") }}</p>
+				<p>{{ $t("options:about.version", { version }) }}</p>
+				<p>{{ $t("options:about.madein") }}</p>
 
 				<IonIcon class="logo" :icon="AmpersandLogo" />
 
