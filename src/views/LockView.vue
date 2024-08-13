@@ -1,9 +1,12 @@
 <script setup lang="ts">
-	import { IonPage, IonContent, IonLabel, IonInput } from "@ionic/vue";
+	import { IonPage, IonContent, IonLabel, IonInput, useIonRouter } from "@ionic/vue";
 	import { unlock } from "../lib/applock";
+	
+	const router = useIonRouter();
 
 	function checkAndTryUnlocking(e){
-		console.log(unlock(e.detail.value));
+		if(unlock(e.detail.value))
+			router.replace("/");
 	}
 </script>
 

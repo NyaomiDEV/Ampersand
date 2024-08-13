@@ -50,6 +50,7 @@ import { tryPersistStorage } from "./lib/util/storageManager";
 import { getSystem, newSystem } from "./lib/db/entities/system";
 import { appConfig } from "./lib/config";
 import { getLockedStatus } from "./lib/applock";
+import { RouteLocationNormalizedGeneric } from "vue-router";
 
 if(!window.isSecureContext){
 	console.error("Cannot continue, this is not a safe environment!");
@@ -74,15 +75,25 @@ if(!window.isSecureContext){
 
 	const app = createApp(App).use(IonicVue).use(router).use(I18NextVue, { i18next: i18n });
 
+	let wantedRoute: RouteLocationNormalizedGeneric | undefined;
 	router.beforeEach((to) => {
 		if(getLockedStatus()) {
 			if(to.path === "/lock")
 				return true;
 
+			wantedRoute = to;
+
 			return { path: "/lock" };
 		}
 
 		if (to.fullPath === "/" || to.path === "/lock") {
+
+			if(wantedRoute){
+				const _r = wantedRoute;
+				wantedRoute = undefined;
+				return _r;
+			}
+
 			// route to default view
 			switch (appConfig.view) {
 				case "members":

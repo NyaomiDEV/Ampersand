@@ -1,8 +1,9 @@
-import router from "../router";
 import { securityConfig } from "./config";
 import sha1 from "./util/sha1";
 
-let isLocked = true;
+let isLocked = false;
+if (securityConfig.password)
+	isLocked = true;
 
 export function getLockedStatus(){
 	if (securityConfig.password === undefined || !securityConfig.usePassword) return false;
@@ -14,7 +15,6 @@ export function unlock(plaintextPwd: string) {
 
 	if(securityConfig.password === password) {
 		isLocked = false;
-		router.replace("/");
 		return true;
 	}
 
