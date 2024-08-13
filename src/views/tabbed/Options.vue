@@ -1,10 +1,11 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonList, IonItem, IonListHeader, IonLabel, IonPage, IonTitle, IonToolbar, IonIcon } from '@ionic/vue';
+	import { IonContent, IonHeader, IonList, IonItem, IonListHeader, IonLabel, IonPage, IonTitle, IonToolbar, IonIcon, IonButtons, IonButton, useIonRouter } from '@ionic/vue';
 	import { inject } from 'vue';
 	import { wasPersisted } from '../../lib/util/storageManager';
 	import StoragePersistenceMissing from "../../components/StoragePersistenceMissing.vue";
 
 	import {
+		lockClosedOutline as LockIOS,
 		personOutline as SystemIOS,
 		analyticsOutline as FrontHistoryIOS,
 		newspaperOutline as MessageBoardIOS,
@@ -18,6 +19,7 @@
 		sparklesOutline as SparklesIOS,
 	} from "ionicons/icons";
 
+	import LockMD from '@material-design-icons/svg/outlined/lock.svg';
 	import SparklesMD from '@material-design-icons/svg/outlined/star.svg';
 	import SystemMD from '@material-design-icons/svg/outlined/person.svg';
 	import FrontHistoryMD from '@material-design-icons/svg/outlined/show_chart.svg';
@@ -29,10 +31,18 @@
 	import AccessibilityMD from '@material-design-icons/svg/outlined/accessibility_new.svg';
 	import ImportExportMD from '@material-design-icons/svg/outlined/import_export.svg';
 	import AboutMD from '@material-design-icons/svg/outlined/info.svg';
+	import { securityConfig } from '../../lib/config';
+	import { lock } from '../../lib/applock';
 
+	const router = useIonRouter();
 	const isIOS = inject<boolean>("isIOS");
 
 	const isDev = import.meta.env.MODE === 'development';
+
+	function lockImmediately(){
+		if(lock())
+			router.replace("/lock");
+	}
 </script>
 
 <template>
@@ -42,6 +52,11 @@
 				<IonTitle>
 					{{ $t("options:options.header") }}
 				</IonTitle>
+				<IonButtons slot="end">
+					<IonButton v-if="securityConfig.password && securityConfig.usePassword" @click="lockImmediately">
+						<IonIcon slot="icon-only" :ios="LockIOS" :md="LockMD" />
+					</IonButton>
+				</IonButtons>
 			</IonToolbar>
 		</IonHeader>
 

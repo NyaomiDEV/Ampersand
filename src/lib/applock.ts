@@ -10,6 +10,13 @@ export function getLockedStatus(){
 	return isLocked;
 }
 
+export function lock(){
+	if(isLocked) return false;
+
+	isLocked = true;
+	return true;
+}
+
 export function unlock(plaintextPwd: string) {
 	const password = new TextDecoder().decode(sha1(new TextEncoder().encode(plaintextPwd)));
 
