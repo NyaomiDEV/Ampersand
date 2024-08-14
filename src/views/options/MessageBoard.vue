@@ -212,4 +212,12 @@
 		--background: var(--ion-toolbar-background);
 	}
 
+	.ios ion-item-divider {
+		background-color: transparent;
+	}
+
+	.ios ion-list {
+		background-color: transparent;
+	}
+
 </style>

@@ -27,3 +27,19 @@
 	border-bottom-right-radius: 12px;
 	border-bottom-left-radius: 12px;
 }
+
+.ios-md3 ion-card,
+.ios.md3 ion-card.elevated {
+	--background: rgb(var(--md3-surface-container-low));
+	--color: rgb(var(--md3-on-surface));
+}
+
+.ios.md3 ion-card.filled {
+	--background: rgb(var(--md3-surface-container-highest));
+}
+
+.ios.md3 ion-card.outlined {
+	--background: rgb(var(--md3-surface));
+	outline: 1px solid rgb(var(--md3-outline));
+	box-shadow: none;
+}
