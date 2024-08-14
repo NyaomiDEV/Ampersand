@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonCard, IonCardHeader, IonCardContent, IonFab, IonFabButton, IonCardSubtitle, IonIcon, IonCardTitle, IonItem, IonSearchbar, IonLabel, IonItemDivider, IonButtons, IonButton, IonDatetime} from '@ionic/vue';
+	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonFab, IonFabButton, IonIcon, IonSearchbar, IonLabel, IonItemDivider, IonButtons, IonButton, IonDatetime } from '@ionic/vue';
 	import { inject, onMounted, onUnmounted, ref, shallowRef, watch, WatchStopHandle } from 'vue';
 	import { BoardMessage, BoardMessageComplete, getBoardMessagesTable } from '../../lib/db/entities/boardMessages';
 	import BoardMessageEdit from "../../modals/BoardMessageEdit.vue";
@@ -21,19 +21,17 @@
 	dayjs.extend(LocalizedFormat);
 
 	import { appConfig } from '../../lib/config';
-	import MemberAvatar from '../../components/member/MemberAvatar.vue';
-	import { getMarkdownFor } from '../../lib/markdown';
 	import { from, useObservable } from '@vueuse/rxjs';
 	import { liveQuery } from 'dexie';
 	import { getMembersTable } from '../../lib/db/entities/members';
 	import { getFilteredBoardMessages } from '../../lib/db/search';
+	import MessageBoardCard from '../../components/MessageBoardCard.vue';
 
 	const props = defineProps<{
 		q?: string
 	}>();
 
 	const isIOS = inject<boolean>("isIOS");
-	const twelveHour = appConfig.locale.twelveHourClock;
 	
 	const emptyBoardMessage: PartialBy<BoardMessageComplete, "uuid" | "member"> = {
 		title: "",
@@ -148,19 +146,7 @@
 					<IonItemDivider sticky>
 						<IonLabel>{{ dayjs(tuple[0]).format("LL") }}</IonLabel>
 					</IonItemDivider>
-					<IonCard button v-for="boardMessage in tuple[1]" :key="JSON.stringify(boardMessage)" @click="showModal(boardMessage)">
-						<IonItem>
-							<MemberAvatar slot="start" :member="boardMessage.member" />
-							<IonLabel>
-								<p style="float:right">{{ dayjs(boardMessage.date).format(`LL, ${twelveHour ? 'hh:mm A' : "HH:mm"}`) }}</p>
-								<h3 style="color:var(--ion-text-color-step-400)">{{ boardMessage.member.name }}</h3>
-								<h1>{{ boardMessage.title }}</h1>
-								<h2 style="margin-top: .75rem">
-									<p v-html="getMarkdownFor(boardMessage.body)"></p>
-								</h2>
-							</IonLabel>
-						</IonItem>
-					</IonCard>
+					<MessageBoardCard :boardMessage v-for="boardMessage in tuple[1]" :key="JSON.stringify(boardMessage)" @click="showModal(boardMessage)" />
 				</template>
 			</IonList>
 
@@ -169,19 +155,7 @@
 					<IonItemDivider sticky>
 						<IonLabel>{{ dayjs(tuple[0]).format("LL") }}</IonLabel>
 					</IonItemDivider>
-					<IonCard button v-for="boardMessage in tuple[1]" :key="JSON.stringify(boardMessage)" @click="showModal(boardMessage)">
-						<IonItem>
-							<MemberAvatar slot="start" :member="boardMessage.member" />
-							<IonLabel>
-								<p style="float:right">{{ dayjs(boardMessage.date).format(`LL, ${twelveHour ? 'hh:mm A' : "HH:mm"}`) }}</p>
-								<h3 style="color:var(--ion-text-color-step-400)">{{ boardMessage.member.name }}</h3>
-								<h1>{{ boardMessage.title }}</h1>
-								<h2 style="margin-top: .75rem">
-									<p v-html="getMarkdownFor(boardMessage.body)"></p>
-								</h2>
-							</IonLabel>
-						</IonItem>
-					</IonCard>
+					<MessageBoardCard :boardMessage v-for="boardMessage in tuple[1]" :key="JSON.stringify(boardMessage)" @click="showModal(boardMessage)" />
 				</template>
 			</IonList>
 
@@ -197,11 +171,6 @@
 </template>
 
 <style scoped>
-
-	ion-card ion-item {
-		--background: transparent;
-	}
-
 	.container {
 		background-color: var(--ion-toolbar-background);
 		z-index: 1;
@@ -219,5 +188,4 @@
 	.ios ion-list {
 		background-color: transparent;
 	}
-
 </style>
