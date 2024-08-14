@@ -3,18 +3,25 @@
 	--bar-height: 24px;
 	--bar-border-radius: 24px;
 	--knob-background: var(--ion-color-primary);
-	--knob-size: 64px;
+	--knob-size: 6px;
 	--knob-border-radius: 64px;
 }
 
+.md.md3 ion-range:active::part(pin) {
+	transform: translate3d(0px, -80px, 0px) scale(1);
+}
+
 .md.md3 ion-range::part(knob) {
-	width: 6px;
-	outline: 12px solid var(--ion-background-color);
-	transform: translateX(29px);
+	height: 64px;
+	border: 12px solid var(--ion-background-color);
+	transform: none;
+	inset-inline-start: 0;
+	top: -41px;
+	left: -9px;
 }
 
 .md.md3 ion-range:active::part(knob) {
-	transform: translateX(29px) scale(0.75, 1);
+	transform: scale(0.75, 1);
 }
 
 .md.md3 ion-range::part(knob)::before {
