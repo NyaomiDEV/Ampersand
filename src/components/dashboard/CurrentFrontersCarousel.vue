@@ -90,6 +90,7 @@
 
 	ion-card {
 		width: 160px;
+		flex: none;
 	}
 
 	ion-card ion-avatar {
