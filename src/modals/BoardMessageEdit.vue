@@ -129,8 +129,8 @@
 					</IonItem>
 
 					<IonItem button @click="deleteBoardMessage">
-						<IonIcon :ios="trashIOS" :md="trashMD" slot="start" aria-hidden="true" />
-						<IonLabel>
+						<IonIcon :ios="trashIOS" :md="trashMD" slot="start" aria-hidden="true" color="danger"/>
+						<IonLabel color="danger">
 							<h3>{{ $t("options:messageBoard.edit.delete.title") }}</h3>
 							<p>{{ $t("options:messageBoard.edit.delete.desc") }}</p>
 						</IonLabel>
