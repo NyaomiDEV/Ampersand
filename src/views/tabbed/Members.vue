@@ -210,7 +210,15 @@
 			<IonList :inset="isIOS" ref="list">
 
 				<IonItemSliding v-for="member in filteredMembers" @ionDrag="endPress(member, true)" :key="JSON.stringify(member)">
-					<IonItem button :class="{ archived: member.isArchived }" :style="getStyle(member)" @pointerdown="startPress(member)" @pointerup="endPress(member, false)">
+					<IonItem
+						button
+						:class="{ archived: member.isArchived }"
+						:style="getStyle(member)"
+						@pointerdown="startPress(member)"
+						@pointerup="endPress(member, false)"
+						@pointercancel="endPress(member, true)"
+						@pointerleave="endPress(member, true)"
+					>
 						<MemberAvatar slot="start" :member />
 						<MemberLabel :member />
 						<IonIcon slot="end" :ios="archivedIOS" :md="archivedMD" v-if="member.isArchived" />
