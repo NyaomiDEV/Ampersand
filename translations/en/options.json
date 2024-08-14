@@ -81,7 +81,8 @@
 				},
 				"delete": {
 					"title": "Delete tag",
-					"desc": "You won't be able to undo this action!"
+					"desc": "You won't be able to undo this action!",
+					"confirm": "Are you sure you want to delete this tag?"
 				}
 			}
 		}

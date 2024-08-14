@@ -15,7 +15,8 @@
 		IonModal,
 		IonSegment,
 		IonTextarea,
-		useIonRouter
+		useIonRouter,
+		alertController
 	} from "@ionic/vue";
 	import MD3SegmentButton from "../components/MD3SegmentButton.vue";
 	import Color from "../components/Color.vue";
@@ -39,8 +40,10 @@
 	import { globalEvents, SearchEvent } from "../lib/globalEvents";
 	import { getMembersTable } from "../lib/db/entities/members";
 	import { getJournalPostsTable } from "../lib/db/entities/journalPosts";
+	import { useTranslation } from "i18next-vue";
 
 	const isIOS = inject<boolean>("isIOS");
+	const i18next = useTranslation();
 
 	const props = defineProps<{
 		tag: PartialBy<Tag, "uuid">
@@ -89,11 +92,36 @@
 		// however it's safe for us to ignore
 	}
 
+	function promptDeletion(): Promise<boolean> {
+		return new Promise(async (resolve) => {
+			const alert = await alertController.create({
+				header: i18next.t("options:tagManagement.edit.actions.delete.title"),
+				subHeader: i18next.t("options:tagManagement.edit.actions.delete.confirm"),
+				buttons: [
+					{
+						text: i18next.t("other:alerts.cancel"),
+						role: "cancel",
+						handler: () => resolve(false)
+					},
+					{
+						text: i18next.t("other:alerts.ok"),
+						role: "confirm",
+						handler: () => resolve(true)
+					}
+				]
+			});
+
+			await alert.present();
+		});
+	}
+
 	async function deleteTag(){
-		await removeTag(tag.value.uuid!);
-		try{
-			await modalController.dismiss(undefined, "deleted");
-		}catch(_){}
+		if(await promptDeletion()){
+			await removeTag(tag.value.uuid!);
+			try {
+				await modalController.dismiss(undefined, "deleted");
+			} catch (_) { }
+		}
 	}
 
 	function present() {
