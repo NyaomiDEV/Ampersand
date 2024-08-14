@@ -34,7 +34,7 @@
 					{{ $t("journal:header") }}
 				</IonTabButton>
 
-				<IonTabButton tab="dashboard" href="/dashboard" v-if="false">
+				<IonTabButton tab="dashboard" href="/dashboard">
 					<IonIcon :ios="HomeIOS" :md="HomeMD" />
 					{{ $t("dashboard:header") }}
 				</IonTabButton>

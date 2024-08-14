@@ -86,6 +86,9 @@
 			<IonList :inset="isIOS">
 				<IonItem>
 					<IonSelect :label="$t('options:appSettings.view.title')" interface="popover" v-model="appConfig.view">
+						<IonSelectOption value="dashboard">
+							{{ $t("options:appSettings.view.dashboard") }}
+						</IonSelectOption>
 						<IonSelectOption value="members">
 							{{ $t("options:appSettings.view.members") }}
 						</IonSelectOption>
