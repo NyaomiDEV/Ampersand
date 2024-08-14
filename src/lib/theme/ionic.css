@@ -35,10 +35,10 @@
 	--ion-color-warning-shade: rgb(var(--md3-secondary-fixed-dim));
 	--ion-color-warning-tint: rgb(var(--md3-secondary-fixed));
 
-	--ion-color-danger: rgb(var(--md3-error-container));
-	--ion-color-danger-rgb: var(--md3-error-container);
-	--ion-color-danger-contrast: rgb(var(--md3-on-error-container));
-	--ion-color-danger-contrast-rgb: var(--md3-on-error-container);
+	--ion-color-danger: rgb(var(--md3-error));
+	--ion-color-danger-rgb: var(--md3-error);
+	--ion-color-danger-contrast: rgb(var(--md3-on-error));
+	--ion-color-danger-contrast-rgb: var(--md3-on-error);
 	--ion-color-danger-shade: rgb(var(--md3-error-container));
 	--ion-color-danger-tint: rgb(var(--md3-error-container));
 
