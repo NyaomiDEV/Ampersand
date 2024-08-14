@@ -1,0 +1,18 @@
+.md.md3 ion-item {
+	--min-height: 56px;
+	--inner-padding-start: 16px;
+	--inner-padding-end: 16px;
+	--inner-padding-top: 8px;
+	--inner-padding-bottom: 8px;
+	--inner-border-width: 0 0 0 0;
+}
+
+.md.md3 ion-item [slot="start"],
+.md.md3 ion-item [slot="end"] {
+	margin-inline-start: 0;
+	margin-inline-end: 0;
+}
+
+.md.md3 ion-item[lines="lines"] {
+	--inner-border-width: unset;
+}
