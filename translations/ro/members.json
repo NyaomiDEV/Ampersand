@@ -1,0 +1,33 @@
+{
+	"header": "Membri",
+	"searchPlaceholder": "Căutați memberi...",
+	"actions": {
+		"addToFront": "Adaugați in frunte",
+		"setMainFronter": "Stabiliți starea de fruntaș principal",
+		"unsetMainFronter": "Anulați starea de fruntaș principal",
+		"setSoleFronter": "Stabiliți ca și fruntaș unic",
+		"removeFromFront": "Eliminați din frunte"
+	},
+	"edit": {
+		"headerAdd": "Adăugați un membru",
+		"headerEdit": "Modificați un membru",
+		"name": "Nume",
+		"pronouns": "Pronume",
+		"role": "Rol",
+		"color": "Culoare preferată",
+		"tags": "Modificați etichetele",
+		"description": "Descriere",
+		"noDescription": "Fară descriere",
+		"customFront": "Frunte personalizata",
+		"isCustomFront": "Stabiliți ca frunte personalizată",
+		"archived": "Arhivat",
+		"isArchived": "Stabiliți ca arhivat",
+		"showBoardEntries": "Arătați intrările de pe tablă",
+		"showJournalEntries": "Arătați intrările din jurnal",
+		"delete": {
+			"title": "Ștergeți un membru",
+			"desc": "Atenție! Nu veți putea anula această acțiune!"
+		},
+		"memberID": "Cod identificator pentru membru: {{memberID}}"
+	}
+}

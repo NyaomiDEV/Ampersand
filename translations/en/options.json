@@ -133,7 +133,6 @@
 			"title": "Enter a password",
 			"hint": "Password"
 		}
-
 	},
 	"accessibility": {
 		"header": "Accessibility",

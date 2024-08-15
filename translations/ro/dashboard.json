@@ -1,0 +1,12 @@
+{
+	"header": "Tablou de bord",
+	"header_salute": "Bună!",
+	"header_mainfronter": "Salut, {{fronterName}}!",
+	"nowFronting": "Acum se află în frunte",
+	"recentFrontingHistory": "A plecat din frunte recent",
+	"messageBoard": {
+		"header": "Tabla de mesaje",
+		"add": "Adăugați pe tabla de mesaje",
+		"view": "Vedeți mai multe..."
+	}
+}

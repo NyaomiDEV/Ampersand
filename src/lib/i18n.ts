@@ -7,7 +7,8 @@ import { appConfig } from "./config";
 const translations = import.meta.glob("../../translations/*/*.json");
 
 const loadTranslations = [
-	"en"
+	"en",
+	"ro"
 ];
 
 i18next.on("languageChanged", async (lng) => {

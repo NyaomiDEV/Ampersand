@@ -1,0 +1,195 @@
+{
+	"options": {
+		"header": "Opțiuni", 
+		"managementLabel": "Administrare",
+		"settingsLabel": "Setări"
+	},
+	"systemSettings": {
+		"header": "Numele sistemului și poza",
+		"systemName": "Numele sistemului",
+		"systemDescription": "Descrierea sistemului",
+		"memberCount": "Numărul de membri",
+		"memberCountText": "{{memberCount}} membri",
+		"tapToShow": "Atingeți pentru a afișa"
+	},
+	"frontHistory": {
+		"header": "Istoricul frunții",
+		"searchPlaceholder": "Căutați prin istoricul frunții",
+		"currentlyFronting": "În prezent se află in frunte",
+		"edit": {
+			"header": "Schimbați intrarea în frunte",
+			"member": "Schimbați membrul fruntaș",
+			"customStatus": "Stare personalizată",
+			"startTime": "Timpul de începere",
+			"endTime": "Timpul de sfârșire",
+			"removeFromFront": {
+				"title": "Eliminați din frunte",
+				"desc": "Nu veți putea anula această acțiune după ce salvați!"
+			},
+			"isMainFronter": "Fruntaș principal?",
+			"delete": {
+				"title": "Ștergeți intrarea în frunte",
+				"desc": "Nu veți putea anula această acțiune!"
+			}
+		}
+	},
+	"messageBoard": {
+		"header": "Tabla de mesaje",
+		"searchPlaceholder": "Căutați mesaje...",
+		"edit": {
+			"header": "Schimbați mesajul",
+			"member": "Schimbați autorul mesajului",
+			"title": "Titlu",
+			"body": "Corpul mesajului",
+			"delete": {
+				"title": "Ștergeți mesajul de pe tablă",
+				"desc": "Nu veți putea anula această acțiune!"
+			}
+		}
+	},
+	"tagManagement": {
+		"header": "Administrare etichete",
+		"searchPlaceholder": "Căutați etichete...",
+		"selector": {
+			"member": "Etichete pentru membri",
+			"journal": "Etichete pentru jurnal"
+		},
+		"edit": {
+			"header": {
+				"member": "Schimbați eticheta destinată membrilor",
+				"journal": "Schimbați eticheta destinată jurnalului"
+			},
+			"name": "Numele etichetei",
+			"description": "Descrierea etichetei",
+			"color": "Culoarea etichetei",
+			"type": {
+				"header": "Tipul etichetei",
+				"member": "Membru",
+				"journal": "Jurnal",
+				"desc": "Notă: Puteți defini tipul etichetei numai la momentul creației!"
+			},
+			"actions": {
+				"showMembers": {
+					"title": "Afișați membrii cu această etichetă",
+					"desc_one": "{{count}} membru are această etichetă",
+					"desc_few": "{{count}} membri au această etichetă",
+					"desc_other": "{{count}} membri au această etichetă"
+				},
+				"showJournal": {
+					"title": "Afișați intrările în jurnal cu această etichetă",
+					"desc_one": "{{count}} intrare în jurnal are această etichetă",
+					"desc_few": "{{count}} intrări în jurnal au această etichetă",
+					"desc_other": "{{count}} intrări în jurnal au această etichetă"
+				},
+				"delete": {
+					"title": "Ștergeți eticheta",
+					"desc": "Nu veți putea anula această acțiune!",
+					"confirm": "Doriți să ștergeți această etichetă cu siguranță?"
+				}
+			}
+		}
+	},
+	"reminders": { 
+		"header": "Mementouri"
+	},
+	"appSettings": {
+		"header": "Setări aplicație",
+		"localeLabel": "Administrarea localei",
+		"locale": {
+			"language": "Schimbați limba",
+			"clock": {
+				"title": "Formatul ceasului",
+				"12h": "12 ore",
+				"24h": "24 de ore"
+			},
+			"firstDayOfWeek": {
+				"title": "Prima zi a saptămânii",
+				"sunday": "Duminică",
+				"monday": "Luni"
+			}
+		},
+		"behaviorLabel": "Comportament",
+		"view": {
+			"title": "Pagina prestabilită",
+			"members": "Membri",
+			"journal": "Jurnal",
+			"dashboard": "Tablou de bord",
+			"chat": "Chaturi"
+		},
+		"defaultFilterQueries": {
+			"members": "Căutarea prestabilită pentru membri",
+			"journal": "Căutarea prestabilită pentru jurnal",
+			"tags": "Căutarea prestabilită pentru etichete",
+			"frontingHistory": "Căutarea prestabilită pentru istoricul frontului",
+			"messageBoard": "Căutarea prestabilită pentru tabla cu mesaje"
+		}
+	},
+	"security": {
+		"header": "Securitate",
+		"applock": {
+			"title": "Încuiere aplicație",
+			"desc": "Încuiați aplicația cu o parola"
+		},
+		"editPassword": "Modificați parola",
+		"inputPassword": {
+			"title": "Introduceți parola",
+			"hint": "Parola"
+		}
+	},
+	"accessibility": {
+		"header": "Accesibilitate",
+		"highLegibilityFont": {
+			"title": "Font cu legibilitate crescută",
+			"desc": "Folosiți un font cu legibilitate crescută în loc de fontul dispozitivului"
+		},
+		"highLegibilityFontType": {
+			"title": "Familia fontului cu legibilitate crescută",
+			"atkinson": "Atkinson Hyperlegible",
+			"opendyslexic": "OpenDyslexic",
+			"lexend": "Lexend"
+		},
+		"uiVariant": {
+			"title": "Variantă interfață",
+			"auto": "Auto",
+			"light": "Deschisă",
+			"dark": "Întunecată"
+		},
+		"useAccentColor": {
+			"title": "Culoarea de accent",
+			"desc": "Folosiți o culoare de accent personalizată"
+		},
+		"accentColor": {
+			"title": "Alegeți culoarea de accent",
+			"desc": "Nu alegeți tonuri de gri!"
+		},
+		"reducedMotion": {
+			"title": "Mișcare redusă",
+			"desc": "Dezactivați animațiile din aplicație"
+		},
+		"fontScale": {
+			"title": "Mărime interfață"
+		},
+		"chatFontScale": {
+			"title": "Mărimea interfeței chat"
+		},
+		"longPressDuration": {
+			"title": "Durata apăsării lungi"
+		}
+	},
+	"importExport": {
+		"header": "Import / Export",
+		"import": {
+			"title": "Importați-vă datele dintr-un fișier de backup",
+			"desc": "Atenție! Va superscrie orice date existente"
+		},
+		"export": {
+			"title": "Exportați-vă datele curente",
+			"desc": "Faceți backup datelor curente într-un fișier care poate fi stocat altundeva"
+		}
+	},
+	"about": {
+		"header": "Despre",
+		"version": "Versiunea {{version}}",
+		"madein": "Făcut cu dragoste în Italia."
+	}
+}
