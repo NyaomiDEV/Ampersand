@@ -40,11 +40,12 @@
 
 			<IonList :inset="isIOS">
 
-				<IonItem button disabled>
-					<IonLabel>
-						<h3>{{ $t("options:appSettings.locale.language") }}</h3>
-						<p>{{ $t("other:languageName.local") }}</p>
-					</IonLabel>
+				<IonItem>
+					<IonSelect :label="$t('options:appSettings.locale.language')" interface="popover" v-model="appConfig.locale.language">
+						<IonSelectOption :value="lng" v-for="lng in $i18next.languages">
+							{{ $t("other:languageName.inEnglish", { lng }) }}
+						</IonSelectOption>
+					</IonSelect>
 				</IonItem>
 
 				<IonItem>
