@@ -42,7 +42,7 @@
 
 				<IonItem>
 					<IonSelect :label="$t('options:appSettings.locale.language')" interface="popover" v-model="appConfig.locale.language">
-						<IonSelectOption :value="lng" v-for="lng in $i18next.languages">
+						<IonSelectOption :value="lng" v-for="lng in Object.keys($i18next.services.resourceStore.data)">
 							{{ $t("other:languageName.inEnglish", { lng }) }}
 						</IonSelectOption>
 					</IonSelect>

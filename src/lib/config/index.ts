@@ -3,6 +3,7 @@ import { get, set } from "./localStorage";
 import { AccessibilityConfig, AppConfig, SecurityConfig } from "./types";
 import { updateAccessibility, updateDarkMode } from "../mode";
 import { updateMaterialColors } from "../theme";
+import i18next from "i18next";
 
 const defaultAppConfig: AppConfig = {
 	locale: {
@@ -38,7 +39,10 @@ export const appConfig = reactive<AppConfig>({...defaultAppConfig, ...get("appCo
 export const accessibilityConfig = reactive<AccessibilityConfig>({ ...defaultAccessibilityConfig, ...get("accessibilityConfig") });
 export const securityConfig = reactive<SecurityConfig>({ ...defaultSecurityConfig, ...get("securityConfig") });
 
-watch(appConfig, () => set("appConfig", {...appConfig}));
+watch(appConfig, () => {
+	set("appConfig", {...appConfig});
+	i18next.changeLanguage(appConfig.locale.language);
+});
 watch(accessibilityConfig, () => {
 	set("accessibilityConfig", { ...accessibilityConfig });
 	updateDarkMode();

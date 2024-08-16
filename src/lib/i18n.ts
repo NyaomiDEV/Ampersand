@@ -2,6 +2,7 @@ import dayjs from "dayjs";
 import i18next from "i18next";
 
 import "dayjs/locale/en";
+import { appConfig } from "./config";
 
 const translations = import.meta.glob("../../translations/*/*.json");
 
@@ -14,6 +15,7 @@ i18next.on("languageChanged", async (lng) => {
 })
 
 await i18next.init({
+	lng: appConfig.locale.language || "en",
 	fallbackLng: "en",
 	lowerCaseLng: true,
 });
@@ -21,7 +23,7 @@ await i18next.init({
 for(const path in translations){
 	const [, lang, ns] = /\/translations\/(.*)\/(.*)\.json$/.exec(path)!;
 	if(!loadTranslations.includes(lang)) continue;
-	
+
 	i18next.addResourceBundle(lang, ns, await translations[path]())
 }
 
