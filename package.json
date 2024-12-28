@@ -7,44 +7,36 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
-    "preview": "vite preview",
-    "update-icons": "capacitor-assets generate --android",
-    "capacitor:sync:before": "yarn run build"
+    "preview": "vite preview"
   },
   "dependencies": {
-    "@capacitor/splash-screen": "^6.0.2",
-    "@ionic/vue": "^8.2.7",
-    "@ionic/vue-router": "^8.2.7",
+    "@ionic/vue": "^8.4.1",
+    "@ionic/vue-router": "^8.4.1",
     "@material-design-icons/svg": "^0.14.13",
     "@material/material-color-utilities": "^0.3.0",
     "@msgpack/msgpack": "^3.0.0-beta2",
     "@vueuse/rxjs": "^10.11.1",
-    "dayjs": "^1.11.12",
-    "dexie": "^4.0.8",
+    "dayjs": "^1.11.13",
+    "dexie": "^4.0.10",
     "i18next": "^23.12.3",
     "i18next-vue": "^4.0.0",
     "ionicons": "^7.4.0",
-    "rehype-stringify": "^10.0.0",
+    "rehype-stringify": "^10.0.1",
     "remark-parse": "^11.0.0",
-    "remark-rehype": "^11.1.0",
+    "remark-rehype": "^11.1.1",
     "rxjs": "^7.8.1",
     "typeson": "^9.0.3",
-    "typeson-registry": "^11.0.0",
+    "typeson-registry": "^11.1.1",
     "unified": "^11.0.5",
-    "vue": "^3.4.37",
-    "vue-router": "^4.4.3"
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0"
   },
   "devDependencies": {
-    "@capacitor/android": "^6.1.2",
-    "@capacitor/app": "^6.0.1",
-    "@capacitor/assets": "^3.0.5",
-    "@capacitor/cli": "^6.1.2",
-    "@capacitor/core": "^6.1.2",
-    "@types/node": "^22.2.0",
-    "@vitejs/plugin-vue": "^5.1.2",
-    "typescript": "^5.5.4",
+    "@types/node": "^22.10.2",
+    "@vitejs/plugin-vue": "^5.2.1",
+    "typescript": "^5.7.2",
     "vite": "^5.4.0",
     "vite-svg-loader": "^5.1.0",
-    "vue-tsc": "^2.0.29"
+    "vue-tsc": "^2.2.0"
   }
 }

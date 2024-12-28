@@ -44,8 +44,6 @@ import "./styles/override.css";
 import { activateMaterialTheme, updateMaterialColors } from "./lib/theme";
 import "./lib/theme/style.css";
 
-// Capacitor stuff
-import { SplashScreen } from "@capacitor/splash-screen";
 import { tryPersistStorage } from "./lib/util/storageManager";
 import { getSystem, newSystem } from "./lib/db/entities/system";
 import { appConfig } from "./lib/config";
@@ -113,6 +111,5 @@ if(!window.isSecureContext){
 
 	router.isReady().then(async () => {
 		app.mount(document.body);
-		await SplashScreen.hide();
 	});
 }
