@@ -185,7 +185,7 @@
 							</IonLabel>
 						</IonToggle>
 					</IonItem>
-					<IonItem button @click="deleteFrontingEntry">
+					<IonItem button v-if="frontingEntry.uuid" @click="deleteFrontingEntry">
 						<IonIcon :ios="trashIOS" :md="trashMD" slot="start" aria-hidden="true" color="danger"/>
 						<IonLabel color="danger">
 							<h3>{{ $t("options:frontHistory.edit.delete.title") }}</h3>

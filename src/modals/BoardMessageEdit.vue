@@ -128,7 +128,7 @@
 						<IonTextarea :fill="!isIOS ? 'outline' : undefined" auto-grow :label="$t('options:messageBoard.edit.body')" labelPlacement="floating" v-model="boardMessage.body" />
 					</IonItem>
 
-					<IonItem button @click="deleteBoardMessage">
+					<IonItem button v-if="boardMessage.uuid" @click="deleteBoardMessage">
 						<IonIcon :ios="trashIOS" :md="trashMD" slot="start" aria-hidden="true" color="danger"/>
 						<IonLabel color="danger">
 							<h3>{{ $t("options:messageBoard.edit.delete.title") }}</h3>
