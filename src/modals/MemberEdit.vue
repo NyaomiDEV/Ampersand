@@ -42,15 +42,16 @@
 	import journalMD from "@material-design-icons/svg/outlined/book.svg";
 	import trashMD from "@material-design-icons/svg/outlined/delete.svg";
 
-	import { Member, getMembersTable, newMember } from '../lib/db/entities/members';
-	import { getTagsTable, Tag } from "../lib/db/entities/tags";
+	import { Member, Tag } from "../lib/db/entities";
+	import { getMembersTable, newMember } from '../lib/db/tables/members';
+	import { getTagsTable } from "../lib/db/tables/tags";
 	import { getBlobURL } from '../lib/util/blob';
 	import { getFiles } from "../lib/util/misc";
 	import { resizeImage } from "../lib/util/image";
 	import { ShallowReactive, inject, onMounted, ref, shallowReactive, shallowRef, toRaw } from "vue";
 	import { getMarkdownFor } from "../lib/markdown";
 	import { addMaterialColors, unsetMaterialColors } from "../lib/theme";
-	import { PartialBy } from "../lib/db/types";
+	import { PartialBy } from "../lib/types";
 
 	const isIOS = inject<boolean>("isIOS")!;
 

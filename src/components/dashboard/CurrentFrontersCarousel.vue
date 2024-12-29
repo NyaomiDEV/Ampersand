@@ -2,11 +2,12 @@
 	import { IonCard, IonCardContent, IonLabel, IonListHeader } from '@ionic/vue';
 	import FrontingEntryAvatar from '../frontingEntry/FrontingEntryAvatar.vue';
 	import { onMounted, onUnmounted, ref, shallowRef, watch, WatchStopHandle } from 'vue';
-	import { PartialBy } from '../../lib/db/types';
-	import { FrontingEntryComplete, getFrontingEntriesTable, toFrontingEntryComplete } from '../../lib/db/entities/frontingEntries';
+	import { PartialBy } from '../../lib/types';
+	import { FrontingEntryComplete } from '../../lib/db/entities';
+	import { getFrontingEntriesTable, toFrontingEntryComplete } from '../../lib/db/tables/frontingEntries';
 	import { from, useObservable } from '@vueuse/rxjs';
 	import { liveQuery } from 'dexie';
-	import { getMembersTable } from '../../lib/db/entities/members';
+	import { getMembersTable } from '../../lib/db/tables/members';
 	import { formatWrittenTime } from "../../lib/util/misc";
 	import FrontingEntryEdit from '../../modals/FrontingEntryEdit.vue';
 

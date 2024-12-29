@@ -3,7 +3,7 @@
 		IonLabel,
 	} from "@ionic/vue";
 
-	import { Member } from '../../lib/db/entities/members';
+	import { Member } from '../../lib/db/entities';
 
 	const props = defineProps<{
 		member: Member,

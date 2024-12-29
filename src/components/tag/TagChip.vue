@@ -3,7 +3,7 @@
 		IonChip,
 	} from "@ionic/vue";
 
-	import { Tag } from "../../lib/db/entities/tags";
+	import { Tag } from "../../lib/db/entities";
 
 	import TagColor from "./TagColor.vue";
 	import TagLabel from "./TagLabel.vue";

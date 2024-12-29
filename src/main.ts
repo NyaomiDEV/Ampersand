@@ -45,7 +45,7 @@ import { activateMaterialTheme, updateMaterialColors } from "./lib/theme";
 import "./lib/theme/style.css";
 
 import { tryPersistStorage } from "./lib/util/storageManager";
-import { getSystem, newSystem } from "./lib/db/entities/system";
+import { getSystem, newSystem } from "./lib/db/tables/system";
 import { appConfig } from "./lib/config";
 import { getLockedStatus } from "./lib/applock";
 import { RouteLocationNormalizedGeneric } from "vue-router";

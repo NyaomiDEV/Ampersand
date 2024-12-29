@@ -1,16 +1,17 @@
 <script setup lang="ts">
 	import { IonList, IonLabel, IonButton, IonListHeader } from '@ionic/vue';
 	import { inject, onMounted, onUnmounted, ref, shallowRef, watch, WatchStopHandle } from 'vue';
-	import { BoardMessageComplete, getBoardMessagesTable, toBoardMessageComplete } from '../../lib/db/entities/boardMessages';
+	import { getBoardMessagesTable, toBoardMessageComplete } from '../../lib/db/tables/boardMessages';
+	import { BoardMessageComplete } from '../../lib/db/entities';
 	import BoardMessageEdit from "../../modals/BoardMessageEdit.vue";
-	import { PartialBy } from '../../lib/db/types';
+	import { PartialBy } from '../../lib/types';
 
 	import dayjs from 'dayjs';
 
 	import { from, useObservable } from '@vueuse/rxjs';
 	import { liveQuery } from 'dexie';
-	import { getMembersTable } from '../../lib/db/entities/members';
-	import { getFronting, getMainFronter } from '../../lib/db/entities/frontingEntries';
+	import { getMembersTable } from '../../lib/db/tables/members';
+	import { getFronting, getMainFronter } from '../../lib/db/tables/frontingEntries';
 	import MessageBoardCard from '../MessageBoardCard.vue';
 
 	const isIOS = inject<boolean>("isIOS");

@@ -1,6 +1,5 @@
-import dayjs from "dayjs";
-import { getTagFromNameHashtag } from "../db/entities/tags";
-import { UUID } from "../db/types";
+import { getTagFromNameHashtag } from "../db/tables/tags";
+import { UUID } from "../db/entities";
 
 export type MemberFilterQuery = {
 	query: string,

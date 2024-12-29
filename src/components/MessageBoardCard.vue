@@ -2,7 +2,7 @@
 
 	import { IonCard, IonItem, IonLabel } from "@ionic/vue";
 	import MemberAvatar from "./member/MemberAvatar.vue";
-	import { BoardMessageComplete } from "../lib/db/entities/boardMessages";
+	import { BoardMessageComplete } from "../lib/db/entities";
 	import dayjs from 'dayjs';
 	import LocalizedFormat from "dayjs/plugin/localizedFormat";
 	dayjs.extend(LocalizedFormat);

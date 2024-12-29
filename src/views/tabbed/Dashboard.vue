@@ -1,8 +1,8 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, onIonViewWillEnter, onIonViewWillLeave } from '@ionic/vue';
 	import { inject, ref, watch, WatchStopHandle } from 'vue';
-	import { getFrontingEntriesTable, getMainFronter } from '../../lib/db/entities/frontingEntries';
-	import { Member } from '../../lib/db/entities/members';
+	import { getFrontingEntriesTable, getMainFronter } from '../../lib/db/tables/frontingEntries';
+	import { Member } from '../../lib/db/entities';
 	import { useObservable } from '@vueuse/rxjs';
 	import { from } from 'rxjs';
 	import { liveQuery } from 'dexie';

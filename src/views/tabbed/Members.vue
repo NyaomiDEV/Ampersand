@@ -42,9 +42,10 @@
 	import archivedMD from "@material-design-icons/svg/outlined/archive.svg";
 
 	import MemberEdit from '../../modals/MemberEdit.vue';
-	import { getMembersTable, Member } from '../../lib/db/entities/members';
-	import { PartialBy } from '../../lib/db/types';
-	import { FrontingEntry, getCurrentFrontEntryForMember, getFrontingEntriesTable, newFrontingEntry, removeFronter, setMainFronter, setSoleFronter } from '../../lib/db/entities/frontingEntries';
+	import { getMembersTable } from '../../lib/db/tables/members';
+	import { Member, FrontingEntry } from '../../lib/db/entities';
+	import { PartialBy } from '../../lib/types';
+	import { getCurrentFrontEntryForMember, getFrontingEntriesTable, newFrontingEntry, removeFronter, setMainFronter, setSoleFronter } from '../../lib/db/tables/frontingEntries';
 	import MemberAvatar from '../../components/member/MemberAvatar.vue';
 	import MemberLabel from '../../components/member/MemberLabel.vue';
 	import { from, useObservable } from '@vueuse/rxjs';

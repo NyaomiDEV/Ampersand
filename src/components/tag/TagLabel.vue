@@ -3,7 +3,7 @@
 		IonLabel,
 	} from "@ionic/vue";
 
-	import { Tag } from '../../lib/db/entities/tags';
+	import { Tag } from '../../lib/db/entities';
 
 	const props = defineProps<{
 		tag: Tag

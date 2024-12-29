@@ -16,7 +16,8 @@
 	import { getFilteredMembers } from "../lib/db/search";
 	import MemberAvatar from "../components/member/MemberAvatar.vue";
 	import MemberLabel from "../components/member/MemberLabel.vue";
-	import { getMembersTable, Member } from "../lib/db/entities/members";
+	import { Member } from "../lib/db/entities";
+	import { getMembersTable } from "../lib/db/tables/members";
 	import { from, useObservable } from "@vueuse/rxjs";
 	import { liveQuery } from "dexie";
 

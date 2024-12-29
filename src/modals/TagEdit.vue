@@ -33,13 +33,14 @@
 	import personMD from "@material-design-icons/svg/outlined/person.svg";
 	import journalMD from "@material-design-icons/svg/outlined/book.svg";
 
-	import { Tag, getTagsTable, newTag, removeTag } from '../lib/db/entities/tags';
+	import { getTagsTable, newTag, removeTag } from '../lib/db/tables/tags';
+	import { Tag } from "../lib/db/entities";
 	import { inject, ref, shallowRef } from "vue";
 	import { addMaterialColors, unsetMaterialColors } from "../lib/theme";
-	import { PartialBy } from "../lib/db/types";
+	import { PartialBy } from "../lib/types";
 	import { globalEvents, SearchEvent } from "../lib/globalEvents";
-	import { getMembersTable } from "../lib/db/entities/members";
-	import { getJournalPostsTable } from "../lib/db/entities/journalPosts";
+	import { getMembersTable } from "../lib/db/tables/members";
+	import { getJournalPostsTable } from "../lib/db/tables/journalPosts";
 	import { useTranslation } from "i18next-vue";
 
 	const isIOS = inject<boolean>("isIOS");

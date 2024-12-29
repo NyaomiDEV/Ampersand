@@ -1,5 +1,5 @@
 import { Typeson } from "typeson";
-import { db } from ".";
+import { getTables } from ".";
 import { blob, file, filelist, imagebitmap, imagedata, map, set, typedArrays, undef } from "typeson-registry";
 import { decode, encode } from "@msgpack/msgpack";
 import { compressGzip, decompressGzip } from "../util/misc";
@@ -21,7 +21,7 @@ const typeson = new Typeson({
 
 async function _exportDatabase(){
 	const theEntireDatabase: Record<string, any> = {};
-	for (const x of db.tables) {
+	for (const x of getTables()) {
 		theEntireDatabase[x.name] = await typeson.encapsulate(await x.toArray());
 	}
 
@@ -43,7 +43,7 @@ export async function exportDatabaseToBinaryWithPassword(password: string){
 
 async function _importDatabase(theEntireDatabase: Record<string, any>){
 	for (const key of Object.getOwnPropertyNames(theEntireDatabase)) {
-		const table = db.tables.find((x) => x.name === key);
+		const table = getTables().find((x) => x.name === key);
 		if (table) {
 			const contents = await typeson.revive(theEntireDatabase[key]);
 			await table.clear();
@@ -66,7 +66,7 @@ export async function importDatabaseFromBinaryWithPassword(data: Uint8Array, pas
 }
 
 export async function exportTableToBinary(tableName: string){
-	const table = db.tables.find((x) => x.name === tableName);
+	const table = getTables().find((x) => x.name === tableName);
 	if(table){
 		return encode(
 			await typeson.encapsulate(await table.toArray())
@@ -76,7 +76,7 @@ export async function exportTableToBinary(tableName: string){
 }
 
 export async function importTableFromBinary(tableName: string, data: Uint8Array){
-	const table = db.tables.find((x) => x.name === tableName);
+	const table = getTables().find((x) => x.name === tableName);
 	if (table) {
 		const contents = await typeson.revive(decode(data));
 		await table.clear();

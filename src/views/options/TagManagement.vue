@@ -5,8 +5,9 @@
 	import addMD from "@material-design-icons/svg/outlined/add.svg";
 	import TagEdit from "../../modals/TagEdit.vue";
 	import { getFilteredTags } from '../../lib/db/search';
-	import { getTagsTable, Tag } from '../../lib/db/entities/tags';
-	import { PartialBy } from '../../lib/db/types';
+	import { getTagsTable } from '../../lib/db/tables/tags';
+	import { Tag } from '../../lib/db/entities';
+	import { PartialBy } from '../../lib/types';
 	import TagColor from '../../components/tag/TagColor.vue';
 	import TagLabel from '../../components/tag/TagLabel.vue';
 	import { from, useObservable } from '@vueuse/rxjs';

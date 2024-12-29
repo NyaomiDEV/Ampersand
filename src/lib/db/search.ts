@@ -1,11 +1,10 @@
 
 import { shallowRef, Ref, ShallowRef, watch } from "vue";
-import { Member } from "./entities/members";
-import { Tag } from "./entities/tags";
-import { FrontingEntry, FrontingEntryComplete, toFrontingEntryComplete } from "./entities/frontingEntries";
+import { Member, Tag, FrontingEntry, FrontingEntryComplete, BoardMessage, BoardMessageComplete } from "./entities";
 import { parseBoardMessageFilterQuery, parseFrontingHistoryFilterQuery, parseMemberFilterQuery } from "../util/filterQuery";
 import dayjs from "dayjs";
-import { BoardMessage, BoardMessageComplete, toBoardMessageComplete } from "./entities/boardMessages";
+import { toBoardMessageComplete } from "./tables/boardMessages";
+import { toFrontingEntryComplete } from "./tables/frontingEntries";
 import { appConfig } from "../config";
 
 export function getFilteredMembers(search: Ref<string>, members: ShallowRef<Member[]>){

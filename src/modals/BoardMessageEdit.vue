@@ -24,12 +24,12 @@
 	import saveMD from "@material-design-icons/svg/outlined/save.svg";
 	import trashMD from "@material-design-icons/svg/outlined/delete.svg";
 
-	import { getBoardMessagesTable, BoardMessageComplete, newBoardMessage } from "../lib/db/entities/boardMessages";
+	import { BoardMessageComplete, Member } from "../lib/db/entities";
+	import { getBoardMessagesTable, newBoardMessage } from "../lib/db/tables/boardMessages";
 	import { inject, ref, shallowReactive, toRaw } from "vue";
-	import { PartialBy } from "../lib/db/types";
+	import { PartialBy } from "../lib/types";
 	import MemberAvatar from "../components/member/MemberAvatar.vue";
 	import MemberSelect from "./MemberSelect.vue";
-	import { Member } from "../lib/db/entities/members";
 
 	const isIOS = inject<boolean>("isIOS");
 

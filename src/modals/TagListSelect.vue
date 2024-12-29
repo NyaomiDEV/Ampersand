@@ -14,7 +14,8 @@
 
 	import { inject, onMounted, ref, shallowRef } from "vue";
 	import { getFilteredTags } from "../lib/db/search";
-	import { getTagsTable, Tag } from "../lib/db/entities/tags";
+	import { getTagsTable } from "../lib/db/tables/tags";
+	import { Tag } from "../lib/db/entities";
 	import TagColor from "../components/tag/TagColor.vue";
 	import TagLabel from "../components/tag/TagLabel.vue";
 

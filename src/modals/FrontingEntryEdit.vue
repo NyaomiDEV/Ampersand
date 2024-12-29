@@ -26,7 +26,8 @@
 	import saveMD from "@material-design-icons/svg/outlined/save.svg";
 	import trashMD from "@material-design-icons/svg/outlined/delete.svg";
 
-	import { FrontingEntryComplete, getFrontingEntriesTable, newFrontingEntry } from '../lib/db/entities/frontingEntries';
+	import { Member, FrontingEntryComplete } from "../lib/db/entities";
+	import { getFrontingEntriesTable, newFrontingEntry } from '../lib/db/tables/frontingEntries';
 	import { Ref, ShallowReactive, WatchStopHandle, inject, ref, shallowReactive, toRaw, watch } from "vue";
 
 	import MemberSelect from "./MemberSelect.vue";
@@ -35,9 +36,8 @@
 	import dayjs from "dayjs";
 	import UTC from "dayjs/plugin/utc";
 	import Timezone from "dayjs/plugin/timezone";
-	import { Member } from "../lib/db/entities/members";
 	import { appConfig } from "../lib/config";
-	import { PartialBy } from "../lib/db/types";
+	import { PartialBy } from "../lib/types";
 	dayjs.extend(UTC);
 	dayjs.extend(Timezone);
 

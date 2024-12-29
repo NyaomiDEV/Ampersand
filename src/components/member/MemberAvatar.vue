@@ -3,7 +3,7 @@
 		IonAvatar,
 	} from "@ionic/vue";
 
-	import { Member } from '../../lib/db/entities/members';
+	import { Member } from '../../lib/db/entities';
 	import { getBlobURL } from '../../lib/util/blob';
 
 	const props = defineProps<{

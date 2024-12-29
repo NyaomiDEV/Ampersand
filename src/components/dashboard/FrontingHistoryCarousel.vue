@@ -3,14 +3,15 @@
 	import { inject, onMounted, onUnmounted, ref, ShallowRef, shallowRef, watch, WatchStopHandle } from 'vue';
 	import FrontingEntryAvatar from "../frontingEntry/FrontingEntryAvatar.vue";
 	import FrontingEntryLabel from "../frontingEntry/FrontingEntryLabel.vue";
-	import { FrontingEntryComplete, getFrontingEntriesTable, toFrontingEntryComplete } from '../../lib/db/entities/frontingEntries';
+	import { FrontingEntryComplete } from '../../lib/db/entities';
+	import { getFrontingEntriesTable, toFrontingEntryComplete } from '../../lib/db/tables/frontingEntries';
 	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
 	import dayjs from 'dayjs';
 
 	import { from, useObservable } from '@vueuse/rxjs';
 	import { liveQuery } from 'dexie';
-	import { getMembersTable } from '../../lib/db/entities/members';
-	import { PartialBy } from '../../lib/db/types';
+	import { getMembersTable } from '../../lib/db/tables/members';
+	import { PartialBy } from '../../lib/types';
 
 	const isIOS = inject<boolean>("isIOS");
 

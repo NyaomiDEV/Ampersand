@@ -3,7 +3,7 @@
 		IonLabel,
 	} from "@ionic/vue";
 
-	import { FrontingEntryComplete } from '../../lib/db/entities/frontingEntries';
+	import { FrontingEntryComplete } from '../../lib/db/entities';
 	import dayjs from "dayjs";
 	import RelativeTime from "dayjs/plugin/relativeTime";
 	import LocalizedFormat from "dayjs/plugin/localizedFormat";

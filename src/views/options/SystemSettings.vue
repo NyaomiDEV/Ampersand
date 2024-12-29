@@ -4,8 +4,8 @@
 	import { getBlobURL } from '../../lib/util/blob';
 	import { getFiles } from '../../lib/util/misc';
 	import { resizeImage } from '../../lib/util/image';
-	import { getSystem, modifySystem } from '../../lib/db/entities/system';
-	import { getMembersTable } from '../../lib/db/entities/members';
+	import { getSystem, modifySystem } from '../../lib/db/tables/system';
+	import { getMembersTable } from '../../lib/db/tables/members';
 
 	import {
 		peopleOutline as peopleIOS,

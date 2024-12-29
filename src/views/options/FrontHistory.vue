@@ -3,7 +3,8 @@
 	import { inject, onMounted, onUnmounted, ref, ShallowRef, shallowRef, watch, WatchStopHandle } from 'vue';
 	import FrontingEntryAvatar from "../../components/frontingEntry/FrontingEntryAvatar.vue";
 	import FrontingEntryLabel from "../../components/frontingEntry/FrontingEntryLabel.vue";
-	import { FrontingEntry, FrontingEntryComplete, getFronting, getFrontingEntriesTable, getMainFronter } from '../../lib/db/entities/frontingEntries';
+	import { FrontingEntry, FrontingEntryComplete } from '../../lib/db/entities';
+	import { getFronting, getFrontingEntriesTable, getMainFronter } from '../../lib/db/tables/frontingEntries';
 	import { getFilteredFrontingEntries } from '../../lib/db/search';
 	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
 	import dayjs from 'dayjs';
@@ -23,8 +24,8 @@
 	import { appConfig } from '../../lib/config';
 	import { from, useObservable } from '@vueuse/rxjs';
 	import { liveQuery } from 'dexie';
-	import { getMembersTable } from '../../lib/db/entities/members';
-	import { PartialBy } from '../../lib/db/types';
+	import { getMembersTable } from '../../lib/db/tables/members';
+	import { PartialBy } from '../../lib/types';
 
 	const props = defineProps<{
 		q?: string

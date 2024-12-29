@@ -3,7 +3,7 @@
 		IonAvatar,
 	} from "@ionic/vue";
 
-	import { FrontingEntryComplete } from '../../lib/db/entities/frontingEntries';
+	import { FrontingEntryComplete } from '../../lib/db/entities';
 	import { getBlobURL } from '../../lib/util/blob';
 
 	const props = defineProps<{

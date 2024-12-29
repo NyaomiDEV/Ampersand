@@ -1,10 +1,11 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonFab, IonFabButton, IonIcon, IonSearchbar, IonLabel, IonItemDivider, IonButtons, IonButton, IonDatetime } from '@ionic/vue';
 	import { inject, onMounted, onUnmounted, ref, shallowRef, watch, WatchStopHandle } from 'vue';
-	import { BoardMessage, BoardMessageComplete, getBoardMessagesTable } from '../../lib/db/entities/boardMessages';
+	import { BoardMessage, BoardMessageComplete } from '../../lib/db/entities';
+	import { getBoardMessagesTable } from '../../lib/db/tables/boardMessages';
 	import BoardMessageEdit from "../../modals/BoardMessageEdit.vue";
-	import { getFronting, getMainFronter } from '../../lib/db/entities/frontingEntries';
-	import { PartialBy } from '../../lib/db/types';
+	import { getFronting, getMainFronter } from '../../lib/db/tables/frontingEntries';
+	import { PartialBy } from '../../lib/types';
 
 	import {
 		calendarOutline as calendarIOS,
@@ -23,7 +24,7 @@
 	import { appConfig } from '../../lib/config';
 	import { from, useObservable } from '@vueuse/rxjs';
 	import { liveQuery } from 'dexie';
-	import { getMembersTable } from '../../lib/db/entities/members';
+	import { getMembersTable } from '../../lib/db/tables/members';
 	import { getFilteredBoardMessages } from '../../lib/db/search';
 	import MessageBoardCard from '../../components/MessageBoardCard.vue';
 
