@@ -1,17 +1,14 @@
 <script setup lang="ts">
 	import { IonList, IonItem, IonListHeader, IonLabel } from '@ionic/vue';
-	import { inject, onMounted, onUnmounted, ref, ShallowRef, shallowRef, watch, WatchStopHandle } from 'vue';
+	import { inject, onMounted, onUnmounted, ref, ShallowRef, shallowRef } from 'vue';
 	import FrontingEntryAvatar from "../frontingEntry/FrontingEntryAvatar.vue";
 	import FrontingEntryLabel from "../frontingEntry/FrontingEntryLabel.vue";
 	import { FrontingEntryComplete } from '../../lib/db/entities';
-	import { getFrontingEntriesTable, toFrontingEntryComplete } from '../../lib/db/tables/frontingEntries';
+	import { getFrontingEntries, toFrontingEntryComplete } from '../../lib/db/tables/frontingEntries';
 	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
 	import dayjs from 'dayjs';
-
-	import { from, useObservable } from '@vueuse/rxjs';
-	import { liveQuery } from 'dexie';
-	import { getMembersTable } from '../../lib/db/tables/members';
 	import { PartialBy } from '../../lib/types';
+	import { DatabaseEvent, DatabaseEvents } from '../../lib/db';
 
 	const isIOS = inject<boolean>("isIOS");
 
@@ -25,27 +22,29 @@
 	const frontingEntry = shallowRef({...emptyFrontingEntry});
 	const frontingEntries: ShallowRef<FrontingEntryComplete[]> = shallowRef([]);
 
-	let handle: WatchStopHandle;
-
-	onMounted(() => {
-		handle = watch([
-			useObservable(from(liveQuery(() => getFrontingEntriesTable().toArray()))),
-			useObservable(from(liveQuery(() => getMembersTable().toArray()))),
-		], async () => {
+	const listener = async (event: Event) => {
+		if(["members", "frontingEntries"].includes((event as DatabaseEvent).data.table)){
 			frontingEntries.value = await Promise.all(
-				(
-					await getFrontingEntriesTable()
-						.filter(x => !!x.endTime && dayjs.duration(dayjs().diff(x.endTime)).asHours() < 48)
-						.toArray()
-				)
+				(await getFrontingEntries())
+					.filter(x => !!x.endTime && dayjs.duration(dayjs().diff(x.endTime)).asHours() < 48)
+					.sort((a, b) => b.endTime!.getTime() - a.endTime!.getTime())
+					.map(x => toFrontingEntryComplete(x))
+			);
+		}
+	}
+
+	onMounted(async () => {
+		DatabaseEvents.addEventListener("updated", listener);
+		frontingEntries.value = await Promise.all(
+			(await getFrontingEntries())
+				.filter(x => !!x.endTime && dayjs.duration(dayjs().diff(x.endTime)).asHours() < 48)
 				.sort((a, b) => b.endTime!.getTime() - a.endTime!.getTime())
 				.map(x => toFrontingEntryComplete(x))
-			);
-		}, { immediate: true });
+		);
 	});
 
-	onUnmounted(async () => {
-		handle();
+	onUnmounted(() => {
+		DatabaseEvents.removeEventListener("updated", listener);
 	});
 
 	async function showModal(clickedFrontingEntry: FrontingEntryComplete){

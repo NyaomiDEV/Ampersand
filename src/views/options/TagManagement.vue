@@ -1,17 +1,16 @@
 <script setup lang="ts">
 	import { IonContent, IonSearchbar, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonSegment, IonSegmentButton, IonLabel, IonFab, IonFabButton, IonIcon, IonItem } from '@ionic/vue';
-	import { inject, onMounted, onUnmounted, Ref, ref, shallowRef, watch, WatchStopHandle } from 'vue';
+	import { inject, onMounted, onUnmounted, Ref, ref, shallowRef } from 'vue';
 	import { addOutline as addIOS } from "ionicons/icons";
 	import addMD from "@material-design-icons/svg/outlined/add.svg";
 	import TagEdit from "../../modals/TagEdit.vue";
 	import { getFilteredTags } from '../../lib/db/search';
-	import { getTagsTable } from '../../lib/db/tables/tags';
+	import { getTags } from '../../lib/db/tables/tags';
 	import { Tag } from '../../lib/db/entities';
 	import { PartialBy } from '../../lib/types';
 	import TagColor from '../../components/tag/TagColor.vue';
 	import TagLabel from '../../components/tag/TagLabel.vue';
-	import { from, useObservable } from '@vueuse/rxjs';
-	import { liveQuery } from 'dexie';
+	import { DatabaseEvent, DatabaseEvents } from '../../lib/db';
 
 	const isIOS = inject<boolean>("isIOS");
 
@@ -29,21 +28,18 @@
 
 	const tag: Ref<PartialBy<Tag, "uuid">> = ref({...emptyTag});
 
-	const watchStopHandlers: WatchStopHandle[] = [];
+	const listener = async (event: Event) => {
+		if((event as DatabaseEvent).data.table === "tags")
+			tags.value = await getTags();
+	}
 
-	onMounted(() => {
-		watchStopHandlers.push(
-			watch(
-				useObservable(from(liveQuery(() => getTagsTable().toArray()))),
-				async () => tags.value = await getTagsTable().toArray(),
-				{ immediate: true }
-			)
-		);
+	onMounted(async () => {
+		DatabaseEvents.addEventListener("updated", listener);
+		tags.value = await getTags();
 	});
 
 	onUnmounted(() => {
-		watchStopHandlers.forEach(x => x());
-		watchStopHandlers.length = 0;
+		DatabaseEvents.removeEventListener("updated", listener);
 	});
 
 	async function showModal(clickedTag?: Tag){

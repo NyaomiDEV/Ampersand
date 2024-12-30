@@ -1,10 +1,10 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonLabel, IonToolbar, IonBackButton, IonItem, IonItemDivider, IonDatetime, IonButtons, IonIcon, IonButton, IonSearchbar, IonFabButton, IonFab } from '@ionic/vue';
-	import { inject, onMounted, onUnmounted, ref, ShallowRef, shallowRef, watch, WatchStopHandle } from 'vue';
+	import { inject, onMounted, onUnmounted, ref, ShallowRef, shallowRef } from 'vue';
 	import FrontingEntryAvatar from "../../components/frontingEntry/FrontingEntryAvatar.vue";
 	import FrontingEntryLabel from "../../components/frontingEntry/FrontingEntryLabel.vue";
 	import { FrontingEntry, FrontingEntryComplete } from '../../lib/db/entities';
-	import { getFronting, getFrontingEntriesTable, getMainFronter } from '../../lib/db/tables/frontingEntries';
+	import { getFronting, getFrontingEntries, getMainFronter } from '../../lib/db/tables/frontingEntries';
 	import { getFilteredFrontingEntries } from '../../lib/db/search';
 	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
 	import dayjs from 'dayjs';
@@ -22,10 +22,8 @@
 	import addMD from "@material-design-icons/svg/outlined/add.svg";
 
 	import { appConfig } from '../../lib/config';
-	import { from, useObservable } from '@vueuse/rxjs';
-	import { liveQuery } from 'dexie';
-	import { getMembersTable } from '../../lib/db/tables/members';
 	import { PartialBy } from '../../lib/types';
+	import { DatabaseEvent, DatabaseEvents } from '../../lib/db';
 
 	const props = defineProps<{
 		q?: string
@@ -51,20 +49,19 @@
 	const frontingEntries: ShallowRef<FrontingEntry[]> = shallowRef([]);
 	const filteredFrontingEntries = getFilteredFrontingEntries(search, frontingEntries);
 
-	let handle: WatchStopHandle;
+	const listener = async (event: Event) => {
+		if(["frontingEntries", "members"].includes((event as DatabaseEvent).data.table))
+			frontingEntries.value = await getFrontingEntries();
+	}
 
 	onMounted(async () => {
-		handle = watch([
-			useObservable(from(liveQuery(() => getFrontingEntriesTable().toArray()))),
-			useObservable(from(liveQuery(() => getMembersTable().toArray())))
-		], async () => {
-			frontingEntries.value = await getFrontingEntriesTable().toArray();
-		}, { immediate: true });
+		DatabaseEvents.addEventListener("updated", listener);
+		frontingEntries.value = await getFrontingEntries();
 		frontingEntry.value = { ...filteredFrontingEntries.value[0] };
 	});
 
 	onUnmounted(async () => {
-		handle();
+		DatabaseEvents.removeEventListener("updated", listener);
 	});
 
 	async function showModal(clickedFrontingEntry?: FrontingEntryComplete){

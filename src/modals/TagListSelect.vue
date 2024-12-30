@@ -14,7 +14,7 @@
 
 	import { inject, onMounted, ref, shallowRef } from "vue";
 	import { getFilteredTags } from "../lib/db/search";
-	import { getTagsTable } from "../lib/db/tables/tags";
+	import { getTags } from "../lib/db/tables/tags";
 	import { Tag } from "../lib/db/entities";
 	import TagColor from "../components/tag/TagColor.vue";
 	import TagLabel from "../components/tag/TagLabel.vue";
@@ -36,7 +36,7 @@
 	const filteredTags = getFilteredTags(search, ref("member"), tags);
 
 	onMounted(async () => {
-		tags.value = await getTagsTable().toArray()
+		tags.value = await getTags()
 	});
 
 	function check(ev: CheckboxCustomEvent){

@@ -1,7 +1,7 @@
 import Dexie from 'dexie';
-import { AmpersandDatabase } from '../../types';
+import { AmpersandDexieDatabase } from '../../types';
 
-export const db = new Dexie("ampersandDatabase") as AmpersandDatabase;
+export const db = new Dexie("ampersandDatabase") as AmpersandDexieDatabase;
 
 db.version(1).stores({
 	boardMessages: "uuid, member, title",

@@ -1,30 +1,28 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, onIonViewWillEnter, onIonViewWillLeave } from '@ionic/vue';
-	import { inject, ref, watch, WatchStopHandle } from 'vue';
-	import { getFrontingEntriesTable, getMainFronter } from '../../lib/db/tables/frontingEntries';
+	import { inject, ref } from 'vue';
+	import { getMainFronter } from '../../lib/db/tables/frontingEntries';
 	import { Member } from '../../lib/db/entities';
-	import { useObservable } from '@vueuse/rxjs';
-	import { from } from 'rxjs';
-	import { liveQuery } from 'dexie';
 
 	import CurrentFrontersCarousel from '../../components/dashboard/CurrentFrontersCarousel.vue';
 	import MessageBoardCarousel from '../../components/dashboard/MessageBoardCarousel.vue';
 	import FrontingHistoryCarousel from '../../components/dashboard/FrontingHistoryCarousel.vue';
+	import { DatabaseEvent, DatabaseEvents } from '../../lib/db';
 
 	const mainFronter = ref<Member>();
 
-	let handle: WatchStopHandle;
-	onIonViewWillEnter(() => {
-		handle = watch(
-			useObservable(from(liveQuery(() => getFrontingEntriesTable().toArray()))),
-			async () => {
-				mainFronter.value = await getMainFronter();
-			},
-			{ immediate: true }
-		);
+	const listener = async (event: Event) => {
+		if((event as DatabaseEvent).data.table === "frontingEntries")
+			mainFronter.value = await getMainFronter();
+	}
+	
+	onIonViewWillEnter(async () => {
+		DatabaseEvents.addEventListener("updated", listener);
+		mainFronter.value = await getMainFronter();
 	});
-	onIonViewWillLeave(() => handle());
-
+	onIonViewWillLeave(() => {
+		DatabaseEvents.removeEventListener("updated", listener);
+	});
 
 	const isIOS = inject<boolean>("isIOS");
 </script>

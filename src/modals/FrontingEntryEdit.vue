@@ -27,7 +27,7 @@
 	import trashMD from "@material-design-icons/svg/outlined/delete.svg";
 
 	import { Member, FrontingEntryComplete } from "../lib/db/entities";
-	import { getFrontingEntriesTable, newFrontingEntry } from '../lib/db/tables/frontingEntries';
+	import { newFrontingEntry, updateFrontingEntry, removeFrontingEntry } from '../lib/db/tables/frontingEntries';
 	import { Ref, ShallowReactive, WatchStopHandle, inject, ref, shallowReactive, toRaw, watch } from "vue";
 
 	import MemberSelect from "./MemberSelect.vue";
@@ -75,7 +75,7 @@
 			return;
 		}
 
-		await getFrontingEntriesTable().update(uuid, {
+		await updateFrontingEntry(uuid, {
 			..._frontingEntry,
 			member: _frontingEntry.member.uuid
 		});
@@ -88,9 +88,9 @@
 	}
 
 	async function deleteFrontingEntry(){
-		if(!frontingEntry.value) return;
+		if(!frontingEntry.value.uuid) return;
 
-		await getFrontingEntriesTable().delete(frontingEntry.value.uuid);
+		await removeFrontingEntry(frontingEntry.value.uuid);
 		try{
 			await modalController.dismiss(undefined, "deleted");
 		}catch(_){}

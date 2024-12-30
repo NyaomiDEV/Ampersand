@@ -24,8 +24,8 @@
 	import saveMD from "@material-design-icons/svg/outlined/save.svg";
 	import trashMD from "@material-design-icons/svg/outlined/delete.svg";
 
-	import { BoardMessageComplete, Member } from "../lib/db/entities";
-	import { getBoardMessagesTable, newBoardMessage } from "../lib/db/tables/boardMessages";
+	import { BoardMessage, BoardMessageComplete, Member } from "../lib/db/entities";
+	import { updateBoardMessage, deleteBoardMessage, newBoardMessage } from "../lib/db/tables/boardMessages";
 	import { inject, ref, shallowReactive, toRaw } from "vue";
 	import { PartialBy } from "../lib/types";
 	import MemberAvatar from "../components/member/MemberAvatar.vue";
@@ -55,7 +55,7 @@
 			return;
 		}
 
-		await getBoardMessagesTable().update(uuid, {
+		await updateBoardMessage(uuid, {
 			..._boardMessage,
 			member: _boardMessage.member.uuid
 		});
@@ -67,10 +67,10 @@
 		// however it's safe for us to ignore
 	}
 
-	async function deleteBoardMessage(){
+	async function _deleteBoardMessage(){
 		if(!boardMessage.value.uuid) return;
 
-		await getBoardMessagesTable().delete(boardMessage.value.uuid);
+		await deleteBoardMessage(boardMessage.value.uuid);
 
 		try{
 			await modalController.dismiss(null, "deleted");
@@ -128,7 +128,7 @@
 						<IonTextarea :fill="!isIOS ? 'outline' : undefined" auto-grow :label="$t('options:messageBoard.edit.body')" labelPlacement="floating" v-model="boardMessage.body" />
 					</IonItem>
 
-					<IonItem button v-if="boardMessage.uuid" @click="deleteBoardMessage">
+					<IonItem button v-if="boardMessage.uuid" @click="_deleteBoardMessage">
 						<IonIcon :ios="trashIOS" :md="trashMD" slot="start" aria-hidden="true" color="danger"/>
 						<IonLabel color="danger">
 							<h3>{{ $t("options:messageBoard.edit.delete.title") }}</h3>

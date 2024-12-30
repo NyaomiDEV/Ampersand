@@ -560,21 +560,6 @@
   resolved "https://registry.yarnpkg.com/@vue/shared/-/shared-3.5.13.tgz#87b309a6379c22b926e696893237826f64339b6f"
   integrity sha512-/hnE/qP5ZoGpol0a5mDi45bOd7t3tjYJBjsgCsivow7D48cJeV5l05RD82lPqi7gRiphZM37rnhW1l6ZoCNNnQ==
 
-"@vueuse/rxjs@^12.2.0":
-  version "12.2.0"
-  resolved "https://registry.yarnpkg.com/@vueuse/rxjs/-/rxjs-12.2.0.tgz#7028456cd5f5dbc5e0e3a76d0001a217b808930b"
-  integrity sha512-U3dWHDhVVmX5FsoURptnDh1y8ycm4tY4RLk97EmklIcfY1cYjdFuhPL3Gk9fCmzTkg8cY6sY6/E6yqIynazRWw==
-  dependencies:
-    "@vueuse/shared" "12.2.0"
-    vue "^3.5.13"
-
-"@vueuse/shared@12.2.0":
-  version "12.2.0"
-  resolved "https://registry.yarnpkg.com/@vueuse/shared/-/shared-12.2.0.tgz#495eed20416d4975ea2570d3087db4eebcb92252"
-  integrity sha512-SRr4AZwv/giS+EmyA1ZIzn3/iALjjnWAGaBNmoDTMEob9JwQaevAocuaMDnPAvU7Z35Y5g3CFRusCWgp1gVJ3Q==
-  dependencies:
-    vue "^3.5.13"
-
 alien-signals@^0.4.9:
   version "0.4.11"
   resolved "https://registry.yarnpkg.com/alien-signals/-/alien-signals-0.4.11.tgz#322a22cf263060b5ede411d772f6cf499172bf64"
@@ -1316,13 +1301,6 @@ rollup@^4.23.0:
     "@rollup/rollup-win32-ia32-msvc" "4.29.1"
     "@rollup/rollup-win32-x64-msvc" "4.29.1"
     fsevents "~2.3.2"
-
-rxjs@^7.8.1:
-  version "7.8.1"
-  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-7.8.1.tgz#6f6f3d99ea8044291efd92e7c7fcf562c4057543"
-  integrity sha512-AA3TVj+0A2iuIoQkWEK/tqFjBq2j+6PO6Y0zJcvzLAFhEFIO3HL0vls9hWLncZbAAbK0mar7oZ4V079I/qPMxg==
-  dependencies:
-    tslib "^2.1.0"
 
 source-map-js@^1.0.1, source-map-js@^1.2.0:
   version "1.2.0"

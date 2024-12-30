@@ -1,34 +1,53 @@
 import { db } from ".";
+import { DatabaseEvent, DatabaseEvents } from "../..";
 import { AppNamespace, makeUUIDv5 } from "../../../util/uuid"
 import { UUIDable, System } from "../../entities"
-
-export function getSystemTable(){
-	return db.system;
-}
 
 export function genid(name: string) {
 	return makeUUIDv5(AppNamespace, name);
 }
 
 export async function newSystem(system: Omit<System, keyof UUIDable>){
-	const uuid = genid(system.name);
-	const res = await getSystemTable().add({
-		...system,
-		uuid
-	});
-
-	return res;
+	try{
+		const uuid = genid(system.name);
+		await db.system.add({
+			...system,
+			uuid
+		});
+		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
+			table: "system",
+			event: "new",
+			data: uuid
+		}));
+		return true;
+	}catch(error){
+		return false;
+	}
 }
 
 // Extra because there shall only be one
 export async function getSystem(){
-	return await getSystemTable().toCollection().first();
+	return await db.system.toCollection().first();
 }
 
 export async function getSystemUUID(){
-	return (await getSystemTable().toCollection().first())?.uuid;
+	return (await db.system.toCollection().first())?.uuid;
 }
 
 export async function modifySystem(system: Partial<System>) {
-	return db.system.update(await getSystemUUID(), system);
+	try {
+		const uuid = await getSystemUUID();
+		const updated = await db.system.update(uuid, system);
+		if(updated){
+			DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
+				table: "system",
+				event: "modified",
+				data: uuid
+			}));
+			return true;
+		}
+		return false;
+	} catch (error) {
+		return false;
+	}
 }

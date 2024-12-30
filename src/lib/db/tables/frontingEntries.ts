@@ -1,9 +1,9 @@
-import { UUIDable, Member, FrontingEntry, FrontingEntryComplete } from "../entities";
+import { UUIDable, Member, FrontingEntry, FrontingEntryComplete, UUID } from "../entities";
 
 const impl = await import('../impl/dexie/frontingEntries');
 
-export function getFrontingEntriesTable(){
-	return impl.getFrontingEntriesTable();
+export function getFrontingEntries(){
+	return impl.getFrontingEntries();
 }
 
 export function toFrontingEntryComplete(frontingEntry: FrontingEntry): Promise<FrontingEntryComplete> {
@@ -12,6 +12,14 @@ export function toFrontingEntryComplete(frontingEntry: FrontingEntry): Promise<F
 
 export function newFrontingEntry(frontingEntry: Omit<FrontingEntry, keyof UUIDable>) {
 	return impl.newFrontingEntry(frontingEntry);
+}
+
+export function removeFrontingEntry(uuid: UUID){
+	return impl.removeFrontingEntry(uuid);
+}
+
+export function updateFrontingEntry(uuid: UUID, newContent: Partial<FrontingEntry>){
+	return impl.updateFrontingEntry(uuid, newContent);
 }
 
 export function removeFronter(member: Member) {

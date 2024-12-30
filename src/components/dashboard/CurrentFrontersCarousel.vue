@@ -1,16 +1,13 @@
 <script setup lang="ts">
 	import { IonCard, IonCardContent, IonLabel, IonListHeader } from '@ionic/vue';
 	import FrontingEntryAvatar from '../frontingEntry/FrontingEntryAvatar.vue';
-	import { onMounted, onUnmounted, ref, shallowRef, watch, WatchStopHandle } from 'vue';
+	import { onMounted, onUnmounted, ref, shallowRef } from 'vue';
 	import { PartialBy } from '../../lib/types';
 	import { FrontingEntryComplete } from '../../lib/db/entities';
-	import { getFrontingEntriesTable, toFrontingEntryComplete } from '../../lib/db/tables/frontingEntries';
-	import { from, useObservable } from '@vueuse/rxjs';
-	import { liveQuery } from 'dexie';
-	import { getMembersTable } from '../../lib/db/tables/members';
+	import { getFrontingEntries, toFrontingEntryComplete } from '../../lib/db/tables/frontingEntries';
 	import { formatWrittenTime } from "../../lib/util/misc";
 	import FrontingEntryEdit from '../../modals/FrontingEntryEdit.vue';
-
+	import { DatabaseEvent, DatabaseEvents } from '../../lib/db';
 
 	const frontingEntryModal = ref();
 	const emptyFrontingEntry: PartialBy<FrontingEntryComplete, "uuid" | "member"> = {
@@ -24,30 +21,34 @@
 
 	const now = ref(new Date());
 
-	let handle: WatchStopHandle;
 	let interval: NodeJS.Timeout;
+
+	const listener = async (event: Event) => {
+		if(["members", "frontingEntries"].includes((event as DatabaseEvent).data.table)){
+			frontingEntries.value = await Promise.all(
+				(await getFrontingEntries())
+					.filter(x => !x.endTime)
+					.sort((a, b) => b.isMainFronter ? 1 : b.startTime.getTime() - a.startTime.getTime())
+					.map(x => toFrontingEntryComplete(x))
+			);
+		}
+	}
 
 	onMounted(async () => {
 		interval = setInterval(() => now.value = new Date(), 1000);
-		handle = watch([
-			useObservable(from(liveQuery(() => getFrontingEntriesTable().toArray()))),
-			useObservable(from(liveQuery(() => getMembersTable().toArray())))
-		], async () => {
-			frontingEntries.value = await Promise.all(
-				(await getFrontingEntriesTable()
+		DatabaseEvents.addEventListener("updated", listener);
+		frontingEntries.value = await Promise.all(
+				(await getFrontingEntries())
 					.filter(x => !x.endTime)
-					.toArray()
-				)
-				.sort((a, b) => b.isMainFronter ? 1 : b.startTime.getTime() - a.startTime.getTime())
-				.map(x => toFrontingEntryComplete(x))
+					.sort((a, b) => b.isMainFronter ? 1 : b.startTime.getTime() - a.startTime.getTime())
+					.map(x => toFrontingEntryComplete(x))
 			);
-		}, { immediate: true });
 		frontingEntry.value = { ...frontingEntries.value[0] };
 	});
 
-	onUnmounted(async () => {
+	onUnmounted(() => {
 		clearInterval(interval);
-		handle();
+		DatabaseEvents.removeEventListener("updated", listener);
 	});
 
 	async function showModal(clickedFrontingEntry: FrontingEntryComplete){

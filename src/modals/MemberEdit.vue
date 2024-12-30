@@ -43,8 +43,8 @@
 	import trashMD from "@material-design-icons/svg/outlined/delete.svg";
 
 	import { Member, Tag } from "../lib/db/entities";
-	import { getMembersTable, newMember } from '../lib/db/tables/members';
-	import { getTagsTable } from "../lib/db/tables/tags";
+	import { newMember, removeMember, updateMember } from '../lib/db/tables/members';
+	import { getTags } from "../lib/db/tables/tags";
 	import { getBlobURL } from '../lib/util/blob';
 	import { getFiles } from "../lib/util/misc";
 	import { resizeImage } from "../lib/util/image";
@@ -69,7 +69,7 @@
 	const self = ref();
 
 	onMounted(async () => {
-		tags.value = await getTagsTable().toArray();
+		tags.value = await getTags();
 	});
 
 	async function toggleEditing(){
@@ -88,7 +88,7 @@
 			return;
 		}
 
-		await getMembersTable().update(uuid, _member);
+		await updateMember(uuid, _member);
 			
 		isEditing.value = false;
 	}
@@ -103,7 +103,7 @@
 	async function deleteMember() {
 		if(!member.value.uuid) return;
 
-		await getMembersTable().delete(member.value.uuid);
+		await removeMember(member.value.uuid);
 		
 		try{
 			await modalController.dismiss();
@@ -121,7 +121,7 @@
 
 		selectedTags.length = 0;
 		for(const uuid of member.value.tags){
-			const tag = await getTagsTable().get(uuid);
+			const tag = (await getTags()).find(x => x.uuid === uuid);
 			selectedTags.push(tag!);
 		}
 

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonFab, IonFabButton, IonIcon, IonSearchbar, IonLabel, IonItemDivider, IonButtons, IonButton, IonDatetime } from '@ionic/vue';
-	import { inject, onMounted, onUnmounted, ref, shallowRef, watch, WatchStopHandle } from 'vue';
+	import { inject, onMounted, onUnmounted, ref, shallowRef } from 'vue';
 	import { BoardMessage, BoardMessageComplete } from '../../lib/db/entities';
-	import { getBoardMessagesTable } from '../../lib/db/tables/boardMessages';
+	import { getBoardMessages } from '../../lib/db/tables/boardMessages';
 	import BoardMessageEdit from "../../modals/BoardMessageEdit.vue";
 	import { getFronting, getMainFronter } from '../../lib/db/tables/frontingEntries';
 	import { PartialBy } from '../../lib/types';
@@ -22,11 +22,9 @@
 	dayjs.extend(LocalizedFormat);
 
 	import { appConfig } from '../../lib/config';
-	import { from, useObservable } from '@vueuse/rxjs';
-	import { liveQuery } from 'dexie';
-	import { getMembersTable } from '../../lib/db/tables/members';
 	import { getFilteredBoardMessages } from '../../lib/db/search';
 	import MessageBoardCard from '../../components/MessageBoardCard.vue';
+	import { DatabaseEvent, DatabaseEvents } from '../../lib/db';
 
 	const props = defineProps<{
 		q?: string
@@ -51,20 +49,21 @@
 	const isCalendarView = ref(false);
 	const date = ref(dayjs().toISOString());
 
-	let handle: WatchStopHandle;
+	const listener = async (event: Event) => {
+		if(["members", "boardMessages"].includes((event as DatabaseEvent).data.table)){
+			boardMessages.value = await getBoardMessages();
+		}
+	}
 
-	onMounted(() => {
-		handle = watch([
-			useObservable(from(liveQuery(() => getBoardMessagesTable().toArray()))),
-			useObservable(from(liveQuery(() => getMembersTable().toArray()))),
-		], async () => {
-			boardMessages.value = await getBoardMessagesTable().toArray();
-		}, { immediate: true });
+	onMounted(async () => {
+		DatabaseEvents.addEventListener("updated", listener);
+		boardMessages.value = await getBoardMessages();
 	});
 
 	onUnmounted(() => {
-		handle();
+		DatabaseEvents.removeEventListener("updated", listener);
 	});
+
 
 	function getGrouped(entries: BoardMessageComplete[]){
 		const map = new Map<string, BoardMessageComplete[]>();

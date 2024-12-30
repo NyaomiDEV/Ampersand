@@ -12,14 +12,13 @@
 		CheckboxCustomEvent,
 	} from "@ionic/vue";
 
-	import { inject, onMounted, onUnmounted, ref, shallowRef, watch, WatchStopHandle } from "vue";
+	import { inject, onMounted, onUnmounted, ref, shallowRef } from "vue";
 	import { getFilteredMembers } from "../lib/db/search";
 	import MemberAvatar from "../components/member/MemberAvatar.vue";
 	import MemberLabel from "../components/member/MemberLabel.vue";
 	import { Member } from "../lib/db/entities";
-	import { getMembersTable } from "../lib/db/tables/members";
-	import { from, useObservable } from "@vueuse/rxjs";
-	import { liveQuery } from "dexie";
+	import { getMembers } from "../lib/db/tables/members";
+	import { DatabaseEvent, DatabaseEvents } from "../lib/db";
 
 	const isIOS = inject<boolean>("isIOS");
 
@@ -55,21 +54,18 @@
 	const members = shallowRef<Member[]>([]);
 	const filteredMembers = getFilteredMembers(search, members);
 
-	const watchStopHandlers: WatchStopHandle[] = [];
+	const listener = async (event: Event) => {
+		if((event as DatabaseEvent).data.table == "members")
+			members.value = await getMembers();
+	}
 
-	onMounted(() => {
-		watchStopHandlers.push(
-			watch(
-				useObservable(from(liveQuery(() => getMembersTable().toArray()))),
-				async () => members.value = await getMembersTable().toArray(),
-				{ immediate: true }
-			)
-		);
+	onMounted(async () => {
+		DatabaseEvents.addEventListener("updated", listener);
+		members.value = await getMembers();
 	});
 
 	onUnmounted(() => {
-		watchStopHandlers.forEach(x => x());
-		watchStopHandlers.length = 0;
+		DatabaseEvents.removeEventListener("updated", listener);
 	});
 </script>
 

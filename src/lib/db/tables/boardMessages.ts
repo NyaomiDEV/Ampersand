@@ -1,9 +1,9 @@
-import { BoardMessage, BoardMessageComplete, UUIDable } from '../entities';
+import { BoardMessage, BoardMessageComplete, UUIDable, UUID } from '../entities';
 
 const impl = await import('../impl/dexie/boardMessages');
 
-export function getBoardMessagesTable() {
-	return impl.getBoardMessagesTable();
+export function getBoardMessages(){
+	return impl.getBoardMessages();
 }
 
 export function toBoardMessageComplete(boardMessage: BoardMessage): Promise<BoardMessageComplete> {
@@ -12,4 +12,12 @@ export function toBoardMessageComplete(boardMessage: BoardMessage): Promise<Boar
 
 export function newBoardMessage(boardMessage: Omit<BoardMessage, keyof UUIDable>) {
 	return impl.newBoardMessage(boardMessage);
+}
+
+export function deleteBoardMessage(uuid: UUID) {
+	return impl.deleteBoardMessage(uuid);
+}
+
+export function updateBoardMessage(uuid: UUID, newContent: Partial<BoardMessage>) {
+	return impl.updateBoardMessage(uuid, newContent);
 }

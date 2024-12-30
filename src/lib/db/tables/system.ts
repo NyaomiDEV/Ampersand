@@ -2,10 +2,6 @@ import { UUIDable, System } from "../entities";
 
 const impl = await import('../impl/dexie/system');
 
-export function getSystemTable(){
-	return impl.getSystemTable();
-}
-
 export function newSystem(system: Omit<System, keyof UUIDable>){
 	return impl.newSystem(system);
 }

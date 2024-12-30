@@ -1,15 +1,15 @@
 import { db } from ".";
+import { DatabaseEvents, DatabaseEvent } from "../..";
 import { makeUUIDv5 } from "../../../util/uuid";
-import { UUIDable, BoardMessage, BoardMessageComplete } from "../../entities";
-import { getMembersTable } from "./members";
+import { UUID, UUIDable, BoardMessage, BoardMessageComplete } from "../../entities";
 import { getSystemUUID } from "./system";
 
-export function getBoardMessagesTable() {
-	return db.boardMessages;
+export async function getBoardMessages(){
+	return await db.boardMessages.toArray();
 }
 
 export async function toBoardMessageComplete(boardMessage: BoardMessage): Promise<BoardMessageComplete> {
-	const member = (await getMembersTable().get(boardMessage.member))!;
+	const member = (await db.members.get(boardMessage.member))!;
 	return { ...boardMessage, member };
 }
 
@@ -18,9 +18,50 @@ async function genid(name: string) {
 }
 
 export async function newBoardMessage(boardMessage: Omit<BoardMessage, keyof UUIDable>) {
-	const uuid = await genid(boardMessage.title);
-	return await getBoardMessagesTable().add({
-		...boardMessage,
-		uuid
-	});
+	try{
+		const uuid = await genid(boardMessage.title);
+		await db.boardMessages.add({
+			...boardMessage,
+			uuid
+		});
+		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
+			table: "boardMessages",
+			event: "new",
+			data: uuid
+		}));
+		return true;
+	}catch(error){
+		return false;
+	}
+}
+
+export async function deleteBoardMessage(uuid: UUID) {
+	try {
+		await db.boardMessages.delete(uuid);
+		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
+			table: "boardMessages",
+			event: "deleted",
+			data: uuid
+		}));
+		return true;
+	} catch (error) {
+		return false;
+	}
+}
+
+export async function updateBoardMessage(uuid: UUID, newContent: Partial<BoardMessage>) {
+	try{
+		const updated = await db.boardMessages.update(uuid, newContent);
+		if(updated) {
+			DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
+				table: "boardMessages",
+				event: "modified",
+				data: uuid
+			}));
+			return true;
+		}
+		return false;
+	}catch(error){
+		return false;
+	}
 }

@@ -1,18 +1,16 @@
 <script setup lang="ts">
 	import { IonList, IonLabel, IonButton, IonListHeader } from '@ionic/vue';
-	import { inject, onMounted, onUnmounted, ref, shallowRef, watch, WatchStopHandle } from 'vue';
-	import { getBoardMessagesTable, toBoardMessageComplete } from '../../lib/db/tables/boardMessages';
+	import { inject, onMounted, onUnmounted, ref, shallowRef } from 'vue';
+	import { getBoardMessages, toBoardMessageComplete } from '../../lib/db/tables/boardMessages';
 	import { BoardMessageComplete } from '../../lib/db/entities';
 	import BoardMessageEdit from "../../modals/BoardMessageEdit.vue";
 	import { PartialBy } from '../../lib/types';
 
 	import dayjs from 'dayjs';
 
-	import { from, useObservable } from '@vueuse/rxjs';
-	import { liveQuery } from 'dexie';
-	import { getMembersTable } from '../../lib/db/tables/members';
 	import { getFronting, getMainFronter } from '../../lib/db/tables/frontingEntries';
 	import MessageBoardCard from '../MessageBoardCard.vue';
+	import { DatabaseEvent, DatabaseEvents } from '../../lib/db';
 
 	const isIOS = inject<boolean>("isIOS");
 
@@ -26,25 +24,27 @@
 
 	const boardMessages = shallowRef<BoardMessageComplete[]>([]);
 
-	let handle: WatchStopHandle;
-
-	onMounted(() => {
-		handle = watch([
-			useObservable(from(liveQuery(() => getBoardMessagesTable().toArray()))),
-			useObservable(from(liveQuery(() => getMembersTable().toArray()))),
-		], async () => {
+	const listener = async (event: Event) => {
+		if(["members", "boardMessages"].includes((event as DatabaseEvent).data.table)){
 			boardMessages.value = await Promise.all(
-				(
-					await getBoardMessagesTable()
-						.filter(x => dayjs(x.date).startOf('day').valueOf() === dayjs().startOf('day').valueOf())
-						.toArray()
-				).map(x => toBoardMessageComplete(x))
+				(await getBoardMessages())
+					.filter(x => dayjs(x.date).startOf('day').valueOf() === dayjs().startOf('day').valueOf())
+					.map(x => toBoardMessageComplete(x))
 			);
-		}, { immediate: true });
+		}
+	}
+
+	onMounted(async () => {
+		DatabaseEvents.addEventListener("updated", listener);
+		boardMessages.value = await Promise.all(
+			(await getBoardMessages())
+				.filter(x => dayjs(x.date).startOf('day').valueOf() === dayjs().startOf('day').valueOf())
+				.map(x => toBoardMessageComplete(x))
+		);
 	});
 
 	onUnmounted(() => {
-		handle();
+		DatabaseEvents.removeEventListener("updated", listener);
 	});
 
 	async function showModal(_boardMessage?: BoardMessageComplete){

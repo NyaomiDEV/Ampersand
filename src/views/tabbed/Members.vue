@@ -17,7 +17,7 @@
 		onIonViewWillEnter,
 		onIonViewWillLeave,
 	} from '@ionic/vue';
-	import { inject, Ref, ref, shallowReactive, shallowRef, watch, WatchStopHandle } from 'vue';
+	import { inject, Ref, ref, shallowReactive, shallowRef } from 'vue';
 	import { getFilteredMembers } from '../../lib/db/search';
 	import { accessibilityConfig } from '../../lib/config';
 
@@ -42,15 +42,14 @@
 	import archivedMD from "@material-design-icons/svg/outlined/archive.svg";
 
 	import MemberEdit from '../../modals/MemberEdit.vue';
-	import { getMembersTable } from '../../lib/db/tables/members';
+	import { getMembers } from '../../lib/db/tables/members';
 	import { Member, FrontingEntry } from '../../lib/db/entities';
 	import { PartialBy } from '../../lib/types';
-	import { getCurrentFrontEntryForMember, getFrontingEntriesTable, newFrontingEntry, removeFronter, setMainFronter, setSoleFronter } from '../../lib/db/tables/frontingEntries';
+	import { getCurrentFrontEntryForMember, newFrontingEntry, removeFronter, setMainFronter, setSoleFronter } from '../../lib/db/tables/frontingEntries';
 	import MemberAvatar from '../../components/member/MemberAvatar.vue';
 	import MemberLabel from '../../components/member/MemberLabel.vue';
-	import { from, useObservable } from '@vueuse/rxjs';
-	import { liveQuery } from 'dexie';
 	import { globalEvents } from '../../lib/globalEvents';
+	import { DatabaseEvent, DatabaseEvents } from '../../lib/db';
 
 	const isIOS = inject<boolean>("isIOS");
 
@@ -76,32 +75,32 @@
 		search.value = e.detail.search;
 	});
 
-	const watchStopHandlers: WatchStopHandle[] = [];
+	const listeners = [
+		async (event: Event) => {
+			if((event as DatabaseEvent).data.table === "members")
+				members.value = await getMembers();
+		},
+		async (event: Event) => {
+			if((event as DatabaseEvent).data.table === "frontingEntries"){
+				frontingEntries.clear();
+				for(const member of members.value)
+					frontingEntries.set(member, await getCurrentFrontEntryForMember(member));
+			}
+		}
+	]
 
-	onIonViewWillEnter(() => {
-		watchStopHandlers.push(
-			watch(
-				useObservable(from(liveQuery(() => getMembersTable().toArray()))),
-				async () => members.value = await getMembersTable().toArray(),
-				{ immediate: true }
-			),
-			watch(
-				[
-					filteredMembers,
-					useObservable(from(liveQuery(() => getFrontingEntriesTable().toArray())))
-				], async () => {
-					frontingEntries.clear();
-					for(const member of filteredMembers.value)
-						frontingEntries.set(member, await getCurrentFrontEntryForMember(member));
-				},
-				{ immediate: true }
-			)
-		);
+	onIonViewWillEnter(async () => {
+		DatabaseEvents.addEventListener("updated", listeners[0]);
+		DatabaseEvents.addEventListener("updated", listeners[1]);
+		members.value = await getMembers();
+		frontingEntries.clear();
+		for(const member of members.value)
+			frontingEntries.set(member, await getCurrentFrontEntryForMember(member));
 	});
 
 	onIonViewWillLeave(() => {
-		watchStopHandlers.forEach(x => x());
-		watchStopHandlers.length = 0;
+		DatabaseEvents.removeEventListener("updated", listeners[0]);
+		DatabaseEvents.removeEventListener("updated", listeners[1]);
 	});
 
 	async function showModal(clickedMember?: Member){

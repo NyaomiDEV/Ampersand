@@ -33,14 +33,14 @@
 	import personMD from "@material-design-icons/svg/outlined/person.svg";
 	import journalMD from "@material-design-icons/svg/outlined/book.svg";
 
-	import { getTagsTable, newTag, removeTag } from '../lib/db/tables/tags';
+	import { newTag, removeTag, updateTag } from '../lib/db/tables/tags';
 	import { Tag } from "../lib/db/entities";
 	import { inject, ref, shallowRef } from "vue";
 	import { addMaterialColors, unsetMaterialColors } from "../lib/theme";
 	import { PartialBy } from "../lib/types";
 	import { globalEvents, SearchEvent } from "../lib/globalEvents";
-	import { getMembersTable } from "../lib/db/tables/members";
-	import { getJournalPostsTable } from "../lib/db/tables/journalPosts";
+	import { getMembers } from "../lib/db/tables/members";
+	import { getJournalPosts } from "../lib/db/tables/journalPosts";
 	import { useTranslation } from "i18next-vue";
 
 	const isIOS = inject<boolean>("isIOS");
@@ -84,7 +84,7 @@
 			return;
 		}
 
-		await getTagsTable().update(uuid, _tag);
+		await updateTag(uuid, _tag);
 
 		try{
 			await modalController.dismiss(null, "modified");
@@ -125,14 +125,14 @@
 		}
 	}
 
-	function present() {
+	async function present() {
 		tag.value = props.tag;
 
 		if(tag.value.uuid){
 			if(tag.value.type === "member")
-				getMembersTable().filter(x => x.tags.includes(tag.value.uuid!)).count().then(c => count.value = c);
+				count.value = (await getMembers()).filter(x => x.tags.includes(tag.value.uuid!)).length;
 			else //journal
-				getJournalPostsTable().filter(x => x.tags.includes(tag.value.uuid!)).count().then(c => count.value = c);
+				count.value = (await getJournalPosts()).filter(x => x.tags.includes(tag.value.uuid!)).length;
 		}
 
 		if(tag.value.color && tag.value.color !== "#000000"){

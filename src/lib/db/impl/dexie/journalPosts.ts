@@ -1,10 +1,11 @@
 import { db } from ".";
+import { DatabaseEvents, DatabaseEvent } from "../..";
 import { makeUUIDv5 } from "../../../util/uuid";
 import { UUIDable, JournalPost } from "../../entities";
 import { getSystemUUID } from "./system";
 
-export function getJournalPostsTable() {
-	return db.journalPosts;
+export async function getJournalPosts(){
+	return await db.journalPosts.toArray();
 }
 
 async function genid(name: string) {
@@ -12,9 +13,19 @@ async function genid(name: string) {
 }
 
 export async function newJournalPost(journalPost: Omit<JournalPost, keyof UUIDable>) {
-	const uuid = await genid(journalPost.member + journalPost.title);
-	return await getJournalPostsTable().add({
-		...journalPost,
-		uuid
-	});
+	try{
+		const uuid = await genid(journalPost.member + journalPost.title);
+		await db.journalPosts.add({
+			...journalPost,
+			uuid
+		});
+		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
+			table: "journalPosts",
+			event: "new",
+			data: uuid
+		}));
+		return true;
+	}catch(error){
+		return false;
+	}
 }
