@@ -34,7 +34,7 @@ const defaultSecurityConfig: SecurityConfig = {
 	useBiometrics: false
 }
 
-const impl = await import('./impl/localStorage');
+const impl = await import(`./impl/${'isTauri' in window ? 'tauri' : 'localStorage'}.ts`);
 
 export const appConfig = reactive<AppConfig>({...defaultAppConfig, ...impl.get("appConfig") });
 export const accessibilityConfig = reactive<AccessibilityConfig>({ ...defaultAccessibilityConfig, ...impl.get("accessibilityConfig") });
