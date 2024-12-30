@@ -1,5 +1,4 @@
 import { reactive, watch } from "vue";
-import { get, set } from "./localStorage";
 import { AccessibilityConfig, AppConfig, SecurityConfig } from "./types";
 import { updateAccessibility, updateDarkMode } from "../mode";
 import { updateMaterialColors } from "../theme";
@@ -35,18 +34,20 @@ const defaultSecurityConfig: SecurityConfig = {
 	useBiometrics: false
 }
 
-export const appConfig = reactive<AppConfig>({...defaultAppConfig, ...get("appConfig") });
-export const accessibilityConfig = reactive<AccessibilityConfig>({ ...defaultAccessibilityConfig, ...get("accessibilityConfig") });
-export const securityConfig = reactive<SecurityConfig>({ ...defaultSecurityConfig, ...get("securityConfig") });
+const impl = await import('./impl/localStorage');
+
+export const appConfig = reactive<AppConfig>({...defaultAppConfig, ...impl.get("appConfig") });
+export const accessibilityConfig = reactive<AccessibilityConfig>({ ...defaultAccessibilityConfig, ...impl.get("accessibilityConfig") });
+export const securityConfig = reactive<SecurityConfig>({ ...defaultSecurityConfig, ...impl.get("securityConfig") });
 
 watch(appConfig, () => {
-	set("appConfig", {...appConfig});
+	impl.set("appConfig", {...appConfig});
 	i18next.changeLanguage(appConfig.locale.language);
 });
 watch(accessibilityConfig, () => {
-	set("accessibilityConfig", { ...accessibilityConfig });
+	impl.set("accessibilityConfig", { ...accessibilityConfig });
 	updateDarkMode();
 	updateMaterialColors();
 	updateAccessibility();
 });
-watch(securityConfig, () => set("securityConfig", { ...securityConfig }));
+watch(securityConfig, () => impl.set("securityConfig", { ...securityConfig }));
