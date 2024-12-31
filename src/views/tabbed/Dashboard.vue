@@ -2,13 +2,12 @@
 	import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, onIonViewWillEnter, onIonViewWillLeave } from '@ionic/vue';
 	import { inject, ref } from 'vue';
 	import { getMainFronter } from '../../lib/db/tables/frontingEntries';
-	import { Member } from '../../lib/db/entities';
+	import type { Member } from '../../lib/db/entities.d.ts';
 
 	import CurrentFrontersCarousel from '../../components/dashboard/CurrentFrontersCarousel.vue';
 	import MessageBoardCarousel from '../../components/dashboard/MessageBoardCarousel.vue';
 	import FrontingHistoryCarousel from '../../components/dashboard/FrontingHistoryCarousel.vue';
-	import { DatabaseEvent, DatabaseEvents } from '../../lib/db';
-
+	import { DatabaseEvents, DatabaseEvent } from '../../lib/db/events';
 	const mainFronter = ref<Member>();
 
 	const listener = async (event: Event) => {

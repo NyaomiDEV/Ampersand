@@ -3,12 +3,12 @@
 	import { inject, onMounted, onUnmounted, ref, ShallowRef, shallowRef } from 'vue';
 	import FrontingEntryAvatar from "../frontingEntry/FrontingEntryAvatar.vue";
 	import FrontingEntryLabel from "../frontingEntry/FrontingEntryLabel.vue";
-	import { FrontingEntryComplete } from '../../lib/db/entities';
+	import type { FrontingEntryComplete } from '../../lib/db/entities.d.ts';
 	import { getFrontingEntries, toFrontingEntryComplete } from '../../lib/db/tables/frontingEntries';
 	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
 	import dayjs from 'dayjs';
 	import { PartialBy } from '../../lib/types';
-	import { DatabaseEvent, DatabaseEvents } from '../../lib/db';
+	import { DatabaseEvents, DatabaseEvent } from '../../lib/db/events';
 
 	const isIOS = inject<boolean>("isIOS");
 

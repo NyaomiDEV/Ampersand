@@ -1,5 +1,5 @@
 import { db } from ".";
-import { DatabaseEvents, DatabaseEvent } from "../..";
+import { DatabaseEvents, DatabaseEvent } from "../../events";
 import { makeUUIDv5 } from "../../../util/uuid";
 import { UUIDable, JournalPost } from "../../entities";
 import { getSystemUUID } from "./system";

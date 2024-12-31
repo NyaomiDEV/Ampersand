@@ -1,8 +1,8 @@
 import { db } from ".";
+import { DatabaseEvents, DatabaseEvent } from "../../events";
 import { makeUUIDv5 } from "../../../util/uuid";
 import { UUIDable, Member, FrontingEntry, FrontingEntryComplete, UUID } from "../../entities";
 import { getSystemUUID } from "./system";
-import { DatabaseEvents, DatabaseEvent } from "../..";
 
 export async function getFrontingEntries(){
 	return await db.frontingEntries.toArray();

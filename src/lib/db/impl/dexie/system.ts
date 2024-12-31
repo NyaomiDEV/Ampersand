@@ -1,9 +1,9 @@
 import { db } from ".";
-import { DatabaseEvent, DatabaseEvents } from "../..";
+//import { DatabaseEvents, DatabaseEvent } from "../../events";
 import { AppNamespace, makeUUIDv5 } from "../../../util/uuid"
 import { UUIDable, System } from "../../entities"
 
-export function genid(name: string) {
+function genid(name: string) {
 	return makeUUIDv5(AppNamespace, name);
 }
 
@@ -14,11 +14,11 @@ export async function newSystem(system: Omit<System, keyof UUIDable>){
 			...system,
 			uuid
 		});
-		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
+		/*DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "system",
 			event: "new",
 			data: uuid
-		}));
+		}));*/
 		return true;
 	}catch(error){
 		return false;
@@ -39,11 +39,11 @@ export async function modifySystem(system: Partial<System>) {
 		const uuid = await getSystemUUID();
 		const updated = await db.system.update(uuid, system);
 		if(updated){
-			DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
+			/*DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 				table: "system",
 				event: "modified",
 				data: uuid
-			}));
+			}));*/
 			return true;
 		}
 		return false;

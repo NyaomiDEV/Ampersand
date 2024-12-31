@@ -3,7 +3,7 @@
 	import { inject, onMounted, onUnmounted, ref, ShallowRef, shallowRef } from 'vue';
 	import FrontingEntryAvatar from "../../components/frontingEntry/FrontingEntryAvatar.vue";
 	import FrontingEntryLabel from "../../components/frontingEntry/FrontingEntryLabel.vue";
-	import { FrontingEntry, FrontingEntryComplete } from '../../lib/db/entities';
+	import type { FrontingEntry, FrontingEntryComplete } from '../../lib/db/entities.d.ts';
 	import { getFronting, getFrontingEntries, getMainFronter } from '../../lib/db/tables/frontingEntries';
 	import { getFilteredFrontingEntries } from '../../lib/db/search';
 	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
@@ -23,7 +23,7 @@
 
 	import { appConfig } from '../../lib/config';
 	import { PartialBy } from '../../lib/types';
-	import { DatabaseEvent, DatabaseEvents } from '../../lib/db';
+	import { DatabaseEvents, DatabaseEvent } from '../../lib/db/events';
 
 	const props = defineProps<{
 		q?: string

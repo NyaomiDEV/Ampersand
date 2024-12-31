@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonFab, IonFabButton, IonIcon, IonSearchbar, IonLabel, IonItemDivider, IonButtons, IonButton, IonDatetime } from '@ionic/vue';
 	import { inject, onMounted, onUnmounted, ref, shallowRef } from 'vue';
-	import { BoardMessage, BoardMessageComplete } from '../../lib/db/entities';
+	import type { BoardMessage, BoardMessageComplete } from '../../lib/db/entities.d.ts';
 	import { getBoardMessages } from '../../lib/db/tables/boardMessages';
 	import BoardMessageEdit from "../../modals/BoardMessageEdit.vue";
 	import { getFronting, getMainFronter } from '../../lib/db/tables/frontingEntries';
@@ -24,7 +24,7 @@
 	import { appConfig } from '../../lib/config';
 	import { getFilteredBoardMessages } from '../../lib/db/search';
 	import MessageBoardCard from '../../components/MessageBoardCard.vue';
-	import { DatabaseEvent, DatabaseEvents } from '../../lib/db';
+	import { DatabaseEvents, DatabaseEvent } from '../../lib/db/events';
 
 	const props = defineProps<{
 		q?: string

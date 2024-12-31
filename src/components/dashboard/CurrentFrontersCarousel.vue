@@ -3,11 +3,11 @@
 	import FrontingEntryAvatar from '../frontingEntry/FrontingEntryAvatar.vue';
 	import { onMounted, onUnmounted, ref, shallowRef } from 'vue';
 	import { PartialBy } from '../../lib/types';
-	import { FrontingEntryComplete } from '../../lib/db/entities';
+	import type { FrontingEntryComplete } from '../../lib/db/entities.d.ts';
 	import { getFrontingEntries, toFrontingEntryComplete } from '../../lib/db/tables/frontingEntries';
 	import { formatWrittenTime } from "../../lib/util/misc";
 	import FrontingEntryEdit from '../../modals/FrontingEntryEdit.vue';
-	import { DatabaseEvent, DatabaseEvents } from '../../lib/db';
+	import { DatabaseEvents, DatabaseEvent } from '../../lib/db/events';
 
 	const frontingEntryModal = ref();
 	const emptyFrontingEntry: PartialBy<FrontingEntryComplete, "uuid" | "member"> = {

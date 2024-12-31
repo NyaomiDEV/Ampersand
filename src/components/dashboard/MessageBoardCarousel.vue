@@ -2,7 +2,7 @@
 	import { IonList, IonLabel, IonButton, IonListHeader } from '@ionic/vue';
 	import { inject, onMounted, onUnmounted, ref, shallowRef } from 'vue';
 	import { getBoardMessages, toBoardMessageComplete } from '../../lib/db/tables/boardMessages';
-	import { BoardMessageComplete } from '../../lib/db/entities';
+	import type { BoardMessageComplete } from '../../lib/db/entities.d.ts';
 	import BoardMessageEdit from "../../modals/BoardMessageEdit.vue";
 	import { PartialBy } from '../../lib/types';
 
@@ -10,7 +10,7 @@
 
 	import { getFronting, getMainFronter } from '../../lib/db/tables/frontingEntries';
 	import MessageBoardCard from '../MessageBoardCard.vue';
-	import { DatabaseEvent, DatabaseEvents } from '../../lib/db';
+	import { DatabaseEvents, DatabaseEvent } from '../../lib/db/events';
 
 	const isIOS = inject<boolean>("isIOS");
 

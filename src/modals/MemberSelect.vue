@@ -16,9 +16,9 @@
 	import { getFilteredMembers } from "../lib/db/search";
 	import MemberAvatar from "../components/member/MemberAvatar.vue";
 	import MemberLabel from "../components/member/MemberLabel.vue";
-	import { Member } from "../lib/db/entities";
+	import type { Member } from "../lib/db/entities.d.ts";
 	import { getMembers } from "../lib/db/tables/members";
-	import { DatabaseEvent, DatabaseEvents } from "../lib/db";
+	import { DatabaseEvents, DatabaseEvent } from '../lib/db/events';
 
 	const isIOS = inject<boolean>("isIOS");
 

@@ -6,11 +6,11 @@
 	import TagEdit from "../../modals/TagEdit.vue";
 	import { getFilteredTags } from '../../lib/db/search';
 	import { getTags } from '../../lib/db/tables/tags';
-	import { Tag } from '../../lib/db/entities';
+	import type { Tag } from '../../lib/db/entities.d.ts';
 	import { PartialBy } from '../../lib/types';
 	import TagColor from '../../components/tag/TagColor.vue';
 	import TagLabel from '../../components/tag/TagLabel.vue';
-	import { DatabaseEvent, DatabaseEvents } from '../../lib/db';
+	import { DatabaseEvents, DatabaseEvent } from '../../lib/db/events';
 
 	const isIOS = inject<boolean>("isIOS");
 

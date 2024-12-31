@@ -1,8 +1,8 @@
 import { db } from ".";
+import { DatabaseEvents, DatabaseEvent } from "../../events";
 import { makeUUIDv5 } from "../../../util/uuid";
 import { UUID, UUIDable, Tag } from "../../entities";
 import { getSystemUUID } from "./system";
-import { DatabaseEvents, DatabaseEvent } from "../..";
 
 export async function getTags(){
 	return await db.tags.toArray();

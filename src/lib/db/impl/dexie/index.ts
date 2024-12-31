@@ -1,5 +1,5 @@
 import Dexie from 'dexie';
-import { AmpersandDexieDatabase } from '../../types';
+import { AmpersandDexieDatabase } from './types';
 
 export const db = new Dexie("ampersandDatabase") as AmpersandDexieDatabase;
 

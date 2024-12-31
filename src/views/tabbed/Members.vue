@@ -43,13 +43,13 @@
 
 	import MemberEdit from '../../modals/MemberEdit.vue';
 	import { getMembers } from '../../lib/db/tables/members';
-	import { Member, FrontingEntry } from '../../lib/db/entities';
+	import type { Member, FrontingEntry } from '../../lib/db/entities.d.ts';
 	import { PartialBy } from '../../lib/types';
 	import { getCurrentFrontEntryForMember, newFrontingEntry, removeFronter, setMainFronter, setSoleFronter } from '../../lib/db/tables/frontingEntries';
 	import MemberAvatar from '../../components/member/MemberAvatar.vue';
 	import MemberLabel from '../../components/member/MemberLabel.vue';
 	import { globalEvents } from '../../lib/globalEvents';
-	import { DatabaseEvent, DatabaseEvents } from '../../lib/db';
+	import { DatabaseEvents, DatabaseEvent } from '../../lib/db/events';
 
 	const isIOS = inject<boolean>("isIOS");
 
