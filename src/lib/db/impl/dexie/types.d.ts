@@ -1,3 +1,4 @@
+import Dexie, { Table } from "dexie";
 export type AmpersandDexieDatabase = Dexie & {
 	boardMessages: Table<BoardMessage>
 	chats: Table<Chat>

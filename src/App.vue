@@ -1,5 +1,4 @@
 <script setup lang="ts">
-	console.log("vue hello");
 	import { IonApp, IonRouterOutlet } from "@ionic/vue";
 
 	import { computed, provide } from "vue";
