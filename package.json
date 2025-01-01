@@ -15,6 +15,7 @@
     "@material-design-icons/svg": "^0.14.13",
     "@material/material-color-utilities": "^0.3.0",
     "@msgpack/msgpack": "^3.0.0-beta2",
+    "@tauri-apps/plugin-fs": "~2",
     "@tauri-apps/plugin-store": "~2",
     "dayjs": "^1.11.13",
     "dexie": "^4.0.10",

@@ -1,6 +1,6 @@
 import { UUID, UUIDable, Tag } from "../entities";
 
-const impl = await (/*"isTauri" in window ? import('../impl/tauri/tags') : */import('../impl/dexie/tags'));
+const impl = await ("isTauri" in window ? import('../impl/tauri/tags') : import('../impl/dexie/tags'));
 
 export function getTags() {
 	return impl.getTags();

@@ -7,6 +7,7 @@
   ],
   "permissions": [
     "core:default",
-    "store:default"
+    "store:default",
+    "fs:default"
   ]
 }

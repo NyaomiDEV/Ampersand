@@ -82,8 +82,6 @@
 	function present() {
 		boardMessage.value = props.boardMessage;
 
-		console.log(boardMessage.value);
-
 		selectedMembers.length = 0;
 
 		if(boardMessage.value.member)

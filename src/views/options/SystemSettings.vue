@@ -22,7 +22,7 @@
 	const membersShowed = ref(false);
 	const memberCount = ref(0);
 
-	const system = shallowRef();
+	const system = ref();
 
 	async function modifyPicture(){
 		const files = await getFiles();

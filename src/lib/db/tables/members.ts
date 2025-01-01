@@ -1,6 +1,6 @@
 import { UUIDable, Member, UUID } from "../entities";
 
-const impl = await (/*"isTauri" in window ? import('../impl/tauri/members') : */import('../impl/dexie/members'));
+const impl = await ("isTauri" in window ? import('../impl/tauri/members') : import('../impl/dexie/members'));
 
 export function getMembers() {
 	return impl.getMembers();
