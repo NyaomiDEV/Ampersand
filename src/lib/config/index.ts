@@ -34,20 +34,24 @@ const defaultSecurityConfig: SecurityConfig = {
 	useBiometrics: false
 }
 
-const impl = await (/*"isTauri" in window ? import('./impl/tauri') : */import('./impl/localStorage'));
+const impl = await ("isTauri" in window ? import('./impl/tauri') : import('./impl/localStorage'));
 
-export const appConfig = reactive<AppConfig>({...defaultAppConfig, ...impl.get("appConfig") });
-export const accessibilityConfig = reactive<AccessibilityConfig>({ ...defaultAccessibilityConfig, ...impl.get("accessibilityConfig") });
-export const securityConfig = reactive<SecurityConfig>({ ...defaultSecurityConfig, ...impl.get("securityConfig") });
+export const appConfig = reactive<AppConfig>({...defaultAppConfig, ...await impl.get("appConfig") });
+export const accessibilityConfig = reactive<AccessibilityConfig>({ ...defaultAccessibilityConfig, ...await impl.get("accessibilityConfig") });
+export const securityConfig = reactive<SecurityConfig>({ ...defaultSecurityConfig, ...await impl.get("securityConfig") });
 
-watch(appConfig, () => {
-	impl.set("appConfig", {...appConfig});
+watch(appConfig, async () => {
+	await impl.set("appConfig", {...appConfig});
 	i18next.changeLanguage(appConfig.locale.language);
 });
-watch(accessibilityConfig, () => {
-	impl.set("accessibilityConfig", { ...accessibilityConfig });
+
+watch(accessibilityConfig, async () => {
+	await impl.set("accessibilityConfig", { ...accessibilityConfig });
 	updateDarkMode();
 	updateMaterialColors();
 	updateAccessibility();
 });
-watch(securityConfig, () => impl.set("securityConfig", { ...securityConfig }));
+
+watch(securityConfig, async () => {
+	await impl.set("securityConfig", { ...securityConfig });
+});
