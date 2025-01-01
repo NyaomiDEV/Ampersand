@@ -4,8 +4,8 @@ import { makeUUIDv5 } from "../../../util/uuid";
 import { UUID, UUIDable, BoardMessage, BoardMessageComplete } from "../../entities";
 import { getSystemUUID } from "./system";
 
-export async function getBoardMessages(){
-	return await db.boardMessages.toArray();
+export function getBoardMessages(){
+	return db.boardMessages.toArray();
 }
 
 export async function toBoardMessageComplete(boardMessage: BoardMessage): Promise<BoardMessageComplete> {

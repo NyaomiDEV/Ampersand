@@ -4,7 +4,16 @@ import i18next from "i18next";
 import "dayjs/locale/en";
 import { appConfig } from "./config";
 
-const translations = import.meta.glob("../../translations/*/*.json");
+const context = import.meta.webpackContext("../../translations/", {
+	recursive: true,
+	regExp: /\.json$/
+});
+
+const translations: Map<string, any> = new Map();
+
+for(const path of context.keys()){
+	translations.set(path, context(path));
+}
 
 const loadTranslations = [
 	"en",
@@ -21,11 +30,11 @@ await i18next.init({
 	lowerCaseLng: true,
 });
 
-for(const path in translations){
-	const [, lang, ns] = /\/translations\/(.*)\/(.*)\.json$/.exec(path)!;
+for(const [path, translation] of translations.entries()){
+	const [, lang, ns] = /\/(.*)\/(.*)\.json$/.exec(path)!;
 	if(!loadTranslations.includes(lang)) continue;
 
-	i18next.addResourceBundle(lang, ns, await translations[path]())
+	i18next.addResourceBundle(lang, ns, translation);
 }
 
 export default i18next;

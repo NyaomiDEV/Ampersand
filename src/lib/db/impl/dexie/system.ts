@@ -26,8 +26,8 @@ export async function newSystem(system: Omit<System, keyof UUIDable>){
 }
 
 // Extra because there shall only be one
-export async function getSystem(){
-	return await db.system.toCollection().first();
+export function getSystem(){
+	return db.system.toCollection().first();
 }
 
 export async function getSystemUUID(){

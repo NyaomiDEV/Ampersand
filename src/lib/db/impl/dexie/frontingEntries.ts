@@ -4,8 +4,8 @@ import { makeUUIDv5 } from "../../../util/uuid";
 import { UUIDable, Member, FrontingEntry, FrontingEntryComplete, UUID } from "../../entities";
 import { getSystemUUID } from "./system";
 
-export async function getFrontingEntries(){
-	return await db.frontingEntries.toArray();
+export function getFrontingEntries(){
+	return db.frontingEntries.toArray();
 }
 
 export async function toFrontingEntryComplete(frontingEntry: FrontingEntry): Promise<FrontingEntryComplete> {

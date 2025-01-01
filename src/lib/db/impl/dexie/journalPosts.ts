@@ -4,8 +4,8 @@ import { makeUUIDv5 } from "../../../util/uuid";
 import { UUIDable, JournalPost } from "../../entities";
 import { getSystemUUID } from "./system";
 
-export async function getJournalPosts(){
-	return await db.journalPosts.toArray();
+export function getJournalPosts(){
+	return db.journalPosts.toArray();
 }
 
 async function genid(name: string) {

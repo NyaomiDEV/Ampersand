@@ -4,8 +4,8 @@ import { makeUUIDv5 } from "../../../util/uuid";
 import { UUIDable, Member, UUID } from "../../entities";
 import { getSystemUUID } from "./system";
 
-export async function getMembers(){
-	return await db.members.toArray();
+export function getMembers(){
+	return db.members.toArray();
 }
 
 async function genid(name: string) {

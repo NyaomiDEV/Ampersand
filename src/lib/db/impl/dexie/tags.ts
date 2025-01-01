@@ -4,8 +4,8 @@ import { makeUUIDv5 } from "../../../util/uuid";
 import { UUID, UUIDable, Tag } from "../../entities";
 import { getSystemUUID } from "./system";
 
-export async function getTags(){
-	return await db.tags.toArray();
+export function getTags(){
+	return db.tags.toArray();
 }
 
 async function genid(name: string) {
@@ -77,6 +77,6 @@ export async function updateTag(uuid: UUID, newContent: Partial<Tag>) {
 	}
 }
 
-export async function getTagFromNameHashtag(name: string){
-	return await db.tags.filter(x => x.name.toLowerCase().replace(/\s/g, "") === name.toLowerCase()).first();
+export function getTagFromNameHashtag(name: string){
+	return db.tags.filter(x => x.name.toLowerCase().replace(/\s/g, "") === name.toLowerCase()).first();
 }

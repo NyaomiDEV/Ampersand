@@ -1,6 +1,6 @@
 import { UUIDable, System } from "../entities";
 
-const impl = await import('../impl/dexie/system');
+const impl = await /*"isTauri" in window ? import('../impl/tauri/system') : */import('../impl/dexie/system');
 
 export function newSystem(system: Omit<System, keyof UUIDable>){
 	return impl.newSystem(system);
