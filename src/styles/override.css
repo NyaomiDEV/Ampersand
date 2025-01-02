@@ -26,6 +26,10 @@ html.high-legibility.hl-lexend {
 	--ion-safe-area-bottom: 24px;
 }
 
+.plt-android ion-content:not(ion-tabs *) {
+	--padding-bottom: 48px;
+}
+
 .centered-text {
 	text-align: center;
 	padding: 1em;
