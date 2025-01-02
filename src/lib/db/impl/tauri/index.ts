@@ -3,6 +3,7 @@ import * as fs from '@tauri-apps/plugin-fs';
 import { Typeson } from "typeson";
 import { blob, file, filelist, map, typedArrays, undef, set as Tset, imagebitmap, imagedata } from "typeson-registry";
 import { BoardMessage, Chat, ChatMessage, FrontingEntry, JournalPost, Member, Reminder, System, Tag, UUIDable } from '../../entities';
+import { decode, encode } from '@msgpack/msgpack';
 
 class ShittyTable<T extends UUIDable> {
 	name: string;
@@ -13,12 +14,10 @@ class ShittyTable<T extends UUIDable> {
 	}
 
 	async get(uuid: string): Promise<T | undefined> {
-		const _path = await path.resolve(this.path, uuid + ".json");
+		const _path = await path.resolve(this.path, uuid);
 		try {
-			const value = new TextDecoder().decode(await fs.readFile(_path));
-
-			if (typeof value !== "undefined" && value !== null) {
-				const obj = JSON.parse(value);
+			const obj = decode(await fs.readFile(_path));
+			if (typeof obj !== "undefined") {
 				return await typeson.revive(obj) as T;
 			}
 		} catch (e) {
@@ -48,8 +47,7 @@ class ShittyTable<T extends UUIDable> {
 		const arr: T[] = [];
 		if (dir) {
 			for (const x of dir) {
-				const uuid = x.replace(".json", "");
-				const data = await this.get(uuid);
+				const data = await this.get(x);
 				if (data) arr.push(data);
 			}
 		}
@@ -57,13 +55,13 @@ class ShittyTable<T extends UUIDable> {
 	}
 
 	async write(uuid: string, data: T) {
-		const _path = await path.resolve(this.path, uuid + ".json");
+		const _path = await path.resolve(this.path, uuid);
 		await fs.mkdir(this.path, { recursive: true });
-		await fs.writeFile(_path, new TextEncoder().encode(JSON.stringify(await typeson.encapsulate(data))));
+		await fs.writeFile(_path, encode(await typeson.encapsulate(data)));
 	}
 
 	async exists(uuid: string) {
-		const _path = await path.resolve(this.path, uuid + ".json");
+		const _path = await path.resolve(this.path, uuid);
 		return fs.exists(_path);
 	}
 
@@ -85,7 +83,7 @@ class ShittyTable<T extends UUIDable> {
 	}
 
 	async delete(uuid: string) {
-		const _path = await path.resolve(this.path, uuid + ".json");
+		const _path = await path.resolve(this.path, uuid);
 		await fs.remove(_path);
 	}
 
