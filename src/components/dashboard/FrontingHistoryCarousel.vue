@@ -54,16 +54,16 @@
 </script>
 
 <template>
-	<IonListHeader>
+	<IonListHeader v-if="frontingEntries.length > 0">
 		<IonLabel>{{ $t("dashboard:recentFrontingHistory") }}</IonLabel>
 	</IonListHeader>
 
-	<IonList :inset="isIOS">
+	<IonList :inset="isIOS" v-if="frontingEntries.length > 0">
 		<IonItem button v-for="entry in frontingEntries" :key="JSON.stringify(entry)" @click="showModal(entry)">
 			<FrontingEntryAvatar slot="start" :entry />
 			<FrontingEntryLabel :entry />
 		</IonItem>
 	</IonList>
 
-	<FrontingEntryEdit :frontingEntry ref="frontingEntryModal" />
+	<FrontingEntryEdit :frontingEntry ref="frontingEntryModal" v-if="frontingEntries.length > 0" />
 </template>
