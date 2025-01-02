@@ -8,6 +8,7 @@
   "permissions": [
     "core:default",
     "store:default",
-    "fs:default"
+    "fs:default",
+    "m3:default"
   ]
 }

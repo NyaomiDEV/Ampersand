@@ -1,5 +1,6 @@
 import { argbFromHex, blueFromArgb, DynamicColor, greenFromArgb, Hct, MaterialDynamicColors, redFromArgb, SchemeTonalSpot, themeFromSourceColor } from "@material/material-color-utilities";
 import { accessibilityConfig } from "../config";
+import { M3 } from "tauri-plugin-m3";
 
 const dynamicColorsWeWant = [
 	"primaryPaletteKeyColor",
@@ -58,6 +59,12 @@ const dynamicColorsWeWant = [
     "onTertiaryFixedVariant",
 ];
 
+const defaultColor = "#7E5700";
+
+const material3 = new M3();
+const m3colors = await material3.fetch().colors();
+console.log(m3colors);
+
 function rgbFromArgb(argb: number){
 	return [
 		redFromArgb(argb),
@@ -71,8 +78,10 @@ export function updateMaterialColors(target?: HTMLElement){
 	const accentColor = accessibilityConfig.accentColor;
 	if (useAccentColor && accentColor)
 		addMaterialColors(accentColor, target);
+	else if(m3colors)
+		addMaterialColors(m3colors.primary || defaultColor, target);
 	else
-		addMaterialColors("#7E5700", target);
+		addMaterialColors(defaultColor, target);
 }
 
 export function activateMaterialTheme(target?: HTMLElement) {
