@@ -71,7 +71,9 @@ if(!window.isSecureContext){
 	updateMaterialColors();
 	updateAccessibility();
 
-	const app = createApp(App).use(IonicVue).use(router).use(I18NextVue, { i18next: i18n });
+	const app = createApp(App).use(IonicVue, {
+		hardwareBackButton: true
+	}).use(router).use(I18NextVue, { i18next: i18n });
 
 	let wantedRoute: RouteLocationNormalizedGeneric | undefined;
 	router.beforeEach((to) => {

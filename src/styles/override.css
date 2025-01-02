@@ -14,6 +14,18 @@ html.high-legibility.hl-lexend {
 	--ion-font-family: 'Lexend', var(--ion-default-font);
 }
 
+.plt-android ion-header {
+	--ion-safe-area-top: 48px;
+}
+
+.plt-android ion-modal.modal-sheet ion-header {
+	--ion-safe-area-top: unset;
+}
+
+.plt-android ion-tab-bar {
+	--ion-safe-area-bottom: 24px;
+}
+
 .centered-text {
 	text-align: center;
 	padding: 1em;

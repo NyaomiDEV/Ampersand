@@ -1,5 +1,4 @@
-import { ref } from "vue";
-import { accessibilityConfig, appConfig, securityConfig } from "./config";
+import { accessibilityConfig } from "./config";
 
 export function getIonicMode(): "ios" | "md" {
 	if (typeof (window as any) !== "undefined") {

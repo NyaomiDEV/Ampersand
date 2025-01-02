@@ -55,7 +55,7 @@
 </script>
 
 <template>
-	<IonModal class="tag-select-modal" :breakpoints="[0,0.25,0.5,1]" initialBreakpoint="0.25" @willDismiss="dismiss">
+	<IonModal class="tag-select-modal" :breakpoints="[0,0.25,0.5,0.9]" initialBreakpoint="0.9" @willDismiss="dismiss">
 		<IonHeader>
 			<IonToolbar>
 				<IonTitle>{{ $t("other:taglistSelect:header") }}</IonTitle>

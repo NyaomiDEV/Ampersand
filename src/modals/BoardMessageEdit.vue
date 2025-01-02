@@ -95,7 +95,7 @@
 </script>
 
 <template>
-	<IonModal class="board-message-edit-modal" ref="self" @willPresent="present" :breakpoints="[0,1]" initialBreakpoint="1">
+	<IonModal class="board-message-edit-modal" ref="self" @willPresent="present" :breakpoints="[0,0.9]" initialBreakpoint="0.9">
 		<IonHeader>
 			<IonToolbar>
 				<IonTitle>{{ $t("options:messageBoard.edit.header") }}</IonTitle>
