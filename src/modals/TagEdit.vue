@@ -144,7 +144,7 @@
 </script>
 
 <template>
-	<IonModal class="tag-edit-modal" ref="self" @willPresent="present" :breakpoints="[0,0.9]" initialBreakpoint="0.9">
+	<IonModal class="tag-edit-modal" ref="self" @willPresent="present" :breakpoints="[0,1]" initialBreakpoint="1">
 		<IonHeader>
 			<IonToolbar>
 				<IonTitle>{{ tag.type === "member" ? $t("options:tagManagement.edit.header.member") : $t("options:tagManagement.edit.header.journal") }}</IonTitle>

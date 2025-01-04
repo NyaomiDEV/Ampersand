@@ -134,7 +134,7 @@
 </script>
 
 <template>
-	<IonModal class="fronting-entry-edit-modal" @willPresent="present" @willDismiss="dismiss" :breakpoints="[0,0.9]" initialBreakpoint="0.9">
+	<IonModal class="fronting-entry-edit-modal" @willPresent="present" @willDismiss="dismiss" :breakpoints="[0,1]" initialBreakpoint="1">
 		<IonHeader>
 			<IonToolbar>
 				<IonTitle>{{ $t("options:frontHistory.edit.header") }}</IonTitle>

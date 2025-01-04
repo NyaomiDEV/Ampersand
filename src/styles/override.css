@@ -35,6 +35,15 @@ ion-fab:not(ion-tabs *) {
 	margin-bottom: var(--device-offset-bottom);
 }
 
+ion-modal.modal-sheet ion-header ion-toolbar:first-of-type {
+	--ion-safe-area-top: unset;
+}
+
+ion-modal.modal-sheet {
+	--ion-safe-area-bottom: var(--device-offset-bottom);
+	--max-height: 90%;
+}
+
 .centered-text {
 	text-align: center;
 	padding: 1em;
