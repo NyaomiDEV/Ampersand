@@ -2,5 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.ampersand" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
+        <item name="android:windowSplashScreenBackground">@color/ampersand_bg</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ampersand_logo_anim</item>
+        <item name="android:windowSplashScreenAnimationDuration">1000</item>
     </style>
 </resources>
