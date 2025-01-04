@@ -76,7 +76,8 @@ class ShittyTable<T extends UUIDable> {
 
 		if (oldData) {
 			const data = {...oldData, ...newData};
-			return await this.write(uuid, data);
+			await this.write(uuid, data);
+			return true;
 		}
 
 		return false;
