@@ -1,3 +1,4 @@
+import { getOffsets } from "tauri-plugin-m3";
 import { accessibilityConfig } from "./config";
 
 export function getIonicMode(): "ios" | "md" {
@@ -27,6 +28,18 @@ export function isDarkMode() {
 
 export function updateDarkMode() {
 	document.documentElement.classList.toggle("ion-palette-dark", isDarkMode());
+}
+
+export async function updateInsets() {
+	if(!('isTauri' in window)) return;
+
+	const offsets = await getOffsets();
+	if(offsets){
+		document.documentElement.style.setProperty("--device-offset-top", Number(offsets.top) / devicePixelRatio + "px");
+		document.documentElement.style.setProperty("--device-offset-left", Number(offsets.left) / devicePixelRatio + "px");
+		document.documentElement.style.setProperty("--device-offset-right", Number(offsets.right) / devicePixelRatio + "px");
+		document.documentElement.style.setProperty("--device-offset-bottom", Number(offsets.bottom) / devicePixelRatio + "px");
+	}
 }
 
 export function updateAccessibility() {

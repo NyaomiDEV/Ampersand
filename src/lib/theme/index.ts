@@ -63,7 +63,6 @@ const defaultColor = "#7E5700";
 
 const material3 = new M3();
 const m3colors = await material3.fetch().colors();
-console.log(m3colors);
 
 function rgbFromArgb(argb: number){
 	return [

@@ -26,7 +26,7 @@
     "rehype-stringify": "^10.0.1",
     "remark-parse": "^11.0.0",
     "remark-rehype": "^11.1.1",
-    "tauri-plugin-m3": "^0.1.1",
+    "tauri-plugin-m3": "https://github.com/0xk1f0/tauri-plugin-m3",
     "typeson": "^9.0.3",
     "typeson-registry": "^11.1.1",
     "unified": "^11.0.5",
@@ -36,8 +36,8 @@
   "devDependencies": {
     "@rsbuild/core": "^1.1.13",
     "@rsbuild/plugin-vue": "^1.0.5",
-    "@tauri-apps/cli": "^2.1.0",
-    "@types/node": "^22.10.3",
+    "@tauri-apps/cli": "^2.2.2",
+    "@types/node": "^22.10.5",
     "typescript": "^5.7.2",
     "vue-tsc": "^2.2.0"
   }

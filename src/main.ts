@@ -10,7 +10,7 @@ import i18n from "./lib/i18n";
 import I18NextVue from "i18next-vue";
 
 // Dark mode
-import { updateAccessibility, updateDarkMode } from "./lib/mode";
+import { updateAccessibility, updateDarkMode, updateInsets } from "./lib/mode";
 
 // App
 import App from "./App.vue";
@@ -70,6 +70,10 @@ if(!window.isSecureContext){
 	activateMaterialTheme();
 	updateMaterialColors();
 	updateAccessibility();
+	updateInsets();
+	window.addEventListener("orientationchange", () => {
+		updateInsets();
+	})
 
 	const app = createApp(App).use(IonicVue, {
 		hardwareBackButton: true

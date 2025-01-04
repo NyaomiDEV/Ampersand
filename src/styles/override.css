@@ -14,20 +14,25 @@ html.high-legibility.hl-lexend {
 	--ion-font-family: 'Lexend', var(--ion-default-font);
 }
 
-.plt-android ion-header {
-	--ion-safe-area-top: 48px;
+ion-content {
+	--ion-safe-area-left: var(--device-offset-left);
+	--ion-safe-area-right: var(--device-offset-right);
 }
 
-.plt-android ion-modal.modal-sheet ion-header {
-	--ion-safe-area-top: unset;
+ion-content:not(ion-tabs *){
+	--padding-bottom: var(--device-offset-bottom);
 }
 
-.plt-android ion-tab-bar {
-	--ion-safe-area-bottom: 24px;
+ion-header ion-toolbar:first-of-type {
+	--ion-safe-area-top: var(--device-offset-top);
 }
 
-.plt-android ion-content:not(ion-tabs *) {
-	--padding-bottom: 48px;
+ion-tab-bar {
+	--ion-safe-area-bottom: var(--device-offset-bottom);
+}
+
+ion-fab:not(ion-tabs *) {
+	margin-bottom: var(--device-offset-bottom);
 }
 
 .centered-text {
