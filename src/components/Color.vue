@@ -3,6 +3,7 @@
 	const input = ref<HTMLInputElement>();
 	const model = defineModel<string>();
 	
+
 	onMounted(() => {
 		model.value = input.value!.value;
 	});
@@ -50,6 +51,7 @@
 	}
 
 	div.color {
+		border: 2.5px solid var(--ion-text-color-step-400);
 		border-radius: 50%;
 		width: 36px;
 		aspect-ratio: 1;
