@@ -1,8 +1,15 @@
 <script setup lang="ts">
+	import { onMounted } from "vue";
 	import { IonPage, IonContent, IonLabel, IonInput, useIonRouter } from "@ionic/vue";
-	import { unlock } from "../lib/applock";
+	import { unlock, areBiometricsAvailable, unlockWithBiometrics } from "../lib/applock";
+	import { securityConfig } from "../lib/config";
 	
 	const router = useIonRouter();
+
+	onMounted(async () => {
+		if(securityConfig.useBiometrics && await areBiometricsAvailable() && await unlockWithBiometrics())
+			router.replace("/");
+	});
 
 	function checkAndTryUnlocking(e){
 		if(unlock(e.detail.value))

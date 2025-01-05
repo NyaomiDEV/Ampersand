@@ -1,3 +1,4 @@
+import { authenticate, checkStatus } from "@tauri-apps/plugin-biometric";
 import { securityConfig } from "./config";
 import sha1 from "./util/sha1";
 
@@ -17,6 +18,16 @@ export function lock(){
 	return true;
 }
 
+export async function unlockWithBiometrics(){
+	try{
+		await authenticate("WOW BIOMETRICS");
+		isLocked = false;
+		return true;
+	}catch(e){
+		return false;
+	}
+}
+
 export function unlock(plaintextPwd: string) {
 	const password = new TextDecoder().decode(sha1(new TextEncoder().encode(plaintextPwd)));
 
@@ -34,6 +45,7 @@ export function disableApplock(plaintextPwd: string) {
 	if (securityConfig.password === password) {
 		isLocked = false;
 		securityConfig.usePassword = false;
+		securityConfig.useBiometrics = false;
 		securityConfig.password = undefined;
 		return true;
 	}
@@ -48,5 +60,13 @@ export function enableApplock(plaintextPwd: string) {
 	securityConfig.password = password;
 	securityConfig.usePassword = true;
 
+	return true;
+}
+
+export async function areBiometricsAvailable(){
+	if(!('isTauri' in window)) return false;
+
+	const status = await checkStatus();
+	if(status.error || status.errorCode || !status.isAvailable) return false;
 	return true;
 }

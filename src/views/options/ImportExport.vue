@@ -4,6 +4,8 @@
 	import { importDatabaseFromBinary, exportDatabaseToBinary, importAppConfigFromBinary, exportAppConfigToBinary } from '../../lib/db/ioutils';
 	import { downloadBlob, getFiles } from '../../lib/util/misc';
 	import dayjs from 'dayjs';
+	import { save } from '@tauri-apps/plugin-dialog';
+	import { writeFile } from '@tauri-apps/plugin-fs';
 
 	const isIOS = inject<boolean>("isIOS");
 
@@ -18,7 +20,19 @@
 	async function exportDb(){
 		const data = await exportDatabaseToBinary();
 		const date = dayjs().format("YYYY-MM-DD");
-		downloadBlob(data,`ampersand-backup-${date}.ampdb`);
+
+		if('isTauri' in window){
+			const path = await save({
+				filters: [{
+					name: `ampersand-backup-${date}`,
+					extensions: ["ampdb"]
+				}]
+			});
+
+			if(path)
+				await writeFile(path, data);
+		} else
+			downloadBlob(data,`ampersand-backup-${date}.ampdb`);
 	}
 
 	async function importSettings(){

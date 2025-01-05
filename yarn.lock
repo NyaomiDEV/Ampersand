@@ -322,6 +322,20 @@
     "@tauri-apps/cli-win32-ia32-msvc" "2.2.2"
     "@tauri-apps/cli-win32-x64-msvc" "2.2.2"
 
+"@tauri-apps/plugin-biometric@~2":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@tauri-apps/plugin-biometric/-/plugin-biometric-2.2.0.tgz#41d03157e93bd21e7d2aa42e7a4122b0447339c2"
+  integrity sha512-bxetRUGNGIuH/zMMlZ1VuYG7B0pWA/GkNDyMKmajCC3T3AIgL+siyeorDw+lAcp9KDNnTZ8vSOlxiAcwdbWN4Q==
+  dependencies:
+    "@tauri-apps/api" "^2.0.0"
+
+"@tauri-apps/plugin-dialog@~2":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@tauri-apps/plugin-dialog/-/plugin-dialog-2.2.0.tgz#2f7b841a982820adbc9c182e0e95acd8d90aa6fc"
+  integrity sha512-6bLkYK68zyK31418AK5fNccCdVuRnNpbxquCl8IqgFByOgWFivbiIlvb79wpSXi0O+8k8RCSsIpOquebusRVSg==
+  dependencies:
+    "@tauri-apps/api" "^2.0.0"
+
 "@tauri-apps/plugin-fs@~2":
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/@tauri-apps/plugin-fs/-/plugin-fs-2.2.0.tgz#3cf2968139a9cd9e4d12a7a7176c0b59e446b0a3"

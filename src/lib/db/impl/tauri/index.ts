@@ -18,8 +18,10 @@ class ShittyTable<T extends UUIDable> {
 	async makeInMemoryIndex() {
 		const dir = await this.walkDir();
 
-		if(!dir)
+		if(!dir){
 			this.index = [];
+			return;
+		}
 
 		this.index = dir?.map(x => x.name);
 	}
@@ -82,8 +84,13 @@ class ShittyTable<T extends UUIDable> {
 
 	async write(uuid: string, data: T) {
 		const _path = await path.resolve(this.path, uuid);
-		await fs.mkdir(this.path, { recursive: true });
-		await fs.writeFile(_path, encode(await typeson.encapsulate(data)));
+		try{
+			await fs.writeFile(_path, encode(await typeson.encapsulate(data)));
+			return true;
+		}catch(e){
+			console.error(e);
+		}
+		return false;
 	}
 
 	async exists(uuid: string) {
@@ -102,7 +109,9 @@ class ShittyTable<T extends UUIDable> {
 		if (!await this.exists(uuid)) {
 			await this.write(uuid, data);
 			this.index?.push(uuid);
+			return true;
 		}
+		return false;
 	}
 
 	async update(uuid: string, newData: Partial<T>) {
@@ -110,8 +119,7 @@ class ShittyTable<T extends UUIDable> {
 
 		if (oldData) {
 			const data = {...oldData, ...newData};
-			await this.write(uuid, data);
-			return true;
+			return await this.write(uuid, data);
 		}
 
 		return false;
@@ -119,22 +127,35 @@ class ShittyTable<T extends UUIDable> {
 
 	async delete(uuid: string) {
 		const _path = await path.resolve(this.path, uuid);
-		await fs.remove(_path);
-		if(this.index)
-			this.index = this.index.filter(x => x !== uuid);
+		try{
+			await fs.remove(_path);
+			if (this.index)
+				this.index = this.index.filter(x => x !== uuid);
+			return true;
+		}catch(e){
+			console.error(e);
+		}
+		return false;
 	}
 
 	async clear() {
-		for (const file of await fs.readDir(this.path))
-			await fs.remove(await path.resolve(this.path, file.name));
-		if(this.index)
-			this.index = [];
+		const dir = await this.walkDir();
+		if(dir){
+			for (const file of dir)
+				await fs.remove(await path.resolve(this.path, file.name));
+			if (this.index)
+				this.index = [];
+			return true;
+		}
+		return false;
 	}
 
 	async bulkAdd(contents: T[]) {
 		for (const content of contents) {
-			await this.add(content.uuid, content);
+			const res = await this.add(content.uuid, content);
+			if(!res) return res;
 		}
+		return true;
 	}
 }
 
@@ -152,6 +173,7 @@ const typeson = new Typeson().register([
 
 async function makeTable<T extends UUIDable>(tableName: string) {
 	const _path = await path.resolve(await path.appDataDir(), 'database', tableName);
+	await fs.mkdir(_path, { recursive: true });
 
 	return new ShittyTable<T>(tableName, _path);
 }

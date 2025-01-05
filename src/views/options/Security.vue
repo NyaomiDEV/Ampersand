@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonLabel, IonItem, IonList, IonPage, IonTitle, IonToolbar, IonToggle, IonBackButton, alertController } from '@ionic/vue';
-	import { inject, ref } from 'vue';
-	import { disableApplock, enableApplock } from '../../lib/applock';
+	import { inject, ref, onMounted } from 'vue';
+	import { disableApplock, enableApplock, areBiometricsAvailable } from '../../lib/applock';
 	import { securityConfig } from '../../lib/config';
 	import { useTranslation } from 'i18next-vue';
 
@@ -9,6 +9,11 @@
 	const i18next = useTranslation();
 
 	const usePassword = ref(securityConfig.usePassword);
+	const biometricsAvailable = ref(false);
+
+	onMounted(async () => {
+		biometricsAvailable.value = await areBiometricsAvailable();
+	});
 
 	function enterPasswordAlert(): Promise<string | null>{
 		return new Promise(async (resolve) => {
@@ -79,7 +84,7 @@
 				</IonTitle>
 			</IonToolbar>
 		</IonHeader>
-		
+
 		<IonContent>
 			<IonList :inset="isIOS">
 				<IonItem>
@@ -95,6 +100,15 @@
 					<IonLabel>
 						<h3>{{ $t("options:security.editPassword") }}</h3>
 					</IonLabel>
+				</IonItem>
+
+				<IonItem v-if="biometricsAvailable" :disabled="!securityConfig.password">
+					<IonToggle v-model="securityConfig.useBiometrics">
+						<IonLabel>
+							<h3>{{ $t("options:security.biometrics.title") }}</h3>
+							<p>{{ $t("options:security.biometrics.desc") }}</p>
+						</IonLabel>
+					</IonToggle>
 				</IonItem>
 
 			</IonList>

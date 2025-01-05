@@ -7,7 +7,6 @@
 	],
 	"permissions": [
 		"fs:allow-app-read-recursive",
-		"fs:allow-app-write-recursive",
-		"m3:allow-colors"
+		"fs:allow-app-write-recursive"
 	]
 }

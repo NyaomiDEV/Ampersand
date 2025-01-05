@@ -9,6 +9,6 @@
     "core:default",
     "store:default",
     "fs:default",
-    "m3:default"
+    "dialog:default"
   ]
 }

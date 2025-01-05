@@ -1,0 +1,14 @@
+{
+  "identifier": "mobile-capability",
+  "platforms": [
+    "android",
+    "iOS"
+  ],
+  "windows": [
+    "main"
+  ],
+  "permissions": [
+    "biometric:default",
+    "m3:default"
+  ]
+}
