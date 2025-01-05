@@ -1,0 +1,201 @@
+{
+	"options": {
+		"header": "Opzioni",
+		"managementLabel": "Gestione",
+		"settingsLabel": "Impostazioni"
+	},
+	"systemSettings": {
+		"header": "Nome del sistema e foto",
+		"systemName": "Nome del sistema",
+		"systemDescription": "Descrizione del sistema",
+		"memberCount": "Numero dei membrɜ",
+		"memberCountText": "{{memberCount}} membrɜ",
+		"tapToShow": "Clicca per mostrare"
+	},
+	"frontHistory": {
+		"header": "Cronologia del front",
+		"searchPlaceholder": "Cerca tra la cronologia del front...",
+		"currentlyFronting": "Al front al corrente",
+		"edit": {
+			"header": "Edit fronting entry",
+			"member": "Modifica il membrə a front",
+			"customStatus": "Status personalizzato",
+			"startTime": "Tempo d'inizio",
+			"endTime": "Tempo di fine",
+			"removeFromFront": {
+				"title": "Rimuovi dal front",
+				"desc": "Non potrai annullare questa azione dopo aver salvato!"
+			},
+			"isMainFronter": "Fronter principale?",
+			"delete": {
+				"title": "Elimina voce dal front",
+				"desc": "Non potrai annullare questa azione!"
+			}
+		}
+	},
+	"messageBoard": {
+		"header": "Bacheca dei messaggi",
+		"searchPlaceholder": "Cerca tra i messaggi...",
+		"edit": {
+			"header": "Modifica messaggio",
+			"member": "Modifica autorə del messaggio",
+			"title": "Titolo",
+			"body": "Corpo del messaggio",
+			"delete": {
+				"title": "Elimina messaggio dalla bacheca",
+				"desc": "Non potrai annullare questa azione!"
+			}
+		}
+	},
+	"tagManagement": {
+		"header": "Gestione dei tag",
+		"searchPlaceholder": "Cerca tra i tag...",
+		"selector": {
+			"member": "Tag dei membrɜ",
+			"journal": "Tag del diario"
+		},
+		"edit": {
+			"header": {
+				"member": "Modifica tag dei membrə",
+				"journal": "Modifica tag del diario"
+			},
+			"name": "Nome del tag",
+			"description": "Descrizione del tag",
+			"color": "Colore del tag",
+			"type": {
+				"header": "Tipo del tag",
+				"member": "Membrə",
+				"journal": "Diario",
+				"desc": "Nota: puoi definire il tipo del tag solo al momento della creazione!"
+			},
+			"actions": {
+				"showMembers": {
+					"title": "Mostra i membrɜ che usano questo tag",
+					"desc_one": "{{count}} membrə usa questo tag",
+					"desc_other": "{{count}} membrə usano questo tag"
+				},
+				"showJournal": {
+					"title": "Mostra le pagine del diario che usano questo tag",
+					"desc_one": "{{count}} pagina del diario usa questo tag",
+					"desc_other": "{{count}} pagine del diario usano questo tag"
+				},
+				"delete": {
+					"title": "Elimina tag",
+					"desc": "Non potrai annullare questa azione!",
+					"confirm": "Sei sicurə di voler eliminare questo tag?"
+				}
+			}
+		}
+	},
+	"reminders": {
+		"header": "Promemoria"
+	},
+	"appSettings": {
+		"header": "Impostazioni dell'app",
+		"localeLabel": "Gestione della localizzazione",
+		"locale": {
+			"language": "Cambia lingua",
+			"clock": {
+				"title": "Formato dell'orologio",
+				"12h": "12 ore",
+				"24h": "24 ore"
+			},
+			"firstDayOfWeek": {
+				"title": "Primo giorno della settimana",
+				"sunday": "Domenica",
+				"monday": "Lunedì"
+			}
+		},
+		"behaviorLabel": "Comportamento",
+		"view": {
+			"title": "Tab di default",
+			"members": "Membri",
+			"journal": "Diario",
+			"dashboard": "Dashboard",
+			"chat": "Chat"
+		},
+		"defaultFilterQueries": {
+			"members": "Ricerca predefinita per i membrə",
+			"journal": "Ricerca predefinita per il diario",
+			"tags": "Ricerca predefinita per i tag",
+			"frontingHistory": "Ricerca predefinita per la cronologia del front",
+			"messageBoard": "Ricerca predefinita per la bacheca dei messaggi"
+		}
+	},
+	"security": {
+		"header": "Sicurezza",
+		"applock": {
+			"title": "Blocco applicazione",
+			"desc": "Blocca l'applicazione con una password"
+		},
+		"editPassword": "Modifica password",
+		"inputPassword": {
+			"title": "Inserisci una password",
+			"hint": "Password"
+		}
+	},
+	"accessibility": {
+		"header": "Accessibilità",
+		"highLegibilityFont": {
+			"title": "Font ad alta leggibilità",
+			"desc": "Usa un font ad alta leggibilità invece del font del dispositivo"
+		},
+		"highLegibilityFontType": {
+			"title": "Famiglia dei font ad alta leggibilità",
+			"atkinson": "Atkinson Hyperlegible",
+			"opendyslexic": "OpenDyslexic",
+			"lexend": "Lexend"
+		},
+		"uiVariant": {
+			"title": "Variante dell'interfaccia",
+			"auto": "Auto",
+			"light": "Chiara",
+			"dark": "Scura"
+		},
+		"useAccentColor": {
+			"title": "Colore secondario",
+			"desc": "Usa un colore secondario personalizzato"
+		},
+		"accentColor": {
+			"title": "Scegli il colore secondario",
+			"desc": "Non scegliere colori monocromatici!"
+		},
+		"reducedMotion": {
+			"title": "Movimenti ridotti",
+			"desc": "Disabilita le animazioni in app"
+		},
+		"fontScale": {
+			"title": "Dimensione dell'interfaccia"
+		},
+		"chatFontScale": {
+			"title": "Dimensione della chat"
+		},
+		"longPressDuration": {
+			"title": "Durata della premuta"
+		}
+	},
+	"importExport": {
+		"header": "Importa / Esporta",
+		"dbImport": {
+			"title": "Importa i tuoi dati da un file di backup",
+			"desc": "Attenzione! Questo sovvrascriverà ogni dato esistente"
+		},
+		"dbExport": {
+			"title": "Esporta i tuoi dati",
+			"desc": "Fai il backup dei tuoi dati così da poterli tenere da qualche altra parte"
+		},
+		"settingsImport": {
+			"title": "Importa la configurazione delle tue impostazioni dell'app",
+			"desc": "Attenzione! Questo sovvrascriverà la tua configurazione delle impostazioni corrente"
+		},
+		"settingsExport": {
+			"title": "Esporta la configurazione delle tue impostazioni dell'app",
+			"desc": "Fai il backup dei tuoi dati delle impostazioni così da poterli reimportare in seguito"
+		}
+	},
+	"about": {
+		"header": "Informazione",
+		"version": "Versione {{version}}",
+		"madein": "Fatto con amore in Italia"
+	}
+}

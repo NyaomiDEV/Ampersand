@@ -176,13 +176,21 @@
 	},
 	"importExport": {
 		"header": "Import / Export",
-		"import": {
+		"dbImport": {
 			"title": "Import your data from a backup file",
 			"desc": "Warning! It will override any existing data"
 		},
-		"export": {
+		"dbExport": {
 			"title": "Export your data",
 			"desc": "Backup your current data to a file you can store somewhere else"
+		},
+		"settingsImport": {
+			"title": "Import your app settings config",
+			"desc": "Warning! It will overwrite your current settings configuration"
+		},
+		"settingsExport": {
+			"title": "Export your app settings config",
+			"desc": "Backup your current settings data so it can be reimported at a later time"
 		}
 	},
 	"about": {

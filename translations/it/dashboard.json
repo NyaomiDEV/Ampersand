@@ -1,0 +1,12 @@
+{
+	"header": "Dashboard",
+	"header_salute": "Ciao!",
+	"header_mainfronter": "Ciao, {{fronterName}}!",
+	"nowFronting": "Ora a front",
+	"recentFrontingHistory": "Uscitə dal front recentemente",
+	"messageBoard": {
+		"header": "Bacheca dei messaggi",
+		"add": "Aggiungi alla bacheca",
+		"view": "Vedi di più..."
+	}
+}

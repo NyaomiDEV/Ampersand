@@ -178,13 +178,21 @@
 	},
 	"importExport": {
 		"header": "Import / Export",
-		"import": {
+		"dbImport": {
 			"title": "Importați-vă datele dintr-un fișier de backup",
 			"desc": "Atenție! Va superscrie orice date existente"
 		},
-		"export": {
+		"dbExport": {
 			"title": "Exportați-vă datele curente",
 			"desc": "Faceți backup datelor curente într-un fișier care poate fi stocat altundeva"
+		},
+		"settingsImport": {
+			"title": "Importați configurația setărilor aplicației dvs.",
+			"desc": "Atenție! Aceasta va suprascrie configurația curentă a setărilor dvs."
+		},
+		"settingsExport": {
+			"title": "Exportați configurația setărilor aplicației dvs.",
+			"desc": "Faceți backup de rezervă a datelor din setările curente, astfel încât acestea să poată fi reinportate ulterior"
 		}
 	},
 	"about": {

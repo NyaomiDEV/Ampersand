@@ -42,7 +42,6 @@
 			await importAppConfigFromBinary(new Uint8Array(await file.arrayBuffer()));
 		}
 	}
-
 	async function exportSettings(){
 		const data = await exportAppConfigToBinary();
 		const date = dayjs().format("YYYY-MM-DD");
@@ -75,16 +74,31 @@
 
 				<IonItem button @click="exportDb" :detail="true">
 					<IonLabel>
-						<h3>{{ $t("options:importExport.export.title") }}</h3>
-						<p>{{ $t("options:importExport.export.desc") }}</p>
+						<h3>{{ $t("options:importExport.dbExport.title") }}</h3>
+						<p>{{ $t("options:importExport.dbExport.desc") }}</p>
 					</IonLabel>
 				</IonItem>
 
 				<IonItem button @click="importDb" :detail="true">
 					<IonLabel>
-						<h3>{{ $t("options:importExport.import.title") }}</h3>
-						<p>{{ $t("options:importExport.import.desc") }}</p>
-					</IonLabel>				
+						<h3>{{ $t("options:importExport.dbImport.title") }}</h3>
+						<p>{{ $t("options:importExport.dbImport.desc") }}</p>
+					</IonLabel>
+				</IonItem>
+					
+				<IonItem button @click="exportSettings" :detail="true">
+					<IonLabel>
+						<h3>{{ $t("options:importExport.settingsExport.title") }}</h3>
+						<p>{{ $t("options:importExport.settingsExport.desc") }}</p>
+					</IonLabel>	
+				</IonItem>
+
+									
+				<IonItem button @click="importSettings" :detail="true">
+					<IonLabel>
+						<h3>{{ $t("options:importExport.settingsImport.title") }}</h3>
+						<p>{{ $t("options:importExport.settingsImport.desc") }}</p>
+					</IonLabel>	
 				</IonItem>
 			</IonList>
 		</IonContent>

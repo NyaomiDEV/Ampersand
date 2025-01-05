@@ -1,0 +1,33 @@
+{
+	"header": "Membrɜ",
+	"searchPlaceholder": "Cerca tra i membrɜ...",
+	"actions": {
+		"addToFront": "Aggiungi a front",
+		"setMainFronter": "Imposta come fronter principale",
+		"unsetMainFronter": "Disimposta come fronter principale",
+		"setSoleFronter": "Imposta a front",
+		"removeFromFront": "Rimuovi dal front"
+	},
+	"edit": {
+		"headerAdd": "Aggiungi membrə",
+		"headerEdit": "Modifica membrə",
+		"name": "Nome",
+		"pronouns": "Pronomi",
+		"role": "Ruolo",
+		"color": "Colore preferito",
+		"tags": "Modifica i tag",
+		"description": "Descrizione",
+		"noDescription": "Nessuna descrizione",
+		"customFront": "Front personalizzato",
+		"isCustomFront": "Imposta come front personalizzato",
+		"archived": "Archiviatə",
+		"isArchived": "Imposta come archiviatə",
+		"showBoardEntries": "Mostra i messaggi sulla bacheca",
+		"showJournalEntries": "Mostra le pagine sul diario",
+		"delete": {
+			"title": "Cancella membrə",
+			"desc": "Non potrai annullare questa azione!"
+		},
+		"memberID": "ID del membrə: {{memberID}}"
+	}
+}

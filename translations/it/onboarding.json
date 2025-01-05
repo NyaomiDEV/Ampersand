@@ -1,0 +1,25 @@
+{
+	"welcomeScreen": {
+		"header": "Benvenutə su Ampersand!",
+		"start": "Inizia il tuo viaggio!"
+	},
+	"importScreen": {
+		"header": "Vuoi importare i tuoi dati?",
+		"prevInstall": "Installazione precedente",
+		"simplyPlural": "Simply Plural",
+		"pluralKit": "PluralKit",
+		"startFromScratch": "No, inizierò da zero",
+		"pleaseWait": "Si prega di attendere mentre importiamo i tuoi dati"
+	},
+	"systemInfo": {
+		"header": "Parlaci del tuo sistema!"
+	},
+	"memberInfo": {
+		"header": "Parlaci di più di te!",
+		"invitation": "Continua a modificare il tuo profilo dopo aver finito con l'introduzione!"
+	},
+	"endScreen": {
+		"header": "Grazie per aver scelto Ampersand!",
+		"startButton": "Iniziamo!"
+	}
+}
