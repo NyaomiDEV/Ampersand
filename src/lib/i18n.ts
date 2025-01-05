@@ -15,11 +15,6 @@ for(const path of context.keys()){
 	translations.set(path, context(path));
 }
 
-const loadTranslations = [
-	"en",
-	"ro"
-];
-
 i18next.on("languageChanged", async (lng) => {
 	dayjs.locale(lng);
 })
@@ -32,7 +27,6 @@ await i18next.init({
 
 for(const [path, translation] of translations.entries()){
 	const [, lang, ns] = /\/(.*)\/(.*)\.json$/.exec(path)!;
-	if(!loadTranslations.includes(lang)) continue;
 
 	i18next.addResourceBundle(lang, ns, translation);
 }
