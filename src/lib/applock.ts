@@ -1,6 +1,7 @@
 import { authenticate, checkStatus } from "@tauri-apps/plugin-biometric";
 import { securityConfig } from "./config";
 import sha1 from "./util/sha1";
+import { t } from "i18next";
 
 let isLocked = false;
 if (securityConfig.password)
@@ -20,7 +21,11 @@ export function lock(){
 
 export async function unlockWithBiometrics(){
 	try{
-		await authenticate("WOW BIOMETRICS");
+		await authenticate(t("lock:biometrics.reason"), {
+			confirmationRequired: false,
+			maxAttemps: 3,
+			title: t("lock:biometrics.title")
+		});
 		isLocked = false;
 		return true;
 	}catch(e){

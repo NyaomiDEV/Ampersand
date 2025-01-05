@@ -1,4 +1,8 @@
 {
 	"title": "The app is locked",
-	"hint": "Please input your app password"
+	"hint": "Please input your app password",
+	"biometrics": {
+		"title": "The app is locked",
+		"reason": "Unlock the application"
+	}
 }

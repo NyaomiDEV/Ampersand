@@ -1,6 +1,6 @@
 export type AppConfig = {
 	locale: {
-		language: string,
+		language?: string,
 		firstWeekOfDayIsSunday: boolean,
 		twelveHourClock: boolean
 	},

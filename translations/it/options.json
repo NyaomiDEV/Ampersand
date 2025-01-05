@@ -128,6 +128,10 @@
 			"title": "Blocco applicazione",
 			"desc": "Blocca l'applicazione con una password"
 		},
+		"biometrics": {
+			"title": "Usa l'autenticazione biometrica",
+			"desc": "Sblocca tramite la tua impronta digitale o faccia"
+		},
 		"editPassword": "Modifica password",
 		"inputPassword": {
 			"title": "Inserisci una password",

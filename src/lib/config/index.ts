@@ -6,7 +6,6 @@ import i18next from "i18next";
 
 const defaultAppConfig: AppConfig = {
 	locale: {
-		language: "en",
 		firstWeekOfDayIsSunday: false,
 		twelveHourClock: false,
 	},
