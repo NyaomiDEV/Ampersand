@@ -4,6 +4,7 @@ import { blob, file, filelist, imagebitmap, imagedata, map, set, typedArrays, un
 import { decode, encode } from "@msgpack/msgpack";
 import { compressGzip, decompressGzip } from "../util/misc";
 import { EncryptedPayload, decrypt, encrypt } from "../util/crypto";
+import { accessibilityConfig, appConfig, securityConfig } from "../config";
 
 const typeson = new Typeson({
 	sync: false
@@ -83,4 +84,21 @@ export async function importTableFromBinary(tableName: string, data: Uint8Array)
 		return await table.bulkAdd(contents);
 	}
 	return null;
+}
+
+export async function exportAppConfigToBinary(){
+	return encode(
+		await typeson.encapsulate(
+			{
+				appConfig, accessibilityConfig, securityConfig
+			}
+		)
+	)
+}
+
+export async function importAppConfigFromBinary(data: Uint8Array) {
+	const contents = await typeson.revive(decode(data));
+	Object.assign(appConfig, contents.appConfig);
+	Object.assign(accessibilityConfig, contents.accessibilityConfig);
+	Object.assign(securityConfig, contents.securityConfig);
 }

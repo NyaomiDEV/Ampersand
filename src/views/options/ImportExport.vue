@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonList, IonItem, IonLabel, IonPage, IonTitle, IonToolbar, IonBackButton} from '@ionic/vue';
 	import { inject } from 'vue';
-	import { importDatabaseFromBinary, exportDatabaseToBinary } from '../../lib/db/ioutils';
+	import { importDatabaseFromBinary, exportDatabaseToBinary, importAppConfigFromBinary, exportAppConfigToBinary } from '../../lib/db/ioutils';
 	import { downloadBlob, getFiles } from '../../lib/util/misc';
 	import dayjs from 'dayjs';
 
@@ -11,7 +11,7 @@
 		const files = await getFiles(undefined, false);
 		if(files.length){
 			const file = files[0];
-			await importDatabaseFromBinary(new Uint8Array(await file.arrayBuffer()))
+			await importDatabaseFromBinary(new Uint8Array(await file.arrayBuffer()));
 		}
 	}
 
@@ -19,6 +19,20 @@
 		const data = await exportDatabaseToBinary();
 		const date = dayjs().format("YYYY-MM-DD");
 		downloadBlob(data,`ampersand-backup-${date}.ampdb`);
+	}
+
+	async function importSettings(){
+		const files = await getFiles(undefined, false);
+		if (files.length) {
+			const file = files[0];
+			await importAppConfigFromBinary(new Uint8Array(await file.arrayBuffer()));
+		}
+	}
+
+	async function exportSettings(){
+		const data = await exportAppConfigToBinary();
+		const date = dayjs().format("YYYY-MM-DD");
+		downloadBlob(data, `ampersand-config-${date}.ampcfg`);
 	}
 </script>
 
