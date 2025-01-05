@@ -8,9 +8,20 @@ import { decode, encode } from '@msgpack/msgpack';
 class ShittyTable<T extends UUIDable> {
 	name: string;
 	path: string;
+	index?: string[];
+
 	constructor(name: string, path: string) {
 		this.name = name;
 		this.path = path;
+	}
+
+	async makeInMemoryIndex() {
+		const dir = await this.walkDir();
+
+		if(!dir)
+			this.index = [];
+
+		this.index = dir?.map(x => x.name);
 	}
 
 	async get(uuid: string): Promise<T | undefined> {
@@ -27,7 +38,7 @@ class ShittyTable<T extends UUIDable> {
 		return undefined;
 	}
 
-	async walk() {
+	async walkDir() {
 		try {
 			const dir = await fs.readDir(this.path);
 			return dir;
@@ -38,19 +49,34 @@ class ShittyTable<T extends UUIDable> {
 		return undefined;
 	}
 
+	async countDir() {
+		return (await this.walkDir())?.length;
+	}
+
+	async walk() {
+		if(!this.index)
+			await this.makeInMemoryIndex();
+
+		return this.index;
+	}
+
 	async count() {
-		return (await this.walk())?.length;
+		if (!this.index)
+			await this.makeInMemoryIndex();
+
+		return this.index!.length;
 	}
 
 	async toArray(): Promise<T[]> {
-		const dir = (await this.walk())?.map(x => x.name);
 		const arr: T[] = [];
-		if (dir) {
-			for (const x of dir) {
-				const data = await this.get(x);
-				if (data) arr.push(data);
-			}
+		if (!this.index)
+			await this.makeInMemoryIndex();
+
+		for (const x of this.index!) {
+			const data = await this.get(x);
+			if (data) arr.push(data);
 		}
+
 		return arr;
 	}
 
@@ -61,6 +87,13 @@ class ShittyTable<T extends UUIDable> {
 	}
 
 	async exists(uuid: string) {
+		if (!this.index)
+			await this.makeInMemoryIndex();
+
+		return this.index!.includes(uuid);
+	}
+
+	async existsInFs(uuid: string) {
 		const _path = await path.resolve(this.path, uuid);
 		return fs.exists(_path);
 	}
@@ -68,6 +101,7 @@ class ShittyTable<T extends UUIDable> {
 	async add(uuid: string, data: T) {
 		if (!await this.exists(uuid)) {
 			await this.write(uuid, data);
+			this.index?.push(uuid);
 		}
 	}
 
@@ -86,11 +120,15 @@ class ShittyTable<T extends UUIDable> {
 	async delete(uuid: string) {
 		const _path = await path.resolve(this.path, uuid);
 		await fs.remove(_path);
+		if(this.index)
+			this.index = this.index.filter(x => x !== uuid);
 	}
 
 	async clear() {
 		for (const file of await fs.readDir(this.path))
 			await fs.remove(await path.resolve(this.path, file.name));
+		if(this.index)
+			this.index = [];
 	}
 
 	async bulkAdd(contents: T[]) {
