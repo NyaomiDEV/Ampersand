@@ -46,7 +46,18 @@
 	async function exportSettings(){
 		const data = await exportAppConfigToBinary();
 		const date = dayjs().format("YYYY-MM-DD");
-		downloadBlob(data, `ampersand-config-${date}.ampcfg`);
+		if('isTauri' in window){
+			const path = await save({
+				filters: [{
+					name: `ampersand-config-${date}`,
+					extensions: ["ampcfg"]
+				}]
+			});
+
+			if(path)
+				await writeFile(path, data);
+		} else
+			downloadBlob(data, `ampersand-config-${date}.ampcfg`);
 	}
 </script>
 
