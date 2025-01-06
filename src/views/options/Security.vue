@@ -15,10 +15,10 @@
 		biometricsAvailable.value = await areBiometricsAvailable();
 	});
 
-	function enterPasswordAlert(): Promise<string | null>{
+	function enterPasswordAlert(prompt: string): Promise<string | null>{
 		return new Promise(async (resolve) => {
 			const alert = await alertController.create({
-				header: i18next.t("options:security.inputPassword.title"),
+				header: prompt,
 				buttons: [
 					{
 						text: i18next.t("other:alerts.cancel"),
@@ -44,18 +44,29 @@
 		});
 	}
 
-	async function modifyPassword() {
-		const password = await enterPasswordAlert();
+	async function addPassword() {
+		const password = await enterPasswordAlert(i18next.t("options:security.inputPassword.titleAdd"));
 
 		if(password){
 			const result = enableApplock(password);
 			usePassword.value = result;
-		} else
+		} else {
 			usePassword.value = false;
+		}
+	}
+
+	async function modifyPassword() {
+		const passwordOld = await enterPasswordAlert(i18next.t("options:security.inputPassword.titleModifyOld"));
+		const password = await enterPasswordAlert(i18next.t("options:security.inputPassword.titleModifyNew"));
+
+		if(passwordOld && password && disableApplock(passwordOld)){
+			const result = enableApplock(password);
+			usePassword.value = result;
+		}
 	}
 
 	async function disablePassword() {
-		const password = await enterPasswordAlert();
+		const password = await enterPasswordAlert(i18next.t("options:security.inputPassword.titleDisable"));
 
 		if(password){
 			const result = disableApplock(password);
@@ -67,7 +78,7 @@
 
 	function toggle(){
 		if(usePassword.value) {
-			return modifyPassword();
+			return addPassword();
 		}
 
 		return disablePassword();		

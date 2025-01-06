@@ -9,7 +9,7 @@ export function getTags(){
 }
 
 async function genid(name: string) {
-	return makeUUIDv5((await getSystemUUID())!, `tags\0${name}`);
+	return makeUUIDv5((await getSystemUUID())!, `tags\0${name}\0${Date.now()}`);
 }
 
 export async function newTag(tag: Omit<Tag, keyof UUIDable>) {

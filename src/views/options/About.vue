@@ -6,6 +6,25 @@
 	import GithubLogo from  "../../assets/github_logo.svg";
 
 	import { version } from "../../../package.json";
+	import { openUrl } from '@tauri-apps/plugin-opener';
+
+	function openGithub(){
+		const url = "https://github.com/NyaomiDEV/Ampersand";
+		if(!('isTauri' in window)){
+			open(url, "_blank");
+		} else {
+			openUrl(url);
+		}
+	}
+
+	function openDiscord() {
+		const url = "https://discord.com/invite/xCptGJKeKc";
+		if(!('isTauri' in window)){
+			open(url, "_blank");
+		} else {
+			openUrl(url);
+		}
+	}
 </script>
 
 <template>
@@ -28,11 +47,11 @@
 				<IonIcon class="logo" :icon="AmpersandLogo" />
 
 				<div class="buttons">
-					<IonButton class="tonal" shape="round" href="https://discord.com/invite/xCptGJKeKc" target="_blank">
+					<IonButton class="tonal" shape="round" @click="openDiscord">
 						<IonIcon slot="icon-only" :icon="DiscordLogo"></IonIcon>
 					</IonButton>
 
-					<IonButton class="tonal" shape="round" href="https://github.com/NyaomiDEV/Ampersand" target="_blank">
+					<IonButton class="tonal" shape="round" @click="openGithub">
 						<IonIcon slot="icon-only" :icon="GithubLogo" ></IonIcon>
 					</IonButton>
 				</div>

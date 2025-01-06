@@ -9,7 +9,7 @@ export function getJournalPosts(){
 }
 
 async function genid(name: string) {
-	return makeUUIDv5((await getSystemUUID())!, `journalPosts\0${name}`);
+	return makeUUIDv5((await getSystemUUID())!, `journalPosts\0${name}\0${Date.now()}`);
 }
 
 export async function newJournalPost(journalPost: Omit<JournalPost, keyof UUIDable>) {

@@ -14,7 +14,7 @@ export async function toFrontingEntryComplete(frontingEntry: FrontingEntry): Pro
 }
 
 async function genid(name: string) {
-	return makeUUIDv5((await getSystemUUID())!, `frontingEntries\0${name}`);
+	return makeUUIDv5((await getSystemUUID())!, `frontingEntries\0${name}\0${Date.now()}`);
 }
 
 export async function newFrontingEntry(frontingEntry: Omit<FrontingEntry, keyof UUIDable>) {

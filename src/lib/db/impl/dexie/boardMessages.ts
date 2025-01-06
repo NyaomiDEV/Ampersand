@@ -14,7 +14,7 @@ export async function toBoardMessageComplete(boardMessage: BoardMessage): Promis
 }
 
 async function genid(name: string) {
-	return makeUUIDv5((await getSystemUUID())!, `boardMessages\0${name}`);
+	return makeUUIDv5((await getSystemUUID())!, `boardMessages\0${name}\0${Date.now()}`);
 }
 
 export async function newBoardMessage(boardMessage: Omit<BoardMessage, keyof UUIDable>) {

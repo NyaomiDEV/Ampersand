@@ -136,7 +136,10 @@
 		},
 		"editPassword": "Modificați parola",
 		"inputPassword": {
-			"title": "Introduceți parola",
+			"titleAdd": "Introduceți noua parolă",
+			"titleModifyOld": "Introduceți vechea parolă",
+			"titleModifyNew": "Introduceți noua parolă",
+			"titleDisable": "Introduceți parola",
 			"hint": "Parola"
 		}
 	},

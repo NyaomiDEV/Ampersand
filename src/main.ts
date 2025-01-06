@@ -101,14 +101,14 @@ if(!window.isSecureContext){
 			// route to default view
 			switch (appConfig.view) {
 				case "members":
-					return { path: "/members" };
+					return { path: "/members", replace: true };
 				case "journal":
-					return { path: "/journal" };
+					return { path: "/journal", replace: true };
 				case "dashboard":
 				default:
-					return { path: "/dashboard" };
+					return { path: "/dashboard", replace: true };
 				case "chats":
-					return { path: "/chats" };
+					return { path: "/chats", replace: true };
 			}
 		}
 

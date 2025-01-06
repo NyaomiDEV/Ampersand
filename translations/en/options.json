@@ -134,7 +134,10 @@
 		},
 		"editPassword": "Modify password",
 		"inputPassword": {
-			"title": "Enter a password",
+			"titleAdd": "Enter your new password",
+			"titleModifyOld": "Enter your old password",
+			"titleModifyNew": "Enter your new password",
+			"titleDisable": "Enter your password",
 			"hint": "Password"
 		}
 	},

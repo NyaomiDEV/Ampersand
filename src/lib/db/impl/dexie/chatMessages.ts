@@ -5,7 +5,7 @@ import { UUIDable, ChatMessage } from "../../entities";
 import { getSystemUUID } from "./system";
 
 async function genid(name: string) {
-	return makeUUIDv5((await getSystemUUID())!, `chatMessages\0${name}`);
+	return makeUUIDv5((await getSystemUUID())!, `chatMessages\0${name}\0${Date.now()}`);
 }
 
 export async function newChatMessage(chatMessage: Omit<ChatMessage, keyof UUIDable>) {

@@ -5,7 +5,7 @@ import { UUIDable, Reminder } from "../../entities";
 import { getSystemUUID } from "./system";
 
 async function genid(name: string) {
-	return makeUUIDv5((await getSystemUUID())!, `reminders\0${name}`);
+	return makeUUIDv5((await getSystemUUID())!, `reminders\0${name}\0${Date.now()}`);
 }
 
 export async function newReminder(reminder: Omit<Reminder, keyof UUIDable>) {

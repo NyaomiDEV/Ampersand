@@ -44,6 +44,7 @@
 
 	const isCalendarView = ref(false);
 	const date = ref(dayjs().toISOString());
+	const calendarDate = ref(dayjs().format("YYYY-MM-DDTHH:mm:ss"));
 
 	const search = ref(props.q || "");
 	const frontingEntries: ShallowRef<FrontingEntry[]> = shallowRef([]);
@@ -157,7 +158,7 @@
 					showCancelButton="focus" showClearButton="focus" :spellcheck="false" v-model="search" />
 			</IonToolbar>
 			<div class="container" v-if="isCalendarView">
-				<IonDatetime presentation="date" :firstDayOfWeek="firstWeekOfDayIsSunday ? 0 : 1" :highlightedDates="highlightInCalendar" v-model="date" :locale="appConfig.locale.language || 'en'"/>
+				<IonDatetime presentation="date" :firstDayOfWeek="firstWeekOfDayIsSunday ? 0 : 1" :highlightedDates="highlightInCalendar" v-model="date" :locale="appConfig.locale.language || 'en'" :datetime="calendarDate"/>
 			</div>
 		</IonHeader>
 
