@@ -2,6 +2,11 @@
 
 export declare global {
 	interface Window {
-		isTauri: boolean | undefined
+		isTauri: boolean | undefined,
+		AmpersandNative: AmpersandNative
 	}
+}
+
+export interface AmpersandNative {
+	exitApp: () => void
 }

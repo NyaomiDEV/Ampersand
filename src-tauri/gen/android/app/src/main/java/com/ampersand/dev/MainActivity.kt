@@ -7,16 +7,12 @@ class MainActivity : TauriActivity() {
     private lateinit var wv: WebView
     
     override fun onWebViewCreate(webView: WebView) { 
-        wv = webView 
+        wv = webView
+        wv.addJavascriptInterface(AmpersandNative(this), "AmpersandNative");
     }
+    @SuppressLint("MissingSuperCall")
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
-        if (!wv.canGoBack())
-            super.onBackPressed();
-        else {
-            wv.evaluateJavascript("document.dispatchEvent(new Event('backbutton'))".trimIndent()) { result ->
-                if (result == "false") super.onBackPressed();
-            }
-        }
+        wv.evaluateJavascript("document.dispatchEvent(new Event('backbutton'))".trimIndent()) { _ -> }
     }
 }
