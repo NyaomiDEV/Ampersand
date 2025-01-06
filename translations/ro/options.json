@@ -136,11 +136,11 @@
 		},
 		"editPassword": "Modificați parola",
 		"inputPassword": {
-			"titleAdd": "Introduceți noua parolă",
-			"titleModifyOld": "Introduceți vechea parolă",
-			"titleModifyNew": "Introduceți noua parolă",
+			"titleAdd": "Introduceți o nouă parolă",
+			"titleModifyOld": "Introduceți parola veche",
+			"titleModifyNew": "Introduceți parola nouă",
 			"titleDisable": "Introduceți parola",
-			"hint": "Parola"
+			"hint": "Parolă"
 		}
 	},
 	"accessibility": {
@@ -187,19 +187,19 @@
 		"header": "Import / Export",
 		"dbImport": {
 			"title": "Importați-vă datele dintr-un fișier de backup",
-			"desc": "Atenție! Va superscrie orice date existente"
+			"desc": "Atenție! Această acțiune suprascrie datele actuale"
 		},
 		"dbExport": {
-			"title": "Exportați-vă datele curente",
-			"desc": "Faceți backup datelor curente într-un fișier care poate fi stocat altundeva"
+			"title": "Exportați-vă datele actuale",
+			"desc": "Faceți backup datelor actuale într-un fișier care poate fi stocat altundeva"
 		},
 		"settingsImport": {
-			"title": "Importați configurația setărilor aplicației dvs.",
-			"desc": "Atenție! Aceasta va suprascrie configurația curentă a setărilor dvs."
+			"title": "Importați-vă setările dintr-un fișier",
+			"desc": "Atenție! Această acțiune suprascrie setările actuale"
 		},
 		"settingsExport": {
-			"title": "Exportați configurația setărilor aplicației dvs.",
-			"desc": "Faceți backup de rezervă a datelor din setările curente, astfel încât acestea să poată fi reinportate ulterior"
+			"title": "Exportați-vă setările dintr-un fișier",
+			"desc": "Salvați setările actuale într-un fișier care poate fi apelat ulterior"
 		}
 	},
 	"about": {
