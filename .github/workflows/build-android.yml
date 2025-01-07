@@ -60,11 +60,11 @@ jobs:
         env:
           NDK_HOME: ${{ env.ANDROID_HOME }}/ndk/27.0.11902837
       - name: Publish artifact
-          uses: softprops/action-gh-release@v1
-          with:
-            draft: true
-            name: Development build for Android
-            tag_name: dev
-            generate_release_notes: true
-            files: |
-              ./src-tauri/gen/android/app/build/outputs/apk/universal/release/app-universal-release.apk
+        uses: softprops/action-gh-release@v1
+        with:
+          draft: true
+          name: Development build for Android
+          tag_name: dev
+          generate_release_notes: true
+          files: |
+            ./src-tauri/gen/android/app/build/outputs/apk/universal/release/app-universal-release.apk
