@@ -40,7 +40,7 @@ jobs:
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
       - name: Set up Android NDK
-        run: sdkmanager "ndk-bundle"
+        run: sdkmanager "ndk;28.0.12674087"
       - name: Set up Rust toolchain
         uses: dtolnay/rust-toolchain@stable
         with:
@@ -58,7 +58,7 @@ jobs:
       - name: Build universal APK
         run: yarn tauri android build --apk
         env:
-          NDK_HOME: ${{ env.ANDROID_HOME }}/ndk-bundle/
+          NDK_HOME: ${{ env.ANDROID_HOME }}/ndk/28.0.12674087/
       - name: Publish artifact
         uses: softprops/action-gh-release@v1
         with:
