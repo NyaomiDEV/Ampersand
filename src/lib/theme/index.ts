@@ -1,4 +1,4 @@
-import { argbFromHex, blueFromArgb, DynamicColor, greenFromArgb, Hct, MaterialDynamicColors, redFromArgb, SchemeTonalSpot, themeFromSourceColor } from "@material/material-color-utilities";
+import { argbFromHex, blueFromArgb, DynamicColor, greenFromArgb, Hct, MaterialDynamicColors, redFromArgb, SchemeFidelity, SchemeTonalSpot } from "@material/material-color-utilities";
 import { accessibilityConfig } from "../config";
 import { M3 } from "tauri-plugin-m3";
 
@@ -61,8 +61,7 @@ const dynamicColorsWeWant = [
 
 const defaultColor = "#7E5700";
 
-const material3 = new M3();
-const m3colors = await material3.fetch().colors();
+const m3colors = await M3.fetch().colors();
 
 function rgbFromArgb(argb: number){
 	return [
@@ -78,7 +77,7 @@ export function updateMaterialColors(target?: HTMLElement){
 	if (useAccentColor && accentColor)
 		addMaterialColors(accentColor, target);
 	else if(m3colors)
-		addMaterialColors(m3colors.primary || defaultColor, target);
+		addMaterialColors(m3colors.primaryContainer || defaultColor, target);
 	else
 		addMaterialColors(defaultColor, target);
 }
@@ -105,8 +104,8 @@ export function unsetMaterialColors(target?: HTMLElement){
 
 export function addMaterialColors(hex: string, target?: HTMLElement){
 	// Generate new theme
-	const tonalSpotLight = new SchemeTonalSpot(Hct.fromInt(argbFromHex(hex)), false, 0);
-	const tonalSpotDark = new SchemeTonalSpot(Hct.fromInt(argbFromHex(hex)), true, 0);
+	const tonalSpotLight = new SchemeFidelity(Hct.fromInt(argbFromHex(hex)), false, 0);
+	const tonalSpotDark = new SchemeFidelity(Hct.fromInt(argbFromHex(hex)), true, 0);
 
 	const styleSheet: Map<string, string> = new Map();
 
