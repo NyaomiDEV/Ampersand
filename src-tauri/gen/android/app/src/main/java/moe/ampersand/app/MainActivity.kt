@@ -1,4 +1,4 @@
-package com.ampersand.dev
+package moe.ampersand.app
 
 import android.webkit.WebView
 import android.annotation.SuppressLint

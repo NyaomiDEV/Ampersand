@@ -1,4 +1,4 @@
-/src/main/java/com/ampersand/dev/generated
+/src/main/java/moe/ampersand/app/generated
 /src/main/jniLibs/**/*.so
 /src/main/assets/tauri.conf.json
 /tauri.build.gradle.kts
