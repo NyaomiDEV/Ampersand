@@ -24,7 +24,7 @@ But if you want to think of it on those terms, sure, having an offline app could
 
 ## So, where's the download button?
 
-Ampersand is in alpha stage. There's a preview PWA at https://app.ampersand.moe and Android builds are handed over in our Discord server, in the hopes we could get a place to host them and just link them (sorry, we are currently broke...)
+Ampersand is in alpha stage. There's a preview PWA at https://app.ampersand.moe and Android builds are available in the [Releases section](https://github.com/NyaomiDEV/Ampersand/releases).
 
 ## How will it be like when it's ready?
 
