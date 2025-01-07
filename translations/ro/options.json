@@ -128,7 +128,7 @@
 		"header": "Securitate",
 		"applock": {
 			"title": "Încuiere aplicație",
-			"desc": "Încuiați aplicația cu o parola"
+			"desc": "Încuiați aplicația cu o parolă"
 		},
 		"biometrics": {
 			"title": "Utilizați autentificarea biometrică",
@@ -167,7 +167,7 @@
 		},
 		"accentColor": {
 			"title": "Alegeți culoarea de accent",
-			"desc": "Nu alegeți tonuri de gri!"
+			"desc": "Nu alegeți nuanțe de gri!"
 		},
 		"reducedMotion": {
 			"title": "Mișcare redusă",
@@ -190,7 +190,7 @@
 			"desc": "Atenție! Această acțiune suprascrie datele actuale"
 		},
 		"dbExport": {
-			"title": "Exportați-vă datele actuale",
+			"title": "Exportați-vă datele actuale într-un fișier",
 			"desc": "Faceți backup datelor actuale într-un fișier care poate fi stocat altundeva"
 		},
 		"settingsImport": {
