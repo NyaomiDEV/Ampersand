@@ -2,20 +2,22 @@ import { authenticate, checkStatus } from "@tauri-apps/plugin-biometric";
 import { securityConfig } from "./config";
 import sha1 from "./util/sha1";
 import { t } from "i18next";
+import { ref } from "vue";
 
-let isLocked = false;
+export const isLocked = ref(false);
+
 if (securityConfig.password)
-	isLocked = true;
+	isLocked.value = true;
 
 export function getLockedStatus(){
 	if (securityConfig.password === undefined || !securityConfig.usePassword) return false;
-	return isLocked;
+	return isLocked.value;
 }
 
 export function lock(){
-	if(isLocked) return false;
+	if (isLocked.value) return false;
 
-	isLocked = true;
+	isLocked.value = true;
 	return true;
 }
 
@@ -26,18 +28,18 @@ export async function unlockWithBiometrics(){
 			maxAttemps: 3,
 			title: t("lock:biometrics.title")
 		});
-		isLocked = false;
+		isLocked.value = false;
 		return true;
 	}catch(e){
 		return false;
 	}
 }
 
-export function unlock(plaintextPwd: string) {
+export function unlockWithPassword(plaintextPwd: string) {
 	const password = new TextDecoder().decode(sha1(new TextEncoder().encode(plaintextPwd)));
 
 	if(securityConfig.password === password) {
-		isLocked = false;
+		isLocked.value = false;
 		return true;
 	}
 
@@ -48,7 +50,7 @@ export function disableApplock(plaintextPwd: string) {
 	const password = new TextDecoder().decode(sha1(new TextEncoder().encode(plaintextPwd)));
 
 	if (securityConfig.password === password) {
-		isLocked = false;
+		isLocked.value = false;
 		securityConfig.usePassword = false;
 		securityConfig.useBiometrics = false;
 		securityConfig.password = undefined;
@@ -59,7 +61,7 @@ export function disableApplock(plaintextPwd: string) {
 }
 
 export function enableApplock(plaintextPwd: string) {
-	if(isLocked) return false;
+	if (isLocked.value) return false;
 
 	const password = new TextDecoder().decode(sha1(new TextEncoder().encode(plaintextPwd)));
 	securityConfig.password = password;

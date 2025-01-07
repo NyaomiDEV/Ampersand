@@ -1,6 +1,6 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, onIonViewWillEnter, onIonViewWillLeave } from '@ionic/vue';
-	import { inject, ref } from 'vue';
+	import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+	import { onBeforeMount, onUnmounted, ref } from 'vue';
 	import { getMainFronter } from '../../lib/db/tables/frontingEntries';
 	import type { Member } from '../../lib/db/entities.d.ts';
 
@@ -15,15 +15,14 @@
 			mainFronter.value = await getMainFronter();
 	}
 	
-	onIonViewWillEnter(async () => {
+	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
 		mainFronter.value = await getMainFronter();
 	});
-	onIonViewWillLeave(() => {
+
+	onUnmounted(() => {
 		DatabaseEvents.removeEventListener("updated", listener);
 	});
-
-	const isIOS = inject<boolean>("isIOS");
 </script>
 
 <template>

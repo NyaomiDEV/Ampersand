@@ -11,7 +11,7 @@
 }
 
 .md.md3 ion-tab-bar {
-	--color: rgb(var(--md3-on-surface));
+	--color: rgb(var(--md3-surface-container));
 	--border: none;
 	height: 80px;
 }

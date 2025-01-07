@@ -61,7 +61,7 @@ const dynamicColorsWeWant = [
 
 const defaultColor = "#7E5700";
 
-const m3colors = await M3.fetch().colors();
+const m3colors = await M3.fetch("system").colors();
 
 function rgbFromArgb(argb: number){
 	return [
@@ -71,13 +71,17 @@ function rgbFromArgb(argb: number){
 	].join(", ");
 }
 
+function rgbaToArgb(rgba: string) {
+	return "#" + rgba.slice(7, 9) + rgba.slice(1, 7);
+}
+
 export function updateMaterialColors(target?: HTMLElement){
 	const useAccentColor = accessibilityConfig.useAccentColor;
 	const accentColor = accessibilityConfig.accentColor;
 	if (useAccentColor && accentColor)
 		addMaterialColors(accentColor, target);
 	else if(m3colors)
-		addMaterialColors(m3colors.primaryContainer || defaultColor, target);
+		addMaterialColors(rgbaToArgb(m3colors.primaryContainer!) || defaultColor, target);
 	else
 		addMaterialColors(defaultColor, target);
 }

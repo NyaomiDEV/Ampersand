@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { IonList, IonItem, IonListHeader, IonLabel } from '@ionic/vue';
-	import { inject, onMounted, onUnmounted, ref, ShallowRef, shallowRef } from 'vue';
+	import { inject, onBeforeMount, onUnmounted, ref, ShallowRef, shallowRef } from 'vue';
 	import FrontingEntryAvatar from "../frontingEntry/FrontingEntryAvatar.vue";
 	import FrontingEntryLabel from "../frontingEntry/FrontingEntryLabel.vue";
 	import type { FrontingEntryComplete } from '../../lib/db/entities.d.ts';
@@ -33,7 +33,7 @@
 		}
 	}
 
-	onMounted(async () => {
+	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
 		frontingEntries.value = await Promise.all(
 			(await getFrontingEntries())
