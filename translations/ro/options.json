@@ -20,8 +20,8 @@
 			"header": "Schimbați intrarea în frunte",
 			"member": "Schimbați membrul fruntaș",
 			"customStatus": "Stare personalizată",
-			"startTime": "Timpul de începere",
-			"endTime": "Timpul de sfârșire",
+			"startTime": "De la",
+			"endTime": "Până la",
 			"removeFromFront": {
 				"title": "Eliminați din frunte",
 				"desc": "Nu veți putea anula această acțiune după ce salvați!"
