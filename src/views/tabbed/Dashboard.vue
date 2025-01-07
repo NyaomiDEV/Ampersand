@@ -1,14 +1,22 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+	import { IonContent, IonHeader, useIonRouter, IonFab, IonIcon, IonFabButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
 	import { onBeforeMount, onUnmounted, ref } from 'vue';
 	import { getMainFronter } from '../../lib/db/tables/frontingEntries';
 	import type { Member } from '../../lib/db/entities.d.ts';
+
+	import { lockClosedOutline as LockIOS } from "ionicons/icons";
+
+	import LockMD from '@material-design-icons/svg/outlined/lock.svg';
 
 	import CurrentFrontersCarousel from '../../components/dashboard/CurrentFrontersCarousel.vue';
 	import MessageBoardCarousel from '../../components/dashboard/MessageBoardCarousel.vue';
 	import FrontingHistoryCarousel from '../../components/dashboard/FrontingHistoryCarousel.vue';
 	import { DatabaseEvents, DatabaseEvent } from '../../lib/db/events';
+	import { securityConfig } from '../../lib/config';
+	import { lock } from '../../lib/applock';
+
 	const mainFronter = ref<Member>();
+	const router = useIonRouter();
 
 	const listener = async (event: Event) => {
 		if((event as DatabaseEvent).data.table === "frontingEntries")
@@ -23,6 +31,12 @@
 	onUnmounted(() => {
 		DatabaseEvents.removeEventListener("updated", listener);
 	});
+
+	function lockImmediately(){
+		if(lock())
+			router.replace("/lock");
+	}
+
 </script>
 
 <template>
@@ -42,6 +56,12 @@
 			<CurrentFrontersCarousel />
 			<MessageBoardCarousel />
 			<FrontingHistoryCarousel />
+
+			<IonFab slot="fixed" vertical="bottom" horizontal="end">
+				<IonFabButton v-if="securityConfig.password && securityConfig.usePassword" @click="lockImmediately">
+					<IonIcon :ios="LockIOS" :md="LockMD" />
+				</IonFabButton>
+			</IonFab>
 		</IonContent>
 	</IonPage>
 </template>
