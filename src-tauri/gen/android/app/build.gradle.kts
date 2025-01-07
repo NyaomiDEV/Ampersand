@@ -20,10 +20,10 @@ localProperties.load(FileInputStream(localPropertiesFile))
 
 android {
     compileSdk = 34
-    namespace = "com.ampersand.dev"
+    namespace = "moe.ampersand.app"
     defaultConfig {
         manifestPlaceholders["usesCleartextTraffic"] = "false"
-        applicationId = "com.ampersand.dev"
+        applicationId = "moe.ampersand.app"
         minSdk = 24
         targetSdk = 34
         versionCode = tauriProperties.getProperty("tauri.android.versionCode", "1").toInt()

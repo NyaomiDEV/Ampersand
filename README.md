@@ -8,10 +8,6 @@ Welcome to Ampersand.
 
 May 4, 2024
 
-## To Do
-
-Please refer to the issue section.
-
 ## What is Ampersand?
 
 Ampersand is a research project, and also an app. It wants to do one thing and do it reasonably well: tracking and journaling for plural systems.
@@ -28,27 +24,19 @@ But if you want to think of it on those terms, sure, having an offline app could
 
 ## So, where's the download button?
 
-Ampersand is still not ready. When it will be ready, it will be released as a Progressive Web App first. We won't really commit to "exclusivity" so alpha/beta/testing URLs will be available to everyone from day one.
-
-We will eventually ship the app as an Android (and iOS) app, and we will get listed on Google Play / F-Droid / Apple App Store / other iPhone App Stores in the EU(?). We're still unsure about using Capacitor or Tauri 2 for that matter, so we're just waiting and building the app as a PWA mainly so that we can be ready regardless of the framework we'll be using.
-
-## Can I check *anything* at all regarding this app?
-
-Sure thing. Here's a [Figma prototype](https://www.figma.com/proto/vD1U1Ed4ACd55tir2bb7qJ/Ampersand-Public?type=design&node-id=23-133&viewport=212%2C585%2C0.23&t=NCu4nRO1hcwOqU0q-0&scaling=min-zoom&starting-point-node-id=23%3A133&show-proto-sidebar=1) for you.
+Ampersand is in alpha stage. There's a preview PWA at https://app.ampersand.moe and Android builds are available in the [Releases section](https://github.com/NyaomiDEV/Ampersand/releases).
 
 ## How will it be like when it's ready?
 
-While the prototype is made with Material 3 in mind, we will actually ship the app with Material 2 first (however, we will use the Material You palette and we will make some adaptations to make it feel more in line with modern standards). The application will feature iOS widgets on Apple devices, and Material You coloring will be opt-in for that platform (based on chosen accent color).
-
-We plan to keep all UI elements exactly where they are in the prototype, though, so don't worry - the final product should be plenty similar.
+Something like this [Figma prototype](https://www.figma.com/proto/vD1U1Ed4ACd55tir2bb7qJ/Ampersand-Public?type=design&node-id=23-133&viewport=212%2C585%2C0.23&t=NCu4nRO1hcwOqU0q-0&scaling=min-zoom&starting-point-node-id=23%3A133&show-proto-sidebar=1), hopefully; however, the application will feature native-looking UI widgets on Apple devices (expect no Material 3 on iOS).
 
 ## Tech question: which tech stack are you using?
 
-Ampersand is made using Vue 3 and Vite. We're using Ionic Framework 8 for our UI widgets, and we're indeed waiting for them to update to Material 3. Database is handled by Dexie.js (IndexedDB). Everything else, unless specified here, is assumed to be Nao's disaster craft.
+Ampersand is made using Vue 3 and Vite. We're using Ionic Framework 8 for our UI widgets, and while we're waiting for them to update to Material 3, we took our own CSS shortcuts to achieve that style. Database is handled by Dexie.js for the PWA, while it's a disaster craft of ours on Android (don't look at it - it will hurt you). Everything else, unless specified here, is assumed to be Nao's disaster craft.
 
 ## Can I contribute code?
 
-Of course you can! And if you're not able to contribute code, you can still hang around, brainstorm ideas, and come up with an enticing logo for this project!
+Of course you can! And if you're not able to contribute code, you can still hang around, translate the app and brainstorm ideas!
 
 ## Can I fund you?
 
@@ -58,7 +46,7 @@ If you want to send money specifically to the main developer, you can donate on 
 
 ## Who's developing this app for now?
 
-@NyaomiDEV at the "back end" and @mecha-cat at the "front end", except that it all runs on your browser so it's unclear if we can use those terms as broadly understood.
+@NyaomiDEV at the "back end" and @mecha-cat at the "front end", except that it all runs on your device so it's unclear if we can use those terms as broadly understood.
 
 ## License
 

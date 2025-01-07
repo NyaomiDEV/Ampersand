@@ -15,24 +15,24 @@ html.high-legibility.hl-lexend {
 }
 
 ion-content {
-	--ion-safe-area-left: var(--device-offset-left);
-	--ion-safe-area-right: var(--device-offset-right);
+	--ion-safe-area-left: var(--device-inset-left);
+	--ion-safe-area-right: var(--device-inset-right);
 }
 
 ion-content:not(ion-tabs *){
-	--padding-bottom: var(--device-offset-bottom);
+	--padding-bottom: var(--device-inset-bottom);
 }
 
 ion-header ion-toolbar:first-of-type {
-	--ion-safe-area-top: var(--device-offset-top);
+	--ion-safe-area-top: var(--device-inset-top);
 }
 
 ion-tab-bar {
-	--ion-safe-area-bottom: var(--device-offset-bottom);
+	--ion-safe-area-bottom: var(--device-inset-bottom);
 }
 
 ion-fab:not(ion-tabs *) {
-	margin-bottom: var(--device-offset-bottom);
+	margin-bottom: var(--device-inset-bottom);
 }
 
 ion-modal.modal-sheet ion-header ion-toolbar:first-of-type {
@@ -40,7 +40,7 @@ ion-modal.modal-sheet ion-header ion-toolbar:first-of-type {
 }
 
 ion-modal.modal-sheet {
-	--ion-safe-area-bottom: var(--device-offset-bottom);
+	--ion-safe-area-bottom: var(--device-inset-bottom);
 	--max-height: 90%;
 }
 

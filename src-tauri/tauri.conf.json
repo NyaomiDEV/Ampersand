@@ -2,7 +2,7 @@
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
   "productName": "Ampersand",
   "version": "0.1.0",
-  "identifier": "com.ampersand.dev",
+  "identifier": "moe.ampersand.app",
   "build": {
     "frontendDist": "../dist",
     "devUrl": "http://localhost:5173",

@@ -1,4 +1,4 @@
-import { getOffsets } from "tauri-plugin-m3";
+import { M3 } from "tauri-plugin-m3";
 import { accessibilityConfig } from "./config";
 
 export function getIonicMode(): "ios" | "md" {
@@ -33,12 +33,12 @@ export function updateDarkMode() {
 export async function updateInsets() {
 	if(!('isTauri' in window)) return;
 
-	const offsets = await getOffsets();
-	if(offsets && !('error' in offsets)){
-		document.documentElement.style.setProperty("--device-offset-top", Number(offsets.top) / devicePixelRatio + "px");
-		document.documentElement.style.setProperty("--device-offset-left", Number(offsets.left) / devicePixelRatio + "px");
-		document.documentElement.style.setProperty("--device-offset-right", Number(offsets.right) / devicePixelRatio + "px");
-		document.documentElement.style.setProperty("--device-offset-bottom", Number(offsets.bottom) / devicePixelRatio + "px");
+	const insets = await M3.getInsets();
+	if(insets && !('error' in insets)){
+		document.documentElement.style.setProperty("--device-inset-top", Number(insets.adjustedInsetTop) + "px");
+		document.documentElement.style.setProperty("--device-inset-left", Number(insets.adjustedInsetLeft) + "px");
+		document.documentElement.style.setProperty("--device-inset-right", Number(insets.adjustedInsetRight) + "px");
+		document.documentElement.style.setProperty("--device-inset-bottom", Number(insets.adjustedInsetBottom) + "px");
 	}
 }
 

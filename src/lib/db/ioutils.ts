@@ -47,7 +47,6 @@ async function _importDatabase(theEntireDatabase: Record<string, any>){
 		const table = getTables().find((x) => x.name === key);
 		if (table) {
 			const contents = await typeson.revive(theEntireDatabase[key]);
-			console.log(contents);
 			await table.clear();
 			await table.bulkAdd(contents);
 		}

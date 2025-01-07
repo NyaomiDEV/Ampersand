@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { IonCard, IonCardContent, IonLabel, IonListHeader } from '@ionic/vue';
 	import FrontingEntryAvatar from '../frontingEntry/FrontingEntryAvatar.vue';
-	import { onMounted, onUnmounted, ref, shallowRef } from 'vue';
+	import { onBeforeMount, onUnmounted, ref, shallowRef } from 'vue';
 	import { PartialBy } from '../../lib/types';
 	import type { FrontingEntryComplete } from '../../lib/db/entities.d.ts';
 	import { getFrontingEntries, toFrontingEntryComplete } from '../../lib/db/tables/frontingEntries';
@@ -34,7 +34,7 @@
 		}
 	}
 
-	onMounted(async () => {
+	onBeforeMount(async () => {
 		interval = setInterval(() => now.value = new Date(), 1000);
 		DatabaseEvents.addEventListener("updated", listener);
 		frontingEntries.value = await Promise.all(

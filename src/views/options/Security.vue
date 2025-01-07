@@ -57,9 +57,11 @@
 
 	async function modifyPassword() {
 		const passwordOld = await enterPasswordAlert(i18next.t("options:security.inputPassword.titleModifyOld"));
+		if(!passwordOld) return;
 		const password = await enterPasswordAlert(i18next.t("options:security.inputPassword.titleModifyNew"));
+		if(!password) return;
 
-		if(passwordOld && password && disableApplock(passwordOld)){
+		if(disableApplock(passwordOld)){
 			const result = enableApplock(password);
 			usePassword.value = result;
 		}

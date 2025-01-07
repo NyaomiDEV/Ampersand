@@ -22,7 +22,6 @@ export default defineConfig({
 		strictPort: true,
 		host: host || undefined,
 		port: 5173,
-		base: process.env.GITHUB_ACTION ? "/Ampersand/" : ""
 	},
 	output: {
 		sourceMap: true,

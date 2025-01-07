@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { IonList, IonLabel, IonButton, IonListHeader } from '@ionic/vue';
-	import { inject, onMounted, onUnmounted, ref, shallowRef } from 'vue';
+	import { inject, onBeforeMount, onUnmounted, ref, shallowRef } from 'vue';
 	import { getBoardMessages, toBoardMessageComplete } from '../../lib/db/tables/boardMessages';
 	import type { BoardMessageComplete } from '../../lib/db/entities.d.ts';
 	import BoardMessageEdit from "../../modals/BoardMessageEdit.vue";
@@ -34,7 +34,7 @@
 		}
 	}
 
-	onMounted(async () => {
+	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
 		boardMessages.value = await Promise.all(
 			(await getBoardMessages())

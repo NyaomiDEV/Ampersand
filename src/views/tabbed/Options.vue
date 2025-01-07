@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonList, IonItem, IonListHeader, IonLabel, IonPage, IonTitle, IonToolbar, IonIcon, IonButtons, IonButton, useIonRouter } from '@ionic/vue';
+	import { IonContent, IonHeader, IonFab, IonFabButton, IonList, IonItem, IonListHeader, IonLabel, IonPage, IonTitle, IonToolbar, IonIcon, useIonRouter } from '@ionic/vue';
 	import { inject } from 'vue';
 	import { wasPersisted } from '../../lib/util/storageManager';
 	import StoragePersistenceMissing from "../../components/StoragePersistenceMissing.vue";
@@ -52,11 +52,6 @@
 				<IonTitle>
 					{{ $t("options:options.header") }}
 				</IonTitle>
-				<IonButtons slot="end">
-					<IonButton v-if="securityConfig.password && securityConfig.usePassword" @click="lockImmediately">
-						<IonIcon slot="icon-only" :ios="LockIOS" :md="LockMD" />
-					</IonButton>
-				</IonButtons>
 			</IonToolbar>
 		</IonHeader>
 
@@ -133,6 +128,13 @@
 					{{ $t("testingGrounds:header") }}
 				</IonItem>
 			</IonList>
+
+			<IonFab slot="fixed" vertical="bottom" horizontal="end">
+				<IonFabButton v-if="securityConfig.password && securityConfig.usePassword" @click="lockImmediately">
+					<IonIcon :ios="LockIOS" :md="LockMD" />
+				</IonFabButton>
+
+			</IonFab>
 		</IonContent>
 	</IonPage>
 </template>

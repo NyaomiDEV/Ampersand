@@ -14,10 +14,8 @@
 		IonItemSliding,
 		IonItemOptions,
 		IonItemOption,
-		onIonViewWillEnter,
-		onIonViewWillLeave,
 	} from '@ionic/vue';
-	import { inject, Ref, ref, shallowReactive, shallowRef } from 'vue';
+	import { inject, onBeforeMount, onUnmounted, Ref, ref, shallowReactive, shallowRef } from 'vue';
 	import { getFilteredMembers } from '../../lib/db/search';
 	import { accessibilityConfig } from '../../lib/config';
 
@@ -89,7 +87,7 @@
 		}
 	]
 
-	onIonViewWillEnter(async () => {
+	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listeners[0]);
 		DatabaseEvents.addEventListener("updated", listeners[1]);
 		members.value = await getMembers();
@@ -98,7 +96,7 @@
 			frontingEntries.set(member, await getCurrentFrontEntryForMember(member));
 	});
 
-	onIonViewWillLeave(() => {
+	onUnmounted(() => {
 		DatabaseEvents.removeEventListener("updated", listeners[0]);
 		DatabaseEvents.removeEventListener("updated", listeners[1]);
 	});

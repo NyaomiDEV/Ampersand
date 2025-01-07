@@ -1,0 +1,70 @@
+# Simple workflow for building Ampersand as an Android application
+name: Build for Android
+
+on:
+  # Runs on pushes targeting the default branch
+  push:
+    branches: [main]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets the GITHUB_TOKEN permissions to allow deployment to GitHub Pages
+permissions:
+  contents: write
+
+# Allow one concurrent deployment
+concurrency:
+  group: 'build-android'
+  cancel-in-progress: true
+
+jobs:
+  # Single deploy job since we're just deploying
+  deploy:
+    environment:
+      name: build-android
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'yarn'
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+      - name: Set up Android NDK
+        run: sdkmanager "ndk;28.0.12674087"
+      - name: Set up Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-linux-android,armv7-linux-androideabi,x86_64-linux-android
+      - name: Install frontend dependencies
+        run: yarn install --frozen-lockfile
+      - name: Set up Android signing
+        run: |
+          cd src-tauri/gen/android
+          echo "keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}" >> local.properties
+          echo "storePassword=${{ secrets.ANDROID_STORE_PASSWORD }}" >> local.properties
+          echo "keyPassword=${{ secrets.ANDROID_KEY_PASSWORD }}" >> local.properties
+          base64 -d <<< "${{ secrets.ANDROID_KEY_BASE64 }}" > $RUNNER_TEMP/keystore.jks
+          echo "storeFile=$RUNNER_TEMP/keystore.jks" >> local.properties
+      - name: Build universal APK
+        run: yarn tauri android build --apk --target aarch64 armv7 x86_64 --ci
+        env:
+          NDK_HOME: ${{ env.ANDROID_HOME }}/ndk/28.0.12674087/
+      - name: Publish artifact
+        uses: softprops/action-gh-release@v1
+        with:
+          name: Development build for Android
+          prerelease: true
+          tag_name: dev
+          generate_release_notes: true
+          files: |
+            ./src-tauri/gen/android/app/build/outputs/apk/universal/release/app-universal-release.apk
