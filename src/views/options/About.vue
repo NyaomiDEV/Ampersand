@@ -4,6 +4,7 @@
 	import AmpersandLogo from  "../../assets/ampersand_logo.svg"
 	import DiscordLogo from  "../../assets/discord_logo.svg";
 	import GithubLogo from  "../../assets/github_logo.svg";
+	import LiberapayLogo from "../../assets/liberapay_logo.svg";
 
 	import { version } from "../../../package.json";
 	import { openUrl } from '@tauri-apps/plugin-opener';
@@ -19,6 +20,15 @@
 
 	function openDiscord() {
 		const url = "https://discord.com/invite/xCptGJKeKc";
+		if(!('isTauri' in window)){
+			open(url, "_blank");
+		} else {
+			openUrl(url);
+		}
+	}
+
+	function openLiberapay(){
+		const url = "https://liberapay.com/Ampersand/";
 		if(!('isTauri' in window)){
 			open(url, "_blank");
 		} else {
@@ -53,6 +63,10 @@
 
 					<IonButton class="tonal" shape="round" @click="openGithub">
 						<IonIcon slot="icon-only" :icon="GithubLogo" ></IonIcon>
+					</IonButton>
+
+					<IonButton class="tonal" shape="round" @click="openLiberapay">
+						<IonIcon slot="icon-only" :icon="LiberapayLogo" ></IonIcon>
 					</IonButton>
 				</div>
 			</div>
