@@ -20,8 +20,8 @@
 			"header": "Schimbați intrarea în frunte",
 			"member": "Schimbați membrul fruntaș",
 			"customStatus": "Stare personalizată",
-			"startTime": "Timpul de începere",
-			"endTime": "Timpul de sfârșire",
+			"startTime": "De la",
+			"endTime": "Până la",
 			"removeFromFront": {
 				"title": "Eliminați din frunte",
 				"desc": "Nu veți putea anula această acțiune după ce salvați!"
@@ -128,7 +128,7 @@
 		"header": "Securitate",
 		"applock": {
 			"title": "Încuiere aplicație",
-			"desc": "Încuiați aplicația cu o parola"
+			"desc": "Încuiați aplicația cu o parolă"
 		},
 		"biometrics": {
 			"title": "Utilizați autentificarea biometrică",
@@ -167,7 +167,7 @@
 		},
 		"accentColor": {
 			"title": "Alegeți culoarea de accent",
-			"desc": "Nu alegeți tonuri de gri!"
+			"desc": "Nu alegeți nuanțe de gri!"
 		},
 		"reducedMotion": {
 			"title": "Mișcare redusă",
@@ -190,7 +190,7 @@
 			"desc": "Atenție! Această acțiune suprascrie datele actuale"
 		},
 		"dbExport": {
-			"title": "Exportați-vă datele actuale",
+			"title": "Exportați-vă datele actuale într-un fișier",
 			"desc": "Faceți backup datelor actuale într-un fișier care poate fi stocat altundeva"
 		},
 		"settingsImport": {
@@ -198,7 +198,7 @@
 			"desc": "Atenție! Această acțiune suprascrie setările actuale"
 		},
 		"settingsExport": {
-			"title": "Exportați-vă setările dintr-un fișier",
+			"title": "Exportați-vă setările într-un fișier",
 			"desc": "Salvați setările actuale într-un fișier care poate fi apelat ulterior"
 		}
 	},
