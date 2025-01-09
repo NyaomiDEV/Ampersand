@@ -59,7 +59,7 @@ const dynamicColorsWeWant = [
     "onTertiaryFixedVariant",
 ];
 
-const defaultColor = "#7E5700";
+const defaultColor = "#FF7E5700";
 
 const m3colors = await M3.fetch("system").colors();
 
@@ -79,7 +79,7 @@ export function updateMaterialColors(target?: HTMLElement){
 	const useAccentColor = accessibilityConfig.useAccentColor;
 	const accentColor = accessibilityConfig.accentColor;
 	if (useAccentColor && accentColor)
-		addMaterialColors(accentColor, target);
+		addMaterialColors(rgbaToArgb(accentColor), target);
 	else if(m3colors)
 		addMaterialColors(rgbaToArgb(m3colors.primaryContainer!) || defaultColor, target);
 	else

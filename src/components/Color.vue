@@ -1,28 +1,39 @@
 <script setup lang="ts">
-	import { onMounted, ref } from 'vue';
-	const input = ref<HTMLInputElement>();
+	import { ref } from 'vue';
+	import { IonModal } from '@ionic/vue';
+	import { ColorPicker } from 'vue-accessible-color-picker';
 	const model = defineModel<string>();
 	
+	const colorModal = ref<{$el: HTMLIonModalElement}>();
 
-	onMounted(() => {
-		model.value = input.value!.value;
-	});
+	const props = defineProps<{
+		alpha?: boolean
+	}>();
 
 	function open(){
-		input.value!.click();
+		colorModal.value?.$el.present();
 	}
 </script>
 
 <template>
 	<div class="color-container" @click="open">
 		<slot></slot>
-		<div class="color" :style="{backgroundColor: model}" @click="open" slot="end">
-			<input type="color" ref="input" v-model="model">
+		<div class="color" :style="{backgroundColor: model}" slot="end">
 		</div>
 	</div>
+	<IonModal class="color-modal" ref="colorModal">
+		<ColorPicker
+			:alpha-channel="props.alpha ? 'show' : 'hide'"
+			:color="model"
+			@color-change="(e) => model = e.colors.hex"
+			:visible-formats="['hex', 'rgb', 'hsl']"
+			default-format="hex"
+		/>
+	</IonModal>
 </template>
 
 <style scoped>
+	@import url('vue-accessible-color-picker/styles');
 	div.color-container {
 		display: flex;
 		align-items: center;
@@ -44,16 +55,24 @@
 		margin-bottom: 10px;
 	}
 
-	input {
-		opacity: 0;
-		width: 0;
-		height: 0;
-	}
-
 	div.color {
 		border: 2.5px solid var(--ion-text-color-step-400);
 		border-radius: 50%;
 		width: 36px;
 		aspect-ratio: 1;
+	}
+
+	ion-modal.color-modal {
+		--backdrop-opacity: var(--ion-backdrop-opacity, 0.32) !important;
+		--border-radius: 16px;
+		--width: fit-content;
+		--height: fit-content;
+		--vacp-color-background: transparent;
+		--vacp-color-background-input: var(--ion-toolbar-background);
+		--vacp-color-border: var(--ion-background-color-step-150);
+	}
+
+	ion-modal.color-modal div.vacp-color-picker {
+		margin: 16px;
 	}
 </style>
