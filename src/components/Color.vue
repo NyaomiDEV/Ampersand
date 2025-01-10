@@ -72,6 +72,11 @@
 		--vacp-color-border: var(--ion-background-color-step-150);
 	}
 
+	ion-modal.color-modal::part(content) {
+		position: absolute;
+		top: calc(var(--device-inset-top, 0px) + 64px);
+	}
+
 	ion-modal.color-modal div.vacp-color-picker {
 		margin: 16px;
 	}

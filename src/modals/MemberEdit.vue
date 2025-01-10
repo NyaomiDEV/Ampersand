@@ -50,7 +50,7 @@
 	import { resizeImage } from "../lib/util/image";
 	import { ShallowReactive, inject, onMounted, ref, shallowReactive, shallowRef, toRaw } from "vue";
 	import { getMarkdownFor } from "../lib/markdown";
-	import { addMaterialColors, unsetMaterialColors } from "../lib/theme";
+	import { addMaterialColors, rgbaToArgb, unsetMaterialColors } from "../lib/theme";
 	import { PartialBy } from "../lib/types";
 
 	const isIOS = inject<boolean>("isIOS")!;
@@ -136,7 +136,7 @@
 		if(!member.value) return;
 
 		if(member.value.color && member.value.color !== "#000000"){
-			addMaterialColors(member.value.color, self.value.$el);
+			addMaterialColors(rgbaToArgb(member.value.color), self.value.$el);
 		} else {
 			unsetMaterialColors(self.value.$el);
 		}

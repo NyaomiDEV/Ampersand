@@ -71,8 +71,16 @@ function rgbFromArgb(argb: number){
 	].join(", ");
 }
 
-function rgbaToArgb(rgba: string) {
-	return "#" + rgba.slice(7, 9) + rgba.slice(1, 7);
+export function rgbaToArgb(rgba: string) {
+	const matches = rgba.replace('#', "").match(/.{1,2}/g);
+
+	if(!matches) return rgba;
+	const [ r, g, b, a ] = matches;
+	if(!a)
+		return "#" + r + g + b;
+
+	// else it does
+	return "#" + a + r + g + b;
 }
 
 export function updateMaterialColors(target?: HTMLElement){

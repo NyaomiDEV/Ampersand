@@ -36,7 +36,7 @@
 	import { newTag, removeTag, updateTag } from '../lib/db/tables/tags';
 	import { Tag } from "../lib/db/entities";
 	import { inject, ref, shallowRef } from "vue";
-	import { addMaterialColors, unsetMaterialColors } from "../lib/theme";
+	import { addMaterialColors, rgbaToArgb, unsetMaterialColors } from "../lib/theme";
 	import { PartialBy } from "../lib/types";
 	import { globalEvents, SearchEvent } from "../lib/globalEvents";
 	import { getMembers } from "../lib/db/tables/members";
@@ -136,7 +136,7 @@
 		}
 
 		if(tag.value.color && tag.value.color !== "#000000"){
-			addMaterialColors(tag.value.color, self.value.$el);
+			addMaterialColors(rgbaToArgb(tag.value.color), self.value.$el);
 		} else {
 			unsetMaterialColors(self.value.$el);
 		}
