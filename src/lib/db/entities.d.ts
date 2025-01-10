@@ -66,20 +66,21 @@ type ReminderBase = UUIDable & {
 	name: string,
 	title: string,
 	message: string,
-	nativeId: number,
-	type: "event" | "periodic"
+	nativeId: number
 }
 
 export type EventReminder = ReminderBase & {
-	triggeringEvent?: {
+	type: "event",
+	triggeringEvent: {
 		type: "memberAdded" | "memberRemoved",
 		filterQuery?: string
 	},
-	delay?: number // seconds
+	delay: number // seconds
 }
 
 export type PeriodicReminder = ReminderBase & {
-	scheduleOn?: {
+	type: "periodic",
+	scheduleOn: {
 		year?: number,
 		month?: number,
 		day?: number,

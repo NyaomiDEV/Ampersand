@@ -14,7 +14,7 @@ export async function newReminder(reminder: Omit<Reminder, keyof UUIDable>) {
 		await db.reminders.add(uuid, {
 			...reminder,
 			uuid
-		});
+		} as Reminder);
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "reminders",
 			event: "new",
