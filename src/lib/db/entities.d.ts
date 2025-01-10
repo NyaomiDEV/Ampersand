@@ -66,6 +66,7 @@ type ReminderBase = UUIDable & {
 	name: string,
 	title: string,
 	message: string,
+	nativeId: number,
 	type: "event" | "periodic"
 }
 
