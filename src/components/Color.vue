@@ -65,8 +65,8 @@
 	ion-modal.color-modal {
 		--backdrop-opacity: var(--ion-backdrop-opacity, 0.32) !important;
 		--border-radius: 16px;
-		--width: fit-content;
-		--height: fit-content;
+		--width: unset;
+		--height: unset;
 		--vacp-color-background: transparent;
 		--vacp-color-background-input: var(--ion-toolbar-background);
 		--vacp-color-border: var(--ion-background-color-step-150);
