@@ -16,6 +16,7 @@
 		title: "",
 		message: ""
 	};
+
 	const reminder = shallowRef<PartialBy<Reminder, "uuid">>({...emptyReminder});
 
 	const reminderEditModal = ref();

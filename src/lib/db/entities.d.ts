@@ -66,7 +66,7 @@ type ReminderBase = UUIDable & {
 	name: string,
 	title: string,
 	message: string,
-	nativeId: number
+	nativeId?: number
 }
 
 export type EventReminder = ReminderBase & {
