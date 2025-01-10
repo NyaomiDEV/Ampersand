@@ -90,7 +90,9 @@
 		}
 	},
 	"reminders": { 
-		"header": "Mementouri"
+		"header": "Mementouri",
+		"eventBasedLocale": "Event based reminders",
+		"periodicLocale": "Periodic reminders"
 	},
 	"appSettings": {
 		"header": "Setări aplicație",
@@ -166,8 +168,7 @@
 			"desc": "Folosiți o culoare de accent personalizată"
 		},
 		"accentColor": {
-			"title": "Alegeți culoarea de accent",
-			"desc": "Nu alegeți nuanțe de gri!"
+			"title": "Alegeți culoarea de accent"
 		},
 		"reducedMotion": {
 			"title": "Mișcare redusă",

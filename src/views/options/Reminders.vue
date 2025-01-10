@@ -1,8 +1,9 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton} from '@ionic/vue';
+	import { IonContent, IonHeader, IonFab, IonListHeader, IonFabButton, IonIcon, IonList, IonPage, IonTitle, IonToolbar, IonBackButton} from '@ionic/vue';
 	import { inject } from 'vue';
+	import { addOutline as addIOS } from "ionicons/icons";
 
-	import NotDoneYet from "../../components/NotDoneYet.vue";
+	import addMD from "@material-design-icons/svg/outlined/add.svg";
 
 	const isIOS = inject<boolean>("isIOS");
 </script>
@@ -19,9 +20,27 @@
 		</IonHeader>
 		
 		<IonContent>
-			<NotDoneYet />
-			<IonList :inset="isIOS" v-if="false">
-			</IonList>
+			<IonListHeader>
+				<IonLabel>
+					{{ $t("options:reminders.eventBasedLocale") }}
+				</IonLabel>
+			</IonListHeader>
+			
+			<IonList :inset="isIOS"></IonList>
+
+			<IonListHeader>
+				<IonLabel>
+					{{ $t("options:reminders.periodicLocale") }}
+				</IonLabel>
+			</IonListHeader>
+
+			<IonList :inset="isIOS"></IonList>
+
+			<IonFab slot="fixed" vertical="bottom" horizontal="end">
+				<IonFabButton>
+					<IonIcon :ios="addIOS" :md="addMD" />
+				</IonFabButton>
+			</IonFab>
 		</IonContent>
 	</IonPage>
 </template>

@@ -88,7 +88,9 @@
 		}
 	},
 	"reminders": {
-		"header": "Promemoria"
+		"header": "Promemoria",
+		"eventBasedLocale": "Promemoria eventi",
+		"periodicLocale": "Promemoria periodici"
 	},
 	"appSettings": {
 		"header": "Impostazioni dell'app",
@@ -164,8 +166,7 @@
 			"desc": "Usa un colore secondario personalizzato"
 		},
 		"accentColor": {
-			"title": "Scegli il colore secondario",
-			"desc": "Non scegliere colori monocromatici!"
+			"title": "Scegli il colore secondario"
 		},
 		"reducedMotion": {
 			"title": "Movimenti ridotti",

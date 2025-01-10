@@ -88,7 +88,9 @@
 		}
 	},
 	"reminders": {
-		"header": "Reminders"
+		"header": "Reminders",
+		"eventBasedLocale": "Event based reminders",
+		"periodicLocale": "Periodic reminders"
 	},
 	"appSettings": {
 		"header": "App settings",
@@ -164,8 +166,7 @@
 			"desc": "Use a custom accent color"
 		},
 		"accentColor": {
-			"title": "Choose the accent color",
-			"desc": "Don't choose greyscale values!"
+			"title": "Choose the accent color"
 		},
 		"reducedMotion": {
 			"title": "Reduced motion",
