@@ -90,7 +90,35 @@
 	"reminders": {
 		"header": "Reminders",
 		"eventBasedLocale": "Event based reminders",
-		"periodicLocale": "Periodic reminders"
+		"periodicLocale": "Periodic reminders",
+
+		"editReminder": {
+			"header": "Edit reminder",
+			"reminderName": "Reminder name",
+			"reminderMessage": "Reminder message",
+
+			"reminderType": {
+				"title": "Type of reminder",
+				"eventBased": "Event based",
+				"periodic": "Periodic"
+			},
+
+			"eventBased": {
+				"title": "Triggering event",
+				"addedToFront": "After a member has been added to front",
+				"removedFromFront": "After a member has been removed from front",
+				"memberFilterQuery": "Member filter query",
+
+				"timing": {
+					"title": "Timing",
+					"delay": "Delay"
+				}
+			},
+
+			"periodic": {
+
+			}
+		}
 	},
 	"appSettings": {
 		"header": "App settings",

@@ -80,7 +80,6 @@
 					<Color v-model="accessibilityConfig.accentColor">
 						<IonLabel>
 							<h3>{{ $t("options:accessibility.accentColor.title") }}</h3>
-							<p>{{ $t("options:accessibility.accentColor.desc") }}</p>
 						</IonLabel>
 					</Color>
 				</IonItem>
