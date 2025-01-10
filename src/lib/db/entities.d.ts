@@ -76,6 +76,9 @@ export type EventReminder = ReminderBase & {
 		filterQuery?: string
 	},
 	delay: number // seconds
+
+	// make it either-or in regards to PeriodicReminder
+	scheduleOn?: never
 }
 
 export type PeriodicReminder = ReminderBase & {
@@ -89,6 +92,10 @@ export type PeriodicReminder = ReminderBase & {
 		minute?: number,
 		second?: number
 	}
+
+	// make it either-or in regards to EventReminder
+	triggeringEvent?: never,
+	delay?: never
 }
 
 export type Reminder = EventReminder | PeriodicReminder;
