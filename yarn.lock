@@ -1626,7 +1626,7 @@ tapable@^2.1.1, tapable@^2.2.0:
 
 "tauri-plugin-m3@https://github.com/0xk1f0/tauri-plugin-m3":
   version "0.2.0"
-  resolved "https://github.com/0xk1f0/tauri-plugin-m3#b51ced529ec473480caa8f82de48f51bd71aaa72"
+  resolved "https://github.com/0xk1f0/tauri-plugin-m3#a1f4865db83132f20625052058a92d8a5359832d"
   dependencies:
     "@tauri-apps/api" "^2.1.1"
 
