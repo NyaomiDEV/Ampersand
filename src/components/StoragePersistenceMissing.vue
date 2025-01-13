@@ -15,5 +15,5 @@
 			<IonCardTitle>{{ $t("other:storagePersistence.header") }}</IonCardTitle>
 		</IonCardHeader>
 		<IonCardContent>{{ $t("other:storagePersistence.content") }}</IonCardContent>
-  </IonCard>
+	</IonCard>
 </template>
