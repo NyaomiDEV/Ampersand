@@ -22,12 +22,18 @@
 		<IonItem>
 			<MemberAvatar slot="start" :member="props.boardMessage.member" />
 			<IonLabel>
-				<p style="float:right">{{ dayjs(props.boardMessage.date).format(`LL, ${twelveHour ? 'hh:mm A' : "HH:mm"}`) }}</p>
-				<h3 style="color:var(--ion-text-color-step-400)">{{ props.boardMessage.member.name }}</h3>
-				<h1>{{ props.boardMessage.title }}</h1>
-				<h2 style="margin-top: .75rem">
-					<p v-html="getMarkdownFor(props.boardMessage.body)"></p>
-				</h2>
+				<div class="flexbox">
+					<div class="subheader">
+						<h3 style="color:var(--ion-text-color-step-400)">{{ props.boardMessage.member.name }}</h3>
+						<p>{{ dayjs(props.boardMessage.date).format(`LL, ${twelveHour ? 'hh:mm A' : "HH:mm"}`) }}</p>
+					</div>
+					<div class="contents">
+						<h1>{{ props.boardMessage.title }}</h1>
+						<h2>
+							<p v-html="getMarkdownFor(props.boardMessage.body)"></p>
+						</h2>
+					</div>
+				</div>
 			</IonLabel>
 		</IonItem>
 	</IonCard>
@@ -36,5 +42,29 @@
 <style scoped>
 	ion-card ion-item {
 		--background: transparent;
+	}
+
+	ion-card ion-label .flexbox {
+		display: flex;
+		flex-direction: column;
+		gap: .25em;
+	}
+
+	ion-card ion-label .subheader {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	ion-card ion-label .contents {
+		display: flex;
+		flex-direction: column;
+		gap: .25em;
+	}
+
+	ion-card ion-label .contents h1 {
+		font-size: 1.30em;
+		margin-bottom: 0;
 	}
 </style>
