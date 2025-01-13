@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonLabel, IonToolbar, IonBackButton, IonItem, IonItemDivider, IonDatetime, IonButtons, IonIcon, IonButton, IonSearchbar, IonFabButton, IonFab } from '@ionic/vue';
-	import { inject, onMounted, onUnmounted, ref, ShallowRef, shallowRef } from 'vue';
+	import { inject, onMounted, onUnmounted, ref, shallowRef } from 'vue';
 	import FrontingEntryAvatar from "../../components/frontingEntry/FrontingEntryAvatar.vue";
 	import FrontingEntryLabel from "../../components/frontingEntry/FrontingEntryLabel.vue";
 	import type { FrontingEntry, FrontingEntryComplete } from '../../lib/db/entities.d.ts';
@@ -47,7 +47,7 @@
 	const calendarDate = ref(dayjs().format("YYYY-MM-DDTHH:mm:ss"));
 
 	const search = ref(props.q || "");
-	const frontingEntries: ShallowRef<FrontingEntry[]> = shallowRef([]);
+	const frontingEntries = shallowRef<FrontingEntry[]>();
 	const filteredFrontingEntries = getFilteredFrontingEntries(search, frontingEntries);
 
 	const listener = async (event: Event) => {
@@ -162,7 +162,10 @@
 			</div>
 		</IonHeader>
 
-		<IonContent>
+		<div v-if="!frontingEntries" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; --spinner-size: 72px; --spinner-width: 5px">
+			<Spinner />
+		</div>
+		<IonContent v-else>
 			<IonList :inset="isIOS" v-if="isCalendarView">
 				<template v-for="tuple in getAtDate(date)">
 					<IonItemDivider sticky v-if="tuple[1].length">

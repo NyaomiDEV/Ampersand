@@ -3,6 +3,7 @@
 	import { inject, onBeforeMount, onUnmounted, ref, shallowRef } from 'vue';
 	import { addOutline as addIOS } from "ionicons/icons";
 
+	import Spinner from '../../components/Spinner.vue';
 	import addMD from "@material-design-icons/svg/outlined/add.svg";
 	import { Reminder, EventReminder } from '../../lib/db/entities';
 	import { PartialBy } from '../../lib/types';
@@ -71,7 +72,10 @@
 			</IonToolbar>
 		</IonHeader>
 
-		<IonContent>
+		<div v-if="!reminders" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; --spinner-size: 72px; --spinner-width: 5px">
+			<Spinner />
+		</div>
+		<IonContent v-else>
 			<!-- remove this when its completed -->
 			<IonCard color="warning">
 				<IonCardHeader>

@@ -48,11 +48,12 @@
 	import MemberLabel from '../../components/member/MemberLabel.vue';
 	import { globalEvents } from '../../lib/globalEvents';
 	import { DatabaseEvents, DatabaseEvent } from '../../lib/db/events';
+import Spinner from '../../components/Spinner.vue';
 
 	const isIOS = inject<boolean>("isIOS");
 
 	const search = ref("");
-	const members = shallowRef<Member[]>([]);
+	const members = shallowRef<Member[]>();
 
 	const filteredMembers = getFilteredMembers(search, members);
 	const frontingEntries = shallowReactive(new Map<Member, FrontingEntry | undefined>());
@@ -81,8 +82,10 @@
 		async (event: Event) => {
 			if((event as DatabaseEvent).data.table === "frontingEntries"){
 				frontingEntries.clear();
-				for(const member of members.value)
-					frontingEntries.set(member, await getCurrentFrontEntryForMember(member));
+				if(members.value){
+					for(const member of members.value)
+						frontingEntries.set(member, await getCurrentFrontEntryForMember(member));
+				}
 			}
 		}
 	]
@@ -204,7 +207,10 @@
 			</IonToolbar>
 		</IonHeader>
 		
-		<IonContent>
+		<div v-if="!members" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; --spinner-size: 72px; --spinner-width: 5px">
+			<Spinner />
+		</div>
+		<IonContent v-else>
 			<IonList :inset="isIOS" ref="list">
 
 				<IonItemSliding v-for="member in filteredMembers" @ionDrag="endPress(member, true)" :key="JSON.stringify(member)">

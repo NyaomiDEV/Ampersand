@@ -40,7 +40,7 @@
 	const boardMessage = shallowRef<PartialBy<BoardMessageComplete, "uuid" | "member">>({...emptyBoardMessage});
 	const boardMessageEditModal = ref();
 
-	const boardMessages = shallowRef<BoardMessage[]>([]);
+	const boardMessages = shallowRef<BoardMessage[]>();
 	const search = ref(props.q || "");
 	const filteredBoardMessages = getFilteredBoardMessages(search, boardMessages);
 
@@ -140,8 +140,11 @@
 				<IonDatetime presentation="date" :firstDayOfWeek="firstWeekOfDayIsSunday ? 0 : 1" :highlightedDates="highlightInCalendar" v-model="date" :locale="appConfig.locale.language || 'en'" :datetime="calendarDate"/>
 			</div>
 		</IonHeader>
-		
-		<IonContent>
+
+		<div v-if="!boardMessages" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; --spinner-size: 72px; --spinner-width: 5px">
+			<Spinner />
+		</div>
+		<IonContent v-else>
 			<IonList :inset="isIOS" v-if="isCalendarView">
 				<template v-for="tuple in getAtDate(date)">
 					<IonItemDivider sticky>

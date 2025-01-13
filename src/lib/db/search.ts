@@ -7,13 +7,14 @@ import { toBoardMessageComplete } from "./tables/boardMessages";
 import { toFrontingEntryComplete } from "./tables/frontingEntries";
 import { appConfig } from "../config";
 
-export function getFilteredMembers(search: Ref<string>, members: ShallowRef<Member[]>){
+export function getFilteredMembers(search: Ref<string>, members: ShallowRef<Member[] | undefined>){
 	const _members = shallowRef<Member[]>([]);
 
 	watch([
 		search,
 		members,
 	], async () => {
+		if (!members.value) return;
 		let query: string;
 		if(!search.value.length)
 			query = appConfig.defaultFilterQueries.members || "";
@@ -89,13 +90,14 @@ export function getFilteredTags(search: Ref<string>, type: Ref<string>, tags: Sh
 	return _tags;
 }
 
-export function getFilteredFrontingEntries(search: Ref<string>, frontingEntries: ShallowRef<FrontingEntry[]>){
+export function getFilteredFrontingEntries(search: Ref<string>, frontingEntries: ShallowRef<FrontingEntry[] | undefined>){
 	const _frontingEntries = shallowRef<FrontingEntryComplete[]>([]);
 
 	watch([
 		search,
 		frontingEntries
 	], async () => {
+		if(!frontingEntries.value) return;
 		const filtered: FrontingEntryComplete[] = [];
 		let query: string;
 
@@ -183,13 +185,14 @@ export function getFilteredFrontingEntries(search: Ref<string>, frontingEntries:
 	return _frontingEntries;
 }
 
-export function getFilteredBoardMessages(search: Ref<string>, boardMessages: ShallowRef<BoardMessage[]>) {
+export function getFilteredBoardMessages(search: Ref<string>, boardMessages: ShallowRef<BoardMessage[] | undefined>) {
 	const _boardMessages = shallowRef<BoardMessageComplete[]>([]);
 
 	watch([
 		search,
 		boardMessages
 	], async () => {
+		if(!boardMessages.value) return;
 		const filtered: BoardMessageComplete[] = [];
 
 		let query: string;
