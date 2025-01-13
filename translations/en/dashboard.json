@@ -6,7 +6,7 @@
 	"recentFrontingHistory": "Recently switched out",
 	"messageBoard": {
 		"header": "Message board",
-		"add": "Add to message board",
-		"view": "View more..."
+		"add": "Add to board",
+		"view": "View more"
 	}
 }
