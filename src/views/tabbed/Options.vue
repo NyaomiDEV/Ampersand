@@ -38,6 +38,7 @@
 	const isIOS = inject<boolean>("isIOS");
 
 	const isDev = import.meta.env.MODE === 'development';
+	const isTauri = 'isTauri' in window;
 
 	function lockImmediately(){
 		if(lock())
@@ -85,7 +86,7 @@
 					<IonLabel>{{ $t("options:tagManagement.header") }}</IonLabel>
 				</IonItem>
 
-				<IonItem button routerLink="/options/reminders" v-if="isDev || 'isTauri' in window">
+				<IonItem button routerLink="/options/reminders" v-if="isDev || isTauri">
 					<IonIcon :ios="RemindersIOS" :md="RemindersMD" slot="start" aria-hidden="true" />
 					<IonLabel>{{ $t("options:reminders.header") }}</IonLabel>
 				</IonItem>
