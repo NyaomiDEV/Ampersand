@@ -95,7 +95,8 @@
 		"editReminder": {
 			"header": "Edit reminder",
 			"reminderName": "Reminder name",
-			"reminderMessage": "Reminder message",
+			"reminderTitle": "Reminder notification title",
+			"reminderMessage": "Reminder notification message",
 
 			"reminderType": {
 				"title": "Type of reminder",
@@ -108,10 +109,10 @@
 				"addedToFront": "After a member has been added to front",
 				"removedFromFront": "After a member has been removed from front",
 				"memberFilterQuery": "Member filter query",
-
-				"timing": {
-					"title": "Timing",
-					"delay": "Delay"
+				"timing": "Timing",
+				"delay": {
+					"title": "Delay",
+					"desc": "After {{delay}}"
 				}
 			},
 

@@ -1,31 +1,33 @@
-export type UUIDable = {
+export interface UUIDable {
 	uuid: UUID
 };
 
 export type UUID = string;
 
-export type BoardMessage = UUIDable & {
+export interface BoardMessage extends UUIDable {
 	member: UUID,
 	title: string,
 	body: string,
 	date: Date
 }
 
-export type BoardMessageComplete = Omit<BoardMessage, "member"> & { member: Member }
+export interface BoardMessageComplete extends BoardMessage {
+	member: Member
+}
 
-export type ChatMessage = UUIDable & {
+export interface ChatMessage extends UUIDable {
 	chat: UUID,
 	member: UUID,
 	date: Date,
 	message: string,
 }
 
-export type Chat = UUIDable & {
+export interface Chat extends UUIDable {
 	name: string,
 	image?: File
 }
 
-export type FrontingEntry = UUIDable & {
+export interface FrontingEntry extends UUIDable {
 	member: UUID,
 	startTime: Date,
 	endTime?: Date,
@@ -33,9 +35,11 @@ export type FrontingEntry = UUIDable & {
 	customStatus?: string
 }
 
-export type FrontingEntryComplete = Omit<FrontingEntry, "member"> & { member: Member }
+export interface FrontingEntryComplete extends FrontingEntry {
+	member: Member
+}
 
-export type JournalPost = UUIDable & {
+export interface JournalPost extends UUIDable {
 	member: UUID,
 	date: Date,
 	title: string,
@@ -45,12 +49,12 @@ export type JournalPost = UUIDable & {
 	tags: UUID[] // array of UUIDs
 }
 
-export type Attachment = UUIDable & {
+export interface Attachment extends UUIDable {
 	name: string,
 	file: File
 }
 
-export type Member = UUIDable & {
+export interface Member extends UUIDable {
 	name: string,
 	pronouns?: string,
 	description?: string,
@@ -62,32 +66,47 @@ export type Member = UUIDable & {
 	tags: UUID[] // array of UUIDs
 }
 
-type ReminderBase = UUIDable & {
+interface ReminderBase extends UUIDable {
 	name: string,
 	title: string,
 	message: string,
-	nativeId?: number
+	nativeId?: number // if nativeId is present then the reminder is active
 }
 
-export type EventReminder = ReminderBase & {
+interface EventReminder extends ReminderBase {
 	type: "event",
 	triggeringEvent: {
 		type: "memberAdded" | "memberRemoved",
 		filterQuery?: string
 	},
-	delay: number // seconds
+	delay: {
+		hours: number,
+		minutes: number
+	},
 
 	// make it either-or in regards to PeriodicReminder
-	scheduleOn?: never
+	scheduleEveryInterval?: never,
+	scheduleEveryWeekday?: never,
+	scheduleTimeAt?: never
 }
 
-export type PeriodicReminder = ReminderBase & {
+interface PeriodicReminder extends ReminderBase {
 	type: "periodic",
-	scheduleOn: {
+	scheduleEveryInterval?: {
 		year?: number,
 		month?: number,
 		day?: number,
-		weekday?: 1 | 2 | 3 | 4 | 5 | 6 | 7,
+	},
+	scheduleEveryWeekday?: {
+		monday?: boolean,
+		tuesday?: boolean,
+		wednesday?: boolean,
+		thursday?: boolean,
+		friday?: boolean,
+		saturday?: boolean,
+		sunday?: boolean
+	},
+	scheduleTimeAt?: {
 		hour?: number,
 		minute?: number,
 		second?: number
@@ -100,13 +119,13 @@ export type PeriodicReminder = ReminderBase & {
 
 export type Reminder = EventReminder | PeriodicReminder;
 
-export type System = UUIDable & {
+export interface System extends UUIDable {
 	name: string,
 	description?: string,
 	image?: File
 }
 
-export type Tag = UUIDable & {
+export interface Tag extends UUIDable {
 	name: string,
 	description?: string,
 	type: "member" | "journal",
