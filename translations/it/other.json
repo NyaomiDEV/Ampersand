@@ -16,5 +16,9 @@
 	"alerts": {
 		"ok": "Ok",
 		"cancel": "Cancella"
+	},
+	"remindersAreNotFinished": {
+		"header": "I promemoria non sono finiti!",
+		"content": "Al momento, tutto questo è solo un'anteprima dell'interfaccia utente! A un certo punto potrete salvare i vostri promemoria, ma tenete presente che nulla è ancora collegato ad alcun sistema di notifica! Se siete su Android dovreste già essere in grado di configurare alcune cose che funzioneranno quando avremo completato il sistema sottostante, ma tenete presente che questo non funzionerà sulla versione Web, quindi non fatevi prendere dall'entusiasmo di usare i promemoria sul vostro computer. Inoltre, se siete sviluppatori, aiutateci!"
 	}
 }

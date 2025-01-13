@@ -16,5 +16,9 @@
 	"alerts": {
 		"ok": "Ok",
 		"cancel": "Cancel"
+	},
+	"remindersAreNotFinished": {
+		"header": "Reminders are not finished!",
+		"content": "Right now, all of this is just an UI preview! You may be able to save your reminders at some point but keep in mind that this is not yet wired to any notification system! If you're on Android you should already be able to configure some stuff that will work when we finish up the underlying system, but please bear in mind that this won't work on the Web version, so don't get too hyped about using reminders on your computer. Also if you're a developer please help us out!"
 	}
 }

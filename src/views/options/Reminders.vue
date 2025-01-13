@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonFab, IonListHeader, IonFabButton, IonIcon, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonLabel } from '@ionic/vue';
+	import { IonContent, IonHeader, IonFab, IonListHeader, IonFabButton, IonIcon, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonLabel, IonCard, IonCardHeader, IonCardContent, IonCardTitle } from '@ionic/vue';
 	import { inject, ref, shallowRef } from 'vue';
 	import { addOutline as addIOS } from "ionicons/icons";
 
@@ -42,14 +42,23 @@
 				</IonTitle>
 			</IonToolbar>
 		</IonHeader>
-		
+
 		<IonContent>
+			<!-- remove this when its completed -->
+			<IonCard color="warning">
+				<IonCardHeader>
+					<IonCardTitle>{{ $t("other:remindersAreNotFinished.header") }}</IonCardTitle>
+				</IonCardHeader>
+				<IonCardContent>{{ $t("other:remindersAreNotFinished.content") }}</IonCardContent>
+			</IonCard>
+
+
 			<IonListHeader>
 				<IonLabel>
 					{{ $t("options:reminders.eventBasedLocale") }}
 				</IonLabel>
 			</IonListHeader>
-			
+
 			<IonList :inset="isIOS"></IonList>
 
 			<IonListHeader>

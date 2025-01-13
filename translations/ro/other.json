@@ -16,5 +16,9 @@
 	"alerts": {
 		"ok": "Ok",
 		"cancel": "Anulați"
-	}	
+	},
+	"remindersAreNotFinished": {
+		"header": "Amintirile nu sunt finalizate!",
+		"content": "În acest moment, toate acestea sunt doar o previzualizare a UI! Este posibil să vă puteți salva memento-urile la un moment dat, dar rețineți că acest lucru nu este încă conectat la niciun sistem de notificare! Dacă sunteți pe Android, ar trebui să fiți deja în măsură să configurați unele lucruri care vor funcționa atunci când vom finaliza sistemul de bază, dar vă rugăm să rețineți că acest lucru nu va funcționa pe versiunea Web, deci nu vă entuziasmați prea mult cu privire la utilizarea memento-urilor pe computer. De asemenea, dacă sunteți un dezvoltator, vă rugăm să ne ajutați!"
+	}
 }
