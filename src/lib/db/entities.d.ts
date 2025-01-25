@@ -90,23 +90,9 @@ interface EventReminder extends ReminderBase {
 	scheduleTimeAt?: never
 }
 
-interface PeriodicReminder extends ReminderBase {
+interface PeriodicReminderBase extends ReminderBase {
 	type: "periodic",
-	scheduleEveryInterval?: {
-		year?: number,
-		month?: number,
-		day?: number,
-	},
-	scheduleEveryWeekday?: {
-		monday?: boolean,
-		tuesday?: boolean,
-		wednesday?: boolean,
-		thursday?: boolean,
-		friday?: boolean,
-		saturday?: boolean,
-		sunday?: boolean
-	},
-	scheduleTimeAt?: {
+	scheduleTimeInterval?: {
 		hour?: number,
 		minute?: number,
 		second?: number
@@ -117,6 +103,28 @@ interface PeriodicReminder extends ReminderBase {
 	delay?: never
 }
 
+interface PeriodicReminderDate extends ReminderBase {
+	scheduleEveryDateInterval?: {
+		year?: number,
+		month?: number,
+		day?: number,
+	},
+	scheduleEveryWeekdayInterval?: never
+}
+interface PeriodicReminderWeekday extends ReminderBase {
+	scheduleEveryWeekdayInterval?: {
+		monday?: boolean,
+		tuesday?: boolean,
+		wednesday?: boolean,
+		thursday?: boolean,
+		friday?: boolean,
+		saturday?: boolean,
+		sunday?: boolean
+	},
+	scheduleEveryDateInterval?: never
+}
+
+export type PeriodicReminder = PeriodicReminderDate | PeriodicReminderWeekday;
 export type Reminder = EventReminder | PeriodicReminder;
 
 export interface System extends UUIDable {
