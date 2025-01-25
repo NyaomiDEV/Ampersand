@@ -117,6 +117,11 @@
 			},
 
 			"periodic": {
+				"title": "Interval of time",
+				"timeOfDay": {
+					"title": "Time of day",
+					"desc": "At {{timeOfDay}}"
+				}
 
 			}
 		}

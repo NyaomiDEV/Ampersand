@@ -72,7 +72,7 @@
 				"showMembers": {
 					"title": "Mostra i membrɜ che usano questo tag",
 					"desc_one": "{{count}} membrə usa questo tag",
-					"desc_other": "{{count}} membrə usano questo tag"
+					"desc_other": "{{count}} membrɜ usano questo tag"
 				},
 				"showJournal": {
 					"title": "Mostra le pagine del diario che usano questo tag",
@@ -90,7 +90,41 @@
 	"reminders": {
 		"header": "Promemoria",
 		"eventBasedLocale": "Promemoria eventi",
-		"periodicLocale": "Promemoria periodici"
+		"periodicLocale": "Promemoria periodici",
+
+		"editReminder": {
+			"header": "Modifica promemoria",
+			"reminderName": "Nome del promemoria",
+			"reminderTitle": "Titolo di notifica del promemoria",
+			"reminderMessage": "Messaggio di notifica del promemoria",
+
+			"reminderType": {
+				"title": "Tipo di promemoria",
+				"eventBased": "Evento",
+				"periodic": "Periodico"
+			},
+
+			"eventBased": {
+				"title": "Evento scatenante",
+				"addedToFront": "Dopo che un membrə è stato aggiuntə al front",
+				"removedFromFront": "Dopo che un membrə è stato rimossə dal front",
+				"memberFilterQuery": "Filtro dei membrɜ",
+				"timing": "Tempismo",
+				"delay": {
+					"title": "Ritardo",
+					"desc": "Dopo {{delay}}"
+				}
+			},
+
+			"periodic": {
+				"title": "Intervallo di tempo",
+				"timeOfDay": {
+					"title": "Orario",
+					"desc": "Alle {{timeOfDay}}"
+				}
+
+			}
+		}
 	},
 	"appSettings": {
 		"header": "Impostazioni dell'app",
@@ -110,14 +144,14 @@
 		},
 		"behaviorLabel": "Comportamento",
 		"view": {
-			"title": "Tab di default",
+			"title": "Tab predefinita",
 			"members": "Membri",
 			"journal": "Diario",
 			"dashboard": "Dashboard",
 			"chat": "Chat"
 		},
 		"defaultFilterQueries": {
-			"members": "Ricerca predefinita per i membrə",
+			"members": "Ricerca predefinita per i membrɜ",
 			"journal": "Ricerca predefinita per il diario",
 			"tags": "Ricerca predefinita per i tag",
 			"frontingHistory": "Ricerca predefinita per la cronologia del front",
