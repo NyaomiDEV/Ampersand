@@ -57,10 +57,14 @@
 		const _reminder = toRaw(reminder.value);
 
 		if(_reminder.type === "event"){
-			delete (_reminder as EventReminder).scheduleInterval;
+			if(_reminder.scheduleInterval)
+				delete _reminder.scheduleInterval;
 		} else {
-			delete (_reminder as PeriodicReminder).delay;
-			delete (_reminder as PeriodicReminder).triggeringEvent;
+			if(_reminder.triggeringEvent)
+				delete _reminder.triggeringEvent;
+
+			if(_reminder.delay)
+				delete _reminder.delay;
 		}
 
 		if(!uuid) {
@@ -84,10 +88,40 @@
 		reminder.value = props.reminder;
 	}
 
+	function switchType() {
+		if(reminder.value.type == "event"){
+			reminder.value.delay = {
+				hours: 0,
+				minutes: 0
+			};
+			reminder.value.triggeringEvent = {
+				type: "memberAdded"
+			};
+
+			if(reminder.value.scheduleInterval)
+				delete reminder.value.scheduleInterval;
+		} else {
+			reminder.value.scheduleInterval = {};
+
+			if(reminder.value.triggeringEvent)
+				delete reminder.value.triggeringEvent;
+
+			if(reminder.value.delay)
+				delete reminder.value.delay;
+		}
+	}
+
 	watch(eventDelayPickerValue, () => {
 		reminder.value.delay = {
 			hours: eventDelayPickerValue.get('hours') || 0,
 			minutes: eventDelayPickerValue.get('minutes') || 0,
+		}
+	});
+
+	watch(periodicTimeOfDayPickerValue, () => {
+		if(reminder.value.scheduleInterval){
+			reminder.value.scheduleInterval.hourOfDay = periodicTimeOfDayPickerValue.get('hours') || 0;
+			reminder.value.scheduleInterval.minuteOfHour = periodicTimeOfDayPickerValue.get('minutes') || 0;
 		}
 	});
 
@@ -128,7 +162,7 @@
 				<IonItem>
 					<IonLabel>
 						<h3 class="centered-text">{{ $t("options:reminders.editReminder.reminderType.title") }}</h3>
-						<IonSegment class="segment-alt" value="reminder-type" v-model="reminder.type">
+						<IonSegment class="segment-alt" value="reminder-type" v-model="reminder.type" @ionChange="switchType">
 
 							<MD3SegmentButton value="event">
 								<IonLabel>{{ $t("options:reminders.editReminder.reminderType.eventBased") }}</IonLabel>
