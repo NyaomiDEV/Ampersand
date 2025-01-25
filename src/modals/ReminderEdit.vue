@@ -55,9 +55,7 @@
 		const _reminder = toRaw(reminder.value);
 
 		if(_reminder.type === "event"){
-			delete (_reminder as EventReminder).scheduleEveryDateInterval;
-			delete (_reminder as EventReminder).scheduleEveryWeekdayInterval;
-			delete (_reminder as EventReminder).scheduleTimeInterval;
+			delete (_reminder as EventReminder).scheduleInterval;
 		} else {
 			delete (_reminder as PeriodicReminder).delay;
 			delete (_reminder as PeriodicReminder).triggeringEvent;

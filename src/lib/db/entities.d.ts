@@ -85,9 +85,7 @@ interface EventReminder extends ReminderBase {
 	},
 
 	// make it either-or in regards to PeriodicReminder
-	scheduleEveryDateInterval?: never,
-	scheduleEveryWeekdayInterval?: never,
-	scheduleTimeInterval?: never
+	scheduleInterval?: never
 }
 
 /*
@@ -108,12 +106,16 @@ interface EventReminder extends ReminderBase {
 	the problem is that we can't do stuff "every two days, every three days" in this way,
 	and Tauri doesn't give us any better ways, sadly.
 */
-interface PeriodicReminderBase extends ReminderBase {
+interface PeriodicReminder extends ReminderBase {
 	type: "periodic",
-	scheduleTimeInterval?: {
-		hour?: number,
-		minute?: number,
-		second?: number
+	scheduleInterval?: {
+		year?: number,
+		monthOfYear?: number,
+		dayOfMonth?: number, // it probably will overflow on february lmao
+		dayOfWeek?: number, // 1 is sunday, REPENT
+		hourOfDay?: number,
+		minuteOfHour?: number,
+		secondOfMinute?: number
 	}
 
 	// make it either-or in regards to EventReminder
@@ -121,28 +123,6 @@ interface PeriodicReminderBase extends ReminderBase {
 	delay?: never
 }
 
-interface PeriodicReminderDate extends PeriodicReminderBase {
-	scheduleEveryDateInterval?: {
-		year?: number,
-		month?: number,
-		day?: number,
-	},
-	scheduleEveryWeekdayInterval?: never
-}
-interface PeriodicReminderWeekday extends PeriodicReminderBase {
-	scheduleEveryWeekdayInterval?: {
-		monday?: boolean,
-		tuesday?: boolean,
-		wednesday?: boolean,
-		thursday?: boolean,
-		friday?: boolean,
-		saturday?: boolean,
-		sunday?: boolean
-	},
-	scheduleEveryDateInterval?: never
-}
-
-export type PeriodicReminder = PeriodicReminderDate | PeriodicReminderWeekday;
 export type Reminder = EventReminder | PeriodicReminder;
 
 export interface System extends UUIDable {
