@@ -47,8 +47,10 @@
 	const self = ref();
 
 	const eventDelayPopupPicker = ref();
+	const periodicTimeOfDayPopupPicker = ref();
 
 	const eventDelayPickerValue = reactive(new Map<string, number>());
+	const periodicTimeOfDayPickerValue = reactive(new Map<string, number>([['hours', 0], ['minutes', 0]]));
 
 	async function save(){
 		const uuid = reminder.value?.uuid;
@@ -207,6 +209,45 @@
 					]"
 				/>
 
+			</template>
+
+			<template v-if="reminder.type == 'periodic'">
+				<IonListHeader>
+					<IonLabel>
+						{{ $t("options:reminders.editReminder.periodic.title") }}
+					</IonLabel>
+				</IonListHeader>
+
+				<IonList>
+					<IonItem button :detail="true" @click="() => periodicTimeOfDayPopupPicker.$el.present()">
+						<IonLabel>
+							<h3>{{ $t("options:reminders.editReminder.periodic.timeOfDay.title") }}</h3>
+							<p>{{ $t("options:reminders.editReminder.periodic.timeOfDay.desc", {timeOfDay: reminder.scheduleInterval?.hourOfDay?.toString().padStart(2, "0") + ":" + reminder.scheduleInterval?.minuteOfHour?.toString().padStart(2, "0") })}}</p>
+						</IonLabel>
+					</IonItem>
+				</IonList>
+
+				<PopupPicker
+					ref="periodicTimeOfDayPopupPicker"
+					v-model="periodicTimeOfDayPickerValue"
+					:content="[
+						{
+							name: 'hours',
+							suffix: ':',
+							values: Array.from({length: 24}, (_, i) => ({
+								name: i.toString(),
+								value: i
+							}))
+						},
+						{
+							name: 'minutes',
+							values: Array.from({length: 60}, (_, i) => ({
+								name: i.toString(),
+								value: i
+							}))
+						},
+					]"
+				/>
 			</template>
 
 
