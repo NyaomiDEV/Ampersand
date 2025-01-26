@@ -9,7 +9,7 @@
  * The code in this file is generated from files in ./src/
  */
 
-import { h } from 'vue';
+import { h, Fragment, Text } from 'vue';
 
 /**
  * Gets the original marked default options.
@@ -1750,7 +1750,7 @@ class _Renderer {
         this.options = options || _defaults;
     }
     space(token) {
-        return h('template', '');
+        return h(Fragment, { innerHTML: '' });
     }
     code({ text, lang, escaped }) {
         const langString = (lang || '').match(other.notSpaceStart)?.[0];
@@ -1768,7 +1768,7 @@ class _Renderer {
         return h('blockquote', {}, body);
     }
     html({ text }) {
-        return h('template', { innerHTML: text });
+        return h(Fragment, { innerHTML: text });
     }
     heading({ tokens, depth }) {
         return h(`h${depth}`, this.parser.parseInline(tokens));
@@ -1779,13 +1779,8 @@ class _Renderer {
     list(token) {
         const ordered = token.ordered;
         const start = token.start;
-        let body = '';
-        for (let j = 0; j < token.items.length; j++) {
-            const item = token.items[j];
-            body += this.listitem(item);
-        }
         const type = ordered ? 'ol' : 'ul';
-        return h(type, { start: ordered && start !== 1 ? start : undefined }, body);
+        return h(type, { start: ordered && start !== 1 ? start : undefined }, token.items.map(x => this.listitem(x)));
     }
     listitem(item) {
         return h('li', this.parser.parse(item.tokens, !!item.loose));
@@ -1830,7 +1825,7 @@ class _Renderer {
         const text = this.parser.parseInline(tokens);
         const cleanHref = cleanUrl(href);
         if (cleanHref === null) {
-            return h('template', text);
+            return h(Fragment, text);
         }
         href = cleanHref;
         return h('a', { href, title }, text);
@@ -1838,14 +1833,14 @@ class _Renderer {
     image({ href, title, text }) {
         const cleanHref = cleanUrl(href);
         if (cleanHref === null) {
-            return h('template', text);
+            return h(Text, text);
         }
         href = cleanHref;
         return h('img', { src: href, alt: text, title });
     }
     text(token) {
         return 'tokens' in token && token.tokens
-            ? h('template', this.parser.parseInline(token.tokens))
+            ? h(Fragment, this.parser.parseInline(token.tokens))
             : h('span', token.text);
     }
 }
@@ -1930,7 +1925,7 @@ class _Parser {
                     if (this.options.extensions?.renderers?.[anyToken.type]) {
                         const ret = this.options.extensions.renderers[anyToken.type].call({ parser: this }, anyToken);
                         if (ret) {
-                            out.push(h('template', { innerHTML: ret }));
+                            out.push(h(Fragment, { innerHTML: ret }));
                             break;
                         }
                     }
@@ -2001,7 +1996,7 @@ class _Parser {
                     if (this.options.extensions?.renderers?.[anyToken.type]) {
                         const ret = this.options.extensions.renderers[anyToken.type].call({ parser: this }, anyToken);
                         if (ret) {
-                            out.push(h('template', { innerHTML: ret }));
+                            out.push(h(Fragment, { innerHTML: ret }));
                             continue;
                         }
                     }
