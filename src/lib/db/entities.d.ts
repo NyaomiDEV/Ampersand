@@ -115,7 +115,7 @@ interface PeriodicReminder extends ReminderBase {
 		dayOfWeek?: number, // 1 is sunday, REPENT
 		hourOfDay?: number,
 		minuteOfHour?: number,
-		secondOfMinute?: number
+		//secondOfMinute?: number // nah won't bother
 	}
 
 	// make it either-or in regards to EventReminder

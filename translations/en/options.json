@@ -121,8 +121,15 @@
 				"timeOfDay": {
 					"title": "Time of day",
 					"desc": "At {{timeOfDay}}"
+				},
+				"dayOfMonth": {
+					"title": "Day of month",
+					"desc_undefined": "Repeat every day",
+					"desc_ordinal_one": "Repeat every {{count}}st day of month",
+					"desc_ordinal_two": "Repeat every {{count}}nd day of month",
+					"desc_ordinal_few": "Repeat every {{count}}rd day of month",
+					"desc_ordinal_other": "Repeat every {{count}}th day of month"
 				}
-
 			}
 		}
 	},

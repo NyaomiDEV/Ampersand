@@ -48,6 +48,7 @@
 
 	const eventDelayPopupPicker = ref();
 	const periodicTimeOfDayPopupPicker = ref();
+	const periodicDayOfMonthPopupPicker = ref();
 
 	const eventDelayPickerValue = reactive(new Map<string, number>());
 	const periodicTimeOfDayPickerValue = reactive(new Map<string, number>([['hours', 0], ['minutes', 0]]));
@@ -89,6 +90,7 @@
 	}
 
 	function switchType() {
+		console.log(reminder.value.type)
 		if(reminder.value.type == "event"){
 			reminder.value.delay = {
 				hours: 0,
@@ -101,7 +103,10 @@
 			if(reminder.value.scheduleInterval)
 				delete reminder.value.scheduleInterval;
 		} else {
-			reminder.value.scheduleInterval = {};
+			reminder.value.scheduleInterval = {
+				hourOfDay: 0,
+				minuteOfHour: 0
+			};
 
 			if(reminder.value.triggeringEvent)
 				delete reminder.value.triggeringEvent;
@@ -280,6 +285,42 @@
 								value: i
 							}))
 						},
+					]"
+				/>
+
+				<IonList>
+					<IonItem button :detail="true" @click="() => periodicDayOfMonthPopupPicker.$el.present()">
+						<IonLabel>
+							<h3>{{ $t("options:reminders.editReminder.periodic.dayOfMonth.title") }}</h3>
+							<p>{{ 
+								reminder.scheduleInterval?.dayOfMonth === undefined
+								? $t("options:reminders.editReminder.periodic.dayOfMonth.desc_undefined")
+								: $t("options:reminders.editReminder.periodic.dayOfMonth.desc", { count: reminder.scheduleInterval?.dayOfMonth, ordinal: true })
+							}}</p>
+						</IonLabel>
+					</IonItem>
+				</IonList>
+
+				<PopupPicker
+					ref="periodicDayOfMonthPopupPicker"
+					@update:modelValue="v => {
+						const val = v.get('dayOfMonth');
+						reminder.scheduleInterval!.dayOfMonth = val !== undefined ? Number(val) : undefined;
+					}"
+					:content="[
+						{
+							name: 'dayOfMonth',
+							values: [
+								{
+									name: '-',
+									value: undefined
+								},
+								...Array.from({length: 31}, (_, i) => ({
+									name: (i+1).toString(),
+									value: i+1
+								}))
+							]
+						}
 					]"
 				/>
 			</template>
