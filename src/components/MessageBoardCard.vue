@@ -6,7 +6,7 @@
 	import dayjs from 'dayjs';
 	import LocalizedFormat from "dayjs/plugin/localizedFormat";
 	dayjs.extend(LocalizedFormat);
-	import { getMarkdownFor } from "../lib/markdown";
+	import Markdown from "./Markdown.vue";
 	import { appConfig } from "../lib/config";
 
 	const twelveHour = appConfig.locale.twelveHourClock;
@@ -30,7 +30,7 @@
 					<div class="contents">
 						<h1>{{ props.boardMessage.title }}</h1>
 						<h2>
-							<p v-html="getMarkdownFor(props.boardMessage.body)"></p>
+							<Markdown :markdown="props.boardMessage.body" />
 						</h2>
 					</div>
 				</div>

@@ -49,7 +49,7 @@
 	import { getFiles } from "../lib/util/misc";
 	import { resizeImage } from "../lib/util/image";
 	import { ShallowReactive, inject, onMounted, ref, shallowReactive, shallowRef, toRaw } from "vue";
-	import { getMarkdownFor } from "../lib/markdown";
+	import Markdown from "../components/Markdown.vue";
 	import { addMaterialColors, rgbaToArgb, unsetMaterialColors } from "../lib/theme";
 	import { PartialBy } from "../lib/types";
 
@@ -184,7 +184,9 @@
 
 			<div class="member-description" v-if="!isEditing">
 				<IonLabel>{{ $t("members:edit.description") }}</IonLabel>
-				<div class="markdown-content" v-html="getMarkdownFor(member.description || $t('members:edit.noDescription'))"></div>
+				<div class="markdown-content">
+					<Markdown :markdown="member.description || $t('members:edit.noDescription')" />
+				</div>
 			</div>
 
 			<IonList class="member-actions" v-if="!isEditing">
