@@ -28,7 +28,11 @@
 			frontingEntries.value = await Promise.all(
 				(await getFrontingEntries())
 					.filter(x => !x.endTime)
-					.sort((a, b) => b.isMainFronter ? 1 : b.startTime.getTime() - a.startTime.getTime())
+					.sort((a, b) => {
+						if (a.isMainFronter) return -1;
+						if (b.isMainFronter) return 1;
+						return a.startTime.getTime() - b.startTime.getTime();
+					})
 					.map(x => toFrontingEntryComplete(x))
 			);
 		}
@@ -40,7 +44,11 @@
 		frontingEntries.value = await Promise.all(
 				(await getFrontingEntries())
 					.filter(x => !x.endTime)
-					.sort((a, b) => b.isMainFronter ? 1 : b.startTime.getTime() - a.startTime.getTime())
+					.sort((a, b) => {
+						if(a.isMainFronter) return -1;
+						if(b.isMainFronter) return 1;
+						return a.startTime.getTime() - b.startTime.getTime();
+					})
 					.map(x => toFrontingEntryComplete(x))
 			);
 		frontingEntry.value = { ...frontingEntries.value[0] };
