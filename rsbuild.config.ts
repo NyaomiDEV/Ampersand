@@ -5,8 +5,6 @@ const host = process.env.TAURI_DEV_HOST;
 
 const { publicVars } = loadEnv({ prefixes: ['TAURI_ENV_', 'AMPERSAND_'] });
 
-console.log(publicVars);
-
 export default defineConfig({
 	plugins: [
 		pluginVue()
