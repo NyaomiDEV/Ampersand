@@ -121,8 +121,12 @@
 				"timeOfDay": {
 					"title": "Orario",
 					"desc": "Alle {{timeOfDay}}"
+				},
+				"dayOfMonth": {
+					"title": "Giorno del mese",
+					"desc_undefined": "Ripeti ogni giorno",
+					"desc_ordinal_other": "Ripeti ogni {{count}}° giorno del mese"
 				}
-
 			}
 		}
 	},
