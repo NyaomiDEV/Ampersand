@@ -209,6 +209,7 @@ export function parseFrontingHistoryFilterQuery(search: string) {
 export type BoardMessageFilterQuery = {
 	query: string,
 	all?: boolean,
+	pinned?: boolean,
 	dateString?: string,
 	day?: number,
 	month?: number,
@@ -247,6 +248,25 @@ export function parseBoardMessageFilterQuery(search: string) {
 							}
 						} else
 							result.all = true;
+
+						break;
+					case "pinned":
+						if (tokenParts[1]) {
+							switch (tokenParts[1].toLowerCase()) {
+								case "yes":
+								case "true":
+									result.pinned = true;
+									break;
+								case "no":
+								case "false":
+									result.pinned = false;
+									break;
+								default:
+									queryTokens.push(token);
+									break;
+							}
+						} else
+							result.pinned = true;
 
 						break;
 					case "date":

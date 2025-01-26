@@ -41,6 +41,7 @@
 			"member": "Modifica autorə del messaggio",
 			"title": "Titolo",
 			"body": "Corpo del messaggio",
+			"isPinned": "Fissato",
 			"delete": {
 				"title": "Elimina messaggio dalla bacheca",
 				"desc": "Non potrai annullare questa azione!"

@@ -18,7 +18,7 @@
 </script>
 
 <template>
-	<IonCard button>
+	<IonCard button :class="{filled: props.boardMessage.isPinned}">
 		<IonItem>
 			<MemberAvatar slot="start" :member="props.boardMessage.member" />
 			<IonLabel>

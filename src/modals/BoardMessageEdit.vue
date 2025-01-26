@@ -5,6 +5,7 @@
 		IonToolbar,
 		IonTitle,
 		IonIcon,
+		IonToggle,
 		IonList,
 		IonInput,
 		IonFab,
@@ -118,12 +119,21 @@
 							</IonLabel>
 						</template>
 					</IonItem>
+
 					<IonItem>
 						<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('options:messageBoard.edit.title')" labelPlacement="floating" v-model="boardMessage.title" />
 					</IonItem>
 
 					<IonItem>
 						<IonTextarea :fill="!isIOS ? 'outline' : undefined" auto-grow :label="$t('options:messageBoard.edit.body')" labelPlacement="floating" v-model="boardMessage.body" />
+					</IonItem>
+
+					<IonItem button>
+						<IonToggle v-model="boardMessage.isPinned">
+							<IonLabel>
+								{{ $t("options:messageBoard.edit.isPinned") }}
+							</IonLabel>
+						</IonToggle>
 					</IonItem>
 
 					<IonItem button v-if="boardMessage.uuid" @click="_deleteBoardMessage">

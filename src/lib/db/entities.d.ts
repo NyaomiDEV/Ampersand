@@ -8,7 +8,8 @@ export interface BoardMessage extends UUIDable {
 	member: UUID,
 	title: string,
 	body: string,
-	date: Date
+	date: Date,
+	isPinned?: boolean
 }
 
 export interface BoardMessageComplete extends BoardMessage {

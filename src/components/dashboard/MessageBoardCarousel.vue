@@ -28,7 +28,7 @@
 		if(["members", "boardMessages"].includes((event as DatabaseEvent).data.table)){
 			boardMessages.value = await Promise.all(
 				(await getBoardMessages())
-					.filter(x => dayjs(x.date).startOf('day').valueOf() === dayjs().startOf('day').valueOf())
+					.filter(x => x.isPinned ? true : dayjs().startOf('day').valueOf() - dayjs(x.date).startOf('day').valueOf() < 3 * 24 * 60 * 60 * 1000)
 					.map(x => toBoardMessageComplete(x))
 			);
 		}
@@ -38,7 +38,7 @@
 		DatabaseEvents.addEventListener("updated", listener);
 		boardMessages.value = await Promise.all(
 			(await getBoardMessages())
-				.filter(x => dayjs(x.date).startOf('day').valueOf() === dayjs().startOf('day').valueOf())
+				.filter(x => x.isPinned ? true : dayjs().startOf('day').valueOf() - dayjs(x.date).startOf('day').valueOf() < 3 * 24 * 60 * 60 * 1000)
 				.map(x => toBoardMessageComplete(x))
 		);
 	});

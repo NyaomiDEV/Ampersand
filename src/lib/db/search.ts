@@ -208,6 +208,7 @@ export function getFilteredBoardMessages(search: Ref<string>, boardMessages: Sha
 				filtered.push(await toBoardMessageComplete(x))
 		} else {
 			const parsed = parseBoardMessageFilterQuery(query);
+			console.log(parsed);
 
 			for (const x of boardMessages.value) {
 				const complete = await toBoardMessageComplete(x);
@@ -215,6 +216,13 @@ export function getFilteredBoardMessages(search: Ref<string>, boardMessages: Sha
 				if (parsed.all) {
 					filtered.push(complete);
 					continue;
+				}
+
+				if (parsed.pinned !== undefined) {
+					if(parsed.pinned && !x.isPinned)
+						continue;
+					else if(!parsed.pinned && x.isPinned)
+						continue;
 				}
 
 				if (
