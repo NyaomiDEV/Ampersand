@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { onMounted, onUnmounted, watch } from "vue";
 	import { IonPage, IonContent, IonLabel, IonInput, useIonRouter } from "@ionic/vue";
-	import { unlockWithPassword, areBiometricsAvailable, unlockWithBiometrics, isLocked } from "../lib/applock";
+	import { unlockWithPassword, unlockWithBiometrics, isLocked } from "../lib/applock";
 	import { securityConfig } from "../lib/config";
 	
 	const router = useIonRouter();
@@ -12,7 +12,7 @@
 	});
 
 	onMounted(async () => {
-		if(securityConfig.useBiometrics && await areBiometricsAvailable())
+		if(securityConfig.useBiometrics)
 			await unlockWithBiometrics();
 	});
 

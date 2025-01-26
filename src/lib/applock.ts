@@ -22,10 +22,10 @@ export function lock(){
 }
 
 export async function unlockWithBiometrics(){
+	if(!areBiometricsAvailable()) return false;
 	try{
 		await authenticate(t("lock:biometrics.reason"), {
-			confirmationRequired: false,
-			maxAttemps: 3,
+			confirmationRequired: true,
 			title: t("lock:biometrics.title")
 		});
 		isLocked.value = false;
