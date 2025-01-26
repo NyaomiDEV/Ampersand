@@ -211,7 +211,7 @@
 					:hourCycle="twelveHourClock ? 'h12' : 'h23'"
 					:firstDayOfWeek="firstWeekOfDayIsSunday ? 0 : 1"
 					:locale="appConfig.locale.language || 'en'" 
-					:max="frontingEntry.endTime ? endTime : undefined"
+					:max="frontingEntry.endTime ? endTime : dayjs().format('YYYY-MM-DDTHH:mm:ss')"
 				>
 					<span slot="title">{{ $t("options:frontHistory.edit.startTime") }}</span>
 				</IonDatetime>
