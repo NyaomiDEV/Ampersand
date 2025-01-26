@@ -59,8 +59,14 @@ jobs:
         run: yarn tauri android build --apk --target aarch64 armv7 x86_64 --ci
         env:
           NDK_HOME: ${{ env.ANDROID_HOME }}/ndk/28.0.12674087/
+      - name: Update dev tag
+        run: |
+          git tag -d dev || true
+          git push origin :refs/tags/dev || true
+          git tag dev
+          git push origin dev
       - name: Publish artifact
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2.2.1
         with:
           name: Development build for Android
           prerelease: true
