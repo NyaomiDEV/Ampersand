@@ -26,8 +26,9 @@ export function isDarkMode() {
 	}
 }
 
-export function updateDarkMode() {
+export async function updateDarkMode() {
 	document.documentElement.classList.toggle("ion-palette-dark", isDarkMode());
+	await M3.barColor(isDarkMode() ? "dark" : "light");
 }
 
 export async function updateInsets() {
