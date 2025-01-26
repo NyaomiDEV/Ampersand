@@ -4,6 +4,7 @@
 	import type { BoardMessage, BoardMessageComplete } from '../../lib/db/entities.d.ts';
 	import { getBoardMessages } from '../../lib/db/tables/boardMessages';
 	import BoardMessageEdit from "../../modals/BoardMessageEdit.vue";
+	import Spinner from "../../components/Spinner.vue";
 	import { getFronting, getMainFronter } from '../../lib/db/tables/frontingEntries';
 	import { PartialBy } from '../../lib/types';
 

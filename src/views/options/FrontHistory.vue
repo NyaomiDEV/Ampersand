@@ -6,6 +6,7 @@
 	import type { FrontingEntry, FrontingEntryComplete } from '../../lib/db/entities.d.ts';
 	import { getFronting, getFrontingEntries, getMainFronter } from '../../lib/db/tables/frontingEntries';
 	import { getFilteredFrontingEntries } from '../../lib/db/search';
+	import Spinner from "../../components/Spinner.vue";
 	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
 	import dayjs from 'dayjs';
 	import LocalizedFormat from "dayjs/plugin/localizedFormat";
