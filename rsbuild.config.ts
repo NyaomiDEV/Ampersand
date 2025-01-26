@@ -3,7 +3,9 @@ import { pluginVue } from "@rsbuild/plugin-vue";
 
 const host = process.env.TAURI_DEV_HOST;
 
-const { publicVars } = loadEnv({ prefixes: ['TAURI_ENV_'] });
+const { publicVars } = loadEnv({ prefixes: ['TAURI_ENV_', 'AMPERSAND_'] });
+
+console.log(publicVars);
 
 export default defineConfig({
 	plugins: [

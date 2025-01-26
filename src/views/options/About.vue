@@ -9,6 +9,14 @@
 	import { version } from "../../../package.json";
 	import { openUrl } from '@tauri-apps/plugin-opener';
 
+	function isAppStore() {
+		try{
+			return !!import.meta.env.AMPERSAND_IS_APP_STORE;
+		}catch(e){
+		 	return false;
+		}
+	}
+
 	function openGithub(){
 		const url = "https://github.com/NyaomiDEV/Ampersand";
 		if(!('isTauri' in window)){
@@ -65,7 +73,7 @@
 						<IonIcon slot="icon-only" :icon="GithubLogo" ></IonIcon>
 					</IonButton>
 
-					<IonButton class="tonal" shape="round" @click="openLiberapay">
+					<IonButton class="tonal" shape="round" @click="openLiberapay" v-if="!isAppStore()">
 						<IonIcon slot="icon-only" :icon="LiberapayLogo" ></IonIcon>
 					</IonButton>
 				</div>
