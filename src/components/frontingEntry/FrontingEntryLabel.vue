@@ -37,7 +37,7 @@
 		if(end.valueOf() - start.endOf('day').valueOf() <= 0) // same day
 			return start.format(`${twelveHour ? 'hh:mm A' : "HH:mm"}`) + "~" + end.format(twelveHour ? 'hh:mm A' : "HH:mm");
 		
-		return start.format(`${twelveHour ? 'hh:mm A' : "HH:mm"}`) + " - " + end.format(`LL, ${twelveHour ? 'hh:mm A' : "HH:mm"}`);
+		return start.format(`LL, ${twelveHour ? 'hh:mm A' : "HH:mm"}`) + " - " + end.format(`LL, ${twelveHour ? 'hh:mm A' : "HH:mm"}`);
 	}
 
 	onMounted(() => {
