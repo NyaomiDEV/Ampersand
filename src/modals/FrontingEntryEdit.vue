@@ -130,6 +130,7 @@
 
 	function removeFromFront() {
 		frontingEntry.value.endTime = new Date();
+		endTime.value = dayjs(frontingEntry.value.endTime).format("YYYY-MM-DDTHH:mm:ss");
 	}
 </script>
 
@@ -202,13 +203,31 @@
 
 			<MemberSelect :selectedMembers :onlyOne="true" @selectedMembers="updateSelectedMember" ref="memberSelectModal" />
 			<IonModal class="stack-modal" :keep-contents-mounted="true">
-				<IonDatetime id="startTime" v-model="startTime" :showDefaultButtons="true" :hourCycle="twelveHourClock ? 'h12' : 'h23'" :firstDayOfWeek="firstWeekOfDayIsSunday ? 0 : 1" :locale="appConfig.locale.language || 'en'">
+				<IonDatetime
+					id="startTime"
+					presentation="date-time"
+					v-model="startTime"
+					:showDefaultButtons="true"
+					:hourCycle="twelveHourClock ? 'h12' : 'h23'"
+					:firstDayOfWeek="firstWeekOfDayIsSunday ? 0 : 1"
+					:locale="appConfig.locale.language || 'en'" 
+					:max="frontingEntry.endTime ? endTime : undefined"
+				>
 					<span slot="title">{{ $t("options:frontHistory.edit.startTime") }}</span>
 				</IonDatetime>
 			</IonModal>
 			<IonModal class="stack-modal" :keep-contents-mounted="true">
-				<IonDatetime id="endTime" v-model="endTime" :showDefaultButtons="true" :hourCycle="twelveHourClock ? 'h12' : 'h23'" :firstDayOfWeek="firstWeekOfDayIsSunday ? 0 : 1" :locale="appConfig.locale.language || 'en'">
-					<span slot="title">{{ $t("options:frontHistory.edit.endTime") }}</span>
+				<IonDatetime
+					id="endTime"
+					presentation="date-time"
+					v-model="endTime"
+					:showDefaultButtons="true"
+					:hourCycle="twelveHourClock ? 'h12' : 'h23'"
+					:firstDayOfWeek="firstWeekOfDayIsSunday ? 0 : 1"
+					:locale="appConfig.locale.language || 'en'"
+					:min="startTime"
+				>
+						<span slot="title">{{ $t("options:frontHistory.edit.endTime") }}</span>
 				</IonDatetime>
 			</IonModal>
 		</IonContent>
