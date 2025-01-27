@@ -47,6 +47,8 @@ jobs:
           targets: aarch64-linux-android,armv7-linux-androideabi,x86_64-linux-android
       - name: Install frontend dependencies
         run: yarn install --frozen-lockfile
+      - name: Update versioning
+        run: yarn run upgrade-vcs
       - name: Set up Android signing
         run: |
           cd src-tauri/gen/android
@@ -68,7 +70,7 @@ jobs:
       - name: Publish artifact
         uses: softprops/action-gh-release@v2.2.1
         with:
-          name: Development build for Android
+          name: Development build for Android (${{ env.AMPERSAND_VERSION }})
           prerelease: true
           tag_name: dev
           generate_release_notes: true
