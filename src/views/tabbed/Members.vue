@@ -48,7 +48,7 @@
 	import MemberLabel from '../../components/member/MemberLabel.vue';
 	import { globalEvents } from '../../lib/globalEvents';
 	import { DatabaseEvents, DatabaseEvent } from '../../lib/db/events';
-import Spinner from '../../components/Spinner.vue';
+	import Spinner from '../../components/Spinner.vue';
 
 	const isIOS = inject<boolean>("isIOS");
 

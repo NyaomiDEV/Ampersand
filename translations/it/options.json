@@ -17,7 +17,7 @@
 		"searchPlaceholder": "Cerca tra la cronologia del front...",
 		"currentlyFronting": "Al front al corrente",
 		"edit": {
-			"header": "Edit fronting entry",
+			"header": "Modifica voce di front",
 			"member": "Modifica il membrə a front",
 			"customStatus": "Status personalizzato",
 			"startTime": "Tempo d'inizio",
@@ -200,12 +200,16 @@
 			"light": "Chiara",
 			"dark": "Scura"
 		},
+		"useMaterialTheming": {
+			"title": "Tema Material Design",
+			"desc": "Usa un tema che segue le linee guida Material (potrebbe causare fatica agli occhi)"
+		},
 		"useAccentColor": {
-			"title": "Colore secondario",
-			"desc": "Usa un colore secondario personalizzato"
+			"title": "Colore primario",
+			"desc": "Usa un colore primario personalizzato"
 		},
 		"accentColor": {
-			"title": "Scegli il colore secondario"
+			"title": "Scegli il colore primario"
 		},
 		"reducedMotion": {
 			"title": "Movimenti ridotti",

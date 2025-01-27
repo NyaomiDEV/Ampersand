@@ -1,3 +1,4 @@
+@import url(ios-steps.css);
 html {
 	--ion-font-family: 'Inter', var(--ion-default-font);
 }
@@ -55,4 +56,14 @@ ion-modal.modal-sheet {
 
 p {
 	text-wrap: wrap;
+}
+
+.ios:not(.md3) ion-card.filled {
+	--background: var(--ion-color-light-shade);
+}
+
+.ios:not(.md3) ion-card.outlined {
+	--background: transparent;
+	outline: 1px solid var(--ion-color-light-shade);
+	box-shadow: unset;
 }

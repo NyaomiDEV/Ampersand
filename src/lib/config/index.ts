@@ -1,7 +1,7 @@
 import { reactive, watch } from "vue";
 import { AccessibilityConfig, AppConfig, SecurityConfig } from "./types";
-import { updateAccessibility, updateDarkMode } from "../mode";
-import { updateMaterialColors } from "../theme";
+import { isIOSIonicMode, updateAccessibility, updateDarkMode } from "../mode";
+import { activateMaterialTheme, deactivateMaterialTheme, defaultColor, unsetMaterialColors, updateMaterialColors } from "../theme";
 import i18next from "i18next";
 
 const defaultAppConfig: AppConfig = {
@@ -19,8 +19,9 @@ const defaultAccessibilityConfig: AccessibilityConfig = {
 	highLegibility: false,
 	highLegibilityType: "atkinson",
 	theme: "auto",
-	useAccentColor: false,
-	accentColor: undefined,
+	useMaterialTheming: isIOSIonicMode(),
+	useAccentColor: !isIOSIonicMode(),
+	accentColor: isIOSIonicMode() ? defaultColor : undefined,
 	reducedMotion: false,
 	fontScale: 1,
 	chatFontScale: 1,
@@ -47,6 +48,15 @@ watch(appConfig, async () => {
 watch(accessibilityConfig, async () => {
 	await impl.set("accessibilityConfig", { ...accessibilityConfig });
 	updateDarkMode();
+
+	if(isIOSIonicMode())
+		if(accessibilityConfig.useMaterialTheming)
+			activateMaterialTheme();
+		else {
+			deactivateMaterialTheme();
+			unsetMaterialColors();
+		}
+
 	updateMaterialColors();
 	updateAccessibility();
 });

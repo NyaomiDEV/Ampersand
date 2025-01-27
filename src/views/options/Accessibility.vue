@@ -67,7 +67,16 @@
 					</IonLabel>
 				</IonItem>
 
-				<IonItem>
+				<IonItem v-if="isIOS">
+					<IonToggle v-model="accessibilityConfig.useMaterialTheming" @ion-change="e => { if(isIOS) accessibilityConfig.useAccentColor = e.detail.checked }">
+						<IonLabel>
+							<h3>{{ $t("options:accessibility.useMaterialTheming.title") }}</h3>
+							<p>{{ $t("options:accessibility.useMaterialTheming.desc") }}</p>
+						</IonLabel>
+					</IonToggle>
+				</IonItem>
+
+				<IonItem v-if="!isIOS">
 					<IonToggle v-model="accessibilityConfig.useAccentColor">
 						<IonLabel>
 							<h3>{{ $t("options:accessibility.useAccentColor.title") }}</h3>
@@ -76,7 +85,7 @@
 					</IonToggle>
 				</IonItem>
 
-				<IonItem button>
+				<IonItem button v-if="accessibilityConfig.useMaterialTheming || !isIOS">
 					<Color v-model="accessibilityConfig.accentColor">
 						<IonLabel>
 							<h3>{{ $t("options:accessibility.accentColor.title") }}</h3>

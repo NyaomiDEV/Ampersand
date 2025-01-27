@@ -1,6 +1,7 @@
 import { argbFromHex, blueFromArgb, DynamicColor, greenFromArgb, Hct, MaterialDynamicColors, redFromArgb, SchemeFidelity, SchemeTonalSpot } from "@material/material-color-utilities";
 import { accessibilityConfig } from "../config";
 import { M3 } from "tauri-plugin-m3";
+import { isIOSIonicMode } from "../mode";
 
 const dynamicColorsWeWant = [
 	"primaryPaletteKeyColor",
@@ -59,7 +60,7 @@ const dynamicColorsWeWant = [
     "onTertiaryFixedVariant",
 ];
 
-const defaultColor = "#FF7E5700";
+export const defaultColor = "#FF7E5700";
 
 const m3colors = await M3.fetch("system").colors();
 
@@ -95,6 +96,9 @@ export function updateMaterialColors(target?: HTMLElement){
 }
 
 export function activateMaterialTheme(target?: HTMLElement) {
+	// don't add the md3 class if material theming is not enabled
+	if (isIOSIonicMode() && !accessibilityConfig.useMaterialTheming) return;
+
 	(target ?? document.documentElement).classList.add("md3");
 }
 
@@ -115,6 +119,9 @@ export function unsetMaterialColors(target?: HTMLElement){
 }
 
 export function addMaterialColors(hex: string, target?: HTMLElement){
+	// don't add material colors if material theming is deactivated
+	if (isIOSIonicMode() && !accessibilityConfig.useMaterialTheming) return;
+
 	// Generate new theme
 	const tonalSpotLight = new SchemeFidelity(Hct.fromInt(argbFromHex(hex)), false, 0);
 	const tonalSpotDark = new SchemeFidelity(Hct.fromInt(argbFromHex(hex)), true, 0);

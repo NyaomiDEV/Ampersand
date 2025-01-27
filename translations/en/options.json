@@ -203,6 +203,10 @@
 			"light": "Light",
 			"dark": "Dark"
 		},
+		"useMaterialTheming": {
+			"title": "Material Design theming",
+			"desc": "Theme your experience according to Material guidelines (could cause eye strain)"
+		},
 		"useAccentColor": {
 			"title": "Accent color",
 			"desc": "Use a custom accent color"

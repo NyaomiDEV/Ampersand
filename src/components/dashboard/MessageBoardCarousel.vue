@@ -29,6 +29,11 @@
 			boardMessages.value = await Promise.all(
 				(await getBoardMessages())
 					.filter(x => x.isPinned ? true : dayjs().startOf('day').valueOf() - dayjs(x.date).startOf('day').valueOf() < 3 * 24 * 60 * 60 * 1000)
+					.sort((a,b) => {
+						if(a.isPinned && !b.isPinned) return -1;
+						if(!a.isPinned && b.isPinned) return 1;
+						return a.date.getTime() - b.date.getTime();
+					})
 					.map(x => toBoardMessageComplete(x))
 			);
 		}
@@ -39,6 +44,11 @@
 		boardMessages.value = await Promise.all(
 			(await getBoardMessages())
 				.filter(x => x.isPinned ? true : dayjs().startOf('day').valueOf() - dayjs(x.date).startOf('day').valueOf() < 3 * 24 * 60 * 60 * 1000)
+				.sort((a,b) => {
+						if(a.isPinned && !b.isPinned) return -1;
+						if(!a.isPinned && b.isPinned) return 1;
+						return a.date.getTime() - b.date.getTime();
+				})
 				.map(x => toBoardMessageComplete(x))
 		);
 	});

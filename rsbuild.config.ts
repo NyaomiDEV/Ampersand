@@ -1,5 +1,6 @@
 import { defineConfig, loadEnv } from '@rsbuild/core';
 import { pluginVue } from "@rsbuild/plugin-vue";
+import { pluginBasicSsl } from "@rsbuild/plugin-basic-ssl";
 
 const host = process.env.TAURI_DEV_HOST;
 
@@ -7,7 +8,11 @@ const { publicVars } = loadEnv({ prefixes: ['TAURI_ENV_', 'AMPERSAND_'] });
 
 export default defineConfig({
 	plugins: [
-		pluginVue()
+		pluginVue(),
+		pluginBasicSsl({
+			filename: "self-signed.pem",
+			outputPath: __dirname
+		})
 	],
 	html: {
 		template: './index.html',
