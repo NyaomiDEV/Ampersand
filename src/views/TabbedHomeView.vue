@@ -24,7 +24,7 @@
 		<IonTabs>
 			<IonRouterOutlet />
 
-			<IonTabBar :translucent="true" slot="bottom">
+			<IonTabBar slot="bottom">
 
 				<IonTabButton tab="members" href="/members" @click="router.replace('/members')">
 					<IonIcon :ios="PeopleIOS" :md="PeopleMD" />
