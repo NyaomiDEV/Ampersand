@@ -16,24 +16,24 @@ html.high-legibility.hl-lexend {
 }
 
 ion-content {
-	--ion-safe-area-left: var(--device-inset-left);
-	--ion-safe-area-right: var(--device-inset-right);
+	--ion-safe-area-left: var(--device-inset-left, env(safe-area-inset-left));
+	--ion-safe-area-right: var(--device-inset-right, env(safe-area-inset-right));
 }
 
 ion-content:not(ion-tabs *){
-	--padding-bottom: var(--device-inset-bottom);
+	--padding-bottom: var(--device-inset-bottom, env(safe-area-inset-bottom));
 }
 
 ion-header ion-toolbar:first-of-type {
-	--ion-safe-area-top: var(--device-inset-top);
+	--ion-safe-area-top: var(--device-inset-top, env(safe-area-inset-top));
 }
 
 ion-tab-bar {
-	--ion-safe-area-bottom: var(--device-inset-bottom);
+	--ion-safe-area-bottom: var(--device-inset-bottom, env(safe-area-inset-bottom));
 }
 
 ion-fab:not(ion-tabs *) {
-	margin-bottom: var(--device-inset-bottom);
+	margin-bottom: var(--device-inset-bottom, env(safe-area-inset-bottom));
 }
 
 ion-modal.modal-sheet ion-header ion-toolbar:first-of-type {
@@ -41,7 +41,7 @@ ion-modal.modal-sheet ion-header ion-toolbar:first-of-type {
 }
 
 ion-modal.modal-sheet {
-	--ion-safe-area-bottom: var(--device-inset-bottom);
+	--ion-safe-area-bottom: var(--device-inset-bottom, env(safe-area-inset-bottom));
 	--max-height: 90%;
 }
 
