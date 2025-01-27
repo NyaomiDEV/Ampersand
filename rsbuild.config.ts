@@ -34,6 +34,24 @@ export default defineConfig({
 			root: "dist",
 			assets: "assets"
 		},
-		minify: false
+		minify: false,
+		copy: [
+			{
+				from: "resources/icon/180.png",
+				to: "static/images/favicon-180x.png"
+			},
+			{
+				from: "resources/icon/192.png",
+				to: "static/images/favicon-192x.png"
+			},
+			{
+				from: "resources/icon/512.png",
+				to: "static/images/favicon-512x.png"
+			},
+			{
+				from: "resources/icon/1024.png",
+				to: "static/images/favicon-1024x.png"
+			}
+		]
 	},
 });
