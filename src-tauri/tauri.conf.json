@@ -1,7 +1,7 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
   "productName": "Ampersand",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "identifier": "moe.ampersand.app",
   "build": {
     "frontendDist": "../dist",
@@ -35,7 +35,7 @@
       "icons/icon.ico"
     ],
     "android": {
-      "minSdkVersion": 24
+      "versionCode": 1000
     },
     "linux": {
       "appimage": {
