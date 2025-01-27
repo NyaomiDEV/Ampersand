@@ -6,9 +6,9 @@ import { spawn } from "node:child_process";
 import { resolve } from "node:path";
 import * as TOML from "smol-toml";
 
-function spawnAsync(cmd, args){
+function spawnAsync(cmd, args, cwd){
 	return new Promise(resolve => {
-		const _process = spawn(cmd, args, {stdio: "pipe"});
+		const _process = spawn(cmd, args, {stdio: "pipe", cwd});
 
 		let stdout = "", stderr = "";
 
@@ -26,7 +26,7 @@ function spawnAsync(cmd, args){
 }
 
 async function main(){
-	const revcount = Number((await spawnAsync("git", ["rev-list", "--count", "HEAD"])).stdout);
+	const revcount = Number((await spawnAsync("git", ["rev-list", "--count", "HEAD"], import.meta.dirname)).stdout);
 
 	if(revcount){
 		console.log("Revision count is", revcount);
