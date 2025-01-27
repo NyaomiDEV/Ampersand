@@ -8,7 +8,7 @@
     "dev": "rsbuild dev",
     "build": "vue-tsc && rsbuild build",
     "preview": "rsbuild preview",
-    "upgrade-vcs": "node upgrade-vcs.js"
+    "upgrade-vcs": "node upgrade-vcs.mjs"
   },
   "dependencies": {
     "@ionic/vue": "^8.4.2",
