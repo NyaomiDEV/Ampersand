@@ -67,3 +67,16 @@ p {
 	outline: 1px solid var(--ion-color-light-shade);
 	box-shadow: unset;
 }
+
+ion-label > .sc-ion-label-md {
+	text-wrap: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+ion-label > .sc-ion-label-ios {
+	text-wrap: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
