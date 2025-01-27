@@ -1,6 +1,6 @@
 import { reactive, watch } from "vue";
 import { AccessibilityConfig, AppConfig, SecurityConfig } from "./types";
-import { isIOSIonicMode, updateAccessibility, updateDarkMode } from "../mode";
+import { isIOSIonicMode, updateAccessibility, updateDarkMode, updatePWATitlebarColor } from "../mode";
 import { activateMaterialTheme, deactivateMaterialTheme, defaultColor, unsetMaterialColors, updateMaterialColors } from "../theme";
 import i18next from "i18next";
 
@@ -58,6 +58,7 @@ watch(accessibilityConfig, async () => {
 		}
 
 	updateMaterialColors();
+	updatePWATitlebarColor(window.getComputedStyle(document.body).getPropertyValue("--ion-toolbar-background"));
 	updateAccessibility();
 });
 

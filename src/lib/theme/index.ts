@@ -1,7 +1,7 @@
 import { argbFromHex, blueFromArgb, DynamicColor, greenFromArgb, Hct, MaterialDynamicColors, redFromArgb, SchemeFidelity, SchemeTonalSpot } from "@material/material-color-utilities";
 import { accessibilityConfig } from "../config";
 import { M3 } from "tauri-plugin-m3";
-import { isIOSIonicMode } from "../mode";
+import { isIOSIonicMode, updatePWATitlebarColor } from "../mode";
 
 const dynamicColorsWeWant = [
 	"primaryPaletteKeyColor",

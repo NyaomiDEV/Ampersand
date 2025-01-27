@@ -26,8 +26,22 @@ export function isDarkMode() {
 	}
 }
 
+export function updatePWATitlebarColor(color: string){
+	const query = document.head.querySelector('meta[name="theme-color"]')
+	if(query) {
+		query.setAttribute("content", color);
+		return;
+	}
+
+	const themeMeta = document.createElement("meta");
+	themeMeta.setAttribute("name", "theme-color");
+	themeMeta.setAttribute("content", color);
+	document.head.appendChild(themeMeta);
+}
+
 export async function updateDarkMode() {
 	document.documentElement.classList.toggle("ion-palette-dark", isDarkMode());
+	updatePWATitlebarColor(window.getComputedStyle(document.body).getPropertyValue("--ion-toolbar-background"));
 	await M3.barColor(isDarkMode() ? "light" : "dark");
 }
 
@@ -60,5 +74,4 @@ export function updateAccessibility() {
 		document.documentElement.style.setProperty("font-size", `${fontScale}em`);
 	else
 		document.documentElement.style.removeProperty("font-size");
-
 }
