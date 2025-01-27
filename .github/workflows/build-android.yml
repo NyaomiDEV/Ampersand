@@ -20,7 +20,7 @@ concurrency:
 
 jobs:
   # Single deploy job since we're just deploying
-  deploy:
+  deploy-android:
     environment:
       name: build-android
     runs-on: ubuntu-latest
