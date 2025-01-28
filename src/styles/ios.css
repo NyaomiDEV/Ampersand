@@ -1,4 +1,7 @@
 html.ios:not(.ion-palette-dark) {
+	--ion-background-color: #fff;
+	--ion-text-color: #000;
+
 	--ion-text-color-step-50: #0d0d0d;
 	--ion-text-color-step-100: #1a1a1a;
 	--ion-text-color-step-150: #262626;
@@ -41,6 +44,9 @@ html.ios:not(.ion-palette-dark) {
 }
 
 html.ios {
-	--ion-toolbar-background: var(--ion-background-color-step-50);
-	--ion-item-background: var(--ion-background-color-step-50) !important;
+	--ion-toolbar-background: var(--ion-background-color);
+}
+
+html.ios ion-content {
+	--background: var(--ion-background-color-step-50);
 }
