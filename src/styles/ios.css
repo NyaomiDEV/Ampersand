@@ -50,3 +50,13 @@ html.ios {
 html.ios ion-content {
 	--background: var(--ion-background-color-step-50);
 }
+
+.ios:not(.md3) ion-card.filled {
+	--background: var(--ion-color-light-shade);
+}
+
+.ios:not(.md3) ion-card.outlined {
+	--background: transparent;
+	outline: 1px solid var(--ion-color-light-shade);
+	box-shadow: unset;
+}

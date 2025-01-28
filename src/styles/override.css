@@ -58,16 +58,6 @@ p {
 	text-wrap: wrap;
 }
 
-.ios:not(.md3) ion-card.filled {
-	--background: var(--ion-color-light-shade);
-}
-
-.ios:not(.md3) ion-card.outlined {
-	--background: transparent;
-	outline: 1px solid var(--ion-color-light-shade);
-	box-shadow: unset;
-}
-
 ion-label > .sc-ion-label-md {
 	text-wrap: nowrap;
 	text-overflow: ellipsis;
