@@ -33,7 +33,8 @@ const mention: TokenizerAndRendererExtension = {
 	renderer(token) {
 		if (token.member) {
 			return h(MemberChip, {
-				member: token.member
+				member: token.member,
+				clickable: true
 			});
 		} else {
 			return h('span', token.raw);
