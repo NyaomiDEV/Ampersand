@@ -1,7 +1,23 @@
+.markdown-content {
+    margin: 8px 0;
+}
+
+/* Horizontal Rules */
+.markdown-content hr {
+    border-top-width: 1px;
+    color: var(--ion-text-color-step-400);
+}
+
+/* Blockquotes */
+.markdown-content blockquote {
+    border-left: 1px solid var(--ion-text-color-step-400);
+    padding-left: 8px;
+    margin: 12px;
+}
+
 /* Tables */
 .markdown-content table {
     border: 1px solid var(--ion-text-color-step-400);
-
 }
 
 .markdown-content table tr {
@@ -18,7 +34,7 @@
     border-right: 1px solid var(--ion-text-color-step-400);
 }
 
-.markdown-content table span {
+.markdown-content table :is(td, th) {
     padding: 8px;
 }
 
