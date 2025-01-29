@@ -1,7 +1,8 @@
 import { createRouter, createWebHashHistory } from "@ionic/vue-router";
 import { RouteRecordRaw } from "vue-router";
 import tabbedRoutes from "./tabbedRoutes";
-import settings from "./settings";
+import options from "./options";
+import edit from "./edit";
 
 const routes: Array<RouteRecordRaw> = [
 	{
@@ -17,7 +18,8 @@ const routes: Array<RouteRecordRaw> = [
 		name: "LockView",
 		component: () => import("../views/LockView.vue"),
 	},
-	...settings,
+	...options,
+	...edit,
 ];
 
 const router = createRouter({

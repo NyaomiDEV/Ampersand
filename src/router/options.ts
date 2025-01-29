@@ -1,6 +1,6 @@
 import { RouteRecordRaw } from "vue-router";
 
-const settings: Array<RouteRecordRaw> = [
+const options: Array<RouteRecordRaw> = [
 	{
 		path: '/options/testingGrounds',
 		name: 'Testing grounds',
@@ -61,4 +61,4 @@ const settings: Array<RouteRecordRaw> = [
 	},
 ];
 
-export default settings;
+export default options;

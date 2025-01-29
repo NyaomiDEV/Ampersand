@@ -4,7 +4,6 @@
 		IonHeader,
 		IonToolbar,
 		IonTitle,
-		IonButton,
 		IonIcon,
 		IonList,
 		IonInput,
@@ -14,37 +13,44 @@
 		IonFabButton,
 		IonLabel,
 		IonItem,
-		modalController,
-		IonModal,
-		IonButtons,
 		IonRadioGroup,
-		IonRadio
+		IonRadio,
+		IonPage,
+		IonBackButton
 	} from "@ionic/vue";
 
 	import {
 		saveOutline as saveIOS,
-		chevronBack as backIOS,
 	} from "ionicons/icons";
 
 	import saveMD from "@material-design-icons/svg/outlined/save.svg";
-	import backMD from "@material-design-icons/svg/outlined/arrow_back.svg";
 
-	import MD3SegmentButton from '../components/MD3SegmentButton.vue';
-	import PopupPicker from "../components/PopupPicker.vue";
+	import MD3SegmentButton from '../../components/MD3SegmentButton.vue';
+	import PopupPicker from "../../components/PopupPicker.vue";
 
-	import { inject, reactive, ref, toRaw, watch } from "vue";
-	import { PartialBy } from "../lib/types";
-	import { EventReminder, PeriodicReminder, Reminder } from "../lib/db/entities";
-	import { newReminder, updateReminder } from "../lib/db/tables/reminders";
+	import { inject, onBeforeMount, reactive, ref, toRaw, watch } from "vue";
+	import { EventReminder, Reminder } from "../../lib/db/entities";
+	import { getReminders, newReminder, updateReminder } from "../../lib/db/tables/reminders";
+	import { PartialBy } from "../../lib/types";
+	import { useRoute } from "vue-router";
 
 	const isIOS = inject<boolean>("isIOS")!;
+	const route = useRoute();
 
-	const props = defineProps<{
-		reminder: PartialBy<Reminder, "uuid">
-	}>();
-
-	const reminder = ref(props.reminder);
-	const self = ref();
+	const emptyReminder: PartialBy<Reminder, "uuid"> = {
+		name: "",
+		type: "event",
+		title: "",
+		message: "",
+		triggeringEvent: {
+			type: "memberAdded"
+		},
+		delay: {
+			hours: 0,
+			minutes: 0
+		}
+	};
+	const reminder = ref<PartialBy<Reminder, "uuid">>({...emptyReminder});
 
 	const eventDelayPopupPicker = ref();
 	const periodicTimeOfDayPopupPicker = ref();
@@ -52,6 +58,14 @@
 
 	const eventDelayPickerValue = reactive(new Map<string, number>());
 	const periodicTimeOfDayPickerValue = reactive(new Map<string, number>([['hours', 0], ['minutes', 0]]));
+
+	async function updateRoute(){
+		if(route.query.uuid){
+			const rem = (await getReminders()).find(x => x.uuid === route.query.uuid);
+			if(rem) reminder.value = rem;
+			else reminder.value = emptyReminder;
+		}
+	}
 
 	async function save(){
 		const uuid = reminder.value?.uuid;
@@ -70,27 +84,13 @@
 
 		if(!uuid) {
 			await newReminder({..._reminder });
-
-			await modalController.dismiss(null, "added");
-
 			return;
 		}
 
 		await updateReminder(uuid, { ..._reminder } as Reminder);
-
-		try{
-			await modalController.dismiss(null, "modified");
-		}catch(_){}
-		// catch an error because the type might get changed, causing the parent to be removed from DOM
-		// however it's safe for us to ignore
-	}
-
-	async function present() {
-		reminder.value = props.reminder;
 	}
 
 	function switchType() {
-		console.log(reminder.value.type)
 		if(reminder.value.type == "event"){
 			reminder.value.delay = {
 				hours: 0,
@@ -116,6 +116,9 @@
 		}
 	}
 
+	watch(route, updateRoute);
+	onBeforeMount(updateRoute);
+
 	watch(eventDelayPickerValue, () => {
 		reminder.value.delay = {
 			hours: eventDelayPickerValue.get('hours') || 0,
@@ -133,14 +136,10 @@
 </script>
 
 <template>
-	<IonModal class="reminder-edit-modal" ref="self" @willPresent="present">
+	<IonPage>
 		<IonHeader>
 			<IonToolbar>
-				<IonButtons slot="start">
-					<IonButton shape="round" fill="clear" @click="self.$el.dismiss()">
-						<IonIcon slot="icon-only" :md="backMD" :ios="backIOS"></IonIcon>
-					</IonButton>
-				</IonButtons>
+				<IonBackButton slot="start" defaultHref="/options/reminders/" />
 				<IonTitle>{{ $t("options:reminders.editReminder.header") }}</IonTitle>
 			</IonToolbar>
 		</IonHeader>
@@ -332,7 +331,7 @@
 				</IonFabButton>
 			</IonFab>
 		</IonContent>
-	</IonModal>
+	</IonPage>
 </template>
 
 

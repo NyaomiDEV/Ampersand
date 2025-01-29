@@ -1,36 +1,17 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonFab, IonListHeader, IonFabButton, IonIcon, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonLabel, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonItem, IonToggle, ToggleChangeEventDetail } from '@ionic/vue';
-	import { inject, onBeforeMount, onUnmounted, ref, shallowRef } from 'vue';
+	import { inject, onBeforeMount, onUnmounted, shallowRef } from 'vue';
 	import { addOutline as addIOS } from "ionicons/icons";
 
 	import Spinner from '../../components/Spinner.vue';
 	import addMD from "@material-design-icons/svg/outlined/add.svg";
-	import { Reminder, EventReminder } from '../../lib/db/entities';
-	import { PartialBy } from '../../lib/types';
-	import ReminderEdit from '../../modals/ReminderEdit.vue';
+	import { Reminder } from '../../lib/db/entities';
 	import { getReminders } from '../../lib/db/tables/reminders';
 	import { DatabaseEvent, DatabaseEvents } from '../../lib/db/events';
 
 	const isIOS = inject<boolean>("isIOS");
 
-	const emptyReminder: PartialBy<EventReminder, "uuid"> = {
-		name: "",
-		type: "event",
-		title: "",
-		message: "",
-		triggeringEvent: {
-			type: "memberAdded"
-		},
-		delay: {
-			hours: 0,
-			minutes: 0
-		}
-	};
-
 	const reminders = shallowRef<Reminder[]>();
-	const reminder = shallowRef<PartialBy<Reminder, "uuid">>({...emptyReminder});
-
-	const reminderEditModal = ref();
 
 	const listener = async (event: Event) => {
 		if(["reminders"].includes((event as DatabaseEvent).data.table))
@@ -45,16 +26,6 @@
 	onUnmounted(async () => {
 		DatabaseEvents.removeEventListener("updated", listener);
 	});
-
-	async function showModal(clickedReminder?: Reminder){
-		if(clickedReminder)
-			reminder.value = {...clickedReminder};
-		else {
-			reminder.value = {...emptyReminder};
-		}
-
-		await reminderEditModal.value.$el.present();
-	}
 
 	async function toggleReminder(reminder: Reminder, e: CustomEvent<ToggleChangeEventDetail>){
 		console.log(reminder, e);
@@ -94,7 +65,7 @@
 				<IonItem button
 					v-for="eventReminder in reminders?.filter(x => x.type === 'event')"
 					:key="'eventreminder'+JSON.stringify(eventReminder)"
-					@click="showModal(eventReminder)"
+					:routerLink="'/options/reminders/edit?uuid='+eventReminder.uuid"
 				>
 					<IonLabel>
 						{{ eventReminder.name }}
@@ -120,7 +91,7 @@
 				<IonItem button
 					v-for="periodicReminder in reminders?.filter(x => x.type === 'periodic')"
 					:key="'periodicreminder'+JSON.stringify(periodicReminder)"
-					@click="showModal(periodicReminder)"
+					:routerLink="'/options/reminders/edit?uuid='+periodicReminder.uuid"
 				>
 					<IonLabel>
 						{{ periodicReminder.name }}
@@ -137,12 +108,10 @@
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton @click="showModal()">
+				<IonFabButton routerLink="/options/reminders/edit">
 					<IonIcon :ios="addIOS" :md="addMD" />
 				</IonFabButton>
 			</IonFab>
 		</IonContent>
-
-		<ReminderEdit ref="reminderEditModal" :reminder />
 	</IonPage>
 </template>
