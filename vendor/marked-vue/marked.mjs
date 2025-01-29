@@ -9,7 +9,7 @@
  * The code in this file is generated from files in ./src/
  */
 
-import { h, Fragment, Text, isVNode } from 'vue';
+import { h, Text, Fragment, isVNode } from 'vue';
 
 /**
  * Gets the original marked default options.
@@ -1750,7 +1750,7 @@ class _Renderer {
         this.options = options || _defaults;
     }
     space(token) {
-        return h(Fragment, { innerHTML: '' });
+        return h(Text, '');
     }
     code({ text, lang, escaped }) {
         const langString = (lang || '').match(other.notSpaceStart)?.[0];
@@ -1822,13 +1822,13 @@ class _Renderer {
         return h('del', this.parser.parseInline(tokens));
     }
     link({ href, title, tokens }) {
-        const text = this.parser.parseInline(tokens);
+        const inlineParsed = this.parser.parseInline(tokens);
         const cleanHref = cleanUrl(href);
         if (cleanHref === null) {
-            return h(Fragment, text);
+            return h(Fragment, inlineParsed);
         }
         href = cleanHref;
-        return h('a', { href, title }, text);
+        return h('a', { href, title }, inlineParsed);
     }
     image({ href, title, text }) {
         const cleanHref = cleanUrl(href);
