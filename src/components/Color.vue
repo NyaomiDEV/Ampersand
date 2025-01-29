@@ -1,10 +1,10 @@
 <script setup lang="ts">
-	import { ref } from 'vue';
+	import { useTemplateRef } from 'vue';
 	import { IonModal } from '@ionic/vue';
 	import { ColorPicker } from 'vue-accessible-color-picker';
 	const model = defineModel<string>();
 	
-	const colorModal = ref<{$el: HTMLIonModalElement}>();
+	const colorModal = useTemplateRef("colorModal");
 
 	const props = defineProps<{
 		alpha?: boolean

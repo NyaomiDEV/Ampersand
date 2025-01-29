@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonLabel, IonToolbar, IonBackButton, IonItem, IonItemDivider, IonDatetime, IonButtons, IonIcon, IonButton, IonSearchbar, IonFabButton, IonFab } from '@ionic/vue';
-	import { inject, onMounted, onUnmounted, ref, shallowRef } from 'vue';
+	import { inject, onMounted, onUnmounted, ref, shallowRef, useTemplateRef } from 'vue';
 	import FrontingEntryAvatar from "../../components/frontingEntry/FrontingEntryAvatar.vue";
 	import FrontingEntryLabel from "../../components/frontingEntry/FrontingEntryLabel.vue";
 	import type { FrontingEntry, FrontingEntryComplete } from '../../lib/db/entities.d.ts';
@@ -32,7 +32,7 @@
 
 	const isIOS = inject<boolean>("isIOS");
 
-	const frontingEntryModal = ref();
+	const frontingEntryModal = useTemplateRef("frontingEntryModal");
 	const emptyFrontingEntry: PartialBy<FrontingEntryComplete, "uuid" | "member"> = {
 		isMainFronter: false,
 		startTime: new Date(),
@@ -78,7 +78,7 @@
 			};
 		}
 
-		await frontingEntryModal.value.$el.present();
+		await frontingEntryModal.value?.$el.present();
 	}
 
 	function getGrouped(entries: FrontingEntryComplete[]){

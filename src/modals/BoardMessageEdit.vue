@@ -27,7 +27,7 @@
 
 	import { BoardMessageComplete, Member } from "../lib/db/entities";
 	import { updateBoardMessage, deleteBoardMessage, newBoardMessage } from "../lib/db/tables/boardMessages";
-	import { inject, ref, shallowReactive, toRaw } from "vue";
+	import { inject, ref, shallowReactive, toRaw, useTemplateRef } from "vue";
 	import { PartialBy } from "../lib/types";
 	import MemberAvatar from "../components/member/MemberAvatar.vue";
 	import MemberSelect from "./MemberSelect.vue";
@@ -40,8 +40,7 @@
 
 	const boardMessage = ref(props.boardMessage);
 
-	const memberSelectModal = ref();
-	const self = ref();
+	const memberSelectModal = useTemplateRef("memberSelectModal");
 
 	async function save(){
 		const uuid = boardMessage.value?.uuid;
@@ -96,7 +95,7 @@
 </script>
 
 <template>
-	<IonModal class="board-message-edit-modal" ref="self" @willPresent="present" :breakpoints="[0,1]" initialBreakpoint="1">
+	<IonModal class="board-message-edit-modal" @willPresent="present" :breakpoints="[0,1]" initialBreakpoint="1">
 		<IonHeader>
 			<IonToolbar>
 				<IonTitle>{{ $t("options:messageBoard.edit.header") }}</IonTitle>
@@ -105,7 +104,7 @@
 
 		<IonContent>
 			<IonList inset>
-					<IonItem button @click="memberSelectModal.$el.present()">
+					<IonItem button @click="memberSelectModal?.$el.present()">
 						<template v-if="boardMessage.member">
 							<MemberAvatar slot="start" :member="boardMessage.member" />
 							<IonLabel>

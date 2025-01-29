@@ -28,7 +28,7 @@
 
 	import { Member, FrontingEntryComplete } from "../lib/db/entities";
 	import { newFrontingEntry, updateFrontingEntry, deleteFrontingEntry } from '../lib/db/tables/frontingEntries';
-	import { Ref, ShallowReactive, WatchStopHandle, inject, ref, shallowReactive, toRaw, watch } from "vue";
+	import { Ref, ShallowReactive, WatchStopHandle, inject, ref, shallowReactive, toRaw, useTemplateRef, watch } from "vue";
 
 	import MemberSelect from "./MemberSelect.vue";
 	import MemberAvatar from "../components/member/MemberAvatar.vue";
@@ -52,7 +52,7 @@
 
 	const frontingEntry = ref(props.frontingEntry);
 
-	const memberSelectModal = ref();
+	const memberSelectModal = useTemplateRef("memberSelectModal");
 
 	const selectedMembers: ShallowReactive<Member[]> = shallowReactive([]);
 
@@ -144,7 +144,7 @@
 
 		<IonContent>
 			<IonList inset>
-					<IonItem button @click="memberSelectModal.$el.present()">
+					<IonItem button @click="memberSelectModal?.$el.present()">
 						<template v-if="frontingEntry.member">
 							<MemberAvatar slot="start" :member="frontingEntry.member" />
 							<IonLabel>

@@ -17,7 +17,7 @@
 		useIonRouter,
 		IonBackButton,
 	} from '@ionic/vue';
-	import { inject, onBeforeMount, onUnmounted, Ref, ref, shallowReactive, shallowRef } from 'vue';
+	import { inject, onBeforeMount, onUnmounted, ref, shallowReactive, shallowRef, useTemplateRef } from 'vue';
 	import { getFilteredMembers } from '../lib/db/search.ts';
 	import { accessibilityConfig } from '../lib/config/index.ts';
 
@@ -59,7 +59,7 @@
 	const filteredMembers = getFilteredMembers(search, members);
 	const frontingEntries = shallowReactive(new Map<Member, FrontingEntry | undefined>());
 
-	const list: Ref<typeof IonList | undefined> = ref();
+	const list = useTemplateRef('list');
 	const router = useIonRouter();
 
 	const listeners = [

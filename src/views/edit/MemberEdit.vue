@@ -47,7 +47,7 @@
 	import { getBlobURL } from '../../lib/util/blob';
 	import { getFiles } from "../../lib/util/misc";
 	import { resizeImage } from "../../lib/util/image";
-	import { ShallowReactive, getCurrentInstance, inject, onBeforeMount, ref, shallowReactive, shallowRef, toRaw, watch } from "vue";
+	import { ShallowReactive, getCurrentInstance, inject, onBeforeMount, ref, shallowReactive, shallowRef, toRaw, useTemplateRef, watch } from "vue";
 	import Markdown from "../../components/Markdown.vue";
 	import { addMaterialColors, rgbaToArgb, unsetMaterialColors } from "../../lib/theme";
 	import { PartialBy } from "../../lib/types";
@@ -70,7 +70,7 @@
 	const member = ref({...emptyMember});
 
 	const tags = shallowRef<Tag[]>([]);
-	const tagSelectionModal = ref();
+	const tagSelectionModal = useTemplateRef("tagSelectionModal");
 	const selectedTags: ShallowReactive<Tag[]> = shallowReactive([]);
 
 	const canEdit = ref(true);
@@ -261,7 +261,7 @@
 						</IonToggle>
 					</IonItem>
 
-					<IonItem button @click="tagSelectionModal.$el.present()">
+					<IonItem button @click="tagSelectionModal?.$el.present()">
 						<IonLabel>
 							{{ $t("members:edit.tags") }}
 							<div class="member-tags">

@@ -29,7 +29,7 @@
 	import MD3SegmentButton from '../../components/MD3SegmentButton.vue';
 	import PopupPicker from "../../components/PopupPicker.vue";
 
-	import { inject, onBeforeMount, reactive, ref, toRaw, watch } from "vue";
+	import { inject, onBeforeMount, reactive, ref, toRaw, useTemplateRef, watch } from "vue";
 	import { EventReminder, Reminder } from "../../lib/db/entities";
 	import { getReminders, newReminder, updateReminder } from "../../lib/db/tables/reminders";
 	import { PartialBy } from "../../lib/types";
@@ -54,9 +54,9 @@
 	};
 	const reminder = ref<PartialBy<Reminder, "uuid">>({...emptyReminder});
 
-	const eventDelayPopupPicker = ref();
-	const periodicTimeOfDayPopupPicker = ref();
-	const periodicDayOfMonthPopupPicker = ref();
+	const eventDelayPopupPicker = useTemplateRef("eventDelayPopupPicker");
+	const periodicTimeOfDayPopupPicker = useTemplateRef("periodicTimeOfDayPopupPicker");
+	const periodicDayOfMonthPopupPicker = useTemplateRef("periodicDayOfMonthPopupPicker");
 
 	const eventDelayPickerValue = reactive(new Map<string, number>());
 	const periodicTimeOfDayPickerValue = reactive(new Map<string, number>([['hours', 0], ['minutes', 0]]));
@@ -220,7 +220,7 @@
 				</IonListHeader>
 
 				<IonList>
-					<IonItem button :detail="true" @click="() => eventDelayPopupPicker.$el.present()">
+					<IonItem button :detail="true" @click="() => eventDelayPopupPicker?.$el.present()">
 						<IonLabel>
 							<h3>{{ $t("options:reminders.editReminder.eventBased.delay.title") }}</h3>
 							<p>{{ $t("options:reminders.editReminder.eventBased.delay.desc", {delay: reminder.delay?.hours.toString().padStart(2, "0") + ":" + reminder.delay?.minutes.toString().padStart(2, "0") })}}</p>
@@ -261,7 +261,7 @@
 				</IonListHeader>
 
 				<IonList>
-					<IonItem button :detail="true" @click="() => periodicTimeOfDayPopupPicker.$el.present()">
+					<IonItem button :detail="true" @click="() => periodicTimeOfDayPopupPicker?.$el.present()">
 						<IonLabel>
 							<h3>{{ $t("options:reminders.editReminder.periodic.timeOfDay.title") }}</h3>
 							<p>{{ $t("options:reminders.editReminder.periodic.timeOfDay.desc", {timeOfDay: reminder.scheduleInterval?.hourOfDay?.toString().padStart(2, "0") + ":" + reminder.scheduleInterval?.minuteOfHour?.toString().padStart(2, "0") })}}</p>
@@ -292,7 +292,7 @@
 				/>
 
 				<IonList>
-					<IonItem button :detail="true" @click="() => periodicDayOfMonthPopupPicker.$el.present()">
+					<IonItem button :detail="true" @click="() => periodicDayOfMonthPopupPicker?.$el.present()">
 						<IonLabel>
 							<h3>{{ $t("options:reminders.editReminder.periodic.dayOfMonth.title") }}</h3>
 							<p>{{ 

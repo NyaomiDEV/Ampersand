@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { IonList, IonLabel, IonButton, IonListHeader } from '@ionic/vue';
-	import { inject, onBeforeMount, onUnmounted, ref, shallowRef } from 'vue';
+	import { inject, onBeforeMount, onUnmounted, ref, shallowRef, useTemplateRef } from 'vue';
 	import { getBoardMessages, toBoardMessageComplete } from '../../lib/db/tables/boardMessages';
 	import type { BoardMessageComplete } from '../../lib/db/entities.d.ts';
 	import BoardMessageEdit from "../../modals/BoardMessageEdit.vue";
@@ -20,7 +20,7 @@
 		date: new Date()
 	}
 	const boardMessage = shallowRef<PartialBy<BoardMessageComplete, "uuid" | "member">>({...emptyBoardMessage});
-	const boardMessageEditModal = ref();
+	const boardMessageEditModal = useTemplateRef("boardMessageEditModal");
 
 	const boardMessages = shallowRef<BoardMessageComplete[]>([]);
 
@@ -67,7 +67,7 @@
 				member: await getMainFronter() || (await getFronting())[0]
 			};
 		}
-		await boardMessageEditModal.value.$el.present();
+		await boardMessageEditModal.value?.$el.present();
 	}
 </script>
 

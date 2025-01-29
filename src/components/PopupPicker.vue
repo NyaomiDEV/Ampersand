@@ -1,8 +1,6 @@
 <script setup lang="ts">
 	import { IonModal, IonPicker, IonPickerColumn, IonPickerColumnOption } from '@ionic/vue';
-	import { onMounted, Reactive, reactive, ref, watch } from 'vue';
-
-	const self = ref();
+	import { onMounted, Reactive, reactive, watch } from 'vue';
 
 	type ColumnContent = {
 		name: string,
@@ -42,7 +40,7 @@
 </script>
 
 <template>
-	<IonModal class="popup-picker" ref="self">
+	<IonModal class="popup-picker">
 		<IonPicker>
 			<IonPickerColumn
 				v-for="column in props.content"

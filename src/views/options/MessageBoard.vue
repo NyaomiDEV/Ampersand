@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonFab, IonFabButton, IonIcon, IonSearchbar, IonLabel, IonItemDivider, IonButtons, IonButton, IonDatetime } from '@ionic/vue';
-	import { inject, onMounted, onUnmounted, ref, shallowRef } from 'vue';
+	import { inject, onMounted, onUnmounted, ref, shallowRef, useTemplateRef } from 'vue';
 	import type { BoardMessage, BoardMessageComplete } from '../../lib/db/entities.d.ts';
 	import { getBoardMessages } from '../../lib/db/tables/boardMessages';
 	import BoardMessageEdit from "../../modals/BoardMessageEdit.vue";
@@ -38,7 +38,7 @@
 		date: new Date()
 	}
 	const boardMessage = shallowRef<PartialBy<BoardMessageComplete, "uuid" | "member">>({...emptyBoardMessage});
-	const boardMessageEditModal = ref();
+	const boardMessageEditModal = useTemplateRef("boardMessageEditModal");
 
 	const boardMessages = shallowRef<BoardMessage[]>();
 	const search = ref(route.query.q as string || "");
@@ -113,7 +113,7 @@
 				member: await getMainFronter() || (await getFronting())[0]
 			};
 		}
-		await boardMessageEditModal.value.$el.present();
+		await boardMessageEditModal.value?.$el.present();
 	}
 </script>
 

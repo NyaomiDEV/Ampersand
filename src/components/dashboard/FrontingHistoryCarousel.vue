@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { IonList, IonItem, IonListHeader, IonLabel } from '@ionic/vue';
-	import { inject, onBeforeMount, onUnmounted, ref, ShallowRef, shallowRef } from 'vue';
+	import { inject, onBeforeMount, onUnmounted, ref, ShallowRef, shallowRef, useTemplateRef } from 'vue';
 	import FrontingEntryAvatar from "../frontingEntry/FrontingEntryAvatar.vue";
 	import FrontingEntryLabel from "../frontingEntry/FrontingEntryLabel.vue";
 	import type { FrontingEntryComplete } from '../../lib/db/entities.d.ts';
@@ -12,7 +12,7 @@
 
 	const isIOS = inject<boolean>("isIOS");
 
-	const frontingEntryModal = ref();
+	const frontingEntryModal = useTemplateRef("frontingEntryModal");
 	const emptyFrontingEntry: PartialBy<FrontingEntryComplete, "uuid" | "member"> = {
 		isMainFronter: false,
 		startTime: new Date(),
@@ -49,7 +49,7 @@
 
 	async function showModal(clickedFrontingEntry: FrontingEntryComplete){
 		frontingEntry.value = {...clickedFrontingEntry};
-		await frontingEntryModal.value.$el.present();
+		await frontingEntryModal.value?.$el.present();
 	}
 </script>
 
