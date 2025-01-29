@@ -3,10 +3,8 @@
 
 	import { computed, provide } from "vue";
 	import { isIOSIonicMode } from "./lib/mode";
-	import { accessibilityConfig } from "./lib/config";
 
 	provide("isIOS", computed(isIOSIonicMode));
-	provide("reducedMotion", accessibilityConfig.reducedMotion);
 
 	const router = useIonRouter();
 	

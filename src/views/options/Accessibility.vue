@@ -93,7 +93,7 @@
 					</Color>
 				</IonItem>
 
-				<IonItem v-if="false"> <!-- we don't have anything that warrants us reduced motion yet -->
+				<IonItem>
 					<IonToggle v-model="accessibilityConfig.reducedMotion">
 						<IonLabel>
 							<h3>{{ $t("options:accessibility.reducedMotion.title") }}</h3>

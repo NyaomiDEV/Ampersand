@@ -69,6 +69,8 @@ export function updateAccessibility() {
 	} else
 		document.documentElement.classList.remove("high-legibility", ...[...document.documentElement.classList.values()].filter(x => x.startsWith("hl-")));
 
+	window.Ionic.config.set("animated", !accessibilityConfig.reducedMotion);
+
 	const fontScale = accessibilityConfig.fontScale;
 	if (fontScale !== 1)
 		document.documentElement.style.setProperty("font-size", `${fontScale}em`);
