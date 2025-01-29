@@ -353,23 +353,6 @@
 		color: var(--ion-color-step-600, var(--ion-text-color-step-400, #666666));
 	}
 
-	div.markdown-content :deep(:is(h1, h2, h3, h4, h5, h6, p)) {
-		margin-top: 0;
-		margin-bottom: 0.25rem;
-	}
-
-	div.markdown-content :deep(h1) {
-		font-size: 1.5rem;
-	}
-
-	div.markdown-content :deep(h2) {
-		font-size: 1.25rem;
-	}
-
-	div.markdown-content :deep(h3) {
-		font-size: 1rem;
-	}
-
 	.md ion-input, .md ion-textarea {
 		margin: 16px 0;
 	}

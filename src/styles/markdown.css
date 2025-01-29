@@ -23,26 +23,31 @@
 }
 
 /* Headings */
-.markdown-content h1 span {
-    font-size: 1.3em;
+.markdown-content :is(h1, h2, h3, h4, h5, h6, p) {
+    margin-top: 0;
+    margin-bottom: 0.25rem;
 }
 
-.markdown-content h2 span {
-    font-size: 1.3em;
+.markdown-content h1 {
+    font-size: 1.95rem;
 }
 
-.markdown-content h3 span {
-    font-size: 1.3em;
+.markdown-content h2 {
+    font-size: 1.625rem;
 }
 
-.markdown-content h4 span {
-    font-size: 0.9em;
+.markdown-content h3 {
+    font-size: 1.3rem;
 }
 
-.markdown-content h5 span {
-    font-size: 0.9em;
+.markdown-content h4 {
+    font-size: 1.125rem;
 }
 
-.markdown-content h6 span {
-    font-size: 0.9em;
+.markdown-content h5 {
+    font-size: 1.0125rem;
+}
+
+.markdown-content h6 {
+    font-size: 0.9rem;
 }
