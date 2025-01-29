@@ -1,0 +1,48 @@
+/* Tables */
+.markdown-content table {
+    border: 1px solid var(--ion-text-color-step-400);
+
+}
+
+.markdown-content table tr {
+    border-bottom: 1px solid var(--ion-text-color-step-400);
+}
+
+.markdown-content table th {
+    border-left: 1px solid var(--ion-text-color-step-400);
+    border-right: 1px solid var(--ion-text-color-step-400);
+}
+
+.markdown-content table td {
+    border-left: 1px solid var(--ion-text-color-step-400);
+    border-right: 1px solid var(--ion-text-color-step-400);
+}
+
+.markdown-content table span {
+    padding: 8px;
+}
+
+/* Headings */
+.markdown-content h1 span {
+    font-size: 1.3em;
+}
+
+.markdown-content h2 span {
+    font-size: 1.3em;
+}
+
+.markdown-content h3 span {
+    font-size: 1.3em;
+}
+
+.markdown-content h4 span {
+    font-size: 0.9em;
+}
+
+.markdown-content h5 span {
+    font-size: 0.9em;
+}
+
+.markdown-content h6 span {
+    font-size: 0.9em;
+}

@@ -1,4 +1,6 @@
 @import url(ios.css);
+@import url(markdown.css);
+
 html {
 	--ion-font-family: 'Inter', var(--ion-default-font);
 }
