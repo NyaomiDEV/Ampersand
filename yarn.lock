@@ -34,28 +34,28 @@
     "@babel/helper-string-parser" "^7.25.9"
     "@babel/helper-validator-identifier" "^7.25.9"
 
-"@ionic/core@8.4.2":
-  version "8.4.2"
-  resolved "https://registry.yarnpkg.com/@ionic/core/-/core-8.4.2.tgz#8dff3b5062ec4485add20df54752d88b511a2826"
-  integrity sha512-p1/avROJi+z/rTw07nkIi0hBsWw3oITVK3KCMrAccaViQpqQ6a692jX6xdnoycsj/ixeVjXgfV1Useu6hTNaHA==
+"@ionic/core@8.4.3":
+  version "8.4.3"
+  resolved "https://registry.yarnpkg.com/@ionic/core/-/core-8.4.3.tgz#109868f5b44b178a46489c1de56f16f300684b6e"
+  integrity sha512-U9HdZ32bre6OKA5akJVmQMxNB8Art3Nqdn3s7m2W83I5NhLg9Tehaf8ua8jxPZtxCa1nuN7tUbzHmMCkcdqDTw==
   dependencies:
     "@stencil/core" "4.20.0"
     ionicons "^7.2.2"
     tslib "^2.1.0"
 
-"@ionic/vue-router@^8.4.2":
-  version "8.4.2"
-  resolved "https://registry.yarnpkg.com/@ionic/vue-router/-/vue-router-8.4.2.tgz#9f4e543a6317ed6c896af872c1a75c7c0eccfb03"
-  integrity sha512-ekfsUnpZpsPMz/LvT4r+Er5NiPRWecUbO0g1BhrlseWlRczBvJxFUhb4Beth23tKCyaYgh5RjslMO9vBS8ok6Q==
+"@ionic/vue-router@^8.4.3":
+  version "8.4.3"
+  resolved "https://registry.yarnpkg.com/@ionic/vue-router/-/vue-router-8.4.3.tgz#91f7993dd3cd6549626e0d428b368e1c132b1813"
+  integrity sha512-KjOJrzrLMxJn0yYNs+8HMKjhVnCNTPrSiTBmfVUt8xOTFAbVJ1KOaC1SZIucpmoU9N1gaRjn9V5r3rk5ELfFtQ==
   dependencies:
-    "@ionic/vue" "8.4.2"
+    "@ionic/vue" "8.4.3"
 
-"@ionic/vue@8.4.2", "@ionic/vue@^8.4.2":
-  version "8.4.2"
-  resolved "https://registry.yarnpkg.com/@ionic/vue/-/vue-8.4.2.tgz#4c4611a41ee1c00b3d4c11b359cd8d6818a52610"
-  integrity sha512-GJZJJMXRZ1LP7bpIJquSrL8HC5Gwpz9ak/H6BzdhGIhDLEPfe//4EMkijbNGEnrlW6XSamN2lf6SrRZ1Lk5NMA==
+"@ionic/vue@8.4.3", "@ionic/vue@^8.4.3":
+  version "8.4.3"
+  resolved "https://registry.yarnpkg.com/@ionic/vue/-/vue-8.4.3.tgz#c59d81e0639f28827ea289d4f2a81c5255cb7f15"
+  integrity sha512-jg4zDRfSrk3jSx3jvYf618Nf4pwTngB2viNihsOcXd2o04JvNHytouEQ7zES40/u9+tctRd0Db98nRyDOqwrCw==
   dependencies:
-    "@ionic/core" "8.4.2"
+    "@ionic/core" "8.4.3"
     ionicons "^7.0.0"
 
 "@jridgewell/gen-mapping@^0.3.5":
@@ -424,10 +424,10 @@
   dependencies:
     undici-types "~6.20.0"
 
-"@types/node@^22.10.10":
-  version "22.10.10"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.10.10.tgz#85fe89f8bf459dc57dfef1689bd5b52ad1af07e6"
-  integrity sha512-X47y/mPNzxviAGY5TcYPtYL8JsY3kAq2n8fMmKoRCxq/c4v4pyGNCzM2R6+M5/umG4ZfHuT+sgqDYqWc9rJ6ww==
+"@types/node@^22.12.0":
+  version "22.12.0"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.12.0.tgz#bf8af3b2af0837b5a62a368756ff2b705ae0048c"
+  integrity sha512-Fll2FZ1riMjNmlmJOdAyY5pUbkftXslB5DgEzlIuNaiWhXd00FhWxVC/r4yV/4wBb9JfImTu+jiSvXTkJ7F/gA==
   dependencies:
     undici-types "~6.20.0"
 
