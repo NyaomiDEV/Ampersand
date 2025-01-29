@@ -15,20 +15,19 @@
 		IonFabButton,
 		IonLabel,
 		IonItem,
-		modalController,
-		IonModal,
-		IonButtons
+		IonBackButton,
+		useIonRouter,
+		IonPage
 	} from "@ionic/vue";
-	import Color from "../components/Color.vue";
-	import TagChip from "../components/tag/TagChip.vue";
+	import Color from "../../components/Color.vue";
+	import TagChip from "../../components/tag/TagChip.vue";
 
-	import TagListSelect from "./TagListSelect.vue";
+	import TagListSelect from "../../modals/TagListSelect.vue";
 
 	import {
 		pencilOutline as pencilIOS,
 		saveOutline as saveIOS,
 		personOutline as personIOS,
-		chevronBack as backIOS,
 		newspaperOutline as newspaperIOS,
 		journalOutline as journalIOS,
 		trashBinOutline as trashIOS
@@ -37,40 +36,42 @@
 	import pencilMD from "@material-design-icons/svg/outlined/edit.svg";
 	import saveMD from "@material-design-icons/svg/outlined/save.svg";
 	import personMD from "@material-design-icons/svg/outlined/person.svg";
-	import backMD from "@material-design-icons/svg/outlined/arrow_back.svg";
 	import newspaperMD from "@material-design-icons/svg/outlined/newspaper.svg";
 	import journalMD from "@material-design-icons/svg/outlined/book.svg";
 	import trashMD from "@material-design-icons/svg/outlined/delete.svg";
 
-	import { Member, Tag } from "../lib/db/entities";
-	import { newMember, removeMember, updateMember } from '../lib/db/tables/members';
-	import { getTags } from "../lib/db/tables/tags";
-	import { getBlobURL } from '../lib/util/blob';
-	import { getFiles } from "../lib/util/misc";
-	import { resizeImage } from "../lib/util/image";
-	import { ShallowReactive, inject, onMounted, ref, shallowReactive, shallowRef, toRaw } from "vue";
-	import Markdown from "../components/Markdown.vue";
-	import { addMaterialColors, rgbaToArgb, unsetMaterialColors } from "../lib/theme";
-	import { PartialBy } from "../lib/types";
+	import { Member, Tag } from "../../lib/db/entities";
+	import { getMembers, newMember, deleteMember, updateMember } from '../../lib/db/tables/members';
+	import { getTags } from "../../lib/db/tables/tags";
+	import { getBlobURL } from '../../lib/util/blob';
+	import { getFiles } from "../../lib/util/misc";
+	import { resizeImage } from "../../lib/util/image";
+	import { ShallowReactive, getCurrentInstance, inject, onBeforeMount, ref, shallowReactive, shallowRef, toRaw, watch } from "vue";
+	import Markdown from "../../components/Markdown.vue";
+	import { addMaterialColors, rgbaToArgb, unsetMaterialColors } from "../../lib/theme";
+	import { PartialBy } from "../../lib/types";
+	import { useRoute } from "vue-router";
 
 	const isIOS = inject<boolean>("isIOS")!;
 
-	const props = defineProps<{
-		member: PartialBy<Member, "uuid">
-	}>();
+	const router = useIonRouter();
+	const route = useRoute();
 
-	const member = ref(props.member);
+	const emptyMember: PartialBy<Member, "uuid"> = {
+		name: "",
+		isArchived: false,
+		isCustomFront: false,
+		tags: []
+	};
+	const member = ref({...emptyMember});
 
 	const tags = shallowRef<Tag[]>([]);
 	const tagSelectionModal = ref();
 	const selectedTags: ShallowReactive<Tag[]> = shallowReactive([]);
 
+	const canEdit = ref(true);
 	const isEditing = ref(false);
-	const self = ref();
-
-	onMounted(async () => {
-		tags.value = await getTags();
-	});
+	const self = getCurrentInstance();
 
 	async function toggleEditing(){
 		if(!isEditing.value){
@@ -83,13 +84,12 @@
 
 		if(!uuid){
 			await newMember(_member);
-			await modalController.dismiss();
+			router.back();
 
 			return;
 		}
 
 		await updateMember(uuid, _member);
-			
 		isEditing.value = false;
 	}
 
@@ -104,14 +104,11 @@
 		}
 	}
 
-	async function deleteMember() {
+	async function _deleteMember() {
 		if(!member.value.uuid) return;
 
-		await removeMember(member.value.uuid);
-		
-		try{
-			await modalController.dismiss();
-		}catch(_){}
+		await deleteMember(member.value.uuid);
+		router.back();
 	}
 
 	async function updateSelectedTags(tags: Tag[]) {
@@ -120,12 +117,24 @@
 		selectedTags.push(...tags);
 	}
 
-	async function present() {
-		member.value = props.member;
+	async function updateRoute() {
+		tags.value = await getTags();
+
+		if(route.query.uuid){
+			const _member = (await getMembers()).find(x => x.uuid === route.query.uuid);
+			if(_member) member.value = _member;
+			else member.value = {...emptyMember};
+		} else member.value = {...emptyMember};
+
+		if(route.query.disallowEditing){
+			canEdit.value = false;
+		} else {
+			canEdit.value = true;
+		}
 
 		selectedTags.length = 0;
 		for(const uuid of member.value.tags){
-			const tag = (await getTags()).find(x => x.uuid === uuid);
+			const tag = tags.value.find(x => x.uuid === uuid);
 			selectedTags.push(tag!);
 		}
 
@@ -133,29 +142,26 @@
 		isEditing.value = !member.value.uuid;
 
 		// set color
-		updateColor();
+		updateColors();
 	}
 
-	function updateColor(){
-		if(!member.value) return;
-
+	function updateColors(){
 		if(member.value.color && member.value.color !== "#000000"){
-			addMaterialColors(rgbaToArgb(member.value.color), self.value.$el);
+			if(self?.vnode.el) addMaterialColors(rgbaToArgb(member.value.color), self?.vnode.el as HTMLElement);
 		} else {
-			unsetMaterialColors(self.value.$el);
+			if(self?.vnode.el) unsetMaterialColors(self?.vnode.el as HTMLElement);
 		}
 	}
+
+	watch(route, updateRoute);
+	onBeforeMount(updateRoute);
 </script>
 
 <template>
-	<IonModal class="member-edit-modal" ref="self" @willPresent="present">
+	<IonPage>
 		<IonHeader>
 			<IonToolbar>
-				<IonButtons slot="start">
-					<IonButton shape="round" fill="clear" @click="self.$el.dismiss()">
-						<IonIcon slot="icon-only" :md="backMD" :ios="backIOS"></IonIcon>
-					</IonButton>
-				</IonButtons>
+				<IonBackButton slot="start" defaultHref="/members/" />
 				<IonTitle>{{ !member.uuid ? $t("members:edit.headerAdd") : $t("members:edit.headerEdit") }}</IonTitle>
 			</IonToolbar>
 		</IonHeader>
@@ -190,7 +196,7 @@
 			</div>
 
 			<IonList class="member-actions" v-if="!isEditing">
-				<IonItem button detail :router-link="`/options/messageBoard?q=@member:${member.uuid}`" @click="modalController.dismiss()">
+				<IonItem button detail :router-link="`/options/messageBoard?q=@member:${member.uuid}`">
 					<IonIcon :ios="newspaperIOS" :md="newspaperMD" slot="start" aria-hidden="true" />
 					<IonLabel>{{ $t("members:edit.showBoardEntries") }}</IonLabel>
 				</IonItem>
@@ -214,7 +220,7 @@
 						<IonTextarea :fill="!isIOS ? 'outline' : undefined" auto-grow :label="$t('members:edit.description')" labelPlacement="floating" v-model="member.description" />
 					</IonItem>
 					<IonItem button>
-						<Color v-model="member.color" @update:model-value="updateColor">
+						<Color v-model="member.color" @update:model-value="updateColors">
 							<IonLabel>
 								{{ $t("members:edit.color") }}
 							</IonLabel>
@@ -243,7 +249,7 @@
 							</div>
 						</IonLabel>
 					</IonItem>
-					<IonItem button v-if="member.uuid" @click="deleteMember">
+					<IonItem button v-if="member.uuid" @click="_deleteMember">
 						<IonIcon :ios="trashIOS" :md="trashMD" slot="start" aria-hidden="true" color="danger"/>
 						<IonLabel color="danger">
 							<h3>{{ $t("members:edit.delete.title") }}</h3>
@@ -259,22 +265,17 @@
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton @click="toggleEditing" v-if="member.name.length > 0">
+				<IonFabButton @click="toggleEditing" v-if="member.name.length > 0 && canEdit">
 					<IonIcon :ios="isEditing ? saveIOS : pencilIOS" :md="isEditing ? saveMD : pencilMD" />
 				</IonFabButton>
 			</IonFab>
 
 			<TagListSelect ref="tagSelectionModal" :selectedTags @selectedTags="updateSelectedTags"/>
 		</IonContent>
-	</IonModal>
+	</IonPage>
 </template>
 
 <style scoped>
-	ion-modal.member-edit-modal {
-		--width: 100dvw;
-		--height: 100dvh;
-	}
-
 	ion-content {
 		--padding-bottom: 80px;
 	}

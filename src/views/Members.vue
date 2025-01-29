@@ -14,10 +14,12 @@
 		IonItemSliding,
 		IonItemOptions,
 		IonItemOption,
+		useIonRouter,
+		IonBackButton,
 	} from '@ionic/vue';
 	import { inject, onBeforeMount, onUnmounted, Ref, ref, shallowReactive, shallowRef } from 'vue';
-	import { getFilteredMembers } from '../../lib/db/search';
-	import { accessibilityConfig } from '../../lib/config';
+	import { getFilteredMembers } from '../lib/db/search.ts';
+	import { accessibilityConfig } from '../lib/config/index.ts';
 
 	import {
 		addOutline as addIOS,
@@ -39,40 +41,26 @@
 	import setAsFrontMD from "@material-design-icons/svg/outlined/person_pin_circle.svg";
 	import archivedMD from "@material-design-icons/svg/outlined/archive.svg";
 
-	import MemberEdit from '../../modals/MemberEdit.vue';
-	import { getMembers } from '../../lib/db/tables/members';
-	import type { Member, FrontingEntry } from '../../lib/db/entities.d.ts';
-	import { PartialBy } from '../../lib/types';
-	import { getCurrentFrontEntryForMember, newFrontingEntry, removeFronter, setMainFronter, setSoleFronter } from '../../lib/db/tables/frontingEntries';
-	import MemberAvatar from '../../components/member/MemberAvatar.vue';
-	import MemberLabel from '../../components/member/MemberLabel.vue';
-	import { globalEvents } from '../../lib/globalEvents';
-	import { DatabaseEvents, DatabaseEvent } from '../../lib/db/events';
-	import Spinner from '../../components/Spinner.vue';
+	import { getMembers } from '../lib/db/tables/members.ts';
+	import type { Member, FrontingEntry } from '../lib/db/entities';
+	import { getCurrentFrontEntryForMember, newFrontingEntry, removeFronter, setMainFronter, setSoleFronter } from '../lib/db/tables/frontingEntries.ts';
+	import MemberAvatar from '../components/member/MemberAvatar.vue';
+	import MemberLabel from '../components/member/MemberLabel.vue';
+	import { DatabaseEvents, DatabaseEvent } from '../lib/db/events.ts';
+	import Spinner from '../components/Spinner.vue';
+	import { useRoute } from 'vue-router';
 
 	const isIOS = inject<boolean>("isIOS");
 
-	const search = ref("");
+	const route = useRoute();
+	const search = ref(route.query.q as string || "");
 	const members = shallowRef<Member[]>();
 
 	const filteredMembers = getFilteredMembers(search, members);
 	const frontingEntries = shallowReactive(new Map<Member, FrontingEntry | undefined>());
 
-	const list: Ref<typeof IonList | undefined> = ref()
-
-	const emptyMember: PartialBy<Member, "uuid"> = {
-		name: "",
-		isArchived: false,
-		isCustomFront: false,
-		tags: []
-	};
-	const member = shallowRef<PartialBy<Member, "uuid">>({...emptyMember});
-
-	const memberEditModal = ref();
-
-	globalEvents.addEventListener("members:search", (e) => {
-		search.value = e.detail.search;
-	});
+	const list: Ref<typeof IonList | undefined> = ref();
+	const router = useIonRouter();
 
 	const listeners = [
 		async (event: Event) => {
@@ -103,16 +91,6 @@
 		DatabaseEvents.removeEventListener("updated", listeners[0]);
 		DatabaseEvents.removeEventListener("updated", listeners[1]);
 	});
-
-	async function showModal(clickedMember?: Member){
-		if(clickedMember)
-			member.value = {...clickedMember};
-		else {
-			member.value = {...emptyMember};
-		}
-
-		await memberEditModal.value.$el.present();
-	}
 
 	function addFrontingEntry(member: Member) {
 		newFrontingEntry({
@@ -183,7 +161,7 @@
 		if(!timeoutHandler) return;
 		clearTimeout(timeoutHandler);
 		longPressHandlers.delete(member);
-		if(!dragged) showModal(member);
+		if(!dragged) router.push("/members/edit?uuid=" + member.uuid);
 	}
 </script>
 
@@ -191,6 +169,7 @@
 	<IonPage>
 		<IonHeader>
 			<IonToolbar>
+				<IonBackButton slot="start" />
 				<IonTitle>
 					{{ $t("members:header") }}
 				</IonTitle>
@@ -249,13 +228,11 @@
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton @click="showModal()">
+				<IonFabButton routerLink="/members/edit/">
 					<IonIcon :ios="addIOS" :md="addMD" />
 				</IonFabButton>
 			</IonFab>
 		</IonContent>
-
-		<MemberEdit ref="memberEditModal" :member />
 	</IonPage>
 </template>
 

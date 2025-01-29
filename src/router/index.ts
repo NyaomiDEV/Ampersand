@@ -3,6 +3,7 @@ import { RouteRecordRaw } from "vue-router";
 import tabbedRoutes from "./tabbedRoutes";
 import options from "./options";
 import edit from "./edit";
+import standaloneRoutes from "./standaloneRoutes";
 
 const routes: Array<RouteRecordRaw> = [
 	{
@@ -18,6 +19,7 @@ const routes: Array<RouteRecordRaw> = [
 		name: "LockView",
 		component: () => import("../views/LockView.vue"),
 	},
+	...standaloneRoutes,
 	...options,
 	...edit,
 ];

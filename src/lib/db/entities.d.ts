@@ -16,6 +16,11 @@ export interface BoardMessageComplete extends BoardMessage {
 	member: Member
 }
 
+export interface Chat extends UUIDable {
+	name: string,
+	image?: File
+}
+
 export interface ChatMessage extends UUIDable {
 	chat: UUID,
 	member: UUID,
@@ -23,9 +28,9 @@ export interface ChatMessage extends UUIDable {
 	message: string,
 }
 
-export interface Chat extends UUIDable {
-	name: string,
-	image?: File
+export interface ChatMessageComplete extends ChatMessage {
+	chat: Chat,
+	member: Member
 }
 
 export interface FrontingEntry extends UUIDable {
@@ -46,13 +51,11 @@ export interface JournalPost extends UUIDable {
 	title: string,
 	body: string,
 	cover?: File,
-	attachments?: Attachment[],
 	tags: UUID[] // array of UUIDs
 }
 
-export interface Attachment extends UUIDable {
-	name: string,
-	file: File
+export interface JournalPostComplete extends JournalPost {
+	member: Member
 }
 
 export interface Member extends UUIDable {

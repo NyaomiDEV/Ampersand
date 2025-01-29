@@ -16,7 +16,8 @@
 		IonRadioGroup,
 		IonRadio,
 		IonPage,
-		IonBackButton
+		IonBackButton,
+		useIonRouter
 	} from "@ionic/vue";
 
 	import {
@@ -36,6 +37,7 @@
 
 	const isIOS = inject<boolean>("isIOS")!;
 	const route = useRoute();
+	const router = useIonRouter();
 
 	const emptyReminder: PartialBy<Reminder, "uuid"> = {
 		name: "",
@@ -59,14 +61,6 @@
 	const eventDelayPickerValue = reactive(new Map<string, number>());
 	const periodicTimeOfDayPickerValue = reactive(new Map<string, number>([['hours', 0], ['minutes', 0]]));
 
-	async function updateRoute(){
-		if(route.query.uuid){
-			const rem = (await getReminders()).find(x => x.uuid === route.query.uuid);
-			if(rem) reminder.value = rem;
-			else reminder.value = emptyReminder;
-		}
-	}
-
 	async function save(){
 		const uuid = reminder.value?.uuid;
 		const _reminder = toRaw(reminder.value);
@@ -84,10 +78,12 @@
 
 		if(!uuid) {
 			await newReminder({..._reminder });
+			router.back();
 			return;
 		}
 
 		await updateReminder(uuid, { ..._reminder } as Reminder);
+		router.back();
 	}
 
 	function switchType() {
@@ -114,6 +110,14 @@
 			if(reminder.value.delay)
 				delete reminder.value.delay;
 		}
+	}
+
+	async function updateRoute(){
+		if(route.query.uuid){
+			const rem = (await getReminders()).find(x => x.uuid === route.query.uuid);
+			if(rem) reminder.value = rem;
+			else reminder.value = {...emptyReminder};
+		} else reminder.value = {...emptyReminder};
 	}
 
 	watch(route, updateRoute);
@@ -336,11 +340,6 @@
 
 
 <style scoped>
-	ion-modal.reminder-edit-modal {
-		--width: 100dvw;
-		--height: 100dvh;
-	}
-	
 	ion-content {
 		--padding-bottom: 80px;
 	}

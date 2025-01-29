@@ -26,10 +26,9 @@
 	import { getFilteredBoardMessages } from '../../lib/db/search';
 	import MessageBoardCard from '../../components/MessageBoardCard.vue';
 	import { DatabaseEvents, DatabaseEvent } from '../../lib/db/events';
+	import { useRoute } from 'vue-router';
 
-	const props = defineProps<{
-		q?: string
-	}>();
+	const route = useRoute();
 
 	const isIOS = inject<boolean>("isIOS");
 	
@@ -42,7 +41,7 @@
 	const boardMessageEditModal = ref();
 
 	const boardMessages = shallowRef<BoardMessage[]>();
-	const search = ref(props.q || "");
+	const search = ref(route.query.q as string || "");
 	const filteredBoardMessages = getFilteredBoardMessages(search, boardMessages);
 
 	const firstWeekOfDayIsSunday = appConfig.locale.firstWeekOfDayIsSunday;

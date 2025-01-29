@@ -12,14 +12,15 @@
 		IonLabel,
 		IonItem,
 		modalController,
-		IonModal,
+		IonPage,
+		IonBackButton,
 		IonSegment,
 		IonTextarea,
 		useIonRouter,
 		alertController
 	} from "@ionic/vue";
-	import MD3SegmentButton from "../components/MD3SegmentButton.vue";
-	import Color from "../components/Color.vue";
+	import MD3SegmentButton from "../../components/MD3SegmentButton.vue";
+	import Color from "../../components/Color.vue";
 
 	import {
 		saveOutline as saveIOS,
@@ -33,45 +34,31 @@
 	import personMD from "@material-design-icons/svg/outlined/person.svg";
 	import journalMD from "@material-design-icons/svg/outlined/book.svg";
 
-	import { newTag, removeTag, updateTag } from '../lib/db/tables/tags';
-	import { Tag } from "../lib/db/entities";
-	import { inject, ref, shallowRef } from "vue";
-	import { addMaterialColors, rgbaToArgb, unsetMaterialColors } from "../lib/theme";
-	import { PartialBy } from "../lib/types";
-	import { globalEvents, SearchEvent } from "../lib/globalEvents";
-	import { getMembers } from "../lib/db/tables/members";
-	import { getJournalPosts } from "../lib/db/tables/journalPosts";
+	import { getTags, newTag, removeTag, updateTag } from '../../lib/db/tables/tags';
+	import { Tag } from "../../lib/db/entities";
+	import { getCurrentInstance, inject, onBeforeMount, ref, watch } from "vue";
+	import { addMaterialColors, rgbaToArgb, unsetMaterialColors } from "../../lib/theme";
+	import { PartialBy } from "../../lib/types";
+	import { getMembers } from "../../lib/db/tables/members";
+	import { getJournalPosts } from "../../lib/db/tables/journalPosts";
 	import { useTranslation } from "i18next-vue";
+	import { useRoute } from "vue-router";
 
 	const isIOS = inject<boolean>("isIOS");
 	const i18next = useTranslation();
 
-	const props = defineProps<{
-		tag: PartialBy<Tag, "uuid">
-	}>();
+	const self = getCurrentInstance();
 
-	const tag = shallowRef(props.tag);
+	const emptyTag: PartialBy<Tag, "uuid"> = {
+		name: "",
+		type: "member"
+	};
+	const tag = ref({...emptyTag});
 
-	const self = ref();
-
+	const route = useRoute();
 	const router = useIonRouter();
 
 	const count = ref(0);
-
-	async function goBackAndSearchInMembers(search: string){
-		router.navigate("/members", "back", "push");
-		await modalController.dismiss();
-		globalEvents.dispatchEvent(new CustomEvent("members:search", { detail: {search} }) as SearchEvent)
-	}
-
-	async function goBackAndSearchInJournal(search: string){
-		// not yet sorry
-		return;
-
-		router.navigate("/journal", "back", "push");
-		await modalController.dismiss();
-		globalEvents.dispatchEvent(new CustomEvent("journal:search", { detail: {search} }))
-	}
 
 	async function save(){
 		const uuid = tag.value.uuid;
@@ -79,18 +66,12 @@
 
 		if(!uuid){
 			await newTag(_tag);
-			await modalController.dismiss(null, "added");
-	
+			router.back();
 			return;
 		}
 
 		await updateTag(uuid, _tag);
-
-		try{
-			await modalController.dismiss(null, "modified");
-		}catch(_){}
-		// catch an error because the type might get changed, causing the parent to be removed from DOM
-		// however it's safe for us to ignore
+		router.back();
 	}
 
 	function promptDeletion(): Promise<boolean> {
@@ -125,28 +106,40 @@
 		}
 	}
 
-	async function present() {
-		tag.value = props.tag;
+	async function updateRoute(){
+		if(route.query.uuid){
+			const _tag = (await getTags()).find(x => x.uuid === route.query.uuid);
+			if(_tag){
+				tag.value = _tag;
 
-		if(tag.value.uuid){
-			if(tag.value.type === "member")
-				count.value = (await getMembers()).filter(x => x.tags.includes(tag.value.uuid!)).length;
-			else //journal
-				count.value = (await getJournalPosts()).filter(x => x.tags.includes(tag.value.uuid!)).length;
-		}
+				if(tag.value.type === "member")
+					count.value = (await getMembers()).filter(x => x.tags.includes(tag.value.uuid!)).length;
+				else //journal
+					count.value = (await getJournalPosts()).filter(x => x.tags.includes(tag.value.uuid!)).length;
+			}
+			else tag.value = {...emptyTag};
+		} else tag.value = {...emptyTag};
 
+		updateColors();
+	}
+
+	function updateColors(){
 		if(tag.value.color && tag.value.color !== "#000000"){
-			addMaterialColors(rgbaToArgb(tag.value.color), self.value.$el);
+			if(self?.vnode.el) addMaterialColors(rgbaToArgb(tag.value.color), self?.vnode.el as HTMLElement);
 		} else {
-			unsetMaterialColors(self.value.$el);
+			if(self?.vnode.el) unsetMaterialColors(self?.vnode.el as HTMLElement);
 		}
 	}
+
+	watch(route, updateRoute);
+	onBeforeMount(updateRoute);
 </script>
 
 <template>
-	<IonModal class="tag-edit-modal" ref="self" @willPresent="present" :breakpoints="[0,1]" initialBreakpoint="1">
+	<IonPage>
 		<IonHeader>
 			<IonToolbar>
+				<IonBackButton slot="start" defaultHref="/options/tagManagement/" />
 				<IonTitle>{{ tag.type === "member" ? $t("options:tagManagement.edit.header.member") : $t("options:tagManagement.edit.header.journal") }}</IonTitle>
 			</IonToolbar>
 		</IonHeader>
@@ -162,7 +155,7 @@
 					</IonItem>
 
 					<IonItem button>
-						<Color v-model="tag.color" @update:model-value="present">
+						<Color v-model="tag.color" @update:model-value="updateColors">
 							<IonLabel>
 								{{ $t("options:tagManagement.edit.color") }}
 							</IonLabel>
@@ -188,7 +181,7 @@
 						</IonLabel>
 					</IonItem>
 
-					<IonItem button v-if="tag.uuid && tag.type === 'member'" @click="goBackAndSearchInMembers(`#${tag.name.toLowerCase().replace(/\s/g, '')}`)">
+					<IonItem button v-if="tag.uuid && tag.type === 'member'" @click="() => router.push(`/s/members?q=${encodeURIComponent('#' + tag.name.toLowerCase().replace(/\s/g, ''))}`)">
 						<IonIcon :ios="personIOS" :md="personMD" slot="start" aria-hidden="true" />
 						<IonLabel>
 							<h3>{{ $t("options:tagManagement.edit.actions.showMembers.title") }}</h3>
@@ -196,7 +189,7 @@
 						</IonLabel>
 					</IonItem>
 
-					<IonItem button v-if="tag.uuid && tag.type === 'journal'" @click="goBackAndSearchInJournal(`#${tag.name.toLowerCase().replace(/\s/g, '')}`)">
+					<IonItem button v-if="tag.uuid && tag.type === 'journal'">
 						<IonIcon :ios="journalIOS" :md="journalMD" slot="start" aria-hidden="true" />
 						<IonLabel>
 							<h3>{{ $t("options:tagManagement.edit.actions.showJournal.title") }}</h3>
@@ -219,16 +212,10 @@
 				</IonFabButton>
 			</IonFab>
 		</IonContent>
-	</IonModal>
+	</IonPage>
 </template>
 
 <style scoped>
-	ion-modal.tag-edit-modal {
-		--height: 50dvh;
-		--min-height: 600px;
-		--border-radius: 16px;
-	}
-
 	ion-content {
 		--padding-bottom: 80px;
 	}

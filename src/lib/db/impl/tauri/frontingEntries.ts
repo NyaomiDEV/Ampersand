@@ -35,7 +35,7 @@ export async function newFrontingEntry(frontingEntry: Omit<FrontingEntry, keyof 
 	}
 }
 
-export async function removeFrontingEntry(uuid: UUID) {
+export async function deleteFrontingEntry(uuid: UUID) {
 	try {
 		await db.frontingEntries.delete(uuid);
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {

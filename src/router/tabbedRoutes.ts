@@ -4,27 +4,27 @@ const tabbedRoutes: Array<RouteRecordRaw> = [
 	{
 		path: '/members',
 		name: 'Members',
-		component: () => import("../views/tabbed/Members.vue"),
+		component: () => import("../views/Members.vue"),
 	},
 	{
 		path: '/journal',
 		name: 'Journal',
-		component: () => import("../views/tabbed/Journal.vue"),
+		component: () => import("../views/Journal.vue"),
 	},
 	{
 		path: '/dashboard',
 		name: 'Dashboard',
-		component: () => import("../views/tabbed/Dashboard.vue"),
+		component: () => import("../views/Dashboard.vue"),
 	},
 	{
 		path: '/chats',
 		name: 'Chats',
-		component: () => import("../views/tabbed/Chats.vue"),
+		component: () => import("../views/Chats.vue"),
 	},
 	{
 		path: '/options',
 		name: 'Options',
-		component: () => import("../views/tabbed/Options.vue"),
+		component: () => import("../views/Options.vue"),
 	}
 ];
 

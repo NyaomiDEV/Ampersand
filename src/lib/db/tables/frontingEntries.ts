@@ -14,8 +14,8 @@ export function newFrontingEntry(frontingEntry: Omit<FrontingEntry, keyof UUIDab
 	return impl.newFrontingEntry(frontingEntry);
 }
 
-export function removeFrontingEntry(uuid: UUID){
-	return impl.removeFrontingEntry(uuid);
+export function deleteFrontingEntry(uuid: UUID){
+	return impl.deleteFrontingEntry(uuid);
 }
 
 export function updateFrontingEntry(uuid: UUID, newContent: Partial<FrontingEntry>){

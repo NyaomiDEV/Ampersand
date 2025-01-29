@@ -1,19 +1,19 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, useIonRouter, IonFab, IonIcon, IonFabButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
 	import { onBeforeMount, onUnmounted, ref } from 'vue';
-	import { getMainFronter } from '../../lib/db/tables/frontingEntries';
-	import type { Member } from '../../lib/db/entities.d.ts';
+	import { getMainFronter } from '../lib/db/tables/frontingEntries.ts';
+	import type { Member } from '../lib/db/entities';
 
 	import { lockClosedOutline as LockIOS } from "ionicons/icons";
 
 	import LockMD from '@material-design-icons/svg/outlined/lock.svg';
 
-	import CurrentFrontersCarousel from '../../components/dashboard/CurrentFrontersCarousel.vue';
-	import MessageBoardCarousel from '../../components/dashboard/MessageBoardCarousel.vue';
-	import FrontingHistoryCarousel from '../../components/dashboard/FrontingHistoryCarousel.vue';
-	import { DatabaseEvents, DatabaseEvent } from '../../lib/db/events';
-	import { securityConfig } from '../../lib/config';
-	import { lock } from '../../lib/applock';
+	import CurrentFrontersCarousel from '../components/dashboard/CurrentFrontersCarousel.vue';
+	import MessageBoardCarousel from '../components/dashboard/MessageBoardCarousel.vue';
+	import FrontingHistoryCarousel from '../components/dashboard/FrontingHistoryCarousel.vue';
+	import { DatabaseEvents, DatabaseEvent } from '../lib/db/events.ts';
+	import { securityConfig } from '../lib/config/index.ts';
+	import { lock } from '../lib/applock.ts';
 
 	const mainFronter = ref<Member>();
 	const router = useIonRouter();

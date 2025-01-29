@@ -1,8 +1,8 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonFab, IonFabButton, IonList, IonItem, IonListHeader, IonLabel, IonPage, IonTitle, IonToolbar, IonIcon, useIonRouter } from '@ionic/vue';
 	import { inject } from 'vue';
-	import { wasPersisted } from '../../lib/util/storageManager';
-	import StoragePersistenceMissing from "../../components/StoragePersistenceMissing.vue";
+	import { wasPersisted } from '../lib/util/storageManager';
+	import StoragePersistenceMissing from "../components/StoragePersistenceMissing.vue";
 
 	import {
 		lockClosedOutline as LockIOS,
@@ -31,8 +31,8 @@
 	import AccessibilityMD from '@material-design-icons/svg/outlined/accessibility_new.svg';
 	import ImportExportMD from '@material-design-icons/svg/outlined/import_export.svg';
 	import AboutMD from '@material-design-icons/svg/outlined/info.svg';
-	import { securityConfig } from '../../lib/config';
-	import { lock } from '../../lib/applock';
+	import { securityConfig } from '../lib/config';
+	import { lock } from '../lib/applock';
 
 	const router = useIonRouter();
 	const isIOS = inject<boolean>("isIOS");

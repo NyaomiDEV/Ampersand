@@ -3,6 +3,8 @@ import { DatabaseEvents, DatabaseEvent } from "../../events";
 import { makeUUIDv5 } from "../../../util/uuid";
 import { UUIDable, Member, UUID } from "../../entities";
 import { getSystemUUID } from "./system";
+import { deleteFrontingEntry, getFrontingEntries } from "./frontingEntries";
+import { deleteBoardMessage, getBoardMessages } from "./boardMessages";
 
 export function getMembers(){
 	return db.members.toArray();
@@ -30,8 +32,14 @@ export async function newMember(member: Omit<Member, keyof UUIDable>) {
 	}
 }
 
-export async function removeMember(uuid: UUID) {
+export async function deleteMember(uuid: UUID) {
 	try {
+		for(const entry of (await getFrontingEntries()).filter(x => x.member === uuid))
+			await deleteFrontingEntry(entry.uuid);
+
+		for(const entry of (await getBoardMessages()).filter(x => x.member === uuid))
+			await deleteBoardMessage(entry.uuid);
+
 		await db.members.delete(uuid);
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "members",

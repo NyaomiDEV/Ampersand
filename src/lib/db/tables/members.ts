@@ -10,8 +10,8 @@ export function newMember(member: Omit<Member, keyof UUIDable>) {
 	return impl.newMember(member);
 }
 
-export function removeMember(uuid: UUID){
-	return impl.removeMember(uuid);
+export function deleteMember(uuid: UUID){
+	return impl.deleteMember(uuid);
 }
 
 export function updateMember(uuid: UUID, newContent: Partial<Member>){
