@@ -17,7 +17,8 @@
 		IonItem,
 		IonBackButton,
 		useIonRouter,
-		IonPage
+		IonPage,
+		toastController
 	} from "@ionic/vue";
 	import Color from "../../components/Color.vue";
 	import TagChip from "../../components/tag/TagChip.vue";
@@ -51,6 +52,9 @@
 	import { addMaterialColors, rgbaToArgb, unsetMaterialColors } from "../../lib/theme";
 	import { PartialBy } from "../../lib/types";
 	import { useRoute } from "vue-router";
+	import { useTranslation } from "i18next-vue";
+
+	const i18next = useTranslation();
 
 	const isIOS = inject<boolean>("isIOS")!;
 
@@ -115,6 +119,24 @@
 		member.value.tags = tags.map(x => x.uuid);
 		selectedTags.length = 0;
 		selectedTags.push(...tags);
+	}
+
+	async function copyIdToClipboard(){
+		if(member.value.uuid){
+			try{
+				await window.navigator.clipboard.writeText("@<m:" + member.value.uuid + ">");
+
+				const toast = await toastController.create({
+					message: i18next.t("members:edit.memberIDcopiedToClipboard"),
+					duration: 1500,
+					position: "bottom",
+				});
+
+				await toast.present();
+			}catch(e){
+				return;
+			}
+		}
 	}
 
 	async function updateRoute() {
@@ -257,7 +279,7 @@
 						</IonLabel>
 					</IonItem>
 
-					<IonItem v-if="member.uuid">
+					<IonItem v-if="member.uuid" button @click="copyIdToClipboard">
 						<IonLabel>
 							<p>{{ $t("members:edit.memberID", { memberID: member.uuid }) }}</p>
 						</IonLabel>

@@ -28,6 +28,7 @@
 			"title": "Cancella membrə",
 			"desc": "Non potrai annullare questa azione!"
 		},
-		"memberID": "ID del membrə: {{memberID}}"
+		"memberID": "ID del membrə: {{memberID}}",
+		"memberIDcopiedToClipboard": "ID del membrə in formato menzione copiato negli appunti!"
 	}
 }

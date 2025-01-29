@@ -28,6 +28,7 @@
 			"title": "Delete member",
 			"desc": "You won't be able to undo this action!"
 		},
-		"memberID": "Member ID: {{memberID}}"
+		"memberID": "Member ID: {{memberID}}",
+		"memberIDcopiedToClipboard": "Member ID in mention format copied to clipboard!"
 	}
 }
