@@ -401,7 +401,7 @@ export interface TokenizerExtension {
 export interface RendererThis {
 	parser: _Parser;
 }
-export type RendererExtensionFunction = (this: RendererThis, token: Tokens.Generic) => string | false | undefined;
+export type RendererExtensionFunction = (this: RendererThis, token: Tokens.Generic) => VNode | string | false | undefined;
 export interface RendererExtension {
 	name: string;
 	renderer: RendererExtensionFunction;

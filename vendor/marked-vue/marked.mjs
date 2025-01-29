@@ -9,7 +9,7 @@
  * The code in this file is generated from files in ./src/
  */
 
-import { h, Fragment, Text } from 'vue';
+import { h, Fragment, Text, isVNode } from 'vue';
 
 /**
  * Gets the original marked default options.
@@ -1768,7 +1768,7 @@ class _Renderer {
         return h('blockquote', {}, body);
     }
     html({ text }) {
-        return h(Fragment, { innerHTML: text });
+        return h('span', { innerHTML: text });
     }
     heading({ tokens, depth }) {
         return h(`h${depth}`, this.parser.parseInline(tokens));
@@ -1925,7 +1925,10 @@ class _Parser {
                     if (this.options.extensions?.renderers?.[anyToken.type]) {
                         const ret = this.options.extensions.renderers[anyToken.type].call({ parser: this }, anyToken);
                         if (ret) {
-                            out.push(h(Fragment, { innerHTML: ret }));
+                            if (isVNode(ret))
+                                out.push(ret);
+                            else
+                                out.push(h('span', { innerHTML: ret }));
                             break;
                         }
                     }
@@ -1996,8 +1999,11 @@ class _Parser {
                     if (this.options.extensions?.renderers?.[anyToken.type]) {
                         const ret = this.options.extensions.renderers[anyToken.type].call({ parser: this }, anyToken);
                         if (ret) {
-                            out.push(h(Fragment, { innerHTML: ret }));
-                            continue;
+                            if (isVNode(ret))
+                                out.push(ret);
+                            else
+                                out.push(h('span', { innerHTML: ret }));
+                            break;
                         }
                     }
                     // if we didn't find anything to parse the token, return an error

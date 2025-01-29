@@ -7,6 +7,12 @@ const host = process.env.TAURI_DEV_HOST;
 const { publicVars } = loadEnv({ prefixes: ['TAURI_ENV_', 'AMPERSAND_'] });
 
 export default defineConfig({
+	dev: {
+		watchFiles: [{
+			paths: "vendor",
+			type: "reload-page"
+		}]
+	},
 	plugins: [
 		pluginVue(),
 		pluginBasicSsl({
