@@ -44,14 +44,36 @@ const mention: TokenizerAndRendererExtension = {
 
 marked.use({
 	extensions: [mention],
+	renderer: {
+		image(token) {
+			return h('img', {
+				src: token.href,
+				alt: token.text,
+				title: token.title,
+				width: (token as any).width,
+				height: (token as any).height
+			});
+		},
+	},
 	async: true,
 	async walkTokens(token) {
-		if (token.type === "mention") {
-			switch (token.mentionedType) {
-				case "member":
-					token.member = (await getMembers()).find(x => x.uuid === token.uuid);
-					break;
-			}
+		switch(token.type){
+			case "mention":
+				switch (token.mentionedType) {
+					case "member":
+						token.member = (await getMembers()).find(x => x.uuid === token.uuid);
+						break;
+				}
+				break;
+			case "image":
+				const matches = /#(-?\d+?x-?\d+?)$/.exec(token.href);
+				if(matches){
+					const [w,h] = matches[1].split("x").map(x => Number(x));
+					if(w >= 0) (token as any).width = w;
+					if(h >= 0) (token as any).height = h;
+					token.href = token.href.replace(/#(-?\d+?x-?\d+?)$/, "");
+				}
+				break;
 		}
 	},
 });
