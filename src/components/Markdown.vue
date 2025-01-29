@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { defineComponent, ref, watch } from 'vue';
+	import { defineComponent, ref, h, watch } from 'vue';
 	import { marked } from '../lib/markdown';
 
 	const props = defineProps<{
@@ -11,7 +11,7 @@
 			watch(props, async () => {
 				mdRef.value = await marked.parse(props.markdown);
 			});
-			return () => mdRef.value;
+			return () => h('div', {class: "markdown-content"}, mdRef.value);
 		}
 	);
 </script>

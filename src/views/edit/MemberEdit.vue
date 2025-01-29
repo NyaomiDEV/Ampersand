@@ -212,9 +212,7 @@
 
 			<div class="member-description" v-if="!isEditing">
 				<IonLabel>{{ $t("members:edit.description") }}</IonLabel>
-				<div class="markdown-content">
-					<Markdown :markdown="member.description || $t('members:edit.noDescription')" />
-				</div>
+				<Markdown :markdown="member.description || $t('members:edit.noDescription')" />
 			</div>
 
 			<IonList class="member-actions" v-if="!isEditing">
