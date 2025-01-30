@@ -41,7 +41,13 @@
 			"member": "Edit message author",
 			"title": "Title",
 			"body": "Message body",
-			"isPinned": "Pinned",
+			"isPinned": "Set as pinned",
+			"attachPoll": "Attach a poll to this message",
+			"deleteAttachedPoll": "Delete attached poll",
+			"pollIsMultipleChoice": "Set poll as multiple choice",
+			"pollAddNewChoice": "Add a new choice to the poll",
+			"pollChoice": "Choice description",
+			"pollEditWarning": "Changing any of the poll details will reset the votes!",
 			"delete": {
 				"title": "Delete message on board",
 				"desc": "You won't be able to undo this action!"

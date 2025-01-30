@@ -55,5 +55,20 @@
 			"long": "seconds",
 			"short": "s"
 		}
+	},
+	"polls": {
+		"boardMessageContainsPoll": "Contains poll",
+		"voteCast": {
+			"voter": "Select the voter",
+			"reason": "Tell the reason",
+			"reasonHint": "Reason",
+			"retractConfirmation": "Are you sure you want to retract this vote?"
+		},
+		"resultsHeader": "Vote results",
+		"resultsButton": "Show poll results",
+		"choice": {
+			"desc_one": "{{count}} voter",
+			"desc_other": "{{count}} voters"
+		}
 	}
 }

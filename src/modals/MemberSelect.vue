@@ -9,6 +9,7 @@
 		IonModal,
 		IonSearchbar,
 		IonCheckbox,
+		modalController,
 	} from "@ionic/vue";
 
 	import { inject, onMounted, onUnmounted, reactive, ref, shallowRef, watch } from "vue";
@@ -24,6 +25,7 @@
 	const props = defineProps<{
 		customTitle?: string,
 		onlyOne?: boolean,
+		discardOnSelect?: boolean,
 		modelValue?: Member[]
 	}>();
 
@@ -41,11 +43,14 @@
 			if(props.onlyOne)
 				selectedMembers.length = 0;
 			selectedMembers.push(member);
-		}
-		else {
+		} else {
 			const index = selectedMembers.indexOf(member);
 			if(index > -1)
 				selectedMembers.splice(index, 1);
+		}
+
+		if(props.onlyOne && props.discardOnSelect){
+			modalController.dismiss();
 		}
 	}
 

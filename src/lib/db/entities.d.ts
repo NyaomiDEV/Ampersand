@@ -9,11 +9,27 @@ export interface BoardMessage extends UUIDable {
 	title: string,
 	body: string,
 	date: Date,
-	isPinned?: boolean
+	isPinned?: boolean,
+	poll?: Poll
 }
 
 export interface BoardMessageComplete extends BoardMessage {
 	member: Member
+}
+
+export interface Poll {
+	entries: PollEntry[],
+	multipleChoice: boolean
+}
+
+export interface PollEntry {
+	choice: string,
+	votes: Vote[]
+}
+
+export interface Vote {
+	member: UUID,
+	reason?: string
 }
 
 export interface Chat extends UUIDable {
