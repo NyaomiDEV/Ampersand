@@ -9,35 +9,46 @@
 		IonModal,
 		IonSearchbar,
 		IonCheckbox,
-		CheckboxCustomEvent,
 	} from "@ionic/vue";
 
-	import { inject, onMounted, ref, shallowRef } from "vue";
+	import { inject, onBeforeMount, reactive, ref, shallowRef, watch } from "vue";
 	import { getFilteredTags } from "../lib/db/search";
 	import { getTags } from "../lib/db/tables/tags";
 	import { Tag } from "../lib/db/entities";
 	import TagColor from "../components/tag/TagColor.vue";
 	import TagLabel from "../components/tag/TagLabel.vue";
 
-	const isIOS = inject<boolean>("isIOS");
+	const props = defineProps<{
+		customTitle?: string,
+		modelValue?: Tag[]
+	}>();
 
-	const selectedTags = defineModel<Tag[]>({default: []});
+	const emit = defineEmits<{
+		'update:modelValue': [Tag[]],
+	}>();
+
+	const selectedTags = reactive<Tag[]>([]);
+	watch(selectedTags, () => {
+		emit("update:modelValue", selectedTags);
+	});
+
+	const isIOS = inject<boolean>("isIOS");
 
 	const search = ref("");
 	const tags = shallowRef<Tag[]>([]);
 	const filteredTags = getFilteredTags(search, ref("member"), tags);
 
-	onMounted(async () => {
+	onBeforeMount(async () => {
 		tags.value = await getTags()
 	});
 
-	function check(ev: CheckboxCustomEvent){
-		if(ev.detail.checked)
-			selectedTags.value.push(tags.value.find(x => x.uuid === ev.detail.value)!);
+	function check(tag: Tag, checked: boolean){
+		if(checked)
+			selectedTags.push(tag);
 		else {
-			const index = selectedTags.value.findIndex(x => x.uuid === ev.detail.value);
+			const index = selectedTags.indexOf(tag);
 			if(index > -1)
-				selectedTags.value.splice(index, 1);
+				selectedTags.splice(index, 1);
 		}
 	}
 </script>
@@ -46,7 +57,7 @@
 	<IonModal class="tag-select-modal" :breakpoints="[0,0.25,0.75,1]" initialBreakpoint="0.75">
 		<IonHeader>
 			<IonToolbar>
-				<IonTitle>{{ $t("other:taglistSelect:header") }}</IonTitle>
+				<IonTitle>{{ props.customTitle ?? $t("other:taglistSelect:header") }}</IonTitle>
 			</IonToolbar>
 			<IonToolbar>
 				<IonSearchbar :animated="true" :placeholder="$t('options:tagManagement.searchPlaceholder')"
@@ -58,7 +69,7 @@
 			<IonList :inset="isIOS">
 				<IonItem button v-for="tag in filteredTags" :key="JSON.stringify(tag)">
 					<TagColor slot="start" :tag />
-					<IonCheckbox :value="tag.uuid" :checked="!!selectedTags.find(x => x.uuid === tag.uuid)" @ionChange="check">
+					<IonCheckbox :value="tag.uuid" :checked="!!selectedTags.find(x => x.uuid === tag.uuid)" @update:modelValue="value => check(tag, value)">
 						<TagLabel :tag />
 					</IonCheckbox>
 				</IonItem>

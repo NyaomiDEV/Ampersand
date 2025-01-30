@@ -9,10 +9,9 @@
 		IonModal,
 		IonSearchbar,
 		IonCheckbox,
-		CheckboxCustomEvent,
 	} from "@ionic/vue";
 
-	import { inject, onMounted, onUnmounted, ref, shallowRef } from "vue";
+	import { inject, onMounted, onUnmounted, reactive, ref, shallowRef, watch } from "vue";
 	import { getFilteredMembers } from "../lib/db/search";
 	import MemberAvatar from "../components/member/MemberAvatar.vue";
 	import MemberLabel from "../components/member/MemberLabel.vue";
@@ -23,21 +22,30 @@
 	const isIOS = inject<boolean>("isIOS");
 
 	const props = defineProps<{
-		onlyOne?: boolean
+		customTitle?: string,
+		onlyOne?: boolean,
+		modelValue?: Member[]
 	}>();
 
-	const selectedMembers = defineModel<Member[]>({default: []});
+	const emit = defineEmits<{
+		"update:modelValue": [Member[]],
+	}>();
 
-	function check(ev: CheckboxCustomEvent){
-		if(ev.detail.checked){
+	const selectedMembers = reactive<Member[]>([]);
+	watch(selectedMembers, () => {
+		emit("update:modelValue", selectedMembers);
+	});
+
+	function check(member: Member, checked: boolean){
+		if(checked){
 			if(props.onlyOne)
-				selectedMembers.value.length = 0;
-			selectedMembers.value.push(filteredMembers.value?.find(x => x.uuid === ev.detail.value)!);
+				selectedMembers.length = 0;
+			selectedMembers.push(member);
 		}
 		else {
-			const index = selectedMembers.value.findIndex(x => x.uuid === ev.detail.value);
+			const index = selectedMembers.indexOf(member);
 			if(index > -1)
-				selectedMembers.value.splice(index, 1);
+				selectedMembers.splice(index, 1);
 		}
 	}
 
@@ -64,7 +72,7 @@
 	<IonModal class="member-select-modal" :breakpoints="[0,0.25,0.75,1]" initialBreakpoint="0.75">
 		<IonHeader>
 			<IonToolbar>
-				<IonTitle>{{ $t("other:memberSelect.header") }}</IonTitle>
+				<IonTitle>{{ props.customTitle ?? $t("other:memberSelect.header") }}</IonTitle>
 			</IonToolbar>
 			<IonToolbar>
 				<IonSearchbar :animated="true" :placeholder="$t('members:searchPlaceholder')"
@@ -76,7 +84,7 @@
 			<IonList :inset="isIOS">
 				<IonItem button v-for="member in filteredMembers" :key="JSON.stringify(member)">
 					<MemberAvatar slot="start" :member />
-					<IonCheckbox :value="member.uuid" :checked="!!selectedMembers.find(x => x.uuid === member.uuid)" @ionChange="check">
+					<IonCheckbox :value="member.uuid" :checked="!!selectedMembers.find(x => x.uuid === member.uuid)" @update:modelValue="value => check(member, value)">
 						<MemberLabel :member />
 					</IonCheckbox>
 				</IonItem>
