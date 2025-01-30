@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonFab, IonFabButton, IonIcon, IonSearchbar, IonLabel, IonItemDivider, IonButtons, IonButton, IonDatetime } from '@ionic/vue';
-	import { h, inject, onMounted, onUnmounted, ref, shallowRef } from 'vue';
+	import { h, inject, onBeforeMount, onUnmounted, ref, shallowRef, watch } from 'vue';
 	import type { BoardMessage, BoardMessageComplete } from '../../lib/db/entities.d.ts';
 	import { getBoardMessages } from '../../lib/db/tables/boardMessages';
 	import BoardMessageEdit from "../../modals/BoardMessageEdit.vue";
@@ -29,13 +29,16 @@
 
 	const route = useRoute();
 
+	const firstWeekOfDayIsSunday = appConfig.locale.firstWeekOfDayIsSunday;
 	const isIOS = inject<boolean>("isIOS");
 
-	const boardMessages = shallowRef<BoardMessage[]>();
 	const search = ref(route.query.q as string || "");
-	const filteredBoardMessages = getFilteredBoardMessages(search, boardMessages);
+	watch(route, () => {
+		search.value = route.query.q as string || "";
+	});
 
-	const firstWeekOfDayIsSunday = appConfig.locale.firstWeekOfDayIsSunday;
+	const boardMessages = shallowRef<BoardMessage[]>();
+	const filteredBoardMessages = getFilteredBoardMessages(search, boardMessages);
 
 	const isCalendarView = ref(false);
 	const date = ref(dayjs().toISOString());
@@ -47,7 +50,7 @@
 		}
 	}
 
-	onMounted(async () => {
+	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
 		boardMessages.value = await getBoardMessages();
 	});

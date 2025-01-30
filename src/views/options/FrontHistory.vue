@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonLabel, IonToolbar, IonBackButton, IonItem, IonItemDivider, IonDatetime, IonButtons, IonIcon, IonButton, IonSearchbar, IonFabButton, IonFab } from '@ionic/vue';
-	import { h, inject, onBeforeMount, onUnmounted, ref, shallowRef } from 'vue';
+	import { h, inject, onBeforeMount, onUnmounted, ref, shallowRef, watch } from 'vue';
 	import MemberAvatar from "../../components/member/MemberAvatar.vue";
 	import FrontingEntryLabel from "../../components/frontingEntry/FrontingEntryLabel.vue";
 	import type { FrontingEntry, FrontingEntryComplete } from '../../lib/db/entities.d.ts';
@@ -24,23 +24,26 @@
 
 	import { appConfig } from '../../lib/config';
 	import { DatabaseEvents, DatabaseEvent } from '../../lib/db/events';
-import { addModal, removeModal } from '../../lib/modals.ts';
+	import { addModal, removeModal } from '../../lib/modals.ts';
+	import { useRoute } from 'vue-router';
 
-	const props = defineProps<{
-		q?: string
-	}>();
-
-	const isIOS = inject<boolean>("isIOS");
+	const route = useRoute();
 
 	const firstWeekOfDayIsSunday = appConfig.locale.firstWeekOfDayIsSunday;
+	const isIOS = inject<boolean>("isIOS");
+
+	const search = ref(route.query.q as string || "");
+	watch(route, () => {
+		search.value = route.query.q as string || "";
+	});
+	
+	const frontingEntries = shallowRef<FrontingEntry[]>();
+	const filteredFrontingEntries = getFilteredFrontingEntries(search, frontingEntries);
+
 
 	const isCalendarView = ref(false);
 	const date = ref(dayjs().toISOString());
 	const calendarDate = ref(dayjs().format("YYYY-MM-DDTHH:mm:ss"));
-
-	const search = ref(props.q || "");
-	const frontingEntries = shallowRef<FrontingEntry[]>();
-	const filteredFrontingEntries = getFilteredFrontingEntries(search, frontingEntries);
 
 	const listener = async (event: Event) => {
 		if(["frontingEntries", "members"].includes((event as DatabaseEvent).data.table))

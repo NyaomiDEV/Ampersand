@@ -17,7 +17,7 @@
 		useIonRouter,
 		IonBackButton,
 	} from '@ionic/vue';
-	import { inject, onBeforeMount, onUnmounted, ref, shallowReactive, shallowRef, useTemplateRef } from 'vue';
+	import { inject, onBeforeMount, onUnmounted, ref, shallowReactive, shallowRef, useTemplateRef, watch } from 'vue';
 	import { getFilteredMembers } from '../lib/db/search.ts';
 	import { accessibilityConfig } from '../lib/config/index.ts';
 
@@ -50,12 +50,16 @@
 	import Spinner from '../components/Spinner.vue';
 	import { useRoute } from 'vue-router';
 
+	const route = useRoute();
+
 	const isIOS = inject<boolean>("isIOS");
 
-	const route = useRoute();
 	const search = ref(route.query.q as string || "");
-	const members = shallowRef<Member[]>();
+	watch(route, () => {
+		search.value = route.query.q as string || "";
+	});
 
+	const members = shallowRef<Member[]>();
 	const filteredMembers = getFilteredMembers(search, members);
 	const frontingEntries = shallowReactive(new Map<Member, FrontingEntry | undefined>());
 

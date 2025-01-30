@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { IonContent, IonSearchbar, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonSegment, IonSegmentButton, IonLabel, IonFab, IonFabButton, IonIcon, IonItem } from '@ionic/vue';
-	import { inject, onMounted, onUnmounted, ref, shallowRef } from 'vue';
+	import { inject, onMounted, onUnmounted, ref, shallowRef, watch } from 'vue';
 	import { addOutline as addIOS } from "ionicons/icons";
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 	import { getFilteredTags } from '../../lib/db/search';
@@ -9,11 +9,19 @@
 	import TagColor from '../../components/tag/TagColor.vue';
 	import TagLabel from '../../components/tag/TagLabel.vue';
 	import { DatabaseEvents, DatabaseEvent } from '../../lib/db/events';
+	import { useRoute } from 'vue-router';
+
+	const route = useRoute();
 
 	const isIOS = inject<boolean>("isIOS");
 
+	const search = ref(route.query.q as string || "");
+	watch(route, () => {
+		search.value = route.query.q as string || "";
+	});
+
 	const type = ref("member");
-	const search = ref("");
+
 	const tags = shallowRef<Tag[]>([]);
 	const filteredTags = getFilteredTags(search, type, tags);
 
