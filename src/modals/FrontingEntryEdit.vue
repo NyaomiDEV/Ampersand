@@ -26,9 +26,9 @@
 	import saveMD from "@material-design-icons/svg/outlined/save.svg";
 	import trashMD from "@material-design-icons/svg/outlined/delete.svg";
 
-	import { Member, FrontingEntryComplete } from "../lib/db/entities";
+	import { FrontingEntryComplete } from "../lib/db/entities";
 	import { newFrontingEntry, updateFrontingEntry, deleteFrontingEntry } from '../lib/db/tables/frontingEntries';
-	import { Ref, ShallowReactive, WatchStopHandle, inject, ref, shallowReactive, toRaw, useTemplateRef, watch } from "vue";
+	import { Ref, inject, ref, toRaw, useTemplateRef, watch } from "vue";
 
 	import MemberSelect from "./MemberSelect.vue";
 	import MemberAvatar from "../components/member/MemberAvatar.vue";
@@ -47,19 +47,31 @@
 	const firstWeekOfDayIsSunday = appConfig.locale.firstWeekOfDayIsSunday;
 
 	const props = defineProps<{
-		frontingEntry: PartialBy<FrontingEntryComplete, "uuid" | "member">
+		frontingEntry?: PartialBy<FrontingEntryComplete, "uuid" | "member">
 	}>();
 
-	const frontingEntry = ref(props.frontingEntry);
+	const emptyFrontingEntry: PartialBy<FrontingEntryComplete, "uuid" | "member"> = {
+		isMainFronter: false,
+		startTime: new Date(),
+		endTime: new Date(),
+	};
+	const frontingEntry = ref(props.frontingEntry || {...emptyFrontingEntry});
 
 	const memberSelectModal = useTemplateRef("memberSelectModal");
 
-	const selectedMembers: ShallowReactive<Member[]> = shallowReactive([]);
-
-	const startTime: Ref<string | undefined> = ref();
+	const startTime: Ref<string | undefined> = ref(dayjs(frontingEntry.value.startTime).format("YYYY-MM-DDTHH:mm:ss"));
 	const endTime: Ref<string | undefined> = ref();
+	if(frontingEntry.value.endTime)
+		endTime.value = dayjs(frontingEntry.value.endTime).format("YYYY-MM-DDTHH:mm:ss");
 
-	const watchStopHandles: WatchStopHandle[] = [];
+	watch(startTime, () => {
+		frontingEntry.value.startTime = dayjs(startTime.value).toDate();
+	}, {immediate: false});
+
+	watch(endTime, () => {
+		if(endTime.value)
+			frontingEntry.value.endTime = dayjs(endTime.value).toDate();
+	}, {immediate: false});
 
 	async function save(){
 		const uuid = frontingEntry.value?.uuid;
@@ -96,38 +108,6 @@
 		}catch(_){}
 	}
 
-	function present() {
-		frontingEntry.value = props.frontingEntry;
-
-		selectedMembers.length = 0;
-		if(frontingEntry.value.member)
-			selectedMembers.push(frontingEntry.value.member);
-
-		startTime.value = dayjs(frontingEntry.value.startTime).format("YYYY-MM-DDTHH:mm:ss");
-
-		if(frontingEntry.value.endTime)
-			endTime.value = dayjs(frontingEntry.value.endTime).format("YYYY-MM-DDTHH:mm:ss");
-
-		watchStopHandles.push(
-			watch(startTime, () => {
-				frontingEntry.value.startTime = dayjs(startTime.value).toDate();
-			}, {immediate: false}),
-			watch(endTime, () => {
-				if(endTime.value)
-					frontingEntry.value.endTime = dayjs(endTime.value).toDate();
-			}, {immediate: false})
-		);
-	}
-
-	function dismiss(){
-		watchStopHandles.forEach(x => x());
-		watchStopHandles.length = 0;
-	}
-
-	function updateSelectedMember(members: Member[]){
-		frontingEntry.value.member = members[0];
-	}
-
 	function removeFromFront() {
 		frontingEntry.value.endTime = new Date();
 		endTime.value = dayjs(frontingEntry.value.endTime).format("YYYY-MM-DDTHH:mm:ss");
@@ -135,7 +115,7 @@
 </script>
 
 <template>
-	<IonModal class="fronting-entry-edit-modal" @willPresent="present" @willDismiss="dismiss" :breakpoints="[0,1]" initialBreakpoint="1">
+	<IonModal class="fronting-entry-edit-modal" :breakpoints="[0,1]" initialBreakpoint="1">
 		<IonHeader>
 			<IonToolbar>
 				<IonTitle>{{ $t("options:frontHistory.edit.header") }}</IonTitle>
@@ -201,7 +181,7 @@
 				</IonFabButton>
 			</IonFab>
 
-			<MemberSelect :selectedMembers :onlyOne="true" @selectedMembers="updateSelectedMember" ref="memberSelectModal" />
+			<MemberSelect :onlyOne="true" :model-value="frontingEntry.member ? [frontingEntry.member] : []" @update:model-value="(e) => { if(e[0]) frontingEntry.member = e[0] }" ref="memberSelectModal" />
 			<IonModal class="stack-modal" :keep-contents-mounted="true">
 				<IonDatetime
 					id="startTime"

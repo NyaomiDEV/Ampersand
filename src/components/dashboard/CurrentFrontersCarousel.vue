@@ -1,22 +1,14 @@
 <script setup lang="ts">
 	import { IonCard, IonCardContent, IonLabel, IonListHeader } from '@ionic/vue';
 	import FrontingEntryAvatar from '../frontingEntry/FrontingEntryAvatar.vue';
-	import { onBeforeMount, onUnmounted, ref, shallowRef, useTemplateRef } from 'vue';
-	import { PartialBy } from '../../lib/types';
+	import { h, onBeforeMount, onUnmounted, ref, shallowRef } from 'vue';
 	import type { FrontingEntryComplete } from '../../lib/db/entities.d.ts';
 	import { getFrontingEntries, toFrontingEntryComplete } from '../../lib/db/tables/frontingEntries';
 	import { formatWrittenTime } from "../../lib/util/misc";
 	import FrontingEntryEdit from '../../modals/FrontingEntryEdit.vue';
 	import { DatabaseEvents, DatabaseEvent } from '../../lib/db/events';
+	import { addModal, removeModal } from '../../lib/modals.ts';
 
-	const frontingEntryModal = useTemplateRef("frontingEntryModal");
-	const emptyFrontingEntry: PartialBy<FrontingEntryComplete, "uuid" | "member"> = {
-		isMainFronter: false,
-		startTime: new Date(),
-		endTime: new Date(),
-	};
-
-	const frontingEntry = shallowRef({...emptyFrontingEntry});
 	const frontingEntries = shallowRef<FrontingEntryComplete[]>([]);
 
 	const now = ref(new Date());
@@ -51,7 +43,6 @@
 					})
 					.map(x => toFrontingEntryComplete(x))
 			);
-		frontingEntry.value = { ...frontingEntries.value[0] };
 	});
 
 	onUnmounted(() => {
@@ -60,8 +51,13 @@
 	});
 
 	async function showModal(clickedFrontingEntry: FrontingEntryComplete){
-		frontingEntry.value = {...clickedFrontingEntry};
-		await frontingEntryModal.value?.$el.present();
+		const vnode = h(FrontingEntryEdit, {
+			frontingEntry: clickedFrontingEntry,
+			onDidDismiss: () => removeModal(vnode)
+		});
+
+		const modal = await addModal(vnode);
+		await (modal.el as any).present();
 	}
 </script>
 
@@ -87,7 +83,6 @@
 			</IonCardContent>
 		</IonCard>
 	</div>
-	<FrontingEntryEdit v-if="frontingEntries.length" ref="frontingEntryModal" :frontingEntry />
 </template>
 
 <style scoped>

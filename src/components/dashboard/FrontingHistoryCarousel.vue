@@ -1,25 +1,17 @@
 <script setup lang="ts">
 	import { IonList, IonItem, IonListHeader, IonLabel } from '@ionic/vue';
-	import { inject, onBeforeMount, onUnmounted, ref, ShallowRef, shallowRef, useTemplateRef } from 'vue';
+	import { h, inject, onBeforeMount, onUnmounted, ShallowRef, shallowRef } from 'vue';
 	import FrontingEntryAvatar from "../frontingEntry/FrontingEntryAvatar.vue";
 	import FrontingEntryLabel from "../frontingEntry/FrontingEntryLabel.vue";
 	import type { FrontingEntryComplete } from '../../lib/db/entities.d.ts';
 	import { getFrontingEntries, toFrontingEntryComplete } from '../../lib/db/tables/frontingEntries';
 	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
 	import dayjs from 'dayjs';
-	import { PartialBy } from '../../lib/types';
 	import { DatabaseEvents, DatabaseEvent } from '../../lib/db/events';
+	import { addModal, removeModal } from '../../lib/modals.ts';
 
 	const isIOS = inject<boolean>("isIOS");
 
-	const frontingEntryModal = useTemplateRef("frontingEntryModal");
-	const emptyFrontingEntry: PartialBy<FrontingEntryComplete, "uuid" | "member"> = {
-		isMainFronter: false,
-		startTime: new Date(),
-		endTime: new Date(),
-	};
-
-	const frontingEntry = shallowRef({...emptyFrontingEntry});
 	const frontingEntries: ShallowRef<FrontingEntryComplete[]> = shallowRef([]);
 
 	const listener = async (event: Event) => {
@@ -48,8 +40,13 @@
 	});
 
 	async function showModal(clickedFrontingEntry: FrontingEntryComplete){
-		frontingEntry.value = {...clickedFrontingEntry};
-		await frontingEntryModal.value?.$el.present();
+		const vnode = h(FrontingEntryEdit, {
+			frontingEntry: clickedFrontingEntry,
+			onDidDismiss: () => removeModal(vnode)
+		});
+
+		const modal = await addModal(vnode);
+		await (modal.el as any).present();
 	}
 </script>
 
@@ -64,6 +61,4 @@
 			<FrontingEntryLabel :entry />
 		</IonItem>
 	</IonList>
-
-	<FrontingEntryEdit :frontingEntry ref="frontingEntryModal" v-if="frontingEntries.length > 0" />
 </template>

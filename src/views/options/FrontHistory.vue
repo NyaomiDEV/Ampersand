@@ -1,10 +1,10 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonLabel, IonToolbar, IonBackButton, IonItem, IonItemDivider, IonDatetime, IonButtons, IonIcon, IonButton, IonSearchbar, IonFabButton, IonFab } from '@ionic/vue';
-	import { inject, onMounted, onUnmounted, ref, shallowRef, useTemplateRef } from 'vue';
+	import { h, inject, onBeforeMount, onUnmounted, ref, shallowRef } from 'vue';
 	import FrontingEntryAvatar from "../../components/frontingEntry/FrontingEntryAvatar.vue";
 	import FrontingEntryLabel from "../../components/frontingEntry/FrontingEntryLabel.vue";
 	import type { FrontingEntry, FrontingEntryComplete } from '../../lib/db/entities.d.ts';
-	import { getFronting, getFrontingEntries, getMainFronter } from '../../lib/db/tables/frontingEntries';
+	import { getFrontingEntries } from '../../lib/db/tables/frontingEntries';
 	import { getFilteredFrontingEntries } from '../../lib/db/search';
 	import Spinner from "../../components/Spinner.vue";
 	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
@@ -23,23 +23,14 @@
 	import addMD from "@material-design-icons/svg/outlined/add.svg";
 
 	import { appConfig } from '../../lib/config';
-	import { PartialBy } from '../../lib/types';
 	import { DatabaseEvents, DatabaseEvent } from '../../lib/db/events';
+import { addModal, removeModal } from '../../lib/modals.ts';
 
 	const props = defineProps<{
 		q?: string
 	}>();
 
 	const isIOS = inject<boolean>("isIOS");
-
-	const frontingEntryModal = useTemplateRef("frontingEntryModal");
-	const emptyFrontingEntry: PartialBy<FrontingEntryComplete, "uuid" | "member"> = {
-		isMainFronter: false,
-		startTime: new Date(),
-		endTime: new Date(),
-	};
-
-	const frontingEntry = shallowRef({...emptyFrontingEntry});
 
 	const firstWeekOfDayIsSunday = appConfig.locale.firstWeekOfDayIsSunday;
 
@@ -56,30 +47,14 @@
 			frontingEntries.value = await getFrontingEntries();
 	}
 
-	onMounted(async () => {
+	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
 		frontingEntries.value = await getFrontingEntries();
-		frontingEntry.value = { ...filteredFrontingEntries.value[0] };
 	});
 
 	onUnmounted(async () => {
 		DatabaseEvents.removeEventListener("updated", listener);
 	});
-
-	async function showModal(clickedFrontingEntry?: FrontingEntryComplete){
-		if(clickedFrontingEntry)
-			frontingEntry.value = {...clickedFrontingEntry};
-		else {
-			frontingEntry.value = {
-				...emptyFrontingEntry,
-				startTime: new Date(),
-				endTime: new Date(),
-				member: await getMainFronter() || (await getFronting())[0]
-			};
-		}
-
-		await frontingEntryModal.value?.$el.present();
-	}
 
 	function getGrouped(entries: FrontingEntryComplete[]){
 		const map = new Map<string, FrontingEntryComplete[]>();
@@ -136,6 +111,16 @@
 			if(a[0] === "currentlyFronting") return -1;
 			return dayjs(b[0]).valueOf() - dayjs(a[0]).valueOf()
 		});
+	}
+
+	async function showModal(clickedFrontingEntry?: FrontingEntryComplete){
+		const vnode = h(FrontingEntryEdit, {
+			frontingEntry: clickedFrontingEntry,
+			onDidDismiss: () => removeModal(vnode)
+		});
+
+		const modal = await addModal(vnode);
+		await (modal.el as any).present();
 	}
 </script>
 
@@ -205,8 +190,6 @@
 				</IonFabButton>
 			</IonFab>
 		</IonContent>
-
-		<FrontingEntryEdit :frontingEntry ref="frontingEntryModal" />
 	</IonPage>
 </template>
 

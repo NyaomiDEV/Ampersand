@@ -25,9 +25,9 @@
 	import saveMD from "@material-design-icons/svg/outlined/save.svg";
 	import trashMD from "@material-design-icons/svg/outlined/delete.svg";
 
-	import { BoardMessageComplete, Member } from "../lib/db/entities";
+	import { BoardMessageComplete } from "../lib/db/entities";
 	import { updateBoardMessage, deleteBoardMessage, newBoardMessage } from "../lib/db/tables/boardMessages";
-	import { inject, ref, shallowReactive, toRaw, useTemplateRef } from "vue";
+	import { inject, ref, toRaw, useTemplateRef } from "vue";
 	import { PartialBy } from "../lib/types";
 	import MemberAvatar from "../components/member/MemberAvatar.vue";
 	import MemberSelect from "./MemberSelect.vue";
@@ -35,10 +35,15 @@
 	const isIOS = inject<boolean>("isIOS");
 
 	const props = defineProps<{
-		boardMessage: PartialBy<BoardMessageComplete, "uuid" | "member">
+		boardMessage?: PartialBy<BoardMessageComplete, "uuid" | "member">
 	}>();
 
-	const boardMessage = ref(props.boardMessage);
+	const emptyBoardMessage: PartialBy<BoardMessageComplete, "uuid" | "member"> = {
+		title: "",
+		body: "",
+		date: new Date()
+	}
+	const boardMessage = ref(props.boardMessage || {...emptyBoardMessage});
 
 	const memberSelectModal = useTemplateRef("memberSelectModal");
 
@@ -76,26 +81,10 @@
 			await modalController.dismiss(null, "deleted");
 		}catch(_){}
 	}
-
-	const selectedMembers = shallowReactive<Member[]>([]);
-
-	function present() {
-		boardMessage.value = props.boardMessage;
-
-		selectedMembers.length = 0;
-
-		if(boardMessage.value.member)
-			selectedMembers.push(boardMessage.value.member);
-	}
-
-	function updateSelectedMember(members: Member[]){
-		if(selectedMembers.length)
-			boardMessage.value.member = members[0];
-	}
 </script>
 
 <template>
-	<IonModal class="board-message-edit-modal" @willPresent="present" :breakpoints="[0,1]" initialBreakpoint="1">
+	<IonModal class="board-message-edit-modal" :breakpoints="[0,1]" initialBreakpoint="1">
 		<IonHeader>
 			<IonToolbar>
 				<IonTitle>{{ $t("options:messageBoard.edit.header") }}</IonTitle>
@@ -149,7 +138,7 @@
 					<IonIcon :ios="saveIOS" :md="saveMD" />
 				</IonFabButton>
 			</IonFab>
-			<MemberSelect :selectedMembers :onlyOne="true" @selectedMembers="updateSelectedMember" ref="memberSelectModal" />
+			<MemberSelect :onlyOne="true" :model-value="boardMessage.member ? [boardMessage.member] : []" @update:model-value="(e) => { if(e[0]) boardMessage.member = e[0] }" ref="memberSelectModal" />
 		</IonContent>
 	</IonModal>
 </template>

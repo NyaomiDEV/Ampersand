@@ -1,26 +1,17 @@
 <script setup lang="ts">
 	import { IonList, IonLabel, IonButton, IonListHeader } from '@ionic/vue';
-	import { inject, onBeforeMount, onUnmounted, ref, shallowRef, useTemplateRef } from 'vue';
+	import { h, inject, onBeforeMount, onUnmounted, shallowRef } from 'vue';
 	import { getBoardMessages, toBoardMessageComplete } from '../../lib/db/tables/boardMessages';
 	import type { BoardMessageComplete } from '../../lib/db/entities.d.ts';
 	import BoardMessageEdit from "../../modals/BoardMessageEdit.vue";
-	import { PartialBy } from '../../lib/types';
 
 	import dayjs from 'dayjs';
 
-	import { getFronting, getMainFronter } from '../../lib/db/tables/frontingEntries';
 	import MessageBoardCard from '../MessageBoardCard.vue';
 	import { DatabaseEvents, DatabaseEvent } from '../../lib/db/events';
+	import { addModal, removeModal } from '../../lib/modals.ts';
 
 	const isIOS = inject<boolean>("isIOS");
-
-	const emptyBoardMessage: PartialBy<BoardMessageComplete, "uuid" | "member"> = {
-		title: "",
-		body: "",
-		date: new Date()
-	}
-	const boardMessage = shallowRef<PartialBy<BoardMessageComplete, "uuid" | "member">>({...emptyBoardMessage});
-	const boardMessageEditModal = useTemplateRef("boardMessageEditModal");
 
 	const boardMessages = shallowRef<BoardMessageComplete[]>([]);
 
@@ -57,17 +48,14 @@
 		DatabaseEvents.removeEventListener("updated", listener);
 	});
 
-	async function showModal(_boardMessage?: BoardMessageComplete){
-		if(_boardMessage)
-			boardMessage.value = {..._boardMessage};
-		else {
-			boardMessage.value = {
-				...emptyBoardMessage,
-				date: new Date(),
-				member: await getMainFronter() || (await getFronting())[0]
-			};
-		}
-		await boardMessageEditModal.value?.$el.present();
+	async function showModal(clickedBoardMessage?: BoardMessageComplete){
+		const vnode = h(BoardMessageEdit, {
+			boardMessage: clickedBoardMessage,
+			onDidDismiss: () => removeModal(vnode)
+		});
+
+		const modal = await addModal(vnode);
+		await (modal.el as any).present();
 	}
 </script>
 
@@ -84,8 +72,6 @@
 		<IonButton @click="showModal()">{{ $t("dashboard:messageBoard.add") }}</IonButton>
 		<IonButton fill="clear" router-link="/options/messageBoard">{{ $t("dashboard:messageBoard.view") }}</IonButton>
 	</div>
-
-	<BoardMessageEdit :boardMessage ref="boardMessageEditModal" />
 </template>
 
 <style scoped>
