@@ -23,6 +23,10 @@ export function getFiles(contentType?: string, multiple?: boolean): Promise<File
 			resolve(arr);
 		};
 
+		i.oncancel = () => {
+			resolve([]);
+		}
+
 		i.click();
 
 	});

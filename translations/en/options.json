@@ -245,6 +245,20 @@
 		"settingsExport": {
 			"title": "Export your app settings config",
 			"desc": "Backup your current settings data so it can be reimported at a later time"
+		},
+		"status": {
+			"database": {
+				"imported": "The database backup has been imported. Please restart the app.",
+				"exportedPwa": "The database backup has been downloaded to your downloads folder.",
+				"exportedApp": "The database backup has been exported to the location you chose.",
+				"error": "Error while processing the database export."
+			},
+			"settings": {
+				"imported": "The settings backup has been imported. Please restart the app.",
+				"exportedPwa": "The settings backup has been downloaded to your downloads folder.",
+				"exportedApp": "The settings backup has been exported to the location you chose.",
+				"error": "Error while processing the settings export."
+			}
 		}
 	},
 	"about": {
