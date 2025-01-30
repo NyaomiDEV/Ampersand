@@ -44,7 +44,7 @@
 
 	onMounted(async () => {
 		system.value = await getSystem();
-		memberCount.value = (await getMembers()).length;
+		memberCount.value = (await getMembers()).filter(x => !x.isCustomFront).length;
 	});
 </script>
 
