@@ -87,6 +87,10 @@
 				}
 			}
 		}
+	},	
+	"assetManager": {
+		"header": "Gestore degli asset",
+		"searchPlaceholder": "Cerca tra gli asset..."
 	},
 	"reminders": {
 		"header": "Promemoria",

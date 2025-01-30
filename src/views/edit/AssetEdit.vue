@@ -1,0 +1,172 @@
+<script setup lang="ts">
+	import {
+		IonContent,
+		IonHeader,
+		IonToolbar,
+		IonTitle,
+		IonIcon,
+		IonList,
+		IonInput,
+		IonButton,
+		IonFab,
+		IonFabButton,
+		IonLabel,
+		IonItem,
+		IonPage,
+		IonBackButton,
+		useIonRouter,
+		alertController
+	} from "@ionic/vue";
+
+	import {
+		saveOutline as saveIOS,
+		trashBinOutline as trashIOS,
+	} from "ionicons/icons";
+
+	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
+	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
+
+	import { getAssets, newAsset, deleteAsset, updateAsset } from '../../lib/db/tables/assets';
+	import { Asset } from "../../lib/db/entities";
+	import { inject, onBeforeMount, ref, watch } from "vue";
+	import { PartialBy } from "../../lib/types";
+	import { useRoute } from "vue-router";
+	import { useTranslation } from "i18next-vue";
+	import { getFiles } from "../../lib/util/misc";
+
+	const isIOS = inject<boolean>("isIOS");
+
+	const emptyAsset: PartialBy<Asset, "uuid" | "file"> = {
+		friendlyName: ""
+	};
+	const asset = ref({...emptyAsset});
+
+	const route = useRoute();
+	const router = useIonRouter();
+	const i18next = useTranslation();
+
+	async function updateFile() {
+		const files = await getFiles();
+		if (files.length > 0) {
+			asset.value.file = files[0];
+		}
+	}
+
+	async function save(){
+		const uuid = asset.value.uuid;
+		const _asset = asset.value;
+
+		if(!_asset.file) return;
+
+		if(!uuid){
+			await newAsset(_asset as PartialBy<Asset, "uuid">);
+			router.back();
+			return;
+		}
+
+		await updateAsset(uuid, _asset);
+		router.back();
+	}
+
+	function promptDeletion(): Promise<boolean> {
+		return new Promise(async (resolve) => {
+			const alert = await alertController.create({
+				header: i18next.t("options:assetManager.edit.actions.delete.title"),
+				subHeader: i18next.t("options:assetManager.edit.actions.delete.confirm"),
+				buttons: [
+					{
+						text: i18next.t("other:alerts.cancel"),
+						role: "cancel",
+						handler: () => resolve(false)
+					},
+					{
+						text: i18next.t("other:alerts.ok"),
+						role: "confirm",
+						handler: () => resolve(true)
+					}
+				]
+			});
+
+			await alert.present();
+		});
+	}
+
+	async function removeAsset(){
+		if(await promptDeletion()){
+			await deleteAsset(asset.value.uuid!);
+		}
+	}
+
+	async function updateRoute(){
+		if(route.query.uuid){
+			const _asset = (await getAssets()).find(x => x.uuid === route.query.uuid);
+			if(_asset)
+				asset.value = _asset;
+			else asset.value = {...emptyAsset};
+		} else asset.value = {...emptyAsset};
+
+	}
+
+	watch(route, updateRoute);
+	onBeforeMount(updateRoute);
+</script>
+
+<template>
+	<IonPage>
+		<IonHeader>
+			<IonToolbar>
+				<IonBackButton slot="start" defaultHref="/options/assetManager/" />
+				<IonTitle>
+					{{ !asset.uuid ? $t("options:assetManager.add.header") : $t("options:assetManager.edit.header") }}
+				</IonTitle>
+			</IonToolbar>
+		</IonHeader>
+
+		<IonContent>
+			<IonList :inset="isIOS">
+				<IonItem>
+					<IonButton @click="updateFile">
+						<IonLabel>
+							{{ !asset.uuid ? $t("options:assetManager.add.attachment") : $t("options:assetManager.edit.attachment") }}
+						</IonLabel>
+					</IonButton>
+				</IonItem>
+
+				<IonItem v-if="asset.file">
+					<IonLabel>
+						{{ asset.file.name }}
+					</IonLabel>
+				</IonItem>
+
+				<IonItem>
+					<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('options:assetManager.edit.friendlyName')" labelPlacement="floating" v-model="asset.friendlyName" />
+				</IonItem>
+
+				<IonItem button v-if="asset.uuid" @click="removeAsset">
+					<IonIcon :ios="trashIOS" :md="trashMD" slot="start" aria-hidden="true" color="danger"/>
+					<IonLabel color="danger">
+						<h3>{{ $t("options:assetManager.delete.title") }}</h3>
+						<p>{{ $t("options:assetManager.delete.desc") }}</p>
+					</IonLabel>
+				</IonItem>
+			</IonList>
+
+			<IonFab slot="fixed" vertical="bottom" horizontal="end">
+				<IonFabButton @click="save" v-if="asset.friendlyName.length > 0">
+					<IonIcon :ios="saveIOS" :md="saveMD" />
+				</IonFabButton>
+			</IonFab>
+		</IonContent>
+	</IonPage>
+</template>
+
+<style scoped>
+	ion-button {
+		width: 100%;
+		margin-top: 16px;
+	}
+
+	.md ion-input {
+		margin: 16px 0;
+	}
+</style>

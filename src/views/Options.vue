@@ -16,6 +16,7 @@
 		swapVerticalOutline as ImportExportIOS,
 		informationCircleOutline as AboutIOS,
 		sparklesOutline as SparklesIOS,
+		folderOpenOutline as FolderIOS
 	} from "ionicons/icons";
 
 	import LockMD from '@material-symbols/svg-600/outlined/lock.svg';
@@ -29,6 +30,7 @@
 	import AccessibilityMD from '@material-symbols/svg-600/outlined/accessibility_new.svg';
 	import ImportExportMD from '@material-symbols/svg-600/outlined/swap_vert.svg';
 	import AboutMD from '@material-symbols/svg-600/outlined/info.svg';
+	import FolderMD from '@material-symbols/svg-600/outlined/folder_open.svg';
 	import { securityConfig } from '../lib/config';
 	import { lock } from '../lib/applock';
 
@@ -79,9 +81,14 @@
 					<IonLabel>{{ $t("options:messageBoard.header") }}</IonLabel>
 				</IonItem>
 
-				<IonItem button routerLink="/options/tagManagement">
+				<IonItem button routerLink="/options/tagManagement" v-if="isDev || isTauri">
 					<IonIcon :ios="TagIOS" :md="TagMD" slot="start" aria-hidden="true" />
 					<IonLabel>{{ $t("options:tagManagement.header") }}</IonLabel>
+				</IonItem>
+
+				<IonItem button routerLink="/options/assetManager">
+					<IonIcon :ios="FolderIOS" :md="FolderMD" slot="start" aria-hidden="true" />
+					<IonLabel>{{ $t("options:assetManager.header") }}</IonLabel>
 				</IonItem>
 
 				<IonItem button routerLink="/options/reminders" v-if="isDev || isTauri">

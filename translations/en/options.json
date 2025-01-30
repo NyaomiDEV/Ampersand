@@ -94,6 +94,25 @@
 			}
 		}
 	},
+	"assetManager": {
+		"header": "Asset manager",
+		"searchPlaceholder": "Search assets...",
+		"add": {
+			"header": "Add asset",
+			"attachment": "Add attachment"
+		},
+
+		"edit": {
+			"header": "Edit asset",
+			"friendlyName": "Edit name",
+			"attachment": "Replace attachment"
+		},
+
+		"delete": {
+			"title": "Delete asset",
+			"desc": "You won't be able to undo this action!"
+		}
+	},
 	"reminders": {
 		"header": "Reminders",
 		"eventBasedLocale": "Event based reminders",

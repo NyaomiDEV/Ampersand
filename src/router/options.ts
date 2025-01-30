@@ -27,6 +27,11 @@ const options: Array<RouteRecordRaw> = [
 		component: () => import("../views/options/TagManagement.vue"),
 	},
 	{
+		path: '/options/assetManager',
+		name: 'Asset Manager',
+		component: () => import("../views/options/AssetManager.vue"),
+	},
+	{
 		path: '/options/reminders',
 		name: 'Reminders',
 		component: () => import("../views/options/Reminders.vue"),
