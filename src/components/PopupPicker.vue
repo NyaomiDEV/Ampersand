@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { IonModal, IonPicker, IonPickerColumn, IonPickerColumnOption } from '@ionic/vue';
-	import { onMounted, Reactive, reactive, watch } from 'vue';
+	import { onMounted, reactive, watch } from 'vue';
 
 	type ColumnContent = {
 		name: string,
