@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { IonSegmentButton, IonIcon } from "@ionic/vue";
 
-	import CheckMD from '@material-design-icons/svg/outlined/check.svg';
+	import CheckMD from '@material-symbols/svg-600/outlined/check.svg';
 </script>
 
 <template>

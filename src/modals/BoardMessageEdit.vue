@@ -22,8 +22,8 @@
 		trashBinOutline as trashIOS
 	} from "ionicons/icons";
 
-	import saveMD from "@material-symbols/svg-400/outlined/save.svg";
-	import trashMD from "@material-symbols/svg-400/outlined/delete.svg";
+	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
+	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
 
 	import { BoardMessageComplete } from "../lib/db/entities";
 	import { updateBoardMessage, deleteBoardMessage, newBoardMessage } from "../lib/db/tables/boardMessages";

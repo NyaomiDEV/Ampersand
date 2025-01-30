@@ -18,17 +18,17 @@
 		sparklesOutline as SparklesIOS,
 	} from "ionicons/icons";
 
-	import LockMD from '@material-symbols/svg-400/outlined/lock.svg';
-	import SparklesMD from '@material-symbols/svg-400/outlined/star.svg';
-	import SystemMD from '@material-symbols/svg-400/outlined/person.svg';
-	import FrontHistoryMD from '@material-symbols/svg-400/outlined/show_chart.svg';
-	import MessageBoardMD from '@material-symbols/svg-400/outlined/newspaper.svg';
-	import TagMD from '@material-symbols/svg-400/outlined/label.svg';
-	import RemindersMD from '@material-symbols/svg-400/outlined/notification_add.svg';
-	import SettingsMD from '@material-symbols/svg-400/outlined/settings.svg';
-	import AccessibilityMD from '@material-symbols/svg-400/outlined/accessibility_new.svg';
-	import ImportExportMD from '@material-symbols/svg-400/outlined/swap_vert.svg';
-	import AboutMD from '@material-symbols/svg-400/outlined/info.svg';
+	import LockMD from '@material-symbols/svg-600/outlined/lock.svg';
+	import SparklesMD from '@material-symbols/svg-600/outlined/star.svg';
+	import SystemMD from '@material-symbols/svg-600/outlined/person.svg';
+	import FrontHistoryMD from '@material-symbols/svg-600/outlined/show_chart.svg';
+	import MessageBoardMD from '@material-symbols/svg-600/outlined/newspaper.svg';
+	import TagMD from '@material-symbols/svg-600/outlined/label.svg';
+	import RemindersMD from '@material-symbols/svg-600/outlined/notification_add.svg';
+	import SettingsMD from '@material-symbols/svg-600/outlined/settings.svg';
+	import AccessibilityMD from '@material-symbols/svg-600/outlined/accessibility_new.svg';
+	import ImportExportMD from '@material-symbols/svg-600/outlined/swap_vert.svg';
+	import AboutMD from '@material-symbols/svg-600/outlined/info.svg';
 	import { securityConfig } from '../lib/config';
 	import { lock } from '../lib/applock';
 

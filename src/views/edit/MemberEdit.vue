@@ -34,12 +34,12 @@
 		trashBinOutline as trashIOS
 	} from "ionicons/icons";
 
-	import pencilMD from "@material-symbols/svg-400/outlined/edit.svg";
-	import saveMD from "@material-symbols/svg-400/outlined/save.svg";
-	import personMD from "@material-symbols/svg-400/outlined/person.svg";
-	import newspaperMD from "@material-symbols/svg-400/outlined/newspaper.svg";
-	import journalMD from "@material-symbols/svg-400/outlined/book.svg";
-	import trashMD from "@material-symbols/svg-400/outlined/delete.svg";
+	import pencilMD from "@material-symbols/svg-600/outlined/edit.svg";
+	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
+	import personMD from "@material-symbols/svg-600/outlined/person.svg";
+	import newspaperMD from "@material-symbols/svg-600/outlined/newspaper.svg";
+	import journalMD from "@material-symbols/svg-600/outlined/book.svg";
+	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
 
 	import { Member, Tag } from "../../lib/db/entities";
 	import { getMembers, newMember, deleteMember, updateMember } from '../../lib/db/tables/members';

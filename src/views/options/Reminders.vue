@@ -4,7 +4,7 @@
 	import { addOutline as addIOS } from "ionicons/icons";
 
 	import Spinner from '../../components/Spinner.vue';
-	import addMD from "@material-design-icons/svg/outlined/add.svg";
+	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 	import { Reminder } from '../../lib/db/entities';
 	import { getReminders } from '../../lib/db/tables/reminders';
 	import { DatabaseEvent, DatabaseEvents } from '../../lib/db/events';

@@ -2,7 +2,7 @@
 	import { IonContent, IonSearchbar, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonSegment, IonSegmentButton, IonLabel, IonFab, IonFabButton, IonIcon, IonItem } from '@ionic/vue';
 	import { inject, onMounted, onUnmounted, ref, shallowRef } from 'vue';
 	import { addOutline as addIOS } from "ionicons/icons";
-	import addMD from "@material-design-icons/svg/outlined/add.svg";
+	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 	import { getFilteredTags } from '../../lib/db/search';
 	import { getTags } from '../../lib/db/tables/tags';
 	import type { Tag } from '../../lib/db/entities.d.ts';

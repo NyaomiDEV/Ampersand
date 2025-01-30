@@ -24,7 +24,7 @@
 		saveOutline as saveIOS,
 	} from "ionicons/icons";
 
-	import saveMD from "@material-symbols/svg-400/outlined/save.svg";
+	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
 
 	import MD3SegmentButton from '../../components/MD3SegmentButton.vue';
 	import PopupPicker from "../../components/PopupPicker.vue";

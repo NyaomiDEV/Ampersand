@@ -32,14 +32,14 @@
 		archiveOutline as archivedIOS
 	} from "ionicons/icons";
 
-	import addMD from "@material-symbols/svg-400/outlined/add.svg";
-	import addToFrontMD from "@material-symbols/svg-400/outlined/person_add.svg";
-	import removeFromFrontMD from "@material-symbols/svg-400/outlined/person_remove.svg";
-	import setMainFronterMD from "@material-symbols/svg-400/outlined/arrow_circle_up.svg";
-	import unsetMainFronterMD from "@material-symbols/svg-400/outlined/arrow_circle_down.svg";
-	import mainFronterMD from "@material-symbols/svg-400/outlined/account_circle-fill.svg";
-	import setAsFrontMD from "@material-symbols/svg-400/outlined/person_pin_circle.svg";
-	import archivedMD from "@material-symbols/svg-400/outlined/archive.svg";
+	import addMD from "@material-symbols/svg-600/outlined/add.svg";
+	import addToFrontMD from "@material-symbols/svg-600/outlined/person_add.svg";
+	import removeFromFrontMD from "@material-symbols/svg-600/outlined/person_remove.svg";
+	import setMainFronterMD from "@material-symbols/svg-600/outlined/arrow_circle_up.svg";
+	import unsetMainFronterMD from "@material-symbols/svg-600/outlined/arrow_circle_down.svg";
+	import mainFronterMD from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
+	import setAsFrontMD from "@material-symbols/svg-600/outlined/person_pin_circle.svg";
+	import archivedMD from "@material-symbols/svg-600/outlined/archive.svg";
 
 	import { getMembers } from '../lib/db/tables/members.ts';
 	import type { Member, FrontingEntry } from '../lib/db/entities';

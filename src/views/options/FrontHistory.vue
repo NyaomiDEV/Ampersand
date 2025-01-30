@@ -18,9 +18,9 @@
 		addOutline as addIOS
 	} from "ionicons/icons";
 
-	import calendarMD from "@material-symbols/svg-400/outlined/calendar_month.svg";
-	import listMD from "@material-symbols/svg-400/outlined/list.svg";
-	import addMD from "@material-symbols/svg-400/outlined/add.svg";
+	import calendarMD from "@material-symbols/svg-600/outlined/calendar_month.svg";
+	import listMD from "@material-symbols/svg-600/outlined/list.svg";
+	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 
 	import { appConfig } from '../../lib/config';
 	import { DatabaseEvents, DatabaseEvent } from '../../lib/db/events';
