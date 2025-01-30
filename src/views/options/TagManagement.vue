@@ -3,7 +3,7 @@
 	import { inject, onMounted, onUnmounted, ref, shallowRef, watch } from 'vue';
 	import { addOutline as addIOS } from "ionicons/icons";
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
-	import { getFilteredTags } from '../../lib/db/search';
+	import { getFilteredTags } from '../../lib/search.ts';
 	import { getTags } from '../../lib/db/tables/tags';
 	import type { Tag } from '../../lib/db/entities.d.ts';
 	import TagColor from '../../components/tag/TagColor.vue';

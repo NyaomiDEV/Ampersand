@@ -12,7 +12,7 @@
 	} from "@ionic/vue";
 
 	import { inject, onBeforeMount, reactive, ref, shallowRef, watch } from "vue";
-	import { getFilteredTags } from "../lib/db/search";
+	import { getFilteredTags } from "../lib/search";
 	import { getTags } from "../lib/db/tables/tags";
 	import { Tag } from "../lib/db/entities";
 	import TagColor from "../components/tag/TagColor.vue";

@@ -21,7 +21,7 @@
 	dayjs.extend(LocalizedFormat);
 
 	import { appConfig } from '../../lib/config';
-	import { getFilteredBoardMessages } from '../../lib/db/search';
+	import { getFilteredBoardMessages } from '../../lib/search.ts';
 	import MessageBoardCard from '../../components/MessageBoardCard.vue';
 	import { DatabaseEvents, DatabaseEvent } from '../../lib/db/events';
 	import { useRoute } from 'vue-router';

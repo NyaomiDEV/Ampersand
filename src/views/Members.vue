@@ -18,7 +18,7 @@
 		IonBackButton,
 	} from '@ionic/vue';
 	import { inject, onBeforeMount, onUnmounted, ref, shallowReactive, shallowRef, useTemplateRef, watch } from 'vue';
-	import { getFilteredMembers } from '../lib/db/search.ts';
+	import { getFilteredMembers } from '../lib/search.ts';
 	import { accessibilityConfig } from '../lib/config/index.ts';
 
 	import {

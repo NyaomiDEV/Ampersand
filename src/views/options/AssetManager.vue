@@ -6,6 +6,7 @@
 	import { getAssets } from '../../lib/db/tables/assets';
 	import { DatabaseEvent, DatabaseEvents } from '../../lib/db/events';
 	import { useRoute } from 'vue-router';
+	import { getFilteredAssets } from '../../lib/search';
 
 	import {
 		addOutline as addIOS
@@ -23,6 +24,7 @@
 	});
 
 	const assets = shallowRef<Asset[]>();
+	const filteredAssets = getFilteredAssets(search, assets);
 
 	const listener = async (event: Event) => {
 		if(["assets"].includes((event as DatabaseEvent).data.table)){
@@ -63,7 +65,7 @@
 		
 		<IonContent>
 			<IonList :inset="isIOS">
-				<AssetItem :asset v-for="asset in assets" />
+				<AssetItem :asset v-for="asset in filteredAssets" />
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">

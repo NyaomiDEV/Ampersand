@@ -13,7 +13,7 @@
 	} from "@ionic/vue";
 
 	import { inject, onMounted, onUnmounted, reactive, ref, shallowRef, watch } from "vue";
-	import { getFilteredMembers } from "../lib/db/search";
+	import { getFilteredMembers } from "../lib/search.ts";
 	import MemberAvatar from "../components/member/MemberAvatar.vue";
 	import MemberLabel from "../components/member/MemberLabel.vue";
 	import type { Member } from "../lib/db/entities.d.ts";

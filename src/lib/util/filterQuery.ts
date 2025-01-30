@@ -298,3 +298,64 @@ export function parseBoardMessageFilterQuery(search: string) {
 	result.query = queryTokens.filter(Boolean).join(" ");
 	return result;
 }
+
+export type AssetFilterQuery = {
+	query: string,
+	all?: boolean,
+	type?: string,
+	filename?: string
+};
+
+export function parseAssetFilterQuery(search: string) {
+	const tokens = search.split(" ");
+
+	const queryTokens: string[] = [];
+
+	const result: AssetFilterQuery = {
+		query: "",
+	};
+
+	for (const token of tokens) {
+		switch (token.charAt(0)) {
+			case "@":
+				const tokenParts = token.slice(1).split(":");
+				switch (tokenParts[0].toLowerCase()) {
+					case "all":
+						if (tokenParts[1]) {
+							switch (tokenParts[1].toLowerCase()) {
+								case "yes":
+								case "true":
+									result.all = true;
+									break;
+								case "no":
+								case "false":
+									result.all = false;
+									break;
+								default:
+									queryTokens.push(token);
+									break;
+							}
+						} else
+							result.all = true;
+
+						break;
+					case "type":
+						result.type = tokenParts[1];
+						break;
+					case "filename":
+						result.filename = tokenParts[1];
+						break;
+					default:
+						queryTokens.push(token);
+						break;
+				}
+				break;
+			default:
+				queryTokens.push(token);
+				break;
+		}
+	}
+
+	result.query = queryTokens.filter(Boolean).join(" ");
+	return result;
+}

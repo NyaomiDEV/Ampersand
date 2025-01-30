@@ -1,11 +1,11 @@
 
 import { shallowRef, Ref, ShallowRef, watch } from "vue";
-import { Member, Tag, FrontingEntry, FrontingEntryComplete, BoardMessage, BoardMessageComplete } from "./entities";
-import { parseBoardMessageFilterQuery, parseFrontingHistoryFilterQuery, parseMemberFilterQuery } from "../util/filterQuery";
+import { Member, Tag, FrontingEntry, FrontingEntryComplete, BoardMessage, BoardMessageComplete, Asset } from "./db/entities";
+import { parseAssetFilterQuery, parseBoardMessageFilterQuery, parseFrontingHistoryFilterQuery, parseMemberFilterQuery } from "./util/filterQuery";
 import dayjs from "dayjs";
-import { toBoardMessageComplete } from "./tables/boardMessages";
-import { toFrontingEntryComplete } from "./tables/frontingEntries";
-import { appConfig } from "../config";
+import { toBoardMessageComplete } from "./db/tables/boardMessages";
+import { toFrontingEntryComplete } from "./db/tables/frontingEntries";
+import { appConfig } from "./config";
 
 export function getFilteredMembers(search: Ref<string>, members: ShallowRef<Member[] | undefined>){
 	const _members = shallowRef<Member[]>([]);
@@ -266,4 +266,57 @@ export function getFilteredBoardMessages(search: Ref<string>, boardMessages: Sha
 	}, { immediate: true });
 
 	return _boardMessages;
+}
+
+export function getFilteredAssets(search: Ref<string>, assets: ShallowRef<Asset[] | undefined>) {
+	const _assets = shallowRef<Asset[]>([]);
+
+	watch([
+		search,
+		assets
+	], async () => {
+		if (!assets.value) return;
+		const filtered: Asset[] = [];
+
+		let query: string;
+
+		if (!search.value.length)
+			query = appConfig.defaultFilterQueries.messageBoard || "";
+		else
+			query = search.value;
+
+
+		if (!query.length) {
+			for (const x of assets.value)
+				filtered.push(x)
+		} else {
+			const parsed = parseAssetFilterQuery(query);
+
+			for (const x of assets.value) {
+				if (parsed.all) {
+					filtered.push(x);
+					continue;
+				}
+
+				if (!x.friendlyName.toLowerCase().startsWith(parsed.query.toLowerCase()))
+					continue;
+
+				if (parsed.type) {
+					if (x.file.type.split("/")[1].toLowerCase() !== parsed.type.toLowerCase())
+						continue;
+				}
+
+				if (parsed.filename) {
+					if (x.file.name.toLowerCase() !== parsed.filename.toLowerCase())
+						continue;
+				}
+
+				filtered.push(x)
+			}
+		}
+
+		_assets.value = filtered;
+	}, { immediate: true });
+
+	return _assets;
 }
