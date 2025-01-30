@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonList, IonPage, IonLabel, IonListHeader, IonTitle, IonToolbar, IonBackButton, IonItem, IonToggle, IonSegment, IonSelect, IonSelectOption, IonInput } from '@ionic/vue';
+	import { IonContent, IonHeader, IonList, IonPage, IonLabel, IonListHeader, IonTitle, IonToolbar, IonBackButton, IonItem, IonSegment, IonSelect, IonSelectOption, IonInput } from '@ionic/vue';
 	import { inject, ref, watch } from 'vue';
 
 	import NotDoneYet from "../../components/NotDoneYet.vue";
