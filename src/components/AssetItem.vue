@@ -18,7 +18,7 @@
 </template>
 
 <style scoped>
-    img {
-	    border-radius: 24%;
+    ion-thumbnail {
+	    --border-radius: 16px;
     }
 </style>

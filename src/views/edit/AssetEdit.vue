@@ -15,16 +15,19 @@
 		IonPage,
 		IonBackButton,
 		useIonRouter,
-		alertController
+		alertController,
+		IonThumbnail
 	} from "@ionic/vue";
 
 	import {
 		saveOutline as saveIOS,
 		trashBinOutline as trashIOS,
+		documentOutline as documentIOS
 	} from "ionicons/icons";
 
 	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
+	import documentMD from "@material-symbols/svg-600/outlined/draft.svg";
 
 	import { getAssets, newAsset, deleteAsset, updateAsset } from '../../lib/db/tables/assets';
 	import { Asset } from "../../lib/db/entities";
@@ -33,6 +36,7 @@
 	import { useRoute } from "vue-router";
 	import { useTranslation } from "i18next-vue";
 	import { getFiles } from "../../lib/util/misc";
+	import { getBlobURL } from "../../lib/util/blob";
 
 	const isIOS = inject<boolean>("isIOS");
 
@@ -45,10 +49,14 @@
 	const router = useIonRouter();
 	const i18next = useTranslation();
 
+	const preview = ref();
+
 	async function updateFile() {
 		const files = await getFiles();
 		if (files.length > 0) {
 			asset.value.file = files[0];
+
+			preview.value = await generatePreview();
 		}
 	}
 
@@ -104,7 +112,22 @@
 				asset.value = _asset;
 			else asset.value = {...emptyAsset};
 		} else asset.value = {...emptyAsset};
+	}
 
+	function generatePreview(){
+		if(asset.value.file){
+			const file: File = asset.value.file;
+			switch(file.type){
+				case "image/png":
+				case "image/jpeg":
+				case "image/gif":
+				case "image/webp":
+					return getBlobURL(file);
+				default:
+					break;
+			}
+		}
+		return;
 	}
 
 	watch(route, updateRoute);
@@ -124,18 +147,22 @@
 
 		<IonContent>
 			<IonList :inset="isIOS">
-				<IonItem>
-					<IonButton @click="updateFile">
-						<IonLabel>
-							{{ !asset.uuid ? $t("options:assetManager.add.attachment") : $t("options:assetManager.edit.attachment") }}
-						</IonLabel>
-					</IonButton>
-				</IonItem>
 
 				<IonItem v-if="asset.file">
+					<IonThumbnail v-if="preview" slot="start">
+						<img :src="preview" />
+					</IonThumbnail>
+					<IonIcon v-else slot="start" :ios="documentIOS" :md="documentMD" />
 					<IonLabel>
-						{{ asset.file.name }}
+						<h2>{{ asset.file.name }}</h2>
+						<p>{{ asset.file.type.split("/")[1].replace(/^x-/, '') }}</p>
 					</IonLabel>
+				</IonItem>
+
+				<IonItem>
+					<IonButton @click="updateFile">
+						{{ !asset.file ? $t("options:assetManager.add.attachment") : $t("options:assetManager.edit.attachment") }}
+					</IonButton>
 				</IonItem>
 
 				<IonItem>
@@ -164,6 +191,16 @@
 	ion-button {
 		width: 100%;
 		margin-top: 16px;
+	}
+
+	ion-item ion-icon {
+		width: 36px;
+		height: 36px;
+		margin-inline-start: 16px;
+	}
+
+	ion-thumbnail {
+		--border-radius: 16px;
 	}
 
 	.md ion-input {

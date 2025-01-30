@@ -12,7 +12,6 @@
 
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 
-
 	const isIOS = inject<boolean>("isIOS");
 
 	const assets = shallowRef<Asset[]>();
@@ -59,7 +58,7 @@
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton routerLink="/options/assetManager/edit">
+				<IonFabButton routerLink="/options/assetManager/edit/">
 					<IonIcon :ios="addIOS" :md="addMD" />
 				</IonFabButton>
 			</IonFab>
