@@ -1,5 +1,6 @@
 .markdown-content {
     margin: 8px 0;
+    overflow-wrap: anywhere;
 }
 
 /* Horizontal Rules */
