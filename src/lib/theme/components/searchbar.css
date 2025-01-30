@@ -1,5 +1,5 @@
 /* Search bar - this one is done "at eye" please review */
 .md.md3 ion-searchbar {
 	--border-radius: 32px;
-	--box-shadow: unset;
+	--box-shadow: none;
 }
