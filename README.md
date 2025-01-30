@@ -6,7 +6,7 @@ Welcome to Ampersand.
 
 ## Days since last incident, but in reverse
 
-May 4, 2024
+January 30, 2025
 
 ## What is Ampersand?
 
@@ -18,7 +18,7 @@ Because all other approaches up until now are cloud based. We need at least one 
 
 ## So, is this for privacy reasons?
 
-It is not. It's just because it's unreasonable that other apps and services out here do require an account somewhere to work, and while some do offer an "offline mode", they still require online signup. What if one wants their data to live and die on their phone/tablet/desktop/laptop?
+It is not. It's just because it's unreasonable that other apps and services out here do require an account somewhere to work, and while some do offer an "offline mode", they still require online signup. What if one wants their data to live and die on their device?
 
 But if you want to think of it on those terms, sure, having an offline app could also mean privacy.
 
@@ -32,7 +32,7 @@ Something like this [Figma prototype](https://www.figma.com/proto/vD1U1Ed4ACd55t
 
 ## Tech question: which tech stack are you using?
 
-Ampersand is made using Vue 3 and Vite. We're using Ionic Framework 8 for our UI widgets, and while we're waiting for them to update to Material 3, we took our own CSS shortcuts to achieve that style. Database is handled by Dexie.js for the PWA, while it's a disaster craft of ours on Android (don't look at it - it will hurt you). Everything else, unless specified here, is assumed to be Nao's disaster craft.
+Ampersand is made using Vue 3 and Rspack. We're using Ionic Framework 8 for our UI widgets, and while we're waiting for them to update to Material 3, we took our own CSS shortcuts to achieve that style. Database is handled by Dexie.js for the PWA, while it's a disaster craft of ours on Android (don't look at it - it will hurt you). Everything else, unless specified here, is assumed to be Nao's disaster craft.
 
 ## Can I contribute code?
 
@@ -46,7 +46,8 @@ If you want to send money specifically to the main developer, you can donate on 
 
 ## Who's developing this app for now?
 
-@NyaomiDEV at the "back end" and @mecha-cat at the "front end", except that it all runs on your device so it's unclear if we can use those terms as broadly understood.
+- @NyaomiDEV: Most "backend" app logic;
+- @mecha-cat: Italian translation, CSS fixes, some UI work, QoL testing.
 
 ## License
 
