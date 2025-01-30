@@ -23,31 +23,22 @@
 	const isIOS = inject<boolean>("isIOS");
 
 	const props = defineProps<{
-		selectedMembers: Member[],
 		onlyOne?: boolean
 	}>();
 
-	const selectedMembers = props.selectedMembers;
-
-	const emit = defineEmits<{
-		selectedMembers: [Member[]]
-	}>();
+	const selectedMembers = defineModel<Member[]>({default: []});
 
 	function check(ev: CheckboxCustomEvent){
 		if(ev.detail.checked){
 			if(props.onlyOne)
-				selectedMembers.length = 0;
-			selectedMembers.push(filteredMembers.value?.find(x => x.uuid === ev.detail.value)!);
+				selectedMembers.value.length = 0;
+			selectedMembers.value.push(filteredMembers.value?.find(x => x.uuid === ev.detail.value)!);
 		}
 		else {
-			const index = selectedMembers.findIndex(x => x.uuid === ev.detail.value);
+			const index = selectedMembers.value.findIndex(x => x.uuid === ev.detail.value);
 			if(index > -1)
-				selectedMembers.splice(index, 1);
+				selectedMembers.value.splice(index, 1);
 		}
-	}
-
-	function dismiss(){
-		emit("selectedMembers", [...selectedMembers]);
 	}
 
 	const search = ref("");
@@ -70,7 +61,7 @@
 </script>
 
 <template>
-	<IonModal class="member-select-modal" :breakpoints="[0,0.25,0.75,1]" initialBreakpoint="0.75" @willDismiss="dismiss">
+	<IonModal class="member-select-modal" :breakpoints="[0,0.25,0.75,1]" initialBreakpoint="0.75">
 		<IonHeader>
 			<IonToolbar>
 				<IonTitle>{{ $t("other:memberSelect.header") }}</IonTitle>

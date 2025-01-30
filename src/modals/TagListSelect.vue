@@ -21,15 +21,7 @@
 
 	const isIOS = inject<boolean>("isIOS");
 
-	const props = defineProps<{
-		selectedTags: Tag[]
-	}>();
-
-	const emit = defineEmits<{
-		selectedTags: [Tag[]]
-	}>();
-
-	const selectedTags = props.selectedTags;
+	const selectedTags = defineModel<Tag[]>({default: []});
 
 	const search = ref("");
 	const tags = shallowRef<Tag[]>([]);
@@ -41,21 +33,17 @@
 
 	function check(ev: CheckboxCustomEvent){
 		if(ev.detail.checked)
-			selectedTags.push(tags.value.find(x => x.uuid === ev.detail.value)!);
+			selectedTags.value.push(tags.value.find(x => x.uuid === ev.detail.value)!);
 		else {
-			const index = selectedTags.findIndex(x => x.uuid === ev.detail.value);
+			const index = selectedTags.value.findIndex(x => x.uuid === ev.detail.value);
 			if(index > -1)
-				selectedTags.splice(index, 1);
+				selectedTags.value.splice(index, 1);
 		}
-	}
-
-	function dismiss(){
-		emit("selectedTags", [...selectedTags]);
 	}
 </script>
 
 <template>
-	<IonModal class="tag-select-modal" :breakpoints="[0,0.25,0.75,1]" initialBreakpoint="0.75" @willDismiss="dismiss">
+	<IonModal class="tag-select-modal" :breakpoints="[0,0.25,0.75,1]" initialBreakpoint="0.75">
 		<IonHeader>
 			<IonToolbar>
 				<IonTitle>{{ $t("other:taglistSelect:header") }}</IonTitle>
