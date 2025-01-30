@@ -14,6 +14,7 @@
     "@ionic/vue": "^8.4.3",
     "@ionic/vue-router": "^8.4.3",
     "@material-design-icons/svg": "^0.14.14",
+    "@material-symbols/svg-400": "^0.28.1",
     "@material/material-color-utilities": "^0.3.0",
     "@msgpack/msgpack": "^3.0.0-beta3",
     "@tauri-apps/plugin-biometric": "~2",
