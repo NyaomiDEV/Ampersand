@@ -3,6 +3,7 @@
 
 	import { computed, provide } from "vue";
 	import { isIOSIonicMode } from "./lib/mode";
+	import ModalContainer from "./components/ModalContainer.vue";
 
 	provide("isIOS", computed(isIOSIonicMode));
 
@@ -19,5 +20,6 @@
 <template>
 	<IonApp>
 		<IonRouterOutlet />
+		<ModalContainer />
 	</IonApp>
 </template>
