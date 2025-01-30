@@ -21,6 +21,7 @@
 
 	const membersShowed = ref(false);
 	const memberCount = ref(0);
+	const archivedMemberCount = ref(0);
 
 	const system = ref();
 
@@ -45,6 +46,7 @@
 	onMounted(async () => {
 		system.value = await getSystem();
 		memberCount.value = (await getMembers()).filter(x => !x.isCustomFront).length;
+		archivedMemberCount.value = (await getMembers()).filter(x => x.isArchived).length;
 	});
 </script>
 
@@ -80,7 +82,7 @@
 				<IonItem>
 					<IonLabel>{{ $t("options:systemSettings.memberCount") }}</IonLabel>
 					<IonButton slot="end" v-if="!membersShowed" @click="membersShowed = true">{{ $t("options:systemSettings.tapToShow") }}</IonButton>
-					<IonLabel slot="end" v-if="membersShowed">{{ $t("options:systemSettings.memberCountText", { memberCount }) }}</IonLabel>
+					<IonLabel slot="end" v-if="membersShowed">{{ $t("options:systemSettings.memberCountText", { memberCount, archivedMemberCount }) }}</IonLabel>
 				</IonItem>
 			</IonList>
 
