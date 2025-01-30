@@ -18,6 +18,7 @@
 /* Tables */
 .markdown-content table {
     border: 1px solid var(--ion-text-color-step-400);
+    margin-bottom: 8px;
 }
 
 .markdown-content table tr {
