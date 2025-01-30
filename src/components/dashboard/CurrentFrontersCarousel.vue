@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { IonCard, IonCardContent, IonLabel, IonListHeader } from '@ionic/vue';
-	import FrontingEntryAvatar from '../frontingEntry/FrontingEntryAvatar.vue';
+	import MemberAvatar from '../member/MemberAvatar.vue';
 	import { h, onBeforeMount, onUnmounted, ref, shallowRef } from 'vue';
 	import type { FrontingEntryComplete } from '../../lib/db/entities.d.ts';
 	import { getFrontingEntries, toFrontingEntryComplete } from '../../lib/db/tables/frontingEntries';
@@ -68,7 +68,7 @@
 	<div class="carousel" v-if="frontingEntries.length">
 		<IonCard button :class="{outlined: !fronting.isMainFronter, elevated: fronting.isMainFronter}" @click="showModal(fronting)" v-for="fronting in frontingEntries" :key="JSON.stringify(fronting)">
 			<IonCardContent>
-				<FrontingEntryAvatar :entry="fronting" />
+				<MemberAvatar :member="fronting.member" />
 				<IonLabel>
 					<h2>
 						{{ fronting.member.name }}

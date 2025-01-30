@@ -60,15 +60,9 @@ p {
 	text-wrap: wrap;
 }
 
-ion-label > .sc-ion-label-md {
-	text-wrap: nowrap;
-	text-overflow: ellipsis;
-	overflow: hidden;
-}
-
-ion-label > .sc-ion-label-ios {
-	text-wrap: nowrap;
-	text-overflow: ellipsis;
-	overflow: hidden;
+ion-label.nowrap > * {
+	text-wrap: nowrap !important;
+	text-overflow: ellipsis !important;
+	overflow: hidden !important;
 }
 

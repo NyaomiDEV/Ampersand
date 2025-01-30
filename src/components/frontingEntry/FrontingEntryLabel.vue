@@ -62,7 +62,7 @@
 		<h2>
 			{{ props.entry.member.name }}
 		</h2>
-		<p v-if="props.entry.customStatus" style="color: inherit;">
+		<p class="custom-status" v-if="props.entry.customStatus" style="color: inherit;">
 			{{ props.entry.customStatus }}
 		</p>
 		<p>
@@ -70,3 +70,11 @@
 		</p>
 	</IonLabel>
 </template>
+
+<style scoped>
+	h2, p.custom-status {
+		text-wrap: nowrap;
+		text-overflow: ellipsis;
+		overflow: hidden;
+	}
+</style>

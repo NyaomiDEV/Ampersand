@@ -149,35 +149,34 @@
 
 <template>
 	<IonCard button :class="{filled: props.boardMessage.isPinned}">
-		<IonItem>
-			<MemberAvatar slot="start" :member="props.boardMessage.member" />
-			<IonLabel>
-				<div class="flexbox">
-					<div class="subheader">
-						<h3 style="color:var(--ion-text-color-step-400)">{{ props.boardMessage.member.name }}</h3>
-						<p>{{ dayjs(props.boardMessage.date).format(`LL, ${twelveHour ? 'hh:mm A' : "HH:mm"}`) }}</p>
-					</div>
-					<div class="contents">
-						<h1>{{ props.boardMessage.title }}</h1>
-						<h2>
-							<Markdown :markdown="props.boardMessage.body" />
-						</h2>
-						<p class="contains-poll" v-if="props.boardMessage.poll && props.hidePoll">
-							{{ $t("other:polls.boardMessageContainsPoll") }}
-						</p>
-					</div>
-					<div class="poll" v-if="props.boardMessage.poll && !props.hidePoll" @click="(e) => e.stopPropagation()">
-						<IonItem button v-for="choice in props.boardMessage.poll.entries" @click="voteFor(choice)">
-							<IonLabel>
-								<h3>{{ choice.choice }}</h3>
-								<p>{{ $t("other:polls.choice.desc", { count: choice.votes.length }) }} - {{ calcPercentageVoted(choice) * 100 }}%</p>
-							</IonLabel>
-						</IonItem>
-						<IonButton @click="showPollResults">{{ $t("other:polls.resultsButton") }}</IonButton>
-					</div>
+		<div class="card-inner">
+			<MemberAvatar :member="props.boardMessage.member" />
+			<div class="flexbox">
+				<div class="subheader">
+					<h3 style="color: var(--ion-text-color-step-400)">{{ props.boardMessage.member.name }}</h3>
+					<p>{{ dayjs(props.boardMessage.date).format(`LL, ${twelveHour ? 'hh:mm A' : "HH:mm"}`) }}</p>
 				</div>
-			</IonLabel>
-		</IonItem>
+				<div class="contents">
+					<h1>{{ props.boardMessage.title }}</h1>
+					<h2>
+						<Markdown :markdown="props.boardMessage.body" />
+					</h2>
+					<p class="contains-poll" v-if="props.boardMessage.poll && props.hidePoll">
+						{{ $t("other:polls.boardMessageContainsPoll") }}
+					</p>
+				</div>
+				<div class="poll" v-if="props.boardMessage.poll && !props.hidePoll" @click="(e) => e.stopPropagation()">
+					<IonItem button detail="false" v-for="choice in props.boardMessage.poll.entries" @click="voteFor(choice)">
+						<IonLabel>
+							<h3>{{ choice.choice }}</h3>
+							<p>{{ $t("other:polls.choice.desc", { count: choice.votes.length }) }} - {{ calcPercentageVoted(choice) * 100 }}%</p>
+							<div class="percentage" :style="{'--vote-percentage': (calcPercentageVoted(choice) * 100) + '%'}" v-if="choice.votes.length"></div>
+						</IonLabel>
+					</IonItem>
+					<IonButton @click="showPollResults">{{ $t("other:polls.resultsButton") }}</IonButton>
+				</div>
+			</div>
+		</div>
 	</IonCard>
 </template>
 
@@ -190,50 +189,90 @@
 		--background: transparent;
 	}
 
-	ion-card ion-label .flexbox {
+	ion-card .card-inner {
+		display: flex;
+		flex-direction: row;
+		align-items: top;
+		gap: 16px;
+		padding: 16px;
+	}
+
+	ion-card .card-inner ion-avatar {
+		width: 40px;
+		height: 40px;
+		align-self: flex-start;
+		flex-shrink: 0;
+		flex-grow: 0;
+	}
+
+	ion-card .flexbox {
 		display: flex;
 		flex-direction: column;
 		gap: .25em;
+		width: 100%;
 	}
 
-	ion-card ion-label .subheader {
+	ion-card .subheader {
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
 		align-items: center;
 	}
 
-	ion-card ion-label .contents {
+	ion-card .subheader * {
+		margin: 0;
+	}
+
+	ion-card .contents {
 		display: flex;
 		flex-direction: column;
 		gap: .25em;
 	}
 
-	ion-card ion-label .contents h1 {
+	ion-card .contents * {
+		margin: 0;
+	}
+
+	ion-card .contents h1 {
 		font-size: 1.30em;
 		margin-bottom: 0;
 	}
 
-	ion-card ion-label .contents p.contains-poll {
+	ion-card .contents p.contains-poll {
 		opacity: .5;
 	}
 
-	ion-card ion-label .poll {
+	ion-card .poll {
 		display: flex;
 		flex-direction: column;
-		gap: .25em;
-		border-radius: 16px;
-		border: 1px solid var(--ion-text-color-step-800);
+		gap: .5rem;
 		overflow: hidden;
 	}
 
-	ion-card ion-label .poll ion-item {
+	ion-card .poll ion-item {
 		--inner-padding-bottom: 4px;
 		--inner-padding-top: 4px;
 		--min-height: none;
+		border: 1px solid var(--ion-text-color-step-700);
+		border-radius: 16px;
 	}
 
-	ion-card ion-label .poll ion-item ion-label {
+	ion-card .poll ion-item.md {
+		--inner-padding-end: 0px;
+	}
+
+	ion-card .percentage {
+		display: block;
+		box-sizing: border-box;
+		margin: 8px 0px 0px 0px;
+		width: var(--vote-percentage);
+		transition: ease .2s width;
+		height: 4px;
+		background-color: var(--ion-color-primary);
+		border-radius: 4px;
+	}
+
+	ion-card .poll ion-item ion-label {
 		margin: 8px 0px;
 	}
 </style>

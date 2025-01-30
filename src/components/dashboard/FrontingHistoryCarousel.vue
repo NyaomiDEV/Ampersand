@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { IonList, IonItem, IonListHeader, IonLabel } from '@ionic/vue';
 	import { h, inject, onBeforeMount, onUnmounted, ShallowRef, shallowRef } from 'vue';
-	import FrontingEntryAvatar from "../frontingEntry/FrontingEntryAvatar.vue";
+	import MemberAvatar from "../member/MemberAvatar.vue";
 	import FrontingEntryLabel from "../frontingEntry/FrontingEntryLabel.vue";
 	import type { FrontingEntryComplete } from '../../lib/db/entities.d.ts';
 	import { getFrontingEntries, toFrontingEntryComplete } from '../../lib/db/tables/frontingEntries';
@@ -57,7 +57,7 @@
 
 	<IonList :inset="isIOS" v-if="frontingEntries.length > 0">
 		<IonItem button v-for="entry in frontingEntries" :key="JSON.stringify(entry)" @click="showModal(entry)">
-			<FrontingEntryAvatar slot="start" :entry />
+			<MemberAvatar slot="start" :member="entry.member" />
 			<FrontingEntryLabel :entry />
 		</IonItem>
 	</IonList>

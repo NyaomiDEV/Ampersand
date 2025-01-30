@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonLabel, IonToolbar, IonBackButton, IonItem, IonItemDivider, IonDatetime, IonButtons, IonIcon, IonButton, IonSearchbar, IonFabButton, IonFab } from '@ionic/vue';
 	import { h, inject, onBeforeMount, onUnmounted, ref, shallowRef } from 'vue';
-	import FrontingEntryAvatar from "../../components/frontingEntry/FrontingEntryAvatar.vue";
+	import MemberAvatar from "../../components/member/MemberAvatar.vue";
 	import FrontingEntryLabel from "../../components/frontingEntry/FrontingEntryLabel.vue";
 	import type { FrontingEntry, FrontingEntryComplete } from '../../lib/db/entities.d.ts';
 	import { getFrontingEntries } from '../../lib/db/tables/frontingEntries';
@@ -162,7 +162,7 @@ import { addModal, removeModal } from '../../lib/modals.ts';
 							}}</IonLabel>
 					</IonItemDivider>
 					<IonItem button v-for="entry in tuple[1]" :key="'calendarview'+JSON.stringify(entry)" @click="showModal(entry)">
-						<FrontingEntryAvatar slot="start" :entry />
+						<MemberAvatar slot="start" :member="entry.member" />
 						<FrontingEntryLabel :entry />
 					</IonItem>
 				</template>
@@ -178,7 +178,7 @@ import { addModal, removeModal } from '../../lib/modals.ts';
 							}}</IonLabel>
 					</IonItemDivider>
 					<IonItem button v-for="entry in tuple[1]" :key="JSON.stringify(entry)" @click="showModal(entry)">
-						<FrontingEntryAvatar slot="start" :entry />
+						<MemberAvatar slot="start" :member="entry.member" />
 						<FrontingEntryLabel :entry />
 					</IonItem>
 				</template>

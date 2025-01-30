@@ -11,7 +11,7 @@
 </script>
 
 <template>
-	<IonLabel>
+	<IonLabel class="nowrap">
 		<p>
 			{{
 				[

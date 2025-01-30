@@ -19,7 +19,7 @@
 <template>
 	<IonChip :routerLink>
 		<MemberAvatar :member="props.member" />
-		<IonLabel>
+		<IonLabel class="nowrap">
 			{{ props.member.name }}
 		</IonLabel>
 	</IonChip>
