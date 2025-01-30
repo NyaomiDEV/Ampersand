@@ -1,5 +1,5 @@
 import Dexie, { Table } from "dexie";
-import { BoardMessage, Chat, ChatMessage, FrontingEntry, JournalPost, Member, Reminder, System, Tag } from "../../entities";
+import { BoardMessage, Chat, ChatMessage, FrontingEntry, JournalPost, Member, Reminder, System, Tag, Asset } from "../../entities";
 export type AmpersandDexieDatabase = Dexie & {
 	boardMessages: Table<BoardMessage>
 	chats: Table<Chat>
@@ -10,4 +10,5 @@ export type AmpersandDexieDatabase = Dexie & {
 	reminders: Table<Reminder>
 	system: Table<System>
 	tags: Table<Tag>
+	assets: Table<Asset>
 };

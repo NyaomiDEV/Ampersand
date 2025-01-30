@@ -9,7 +9,8 @@ export type AmpersandDatabase = {
 	members: Member[]
 	reminders: Reminder[]
 	system: System[]
-	tags: Tag[]
+	tags: Tag[],
+	assets: Asset[]
 }
 
 export type DatabaseEventData = {

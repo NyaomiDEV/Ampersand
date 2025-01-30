@@ -12,7 +12,8 @@ db.version(1).stores({
 	members: "uuid, name, isArchived, isCustomFront",
 	reminders: "uuid, name",
 	system: "uuid", // do we even?
-	tags: "uuid, name"
+	tags: "uuid, name",
+	assets: "uuid"
 });
 
 export function getTables(){

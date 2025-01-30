@@ -141,3 +141,8 @@ export interface Tag extends UUIDable {
 	type: "member" | "journal",
 	color?: string
 }
+
+export interface Asset extends UUIDable {
+	asset: File,
+	friendlyName: string
+}
