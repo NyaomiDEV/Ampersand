@@ -101,7 +101,7 @@
 		<IonContent>
 			<IonList :inset="isIOS">
 				<IonItem>
-					<IonToggle @ionChange="toggle" v-model="usePassword">
+					<IonToggle @update:modelValue="toggle" v-model="usePassword">
 						<IonLabel>
 							<h3>{{ $t("options:security.applock.title") }}</h3>
 							<p>{{ $t("options:security.applock.desc") }}</p>

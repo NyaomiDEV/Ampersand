@@ -29,7 +29,7 @@
 	import MD3SegmentButton from '../../components/MD3SegmentButton.vue';
 	import PopupPicker from "../../components/PopupPicker.vue";
 
-	import { inject, onBeforeMount, reactive, ref, toRaw, useTemplateRef, watch } from "vue";
+	import { inject, onBeforeMount, ref, toRaw, useTemplateRef, watch } from "vue";
 	import { EventReminder, Reminder } from "../../lib/db/entities";
 	import { getReminders, newReminder, updateReminder } from "../../lib/db/tables/reminders";
 	import { PartialBy } from "../../lib/types";
@@ -57,9 +57,6 @@
 	const eventDelayPopupPicker = useTemplateRef("eventDelayPopupPicker");
 	const periodicTimeOfDayPopupPicker = useTemplateRef("periodicTimeOfDayPopupPicker");
 	const periodicDayOfMonthPopupPicker = useTemplateRef("periodicDayOfMonthPopupPicker");
-
-	const eventDelayPickerValue = reactive(new Map<string, number>());
-	const periodicTimeOfDayPickerValue = reactive(new Map<string, number>([['hours', 0], ['minutes', 0]]));
 
 	async function save(){
 		const uuid = reminder.value?.uuid;
@@ -123,20 +120,6 @@
 	watch(route, updateRoute);
 	onBeforeMount(updateRoute);
 
-	watch(eventDelayPickerValue, () => {
-		reminder.value.delay = {
-			hours: eventDelayPickerValue.get('hours') || 0,
-			minutes: eventDelayPickerValue.get('minutes') || 0,
-		}
-	});
-
-	watch(periodicTimeOfDayPickerValue, () => {
-		if(reminder.value.scheduleInterval){
-			reminder.value.scheduleInterval.hourOfDay = periodicTimeOfDayPickerValue.get('hours') || 0;
-			reminder.value.scheduleInterval.minuteOfHour = periodicTimeOfDayPickerValue.get('minutes') || 0;
-		}
-	});
-
 </script>
 
 <template>
@@ -170,7 +153,7 @@
 				<IonItem>
 					<IonLabel>
 						<h3 class="centered-text">{{ $t("options:reminders.editReminder.reminderType.title") }}</h3>
-						<IonSegment class="segment-alt" value="reminder-type" v-model="reminder.type" @ionChange="switchType">
+						<IonSegment class="segment-alt" value="reminder-type" v-model="reminder.type" @update:modelValue="switchType">
 
 							<MD3SegmentButton value="event">
 								<IonLabel>{{ $t("options:reminders.editReminder.reminderType.eventBased") }}</IonLabel>
@@ -230,7 +213,12 @@
 
 				<PopupPicker
 					ref="eventDelayPopupPicker"
-					v-model="eventDelayPickerValue"
+					@update:modelValue="v => {
+						reminder.delay = {
+							hours: Number(v.get('hours')) || 0,
+							minutes: Number(v.get('minutes')) || 0
+						}
+					}"
 					:content="[
 						{
 							name: 'hours',
@@ -271,7 +259,12 @@
 
 				<PopupPicker
 					ref="periodicTimeOfDayPopupPicker"
-					v-model="periodicTimeOfDayPickerValue"
+					@update:modelValue="v => {
+						if(reminder.scheduleInterval){
+							reminder.scheduleInterval.hourOfDay = Number(v.get('hours')) || 0;
+							reminder.scheduleInterval.minuteOfHour = Number(v.get('minutes')) || 0;
+						}
+					}"
 					:content="[
 						{
 							name: 'hours',
@@ -308,7 +301,8 @@
 					ref="periodicDayOfMonthPopupPicker"
 					@update:modelValue="v => {
 						const val = v.get('dayOfMonth');
-						reminder.scheduleInterval!.dayOfMonth = val !== undefined ? Number(val) : undefined;
+						if(reminder.scheduleInterval)
+							reminder.scheduleInterval.dayOfMonth = val !== undefined ? Number(val) : undefined;
 					}"
 					:content="[
 						{

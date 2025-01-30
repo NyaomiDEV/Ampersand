@@ -19,24 +19,23 @@
 
 	const props = defineProps<{
 		content: ColumnContent[],
-		modelValue?: Reactive<Map<string, string | number | undefined>>
+		modelValue?: Map<string, string | number | undefined>
 	}>();
 
 	const emit = defineEmits<{
-		'update:modelValue': [Reactive<Map<string, string | number | undefined>>],
+		'update:modelValue': [Map<string, string | number | undefined>],
 	}>();
 
-	const values = props.modelValue || reactive(new Map<string, string | number | undefined>());
+	const values = reactive(new Map<string, string | number | undefined>(props.modelValue));
 
 	watch(values, () => {
-		emit("update:modelValue", values);
+		emit("update:modelValue", new Map(values));
 	});
 
 	onMounted(() => {
 		for(const column of props.content)
 			values.set(column.name, column.values.find(x => x.default)?.value || undefined);
 	});
-
 </script>
 
 <template>
@@ -44,7 +43,7 @@
 		<IonPicker>
 			<IonPickerColumn
 				v-for="column in props.content"
-				@ionChange="(e) => { values.set(column.name, e.detail.value) }"
+				@["ion-change"]="(e) => { values.set(column.name, e.detail.value); console.log(e, values) }"
 				:value="values.get(column.name) || column.values.find(x => x.default)?.value || undefined"
 			>
 				<div slot="prefix" v-if="column.prefix">{{ column.prefix }}</div>
