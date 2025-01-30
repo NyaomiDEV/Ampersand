@@ -11,8 +11,6 @@
 	import { inject } from 'vue';
 
 	const isIOS = inject<boolean>("isIOS");
-
-
 </script>
 
 <template>
