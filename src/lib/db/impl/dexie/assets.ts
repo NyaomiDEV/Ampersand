@@ -14,7 +14,7 @@ async function genid(name: string) {
 
 export async function newAsset(asset: Omit<Asset, keyof UUIDable>) {
 	try{
-		const uuid = await genid(asset.asset.name);
+		const uuid = await genid(asset.file.name);
 		await db.assets.add({
 			...asset,
 			uuid
