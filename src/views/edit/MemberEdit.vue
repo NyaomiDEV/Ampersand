@@ -279,8 +279,8 @@
 
 			<TagListSelect
 				ref="tagSelectionModal"
-				:model-value="member.tags.map(uuid => tags.find(x => x.uuid === uuid)!)"
-				@update:model-value="(tags) => member.tags = tags.map(x => x.uuid)"
+				:modelValue="member.tags.map(uuid => tags.find(x => x.uuid === uuid)!)"
+				@update:modelValue="tags => { member.tags = tags.map(x => x.uuid) }"
 			/>
 		</IonContent>
 	</IonPage>
