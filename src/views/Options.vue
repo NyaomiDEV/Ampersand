@@ -81,7 +81,7 @@
 					<IonLabel>{{ $t("options:messageBoard.header") }}</IonLabel>
 				</IonItem>
 
-				<IonItem button routerLink="/options/tagManagement" v-if="isDev || isTauri">
+				<IonItem button routerLink="/options/tagManagement">
 					<IonIcon :ios="TagIOS" :md="TagMD" slot="start" aria-hidden="true" />
 					<IonLabel>{{ $t("options:tagManagement.header") }}</IonLabel>
 				</IonItem>
