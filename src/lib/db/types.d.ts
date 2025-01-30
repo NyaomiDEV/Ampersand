@@ -1,4 +1,4 @@
-import { BoardMessage, Chat, ChatMessage, FrontingEntry, JournalPost, Member, Reminder, System, Tag } from "./entities";
+import { BoardMessage, Chat, ChatMessage, FrontingEntry, JournalPost, Member, Reminder, System, Tag, Asset } from "./entities";
 
 export type AmpersandDatabase = {
 	boardMessages: BoardMessage[]

@@ -143,6 +143,6 @@ export interface Tag extends UUIDable {
 }
 
 export interface Asset extends UUIDable {
-	asset: File,
+	file: File,
 	friendlyName: string
 }

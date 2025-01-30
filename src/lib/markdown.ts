@@ -1,7 +1,8 @@
-import { h } from "vue";
+import { Fragment, h } from "vue";
 import { Marked, TokenizerAndRendererExtension } from "../../vendor/marked-vue/marked";
 import { getMembers } from "../lib/db/tables/members";
 import MemberChip from "../components/member/MemberChip.vue";
+import { getAssets } from "./db/tables/assets";
 
 export const marked = new Marked();
 
@@ -46,13 +47,29 @@ marked.use({
 	extensions: [mention],
 	renderer: {
 		image(token) {
-			return h('img', {
-				src: token.href,
-				alt: token.text,
-				title: token.title,
-				width: (token as any).width,
-				height: (token as any).height
-			});
+			// checking for lone surrogates the shitty way
+			try {
+				const href = encodeURI(token.href).replace(/%25/g, '%');
+				return h('img', {
+					src: href,
+					alt: token.text,
+					title: token.title,
+					width: (token as any).width,
+					height: (token as any).height
+				});
+			} catch (e) {
+				return h(Text, token.text);
+			}
+		},
+		link(token) {
+			const inlineParsed = this.parser.parseInline(token.tokens);
+			// checking for lone surrogates the shitty way
+			try{
+				const href = encodeURI(token.href).replace(/%25/g, '%');
+				return h('a', { href, title: token.title }, inlineParsed);
+			}catch(e){
+				return h(Fragment, inlineParsed);
+			}
 		},
 	},
 	async: true,
@@ -66,6 +83,7 @@ marked.use({
 				}
 				break;
 			case "image":
+				// first off let's match the size tokens
 				const matches = /#(-?\d+?x-?\d+?)$/.exec(token.href);
 				if(matches){
 					const [w,h] = matches[1].split("x").map(x => Number(x));
@@ -73,7 +91,25 @@ marked.use({
 					if(h >= 0) (token as any).height = h;
 					token.href = token.href.replace(/#(-?\d+?x-?\d+?)$/, "");
 				}
+
+				// then let's put the href to asset code
+				if(token.href.startsWith("@")){
+					const friendlyNameMaybe = token.href.slice(1);
+					const asset = (await getAssets()).find(x => x.friendlyName === friendlyNameMaybe);
+					if(asset){
+						token.href = URL.createObjectURL(asset.file);
+					}
+				}
 				break;
+			case "link":
+				if (token.href.startsWith("@")) {
+					const friendlyNameMaybe = token.href.slice(1);
+					const asset = (await getAssets()).find(x => x.friendlyName === friendlyNameMaybe);
+					if (asset) {
+						token.href = URL.createObjectURL(asset.file);
+					}
+				}
+				break;				
 		}
 	},
 });
