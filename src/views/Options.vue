@@ -12,25 +12,23 @@
 		pricetagOutline as TagIOS,
 		notificationsOutline as RemindersIOS,
 		cog as SettingsIOS,
-		lockClosedOutline as SecurityIOS,
 		accessibilityOutline as AccessibilityIOS,
 		swapVerticalOutline as ImportExportIOS,
 		informationCircleOutline as AboutIOS,
 		sparklesOutline as SparklesIOS,
 	} from "ionicons/icons";
 
-	import LockMD from '@material-design-icons/svg/outlined/lock.svg';
-	import SparklesMD from '@material-design-icons/svg/outlined/star.svg';
-	import SystemMD from '@material-design-icons/svg/outlined/person.svg';
-	import FrontHistoryMD from '@material-design-icons/svg/outlined/show_chart.svg';
-	import MessageBoardMD from '@material-design-icons/svg/outlined/newspaper.svg';
-	import TagMD from '@material-design-icons/svg/outlined/label.svg';
-	import RemindersMD from '@material-design-icons/svg/outlined/notification_add.svg';
-	import SettingsMD from '@material-design-icons/svg/outlined/settings.svg';
-	import SecurityMD from '@material-design-icons/svg/outlined/lock.svg';
-	import AccessibilityMD from '@material-design-icons/svg/outlined/accessibility_new.svg';
-	import ImportExportMD from '@material-design-icons/svg/outlined/import_export.svg';
-	import AboutMD from '@material-design-icons/svg/outlined/info.svg';
+	import LockMD from '@material-symbols/svg-400/outlined/lock.svg';
+	import SparklesMD from '@material-symbols/svg-400/outlined/star.svg';
+	import SystemMD from '@material-symbols/svg-400/outlined/person.svg';
+	import FrontHistoryMD from '@material-symbols/svg-400/outlined/show_chart.svg';
+	import MessageBoardMD from '@material-symbols/svg-400/outlined/newspaper.svg';
+	import TagMD from '@material-symbols/svg-400/outlined/label.svg';
+	import RemindersMD from '@material-symbols/svg-400/outlined/notification_add.svg';
+	import SettingsMD from '@material-symbols/svg-400/outlined/settings.svg';
+	import AccessibilityMD from '@material-symbols/svg-400/outlined/accessibility_new.svg';
+	import ImportExportMD from '@material-symbols/svg-400/outlined/swap_vert.svg';
+	import AboutMD from '@material-symbols/svg-400/outlined/info.svg';
 	import { securityConfig } from '../lib/config';
 	import { lock } from '../lib/applock';
 
@@ -105,7 +103,7 @@
 				</IonItem>
 
 				<IonItem button routerLink="/options/security">
-					<IonIcon :ios="SecurityIOS" :md="SecurityMD" slot="start" aria-hidden="true" />
+					<IonIcon :ios="LockIOS" :md="LockMD" slot="start" aria-hidden="true" />
 					<IonLabel>{{ $t("options:security.header") }}</IonLabel>
 				</IonItem>
 

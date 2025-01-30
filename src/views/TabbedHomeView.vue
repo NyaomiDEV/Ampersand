@@ -10,11 +10,11 @@
 	} 
 	from "ionicons/icons";
 
-	import PeopleMD from '@material-design-icons/svg/outlined/group.svg';
-	import JournalMD from '@material-design-icons/svg/outlined/book.svg';
-	import HomeMD from '@material-design-icons/svg/outlined/home.svg';
-	import ChatMD from '@material-design-icons/svg/outlined/chat.svg';
-	import OptionsMD from '@material-design-icons/svg/outlined/menu.svg';
+	import PeopleMD from '@material-symbols/svg-400/outlined/group.svg';
+	import JournalMD from '@material-symbols/svg-400/outlined/book.svg';
+	import HomeMD from '@material-symbols/svg-400/outlined/home.svg';
+	import ChatMD from '@material-symbols/svg-400/outlined/chat.svg';
+	import OptionsMD from '@material-symbols/svg-400/outlined/menu.svg';
 
 	const router = useIonRouter();
 </script>

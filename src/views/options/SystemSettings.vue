@@ -13,9 +13,9 @@
 		saveOutline as saveIOS
 	} from "ionicons/icons";
 
-	import peopleMD from "@material-design-icons/svg/outlined/groups_2.svg"
-	import pencilMD from "@material-design-icons/svg/outlined/edit.svg"
-	import saveMD from "@material-design-icons/svg/outlined/save.svg"
+	import peopleMD from "@material-symbols/svg-400/outlined/groups_2.svg"
+	import pencilMD from "@material-symbols/svg-400/outlined/edit.svg"
+	import saveMD from "@material-symbols/svg-400/outlined/save.svg"
 
 	const isIOS = inject<boolean>("isIOS");
 

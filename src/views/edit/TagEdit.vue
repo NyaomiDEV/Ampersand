@@ -29,10 +29,10 @@
 		bookOutline as journalIOS
 	} from "ionicons/icons";
 
-	import saveMD from "@material-design-icons/svg/outlined/save.svg";
-	import trashMD from "@material-design-icons/svg/outlined/delete.svg";
-	import personMD from "@material-design-icons/svg/outlined/person.svg";
-	import journalMD from "@material-design-icons/svg/outlined/book.svg";
+	import saveMD from "@material-symbols/svg-400/outlined/save.svg";
+	import trashMD from "@material-symbols/svg-400/outlined/delete.svg";
+	import personMD from "@material-symbols/svg-400/outlined/person.svg";
+	import journalMD from "@material-symbols/svg-400/outlined/book.svg";
 
 	import { getTags, newTag, removeTag, updateTag } from '../../lib/db/tables/tags';
 	import { Tag } from "../../lib/db/entities";

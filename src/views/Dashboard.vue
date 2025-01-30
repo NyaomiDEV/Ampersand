@@ -6,7 +6,7 @@
 
 	import { lockClosedOutline as LockIOS } from "ionicons/icons";
 
-	import LockMD from '@material-design-icons/svg/outlined/lock.svg';
+	import LockMD from '@material-symbols/svg-400/outlined/lock.svg';
 
 	import CurrentFrontersCarousel from '../components/dashboard/CurrentFrontersCarousel.vue';
 	import MessageBoardCarousel from '../components/dashboard/MessageBoardCarousel.vue';

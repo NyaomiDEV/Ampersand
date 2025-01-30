@@ -12,9 +12,9 @@
 		addOutline as addIOS
 	} from "ionicons/icons";
 
-	import calendarMD from "@material-design-icons/svg/outlined/calendar_month.svg";
-	import listMD from "@material-design-icons/svg/outlined/list.svg";
-	import addMD from "@material-design-icons/svg/outlined/add.svg";
+	import calendarMD from "@material-symbols/svg-400/outlined/calendar_month.svg";
+	import listMD from "@material-symbols/svg-400/outlined/list.svg";
+	import addMD from "@material-symbols/svg-400/outlined/add.svg";
 
 	import dayjs from 'dayjs';
 	import LocalizedFormat from "dayjs/plugin/localizedFormat";
