@@ -1841,7 +1841,7 @@ class _Renderer {
     text(token) {
         return 'tokens' in token && token.tokens
             ? h(Fragment, this.parser.parseInline(token.tokens))
-            : h('span', token.text);
+            : h(Text, token.text);
     }
 }
 
