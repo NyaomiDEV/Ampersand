@@ -204,7 +204,7 @@
 					<IonIcon :ios="saveIOS" :md="saveMD" />
 				</IonFabButton>
 			</IonFab>
-			<MemberSelect :custom-title="$t('options:messageBoard.edit.member')" :onlyOne="true" :modelValue="boardMessage.member ? [boardMessage.member] : []" @update:modelValue="(e) => { console.log(e); if(e[0]) boardMessage.member = e[0] }" ref="memberSelectModal" />
+			<MemberSelect :custom-title="$t('options:messageBoard.edit.member')" :onlyOne="true" :modelValue="boardMessage.member ? [boardMessage.member] : []" @update:modelValue="(e) => { if(e[0]) boardMessage.member = e[0] }" ref="memberSelectModal" />
 		</IonContent>
 	</IonModal>
 </template>

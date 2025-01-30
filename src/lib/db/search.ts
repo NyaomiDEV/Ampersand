@@ -208,7 +208,6 @@ export function getFilteredBoardMessages(search: Ref<string>, boardMessages: Sha
 				filtered.push(await toBoardMessageComplete(x))
 		} else {
 			const parsed = parseBoardMessageFilterQuery(query);
-			console.log(parsed);
 
 			for (const x of boardMessages.value) {
 				const complete = await toBoardMessageComplete(x);

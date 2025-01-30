@@ -52,7 +52,6 @@ export function addModal(vnode: VNode): Promise<{el: HTMLElement, vnode: VNode}>
 
 		function cb(evt){
 			if(evt.detail.originalVnode === vnode){
-				console.log(vnode);
 				resolve({el: evt.detail.el, vnode: evt.detail.vnode});
 				modalEvents.removeEventListener("mounted", cb);
 			}
