@@ -1,10 +1,11 @@
 <script setup lang="ts">
 	import { IonBackButton, IonContent, IonHeader, IonSearchbar, IonList, IonIcon, IonPage, IonTitle, IonToolbar, IonFab, IonFabButton } from '@ionic/vue';
-	import { inject, onBeforeMount, onUnmounted, shallowRef } from 'vue';
+	import { inject, onBeforeMount, onUnmounted, ref, shallowRef, watch } from 'vue';
 	import AssetItem from '../../components/AssetItem.vue';
 	import { Asset } from '../../lib/db/entities';
 	import { getAssets } from '../../lib/db/tables/assets';
 	import { DatabaseEvent, DatabaseEvents } from '../../lib/db/events';
+	import { useRoute } from 'vue-router';
 
 	import {
 		addOutline as addIOS
@@ -12,7 +13,14 @@
 
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 
+	const route = useRoute();
+
 	const isIOS = inject<boolean>("isIOS");
+
+	const search = ref(route.query.q as string || "");
+	watch(route, () => {
+		search.value = route.query.q as string || "";
+	});
 
 	const assets = shallowRef<Asset[]>();
 
@@ -48,6 +56,7 @@
 					showCancelButton="focus"
 					showClearButton="focus"
 					:spellcheck="false"
+					v-model="search"
 				/>
 			</IonToolbar>
 		</IonHeader>
