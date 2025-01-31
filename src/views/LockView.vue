@@ -3,12 +3,14 @@
 	import { IonPage, IonContent, IonLabel, IonInput, useIonRouter } from "@ionic/vue";
 	import { unlockWithPassword, unlockWithBiometrics, isLocked } from "../lib/applock";
 	import { securityConfig } from "../lib/config";
+	import { useRoute } from "vue-router";
 	
 	const router = useIonRouter();
+	const route = useRoute();
 
 	const handle = watch(isLocked, () => {
 		if(!isLocked.value)
-			router.replace("/")
+			router.replace(route.query.wantedPath || "/")
 	});
 
 	onMounted(async () => {

@@ -48,32 +48,26 @@ import { tryPersistStorage } from "./lib/util/storageManager";
 import { getSystem, newSystem } from "./lib/db/tables/system";
 import { appConfig } from "./lib/config";
 import { getLockedStatus } from "./lib/applock";
-import { RouteLocationNormalizedGeneric } from "vue-router";
 import { clearTempDir } from "./lib/native/cache";
 
 const app = createApp(App).use(IonicVue, {
 	hardwareBackButton: true
 }).use(router).use(I18NextVue, { i18next: i18n });
 
-let wantedRoute: RouteLocationNormalizedGeneric | undefined;
 router.beforeEach((to) => {
+	// lock flow
 	if (getLockedStatus()) {
 		if (to.path === "/lock")
 			return true;
 
-		wantedRoute = to;
-
-		return { path: "/lock" };
+		return { path: "/lock", query: { wantedPath: to.fullPath } };
+	} else {
+		if (to.path === "/lock") // for the two people who get stuck in this
+			return { fullPath: "/" }; // just reset
 	}
 
-	if (to.fullPath === "/" || to.path === "/lock") {
-
-		if (wantedRoute) {
-			const _r = wantedRoute;
-			wantedRoute = undefined;
-			return _r;
-		}
-
+	// app just started
+	if (to.fullPath === "/") {
 		// route to default view
 		switch (appConfig.view) {
 			case "members":
@@ -88,6 +82,7 @@ router.beforeEach((to) => {
 		}
 	}
 
+	// assume normal navigation
 	return true;
 });
 
