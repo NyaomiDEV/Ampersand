@@ -183,12 +183,13 @@
 			"dashboard": "Dashboard",
 			"chat": "Chats"
 		},
+		"defaultFilterLabel": "Default search query for",
 		"defaultFilterQueries": {
-			"members": "Default search query for members",
-			"journal": "Default search query for journal",
-			"tags": "Default search query for tags",
-			"frontingHistory": "Default search query for the fronting history",
-			"messageBoard": "Default search query for the message board"
+			"members": "Members",
+			"journal": "Journal",
+			"tags": "Tags",
+			"frontingHistory": "Fronting history",
+			"messageBoard": "Message board"
 		}
 	},
 	"security": {

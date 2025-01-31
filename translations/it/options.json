@@ -159,12 +159,14 @@
 			"dashboard": "Dashboard",
 			"chat": "Chat"
 		},
+
+		"defaultFilterLabel": "Ricerca predefinita per",
 		"defaultFilterQueries": {
-			"members": "Ricerca predefinita per i membrɜ",
-			"journal": "Ricerca predefinita per il diario",
-			"tags": "Ricerca predefinita per i tag",
-			"frontingHistory": "Ricerca predefinita per la cronologia del front",
-			"messageBoard": "Ricerca predefinita per la bacheca dei messaggi"
+			"members": "Membrɜ",
+			"journal": "Diario",
+			"tags": "Tag",
+			"frontingHistory": "Cronologia del front",
+			"messageBoard": "Bacheca dei messaggi"
 		}
 	},
 	"security": {

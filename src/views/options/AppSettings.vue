@@ -95,7 +95,13 @@
 						</IonSelectOption>
 					</IonSelect>
 				</IonItem>
+			</IonList>
 
+			<IonListHeader>
+				<IonLabel>{{ $t("options:appSettings.defaultFilterLabel") }}</IonLabel>
+			</IonListHeader>
+
+			<IonList>
 				<IonItem>
 					<IonInput :fill="!isIOS ? 'outline' : undefined" labelPlacement="floating" :label="$t('options:appSettings.defaultFilterQueries.members')" v-model="appConfig.defaultFilterQueries.members" />
 				</IonItem>

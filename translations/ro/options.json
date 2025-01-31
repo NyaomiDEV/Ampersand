@@ -118,12 +118,13 @@
 			"dashboard": "Tablou de bord",
 			"chat": "Chaturi"
 		},
+		"defaultFilterLabel": "Căutarea prestabilită pentru",
 		"defaultFilterQueries": {
-			"members": "Căutarea prestabilită pentru membri",
-			"journal": "Căutarea prestabilită pentru jurnal",
-			"tags": "Căutarea prestabilită pentru etichete",
-			"frontingHistory": "Căutarea prestabilită pentru istoricul frontului",
-			"messageBoard": "Căutarea prestabilită pentru tabla cu mesaje"
+			"members": "Membri",
+			"journal": "Jurnal",
+			"tags": "Etichete",
+			"frontingHistory": "Istoricul frontului",
+			"messageBoard": "Tabla cu mesaje"
 		}
 	},
 	"security": {
