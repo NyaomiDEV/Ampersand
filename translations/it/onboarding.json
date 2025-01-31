@@ -5,9 +5,9 @@
 	},
 	"importScreen": {
 		"header": "Vuoi importare i tuoi dati?",
-		"prevInstall": "Installazione precedente",
-		"simplyPlural": "Simply Plural",
-		"pluralKit": "PluralKit",
+		"prevInstall": "Si, installazione precedente",
+		"simplyPlural": "Si, Simply Plural",
+		"pluralKit": "Si, PluralKit",
 		"startFromScratch": "No, inizierò da zero",
 		"pleaseWait": "Si prega di attendere mentre importiamo i tuoi dati"
 	},

@@ -4,6 +4,7 @@ import tabbedRoutes from "./tabbedRoutes";
 import options from "./options";
 import edit from "./edit";
 import standaloneRoutes from "./standaloneRoutes";
+import onboarding from "./onboarding";
 
 const routes: Array<RouteRecordRaw> = [
 	{
@@ -19,6 +20,7 @@ const routes: Array<RouteRecordRaw> = [
 		name: "LockView",
 		component: () => import("../views/LockView.vue"),
 	},
+	...onboarding,
 	...standaloneRoutes,
 	...options,
 	...edit,

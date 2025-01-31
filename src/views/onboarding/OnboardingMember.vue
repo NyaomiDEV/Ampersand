@@ -1,0 +1,169 @@
+<script setup lang="ts">
+	import {
+		IonContent,
+		IonButton,
+		IonIcon,
+		IonList,
+		IonInput,
+		IonTextarea,
+		IonFab,
+		IonFabButton,
+		IonItem,
+		IonPage,
+		useIonRouter
+	} from "@ionic/vue";
+
+	import {
+		pencilOutline as pencilIOS,
+		arrowForwardOutline as ArrowIOS,
+	} from "ionicons/icons";
+
+	import pencilMD from "@material-symbols/svg-600/outlined/edit.svg";
+    import ArrowMD from "@material-symbols/svg-600/outlined/arrow_forward.svg";
+
+	import { Member } from "../../lib/db/entities";
+	import { newMember } from '../../lib/db/tables/members';
+	import { getFiles } from "../../lib/util/misc";
+	import { resizeImage } from "../../lib/util/image";
+	import { inject, ref, toRaw } from "vue";
+	import { PartialBy } from "../../lib/types";
+	import MemberAvatar from "../../components/member/MemberAvatar.vue";
+
+	const router = useIonRouter();
+
+	const isIOS = inject<boolean>("isIOS")!;
+	const emptyMember: PartialBy<Member, "uuid"> = {
+		name: "",
+		isArchived: false,
+		isCustomFront: false,
+		tags: []
+	};
+
+	const member = ref({...emptyMember});
+
+	async function modifyPicture(){
+		const files = await getFiles();
+		if(files.length){
+			if(files[0].type == 'image/gif'){
+				member.value.image = files[0];
+				return;
+			}
+			member.value.image = await resizeImage(files[0]);
+		}
+	}
+
+	async function save(){
+		const _member = toRaw(member.value);
+		await newMember(_member);
+		router.push("/onboarding/end")
+	}
+</script>
+
+<template>
+	<IonPage>
+		<IonContent>
+			<h1> {{ $t('onboarding:memberInfo.header') }}</h1>
+			<div class="avatar-container">
+				<MemberAvatar :member />
+				<IonButton shape="round" @click="modifyPicture">
+					<IonIcon slot="icon-only" :ios="pencilIOS" :md="pencilMD" />
+				</IonButton>
+			</div>
+
+			<IonList class="member-edit" inset>
+					<IonItem>
+						<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('members:edit.name')" labelPlacement="floating" v-model="member.name" />
+					</IonItem>
+
+					<IonItem>
+						<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('members:edit.pronouns')" labelPlacement="floating" v-model="member.pronouns" />
+					</IonItem>
+
+					<IonItem>
+						<IonTextarea :fill="!isIOS ? 'outline' : undefined" auto-grow :label="$t('onboarding:memberInfo.description')" labelPlacement="floating" v-model="member.description" />
+					</IonItem>
+
+					<p> {{ $t("onboarding:memberInfo:invitation") }}</p>
+			</IonList>
+
+			<IonFab slot="fixed" vertical="bottom" horizontal="end">
+				<IonFabButton @click="save">
+					<IonIcon :ios="ArrowIOS" :md="ArrowMD" />
+				</IonFabButton>
+			</IonFab>
+		</IonContent>
+	</IonPage>
+</template>
+
+<style scoped>
+
+	h1 {
+		margin-top: 128px;
+	}
+
+	h1, p {
+		text-align: center;
+	}
+
+	ion-content {
+		--padding-bottom: 80px;
+	}
+
+	div.avatar-container {
+		position: relative;
+		width: fit-content;
+		height: fit-content;
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: 24px;
+		margin-bottom: 16px;
+	}
+
+	div.member-tags {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: center;
+		padding: 0 16px;
+	}
+
+	.member-edit div.member-tags {
+		padding: 8px 0 0 0;
+		justify-content: start;
+	}
+
+	ion-avatar {
+		width: 192px;
+		height: 192px;
+		outline-width: 8px !important;
+	}
+
+	div.avatar-container ion-button {
+		position: absolute;
+		bottom: 8px;
+		right: 8px;
+	}
+
+	div.member-info {
+		display: block;
+		margin: auto;
+		text-align: center;
+	}
+
+	div.member-info * {
+		margin: 0;
+	}
+
+	div.member-description {
+		padding: 16px;
+	}
+
+	div.member-description ion-label {
+		color: var(--ion-color-step-600, var(--ion-text-color-step-400, #666666));
+	}
+
+	.md ion-input, .md ion-textarea {
+		margin: 16px 0;
+	}
+</style>
