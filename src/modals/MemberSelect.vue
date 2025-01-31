@@ -19,6 +19,7 @@
 	import type { Member } from "../lib/db/entities.d.ts";
 	import { getMembers } from "../lib/db/tables/members";
 	import { DatabaseEvents, DatabaseEvent } from '../lib/db/events';
+	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
 
 	const isIOS = inject<boolean>("isIOS");
 
@@ -55,7 +56,7 @@
 	}
 
 	const search = ref("");
-	const members = shallowRef<Member[]>([]);
+	const members = shallowRef<Member[]>();
 	const filteredMembers = getFilteredMembers(search, members);
 
 	const listener = async (event: Event) => {
@@ -85,7 +86,8 @@
 			</IonToolbar>
 		</IonHeader>
 
-		<IonContent>
+		<SpinnerFullscreen v-if="!members" />
+		<IonContent v-else>
 			<IonList :inset="isIOS">
 				<IonItem button v-for="member in filteredMembers" :key="JSON.stringify(member)">
 					<MemberAvatar slot="start" :member />

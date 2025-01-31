@@ -7,6 +7,7 @@
 	import { DatabaseEvent, DatabaseEvents } from '../../lib/db/events';
 	import { useRoute } from 'vue-router';
 	import { getFilteredAssets } from '../../lib/search';
+	import SpinnerFullscreen from '../../components/SpinnerFullscreen.vue';
 
 	import {
 		addOutline as addIOS
@@ -63,7 +64,8 @@
 			</IonToolbar>
 		</IonHeader>
 		
-		<IonContent>
+		<SpinnerFullscreen v-if="!assets" />
+		<IonContent v-else>
 			<IonList :inset="isIOS">
 				<AssetItem :asset v-for="asset in filteredAssets" />
 			</IonList>

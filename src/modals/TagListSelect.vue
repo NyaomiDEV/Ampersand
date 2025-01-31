@@ -17,6 +17,7 @@
 	import { Tag } from "../lib/db/entities";
 	import TagColor from "../components/tag/TagColor.vue";
 	import TagLabel from "../components/tag/TagLabel.vue";
+	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
 
 	const props = defineProps<{
 		customTitle?: string,
@@ -35,7 +36,7 @@
 	const isIOS = inject<boolean>("isIOS");
 
 	const search = ref("");
-	const tags = shallowRef<Tag[]>([]);
+	const tags = shallowRef<Tag[]>();
 	const filteredTags = getFilteredTags(search, ref("member"), tags);
 
 	onBeforeMount(async () => {
@@ -65,7 +66,8 @@
 			</IonToolbar>
 		</IonHeader>
 
-		<IonContent>
+		<SpinnerFullscreen v-if="!tags" />
+		<IonContent v-else>
 			<IonList :inset="isIOS">
 				<IonItem button v-for="tag in filteredTags" :key="JSON.stringify(tag)">
 					<TagColor slot="start" :tag />

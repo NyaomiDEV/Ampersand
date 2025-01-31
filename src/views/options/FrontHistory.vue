@@ -6,7 +6,7 @@
 	import type { FrontingEntry, FrontingEntryComplete } from '../../lib/db/entities.d.ts';
 	import { getFrontingEntries } from '../../lib/db/tables/frontingEntries';
 	import { getFilteredFrontingEntries } from '../../lib/search.ts';
-	import Spinner from "../../components/Spinner.vue";
+	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
 	import dayjs from 'dayjs';
 	import LocalizedFormat from "dayjs/plugin/localizedFormat";
@@ -151,9 +151,8 @@
 			</div>
 		</IonHeader>
 
-		<div v-if="!frontingEntries" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; --spinner-size: 72px; --spinner-width: 5px">
-			<Spinner />
-		</div>
+
+		<SpinnerFullscreen v-if="!frontingEntries" />
 		<IonContent v-else>
 			<IonList :inset="isIOS" v-if="isCalendarView">
 				<template v-for="tuple in getAtDate(date)">

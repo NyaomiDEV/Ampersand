@@ -65,7 +65,7 @@ export function getFilteredMembers(search: Ref<string>, members: ShallowRef<Memb
 	return _members;
 }
 
-export function getFilteredTags(search: Ref<string>, type: Ref<string>, tags: ShallowRef<Tag[]>) {
+export function getFilteredTags(search: Ref<string>, type: Ref<string>, tags: ShallowRef<Tag[] | undefined>) {
 	const _tags = shallowRef<Tag[]>([]);
 
 	watch([
@@ -82,9 +82,9 @@ export function getFilteredTags(search: Ref<string>, type: Ref<string>, tags: Sh
 
 
 		if(!query.length)
-			_tags.value = tags.value.filter(x => x.type === type.value);
+			_tags.value = tags.value?.filter(x => x.type === type.value) || [];
 		else
-			_tags.value = tags.value.filter(x => x.name.toLowerCase().startsWith(query.toLowerCase()) && x.type === type.value);
+			_tags.value = tags.value?.filter(x => x.name.toLowerCase().startsWith(query.toLowerCase()) && x.type === type.value) || [];
 	}, { immediate: true });
 
 	return _tags;

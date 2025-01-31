@@ -37,8 +37,10 @@
 	import { useTranslation } from "i18next-vue";
 	import { getFiles } from "../../lib/util/misc";
 	import { getBlobURL } from "../../lib/util/blob";
+	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 
 	const isIOS = inject<boolean>("isIOS");
+	const loading = ref(false);
 
 	const emptyAsset: PartialBy<Asset, "uuid" | "file"> = {
 		friendlyName: ""
@@ -106,12 +108,16 @@
 	}
 
 	async function updateRoute(){
+		loading.value = true;
+
 		if(route.query.uuid){
 			const _asset = (await getAssets()).find(x => x.uuid === route.query.uuid);
 			if(_asset)
 				asset.value = _asset;
 			else asset.value = {...emptyAsset};
 		} else asset.value = {...emptyAsset};
+
+		loading.value = false;
 	}
 
 	function generatePreview(){
@@ -145,7 +151,8 @@
 			</IonToolbar>
 		</IonHeader>
 
-		<IonContent>
+		<SpinnerFullscreen v-if="loading" />
+		<IonContent v-else>
 			<IonList :inset="isIOS">
 
 				<IonItem v-if="asset.file">

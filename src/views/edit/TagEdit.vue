@@ -43,10 +43,12 @@
 	import { getJournalPosts } from "../../lib/db/tables/journalPosts";
 	import { useTranslation } from "i18next-vue";
 	import { useRoute } from "vue-router";
+	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 
 	const isIOS = inject<boolean>("isIOS");
-	const i18next = useTranslation();
+	const loading = ref(false);
 
+	const i18next = useTranslation();
 	const self = getCurrentInstance();
 
 	const emptyTag: PartialBy<Tag, "uuid"> = {
@@ -107,6 +109,8 @@
 	}
 
 	async function updateRoute(){
+		loading.value = true;
+
 		if(route.query.uuid){
 			const _tag = (await getTags()).find(x => x.uuid === route.query.uuid);
 			if(_tag){
@@ -121,6 +125,8 @@
 		} else tag.value = {...emptyTag};
 
 		updateColors();
+
+		loading.value = false;
 	}
 
 	function updateColors(){
@@ -144,7 +150,8 @@
 			</IonToolbar>
 		</IonHeader>
 
-		<IonContent>
+		<SpinnerFullscreen v-if="loading" />
+		<IonContent v-else>
 			<IonList inset>
 					<IonItem>
 						<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('options:tagManagement.edit.name')" labelPlacement="floating" v-model="tag.name" />

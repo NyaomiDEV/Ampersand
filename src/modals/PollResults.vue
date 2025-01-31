@@ -13,7 +13,7 @@
 
 	import { inject, onMounted, onUnmounted, shallowRef } from "vue";
 	import MemberAvatar from "../components/member/MemberAvatar.vue";
-	import Spinner from "../components/Spinner.vue";
+	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
 	import type { Member, Poll } from "../lib/db/entities";
 	import { getMembers } from "../lib/db/tables/members.ts";
 	import { DatabaseEvents, DatabaseEvent } from '../lib/db/events.ts';
@@ -49,9 +49,7 @@
 			</IonToolbar>
 		</IonHeader>
 
-		<div v-if="!members" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; --spinner-size: 72px; --spinner-width: 5px">
-			<Spinner />
-		</div>
+		<SpinnerFullscreen v-if="!members" />
 		<IonContent v-else>
 			<IonList :inset="isIOS">
 				<template v-for="choice in props.poll.entries">

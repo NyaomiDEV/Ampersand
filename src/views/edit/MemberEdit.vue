@@ -53,6 +53,7 @@
 	import { PartialBy } from "../../lib/types";
 	import { useRoute } from "vue-router";
 	import { useTranslation } from "i18next-vue";
+	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 
 	const i18next = useTranslation();
 
@@ -60,6 +61,8 @@
 
 	const router = useIonRouter();
 	const route = useRoute();
+
+	const loading = ref(false);
 
 	const emptyMember: PartialBy<Member, "uuid"> = {
 		name: "",
@@ -133,6 +136,8 @@
 	}
 
 	async function updateRoute() {
+		loading.value = true;
+
 		tags.value = await getTags();
 
 		if(route.query.uuid){
@@ -152,6 +157,8 @@
 
 		// set color
 		updateColors();
+
+		loading.value = false;
 	}
 
 	function updateColors(){
@@ -175,7 +182,8 @@
 			</IonToolbar>
 		</IonHeader>
 
-		<IonContent>
+		<SpinnerFullscreen v-if="loading" />
+		<IonContent v-else>
 			<div class="avatar-container">
 				<IonAvatar>
 					<img aria-hidden="true" :src="member.image ? getBlobURL(member.image) : (isIOS ? personIOS : personMD)" />

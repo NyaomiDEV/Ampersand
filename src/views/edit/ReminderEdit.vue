@@ -34,10 +34,13 @@
 	import { getReminders, newReminder, updateReminder } from "../../lib/db/tables/reminders";
 	import { PartialBy } from "../../lib/types";
 	import { useRoute } from "vue-router";
+	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 
-	const isIOS = inject<boolean>("isIOS")!;
 	const route = useRoute();
 	const router = useIonRouter();
+
+	const isIOS = inject<boolean>("isIOS")!;
+	const loading = ref(false);
 
 	const emptyReminder: PartialBy<Reminder, "uuid"> = {
 		name: "",
@@ -131,7 +134,8 @@
 			</IonToolbar>
 		</IonHeader>
 
-		<IonContent>
+		<SpinnerFullscreen v-if="loading" />
+		<IonContent v-else>
 
 			<IonList :inset="isIOS">
 

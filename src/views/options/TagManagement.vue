@@ -10,6 +10,7 @@
 	import TagLabel from '../../components/tag/TagLabel.vue';
 	import { DatabaseEvents, DatabaseEvent } from '../../lib/db/events';
 	import { useRoute } from 'vue-router';
+	import SpinnerFullscreen from '../../components/SpinnerFullscreen.vue';
 
 	const route = useRoute();
 
@@ -22,7 +23,7 @@
 
 	const type = ref("member");
 
-	const tags = shallowRef<Tag[]>([]);
+	const tags = shallowRef<Tag[]>();
 	const filteredTags = getFilteredTags(search, type, tags);
 
 	const listener = async (event: Event) => {
@@ -71,7 +72,8 @@
 			</IonToolbar>
 		</IonHeader>
 		
-		<IonContent>
+		<SpinnerFullscreen v-if="!tags" />
+		<IonContent v-else>
 			<IonList :inset="isIOS">
 				<IonItem button v-for="tag in filteredTags" :key="JSON.stringify(tag)" :routerLink="'/options/tagManagement/edit?uuid='+tag.uuid">
 					<TagColor slot="start" :tag />

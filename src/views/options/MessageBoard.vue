@@ -4,7 +4,7 @@
 	import type { BoardMessage, BoardMessageComplete } from '../../lib/db/entities.d.ts';
 	import { getBoardMessages } from '../../lib/db/tables/boardMessages';
 	import BoardMessageEdit from "../../modals/BoardMessageEdit.vue";
-	import Spinner from "../../components/Spinner.vue";
+	import SpinnerFullscreen from '../../components/SpinnerFullscreen.vue';
 
 	import {
 		calendarOutline as calendarIOS,
@@ -132,9 +132,7 @@
 			</div>
 		</IonHeader>
 
-		<div v-if="!boardMessages" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; --spinner-size: 72px; --spinner-width: 5px">
-			<Spinner />
-		</div>
+		<SpinnerFullscreen v-if="!boardMessages" />
 		<IonContent v-else>
 			<IonList :inset="isIOS" v-if="isCalendarView">
 				<template v-for="tuple in getAtDate(date)">
