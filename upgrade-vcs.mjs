@@ -56,7 +56,7 @@ const tauriCargoToml = TOML.parse(await readFile(resolve(import.meta.dirname, "s
 // Modify parsed manifests
 packageJson.version = version;
 tauriConfJson.version = version;
-tauriConfJson.android.versionCode = revcount;
+tauriConfJson.bundle.android.versionCode = revcount;
 tauriCargoToml.package.version = version;
 
 // Write modified manifests
