@@ -1,9 +1,10 @@
 <script setup lang="ts">
-    import { IonContent, IonPage, IonButton, IonIcon } from '@ionic/vue';
-    import {accessibilityOutline as AccessibilityIOS} from "ionicons/icons";
+    import { IonContent, IonPage, IonButton, IonIcon, useIonRouter } from '@ionic/vue';
+    import { accessibilityOutline as AccessibilityIOS } from "ionicons/icons";
     import AccessibilityMD from "@material-symbols/svg-600/outlined/accessibility_new.svg";
     import AmpersandLogo from  "../../assets/ampersand_logo.svg"
 
+    const router = useIonRouter();
 </script>
 
 <template>
@@ -13,12 +14,12 @@
                 <h1>{{ $t("onboarding:welcomeScreen.header") }}</h1>
                 <IonIcon class="logo" :icon="AmpersandLogo" />
 
-                <IonButton routerLink="/onboarding/import">
+                <IonButton @click="router.replace('/onboarding/import/')">
                     {{ $t("onboarding:welcomeScreen.start") }}
                 </IonButton>
 
                 <div class="button">
-					<IonButton class="tonal" shape="round" routerLink="/options/accessibility">
+					<IonButton class="tonal" shape="round" routerLink="/options/accessibility/">
 						<IonIcon slot="icon-only" :md="AccessibilityMD" :ios="AccessibilityIOS"></IonIcon>
 					</IonButton>
                 </div>

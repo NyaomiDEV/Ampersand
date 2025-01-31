@@ -94,7 +94,7 @@ export async function setSoleFronter(member: Member) {
 	for(const uuid of toUpdate)
 		await updateFrontingEntry(uuid, { endTime });
 
-	if(!getCurrentFrontEntryForMember(member)){
+	if(!await getCurrentFrontEntryForMember(member)){
 		await newFrontingEntry({
 			member: member.uuid,
 			startTime: endTime,

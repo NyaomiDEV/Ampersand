@@ -32,13 +32,13 @@
 	const router = useIonRouter();
 
 	const isIOS = inject<boolean>("isIOS")!;
+
 	const emptyMember: PartialBy<Member, "uuid"> = {
 		name: "",
 		isArchived: false,
 		isCustomFront: false,
 		tags: []
 	};
-
 	const member = ref({...emptyMember});
 
 	async function modifyPicture(){
@@ -55,7 +55,7 @@
 	async function save(){
 		const _member = toRaw(member.value);
 		await newMember(_member);
-		router.push("/onboarding/end")
+		router.replace("/onboarding/end/");
 	}
 </script>
 
@@ -87,7 +87,7 @@
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton @click="save">
+				<IonFabButton @click="save" v-if="member.name.length">
 					<IonIcon :ios="ArrowIOS" :md="ArrowMD" />
 				</IonFabButton>
 			</IonFab>
@@ -120,19 +120,6 @@
 		margin-bottom: 16px;
 	}
 
-	div.member-tags {
-		display: flex;
-		flex-direction: row;
-		flex-wrap: wrap;
-		justify-content: center;
-		padding: 0 16px;
-	}
-
-	.member-edit div.member-tags {
-		padding: 8px 0 0 0;
-		justify-content: start;
-	}
-
 	ion-avatar {
 		width: 192px;
 		height: 192px;
@@ -143,24 +130,6 @@
 		position: absolute;
 		bottom: 8px;
 		right: 8px;
-	}
-
-	div.member-info {
-		display: block;
-		margin: auto;
-		text-align: center;
-	}
-
-	div.member-info * {
-		margin: 0;
-	}
-
-	div.member-description {
-		padding: 16px;
-	}
-
-	div.member-description ion-label {
-		color: var(--ion-color-step-600, var(--ion-text-color-step-400, #666666));
 	}
 
 	.md ion-input, .md ion-textarea {

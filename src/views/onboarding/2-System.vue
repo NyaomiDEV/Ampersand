@@ -1,10 +1,10 @@
 <script setup lang="ts">
 	import { IonContent, IonList, IonPage, IonAvatar, IonButton, IonIcon, IonInput, IonFab, IonFabButton, IonItem, IonTextarea, useIonRouter} from '@ionic/vue';
-	import { inject, onMounted, ref } from 'vue';
+	import { inject, onBeforeMount, ref, toRaw } from 'vue';
 	import { getObjectURL } from '../../lib/util/blob';
 	import { getFiles } from '../../lib/util/misc';
 	import { resizeImage } from '../../lib/util/image';
-	import { getSystem, modifySystem } from '../../lib/db/tables/system';
+	import { getSystem, modifySystem, newSystem } from '../../lib/db/tables/system';
 	
 	import {
 		peopleOutline as peopleIOS,
@@ -15,12 +15,15 @@
 	import peopleMD from "@material-symbols/svg-600/outlined/groups_2.svg"
 	import pencilMD from "@material-symbols/svg-600/outlined/edit.svg"
     import ArrowMD from "@material-symbols/svg-600/outlined/arrow_forward.svg";
+	import { System } from '../../lib/db/entities';
+	import { PartialBy } from '../../lib/types';
 
 	const isIOS = inject<boolean>("isIOS");
 
 	const router = useIonRouter();
 
-	const system = ref();
+	const emptySystem: PartialBy<System, "uuid"> = {name: ""};
+	const system = ref<PartialBy<System, "uuid">>({...emptySystem});
 
 	async function modifyPicture(){
 		const files = await getFiles();
@@ -34,12 +37,17 @@
 	}
 
 	async function save() {
-		await modifySystem({...system.value});
-		router.push("/onboarding/member");
+		if(!await getSystem())
+			await newSystem({...toRaw(system.value)});
+		else
+			await modifySystem({...toRaw(system.value)});
+	
+		router.replace("/onboarding/member/");
 	}
 
-	onMounted(async () => {
-		system.value = await getSystem();
+	onBeforeMount(async () => {
+		const sys = await getSystem();
+		if(sys) system.value = sys;
 	});
 </script>
 
@@ -77,9 +85,7 @@
 </template>
 
 <style scoped>
-
 	h1 {
-		margin-top: 208px;
 		text-align: center;
 	}
 

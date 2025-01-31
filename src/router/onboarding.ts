@@ -4,28 +4,28 @@ const onboarding: Array<RouteRecordRaw> = [
     { 
         path: '/onboarding/start',
         name: 'OnboardingStart',
-        component: () => import("../views/onboarding/OnboardingStart.vue")
+        component: () => import("../views/onboarding/0-Start.vue")
 
-    },
-    {
-        path: '/onboarding/end',
-        name: 'OnboardingEnd',
-        component: () => import("../views/onboarding/OnboardingEnd.vue")
     },
     {
         path: '/onboarding/import',
         name: 'OnboardingImport',
-        component: () => import("../views/onboarding/OnboardingImport.vue")
+        component: () => import("../views/onboarding/1-Import.vue")
     },
     {
         path: '/onboarding/system',
         name: 'OnboardingSystemSetup',
-        component: () => import("../views/onboarding/OnboardingSystem.vue")
+        component: () => import("../views/onboarding/2-System.vue")
     },
     {
         path: '/onboarding/member',
         name: 'OnboardingMemberSetup',
-        component: () => import("../views/onboarding/OnboardingMember.vue")
+        component: () => import("../views/onboarding/3-Member.vue")
+    },
+    {
+        path: '/onboarding/end',
+        name: 'OnboardingEnd',
+        component: () => import("../views/onboarding/4-End.vue")
     }
 ];
 

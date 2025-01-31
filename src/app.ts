@@ -45,7 +45,7 @@ import { activateMaterialTheme, updateMaterialColors } from "./lib/theme";
 import "./lib/theme/style.css";
 
 import { tryPersistStorage } from "./lib/util/storageManager";
-import { getSystem, newSystem } from "./lib/db/tables/system";
+import { getSystem } from "./lib/db/tables/system";
 import { appConfig } from "./lib/config";
 import { getLockedStatus } from "./lib/applock";
 import { clearTempDir } from "./lib/native/cache";
@@ -54,7 +54,7 @@ const app = createApp(App).use(IonicVue, {
 	hardwareBackButton: true
 }).use(router).use(I18NextVue, { i18next: i18n });
 
-router.beforeEach((to) => {
+router.beforeEach(async (to) => {
 	// lock flow
 	if (getLockedStatus()) {
 		if (to.path === "/lock")
@@ -66,7 +66,15 @@ router.beforeEach((to) => {
 			return { fullPath: "/" }; // just reset
 	}
 
-	// app just started
+	// first time???
+	if (!(await getSystem())){
+		if (to.path.startsWith("/onboarding/"))
+			return true;
+
+		return { path: "/onboarding/start", replace: true };
+	}
+
+	// app just started???
 	if (to.fullPath === "/") {
 		// route to default view
 		switch (appConfig.view) {
@@ -88,12 +96,6 @@ router.beforeEach((to) => {
 
 await clearTempDir();
 await tryPersistStorage();
-
-if(!await getSystem()){
-	await newSystem({
-		name: ""
-	});
-}
 
 const darkMode = window.matchMedia("(prefers-color-scheme: dark)");
 darkMode.addEventListener("change", updateDarkMode);

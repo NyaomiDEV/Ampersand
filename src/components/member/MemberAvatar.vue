@@ -9,7 +9,7 @@
 	import { PartialBy } from "../../lib/types";
 
 	import accountCircle from "@material-symbols/svg-600/outlined/account_circle.svg";
-	import { ref, watch } from "vue";
+	import { isReactive, ref, watch } from "vue";
 
 	const props = defineProps<{
 		member: PartialBy<Member, "uuid">,
@@ -17,11 +17,15 @@
 
 	const cssColor = ref("var(--ion-color-primary)");
 
-	watch(props.member, () => {
+	function updateColor() {
 		cssColor.value = props.member.color && props.member.color !== "#000000"
 			? props.member.color
 			: "var(--ion-color-primary)";
-	}, { immediate: true });
+	}
+
+	updateColor();
+	if(isReactive(props.member))
+		watch(props.member, updateColor);
 </script>
 
 <template>
