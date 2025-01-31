@@ -16,18 +16,15 @@
 		IonBackButton,
 		useIonRouter,
 		alertController,
-		IonThumbnail
 	} from "@ionic/vue";
 
 	import {
 		saveOutline as saveIOS,
 		trashBinOutline as trashIOS,
-		documentOutline as documentIOS
 	} from "ionicons/icons";
 
 	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
-	import documentMD from "@material-symbols/svg-600/outlined/draft.svg";
 
 	import { getAssets, newAsset, deleteAsset, updateAsset } from '../../lib/db/tables/assets';
 	import { Asset } from "../../lib/db/entities";
@@ -36,14 +33,15 @@
 	import { useRoute } from "vue-router";
 	import { useTranslation } from "i18next-vue";
 	import { getFiles } from "../../lib/util/misc";
-	import { getBlobURL } from "../../lib/util/blob";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
+	import AssetItem from "../../components/AssetItem.vue";
 
 	const isIOS = inject<boolean>("isIOS");
 	const loading = ref(false);
 
-	const emptyAsset: PartialBy<Asset, "uuid" | "file"> = {
-		friendlyName: ""
+	const emptyAsset: PartialBy<Asset, "uuid"> = {
+		friendlyName: "",
+		file: new File([], "")
 	};
 	const asset = ref({...emptyAsset});
 
@@ -51,14 +49,10 @@
 	const router = useIonRouter();
 	const i18next = useTranslation();
 
-	const preview = ref();
-
 	async function updateFile() {
 		const files = await getFiles();
 		if (files.length > 0) {
 			asset.value.file = files[0];
-
-			preview.value = await generatePreview();
 		}
 	}
 
@@ -66,7 +60,7 @@
 		const uuid = asset.value.uuid;
 		const _asset = asset.value;
 
-		if(!_asset.file) return;
+		if(!_asset.file.size) return;
 
 		if(!uuid){
 			await newAsset(_asset as PartialBy<Asset, "uuid">);
@@ -120,22 +114,6 @@
 		loading.value = false;
 	}
 
-	function generatePreview(){
-		if(asset.value.file){
-			const file: File = asset.value.file;
-			switch(file.type){
-				case "image/png":
-				case "image/jpeg":
-				case "image/gif":
-				case "image/webp":
-					return getBlobURL(file);
-				default:
-					break;
-			}
-		}
-		return;
-	}
-
 	watch(route, updateRoute);
 	onBeforeMount(updateRoute);
 </script>
@@ -155,20 +133,11 @@
 		<IonContent v-else>
 			<IonList :inset="isIOS">
 
-				<IonItem v-if="asset.file">
-					<IonThumbnail v-if="preview" slot="start">
-						<img :src="preview" />
-					</IonThumbnail>
-					<IonIcon v-else slot="start" :ios="documentIOS" :md="documentMD" />
-					<IonLabel>
-						<h2>{{ asset.file.name }}</h2>
-						<p>{{ asset.file.type.split("/")[1].replace(/^x-/, '') }}</p>
-					</IonLabel>
-				</IonItem>
+				<AssetItem v-if="asset.file.size" :asset :clickable="false" :showFilenameAndType="true" />
 
 				<IonItem>
 					<IonButton @click="updateFile">
-						{{ !asset.file ? $t("options:assetManager.add.attachment") : $t("options:assetManager.edit.attachment") }}
+						{{ !asset.file.size ? $t("options:assetManager.add.attachment") : $t("options:assetManager.edit.attachment") }}
 					</IonButton>
 				</IonItem>
 

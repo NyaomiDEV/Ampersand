@@ -1,19 +1,57 @@
 <script setup lang="ts">
-    import { IonThumbnail, IonLabel, IonItem } from '@ionic/vue'
+    import { IonThumbnail, IonLabel, IonItem, IonIcon } from '@ionic/vue'
     import { Asset } from '../lib/db/entities';
     import { getBlobURL } from '../lib/util/blob';
+    import { PartialBy } from '../lib/types';
+
+	import {
+		documentOutline as documentIOS
+	} from "ionicons/icons";
+
+	import documentMD from "@material-symbols/svg-600/outlined/draft.svg";
+
 
     const props = defineProps<{
-        asset: Asset
+        asset: PartialBy<Asset, "uuid">,
+        clickable?: boolean,
+        showFilenameAndType?: boolean
     }>();
+
+	function generatePreview(){
+		if(props.asset.file.size){
+			const file = props.asset.file;
+			switch(file.type){
+				case "image/png":
+				case "image/jpeg":
+				case "image/gif":
+				case "image/webp":
+					return getBlobURL(file);
+				default:
+					break;
+			}
+		}
+		return;
+	}
 </script>
 
 <template>
-    <IonItem button :routerLink="'/options/assetManager/edit/?uuid=' + props.asset.uuid">
-        <IonThumbnail slot="start">
+    <IonItem
+        button
+        :routerLink="props.clickable ? '/options/assetManager/edit/?uuid=' + props.asset.uuid : undefined"
+    >
+        <IonThumbnail slot="start" v-if="generatePreview()">
             <img :src="getBlobURL(props.asset.file)" />
         </IonThumbnail>
-        <IonLabel class="nowrap">{{ props.asset.friendlyName }}</IonLabel>
+		<IonIcon v-else slot="start" :ios="documentIOS" :md="documentMD" />
+        <IonLabel class="nowrap">
+            <template v-if="props.showFilenameAndType">
+                <h2>{{ asset.file.name }}</h2>
+				<p>{{ asset.file.type.split("/")[1].replace(/^x-/, '').toUpperCase() }}</p>
+            </template>
+            <template v-else>
+                {{ props.asset.friendlyName }}
+            </template>
+        </IonLabel>
     </IonItem>
 </template>
 

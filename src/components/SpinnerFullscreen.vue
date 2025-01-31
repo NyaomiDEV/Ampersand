@@ -10,6 +10,7 @@
 
 <style scoped>
 	div.spinner-fullscreen {
+		background-color: var(--ion-background-color);
 		width: 100%;
 		height: 100%;
 		display: flex;
