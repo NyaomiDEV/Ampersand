@@ -23,7 +23,7 @@ export function getFilteredMembers(search: Ref<string>, members: ShallowRef<Memb
 
 		const parsed = await parseMemberFilterQuery(query);
 
-		_members.value = members.value.filter(x => {
+		_members.value = members.value.sort((a, b) => a.name.localeCompare(b.name)).filter(x => {
 
 			if(parsed.all)
 				return true;
@@ -82,9 +82,9 @@ export function getFilteredTags(search: Ref<string>, type: Ref<string>, tags: Sh
 
 
 		if(!query.length)
-			_tags.value = tags.value?.filter(x => x.type === type.value) || [];
+			_tags.value = tags.value?.sort((a, b) => a.name.localeCompare(b.name)).filter(x => x.type === type.value) || [];
 		else
-			_tags.value = tags.value?.filter(x => x.name.toLowerCase().startsWith(query.toLowerCase()) && x.type === type.value) || [];
+			_tags.value = tags.value?.sort((a, b) => a.name.localeCompare(b.name)).filter(x => x.name.toLowerCase().startsWith(query.toLowerCase()) && x.type === type.value) || [];
 	}, { immediate: true });
 
 	return _tags;
@@ -287,12 +287,12 @@ export function getFilteredAssets(search: Ref<string>, assets: ShallowRef<Asset[
 
 
 		if (!query.length) {
-			for (const x of assets.value)
+			for (const x of assets.value.sort((a, b) => a.friendlyName.localeCompare(b.friendlyName)))
 				filtered.push(x)
 		} else {
 			const parsed = parseAssetFilterQuery(query);
 
-			for (const x of assets.value) {
+			for (const x of assets.value.sort((a, b) => a.friendlyName.localeCompare(b.friendlyName))) {
 				if (parsed.all) {
 					filtered.push(x);
 					continue;
