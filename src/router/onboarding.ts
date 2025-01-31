@@ -3,33 +3,30 @@ import { RouteRecordRaw } from "vue-router";
 const onboarding: Array<RouteRecordRaw> = [
     { 
         path: '/onboarding/start',
-        name: 'Onboarding Start',
+        name: 'OnboardingStart',
         component: () => import("../views/onboarding/OnboardingStart.vue")
 
     },
     {
         path: '/onboarding/end',
-        name: 'Onboarding End',
+        name: 'OnboardingEnd',
         component: () => import("../views/onboarding/OnboardingEnd.vue")
     },
     {
         path: '/onboarding/import',
-        name: 'Onboarding Import',
+        name: 'OnboardingImport',
         component: () => import("../views/onboarding/OnboardingImport.vue")
     },
     {
         path: '/onboarding/system',
-        name: 'Onboarding System',
+        name: 'OnboardingSystemSetup',
         component: () => import("../views/onboarding/OnboardingSystem.vue")
     },
     {
         path: '/onboarding/member',
-        name: 'Onboarding Member',
+        name: 'OnboardingMemberSetup',
         component: () => import("../views/onboarding/OnboardingMember.vue")
     }
 ];
-
-
-
 
 export default onboarding;

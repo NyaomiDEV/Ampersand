@@ -3,32 +3,32 @@ import { RouteRecordRaw } from "vue-router";
 const options: Array<RouteRecordRaw> = [
 	{
 		path: '/options/testingGrounds',
-		name: 'Testing grounds',
+		name: 'TestingGrounds',
 		component: () => import("../views/options/TestingGrounds.vue"),
 	},
 	{
 		path: '/options/systemSettings',
-		name: 'System Settings',
+		name: 'SystemSettings',
 		component: () => import("../views/options/SystemSettings.vue"),
 	},
 	{
 		path: '/options/frontHistory',
-		name: 'Front History',
+		name: 'FrontHistory',
 		component: () => import("../views/options/FrontHistory.vue"),
 	},
 	{
 		path: '/options/messageBoard',
-		name: 'Message Board',
+		name: 'MessageBoard',
 		component: () => import("../views/options/MessageBoard.vue"),
 	},
 	{
 		path: '/options/tagManagement',
-		name: 'Tag Management',
+		name: 'TagManagement',
 		component: () => import("../views/options/TagManagement.vue"),
 	},
 	{
 		path: '/options/assetManager',
-		name: 'Asset Manager',
+		name: 'AssetManager',
 		component: () => import("../views/options/AssetManager.vue"),
 	},
 	{
@@ -38,7 +38,7 @@ const options: Array<RouteRecordRaw> = [
 	},
 	{
 		path: '/options/appSettings',
-		name: 'App Settings',
+		name: 'AppSettings',
 		component: () => import("../views/options/AppSettings.vue"),
 	},
 	{
@@ -53,7 +53,7 @@ const options: Array<RouteRecordRaw> = [
 	},
 	{
 		path: '/options/importExport',
-		name: 'Import / Export',
+		name: 'ImportExport',
 		component: () => import("../views/options/ImportExport.vue"),
 	},
 	{
