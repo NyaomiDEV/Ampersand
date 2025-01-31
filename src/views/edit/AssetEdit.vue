@@ -166,13 +166,6 @@
 <style scoped>
 	ion-button {
 		width: 100%;
-		margin-top: 16px;
-	}
-
-	ion-item ion-icon {
-		width: 36px;
-		height: 36px;
-		margin-inline-start: 16px;
 	}
 
 	ion-thumbnail {

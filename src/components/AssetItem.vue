@@ -10,7 +10,7 @@
 
 	import documentMD from "@material-symbols/svg-600/outlined/draft.svg";
     import { openFile } from '../lib/native/opener';
-import { isTauri } from '../lib/mode';
+    import { isTauri } from '../lib/mode';
 
     const props = defineProps<{
         asset: PartialBy<Asset, "uuid">,
@@ -69,6 +69,17 @@ import { isTauri } from '../lib/mode';
 
 <style scoped>
     ion-thumbnail {
+        width: 48px;
+        height: 48px;
 	    --border-radius: 16px;
     }
+
+    ion-thumbnail img {
+        object-fit: contain;
+    }
+
+	ion-icon {
+		width: 48px;
+		height: 48px;
+	}
 </style>
