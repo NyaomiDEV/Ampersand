@@ -26,6 +26,7 @@ android {
         applicationId = "moe.ampersand.app"
         minSdk = 24
         targetSdk = 34
+        base.archivesName.set("ampersand")
         versionCode = tauriProperties.getProperty("tauri.android.versionCode", "1").toInt()
         versionName = tauriProperties.getProperty("tauri.android.versionName", "1.0")
     }
@@ -38,8 +39,25 @@ android {
         }
     }
     buildTypes {
+        getByName("release") {
+            signingConfig = signingConfigs.getByName("release")
+            isMinifyEnabled = true
+            manifestPlaceholders["appName"] = "@string/app_name"
+            if(System.getenv("CI") !== null) {
+                applicationIdSuffix = ".ci"
+                manifestPlaceholders["appName"] = "@string/app_name_ci"
+                base.archivesName.set("ampersand-ci")
+            }
+            proguardFiles(
+                *fileTree(".") { include("**/*.pro") }
+                    .plus(getDefaultProguardFile("proguard-android-optimize.txt"))
+                    .toList().toTypedArray()
+            )
+        }
         getByName("debug") {
+            applicationIdSuffix = ".debug"
             manifestPlaceholders["usesCleartextTraffic"] = "true"
+            manifestPlaceholders["appName"] = "@string/app_name_debug"
             isDebuggable = true
             isJniDebuggable = true
             isMinifyEnabled = false
@@ -49,15 +67,6 @@ android {
                 jniLibs.keepDebugSymbols.add("*/x86/*.so")
                 jniLibs.keepDebugSymbols.add("*/x86_64/*.so")
             }
-        }
-        getByName("release") {
-            signingConfig = signingConfigs.getByName("release")
-            isMinifyEnabled = true
-            proguardFiles(
-                *fileTree(".") { include("**/*.pro") }
-                    .plus(getDefaultProguardFile("proguard-android-optimize.txt"))
-                    .toList().toTypedArray()
-            )
         }
     }
     kotlinOptions {

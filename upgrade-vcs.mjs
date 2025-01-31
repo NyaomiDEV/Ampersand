@@ -35,14 +35,17 @@ async function getVersion(){
 
 	const revcount = Number((await spawnAsync("git", ["rev-list", "--count", "HEAD"], import.meta.dirname)).stdout);
 	const packageJson = JSON.parse(await readFile(resolve(import.meta.dirname, "package.json"), "utf-8"));
-	return packageJson.version + "+" + revcount;
+	return {
+		revcount,
+		version: packageJson.version + "+" + revcount
+	}
 }
 
 //
 // MAIN CODE
 //
 
-const version = await getVersion();
+const { revcount, version } = await getVersion();
 console.log("New version is", version);
 
 // Read manifest files
@@ -53,6 +56,7 @@ const tauriCargoToml = TOML.parse(await readFile(resolve(import.meta.dirname, "s
 // Modify parsed manifests
 packageJson.version = version;
 tauriConfJson.version = version;
+tauriConfJson.android.versionCode = revcount;
 tauriCargoToml.package.version = version;
 
 // Write modified manifests

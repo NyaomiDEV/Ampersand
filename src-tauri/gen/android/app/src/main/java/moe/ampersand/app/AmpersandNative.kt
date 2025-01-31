@@ -18,7 +18,7 @@ class AmpersandNative(private var activity: Activity) {
     fun openFile(path: String): Boolean {
         try {
             val file = File(path);
-            val uri = FileProvider.getUriForFile(activity, "moe.ampersand.app.fileprovider", file);
+            val uri = FileProvider.getUriForFile(activity, activity.packageName + ".fileprovider", file);
             val intent = Intent(Intent.ACTION_VIEW);
             intent.setData(uri);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

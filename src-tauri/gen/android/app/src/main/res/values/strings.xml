@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Ampersand</string>
-    <string name="main_activity_title">Ampersand</string>
+    <string name="app_name_ci">Ampersand (CI)</string>
+    <string name="app_name_debug">Ampersand (Debug)</string>
 </resources>

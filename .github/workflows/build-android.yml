@@ -60,7 +60,7 @@ jobs:
           base64 -d <<< "${{ secrets.ANDROID_KEY_BASE64 }}" > $RUNNER_TEMP/keystore.jks
           echo "storeFile=$RUNNER_TEMP/keystore.jks" >> local.properties
       - name: Build universal APK
-        run: yarn tauri android build --apk --target aarch64 armv7 x86_64 --ci
+        run: yarn tauri android build --apk --target aarch64 armv7 --ci
         env:
           NDK_HOME: ${{ env.ANDROID_HOME }}/ndk/28.0.12674087/
       - name: Update dev tag
@@ -77,4 +77,4 @@ jobs:
           tag_name: dev
           generate_release_notes: true
           files: |
-            ./src-tauri/gen/android/app/build/outputs/apk/universal/release/app-universal-release.apk
+            ./src-tauri/gen/android/app/build/outputs/apk/*/release/*.apk
