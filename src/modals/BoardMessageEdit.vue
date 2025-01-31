@@ -175,7 +175,7 @@
 							</IonToggle>
 						</IonItem>
 
-						<IonItem v-for="entry in boardMessage.poll.entries">
+						<IonItem v-for="entry in boardMessage.poll.entries" :key="entry.choice">
 							<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('options:messageBoard.edit.pollChoice')" labelPlacement="floating" v-model="entry.choice" />
 							<IonButton slot="end" shape="round" fill="outline" size="default" @click="() => boardMessage.poll!.entries.splice(boardMessage.poll!.entries.indexOf(entry), 1)">
 								<IonIcon :ios="trashIOS" :md="trashMD" slot="icon-only" color="danger" />

@@ -25,7 +25,10 @@
 	});
 
 	const assets = shallowRef<Asset[]>();
-	const filteredAssets = getFilteredAssets(search, assets);
+	const filteredAssets = shallowRef<Asset[]>();
+	watch([assets, search], () => {
+		filteredAssets.value = getFilteredAssets(search.value, assets.value);
+	}, { immediate: true });
 
 	const listener = async (event: Event) => {
 		if(["assets"].includes((event as DatabaseEvent).data.table)){
@@ -67,7 +70,7 @@
 		<SpinnerFullscreen v-if="!assets" />
 		<IonContent v-else>
 			<IonList :inset="isIOS">
-				<AssetItem routeToEditPage :asset v-for="asset in filteredAssets" />
+				<AssetItem routeToEditPage :asset v-for="asset in filteredAssets" :key="asset.uuid" />
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">

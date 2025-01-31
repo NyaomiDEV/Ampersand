@@ -11,6 +11,39 @@ export type MemberFilterQuery = {
 	role?: string
 };
 
+export type FrontingHistoryFilterQuery = {
+	query: string,
+	all?: boolean,
+	startDateString?: string,
+	endDateString?: string,
+	startDay?: number,
+	endDay?: number,
+	startMonth?: number,
+	endMonth?: number,
+	startYear?: number,
+	endYear?: number,
+	currentlyFronting?: boolean,
+	member?: UUID
+};
+
+export type BoardMessageFilterQuery = {
+	query: string,
+	all?: boolean,
+	pinned?: boolean,
+	dateString?: string,
+	day?: number,
+	month?: number,
+	year?: number,
+	member?: UUID
+};
+
+export type AssetFilterQuery = {
+	query: string,
+	all?: boolean,
+	type?: string,
+	filename?: string
+};
+
 export async function parseMemberFilterQuery(search: string): Promise<MemberFilterQuery> {
 	const tokens = search.split(" ");
 
@@ -113,21 +146,6 @@ export async function parseMemberFilterQuery(search: string): Promise<MemberFilt
 	return result;
 }
 
-export type FrontingHistoryFilterQuery = {
-	query: string,
-	all?: boolean,
-	startDateString?: string,
-	endDateString?: string,
-	startDay?: number,
-	endDay?: number,
-	startMonth?: number,
-	endMonth?: number,
-	startYear?: number,
-	endYear?: number,
-	currentlyFronting?: boolean,
-	member?: UUID
-};
-
 export function parseFrontingHistoryFilterQuery(search: string) {
 	const tokens = search.split(" ");
 
@@ -205,17 +223,6 @@ export function parseFrontingHistoryFilterQuery(search: string) {
 	result.query = queryTokens.filter(Boolean).join(" ");
 	return result;
 }
-
-export type BoardMessageFilterQuery = {
-	query: string,
-	all?: boolean,
-	pinned?: boolean,
-	dateString?: string,
-	day?: number,
-	month?: number,
-	year?: number,
-	member?: UUID
-};
 
 export function parseBoardMessageFilterQuery(search: string) {
 	const tokens = search.split(" ");
@@ -298,13 +305,6 @@ export function parseBoardMessageFilterQuery(search: string) {
 	result.query = queryTokens.filter(Boolean).join(" ");
 	return result;
 }
-
-export type AssetFilterQuery = {
-	query: string,
-	all?: boolean,
-	type?: string,
-	filename?: string
-};
 
 export function parseAssetFilterQuery(search: string) {
 	const tokens = search.split(" ");

@@ -17,7 +17,7 @@
 		useIonRouter,
 		IonBackButton,
 	} from '@ionic/vue';
-	import { inject, onBeforeMount, onUnmounted, ref, shallowReactive, shallowRef, useTemplateRef, watch } from 'vue';
+	import { inject, onBeforeMount, onUnmounted, ref, shallowRef, useTemplateRef, watch } from 'vue';
 	import { getFilteredMembers } from '../lib/search.ts';
 	import { accessibilityConfig } from '../lib/config/index.ts';
 
@@ -60,8 +60,13 @@
 	});
 
 	const members = shallowRef<Member[]>();
-	const filteredMembers = getFilteredMembers(search, members);
-	const frontingEntries = shallowReactive(new Map<Member, FrontingEntry | undefined>());
+	const filteredMembers = shallowRef<Member[]>();
+
+	watch([search, members], async () => {
+		filteredMembers.value = await getFilteredMembers(search.value, members.value);
+	}, { immediate: true });
+
+	const frontingEntries = new Map<Member, FrontingEntry | undefined>();
 
 	const list = useTemplateRef('list');
 	const router = useIonRouter();
@@ -194,7 +199,7 @@
 		<IonContent v-else>
 			<IonList :inset="isIOS" ref="list">
 
-				<IonItemSliding v-for="member in filteredMembers" @ionDrag="endPress(member, true)" :key="JSON.stringify(member)">
+				<IonItemSliding v-for="member in filteredMembers" @ionDrag="endPress(member, true)" :key="member.uuid">
 					<IonItem
 						button
 						:class="{ archived: member.isArchived }"

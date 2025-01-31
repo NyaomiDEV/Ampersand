@@ -20,10 +20,9 @@
 		if(handle) handle();
 	});
 
-	function checkAndTryUnlocking(e){
-		unlockWithPassword(e.detail.value);
+	function checkAndTryUnlocking(input: string){
+		unlockWithPassword(input);
 	}
-
 </script>
 
 <template>
@@ -39,7 +38,7 @@
 					type="password"
 					labelPlacement="floating"
 					:label="$t('lock:hint')"
-					@["ion-input"]="checkAndTryUnlocking"
+					@update:modelValue="checkAndTryUnlocking"
 				></IonInput>
 			</div>
 

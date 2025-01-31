@@ -10,7 +10,8 @@ export type AppConfig = {
 		tags?: string,
 		frontingHistory?: string,
 		messageBoard?: string,
-		journal?: string
+		journal?: string,
+		assetManager?: string
 	}
 }
 

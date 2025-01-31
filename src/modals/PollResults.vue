@@ -11,7 +11,7 @@
 		IonLabel,
 	} from "@ionic/vue";
 
-	import { inject, onMounted, onUnmounted, shallowRef } from "vue";
+	import { inject, onBeforeMount, onUnmounted, shallowRef } from "vue";
 	import MemberAvatar from "../components/member/MemberAvatar.vue";
 	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
 	import type { Member, Poll } from "../lib/db/entities";
@@ -31,7 +31,7 @@
 			members.value = await getMembers();
 	}
 
-	onMounted(async () => {
+	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
 		members.value = await getMembers();
 	});
@@ -52,11 +52,11 @@
 		<SpinnerFullscreen v-if="!members" />
 		<IonContent v-else>
 			<IonList :inset="isIOS">
-				<template v-for="choice in props.poll.entries">
+				<template v-for="choice in props.poll.entries" :key="choice.choice">
 					<IonItemDivider sticky>
 						{{ choice.choice }} - {{ $t("other:polls.choice.desc", { count: choice.votes.length }) }}
 					</IonItemDivider>
-					<IonItem v-for="vote in choice.votes">
+					<IonItem v-for="vote in choice.votes" :key="vote.member">
 						<MemberAvatar slot="start" :member="members.find(x => vote.member === x.uuid)!" />
 						<IonLabel>
 							<h2>{{ members.find(x => vote.member === x.uuid)!.name }}</h2>

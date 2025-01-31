@@ -66,7 +66,7 @@
 		<IonLabel>{{ $t("dashboard:nowFronting") }}</IonLabel>
 	</IonListHeader>
 	<div class="carousel" v-if="frontingEntries.length">
-		<IonCard button :class="{outlined: !fronting.isMainFronter, elevated: fronting.isMainFronter}" @click="showModal(fronting)" v-for="fronting in frontingEntries" :key="JSON.stringify(fronting)">
+		<IonCard button :class="{outlined: !fronting.isMainFronter, elevated: fronting.isMainFronter}" @click="showModal(fronting)" v-for="fronting in frontingEntries" :key="fronting.uuid">
 			<IonCardContent>
 				<MemberAvatar :member="fronting.member" />
 				<IonLabel>

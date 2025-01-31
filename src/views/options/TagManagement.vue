@@ -24,7 +24,10 @@
 	const type = ref("member");
 
 	const tags = shallowRef<Tag[]>();
-	const filteredTags = getFilteredTags(search, type, tags);
+	const filteredTags = shallowRef<Tag[]>();
+	watch([search, tags], async () => {
+		filteredTags.value = getFilteredTags(search.value, tags.value?.filter(x => x.type === type.value));
+	}, {immediate: true});
 
 	const listener = async (event: Event) => {
 		if((event as DatabaseEvent).data.table === "tags")

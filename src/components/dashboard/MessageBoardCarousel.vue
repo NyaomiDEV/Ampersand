@@ -65,7 +65,7 @@
 	</IonListHeader>
 
 	<IonList :inset="isIOS">
-		<MessageBoardCard :boardMessage v-for="boardMessage in boardMessages" :key="JSON.stringify(boardMessage)" @click="showModal(boardMessage)" :hidePoll="!boardMessage.isPinned" />
+		<MessageBoardCard :boardMessage v-for="boardMessage in boardMessages" :key="boardMessage.uuid" @click="showModal(boardMessage)" :hidePoll="!boardMessage.isPinned" />
 	</IonList>
 
 	<div>

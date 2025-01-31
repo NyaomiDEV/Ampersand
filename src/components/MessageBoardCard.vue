@@ -37,7 +37,7 @@
 					{
 						text: i18next.t("other:alerts.ok"),
 						role: "confirm",
-						handler: (e) => resolve(e.reason)
+						handler: (e) => resolve(e.reason.length ? e.reason : null)
 					}
 				],
 				inputs: [
@@ -81,6 +81,7 @@
 			const vnode = h(MemberSelect, {
 				onlyOne: true,
 				discardOnSelect: true,
+				hideCheckboxes: true,
 				customTitle: i18next.t("other:polls.voteCast.voter"),
 				onDidDismiss: () => {
 					removeModal(vnode);
@@ -120,9 +121,12 @@
 				_choice.votes.splice(index, 1);
 			}
 		} else {
+			const reason = await showReasonAlert();
+			if(reason === undefined) return;
+
 			_choice?.votes.push({
 				member: voter.uuid,
-				reason: await showReasonAlert()
+				reason: reason ?? undefined
 			});
 
 			if(!poll.multipleChoice){
@@ -166,11 +170,11 @@
 					</p>
 				</div>
 				<div class="poll" v-if="props.boardMessage.poll && !props.hidePoll" @click="(e) => e.stopPropagation()">
-					<IonItem button detail="false" v-for="choice in props.boardMessage.poll.entries" @click="voteFor(choice)">
+					<IonItem button detail="false" v-for="choice in props.boardMessage.poll.entries" @click="voteFor(choice)" :key="choice.choice">
 						<IonLabel>
 							<h3>{{ choice.choice }}</h3>
 							<p>{{ $t("other:polls.choice.desc", { count: choice.votes.length }) }} - {{ calcPercentageVoted(choice) * 100 }}%</p>
-							<div class="percentage" :style="{'--vote-percentage': (calcPercentageVoted(choice) * 100) + '%'}" v-if="choice.votes.length"></div>
+							<div class="percentage" :style="{'--vote-percentage': (Math.max(0.005, calcPercentageVoted(choice)) * 100) + '%'}"></div>
 						</IonLabel>
 					</IonItem>
 					<IonButton @click="showPollResults">{{ $t("other:polls.resultsButton") }}</IonButton>
@@ -266,7 +270,7 @@
 		box-sizing: border-box;
 		margin: 8px 0px 0px 0px;
 		width: var(--vote-percentage);
-		transition: ease .2s width;
+		transition: width .25s ease-in-out;
 		height: 4px;
 		background-color: var(--ion-color-primary);
 		border-radius: 4px;

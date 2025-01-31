@@ -56,7 +56,7 @@
 	</IonListHeader>
 
 	<IonList :inset="isIOS" v-if="frontingEntries.length > 0">
-		<IonItem button v-for="entry in frontingEntries" :key="JSON.stringify(entry)" @click="showModal(entry)">
+		<IonItem button v-for="entry in frontingEntries" :key="entry.uuid" @click="showModal(entry)">
 			<MemberAvatar slot="start" :member="entry.member" />
 			<FrontingEntryLabel :entry />
 		</IonItem>

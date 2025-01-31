@@ -33,13 +33,9 @@
 	const isIOS = inject<boolean>("isIOS");
 
 	const search = ref(route.query.q as string || "");
-	watch(route, () => {
-		search.value = route.query.q as string || "";
-	});
 	
 	const frontingEntries = shallowRef<FrontingEntry[]>();
-	const filteredFrontingEntries = getFilteredFrontingEntries(search, frontingEntries);
-
+	const filteredFrontingEntries = shallowRef<FrontingEntryComplete[]>();
 
 	const isCalendarView = ref(false);
 	const date = ref(dayjs().toISOString());
@@ -48,7 +44,15 @@
 	const listener = async (event: Event) => {
 		if(["frontingEntries", "members"].includes((event as DatabaseEvent).data.table))
 			frontingEntries.value = await getFrontingEntries();
-	}
+	};
+
+	watch(route, () => {
+		search.value = route.query.q as string || "";
+	});
+
+	watch([search, frontingEntries], async () => {
+		filteredFrontingEntries.value = await getFilteredFrontingEntries(search.value, frontingEntries.value);
+	}, { immediate: true });
 
 	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
@@ -88,7 +92,7 @@
 
 	function highlightInCalendar(_date: string){
 		const date = dayjs(_date).startOf("day");
-		if(filteredFrontingEntries.value?.filter(x => dayjs(x.startTime).startOf('day').valueOf() === date.valueOf()).length > 0){
+		if(filteredFrontingEntries.value && filteredFrontingEntries.value.filter(x => dayjs(x.startTime).startOf('day').valueOf() === date.valueOf()).length > 0){
 			return {
 				backgroundColor: "var(--ion-background-color-step-200)"
 			};
@@ -151,27 +155,10 @@
 			</div>
 		</IonHeader>
 
-
 		<SpinnerFullscreen v-if="!frontingEntries" />
 		<IonContent v-else>
-			<IonList :inset="isIOS" v-if="isCalendarView">
-				<template v-for="tuple in getAtDate(date)">
-					<IonItemDivider sticky v-if="tuple[1].length">
-						<IonLabel>{{
-							tuple[0] === "currentlyFronting"
-							? $t("options:frontHistory.currentlyFronting")
-							: dayjs(tuple[0]).format("LL")
-							}}</IonLabel>
-					</IonItemDivider>
-					<IonItem button v-for="entry in tuple[1]" :key="'calendarview'+JSON.stringify(entry)" @click="showModal(entry)">
-						<MemberAvatar slot="start" :member="entry.member" />
-						<FrontingEntryLabel :entry />
-					</IonItem>
-				</template>
-			</IonList>
-
-			<IonList :inset="isIOS" v-if="!isCalendarView">
-				<template v-for="tuple in getGrouped(filteredFrontingEntries || [])">
+			<IonList :inset="isIOS">
+				<template v-for="tuple in (isCalendarView ? getAtDate(date) : getGrouped(filteredFrontingEntries || []))" :key="tuple[0]">
 					<IonItemDivider sticky>
 						<IonLabel>{{
 							tuple[0] === "currentlyFronting"
@@ -179,7 +166,7 @@
 							: dayjs(tuple[0]).format("LL")
 							}}</IonLabel>
 					</IonItemDivider>
-					<IonItem button v-for="entry in tuple[1]" :key="JSON.stringify(entry)" @click="showModal(entry)">
+					<IonItem button v-for="entry in tuple[1]" :key="entry.uuid" @click="showModal(entry)">
 						<MemberAvatar slot="start" :member="entry.member" />
 						<FrontingEntryLabel :entry />
 					</IonItem>

@@ -19,6 +19,8 @@
 	import TagLabel from "../components/tag/TagLabel.vue";
 	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
 
+	const isIOS = inject<boolean>("isIOS");
+
 	const props = defineProps<{
 		customTitle?: string,
 		modelValue?: Tag[]
@@ -28,19 +30,21 @@
 		'update:modelValue': [Tag[]],
 	}>();
 
-	const selectedTags = reactive<Tag[]>([]);
+	const selectedTags = reactive<Tag[]>([...props.modelValue || []]);
+	const search = ref("");
+	const tags = shallowRef<Tag[]>();
+	const filteredTags = shallowRef<Tag[]>();
+
 	watch(selectedTags, () => {
 		emit("update:modelValue", selectedTags);
 	});
 
-	const isIOS = inject<boolean>("isIOS");
-
-	const search = ref("");
-	const tags = shallowRef<Tag[]>();
-	const filteredTags = getFilteredTags(search, ref("member"), tags);
+	watch([search, tags], () => {
+		filteredTags.value = getFilteredTags(search.value, tags.value);
+	}, { immediate: true })
 
 	onBeforeMount(async () => {
-		tags.value = await getTags()
+		tags.value = await getTags();
 	});
 
 	function check(tag: Tag, checked: boolean){
@@ -69,7 +73,7 @@
 		<SpinnerFullscreen v-if="!tags" />
 		<IonContent v-else>
 			<IonList :inset="isIOS">
-				<IonItem button v-for="tag in filteredTags" :key="JSON.stringify(tag)">
+				<IonItem button v-for="tag in filteredTags" :key="tag.uuid">
 					<TagColor slot="start" :tag />
 					<IonCheckbox :value="tag.uuid" :checked="!!selectedTags.find(x => x.uuid === tag.uuid)" @update:modelValue="value => check(tag, value)">
 						<TagLabel :tag />

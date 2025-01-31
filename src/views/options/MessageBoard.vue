@@ -38,7 +38,10 @@
 	});
 
 	const boardMessages = shallowRef<BoardMessage[]>();
-	const filteredBoardMessages = getFilteredBoardMessages(search, boardMessages);
+	const filteredBoardMessages = shallowRef<BoardMessageComplete[]>();
+	watch([boardMessages, search], async () => {
+		filteredBoardMessages.value = await getFilteredBoardMessages(search.value, boardMessages.value);
+	}, { immediate: true });
 
 	const isCalendarView = ref(false);
 	const date = ref(dayjs().toISOString());
@@ -88,7 +91,7 @@
 
 	function highlightInCalendar(_date: string){
 		const date = dayjs(_date).startOf("day");
-		if(filteredBoardMessages.value?.filter(x => dayjs(x.date).startOf('day').valueOf() === date.valueOf()).length > 0){
+		if(filteredBoardMessages.value && filteredBoardMessages.value.filter(x => dayjs(x.date).startOf('day').valueOf() === date.valueOf()).length > 0){
 			return {
 				backgroundColor: "var(--ion-background-color-step-200)"
 			};
@@ -134,21 +137,12 @@
 
 		<SpinnerFullscreen v-if="!boardMessages" />
 		<IonContent v-else>
-			<IonList :inset="isIOS" v-if="isCalendarView">
-				<template v-for="tuple in getAtDate(date)">
+			<IonList :inset="isIOS">
+				<template v-for="tuple in (isCalendarView ? getAtDate(date) : getGrouped(filteredBoardMessages || []))" :key="tuple[0]">
 					<IonItemDivider sticky>
 						<IonLabel>{{ dayjs(tuple[0]).format("LL") }}</IonLabel>
 					</IonItemDivider>
-					<MessageBoardCard :boardMessage v-for="boardMessage in tuple[1]" :key="JSON.stringify(boardMessage)" @click="showModal(boardMessage)" />
-				</template>
-			</IonList>
-
-			<IonList :inset="isIOS" v-if="!isCalendarView">
-				<template v-for="tuple in getGrouped(filteredBoardMessages || [])">
-					<IonItemDivider sticky>
-						<IonLabel>{{ dayjs(tuple[0]).format("LL") }}</IonLabel>
-					</IonItemDivider>
-					<MessageBoardCard :boardMessage v-for="boardMessage in tuple[1]" :key="JSON.stringify(boardMessage)" @click="showModal(boardMessage)" />
+					<MessageBoardCard :boardMessage v-for="boardMessage in tuple[1]" :key="boardMessage.uuid" @click="showModal(boardMessage)" />
 				</template>
 			</IonList>
 

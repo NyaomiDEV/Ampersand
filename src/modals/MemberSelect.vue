@@ -12,7 +12,7 @@
 		modalController,
 	} from "@ionic/vue";
 
-	import { inject, onMounted, onUnmounted, reactive, ref, shallowRef, watch } from "vue";
+	import { inject, onBeforeMount, onUnmounted, reactive, ref, shallowRef, watch } from "vue";
 	import { getFilteredMembers } from "../lib/search.ts";
 	import MemberAvatar from "../components/member/MemberAvatar.vue";
 	import MemberLabel from "../components/member/MemberLabel.vue";
@@ -27,16 +27,39 @@
 		customTitle?: string,
 		onlyOne?: boolean,
 		discardOnSelect?: boolean,
-		modelValue?: Member[]
+		modelValue?: Member[],
+		hideCheckboxes?: boolean
 	}>();
 
 	const emit = defineEmits<{
 		"update:modelValue": [Member[]],
 	}>();
 
-	const selectedMembers = reactive<Member[]>([]);
+	const selectedMembers = reactive<Member[]>([...props.modelValue || []]);
+	const search = ref("");
+	const members = shallowRef<Member[]>();
+	const filteredMembers = shallowRef<Member[]>();
+
+	const listener = async (event: Event) => {
+		if((event as DatabaseEvent).data.table == "members")
+			members.value = await getMembers();
+	}
+
 	watch(selectedMembers, () => {
 		emit("update:modelValue", selectedMembers);
+	});
+
+	watch([search, members], async () => {
+		filteredMembers.value = await getFilteredMembers(search.value, members.value);
+	}, { immediate: true });
+
+	onBeforeMount(async () => {
+		DatabaseEvents.addEventListener("updated", listener);
+		members.value = await getMembers();
+	});
+
+	onUnmounted(() => {
+		DatabaseEvents.removeEventListener("updated", listener);
 	});
 
 	function check(member: Member, checked: boolean){
@@ -54,24 +77,6 @@
 			modalController.dismiss();
 		}
 	}
-
-	const search = ref("");
-	const members = shallowRef<Member[]>();
-	const filteredMembers = getFilteredMembers(search, members);
-
-	const listener = async (event: Event) => {
-		if((event as DatabaseEvent).data.table == "members")
-			members.value = await getMembers();
-	}
-
-	onMounted(async () => {
-		DatabaseEvents.addEventListener("updated", listener);
-		members.value = await getMembers();
-	});
-
-	onUnmounted(() => {
-		DatabaseEvents.removeEventListener("updated", listener);
-	});
 </script>
 
 <template>
@@ -89,7 +94,7 @@
 		<SpinnerFullscreen v-if="!members" />
 		<IonContent v-else>
 			<IonList :inset="isIOS">
-				<IonItem button v-for="member in filteredMembers" :key="JSON.stringify(member)">
+				<IonItem button v-for="member in filteredMembers" :key="member.uuid">
 					<MemberAvatar slot="start" :member />
 					<IonCheckbox :value="member.uuid" :checked="!!selectedMembers.find(x => x.uuid === member.uuid)" @update:modelValue="value => check(member, value)">
 						<MemberLabel :member />
@@ -104,5 +109,9 @@
 	ion-modal.member-select-modal {
 		--height: 100dvh;
 		--border-radius: 16px;
+	}
+
+	ion-checkbox::part(container) {
+		visibility: v-bind("!props.hideCheckboxes ? 'visible' : 'hidden'")
 	}
 </style>

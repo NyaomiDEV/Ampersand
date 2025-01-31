@@ -43,11 +43,12 @@
 		<IonPicker>
 			<IonPickerColumn
 				v-for="column in props.content"
+				:key="column.name"
 				@["ion-change"]="(e) => { values.set(column.name, e.detail.value) }"
 				:value="values.get(column.name) || column.values.find(x => x.default)?.value || undefined"
 			>
 				<div slot="prefix" v-if="column.prefix">{{ column.prefix }}</div>
-				<IonPickerColumnOption v-for="option in column.values" :value="option.value" :color="option.color" :disabled="option.disabled">
+				<IonPickerColumnOption v-for="option in column.values" :key="option.value" :value="option.value" :color="option.color" :disabled="option.disabled">
 					{{ option.name }}
 				</IonPickerColumnOption>
 				<div slot="suffix" v-if="column.suffix">{{ column.suffix }}</div>
