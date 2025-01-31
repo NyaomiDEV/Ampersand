@@ -4,7 +4,6 @@
 		IonHeader,
 		IonToolbar,
 		IonTitle,
-		IonAvatar,
 		IonButton,
 		IonIcon,
 		IonList,
@@ -28,7 +27,6 @@
 	import {
 		pencilOutline as pencilIOS,
 		saveOutline as saveIOS,
-		personOutline as personIOS,
 		newspaperOutline as newspaperIOS,
 		journalOutline as journalIOS,
 		trashBinOutline as trashIOS
@@ -36,7 +34,6 @@
 
 	import pencilMD from "@material-symbols/svg-600/outlined/edit.svg";
 	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
-	import personMD from "@material-symbols/svg-600/outlined/person.svg";
 	import newspaperMD from "@material-symbols/svg-600/outlined/newspaper.svg";
 	import journalMD from "@material-symbols/svg-600/outlined/book.svg";
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
@@ -44,7 +41,6 @@
 	import { Member, Tag } from "../../lib/db/entities";
 	import { getMembers, newMember, deleteMember, updateMember } from '../../lib/db/tables/members';
 	import { getTags } from "../../lib/db/tables/tags";
-	import { getBlobURL } from '../../lib/util/blob';
 	import { getFiles } from "../../lib/util/misc";
 	import { resizeImage } from "../../lib/util/image";
 	import { getCurrentInstance, inject, onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
@@ -54,6 +50,7 @@
 	import { useRoute } from "vue-router";
 	import { useTranslation } from "i18next-vue";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
+import MemberAvatar from "../../components/member/MemberAvatar.vue";
 
 	const i18next = useTranslation();
 
@@ -185,9 +182,7 @@
 		<SpinnerFullscreen v-if="loading" />
 		<IonContent v-else>
 			<div class="avatar-container">
-				<IonAvatar>
-					<img aria-hidden="true" :src="member.image ? getBlobURL(member.image) : (isIOS ? personIOS : personMD)" />
-				</IonAvatar>
+				<MemberAvatar :member />
 				<IonButton shape="round" @click="modifyPicture" v-if="isEditing">
 					<IonIcon slot="icon-only" :ios="pencilIOS" :md="pencilMD" />
 				</IonButton>
@@ -326,6 +321,7 @@
 	ion-avatar {
 		width: 192px;
 		height: 192px;
+		outline-width: 8px !important;
 	}
 
 	div.avatar-container ion-button {

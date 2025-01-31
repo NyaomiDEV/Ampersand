@@ -3,7 +3,7 @@ import { Marked, TokenizerAndRendererExtension } from "../../vendor/marked-vue/m
 import { getMembers } from "../lib/db/tables/members";
 import MemberChip from "../components/member/MemberChip.vue";
 import { getAssets } from "./db/tables/assets";
-import { getBlobURL } from "./util/blob";
+import { getObjectURL } from "./util/blob";
 
 export const marked = new Marked();
 
@@ -98,7 +98,7 @@ marked.use({
 					const friendlyNameMaybe = token.href.slice(1);
 					const asset = (await getAssets()).find(x => x.friendlyName === friendlyNameMaybe);
 					if(asset){
-						token.href = getBlobURL(asset.file);
+						token.href = getObjectURL(asset.file);
 					}
 				}
 				break;
@@ -107,7 +107,7 @@ marked.use({
 					const friendlyNameMaybe = token.href.slice(1);
 					const asset = (await getAssets()).find(x => x.friendlyName === friendlyNameMaybe);
 					if (asset) {
-						token.href = getBlobURL(asset.file);
+						token.href = getObjectURL(asset.file);
 					}
 				}
 				break;				

@@ -15,6 +15,10 @@ export function isIOSIonicMode(): boolean {
 	return getIonicMode() === "ios";
 }
 
+export function isTauri(): boolean { 
+	return !!window.isTauri;
+}
+
 export function isDarkMode() {
 	switch (accessibilityConfig.theme) {
 		case "dark":
@@ -46,7 +50,7 @@ export async function updateDarkMode() {
 }
 
 export async function updateInsets() {
-	if(!('isTauri' in window)) return;
+	if(!isTauri()) return;
 
 	const insets = await M3.getInsets();
 	if(insets && !('error' in insets)){

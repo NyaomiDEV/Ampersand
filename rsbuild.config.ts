@@ -15,7 +15,7 @@ export default defineConfig({
 	},
 	plugins: [
 		pluginVue(),
-		pluginBasicSsl({
+		process.env.TAURI_ENV_DEBUG ? undefined : pluginBasicSsl({
 			filename: "self-signed.pem",
 			outputPath: __dirname
 		})

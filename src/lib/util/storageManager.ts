@@ -1,9 +1,10 @@
 import { ref } from "vue";
+import { isTauri } from "../mode";
 
-export const wasPersisted = ref('isTauri' in window || false);
+export const wasPersisted = ref(isTauri());
 
 export async function tryPersistStorage(){
-	wasPersisted.value = 'isTauri' in window || await navigator.storage?.persisted();
+	wasPersisted.value = isTauri() || await navigator.storage?.persisted();
 
 	if (!wasPersisted.value) {
 		const persist = await navigator.storage?.persist();

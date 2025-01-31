@@ -10,6 +10,8 @@
         android:label="@string/app_name"
         android:theme="@style/Theme.ampersand"
         android:usesCleartextTraffic="${usesCleartextTraffic}">
+        <meta-data android:name="android.webkit.WebView.MetricsOptOut"
+            android:value="true" />
         <activity
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode"
             android:launchMode="singleTask"
@@ -26,7 +28,7 @@
 
         <provider
           android:name="androidx.core.content.FileProvider"
-          android:authorities="${applicationId}.fileprovider"
+          android:authorities="moe.ampersand.app.fileprovider"
           android:exported="false"
           android:grantUriPermissions="true">
           <meta-data

@@ -133,7 +133,7 @@
 		<IonContent v-else>
 			<IonList :inset="isIOS">
 
-				<AssetItem v-if="asset.file.size" :asset :clickable="false" :showFilenameAndType="true" />
+				<AssetItem v-if="asset.file.size" :asset routeToOpenFile :showFilenameAndType="true" />
 
 				<IonItem>
 					<IonButton @click="updateFile">

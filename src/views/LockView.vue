@@ -39,7 +39,7 @@
 					type="password"
 					labelPlacement="floating"
 					:label="$t('lock:hint')"
-					@ionInput="checkAndTryUnlocking"
+					@["ion-input"]="checkAndTryUnlocking"
 				></IonInput>
 			</div>
 

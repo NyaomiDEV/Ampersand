@@ -3,6 +3,7 @@ import { securityConfig } from "./config";
 import sha1 from "./util/sha1";
 import { t } from "i18next";
 import { ref } from "vue";
+import { isTauri } from "./mode";
 
 export const isLocked = ref(false);
 
@@ -71,7 +72,7 @@ export function enableApplock(plaintextPwd: string) {
 }
 
 export async function areBiometricsAvailable(){
-	if(!('isTauri' in window)) return false;
+	if(!isTauri()) return false;
 
 	const status = await checkStatus();
 	if(status.error || status.errorCode || !status.isAvailable) return false;

@@ -67,7 +67,7 @@
 		<SpinnerFullscreen v-if="!assets" />
 		<IonContent v-else>
 			<IonList :inset="isIOS">
-				<AssetItem clickable :asset v-for="asset in filteredAssets" />
+				<AssetItem routeToEditPage :asset v-for="asset in filteredAssets" />
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">

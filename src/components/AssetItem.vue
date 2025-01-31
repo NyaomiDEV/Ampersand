@@ -1,7 +1,7 @@
 <script setup lang="ts">
     import { IonThumbnail, IonLabel, IonItem, IonIcon } from '@ionic/vue'
     import { Asset } from '../lib/db/entities';
-    import { getBlobURL } from '../lib/util/blob';
+    import { getObjectURL } from '../lib/util/blob';
     import { PartialBy } from '../lib/types';
 
 	import {
@@ -9,11 +9,13 @@
 	} from "ionicons/icons";
 
 	import documentMD from "@material-symbols/svg-600/outlined/draft.svg";
-
+    import { openFile } from '../lib/native/opener';
+import { isTauri } from '../lib/mode';
 
     const props = defineProps<{
         asset: PartialBy<Asset, "uuid">,
-        clickable?: boolean,
+        routeToEditPage?: boolean,
+        routeToOpenFile?: boolean,
         showFilenameAndType?: boolean
     }>();
 
@@ -25,22 +27,32 @@
 				case "image/jpeg":
 				case "image/gif":
 				case "image/webp":
-					return getBlobURL(file);
+					return getObjectURL(file);
 				default:
 					break;
 			}
 		}
 		return;
 	}
+
+    function open(){
+        if(!isTauri()){
+            window.open(getObjectURL(props.asset.file), "_blank");
+            return;
+        }
+
+        openFile(props.asset.file);
+    }
 </script>
 
 <template>
     <IonItem
         button
-        :routerLink="props.clickable ? '/options/assetManager/edit/?uuid=' + props.asset.uuid : undefined"
+        :routerLink="props.routeToEditPage ? '/options/assetManager/edit/?uuid=' + props.asset.uuid : undefined"
+        @click="props.routeToOpenFile ? open() : undefined"
     >
         <IonThumbnail slot="start" v-if="generatePreview()">
-            <img :src="getBlobURL(props.asset.file)" />
+            <img :src="getObjectURL(props.asset.file)" />
         </IonThumbnail>
 		<IonIcon v-else slot="start" :ios="documentIOS" :md="documentMD" />
         <IonLabel class="nowrap">

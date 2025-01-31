@@ -33,12 +33,12 @@
 	import FolderMD from '@material-symbols/svg-600/outlined/folder_open.svg';
 	import { securityConfig } from '../lib/config';
 	import { lock } from '../lib/applock';
+	import { isTauri } from '../lib/mode';
 
 	const router = useIonRouter();
 	const isIOS = inject<boolean>("isIOS");
 
 	const isDev = import.meta.env.MODE === 'development';
-	const isTauri = 'isTauri' in window;
 
 	function lockImmediately(){
 		if(lock())
@@ -91,7 +91,7 @@
 					<IonLabel>{{ $t("options:assetManager.header") }}</IonLabel>
 				</IonItem>
 
-				<IonItem button routerLink="/options/reminders" v-if="isDev || isTauri">
+				<IonItem button routerLink="/options/reminders" v-if="isDev || isTauri()">
 					<IonIcon :ios="RemindersIOS" :md="RemindersMD" slot="start" aria-hidden="true" />
 					<IonLabel>{{ $t("options:reminders.header") }}</IonLabel>
 				</IonItem>

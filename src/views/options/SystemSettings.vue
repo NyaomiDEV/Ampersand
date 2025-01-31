@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonAvatar, IonButton, IonIcon, IonInput, IonFab, IonFabButton, IonItem, IonLabel, IonTextarea} from '@ionic/vue';
 	import { inject, onMounted, ref } from 'vue';
-	import { getBlobURL } from '../../lib/util/blob';
+	import { getObjectURL } from '../../lib/util/blob';
 	import { getFiles } from '../../lib/util/misc';
 	import { resizeImage } from '../../lib/util/image';
 	import { getSystem, modifySystem } from '../../lib/db/tables/system';
@@ -64,7 +64,7 @@
 		<IonContent>
 			<div class="avatar-container">
 				<IonAvatar>
-					<img aria-hidden="true" :src="system?.image ? getBlobURL(system.image) : (isIOS ? peopleIOS : peopleMD )" />
+					<img aria-hidden="true" :src="system?.image ? getObjectURL(system.image) : (isIOS ? peopleIOS : peopleMD )" />
 				</IonAvatar>
 
 				<IonButton shape="round" @click="modifyPicture">

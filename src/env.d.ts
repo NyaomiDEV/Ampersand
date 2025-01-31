@@ -14,5 +14,6 @@ export declare global {
 }
 
 export interface AmpersandNative {
-	exitApp: () => void
+	exitApp: () => void,
+	openFile: (path: string) => boolean
 }
