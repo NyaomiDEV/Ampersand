@@ -157,14 +157,12 @@
 			<MemberAvatar :member="props.boardMessage.member" />
 			<div class="flexbox">
 				<div class="subheader">
-					<h3 style="color: var(--ion-text-color-step-400)">{{ props.boardMessage.member.name }}</h3>
+					<span>{{ props.boardMessage.member.name }}</span>
 					<p>{{ dayjs(props.boardMessage.date).format(`LL, ${twelveHour ? 'hh:mm A' : "HH:mm"}`) }}</p>
 				</div>
 				<div class="contents">
 					<h1>{{ props.boardMessage.title }}</h1>
-					<h2>
-						<Markdown :markdown="props.boardMessage.body" />
-					</h2>
+					<Markdown :markdown="props.boardMessage.body" />
 					<p class="contains-poll" v-if="props.boardMessage.poll && props.hidePoll">
 						{{ $t("other:polls.boardMessageContainsPoll") }}
 					</p>
@@ -227,6 +225,11 @@
 		margin: 0;
 	}
 
+	ion-card .subheader span {
+		font-size: 1.1em;
+		color: var(--ion-text-color-step-400);
+	}
+
 	ion-card .contents {
 		display: flex;
 		flex-direction: column;
@@ -237,7 +240,7 @@
 		margin: 0;
 	}
 
-	ion-card .contents h1 {
+	ion-card .contents > h1 {
 		font-size: 1.30em;
 		margin-bottom: 0;
 	}
