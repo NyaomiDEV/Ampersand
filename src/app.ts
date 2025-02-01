@@ -10,7 +10,7 @@ import i18n from "./lib/i18n";
 import I18NextVue from "i18next-vue";
 
 // Dark mode
-import { updateAccessibility, updateDarkMode, updateInsets, updatePWATitlebarColor } from "./lib/mode";
+import { isIOSIonicMode, updateAccessibility, updateDarkMode, updateInsets, updatePWATitlebarColor } from "./lib/mode";
 
 // App
 import App from "./App.vue";
@@ -53,8 +53,10 @@ import { slideAnimation } from "./lib/util/misc";
 
 const app = createApp(App).use(IonicVue, {
 	hardwareBackButton: true,
-	navAnimation: slideAnimation
 }).use(router).use(I18NextVue, { i18next: i18n });
+
+const _navAnimation = window.Ionic.config.get("navAnimation");
+window.Ionic.config.set("navAnimation", isIOSIonicMode() ? _navAnimation : slideAnimation);
 
 router.beforeEach(async (to) => {
 	// lock flow

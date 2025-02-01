@@ -2,17 +2,26 @@ import { M3 } from "tauri-plugin-m3";
 import { accessibilityConfig } from "./config";
 
 export function getIonicMode(): "ios" | "md" {
-	if (typeof (window as any) !== "undefined") {
-		const Ionic = (window as any).Ionic;
-		if (Ionic && Ionic.config) {
-			return Ionic.config.get("mode");
-		}
+	if (window.Ionic && window.Ionic.config) {
+		return window.Ionic.config.get("mode");
 	}
 	return "md";
 }
 
 export function isIOSIonicMode(): boolean {
 	return getIonicMode() === "ios";
+}
+
+export function isMobile(){
+	return window.matchMedia('(any-pointer:coarse)').matches;
+}
+
+function testUserAgent(regex: RegExp) {
+	return regex.test(window.navigator.userAgent);
+}
+
+export function isIOS(){
+	return testUserAgent(/iPhone|iPod|iPad/i) || (isMobile() && testUserAgent(/Macintosh/i))
 }
 
 export function isTauri(): boolean { 
