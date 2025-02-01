@@ -260,27 +260,11 @@
 			"title": "Export your data",
 			"desc": "Backup your current data to a file you can store somewhere else"
 		},
-		"settingsImport": {
-			"title": "Import your app settings config",
-			"desc": "Warning! It will overwrite your current settings configuration"
-		},
-		"settingsExport": {
-			"title": "Export your app settings config",
-			"desc": "Backup your current settings data so it can be reimported at a later time"
-		},
 		"status": {
-			"database": {
-				"imported": "The database backup has been imported. Please restart the app.",
-				"exportedPwa": "The database backup has been downloaded to your downloads folder.",
-				"exportedApp": "The database backup has been exported to the location you chose.",
-				"error": "Error while processing the database export."
-			},
-			"settings": {
-				"imported": "The settings backup has been imported. Please restart the app.",
-				"exportedPwa": "The settings backup has been downloaded to your downloads folder.",
-				"exportedApp": "The settings backup has been exported to the location you chose.",
-				"error": "Error while processing the settings export."
-			}
+			"imported": "The backup has been imported. Please restart the app.",
+			"exportedPwa": "The backup has been downloaded to your downloads folder.",
+			"exportedApp": "The backup has been exported to the location you chose.",
+			"error": "Error while exporting the backup."
 		}
 	},
 	"about": {

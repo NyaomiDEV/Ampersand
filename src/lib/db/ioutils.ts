@@ -21,12 +21,10 @@ const typeson = new Typeson({
 ]);
 
 async function _exportDatabase(){
-	const theEntireDatabase: Record<string, any> = {};
-	for (const x of getTables()) {
-		theEntireDatabase[x.name] = await typeson.encapsulate(await x.toArray());
-	}
+	const config = await typeson.encapsulate({ appConfig, accessibilityConfig, securityConfig });
+	const database = await Promise.all(getTables().map(async x => await typeson.encapsulate(await x.toArray())));
 
-	return theEntireDatabase;
+	return { config, database };
 }
 
 export async function exportDatabaseToBinary(){
@@ -42,15 +40,19 @@ export async function exportDatabaseToBinaryWithPassword(password: string){
 	return await compressGzip(encode(encodedDatabase));
 }
 
-async function _importDatabase(theEntireDatabase: Record<string, any>){
-	for (const key of Object.getOwnPropertyNames(theEntireDatabase)) {
+async function _importDatabase(tablesAndConfig: Record<"database" | "config", any>){
+	for (const key of Object.getOwnPropertyNames(tablesAndConfig.database)) {
 		const table = getTables().find((x) => x.name === key);
 		if (table) {
-			const contents = await typeson.revive(theEntireDatabase[key]);
+			const contents = await typeson.revive(tablesAndConfig.database[key]);
 			await table.clear();
 			await table.bulkAdd(contents);
 		}
 	}
+	const config = await typeson.revive(tablesAndConfig.config);
+	Object.assign(appConfig, config.appConfig);
+	Object.assign(accessibilityConfig, config.accessibilityConfig);
+	Object.assign(securityConfig, config.securityConfig);
 }
 
 export async function importDatabaseFromBinary(data: Uint8Array) {
@@ -64,41 +66,4 @@ export async function importDatabaseFromBinaryWithPassword(data: Uint8Array, pas
 	const theEntireDatabase = decode(await decrypt(encodedDatabase, password)) as Record<string, any>;
 
 	return await _importDatabase(theEntireDatabase);
-}
-
-export async function exportTableToBinary(tableName: string){
-	const table = getTables().find((x) => x.name === tableName);
-	if(table){
-		return encode(
-			await typeson.encapsulate(await table.toArray())
-		)
-	}
-	return null;
-}
-
-export async function importTableFromBinary(tableName: string, data: Uint8Array){
-	const table = getTables().find((x) => x.name === tableName);
-	if (table) {
-		const contents = await typeson.revive(decode(data));
-		await table.clear();
-		return await table.bulkAdd(contents);
-	}
-	return null;
-}
-
-export async function exportAppConfigToBinary(){
-	return encode(
-		await typeson.encapsulate(
-			{
-				appConfig, accessibilityConfig, securityConfig
-			}
-		)
-	)
-}
-
-export async function importAppConfigFromBinary(data: Uint8Array) {
-	const contents = await typeson.revive(decode(data));
-	Object.assign(appConfig, contents.appConfig);
-	Object.assign(accessibilityConfig, contents.accessibilityConfig);
-	Object.assign(securityConfig, contents.securityConfig);
 }

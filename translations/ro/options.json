@@ -191,14 +191,6 @@
 		"dbExport": {
 			"title": "Exportați-vă datele actuale într-un fișier",
 			"desc": "Faceți backup datelor actuale într-un fișier care poate fi stocat altundeva"
-		},
-		"settingsImport": {
-			"title": "Importați-vă setările dintr-un fișier",
-			"desc": "Atenție! Această acțiune suprascrie setările actuale"
-		},
-		"settingsExport": {
-			"title": "Exportați-vă setările într-un fișier",
-			"desc": "Salvați setările actuale într-un fișier care poate fi apelat ulterior"
 		}
 	},
 	"about": {
