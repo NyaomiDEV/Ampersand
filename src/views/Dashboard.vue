@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, useIonRouter, IonFab, IonIcon, IonFabButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
-	import { onBeforeMount, onUnmounted, ref } from 'vue';
+	import { onBeforeMount, onUnmounted, shallowRef } from 'vue';
 	import { getMainFronter } from '../lib/db/tables/frontingEntries.ts';
 	import type { Member } from '../lib/db/entities';
 
@@ -15,7 +15,7 @@
 	import { securityConfig } from '../lib/config/index.ts';
 	import { lock } from '../lib/applock.ts';
 
-	const mainFronter = ref<Member>();
+	const mainFronter = shallowRef<Member>();
 	const router = useIonRouter();
 
 	const listener = async (event: Event) => {

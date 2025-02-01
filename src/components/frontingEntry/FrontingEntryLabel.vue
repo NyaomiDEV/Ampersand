@@ -26,7 +26,7 @@
 		: formatWrittenTime(new Date(), props.entry.startTime)
 	);
 
-	const intervalRef = ref();
+	let intervalRef: number;
 
 	function format(startTime: Date, endTime?: Date){
 		const start = dayjs(startTime);
@@ -42,15 +42,14 @@
 
 	onMounted(() => {
 		if(!props.entry.endTime){
-			intervalRef.value = setInterval(() => {
+			intervalRef = setInterval(() => {
 				interval.value = formatWrittenTime(new Date(), props.entry.startTime);
 			}, 1000);
 		}
 	});
 
 	onUnmounted(() => {
-		clearInterval(intervalRef.value);
-		intervalRef.value = undefined;
+		clearInterval(intervalRef);
 	});
 </script>
 

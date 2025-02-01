@@ -13,7 +13,7 @@
 
 	const now = ref(new Date());
 
-	let interval: NodeJS.Timeout;
+	let interval: number;
 
 	const listener = async (event: Event) => {
 		if(["members", "frontingEntries"].includes((event as DatabaseEvent).data.table)){

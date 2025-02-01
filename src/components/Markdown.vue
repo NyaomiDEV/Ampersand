@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { defineComponent, ref, h, watch } from 'vue';
+	import { defineComponent, h, watch, shallowRef } from 'vue';
 	import { marked } from '../lib/markdown';
 	import { openUrl } from '@tauri-apps/plugin-opener';
 	import { getFile } from '../lib/util/blob';
@@ -39,7 +39,7 @@
 	}
 
 	const rendererComponent = defineComponent(async () => {
-			const mdRef = ref(await marked.parse(props.markdown));
+			const mdRef = shallowRef(await marked.parse(props.markdown));
 			watch(props, async () => {
 				mdRef.value = await marked.parse(props.markdown);
 			});
