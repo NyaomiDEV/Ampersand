@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { IonPage, IonTabs, IonTabBar, IonRouterOutlet, IonTabButton, IonIcon, useIonRouter, mdTransitionAnimation } from "@ionic/vue";
+	import { IonPage, IonTabs, IonTabBar, IonRouterOutlet, IonTabButton, IonIcon, useIonRouter } from "@ionic/vue";
 
 	import {
 		homeOutline as HomeIOS,
