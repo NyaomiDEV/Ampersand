@@ -41,6 +41,12 @@
 			"title": "Titolo",
 			"body": "Corpo del messaggio",
 			"isPinned": "Fissato",
+			"attachPoll": "Allega un sondaggio al messaggio",
+			"deleteAttachedPoll": "Elimina il sondaggio allegato",
+			"pollIsMultipleChoice": "Consenti più di una scelta",
+			"pollAddNewChoice": "Aggiungi una nuova scelta al sondaggio",
+			"pollChoice": "Descrizione della scelta",
+			"pollEditWarning": "I voti verranno resettati se cambi un qualsiasi dettaglio del sondaggio!",
 			"delete": {
 				"title": "Elimina messaggio dalla bacheca"
 			}
