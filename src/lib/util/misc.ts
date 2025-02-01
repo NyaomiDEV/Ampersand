@@ -2,6 +2,7 @@ import { createAnimation, getIonPageElement, TransitionOptions } from "@ionic/vu
 import dayjs from "dayjs";
 import Duration from "dayjs/plugin/duration";
 import { Ref } from "vue";
+import { appConfig } from "../config";
 dayjs.extend(Duration);
 
 export function getFiles(contentType?: string, multiple?: boolean): Promise<File[]> {
@@ -88,6 +89,12 @@ export async function decompressGzip(data: Uint8Array) {
 	}
 
 	return result;
+}
+
+export function formatDate(date: Date, expanded?: boolean){
+	if(expanded)
+		return dayjs(date).format(`LL, ${appConfig.locale.twelveHourClock ? 'hh:mm A' : "HH:mm"}`);
+	return dayjs(date).format(`${appConfig.locale.twelveHourClock ? 'hh:mm A' : "HH:mm"}`);
 }
 
 export function formatWrittenTime(dateStart: Date, dateEnd: Date){

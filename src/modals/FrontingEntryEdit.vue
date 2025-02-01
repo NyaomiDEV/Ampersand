@@ -13,9 +13,7 @@
 		IonInput,
 		IonItem,
 		modalController,
-		IonModal,
-		IonDatetimeButton,
-		IonDatetime
+		IonModal
 	} from "@ionic/vue";
 
 	import {
@@ -32,19 +30,17 @@
 
 	import MemberSelect from "./MemberSelect.vue";
 	import MemberAvatar from "../components/member/MemberAvatar.vue";
+	import DatePopupPicker from "../components/DatePopupPicker.vue";
 
 	import dayjs from "dayjs";
 	import UTC from "dayjs/plugin/utc";
 	import Timezone from "dayjs/plugin/timezone";
-	import { appConfig } from "../lib/config";
 	import { PartialBy } from "../lib/types";
+	import { formatDate } from "../lib/util/misc";
 	dayjs.extend(UTC);
 	dayjs.extend(Timezone);
 
 	const isIOS = inject<boolean>("isIOS");
-
-	const twelveHourClock = appConfig.locale.twelveHourClock;
-	const firstWeekOfDayIsSunday = appConfig.locale.firstWeekOfDayIsSunday;
 
 	const props = defineProps<{
 		frontingEntry?: PartialBy<FrontingEntryComplete, "uuid" | "member">
@@ -55,23 +51,23 @@
 		startTime: new Date(),
 		endTime: new Date(),
 	};
-	const frontingEntry = ref(props.frontingEntry || {...emptyFrontingEntry});
+	const frontingEntry = ref({...(props.frontingEntry || emptyFrontingEntry)});
 
 	const memberSelectModal = useTemplateRef("memberSelectModal");
 
-	const startTime: Ref<string | undefined> = ref(dayjs(frontingEntry.value.startTime).format("YYYY-MM-DDTHH:mm:ss"));
+	const startTime: Ref<string | undefined> = ref(dayjs(frontingEntry.value.startTime).format());
 	const endTime: Ref<string | undefined> = ref();
 	if(frontingEntry.value.endTime)
-		endTime.value = dayjs(frontingEntry.value.endTime).format("YYYY-MM-DDTHH:mm:ss");
+		endTime.value = dayjs(frontingEntry.value.endTime).format();
 
 	watch(startTime, () => {
 		frontingEntry.value.startTime = dayjs(startTime.value).toDate();
-	}, {immediate: false});
+	}, {immediate: true });
 
 	watch(endTime, () => {
 		if(endTime.value)
 			frontingEntry.value.endTime = dayjs(endTime.value).toDate();
-	}, {immediate: false});
+	}, {immediate: true });
 
 	async function save(){
 		const uuid = frontingEntry.value?.uuid;
@@ -141,11 +137,18 @@
 					<IonItem>
 						<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('options:frontHistory.edit.customStatus')" labelPlacement="floating" v-model="frontingEntry.customStatus" />
 					</IonItem>
-					<IonItem button>
+					<IonItem button @click="$refs.startTimePicker?.$el.present()">
 						<IonLabel>
-							{{ $t("options:frontHistory.edit.startTime") }}
+							<h2>{{ $t("options:frontHistory.edit.startTime") }}</h2>
+							<p>{{ formatDate(frontingEntry.startTime, true) }}</p>
 						</IonLabel>
-						<IonDatetimeButton slot="end" datetime="startTime"></IonDatetimeButton>
+						<DatePopupPicker
+							v-model="startTime"
+							showDefaultButtons
+							ref="startTimePicker"
+							:title="$t('options.frontHistory.edit.startTime')"
+							:max="frontingEntry.endTime || new Date()"
+						/>
 					</IonItem>
 					<IonItem button v-if="!frontingEntry.endTime" @click="removeFromFront">
 						<IonLabel>
@@ -153,11 +156,18 @@
 							<p>{{ $t("options:frontHistory.edit.removeFromFront.desc") }}</p>
 						</IonLabel>
 					</IonItem>
-					<IonItem button v-if="frontingEntry.endTime">
+					<IonItem button v-if="frontingEntry.endTime" @click="$refs.endTimePicker?.$el.present()">
 						<IonLabel>
-							{{ $t("options:frontHistory.edit.endTime") }}
+							<h2>{{ $t("options:frontHistory.edit.endTime") }}</h2>
+							<p>{{ formatDate(frontingEntry.endTime, true) }}</p>
 						</IonLabel>
-						<IonDatetimeButton slot="end" datetime="endTime"></IonDatetimeButton>
+						<DatePopupPicker
+							v-model="endTime"
+							showDefaultButtons
+							ref="endTimePicker"
+							:title="$t('options.frontHistory.edit.startTime')"
+							:min="frontingEntry.startTime"
+						/>
 					</IonItem>
 					<IonItem button>
 						<IonToggle v-model="frontingEntry.isMainFronter">
@@ -182,44 +192,11 @@
 			</IonFab>
 
 			<MemberSelect :onlyOne="true" :model-value="frontingEntry.member ? [frontingEntry.member] : []" @update:model-value="(e) => { if(e[0]) frontingEntry.member = e[0] }" ref="memberSelectModal" />
-			<IonModal class="stack-modal" :keep-contents-mounted="true">
-				<IonDatetime
-					id="startTime"
-					presentation="date-time"
-					v-model="startTime"
-					:showDefaultButtons="true"
-					:hourCycle="twelveHourClock ? 'h12' : 'h23'"
-					:firstDayOfWeek="firstWeekOfDayIsSunday ? 0 : 1"
-					:locale="appConfig.locale.language || 'en'" 
-					:max="frontingEntry.endTime ? endTime : dayjs().format('YYYY-MM-DDTHH:mm:ss')"
-				>
-					<span slot="title">{{ $t("options:frontHistory.edit.startTime") }}</span>
-				</IonDatetime>
-			</IonModal>
-			<IonModal class="stack-modal" :keep-contents-mounted="true">
-				<IonDatetime
-					id="endTime"
-					presentation="date-time"
-					v-model="endTime"
-					:showDefaultButtons="true"
-					:hourCycle="twelveHourClock ? 'h12' : 'h23'"
-					:firstDayOfWeek="firstWeekOfDayIsSunday ? 0 : 1"
-					:locale="appConfig.locale.language || 'en'"
-					:min="startTime"
-				>
-						<span slot="title">{{ $t("options:frontHistory.edit.endTime") }}</span>
-				</IonDatetime>
-			</IonModal>
 		</IonContent>
 	</IonModal>
 </template>
 
 <style scoped>
-	ion-modal.stack-modal {
-		--backdrop-opacity: var(--ion-backdrop-opacity, 0.32) !important;
-		--border-radius: 16px;
-	}
-
 	ion-modal.fronting-entry-edit-modal {
 		--height: 50dvh;
 		--min-height: 600px;
