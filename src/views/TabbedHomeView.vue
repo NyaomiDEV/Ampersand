@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { IonPage, IonTabs, IonTabBar, IonRouterOutlet, IonTabButton, IonIcon, useIonRouter } from "@ionic/vue";
+	import { IonPage, IonTabs, IonTabBar, IonRouterOutlet, IonTabButton, IonIcon, useIonRouter, mdTransitionAnimation } from "@ionic/vue";
 
 	import {
 		homeOutline as HomeIOS,
@@ -15,8 +15,36 @@
 	import HomeMD from '@material-symbols/svg-600/outlined/home.svg';
 	import ChatMD from '@material-symbols/svg-600/outlined/chat.svg';
 	import OptionsMD from '@material-symbols/svg-600/outlined/menu.svg';
+	import { slideAnimation } from "../lib/util/misc";
+	import { useRoute } from "vue-router";
+	import { ref, useTemplateRef } from "vue";
 
 	const router = useIonRouter();
+	const route = useRoute();
+
+	const tabBar = useTemplateRef("tabBar");
+
+	// store a value to pass by ref to the cached animation
+	const directionOverride = ref("forward");
+
+	function clickReplaceHandler(location){
+		const prevIndex = tabBar.value!.tabVnodes.findIndex(x => x.props?.href === route.path);
+		const curIndex = tabBar.value!.tabVnodes.findIndex(x => x.props?.href === location);
+
+		// we control the value here so we can update it
+		directionOverride.value = prevIndex > curIndex ? "back" : "forward";
+
+		router.replace(
+			location,
+			// THIS ARROW FUNCTION GETS CACHED!
+			(el, opts) => {
+				// pass directionOverride here so that we have a ref to a value we can control
+				return slideAnimation(el, opts, directionOverride);
+				// and just like this the direction is under our control
+			}
+		);
+	}
+
 </script>
 
 <template>
@@ -24,29 +52,28 @@
 		<IonTabs>
 			<IonRouterOutlet />
 
-			<IonTabBar slot="bottom">
-
-				<IonTabButton tab="members" href="/members" @click="router.replace('/members')">
+			<IonTabBar slot="bottom" ref="tabBar">
+				<IonTabButton tab="members" href="/members" @click="clickReplaceHandler('/members')">
 					<IonIcon :ios="PeopleIOS" :md="PeopleMD" />
 					{{ $t("members:header") }}
 				</IonTabButton>
 
-				<IonTabButton tab="journal" href="/journal" @click="router.replace('/journal')" v-if="false">
+				<IonTabButton tab="journal" href="/journal" @click="clickReplaceHandler('/journal')" v-if="false">
 					<IonIcon :ios="JournalIOS" :md="JournalMD" />
 					{{ $t("journal:header") }}
 				</IonTabButton>
 
-				<IonTabButton tab="dashboard" href="/dashboard" @click="router.replace('/dashboard')">
+				<IonTabButton tab="dashboard" href="/dashboard" @click="clickReplaceHandler('/dashboard')">
 					<IonIcon :ios="HomeIOS" :md="HomeMD" />
 					{{ $t("dashboard:header") }}
 				</IonTabButton>
 
-				<IonTabButton tab="chats" href="/chats" @click="router.replace('/chats')" v-if="false">
+				<IonTabButton tab="chats" href="/chats" @click="clickReplaceHandler('/chats')" v-if="false">
 					<IonIcon :ios="ChatIOS" :md="ChatMD" />
 					{{ $t("chats:header") }}
 				</IonTabButton>
 
-				<IonTabButton tab="options" href="/options" @click="router.replace('/options')">
+				<IonTabButton tab="options" href="/options" @click="clickReplaceHandler('/options')">
 					<IonIcon :ios="OptionsIOS" :md="OptionsMD" />
 					{{ $t("options:options.header") }}
 				</IonTabButton>

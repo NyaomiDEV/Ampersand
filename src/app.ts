@@ -49,9 +49,11 @@ import { getSystem } from "./lib/db/tables/system";
 import { appConfig } from "./lib/config";
 import { getLockedStatus } from "./lib/applock";
 import { clearTempDir } from "./lib/native/cache";
+import { slideAnimation } from "./lib/util/misc";
 
 const app = createApp(App).use(IonicVue, {
-	hardwareBackButton: true
+	hardwareBackButton: true,
+	navAnimation: slideAnimation
 }).use(router).use(I18NextVue, { i18next: i18n });
 
 router.beforeEach(async (to) => {
