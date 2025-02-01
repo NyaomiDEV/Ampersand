@@ -25,8 +25,7 @@
 		"showBoardEntries": "Arătați intrările de pe tablă",
 		"showJournalEntries": "Arătați intrările din jurnal",
 		"delete": {
-			"title": "Ștergeți un membru",
-			"desc": "Atenție! Nu veți putea anula această acțiune!"
+			"title": "Ștergeți un membru"
 		},
 		"memberID": "Cod identificator pentru membru: {{memberID}}"
 	}

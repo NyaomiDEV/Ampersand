@@ -25,8 +25,7 @@
 		"showBoardEntries": "Show board messages",
 		"showJournalEntries": "Show journal posts",
 		"delete": {
-			"title": "Delete member",
-			"desc": "You won't be able to undo this action!"
+			"title": "Delete member"
 		},
 		"memberID": "Member ID: {{memberID}}",
 		"memberIDcopiedToClipboard": "Member ID in mention format copied to clipboard!"

@@ -28,8 +28,7 @@
 			},
 			"isMainFronter": "Fronter principale?",
 			"delete": {
-				"title": "Elimina voce dal front",
-				"desc": "Non potrai annullare questa azione!"
+				"title": "Elimina voce dal front"
 			}
 		}
 	},
@@ -43,8 +42,7 @@
 			"body": "Corpo del messaggio",
 			"isPinned": "Fissato",
 			"delete": {
-				"title": "Elimina messaggio dalla bacheca",
-				"desc": "Non potrai annullare questa azione!"
+				"title": "Elimina messaggio dalla bacheca"
 			}
 		}
 	},
@@ -82,7 +80,6 @@
 				},
 				"delete": {
 					"title": "Elimina tag",
-					"desc": "Non potrai annullare questa azione!",
 					"confirm": "Sei sicurə di voler eliminare questo tag?"
 				}
 			}
@@ -90,7 +87,21 @@
 	},	
 	"assetManager": {
 		"header": "Gestore degli asset",
-		"searchPlaceholder": "Cerca tra gli asset..."
+		"searchPlaceholder": "Cerca tra gli asset...",
+		"add": {
+			"header": "Aggiungi asset",
+			"attachment": "Add attachment"
+		},
+
+		"edit": {
+			"header": "Modifica asset",
+			"friendlyName": "Modifica il nome",
+			"attachment": "Replace attachment"
+		},
+
+		"delete": {
+			"title": "Elimina asset"
+		}
 	},
 	"reminders": {
 		"header": "Promemoria",

@@ -28,8 +28,7 @@
 			},
 			"isMainFronter": "Fruntaș principal?",
 			"delete": {
-				"title": "Ștergeți intrarea în frunte",
-				"desc": "Nu veți putea anula această acțiune!"
+				"title": "Ștergeți intrarea în frunte"
 			}
 		}
 	},
@@ -42,8 +41,7 @@
 			"title": "Titlu",
 			"body": "Corpul mesajului",
 			"delete": {
-				"title": "Ștergeți mesajul de pe tablă",
-				"desc": "Nu veți putea anula această acțiune!"
+				"title": "Ștergeți mesajul de pe tablă"
 			}
 		}
 	},
@@ -83,7 +81,6 @@
 				},
 				"delete": {
 					"title": "Ștergeți eticheta",
-					"desc": "Nu veți putea anula această acțiune!",
 					"confirm": "Doriți să ștergeți această etichetă cu siguranță?"
 				}
 			}

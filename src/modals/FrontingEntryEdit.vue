@@ -170,7 +170,7 @@
 						<IonIcon :ios="trashIOS" :md="trashMD" slot="start" aria-hidden="true" color="danger"/>
 						<IonLabel color="danger">
 							<h3>{{ $t("options:frontHistory.edit.delete.title") }}</h3>
-							<p>{{ $t("options:frontHistory.edit.delete.desc") }}</p>
+							<p>{{ $t("other:genericDeleteDesc") }}</p>
 						</IonLabel>
 					</IonItem>
 			</IonList>

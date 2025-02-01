@@ -25,8 +25,7 @@
 		"showBoardEntries": "Mostra i messaggi sulla bacheca",
 		"showJournalEntries": "Mostra le pagine sul diario",
 		"delete": {
-			"title": "Cancella membrə",
-			"desc": "Non potrai annullare questa azione!"
+			"title": "Cancella membrə"
 		},
 		"memberID": "ID del membrə: {{memberID}}",
 		"memberIDcopiedToClipboard": "ID del membrə in formato menzione copiato negli appunti!"

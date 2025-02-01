@@ -149,7 +149,7 @@
 					<IonIcon :ios="trashIOS" :md="trashMD" slot="start" aria-hidden="true" color="danger"/>
 					<IonLabel color="danger">
 						<h3>{{ $t("options:assetManager.delete.title") }}</h3>
-						<p>{{ $t("options:assetManager.delete.desc") }}</p>
+						<p>{{ $t("other:genericDeleteDesc") }}</p>
 					</IonLabel>
 				</IonItem>
 			</IonList>

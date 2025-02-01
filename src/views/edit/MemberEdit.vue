@@ -263,7 +263,7 @@
 						<IonIcon :ios="trashIOS" :md="trashMD" slot="start" aria-hidden="true" color="danger"/>
 						<IonLabel color="danger">
 							<h3>{{ $t("members:edit.delete.title") }}</h3>
-							<p>{{ $t("members:edit.delete.desc") }}</p>
+							<p>{{ $t("other:genericDeleteDesc") }}</p>
 						</IonLabel>
 					</IonItem>
 
