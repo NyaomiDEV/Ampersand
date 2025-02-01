@@ -3,6 +3,7 @@ import { pluginVue } from "@rsbuild/plugin-vue";
 import { pluginBasicSsl } from "@rsbuild/plugin-basic-ssl";
 
 const host = process.env.TAURI_DEV_HOST;
+const debug = process.env.NODE_ENV === 'development';
 
 const { publicVars } = loadEnv({ prefixes: ['TAURI_ENV_', 'AMPERSAND_'] });
 
@@ -35,12 +36,24 @@ export default defineConfig({
 		port: 5173,
 	},
 	output: {
-		sourceMap: true,
+		sourceMap: {
+			js: debug ? "cheap-module-source-map" : false,
+			css: debug ? true : false
+		},
 		distPath: {
 			root: "dist",
-			assets: "assets"
+			assets: "static/assets",
+			font: "static/assets",
+			image: "static/images",
+			svg: "static/images",
+			media: "static/media",
+			js: "js",
+			css: "styles",
+			jsAsync: "js",
+			cssAsync: "styles",
+			wasm: "wasm"
 		},
-		minify: false,
+		minify: true,
 		copy: [
 			{
 				from: "resources/icon/180.png",
