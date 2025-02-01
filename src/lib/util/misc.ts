@@ -1,4 +1,4 @@
-import { createAnimation, getIonPageElement, mdTransitionAnimation, TransitionOptions } from "@ionic/vue";
+import { createAnimation, getIonPageElement, TransitionOptions } from "@ionic/vue";
 import dayjs from "dayjs";
 import Duration from "dayjs/plugin/duration";
 import { Ref } from "vue";
