@@ -2,7 +2,13 @@
 
 Welcome to Ampersand.
 
-[Join our Discord](https://discord.gg/xCptGJKeKc)
+[![Discord](https://img.shields.io/discord/1235649423439298622?style=flat&logo=discord&logoColor=white&color=%235865F2)](https://discord.gg/xCptGJKeKc)
+[![Liberapay patrons](https://img.shields.io/liberapay/patrons/Ampersand)](https://liberapay.com/Ampersand)
+![Android Build Status](https://img.shields.io/github/actions/workflow/status/NyaomiDEV/Ampersand/build-android.yml?style=flat&label=android%20build)
+![GitHub Pages Status](https://img.shields.io/github/actions/workflow/status/NyaomiDEV/Ampersand/github-pages.yml?style=flat&label=pwa%20build)
+
+
+[![Get it on Obtainium](https://github.com/user-attachments/assets/713d71c5-3dec-4ec4-a3f2-8d28d025a9c6)](https://apps.obtainium.imranr.dev/redirect.html?r=obtainium://app/%7B%22id%22%3A%22moe.ampersand.app.ci%22%2C%22url%22%3A%22https%3A%2F%2Fgithub.com%2FNyaomiDEV%2FAmpersand%22%2C%22author%22%3A%22NyaomiDEV%22%2C%22name%22%3A%22Ampersand%20(CI)%22%2C%22preferredApkIndex%22%3A0%2C%22additionalSettings%22%3A%22%7B%5C%22includePrereleases%5C%22%3Atrue%2C%5C%22fallbackToOlderReleases%5C%22%3Atrue%2C%5C%22filterReleaseTitlesByRegEx%5C%22%3A%5C%22%5C%22%2C%5C%22filterReleaseNotesByRegEx%5C%22%3A%5C%22%5C%22%2C%5C%22verifyLatestTag%5C%22%3Afalse%2C%5C%22dontSortReleasesList%5C%22%3Afalse%2C%5C%22useLatestAssetDateAsReleaseDate%5C%22%3Afalse%2C%5C%22releaseTitleAsVersion%5C%22%3Atrue%2C%5C%22trackOnly%5C%22%3Afalse%2C%5C%22versionExtractionRegEx%5C%22%3A%5C%22%5C%5C%5C%5C((.*)%5C%5C%5C%5C)%24%5C%22%2C%5C%22matchGroupToUse%5C%22%3A%5C%22%241%5C%22%2C%5C%22versionDetection%5C%22%3Afalse%2C%5C%22releaseDateAsVersion%5C%22%3Afalse%2C%5C%22useVersionCodeAsOSVersion%5C%22%3Afalse%2C%5C%22apkFilterRegEx%5C%22%3A%5C%22%5C%22%2C%5C%22invertAPKFilter%5C%22%3Afalse%2C%5C%22autoApkFilterByArch%5C%22%3Afalse%2C%5C%22appName%5C%22%3A%5C%22Ampersand%20(CI)%5C%22%2C%5C%22shizukuPretendToBeGooglePlay%5C%22%3Afalse%2C%5C%22allowInsecure%5C%22%3Afalse%2C%5C%22exemptFromBackgroundUpdates%5C%22%3Afalse%2C%5C%22skipUpdateNotifications%5C%22%3Afalse%2C%5C%22about%5C%22%3A%5C%22Tracking%20app%20for%20plural%20systems%5C%22%2C%5C%22refreshBeforeDownload%5C%22%3Atrue%7D%22%7D)
 
 ## Days since last incident, but in reverse
 
