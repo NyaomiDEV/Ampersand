@@ -12,10 +12,13 @@
 		"pleaseWait": "Si prega di attendere mentre importiamo i tuoi dati"
 	},
 	"systemInfo": {
-		"header": "Parlaci del tuo sistema!"
+		"header": "Parlaci del tuo sistema!",
+		"name": "Nome collettivo",
+		"description": "Alcune cose su di voi..."
 	},
 	"memberInfo": {
 		"header": "Parlaci di più di te!",
+		"description": "Alcune cose su di te...",
 		"invitation": "Continua a modificare il tuo profilo dopo aver finito con l'introduzione!"
 	},
 	"endScreen": {

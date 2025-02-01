@@ -22,5 +22,55 @@
 	"remindersAreNotFinished": {
 		"header": "I promemoria non sono finiti!",
 		"content": "Al momento, tutto questo è solo un'anteprima dell'interfaccia utente! A un certo punto potrete salvare i vostri promemoria, ma tenete presente che nulla è ancora collegato ad alcun sistema di notifica! Se siete su Android dovreste già essere in grado di configurare alcune cose che funzioneranno quando avremo completato il sistema sottostante, ma tenete presente che questo non funzionerà sulla versione Web, quindi non fatevi prendere dall'entusiasmo di usare i promemoria sul vostro computer. Inoltre, se siete sviluppatori, aiutateci!"
+	},
+	"timeSizes": {
+		"years": {
+			"long": "anni",
+			"short": "Y"
+		},
+		"months": {
+			"long": "mesi",
+			"short": "M"
+		},
+		"days": {
+			"long": "giorni",
+			"short": "D"
+		},
+		"weekdays": {
+			"monday": "Lunedì",
+			"tuesday": "Martedi",
+			"wednesday": "Mercoledi",
+			"thursday": "Giovedi",
+			"friday": "Venerdi",
+			"saturday": "Sabato",
+			"sunday": "Domenica"
+		},
+		"hours": {
+			"long": "ore",
+			"short": "h"
+		},
+		"minutes": {
+			"long": "minuti",
+			"short": "m"
+		},
+		"seconds": {
+			"long": "seconds",
+			"short": "s"
+		}
+	},
+	"polls": {
+		"boardMessageContainsPoll": "Contiene sondaggio",
+		"voteCast": {
+			"voter": "Seleziona il votantə",
+			"reason": "Dai la ragione",
+			"reasonHint": "Ragione",
+			"retractConfirmation": "Sei sicurə di voler rescindere il voto?"
+		},
+		"resultsHeader": "Risultati dei voti",
+		"resultsButton": "Mostra i risultati del sondaggio",
+		"choice": {
+			"desc_one": "{{count}} votantə",
+			"desc_other": "{{count}} votantɜ"
+		}
 	}
 }

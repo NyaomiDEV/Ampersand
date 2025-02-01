@@ -90,13 +90,13 @@
 		"searchPlaceholder": "Cerca tra gli asset...",
 		"add": {
 			"header": "Aggiungi asset",
-			"attachment": "Add attachment"
+			"attachment": "Aggiungi allegato"
 		},
 
 		"edit": {
 			"header": "Modifica asset",
 			"friendlyName": "Modifica il nome",
-			"attachment": "Replace attachment"
+			"attachment": "Rimpiazza allegato"
 		},
 
 		"delete": {
@@ -159,7 +159,7 @@
 			"firstDayOfWeek": {
 				"title": "Primo giorno della settimana",
 				"sunday": "Domenica",
-				"monday": "Lunedì"
+				"monday": "Lunedi"
 			}
 		},
 		"behaviorLabel": "Comportamento",
@@ -259,6 +259,20 @@
 		"settingsExport": {
 			"title": "Esporta la configurazione delle tue impostazioni dell'app",
 			"desc": "Fai il backup dei tuoi dati delle impostazioni così da poterli reimportare in seguito"
+		},
+		"status": {
+			"database": {
+				"imported": "Il backup del database è stato importato. Si prega di far ripartire l'app.",
+				"exportedPwa": "Il backup del database è stato scaricato nella tua cartella degli scaricati.",
+				"exportedApp": "Il backup del database è stato esportato nella posizione scelta.",
+				"error": "Errore durante l'elaborazione dell'esportazione del database."
+			},
+			"settings": {
+				"imported": "La configurazione delle impostazioni è stata importata. Si prega di far ripartire l'app.",
+				"exportedPwa": "Il backup delle impostazioni è stato scaricato nella tua cartella degli scaricati.",
+				"exportedApp": "Il backup delle impostazioni è stato esportato nella posizione scelta.",
+				"error": "Errore durante l'elaborazione dell'esportazione delle impostazioni."
+			}
 		}
 	},
 	"about": {
