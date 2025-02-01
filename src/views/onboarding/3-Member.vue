@@ -19,11 +19,11 @@
 	} from "ionicons/icons";
 
 	import pencilMD from "@material-symbols/svg-600/outlined/edit.svg";
-    import ArrowMD from "@material-symbols/svg-600/outlined/arrow_forward.svg";
+	import ArrowMD from "@material-symbols/svg-600/outlined/arrow_forward.svg";
 
 	import { Member } from "../../lib/db/entities";
 	import { newMember } from '../../lib/db/tables/members';
-	import { getFiles } from "../../lib/util/misc";
+	import { getFiles, slideAnimation } from "../../lib/util/misc";
 	import { resizeImage } from "../../lib/util/image";
 	import { inject, ref, toRaw } from "vue";
 	import { PartialBy } from "../../lib/types";
@@ -55,7 +55,7 @@
 	async function save(){
 		const _member = toRaw(member.value);
 		await newMember(_member);
-		router.replace("/onboarding/end/");
+		router.replace("/onboarding/end/", slideAnimation);
 	}
 </script>
 

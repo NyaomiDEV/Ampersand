@@ -1,31 +1,32 @@
 <script setup lang="ts">
-    import { IonContent, IonPage, IonButton, IonIcon, useIonRouter } from '@ionic/vue';
-    import { accessibilityOutline as AccessibilityIOS } from "ionicons/icons";
-    import AccessibilityMD from "@material-symbols/svg-600/outlined/accessibility_new.svg";
-    import AmpersandLogo from  "../../assets/ampersand_logo.svg"
+	import { IonContent, IonPage, IonButton, IonIcon, useIonRouter } from '@ionic/vue';
+	import { accessibilityOutline as AccessibilityIOS } from "ionicons/icons";
+	import AccessibilityMD from "@material-symbols/svg-600/outlined/accessibility_new.svg";
+	import AmpersandLogo from "../../assets/ampersand_logo.svg"
+	import { slideAnimation } from '../../lib/util/misc';
 
-    const router = useIonRouter();
+	const router = useIonRouter();
 </script>
 
 <template>
-    <IonPage>
-        <IonContent>
-            <div class="container">
-                <h1>{{ $t("onboarding:welcomeScreen.header") }}</h1>
-                <IonIcon class="logo" :icon="AmpersandLogo" />
+	<IonPage>
+		<IonContent>
+			<div class="container">
+				<h1>{{ $t("onboarding:welcomeScreen.header") }}</h1>
+				<IonIcon class="logo" :icon="AmpersandLogo" />
 
-                <IonButton @click="router.replace('/onboarding/import/')">
-                    {{ $t("onboarding:welcomeScreen.start") }}
-                </IonButton>
+				<IonButton @click="router.replace('/onboarding/import/', slideAnimation)">
+					{{ $t("onboarding:welcomeScreen.start") }}
+				</IonButton>
 
-                <div class="button">
+				<div class="button">
 					<IonButton class="tonal" shape="round" routerLink="/options/accessibility/">
 						<IonIcon slot="icon-only" :md="AccessibilityMD" :ios="AccessibilityIOS"></IonIcon>
 					</IonButton>
-                </div>
-            </div>
-        </IonContent>
-    </IonPage>
+				</div>
+			</div>
+		</IonContent>
+	</IonPage>
 </template>
 
 <style scoped>
@@ -36,8 +37,8 @@
 		align-items: center;
 		justify-content: center;
 		flex-direction: column;
-    }
-    
+	}
+	
 	.logo {
 		margin: 14px 0 12px 0;
 		width: 256px;
@@ -46,6 +47,6 @@
 	}
 
 	.button {
-        margin: 12 auto;
+		margin: 12 auto;
 	}
 </style>

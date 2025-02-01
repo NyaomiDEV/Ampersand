@@ -2,7 +2,7 @@
 	import { IonContent, IonList, IonPage, IonAvatar, IonButton, IonIcon, IonInput, IonFab, IonFabButton, IonItem, IonTextarea, useIonRouter} from '@ionic/vue';
 	import { inject, onBeforeMount, ref, toRaw } from 'vue';
 	import { getObjectURL } from '../../lib/util/blob';
-	import { getFiles } from '../../lib/util/misc';
+	import { getFiles, slideAnimation } from '../../lib/util/misc';
 	import { resizeImage } from '../../lib/util/image';
 	import { getSystem, modifySystem, newSystem } from '../../lib/db/tables/system';
 	
@@ -14,7 +14,7 @@
 
 	import peopleMD from "@material-symbols/svg-600/outlined/groups_2.svg"
 	import pencilMD from "@material-symbols/svg-600/outlined/edit.svg"
-    import ArrowMD from "@material-symbols/svg-600/outlined/arrow_forward.svg";
+	import ArrowMD from "@material-symbols/svg-600/outlined/arrow_forward.svg";
 	import { System } from '../../lib/db/entities';
 	import { PartialBy } from '../../lib/types';
 
@@ -42,7 +42,7 @@
 		else
 			await modifySystem({...toRaw(system.value)});
 	
-		router.replace("/onboarding/member/");
+		router.replace("/onboarding/member/", slideAnimation);
 	}
 
 	onBeforeMount(async () => {

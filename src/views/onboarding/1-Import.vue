@@ -1,9 +1,9 @@
 <script setup lang="ts">
-    import { IonContent, IonPage, IonButton, useIonRouter } from '@ionic/vue';
+	import { IonContent, IonPage, IonButton, useIonRouter } from '@ionic/vue';
 	import { ref } from 'vue';
 	import Spinner from '../../components/Spinner.vue';
 	import { importDatabaseFromBinary } from '../../lib/db/ioutils';
-	import { getFiles } from '../../lib/util/misc';
+	import { getFiles, slideAnimation } from '../../lib/util/misc';
 
 	const loading = ref(false);
 
@@ -18,13 +18,14 @@
 			await importDatabaseFromBinary(new Uint8Array(await file.arrayBuffer()));
 		}
 
-		router.replace("/onboarding/end");
+		router.replace("/onboarding/end/", slideAnimation);
 	}
 </script>
 
 <template>
 	<IonPage>
 		<IonContent>
+			<Transition name="slide">
 			<div class="import-container" v-if="!loading">
 				<h1>{{ $t("onboarding:importScreen.header") }}</h1>
 
@@ -32,15 +33,17 @@
 					{{ $t("onboarding:importScreen.prevInstall") }}
 				</IonButton>
 
-				<IonButton fill="clear" @click="router.replace('/onboarding/system/')">
+				<IonButton fill="clear" @click="router.replace('/onboarding/system/', slideAnimation)">
 					{{ $t("onboarding:importScreen.startFromScratch") }}
 				</IonButton>
 			</div>
-
-			<div class="import-loading-container" v-else>
-				<h1>{{ $t("onboarding:importScreen.pleaseWait") }}</h1>
-				<Spinner />
-			</div>
+			</Transition>
+			<Transition name="slide">
+				<div class="import-loading-container" v-if="loading">
+					<h1>{{ $t("onboarding:importScreen.pleaseWait") }}</h1>
+					<Spinner />
+				</div>
+			</Transition>
 		</IonContent>
 	</IonPage>
 </template>
@@ -56,5 +59,32 @@
 		flex-direction: column;
 		text-align: center;
 		gap: 16px;
+	}
+
+	.slide-enter-active,
+	.slide-leave-active {
+		transition-timing-function: cubic-bezier(0.47,0,0.745,0.715);
+		transition-duration: 200ms;
+		transition-property: all;
+	}
+
+	.slide-enter-from {
+		transform: translateX(40px);
+		opacity: 0;
+	}
+
+	.slide-enter-to {
+		transform: translateX(0px);
+		opacity: 1;
+	}
+
+	.slide-leave-from {
+		transform: translateX(0px);
+		opacity: 1;
+	}
+
+	.slide-leave-to {
+		transform: translateX(-40px);
+		opacity: 0;
 	}
 </style>

@@ -1,24 +1,24 @@
 <script setup lang="ts">
-    import { IonContent, IonPage, IonButton, IonIcon, useIonRouter } from '@ionic/vue';
-    import {arrowForwardOutline as ArrowIOS} from "ionicons/icons";
-    import ArrowMD from "@material-symbols/svg-600/outlined/arrow_forward.svg";
+	import { IonContent, IonPage, IonButton, IonIcon, useIonRouter } from '@ionic/vue';
+	import {arrowForwardOutline as ArrowIOS} from "ionicons/icons";
+	import ArrowMD from "@material-symbols/svg-600/outlined/arrow_forward.svg";
 
-    const router = useIonRouter();
+	const router = useIonRouter();
 </script>
 
 <template>
-    <IonPage>
-        <IonContent>
-            <div class="container">
-                <h1>{{ $t("onboarding:endScreen.header") }}</h1>
+	<IonPage>
+		<IonContent>
+			<div class="container">
+				<h1>{{ $t("onboarding:endScreen.header") }}</h1>
 
-                <IonButton @click="router.replace('/')">
-                    {{ $t("onboarding:endScreen.startButton") }}
-                    <IonIcon slot="end" :ios="ArrowIOS" :md="ArrowMD"></IonIcon>
-                </IonButton>
-            </div>
-        </IonContent>
-    </IonPage>
+				<IonButton @click="router.replace('/')">
+					{{ $t("onboarding:endScreen.startButton") }}
+					<IonIcon slot="end" :ios="ArrowIOS" :md="ArrowMD"></IonIcon>
+				</IonButton>
+			</div>
+		</IonContent>
+	</IonPage>
 </template>
 
 <style scoped>
@@ -29,6 +29,6 @@
 		align-items: center;
 		justify-content: center;
 		flex-direction: column;
-        text-align: center;
+		text-align: center;
 	}
 </style>

@@ -77,7 +77,7 @@
 						{{ formatWrittenTime(now, fronting.startTime) }}
 					</p>
 					<p v-if="fronting.customStatus">
-						{{  fronting.customStatus }}
+						{{ fronting.customStatus }}
 					</p>
 				</IonLabel>
 			</IonCardContent>

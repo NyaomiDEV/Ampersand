@@ -1,3 +1,4 @@
+import { createAnimation, getIonPageElement, TransitionOptions } from "@ionic/vue";
 import dayjs from "dayjs";
 import Duration from "dayjs/plugin/duration";
 dayjs.extend(Duration);
@@ -92,4 +93,25 @@ export function formatWrittenTime(dateStart: Date, dateEnd: Date){
 	const duration = dayjs.duration(dayjs(dateStart).diff(dateEnd));
 
 	return duration.format("Y[y] M[M] D[d] H[h] m[m] s[s]").replace(/(?<![1-9])0\w\s?/g, "");
+}
+
+export function slideAnimation(_: HTMLElement, opts: TransitionOptions) {
+	const transition = createAnimation().duration(200).easing('cubic-bezier(0.47,0,0.745,0.715)');
+
+	const leavingPage = createAnimation().addElement(getIonPageElement(opts.baseEl))
+		.onFinish((currentStep) => {
+			if (currentStep === 1 && leavingPage.elements.length > 0) {
+				leavingPage.elements[0].style.setProperty('display', 'none');
+			}
+		})
+		.fromTo('transform', `translateX(0px)`, `translateX(-40px)`)
+		.fromTo('opacity', 1, 0);
+
+	const enteringPage = createAnimation().addElement(getIonPageElement(opts.enteringEl))
+		.fromTo('transform', `translateX(40px)`, `translateX(0px)`)
+		.fromTo('opacity', 0, 1);
+
+	transition.addAnimation([leavingPage, enteringPage]);
+
+	return transition;
 }

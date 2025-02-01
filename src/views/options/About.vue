@@ -1,9 +1,9 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonIcon, IonBackButton } from '@ionic/vue';
 
-	import AmpersandLogo from  "../../assets/ampersand_logo.svg"
-	import DiscordLogo from  "../../assets/discord_logo.svg";
-	import GithubLogo from  "../../assets/github_logo.svg";
+	import AmpersandLogo from "../../assets/ampersand_logo.svg"
+	import DiscordLogo from "../../assets/discord_logo.svg";
+	import GithubLogo from "../../assets/github_logo.svg";
 	import LiberapayLogo from "../../assets/liberapay_logo.svg";
 
 	import { version } from "../../../package.json";
