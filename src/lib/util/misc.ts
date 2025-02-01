@@ -97,7 +97,6 @@ export function formatWrittenTime(dateStart: Date, dateEnd: Date){
 }
 
 export function slideAnimation(_: HTMLElement, opts: TransitionOptions, directionOverride?: Ref<string>) {
-	console.log("inside", opts.direction, directionOverride?.value);
 	const transition = createAnimation().duration(200).easing('cubic-bezier(0.47,0,0.745,0.715)');
 
 	const directions = {
