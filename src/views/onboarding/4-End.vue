@@ -12,7 +12,7 @@
 			<div class="container">
 				<h1>{{ $t("onboarding:endScreen.header") }}</h1>
 
-				<IonButton @click="router.replace('/')">
+				<IonButton @click="router.push('/')">
 					{{ $t("onboarding:endScreen.startButton") }}
 					<IonIcon slot="end" :ios="ArrowIOS" :md="ArrowMD"></IonIcon>
 				</IonButton>
