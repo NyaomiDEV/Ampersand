@@ -69,3 +69,21 @@
 .markdown-content h6 {
     font-size: 0.9rem;
 }
+
+.markdown-content span.spoiler {
+    border-radius: 4px;
+    padding: 0px 4px;
+    background-color: var(--ion-background-color-step-200);
+    transition-duration: 250ms;
+    transition-timing-function: ease-in-out;
+    transition-property: color, background-color;
+    color: transparent;
+    cursor: pointer;
+    user-select: none;
+}
+
+.markdown-content span.spoiler:focus {
+    background-color: var(--ion-background-color-step-400);
+    color: unset;
+    user-select: unset;
+}
