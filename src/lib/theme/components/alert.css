@@ -1,0 +1,9 @@
+.md3 ion-alert.md .alert-wrapper {
+	border-radius: 28px;
+	padding: 24px;
+	box-shadow: var(--md3-elevation-3)
+}
+
+.md3 ion-alert.md .alert-button {
+	text-transform: none;
+}

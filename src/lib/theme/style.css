@@ -1,5 +1,6 @@
 @import url(color.css);
 
+@import url(components/alert.css);
 @import url(components/button.css);
 @import url(components/cards.css);
 @import url(components/fab.css);
