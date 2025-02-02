@@ -26,7 +26,7 @@ export async function newMember(member: Omit<Member, keyof UUIDable>) {
 			event: "new",
 			data: uuid
 		}));
-		return true;
+		return uuid;
 	}catch(error){
 		return false;
 	}

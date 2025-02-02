@@ -25,3 +25,7 @@ dist-ssr
 
 # Self signed certificate
 self-signed.pem
+
+# Testing files
+/test.mts
+/*.test.mts

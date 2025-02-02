@@ -20,7 +20,7 @@ export async function newChatMessage(chatMessage: Omit<ChatMessage, keyof UUIDab
 			event: "new",
 			data: uuid
 		}));
-		return true;
+		return uuid;
 	}catch(error){
 		return false;
 	}

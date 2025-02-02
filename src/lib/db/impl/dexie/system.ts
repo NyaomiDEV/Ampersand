@@ -19,7 +19,7 @@ export async function newSystem(system: Omit<System, keyof UUIDable>){
 			event: "new",
 			data: uuid
 		}));
-		return true;
+		return uuid;
 	}catch(error){
 		return false;
 	}

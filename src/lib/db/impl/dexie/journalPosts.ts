@@ -24,7 +24,7 @@ export async function newJournalPost(journalPost: Omit<JournalPost, keyof UUIDab
 			event: "new",
 			data: uuid
 		}));
-		return true;
+		return uuid;
 	}catch(error){
 		return false;
 	}

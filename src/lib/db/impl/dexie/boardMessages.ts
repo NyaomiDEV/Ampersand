@@ -29,7 +29,7 @@ export async function newBoardMessage(boardMessage: Omit<BoardMessage, keyof UUI
 			event: "new",
 			data: uuid
 		}));
-		return true;
+		return uuid;
 	}catch(error){
 		return false;
 	}

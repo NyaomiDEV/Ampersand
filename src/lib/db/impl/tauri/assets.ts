@@ -24,7 +24,7 @@ export async function newAsset(asset: Omit<Asset, keyof UUIDable>) {
 			event: "new",
 			data: uuid
 		}));
-		return true;
+		return uuid;
 	}catch(error){
 		return false;
 	}

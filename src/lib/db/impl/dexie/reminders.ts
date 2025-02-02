@@ -24,7 +24,7 @@ export async function newReminder(reminder: Omit<Reminder, keyof UUIDable>) {
 			event: "new",
 			data: uuid
 		}));
-		return true;
+		return uuid;
 	}catch(error){
 		return false;
 	}

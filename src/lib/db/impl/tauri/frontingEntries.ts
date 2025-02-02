@@ -29,7 +29,7 @@ export async function newFrontingEntry(frontingEntry: Omit<FrontingEntry, keyof 
 			event: "new",
 			data: uuid
 		}));
-		return true;
+		return uuid;
 	}catch(error){
 		return false;
 	}

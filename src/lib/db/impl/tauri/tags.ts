@@ -24,7 +24,7 @@ export async function newTag(tag: Omit<Tag, keyof UUIDable>) {
 			event: "new",
 			data: uuid
 		}));
-		return true;
+		return uuid;
 	}catch(error){
 		return false;
 	}
