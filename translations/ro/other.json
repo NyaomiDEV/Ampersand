@@ -11,5 +11,11 @@
 	"alerts": {
 		"ok": "Ok",
 		"cancel": "Anulați"
+	},
+	"timeSizes": {
+		"weekdays": {
+			"monday": "Luni",
+			"sunday": "Duminică"
+		}
 	}
 }
