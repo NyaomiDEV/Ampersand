@@ -202,7 +202,14 @@
 				</IonFabButton>
 			</IonFab>
 
-			<MemberSelect :onlyOne="true" :model-value="frontingEntry.member ? [frontingEntry.member] : []" @update:model-value="(e) => { if(e[0]) frontingEntry.member = e[0] }" ref="memberSelectModal" />
+			<MemberSelect
+				:onlyOne="true"
+				:discardOnSelect="true"
+				:hideCheckboxes="true"
+				:modelValue="frontingEntry.member ? [frontingEntry.member] : []"
+				@update:modelValue="(e) => { if(e[0]) frontingEntry.member = e[0] }"
+				ref="memberSelectModal"
+			/>
 		</IonContent>
 	</IonModal>
 </template>
