@@ -13,6 +13,8 @@
 			"desc": "Nu veți putea anula această acțiune după ce salvați!"
 		},
 		"isMainFronter": "Fruntaș principal?",
-		"delete": "Ștergeți intrarea în frunte"
+		"delete": {
+			"title": "Ștergeți intrarea în frunte"
+		}
 	}
 }
