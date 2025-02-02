@@ -44,10 +44,8 @@ export async function getFilteredMembers(search: string, members?: Member[]){
 		}
 
 		if (parsed.tags.length) {
-			for (const uuid of parsed.tags) {
-				if (!x.tags.includes(uuid))
-					continue;
-			}
+			if(!parsed.tags.filter(uuid => x.tags.includes(uuid)).length)
+				continue;
 		}
 
 		filtered.push(x);
