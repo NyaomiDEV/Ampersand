@@ -1,0 +1,50 @@
+{
+	"remindersAreNotFinished": {
+		"header": "Reminders are not finished!",
+		"content": "Right now, all of this is just an UI preview! You may be able to save your reminders at some point but keep in mind that this is not yet wired to any notification system! If you're on Android you should already be able to configure some stuff that will work when we finish up the underlying system, but please bear in mind that this won't work on the Web version, so don't get too hyped about using reminders on your computer. Also if you're a developer please help us out!"
+	},
+	"header": "Reminders",
+	"eventBasedHeader": "Event based reminders",
+	"periodicHeader": "Periodic reminders",
+	"edit": {
+		"header": "Edit reminder",
+		"name": "Reminder name",
+		"title": "Reminder notification title",
+		"message": "Reminder notification message",
+		"type": {
+			"title": "Type of reminder",
+			"eventBased": "Event based",
+			"periodic": "Periodic"
+		},
+		"eventBased": {
+			"title": "Triggering event",
+			"addedToFront": "After a member has been added to front",
+			"removedFromFront": "After a member has been removed from front",
+			"memberFilterQuery": "Member filter query",
+			"timing": "Timing",
+			"delay": {
+				"title": "Delay",
+				"desc": "After {{delay}}"
+			}
+		},
+		"periodic": {
+			"title": "Interval of time",
+			"timeOfDay": {
+				"title": "Time of day",
+				"desc": "At {{timeOfDay}}"
+			},
+			"dayOfMonth": {
+				"title": "Day of month",
+				"desc_undefined": "Repeat every day",
+				"desc_ordinal_one": "Repeat every {{count}}st day of month",
+				"desc_ordinal_two": "Repeat every {{count}}nd day of month",
+				"desc_ordinal_few": "Repeat every {{count}}rd day of month",
+				"desc_ordinal_other": "Repeat every {{count}}th day of month"
+			}
+		},
+		"delete": {
+			"title": "Delete reminder",
+			"confirm": "Are you sure you want to delete this reminder?"
+		}
+	}
+}

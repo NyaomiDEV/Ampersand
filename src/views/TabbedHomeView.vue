@@ -75,7 +75,7 @@
 
 				<IonTabButton tab="options" href="/options" @click="clickReplaceHandler('/options')">
 					<IonIcon :ios="OptionsIOS" :md="OptionsMD" />
-					{{ $t("options:options.header") }}
+					{{ $t("options:header") }}
 				</IonTabButton>
 			</IonTabBar>
 		</IonTabs>

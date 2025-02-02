@@ -1,0 +1,36 @@
+{
+	"header": "Message board",
+	"searchPlaceholder": "Search for messages...",
+	"polls": {
+		"boardMessageContainsPoll": "Contains poll",
+		"voteCast": {
+			"voter": "Select the voter",
+			"reason": "Tell the reason",
+			"reasonHint": "Reason",
+			"retractConfirmation": "Are you sure you want to retract this vote?"
+		},
+		"resultsHeader": "Vote results",
+		"resultsButton": "Show poll results",
+		"choice": {
+			"desc_one": "{{count}} voter",
+			"desc_other": "{{count}} voters"
+		}
+	},
+	"edit": {
+		"header": "Edit message",
+		"member": "Edit message author",
+		"title": "Title",
+		"body": "Message body",
+		"isPinned": "Set as pinned",
+		"attachPoll": "Attach a poll to this message",
+		"deleteAttachedPoll": "Delete attached poll",
+		"pollIsMultipleChoice": "Allow selecting multiple choices",
+		"pollAddNewChoice": "Add a new choice to the poll",
+		"pollChoice": "Choice description",
+		"pollEditWarning": "Changing any of the poll details will reset the votes!",
+		"delete": {
+			"title": "Delete message on board",
+			"confirm": "Are you sure you want to delete this message?"
+		}
+	}
+}

@@ -1,0 +1,19 @@
+{
+	"header": "Security",
+	"applock": {
+		"title": "App lock",
+		"desc": "Lock the application with a password"
+	},
+	"biometrics": {
+		"title": "Use biometrics",
+		"desc": "Unlock via your fingerprint or face"
+	},
+	"editPassword": "Modify password",
+	"inputPassword": {
+		"titleAdd": "Enter your new password",
+		"titleModifyOld": "Enter your old password",
+		"titleModifyNew": "Enter your new password",
+		"titleDisable": "Enter your password",
+		"hint": "Password"
+	}
+}

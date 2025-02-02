@@ -51,7 +51,7 @@
 			<IonToolbar>
 				<IonBackButton slot="start" defaultHref="/options/" />
 				<IonTitle>
-					{{ $t("options:about.header") }}
+					{{ $t("about:header") }}
 				</IonTitle>
 			</IonToolbar>
 		</IonHeader>
@@ -59,8 +59,8 @@
 		<IonContent>
 			<div class="container">
 				<h1>Ampersand</h1>
-				<p>{{ $t("options:about.version", { version }) }}</p>
-				<p>{{ $t("options:about.madein") }}</p>
+				<p>{{ $t("about:version", { version }) }}</p>
+				<p>{{ $t("about:madein") }}</p>
 
 				<IonIcon class="logo" :icon="AmpersandLogo" />
 

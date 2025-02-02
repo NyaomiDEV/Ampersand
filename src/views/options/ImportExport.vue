@@ -22,7 +22,7 @@
 			await importDatabaseFromBinary(new Uint8Array(await file.arrayBuffer()));
 
 			const statusMessage = await toastController.create({
-				message: i18next.t("options:importExport.status.imported"),
+				message: i18next.t("importExport:status.imported"),
 				duration: 1500
 			});
 
@@ -49,14 +49,14 @@
 			if(path){
 				await writeFile(path, data);
 				const statusMessage = await toastController.create({
-					message: i18next.t("options:importExport.status.exportedApp"),
+					message: i18next.t("importExport:status.exportedApp"),
 					duration: 1500
 				});
 
 				await statusMessage.present();
 			} else {
 				const statusMessage = await toastController.create({
-					message: i18next.t("options:importExport.status.error"),
+					message: i18next.t("importExport:status.error"),
 					duration: 1500
 				});
 
@@ -66,7 +66,7 @@
 			downloadBlob(data,`ampersand-backup-${date}.ampdb`);
 
 			const statusMessage = await toastController.create({
-				message: i18next.t("options:importExport.status.exportedPwa"),
+				message: i18next.t("importExport:status.exportedPwa"),
 				duration: 1500
 			});
 
@@ -82,7 +82,7 @@
 		<IonHeader>
 			<IonToolbar>
 				<IonBackButton slot="start" defaultHref="/options/" />
-				<IonTitle>{{ $t("options:importExport.header") }}</IonTitle>
+				<IonTitle>{{ $t("importExport:header") }}</IonTitle>
 				<IonProgressBar v-if="loading" type="indeterminate" />
 			</IonToolbar>
 		</IonHeader>
@@ -92,15 +92,15 @@
 
 				<IonItem button @click="exportDb" :detail="true">
 					<IonLabel>
-						<h3>{{ $t("options:importExport.dbExport.title") }}</h3>
-						<p>{{ $t("options:importExport.dbExport.desc") }}</p>
+						<h3>{{ $t("importExport:dbExport.title") }}</h3>
+						<p>{{ $t("importExport:dbExport.desc") }}</p>
 					</IonLabel>
 				</IonItem>
 
 				<IonItem button @click="importDb" :detail="true">
 					<IonLabel>
-						<h3>{{ $t("options:importExport.dbImport.title") }}</h3>
-						<p>{{ $t("options:importExport.dbImport.desc") }}</p>
+						<h3>{{ $t("importExport:dbImport.title") }}</h3>
+						<p>{{ $t("importExport:dbImport.desc") }}</p>
 					</IonLabel>
 				</IonItem>
 			</IonList>

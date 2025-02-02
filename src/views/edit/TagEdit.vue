@@ -11,7 +11,6 @@
 		IonFabButton,
 		IonLabel,
 		IonItem,
-		modalController,
 		IonPage,
 		IonBackButton,
 		IonSegment,
@@ -79,8 +78,8 @@
 	function promptDeletion(): Promise<boolean> {
 		return new Promise(async (resolve) => {
 			const alert = await alertController.create({
-				header: i18next.t("options:tagManagement.edit.actions.delete.title"),
-				subHeader: i18next.t("options:tagManagement.edit.actions.delete.confirm"),
+				header: i18next.t("tagManagement:edit.delete.title"),
+				subHeader: i18next.t("tagManagement:edit.delete.confirm"),
 				buttons: [
 					{
 						text: i18next.t("other:alerts.cancel"),
@@ -102,9 +101,7 @@
 	async function deleteTag(){
 		if(await promptDeletion()){
 			await removeTag(tag.value.uuid!);
-			try {
-				await modalController.dismiss(undefined, "deleted");
-			} catch (_) { }
+			router.back();
 		}
 	}
 
@@ -146,7 +143,7 @@
 		<IonHeader>
 			<IonToolbar>
 				<IonBackButton slot="start" defaultHref="/options/tagManagement/" />
-				<IonTitle>{{ tag.type === "member" ? $t("options:tagManagement.edit.header.member") : $t("options:tagManagement.edit.header.journal") }}</IonTitle>
+				<IonTitle>{{ tag.type === "member" ? $t("tagManagement:edit.header.member") : $t("tagManagement:edit.header.journal") }}</IonTitle>
 			</IonToolbar>
 		</IonHeader>
 
@@ -154,60 +151,60 @@
 		<IonContent v-else>
 			<IonList inset>
 					<IonItem>
-						<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('options:tagManagement.edit.name')" labelPlacement="floating" v-model="tag.name" />
+						<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('tagManagement:edit.name')" labelPlacement="floating" v-model="tag.name" />
 					</IonItem>
 
 					<IonItem>
-						<IonTextarea :fill="!isIOS ? 'outline' : undefined" auto-grow :label="$t('options:tagManagement.edit.description')" labelPlacement="floating" v-model="tag.description" />
+						<IonTextarea :fill="!isIOS ? 'outline' : undefined" auto-grow :label="$t('tagManagement:edit.description')" labelPlacement="floating" v-model="tag.description" />
 					</IonItem>
 
 					<IonItem button>
 						<Color v-model="tag.color" @update:model-value="updateColors">
 							<IonLabel>
-								{{ $t("options:tagManagement.edit.color") }}
+								{{ $t("tagManagement:edit.color") }}
 							</IonLabel>
 						</Color>
 					</IonItem>
 
 					<IonItem v-if="!tag.uuid">
 						<IonLabel>
-							<h3 class="centered-text">{{ $t("options:tagManagement.edit.type.header") }}</h3>
+							<h3 class="centered-text">{{ $t("tagManagement:edit.type.header") }}</h3>
 							<IonSegment class="segment-alt" v-model="tag.type">
 								<MD3SegmentButton value="member">
 									<IonLabel>
-										{{ $t("options:tagManagement.edit.type.member") }}
+										{{ $t("tagManagement:edit.type.member") }}
 									</IonLabel>
 								</MD3SegmentButton>
 								<MD3SegmentButton value="journal">
 									<IonLabel>
-										{{ $t("options:tagManagement.edit.type.journal") }}
+										{{ $t("tagManagement:edit.type.journal") }}
 									</IonLabel>
 								</MD3SegmentButton>
 							</IonSegment>
-							<p class="centered-text">{{ $t("options:tagManagement.edit.type.desc") }}</p>
+							<p class="centered-text">{{ $t("tagManagement:edit.type.desc") }}</p>
 						</IonLabel>
 					</IonItem>
 
 					<IonItem button v-if="tag.uuid && tag.type === 'member'" @click="() => router.push(`/s/members?q=${encodeURIComponent('#' + tag.name.toLowerCase().replace(/\s/g, ''))}`)">
 						<IonIcon :ios="personIOS" :md="personMD" slot="start" aria-hidden="true" />
 						<IonLabel>
-							<h3>{{ $t("options:tagManagement.edit.actions.showMembers.title") }}</h3>
-							<p>{{ $t("options:tagManagement.edit.actions.showMembers.desc", { count }) }}</p>
+							<h3>{{ $t("tagManagement:edit.showMembers.title") }}</h3>
+							<p>{{ $t("tagManagement:edit.showMembers.desc", { count }) }}</p>
 						</IonLabel>
 					</IonItem>
 
 					<IonItem button v-if="tag.uuid && tag.type === 'journal'">
 						<IonIcon :ios="journalIOS" :md="journalMD" slot="start" aria-hidden="true" />
 						<IonLabel>
-							<h3>{{ $t("options:tagManagement.edit.actions.showJournal.title") }}</h3>
-							<p>{{ $t("options:tagManagement.edit.actions.showJournal.desc", { count }) }}</p>
+							<h3>{{ $t("tagManagement:edit.showJournal.title") }}</h3>
+							<p>{{ $t("tagManagement:edit.showJournal.desc", { count }) }}</p>
 						</IonLabel>
 					</IonItem>
 
 					<IonItem button v-if="tag.uuid" @click="deleteTag">
 						<IonIcon :ios="trashIOS" :md="trashMD" slot="start" aria-hidden="true" color="danger"/>
 						<IonLabel color="danger">
-							<h3>{{ $t("options:tagManagement.edit.actions.delete.title") }}</h3>
+							<h3>{{ $t("tagManagement:edit.delete.title") }}</h3>
 							<p>{{ $t("other:genericDeleteDesc") }}</p>
 						</IonLabel>
 					</IonItem>

@@ -51,7 +51,7 @@
 		<IonHeader>
 			<IonToolbar>
 				<IonTitle>
-					{{ $t("options:options.header") }}
+					{{ $t("options:header") }}
 				</IonTitle>
 			</IonToolbar>
 		</IonHeader>
@@ -61,72 +61,72 @@
 			<StoragePersistenceMissing v-if="!wasPersisted" />
 
 			<IonListHeader>
-				<IonLabel>{{ $t("options:options.managementLabel") }}</IonLabel>
+				<IonLabel>{{ $t("options:managementLabel") }}</IonLabel>
 			</IonListHeader>
 
 			<IonList :inset="isIOS">
 
 				<IonItem button routerLink="/options/systemSettings">
 					<IonIcon :ios="SystemIOS" :md="SystemMD" slot="start" aria-hidden="true" />
-					<IonLabel>{{ $t("options:systemSettings.header") }}</IonLabel>
+					<IonLabel>{{ $t("systemSettings:header") }}</IonLabel>
 				</IonItem>
 
 				<IonItem button routerLink="/options/frontHistory">
 					<IonIcon :ios="FrontHistoryIOS" :md="FrontHistoryMD" slot="start" aria-hidden="true" />
-					<IonLabel>{{ $t("options:frontHistory.header") }}</IonLabel>
+					<IonLabel>{{ $t("frontHistory:header") }}</IonLabel>
 				</IonItem>
 
 				<IonItem button routerLink="/options/messageBoard">
 					<IonIcon :ios="MessageBoardIOS" :md="MessageBoardMD" slot="start" aria-hidden="true" />
-					<IonLabel>{{ $t("options:messageBoard.header") }}</IonLabel>
+					<IonLabel>{{ $t("messageBoard:header") }}</IonLabel>
 				</IonItem>
 
 				<IonItem button routerLink="/options/tagManagement">
 					<IonIcon :ios="TagIOS" :md="TagMD" slot="start" aria-hidden="true" />
-					<IonLabel>{{ $t("options:tagManagement.header") }}</IonLabel>
+					<IonLabel>{{ $t("tagManagement:header") }}</IonLabel>
 				</IonItem>
 
 				<IonItem button routerLink="/options/assetManager">
 					<IonIcon :ios="FolderIOS" :md="FolderMD" slot="start" aria-hidden="true" />
-					<IonLabel>{{ $t("options:assetManager.header") }}</IonLabel>
+					<IonLabel>{{ $t("assetManager:header") }}</IonLabel>
 				</IonItem>
 
 				<IonItem button routerLink="/options/reminders" v-if="isDev || isTauri()">
 					<IonIcon :ios="RemindersIOS" :md="RemindersMD" slot="start" aria-hidden="true" />
-					<IonLabel>{{ $t("options:reminders.header") }}</IonLabel>
+					<IonLabel>{{ $t("reminders:header") }}</IonLabel>
 				</IonItem>
 
 			</IonList>
 
 			<IonListHeader>
-				<IonLabel>{{ $t("options:options.settingsLabel") }}</IonLabel>
+				<IonLabel>{{ $t("options:settingsLabel") }}</IonLabel>
 			</IonListHeader>
 
 			<IonList :inset="isIOS">
 
 				<IonItem button routerLink="/options/appSettings">
 					<IonIcon :ios="SettingsIOS" :md="SettingsMD" slot="start" aria-hidden="true" />
-					<IonLabel>{{ $t("options:appSettings.header") }}</IonLabel>
+					<IonLabel>{{ $t("appSettings:header") }}</IonLabel>
 				</IonItem>
 
 				<IonItem button routerLink="/options/security">
 					<IonIcon :ios="LockIOS" :md="LockMD" slot="start" aria-hidden="true" />
-					<IonLabel>{{ $t("options:security.header") }}</IonLabel>
+					<IonLabel>{{ $t("security:header") }}</IonLabel>
 				</IonItem>
 
 				<IonItem button routerLink="/options/accessibility">
 					<IonIcon :ios="AccessibilityIOS" :md="AccessibilityMD" slot="start" aria-hidden="true" />
-					<IonLabel>{{ $t("options:accessibility.header") }}</IonLabel>
+					<IonLabel>{{ $t("accessibility:header") }}</IonLabel>
 				</IonItem>
 
 				<IonItem button routerLink="/options/importExport">
 					<IonIcon :ios="ImportExportIOS" :md="ImportExportMD" slot="start" aria-hidden="true" />
-					<IonLabel>{{ $t("options:importExport.header") }}</IonLabel>
+					<IonLabel>{{ $t("importExport:header") }}</IonLabel>
 				</IonItem>
 
 				<IonItem button routerLink="/options/about">
 					<IonIcon :ios="AboutIOS" :md="AboutMD" slot="start" aria-hidden="true" />
-					<IonLabel>{{ $t("options:about.header") }}</IonLabel>
+					<IonLabel>{{ $t("about:header") }}</IonLabel>
 				</IonItem>
 
 				<IonItem button routerLink="/options/testingGrounds" v-if="isDev">

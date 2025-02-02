@@ -1,6 +1,8 @@
 <script setup lang="ts">
 	import { IonModal, IonDatetime } from '@ionic/vue';
 	import { appConfig } from '../lib/config';
+	import { ref, watch } from 'vue';
+	import dayjs from "dayjs";
 
 	const props = defineProps<{
 		presentation?: string,
@@ -10,7 +12,9 @@
 		title?: string
 	}>();
 
-	const model = defineModel<string>();
+	const model = defineModel<Date>();
+	const innerModel = ref<string | undefined>(dayjs(model.value).format());
+	watch(innerModel, () => model.value = dayjs(innerModel.value).toDate());
 </script>
 
 <template>
@@ -21,11 +25,14 @@
 			:hourCycle="appConfig.locale.twelveHourClock ? 'h12' : 'h23'"
 			:firstDayOfWeek="appConfig.locale.twelveHourClock ? 0 : 1"
 			:locale="appConfig.locale.language || 'en'"
-			:min="props.min?.toISOString()"
-			:max="props.max?.toISOString()"
-			v-model="model"
+			:min="props.min ? dayjs(props.min).format() : undefined"
+			:max="props.max ? dayjs(props.max).format() : undefined"
+			:doneText="$t('other:alerts.ok')"
+			:cancelText="$t('other:alerts.cancel')"
+			v-model="innerModel"
 		>
 			<span slot="title" v-if="props.title">{{ props.title }}</span>
+			<span slot="time-label">{{ $t("other:time") }}</span>
 		</IonDatetime>
 	</IonModal>
 </template>

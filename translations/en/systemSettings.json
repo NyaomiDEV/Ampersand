@@ -1,0 +1,8 @@
+{
+	"header": "System name and photo",
+	"systemName": "System name",
+	"systemDescription": "System description",
+	"memberCount": "Member count",
+	"memberCountText": "{{memberCount}} member(s), {{archivedMemberCount}} archived",
+	"tapToShow": "Tap to show"
+}

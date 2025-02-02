@@ -1,0 +1,38 @@
+{
+	"header": "Tag management",
+	"searchPlaceholder": "Search for tags...",
+	"select": "Select some tags",
+	"selector": {
+		"member": "Member tags",
+		"journal": "Journal tags"
+	},
+	"edit": {
+		"header": {
+			"member": "Edit member tag",
+			"journal": "Edit journal tag"
+		},
+		"name": "Tag name",
+		"description": "Tag description",
+		"color": "Tag color",
+		"type": {
+			"header": "Tag type",
+			"member": "Member",
+			"journal": "Journal",
+			"desc": "Note: you can only define the tag type upon creation!"
+		},
+		"showMembers": {
+			"title": "Show members using this tag",
+			"desc_one": "{{count}} member uses this tag",
+			"desc_other": "{{count}} members use this tag"
+		},
+		"showJournal": {
+			"title": "Show journal posts having this tag",
+			"desc_one": "{{count}} journal post has this tag",
+			"desc_other": "{{count}} journal posts have this tag"
+		},
+		"delete": {
+			"title": "Delete tag",
+			"confirm": "Are you sure you want to delete this tag?"
+		}
+	}
+}

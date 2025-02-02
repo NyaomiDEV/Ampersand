@@ -1,0 +1,43 @@
+{
+	"header": "Accessibilità",
+	"highLegibilityFont": {
+		"title": "Font ad alta leggibilità",
+		"desc": "Usa un font ad alta leggibilità invece del font del dispositivo"
+	},
+	"highLegibilityFontType": {
+		"title": "Famiglia dei font ad alta leggibilità",
+		"atkinson": "Atkinson Hyperlegible",
+		"opendyslexic": "OpenDyslexic",
+		"lexend": "Lexend"
+	},
+	"uiVariant": {
+		"title": "Variante dell'interfaccia",
+		"auto": "Auto",
+		"light": "Chiara",
+		"dark": "Scura"
+	},
+	"useMaterialTheming": {
+		"title": "Tema Material Design",
+		"desc": "Usa un tema che segue le linee guida Material (potrebbe causare fatica agli occhi)"
+	},
+	"useAccentColor": {
+		"title": "Colore primario",
+		"desc": "Usa un colore primario personalizzato"
+	},
+	"accentColor": {
+		"title": "Scegli il colore primario"
+	},
+	"reducedMotion": {
+		"title": "Movimenti ridotti",
+		"desc": "Disabilita le animazioni in app"
+	},
+	"fontScale": {
+		"title": "Dimensione dell'interfaccia"
+	},
+	"chatFontScale": {
+		"title": "Dimensione della chat"
+	},
+	"longPressDuration": {
+		"title": "Durata della premuta"
+	}
+}

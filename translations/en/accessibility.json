@@ -1,0 +1,43 @@
+{
+	"header": "Accessibility",
+	"highLegibilityFont": {
+		"title": "High legibility font",
+		"desc": "Use an high legibility font instead of the standard device font"
+	},
+	"highLegibilityFontType": {
+		"title": "High legibility font family",
+		"atkinson": "Atkinson Hyperlegible",
+		"opendyslexic": "OpenDyslexic",
+		"lexend": "Lexend"
+	},
+	"uiVariant": {
+		"title": "UI variant",
+		"auto": "Auto",
+		"light": "Light",
+		"dark": "Dark"
+	},
+	"useMaterialTheming": {
+		"title": "Material Design theming",
+		"desc": "Theme your experience according to Material guidelines (could cause eye strain)"
+	},
+	"useAccentColor": {
+		"title": "Accent color",
+		"desc": "Use a custom accent color"
+	},
+	"accentColor": {
+		"title": "Choose the accent color"
+	},
+	"reducedMotion": {
+		"title": "Reduced motion",
+		"desc": "Disable in-app animations"
+	},
+	"fontScale": {
+		"title": "UI size"
+	},
+	"chatFontScale": {
+		"title": "Chat UI size"
+	},
+	"longPressDuration": {
+		"title": "Long press duration"
+	}
+}

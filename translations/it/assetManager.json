@@ -1,0 +1,17 @@
+{
+	"header": "Gestore degli asset",
+	"searchPlaceholder": "Cerca tra gli asset...",
+	"add": {
+		"header": "Aggiungi asset",
+		"attachment": "Aggiungi allegato"
+	},
+	"edit": {
+		"header": "Modifica asset",
+		"friendlyName": "Modifica il nome",
+		"attachment": "Rimpiazza allegato",
+		"delete": {
+			"title": "Elimina asset",
+			"confirm": "Vuoi davvero eliminare questo asset?"
+		}
+	}
+}

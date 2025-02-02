@@ -1,0 +1,13 @@
+{
+	"header": "Tabla de mesaje",
+	"searchPlaceholder": "Căutați mesaje...",
+	"edit": {
+		"header": "Schimbați mesajul",
+		"member": "Schimbați autorul mesajului",
+		"title": "Titlu",
+		"body": "Corpul mesajului",
+		"delete": {
+			"title": "Ștergeți mesajul de pe tablă"
+		}
+	}
+}

@@ -1,0 +1,40 @@
+{
+	"header": "Administrare etichete",
+	"searchPlaceholder": "Căutați etichete...",
+	"select": "Alege etichete",
+	"selector": {
+		"member": "Etichete pentru membri",
+		"journal": "Etichete pentru jurnal"
+	},
+	"edit": {
+		"header": {
+			"member": "Schimbați eticheta destinată membrilor",
+			"journal": "Schimbați eticheta destinată jurnalului"
+		},
+		"name": "Numele etichetei",
+		"description": "Descrierea etichetei",
+		"color": "Culoarea etichetei",
+		"type": {
+			"header": "Tipul etichetei",
+			"member": "Membru",
+			"journal": "Jurnal",
+			"desc": "Notă: Puteți defini tipul etichetei numai la momentul creației!"
+		},
+		"showMembers": {
+			"title": "Afișați membrii cu această etichetă",
+			"desc_one": "{{count}} membru are această etichetă",
+			"desc_few": "{{count}} membri au această etichetă",
+			"desc_other": "{{count}} membri au această etichetă"
+		},
+		"showJournal": {
+			"title": "Afișați intrările în jurnal cu această etichetă",
+			"desc_one": "{{count}} intrare în jurnal are această etichetă",
+			"desc_few": "{{count}} intrări în jurnal au această etichetă",
+			"desc_other": "{{count}} intrări în jurnal au această etichetă"
+		},
+		"delete": {
+			"title": "Ștergeți eticheta",
+			"confirm": "Doriți să ștergeți această etichetă cu siguranță?"
+		}
+	}
+}

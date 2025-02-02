@@ -50,13 +50,13 @@
 			<IonToolbar>
 				<IonBackButton slot="start" defaultHref="/options/" />
 				<IonTitle>
-					{{ $t("options:tagManagement.header") }}
+					{{ $t("tagManagement:header") }}
 				</IonTitle>
 			</IonToolbar>
 			<IonToolbar>
 				<IonSearchbar
 					:animated="true"
-					:placeholder="$t('options:tagManagement.searchPlaceholder')"
+					:placeholder="$t('tagManagement:searchPlaceholder')"
 					showCancelButton="focus"
 					showClearButton="focus"
 					:spellcheck="false"
@@ -66,10 +66,10 @@
 			<IonToolbar>
 				<IonSegment v-model="type" value="member">
 					<IonSegmentButton value="member">
-						<IonLabel>{{ $t("options:tagManagement.selector.member") }}</IonLabel>
+						<IonLabel>{{ $t("tagManagement:selector.member") }}</IonLabel>
 					</IonSegmentButton>
 					<IonSegmentButton value="journal">
-						<IonLabel>{{ $t("options:tagManagement.selector.journal") }}</IonLabel>
+						<IonLabel>{{ $t("tagManagement:selector.journal") }}</IonLabel>
 					</IonSegmentButton>
 				</IonSegment>
 			</IonToolbar>

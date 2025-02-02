@@ -45,7 +45,7 @@
 	<IonModal class="poll-results-modal" :breakpoints="[0,0.25,0.75,1]" initialBreakpoint="0.75">
 		<IonHeader>
 			<IonToolbar>
-				<IonTitle>{{ $t("other:polls.resultsHeader") }}</IonTitle>
+				<IonTitle>{{ $t("messageBoard:polls.resultsHeader") }}</IonTitle>
 			</IonToolbar>
 		</IonHeader>
 
@@ -54,7 +54,7 @@
 			<IonList :inset="isIOS">
 				<template v-for="choice in props.poll.entries" :key="choice.choice">
 					<IonItemDivider sticky>
-						{{ choice.choice }} - {{ $t("other:polls.choice.desc", { count: choice.votes.length }) }}
+						{{ choice.choice }} - {{ $t("messageBoard:polls.choice.desc", { count: choice.votes.length }) }}
 					</IonItemDivider>
 					<IonItem v-for="vote in choice.votes" :key="vote.member">
 						<MemberAvatar slot="start" :member="members.find(x => vote.member === x.uuid)!" />

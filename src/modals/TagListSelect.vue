@@ -62,10 +62,10 @@
 	<IonModal class="tag-select-modal" :breakpoints="[0,0.25,0.75,1]" initialBreakpoint="0.75">
 		<IonHeader>
 			<IonToolbar>
-				<IonTitle>{{ props.customTitle ?? $t("other:taglistSelect:header") }}</IonTitle>
+				<IonTitle>{{ props.customTitle ?? $t("tagManagement:select") }}</IonTitle>
 			</IonToolbar>
 			<IonToolbar>
-				<IonSearchbar :animated="true" :placeholder="$t('options:tagManagement.searchPlaceholder')"
+				<IonSearchbar :animated="true" :placeholder="$t('tagManagement:searchPlaceholder')"
 					showCancelButton="focus" showClearButton="focus" :spellcheck="false" v-model="search" />
 			</IonToolbar>
 		</IonHeader>

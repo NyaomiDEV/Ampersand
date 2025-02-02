@@ -1,0 +1,39 @@
+{
+	"header": "Accesibilitate",
+	"highLegibilityFont": {
+		"title": "Font cu legibilitate crescută",
+		"desc": "Folosiți un font cu legibilitate crescută în loc de fontul dispozitivului"
+	},
+	"highLegibilityFontType": {
+		"title": "Familia fontului cu legibilitate crescută",
+		"atkinson": "Atkinson Hyperlegible",
+		"opendyslexic": "OpenDyslexic",
+		"lexend": "Lexend"
+	},
+	"uiVariant": {
+		"title": "Variantă interfață",
+		"auto": "Auto",
+		"light": "Deschisă",
+		"dark": "Întunecată"
+	},
+	"useAccentColor": {
+		"title": "Culoarea de accent",
+		"desc": "Folosiți o culoare de accent personalizată"
+	},
+	"accentColor": {
+		"title": "Alegeți culoarea de accent"
+	},
+	"reducedMotion": {
+		"title": "Mișcare redusă",
+		"desc": "Dezactivați animațiile din aplicație"
+	},
+	"fontScale": {
+		"title": "Mărime interfață"
+	},
+	"chatFontScale": {
+		"title": "Mărimea interfeței chat"
+	},
+	"longPressDuration": {
+		"title": "Durata apăsării lungi"
+	}
+}

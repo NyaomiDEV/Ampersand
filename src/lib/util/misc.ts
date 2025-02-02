@@ -1,9 +1,11 @@
 import { createAnimation, getIonPageElement, TransitionOptions } from "@ionic/vue";
 import dayjs from "dayjs";
 import Duration from "dayjs/plugin/duration";
+import LocalizedFormat from "dayjs/plugin/localizedFormat";
 import { Ref } from "vue";
 import { appConfig } from "../config";
 dayjs.extend(Duration);
+dayjs.extend(LocalizedFormat);
 
 export function getFiles(contentType?: string, multiple?: boolean): Promise<File[]> {
 	return new Promise(resolve => {

@@ -1,0 +1,8 @@
+{
+	"header": "Numele sistemului și poza",
+	"systemName": "Numele sistemului",
+	"systemDescription": "Descrierea sistemului",
+	"memberCount": "Numărul de membri",
+	"memberCountText": "{{memberCount}} membri",
+	"tapToShow": "Atingeți pentru a afișa"
+}

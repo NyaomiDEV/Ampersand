@@ -38,7 +38,7 @@
 			<IonToolbar>
 				<IonBackButton slot="start" defaultHref="/options/" />
 				<IonTitle>
-					{{ $t("options:reminders.header") }}
+					{{ $t("reminders:header") }}
 				</IonTitle>
 			</IonToolbar>
 		</IonHeader>
@@ -48,21 +48,21 @@
 			<!-- remove this when its completed -->
 			<IonCard color="warning">
 				<IonCardHeader>
-					<IonCardTitle>{{ $t("other:remindersAreNotFinished.header") }}</IonCardTitle>
+					<IonCardTitle>{{ $t("reminders:remindersAreNotFinished.header") }}</IonCardTitle>
 				</IonCardHeader>
-				<IonCardContent>{{ $t("other:remindersAreNotFinished.content") }}</IonCardContent>
+				<IonCardContent>{{ $t("reminders:remindersAreNotFinished.content") }}</IonCardContent>
 			</IonCard>
 
 			<IonListHeader>
 				<IonLabel>
-					{{ $t("options:reminders.eventBasedLocale") }}
+					{{ $t("reminders:eventBasedHeader") }}
 				</IonLabel>
 			</IonListHeader>
 
 			<IonList :inset="isIOS">
 				<IonItem button
 					v-for="eventReminder in reminders?.filter(x => x.type === 'event')"
-					:key="'eventreminder'+JSON.stringify(eventReminder)"
+					:key="eventReminder.uuid"
 					:routerLink="'/options/reminders/edit?uuid='+eventReminder.uuid"
 				>
 					<IonLabel>
@@ -81,14 +81,14 @@
 
 			<IonListHeader>
 				<IonLabel>
-					{{ $t("options:reminders.periodicLocale") }}
+					{{ $t("reminders:periodicHeader") }}
 				</IonLabel>
 			</IonListHeader>
 
 			<IonList :inset="isIOS">
 				<IonItem button
 					v-for="periodicReminder in reminders?.filter(x => x.type === 'periodic')"
-					:key="'periodicreminder'+JSON.stringify(periodicReminder)"
+					:key="periodicReminder.uuid"
 					:routerLink="'/options/reminders/edit?uuid='+periodicReminder.uuid"
 				>
 					<IonLabel>

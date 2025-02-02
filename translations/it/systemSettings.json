@@ -1,0 +1,8 @@
+{
+	"header": "Nome del sistema e foto",
+	"systemName": "Nome del sistema",
+	"systemDescription": "Descrizione del sistema",
+	"memberCount": "Numero di membrɜ",
+	"memberCountText": "{{memberCount}} membrɜ, {{archivedMemberCount}} archiviatɜ",
+	"tapToShow": "Clicca per mostrare"
+}

@@ -17,27 +17,32 @@
 		IonRadio,
 		IonPage,
 		IonBackButton,
-		useIonRouter
+		useIonRouter,
+		alertController
 	} from "@ionic/vue";
 
 	import {
 		saveOutline as saveIOS,
+		trashBinOutline as trashIOS
 	} from "ionicons/icons";
 
 	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
+	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
 
 	import MD3SegmentButton from '../../components/MD3SegmentButton.vue';
 	import PopupPicker from "../../components/PopupPicker.vue";
 
 	import { inject, onBeforeMount, ref, toRaw, useTemplateRef, watch } from "vue";
 	import { EventReminder, Reminder } from "../../lib/db/entities";
-	import { getReminders, newReminder, updateReminder } from "../../lib/db/tables/reminders";
+	import { getReminders, newReminder, removeReminder, updateReminder } from "../../lib/db/tables/reminders";
 	import { PartialBy } from "../../lib/types";
 	import { useRoute } from "vue-router";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
+	import { useTranslation } from "i18next-vue";
 
 	const route = useRoute();
 	const router = useIonRouter();
+	const i18next = useTranslation();
 
 	const isIOS = inject<boolean>("isIOS")!;
 	const loading = ref(false);
@@ -60,6 +65,36 @@
 	const eventDelayPopupPicker = useTemplateRef("eventDelayPopupPicker");
 	const periodicTimeOfDayPopupPicker = useTemplateRef("periodicTimeOfDayPopupPicker");
 	const periodicDayOfMonthPopupPicker = useTemplateRef("periodicDayOfMonthPopupPicker");
+
+	function promptDeletion(): Promise<boolean> {
+		return new Promise(async (resolve) => {
+			const alert = await alertController.create({
+				header: i18next.t("reminders:edit.delete.title"),
+				subHeader: i18next.t("reminders:edit.delete.confirm"),
+				buttons: [
+					{
+						text: i18next.t("other:alerts.cancel"),
+						role: "cancel",
+						handler: () => resolve(false)
+					},
+					{
+						text: i18next.t("other:alerts.ok"),
+						role: "confirm",
+						handler: () => resolve(true)
+					}
+				]
+			});
+
+			await alert.present();
+		});
+	}
+
+	async function deleteReminder(){
+		if(await promptDeletion()){
+			await removeReminder(reminder.value.uuid!);
+			router.back();
+		}
+	}
 
 	async function save(){
 		const uuid = reminder.value?.uuid;
@@ -130,7 +165,7 @@
 		<IonHeader>
 			<IonToolbar>
 				<IonBackButton slot="start" defaultHref="/options/reminders/" />
-				<IonTitle>{{ $t("options:reminders.editReminder.header") }}</IonTitle>
+				<IonTitle>{{ $t("reminders:edit.header") }}</IonTitle>
 			</IonToolbar>
 		</IonHeader>
 
@@ -141,30 +176,30 @@
 
 				<IonItem>
 					<IonInput :fill="!isIOS ? 'outline' : undefined" labelPlacement="floating"
-						:label="$t('options:reminders.editReminder.reminderName')" v-model="reminder.name" />
+						:label="$t('reminders:edit.name')" v-model="reminder.name" />
 				</IonItem>
 
 				<IonItem>
 					<IonInput :fill="!isIOS ? 'outline' : undefined" labelPlacement="floating"
-						:label="$t('options:reminders.editReminder.reminderTitle')" v-model="reminder.title" />
+						:label="$t('reminders:edit.title')" v-model="reminder.title" />
 				</IonItem>
 
 				<IonItem>
 					<IonInput :fill="!isIOS ? 'outline' : undefined" labelPlacement="floating"
-						:label="$t('options:reminders.editReminder.reminderMessage')" v-model="reminder.message" />
+						:label="$t('reminders:edit.message')" v-model="reminder.message" />
 				</IonItem>
 
 				<IonItem>
 					<IonLabel>
-						<h3 class="centered-text">{{ $t("options:reminders.editReminder.reminderType.title") }}</h3>
+						<h3 class="centered-text">{{ $t("reminders:edit.type.title") }}</h3>
 						<IonSegment class="segment-alt" value="reminder-type" v-model="reminder.type" @update:modelValue="switchType">
 
 							<MD3SegmentButton value="event">
-								<IonLabel>{{ $t("options:reminders.editReminder.reminderType.eventBased") }}</IonLabel>
+								<IonLabel>{{ $t("reminders:edit.type.eventBased") }}</IonLabel>
 							</MD3SegmentButton>
 
 							<MD3SegmentButton value="periodic">
-								<IonLabel>{{ $t("options:reminders.editReminder.reminderType.periodic") }}</IonLabel>
+								<IonLabel>{{ $t("reminders:edit.type.periodic") }}</IonLabel>
 							</MD3SegmentButton>
 						</IonSegment>
 					</IonLabel>
@@ -175,7 +210,7 @@
 			<template v-if="reminder.type == 'event'">
 				<IonListHeader>
 					<IonLabel>
-						{{ $t("options:reminders.editReminder.eventBased.title") }}
+						{{ $t("reminders:edit.eventBased.title") }}
 					</IonLabel>
 				</IonListHeader>
 
@@ -183,34 +218,34 @@
 					<IonRadioGroup v-model="(reminder as EventReminder).triggeringEvent.type">
 						<IonItem>
 							<IonRadio value="memberAdded" justify="space-between">
-								{{ $t("options:reminders.editReminder.eventBased.addedToFront") }}
+								{{ $t("reminders:edit.eventBased.addedToFront") }}
 							</IonRadio>
 						</IonItem>
 						<IonItem>
 							<IonRadio value="memberRemoved" justify="space-between">
-								{{ $t("options:reminders.editReminder.eventBased.removedFromFront") }}
+								{{ $t("reminders:edit.eventBased.removedFromFront") }}
 							</IonRadio>
 						</IonItem>
 					</IonRadioGroup>
 
 					<IonItem>
 						<IonInput :fill="!isIOS ? 'outline' : undefined" labelPlacement="floating"
-							:label="$t('options:reminders.editReminder.eventBased.memberFilterQuery')" v-model="(reminder as EventReminder).triggeringEvent.filterQuery" />
+							:label="$t('reminders:edit.eventBased.memberFilterQuery')" v-model="(reminder as EventReminder).triggeringEvent.filterQuery" />
 					</IonItem>
 
 				</IonList>
 
 				<IonListHeader>
 					<IonLabel>
-						{{ $t("options:reminders.editReminder.eventBased.timing") }}
+						{{ $t("reminders:edit.eventBased.timing") }}
 					</IonLabel>
 				</IonListHeader>
 
 				<IonList>
 					<IonItem button :detail="true" @click="() => eventDelayPopupPicker?.$el.present()">
 						<IonLabel>
-							<h3>{{ $t("options:reminders.editReminder.eventBased.delay.title") }}</h3>
-							<p>{{ $t("options:reminders.editReminder.eventBased.delay.desc", {delay: reminder.delay?.hours.toString().padStart(2, "0") + ":" + reminder.delay?.minutes.toString().padStart(2, "0") })}}</p>
+							<h3>{{ $t("reminders:edit.eventBased.delay.title") }}</h3>
+							<p>{{ $t("reminders:edit.eventBased.delay.desc", {delay: reminder.delay?.hours.toString().padStart(2, "0") + ":" + reminder.delay?.minutes.toString().padStart(2, "0") })}}</p>
 						</IonLabel>
 					</IonItem>
 				</IonList>
@@ -248,15 +283,15 @@
 			<template v-if="reminder.type == 'periodic'">
 				<IonListHeader>
 					<IonLabel>
-						{{ $t("options:reminders.editReminder.periodic.title") }}
+						{{ $t("reminders:edit.periodic.title") }}
 					</IonLabel>
 				</IonListHeader>
 
 				<IonList>
 					<IonItem button :detail="true" @click="() => periodicTimeOfDayPopupPicker?.$el.present()">
 						<IonLabel>
-							<h3>{{ $t("options:reminders.editReminder.periodic.timeOfDay.title") }}</h3>
-							<p>{{ $t("options:reminders.editReminder.periodic.timeOfDay.desc", {timeOfDay: reminder.scheduleInterval?.hourOfDay?.toString().padStart(2, "0") + ":" + reminder.scheduleInterval?.minuteOfHour?.toString().padStart(2, "0") })}}</p>
+							<h3>{{ $t("reminders:edit.periodic.timeOfDay.title") }}</h3>
+							<p>{{ $t("reminders:edit.periodic.timeOfDay.desc", {timeOfDay: reminder.scheduleInterval?.hourOfDay?.toString().padStart(2, "0") + ":" + reminder.scheduleInterval?.minuteOfHour?.toString().padStart(2, "0") })}}</p>
 						</IonLabel>
 					</IonItem>
 				</IonList>
@@ -291,11 +326,11 @@
 				<IonList>
 					<IonItem button :detail="true" @click="() => periodicDayOfMonthPopupPicker?.$el.present()">
 						<IonLabel>
-							<h3>{{ $t("options:reminders.editReminder.periodic.dayOfMonth.title") }}</h3>
+							<h3>{{ $t("reminders:edit.periodic.dayOfMonth.title") }}</h3>
 							<p>{{ 
 								reminder.scheduleInterval?.dayOfMonth === undefined
-								? $t("options:reminders.editReminder.periodic.dayOfMonth.desc_undefined")
-								: $t("options:reminders.editReminder.periodic.dayOfMonth.desc", { count: reminder.scheduleInterval?.dayOfMonth, ordinal: true })
+								? $t("reminders:edit.periodic.dayOfMonth.desc_undefined")
+								: $t("reminders:edit.periodic.dayOfMonth.desc", { count: reminder.scheduleInterval?.dayOfMonth, ordinal: true })
 							}}</p>
 						</IonLabel>
 					</IonItem>
@@ -326,6 +361,13 @@
 				/>
 			</template>
 
+			<IonItem button v-if="reminder.uuid" @click="deleteReminder">
+				<IonIcon :ios="trashIOS" :md="trashMD" slot="start" aria-hidden="true" color="danger" />
+				<IonLabel color="danger">
+					<h3>{{ $t("reminders:edit.delete.title") }}</h3>
+					<p>{{ $t("other:genericDeleteDesc") }}</p>
+				</IonLabel>
+			</IonItem>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
 				<IonFabButton @click="save" v-if="reminder.name.length > 0">

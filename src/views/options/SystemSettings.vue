@@ -56,7 +56,7 @@
 			<IonToolbar>
 				<IonBackButton slot="start" defaultHref="/options/" />
 				<IonTitle>
-					{{ $t("options:systemSettings.header") }}
+					{{ $t("systemSettings:header") }}
 				</IonTitle>
 			</IonToolbar>
 		</IonHeader>
@@ -74,15 +74,15 @@
 
 			<IonList inset v-if="system">
 				<IonItem>
-					<IonInput :fill="!isIOS ? 'outline' : undefined" labelPlacement="floating" :label="$t('options:systemSettings.systemName')" v-model="system.name" />
+					<IonInput :fill="!isIOS ? 'outline' : undefined" labelPlacement="floating" :label="$t('systemSettings:systemName')" v-model="system.name" />
 				</IonItem>
 				<IonItem>
-					<IonTextarea :fill="!isIOS ? 'outline' : undefined" auto-grow :label="$t('options:systemSettings.systemDescription')" labelPlacement="floating" v-model="system.description" />
+					<IonTextarea :fill="!isIOS ? 'outline' : undefined" auto-grow :label="$t('systemSettings:systemDescription')" labelPlacement="floating" v-model="system.description" />
 				</IonItem>
 				<IonItem>
-					<IonLabel>{{ $t("options:systemSettings.memberCount") }}</IonLabel>
-					<IonButton slot="end" v-if="!membersShowed" @click="membersShowed = true">{{ $t("options:systemSettings.tapToShow") }}</IonButton>
-					<IonLabel slot="end" v-if="membersShowed">{{ $t("options:systemSettings.memberCountText", { memberCount, archivedMemberCount }) }}</IonLabel>
+					<IonLabel>{{ $t("systemSettings:memberCount") }}</IonLabel>
+					<IonButton slot="end" v-if="!membersShowed" @click="membersShowed = true">{{ $t("systemSettings:tapToShow") }}</IonButton>
+					<IonLabel slot="end" v-if="membersShowed">{{ $t("systemSettings:memberCountText", { memberCount, archivedMemberCount }) }}</IonLabel>
 				</IonItem>
 			</IonList>
 

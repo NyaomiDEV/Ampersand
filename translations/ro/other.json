@@ -4,9 +4,6 @@
 		"inEnglish": "Romanian"
 	},
 	"genericDeleteDesc": "Atenție! Nu veți putea anula această acțiune!",
-	"taglistSelect": {
-		"header": "Alege etichete"
-	},
 	"storagePersistence": {
 		"header": "Atenție!",
 		"content": "Ampersand nu poate stoca date persistent pe dispozitivul dumneavoastră. Dacă sunteți pe Firefox, vă rugăm să îi acordați această permisiune. Dacă sunteți pe un browser bazat pe Chromium (Cum ar fi Google Chrome, Microsoft Edge, Opera, Vivaldi, etc...), vă rugăm să instalați Ampersand ca și o aplicație web sau să o adăugați pe Desktop sau în ecranul de start. Dacă mesajul acesta nu dispare, faceți backup des din ecranul Import/Export"
@@ -14,9 +11,5 @@
 	"alerts": {
 		"ok": "Ok",
 		"cancel": "Anulați"
-	},
-	"remindersAreNotFinished": {
-		"header": "Amintirile nu sunt finalizate!",
-		"content": "În acest moment, toate acestea sunt doar o previzualizare a UI! Este posibil să vă puteți salva memento-urile la un moment dat, dar rețineți că acest lucru nu este încă conectat la niciun sistem de notificare! Dacă sunteți pe Android, ar trebui să fiți deja în măsură să configurați unele lucruri care vor funcționa atunci când vom finaliza sistemul de bază, dar vă rugăm să rețineți că acest lucru nu va funcționa pe versiunea Web, deci nu vă entuziasmați prea mult cu privire la utilizarea memento-urilor pe computer. De asemenea, dacă sunteți un dezvoltator, vă rugăm să ne ajutați!"
 	}
 }

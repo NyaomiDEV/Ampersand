@@ -75,8 +75,8 @@
 	function promptDeletion(): Promise<boolean> {
 		return new Promise(async (resolve) => {
 			const alert = await alertController.create({
-				header: i18next.t("options:assetManager.edit.actions.delete.title"),
-				subHeader: i18next.t("options:assetManager.edit.actions.delete.confirm"),
+				header: i18next.t("assetManager:edit.delete.title"),
+				subHeader: i18next.t("assetManager:edit.delete.confirm"),
 				buttons: [
 					{
 						text: i18next.t("other:alerts.cancel"),
@@ -124,7 +124,7 @@
 			<IonToolbar>
 				<IonBackButton slot="start" defaultHref="/options/assetManager/" />
 				<IonTitle>
-					{{ !asset.uuid ? $t("options:assetManager.add.header") : $t("options:assetManager.edit.header") }}
+					{{ !asset.uuid ? $t("assetManager:add.header") : $t("assetManager:edit.header") }}
 				</IonTitle>
 			</IonToolbar>
 		</IonHeader>
@@ -137,18 +137,18 @@
 
 				<IonItem>
 					<IonButton @click="updateFile">
-						{{ !asset.file.size ? $t("options:assetManager.add.attachment") : $t("options:assetManager.edit.attachment") }}
+						{{ !asset.file.size ? $t("assetManager:add.attachment") : $t("assetManager:edit.attachment") }}
 					</IonButton>
 				</IonItem>
 
 				<IonItem>
-					<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('options:assetManager.edit.friendlyName')" labelPlacement="floating" v-model="asset.friendlyName" />
+					<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('assetManager:edit.friendlyName')" labelPlacement="floating" v-model="asset.friendlyName" />
 				</IonItem>
 
 				<IonItem button v-if="asset.uuid" @click="removeAsset">
 					<IonIcon :ios="trashIOS" :md="trashMD" slot="start" aria-hidden="true" color="danger"/>
 					<IonLabel color="danger">
-						<h3>{{ $t("options:assetManager.delete.title") }}</h3>
+						<h3>{{ $t("assetManager:edit.delete.title") }}</h3>
 						<p>{{ $t("other:genericDeleteDesc") }}</p>
 					</IonLabel>
 				</IonItem>

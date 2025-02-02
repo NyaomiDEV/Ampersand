@@ -1,0 +1,19 @@
+{
+	"header": "Securitate",
+	"applock": {
+		"title": "Încuiere aplicație",
+		"desc": "Încuiați aplicația cu o parolă"
+	},
+	"biometrics": {
+		"title": "Utilizați autentificarea biometrică",
+		"desc": "Deblocare prin amprentă sau față"
+	},
+	"editPassword": "Modificați parola",
+	"inputPassword": {
+		"titleAdd": "Introduceți o nouă parolă",
+		"titleModifyOld": "Introduceți parola veche",
+		"titleModifyNew": "Introduceți parola nouă",
+		"titleDisable": "Introduceți parola",
+		"hint": "Parolă"
+	}
+}

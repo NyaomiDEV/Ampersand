@@ -13,7 +13,8 @@
 		IonInput,
 		IonItem,
 		modalController,
-		IonModal
+		IonModal,
+		alertController
 	} from "@ionic/vue";
 
 	import {
@@ -26,7 +27,7 @@
 
 	import { FrontingEntryComplete } from "../lib/db/entities";
 	import { newFrontingEntry, updateFrontingEntry, deleteFrontingEntry } from '../lib/db/tables/frontingEntries';
-	import { Ref, inject, ref, toRaw, useTemplateRef, watch } from "vue";
+	import { inject, ref, toRaw, useTemplateRef } from "vue";
 
 	import MemberSelect from "./MemberSelect.vue";
 	import MemberAvatar from "../components/member/MemberAvatar.vue";
@@ -37,9 +38,11 @@
 	import Timezone from "dayjs/plugin/timezone";
 	import { PartialBy } from "../lib/types";
 	import { formatDate } from "../lib/util/misc";
+	import { useTranslation } from "i18next-vue";
 	dayjs.extend(UTC);
 	dayjs.extend(Timezone);
 
+	const i18next = useTranslation();
 	const isIOS = inject<boolean>("isIOS");
 
 	const props = defineProps<{
@@ -54,20 +57,6 @@
 	const frontingEntry = ref({...(props.frontingEntry || emptyFrontingEntry)});
 
 	const memberSelectModal = useTemplateRef("memberSelectModal");
-
-	const startTime: Ref<string | undefined> = ref(dayjs(frontingEntry.value.startTime).format());
-	const endTime: Ref<string | undefined> = ref();
-	if(frontingEntry.value.endTime)
-		endTime.value = dayjs(frontingEntry.value.endTime).format();
-
-	watch(startTime, () => {
-		frontingEntry.value.startTime = dayjs(startTime.value).toDate();
-	}, {immediate: true });
-
-	watch(endTime, () => {
-		if(endTime.value)
-			frontingEntry.value.endTime = dayjs(endTime.value).toDate();
-	}, {immediate: true });
 
 	async function save(){
 		const uuid = frontingEntry.value?.uuid;
@@ -95,18 +84,40 @@
 		// however it's safe for us to ignore
 	}
 
-	async function _deleteFrontingEntry(){
-		if(!frontingEntry.value.uuid) return;
+	function promptDeletion(): Promise<boolean> {
+		return new Promise(async (resolve) => {
+			const alert = await alertController.create({
+				header: i18next.t("frontHistory:edit.delete.title"),
+				subHeader: i18next.t("frontHistory:edit.delete.confirm"),
+				buttons: [
+					{
+						text: i18next.t("other:alerts.cancel"),
+						role: "cancel",
+						handler: () => resolve(false)
+					},
+					{
+						text: i18next.t("other:alerts.ok"),
+						role: "confirm",
+						handler: () => resolve(true)
+					}
+				]
+			});
 
-		await deleteFrontingEntry(frontingEntry.value.uuid);
-		try{
-			await modalController.dismiss(undefined, "deleted");
-		}catch(_){}
+			await alert.present();
+		});
+	}
+
+	async function removeFrontingEntry(){
+		if(await promptDeletion()){
+			await deleteFrontingEntry(frontingEntry.value.uuid!);
+			try{
+				await modalController.dismiss(undefined, "deleted");
+			}catch(_){}
+		}
 	}
 
 	function removeFromFront() {
 		frontingEntry.value.endTime = new Date();
-		endTime.value = dayjs(frontingEntry.value.endTime).format("YYYY-MM-DDTHH:mm:ss");
 	}
 </script>
 
@@ -114,7 +125,7 @@
 	<IonModal class="fronting-entry-edit-modal" :breakpoints="[0,1]" initialBreakpoint="1">
 		<IonHeader>
 			<IonToolbar>
-				<IonTitle>{{ $t("options:frontHistory.edit.header") }}</IonTitle>
+				<IonTitle>{{ $t("frontHistory:edit.header") }}</IonTitle>
 			</IonToolbar>
 		</IonHeader>
 
@@ -125,61 +136,61 @@
 							<MemberAvatar slot="start" :member="frontingEntry.member" />
 							<IonLabel>
 								<h2>{{ frontingEntry.member.name }}</h2>
-								<p>{{ $t("options:frontHistory.edit.member") }}</p>
+								<p>{{ $t("frontHistory:edit.member") }}</p>
 							</IonLabel>
 						</template>
 						<template v-else>
 							<IonLabel>
-								<h2>{{ $t("options:frontHistory.edit.member") }}</h2>
+								<h2>{{ $t("frontHistory:edit.member") }}</h2>
 							</IonLabel>
 						</template>
 					</IonItem>
 					<IonItem>
-						<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('options:frontHistory.edit.customStatus')" labelPlacement="floating" v-model="frontingEntry.customStatus" />
+						<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('frontHistory:edit.customStatus')" labelPlacement="floating" v-model="frontingEntry.customStatus" />
 					</IonItem>
 					<IonItem button @click="$refs.startTimePicker?.$el.present()">
 						<IonLabel>
-							<h2>{{ $t("options:frontHistory.edit.startTime") }}</h2>
+							<h2>{{ $t("frontHistory:edit.startTime") }}</h2>
 							<p>{{ formatDate(frontingEntry.startTime, true) }}</p>
 						</IonLabel>
 						<DatePopupPicker
-							v-model="startTime"
+							v-model="frontingEntry.startTime"
 							showDefaultButtons
 							ref="startTimePicker"
-							:title="$t('options.frontHistory.edit.startTime')"
+							:title="$t('frontHistory:edit.startTime')"
 							:max="frontingEntry.endTime || new Date()"
 						/>
 					</IonItem>
 					<IonItem button v-if="!frontingEntry.endTime" @click="removeFromFront">
 						<IonLabel>
-							<h2>{{ $t("options:frontHistory.edit.removeFromFront.title") }}</h2>
-							<p>{{ $t("options:frontHistory.edit.removeFromFront.desc") }}</p>
+							<h2>{{ $t("frontHistory:edit.removeFromFront.title") }}</h2>
+							<p>{{ $t("frontHistory:edit.removeFromFront.desc") }}</p>
 						</IonLabel>
 					</IonItem>
 					<IonItem button v-if="frontingEntry.endTime" @click="$refs.endTimePicker?.$el.present()">
 						<IonLabel>
-							<h2>{{ $t("options:frontHistory.edit.endTime") }}</h2>
+							<h2>{{ $t("frontHistory:edit.endTime") }}</h2>
 							<p>{{ formatDate(frontingEntry.endTime, true) }}</p>
 						</IonLabel>
 						<DatePopupPicker
-							v-model="endTime"
+							v-model="frontingEntry.endTime"
 							showDefaultButtons
 							ref="endTimePicker"
-							:title="$t('options.frontHistory.edit.startTime')"
+							:title="$t('frontHistory:edit.endTime')"
 							:min="frontingEntry.startTime"
 						/>
 					</IonItem>
 					<IonItem button>
 						<IonToggle v-model="frontingEntry.isMainFronter">
 							<IonLabel>
-								{{ $t("options:frontHistory.edit.isMainFronter") }}
+								{{ $t("frontHistory:edit.isMainFronter") }}
 							</IonLabel>
 						</IonToggle>
 					</IonItem>
-					<IonItem button v-if="frontingEntry.uuid" @click="_deleteFrontingEntry">
+					<IonItem button v-if="frontingEntry.uuid" @click="removeFrontingEntry">
 						<IonIcon :ios="trashIOS" :md="trashMD" slot="start" aria-hidden="true" color="danger"/>
 						<IonLabel color="danger">
-							<h3>{{ $t("options:frontHistory.edit.delete.title") }}</h3>
+							<h3>{{ $t("frontHistory:edit.delete.title") }}</h3>
 							<p>{{ $t("other:genericDeleteDesc") }}</p>
 						</IonLabel>
 					</IonItem>

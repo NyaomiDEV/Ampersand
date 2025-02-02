@@ -25,11 +25,12 @@
 		"isArchived": "Set as archived",
 		"showBoardEntries": "Show board messages",
 		"showJournalEntries": "Show journal posts",
-		"delete": {
-			"title": "Delete member"
-		},
 		"memberID": "Member ID: {{memberID}}",
 		"dateCreated": "Date created: {{dateCreated}}",
-		"memberIDcopiedToClipboard": "Member ID in mention format copied to clipboard!"
+		"memberIDcopiedToClipboard": "Member ID in mention format copied to clipboard!",
+		"delete": {
+			"title": "Delete member",
+			"confirm": "Are you sure you want to delete this member?"
+		}
 	}
 }

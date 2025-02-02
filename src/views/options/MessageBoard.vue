@@ -117,7 +117,7 @@
 			<IonToolbar>
 				<IonBackButton slot="start" defaultHref="/options/" />
 				<IonTitle>
-					{{ $t("options:messageBoard.header") }}
+					{{ $t("messageBoard:header") }}
 				</IonTitle>
 				<IonButtons slot="secondary">
 					<IonButton @click="isCalendarView = !isCalendarView">
@@ -127,7 +127,7 @@
 				</IonButtons>
 			</IonToolbar>
 			<IonToolbar>
-				<IonSearchbar :animated="true" :placeholder="$t('options:messageBoard.searchPlaceholder')"
+				<IonSearchbar :animated="true" :placeholder="$t('messageBoard:searchPlaceholder')"
 					showCancelButton="focus" showClearButton="focus" :spellcheck="false" v-model="search" />
 			</IonToolbar>
 			<div class="container" v-if="isCalendarView">

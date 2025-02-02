@@ -26,7 +26,7 @@
 			<IonToolbar>
 				<IonBackButton slot="start" defaultHref="/options/" />
 				<IonTitle>
-					{{ $t("options:appSettings.header") }}
+					{{ $t("appSettings:header") }}
 				</IonTitle>
 			</IonToolbar>
 		</IonHeader>
@@ -35,13 +35,13 @@
 			<NotDoneYet v-if="false"/>
 
 			<IonListHeader>
-				<IonLabel>{{ $t("options:appSettings.localeLabel") }}</IonLabel>
+				<IonLabel>{{ $t("appSettings:localeLabel") }}</IonLabel>
 			</IonListHeader>
 
 			<IonList :inset="isIOS">
 
 				<IonItem>
-					<IonSelect :label="$t('options:appSettings.locale.language')" interface="popover" v-model="appConfig.locale.language" :value="appConfig.locale.language || 'en'">
+					<IonSelect :label="$t('appSettings:locale.language')" interface="popover" v-model="appConfig.locale.language" :value="appConfig.locale.language || 'en'">
 						<IonSelectOption :value="lng" v-for="lng in Object.keys($i18next.services.resourceStore.data)" :key="lng">
 							{{ $t("other:languageName.local", { lng }) }} ({{ $t("other:languageName.inEnglish", { lng }) }})
 						</IonSelectOption>
@@ -50,14 +50,14 @@
 
 				<IonItem>
 					<IonLabel>
-						<h3 class="centered-text">{{ $t("options:appSettings.locale.clock.title") }}</h3>
+						<h3 class="centered-text">{{ $t("appSettings:locale.clock.title") }}</h3>
 						<IonSegment class="segment-alt" v-model="twelveHourClock">
 							<MD3SegmentButton value="true">
-								<IonLabel>{{ $t("options:appSettings.locale.clock.12h") }}</IonLabel>
+								<IonLabel>{{ $t("appSettings:locale.clock.12h") }}</IonLabel>
 							</MD3SegmentButton>
 
 							<MD3SegmentButton value="false">
-								<IonLabel>{{ $t("options:appSettings.locale.clock.24h") }}</IonLabel>
+								<IonLabel>{{ $t("appSettings:locale.clock.24h") }}</IonLabel>
 							</MD3SegmentButton>
 						</IonSegment>
 					</IonLabel>
@@ -65,14 +65,14 @@
 
 				<IonItem>
 					<IonLabel>
-						<h3 class="centered-text">{{ $t("options:appSettings.locale.firstDayOfWeek.title") }}</h3>
+						<h3 class="centered-text">{{ $t("appSettings:locale.firstDayOfWeek.title") }}</h3>
 						<IonSegment class="segment-alt" v-model="firstWeekOfDayIsSunday">
 							<MD3SegmentButton value="true">
-								<IonLabel>{{ $t("options:appSettings.locale.firstDayOfWeek.sunday") }}</IonLabel>
+								<IonLabel>{{ $t("appSettings:locale.firstDayOfWeek.sunday") }}</IonLabel>
 							</MD3SegmentButton>
 
 							<MD3SegmentButton value="false">
-								<IonLabel>{{ $t("options:appSettings.locale.firstDayOfWeek.monday") }}</IonLabel>
+								<IonLabel>{{ $t("appSettings:locale.firstDayOfWeek.monday") }}</IonLabel>
 							</MD3SegmentButton>
 						</IonSegment>
 					</IonLabel>
@@ -81,45 +81,45 @@
 			</IonList>
 
 			<IonListHeader>
-				<IonLabel>{{ $t("options:appSettings.behaviorLabel") }}</IonLabel>
+				<IonLabel>{{ $t("appSettings:behaviorLabel") }}</IonLabel>
 			</IonListHeader>
 
 			<IonList :inset="isIOS">
 				<IonItem>
-					<IonSelect :label="$t('options:appSettings.view.title')" interface="popover" v-model="appConfig.view">
+					<IonSelect :label="$t('appSettings:view.title')" interface="popover" v-model="appConfig.view">
 						<IonSelectOption value="dashboard">
-							{{ $t("options:appSettings.view.dashboard") }}
+							{{ $t("appSettings:view.dashboard") }}
 						</IonSelectOption>
 						<IonSelectOption value="members">
-							{{ $t("options:appSettings.view.members") }}
+							{{ $t("appSettings:view.members") }}
 						</IonSelectOption>
 					</IonSelect>
 				</IonItem>
 			</IonList>
 
 			<IonListHeader>
-				<IonLabel>{{ $t("options:appSettings.defaultFilterLabel") }}</IonLabel>
+				<IonLabel>{{ $t("appSettings:defaultFilterLabel") }}</IonLabel>
 			</IonListHeader>
 
 			<IonList>
 				<IonItem>
-					<IonInput :fill="!isIOS ? 'outline' : undefined" labelPlacement="floating" :label="$t('options:appSettings.defaultFilterQueries.members')" v-model="appConfig.defaultFilterQueries.members" />
+					<IonInput :fill="!isIOS ? 'outline' : undefined" labelPlacement="floating" :label="$t('appSettings:defaultFilterQueries.members')" v-model="appConfig.defaultFilterQueries.members" />
 				</IonItem>
 				
 				<IonItem>
-					<IonInput :fill="!isIOS ? 'outline' : undefined" labelPlacement="floating" :label="$t('options:appSettings.defaultFilterQueries.journal')" v-model="appConfig.defaultFilterQueries.journal" />
+					<IonInput :fill="!isIOS ? 'outline' : undefined" labelPlacement="floating" :label="$t('appSettings:defaultFilterQueries.journal')" v-model="appConfig.defaultFilterQueries.journal" />
 				</IonItem>
 
 				<IonItem>
-					<IonInput :fill="!isIOS ? 'outline' : undefined" labelPlacement="floating" :label="$t('options:appSettings.defaultFilterQueries.tags')" v-model="appConfig.defaultFilterQueries.tags" />
+					<IonInput :fill="!isIOS ? 'outline' : undefined" labelPlacement="floating" :label="$t('appSettings:defaultFilterQueries.tags')" v-model="appConfig.defaultFilterQueries.tags" />
 				</IonItem>
 
 				<IonItem>
-					<IonInput :fill="!isIOS ? 'outline' : undefined" labelPlacement="floating" :label="$t('options:appSettings.defaultFilterQueries.frontingHistory')" v-model="appConfig.defaultFilterQueries.frontingHistory" />
+					<IonInput :fill="!isIOS ? 'outline' : undefined" labelPlacement="floating" :label="$t('appSettings:defaultFilterQueries.frontingHistory')" v-model="appConfig.defaultFilterQueries.frontingHistory" />
 				</IonItem>
 
 				<IonItem>
-					<IonInput :fill="!isIOS ? 'outline' : undefined" labelPlacement="floating" :label="$t('options:appSettings.defaultFilterQueries.messageBoard')" v-model="appConfig.defaultFilterQueries.messageBoard" />
+					<IonInput :fill="!isIOS ? 'outline' : undefined" labelPlacement="floating" :label="$t('appSettings:defaultFilterQueries.messageBoard')" v-model="appConfig.defaultFilterQueries.messageBoard" />
 				</IonItem>
 			</IonList>
 

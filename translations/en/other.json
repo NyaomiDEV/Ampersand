@@ -4,9 +4,6 @@
 		"inEnglish": "English"
 	},
 	"genericDeleteDesc": "You won't be able to undo this action!",
-	"taglistSelect": {
-		"header": "Select some tags"
-	},
 	"storagePersistence": {
 		"header": "Warning",
 		"content": "Ampersand cannot store data persistently on your device. If you're on Firefox, please give Ampersand permission to do so. If you're on a Chromium-based browser (such as Chrome, Edge, Opera, Vivaldi, etc...), please install Ampersand as a web app / add it to your Desktop/Home screen. If this message doesn't go away, consider backing up your data often from the Import/Export section."
@@ -15,10 +12,7 @@
 		"ok": "Ok",
 		"cancel": "Cancel"
 	},
-	"remindersAreNotFinished": {
-		"header": "Reminders are not finished!",
-		"content": "Right now, all of this is just an UI preview! You may be able to save your reminders at some point but keep in mind that this is not yet wired to any notification system! If you're on Android you should already be able to configure some stuff that will work when we finish up the underlying system, but please bear in mind that this won't work on the Web version, so don't get too hyped about using reminders on your computer. Also if you're a developer please help us out!"
-	},
+	"time": "Time",
 	"timeSizes": {
 		"years": {
 			"long": "years",
@@ -52,21 +46,6 @@
 		"seconds": {
 			"long": "seconds",
 			"short": "s"
-		}
-	},
-	"polls": {
-		"boardMessageContainsPoll": "Contains poll",
-		"voteCast": {
-			"voter": "Select the voter",
-			"reason": "Tell the reason",
-			"reasonHint": "Reason",
-			"retractConfirmation": "Are you sure you want to retract this vote?"
-		},
-		"resultsHeader": "Vote results",
-		"resultsButton": "Show poll results",
-		"choice": {
-			"desc_one": "{{count}} voter",
-			"desc_other": "{{count}} voters"
 		}
 	}
 }

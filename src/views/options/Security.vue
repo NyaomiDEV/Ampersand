@@ -35,7 +35,7 @@
 					{
 						name: "password",
 						type: "password",
-						placeholder: i18next.t("options:security.inputPassword.hint")
+						placeholder: i18next.t("security:inputPassword.hint")
 					}
 				]
 			});
@@ -45,7 +45,7 @@
 	}
 
 	async function addPassword() {
-		const password = await enterPasswordAlert(i18next.t("options:security.inputPassword.titleAdd"));
+		const password = await enterPasswordAlert(i18next.t("security:inputPassword.titleAdd"));
 
 		if(password){
 			const result = enableApplock(password);
@@ -56,9 +56,9 @@
 	}
 
 	async function modifyPassword() {
-		const passwordOld = await enterPasswordAlert(i18next.t("options:security.inputPassword.titleModifyOld"));
+		const passwordOld = await enterPasswordAlert(i18next.t("security:inputPassword.titleModifyOld"));
 		if(!passwordOld) return;
-		const password = await enterPasswordAlert(i18next.t("options:security.inputPassword.titleModifyNew"));
+		const password = await enterPasswordAlert(i18next.t("security:inputPassword.titleModifyNew"));
 		if(!password) return;
 
 		if(disableApplock(passwordOld)){
@@ -68,7 +68,7 @@
 	}
 
 	async function disablePassword() {
-		const password = await enterPasswordAlert(i18next.t("options:security.inputPassword.titleDisable"));
+		const password = await enterPasswordAlert(i18next.t("security:inputPassword.titleDisable"));
 
 		if(password){
 			const result = disableApplock(password);
@@ -93,7 +93,7 @@
 			<IonToolbar>
 				<IonBackButton slot="start" defaultHref="/options/" />
 				<IonTitle>
-					{{ $t("options:security.header") }}
+					{{ $t("security:header") }}
 				</IonTitle>
 			</IonToolbar>
 		</IonHeader>
@@ -103,23 +103,23 @@
 				<IonItem>
 					<IonToggle @["ion-change"]="toggle" v-model="usePassword">
 						<IonLabel>
-							<h3>{{ $t("options:security.applock.title") }}</h3>
-							<p>{{ $t("options:security.applock.desc") }}</p>
+							<h3>{{ $t("security:applock.title") }}</h3>
+							<p>{{ $t("security:applock.desc") }}</p>
 						</IonLabel>
 					</IonToggle>
 				</IonItem>
 
 				<IonItem button :detail="true" @click="modifyPassword" :disabled="!securityConfig.password">
 					<IonLabel>
-						<h3>{{ $t("options:security.editPassword") }}</h3>
+						<h3>{{ $t("security:editPassword") }}</h3>
 					</IonLabel>
 				</IonItem>
 
 				<IonItem v-if="biometricsAvailable" :disabled="!securityConfig.password">
 					<IonToggle v-model="securityConfig.useBiometrics">
 						<IonLabel>
-							<h3>{{ $t("options:security.biometrics.title") }}</h3>
-							<p>{{ $t("options:security.biometrics.desc") }}</p>
+							<h3>{{ $t("security:biometrics.title") }}</h3>
+							<p>{{ $t("security:biometrics.desc") }}</p>
 						</IonLabel>
 					</IonToggle>
 				</IonItem>

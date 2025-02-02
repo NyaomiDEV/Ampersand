@@ -137,7 +137,7 @@
 			<IonToolbar>
 				<IonBackButton slot="start" defaultHref="/options/" />
 				<IonTitle>
-					{{ $t("options:frontHistory.header") }}
+					{{ $t("frontHistory:header") }}
 				</IonTitle>
 				<IonButtons slot="secondary">
 					<IonButton @click="isCalendarView = !isCalendarView">
@@ -147,7 +147,7 @@
 				</IonButtons>
 			</IonToolbar>
 			<IonToolbar>
-				<IonSearchbar :animated="true" :placeholder="$t('options:frontHistory.searchPlaceholder')"
+				<IonSearchbar :animated="true" :placeholder="$t('frontHistory:searchPlaceholder')"
 					showCancelButton="focus" showClearButton="focus" :spellcheck="false" v-model="search" />
 			</IonToolbar>
 			<div class="container" v-if="isCalendarView">
@@ -162,7 +162,7 @@
 					<IonItemDivider sticky>
 						<IonLabel>{{
 							tuple[0] === "currentlyFronting"
-							? $t("options:frontHistory.currentlyFronting")
+							? $t("frontHistory:currentlyFronting")
 							: dayjs(tuple[0]).format("LL")
 							}}</IonLabel>
 					</IonItemDivider>

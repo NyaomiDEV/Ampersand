@@ -1,0 +1,21 @@
+{
+	"header": "Front history",
+	"searchPlaceholder": "Search the fronting history...",
+	"currentlyFronting": "Currently fronting",
+	"edit": {
+		"header": "Edit fronting entry",
+		"member": "Edit fronting member",
+		"customStatus": "Custom status",
+		"startTime": "Start time",
+		"endTime": "End time",
+		"removeFromFront": {
+			"title": "Remove from front",
+			"desc": "You won't be able to undo this action after saving!"
+		},
+		"isMainFronter": "Set as main fronter",
+		"delete": {
+			"title": "Delete fronting entry",
+			"confirm": "Are you sure you want to delete this fronting entry?"
+		}
+	}
+}

@@ -15,7 +15,8 @@
 		modalController,
 		IonModal,
 		IonTextarea,
-		IonButton
+		IonButton,
+		alertController
 	} from "@ionic/vue";
 
 	import {
@@ -36,7 +37,9 @@
 	import { PartialBy } from "../lib/types";
 	import MemberAvatar from "../components/member/MemberAvatar.vue";
 	import MemberSelect from "./MemberSelect.vue";
+	import { useTranslation } from "i18next-vue";
 
+	const i18next = useTranslation();
 	const isIOS = inject<boolean>("isIOS");
 
 	const props = defineProps<{
@@ -52,6 +55,29 @@
 	const pollAtBeginning = structuredClone(toRaw(boardMessage.value.poll));
 
 	const memberSelectModal = useTemplateRef("memberSelectModal");
+
+	function promptDeletion(): Promise<boolean> {
+		return new Promise(async (resolve) => {
+			const alert = await alertController.create({
+				header: i18next.t("messageBoard:edit.delete.title"),
+				subHeader: i18next.t("messageBoard:edit.delete.confirm"),
+				buttons: [
+					{
+						text: i18next.t("other:alerts.cancel"),
+						role: "cancel",
+						handler: () => resolve(false)
+					},
+					{
+						text: i18next.t("other:alerts.ok"),
+						role: "confirm",
+						handler: () => resolve(true)
+					}
+				]
+			});
+
+			await alert.present();
+		});
+	}
 
 	async function save(){
 		const uuid = boardMessage.value?.uuid;
@@ -94,14 +120,13 @@
 		// however it's safe for us to ignore
 	}
 
-	async function _deleteBoardMessage(){
-		if(!boardMessage.value.uuid) return;
-
-		await deleteBoardMessage(boardMessage.value.uuid);
-
-		try{
-			await modalController.dismiss(null, "deleted");
-		}catch(_){}
+	async function removeBoardMessage(){
+		if(await promptDeletion()){
+			await deleteBoardMessage(boardMessage.value.uuid!);
+			try{
+				await modalController.dismiss(null, "deleted");
+			}catch(_){}
+		}
 	}
 </script>
 
@@ -109,7 +134,7 @@
 	<IonModal class="board-message-edit-modal" :breakpoints="[0,1]" initialBreakpoint="1">
 		<IonHeader>
 			<IonToolbar>
-				<IonTitle>{{ $t("options:messageBoard.edit.header") }}</IonTitle>
+				<IonTitle>{{ $t("messageBoard:edit.header") }}</IonTitle>
 			</IonToolbar>
 		</IonHeader>
 
@@ -120,28 +145,28 @@
 							<MemberAvatar slot="start" :member="boardMessage.member" />
 							<IonLabel>
 								<h2>{{ boardMessage.member.name }}</h2>
-								<p>{{ $t("options:messageBoard.edit.member") }}</p>
+								<p>{{ $t("messageBoard:edit.member") }}</p>
 							</IonLabel>
 						</template>
 						<template v-else>
 							<IonLabel>
-								<h2>{{ $t("options:messageBoard.edit.member") }}</h2>
+								<h2>{{ $t("messageBoard:edit.member") }}</h2>
 							</IonLabel>
 						</template>
 					</IonItem>
 
 					<IonItem>
-						<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('options:messageBoard.edit.title')" labelPlacement="floating" v-model="boardMessage.title" />
+						<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('messageBoard:edit.title')" labelPlacement="floating" v-model="boardMessage.title" />
 					</IonItem>
 
 					<IonItem>
-						<IonTextarea :fill="!isIOS ? 'outline' : undefined" auto-grow :label="$t('options:messageBoard.edit.body')" labelPlacement="floating" v-model="boardMessage.body" />
+						<IonTextarea :fill="!isIOS ? 'outline' : undefined" auto-grow :label="$t('messageBoard:edit.body')" labelPlacement="floating" v-model="boardMessage.body" />
 					</IonItem>
 
 					<IonItem button>
 						<IonToggle v-model="boardMessage.isPinned">
 							<IonLabel>
-								{{ $t("options:messageBoard.edit.isPinned") }}
+								{{ $t("messageBoard:edit.isPinned") }}
 							</IonLabel>
 						</IonToggle>
 					</IonItem>
@@ -149,34 +174,34 @@
 					<IonItem button v-if="!boardMessage.poll" @click="() => { boardMessage.poll = { multipleChoice: false, entries: [] } }">
 						<IonIcon :ios="chartIOS" :md="chartMD" slot="start" aria-hidden="true"/>
 						<IonLabel>
-							{{ $t("options:messageBoard.edit.attachPoll") }}
+							{{ $t("messageBoard:edit.attachPoll") }}
 						</IonLabel>
 					</IonItem>
 
 					<template v-if="boardMessage.poll">
 						<IonItem>
 							<IonLabel>
-								<p>{{ $t("options:messageBoard.edit.pollEditWarning") }}</p>
+								<p>{{ $t("messageBoard:edit.pollEditWarning") }}</p>
 							</IonLabel>
 						</IonItem>
 
 						<IonItem button @click="() => { boardMessage.poll = undefined }">
 							<IonIcon :ios="trashIOS" :md="trashMD" slot="start" aria-hidden="true" color="danger"/>
 							<IonLabel color="danger">
-								<h3>{{ $t("options:messageBoard.edit.deleteAttachedPoll") }}</h3>
+								<h3>{{ $t("messageBoard:edit.deleteAttachedPoll") }}</h3>
 								<p>{{ $t("other:genericDeleteDesc") }}</p>
 							</IonLabel>
 						</IonItem>
 						<IonItem button>
 							<IonToggle v-model="boardMessage.poll.multipleChoice">
 								<IonLabel>
-									{{ $t("options:messageBoard.edit.pollIsMultipleChoice") }}
+									{{ $t("messageBoard:edit.pollIsMultipleChoice") }}
 								</IonLabel>
 							</IonToggle>
 						</IonItem>
 
 						<IonItem v-for="entry in boardMessage.poll.entries" :key="entry.choice">
-							<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('options:messageBoard.edit.pollChoice')" labelPlacement="floating" v-model="entry.choice" />
+							<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('messageBoard:edit.pollChoice')" labelPlacement="floating" v-model="entry.choice" />
 							<IonButton slot="end" shape="round" fill="outline" size="default" @click="() => boardMessage.poll!.entries.splice(boardMessage.poll!.entries.indexOf(entry), 1)">
 								<IonIcon :ios="trashIOS" :md="trashMD" slot="icon-only" color="danger" />
 							</IonButton>
@@ -185,15 +210,15 @@
 						<IonItem button @click="() => { boardMessage.poll!.entries.push({ votes: [], choice: '' }) }">
 							<IonIcon :ios="addIOS" :md="addMD" slot="start" aria-hidden="true"/>
 							<IonLabel>
-								{{ $t("options:messageBoard.edit.pollAddNewChoice") }}
+								{{ $t("messageBoard:edit.pollAddNewChoice") }}
 							</IonLabel>
 						</IonItem>
 					</template>
 
-					<IonItem button v-if="boardMessage.uuid" @click="_deleteBoardMessage">
+					<IonItem button v-if="boardMessage.uuid" @click="removeBoardMessage">
 						<IonIcon :ios="trashIOS" :md="trashMD" slot="start" aria-hidden="true" color="danger"/>
 						<IonLabel color="danger">
-							<h3>{{ $t("options:messageBoard.edit.delete.title") }}</h3>
+							<h3>{{ $t("messageBoard:edit.delete.title") }}</h3>
 							<p>{{ $t("other:genericDeleteDesc") }}</p>
 						</IonLabel>
 					</IonItem>
@@ -204,7 +229,16 @@
 					<IonIcon :ios="saveIOS" :md="saveMD" />
 				</IonFabButton>
 			</IonFab>
-			<MemberSelect :custom-title="$t('options:messageBoard.edit.member')" :onlyOne="true" :modelValue="boardMessage.member ? [boardMessage.member] : []" @update:modelValue="(e) => { if(e[0]) boardMessage.member = e[0] }" ref="memberSelectModal" />
+
+			<MemberSelect
+				:customTitle="$t('messageBoard:edit.member')"
+				:onlyOne="true"
+				:discardOnSelect="true"
+				:hideCheckboxes="true"
+				:modelValue="boardMessage.member ? [boardMessage.member] : []"
+				@update:modelValue="(e) => { if(e[0]) boardMessage.member = e[0] }"
+				ref="memberSelectModal"
+			/>
 		</IonContent>
 	</IonModal>
 </template>

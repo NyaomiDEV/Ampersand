@@ -17,7 +17,8 @@
 		IonBackButton,
 		useIonRouter,
 		IonPage,
-		toastController
+		toastController,
+		alertController
 	} from "@ionic/vue";
 	import Color from "../../components/Color.vue";
 	import TagChip from "../../components/tag/TagChip.vue";
@@ -49,6 +50,7 @@
 	import { PartialBy } from "../../lib/types";
 	import { useRoute } from "vue-router";
 	import { useTranslation } from "i18next-vue";
+	import { formatDate } from "../../lib/util/misc";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import MemberAvatar from "../../components/member/MemberAvatar.vue";
 
@@ -110,11 +112,34 @@
 		}
 	}
 
-	async function _deleteMember() {
-		if(!member.value.uuid) return;
+	function promptDeletion(): Promise<boolean> {
+		return new Promise(async (resolve) => {
+			const alert = await alertController.create({
+				header: i18next.t("members:edit.delete.title"),
+				subHeader: i18next.t("members:edit.delete.confirm"),
+				buttons: [
+					{
+						text: i18next.t("other:alerts.cancel"),
+						role: "cancel",
+						handler: () => resolve(false)
+					},
+					{
+						text: i18next.t("other:alerts.ok"),
+						role: "confirm",
+						handler: () => resolve(true)
+					}
+				]
+			});
 
-		await deleteMember(member.value.uuid);
-		router.back();
+			await alert.present();
+		});
+	}
+
+	async function removeMember() {
+		if(await promptDeletion()){
+			await deleteMember(member.value.uuid!);
+			router.back();
+		}
 	}
 
 	async function copyIdToClipboard(){
@@ -262,7 +287,7 @@
 						</div>
 					</IonLabel>
 				</IonItem>
-				<IonItem button v-if="member.uuid" @click="_deleteMember">
+				<IonItem button v-if="member.uuid" @click="removeMember">
 					<IonIcon :ios="trashIOS" :md="trashMD" slot="start" aria-hidden="true" color="danger"/>
 					<IonLabel color="danger">
 						<h3>{{ $t("members:edit.delete.title") }}</h3>
@@ -277,7 +302,7 @@
 				</IonItem>
 				<IonItem v-if="member.dateCreated" button @click="copyIdToClipboard">
 					<IonLabel>
-						<p>{{ $t("members:edit.dateCreated", { dateCreated: member.dateCreated }) }}</p>
+						<p>{{ $t("members:edit.dateCreated", { dateCreated: formatDate(member.dateCreated, true) }) }}</p>
 					</IonLabel>
 				</IonItem>
 			</IonList>

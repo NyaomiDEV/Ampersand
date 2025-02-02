@@ -1,0 +1,21 @@
+{
+	"header": "Cronologia del front",
+	"searchPlaceholder": "Cerca tra la cronologia del front...",
+	"currentlyFronting": "Correntemente al front",
+	"edit": {
+		"header": "Modifica voce di front",
+		"member": "Modifica lə membrə a front",
+		"customStatus": "Status personalizzato",
+		"startTime": "Data d'inizio",
+		"endTime": "Data di fine",
+		"removeFromFront": {
+			"title": "Rimuovi dal front",
+			"desc": "Non potrai annullare questa azione dopo aver salvato!"
+		},
+		"isMainFronter": "Imposta come fronter principale",
+		"delete": {
+			"title": "Elimina voce di front",
+			"confirm": "Vuoi davvero eliminare questa voce di front?"
+		}
+	}
+}

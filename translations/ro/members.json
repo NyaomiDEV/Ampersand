@@ -25,9 +25,9 @@
 		"isArchived": "Stabiliți ca arhivat",
 		"showBoardEntries": "Arătați intrările de pe tablă",
 		"showJournalEntries": "Arătați intrările din jurnal",
+		"memberID": "Cod identificator pentru membru: {{memberID}}",
 		"delete": {
 			"title": "Ștergeți un membru"
-		},
-		"memberID": "Cod identificator pentru membru: {{memberID}}"
+		}
 	}
 }

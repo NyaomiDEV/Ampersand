@@ -27,7 +27,7 @@
 	function showReasonAlert(): Promise<string | undefined>{
 		return new Promise(async (resolve) => {
 			const alert = await alertController.create({
-				header: i18next.t("other:polls.voteCast.reason"),
+				header: i18next.t("messageBoard:polls.voteCast.reason"),
 				buttons: [
 					{
 						text: i18next.t("other:alerts.cancel"),
@@ -44,7 +44,7 @@
 					{
 						name: "reason",
 						type: "text",
-						placeholder: i18next.t("other:polls.voteCast.reasonHint")
+						placeholder: i18next.t("messageBoard:polls.voteCast.reasonHint")
 					}
 				]
 			});
@@ -56,7 +56,7 @@
 	function showRetractCastAlert(): Promise<boolean>{
 		return new Promise(async (resolve) => {
 			const alert = await alertController.create({
-				header: i18next.t("other:polls.voteCast.retractConfirmation"),
+				header: i18next.t("messageBoard:polls.voteCast.retractConfirmation"),
 				buttons: [
 					{
 						text: i18next.t("other:alerts.cancel"),
@@ -82,7 +82,7 @@
 				onlyOne: true,
 				discardOnSelect: true,
 				hideCheckboxes: true,
-				customTitle: i18next.t("other:polls.voteCast.voter"),
+				customTitle: i18next.t("messageBoard:polls.voteCast.voter"),
 				onDidDismiss: () => {
 					removeModal(vnode);
 					resolve(member);
@@ -164,18 +164,18 @@
 					<h1>{{ props.boardMessage.title }}</h1>
 					<Markdown :markdown="props.boardMessage.body" />
 					<p class="contains-poll" v-if="props.boardMessage.poll && props.hidePoll">
-						{{ $t("other:polls.boardMessageContainsPoll") }}
+						{{ $t("messageBoard:polls.boardMessageContainsPoll") }}
 					</p>
 				</div>
 				<div class="poll" v-if="props.boardMessage.poll && !props.hidePoll" @click="(e) => e.stopPropagation()">
 					<IonItem button detail="false" v-for="choice in props.boardMessage.poll.entries" @click="voteFor(choice)" :key="choice.choice">
 						<IonLabel>
 							<h3>{{ choice.choice }}</h3>
-							<p>{{ $t("other:polls.choice.desc", { count: choice.votes.length }) }} - {{ calcPercentageVoted(choice) * 100 }}%</p>
+							<p>{{ $t("messageBoard:polls.choice.desc", { count: choice.votes.length }) }} - {{ calcPercentageVoted(choice) * 100 }}%</p>
 							<div class="percentage" :style="{'--vote-percentage': (Math.max(0.005, calcPercentageVoted(choice)) * 100) + '%'}"></div>
 						</IonLabel>
 					</IonItem>
-					<IonButton @click="showPollResults">{{ $t("other:polls.resultsButton") }}</IonButton>
+					<IonButton @click="showPollResults">{{ $t("messageBoard:polls.resultsButton") }}</IonButton>
 				</div>
 			</div>
 		</div>

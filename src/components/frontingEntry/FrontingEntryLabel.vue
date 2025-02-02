@@ -5,21 +5,12 @@
 
 	import { FrontingEntryComplete } from '../../lib/db/entities';
 	import dayjs from "dayjs";
-	import RelativeTime from "dayjs/plugin/relativeTime";
-	import LocalizedFormat from "dayjs/plugin/localizedFormat";
-	import Duration from "dayjs/plugin/duration";
 	import { onMounted, onUnmounted, ref } from "vue";
-	import { formatWrittenTime } from "../../lib/util/misc";
-	import { appConfig } from "../../lib/config";
-	dayjs.extend(RelativeTime);
-	dayjs.extend(LocalizedFormat);
-	dayjs.extend(Duration);
+	import { formatDate, formatWrittenTime } from "../../lib/util/misc";
 
 	const props = defineProps<{
 		entry: FrontingEntryComplete,
 	}>();
-
-	const twelveHour = appConfig.locale.twelveHourClock;
 
 	const interval = ref(props.entry.endTime
 		? formatWrittenTime(props.entry.endTime, props.entry.startTime)
@@ -29,15 +20,15 @@
 	let intervalRef: number;
 
 	function format(startTime: Date, endTime?: Date){
-		const start = dayjs(startTime);
+		if(!endTime) return formatDate(startTime, true);
 
-		if(!endTime) return start.format(`LL, ${twelveHour ? 'hh:mm A' : "HH:mm"}`);
+		const start = dayjs(startTime);
 		const end = dayjs(endTime);
 
 		if(end.valueOf() - start.endOf('day').valueOf() <= 0) // same day
-			return start.format(`${twelveHour ? 'hh:mm A' : "HH:mm"}`) + "~" + end.format(twelveHour ? 'hh:mm A' : "HH:mm");
+			return formatDate(startTime) + "~" + formatDate(endTime);
 		
-		return start.format(`LL, ${twelveHour ? 'hh:mm A' : "HH:mm"}`) + " - " + end.format(`LL, ${twelveHour ? 'hh:mm A' : "HH:mm"}`);
+		return formatDate(startTime, true) + " - " + formatDate(endTime, true);
 	}
 
 	onMounted(() => {

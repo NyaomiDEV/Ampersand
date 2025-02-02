@@ -52,13 +52,13 @@
 			<IonToolbar>
 				<IonBackButton slot="start" defaultHref="/options/" />
 				<IonTitle>
-					{{ $t("options:assetManager.header") }}
+					{{ $t("assetManager:header") }}
 				</IonTitle>
 			</IonToolbar>
 			<IonToolbar>
 				<IonSearchbar
 					:animated="true"
-					:placeholder="$t('options:assetManager.searchPlaceholder')"
+					:placeholder="$t('assetManager:searchPlaceholder')"
 					showCancelButton="focus"
 					showClearButton="focus"
 					:spellcheck="false"
