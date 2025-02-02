@@ -3,6 +3,6 @@
 	"systemName": "Numele sistemului",
 	"systemDescription": "Descrierea sistemului",
 	"memberCount": "Numărul de membri",
-	"memberCountText": "{{memberCount}} membri",
+	"memberCountText": "{{memberCount}} membri, {{archived}} arhivați",
 	"tapToShow": "Atingeți pentru a afișa"
 }
