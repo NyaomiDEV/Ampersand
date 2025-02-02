@@ -1,4 +1,8 @@
 <resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="ampersand_bg">#171717</color>
+
     <color name="md_theme_primary">#9BCBFB</color>
     <color name="md_theme_onPrimary">#003353</color>
     <color name="md_theme_primaryContainer">#0F4A73</color>
