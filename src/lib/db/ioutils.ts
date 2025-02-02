@@ -21,10 +21,11 @@ const typeson = new Typeson({
 ]);
 
 async function _exportDatabase(){
-	const config = await typeson.encapsulate({ appConfig, accessibilityConfig, securityConfig });
-	const database = await Promise.all(getTables().map(async x => await typeson.encapsulate(await x.toArray())));
+	const config = { appConfig, accessibilityConfig, securityConfig };
+	const database: Record<string, any> = {};
+	for(const table of getTables()) database[table.name] = await table.toArray();
 
-	return { config, database };
+	return await typeson.encapsulate({ config, database });
 }
 
 export async function exportDatabaseToBinary(){
@@ -40,16 +41,18 @@ export async function exportDatabaseToBinaryWithPassword(password: string){
 	return await compressGzip(encode(encodedDatabase));
 }
 
-async function _importDatabase(tablesAndConfig: Record<"database" | "config", any>){
-	for (const key of Object.getOwnPropertyNames(tablesAndConfig.database)) {
+async function _importDatabase(tablesAndConfig){
+	const revived = await typeson.revive(tablesAndConfig);
+
+	for (const key of Object.getOwnPropertyNames(revived.database)) {
 		const table = getTables().find((x) => x.name === key);
 		if (table) {
-			const contents = await typeson.revive(tablesAndConfig.database[key]);
 			await table.clear();
-			await table.bulkAdd(contents);
+			await table.bulkAdd(revived.database[key]);
 		}
 	}
-	const config = await typeson.revive(tablesAndConfig.config);
+
+	const config = await typeson.revive(revived.config);
 	Object.assign(appConfig, config.appConfig);
 	Object.assign(accessibilityConfig, config.accessibilityConfig);
 	Object.assign(securityConfig, config.securityConfig);
