@@ -1,6 +1,7 @@
 {
 	"header": "Membri",
 	"searchPlaceholder": "Căutați memberi...",
+	"select": "Alege un membru",
 	"actions": {
 		"addToFront": "Adaugați in frunte",
 		"setMainFronter": "Stabiliți starea de fruntaș principal",

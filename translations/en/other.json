@@ -1,15 +1,11 @@
 {	
-	"genericDeleteDesc": "You won't be able to undo this action!",
-
 	"languageName": {
 		"local": "English",
 		"inEnglish": "English"
 	},
+	"genericDeleteDesc": "You won't be able to undo this action!",
 	"taglistSelect": {
 		"header": "Select some tags"
-	},
-	"memberSelect": {
-		"header": "Select a member"
 	},
 	"storagePersistence": {
 		"header": "Warning",

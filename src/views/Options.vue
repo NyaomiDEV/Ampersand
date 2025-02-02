@@ -131,7 +131,7 @@
 
 				<IonItem button routerLink="/options/testingGrounds" v-if="isDev">
 					<IonIcon :ios="SparklesIOS" :md="SparklesMD" slot="start" aria-hidden="true" />
-					{{ $t("testingGrounds:header") }}
+					Testing grounds
 				</IonItem>
 			</IonList>
 

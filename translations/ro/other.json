@@ -1,15 +1,11 @@
 {
-	"genericDeleteDesc": "Atenție! Nu veți putea anula această acțiune!",
-
 	"languageName": {
 		"local": "Romănă",
 		"inEnglish": "Romanian"
 	},
+	"genericDeleteDesc": "Atenție! Nu veți putea anula această acțiune!",
 	"taglistSelect": {
 		"header": "Alege etichete"
-	},
-	"memberSelect": {
-		"header": "Alege un membru"
 	},
 	"storagePersistence": {
 		"header": "Atenție!",

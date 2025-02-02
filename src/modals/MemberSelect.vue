@@ -83,7 +83,7 @@
 	<IonModal class="member-select-modal" :breakpoints="[0,0.25,0.75,1]" initialBreakpoint="0.75">
 		<IonHeader>
 			<IonToolbar>
-				<IonTitle>{{ props.customTitle ?? $t("other:memberSelect.header") }}</IonTitle>
+				<IonTitle>{{ props.customTitle ?? $t("members:select") }}</IonTitle>
 			</IonToolbar>
 			<IonToolbar>
 				<IonSearchbar :animated="true" :placeholder="$t('members:searchPlaceholder')"

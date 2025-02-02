@@ -23,7 +23,7 @@
 			<IonToolbar>
 				<IonBackButton slot="start" defaultHref="/options/" />
 				<IonTitle>
-					{{ $t("testingGrounds:header") }}
+					Testing Grounds
 				</IonTitle>
 			</IonToolbar>
 		</IonHeader>

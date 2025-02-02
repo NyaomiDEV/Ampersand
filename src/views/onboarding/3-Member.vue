@@ -33,7 +33,7 @@
 
 	const isIOS = inject<boolean>("isIOS")!;
 
-	const emptyMember: PartialBy<Member, "uuid"> = {
+	const emptyMember: PartialBy<Member, "uuid" | "dateCreated"> = {
 		name: "",
 		isArchived: false,
 		isCustomFront: false,
@@ -54,7 +54,10 @@
 
 	async function save(){
 		const _member = toRaw(member.value);
-		await newMember(_member);
+		await newMember({
+			..._member,
+			dateCreated: new Date()
+		});
 		router.replace("/onboarding/end/", slideAnimation);
 	}
 </script>

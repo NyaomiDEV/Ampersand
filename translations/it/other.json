@@ -1,15 +1,11 @@
 {
-	"genericDeleteDesc": "Non potrai annullare questa azione!",
-
 	"languageName": {
 		"local": "Italiano",
 		"inEnglish": "Italian"
 	},
+	"genericDeleteDesc": "Non potrai annullare questa azione!",
 	"taglistSelect": {
 		"header": "Seleziona alcuni tag"
-	},
-	"memberSelect": {
-		"header": "Seleziona un membrə"
 	},
 	"storagePersistence": {
 		"header": "Warning",

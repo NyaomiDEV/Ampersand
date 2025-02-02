@@ -1,6 +1,7 @@
 {
 	"header": "Members",
 	"searchPlaceholder": "Search members...",
+	"select": "Select a member",
 	"actions": {
 		"addToFront": "Add to front",
 		"setMainFronter": "Set as main fronter",
@@ -28,6 +29,7 @@
 			"title": "Delete member"
 		},
 		"memberID": "Member ID: {{memberID}}",
+		"dateCreated": "Date created: {{dateCreated}}",
 		"memberIDcopiedToClipboard": "Member ID in mention format copied to clipboard!"
 	}
 }

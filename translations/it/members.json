@@ -1,6 +1,7 @@
 {
 	"header": "Membrɜ",
-	"searchPlaceholder": "Cerca tra i membrɜ...",
+	"searchPlaceholder": "Cerca tra ɜ membrɜ...",
+	"select": "Seleziona unə membrə",
 	"actions": {
 		"addToFront": "Aggiungi a front",
 		"setMainFronter": "Imposta come fronter principale",
@@ -27,7 +28,8 @@
 		"delete": {
 			"title": "Cancella membrə"
 		},
-		"memberID": "ID del membrə: {{memberID}}",
-		"memberIDcopiedToClipboard": "ID del membrə in formato menzione copiato negli appunti!"
+		"memberID": "ID dellə membrə: {{memberID}}",
+		"dateCreated": "Data di creazione: {{dateCreated}}",
+		"memberIDcopiedToClipboard": "ID dellə membrə in formato menzione copiato negli appunti!"
 	}
 }

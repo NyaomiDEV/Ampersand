@@ -84,6 +84,7 @@ export interface Member extends UUIDable {
 	isArchived: boolean,
 	isCustomFront: boolean, // todo
 	tags: UUID[] // array of UUIDs
+	dateCreated: Date
 }
 
 interface ReminderBase extends UUIDable {

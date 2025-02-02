@@ -61,7 +61,7 @@
 
 	const loading = ref(false);
 
-	const emptyMember: PartialBy<Member, "uuid"> = {
+	const emptyMember: PartialBy<Member, "uuid" | "dateCreated"> = {
 		name: "",
 		isArchived: false,
 		isCustomFront: false,
@@ -86,7 +86,10 @@
 		const _member = toRaw(member.value);
 
 		if(!uuid){
-			await newMember(_member);
+			await newMember({
+				..._member,
+				dateCreated: new Date()
+			});
 			router.back();
 
 			return;
@@ -217,61 +220,66 @@
 			</IonList>
 
 			<IonList class="member-edit" v-if="isEditing" inset>
-					<IonItem>
-						<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('members:edit.name')" labelPlacement="floating" v-model="member.name" />
-					</IonItem>
-					<IonItem>
-						<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('members:edit.pronouns')" labelPlacement="floating" v-model="member.pronouns" />
-					</IonItem>
-					<IonItem>
-						<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('members:edit.role')" labelPlacement="floating" v-model="member.role" />
-					</IonItem>
-					<IonItem>
-						<IonTextarea :fill="!isIOS ? 'outline' : undefined" auto-grow :label="$t('members:edit.description')" labelPlacement="floating" v-model="member.description" />
-					</IonItem>
-					<IonItem button>
-						<Color v-model="member.color" @update:model-value="updateColors">
-							<IonLabel>
-								{{ $t("members:edit.color") }}
-							</IonLabel>
-						</Color>
-					</IonItem>
-					<IonItem button>
-						<IonToggle v-model="member.isCustomFront">
-							<IonLabel>
-								{{ $t("members:edit.isCustomFront") }}
-							</IonLabel>
-						</IonToggle>
-					</IonItem>
-					<IonItem button>
-						<IonToggle v-model="member.isArchived">
-							<IonLabel>
-								{{ $t("members:edit.isArchived") }}
-							</IonLabel>
-						</IonToggle>
-					</IonItem>
-
-					<IonItem button @click="tagSelectionModal?.$el.present()">
+				<IonItem>
+					<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('members:edit.name')" labelPlacement="floating" v-model="member.name" />
+				</IonItem>
+				<IonItem>
+					<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('members:edit.pronouns')" labelPlacement="floating" v-model="member.pronouns" />
+				</IonItem>
+				<IonItem>
+					<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('members:edit.role')" labelPlacement="floating" v-model="member.role" />
+				</IonItem>
+				<IonItem>
+					<IonTextarea :fill="!isIOS ? 'outline' : undefined" auto-grow :label="$t('members:edit.description')" labelPlacement="floating" v-model="member.description" />
+				</IonItem>
+				<IonItem button>
+					<Color v-model="member.color" @update:model-value="updateColors">
 						<IonLabel>
-							{{ $t("members:edit.tags") }}
-							<div class="member-tags">
-								<TagChip v-if="tags?.length" v-for="tag in member.tags" :key="tag" :tag="tags.find(x => x.uuid === tag)!" />
-							</div>
+							{{ $t("members:edit.color") }}
 						</IonLabel>
-					</IonItem>
-					<IonItem button v-if="member.uuid" @click="_deleteMember">
-						<IonIcon :ios="trashIOS" :md="trashMD" slot="start" aria-hidden="true" color="danger"/>
-						<IonLabel color="danger">
-							<h3>{{ $t("members:edit.delete.title") }}</h3>
-							<p>{{ $t("other:genericDeleteDesc") }}</p>
-						</IonLabel>
-					</IonItem>
-
-					<IonItem v-if="member.uuid" button @click="copyIdToClipboard">
+					</Color>
+				</IonItem>
+				<IonItem button>
+					<IonToggle v-model="member.isCustomFront">
 						<IonLabel>
-							<p>{{ $t("members:edit.memberID", { memberID: member.uuid }) }}</p>
+							{{ $t("members:edit.isCustomFront") }}
 						</IonLabel>
-					</IonItem>
+					</IonToggle>
+				</IonItem>
+				<IonItem button>
+					<IonToggle v-model="member.isArchived">
+						<IonLabel>
+							{{ $t("members:edit.isArchived") }}
+						</IonLabel>
+					</IonToggle>
+				</IonItem>
+
+				<IonItem button @click="tagSelectionModal?.$el.present()">
+					<IonLabel>
+						{{ $t("members:edit.tags") }}
+						<div class="member-tags">
+							<TagChip v-if="tags?.length" v-for="tag in member.tags" :key="tag" :tag="tags.find(x => x.uuid === tag)!" />
+						</div>
+					</IonLabel>
+				</IonItem>
+				<IonItem button v-if="member.uuid" @click="_deleteMember">
+					<IonIcon :ios="trashIOS" :md="trashMD" slot="start" aria-hidden="true" color="danger"/>
+					<IonLabel color="danger">
+						<h3>{{ $t("members:edit.delete.title") }}</h3>
+						<p>{{ $t("other:genericDeleteDesc") }}</p>
+					</IonLabel>
+				</IonItem>
+
+				<IonItem v-if="member.uuid" button @click="copyIdToClipboard">
+					<IonLabel>
+						<p>{{ $t("members:edit.memberID", { memberID: member.uuid }) }}</p>
+					</IonLabel>
+				</IonItem>
+				<IonItem v-if="member.dateCreated" button @click="copyIdToClipboard">
+					<IonLabel>
+						<p>{{ $t("members:edit.dateCreated", { dateCreated: member.dateCreated }) }}</p>
+					</IonLabel>
+				</IonItem>
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
