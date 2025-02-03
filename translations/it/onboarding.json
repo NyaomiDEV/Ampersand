@@ -9,7 +9,8 @@
 		"simplyPlural": "Si, Simply Plural",
 		"pluralKit": "Si, PluralKit",
 		"startFromScratch": "No, inizierò da zero",
-		"pleaseWait": "Attendi mentre importiamo i tuoi dati"
+		"pleaseWait": "Attendi mentre importiamo i tuoi dati",
+		"errorPk": "Errore durante l'importazione dell'export di PluralKit. Per favore scegli un'altra opzione."
 	},
 	"systemInfo": {
 		"header": "Parlaci del tuo sistema!",

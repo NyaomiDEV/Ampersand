@@ -1,12 +1,16 @@
 <script setup lang="ts">
-	import { IonContent, IonPage, IonButton, useIonRouter } from '@ionic/vue';
+	import { IonContent, IonPage, IonButton, useIonRouter, toastController } from '@ionic/vue';
 	import { ref } from 'vue';
 	import Spinner from '../../components/Spinner.vue';
 	import { importDatabaseFromBinary } from '../../lib/db/ioutils';
 	import { getFiles, slideAnimation } from '../../lib/util/misc';
+	import { importPluralKit } from '../../lib/db/external/pluralkit';
+	import { useTranslation } from 'i18next-vue';
+import { getTables } from '../../lib/db';
 
 	const loading = ref(false);
 
+	const i18next = useTranslation();
 	const router = useIonRouter();
 
 	async function importFromPreviousInstallation() {
@@ -16,6 +20,29 @@
 
 			const file = files[0];
 			await importDatabaseFromBinary(new Uint8Array(await file.arrayBuffer()));
+		}
+
+		router.replace("/onboarding/end/", slideAnimation);
+	}
+
+	async function importFromPluralKit() {
+		const files = await getFiles(undefined, false);
+		if (files.length) {
+			loading.value = true;
+			const file = files[0];
+			const pkExport = JSON.parse(await file.text());
+			const result = await importPluralKit(pkExport);
+			if(!result){
+				await Promise.all(getTables().map(async x => x.clear()));
+
+				const statusMessage = await toastController.create({
+					message: i18next.t("onboarding:importScreen.errorPk"),
+					duration: 1500
+				});
+				await statusMessage.present();
+
+				return;
+			}
 		}
 
 		router.replace("/onboarding/end/", slideAnimation);
@@ -30,6 +57,10 @@
 				<h1>{{ $t("onboarding:importScreen.header") }}</h1>
 
 				<IonButton @click="importFromPreviousInstallation">
+					{{ $t("onboarding:importScreen.prevInstall") }}
+				</IonButton>
+
+				<IonButton @click="importFromPluralKit">
 					{{ $t("onboarding:importScreen.prevInstall") }}
 				</IonButton>
 

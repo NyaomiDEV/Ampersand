@@ -8,10 +8,16 @@
 		"title": "Export your data",
 		"desc": "Backup your current data to a file you can store somewhere else"
 	},
+	"pkImport": {
+		"title": "Import your data from a PluralKit export",
+		"desc": "Warning! It will override any existing data"
+	},
 	"status": {
 		"imported": "The backup has been imported. Please restart the app.",
+		"importedPk": "The PluralKit export has been imported. Please restart the app.",
 		"exportedPwa": "The backup has been downloaded to your downloads folder.",
 		"exportedApp": "The backup has been exported to the location you chose.",
-		"error": "Error while exporting the backup."
+		"error": "Error while exporting the backup.",
+		"errorPk": "Error while importing the PluralKit export."
 	}
 }

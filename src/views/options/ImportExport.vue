@@ -7,6 +7,7 @@
 	import { save } from '@tauri-apps/plugin-dialog';
 	import { writeFile } from '@tauri-apps/plugin-fs';
 	import { useTranslation } from 'i18next-vue';
+	import { importPluralKit } from '../../lib/db/external/pluralkit';
 
 	const isIOS = inject<boolean>("isIOS");
 	const loading = ref(false);
@@ -27,6 +28,33 @@
 			});
 
 			await statusMessage.present();
+		}
+
+		loading.value = false;
+	}
+
+	async function importPk() {
+		loading.value = true;
+
+		const files = await getFiles(undefined, false);
+		if(files.length){
+			const file = files[0];
+			const pkExport = JSON.parse(await file.text());
+			const result = await importPluralKit(pkExport);
+
+			if(result){
+				const statusMessage = await toastController.create({
+					message: i18next.t("importExport:status.importedPk"),
+					duration: 1500
+				});
+				await statusMessage.present();
+			} else {
+				const statusMessage = await toastController.create({
+					message: i18next.t("importExport:status.errorPk"),
+					duration: 1500
+				});
+				await statusMessage.present();
+			}
 		}
 
 		loading.value = false;
@@ -101,6 +129,13 @@
 					<IonLabel>
 						<h3>{{ $t("importExport:dbImport.title") }}</h3>
 						<p>{{ $t("importExport:dbImport.desc") }}</p>
+					</IonLabel>
+				</IonItem>
+
+				<IonItem button @click="importPk" :detail="true">
+					<IonLabel>
+						<h3>{{ $t("importExport:pkImport.title") }}</h3>
+						<p>{{ $t("importExport:pkImport.desc") }}</p>
 					</IonLabel>
 				</IonItem>
 			</IonList>
