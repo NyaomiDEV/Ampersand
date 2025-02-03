@@ -9,7 +9,7 @@
 	import { PartialBy } from "../../lib/types";
 
 	import accountCircle from "@material-symbols/svg-600/outlined/account_circle.svg";
-	import { isReactive, ref, watch } from "vue";
+	import { isReactive, ref, watch, WatchStopHandle } from "vue";
 
 	const props = defineProps<{
 		member: PartialBy<Member, "uuid" | "dateCreated">,
@@ -23,10 +23,17 @@
 			: "var(--ion-color-primary)";
 	}
 
-	updateColor();
-	watch(props, updateColor);
-	if(isReactive(props.member))
-		watch(props.member, updateColor);
+	let watchHandle: WatchStopHandle | undefined;
+	watch(props, () => {
+		updateColor();
+		if(isReactive(props.member))
+			watchHandle = watch(props.member, updateColor);
+		else
+			if(watchHandle){
+				watchHandle();
+				watchHandle = undefined;
+			}
+	}, { immediate: true });
 </script>
 
 <template>
