@@ -3,21 +3,16 @@
 	import { alertController, IonButton, IonCard, IonItem, IonLabel } from "@ionic/vue";
 	import MemberAvatar from "./member/MemberAvatar.vue";
 	import { BoardMessageComplete, Member, PollEntry } from "../lib/db/entities";
-	import dayjs from 'dayjs';
-	import LocalizedFormat from "dayjs/plugin/localizedFormat";
-	dayjs.extend(LocalizedFormat);
 	import Markdown from "./Markdown.vue";
-	import { appConfig } from "../lib/config";
 	import MemberSelect from "../modals/MemberSelect.vue";
 	import { addModal, removeModal } from "../lib/modals";
 	import { h, toRaw } from "vue";
 	import { updateBoardMessage } from "../lib/db/tables/boardMessages";
 	import PollResults from "../modals/PollResults.vue";
 	import { useTranslation } from "i18next-vue";
+	import { formatDate } from "../lib/util/misc";
 
 	const i18next = useTranslation();
-
-	const twelveHour = appConfig.locale.twelveHourClock;
 
 	const props = defineProps<{
 		boardMessage: BoardMessageComplete,
@@ -158,7 +153,7 @@
 			<div class="flexbox">
 				<div class="subheader">
 					<span>{{ props.boardMessage.member.name }}</span>
-					<p>{{ dayjs(props.boardMessage.date).format(`LL, ${twelveHour ? 'hh:mm A' : "HH:mm"}`) }}</p>
+					<p>{{ formatDate(props.boardMessage.date, true) }}</p>
 				</div>
 				<div class="contents">
 					<h1>{{ props.boardMessage.title }}</h1>
