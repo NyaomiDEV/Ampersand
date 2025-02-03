@@ -61,7 +61,7 @@ import { getTables } from '../../lib/db';
 				</IonButton>
 
 				<IonButton @click="importFromPluralKit">
-					{{ $t("onboarding:importScreen.prevInstall") }}
+					{{ $t("onboarding:importScreen.pluralKit") }}
 				</IonButton>
 
 				<IonButton fill="clear" @click="router.replace('/onboarding/system/', slideAnimation)">
