@@ -20,8 +20,8 @@
 			"journal": "Jurnal",
 			"desc": "Notă: Puteți defini tipul etichetei numai la momentul creației!"
 		},
-		"showMembers": {
-			"title": "Afișați membrii cu această etichetă",
+		"members": {
+			"title": "Selectați membrii cu această etichetă",
 			"desc_one": "{{count}} membru are această etichetă",
 			"desc_few": "{{count}} membri au această etichetă",
 			"desc_other": "{{count}} membri au această etichetă"

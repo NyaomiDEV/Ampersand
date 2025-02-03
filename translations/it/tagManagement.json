@@ -20,8 +20,8 @@
 			"journal": "Diario",
 			"desc": "Nota: puoi definire il tipo del tag solo al momento della creazione!"
 		},
-		"showMembers": {
-			"title": "Mostra ɜ membrɜ che usano questo tag",
+		"members": {
+			"title": "Scegli lɜ membrɜ che usano questo tag",
 			"desc_one": "{{count}} membrə usa questo tag",
 			"desc_other": "{{count}} membrɜ usano questo tag"
 		},

@@ -11,7 +11,7 @@
 		IonCheckbox,
 	} from "@ionic/vue";
 
-	import { inject, onBeforeMount, reactive, ref, shallowRef, watch } from "vue";
+	import { inject, onBeforeMount, reactive, ref, shallowRef, toRaw, watch } from "vue";
 	import { getFilteredTags } from "../lib/search";
 	import { getTags } from "../lib/db/tables/tags";
 	import { Tag } from "../lib/db/entities";
@@ -36,7 +36,7 @@
 	const filteredTags = shallowRef<Tag[]>();
 
 	watch(selectedTags, () => {
-		emit("update:modelValue", selectedTags);
+		emit("update:modelValue",  [...toRaw(selectedTags)]);
 	});
 
 	watch([search, tags], () => {
@@ -51,7 +51,7 @@
 		if(checked)
 			selectedTags.push(tag);
 		else {
-			const index = selectedTags.indexOf(tag);
+			const index = selectedTags.findIndex(x => x.uuid === tag.uuid);
 			if(index > -1)
 				selectedTags.splice(index, 1);
 		}

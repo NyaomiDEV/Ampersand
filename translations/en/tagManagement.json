@@ -20,8 +20,8 @@
 			"journal": "Journal",
 			"desc": "Note: you can only define the tag type upon creation!"
 		},
-		"showMembers": {
-			"title": "Show members using this tag",
+		"members": {
+			"title": "Choose members using this tag",
 			"desc_one": "{{count}} member uses this tag",
 			"desc_other": "{{count}} members use this tag"
 		},

@@ -34,15 +34,17 @@
 	import journalMD from "@material-symbols/svg-600/outlined/book.svg";
 
 	import { getTags, newTag, removeTag, updateTag } from '../../lib/db/tables/tags';
-	import { Tag } from "../../lib/db/entities";
-	import { getCurrentInstance, inject, onBeforeMount, ref, watch } from "vue";
+	import { Member, Tag } from "../../lib/db/entities";
+	import { getCurrentInstance, h, inject, onBeforeMount, ref, watch } from "vue";
 	import { addMaterialColors, rgbaToArgb, unsetMaterialColors } from "../../lib/theme";
 	import { PartialBy } from "../../lib/types";
-	import { getMembers } from "../../lib/db/tables/members";
+	import { getMembers, updateMember } from "../../lib/db/tables/members";
 	import { getJournalPosts } from "../../lib/db/tables/journalPosts";
 	import { useTranslation } from "i18next-vue";
 	import { useRoute } from "vue-router";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
+import { addModal, removeModal } from "../../lib/modals";
+import MemberSelect from "../../modals/MemberSelect.vue";
 
 	const isIOS = inject<boolean>("isIOS");
 	const loading = ref(false);
@@ -60,6 +62,37 @@
 	const router = useIonRouter();
 
 	const count = ref(0);
+
+	async function tagMembers() {
+		let members: Member[] = (await getMembers()).filter(x => x.tags.includes(tag.value.uuid!));
+		const vnode = h(MemberSelect, {
+			customTitle: i18next.t("tagManagement:edit.members.title"),
+			modelValue: members,
+			onDidDismiss: async () => {
+				for(const member of await getMembers()){
+					if(members.map(x => x.uuid).includes(member.uuid)){
+						if(member.tags.includes(tag.value.uuid!)) continue;
+
+						await updateMember(member.uuid, {
+							tags: [...member.tags, tag.value.uuid!]
+						});
+					} else {
+						if(!member.tags.includes(tag.value.uuid!)) continue;
+
+						await updateMember(member.uuid, {
+							tags: [...member.tags.filter(x => x !== tag.value.uuid!)]
+						})
+					}
+				}
+				removeModal(vnode);
+				count.value = (await getMembers()).filter(x => x.tags.includes(tag.value.uuid!)).length;
+			},
+			"onUpdate:modelValue": v => { members = [...v]; console.log(members) },
+		});
+
+		const modal = await addModal(vnode);
+		await (modal.el as any).present();
+	}
 
 	async function save(){
 		const uuid = tag.value.uuid;
@@ -185,11 +218,11 @@
 						</IonLabel>
 					</IonItem>
 
-					<IonItem button v-if="tag.uuid && tag.type === 'member'" @click="() => router.push(`/s/members?q=${encodeURIComponent('#' + tag.name.toLowerCase().replace(/\s/g, ''))}`)">
+					<IonItem button v-if="tag.uuid && tag.type === 'member'" @click="tagMembers">
 						<IonIcon :ios="personIOS" :md="personMD" slot="start" aria-hidden="true" />
 						<IonLabel>
-							<h3>{{ $t("tagManagement:edit.showMembers.title") }}</h3>
-							<p>{{ $t("tagManagement:edit.showMembers.desc", { count }) }}</p>
+							<h3>{{ $t("tagManagement:edit.members.title") }}</h3>
+							<p>{{ $t("tagManagement:edit.members.desc", { count }) }}</p>
 						</IonLabel>
 					</IonItem>
 

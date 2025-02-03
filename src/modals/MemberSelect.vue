@@ -12,7 +12,7 @@
 		modalController,
 	} from "@ionic/vue";
 
-	import { inject, onBeforeMount, onUnmounted, reactive, ref, shallowRef, watch } from "vue";
+	import { inject, onBeforeMount, onUnmounted, reactive, ref, shallowRef, toRaw, watch } from "vue";
 	import { getFilteredMembers } from "../lib/search.ts";
 	import MemberAvatar from "../components/member/MemberAvatar.vue";
 	import MemberLabel from "../components/member/MemberLabel.vue";
@@ -46,7 +46,7 @@
 	}
 
 	watch(selectedMembers, () => {
-		emit("update:modelValue", selectedMembers);
+		emit("update:modelValue", toRaw(selectedMembers));
 	});
 
 	watch([search, members], async () => {
@@ -68,7 +68,7 @@
 				selectedMembers.length = 0;
 			selectedMembers.push(member);
 		} else {
-			const index = selectedMembers.indexOf(member);
+			const index = selectedMembers.findIndex(x => x.uuid === member.uuid);
 			if(index > -1)
 				selectedMembers.splice(index, 1);
 		}
