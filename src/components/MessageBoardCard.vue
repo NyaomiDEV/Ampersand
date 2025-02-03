@@ -171,7 +171,7 @@
 					<IonItem button detail="false" v-for="choice in props.boardMessage.poll.entries" @click="voteFor(choice)" :key="choice.choice">
 						<IonLabel>
 							<h3>{{ choice.choice }}</h3>
-							<p>{{ $t("messageBoard:polls.choice.desc", { count: choice.votes.length }) }} - {{ calcPercentageVoted(choice) * 100 }}%</p>
+							<p>{{ $t("messageBoard:polls.choice.desc", { count: choice.votes.length }) }} - {{ Math.floor(calcPercentageVoted(choice) * 100) }}%</p>
 							<div class="percentage" :style="{'--vote-percentage': (Math.max(0.005, calcPercentageVoted(choice)) * 100) + '%'}"></div>
 						</IonLabel>
 					</IonItem>

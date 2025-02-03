@@ -52,7 +52,7 @@
 		<SpinnerFullscreen v-if="!members" />
 		<IonContent v-else>
 			<IonList :inset="isIOS">
-				<template v-for="choice in props.poll.entries" :key="choice.choice">
+				<template v-for="choice in props.poll.entries.filter(x => x.votes.length)" :key="choice.choice">
 					<IonItemDivider sticky>
 						{{ choice.choice }} - {{ $t("messageBoard:polls.choice.desc", { count: choice.votes.length }) }}
 					</IonItemDivider>
