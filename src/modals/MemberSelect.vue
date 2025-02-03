@@ -63,17 +63,29 @@
 	});
 
 	function check(member: Member, checked: boolean){
+		// hideCheckboxes implies onlyOne
+		const onlyOne = props.onlyOne || props.hideCheckboxes;
 		if(checked){
-			if(props.onlyOne)
+			if(onlyOne)
 				selectedMembers.length = 0;
 			selectedMembers.push(member);
 		} else {
 			const index = selectedMembers.findIndex(x => x.uuid === member.uuid);
-			if(index > -1)
+			if(index > -1){
+				if(selectedMembers.length === 1 && onlyOne){
+					// selected the one who was already selected since we're in "selection mode"
+					// we will just not uncheck it
+					// (hideCheckboxes implies onlyOne)
+					if(props.discardOnSelect){
+						modalController.dismiss();
+					}
+					return;
+				}
 				selectedMembers.splice(index, 1);
+			}
 		}
 
-		if(props.onlyOne && props.discardOnSelect){
+		if(onlyOne && props.discardOnSelect){
 			modalController.dismiss();
 		}
 	}

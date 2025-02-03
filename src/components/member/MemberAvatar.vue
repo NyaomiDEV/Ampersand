@@ -24,6 +24,7 @@
 	}
 
 	updateColor();
+	watch(props, updateColor);
 	if(isReactive(props.member))
 		watch(props.member, updateColor);
 </script>
