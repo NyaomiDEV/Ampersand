@@ -64,12 +64,13 @@ import MemberSelect from "../../modals/MemberSelect.vue";
 	const count = ref(0);
 
 	async function tagMembers() {
-		let members: Member[] = (await getMembers()).filter(x => x.tags.includes(tag.value.uuid!));
+		const allMembers = await getMembers();
+		let members: Member[] = allMembers.filter(x => x.tags.includes(tag.value.uuid!));
 		const vnode = h(MemberSelect, {
 			customTitle: i18next.t("tagManagement:edit.members.title"),
 			modelValue: members,
 			onDidDismiss: async () => {
-				for(const member of await getMembers()){
+				for(const member of allMembers){
 					if(members.map(x => x.uuid).includes(member.uuid)){
 						if(member.tags.includes(tag.value.uuid!)) continue;
 
@@ -85,9 +86,14 @@ import MemberSelect from "../../modals/MemberSelect.vue";
 					}
 				}
 				removeModal(vnode);
+
+				// we can't use allMembers here again because
+				// at this point the db is updated and we don't have
+				// the new values; besides, it's a non-issue to read
+				// from disk here
 				count.value = (await getMembers()).filter(x => x.tags.includes(tag.value.uuid!)).length;
 			},
-			"onUpdate:modelValue": v => { members = [...v]; console.log(members) },
+			"onUpdate:modelValue": v => { members = [...v] },
 		});
 
 		const modal = await addModal(vnode);

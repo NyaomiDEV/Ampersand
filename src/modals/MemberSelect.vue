@@ -46,7 +46,7 @@
 	}
 
 	watch(selectedMembers, () => {
-		emit("update:modelValue", toRaw(selectedMembers));
+		emit("update:modelValue", [...toRaw(selectedMembers)]);
 	});
 
 	watch([search, members], async () => {
