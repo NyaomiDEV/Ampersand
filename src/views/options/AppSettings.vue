@@ -121,6 +121,10 @@
 				<IonItem>
 					<IonInput :fill="!isIOS ? 'outline' : undefined" labelPlacement="floating" :label="$t('messageBoard:header')" v-model="appConfig.defaultFilterQueries.messageBoard" />
 				</IonItem>
+
+				<IonItem>
+					<IonInput :fill="!isIOS ? 'outline' : undefined" labelPlacement="floating" :label="$t('assetManager:header')" v-model="appConfig.defaultFilterQueries.assetManager" />
+				</IonItem>
 			</IonList>
 
 		</IonContent>
