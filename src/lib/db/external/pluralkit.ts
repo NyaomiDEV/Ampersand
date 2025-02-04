@@ -30,7 +30,7 @@ export async function importPluralKit(pkExport: any){
 	for (const pkGroup of pkExport.groups) {
 		const tag: PartialBy<Tag, "uuid"> = {
 			name: pkGroup.display_name || pkGroup.name,
-			description: pkGroup.description,
+			description: pkGroup.description || undefined,
 			color: pkGroup.color ? "#" + pkGroup.color : undefined,
 			type: "member"
 		};
@@ -44,8 +44,8 @@ export async function importPluralKit(pkExport: any){
 	for (const pkMember of pkExport.members) {
 		const member: PartialBy<Member, "uuid"> = {
 			name: pkMember.display_name || pkMember.name,
-			description: pkMember.description,
-			pronouns: pkMember.pronouns,
+			description: pkMember.description || undefined,
+			pronouns: pkMember.pronouns || undefined,
 			color: pkMember.color ? "#" + pkMember.color : undefined,
 			isArchived: false,
 			isCustomFront: false,
