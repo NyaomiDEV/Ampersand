@@ -8,9 +8,11 @@
 		"prevInstall": "Yes, previous installation",
 		"simplyPlural": "Yes, Simply Plural",
 		"pluralKit": "Yes, PluralKit",
+		"tupperbox": "Yes, Tupperbox",
 		"startFromScratch": "No, I'll start from scratch",
 		"pleaseWait": "Please wait while we import your data",
-		"errorPk": "Error while importing the PluralKit export. Please select another option."
+		"errorPk": "Error while importing the PluralKit export. Please select another option.",
+		"errorTu": "Error while importing the Tupperbox export. Please select another option."
 	},
 	"systemInfo": {
 		"header": "Tell us about your system!",

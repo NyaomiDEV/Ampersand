@@ -1,11 +1,9 @@
 {
 	"header": "Import / Export",
-	"dbImport": {
-		"title": "Importați-vă datele dintr-un fișier de backup",
-		"desc": "Atenție! Această acțiune suprascrie datele actuale"
-	},
 	"dbExport": {
 		"title": "Exportați-vă datele actuale într-un fișier",
 		"desc": "Faceți backup datelor actuale într-un fișier care poate fi stocat altundeva"
-	}
+	},
+	"dbImportDesc": "Atenție! Această acțiune suprascrie datele actuale",
+	"dbImport": "Importați-vă datele dintr-un fișier de backup"
 }

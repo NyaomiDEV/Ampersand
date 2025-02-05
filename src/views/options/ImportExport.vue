@@ -8,6 +8,7 @@
 	import { writeFile } from '@tauri-apps/plugin-fs';
 	import { useTranslation } from 'i18next-vue';
 	import { importPluralKit } from '../../lib/db/external/pluralkit';
+	import { importTupperBox } from '../../lib/db/external/tupperbox';
 
 	const isIOS = inject<boolean>("isIOS");
 	const loading = ref(false);
@@ -51,6 +52,33 @@
 			} else {
 				const statusMessage = await toastController.create({
 					message: i18next.t("importExport:status.errorPk"),
+					duration: 1500
+				});
+				await statusMessage.present();
+			}
+		}
+
+		loading.value = false;
+	}
+
+	async function importTu() {
+		loading.value = true;
+
+		const files = await getFiles(undefined, false);
+		if (files.length) {
+			const file = files[0];
+			const tuExport = JSON.parse(await file.text());
+			const result = await importTupperBox(tuExport);
+
+			if (result) {
+				const statusMessage = await toastController.create({
+					message: i18next.t("importExport:status.importedTu"),
+					duration: 1500
+				});
+				await statusMessage.present();
+			} else {
+				const statusMessage = await toastController.create({
+					message: i18next.t("importExport:status.errorTu"),
 					duration: 1500
 				});
 				await statusMessage.present();
@@ -114,7 +142,7 @@
 				<IonProgressBar v-if="loading" type="indeterminate" />
 			</IonToolbar>
 		</IonHeader>
-		
+
 		<IonContent>
 			<IonList :inset="isIOS">
 
@@ -127,15 +155,22 @@
 
 				<IonItem button @click="importDb" :detail="true">
 					<IonLabel>
-						<h3>{{ $t("importExport:dbImport.title") }}</h3>
-						<p>{{ $t("importExport:dbImport.desc") }}</p>
+						<h3>{{ $t("importExport:dbImport") }}</h3>
+						<p>{{ $t("importExport:dbImportDesc") }}</p>
 					</IonLabel>
 				</IonItem>
 
 				<IonItem button @click="importPk" :detail="true">
 					<IonLabel>
-						<h3>{{ $t("importExport:pkImport.title") }}</h3>
-						<p>{{ $t("importExport:pkImport.desc") }}</p>
+						<h3>{{ $t("importExport:pkImport") }}</h3>
+						<p>{{ $t("importExport:dbImportDesc") }}</p>
+					</IonLabel>
+				</IonItem>
+
+				<IonItem button @click="importTu" :detail="true">
+					<IonLabel>
+						<h3>{{ $t("importExport:tuImport") }}</h3>
+						<p>{{ $t("importExport:dbImportDesc") }}</p>
 					</IonLabel>
 				</IonItem>
 			</IonList>

@@ -5,8 +5,9 @@
 	import { importDatabaseFromBinary } from '../../lib/db/ioutils';
 	import { getFiles, slideAnimation } from '../../lib/util/misc';
 	import { importPluralKit } from '../../lib/db/external/pluralkit';
+	import { importTupperBox } from '../../lib/db/external/tupperbox';
 	import { useTranslation } from 'i18next-vue';
-import { getTables } from '../../lib/db';
+	import { getTables } from '../../lib/db';
 
 	const loading = ref(false);
 
@@ -47,6 +48,29 @@ import { getTables } from '../../lib/db';
 
 		router.replace("/onboarding/end/", slideAnimation);
 	}
+
+	async function importFromTupperbox() {
+		const files = await getFiles(undefined, false);
+		if (files.length) {
+			loading.value = true;
+			const file = files[0];
+			const tuExport = JSON.parse(await file.text());
+			const result = await importTupperBox(tuExport);
+			if(!result){
+				await Promise.all(getTables().map(async x => x.clear()));
+
+				const statusMessage = await toastController.create({
+					message: i18next.t("onboarding:importScreen.errorTu"),
+					duration: 1500
+				});
+				await statusMessage.present();
+
+				return;
+			}
+		}
+
+		router.replace("/onboarding/end/", slideAnimation);
+	}
 </script>
 
 <template>
@@ -60,10 +84,14 @@ import { getTables } from '../../lib/db';
 					{{ $t("onboarding:importScreen.prevInstall") }}
 				</IonButton>
 
-				<IonButton @click="importFromPluralKit">
+				<IonButton class="tonal" @click="importFromPluralKit">
 					{{ $t("onboarding:importScreen.pluralKit") }}
 				</IonButton>
 
+				<IonButton class="tonal" @click="importFromTupperbox">
+					{{ $t("onboarding:importScreen.tupperbox") }}
+				</IonButton>
+		
 				<IonButton fill="clear" @click="router.replace('/onboarding/system/', slideAnimation)">
 					{{ $t("onboarding:importScreen.startFromScratch") }}
 				</IonButton>
