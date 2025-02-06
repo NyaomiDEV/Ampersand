@@ -1,7 +1,7 @@
 const dataURLs = new Map<File, string>();
 
 export function getObjectURL(file: File){
-	const maybeEntry = dataURLs.entries().find(([k]) => k.name === file.name);
+	const maybeEntry = [...dataURLs.entries()].find(([k]) => k.name === file.name);
 
 	if(maybeEntry)
 		return maybeEntry[1];
