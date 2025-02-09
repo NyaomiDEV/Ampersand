@@ -25,7 +25,7 @@
 
 	const tags = shallowRef<Tag[]>();
 	const filteredTags = shallowRef<Tag[]>();
-	watch([search, tags], async () => {
+	watch([search, tags, type], async () => {
 		filteredTags.value = getFilteredTags(search.value, tags.value?.filter(x => x.type === type.value));
 	}, {immediate: true});
 
