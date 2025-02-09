@@ -69,3 +69,8 @@ html.ios.ion-palette-dark ion-content {
 	outline: 1px solid var(--ion-color-light-shade);
 	box-shadow: unset;
 }
+
+.ios:not(.md3) ion-button.tonal {
+	--background: rgb(from var(--ion-color-primary) r g b / .65);
+	--background-hover-opacity: 0.5;
+}
