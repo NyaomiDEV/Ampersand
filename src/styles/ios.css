@@ -44,11 +44,20 @@ html.ios:not(.ion-palette-dark) {
 }
 
 html.ios {
+	--ion-tab-bar-background: var(--ion-background-color);
 	--ion-toolbar-background: var(--ion-background-color);
 }
 
 html.ios ion-content {
 	--background: var(--ion-background-color-step-50);
+}
+
+html.ios.ion-palette-dark {
+	--ion-item-background: var(--ion-background-color-step-50);
+}
+
+html.ios.ion-palette-dark ion-content {
+	--background: var(--ion-background-color);
 }
 
 .ios:not(.md3) ion-card.filled {
