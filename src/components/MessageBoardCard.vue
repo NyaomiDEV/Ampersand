@@ -153,7 +153,7 @@
 			<div class="flexbox">
 				<div class="subheader">
 					<span>{{ props.boardMessage.member.name }}</span>
-					<p>{{ formatDate(props.boardMessage.date, true) }}</p>
+					<p>{{ formatDate(props.boardMessage.date, "collapsed") }}</p>
 				</div>
 				<div class="contents">
 					<h1>{{ props.boardMessage.title }}</h1>
@@ -223,6 +223,10 @@
 	ion-card .subheader span {
 		font-size: 1.1em;
 		color: var(--ion-text-color-step-400);
+	}
+
+	ion-card .subheader p {
+		text-align: right;
 	}
 
 	ion-card .contents {

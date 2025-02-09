@@ -20,7 +20,7 @@
 	let intervalRef: number;
 
 	function format(startTime: Date, endTime?: Date){
-		if(!endTime) return formatDate(startTime, true);
+		if(!endTime) return formatDate(startTime, "expanded");
 
 		const start = dayjs(startTime);
 		const end = dayjs(endTime);
@@ -28,7 +28,7 @@
 		if(end.valueOf() - start.endOf('day').valueOf() <= 0) // same day
 			return formatDate(startTime) + "~" + formatDate(endTime);
 		
-		return formatDate(startTime, true) + " - " + formatDate(endTime, true);
+		return formatDate(startTime, "expanded") + " - " + formatDate(endTime, "expanded");
 	}
 
 	onMounted(() => {

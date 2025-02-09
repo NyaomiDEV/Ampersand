@@ -93,9 +93,9 @@ export async function decompressGzip(data: Uint8Array) {
 	return result;
 }
 
-export function formatDate(date: Date, expanded?: boolean){
-	if(expanded)
-		return dayjs(date).format(`LL, ${appConfig.locale.twelveHourClock ? 'hh:mm A' : "HH:mm"}`);
+export function formatDate(date: Date, withDate?: "collapsed" | "expanded"){
+	if(withDate)
+		return dayjs(date).format(`${withDate == "expanded" ? "LL" : "ll"}, ${appConfig.locale.twelveHourClock ? 'hh:mm A' : "HH:mm"}`);
 	return dayjs(date).format(`${appConfig.locale.twelveHourClock ? 'hh:mm A' : "HH:mm"}`);
 }
 

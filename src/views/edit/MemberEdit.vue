@@ -302,7 +302,7 @@
 				</IonItem>
 				<IonItem v-if="member.dateCreated" button @click="copyIdToClipboard">
 					<IonLabel>
-						<p>{{ $t("members:edit.dateCreated", { dateCreated: formatDate(member.dateCreated, true) }) }}</p>
+						<p>{{ $t("members:edit.dateCreated", { dateCreated: formatDate(member.dateCreated, "expanded") }) }}</p>
 					</IonLabel>
 				</IonItem>
 			</IonList>

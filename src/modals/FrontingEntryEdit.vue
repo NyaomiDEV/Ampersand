@@ -151,7 +151,7 @@
 					<IonItem button @click="$refs.startTimePicker?.$el.present()">
 						<IonLabel>
 							<h2>{{ $t("frontHistory:edit.startTime") }}</h2>
-							<p>{{ formatDate(frontingEntry.startTime, true) }}</p>
+							<p>{{ formatDate(frontingEntry.startTime, "expanded") }}</p>
 						</IonLabel>
 						<DatePopupPicker
 							v-model="frontingEntry.startTime"
@@ -170,7 +170,7 @@
 					<IonItem button v-if="frontingEntry.endTime" @click="$refs.endTimePicker?.$el.present()">
 						<IonLabel>
 							<h2>{{ $t("frontHistory:edit.endTime") }}</h2>
-							<p>{{ formatDate(frontingEntry.endTime, true) }}</p>
+							<p>{{ formatDate(frontingEntry.endTime, "expanded") }}</p>
 						</IonLabel>
 						<DatePopupPicker
 							v-model="frontingEntry.endTime"
