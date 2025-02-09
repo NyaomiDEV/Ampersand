@@ -72,7 +72,7 @@ router.beforeEach(async (to) => {
 
 	// first time???
 	if (!(await getSystem())){
-		if (to.path.startsWith("/onboarding/"))
+		if (to.path.startsWith("/onboarding/") || to.path.startsWith("/options/accessibility"))
 			return true;
 
 		return { path: "/onboarding/start", replace: true };
