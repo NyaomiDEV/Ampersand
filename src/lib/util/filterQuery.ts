@@ -8,7 +8,8 @@ export type MemberFilterQuery = {
 	isArchived?: boolean,
 	isCustomFront?: boolean,
 	pronouns?: string,
-	role?: string
+	role?: string,
+	sort?: "name-asc" | "name-desc" | "created-asc" | "created-desc"
 };
 
 export type FrontingHistoryFilterQuery = {
@@ -121,6 +122,30 @@ export async function parseMemberFilterQuery(search: string): Promise<MemberFilt
 						break;
 					case "role":
 						result.role = tokenParts[1];
+						break;
+					case "sort":
+						if(tokenParts[1]){
+							switch(tokenParts[1]){
+								case "name":
+								case "name-asc":
+									result.sort = "name-asc";
+									break;
+								case "name-desc":
+									result.sort = "name-desc";
+									break;
+								case "created":
+								case "created-asc":
+									result.sort = "created-asc";
+									break;
+								case "created-desc":
+									result.sort = "created-desc";
+									break;
+								default:
+									queryTokens.push(token);
+									break;
+							}
+						} else
+							queryTokens.push(token);
 						break;
 					default:
 						queryTokens.push(token);

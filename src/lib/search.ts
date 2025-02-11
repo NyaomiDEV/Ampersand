@@ -15,7 +15,20 @@ export async function getFilteredMembers(search: string, members?: Member[]){
 	if (!members) return;
 	const filtered: Member[] = [];
 	const parsed = await parseMemberFilterQuery(search.length ? search : appConfig.defaultFilterQueries.members || "");
-	const sorted = members.sort((a, b) => sortingFunctions.alphabetic(a.name, b.name));
+	const sorted = members.sort((a, b) => {
+		switch(parsed.sort){
+			case "name-asc":
+			default:
+				return sortingFunctions.alphabetic(a.name, b.name);
+			case "name-desc":
+				return sortingFunctions.alphabetic(b.name, a.name);
+			case "created-asc":
+				return sortingFunctions.numeric(a.dateCreated.getTime(), b.dateCreated.getTime());
+			case "created-desc":
+				return sortingFunctions.numeric(b.dateCreated.getTime(), a.dateCreated.getTime());
+		}
+	});
+
 	if(parsed.all) return sorted;
 
 	for(const x of sorted){
