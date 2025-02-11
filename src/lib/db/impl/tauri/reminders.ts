@@ -1,12 +1,6 @@
 import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../../events";
-import { makeUUIDv5 } from "../../../util/uuid";
 import { UUIDable, Reminder, UUID } from "../../entities";
-import { getSystemUUID } from "./system";
-
-async function genid(name: string) {
-	return makeUUIDv5((await getSystemUUID())!, `reminders\0${name}\0${Date.now()}`);
-}
 
 export function getReminders(){
 	return db.reminders.toArray();
@@ -14,7 +8,7 @@ export function getReminders(){
 
 export async function newReminder(reminder: Omit<Reminder, keyof UUIDable>) {
 	try{
-		const uuid = await genid(reminder.name);
+		const uuid = window.crypto.randomUUID();
 		await db.reminders.add(uuid, {
 			...reminder,
 			uuid

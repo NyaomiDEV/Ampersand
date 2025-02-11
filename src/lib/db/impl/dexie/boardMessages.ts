@@ -1,25 +1,20 @@
 import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../../events";
-import { makeUUIDv5 } from "../../../util/uuid";
 import { UUID, UUIDable, BoardMessage, BoardMessageComplete } from "../../entities";
-import { getSystemUUID } from "./system";
+import { defaultMember } from "../../tables/members";
 
 export function getBoardMessages(){
 	return db.boardMessages.toArray();
 }
 
 export async function toBoardMessageComplete(boardMessage: BoardMessage): Promise<BoardMessageComplete> {
-	const member = (await db.members.get(boardMessage.member))!;
+	const member = (await db.members.get(boardMessage.member)) || defaultMember();
 	return { ...boardMessage, member };
-}
-
-async function genid(name: string) {
-	return makeUUIDv5((await getSystemUUID())!, `boardMessages\0${name}\0${Date.now()}`);
 }
 
 export async function newBoardMessage(boardMessage: Omit<BoardMessage, keyof UUIDable>) {
 	try{
-		const uuid = await genid(boardMessage.title);
+		const uuid = window.crypto.randomUUID();
 		await db.boardMessages.add({
 			...boardMessage,
 			uuid

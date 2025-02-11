@@ -2,6 +2,7 @@
 	"header": "Members",
 	"searchPlaceholder": "Search members...",
 	"select": "Select a member",
+	"deletedMember": "Deleted member",
 	"actions": {
 		"addToFront": "Add to front",
 		"setMainFronter": "Set as main fronter",

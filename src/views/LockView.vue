@@ -1,29 +1,23 @@
 <script setup lang="ts">
-	import { onMounted, onUnmounted, watch } from "vue";
+	import { onMounted } from "vue";
 	import { IonPage, IonContent, IonLabel, IonInput, useIonRouter } from "@ionic/vue";
-	import { unlockWithPassword, unlockWithBiometrics, isLocked } from "../lib/applock";
+	import { unlockWithPassword, unlockWithBiometrics } from "../lib/applock";
 	import { securityConfig } from "../lib/config";
 	import { useRoute } from "vue-router";
 	
 	const router = useIonRouter();
 	const route = useRoute();
 
-	const handle = watch(isLocked, () => {
-		if(!isLocked.value)
-			router.replace(route.query.wantedPath || "/")
-	});
-
 	onMounted(async () => {
-		if(securityConfig.useBiometrics)
-			await unlockWithBiometrics();
-	});
-
-	onUnmounted(() => {
-		if(handle) handle();
+		if(securityConfig.useBiometrics && await unlockWithBiometrics()) {
+			router.replace(route.query.wantedPath || "/")
+		}
 	});
 
 	function checkAndTryUnlocking(input: string){
-		unlockWithPassword(input);
+		if(unlockWithPassword(input)){
+			router.replace(route.query.wantedPath || "/")
+		}
 	}
 </script>
 

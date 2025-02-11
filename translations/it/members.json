@@ -2,6 +2,7 @@
 	"header": "Membrɜ",
 	"searchPlaceholder": "Cerca tra ɜ membrɜ...",
 	"select": "Seleziona unə membrə",
+	"deletedMember": "Membrə eliminatə",
 	"actions": {
 		"addToFront": "Aggiungi a front",
 		"setMainFronter": "Imposta come fronter principale",

@@ -102,6 +102,8 @@
 	}
 
 	async function updateRoute(){
+		if(route.name !== "AssetEdit") return;
+
 		loading.value = true;
 
 		if(route.query.uuid){

@@ -40,7 +40,7 @@
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
 
 	import { Member, Tag } from "../../lib/db/entities";
-	import { getMembers, newMember, deleteMember, updateMember } from '../../lib/db/tables/members';
+	import { getMembers, newMember, deleteMember, updateMember, defaultMember } from '../../lib/db/tables/members';
 	import { getTags } from "../../lib/db/tables/tags";
 	import { getFiles } from "../../lib/util/misc";
 	import { resizeImage } from "../../lib/util/image";
@@ -161,6 +161,8 @@
 	}
 
 	async function updateRoute() {
+		if(route.name !== "MemberEdit") return;
+
 		loading.value = true;
 
 		tags.value = await getTags();
@@ -168,7 +170,7 @@
 		if(route.query.uuid){
 			const _member = (await getMembers()).find(x => x.uuid === route.query.uuid);
 			if(_member) member.value = _member;
-			else member.value = {...emptyMember};
+			else member.value = defaultMember();
 		} else member.value = {...emptyMember};
 
 		if(route.query.disallowEditing){

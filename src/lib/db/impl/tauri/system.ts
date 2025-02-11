@@ -1,15 +1,10 @@
 import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../../events";
-import { AppNamespace, makeUUIDv5 } from "../../../util/uuid"
 import { UUIDable, System } from "../../entities"
-
-function genid(name: string) {
-	return makeUUIDv5(AppNamespace, name);
-}
 
 export async function newSystem(system: Omit<System, keyof UUIDable>){
 	try{
-		const uuid = genid(system.name);
+		const uuid = window.crypto.randomUUID();
 		await db.system.add(uuid, {
 			...system,
 			uuid

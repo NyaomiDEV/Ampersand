@@ -1,20 +1,14 @@
 import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../../events";
-import { makeUUIDv5 } from "../../../util/uuid";
 import { UUID, UUIDable, Tag } from "../../entities";
-import { getSystemUUID } from "./system";
 
 export function getTags(){
 	return db.tags.toArray();
 }
 
-async function genid(name: string) {
-	return makeUUIDv5((await getSystemUUID())!, `tags\0${name}\0${Date.now()}`);
-}
-
 export async function newTag(tag: Omit<Tag, keyof UUIDable>) {
 	try{
-		const uuid = await genid(tag.name);
+		const uuid = window.crypto.randomUUID();
 		await db.tags.add(uuid, {
 			...tag,
 			uuid

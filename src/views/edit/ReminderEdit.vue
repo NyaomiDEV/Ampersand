@@ -148,6 +148,8 @@
 	}
 
 	async function updateRoute(){
+		if(route.name !== "ReminderEdit") return;
+
 		if(route.query.uuid){
 			const rem = (await getReminders()).find(x => x.uuid === route.query.uuid);
 			if(rem) reminder.value = rem;

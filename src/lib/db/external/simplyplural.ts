@@ -149,7 +149,7 @@ export async function importSimplyPlural(spExport) {
 	// POLLS AS BOARD MESSAGES
 	for (const spPoll of spExport.polls) {
 		const boardMessage: PartialBy<BoardMessage, "uuid"> = {
-			member: (await getMembers())[0].uuid,
+			member: "00000000-0000-0000-0000-000000000000",
 			title: spPoll.name,
 			body: spPoll.desc,
 			date: new Date(),

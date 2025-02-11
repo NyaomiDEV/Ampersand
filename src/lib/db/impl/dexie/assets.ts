@@ -1,20 +1,14 @@
 import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../../events";
-import { makeUUIDv5 } from "../../../util/uuid";
 import { UUID, UUIDable, Asset } from "../../entities";
-import { getSystemUUID } from "./system";
 
 export function getAssets(){
 	return db.assets.toArray();
 }
 
-async function genid(name: string) {
-	return makeUUIDv5((await getSystemUUID())!, `assets\0${name}\0${Date.now()}`);
-}
-
 export async function newAsset(asset: Omit<Asset, keyof UUIDable>) {
 	try{
-		const uuid = await genid(asset.file.name);
+		const uuid = window.crypto.randomUUID();
 		await db.assets.add({
 			...asset,
 			uuid

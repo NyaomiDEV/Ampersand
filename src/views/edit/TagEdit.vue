@@ -145,6 +145,8 @@ import MemberSelect from "../../modals/MemberSelect.vue";
 	}
 
 	async function updateRoute(){
+		if(route.name !== "TagEdit") return;
+
 		loading.value = true;
 
 		if(route.query.uuid){

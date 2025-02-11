@@ -1,25 +1,20 @@
 import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../../events";
-import { makeUUIDv5 } from "../../../util/uuid";
 import { UUIDable, Member, FrontingEntry, FrontingEntryComplete, UUID } from "../../entities";
-import { getSystemUUID } from "./system";
+import { defaultMember } from "../../tables/members";
 
 export function getFrontingEntries(){
 	return db.frontingEntries.toArray();
 }
 
 export async function toFrontingEntryComplete(frontingEntry: FrontingEntry): Promise<FrontingEntryComplete> {
-	const member = (await db.members.get(frontingEntry.member))!;
+	const member = (await db.members.get(frontingEntry.member)) || defaultMember();
 	return { ...frontingEntry, member };
-}
-
-async function genid(name: string) {
-	return makeUUIDv5((await getSystemUUID())!, `frontingEntries\0${name}\0${Date.now()}`);
 }
 
 export async function newFrontingEntry(frontingEntry: Omit<FrontingEntry, keyof UUIDable>) {
 	try{
-		const uuid = await genid(frontingEntry.member + frontingEntry.startTime.getTime());
+		const uuid = window.crypto.randomUUID();
 		await db.frontingEntries.add({
 			...frontingEntry,
 			uuid

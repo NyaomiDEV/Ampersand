@@ -15,7 +15,7 @@
 	import MemberAvatar from "../components/member/MemberAvatar.vue";
 	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
 	import type { Member, Poll } from "../lib/db/entities";
-	import { getMembers } from "../lib/db/tables/members.ts";
+	import { defaultMember, getMembers } from "../lib/db/tables/members.ts";
 	import { DatabaseEvents, DatabaseEvent } from '../lib/db/events.ts';
 
 	const isIOS = inject<boolean>("isIOS");
@@ -57,9 +57,9 @@
 						{{ choice.choice }} - {{ $t("messageBoard:polls.choice.desc", { count: choice.votes.length }) }}
 					</IonItemDivider>
 					<IonItem v-for="vote in choice.votes" :key="vote.member">
-						<MemberAvatar slot="start" :member="members.find(x => vote.member === x.uuid)!" />
+						<MemberAvatar slot="start" :member="members.find(x => vote.member === x.uuid) || defaultMember()" />
 						<IonLabel>
-							<h2>{{ members.find(x => vote.member === x.uuid)!.name }}</h2>
+							<h2>{{ (members.find(x => vote.member === x.uuid) || defaultMember()).name }}</h2>
 							<p>{{ vote.reason }}</p>
 						</IonLabel>
 					</IonItem>
