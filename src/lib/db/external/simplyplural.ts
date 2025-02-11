@@ -1,6 +1,5 @@
 import { System, Member, FrontingEntry, Tag, BoardMessage } from "../entities";
 import { PartialBy } from "../../types";
-import { AsyncUnzipOptions, unzip, Unzipped } from "fflate";
 import { getTables } from "..";
 import { newSystem } from "../tables/system";
 import { newTag } from "../tables/tags";
@@ -19,35 +18,19 @@ function normalizeSPColor(color: string) {
 	return "#" + color;
 }
 
-function unzipAsync(data: Uint8Array, opts?: AsyncUnzipOptions): Promise<Unzipped> {
-	return new Promise((resolve, reject) => {
-		const cb = (err: any, res: Unzipped) => err ? reject(err) : resolve(res);
-		if (opts)
-			unzip(data, opts, cb);
-		else
-			unzip(data, cb);
-	});
+async function getAvatarFromUuid(systemId: string, avatarUuid: string){
+	try {
+		const url = `https://spaces.apparyllis.com/avatars/${systemId}/${avatarUuid}`;
+		const req = await (await fetch(url)).blob();
+		return new File([req], avatarUuid + "." + req.type.split("/")[1]);
+	}catch(e){
+		return undefined;
+	}
 }
 
 export async function importSimplyPlural(spExport) {
 	// WIPE AMPERSAND
 	await Promise.all(getTables().map(async x => x.clear()));
-
-	// if a valid avatar export is present let's use it
-	const avatarExport = spExport.avatarExports.find(x => Date.now() < x.exp);
-	const avatars = new Map<string, File>();
-	if (avatarExport) {
-		const url = `https://api.apparyllis.com/v1/user/export/avatars/?key=${avatarExport.key}&uid=${avatarExport.uid}`;
-		try {
-			const avatarZip = new Uint8Array(await (await fetch(url)).arrayBuffer());
-			const decompressed = await unzipAsync(avatarZip);
-			for (const key in decompressed) {
-				avatars.set(key.replace(/\.\w+?$/, ""), new File([decompressed[key]], key));
-			}
-		} catch (e) {
-			// whatever
-		}
-	}
 
 	// SYSTEM
 	const systemInfo: PartialBy<System, "uuid"> = {
@@ -65,7 +48,7 @@ export async function importSimplyPlural(spExport) {
 			// whatever
 		}
 	} else if (spExport.users[0].avatarUuid.length) {
-		systemInfo.image = avatars.get(spExport.users[0].avatarUuid);
+		systemInfo.image = await getAvatarFromUuid(spExport.users[0].uid, spExport.users[0].avatarUuid);
 	}
 
 	if(!await newSystem(systemInfo)) return false;
@@ -113,7 +96,7 @@ export async function importSimplyPlural(spExport) {
 				// whatever
 			}
 		} else if (spMember.avatarUuid.length) {
-			systemInfo.image = avatars.get(spMember.avatarUuid);
+			member.image = await getAvatarFromUuid(spExport.users[0].uid, spMember.avatarUuid);
 		}
 
 		const uuid = await newMember(member);
@@ -142,7 +125,7 @@ export async function importSimplyPlural(spExport) {
 				// whatever
 			}
 		} else if (spCustomFront.avatarUuid.length) {
-			systemInfo.image = avatars.get(spCustomFront.avatarUuid);
+			member.image = await getAvatarFromUuid(spExport.users[0].uid, spCustomFront.avatarUuid);
 		}
 
 		const uuid = await newMember(member);
