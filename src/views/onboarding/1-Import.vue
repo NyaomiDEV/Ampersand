@@ -6,6 +6,7 @@
 	import { getFiles, slideAnimation } from '../../lib/util/misc';
 	import { importPluralKit } from '../../lib/db/external/pluralkit';
 	import { importTupperBox } from '../../lib/db/external/tupperbox';
+	import { importSimplyPlural } from '../../lib/db/external/simplyplural';
 	import { useTranslation } from 'i18next-vue';
 	import { getTables } from '../../lib/db';
 
@@ -21,6 +22,29 @@
 
 			const file = files[0];
 			await importDatabaseFromBinary(new Uint8Array(await file.arrayBuffer()));
+		}
+
+		router.replace("/onboarding/end/", slideAnimation);
+	}
+
+	async function importFromSimplyPlural() {
+		const files = await getFiles(undefined, false);
+		if (files.length) {
+			loading.value = true;
+			const file = files[0];
+			const spExport = JSON.parse(await file.text());
+			const result = await importSimplyPlural(spExport);
+			if (!result) {
+				await Promise.all(getTables().map(async x => x.clear()));
+
+				const statusMessage = await toastController.create({
+					message: i18next.t("onboarding:importScreen.errorSp"),
+					duration: 1500
+				});
+				await statusMessage.present();
+
+				return;
+			}
 		}
 
 		router.replace("/onboarding/end/", slideAnimation);
@@ -82,6 +106,10 @@
 
 				<IonButton @click="importFromPreviousInstallation">
 					{{ $t("onboarding:importScreen.prevInstall") }}
+				</IonButton>
+
+				<IonButton class="tonal" @click="importFromSimplyPlural">
+					{{ $t("onboarding:importScreen.simplyPlural") }}
 				</IonButton>
 
 				<IonButton class="tonal" @click="importFromPluralKit">

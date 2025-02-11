@@ -24,6 +24,7 @@
     "@tauri-apps/plugin-store": "~2",
     "dayjs": "^1.11.13",
     "dexie": "^4.0.11",
+    "fflate": "^0.8.2",
     "i18next": "^24.2.2",
     "i18next-vue": "^5.0.0",
     "ionicons": "^7.4.0",

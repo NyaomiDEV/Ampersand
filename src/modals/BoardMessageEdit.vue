@@ -82,8 +82,26 @@
 	async function save(){
 		const uuid = boardMessage.value?.uuid;
 
-		if(boardMessage.value.poll && boardMessage.value.poll.entries.length === 0)
-			boardMessage.value.poll = undefined;
+		if(boardMessage.value.poll && boardMessage.value.poll.entries.length === 0) {
+			boardMessage.value.poll.entries = [
+				{
+					choice: i18next.t("messageBoard:polls.defaultPollValues.yes"),
+					votes: []
+				},
+				{
+					choice: i18next.t("messageBoard:polls.defaultPollValues.no"),
+					votes: []
+				},
+				{
+					choice: i18next.t("messageBoard:polls.defaultPollValues.veto"),
+					votes: []
+				},
+				{
+					choice: i18next.t("messageBoard:polls.defaultPollValues.abstain"),
+					votes: []
+				}
+			];
+		}
 
 		// Reset the voters if the poll part has changed
 		if(

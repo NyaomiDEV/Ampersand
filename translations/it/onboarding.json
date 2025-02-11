@@ -11,6 +11,7 @@
 		"tupperbox": "Si, Tupperbox",
 		"startFromScratch": "No, inizierò da zero",
 		"pleaseWait": "Attendi mentre importiamo i tuoi dati",
+		"errorSp": "Errore durante l'importazione dell'export di Simply Plural. Per favore scegli un'altra opzione.",
 		"errorPk": "Errore durante l'importazione dell'export di PluralKit. Per favore scegli un'altra opzione.",
 		"errorTu": "Errore durante l'importazione dell'export di Tupperbox. Per favore scegli un'altra opzione."
 	},

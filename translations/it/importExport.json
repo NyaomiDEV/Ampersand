@@ -6,6 +6,7 @@
 	},
 	"dbImportDesc": "Attenzione! Questo sovvrascriverà ogni dato esistente",
 	"dbImport": "Importa i tuoi dati da un file di backup",
+	"spImport": "Importa i tuoi dati da un export di Simply Plural",
 	"pkImport": "Importa i tuoi dati da un export di PluralKit",
 	"tuImport": "Importa i tuoi dati da un export di Tupperbox",
 	"status": {
@@ -15,6 +16,7 @@
 		"exportedPwa": "Il backup è stato scaricato nella tua cartella degli scaricati.",
 		"exportedApp": "Il backup è stato esportato nella posizione scelta.",
 		"error": "Errore durante l'esportazione del backup.",
+		"errorSp": "Errore durante l'importazione dell'export di Simply Plural.",
 		"errorPk": "Errore durante l'importazione dell'export di PluralKit.",
 		"errorTu": "Errore durante l'importazione dell'export di Tupperbox."
 	}

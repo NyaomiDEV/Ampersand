@@ -9,6 +9,7 @@
 	import { useTranslation } from 'i18next-vue';
 	import { importPluralKit } from '../../lib/db/external/pluralkit';
 	import { importTupperBox } from '../../lib/db/external/tupperbox';
+import { importSimplyPlural } from '../../lib/db/external/simplyplural';
 
 	const isIOS = inject<boolean>("isIOS");
 	const loading = ref(false);
@@ -29,6 +30,33 @@
 			});
 
 			await statusMessage.present();
+		}
+
+		loading.value = false;
+	}
+
+	async function importSp() {
+		loading.value = true;
+
+		const files = await getFiles(undefined, false);
+		if(files.length){
+			const file = files[0];
+			const spExport = JSON.parse(await file.text());
+			const result = await importSimplyPlural(spExport);
+
+			if(result){
+				const statusMessage = await toastController.create({
+					message: i18next.t("importExport:status.importedSp"),
+					duration: 1500
+				});
+				await statusMessage.present();
+			} else {
+				const statusMessage = await toastController.create({
+					message: i18next.t("importExport:status.errorSp"),
+					duration: 1500
+				});
+				await statusMessage.present();
+			}
 		}
 
 		loading.value = false;
@@ -156,6 +184,13 @@
 				<IonItem button @click="importDb" :detail="true">
 					<IonLabel>
 						<h3>{{ $t("importExport:dbImport") }}</h3>
+						<p>{{ $t("importExport:dbImportDesc") }}</p>
+					</IonLabel>
+				</IonItem>
+
+				<IonItem button @click="importSp" :detail="true">
+					<IonLabel>
+						<h3>{{ $t("importExport:spImport") }}</h3>
 						<p>{{ $t("importExport:dbImportDesc") }}</p>
 					</IonLabel>
 				</IonItem>
