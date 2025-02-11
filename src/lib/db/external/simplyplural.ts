@@ -90,7 +90,7 @@ export async function importSimplyPlural(spExport) {
 			try {
 				member.image = new File(
 					[await (await fetch(spMember.avatarUrl)).blob()],
-					spMember.avatarUrl.avatarUrl.split("/").pop()
+					spMember.avatarUrl.split("/").pop()
 				);
 			} catch (e) {
 				// whatever
@@ -119,7 +119,7 @@ export async function importSimplyPlural(spExport) {
 			try {
 				member.image = new File(
 					[await (await fetch(spCustomFront.avatarUrl)).blob()],
-					spCustomFront.avatarUrl.avatarUrl.split("/").pop()
+					spCustomFront.avatarUrl.split("/").pop()
 				);
 			} catch (e) {
 				// whatever
