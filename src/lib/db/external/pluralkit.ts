@@ -5,6 +5,10 @@ import { getTables } from "..";
 import { newTag } from "../tables/tags";
 import { newMember } from "../tables/members";
 import { newFrontingEntry } from "../tables/frontingEntries";
+import { isTauri } from "../../mode";
+import { fetch as tauriFetch } from "@tauri-apps/plugin-http";
+
+const fetch = isTauri() ? tauriFetch : window.fetch;
 
 export async function importPluralKit(pkExport: any){
 	// WIPE AMPERSAND

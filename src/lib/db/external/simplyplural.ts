@@ -7,6 +7,10 @@ import { getMembers, newMember, updateMember } from "../tables/members";
 import { newFrontingEntry } from "../tables/frontingEntries";
 import { getBoardMessages, newBoardMessage, updateBoardMessage } from "../tables/boardMessages";
 import { t } from "i18next";
+import { isTauri } from "../../mode";
+import { fetch as tauriFetch } from "@tauri-apps/plugin-http";
+
+const fetch = isTauri() ? tauriFetch : window.fetch;
 
 function normalizeSPColor(color: string) {
 	if (color.startsWith("#"))

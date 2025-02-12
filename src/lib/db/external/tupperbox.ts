@@ -4,6 +4,10 @@ import { newSystem } from "../tables/system";
 import { getTables } from "..";
 import { newTag } from "../tables/tags";
 import { newMember } from "../tables/members";
+import { isTauri } from "../../mode";
+import { fetch as tauriFetch } from "@tauri-apps/plugin-http";
+
+const fetch = isTauri() ? tauriFetch : window.fetch;
 
 export async function importTupperBox(tuExport: any){
 	// WIPE AMPERSAND
