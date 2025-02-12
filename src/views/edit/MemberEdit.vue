@@ -165,7 +165,7 @@
 
 		loading.value = true;
 
-		tags.value = await getTags();
+		tags.value = (await getTags()).filter(x => x.type === "member");
 
 		if(route.query.uuid){
 			const _member = (await getMembers()).find(x => x.uuid === route.query.uuid);
