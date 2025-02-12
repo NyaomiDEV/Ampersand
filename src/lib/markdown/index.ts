@@ -1,77 +1,16 @@
 import { Fragment, h } from "vue";
-import { Marked, TokenizerAndRendererExtension } from "../../vendor/marked-vue/marked";
-import { getMembers } from "../lib/db/tables/members";
-import MemberChip from "../components/member/MemberChip.vue";
-import { getAssets } from "./db/tables/assets";
-import { getObjectURL } from "./util/blob";
+import { Marked } from "../../../vendor/marked-vue/marked";
+import { getAssets } from "../db/tables/assets";
+import { getObjectURL } from "../util/blob";
+import mentionExtension from "./mentionExtension";
+import spoilerExtension from "./spoilerExtension";
+import timestampExtension from "./timestampExtension";
+import colorExtension from "./colorExtension";
 
 export const marked = new Marked();
 
-const mention: TokenizerAndRendererExtension = {
-	name: "mention",
-	level: "inline",
-	start(src: string) { return src.match(/@</)?.index; },
-	tokenizer(src: string) {
-		const rule = /^@<([m]):(.+?)>/;
-		const match = rule.exec(src);
-		if (match) {
-			let mentionedType: string = "";
-			switch (match[1]) {
-				case "m":
-					mentionedType = "member";
-					break;
-			}
-			const token = {
-				type: 'mention',
-				raw: match[0],
-				mentionedType,
-				uuid: match[2],
-				tokens: []
-			};
-			return token;
-		}
-		return;
-	},
-	renderer(token) {
-		if (token.member) {
-			return h(MemberChip, {
-				member: token.member,
-				clickable: true
-			});
-		} else {
-			return h('span', token.raw);
-		}
-	}
-};
-
-const spoiler: TokenizerAndRendererExtension = {
-	name: "spoiler",
-	level: "inline",
-	start(src: string) { return src.match(/\|\|/)?.index; },
-	tokenizer(src: string) {
-		const rule = /^\|\|(.+?)\|\|/;
-		const match = rule.exec(src);
-		if (match) {
-			const token = {
-				type: 'spoiler',
-				raw: match[0],
-				text: match[1],
-				tokens: this.lexer.inlineTokens(match[1])
-			};
-			return token;
-		}
-		return;
-	},
-	renderer(token) {
-		return h('span', {
-			tabindex: -1,
-			class: "spoiler"
-		}, token.tokens && token.tokens.length ? this.parser.parseInline(token.tokens) : token.text);
-	}
-};
-
+// Override image and link renderers
 marked.use({
-	extensions: [mention, spoiler],
 	renderer: {
 		image(token) {
 			// checking for lone surrogates the shitty way
@@ -102,13 +41,6 @@ marked.use({
 	async: true,
 	async walkTokens(token) {
 		switch(token.type){
-			case "mention":
-				switch (token.mentionedType) {
-					case "member":
-						token.member = (await getMembers()).find(x => x.uuid === token.uuid);
-						break;
-				}
-				break;
 			case "image":
 				// first off let's match the size tokens
 				const matches = /#(-?\d+?x-?\d+?)$/.exec(token.href);
@@ -140,3 +72,11 @@ marked.use({
 		}
 	},
 });
+
+// Start injecting our extensions
+marked.use(
+	mentionExtension,
+	spoilerExtension,
+	timestampExtension,
+	colorExtension
+);

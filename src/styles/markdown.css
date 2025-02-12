@@ -72,7 +72,7 @@
 
 .markdown-content span.spoiler {
     border-radius: 4px;
-    padding: 0px 4px;
+    padding: 2px 4px;
     background-color: var(--ion-background-color-step-200);
     transition-duration: 250ms;
     transition-timing-function: ease-in-out;
@@ -86,4 +86,21 @@
     background-color: var(--ion-background-color-step-400);
     color: unset;
     user-select: unset;
+}
+
+.markdown-content span.timestamp {
+    border-radius: 4px;
+    padding: 2px 4px;
+    background-color: var(--ion-background-color-step-150);
+}
+
+.markdown-content span.color::before {
+    content: "\A";
+    display: inline-block;
+    aspect-ratio: 1;
+    width: .8em;
+    margin-inline-end: 0.25em;
+    border-radius: 100%;
+    background-color: var(--color);
+    vertical-align: baseline;
 }
