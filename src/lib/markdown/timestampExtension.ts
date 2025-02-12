@@ -8,7 +8,7 @@ const timestampExtension: MarkedExtension = {
 		{
 			name: "timestamp",
 			level: "inline",
-			start(src: string) { return src.match(/</)?.index; },
+			start(src: string) { return src.match(/<t/)?.index; },
 			tokenizer(src: string) {
 				const rule = /^<t:(\d+?):([FfDdTt])>/;
 				const match = rule.exec(src);

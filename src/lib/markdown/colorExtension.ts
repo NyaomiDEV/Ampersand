@@ -6,15 +6,15 @@ const colorExtension: MarkedExtension = {
 		{
 			name: "color",
 			level: "inline",
-			start(src: string) { return src.match(/#/)?.index; },
+			start(src: string) { return src.match(/<#/)?.index; },
 			tokenizer(src: string) {
-				const rule = /^#(?:[0-9a-zA-Z]{2}){3}$/;
+				const rule = /^<(#(?:[0-9a-fA-F]{2}){3})>/;
 				const match = rule.exec(src);
 				if (match) {
 					const token = {
 						type: 'color',
 						raw: match[0],
-						tokens: []
+						color: match[1]
 					};
 					return token;
 				}
@@ -24,9 +24,9 @@ const colorExtension: MarkedExtension = {
 				return h('span', {
 					class: "color",
 					style: {
-						"--color": token.raw
+						"--color": token.color
 					}
-				}, token.raw);
+				}, token.color);
 			}
 		}
 	]
