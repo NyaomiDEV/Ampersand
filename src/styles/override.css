@@ -20,10 +20,11 @@ html.high-legibility.hl-lexend {
 ion-content {
 	--ion-safe-area-left: var(--device-inset-left, env(safe-area-inset-left));
 	--ion-safe-area-right: var(--device-inset-right, env(safe-area-inset-right));
+	--padding-bottom: 80px;
 }
 
 ion-content:not(ion-tabs *){
-	--padding-bottom: var(--device-inset-bottom, env(safe-area-inset-bottom));
+	--padding-bottom: calc(var(--padding-bottom, 0px) + var(--device-inset-bottom, env(safe-area-inset-bottom)));
 }
 
 ion-header ion-toolbar:first-of-type {
@@ -64,4 +65,9 @@ ion-label.nowrap > * {
 	text-wrap: nowrap !important;
 	text-overflow: ellipsis !important;
 	overflow: hidden !important;
+}
+
+.md ion-input,
+.md ion-textarea {
+	margin: 16px 0;
 }

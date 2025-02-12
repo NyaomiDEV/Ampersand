@@ -173,8 +173,4 @@
 	ion-thumbnail {
 		--border-radius: 16px;
 	}
-
-	.md ion-input {
-		margin: 16px 0;
-	}
 </style>

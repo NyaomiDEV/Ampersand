@@ -259,13 +259,3 @@ import MemberSelect from "../../modals/MemberSelect.vue";
 		</IonContent>
 	</IonPage>
 </template>
-
-<style scoped>
-	ion-content {
-		--padding-bottom: 80px;
-	}
-
-	.md ion-input, .md ion-textarea {
-		margin: 16px 0;
-	}
-</style>

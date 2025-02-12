@@ -267,12 +267,4 @@
 		--min-height: 600px;
 		--border-radius: 16px;
 	}
-
-	ion-content {
-		--padding-bottom: 80px;
-	}
-
-	.md ion-input, .md ion-textarea {
-		margin: 16px 0;
-	}
 </style>

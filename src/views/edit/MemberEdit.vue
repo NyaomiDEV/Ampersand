@@ -325,10 +325,6 @@
 </template>
 
 <style scoped>
-	ion-content {
-		--padding-bottom: 80px;
-	}
-
 	div.avatar-container {
 		position: relative;
 		width: fit-content;
@@ -381,9 +377,5 @@
 
 	div.member-description ion-label {
 		color: var(--ion-color-step-600, var(--ion-text-color-step-400, #666666));
-	}
-
-	.md ion-input, .md ion-textarea {
-		margin: 16px 0;
 	}
 </style>

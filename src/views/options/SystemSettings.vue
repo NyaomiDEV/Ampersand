@@ -1,11 +1,12 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonAvatar, IonButton, IonIcon, IonInput, IonFab, IonFabButton, IonItem, IonLabel, IonTextarea} from '@ionic/vue';
+	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonAvatar, IonButton, IonIcon, IonInput, IonFab, IonFabButton, IonItem, IonLabel } from '@ionic/vue';
 	import { inject, onMounted, ref } from 'vue';
 	import { getObjectURL } from '../../lib/util/blob';
 	import { getFiles } from '../../lib/util/misc';
 	import { resizeImage } from '../../lib/util/image';
 	import { getSystem, modifySystem } from '../../lib/db/tables/system';
 	import { getMembers } from '../../lib/db/tables/members';
+	import ContentEditable from '../../components/ContentEditable.vue';
 
 	import {
 		peopleOutline as peopleIOS,
@@ -77,7 +78,7 @@
 					<IonInput :fill="!isIOS ? 'outline' : undefined" labelPlacement="floating" :label="$t('systemSettings:systemName')" v-model="system.name" />
 				</IonItem>
 				<IonItem>
-					<IonTextarea :fill="!isIOS ? 'outline' : undefined" auto-grow :label="$t('systemSettings:systemDescription')" labelPlacement="floating" v-model="system.description" />
+					<ContentEditable :label="$t('systemSettings:systemDescription')" v-model="system.description" />
 				</IonItem>
 				<IonItem>
 					<IonLabel>{{ $t("systemSettings:memberCount") }}</IonLabel>
@@ -117,13 +118,5 @@
 		position: absolute;
 		bottom: 8px;
 		right: 8px;
-	}
-
-	ion-content {
-		--padding-bottom: 80px;
-	}
-
-	.md ion-input, .md ion-textarea {
-		margin: 16px 0;
 	}
 </style>

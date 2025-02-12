@@ -74,3 +74,8 @@ html.ios.ion-palette-dark ion-content {
 	--background: rgb(from var(--ion-color-primary) r g b / .65);
 	--background-hover-opacity: 0.5;
 }
+
+.ios ion-fab {
+	bottom: 24px;
+	right: 24px;
+}

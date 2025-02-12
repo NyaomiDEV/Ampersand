@@ -108,10 +108,6 @@
 		text-align: center;
 	}
 
-	ion-content {
-		--padding-bottom: 80px;
-	}
-
 	div.avatar-container {
 		position: relative;
 		width: fit-content;
@@ -133,9 +129,5 @@
 		position: absolute;
 		bottom: 8px;
 		right: 8px;
-	}
-
-	.md ion-input, .md ion-textarea {
-		margin: 16px 0;
 	}
 </style>

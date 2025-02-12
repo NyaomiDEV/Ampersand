@@ -379,14 +379,3 @@
 		</IonContent>
 	</IonPage>
 </template>
-
-
-<style scoped>
-	ion-content {
-		--padding-bottom: 80px;
-	}
-
-	.md ion-input {
-		margin: 16px 0;
-	}
-</style>

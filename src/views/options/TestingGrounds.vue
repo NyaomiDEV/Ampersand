@@ -6,15 +6,16 @@
 		IonPage,
 		IonTitle,
 		IonToolbar,
-		IonBackButton
+		IonBackButton,
+		IonItem,
+		IonLabel
 	} from '@ionic/vue';
-	import { inject } from 'vue';
+	import { inject, ref } from 'vue';
+	import ContentEditable from '../../components/ContentEditable.vue';
+
+	const model = ref("ciao");
 
 	const isIOS = inject<boolean>("isIOS");
-
-	function test(e: Event){
-		e.preventDefault();
-	}
 </script>
 
 <template>
@@ -30,9 +31,10 @@
 
 		<IonContent>
 			<IonList :inset="isIOS">
-				<div @click="test">
-					ciao <a href="https://google.com">ciaone</a> aaaaa
-				</div>
+				<ContentEditable v-model="model" label="test"/>
+				<IonItem>
+					<IonLabel>Test</IonLabel>
+				</IonItem>
 			</IonList>
 		</IonContent>
 	</IonPage>

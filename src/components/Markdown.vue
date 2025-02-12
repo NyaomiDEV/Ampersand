@@ -11,10 +11,10 @@
 	}>();
 
 	async function redirectClicks(evt: MouseEvent) {
-		evt.preventDefault();
 		const tag = (evt.target as HTMLElement).closest("a");
 		if(!tag || !(evt.currentTarget as HTMLElement).contains(tag)) return;
 
+		evt.preventDefault();
 		const url = tag.href;
 
 		if(!isTauri()){
@@ -35,7 +35,6 @@
 		}catch(e){
 			console.log(e);
 		}
-
 	}
 
 	const rendererComponent = defineComponent(async () => {

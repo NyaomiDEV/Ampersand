@@ -130,9 +130,3 @@
 		</IonContent>
 	</IonPage>
 </template>
-
-<style scoped>
-	.md ion-input {
-		margin: 16px 0;
-	}
-</style>

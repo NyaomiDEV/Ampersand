@@ -110,13 +110,5 @@
 		bottom: 8px;
 		right: 8px;
 	}
-
-	ion-content {
-		--padding-bottom: 80px;
-	}
-
-	.md ion-input, .md ion-textarea {
-		margin: 16px 0;
-	}
 </style>
 
