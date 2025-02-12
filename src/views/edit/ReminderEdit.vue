@@ -363,7 +363,7 @@
 				/>
 			</template>
 
-			<IonItem button v-if="reminder.uuid" @click="deleteReminder">
+			<IonItem button detail="false" v-if="reminder.uuid" @click="deleteReminder">
 				<IonIcon :ios="trashIOS" :md="trashMD" slot="start" aria-hidden="true" color="danger" />
 				<IonLabel color="danger">
 					<h3>{{ $t("reminders:edit.delete.title") }}</h3>

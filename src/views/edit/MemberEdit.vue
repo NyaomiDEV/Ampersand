@@ -259,21 +259,21 @@
 				<IonItem>
 					<IonTextarea :fill="!isIOS ? 'outline' : undefined" auto-grow :label="$t('members:edit.description')" labelPlacement="floating" v-model="member.description" />
 				</IonItem>
-				<IonItem button>
+				<IonItem button detail="false">
 					<Color v-model="member.color" @update:model-value="updateColors">
 						<IonLabel>
 							{{ $t("members:edit.color") }}
 						</IonLabel>
 					</Color>
 				</IonItem>
-				<IonItem button>
+				<IonItem button detail="false">
 					<IonToggle v-model="member.isCustomFront">
 						<IonLabel>
 							{{ $t("members:edit.isCustomFront") }}
 						</IonLabel>
 					</IonToggle>
 				</IonItem>
-				<IonItem button>
+				<IonItem button detail="false">
 					<IonToggle v-model="member.isArchived">
 						<IonLabel>
 							{{ $t("members:edit.isArchived") }}
@@ -289,7 +289,7 @@
 						</div>
 					</IonLabel>
 				</IonItem>
-				<IonItem button v-if="member.uuid" @click="removeMember">
+				<IonItem button detail="false" v-if="member.uuid" @click="removeMember">
 					<IonIcon :ios="trashIOS" :md="trashMD" slot="start" aria-hidden="true" color="danger"/>
 					<IonLabel color="danger">
 						<h3>{{ $t("members:edit.delete.title") }}</h3>
@@ -297,12 +297,12 @@
 					</IonLabel>
 				</IonItem>
 
-				<IonItem v-if="member.uuid" button @click="copyIdToClipboard">
+				<IonItem detail="false" v-if="member.uuid" button @click="copyIdToClipboard">
 					<IonLabel>
 						<p>{{ $t("members:edit.memberID", { memberID: member.uuid }) }}</p>
 					</IonLabel>
 				</IonItem>
-				<IonItem v-if="member.dateCreated" button @click="copyIdToClipboard">
+				<IonItem detail="false" v-if="member.dateCreated" button @click="copyIdToClipboard">
 					<IonLabel>
 						<p>{{ $t("members:edit.dateCreated", { dateCreated: formatDate(member.dateCreated, "expanded") }) }}</p>
 					</IonLabel>

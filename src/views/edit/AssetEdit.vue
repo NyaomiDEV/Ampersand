@@ -147,7 +147,7 @@
 					<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('assetManager:edit.friendlyName')" labelPlacement="floating" v-model="asset.friendlyName" />
 				</IonItem>
 
-				<IonItem button v-if="asset.uuid" @click="removeAsset">
+				<IonItem button detail="false" v-if="asset.uuid" @click="removeAsset">
 					<IonIcon :ios="trashIOS" :md="trashMD" slot="start" aria-hidden="true" color="danger"/>
 					<IonLabel color="danger">
 						<h3>{{ $t("assetManager:edit.delete.title") }}</h3>

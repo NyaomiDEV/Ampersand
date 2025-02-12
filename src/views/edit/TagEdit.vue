@@ -199,7 +199,7 @@ import MemberSelect from "../../modals/MemberSelect.vue";
 						<IonTextarea :fill="!isIOS ? 'outline' : undefined" auto-grow :label="$t('tagManagement:edit.description')" labelPlacement="floating" v-model="tag.description" />
 					</IonItem>
 
-					<IonItem button>
+					<IonItem button detail="false">
 						<Color v-model="tag.color" @update:model-value="updateColors">
 							<IonLabel>
 								{{ $t("tagManagement:edit.color") }}
@@ -242,7 +242,7 @@ import MemberSelect from "../../modals/MemberSelect.vue";
 						</IonLabel>
 					</IonItem>
 
-					<IonItem button v-if="tag.uuid" @click="deleteTag">
+					<IonItem button detail="false" v-if="tag.uuid" @click="deleteTag">
 						<IonIcon :ios="trashIOS" :md="trashMD" slot="start" aria-hidden="true" color="danger"/>
 						<IonLabel color="danger">
 							<h3>{{ $t("tagManagement:edit.delete.title") }}</h3>

@@ -176,14 +176,14 @@
 							:min="frontingEntry.startTime"
 						/>
 					</IonItem>
-					<IonItem button>
+					<IonItem button detail="false">
 						<IonToggle v-model="frontingEntry.isMainFronter">
 							<IonLabel>
 								{{ $t("frontHistory:edit.isMainFronter") }}
 							</IonLabel>
 						</IonToggle>
 					</IonItem>
-					<IonItem button v-if="frontingEntry.uuid" @click="removeFrontingEntry">
+					<IonItem button detail="false" v-if="frontingEntry.uuid" @click="removeFrontingEntry">
 						<IonIcon :ios="trashIOS" :md="trashMD" slot="start" aria-hidden="true" color="danger"/>
 						<IonLabel color="danger">
 							<h3>{{ $t("frontHistory:edit.delete.title") }}</h3>

@@ -181,7 +181,7 @@
 						<IonTextarea :fill="!isIOS ? 'outline' : undefined" auto-grow :label="$t('messageBoard:edit.body')" labelPlacement="floating" v-model="boardMessage.body" />
 					</IonItem>
 
-					<IonItem button>
+					<IonItem button detail="false">
 						<IonToggle v-model="boardMessage.isPinned">
 							<IonLabel>
 								{{ $t("messageBoard:edit.isPinned") }}
@@ -203,14 +203,14 @@
 							</IonLabel>
 						</IonItem>
 
-						<IonItem button @click="() => { boardMessage.poll = undefined }">
+						<IonItem button detail="false" @click="() => { boardMessage.poll = undefined }">
 							<IonIcon :ios="trashIOS" :md="trashMD" slot="start" aria-hidden="true" color="danger"/>
 							<IonLabel color="danger">
 								<h3>{{ $t("messageBoard:edit.deleteAttachedPoll") }}</h3>
 								<p>{{ $t("other:genericDeleteDesc") }}</p>
 							</IonLabel>
 						</IonItem>
-						<IonItem button>
+						<IonItem button detail="false">
 							<IonToggle v-model="boardMessage.poll.multipleChoice">
 								<IonLabel>
 									{{ $t("messageBoard:edit.pollIsMultipleChoice") }}
@@ -233,7 +233,7 @@
 						</IonItem>
 					</template>
 
-					<IonItem button v-if="boardMessage.uuid" @click="removeBoardMessage">
+					<IonItem button detail="false" v-if="boardMessage.uuid" @click="removeBoardMessage">
 						<IonIcon :ios="trashIOS" :md="trashMD" slot="start" aria-hidden="true" color="danger"/>
 						<IonLabel color="danger">
 							<h3>{{ $t("messageBoard:edit.delete.title") }}</h3>
