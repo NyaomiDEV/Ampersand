@@ -1,4 +1,6 @@
 import dayjs from "dayjs";
+import LocalizedFormat from "dayjs/plugin/localizedFormat";
+import Duration from "dayjs/plugin/duration";
 import i18next from "i18next";
 
 import { appConfig } from "./config";
@@ -30,6 +32,8 @@ for(const [path, translation] of translations.entries()){
 	i18next.addResourceBundle(lang, ns, translation);
 }
 
+dayjs.extend(LocalizedFormat);
+dayjs.extend(Duration);
 dayjs.locale(i18next.language);
 
 export default i18next;

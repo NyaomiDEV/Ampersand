@@ -9,8 +9,6 @@
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
 	import dayjs from 'dayjs';
-	import LocalizedFormat from "dayjs/plugin/localizedFormat";
-	dayjs.extend(LocalizedFormat);
 
 	import {
 		calendarOutline as calendarIOS,

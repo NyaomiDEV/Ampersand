@@ -17,8 +17,6 @@
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 
 	import dayjs from 'dayjs';
-	import LocalizedFormat from "dayjs/plugin/localizedFormat";
-	dayjs.extend(LocalizedFormat);
 
 	import { appConfig } from '../../lib/config';
 	import { getFilteredBoardMessages } from '../../lib/search.ts';

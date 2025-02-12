@@ -33,14 +33,10 @@
 	import MemberAvatar from "../components/member/MemberAvatar.vue";
 	import DatePopupPicker from "../components/DatePopupPicker.vue";
 
-	import dayjs from "dayjs";
-	import UTC from "dayjs/plugin/utc";
-	import Timezone from "dayjs/plugin/timezone";
 	import { PartialBy } from "../lib/types";
 	import { formatDate } from "../lib/util/misc";
 	import { useTranslation } from "i18next-vue";
-	dayjs.extend(UTC);
-	dayjs.extend(Timezone);
+
 
 	const i18next = useTranslation();
 	const isIOS = inject<boolean>("isIOS");
