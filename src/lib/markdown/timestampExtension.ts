@@ -16,7 +16,7 @@ const timestampExtension: MarkedExtension = {
 					const token = {
 						type: 'timestamp',
 						raw: match[0],
-						timestamp: Number(match[1]),
+						timestamp: Number(match[1]) * 1000,
 						format: match[2],
 						tokens: []
 					};
