@@ -85,7 +85,7 @@
 					</IonToggle>
 				</IonItem>
 
-				<IonItem button :disabled="!accessibilityConfig.useAccentColor" v-if="accessibilityConfig.useMaterialTheming || !isIOS">
+				<IonItem button detail="false" :disabled="!accessibilityConfig.useAccentColor && !accessibilityConfig.useMaterialTheming" v-if="accessibilityConfig.useMaterialTheming || !isIOS">
 					<Color v-model="accessibilityConfig.accentColor">
 						<IonLabel>
 							<h3>{{ $t("accessibility:accentColor.title") }}</h3>
