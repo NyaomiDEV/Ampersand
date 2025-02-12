@@ -85,7 +85,7 @@ export function rgbaToArgb(rgba: string) {
 }
 
 export function updateMaterialColors(target?: HTMLElement){
-	const useAccentColor = accessibilityConfig.useAccentColor;
+	const useAccentColor = accessibilityConfig.useAccentColor || (isIOSIonicMode() && accessibilityConfig.useMaterialTheming);
 	const accentColor = accessibilityConfig.accentColor;
 	if (useAccentColor && accentColor)
 		addMaterialColors(rgbaToArgb(accentColor), target);

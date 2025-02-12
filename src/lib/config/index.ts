@@ -19,8 +19,8 @@ const defaultAccessibilityConfig: AccessibilityConfig = {
 	highLegibility: false,
 	highLegibilityType: "atkinson",
 	theme: "auto",
-	useMaterialTheming: isIOSIonicMode(),
-	useAccentColor: !isIOSIonicMode(),
+	useMaterialTheming: false,
+	useAccentColor: false,
 	accentColor: isIOSIonicMode() ? defaultColor : undefined,
 	reducedMotion: false,
 	fontScale: 1,
@@ -49,13 +49,14 @@ watch(accessibilityConfig, async () => {
 	await impl.set("accessibilityConfig", { ...accessibilityConfig });
 	updateDarkMode();
 
-	if(isIOSIonicMode())
+	if(isIOSIonicMode()){
 		if(accessibilityConfig.useMaterialTheming)
 			activateMaterialTheme();
 		else {
 			deactivateMaterialTheme();
 			unsetMaterialColors();
 		}
+	}
 
 	updateMaterialColors();
 	updatePWATitlebarColor(window.getComputedStyle(document.body).getPropertyValue("--ion-toolbar-background"));
