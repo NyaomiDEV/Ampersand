@@ -8,7 +8,7 @@
 	import { getMembers } from '../../lib/db/tables/members';
 	import ContentEditable from '../../components/ContentEditable.vue';
 
-	import peopleMD from "@material-symbols/svg-600/outlined/groups_2.svg"
+	import accountCircle from "@material-symbols/svg-600/outlined/account_circle.svg";
 	import pencilMD from "@material-symbols/svg-600/outlined/edit.svg"
 	import saveMD from "@material-symbols/svg-600/outlined/save.svg"
 
@@ -59,7 +59,8 @@
 		<IonContent>
 			<div class="avatar-container">
 				<IonAvatar>
-					<img aria-hidden="true" :src="system?.image ? getObjectURL(system.image) : peopleMD" />
+					<img aria-hidden="true" :src="getObjectURL(system.image)" v-if="system?.image"/>
+					<IonIcon :icon="accountCircle" v-else />
 				</IonAvatar>
 
 				<IonButton shape="round" @click="modifyPicture">
@@ -91,7 +92,6 @@
 </template>
 
 <style scoped>
-
 	div.avatar-container {
 		position: relative;
 		width: fit-content;
@@ -112,5 +112,11 @@
 		position: absolute;
 		bottom: 8px;
 		right: 8px;
+	}
+
+	div.avatar-container ion-avatar ion-icon {
+		width: 100%;
+		height: 100%;
+		color: var(--ion-color-primary);
 	}
 </style>
