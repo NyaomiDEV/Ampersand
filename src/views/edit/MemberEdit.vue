@@ -249,7 +249,7 @@
 				<Markdown :markdown="member.description || $t('members:edit.noDescription')" />
 			</div>
 
-			<div class="member-custom-field" v-if="!isEditing && member.customFields" v-for="customField in customFields.sort((a, b) => a.name.localeCompare(b.name)).filter(x => member.customFields!.keys().toArray().includes(x.uuid))" :key="customField.uuid">
+			<div class="member-custom-field" v-if="!isEditing && member.customFields" v-for="customField in customFields.sort((a, b) => a.name.localeCompare(b.name)).filter(x => Array.from(member.customFields!.keys()).includes(x.uuid))" :key="customField.uuid">
 				<IonLabel>{{ customField.name }}</IonLabel>
 				<Markdown :markdown="member.customFields.get(customField.uuid)!" />
 			</div>
