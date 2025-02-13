@@ -31,7 +31,7 @@ export async function getSystemUUID(){
 
 export async function modifySystem(system: Partial<System>) {
 	try {
-		const uuid = await getSystemUUID();
+		const uuid = (await getSystemUUID())!;
 		const updated = await db.system.update(uuid, system);
 		if(updated){
 			DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {

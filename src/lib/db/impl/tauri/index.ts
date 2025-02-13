@@ -2,7 +2,7 @@ import * as path from '@tauri-apps/api/path';
 import * as fs from '@tauri-apps/plugin-fs';
 import { Typeson } from "typeson";
 import { blob, file, filelist, map, typedArrays, undef, set as Tset, imagebitmap, imagedata } from "typeson-registry";
-import { Asset, BoardMessage, Chat, ChatMessage, FrontingEntry, JournalPost, Member, Reminder, System, Tag, UUIDable } from '../../entities';
+import { Asset, BoardMessage, Chat, ChatMessage, CustomField, FrontingEntry, JournalPost, Member, Reminder, System, Tag, UUIDable } from '../../entities';
 import { decode, encode } from '@msgpack/msgpack';
 
 class ShittyTable<T extends UUIDable> {
@@ -192,6 +192,7 @@ export const db = {
 	reminders: await makeTable<Reminder>("reminders"),
 	system: await makeTable<System>("system"),
 	tags: await makeTable<Tag>("tags"),
-	assets: await makeTable<Asset>("assets")
+	assets: await makeTable<Asset>("assets"),
+	customFields: await makeTable<CustomField>("customFields")
 }
 

@@ -163,3 +163,8 @@ export interface Asset extends UUIDable {
 	file: File,
 	friendlyName: string
 }
+
+export interface CustomField extends UUIDable {
+	name: string,
+	default?: boolean
+}
