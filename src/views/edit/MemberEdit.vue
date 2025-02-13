@@ -249,9 +249,9 @@
 				<Markdown :markdown="member.description || $t('members:edit.noDescription')" />
 			</div>
 
-			<div class="member-custom-field" v-if="!isEditing && member.customFields" v-for="[id, value] in [...member.customFields.entries()].filter(x => x[1].length)" :key="id">
-				<IonLabel>{{ customFields.find(x => x.uuid === id)?.name }}</IonLabel>
-				<Markdown :markdown="value" />
+			<div class="member-custom-field" v-if="!isEditing && member.customFields" v-for="customField in customFields.sort((a, b) => a.name.localeCompare(b.name)).filter(x => member.customFields!.keys().toArray().includes(x.uuid))" :key="customField.uuid">
+				<IonLabel>{{ customField.name }}</IonLabel>
+				<Markdown :markdown="member.customFields.get(customField.uuid)!" />
 			</div>
 
 			<IonList class="member-actions" v-if="!isEditing">
@@ -286,7 +286,7 @@
 					</Color>
 				</IonItem>
 
-				<IonItem v-for="customField in customFieldsToShow" :key="customField.uuid" v-if="member.customFields">
+				<IonItem v-for="customField in customFieldsToShow.sort((a, b) => a.name.localeCompare(b.name))" :key="customField.uuid" v-if="member.customFields">
 					<IonInput
 						:fill="!isIOS ? 'outline' : undefined"
 						:label="customField.name"
