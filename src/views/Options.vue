@@ -16,6 +16,8 @@
 	import ImportExportMD from '@material-symbols/svg-600/outlined/swap_vert.svg';
 	import AboutMD from '@material-symbols/svg-600/outlined/info.svg';
 	import FolderMD from '@material-symbols/svg-600/outlined/folder_open.svg';
+	import CustomFieldsMD from '@material-symbols/svg-600/outlined/format_list_bulleted_add.svg';
+
 	import { securityConfig } from '../lib/config';
 	import { lock } from '../lib/applock';
 	import { isTauri } from '../lib/mode';
@@ -57,7 +59,7 @@
 				</IonItem>
 
 				<IonItem button routerLink="/options/customFields">
-					<IonIcon :icon="SystemMD" slot="start" aria-hidden="true" />
+					<IonIcon :icon="CustomFieldsMD" slot="start" aria-hidden="true" />
 					<IonLabel>{{ $t("customFields:header") }}</IonLabel>
 				</IonItem>
 
