@@ -55,7 +55,8 @@
 	});
 
 
-	function getGrouped(entries: BoardMessageComplete[]){
+	function getGrouped(){
+		const entries = filteredBoardMessages.value || [];
 		const map = new Map<string, BoardMessageComplete[]>();
 
 		for(const entry of entries.sort((a, b) => b.date.getTime() - a.date.getTime())){
@@ -129,7 +130,7 @@
 		<SpinnerFullscreen v-if="!boardMessages" />
 		<IonContent v-else>
 			<IonList :inset="isIOS">
-				<template v-for="tuple in (isCalendarView ? getAtDate(date) : getGrouped(filteredBoardMessages || []))" :key="tuple[0]">
+				<template v-for="tuple in (isCalendarView ? getAtDate(date) : getGrouped())" :key="tuple[0]">
 					<IonItemDivider sticky>
 						<IonLabel>{{ dayjs(tuple[0]).format("LL") }}</IonLabel>
 					</IonItemDivider>

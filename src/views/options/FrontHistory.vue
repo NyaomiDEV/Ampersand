@@ -55,8 +55,9 @@
 		DatabaseEvents.removeEventListener("updated", listener);
 	});
 
-	function getGrouped(entries: FrontingEntryComplete[]){
+	function getGrouped(){
 		const map = new Map<string, FrontingEntryComplete[]>();
+		const entries =  filteredFrontingEntries.value || [];
 
 		for(const entry of entries.filter(x => !x.endTime).sort((a, b) => b.startTime.getTime() - a.startTime.getTime())){
 			const collection = map.get("currentlyFronting");
@@ -149,7 +150,7 @@
 		<SpinnerFullscreen v-if="!frontingEntries" />
 		<IonContent v-else>
 			<IonList :inset="isIOS">
-				<template v-for="tuple in (isCalendarView ? getAtDate(date) : getGrouped(filteredFrontingEntries || []))" :key="tuple[0]">
+				<template v-for="tuple in (isCalendarView ? getAtDate(date) : getGrouped())" :key="tuple[0]">
 					<IonItemDivider sticky>
 						<IonLabel>{{
 							tuple[0] === "currentlyFronting"
