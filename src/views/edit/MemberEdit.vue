@@ -30,8 +30,9 @@
 	import newspaperMD from "@material-symbols/svg-600/outlined/newspaper.svg";
 	import journalMD from "@material-symbols/svg-600/outlined/book.svg";
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
+	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 
-	import { Member, Tag } from "../../lib/db/entities";
+	import { CustomField, Member, Tag } from "../../lib/db/entities";
 	import { getMembers, newMember, deleteMember, updateMember, defaultMember } from '../../lib/db/tables/members';
 	import { getTags } from "../../lib/db/tables/tags";
 	import { getFiles } from "../../lib/util/misc";
@@ -45,6 +46,8 @@
 	import { formatDate } from "../../lib/util/misc";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import MemberAvatar from "../../components/member/MemberAvatar.vue";
+	import { getCustomFields } from "../../lib/db/tables/customFields";
+	import CustomFieldsSelect from "../../modals/CustomFieldsSelect.vue";
 
 	const i18next = useTranslation();
 
@@ -66,6 +69,10 @@
 	const tags = shallowRef<Tag[]>([]);
 	const tagSelectionModal = useTemplateRef("tagSelectionModal");
 
+	const customFields = shallowRef<CustomField[]>([]);
+	const customFieldsToShow = shallowRef<CustomField[]>([]);
+	const customFieldsSelectionModal = useTemplateRef("customFieldsSelectionModal");
+
 	const canEdit = ref(true);
 	const isEditing = ref(false);
 	const self = getCurrentInstance();
@@ -74,6 +81,13 @@
 		if(!isEditing.value){
 			isEditing.value = true;
 			return;
+		}
+
+		if(member.value.customFields){
+			member.value.customFields.forEach((v, k) => {
+				if(!v.length)
+					member.value.customFields!.delete(k);
+			});
 		}
 
 		const uuid = member.value.uuid;
@@ -159,11 +173,18 @@
 
 		tags.value = (await getTags()).filter(x => x.type === "member");
 
+		customFields.value = await getCustomFields();
+		customFieldsToShow.value = customFields.value.filter(x => x.default || member.value.customFields?.has(x.uuid));
+
 		if(route.query.uuid){
 			const _member = (await getMembers()).find(x => x.uuid === route.query.uuid);
 			if(_member) member.value = _member;
 			else member.value = defaultMember();
 		} else member.value = {...emptyMember};
+
+		if(!member.value.customFields){
+			member.value.customFields = new Map();
+		}
 
 		if(route.query.disallowEditing){
 			canEdit.value = false;
@@ -258,6 +279,18 @@
 						</IonLabel>
 					</Color>
 				</IonItem>
+
+				<IonItem v-for="customField in customFieldsToShow" :key="customField.uuid" v-if="member.customFields">
+					<IonInput :fill="!isIOS ? 'outline' : undefined" :label="customField.name" labelPlacement="floating" v-model="member.customFields[customField.uuid]" />
+				</IonItem>
+
+				<IonItem button @click="customFieldsSelectionModal?.$el.present()">
+					<IonIcon :icon="addMD" slot="start" aria-hidden="true"/>
+					<IonLabel>
+						{{ $t("members:edit.customFieldsAdd") }}
+					</IonLabel>
+				</IonItem>
+
 				<IonItem button detail="false">
 					<IonToggle v-model="member.isCustomFront">
 						<IonLabel>
@@ -306,6 +339,16 @@
 					<IonIcon :icon="isEditing ? saveMD : pencilMD" />
 				</IonFabButton>
 			</IonFab>
+
+			<CustomFieldsSelect
+				ref="customFieldsSelectionModal"
+				:modelValue="customFieldsToShow"
+				@update:modelValue="_customFields => {
+					customFieldsToShow = customFields.filter(x => {
+						return x.default || _customFields.map(y => y.uuid).includes(x.uuid)
+					});
+				}"	
+			/>
 
 			<TagListSelect
 				ref="tagSelectionModal"

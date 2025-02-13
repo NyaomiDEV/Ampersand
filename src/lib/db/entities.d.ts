@@ -80,9 +80,10 @@ export interface Member extends UUIDable {
 	description?: string,
 	role?: string,
 	image?: File,
-	color?: string, // todo
+	color?: string,
+	customFields?: Map<UUID, string>,
 	isArchived: boolean,
-	isCustomFront: boolean, // todo
+	isCustomFront: boolean,
 	tags: UUID[] // array of UUIDs
 	dateCreated: Date
 }
