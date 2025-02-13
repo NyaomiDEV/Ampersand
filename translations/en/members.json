@@ -17,6 +17,7 @@
 		"pronouns": "Pronouns",
 		"role": "Role",
 		"color": "Preferred color",
+		"customFieldsAdd": "Add custom fields",
 		"tags": "Edit tags",
 		"description": "Description",
 		"noDescription": "No description",
