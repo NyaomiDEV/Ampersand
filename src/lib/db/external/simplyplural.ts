@@ -1,4 +1,4 @@
-import { System, Member, FrontingEntry, Tag, BoardMessage } from "../entities";
+import { System, Member, FrontingEntry, Tag, BoardMessage, CustomField } from "../entities";
 import { PartialBy } from "../../types";
 import { getTables } from "..";
 import { getSystem, modifySystem, newSystem } from "../tables/system";
@@ -9,6 +9,7 @@ import { getBoardMessages, newBoardMessage, updateBoardMessage } from "../tables
 import { t } from "i18next";
 import { isTauri } from "../../mode";
 import { fetch as tauriFetch } from "@tauri-apps/plugin-http";
+import { newCustomField } from "../tables/customFields";
 
 const fetch = isTauri() ? tauriFetch : window.fetch;
 
@@ -20,6 +21,29 @@ function normalizeSPColor(color: string) {
 		color = color.substring(2);
 
 	return "#" + color;
+}
+
+function mapCustomFieldType(type: number, data: any) {
+	switch(type){
+		case 0: //text
+			return String(data);
+		case 1: //color
+			return `<${normalizeSPColor(data)}>`;
+		case 2: // date
+			return `<t:${Math.round(new Date(data).getTime() / 1000)}:D>`
+		case 3: // month
+			return `<t:${Math.round(new Date(data).getTime() / 1000)}:M>`
+		case 4: // year
+			return `<t:${Math.round(new Date(data).getTime() / 1000)}:Y>`
+		case 5: // month + year
+			return `<t:${Math.round(new Date(data).getTime() / 1000)}:K>`
+		case 6: // timestamp
+			return `<t:${Math.round(new Date(data).getTime() / 1000)}:F>`
+		case 7: // month + day
+			return `<t:${Math.round(new Date(data).getTime() / 1000)}:G>`
+	}
+
+	return "";
 }
 
 async function getAvatarFromUuid(systemId: string, avatarUuid: string){
@@ -72,6 +96,19 @@ export async function importSimplyPlural(spExport) {
 		tagMapping.set(spGroup._id, uuid);
 	}
 
+	// CUSTOM FIELDS
+	const customFieldMapping = new Map<string, [string, number]>();
+	for (const spCustomField of spExport.customFields) {
+		const customField: PartialBy<CustomField, "uuid"> = {
+			name: spCustomField.name,
+			default: false
+		};
+
+		const uuid = await newCustomField(customField);
+		if (!uuid) return false;
+		customFieldMapping.set(spCustomField._id, [uuid, spCustomField.type]);
+	}
+
 	// MEMBERS
 	const memberMapping = new Map<string, string>();
 	for (const spMember of spExport.members) {
@@ -87,6 +124,17 @@ export async function importSimplyPlural(spExport) {
 					.filter(x => x.members.includes(spMember._id))
 					.map(x => tagMapping.get(x._id))
 			],
+			customFields: new Map(
+				Object.entries(spMember.info)
+				.filter(([_, v]) => (v as string).length)
+				.map(([_id, value]) => {
+					console.log(_id, value);
+					const mapped = customFieldMapping.get(_id);
+					if(!mapped) return undefined;
+					return [ mapped[0], mapCustomFieldType(mapped[1], value)] as [string, string];
+				})
+				.filter(x => !!x)
+			),
 			dateCreated: spMember.created ? new Date(spMember.created) : new Date(),
 		};
 
@@ -233,10 +281,14 @@ export async function importSimplyPlural(spExport) {
 		})) return false;
 
 	for (const member of await getMembers()) {
+		const update: Partial<Member> = {};
 		if (member.description)
-			if(!await updateMember(member.uuid, {
-				description: member.description.replace(/<###@(\w+)###>/g, (_, p1) => `@<m:${memberMapping.get(p1) || "00000000-0000-0000-0000-000000000000"}>`)
-			})) return false;
+			update.description = member.description.replace(/<###@(\w+)###>/g, (_, p1) => `@<m:${memberMapping.get(p1) || "00000000-0000-0000-0000-000000000000"}>`);
+
+		if(member.customFields)
+			update.customFields = new Map(member.customFields.entries().map(([k, v]) => [k, v.replace(/<###@(\w+)###>/g, (_, p1) => `@<m:${memberMapping.get(p1) || "00000000-0000-0000-0000-000000000000"}>`)]));
+
+		if (!await updateMember(member.uuid, update)) return false;
 	}
 
 	for (const boardMessage of await getBoardMessages()) {
