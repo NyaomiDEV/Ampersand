@@ -174,7 +174,6 @@
 		tags.value = (await getTags()).filter(x => x.type === "member");
 
 		customFields.value = await getCustomFields();
-		customFieldsToShow.value = customFields.value.filter(x => x.default || member.value.customFields?.has(x.uuid));
 
 		if(route.query.uuid){
 			const _member = (await getMembers()).find(x => x.uuid === route.query.uuid);
@@ -185,6 +184,8 @@
 		if(!member.value.customFields){
 			member.value.customFields = new Map();
 		}
+
+		customFieldsToShow.value = customFields.value.filter(x => x.default || (member.value.customFields?.has(x.uuid) && member.value.customFields?.get(x.uuid)?.length));
 
 		if(route.query.disallowEditing){
 			canEdit.value = false;
@@ -248,6 +249,11 @@
 				<Markdown :markdown="member.description || $t('members:edit.noDescription')" />
 			</div>
 
+			<div class="member-custom-field" v-if="!isEditing && member.customFields" v-for="[id, value] in [...member.customFields.entries()].filter(x => x[1].length)" :key="id">
+				<IonLabel>{{ customFields.find(x => x.uuid === id)?.name }}</IonLabel>
+				<Markdown :markdown="value" />
+			</div>
+
 			<IonList class="member-actions" v-if="!isEditing">
 				<IonItem button detail :router-link="`/options/messageBoard?q=@member:${member.uuid}`">
 					<IonIcon :icon="newspaperMD" slot="start" aria-hidden="true" />
@@ -281,7 +287,12 @@
 				</IonItem>
 
 				<IonItem v-for="customField in customFieldsToShow" :key="customField.uuid" v-if="member.customFields">
-					<IonInput :fill="!isIOS ? 'outline' : undefined" :label="customField.name" labelPlacement="floating" v-model="member.customFields[customField.uuid]" />
+					<IonInput
+						:fill="!isIOS ? 'outline' : undefined"
+						:label="customField.name"
+						labelPlacement="floating"
+						:modelValue="member.customFields.get(customField.uuid)"
+						@update:modelValue="(v) => member.customFields?.set(customField.uuid, v)" />
 				</IonItem>
 
 				<IonItem button @click="customFieldsSelectionModal?.$el.present()">
@@ -406,11 +417,12 @@
 		margin: 0;
 	}
 
-	div.member-description {
-		padding: 16px;
+	div.member-description, div.member-custom-field {
+		padding: 16px 16px 0px 16px;
 	}
 
-	div.member-description ion-label {
+	div.member-description ion-label,
+	div.member-custom-field ion-label {
 		color: var(--ion-color-step-600, var(--ion-text-color-step-400, #666666));
 	}
 </style>
