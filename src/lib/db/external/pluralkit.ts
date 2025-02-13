@@ -88,7 +88,7 @@ export async function importPluralKit(pkExport: any){
 		for(const id of pkSwitch.members){
 			if(!frontingEntries.has(id)){
 				const frontingEntry: PartialBy<FrontingEntry, "uuid"> = {
-					member: memberMapping.get(id)!,
+					member: memberMapping.get(id) || "00000000-0000-0000-0000-000000000000",
 					startTime: date,
 					isMainFronter: false
 				}

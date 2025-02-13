@@ -194,7 +194,7 @@
 		padding: 16px;
 	}
 
-	ion-card .card-inner ion-avatar {
+	ion-card .card-inner > ion-avatar {
 		width: 40px;
 		height: 40px;
 		align-self: flex-start;
@@ -235,7 +235,7 @@
 		gap: .25em;
 	}
 
-	ion-card .contents * {
+	ion-card .contents > * {
 		margin: 0;
 	}
 

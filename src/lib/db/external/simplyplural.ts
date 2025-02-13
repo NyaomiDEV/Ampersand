@@ -1,7 +1,7 @@
 import { System, Member, FrontingEntry, Tag, BoardMessage } from "../entities";
 import { PartialBy } from "../../types";
 import { getTables } from "..";
-import { newSystem } from "../tables/system";
+import { getSystem, modifySystem, newSystem } from "../tables/system";
 import { newTag } from "../tables/tags";
 import { getMembers, newMember, updateMember } from "../tables/members";
 import { newFrontingEntry } from "../tables/frontingEntries";
@@ -150,6 +150,18 @@ export async function importSimplyPlural(spExport) {
 		if(!await newFrontingEntry(frontingEntry)) return false;
 	}
 
+	// BOARD MESSAGES
+	for (const spBoardMessage of spExport.boardMessages){
+		const boardMessage: PartialBy<BoardMessage, "uuid"> = {
+			member: memberMapping.get(spBoardMessage.writtenBy) || "00000000-0000-0000-0000-000000000000",
+			title: spBoardMessage.title,
+			body: `@<m:${memberMapping.get(spBoardMessage.writtenFor)}>\n\n` + spBoardMessage.message,
+			date: new Date(spBoardMessage.writtenAt)
+		};
+
+		if (!await newBoardMessage(boardMessage)) return false;
+	}
+
 	// POLLS AS BOARD MESSAGES
 	for (const spPoll of spExport.polls) {
 		const boardMessage: PartialBy<BoardMessage, "uuid"> = {
@@ -165,7 +177,7 @@ export async function importSimplyPlural(spExport) {
 						votes: spPoll.votes
 							.filter(y => y.vote === x.name)
 							.map(y => ({
-								member: memberMapping.get(y.id),
+								member: memberMapping.get(y.id) || "00000000-0000-0000-0000-000000000000",
 								reason: y.comment.length ? y.comment : undefined
 							}))
 					}))
@@ -175,7 +187,7 @@ export async function importSimplyPlural(spExport) {
 							votes: spPoll.votes
 								.filter(x => x.vote === "yes")
 								.map(x => ({
-									member: memberMapping.get(x.id),
+									member: memberMapping.get(x.id) || "00000000-0000-0000-0000-000000000000",
 									reason: x.comment.length ? x.comment : undefined
 								}))
 						},
@@ -184,7 +196,7 @@ export async function importSimplyPlural(spExport) {
 							votes: spPoll.votes
 								.filter(x => x.vote === "no")
 								.map(x => ({
-									member: memberMapping.get(x.id),
+									member: memberMapping.get(x.id) || "00000000-0000-0000-0000-000000000000",
 									reason: x.comment.length ? x.comment : undefined
 								}))
 						},
@@ -193,7 +205,7 @@ export async function importSimplyPlural(spExport) {
 							votes: spPoll.votes
 								.filter(x => x.vote === "veto")
 								.map(x => ({
-									member: memberMapping.get(x.id),
+									member: memberMapping.get(x.id) || "00000000-0000-0000-0000-000000000000",
 									reason: x.comment.length ? x.comment : undefined
 								}))
 						} : undefined,
@@ -202,7 +214,7 @@ export async function importSimplyPlural(spExport) {
 							votes: spPoll.votes
 								.filter(x => x.vote === "abstain")
 								.map(x => ({
-									member: memberMapping.get(x.id),
+									member: memberMapping.get(x.id) || "00000000-0000-0000-0000-000000000000",
 									reason: x.comment.length ? x.comment : undefined
 								}))
 						} : undefined,
@@ -214,17 +226,23 @@ export async function importSimplyPlural(spExport) {
 	}
 
 	// REMAP ALL MEMBER MENTIONS
+	const systemDesc = (await getSystem())?.description;
+	if (systemDesc)
+		if (!await modifySystem({
+			description: systemDesc.replace(/<###@(\w+)###>/g, (_, p1) => `@<m:${memberMapping.get(p1) || "00000000-0000-0000-0000-000000000000"}>`)
+		})) return false;
+
 	for (const member of await getMembers()) {
 		if (member.description)
 			if(!await updateMember(member.uuid, {
-				description: member.description.replace(/<###@(\w+)###>/g, (_, p1) => `@<m:${memberMapping.get(p1)}>`)
+				description: member.description.replace(/<###@(\w+)###>/g, (_, p1) => `@<m:${memberMapping.get(p1) || "00000000-0000-0000-0000-000000000000"}>`)
 			})) return false;
 	}
 
 	for (const boardMessage of await getBoardMessages()) {
 		if (boardMessage.body)
 			if (!await updateBoardMessage(boardMessage.uuid, {
-				body: boardMessage.body.replace(/<###@(\w+)###>/g, (_, p1) => `@<m:${memberMapping.get(p1)}>`)
+				body: boardMessage.body.replace(/<###@(\w+)###>/g, (_, p1) => `@<m:${memberMapping.get(p1) || "00000000-0000-0000-0000-000000000000"}>`)
 			})) return false;
 	}
 

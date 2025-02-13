@@ -17,7 +17,7 @@
 </script>
 
 <template>
-	<IonChip :routerLink>
+	<IonChip :routerLink @click="(e) => e.stopPropagation()">
 		<MemberAvatar :member="props.member" />
 		<IonLabel class="nowrap">
 			{{ props.member.name }}
