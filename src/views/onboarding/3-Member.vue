@@ -60,29 +60,31 @@
 <template>
 	<IonPage>
 		<IonContent>
-			<h1> {{ $t('onboarding:memberInfo.header') }}</h1>
-			<div class="avatar-container">
-				<MemberAvatar :member />
-				<IonButton shape="round" @click="modifyPicture">
-					<IonIcon slot="icon-only" :icon="pencilMD" />
-				</IonButton>
+			<div class="container">
+				<h1> {{ $t('onboarding:memberInfo.header') }}</h1>
+				<div class="avatar-container">
+					<MemberAvatar :member />
+					<IonButton shape="round" @click="modifyPicture">
+						<IonIcon slot="icon-only" :icon="pencilMD" />
+					</IonButton>
+				</div>
+
+				<IonList class="member-edit" inset>
+						<IonItem>
+							<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('members:edit.name')" labelPlacement="floating" v-model="member.name" />
+						</IonItem>
+
+						<IonItem>
+							<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('members:edit.pronouns')" labelPlacement="floating" v-model="member.pronouns" />
+						</IonItem>
+
+						<IonItem>
+							<IonTextarea :fill="!isIOS ? 'outline' : undefined" auto-grow :label="$t('onboarding:memberInfo.description')" labelPlacement="floating" v-model="member.description" />
+						</IonItem>
+				</IonList>
+
+				<p> {{ $t("onboarding:memberInfo:invitation") }}</p>
 			</div>
-
-			<IonList class="member-edit" inset>
-					<IonItem>
-						<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('members:edit.name')" labelPlacement="floating" v-model="member.name" />
-					</IonItem>
-
-					<IonItem>
-						<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('members:edit.pronouns')" labelPlacement="floating" v-model="member.pronouns" />
-					</IonItem>
-
-					<IonItem>
-						<IonTextarea :fill="!isIOS ? 'outline' : undefined" auto-grow :label="$t('onboarding:memberInfo.description')" labelPlacement="floating" v-model="member.description" />
-					</IonItem>
-
-					<p> {{ $t("onboarding:memberInfo:invitation") }}</p>
-			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
 				<IonFabButton @click="save" v-if="member.name.length">
@@ -95,8 +97,13 @@
 
 <style scoped>
 
-	h1 {
-		margin-top: 128px;
+	.container {
+		width: 100%;
+		min-height: 100%;
+		display: flex;
+		align-items: stretch;
+		justify-content: center;
+		flex-direction: column;
 	}
 
 	h1, p {

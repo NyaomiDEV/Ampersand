@@ -6,8 +6,8 @@
 	import { resizeImage } from '../../lib/util/image';
 	import { getSystem, modifySystem, newSystem } from '../../lib/db/tables/system';
 
-	import peopleMD from "@material-symbols/svg-600/outlined/groups_2.svg"
-	import pencilMD from "@material-symbols/svg-600/outlined/edit.svg"
+	import accountCircle from "@material-symbols/svg-600/outlined/account_circle.svg";
+	import pencilMD from "@material-symbols/svg-600/outlined/edit.svg";
 	import ArrowMD from "@material-symbols/svg-600/outlined/arrow_forward.svg";
 	import { System } from '../../lib/db/entities';
 	import { PartialBy } from '../../lib/types';
@@ -51,7 +51,8 @@
 			<h1> {{ $t('onboarding:systemInfo.header') }}</h1>
 			<div class="avatar-container">
 				<IonAvatar>
-					<img aria-hidden="true" :src="system?.image ? getObjectURL(system.image) : peopleMD " />
+					<img aria-hidden="true" :src="getObjectURL(system.image)" v-if="system?.image"/>
+					<IonIcon :icon="accountCircle" v-else />
 				</IonAvatar>
 
 				<IonButton shape="round" @click="modifyPicture">
@@ -103,6 +104,12 @@
 		position: absolute;
 		bottom: 8px;
 		right: 8px;
+	}
+
+	div.avatar-container ion-avatar ion-icon {
+		width: 100%;
+		height: 100%;
+		color: var(--ion-color-primary);
 	}
 </style>
 
