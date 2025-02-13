@@ -101,7 +101,7 @@
 				<IonLabel>{{ $t("appSettings:defaultFilterLabel") }}</IonLabel>
 			</IonListHeader>
 
-			<IonList>
+			<IonList :inset="isIOS">
 				<IonItem>
 					<IonInput :fill="!isIOS ? 'outline' : undefined" labelPlacement="floating" :label="$t('members:header')" v-model="appConfig.defaultFilterQueries.members" />
 				</IonItem>
@@ -124,6 +124,10 @@
 
 				<IonItem>
 					<IonInput :fill="!isIOS ? 'outline' : undefined" labelPlacement="floating" :label="$t('assetManager:header')" v-model="appConfig.defaultFilterQueries.assetManager" />
+				</IonItem>
+
+				<IonItem>
+					<IonInput :fill="!isIOS ? 'outline' : undefined" labelPlacement="floating" :label="$t('customFields:header')" v-model="appConfig.defaultFilterQueries.customFields" />
 				</IonItem>
 			</IonList>
 
