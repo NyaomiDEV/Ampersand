@@ -128,7 +128,6 @@ export async function importSimplyPlural(spExport) {
 				Object.entries(spMember.info)
 				.filter(([_, v]) => (v as string).length)
 				.map(([_id, value]) => {
-					console.log(_id, value);
 					const mapped = customFieldMapping.get(_id);
 					if(!mapped) return undefined;
 					return [ mapped[0], mapCustomFieldType(mapped[1], value)] as [string, string];
@@ -187,11 +186,12 @@ export async function importSimplyPlural(spExport) {
 
 	// FRONTING ENTRIES
 	for (const spFrontHistory of spExport.frontHistory) {
+		if(!spFrontHistory.startTime) continue; // front entries without startTime are null for us
 		const frontingEntry: PartialBy<FrontingEntry, "uuid"> = {
-			member: memberMapping.get(spFrontHistory.member)!,
+			member: memberMapping.get(spFrontHistory.member) || "00000000-0000-0000-0000-000000000000",
 			startTime: new Date(spFrontHistory.startTime),
 			endTime: spFrontHistory.endTime ? new Date(spFrontHistory.endTime) : undefined,
-			customStatus: spFrontHistory.customStatus,
+			customStatus: spFrontHistory.customStatus?.length ? spFrontHistory.customStatus : undefined,
 			isMainFronter: false
 		}
 		
@@ -286,7 +286,7 @@ export async function importSimplyPlural(spExport) {
 			update.description = member.description.replace(/<###@(\w+)###>/g, (_, p1) => `@<m:${memberMapping.get(p1) || "00000000-0000-0000-0000-000000000000"}>`);
 
 		if(member.customFields)
-			update.customFields = new Map(member.customFields.entries().map(([k, v]) => [k, v.replace(/<###@(\w+)###>/g, (_, p1) => `@<m:${memberMapping.get(p1) || "00000000-0000-0000-0000-000000000000"}>`)]));
+			update.customFields = new Map(Array.from(member.customFields.entries()).map(([k, v]) => [k, v.replace(/<###@(\w+)###>/g, (_, p1) => `@<m:${memberMapping.get(p1) || "00000000-0000-0000-0000-000000000000"}>`)]));
 
 		if (!await updateMember(member.uuid, update)) return false;
 	}
