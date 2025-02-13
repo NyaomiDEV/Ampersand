@@ -10,12 +10,6 @@
 	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
 	import dayjs from 'dayjs';
 
-	import {
-		calendarOutline as calendarIOS,
-		listOutline as listIOS,
-		addOutline as addIOS
-	} from "ionicons/icons";
-
 	import calendarMD from "@material-symbols/svg-600/outlined/calendar_month.svg";
 	import listMD from "@material-symbols/svg-600/outlined/list.svg";
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
@@ -139,8 +133,7 @@
 				</IonTitle>
 				<IonButtons slot="secondary">
 					<IonButton @click="isCalendarView = !isCalendarView">
-						<IonIcon slot="icon-only" :ios="isCalendarView ? listIOS : calendarIOS"
-							:md="isCalendarView ? listMD : calendarMD" />
+						<IonIcon slot="icon-only" :icon="isCalendarView ? listMD : calendarMD" />
 					</IonButton>
 				</IonButtons>
 			</IonToolbar>
@@ -173,7 +166,7 @@
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
 				<IonFabButton @click="showModal()">
-					<IonIcon :ios="addIOS" :md="addMD" />
+					<IonIcon :icon="addMD" />
 				</IonFabButton>
 			</IonFab>
 		</IonContent>

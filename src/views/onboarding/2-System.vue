@@ -5,12 +5,6 @@
 	import { getFiles, slideAnimation } from '../../lib/util/misc';
 	import { resizeImage } from '../../lib/util/image';
 	import { getSystem, modifySystem, newSystem } from '../../lib/db/tables/system';
-	
-	import {
-		peopleOutline as peopleIOS,
-		pencilOutline as pencilIOS,
-		arrowForwardOutline as ArrowIOS
-	} from "ionicons/icons";
 
 	import peopleMD from "@material-symbols/svg-600/outlined/groups_2.svg"
 	import pencilMD from "@material-symbols/svg-600/outlined/edit.svg"
@@ -57,11 +51,11 @@
 			<h1> {{ $t('onboarding:systemInfo.header') }}</h1>
 			<div class="avatar-container">
 				<IonAvatar>
-					<img aria-hidden="true" :src="system?.image ? getObjectURL(system.image) : (isIOS ? peopleIOS : peopleMD )" />
+					<img aria-hidden="true" :src="system?.image ? getObjectURL(system.image) : peopleMD " />
 				</IonAvatar>
 
 				<IonButton shape="round" @click="modifyPicture">
-					<IonIcon slot="icon-only" :ios="pencilIOS" :md="pencilMD" />
+					<IonIcon slot="icon-only" :icon="pencilMD" />
 				</IonButton>
 			</div>
 
@@ -77,7 +71,7 @@
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
 				<IonFabButton @click="save">
-					<IonIcon :ios="ArrowIOS" :md="ArrowMD" />
+					<IonIcon :icon="ArrowMD" />
 				</IonFabButton>
 			</IonFab>
 		</IonContent>

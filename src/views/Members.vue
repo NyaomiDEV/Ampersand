@@ -21,17 +21,6 @@
 	import { getFilteredMembers } from '../lib/search.ts';
 	import { accessibilityConfig } from '../lib/config/index.ts';
 
-	import {
-		addOutline as addIOS,
-		personAddOutline as addToFrontIOS,
-		personRemoveOutline as removeFromFrontIOS,
-		arrowUpCircleOutline as setMainFronterIOS,
-		arrowDownCircleOutline as unsetMainFronterIOS,
-		personCircleOutline as mainFronterIOS,
-		personCircleOutline as setAsFrontIOS,
-		archiveOutline as archivedIOS
-	} from "ionicons/icons";
-
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 	import addToFrontMD from "@material-symbols/svg-600/outlined/person_add.svg";
 	import removeFromFrontMD from "@material-symbols/svg-600/outlined/person_remove.svg";
@@ -211,24 +200,24 @@
 					>
 						<MemberAvatar slot="start" :member />
 						<MemberLabel :member />
-						<IonIcon slot="end" :ios="archivedIOS" :md="archivedMD" v-if="member.isArchived" />
-						<IonIcon slot="end" :ios="mainFronterIOS" :md="mainFronterMD" v-if="frontingEntries.get(member)?.isMainFronter" />
+						<IonIcon slot="end" :icon="archivedMD" v-if="member.isArchived" />
+						<IonIcon slot="end" :icon="mainFronterMD" v-if="frontingEntries.get(member)?.isMainFronter" />
 					</IonItem>
 					<IonItemOptions @ionSwipe="drag(member)">
 						<IonItemOption v-if="!frontingEntries.get(member)" @click="addFrontingEntry(member)">
-							<IonIcon slot="icon-only" :md="addToFrontMD" :ios="addToFrontIOS"></IonIcon>
+							<IonIcon slot="icon-only" :icon="addToFrontMD"></IonIcon>
 						</IonItemOption>
 						<IonItemOption v-if="frontingEntries.get(member)" @click="removeFrontingEntry(member)" color="danger">
-							<IonIcon slot="icon-only" :md="removeFromFrontMD" :ios="removeFromFrontIOS"></IonIcon>
+							<IonIcon slot="icon-only" :icon="removeFromFrontMD"></IonIcon>
 						</IonItemOption>
 						<IonItemOption expandable v-if="frontingEntries.get(member) && !frontingEntries.get(member)?.isMainFronter" @click="setMainFrontingEntry(member, true)" color="secondary">
-							<IonIcon slot="icon-only" :md="setMainFronterMD" :ios="setMainFronterIOS"></IonIcon>
+							<IonIcon slot="icon-only" :icon="setMainFronterMD"></IonIcon>
 						</IonItemOption>
 						<IonItemOption expandable v-if="frontingEntries.get(member)?.isMainFronter" @click="setMainFrontingEntry(member, false)" color="secondary">
-							<IonIcon slot="icon-only" :md="unsetMainFronterMD" :ios="unsetMainFronterIOS"></IonIcon>
+							<IonIcon slot="icon-only" :icon="unsetMainFronterMD"></IonIcon>
 						</IonItemOption>
 						<IonItemOption @click="setSoleFrontingEntry(member)" color="tertiary">
-							<IonIcon slot="icon-only" :md="setAsFrontMD" :ios="setAsFrontIOS"></IonIcon>
+							<IonIcon slot="icon-only" :icon="setAsFrontMD"></IonIcon>
 						</IonItemOption>
 					</IonItemOptions>
 				</IonItemSliding>
@@ -236,7 +225,7 @@
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
 				<IonFabButton routerLink="/members/edit/">
-					<IonIcon :ios="addIOS" :md="addMD" />
+					<IonIcon :icon="addMD" />
 				</IonFabButton>
 			</IonFab>
 		</IonContent>

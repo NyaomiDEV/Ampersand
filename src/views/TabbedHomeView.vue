@@ -1,15 +1,6 @@
 <script setup lang="ts">
 	import { IonPage, IonTabs, IonTabBar, IonRouterOutlet, IonTabButton, IonIcon, useIonRouter } from "@ionic/vue";
 
-	import {
-		homeOutline as HomeIOS,
-		peopleOutline as PeopleIOS,
-		bookOutline as JournalIOS,
-		chatboxEllipsesOutline as ChatIOS,
-		menuOutline as OptionsIOS
-	} 
-	from "ionicons/icons";
-
 	import PeopleMD from '@material-symbols/svg-600/outlined/group.svg';
 	import JournalMD from '@material-symbols/svg-600/outlined/book.svg';
 	import HomeMD from '@material-symbols/svg-600/outlined/home.svg';
@@ -54,27 +45,27 @@
 
 			<IonTabBar slot="bottom" ref="tabBar">
 				<IonTabButton tab="members" href="/members" @click="clickReplaceHandler('/members')">
-					<IonIcon :ios="PeopleIOS" :md="PeopleMD" />
+					<IonIcon :icon="PeopleMD" />
 					{{ $t("members:header") }}
 				</IonTabButton>
 
 				<IonTabButton tab="journal" href="/journal" @click="clickReplaceHandler('/journal')" v-if="false">
-					<IonIcon :ios="JournalIOS" :md="JournalMD" />
+					<IonIcon :icon="JournalMD" />
 					{{ $t("journal:header") }}
 				</IonTabButton>
 
 				<IonTabButton tab="dashboard" href="/dashboard" @click="clickReplaceHandler('/dashboard')">
-					<IonIcon :ios="HomeIOS" :md="HomeMD" />
+					<IonIcon :icon="HomeMD" />
 					{{ $t("dashboard:header") }}
 				</IonTabButton>
 
 				<IonTabButton tab="chats" href="/chats" @click="clickReplaceHandler('/chats')" v-if="false">
-					<IonIcon :ios="ChatIOS" :md="ChatMD" />
+					<IonIcon :icon="ChatMD" />
 					{{ $t("chats:header") }}
 				</IonTabButton>
 
 				<IonTabButton tab="options" href="/options" @click="clickReplaceHandler('/options')">
-					<IonIcon :ios="OptionsIOS" :md="OptionsMD" />
+					<IonIcon :icon="OptionsMD" />
 					{{ $t("options:header") }}
 				</IonTabButton>
 			</IonTabBar>

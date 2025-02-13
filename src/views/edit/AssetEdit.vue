@@ -18,11 +18,6 @@
 		alertController,
 	} from "@ionic/vue";
 
-	import {
-		saveOutline as saveIOS,
-		trashBinOutline as trashIOS,
-	} from "ionicons/icons";
-
 	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
 
@@ -148,7 +143,7 @@
 				</IonItem>
 
 				<IonItem button detail="false" v-if="asset.uuid" @click="removeAsset">
-					<IonIcon :ios="trashIOS" :md="trashMD" slot="start" aria-hidden="true" color="danger"/>
+					<IonIcon :icon="trashMD" slot="start" aria-hidden="true" color="danger"/>
 					<IonLabel color="danger">
 						<h3>{{ $t("assetManager:edit.delete.title") }}</h3>
 						<p>{{ $t("other:genericDeleteDesc") }}</p>
@@ -158,7 +153,7 @@
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
 				<IonFabButton @click="save" v-if="asset.friendlyName.length > 0">
-					<IonIcon :ios="saveIOS" :md="saveMD" />
+					<IonIcon :icon="saveMD" />
 				</IonFabButton>
 			</IonFab>
 		</IonContent>

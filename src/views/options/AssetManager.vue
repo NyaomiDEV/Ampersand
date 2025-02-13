@@ -9,10 +9,6 @@
 	import { getFilteredAssets } from '../../lib/search';
 	import SpinnerFullscreen from '../../components/SpinnerFullscreen.vue';
 
-	import {
-		addOutline as addIOS
-	} from "ionicons/icons";
-
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 
 	const route = useRoute();
@@ -75,7 +71,7 @@
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
 				<IonFabButton routerLink="/options/assetManager/edit/">
-					<IonIcon :ios="addIOS" :md="addMD" />
+					<IonIcon :icon="addMD" />
 				</IonFabButton>
 			</IonFab>
 

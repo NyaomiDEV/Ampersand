@@ -8,12 +8,6 @@
 	import { getMembers } from '../../lib/db/tables/members';
 	import ContentEditable from '../../components/ContentEditable.vue';
 
-	import {
-		peopleOutline as peopleIOS,
-		pencilOutline as pencilIOS,
-		saveOutline as saveIOS
-	} from "ionicons/icons";
-
 	import peopleMD from "@material-symbols/svg-600/outlined/groups_2.svg"
 	import pencilMD from "@material-symbols/svg-600/outlined/edit.svg"
 	import saveMD from "@material-symbols/svg-600/outlined/save.svg"
@@ -65,11 +59,11 @@
 		<IonContent>
 			<div class="avatar-container">
 				<IonAvatar>
-					<img aria-hidden="true" :src="system?.image ? getObjectURL(system.image) : (isIOS ? peopleIOS : peopleMD )" />
+					<img aria-hidden="true" :src="system?.image ? getObjectURL(system.image) : peopleMD" />
 				</IonAvatar>
 
 				<IonButton shape="round" @click="modifyPicture">
-					<IonIcon slot="icon-only" :ios="pencilIOS" :md="pencilMD" />
+					<IonIcon slot="icon-only" :icon="pencilMD" />
 				</IonButton>
 			</div>
 
@@ -89,7 +83,7 @@
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
 				<IonFabButton @click="save">
-					<IonIcon :ios="saveIOS" :md="saveMD" />
+					<IonIcon :icon="saveMD" />
 				</IonFabButton>
 			</IonFab>
 		</IonContent>

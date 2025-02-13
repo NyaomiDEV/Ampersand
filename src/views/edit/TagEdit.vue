@@ -21,13 +21,6 @@
 	import MD3SegmentButton from "../../components/MD3SegmentButton.vue";
 	import Color from "../../components/Color.vue";
 
-	import {
-		saveOutline as saveIOS,
-		trashBinOutline as trashIOS,
-		personOutline as personIOS,
-		bookOutline as journalIOS
-	} from "ionicons/icons";
-
 	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
 	import personMD from "@material-symbols/svg-600/outlined/person.svg";
@@ -227,7 +220,7 @@ import MemberSelect from "../../modals/MemberSelect.vue";
 					</IonItem>
 
 					<IonItem button v-if="tag.uuid && tag.type === 'member'" @click="tagMembers">
-						<IonIcon :ios="personIOS" :md="personMD" slot="start" aria-hidden="true" />
+						<IonIcon :icon="personMD" slot="start" aria-hidden="true" />
 						<IonLabel>
 							<h3>{{ $t("tagManagement:edit.members.title") }}</h3>
 							<p>{{ $t("tagManagement:edit.members.desc", { count }) }}</p>
@@ -235,7 +228,7 @@ import MemberSelect from "../../modals/MemberSelect.vue";
 					</IonItem>
 
 					<IonItem button v-if="tag.uuid && tag.type === 'journal'">
-						<IonIcon :ios="journalIOS" :md="journalMD" slot="start" aria-hidden="true" />
+						<IonIcon :icon="journalMD" slot="start" aria-hidden="true" />
 						<IonLabel>
 							<h3>{{ $t("tagManagement:edit.showJournal.title") }}</h3>
 							<p>{{ $t("tagManagement:edit.showJournal.desc", { count }) }}</p>
@@ -243,7 +236,7 @@ import MemberSelect from "../../modals/MemberSelect.vue";
 					</IonItem>
 
 					<IonItem button detail="false" v-if="tag.uuid" @click="deleteTag">
-						<IonIcon :ios="trashIOS" :md="trashMD" slot="start" aria-hidden="true" color="danger"/>
+						<IonIcon :icon="trashMD" slot="start" aria-hidden="true" color="danger"/>
 						<IonLabel color="danger">
 							<h3>{{ $t("tagManagement:edit.delete.title") }}</h3>
 							<p>{{ $t("other:genericDeleteDesc") }}</p>
@@ -253,7 +246,7 @@ import MemberSelect from "../../modals/MemberSelect.vue";
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
 				<IonFabButton @click="save" v-if="tag.name.length > 0">
-					<IonIcon :ios="saveIOS" :md="saveMD" />
+					<IonIcon :icon="saveMD" />
 				</IonFabButton>
 			</IonFab>
 		</IonContent>

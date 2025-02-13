@@ -25,14 +25,6 @@
 
 	import TagListSelect from "../../modals/TagListSelect.vue";
 
-	import {
-		pencilOutline as pencilIOS,
-		saveOutline as saveIOS,
-		newspaperOutline as newspaperIOS,
-		journalOutline as journalIOS,
-		trashBinOutline as trashIOS
-	} from "ionicons/icons";
-
 	import pencilMD from "@material-symbols/svg-600/outlined/edit.svg";
 	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
 	import newspaperMD from "@material-symbols/svg-600/outlined/newspaper.svg";
@@ -214,7 +206,7 @@
 			<div class="avatar-container">
 				<MemberAvatar :member />
 				<IonButton shape="round" @click="modifyPicture" v-if="isEditing">
-					<IonIcon slot="icon-only" :ios="pencilIOS" :md="pencilMD" />
+					<IonIcon slot="icon-only" :icon="pencilMD" />
 				</IonButton>
 			</div>
 
@@ -237,11 +229,11 @@
 
 			<IonList class="member-actions" v-if="!isEditing">
 				<IonItem button detail :router-link="`/options/messageBoard?q=@member:${member.uuid}`">
-					<IonIcon :ios="newspaperIOS" :md="newspaperMD" slot="start" aria-hidden="true" />
+					<IonIcon :icon="newspaperMD" slot="start" aria-hidden="true" />
 					<IonLabel>{{ $t("members:edit.showBoardEntries") }}</IonLabel>
 				</IonItem>
 				<IonItem button detail>
-					<IonIcon :ios="journalIOS" :md="journalMD" slot="start" aria-hidden="true" />
+					<IonIcon :icon="journalMD" slot="start" aria-hidden="true" />
 					<IonLabel>{{ $t("members:edit.showJournalEntries") }}</IonLabel>
 				</IonItem>
 			</IonList>
@@ -290,7 +282,7 @@
 					</IonLabel>
 				</IonItem>
 				<IonItem button detail="false" v-if="member.uuid" @click="removeMember">
-					<IonIcon :ios="trashIOS" :md="trashMD" slot="start" aria-hidden="true" color="danger"/>
+					<IonIcon :icon="trashMD" slot="start" aria-hidden="true" color="danger"/>
 					<IonLabel color="danger">
 						<h3>{{ $t("members:edit.delete.title") }}</h3>
 						<p>{{ $t("other:genericDeleteDesc") }}</p>
@@ -311,7 +303,7 @@
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
 				<IonFabButton @click="toggleEditing" v-if="member.name.length > 0 && canEdit">
-					<IonIcon :ios="isEditing ? saveIOS : pencilIOS" :md="isEditing ? saveMD : pencilMD" />
+					<IonIcon :icon="isEditing ? saveMD : pencilMD" />
 				</IonFabButton>
 			</IonFab>
 

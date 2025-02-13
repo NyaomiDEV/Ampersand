@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { IonContent, IonPage, IonButton, IonIcon, useIonRouter } from '@ionic/vue';
-	import {arrowForwardOutline as ArrowIOS} from "ionicons/icons";
+
 	import ArrowMD from "@material-symbols/svg-600/outlined/arrow_forward.svg";
 
 	const router = useIonRouter();
@@ -14,7 +14,7 @@
 
 				<IonButton @click="router.replace('/')">
 					{{ $t("onboarding:endScreen.startButton") }}
-					<IonIcon slot="end" :ios="ArrowIOS" :md="ArrowMD"></IonIcon>
+					<IonIcon slot="end" :icon="ArrowMD"></IonIcon>
 				</IonButton>
 			</div>
 		</IonContent>

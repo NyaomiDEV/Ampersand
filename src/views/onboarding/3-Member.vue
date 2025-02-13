@@ -13,11 +13,6 @@
 		useIonRouter
 	} from "@ionic/vue";
 
-	import {
-		pencilOutline as pencilIOS,
-		arrowForwardOutline as ArrowIOS,
-	} from "ionicons/icons";
-
 	import pencilMD from "@material-symbols/svg-600/outlined/edit.svg";
 	import ArrowMD from "@material-symbols/svg-600/outlined/arrow_forward.svg";
 
@@ -69,7 +64,7 @@
 			<div class="avatar-container">
 				<MemberAvatar :member />
 				<IonButton shape="round" @click="modifyPicture">
-					<IonIcon slot="icon-only" :ios="pencilIOS" :md="pencilMD" />
+					<IonIcon slot="icon-only" :icon="pencilMD" />
 				</IonButton>
 			</div>
 
@@ -91,7 +86,7 @@
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
 				<IonFabButton @click="save" v-if="member.name.length">
-					<IonIcon :ios="ArrowIOS" :md="ArrowMD" />
+					<IonIcon :icon="ArrowMD" />
 				</IonFabButton>
 			</IonFab>
 		</IonContent>

@@ -10,10 +10,6 @@
 	import CustomFieldEdit from '../../modals/CustomFieldEdit.vue';
 	import { addModal, removeModal } from '../../lib/modals';
 
-	import {
-		addOutline as addIOS
-	} from "ionicons/icons";
-
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 
 	const route = useRoute();
@@ -88,7 +84,7 @@
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
 				<IonFabButton @click="showModal()">
-					<IonIcon :ios="addIOS" :md="addMD" />
+					<IonIcon :icon="addMD" />
 				</IonFabButton>
 			</IonFab>
 

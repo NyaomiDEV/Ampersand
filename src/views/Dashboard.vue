@@ -4,8 +4,6 @@
 	import { getMainFronter } from '../lib/db/tables/frontingEntries.ts';
 	import type { Member } from '../lib/db/entities';
 
-	import { lockClosedOutline as LockIOS } from "ionicons/icons";
-
 	import LockMD from '@material-symbols/svg-600/outlined/lock.svg';
 
 	import CurrentFrontersCarousel from '../components/dashboard/CurrentFrontersCarousel.vue';
@@ -59,7 +57,7 @@
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
 				<IonFabButton v-if="securityConfig.password && securityConfig.usePassword" @click="lockImmediately">
-					<IonIcon :ios="LockIOS" :md="LockMD" />
+					<IonIcon :icon="LockMD" />
 				</IonFabButton>
 			</IonFab>
 		</IonContent>
