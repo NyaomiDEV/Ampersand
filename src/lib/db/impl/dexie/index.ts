@@ -13,7 +13,8 @@ db.version(1).stores({
 	reminders: "uuid, name",
 	system: "uuid", // do we even?
 	tags: "uuid, name",
-	assets: "uuid"
+	assets: "uuid",
+	customFields: "uuid"
 });
 
 export function getTables(){
