@@ -1,0 +1,18 @@
+{
+	"header": "Campi personalizzati",
+	"select": "Seleziona campi personalizzati",
+	"searchPlaceholder": "Cerca tra i campi personalizzati...",
+	"edit": {
+		"header": "Modifica campo personalizzato",
+		"headerAdd": "Aggiungi campo personalizzato",
+		"name": "Nome del campo personalizzato",
+		"default": {
+			"title": "Rendi predefinito",
+			"desc": "I campi personalizzati predefiniti appariranno sempre sulla schermata di modifica del membrə"
+		},
+		"delete": {
+			"title": "Elimina campo personalizzato",
+			"confirm": "Sei sicurə di voler eliminare questo campo personalizzato?"
+		}
+	}
+}
