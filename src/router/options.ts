@@ -12,6 +12,11 @@ const options: Array<RouteRecordRaw> = [
 		component: () => import("../views/options/SystemSettings.vue"),
 	},
 	{
+		path: '/options/customFields',
+		name: 'CustomFields',
+		component: () => import("../views/options/CustomFields.vue"),
+	},
+	{
 		path: '/options/frontHistory',
 		name: 'FrontHistory',
 		component: () => import("../views/options/FrontHistory.vue"),

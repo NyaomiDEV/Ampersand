@@ -71,6 +71,11 @@
 					<IonLabel>{{ $t("systemSettings:header") }}</IonLabel>
 				</IonItem>
 
+				<IonItem button routerLink="/options/customFields">
+					<IonIcon :ios="SystemIOS" :md="SystemMD" slot="start" aria-hidden="true" />
+					<IonLabel>{{ $t("customFields:header") }}</IonLabel>
+				</IonItem>
+
 				<IonItem button routerLink="/options/frontHistory">
 					<IonIcon :ios="FrontHistoryIOS" :md="FrontHistoryMD" slot="start" aria-hidden="true" />
 					<IonLabel>{{ $t("frontHistory:header") }}</IonLabel>
