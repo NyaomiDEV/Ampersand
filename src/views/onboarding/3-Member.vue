@@ -83,7 +83,7 @@
 						</IonItem>
 				</IonList>
 
-				<p> {{ $t("onboarding:memberInfo:invitation") }}</p>
+				<p>{{ $t("onboarding:memberInfo:invitation") }}</p>
 			</div>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">

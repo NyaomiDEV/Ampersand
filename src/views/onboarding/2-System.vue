@@ -48,27 +48,29 @@
 <template>
 	<IonPage>
 		<IonContent>
-			<h1> {{ $t('onboarding:systemInfo.header') }}</h1>
-			<div class="avatar-container">
-				<IonAvatar>
-					<img aria-hidden="true" :src="getObjectURL(system.image)" v-if="system?.image"/>
-					<IonIcon :icon="accountCircle" v-else />
-				</IonAvatar>
+			<div class="container">
+				<h1> {{ $t('onboarding:systemInfo.header') }}</h1>
+				<div class="avatar-container">
+					<IonAvatar>
+						<img aria-hidden="true" :src="getObjectURL(system.image)" v-if="system?.image"/>
+						<IonIcon :icon="accountCircle" v-else />
+					</IonAvatar>
 
-				<IonButton shape="round" @click="modifyPicture">
-					<IonIcon slot="icon-only" :icon="pencilMD" />
-				</IonButton>
+					<IonButton shape="round" @click="modifyPicture">
+						<IonIcon slot="icon-only" :icon="pencilMD" />
+					</IonButton>
+				</div>
+
+				<IonList inset v-if="system">
+					<IonItem>
+						<IonInput :fill="!isIOS ? 'outline' : undefined" labelPlacement="floating" :label="$t('onboarding:systemInfo.name')" v-model="system.name" />
+					</IonItem>
+
+					<IonItem>
+						<IonTextarea :fill="!isIOS ? 'outline' : undefined" auto-grow :label="$t('onboarding:systemInfo.description')" labelPlacement="floating" v-model="system.description" />
+					</IonItem>
+				</IonList>
 			</div>
-
-			<IonList inset v-if="system">
-				<IonItem>
-					<IonInput :fill="!isIOS ? 'outline' : undefined" labelPlacement="floating" :label="$t('onboarding:systemInfo.name')" v-model="system.name" />
-				</IonItem>
-
-				<IonItem>
-					<IonTextarea :fill="!isIOS ? 'outline' : undefined" auto-grow :label="$t('onboarding:systemInfo.description')" labelPlacement="floating" v-model="system.description" />
-				</IonItem>
-			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
 				<IonFabButton @click="save">
@@ -80,6 +82,16 @@
 </template>
 
 <style scoped>
+
+	.container {
+		width: 100%;
+		min-height: 100%;
+		display: flex;
+		align-items: stretch;
+		justify-content: center;
+		flex-direction: column;
+	}
+
 	h1 {
 		text-align: center;
 	}
