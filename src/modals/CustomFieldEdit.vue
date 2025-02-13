@@ -104,7 +104,7 @@
 	<IonModal class="custom-field-edit-modal" :breakpoints="[0,1]" initialBreakpoint="1">
 		<IonHeader>
 			<IonToolbar>
-				<IonTitle>{{ $t("customFields:edit.header") }}</IonTitle>
+				<IonTitle>{{ !customField.uuid ? $t("customFields:edit.headerAdd") : $t("customFields:edit.header") }}</IonTitle>
 			</IonToolbar>
 		</IonHeader>
 
@@ -116,7 +116,8 @@
 					<IonItem button detail="false">
 						<IonToggle v-model="customField.default">
 							<IonLabel>
-								{{ $t("customFields:edit.default") }}
+								<h3>{{ $t("customFields:edit.default.title") }}</h3>
+								<p>{{ $t("customFields:edit.default.desc") }}</p>
 							</IonLabel>
 						</IonToggle>
 					</IonItem>

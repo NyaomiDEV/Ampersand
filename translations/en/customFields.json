@@ -1,0 +1,18 @@
+{
+	"header": "Custom fields",
+	"select": "Select custom fields",
+	"searchPlaceholder": "Search custom fields...",
+	"edit": {
+		"header": "Edit custom field",
+		"headerAdd": "Add custom field",
+		"name": "Custom field name",
+		"default": {
+			"title": "Toggle default",
+			"desc": "Default custom fields will always appear on the member edit screen"
+		},
+		"delete": {
+			"title": "Delete custom field",
+			"confirm": "Are you sure you want to delete this custom field?"
+		}
+	}
+}
