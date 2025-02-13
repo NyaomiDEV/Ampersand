@@ -46,6 +46,13 @@ export async function deleteFrontingEntry(uuid: UUID) {
 
 export async function updateFrontingEntry(uuid: UUID, newContent: Partial<FrontingEntry>) {
 	try{
+		if(newContent.isMainFronter){
+			const toUpdate = (await db.frontingEntries.toArray()).filter(x => !x.endTime && x.member !== uuid).map(x => x.uuid);
+
+			for (const _uuid of toUpdate)
+				await updateFrontingEntry(_uuid, { isMainFronter: false });
+		}
+
 		const updated = await db.frontingEntries.update(uuid, newContent);
 		if(updated) {
 			DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
@@ -71,14 +78,7 @@ export async function removeFronter(member: Member) {
 export async function setMainFronter(member: Member, value: boolean){
 	const f = await getCurrentFrontEntryForMember(member);
 	if (!f) return false;
-
-	if(value){
-		const toUpdate = (await db.frontingEntries.toArray()).filter(x => !x.endTime && x.member !== member.uuid).map(x => x.uuid);
-
-		for (const uuid of toUpdate)
-			await updateFrontingEntry(uuid, { isMainFronter: false });
-	}
-
+	
 	return await updateFrontingEntry(f.uuid, { isMainFronter: value });
 }
 
