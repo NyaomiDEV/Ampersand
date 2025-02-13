@@ -1,6 +1,6 @@
 
-import { Member, Tag, FrontingEntry, FrontingEntryComplete, BoardMessage, BoardMessageComplete, Asset } from "./db/entities";
-import { parseAssetFilterQuery, parseBoardMessageFilterQuery, parseFrontingHistoryFilterQuery, parseMemberFilterQuery } from "./util/filterQuery";
+import { Member, Tag, FrontingEntry, FrontingEntryComplete, BoardMessage, BoardMessageComplete, Asset, CustomField } from "./db/entities";
+import { parseAssetFilterQuery, parseBoardMessageFilterQuery, parseCustomFieldFilterQuery, parseFrontingHistoryFilterQuery, parseMemberFilterQuery } from "./util/filterQuery";
 import dayjs from "dayjs";
 import { toBoardMessageComplete } from "./db/tables/boardMessages";
 import { toFrontingEntryComplete } from "./db/tables/frontingEntries";
@@ -230,6 +230,27 @@ export function getFilteredAssets(search: string, assets?: Asset[]) {
 
 			filtered.push(x)
 		}
+
+	return filtered;
+}
+
+export function getFilteredCustomFields(search: string, customFields?: CustomField[]) {
+	if (!customFields) return;
+	const filtered: CustomField[] = [];
+	const parsed = parseCustomFieldFilterQuery(search.length ? search : appConfig.defaultFilterQueries.customFields || "");
+	const sorted = customFields.sort((a, b) => sortingFunctions.alphabetic(a.name, b.name));
+
+	for (const x of sorted) {
+		if (!x.name.toLowerCase().startsWith(parsed.query.toLowerCase()))
+			continue;
+
+		if (parsed.default) {
+			if (!x.default)
+				continue;
+		}
+
+		filtered.push(x);
+	}
 
 	return filtered;
 }

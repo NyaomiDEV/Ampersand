@@ -11,7 +11,8 @@ export type AppConfig = {
 		frontingHistory?: string,
 		messageBoard?: string,
 		journal?: string,
-		assetManager?: string
+		assetManager?: string,
+		customFields?: string
 	}
 }
 

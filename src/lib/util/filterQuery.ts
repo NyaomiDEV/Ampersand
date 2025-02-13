@@ -45,6 +45,11 @@ export type AssetFilterQuery = {
 	filename?: string
 };
 
+export type CustomFieldFilterQuery = {
+	query: string,
+	default?: boolean
+}
+
 export async function parseMemberFilterQuery(search: string): Promise<MemberFilterQuery> {
 	const tokens = search.split(" ");
 
@@ -369,6 +374,54 @@ export function parseAssetFilterQuery(search: string) {
 						break;
 					case "filename":
 						result.filename = tokenParts[1];
+						break;
+					default:
+						queryTokens.push(token);
+						break;
+				}
+				break;
+			default:
+				queryTokens.push(token);
+				break;
+		}
+	}
+
+	result.query = queryTokens.filter(Boolean).join(" ");
+	return result;
+}
+
+export function parseCustomFieldFilterQuery(search: string) {
+	const tokens = search.split(" ");
+
+	const queryTokens: string[] = [];
+
+	const result: CustomFieldFilterQuery = {
+		query: "",
+	};
+
+	for (const token of tokens) {
+		switch (token.charAt(0)) {
+			case "@":
+				const tokenParts = token.slice(1).split(":");
+				switch (tokenParts[0].toLowerCase()) {
+					case "default":
+						if (tokenParts[1]) {
+							switch (tokenParts[1].toLowerCase()) {
+								case "yes":
+								case "true":
+									result.default = true;
+									break;
+								case "no":
+								case "false":
+									result.default = false;
+									break;
+								default:
+									queryTokens.push(token);
+									break;
+							}
+						} else
+							result.default = true;
+
 						break;
 					default:
 						queryTokens.push(token);
