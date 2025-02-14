@@ -1,0 +1,3 @@
+[default]
+description = "Default permissions for the Ampersand plugin"
+permissions = ["allow-exit-app", "allow-open-file"]

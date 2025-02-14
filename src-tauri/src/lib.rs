@@ -9,6 +9,7 @@ pub fn run() {
         .plugin(tauri_plugin_persisted_scope::init())
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_store::Builder::new().build())
+        .plugin(tauri_plugin_ampersand::init())
         .setup(|app: &mut tauri::App| {
             #[cfg(mobile)]
             app.handle()

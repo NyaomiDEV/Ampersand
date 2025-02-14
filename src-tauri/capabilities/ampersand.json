@@ -6,6 +6,7 @@
 		"main"
 	],
 	"permissions": [
+		"ampersand:default",
 		"fs:allow-app-read-recursive",
 		"fs:allow-app-write-recursive",
 		{

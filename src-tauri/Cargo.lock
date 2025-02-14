@@ -61,6 +61,7 @@ dependencies = [
  "serde_json",
  "tauri",
  "tauri-build",
+ "tauri-plugin-ampersand",
  "tauri-plugin-biometric",
  "tauri-plugin-dialog",
  "tauri-plugin-fs",
@@ -4347,6 +4348,17 @@ dependencies = [
  "tauri-utils",
  "toml 0.8.20",
  "walkdir",
+]
+
+[[package]]
+name = "tauri-plugin-ampersand"
+version = "0.0.1"
+dependencies = [
+ "serde",
+ "tauri",
+ "tauri-plugin",
+ "tauri-plugin-opener",
+ "thiserror 2.0.11",
 ]
 
 [[package]]
