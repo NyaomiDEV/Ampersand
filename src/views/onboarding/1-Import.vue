@@ -20,13 +20,15 @@
 		const files = await getFiles(undefined, false);
 		if (files.length) {
 			loading.value = true;
-
 			const file = files[0];
-			const result = await importDatabaseFromBinary(new Uint8Array(await file.arrayBuffer()));
 
-			if(!result) {
+			try{
+				const result = await importDatabaseFromBinary(new Uint8Array(await file.arrayBuffer()));
+
+				if(!result) throw new Error("errored out");
+			}catch(e){
 				resetConfig();
-				await Promise.all(getTables().map(async x => x.clear()));
+				await Promise.all(getTables().map(x => x.clear()));
 
 				const statusMessage = await toastController.create({
 					message: i18next.t("onboarding:importScreen.error"),
@@ -48,10 +50,14 @@
 		if (files.length) {
 			loading.value = true;
 			const file = files[0];
-			const spExport = JSON.parse(await file.text());
-			const result = await importSimplyPlural(spExport);
-			if (!result) {
-				await Promise.all(getTables().map(async x => x.clear()));
+
+			try{
+				const spExport = JSON.parse(await file.text());
+				const result = await importSimplyPlural(spExport);
+
+				if (!result) throw new Error("errored out");
+			}catch(e){
+				await Promise.all(getTables().map(x => x.clear()));
 
 				const statusMessage = await toastController.create({
 					message: i18next.t("onboarding:importScreen.errorSp"),
@@ -73,10 +79,14 @@
 		if (files.length) {
 			loading.value = true;
 			const file = files[0];
-			const pkExport = JSON.parse(await file.text());
-			const result = await importPluralKit(pkExport);
-			if(!result){
-				await Promise.all(getTables().map(async x => x.clear()));
+
+			try{
+				const pkExport = JSON.parse(await file.text());
+				const result = await importPluralKit(pkExport);
+
+				if(!result) throw new Error("errored out");
+			}catch(e){
+				await Promise.all(getTables().map(x => x.clear()));
 
 				const statusMessage = await toastController.create({
 					message: i18next.t("onboarding:importScreen.errorPk"),
@@ -98,10 +108,14 @@
 		if (files.length) {
 			loading.value = true;
 			const file = files[0];
-			const tuExport = JSON.parse(await file.text());
-			const result = await importTupperBox(tuExport);
-			if(!result){
-				await Promise.all(getTables().map(async x => x.clear()));
+
+			try{
+				const tuExport = JSON.parse(await file.text());
+				const result = await importTupperBox(tuExport);
+				
+				if(!result) throw new Error("errored out");
+			}catch(e){
+				await Promise.all(getTables().map(x => x.clear()));
 
 				const statusMessage = await toastController.create({
 					message: i18next.t("onboarding:importScreen.errorTu"),

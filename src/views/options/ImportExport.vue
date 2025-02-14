@@ -22,16 +22,18 @@
 		const files = await getFiles(undefined, false);
 		if(files.length){
 			const file = files[0];
-			const result = await importDatabaseFromBinary(new Uint8Array(await file.arrayBuffer()));
+			try{
+				const result = await importDatabaseFromBinary(new Uint8Array(await file.arrayBuffer()));
 
-			if(result){
+				if(!result) throw new Error("errored out");
+
 				const statusMessage = await toastController.create({
 					message: i18next.t("importExport:status.imported"),
 					duration: 1500
 				});
 
 				await statusMessage.present();
-			} else {
+			}catch(e){
 				const statusMessage = await toastController.create({
 					message: i18next.t("importExport:status.error"),
 					duration: 1500
@@ -50,20 +52,25 @@
 		const files = await getFiles(undefined, false);
 		if(files.length){
 			const file = files[0];
-			const spExport = JSON.parse(await file.text());
-			const result = await importSimplyPlural(spExport);
 
-			if(result){
+			try {
+				const spExport = JSON.parse(await file.text());
+				const result = await importSimplyPlural(spExport);
+
+				if(!result) throw new Error("errored out");
+
 				const statusMessage = await toastController.create({
 					message: i18next.t("importExport:status.importedSp"),
 					duration: 1500
 				});
+
 				await statusMessage.present();
-			} else {
+			}catch(e){
 				const statusMessage = await toastController.create({
 					message: i18next.t("importExport:status.errorSp"),
 					duration: 1500
 				});
+
 				await statusMessage.present();
 			}
 		}
@@ -77,20 +84,25 @@
 		const files = await getFiles(undefined, false);
 		if(files.length){
 			const file = files[0];
-			const pkExport = JSON.parse(await file.text());
-			const result = await importPluralKit(pkExport);
 
-			if(result){
+			try{
+				const pkExport = JSON.parse(await file.text());
+				const result = await importPluralKit(pkExport);
+
+				if(!result) throw new Error("errored out");
+
 				const statusMessage = await toastController.create({
 					message: i18next.t("importExport:status.importedPk"),
 					duration: 1500
 				});
+
 				await statusMessage.present();
-			} else {
+			}catch(e){
 				const statusMessage = await toastController.create({
 					message: i18next.t("importExport:status.errorPk"),
 					duration: 1500
 				});
+
 				await statusMessage.present();
 			}
 		}
@@ -104,20 +116,25 @@
 		const files = await getFiles(undefined, false);
 		if (files.length) {
 			const file = files[0];
-			const tuExport = JSON.parse(await file.text());
-			const result = await importTupperBox(tuExport);
 
-			if (result) {
+			try{
+				const tuExport = JSON.parse(await file.text());
+				const result = await importTupperBox(tuExport);
+
+				if(!result) throw new Error("errored out");
+
 				const statusMessage = await toastController.create({
 					message: i18next.t("importExport:status.importedTu"),
 					duration: 1500
 				});
+
 				await statusMessage.present();
-			} else {
+			}catch(e) {
 				const statusMessage = await toastController.create({
 					message: i18next.t("importExport:status.errorTu"),
 					duration: 1500
 				});
+
 				await statusMessage.present();
 			}
 		}

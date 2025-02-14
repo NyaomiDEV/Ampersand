@@ -33,7 +33,7 @@
 
 			await openFile(file);
 		}catch(e){
-			console.log(e);
+			// whatever?
 		}
 	}
 

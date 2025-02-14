@@ -27,8 +27,8 @@
 		DatabaseEvents.removeEventListener("updated", listener);
 	});
 
-	async function toggleReminder(reminder: Reminder, e: CustomEvent<ToggleChangeEventDetail>){
-		console.log(reminder, e);
+	async function toggleReminder(_reminder: Reminder, _e: CustomEvent<ToggleChangeEventDetail>){
+		// do smth
 	}
 </script>
 

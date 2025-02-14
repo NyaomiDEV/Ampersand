@@ -11,7 +11,6 @@ async function ourTempDir(){
 	);
 
 	if(!await exists(path)){
-		console.log("path doesn't exist");
 		try{
 			await mkdir(path, { recursive: true });
 		}catch(e){
@@ -48,7 +47,6 @@ export async function writeToTemp(file: File){
 		await writeFile(path, new Uint8Array(await file.arrayBuffer()));
 		return path;
 	}catch(e){
-		console.log(e);
 		return null;
 	}
 }
