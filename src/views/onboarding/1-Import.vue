@@ -9,6 +9,7 @@
 	import { importSimplyPlural } from '../../lib/db/external/simplyplural';
 	import { useTranslation } from 'i18next-vue';
 	import { getTables } from '../../lib/db';
+	import { resetConfig } from '../../lib/config';
 
 	const loading = ref(false);
 
@@ -21,7 +22,22 @@
 			loading.value = true;
 
 			const file = files[0];
-			await importDatabaseFromBinary(new Uint8Array(await file.arrayBuffer()));
+			const result = await importDatabaseFromBinary(new Uint8Array(await file.arrayBuffer()));
+
+			if(!result) {
+				resetConfig();
+				await Promise.all(getTables().map(async x => x.clear()));
+
+				const statusMessage = await toastController.create({
+					message: i18next.t("onboarding:importScreen.error"),
+					duration: 1500
+				});
+				await statusMessage.present();
+
+				loading.value = false;
+
+				return;
+			}
 		}
 
 		router.replace("/onboarding/end/", slideAnimation);
@@ -42,6 +58,8 @@
 					duration: 1500
 				});
 				await statusMessage.present();
+
+				loading.value = false;
 
 				return;
 			}
@@ -66,6 +84,8 @@
 				});
 				await statusMessage.present();
 
+				loading.value = false;
+
 				return;
 			}
 		}
@@ -88,6 +108,8 @@
 					duration: 1500
 				});
 				await statusMessage.present();
+
+				loading.value = false;
 
 				return;
 			}

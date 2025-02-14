@@ -42,31 +42,44 @@ export async function exportDatabaseToBinaryWithPassword(password: string){
 }
 
 async function _importDatabase(tablesAndConfig){
-	const revived = await typeson.revive(tablesAndConfig);
+	try{
+		const revived = await typeson.revive(tablesAndConfig);
 
-	for (const key of Object.getOwnPropertyNames(revived.database)) {
-		const table = getTables().find((x) => x.name === key);
-		if (table) {
-			await table.clear();
-			await table.bulkAdd(revived.database[key]);
+		Object.assign(appConfig, revived.config.appConfig);
+		Object.assign(accessibilityConfig, revived.config.accessibilityConfig);
+		Object.assign(securityConfig, revived.config.securityConfig);
+
+		for (const key of Object.getOwnPropertyNames(revived.database)) {
+			const table = getTables().find((x) => x.name === key);
+			if (table) {
+				if(await table.clear() === false) return false;
+				if(await table.bulkAdd(revived.database[key]) === false) return false;
+			}
 		}
+	}catch(e){
+		return false;
 	}
 
-	const config = await typeson.revive(revived.config);
-	Object.assign(appConfig, config.appConfig);
-	Object.assign(accessibilityConfig, config.accessibilityConfig);
-	Object.assign(securityConfig, config.securityConfig);
+	return true;
 }
 
 export async function importDatabaseFromBinary(data: Uint8Array) {
-	const theEntireDatabase = decode(await decompressGzip(data)) as Record<string, any>;
+	try{
+		const theEntireDatabase = decode(await decompressGzip(data)) as Record<string, any>;
 
-	return await _importDatabase(theEntireDatabase);
+		return await _importDatabase(theEntireDatabase);
+	}catch(e){
+		return false;
+	}
 }
 
 export async function importDatabaseFromBinaryWithPassword(data: Uint8Array, password: string) {
-	const encodedDatabase = decode(await decompressGzip(data)) as EncryptedPayload;
-	const theEntireDatabase = decode(await decrypt(encodedDatabase, password)) as Record<string, any>;
+	try{
+		const encodedDatabase = decode(await decompressGzip(data)) as EncryptedPayload;
+		const theEntireDatabase = decode(await decrypt(encodedDatabase, password)) as Record<string, any>;
 
-	return await _importDatabase(theEntireDatabase);
+		return await _importDatabase(theEntireDatabase);
+	}catch(e){
+		return false;
+	}
 }

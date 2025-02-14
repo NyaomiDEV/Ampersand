@@ -1,6 +1,24 @@
 @import url(ios.css);
 @import url(markdown.css);
 
+@supports (padding-top: env(safe-area-inset-top)) {
+	html {
+		--ion-safe-area-top: var(--device-inset-top, env(safe-area-inset-top, 0px));
+		--ion-safe-area-left: var(--device-inset-left, env(safe-area-inset-left 0px));
+		--ion-safe-area-right: var(--device-inset-right, env(safe-area-inset-right, 0px));
+		--ion-safe-area-bottom: var(--device-inset-bottom, env(safe-area-inset-bottom, 0px));
+	}
+}
+
+@supports (padding-top: 20px) {
+	html {
+		--ion-safe-area-top: var(--device-inset-top, 0px);
+		--ion-safe-area-left: var(--device-inset-left, 0px);
+		--ion-safe-area-right: var(--device-inset-right, 0px);
+		--ion-safe-area-bottom: var(--device-inset-bottom, 0px);
+	}
+}
+
 html {
 	--ion-font-family: 'Inter', var(--ion-default-font);
 }
@@ -18,33 +36,27 @@ html.high-legibility.hl-lexend {
 }
 
 ion-content {
-	--ion-safe-area-left: var(--device-inset-left, env(safe-area-inset-left));
-	--ion-safe-area-right: var(--device-inset-right, env(safe-area-inset-right));
-	--padding-bottom: 80px;
+	--padding-bottom: var(--ion-safe-area-bottom, 0px);
 }
 
-ion-content:not(ion-tabs *){
-	--padding-bottom: calc(var(--padding-bottom, 0px) + var(--device-inset-bottom, env(safe-area-inset-bottom)));
+ion-content::part(scroll) {
+	padding-left: var(--ion-safe-area-left, 0px);
+	padding-right: var(--ion-safe-area-right, 0px);
 }
 
-ion-header ion-toolbar:first-of-type {
-	--ion-safe-area-top: var(--device-inset-top, env(safe-area-inset-top));
-}
-
-ion-tab-bar {
-	--ion-safe-area-bottom: var(--device-inset-bottom, env(safe-area-inset-bottom));
+ion-content:has(> ion-fab.fab-vertical-bottom[slot="fixed"] > ion-fab-button) {
+	--padding-bottom: calc(var(--ion-safe-area-bottom, 0px) + 80px);
 }
 
 ion-fab:not(ion-tabs *) {
-	margin-bottom: var(--device-inset-bottom, env(safe-area-inset-bottom));
+	margin-bottom: var(--ion-safe-area-bottom, 0px);
 }
 
 ion-modal.modal-sheet ion-header ion-toolbar:first-of-type {
-	--ion-safe-area-top: unset;
+	--ion-safe-area-top: 0px;
 }
 
 ion-modal.modal-sheet {
-	--ion-safe-area-bottom: var(--device-inset-bottom, env(safe-area-inset-bottom));
 	--max-height: 90%;
 }
 

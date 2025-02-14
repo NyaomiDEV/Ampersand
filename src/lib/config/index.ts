@@ -36,12 +36,28 @@ const defaultSecurityConfig: SecurityConfig = {
 
 const impl = await ("isTauri" in window ? import('./impl/tauri') : import('./impl/localStorage'));
 
-export const appConfig = reactive<AppConfig>({...defaultAppConfig, ...await impl.get("appConfig") });
-export const accessibilityConfig = reactive<AccessibilityConfig>({ ...defaultAccessibilityConfig, ...await impl.get("accessibilityConfig") });
-export const securityConfig = reactive<SecurityConfig>({ ...defaultSecurityConfig, ...await impl.get("securityConfig") });
+export const appConfig = reactive<AppConfig>({...structuredClone(defaultAppConfig), ...await impl.get("appConfig") });
+export const accessibilityConfig = reactive<AccessibilityConfig>({ ...structuredClone(defaultAccessibilityConfig), ...await impl.get("accessibilityConfig") });
+export const securityConfig = reactive<SecurityConfig>({ ...structuredClone(defaultSecurityConfig), ...await impl.get("securityConfig") });
+
+
+export function resetConfig(){
+	for(const key of Object.getOwnPropertyNames(appConfig))
+		delete appConfig[key];
+
+	for (const key of Object.getOwnPropertyNames(accessibilityConfig))
+		delete accessibilityConfig[key];
+
+	for (const key of Object.getOwnPropertyNames(securityConfig))
+		delete securityConfig[key];
+
+	Object.assign(appConfig, structuredClone(defaultAppConfig));
+	Object.assign(accessibilityConfig, structuredClone(defaultAccessibilityConfig));
+	Object.assign(securityConfig, structuredClone(defaultSecurityConfig));
+}
 
 watch(appConfig, async () => {
-	await impl.set("appConfig", {...appConfig});
+	await impl.set("appConfig", { ...appConfig });
 	i18next.changeLanguage(appConfig.locale.language);
 });
 

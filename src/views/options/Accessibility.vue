@@ -111,7 +111,7 @@
 							:max="1.5"
 							:step="0.1"
 							:snaps="true"
-							:ticks="true"
+							:ticks="false"
 							:pin="true"
 							:pinFormatter="(v) => `${v}`"
 						/>
@@ -127,7 +127,7 @@
 							:max="1.5"
 							:step="0.1"
 							:snaps="true"
-							:ticks="true"
+							:ticks="false"
 							:pin="true"
 							:pinFormatter="(v) => `${v}`"
 						/>
@@ -143,7 +143,7 @@
 							:max="1000"
 							:step="50"
 							:snaps="true"
-							:ticks="true"
+							:ticks="false"
 							:pin="true"
 							:pinFormatter="(v) => `${v / 1000}`"
 						/>

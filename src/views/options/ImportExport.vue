@@ -9,7 +9,7 @@
 	import { useTranslation } from 'i18next-vue';
 	import { importPluralKit } from '../../lib/db/external/pluralkit';
 	import { importTupperBox } from '../../lib/db/external/tupperbox';
-import { importSimplyPlural } from '../../lib/db/external/simplyplural';
+	import { importSimplyPlural } from '../../lib/db/external/simplyplural';
 
 	const isIOS = inject<boolean>("isIOS");
 	const loading = ref(false);
@@ -22,14 +22,23 @@ import { importSimplyPlural } from '../../lib/db/external/simplyplural';
 		const files = await getFiles(undefined, false);
 		if(files.length){
 			const file = files[0];
-			await importDatabaseFromBinary(new Uint8Array(await file.arrayBuffer()));
+			const result = await importDatabaseFromBinary(new Uint8Array(await file.arrayBuffer()));
 
-			const statusMessage = await toastController.create({
-				message: i18next.t("importExport:status.imported"),
-				duration: 1500
-			});
+			if(result){
+				const statusMessage = await toastController.create({
+					message: i18next.t("importExport:status.imported"),
+					duration: 1500
+				});
 
-			await statusMessage.present();
+				await statusMessage.present();
+			} else {
+				const statusMessage = await toastController.create({
+					message: i18next.t("importExport:status.error"),
+					duration: 1500
+				});
+
+				await statusMessage.present();
+			}
 		}
 
 		loading.value = false;
@@ -140,7 +149,7 @@ import { importSimplyPlural } from '../../lib/db/external/simplyplural';
 				await statusMessage.present();
 			} else {
 				const statusMessage = await toastController.create({
-					message: i18next.t("importExport:status.error"),
+					message: i18next.t("importExport:status.errorExport"),
 					duration: 1500
 				});
 

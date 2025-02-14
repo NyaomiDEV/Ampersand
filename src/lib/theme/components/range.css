@@ -7,25 +7,35 @@
 	--knob-border-radius: 64px;
 }
 
-.md.md3 ion-range:active::part(pin) {
+.md.md3 ion-range.range-pressed::part(pin) {
 	transform: translate3d(0px, -80px, 0px) scale(1);
 }
 
 .md.md3 ion-range::part(knob) {
 	height: 64px;
-	border: 12px solid var(--ion-background-color);
+	outline: 12px solid var(--ion-background-color);
 	transform: none;
-	inset-inline-start: 0;
-	top: -41px;
-	left: -9px;
+	top: -29px;
 }
 
-.md.md3 ion-range:active::part(knob) {
+.md.md3 ion-range.range-pressed::part(knob) {
 	transform: scale(0.75, 1);
 }
 
 .md.md3 ion-range::part(knob)::before {
 	display: none;
+}
+
+.md.md3 ion-range::part(bar)::after {
+	content: "\A";
+	position: absolute;
+	right: 0;
+	margin: calc(var(--bar-height) / 4);
+	border-radius: 100%;
+	height: 50%;
+	aspect-ratio: 1;
+	display: block;
+	background-color: var(--ion-color-primary);
 }
 
 .md.md3 ion-range::part(tick) {

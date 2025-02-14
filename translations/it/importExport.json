@@ -16,7 +16,8 @@
 		"importedTu": "L'export di Tupperbox è stato importato. Si prega di far ripartire l'app.",
 		"exportedPwa": "Il backup è stato scaricato nella tua cartella degli scaricati.",
 		"exportedApp": "Il backup è stato esportato nella posizione scelta.",
-		"error": "Errore durante l'esportazione del backup.",
+		"errorExport": "Errore durante l'esportazione del backup.",
+		"error": "Errore durante l'importazione del backup.",
 		"errorSp": "Errore durante l'importazione dell'export di Simply Plural.",
 		"errorPk": "Errore durante l'importazione dell'export di PluralKit.",
 		"errorTu": "Errore durante l'importazione dell'export di Tupperbox."
