@@ -6,7 +6,6 @@
 	import type { FrontingEntryComplete } from '../../lib/db/entities.d.ts';
 	import { getFrontingEntries, toFrontingEntryComplete } from '../../lib/db/tables/frontingEntries';
 	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
-	import dayjs from 'dayjs';
 	import { DatabaseEvents, DatabaseEvent } from '../../lib/db/events';
 	import { addModal, removeModal } from '../../lib/modals.ts';
 
@@ -14,25 +13,23 @@
 
 	const frontingEntries: ShallowRef<FrontingEntryComplete[]> = shallowRef([]);
 
+	async function updateFrontingEntries(){
+		frontingEntries.value = await Promise.all(
+			(await getFrontingEntries())
+				.filter(x => x.endTime && Date.now() - x.endTime.getTime() <= 48 * 60 * 60 * 1000)
+				.sort((a, b) => b.endTime!.getTime() - a.endTime!.getTime())
+				.map(x => toFrontingEntryComplete(x))
+		);
+	}
+
 	const listener = async (event: Event) => {
-		if(["members", "frontingEntries"].includes((event as DatabaseEvent).data.table)){
-			frontingEntries.value = await Promise.all(
-				(await getFrontingEntries())
-					.filter(x => !!x.endTime && dayjs.duration(dayjs().diff(x.endTime)).asHours() < 48)
-					.sort((a, b) => b.endTime!.getTime() - a.endTime!.getTime())
-					.map(x => toFrontingEntryComplete(x))
-			);
-		}
+		if(["members", "frontingEntries"].includes((event as DatabaseEvent).data.table))
+			await updateFrontingEntries();
 	}
 
 	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
-		frontingEntries.value = await Promise.all(
-			(await getFrontingEntries())
-				.filter(x => !!x.endTime && dayjs.duration(dayjs().diff(x.endTime)).asHours() < 48)
-				.sort((a, b) => b.endTime!.getTime() - a.endTime!.getTime())
-				.map(x => toFrontingEntryComplete(x))
-		);
+		await updateFrontingEntries();
 	});
 
 	onUnmounted(() => {
