@@ -204,7 +204,7 @@
 	}
 
 	function updateColors(){
-		if(member.value.color && member.value.color !== "#000000"){
+		if(member.value.color){
 			if(self?.vnode.el) addMaterialColors(rgbaToArgb(member.value.color), self?.vnode.el as HTMLElement);
 		} else {
 			if(self?.vnode.el) unsetMaterialColors(self?.vnode.el as HTMLElement);

@@ -18,7 +18,7 @@
 	const cssColor = ref("var(--ion-color-primary)");
 
 	function updateColor() {
-		cssColor.value = props.member.color && props.member.color !== "#000000"
+		cssColor.value = props.member.color
 			? props.member.color
 			: "var(--ion-color-primary)";
 	}

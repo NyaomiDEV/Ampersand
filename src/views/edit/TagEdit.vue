@@ -161,7 +161,7 @@
 	}
 
 	function updateColors(){
-		if(tag.value.color && tag.value.color !== "#000000"){
+		if(tag.value.color){
 			if(self?.vnode.el) addMaterialColors(rgbaToArgb(tag.value.color), self?.vnode.el as HTMLElement);
 		} else {
 			if(self?.vnode.el) unsetMaterialColors(self?.vnode.el as HTMLElement);
