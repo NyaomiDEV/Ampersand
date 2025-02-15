@@ -15,7 +15,7 @@ import { resizeImage } from "../../util/image";
 const fetch = isTauri() ? tauriFetch : window.fetch;
 
 function normalizeSPColor(color: string) {
-	if (color.length) return undefined;
+	if (!color.length) return undefined;
 
 	if (color.startsWith("#"))
 		color = color.substring(1);
