@@ -1,3 +1,13 @@
+<script setup lang="ts">
+	const props = withDefaults(defineProps<{
+		size?: string,
+		color?: string
+	}>(), {
+		size: "48px",
+		color: "var(--ion-color-primary)"
+	});
+</script>
+
 <template>
 	<div class="parent">
 		<div class="spinner">
@@ -15,8 +25,8 @@
 	.parent {
 		display: inline-flex;
 		vertical-align: middle;
-		width: var(--spinner-size, 48px);
-		height: var(--spinner-size, 48px);
+		width: v-bind('props.size');
+		height: v-bind('props.size');
 		position: relative;
 		align-items: center;
 		justify-content: center;
@@ -51,8 +61,8 @@
 		box-sizing: border-box;
 		border-radius: 50%;
 		border: solid;
-		border-width: var(--spinner-width, 4px);
-		border-color: var(--spinner-color, var(--ion-color-primary)) var(--spinner-color, var(--ion-color-primary))
+		border-width: calc(v-bind('props.size') / 12);
+		border-color: v-bind('props.color') v-bind('props.color')
 			rgba(0, 0, 0, 0) rgba(0, 0, 0, 0);
 		animation: expand-arc;
 		animation-iteration-count: infinite;

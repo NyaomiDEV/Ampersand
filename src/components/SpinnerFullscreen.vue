@@ -4,7 +4,7 @@
 
 <template>
 	<div class="spinner-fullscreen">
-		<Spinner />
+		<Spinner size="72px" />
 	</div>
 </template>
 
@@ -16,7 +16,5 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		--spinner-size: 72px;
-		--spinner-width: 5px;
 	}
 </style>
