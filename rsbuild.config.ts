@@ -53,7 +53,8 @@ export default defineConfig({
 			cssAsync: "styles",
 			wasm: "wasm"
 		},
-		minify: true,
+		minify: false,
+		polyfill: "usage",
 		copy: [
 			{
 				from: "resources/icon/180.png",
