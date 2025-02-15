@@ -90,6 +90,7 @@
 		align-items: stretch;
 		justify-content: center;
 		flex-direction: column;
+		padding: 1em;
 	}
 
 	h1 {

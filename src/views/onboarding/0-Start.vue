@@ -37,6 +37,11 @@
 		align-items: center;
 		justify-content: center;
 		flex-direction: column;
+		padding: 1em;
+	}
+
+	.container h1 {
+		text-align: center;
 	}
 	
 	.logo {

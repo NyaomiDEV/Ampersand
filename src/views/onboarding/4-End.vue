@@ -30,5 +30,6 @@
 		justify-content: center;
 		flex-direction: column;
 		text-align: center;
+		padding: 1em;
 	}
 </style>

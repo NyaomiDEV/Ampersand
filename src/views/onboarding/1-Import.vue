@@ -183,6 +183,7 @@
 		flex-direction: column;
 		text-align: center;
 		gap: 16px;
+		padding: 1em;
 	}
 
 	.slide-enter-active,
