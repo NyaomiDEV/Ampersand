@@ -7,6 +7,7 @@ import { newMember } from "../tables/members";
 import { newFrontingEntry } from "../tables/frontingEntries";
 import { isTauri } from "../../mode";
 import { fetch as tauriFetch } from "@tauri-apps/plugin-http";
+import { nilUid } from "../../util/misc";
 
 const fetch = isTauri() ? tauriFetch : window.fetch;
 
@@ -88,7 +89,7 @@ export async function importPluralKit(pkExport: any){
 		for(const id of pkSwitch.members){
 			if(!frontingEntries.has(id)){
 				const frontingEntry: PartialBy<FrontingEntry, "uuid"> = {
-					member: memberMapping.get(id) || "00000000-0000-0000-0000-000000000000",
+					member: memberMapping.get(id) || nilUid,
 					startTime: date,
 					isMainFronter: false
 				}

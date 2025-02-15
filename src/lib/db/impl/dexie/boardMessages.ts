@@ -2,13 +2,14 @@ import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../../events";
 import { UUID, UUIDable, BoardMessage, BoardMessageComplete } from "../../entities";
 import { defaultMember } from "../../tables/members";
+import { getMember } from "./members";
 
 export function getBoardMessages(){
 	return db.boardMessages.toArray();
 }
 
 export async function toBoardMessageComplete(boardMessage: BoardMessage): Promise<BoardMessageComplete> {
-	const member = (await db.members.get(boardMessage.member)) || defaultMember();
+	const member = (await getMember(boardMessage.member)) || defaultMember();
 	return { ...boardMessage, member };
 }
 

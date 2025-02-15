@@ -11,6 +11,7 @@ import { isTauri } from "../../mode";
 import { fetch as tauriFetch } from "@tauri-apps/plugin-http";
 import { newCustomField } from "../tables/customFields";
 import { resizeImage } from "../../util/image";
+import { nilUid } from "../../util/misc";
 
 const fetch = isTauri() ? tauriFetch : window.fetch;
 
@@ -212,7 +213,7 @@ export async function importSimplyPlural(spExport) {
 		if(!spFrontHistory.startTime) continue; // front entries without startTime are null for us
 		console.debug("[SP] Creating fronting entry for:", spFrontHistory);
 		const frontingEntry: PartialBy<FrontingEntry, "uuid"> = {
-			member: memberMapping.get(spFrontHistory.member) || "00000000-0000-0000-0000-000000000000",
+			member: memberMapping.get(spFrontHistory.member) || nilUid,
 			startTime: new Date(spFrontHistory.startTime),
 			endTime: spFrontHistory.endTime ? new Date(spFrontHistory.endTime) : undefined,
 			customStatus: spFrontHistory.customStatus?.length ? spFrontHistory.customStatus : undefined,
@@ -228,7 +229,7 @@ export async function importSimplyPlural(spExport) {
 	for (const spBoardMessage of spExport.boardMessages){
 		console.debug("[SP] Creating message board entry for:", spBoardMessage);
 		const boardMessage: PartialBy<BoardMessage, "uuid"> = {
-			member: memberMapping.get(spBoardMessage.writtenBy) || "00000000-0000-0000-0000-000000000000",
+			member: memberMapping.get(spBoardMessage.writtenBy) || nilUid,
 			title: spBoardMessage.title,
 			body: `@<m:${memberMapping.get(spBoardMessage.writtenFor)}>\n\n` + (spBoardMessage.message?.length ? spBoardMessage.message : ""),
 			date: spBoardMessage.writtenAt ? new Date(spBoardMessage.writtenAt) : new Date()
@@ -243,7 +244,7 @@ export async function importSimplyPlural(spExport) {
 	for (const spPoll of spExport.polls) {
 		console.debug("[SP] Creating message board entry for poll:", spPoll);
 		const boardMessage: PartialBy<BoardMessage, "uuid"> = {
-			member: "00000000-0000-0000-0000-000000000000",
+			member: nilUid,
 			title: spPoll.name,
 			body: spPoll.desc?.length ? spPoll.desc : undefined,
 			date: new Date(),
@@ -255,7 +256,7 @@ export async function importSimplyPlural(spExport) {
 						votes: spPoll.votes
 							.filter(y => y.vote === x.name)
 							.map(y => ({
-								member: memberMapping.get(y.id) || "00000000-0000-0000-0000-000000000000",
+								member: memberMapping.get(y.id) || nilUid,
 								reason: y.comment?.length ? y.comment : undefined
 							}))
 					}))
@@ -265,7 +266,7 @@ export async function importSimplyPlural(spExport) {
 							votes: spPoll.votes
 								.filter(x => x.vote === "yes")
 								.map(x => ({
-									member: memberMapping.get(x.id) || "00000000-0000-0000-0000-000000000000",
+									member: memberMapping.get(x.id) || nilUid,
 									reason: x.comment?.length ? x.comment : undefined
 								}))
 						},
@@ -274,7 +275,7 @@ export async function importSimplyPlural(spExport) {
 							votes: spPoll.votes
 								.filter(x => x.vote === "no")
 								.map(x => ({
-									member: memberMapping.get(x.id) || "00000000-0000-0000-0000-000000000000",
+									member: memberMapping.get(x.id) || nilUid,
 									reason: x.comment?.length ? x.comment : undefined
 								}))
 						},
@@ -283,7 +284,7 @@ export async function importSimplyPlural(spExport) {
 							votes: spPoll.votes
 								.filter(x => x.vote === "veto")
 								.map(x => ({
-									member: memberMapping.get(x.id) || "00000000-0000-0000-0000-000000000000",
+									member: memberMapping.get(x.id) || nilUid,
 									reason: x.comment?.length ? x.comment : undefined
 								}))
 						} : undefined,
@@ -292,7 +293,7 @@ export async function importSimplyPlural(spExport) {
 							votes: spPoll.votes
 								.filter(x => x.vote === "abstain")
 								.map(x => ({
-									member: memberMapping.get(x.id) || "00000000-0000-0000-0000-000000000000",
+									member: memberMapping.get(x.id) || nilUid,
 									reason: x.comment?.length ? x.comment : undefined
 								}))
 						} : undefined,
@@ -311,16 +312,16 @@ export async function importSimplyPlural(spExport) {
 	const systemDesc = (await getSystem())?.description;
 	if (systemDesc)
 		if (!await modifySystem({
-			description: systemDesc.replace(/<###@(\w+)###>/g, (_, p1) => `@<m:${memberMapping.get(p1) || "00000000-0000-0000-0000-000000000000"}>`)
+			description: systemDesc.replace(/<###@(\w+)###>/g, (_, p1) => `@<m:${memberMapping.get(p1) || nilUid}>`)
 		})) return false;
 
 	for (const member of await getMembers()) {
 		const update: Partial<Member> = {};
 		if (member.description)
-			update.description = member.description.replace(/<###@(\w+)###>/g, (_, p1) => `@<m:${memberMapping.get(p1) || "00000000-0000-0000-0000-000000000000"}>`);
+			update.description = member.description.replace(/<###@(\w+)###>/g, (_, p1) => `@<m:${memberMapping.get(p1) || nilUid}>`);
 
 		if(member.customFields)
-			update.customFields = new Map(Array.from(member.customFields.entries()).map(([k, v]) => [k, v.replace(/<###@(\w+)###>/g, (_, p1) => `@<m:${memberMapping.get(p1) || "00000000-0000-0000-0000-000000000000"}>`)]));
+			update.customFields = new Map(Array.from(member.customFields.entries()).map(([k, v]) => [k, v.replace(/<###@(\w+)###>/g, (_, p1) => `@<m:${memberMapping.get(p1) || nilUid}>`)]));
 
 		if (!await updateMember(member.uuid, update)) return false;
 	}
@@ -328,7 +329,7 @@ export async function importSimplyPlural(spExport) {
 	for (const boardMessage of await getBoardMessages()) {
 		if (boardMessage.body)
 			if (!await updateBoardMessage(boardMessage.uuid, {
-				body: boardMessage.body.replace(/<###@(\w+)###>/g, (_, p1) => `@<m:${memberMapping.get(p1) || "00000000-0000-0000-0000-000000000000"}>`)
+				body: boardMessage.body.replace(/<###@(\w+)###>/g, (_, p1) => `@<m:${memberMapping.get(p1) || nilUid}>`)
 			})) return false;
 	}
 

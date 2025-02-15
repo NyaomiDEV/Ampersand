@@ -53,7 +53,7 @@ export default defineConfig({
 			cssAsync: "styles",
 			wasm: "wasm"
 		},
-		minify: false,
+		minify: true,
 		polyfill: "usage",
 		copy: [
 			{

@@ -1,6 +1,7 @@
 import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../../events";
 import { UUIDable, Member, UUID } from "../../entities";
+import { nilUid } from "../../../util/misc";
 
 export function getMembers(){
 	return db.members.toArray();
@@ -24,11 +25,13 @@ export async function newMember(member: Omit<Member, keyof UUIDable>) {
 	}
 }
 
-export function getMember(uuid: UUID){
-	return db.members.get(uuid);
+export async function getMember(uuid: UUID){
+	if(uuid === nilUid) return undefined;
+	return await db.members.get(uuid);
 }
 
 export async function deleteMember(uuid: UUID) {
+	if (uuid === nilUid) return false;
 	try {
 		await db.members.delete(uuid);
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
@@ -43,6 +46,7 @@ export async function deleteMember(uuid: UUID) {
 }
 
 export async function updateMember(uuid: UUID, newContent: Partial<Member>) {
+	if (uuid === nilUid) return undefined;
 	try{
 		const updated = await db.members.update(uuid, newContent);
 		if(updated) {

@@ -2,13 +2,14 @@ import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../../events";
 import { UUIDable, Member, FrontingEntry, FrontingEntryComplete, UUID } from "../../entities";
 import { defaultMember } from "../../tables/members";
+import { getMember } from "./members";
 
 export function getFrontingEntries(){
 	return db.frontingEntries.toArray();
 }
 
 export async function toFrontingEntryComplete(frontingEntry: FrontingEntry): Promise<FrontingEntryComplete> {
-	const member = (await db.members.get(frontingEntry.member)) || defaultMember();
+	const member = (await getMember(frontingEntry.member)) || defaultMember();
 	return { ...frontingEntry, member };
 }
 
@@ -105,7 +106,7 @@ export async function getCurrentFrontEntryForMember(member: Member){
 export async function getMainFronter(){
 	const mainFronterEntry = await db.frontingEntries.filter(x => x.endTime === undefined && x.isMainFronter).first();
 	if(mainFronterEntry){
-		return await db.members.get(mainFronterEntry.member);
+		return await getMember(mainFronterEntry.member);
 	}
 	return undefined;
 }
@@ -114,7 +115,7 @@ export async function getFronting() {
 	const frontersEntries = await db.frontingEntries.filter(x => x.endTime === undefined).toArray();
 	const frontingMembers: Member[] = [];
 	for(const entry of frontersEntries){
-		const member = await db.members.get(entry.member);
+		const member = await getMember(entry.member);
 		if(member)
 			frontingMembers.push(member);
 	}
