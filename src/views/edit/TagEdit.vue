@@ -26,7 +26,7 @@
 	import personMD from "@material-symbols/svg-600/outlined/person.svg";
 	import journalMD from "@material-symbols/svg-600/outlined/book.svg";
 
-	import { getTags, newTag, removeTag, updateTag } from '../../lib/db/tables/tags';
+	import { getTag, newTag, removeTag, updateTag } from '../../lib/db/tables/tags';
 	import { Member, Tag } from "../../lib/db/entities";
 	import { getCurrentInstance, h, inject, onBeforeMount, ref, watch } from "vue";
 	import { addMaterialColors, rgbaToArgb, unsetMaterialColors } from "../../lib/theme";
@@ -36,8 +36,8 @@
 	import { useTranslation } from "i18next-vue";
 	import { useRoute } from "vue-router";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
-import { addModal, removeModal } from "../../lib/modals";
-import MemberSelect from "../../modals/MemberSelect.vue";
+	import { addModal, removeModal } from "../../lib/modals";
+	import MemberSelect from "../../modals/MemberSelect.vue";
 
 	const isIOS = inject<boolean>("isIOS");
 	const loading = ref(false);
@@ -143,7 +143,7 @@ import MemberSelect from "../../modals/MemberSelect.vue";
 		loading.value = true;
 
 		if(route.query.uuid){
-			const _tag = (await getTags()).find(x => x.uuid === route.query.uuid);
+			const _tag = await getTag(route.query.uuid as string);
 			if(_tag){
 				tag.value = _tag;
 

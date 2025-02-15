@@ -66,6 +66,7 @@
 
 				await statusMessage.present();
 			}catch(e){
+				console.error(e);
 				const statusMessage = await toastController.create({
 					message: i18next.t("importExport:status.errorSp"),
 					duration: 1500

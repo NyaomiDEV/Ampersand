@@ -10,6 +10,10 @@ export function newAsset(asset: Omit<Asset, keyof UUIDable>) {
 	return impl.newAsset(asset);
 }
 
+export function getAsset(uuid: UUID){
+	return impl.getAsset(uuid);
+}
+
 export function deleteAsset(uuid: UUID) {
 	return impl.deleteAsset(uuid);
 }

@@ -24,6 +24,10 @@ export async function newAsset(asset: Omit<Asset, keyof UUIDable>) {
 	}
 }
 
+export function getAsset(uuid: UUID){
+	return db.assets.get(uuid);
+}
+
 export async function deleteAsset(uuid: UUID) {
 	try {
 		await db.assets.delete(uuid);

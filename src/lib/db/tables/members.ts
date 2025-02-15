@@ -11,11 +11,17 @@ export function newMember(member: Omit<Member, keyof UUIDable>) {
 	return impl.newMember(member);
 }
 
-export function deleteMember(uuid: UUID){
-	return impl.deleteMember(uuid);
+export function getMember(uuid: UUID){
+	return impl.getMember(uuid);
 }
 
-export function updateMember(uuid: UUID, newContent: Partial<Member>){
+export async function deleteMember(uuid: UUID){
+	if(uuid === defaultMember().uuid) return false;
+	return await impl.deleteMember(uuid);
+}
+
+export async function updateMember(uuid: UUID, newContent: Partial<Member>){
+	if (uuid === defaultMember().uuid) return false;
 	return impl.updateMember(uuid, newContent);
 }
 

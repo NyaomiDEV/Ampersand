@@ -10,6 +10,10 @@ export function newReminder(reminder: Omit<Reminder, keyof UUIDable>) {
 	return impl.newReminder(reminder);
 }
 
+export function getReminder(uuid: UUID){
+	return impl.getReminder(uuid)
+}
+
 export function removeReminder(uuid: UUID){
 	return impl.removeReminder(uuid);
 }

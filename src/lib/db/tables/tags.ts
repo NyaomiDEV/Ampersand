@@ -10,6 +10,10 @@ export function newTag(tag: Omit<Tag, keyof UUIDable>) {
 	return impl.newTag(tag);
 }
 
+export function getTag(uuid: UUID){
+	return impl.getTag(uuid)
+}
+
 export function removeTag(uuid: UUID){
 	return impl.removeTag(uuid);
 }

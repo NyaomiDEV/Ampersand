@@ -1,7 +1,7 @@
 import { h } from "vue";
 import MemberChip from "../../components/member/MemberChip.vue";
 import { MarkedExtension } from "../../../vendor/marked-vue/marked";
-import { getMembers } from "../db/tables/members";
+import { getMember } from "../db/tables/members";
 
 const mentionExtension: MarkedExtension = {
 	extensions: [{
@@ -46,7 +46,7 @@ const mentionExtension: MarkedExtension = {
 			case "mention":
 				switch (token.mentionedType) {
 					case "member":
-						token.member = (await getMembers()).find(x => x.uuid === token.uuid);
+						token.member = await getMember(token.uuid);
 						break;
 				}
 				break;

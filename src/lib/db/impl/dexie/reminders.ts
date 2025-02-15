@@ -24,6 +24,10 @@ export async function newReminder(reminder: Omit<Reminder, keyof UUIDable>) {
 	}
 }
 
+export function getReminder(uuid: UUID){
+	return db.reminders.get(uuid)
+}
+
 export async function removeReminder(uuid: UUID) {
 	try {
 		await db.reminders.delete(uuid);

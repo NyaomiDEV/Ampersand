@@ -57,6 +57,7 @@
 
 				if (!result) throw new Error("errored out");
 			}catch(e){
+				console.error(e);
 				await Promise.all(getTables().map(x => x.clear()));
 
 				const statusMessage = await toastController.create({

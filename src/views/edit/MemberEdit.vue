@@ -33,7 +33,7 @@
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 
 	import { CustomField, Member, Tag } from "../../lib/db/entities";
-	import { getMembers, newMember, deleteMember, updateMember, defaultMember } from '../../lib/db/tables/members';
+	import { newMember, deleteMember, updateMember, defaultMember, getMember } from '../../lib/db/tables/members';
 	import { getTags } from "../../lib/db/tables/tags";
 	import { getFiles } from "../../lib/util/misc";
 	import { resizeImage } from "../../lib/util/image";
@@ -104,6 +104,7 @@
 		}
 
 		await updateMember(uuid, _member);
+
 		isEditing.value = false;
 	}
 
@@ -176,7 +177,7 @@
 		customFields.value = await getCustomFields();
 
 		if(route.query.uuid){
-			const _member = (await getMembers()).find(x => x.uuid === route.query.uuid);
+			const _member = await getMember(route.query.uuid as string);
 			if(_member) member.value = _member;
 			else member.value = defaultMember();
 		} else member.value = {...emptyMember};

@@ -24,6 +24,10 @@ export async function newTag(tag: Omit<Tag, keyof UUIDable>) {
 	}
 }
 
+export function getTag(uuid: UUID){
+	return db.tags.get(uuid);
+}
+
 export async function removeTag(uuid: UUID){
 	const tag = await db.tags.get(uuid);
 	if(tag?.type === "member"){

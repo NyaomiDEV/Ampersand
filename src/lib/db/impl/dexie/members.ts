@@ -24,6 +24,10 @@ export async function newMember(member: Omit<Member, keyof UUIDable>) {
 	}
 }
 
+export function getMember(uuid: UUID) {
+	return db.members.get(uuid)
+}
+
 export async function deleteMember(uuid: UUID) {
 	try {
 		await db.members.delete(uuid);

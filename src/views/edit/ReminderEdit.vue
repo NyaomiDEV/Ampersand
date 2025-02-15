@@ -29,7 +29,7 @@
 
 	import { inject, onBeforeMount, ref, toRaw, useTemplateRef, watch } from "vue";
 	import { EventReminder, Reminder } from "../../lib/db/entities";
-	import { getReminders, newReminder, removeReminder, updateReminder } from "../../lib/db/tables/reminders";
+	import { getReminder, newReminder, removeReminder, updateReminder } from "../../lib/db/tables/reminders";
 	import { PartialBy } from "../../lib/types";
 	import { useRoute } from "vue-router";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
@@ -146,7 +146,7 @@
 		if(route.name !== "ReminderEdit") return;
 
 		if(route.query.uuid){
-			const rem = (await getReminders()).find(x => x.uuid === route.query.uuid);
+			const rem = await getReminder(route.query.uuid as string);
 			if(rem) reminder.value = rem;
 			else reminder.value = {...emptyReminder};
 		} else reminder.value = {...emptyReminder};

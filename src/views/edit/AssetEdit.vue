@@ -21,7 +21,7 @@
 	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
 
-	import { getAssets, newAsset, deleteAsset, updateAsset } from '../../lib/db/tables/assets';
+	import { newAsset, deleteAsset, updateAsset, getAsset } from '../../lib/db/tables/assets';
 	import { Asset } from "../../lib/db/entities";
 	import { inject, onBeforeMount, ref, watch } from "vue";
 	import { PartialBy } from "../../lib/types";
@@ -102,7 +102,7 @@
 		loading.value = true;
 
 		if(route.query.uuid){
-			const _asset = (await getAssets()).find(x => x.uuid === route.query.uuid);
+			const _asset = await getAsset(route.query.uuid as string);
 			if(_asset)
 				asset.value = _asset;
 			else asset.value = {...emptyAsset};

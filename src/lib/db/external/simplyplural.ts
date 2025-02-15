@@ -10,10 +10,13 @@ import { t } from "i18next";
 import { isTauri } from "../../mode";
 import { fetch as tauriFetch } from "@tauri-apps/plugin-http";
 import { newCustomField } from "../tables/customFields";
+import { resizeImage } from "../../util/image";
 
 const fetch = isTauri() ? tauriFetch : window.fetch;
 
 function normalizeSPColor(color: string) {
+	if (color.length) return undefined;
+
 	if (color.startsWith("#"))
 		color = color.substring(1);
 
@@ -47,6 +50,7 @@ function mapCustomFieldType(type: number, data: any) {
 }
 
 async function getAvatarFromUuid(systemId: string, avatarUuid: string){
+	if(!avatarUuid || !avatarUuid.length) return undefined;
 	try {
 		const url = `https://spaces.apparyllis.com/avatars/${systemId}/${avatarUuid}`;
 		const req = await (await fetch(url)).blob();
@@ -61,32 +65,41 @@ export async function importSimplyPlural(spExport) {
 	await Promise.all(getTables().map(async x => x.clear()));
 
 	// SYSTEM
+	const spSystem = spExport.users[0];
+	if(!spSystem) return false;
+	console.debug("[SP] Creating system:", spSystem);
+
 	const systemInfo: PartialBy<System, "uuid"> = {
-		name: spExport.users[0].username,
-		description: spExport.users[0].desc,
+		name: spSystem.username,
+		description: spSystem.desc,
 	};
 
-	if (spExport.users[0].avatarUrl) {
+	if (spSystem.avatarUrl?.length) {
 		try {
-			systemInfo.image = new File(
-				[await (await fetch(spExport.users[0].avatarUrl)).blob()],
-				spExport.users[0].avatarUrl.split("/").pop()
+			const image = new File(
+				[await (await fetch(spSystem.avatarUrl)).blob()],
+				spSystem.avatarUrl.split("/").pop()
 			);
+			systemInfo.image = await resizeImage(image);
 		} catch (e) {
 			// whatever
 		}
-	} else if (spExport.users[0].avatarUuid.length) {
-		systemInfo.image = await getAvatarFromUuid(spExport.users[0].uid, spExport.users[0].avatarUuid);
+	} else if (spSystem.avatarUuid?.length) {
+		const image = await getAvatarFromUuid(spSystem.uid, spSystem.avatarUuid);
+		if(image) systemInfo.image = await resizeImage(image);
 	}
 
 	if(!await newSystem(systemInfo)) return false;
 
+	console.debug("[SP] System created");
+
 	// TAGS
 	const tagMapping = new Map<string, string>();
 	for (const spGroup of spExport.groups) {
+		console.debug("[SP] Creating tag for group:", spGroup);
 		const tag: PartialBy<Tag, "uuid"> = {
 			name: spGroup.name,
-			description: spGroup.desc,
+			description: spGroup.desc?.length ? spGroup.desc : undefined,
 			color: normalizeSPColor(spGroup.color),
 			type: "member"
 		};
@@ -94,11 +107,13 @@ export async function importSimplyPlural(spExport) {
 		const uuid = await newTag(tag);
 		if(!uuid) return false;
 		tagMapping.set(spGroup._id, uuid);
+		console.debug("[SP] Created tag for group:", spGroup, "with UUID:", uuid);
 	}
 
 	// CUSTOM FIELDS
 	const customFieldMapping = new Map<string, [string, number]>();
 	for (const spCustomField of spExport.customFields) {
+		console.debug("[SP] Creating custom field for:", spCustomField);
 		const customField: PartialBy<CustomField, "uuid"> = {
 			name: spCustomField.name,
 			default: false
@@ -107,25 +122,28 @@ export async function importSimplyPlural(spExport) {
 		const uuid = await newCustomField(customField);
 		if (!uuid) return false;
 		customFieldMapping.set(spCustomField._id, [uuid, spCustomField.type]);
+		console.debug("[SP] Created custom field for:", spCustomField, "with UUID:", uuid);
 	}
 
 	// MEMBERS
 	const memberMapping = new Map<string, string>();
 	for (const spMember of spExport.members) {
+		console.debug("[SP] Creating member for:", spMember);
 		const member: PartialBy<Member, "uuid"> = {
 			name: spMember.name,
-			pronouns: spMember.pronouns,
-			description: spMember.desc,
+			pronouns: spMember.pronouns?.length ? spMember.pronouns : undefined,
+			description: spMember.desc?.length ? spMember.desc : undefined,
 			color: normalizeSPColor(spMember.color),
-			isArchived: spMember.archived,
+			isArchived: spMember.archived || false,
 			isCustomFront: false,
+			dateCreated: spMember.created ? new Date(spMember.created) : new Date(),
 			tags: [
 				...spExport.groups
-					.filter(x => x.members.includes(spMember._id))
+					.filter(x => x.members?.includes(spMember._id))
 					.map(x => tagMapping.get(x._id))
 			],
 			customFields: new Map(
-				Object.entries(spMember.info)
+				Object.entries(spMember.info || {})
 				.filter(([_, v]) => (v as string).length)
 				.map(([_id, value]) => {
 					const mapped = customFieldMapping.get(_id);
@@ -134,59 +152,65 @@ export async function importSimplyPlural(spExport) {
 				})
 				.filter(x => !!x)
 			),
-			dateCreated: spMember.created ? new Date(spMember.created) : new Date(),
 		};
 
-		if (spMember.avatarUrl) {
+		if (spMember.avatarUrl?.length) {
 			try {
-				member.image = new File(
+				const image = new File(
 					[await (await fetch(spMember.avatarUrl)).blob()],
 					spMember.avatarUrl.split("/").pop()
 				);
+				member.image = await resizeImage(image);
 			} catch (e) {
 				// whatever
 			}
-		} else if (spMember.avatarUuid.length) {
-			member.image = await getAvatarFromUuid(spExport.users[0].uid, spMember.avatarUuid);
+		} else if (spMember.avatarUuid?.length) {
+			const image = await getAvatarFromUuid(spSystem.uid, spMember.avatarUuid);
+			if(image) member.image = await resizeImage(image);
 		}
 
 		const uuid = await newMember(member);
 		if(!uuid) return false;
 		memberMapping.set(spMember._id, uuid);
+		console.debug("[SP] Created member for:", spMember, "with UUID:", uuid);
 	}
 
 	// CUSTOM FRONTS
 	for (const spCustomFront of spExport.frontStatuses) {
+		console.debug("[SP] Creating member for custom front:", spCustomFront);
 		const member: PartialBy<Member, "uuid"> = {
 			name: spCustomFront.name,
-			description: spCustomFront.desc,
+			description: spCustomFront.desc?.length ? spCustomFront.desc : undefined,
 			color: normalizeSPColor(spCustomFront.color),
 			isArchived: false,
 			isCustomFront: true,
 			tags: [],
 			dateCreated: spCustomFront.created ? new Date(spCustomFront.created) : new Date(),
 		};
-		if (spCustomFront.avatarUrl) {
+		if (spCustomFront.avatarUrl?.length) {
 			try {
-				member.image = new File(
+				const image = new File(
 					[await (await fetch(spCustomFront.avatarUrl)).blob()],
 					spCustomFront.avatarUrl.split("/").pop()
 				);
+				member.image = await resizeImage(image)
 			} catch (e) {
 				// whatever
 			}
-		} else if (spCustomFront.avatarUuid.length) {
-			member.image = await getAvatarFromUuid(spExport.users[0].uid, spCustomFront.avatarUuid);
+		} else if (spCustomFront.avatarUuid?.length) {
+			member.image = await getAvatarFromUuid(spSystem.uid, spCustomFront.avatarUuid);
 		}
 
 		const uuid = await newMember(member);
 		if (!uuid) return false;
 		memberMapping.set(spCustomFront._id, uuid);
+		console.debug("[SP] Created member for custom front:", spCustomFront, "with UUID:", uuid);
 	}
 
 	// FRONTING ENTRIES
 	for (const spFrontHistory of spExport.frontHistory) {
 		if(!spFrontHistory.startTime) continue; // front entries without startTime are null for us
+		console.debug("[SP] Creating fronting entry for:", spFrontHistory);
 		const frontingEntry: PartialBy<FrontingEntry, "uuid"> = {
 			member: memberMapping.get(spFrontHistory.member) || "00000000-0000-0000-0000-000000000000",
 			startTime: new Date(spFrontHistory.startTime),
@@ -195,27 +219,33 @@ export async function importSimplyPlural(spExport) {
 			isMainFronter: false
 		}
 		
-		if(!await newFrontingEntry(frontingEntry)) return false;
+		const uuid = await newFrontingEntry(frontingEntry);
+		if(!uuid) return false;
+		console.debug("[SP] Created fronting entry for:", spFrontHistory, "with UUID:", uuid);
 	}
 
 	// BOARD MESSAGES
 	for (const spBoardMessage of spExport.boardMessages){
+		console.debug("[SP] Creating message board entry for:", spBoardMessage);
 		const boardMessage: PartialBy<BoardMessage, "uuid"> = {
 			member: memberMapping.get(spBoardMessage.writtenBy) || "00000000-0000-0000-0000-000000000000",
 			title: spBoardMessage.title,
-			body: `@<m:${memberMapping.get(spBoardMessage.writtenFor)}>\n\n` + spBoardMessage.message,
-			date: new Date(spBoardMessage.writtenAt)
+			body: `@<m:${memberMapping.get(spBoardMessage.writtenFor)}>\n\n` + spBoardMessage.message?.length ? spBoardMessage.message : "",
+			date: spBoardMessage.writtenAt ? new Date(spBoardMessage.writtenAt) : new Date()
 		};
-
-		if (!await newBoardMessage(boardMessage)) return false;
+		
+		const uuid = await newBoardMessage(boardMessage);
+		if (!uuid) return false;
+		console.debug("[SP] Created message board entry for:", spBoardMessage, "with UUID:", uuid);
 	}
 
 	// POLLS AS BOARD MESSAGES
 	for (const spPoll of spExport.polls) {
+		console.debug("[SP] Creating message board entry for poll:", spPoll);
 		const boardMessage: PartialBy<BoardMessage, "uuid"> = {
 			member: "00000000-0000-0000-0000-000000000000",
 			title: spPoll.name,
-			body: spPoll.desc,
+			body: spPoll.desc?.length ? spPoll.desc : undefined,
 			date: new Date(),
 			poll: {
 				multipleChoice: false,
@@ -226,7 +256,7 @@ export async function importSimplyPlural(spExport) {
 							.filter(y => y.vote === x.name)
 							.map(y => ({
 								member: memberMapping.get(y.id) || "00000000-0000-0000-0000-000000000000",
-								reason: y.comment.length ? y.comment : undefined
+								reason: y.comment?.length ? y.comment : undefined
 							}))
 					}))
 					: [
@@ -236,7 +266,7 @@ export async function importSimplyPlural(spExport) {
 								.filter(x => x.vote === "yes")
 								.map(x => ({
 									member: memberMapping.get(x.id) || "00000000-0000-0000-0000-000000000000",
-									reason: x.comment.length ? x.comment : undefined
+									reason: x.comment?.length ? x.comment : undefined
 								}))
 						},
 						{
@@ -245,7 +275,7 @@ export async function importSimplyPlural(spExport) {
 								.filter(x => x.vote === "no")
 								.map(x => ({
 									member: memberMapping.get(x.id) || "00000000-0000-0000-0000-000000000000",
-									reason: x.comment.length ? x.comment : undefined
+									reason: x.comment?.length ? x.comment : undefined
 								}))
 						},
 						spPoll.allowVeto ? {
@@ -254,7 +284,7 @@ export async function importSimplyPlural(spExport) {
 								.filter(x => x.vote === "veto")
 								.map(x => ({
 									member: memberMapping.get(x.id) || "00000000-0000-0000-0000-000000000000",
-									reason: x.comment.length ? x.comment : undefined
+									reason: x.comment?.length ? x.comment : undefined
 								}))
 						} : undefined,
 						spPoll.allowAbstain ? {
@@ -263,17 +293,21 @@ export async function importSimplyPlural(spExport) {
 								.filter(x => x.vote === "abstain")
 								.map(x => ({
 									member: memberMapping.get(x.id) || "00000000-0000-0000-0000-000000000000",
-									reason: x.comment.length ? x.comment : undefined
+									reason: x.comment?.length ? x.comment : undefined
 								}))
 						} : undefined,
 					].filter(Boolean)
 			}
 		};
 		
-		if(!await newBoardMessage(boardMessage)) return false;
+		const uuid = await newBoardMessage(boardMessage);
+		if(!uuid) return false;
+		console.debug("[SP] Created message board entry for poll:", spPoll, "with UUID:", uuid);
 	}
 
 	// REMAP ALL MEMBER MENTIONS
+	console.debug("[SP] Performing remappings");
+
 	const systemDesc = (await getSystem())?.description;
 	if (systemDesc)
 		if (!await modifySystem({
@@ -297,6 +331,8 @@ export async function importSimplyPlural(spExport) {
 				body: boardMessage.body.replace(/<###@(\w+)###>/g, (_, p1) => `@<m:${memberMapping.get(p1) || "00000000-0000-0000-0000-000000000000"}>`)
 			})) return false;
 	}
+
+	console.debug("[SP] Performed remappings");
 
 	return true;
 }
