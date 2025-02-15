@@ -83,7 +83,7 @@ export async function getFilteredFrontingEntries(search: string, frontingEntries
 	if(!frontingEntries) return;
 	const filtered: FrontingEntryComplete[] = [];
 	const parsed = parseFrontingHistoryFilterQuery(search.length ? search : appConfig.defaultFilterQueries.frontingHistory || "");
-	const complete = await Promise.all(frontingEntries.map(x => toFrontingEntryComplete(x)));
+	const complete = await Promise.all(frontingEntries.sort((a, b) => sortingFunctions.numeric(b.startTime.getTime(), a.startTime.getTime())).map(x => toFrontingEntryComplete(x)));
 
 	if(parsed.all) return complete;
 
