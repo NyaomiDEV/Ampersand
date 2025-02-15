@@ -230,7 +230,7 @@ export async function importSimplyPlural(spExport) {
 		const boardMessage: PartialBy<BoardMessage, "uuid"> = {
 			member: memberMapping.get(spBoardMessage.writtenBy) || "00000000-0000-0000-0000-000000000000",
 			title: spBoardMessage.title,
-			body: `@<m:${memberMapping.get(spBoardMessage.writtenFor)}>\n\n` + spBoardMessage.message?.length ? spBoardMessage.message : "",
+			body: `@<m:${memberMapping.get(spBoardMessage.writtenFor)}>\n\n` + (spBoardMessage.message?.length ? spBoardMessage.message : ""),
 			date: spBoardMessage.writtenAt ? new Date(spBoardMessage.writtenAt) : new Date()
 		};
 		
