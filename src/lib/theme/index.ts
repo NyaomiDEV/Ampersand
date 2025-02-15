@@ -89,8 +89,8 @@ export function updateMaterialColors(target?: HTMLElement){
 	const accentColor = accessibilityConfig.accentColor;
 	if (useAccentColor && accentColor)
 		addMaterialColors(rgbaToArgb(accentColor), target);
-	else if(m3colors)
-		addMaterialColors(rgbaToArgb(m3colors.primaryContainer!) || defaultColor, target);
+	else if(m3colors && m3colors.primaryContainer)
+		addMaterialColors(rgbaToArgb(m3colors.primaryContainer), target);
 	else
 		addMaterialColors(defaultColor, target);
 }
