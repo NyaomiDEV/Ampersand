@@ -14,6 +14,12 @@ Welcome to Ampersand.
 
 January 30, 2025
 
+## Issues
+
+We've moved to Codeberg, so please report issues there now!
+
+https://codeberg.org/NyaomiDEV/Ampersand/issues
+
 ## What is Ampersand?
 
 Ampersand is a research project, and also an app. It wants to do one thing and do it reasonably well: tracking and journaling for plural systems.
