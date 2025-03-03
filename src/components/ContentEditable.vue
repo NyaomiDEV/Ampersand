@@ -16,7 +16,7 @@
 	<IonLabel position="stacked" v-if="!focused && props.label">{{ props.label }}</IonLabel>
 	<div v-if="!focused" @click="() => {
 		focused = true;
-		$nextTick(() => $refs.textarea.$el.setFocus());
+		$nextTick(() => ($refs.textarea as any).$el.setFocus());
 	}"><Markdown :markdown="model" /></div>
 	<IonTextarea
 		v-show="focused"

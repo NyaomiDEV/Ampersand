@@ -62,7 +62,7 @@ const dynamicColorsWeWant = [
 
 export const defaultColor = "#30628C";
 
-const m3colors = await M3.fetch("system").colors();
+const m3colors = await M3.getColors("system");
 
 function rgbFromArgb(argb: number){
 	return [

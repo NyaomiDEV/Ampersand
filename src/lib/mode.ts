@@ -55,7 +55,7 @@ export function updatePWATitlebarColor(color: string){
 export async function updateDarkMode() {
 	document.documentElement.classList.toggle("ion-palette-dark", isDarkMode());
 	updatePWATitlebarColor(window.getComputedStyle(document.body).getPropertyValue("--ion-toolbar-background"));
-	await M3.barColor(isDarkMode() ? "light" : "dark");
+	await M3.setBarColor(isDarkMode() ? "light" : "dark");
 }
 
 export async function updateInsets() {

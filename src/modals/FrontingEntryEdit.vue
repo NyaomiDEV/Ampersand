@@ -144,7 +144,7 @@
 					<IonItem>
 						<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('frontHistory:edit.customStatus')" labelPlacement="floating" v-model="frontingEntry.customStatus" />
 					</IonItem>
-					<IonItem button @click="$refs.startTimePicker?.$el.present()">
+					<IonItem button @click="($refs.startTimePicker as any)?.$el.present()">
 						<IonLabel>
 							<h2>{{ $t("frontHistory:edit.startTime") }}</h2>
 							<p>{{ formatDate(frontingEntry.startTime, "expanded") }}</p>
@@ -163,7 +163,7 @@
 							<p>{{ $t("frontHistory:edit.removeFromFront.desc") }}</p>
 						</IonLabel>
 					</IonItem>
-					<IonItem button v-if="frontingEntry.endTime" @click="$refs.endTimePicker?.$el.present()">
+					<IonItem button v-if="frontingEntry.endTime" @click="($refs.endTimePicker as any)?.$el.present()">
 						<IonLabel>
 							<h2>{{ $t("frontHistory:edit.endTime") }}</h2>
 							<p>{{ formatDate(frontingEntry.endTime, "expanded") }}</p>
