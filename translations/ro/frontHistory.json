@@ -1,20 +1,20 @@
 {
-	"header": "Istoricul frunții",
-	"searchPlaceholder": "Căutați prin istoricul frunții",
-	"currentlyFronting": "În prezent se află in frunte",
-	"edit": {
-		"header": "Schimbați intrarea în frunte",
-		"member": "Schimbați membrul fruntaș",
-		"customStatus": "Stare personalizată",
-		"startTime": "De la",
-		"endTime": "Până la",
-		"removeFromFront": {
-			"title": "Eliminați din frunte",
-			"desc": "Nu veți putea anula această acțiune după ce salvați!"
-		},
-		"isMainFronter": "Fruntaș principal?",
-		"delete": {
-			"title": "Ștergeți intrarea în frunte"
-		}
-	}
+    "header": "Istoricul frunții",
+    "searchPlaceholder": "Căutați prin istoricul frunții...",
+    "currentlyFronting": "În prezent se află in frunte",
+    "edit": {
+        "header": "Schimbați intrarea în frunte",
+        "member": "Schimbați membrul fruntaș",
+        "customStatus": "Stare personalizată",
+        "startTime": "De la",
+        "endTime": "Până la",
+        "removeFromFront": {
+            "title": "Eliminați din frunte",
+            "desc": "Nu veți putea anula această acțiune după ce salvați!"
+        },
+        "isMainFronter": "Fruntaș principal",
+        "delete": {
+            "title": "Ștergeți intrarea în frunte"
+        }
+    }
 }

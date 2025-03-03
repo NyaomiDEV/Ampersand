@@ -1,38 +1,40 @@
 {
-	"header": "Gestione dei tag",
-	"searchPlaceholder": "Cerca tra i tag...",
-	"select": "Seleziona alcuni tag",
-	"selector": {
-		"member": "Tag deɜ membrɜ",
-		"journal": "Tag del diario"
-	},
-	"edit": {
-		"header": {
-			"member": "Modifica tag deɜ membrɜ",
-			"journal": "Modifica tag del diario"
-		},
-		"name": "Nome del tag",
-		"description": "Descrizione del tag",
-		"color": "Colore del tag",
-		"type": {
-			"header": "Tipo del tag",
-			"member": "Membrə",
-			"journal": "Diario",
-			"desc": "Nota: puoi definire il tipo del tag solo al momento della creazione!"
-		},
-		"members": {
-			"title": "Scegli lɜ membrɜ che usano questo tag",
-			"desc_one": "{{count}} membrə usa questo tag",
-			"desc_other": "{{count}} membrɜ usano questo tag"
-		},
-		"showJournal": {
-			"title": "Mostra le pagine del diario che usano questo tag",
-			"desc_one": "{{count}} pagina del diario usa questo tag",
-			"desc_other": "{{count}} pagine del diario usano questo tag"
-		},
-		"delete": {
-			"title": "Elimina tag",
-			"confirm": "Vuoi davvero eliminare questo tag?"
-		}
-	}
+    "header": "Gestione dei tag",
+    "searchPlaceholder": "Cerca tra i tag...",
+    "select": "Seleziona alcuni tag",
+    "selector": {
+        "member": "Tag deɜ membrɜ",
+        "journal": "Tag del diario"
+    },
+    "edit": {
+        "header": {
+            "member": "Modifica tag deɜ membrɜ",
+            "journal": "Modifica tag del diario"
+        },
+        "name": "Nome del tag",
+        "description": "Descrizione del tag",
+        "color": "Colore del tag",
+        "type": {
+            "header": "Tipo del tag",
+            "member": "Membrə",
+            "journal": "Diario",
+            "desc": "Nota: puoi definire il tipo del tag solo al momento della creazione!"
+        },
+        "members": {
+            "title": "Scegli lɜ membrɜ che usano questo tag",
+            "desc_one": "{{count}} membrə usa questo tag",
+            "desc_many": "{{count}} membrɜ usano questo tag",
+            "desc_other": "{{count}} membrɜ usano questo tag"
+        },
+        "showJournal": {
+            "title": "Mostra le pagine del diario che usano questo tag",
+            "desc_one": "{{count}} pagina del diario usa questo tag",
+            "desc_many": "{{count}} pagine del diario usano questo tag",
+            "desc_other": "{{count}} pagine del diario usano questo tag"
+        },
+        "delete": {
+            "title": "Elimina tag",
+            "confirm": "Vuoi davvero eliminare questo tag?"
+        }
+    }
 }
