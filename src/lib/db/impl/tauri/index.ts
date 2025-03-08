@@ -5,28 +5,100 @@ import { blob, file, filelist, map, typedArrays, undef, set as Tset, imagebitmap
 import { Asset, BoardMessage, Chat, ChatMessage, CustomField, FrontingEntry, JournalPost, Member, Reminder, System, Tag, UUIDable } from '../../entities';
 import { decode, encode } from '@msgpack/msgpack';
 
+type IndexEntry<T> = UUIDable & Partial<T>;
+type SecondaryKey<T> = (Exclude<keyof T, keyof UUIDable>);
+
 class ShittyTable<T extends UUIDable> {
 	name: string;
 	path: string;
-	index?: string[];
+	secondaryKeys: SecondaryKey<T>[];
+	index: Array<IndexEntry<T>>;
 
-	constructor(name: string, path: string) {
+	constructor(name: string, path: string, secondaryKeys: SecondaryKey<T>[]) {
 		this.name = name;
 		this.path = path;
+		this.secondaryKeys = secondaryKeys;
+		this.index = [];
 	}
 
-	async makeInMemoryIndex() {
-		const dir = await this.walkDir();
-
-		if(!dir){
-			this.index = [];
-			return;
+	async getIndexFromDisk(){
+		const _path = await path.resolve(this.path, ".index");
+		try {
+			const obj = decode(await fs.readFile(_path));
+			if (typeof obj !== "undefined") {
+				return await typeson.revive(obj) as Array<IndexEntry<T>>;
+			}
+		} catch (e) {
+			console.error(e);
 		}
 
-		this.index = dir?.map(x => x.name);
+		return undefined;
 	}
 
-	async get(uuid: string): Promise<T | undefined> {
+	async saveIndexToDisk() {
+		const _path = await path.resolve(this.path, ".index");
+		try {
+			await fs.writeFile(_path, encode(await typeson.encapsulate(this.index)));
+			return true;
+		} catch (e) {
+			console.error(e);
+		}
+		return false;
+	}
+
+	async updateIndexWithData(data: T, saveAfterwards: boolean = true){
+		const indexEntry: any = {uuid: data.uuid};
+		for(const key of this.secondaryKeys){
+			indexEntry[key] = data[key];
+		}
+
+		const _index = this.index.findIndex(x => data.uuid === x.uuid);
+		if(_index > -1){
+			this.index[_index] = indexEntry;
+		} else {
+			this.index.push(indexEntry);
+		}
+
+		if(saveAfterwards)
+			await this.saveIndexToDisk();
+	}
+
+	async removeIndex(uuid: string) {
+		const _index = this.index.findIndex(x => uuid === x.uuid);
+		if (_index == -1) return;
+
+		this.index.splice(_index, 1);
+		await this.saveIndexToDisk();
+	}
+
+	async initializeIndex() {		
+		const dir = await this.walkDir();
+		if (!dir) return;
+
+		const diskIndex = await this.getIndexFromDisk();
+
+		if (diskIndex && this.secondaryKeys.reduce((v, i) => { v = Object.keys(diskIndex[0]).includes(i as string); return v }, true)){
+			this.index = diskIndex;
+
+			for(const key of this.index.keys()){
+				if(!dir.find(x => x.name === this.index[key].uuid)){
+					this.index.splice(key, 1);
+				}
+			}
+		}
+
+		for (const file of dir) {
+			if (!this.index.find(x => x.uuid === file.name)) {
+				const contents = await this.get(file.name);
+				if (!contents) continue;
+				await this.updateIndexWithData(contents, false);
+			}
+		}
+
+		await this.saveIndexToDisk();
+	}
+
+	async get(uuid: string) {
 		const _path = await path.resolve(this.path, uuid);
 		try {
 			const obj = decode(await fs.readFile(_path));
@@ -42,7 +114,7 @@ class ShittyTable<T extends UUIDable> {
 
 	async walkDir() {
 		try {
-			const dir = await fs.readDir(this.path);
+			const dir = (await fs.readDir(this.path)).filter(x => x.name !== ".index");
 			return dir;
 		} catch (e) {
 			console.error(e);
@@ -51,30 +123,13 @@ class ShittyTable<T extends UUIDable> {
 		return undefined;
 	}
 
-	async countDir() {
-		return (await this.walkDir())?.length;
+	count() {
+		return this.index.length;
 	}
 
-	async walk() {
-		if(!this.index)
-			await this.makeInMemoryIndex();
-
-		return this.index;
-	}
-
-	async count() {
-		if (!this.index)
-			await this.makeInMemoryIndex();
-
-		return this.index!.length;
-	}
-
-	async toArray(): Promise<T[]> {
+	async toArray() {
 		const arr: T[] = [];
-		if (!this.index)
-			await this.makeInMemoryIndex();
-
-		for (const x of this.index!) {
+		for (const x of this.index.map(x => x.uuid)) {
 			const data = await this.get(x);
 			if (data) arr.push(data);
 		}
@@ -86,6 +141,7 @@ class ShittyTable<T extends UUIDable> {
 		const _path = await path.resolve(this.path, uuid);
 		try{
 			await fs.writeFile(_path, encode(await typeson.encapsulate(data)));
+			await this.updateIndexWithData(data);
 			return true;
 		}catch(e){
 			console.error(e);
@@ -93,25 +149,37 @@ class ShittyTable<T extends UUIDable> {
 		return false;
 	}
 
-	async exists(uuid: string) {
-		if (!this.index)
-			await this.makeInMemoryIndex();
-
-		return this.index!.includes(uuid);
-	}
-
-	async existsInFs(uuid: string) {
-		const _path = await path.resolve(this.path, uuid);
-		return fs.exists(_path);
+	exists(uuid: string) {
+		return !!this.index.find(x => uuid === x.uuid);
 	}
 
 	async add(uuid: string, data: T) {
-		if (!await this.exists(uuid)) {
+		if (!this.exists(uuid)) {
 			await this.write(uuid, data);
-			this.index?.push(uuid);
 			return true;
 		}
 		return false;
+	}
+
+	async bulkAdd(contents: T[]) {
+		let res = true;
+		for (const content of contents) {
+			// copy of add routine but just because we suck
+			if(!this.exists(content.uuid)) {
+				const _path = await path.resolve(this.path, content.uuid);
+				try {
+					await fs.writeFile(_path, encode(await typeson.encapsulate(content)));
+					await this.updateIndexWithData(content, false);
+				} catch (e) {
+					console.error(e);
+					res = false;
+					break;
+				}
+			}
+		}
+
+		await this.saveIndexToDisk();
+		return res;
 	}
 
 	async update(uuid: string, newData: Partial<T>) {
@@ -129,8 +197,7 @@ class ShittyTable<T extends UUIDable> {
 		const _path = await path.resolve(this.path, uuid);
 		try{
 			await fs.remove(_path);
-			if (this.index)
-				this.index = this.index.filter(x => x !== uuid);
+			await this.removeIndex(uuid);
 			return true;
 		}catch(e){
 			console.error(e);
@@ -139,23 +206,18 @@ class ShittyTable<T extends UUIDable> {
 	}
 
 	async clear() {
-		const dir = await this.walkDir();
-		if(dir){
-			for (const file of dir)
-				await fs.remove(await path.resolve(this.path, file.name));
-			if (this.index)
-				this.index = [];
+		try {
+			for (const key of this.index.keys()){
+				await fs.remove(await path.resolve(this.path, this.index[key].uuid));
+				this.index.splice(key, 1);
+			}
 			return true;
+		} catch(e) {
+			console.log(e);
 		}
-		return false;
-	}
 
-	async bulkAdd(contents: T[]) {
-		for (const content of contents) {
-			const res = await this.add(content.uuid, content);
-			if(!res) return res;
-		}
-		return true;
+		this.saveIndexToDisk();
+		return false;
 	}
 }
 
@@ -171,11 +233,14 @@ const typeson = new Typeson().register([
 	imagedata
 ]);
 
-async function makeTable<T extends UUIDable>(tableName: string) {
+async function makeTable<T extends UUIDable>(tableName: string, secondaryKeys: SecondaryKey<T>[]) {
 	const _path = await path.resolve(await path.appDataDir(), 'database', tableName);
 	await fs.mkdir(_path, { recursive: true });
 
-	return new ShittyTable<T>(tableName, _path);
+	const table = new ShittyTable<T>(tableName, _path, secondaryKeys);
+	await table.initializeIndex();
+
+	return table;
 }
 
 export function getTables(): ShittyTable<any>[] {
@@ -183,16 +248,16 @@ export function getTables(): ShittyTable<any>[] {
 }
 
 export const db = {
-	boardMessages: await makeTable<BoardMessage>("boardMessages"),
-	chats: await makeTable<Chat>("chats"),
-	chatMessages: await makeTable<ChatMessage>("chatMessages"),
-	frontingEntries: await makeTable<FrontingEntry>("frontingEntries"),
-	journalPosts: await makeTable<JournalPost>("journalPosts"),
-	members: await makeTable<Member>("members"),
-	reminders: await makeTable<Reminder>("reminders"),
-	system: await makeTable<System>("system"),
-	tags: await makeTable<Tag>("tags"),
-	assets: await makeTable<Asset>("assets"),
-	customFields: await makeTable<CustomField>("customFields")
+	boardMessages: await makeTable<BoardMessage>("boardMessages", ["date"]),
+	chats: await makeTable<Chat>("chats", ["name"]),
+	chatMessages: await makeTable<ChatMessage>("chatMessages", ["chat", "date"]),
+	frontingEntries: await makeTable<FrontingEntry>("frontingEntries", ["startTime", "endTime"]),
+	journalPosts: await makeTable<JournalPost>("journalPosts", ["date"]),
+	members: await makeTable<Member>("members", []),
+	reminders: await makeTable<Reminder>("reminders", []),
+	system: await makeTable<System>("system", []),
+	tags: await makeTable<Tag>("tags", []),
+	assets: await makeTable<Asset>("assets", []),
+	customFields: await makeTable<CustomField>("customFields", [])
 }
 
