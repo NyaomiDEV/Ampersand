@@ -11,7 +11,7 @@ const fetch = isTauri() ? tauriFetch : window.fetch;
 
 export async function importTupperBox(tuExport: any){
 	// WIPE AMPERSAND
-	await Promise.all(getTables().map(async x => x.clear()));
+	await Promise.all(getTables().map(x => x.clear()));
 
 	// SYSTEM
 	const systemInfo: PartialBy<System, "uuid"> = {
