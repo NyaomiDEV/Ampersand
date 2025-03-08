@@ -14,6 +14,9 @@ rust-version = "1.77.2"
 name = "ampersand"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
+[features]
+debug = ["tauri/devtools"]
+
 [build-dependencies]
 tauri-build = { version = "2.0.6", features = [] }
 
