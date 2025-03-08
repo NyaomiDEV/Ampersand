@@ -4,7 +4,7 @@
 		"title": "Esporta i tuoi dati",
 		"desc": "Fai il backup dei tuoi dati così da poterli tenere da qualche altra parte"
 	},
-	"dbImportDesc": "Attenzione! Questo sovvrascriverà ogni dato esistente",
+	"dbImportDesc": "Attenzione! Questo sovrascriverà ogni dato esistente",
 	"dbImport": "Importa i tuoi dati da un file di backup",
 	"spImport": "Importa i tuoi dati da un export di Simply Plural",
 	"pkImport": "Importa i tuoi dati da un export di PluralKit",
