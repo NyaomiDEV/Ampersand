@@ -10,15 +10,14 @@ export function getFrontingEntries(){
 }
 
 export async function getFrontingEntriesOffset(offset: number, limit?: number){
-	const query = db.frontingEntries
-		.orderBy("startTime")
-		.reverse()
-		.offset(offset);
-
-	if(limit)
-		return query.limit(limit).toArray();
-
-	return query.toArray();
+	return (await db.frontingEntries
+		.toArray())
+		.sort((a, b) => {
+			if(!a.endTime && b.endTime) return -1;
+			if(a.endTime && !b.endTime) return 1;
+			return b.startTime!.getTime() - a.startTime!.getTime();
+		})
+		.slice(offset, limit ? offset + limit : undefined);
 }
 
 export async function toFrontingEntryComplete(frontingEntry: FrontingEntry): Promise<FrontingEntryComplete> {
