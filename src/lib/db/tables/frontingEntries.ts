@@ -6,6 +6,10 @@ export function getFrontingEntries(){
 	return impl.getFrontingEntries();
 }
 
+export function getFrontingEntriesOffset(offset: number, limit?: number){
+	return impl.getFrontingEntriesOffset(offset, limit);
+}
+
 export function toFrontingEntryComplete(frontingEntry: FrontingEntry): Promise<FrontingEntryComplete> {
 	return impl.toFrontingEntryComplete(frontingEntry);
 }
@@ -44,4 +48,8 @@ export function getMainFronter(){
 
 export function getFronting() {
 	return impl.getFronting();
+}
+
+export function getFrontingEntriesOfDay(date: Date) {
+	return impl.getFrontingEntriesOfDay(date)
 }

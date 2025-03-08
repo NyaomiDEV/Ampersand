@@ -3,9 +3,19 @@ import { DatabaseEvents, DatabaseEvent } from "../../events";
 import { UUIDable, Member, FrontingEntry, FrontingEntryComplete, UUID } from "../../entities";
 import { defaultMember } from "../../tables/members";
 import { getMember } from "./members";
+import dayjs from "dayjs";
 
 export function getFrontingEntries(){
 	return db.frontingEntries.toArray();
+}
+
+export async function getFrontingEntriesOffset(offset: number, limit?: number){
+	return (await Promise.all(
+		db.frontingEntries.index
+		.sort((a, b) => b.startTime!.getTime() - a.startTime!.getTime())
+		.slice(offset, limit ? offset + limit : undefined)
+		.map(x => db.frontingEntries.get(x.uuid))
+	)).filter(x => !!x);
 }
 
 export async function toFrontingEntryComplete(frontingEntry: FrontingEntry): Promise<FrontingEntryComplete> {
@@ -120,4 +130,14 @@ export async function getFronting() {
 			frontingMembers.push(member);
 	}
 	return frontingMembers;
+}
+
+export async function getFrontingEntriesOfDay(date: Date) {
+	const _date = dayjs(date).startOf("day");
+
+	return (await Promise.all(
+		db.frontingEntries.index
+		.filter(x => dayjs(x.startTime!).startOf('day').valueOf() === _date.valueOf())
+		.map(async x => await db.frontingEntries.get(x.uuid))
+	)).filter(x => !!x);
 }
