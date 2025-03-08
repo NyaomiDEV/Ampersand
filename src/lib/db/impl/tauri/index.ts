@@ -77,7 +77,7 @@ class ShittyTable<T extends UUIDable> {
 
 		const diskIndex = await this.getIndexFromDisk();
 
-		if (diskIndex && this.secondaryKeys.reduce((v, i) => { v = Object.keys(diskIndex[0]).includes(i as string); return v }, true)){
+		if (diskIndex && diskIndex.length && this.secondaryKeys.reduce((v, i) => { v = Object.keys(diskIndex[0]).includes(i as string); return v }, true)){
 			this.index = diskIndex;
 
 			for(const key of this.index.keys()){
