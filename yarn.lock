@@ -144,10 +144,10 @@
     "@module-federation/runtime" "0.8.4"
     "@module-federation/sdk" "0.8.4"
 
-"@msgpack/msgpack@^3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@msgpack/msgpack/-/msgpack-3.1.0.tgz#ae7e1a1c97bc84fbae5104509286f1f7a9847a89"
-  integrity sha512-igBxaq5JHWdJ0lDyKkCo00pDu+bNVuBAs/cHra6a3ndCw6vlZK9BGLuG7Fvmar/DXK2uJ25zvgcAZEl+AvLpjQ==
+"@msgpack/msgpack@3.0.0-beta3":
+  version "3.0.0-beta3"
+  resolved "https://registry.yarnpkg.com/@msgpack/msgpack/-/msgpack-3.0.0-beta3.tgz#a9f50590ebdd4f9c697e8e7d235a28f4616663ac"
+  integrity sha512-LZYWBmrkKO0quyjnJCeSaqHOcsuZUvE+hlIYRqFc0qI27dLnsOdnv8Fsj2cyitzQTJZmCPm53vZ/P8QTH7E84A==
 
 "@rsbuild/core@^1.2.14":
   version "1.2.14"
