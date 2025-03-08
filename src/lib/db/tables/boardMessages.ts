@@ -6,6 +6,10 @@ export function getBoardMessages(){
 	return impl.getBoardMessages();
 }
 
+export function getBoardMessagesOffset(offset: number, limit?: number){
+	return impl.getBoardMessagesOffset(offset, limit);
+}
+
 export function toBoardMessageComplete(boardMessage: BoardMessage): Promise<BoardMessageComplete> {
 	return impl.toBoardMessageComplete(boardMessage);
 }
@@ -20,4 +24,12 @@ export function deleteBoardMessage(uuid: UUID) {
 
 export function updateBoardMessage(uuid: UUID, newContent: Partial<BoardMessage>) {
 	return impl.updateBoardMessage(uuid, newContent);
+}
+
+export function getRecentBoardMessages(){
+	return impl.getRecentBoardMessages();
+}
+
+export function getBoardMessagesOfDay(date: Date){
+	return impl.getBoardMessagesOfDay(date);
 }

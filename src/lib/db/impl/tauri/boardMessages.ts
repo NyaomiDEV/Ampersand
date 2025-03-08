@@ -3,9 +3,19 @@ import { DatabaseEvents, DatabaseEvent } from "../../events";
 import { UUID, UUIDable, BoardMessage, BoardMessageComplete } from "../../entities";
 import { defaultMember } from "../../tables/members";
 import { getMember } from "./members";
+import dayjs from "dayjs";
 
 export function getBoardMessages(){
 	return db.boardMessages.toArray();
+}
+
+export async function getBoardMessagesOffset(offset: number, limit?: number){
+	return (await Promise.all(
+		db.boardMessages.index
+		.sort((a, b) => b.date!.getTime() - a.date!.getTime())
+		.slice(offset, limit ? offset + limit : undefined)
+		.map(x => db.boardMessages.get(x.uuid))
+	)).filter(x => !!x);
 }
 
 export async function toBoardMessageComplete(boardMessage: BoardMessage): Promise<BoardMessageComplete> {
@@ -60,4 +70,22 @@ export async function updateBoardMessage(uuid: UUID, newContent: Partial<BoardMe
 	}catch(error){
 		return false;
 	}
+}
+
+export async function getRecentBoardMessages() {
+	return Promise.all((await Promise.all(
+		db.boardMessages.index
+			.filter(x => dayjs().startOf('day').valueOf() - dayjs(x.date).startOf('day').valueOf() <= 3 * 24 * 60 * 60 * 1000)
+			.map(x => db.boardMessages.get(x.uuid))
+	)).filter(x => !!x).map(x => toBoardMessageComplete(x)));
+}
+
+export async function getBoardMessagesOfDay(date: Date) {
+	const _date = dayjs(date).startOf("day");
+
+	return (await Promise.all(
+		db.boardMessages.index
+		.filter(x => x.isPinned || dayjs(x.date!).startOf('day').valueOf() === _date.valueOf())
+		.map(async x => await db.boardMessages.get(x.uuid))
+	)).filter(x => !!x);
 }

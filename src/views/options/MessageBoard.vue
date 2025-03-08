@@ -2,9 +2,10 @@
 	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonFab, IonFabButton, IonIcon, IonSearchbar, IonLabel, IonItemDivider, IonButtons, IonButton, IonDatetime } from '@ionic/vue';
 	import { h, inject, onBeforeMount, onUnmounted, ref, shallowRef, watch } from 'vue';
 	import type { BoardMessage, BoardMessageComplete } from '../../lib/db/entities.d.ts';
-	import { getBoardMessages } from '../../lib/db/tables/boardMessages';
+	import { getBoardMessagesOfDay, getBoardMessagesOffset } from '../../lib/db/tables/boardMessages';
 	import BoardMessageEdit from "../../modals/BoardMessageEdit.vue";
 	import SpinnerFullscreen from '../../components/SpinnerFullscreen.vue';
+	import InfiniteScroll from '../../components/InfiniteScroll.vue';
 
 	import calendarMD from "@material-symbols/svg-600/outlined/calendar_month.svg";
 	import listMD from "@material-symbols/svg-600/outlined/list.svg";
@@ -25,38 +26,73 @@
 	const isIOS = inject<boolean>("isIOS");
 
 	const search = ref(route.query.q as string || "");
+
+	const boardMessages = shallowRef<BoardMessage[]>();
+	const filteredBoardMessages = shallowRef<BoardMessageComplete[]>();
+
+	const isCalendarView = ref(false);
+	const date = ref(dayjs().toISOString());
+	const eol = ref(false);
+
+	const listener = async (event: Event) => {
+		if(["members", "boardMessages"].includes((event as DatabaseEvent).data.table)){
+			await resetEntries();
+		}
+	}
+
 	watch(route, () => {
 		search.value = route.query.q as string || "";
 	});
 
-	const boardMessages = shallowRef<BoardMessage[]>();
-	const filteredBoardMessages = shallowRef<BoardMessageComplete[]>();
-	watch([boardMessages, search], async () => {
+	watch([search, boardMessages], async () => {
 		filteredBoardMessages.value = await getFilteredBoardMessages(search.value, boardMessages.value);
 	}, { immediate: true });
 
-	const isCalendarView = ref(false);
-	const date = ref(dayjs().toISOString());
-	const calendarDate = ref(dayjs().format("YYYY-MM-DDTHH:mm:ss"));
-
-	const listener = async (event: Event) => {
-		if(["members", "boardMessages"].includes((event as DatabaseEvent).data.table)){
-			boardMessages.value = await getBoardMessages();
-		}
-	}
+	watch([isCalendarView, date], async () => {
+		await resetEntries();
+	});
 
 	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
-		boardMessages.value = await getBoardMessages();
+		await resetEntries();
 	});
 
 	onUnmounted(() => {
 		DatabaseEvents.removeEventListener("updated", listener);
 	});
 
+	let offset = 0;
+	async function getEntries(_date?: Date){
+		if(_date){
+			const dateEntries = await getBoardMessagesOfDay(_date);
+			boardMessages.value = dateEntries;
+			eol.value = true;
+			return;
+		}
 
-	function getGrouped(){
-		const entries = filteredBoardMessages.value || [];
+		const newEntries = await getBoardMessagesOffset(offset, 20);
+		if(newEntries.length){
+			offset += newEntries.length;
+			if(!boardMessages.value)
+				boardMessages.value = newEntries;
+			else
+				boardMessages.value = [...boardMessages.value, ...newEntries];
+		} else {
+			eol.value = true;
+		}
+	}
+
+	async function resetEntries(_date?: Date){
+		offset = 0;
+		boardMessages.value = undefined;
+		eol.value = false;
+		await getEntries(isCalendarView.value
+			? dayjs(date.value).toDate()
+			: undefined
+		);
+	}
+
+	function getGrouped(entries: BoardMessageComplete[]){
 		const map = new Map<string, BoardMessageComplete[]>();
 
 		for(const entry of entries.sort((a, b) => b.date.getTime() - a.date.getTime())){
@@ -70,27 +106,6 @@
 		}
 
 		return [...map.entries()].sort((a, b) => dayjs(b[0]).valueOf() - dayjs(a[0]).valueOf());
-	}
-
-	function getAtDate(_date: string){
-		const date = dayjs(_date).startOf("day");
-		const map = new Map<string, BoardMessageComplete[]>();
-		const key = date.toISOString();
-
-		map.set(key, filteredBoardMessages.value?.filter(x => dayjs(x.date).startOf('day').valueOf() === date.valueOf()) || []);
-
-		return [...map.entries()].sort((a, b) => dayjs(b[0]).valueOf() - dayjs(a[0]).valueOf());
-	}
-
-	function highlightInCalendar(_date: string){
-		const date = dayjs(_date).startOf("day");
-		if(filteredBoardMessages.value && filteredBoardMessages.value.filter(x => dayjs(x.date).startOf('day').valueOf() === date.valueOf()).length > 0){
-			return {
-				backgroundColor: "var(--ion-background-color-step-200)"
-			};
-		}
-
-		return undefined;
 	}
 
 	async function showModal(clickedBoardMessage?: BoardMessageComplete){
@@ -123,20 +138,26 @@
 					showCancelButton="focus" showClearButton="focus" :spellcheck="false" v-model="search" />
 			</IonToolbar>
 			<div class="container" v-if="isCalendarView">
-				<IonDatetime presentation="date" :firstDayOfWeek="firstWeekOfDayIsSunday ? 0 : 1" :highlightedDates="highlightInCalendar" v-model="date" :locale="appConfig.locale.language || 'en'" :datetime="calendarDate"/>
+				<IonDatetime
+				presentation="date"
+				:firstDayOfWeek="firstWeekOfDayIsSunday ? 0 : 1"
+				v-model="date"
+				:locale="appConfig.locale.language || 'en'"
+				:datetime="dayjs().format('YYYY-MM-DDTHH:mm:ss')"/>
 			</div>
 		</IonHeader>
 
-		<SpinnerFullscreen v-if="!boardMessages" />
+		<SpinnerFullscreen v-if="!filteredBoardMessages" />
 		<IonContent v-else>
 			<IonList :inset="isIOS">
-				<template v-for="tuple in (isCalendarView ? getAtDate(date) : getGrouped())" :key="tuple[0]">
+				<template v-for="tuple in getGrouped(filteredBoardMessages)" :key="tuple[0]">
 					<IonItemDivider sticky>
 						<IonLabel>{{ dayjs(tuple[0]).format("LL") }}</IonLabel>
 					</IonItemDivider>
 					<MessageBoardCard :boardMessage v-for="boardMessage in tuple[1]" :key="boardMessage.uuid" @click="showModal(boardMessage)" />
 				</template>
 			</IonList>
+			<InfiniteScroll v-if="!eol" :callback="getEntries" />
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
 				<IonFabButton @click="showModal()">

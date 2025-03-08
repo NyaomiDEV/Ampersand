@@ -1,11 +1,9 @@
 <script setup lang="ts">
 	import { IonList, IonLabel, IonButton, IonListHeader } from '@ionic/vue';
 	import { h, inject, onBeforeMount, onUnmounted, shallowRef } from 'vue';
-	import { getBoardMessages, toBoardMessageComplete } from '../../lib/db/tables/boardMessages';
+	import { getRecentBoardMessages } from '../../lib/db/tables/boardMessages';
 	import type { BoardMessageComplete } from '../../lib/db/entities.d.ts';
 	import BoardMessageEdit from "../../modals/BoardMessageEdit.vue";
-
-	import dayjs from 'dayjs';
 
 	import MessageBoardCard from '../MessageBoardCard.vue';
 	import { DatabaseEvents, DatabaseEvent } from '../../lib/db/events';
@@ -13,35 +11,26 @@
 
 	const isIOS = inject<boolean>("isIOS");
 
-	const boardMessages = shallowRef<BoardMessageComplete[]>([]);
+	const boardMessages = shallowRef<BoardMessageComplete[]>();
+
+	async function updateBoardMessages(){
+		boardMessages.value = await Promise.all(
+			(await getRecentBoardMessages()).sort((a,b) => {
+				if(a.isPinned && !b.isPinned) return -1;
+				if(!a.isPinned && b.isPinned) return 1;
+				return a.date.getTime() - b.date.getTime();
+			})
+		);
+	}
 
 	const listener = async (event: Event) => {
-		if(["members", "boardMessages"].includes((event as DatabaseEvent).data.table)){
-			boardMessages.value = await Promise.all(
-				(await getBoardMessages())
-					.filter(x => x.isPinned ? true : dayjs().startOf('day').valueOf() - dayjs(x.date).startOf('day').valueOf() < 3 * 24 * 60 * 60 * 1000)
-					.sort((a,b) => {
-						if(a.isPinned && !b.isPinned) return -1;
-						if(!a.isPinned && b.isPinned) return 1;
-						return a.date.getTime() - b.date.getTime();
-					})
-					.map(x => toBoardMessageComplete(x))
-			);
-		}
+		if(["members", "boardMessages"].includes((event as DatabaseEvent).data.table))
+			await updateBoardMessages();
 	}
 
 	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
-		boardMessages.value = await Promise.all(
-			(await getBoardMessages())
-				.filter(x => x.isPinned ? true : dayjs().startOf('day').valueOf() - dayjs(x.date).startOf('day').valueOf() < 3 * 24 * 60 * 60 * 1000)
-				.sort((a,b) => {
-						if(a.isPinned && !b.isPinned) return -1;
-						if(!a.isPinned && b.isPinned) return 1;
-						return a.date.getTime() - b.date.getTime();
-				})
-				.map(x => toBoardMessageComplete(x))
-		);
+		await updateBoardMessages();
 	});
 
 	onUnmounted(() => {

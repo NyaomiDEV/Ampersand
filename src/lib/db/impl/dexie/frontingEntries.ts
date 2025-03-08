@@ -141,10 +141,5 @@ export async function getRecentlyFronted() {
 export async function getFrontingEntriesOfDay(date: Date) {
 	const _date = dayjs(date).startOf("day");
 
-	return (await Promise.all(
-		(await db.frontingEntries
-		.filter(x => dayjs(x.startTime!).startOf('day').valueOf() === _date.valueOf())
-		.toArray())
-		.map(async x => await db.frontingEntries.get(x.uuid))
-	)).filter(x => !!x);
+	return db.frontingEntries.filter(x => dayjs(x.startTime).startOf('day').valueOf() === _date.valueOf()).toArray();
 }

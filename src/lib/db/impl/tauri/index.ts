@@ -248,7 +248,7 @@ export function getTables(): ShittyTable<any>[] {
 }
 
 export const db = {
-	boardMessages: await makeTable<BoardMessage>("boardMessages", ["date"]),
+	boardMessages: await makeTable<BoardMessage>("boardMessages", ["date", "isPinned"]),
 	chats: await makeTable<Chat>("chats", ["name"]),
 	chatMessages: await makeTable<ChatMessage>("chatMessages", ["chat", "date"]),
 	frontingEntries: await makeTable<FrontingEntry>("frontingEntries", ["startTime", "endTime"]),
