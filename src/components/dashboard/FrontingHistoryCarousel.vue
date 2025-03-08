@@ -1,25 +1,20 @@
 <script setup lang="ts">
 	import { IonList, IonItem, IonListHeader, IonLabel } from '@ionic/vue';
-	import { h, inject, onBeforeMount, onUnmounted, ShallowRef, shallowRef } from 'vue';
+	import { h, inject, onBeforeMount, onUnmounted, shallowRef } from 'vue';
 	import MemberAvatar from "../member/MemberAvatar.vue";
 	import FrontingEntryLabel from "../frontingEntry/FrontingEntryLabel.vue";
 	import type { FrontingEntryComplete } from '../../lib/db/entities.d.ts';
-	import { getFrontingEntries, toFrontingEntryComplete } from '../../lib/db/tables/frontingEntries';
+	import { getRecentlyFronted } from '../../lib/db/tables/frontingEntries';
 	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
 	import { DatabaseEvents, DatabaseEvent } from '../../lib/db/events';
 	import { addModal, removeModal } from '../../lib/modals.ts';
 
 	const isIOS = inject<boolean>("isIOS");
 
-	const frontingEntries: ShallowRef<FrontingEntryComplete[]> = shallowRef([]);
+	const frontingEntries = shallowRef<FrontingEntryComplete[]>();
 
 	async function updateFrontingEntries(){
-		frontingEntries.value = await Promise.all(
-			(await getFrontingEntries())
-				.filter(x => x.endTime && Date.now() - x.endTime.getTime() <= 48 * 60 * 60 * 1000)
-				.sort((a, b) => b.endTime!.getTime() - a.endTime!.getTime())
-				.map(x => toFrontingEntryComplete(x))
-		);
+		frontingEntries.value = await getRecentlyFronted();
 	}
 
 	const listener = async (event: Event) => {
@@ -48,11 +43,11 @@
 </script>
 
 <template>
-	<IonListHeader v-if="frontingEntries.length > 0">
+	<IonListHeader v-if="frontingEntries">
 		<IonLabel>{{ $t("dashboard:recentFrontingHistory") }}</IonLabel>
 	</IonListHeader>
 
-	<IonList :inset="isIOS" v-if="frontingEntries.length > 0">
+	<IonList :inset="isIOS" v-if="frontingEntries">
 		<IonItem button v-for="entry in frontingEntries" :key="entry.uuid" @click="showModal(entry)">
 			<MemberAvatar slot="start" :member="entry.member" />
 			<FrontingEntryLabel :entry />

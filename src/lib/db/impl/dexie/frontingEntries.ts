@@ -126,13 +126,16 @@ export async function getMainFronter(){
 
 export async function getFronting() {
 	const frontersEntries = await db.frontingEntries.filter(x => x.endTime === undefined).toArray();
-	const frontingMembers: Member[] = [];
-	for(const entry of frontersEntries){
-		const member = await getMember(entry.member);
-		if(member)
-			frontingMembers.push(member);
-	}
-	return frontingMembers;
+
+	return Promise.all(frontersEntries.map(async x => await toFrontingEntryComplete(x)));
+}
+
+export async function getRecentlyFronted() {
+	return Promise.all((await db.frontingEntries
+				.filter(x => !!x.endTime && Date.now() - x.endTime.getTime() <= 48 * 60 * 60 * 1000)
+				.toArray())
+			.sort((a, b) => b.endTime!.getTime() - a.endTime!.getTime())
+			.map(x => toFrontingEntryComplete(x)));
 }
 
 export async function getFrontingEntriesOfDay(date: Date) {

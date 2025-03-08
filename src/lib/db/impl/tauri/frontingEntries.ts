@@ -94,7 +94,12 @@ export async function setMainFronter(member: Member, value: boolean){
 }
 
 export async function setSoleFronter(member: Member) {
-	const toUpdate = (await db.frontingEntries.toArray()).filter(x => !x.endTime && x.member !== member.uuid).map(x => x.uuid);
+	const toUpdate = (await Promise.all(
+		db.frontingEntries.index.filter(x => !x.endTime).map(async x => await db.frontingEntries.get(x.uuid))
+	)).filter(x => !!x)
+	.filter(x => x.member !== member.uuid)
+	.map(x => x.uuid);
+
 	const endTime = new Date();
 
 	for(const uuid of toUpdate)
@@ -110,26 +115,41 @@ export async function setSoleFronter(member: Member) {
 }
 
 export async function getCurrentFrontEntryForMember(member: Member){
-	return (await db.frontingEntries.toArray()).filter(x => x.endTime === undefined && x.member === member.uuid)[0];
+	const _uuid = db.frontingEntries.index.find(x => x.endTime === undefined && x.member === member.uuid)?.uuid;
+	if(!_uuid) return;
+
+	return db.frontingEntries.get(_uuid);
 }
 
 export async function getMainFronter(){
-	const mainFronterEntry = (await db.frontingEntries.toArray()).filter(x => x.endTime === undefined && x.isMainFronter)[0];
-	if(mainFronterEntry){
-		return await getMember(mainFronterEntry.member);
-	}
-	return undefined;
+	const mainFronterIndexEntry = db.frontingEntries.index.find(x => x.endTime === undefined && x.isMainFronter);
+	if(!mainFronterIndexEntry) return;
+
+	const mainFronterEntry = await db.frontingEntries.get(mainFronterIndexEntry.uuid);
+	if(!mainFronterEntry) return;
+
+	return await getMember(mainFronterEntry.member);
 }
 
 export async function getFronting() {
-	const frontersEntries = (await db.frontingEntries.toArray()).filter(x => x.endTime === undefined);
-	const frontingMembers: Member[] = [];
-	for(const entry of frontersEntries){
-		const member = await getMember(entry.member);
-		if(member)
-			frontingMembers.push(member);
+	const frontersIndexEntries = db.frontingEntries.index.filter(x => x.endTime === undefined);
+	const frontingEntries: FrontingEntryComplete[] = [];
+	for(const entry of frontersIndexEntries){
+		const frontingEntry = await db.frontingEntries.get(entry.uuid);
+		if(!frontingEntry) continue;
+		
+		frontingEntries.push(await toFrontingEntryComplete(frontingEntry));
 	}
-	return frontingMembers;
+	return frontingEntries;
+}
+
+export async function getRecentlyFronted() {
+	return Promise.all((await Promise.all(
+		db.frontingEntries.index
+			.filter(x => x.endTime && Date.now() - x.endTime.getTime() <= 48 * 60 * 60 * 1000)
+			.sort((a, b) => b.endTime!.getTime() - a.endTime!.getTime())
+			.map(x => db.frontingEntries.get(x.uuid))
+	)).filter(x => !!x).map(x => toFrontingEntryComplete(x)));
 }
 
 export async function getFrontingEntriesOfDay(date: Date) {

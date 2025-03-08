@@ -3,7 +3,7 @@
 	import MemberAvatar from '../member/MemberAvatar.vue';
 	import { h, onBeforeMount, onUnmounted, ref, shallowRef } from 'vue';
 	import type { FrontingEntryComplete } from '../../lib/db/entities.d.ts';
-	import { getFrontingEntries, toFrontingEntryComplete } from '../../lib/db/tables/frontingEntries';
+	import { getFronting } from '../../lib/db/tables/frontingEntries';
 	import { formatWrittenTime } from "../../lib/util/misc";
 	import FrontingEntryEdit from '../../modals/FrontingEntryEdit.vue';
 	import { DatabaseEvents, DatabaseEvent } from '../../lib/db/events';
@@ -15,34 +15,19 @@
 
 	let interval: number;
 
+	async function updateFrontingEntries() {
+		frontingEntries.value = await getFronting();
+	}
+
 	const listener = async (event: Event) => {
-		if(["members", "frontingEntries"].includes((event as DatabaseEvent).data.table)){
-			frontingEntries.value = await Promise.all(
-				(await getFrontingEntries())
-					.filter(x => !x.endTime)
-					.sort((a, b) => {
-						if (a.isMainFronter) return -1;
-						if (b.isMainFronter) return 1;
-						return a.startTime.getTime() - b.startTime.getTime();
-					})
-					.map(x => toFrontingEntryComplete(x))
-			);
-		}
+		if(["members", "frontingEntries"].includes((event as DatabaseEvent).data.table))
+			await updateFrontingEntries();
 	}
 
 	onBeforeMount(async () => {
 		interval = setInterval(() => now.value = new Date(), 1000);
 		DatabaseEvents.addEventListener("updated", listener);
-		frontingEntries.value = await Promise.all(
-				(await getFrontingEntries())
-					.filter(x => !x.endTime)
-					.sort((a, b) => {
-						if(a.isMainFronter) return -1;
-						if(b.isMainFronter) return 1;
-						return a.startTime.getTime() - b.startTime.getTime();
-					})
-					.map(x => toFrontingEntryComplete(x))
-			);
+		await updateFrontingEntries();
 	});
 
 	onUnmounted(() => {

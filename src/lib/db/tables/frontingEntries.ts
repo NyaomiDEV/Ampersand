@@ -50,6 +50,10 @@ export function getFronting() {
 	return impl.getFronting();
 }
 
+export function getRecentlyFronted(){
+	return impl.getRecentlyFronted();
+}
+
 export function getFrontingEntriesOfDay(date: Date) {
 	return impl.getFrontingEntriesOfDay(date)
 }
