@@ -16,10 +16,17 @@
 		await checkAndRun();
 	}
 
+	let calling = false;
 	async function checkAndRun(){
+		if(calling) return;
+
 		if(entry.value?.isIntersecting){
+			calling = true;
 			await props.callback();
-			setTimeout(checkAndRun, 500);
+			setTimeout(() => {
+				calling = false;
+				checkAndRun();
+			}, 500);
 		}
 	}
 

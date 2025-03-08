@@ -61,7 +61,6 @@
 	});
 
 	let offset = 0;
-	let gettingEntries = false;
 	async function getEntries(_date?: Date){
 		if(_date){
 			const dateEntries = await getFrontingEntriesOfDay(_date);
@@ -69,9 +68,6 @@
 			eol.value = true;
 			return;
 		}
-
-		if(gettingEntries) return;
-		gettingEntries = true;
 
 		const newEntries = await getFrontingEntriesOffset(offset, 20);
 		if(newEntries.length){
@@ -83,8 +79,6 @@
 		} else {
 			eol.value = true;
 		}
-
-		gettingEntries = false;
 	}
 
 	async function resetEntries(_date?: Date){
