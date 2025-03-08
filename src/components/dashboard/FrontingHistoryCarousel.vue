@@ -43,7 +43,7 @@
 </script>
 
 <template>
-	<IonListHeader v-if="frontingEntries">
+	<IonListHeader v-if="frontingEntries && frontingEntries.length">
 		<IonLabel>{{ $t("dashboard:recentFrontingHistory") }}</IonLabel>
 	</IonListHeader>
 
