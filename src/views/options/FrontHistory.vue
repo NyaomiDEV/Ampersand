@@ -4,7 +4,7 @@
 	import MemberAvatar from "../../components/member/MemberAvatar.vue";
 	import FrontingEntryLabel from "../../components/frontingEntry/FrontingEntryLabel.vue";
 	import type { FrontingEntry, FrontingEntryComplete } from '../../lib/db/entities.d.ts';
-	import { getFrontingEntries } from '../../lib/db/tables/frontingEntries';
+	import { getFrontingEntriesOffset, getFrontingEntriesOfDay } from '../../lib/db/tables/frontingEntries';
 	import { getFilteredFrontingEntries } from '../../lib/search.ts';
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
@@ -18,6 +18,7 @@
 	import { DatabaseEvents, DatabaseEvent } from '../../lib/db/events';
 	import { addModal, removeModal } from '../../lib/modals.ts';
 	import { useRoute } from 'vue-router';
+	import InfiniteScroll from '../../components/InfiniteScroll.vue';
 
 	const route = useRoute();
 
@@ -31,11 +32,11 @@
 
 	const isCalendarView = ref(false);
 	const date = ref(dayjs().toISOString());
-	const calendarDate = ref(dayjs().format("YYYY-MM-DDTHH:mm:ss"));
+	const eol = ref(false);
 
 	const listener = async (event: Event) => {
 		if(["frontingEntries", "members"].includes((event as DatabaseEvent).data.table))
-			frontingEntries.value = await getFrontingEntries();
+			await resetEntries();
 	};
 
 	watch(route, () => {
@@ -46,18 +47,58 @@
 		filteredFrontingEntries.value = await getFilteredFrontingEntries(search.value, frontingEntries.value);
 	}, { immediate: true });
 
+	watch([isCalendarView, date], async () => {
+		await resetEntries();
+	});
+
 	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
-		frontingEntries.value = await getFrontingEntries();
+		await resetEntries();
 	});
 
 	onUnmounted(async () => {
 		DatabaseEvents.removeEventListener("updated", listener);
 	});
 
-	function getGrouped(){
+	let offset = 0;
+	let gettingEntries = false;
+	async function getEntries(_date?: Date){
+		if(_date){
+			const dateEntries = await getFrontingEntriesOfDay(_date);
+			frontingEntries.value = dateEntries;
+			eol.value = true;
+			return;
+		}
+
+		if(gettingEntries) return;
+		gettingEntries = true;
+
+		const newEntries = await getFrontingEntriesOffset(offset, 20);
+		if(newEntries.length){
+			offset += newEntries.length;
+			if(!frontingEntries.value)
+				frontingEntries.value = newEntries;
+			else
+				frontingEntries.value = [...frontingEntries.value, ...newEntries];
+		} else {
+			eol.value = true;
+		}
+
+		gettingEntries = false;
+	}
+
+	async function resetEntries(_date?: Date){
+		offset = 0;
+		frontingEntries.value = undefined;
+		eol.value = false;
+		await getEntries(isCalendarView.value
+			? dayjs(date.value).toDate()
+			: undefined
+		);
+	}
+
+	function getGrouped(entries: FrontingEntryComplete[]){
 		const map = new Map<string, FrontingEntryComplete[]>();
-		const entries =  filteredFrontingEntries.value || [];
 
 		for(const entry of entries.filter(x => !x.endTime).sort((a, b) => b.startTime.getTime() - a.startTime.getTime())){
 			const collection = map.get("currentlyFronting");
@@ -76,36 +117,6 @@
 			else
 				collection.push(entry)
 		}
-
-		return [...map.entries()].sort((a, b) => {
-			if(a[0] === "currentlyFronting") return -1;
-			return dayjs(b[0]).valueOf() - dayjs(a[0]).valueOf()
-		});
-	}
-
-	function highlightInCalendar(_date: string){
-		const date = dayjs(_date).startOf("day");
-		if(filteredFrontingEntries.value && filteredFrontingEntries.value.filter(x => dayjs(x.startTime).startOf('day').valueOf() === date.valueOf()).length > 0){
-			return {
-				backgroundColor: "var(--ion-background-color-step-200)"
-			};
-		}
-
-		return undefined;
-	}
-
-	function getAtDate(_date: string){
-		const today = dayjs().startOf("day");
-		const date = dayjs(_date).startOf("day");
-
-		const map = new Map<string, FrontingEntryComplete[]>();
-
-		if(date.valueOf() === today.valueOf())
-			map.set("currentlyFronting", filteredFrontingEntries.value?.filter(x => !x.endTime) || []);
-
-		const key = date.toISOString();
-
-		map.set(key, filteredFrontingEntries.value?.filter(x => x.endTime && dayjs(x.startTime).startOf('day').valueOf() === date.valueOf()) || []);
 
 		return [...map.entries()].sort((a, b) => {
 			if(a[0] === "currentlyFronting") return -1;
@@ -143,14 +154,16 @@
 					showCancelButton="focus" showClearButton="focus" :spellcheck="false" v-model="search" />
 			</IonToolbar>
 			<div class="container" v-if="isCalendarView">
-				<IonDatetime presentation="date" :firstDayOfWeek="firstWeekOfDayIsSunday ? 0 : 1" :highlightedDates="highlightInCalendar" v-model="date" :locale="appConfig.locale.language || 'en'" :datetime="calendarDate"/>
+				<IonDatetime presentation="date" :firstDayOfWeek="firstWeekOfDayIsSunday ? 0 : 1"
+					v-model="date" :locale="appConfig.locale.language || 'en'"
+					:datetime="dayjs().format('YYYY-MM-DDTHH:mm:ss')" />
 			</div>
 		</IonHeader>
 
-		<SpinnerFullscreen v-if="!frontingEntries" />
+		<SpinnerFullscreen v-if="!filteredFrontingEntries" />
 		<IonContent v-else>
 			<IonList :inset="isIOS">
-				<template v-for="tuple in (isCalendarView ? getAtDate(date) : getGrouped())" :key="tuple[0]">
+				<template v-for="tuple in getGrouped(filteredFrontingEntries)" :key="tuple[0]">
 					<IonItemDivider sticky>
 						<IonLabel>{{
 							tuple[0] === "currentlyFronting"
@@ -164,6 +177,7 @@
 					</IonItem>
 				</template>
 			</IonList>
+			<InfiniteScroll v-if="!eol" :callback="getEntries" />
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
 				<IonFabButton @click="showModal()">
