@@ -64,10 +64,10 @@ class ShittyTable<T extends UUIDable> {
 	}
 
 	async removeIndex(uuid: string) {
-		const _index = this.index.findIndex(x => uuid === x.uuid);
-		if (_index == -1) return;
+		const _entry = this.index.find(x => uuid === x.uuid);
+		if (!_entry) return;
 
-		this.index.splice(_index, 1);
+		this.index = this.index.filter(x => x !== _entry);
 		await this.saveIndexToDisk();
 	}
 
@@ -80,9 +80,9 @@ class ShittyTable<T extends UUIDable> {
 		if (diskIndex && diskIndex.length && this.secondaryKeys.reduce((v, i) => { v = Object.keys(diskIndex[0]).includes(i as string); return v }, true)){
 			this.index = diskIndex;
 
-			for(const key of this.index.keys()){
-				if(!dir.find(x => x.name === this.index[key].uuid)){
-					this.index.splice(key, 1);
+			for(const entry of this.index){
+				if(!dir.find(x => x.name === entry.uuid)){
+					this.index = this.index.filter(x => x.uuid !== entry.uuid);
 				}
 			}
 		}
@@ -207,9 +207,12 @@ class ShittyTable<T extends UUIDable> {
 
 	async clear() {
 		try {
-			for (const key of this.index.keys()){
-				await fs.remove(await path.resolve(this.path, this.index[key].uuid));
-				this.index.splice(key, 1);
+			const _dir = await this.walkDir();
+			if(!_dir) return false;
+
+			for (const file of _dir){
+				await fs.remove(await path.resolve(this.path, file.name));
+				this.index = this.index.filter(x => x.uuid !== file.name);
 			}
 			return true;
 		} catch(e) {

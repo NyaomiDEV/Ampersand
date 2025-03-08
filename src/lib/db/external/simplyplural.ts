@@ -63,7 +63,7 @@ async function getAvatarFromUuid(systemId: string, avatarUuid: string){
 
 export async function importSimplyPlural(spExport) {
 	// WIPE AMPERSAND
-	await Promise.all(getTables().map(async x => x.clear()));
+	await Promise.all(getTables().map(x => x.clear()));
 
 	// SYSTEM
 	const spSystem = spExport.users[0];
