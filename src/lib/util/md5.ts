@@ -151,7 +151,7 @@ function md5blk(a: Uint8Array) {
 	return md5blks;
 }
 
-export function md5(a: Uint8Array) {
+export function md5(a: Uint8Array): Uint8Array {
 	const n = a.length;
 	const state = [1732584193, -271733879, -1732584194, 271733878];
 
@@ -179,7 +179,10 @@ export function md5(a: Uint8Array) {
 
 	md5cycle(state, tail);
 
-	return new Uint8Array(state);
+	return new Uint8Array(state.flatMap(n => [
+		n & 0xFF,
+		n >> 8 & 0xFF,
+		n >> 16 & 0xFF,
+		n >> 24 & 0xFF
+	]));
 }
-
-(window as any).md5 = md5;

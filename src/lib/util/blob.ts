@@ -6,7 +6,7 @@ const dataURLs = new Map<string, {
 }>();
 
 export function getObjectURL(file: File){
-	const hash = new TextDecoder().decode(md5(new TextEncoder().encode(file.name + file.lastModified + file.size)));
+	const hash = Array.from(md5(new TextEncoder().encode(file.name + file.lastModified + file.size))).map(x => x.toString(16)).join("");
 	if(dataURLs.has(hash))
 		return dataURLs.get(hash)!.url;
 
