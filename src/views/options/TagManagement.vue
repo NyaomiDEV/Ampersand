@@ -1,16 +1,21 @@
 <script setup lang="ts">
 	import { IonContent, IonSearchbar, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonSegment, IonSegmentButton, IonLabel, IonFab, IonFabButton, IonIcon, IonItem } from '@ionic/vue';
 	import { inject, onMounted, onUnmounted, ref, shallowRef, watch } from 'vue';
+	import { useRoute } from 'vue-router';
+
 	import { addOutline as addIOS } from "ionicons/icons";
+
+	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
+
 	import { getFilteredTags } from '../../lib/search.ts';
 	import { getTags } from '../../lib/db/tables/tags';
 	import type { Tag } from '../../lib/db/entities.d.ts';
+	import { DatabaseEvents, DatabaseEvent } from '../../lib/db/events';
+
+	import SpinnerFullscreen from '../../components/SpinnerFullscreen.vue';
 	import TagColor from '../../components/tag/TagColor.vue';
 	import TagLabel from '../../components/tag/TagLabel.vue';
-	import { DatabaseEvents, DatabaseEvent } from '../../lib/db/events';
-	import { useRoute } from 'vue-router';
-	import SpinnerFullscreen from '../../components/SpinnerFullscreen.vue';
 
 	const route = useRoute();
 
@@ -48,7 +53,7 @@
 	<IonPage>
 		<IonHeader>
 			<IonToolbar>
-				<IonBackButton slot="start" defaultHref="/options/" />
+				<IonBackButton slot="start" :text="isIOS ? $t('other:back') : undefined" :icon="!isIOS ? backMD : undefined" defaultHref="/options/" />
 				<IonTitle>
 					{{ $t("tagManagement:header") }}
 				</IonTitle>

@@ -3,11 +3,14 @@
 	import { inject, onBeforeMount, onUnmounted, shallowRef } from 'vue';
 	import { addOutline as addIOS } from "ionicons/icons";
 
-	import SpinnerFullscreen from '../../components/SpinnerFullscreen.vue';
-	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 	import { Reminder } from '../../lib/db/entities';
 	import { getReminders } from '../../lib/db/tables/reminders';
 	import { DatabaseEvent, DatabaseEvents } from '../../lib/db/events';
+
+	import SpinnerFullscreen from '../../components/SpinnerFullscreen.vue';
+
+	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
+	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 
 	const isIOS = inject<boolean>("isIOS");
 
@@ -36,7 +39,7 @@
 	<IonPage>
 		<IonHeader>
 			<IonToolbar>
-				<IonBackButton slot="start" defaultHref="/options/" />
+				<IonBackButton slot="start" :text="isIOS ? $t('other:back') : undefined" :icon="!isIOS ? backMD : undefined" defaultHref="/options/" />
 				<IonTitle>
 					{{ $t("reminders:header") }}
 				</IonTitle>

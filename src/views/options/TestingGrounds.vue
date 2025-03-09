@@ -11,6 +11,9 @@
 		IonLabel
 	} from '@ionic/vue';
 	import { inject, ref } from 'vue';
+
+	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
+
 	import ContentEditable from '../../components/ContentEditable.vue';
 
 	const model = ref("ciao");
@@ -22,7 +25,7 @@
 	<IonPage>
 		<IonHeader>
 			<IonToolbar>
-				<IonBackButton slot="start" defaultHref="/options/" />
+				<IonBackButton slot="start" :text="isIOS ? $t('other:back') : undefined" :icon="!isIOS ? backMD : undefined" defaultHref="/options/" />
 				<IonTitle>
 					Testing Grounds
 				</IonTitle>

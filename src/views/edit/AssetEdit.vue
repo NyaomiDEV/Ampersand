@@ -18,6 +18,7 @@
 		alertController,
 	} from "@ionic/vue";
 
+	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
 
@@ -119,7 +120,7 @@
 	<IonPage>
 		<IonHeader>
 			<IonToolbar>
-				<IonBackButton slot="start" defaultHref="/options/assetManager/" />
+				<IonBackButton slot="start" :text="isIOS ? $t('other:back') : undefined" :icon="!isIOS ? backMD : undefined" defaultHref="/options/assetManager/" />
 				<IonTitle>
 					{{ !asset.uuid ? $t("assetManager:add.header") : $t("assetManager:edit.header") }}
 				</IonTitle>

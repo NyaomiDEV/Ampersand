@@ -6,6 +6,8 @@
 
 	import MD3SegmentButton from '../../components/MD3SegmentButton.vue';
 
+	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
+
 	const isIOS = inject<boolean>("isIOS");
 </script>
 
@@ -13,7 +15,7 @@
 	<IonPage>
 		<IonHeader>
 			<IonToolbar>
-				<IonBackButton slot="start" defaultHref="/options/" />
+				<IonBackButton slot="start" :text="isIOS ? $t('other:back') : undefined" :icon="!isIOS ? backMD : undefined" defaultHref="/options/" />
 				<IonTitle>
 					{{ $t("accessibility:header") }}
 				</IonTitle>

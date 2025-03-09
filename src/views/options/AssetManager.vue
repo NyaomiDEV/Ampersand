@@ -9,6 +9,7 @@
 	import { getFilteredAssets } from '../../lib/search';
 	import SpinnerFullscreen from '../../components/SpinnerFullscreen.vue';
 
+	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 
 	const route = useRoute();
@@ -46,7 +47,7 @@
 	<IonPage>
 		<IonHeader>
 			<IonToolbar>
-				<IonBackButton slot="start" defaultHref="/options/" />
+				<IonBackButton slot="start" :text="isIOS ? $t('other:back') : undefined" :icon="!isIOS ? backMD : undefined" defaultHref="/options/" />
 				<IonTitle>
 					{{ $t("assetManager:header") }}
 				</IonTitle>

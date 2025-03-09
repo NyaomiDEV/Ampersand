@@ -10,6 +10,7 @@
 	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
 	import dayjs from 'dayjs';
 
+	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import calendarMD from "@material-symbols/svg-600/outlined/calendar_month.svg";
 	import listMD from "@material-symbols/svg-600/outlined/list.svg";
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
@@ -145,7 +146,7 @@
 	<IonPage>
 		<IonHeader>
 			<IonToolbar>
-				<IonBackButton slot="start" defaultHref="/options/" />
+				<IonBackButton slot="start" :text="isIOS ? $t('other:back') : undefined" :icon="!isIOS ? backMD : undefined" defaultHref="/options/" />
 				<IonTitle>
 					{{ $t("frontHistory:header") }}
 				</IonTitle>

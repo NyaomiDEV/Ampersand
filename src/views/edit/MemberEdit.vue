@@ -25,6 +25,7 @@
 
 	import TagListSelect from "../../modals/TagListSelect.vue";
 
+	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import pencilMD from "@material-symbols/svg-600/outlined/edit.svg";
 	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
 	import newspaperMD from "@material-symbols/svg-600/outlined/newspaper.svg";
@@ -219,7 +220,7 @@
 	<IonPage>
 		<IonHeader>
 			<IonToolbar>
-				<IonBackButton slot="start" defaultHref="/members/" />
+				<IonBackButton slot="start" :text="isIOS ? $t('other:back') : undefined" :icon="!isIOS ? backMD : undefined" defaultHref="/members/" />
 				<IonTitle>{{ !member.uuid ? $t("members:edit.headerAdd") : $t("members:edit.headerEdit") }}</IonTitle>
 			</IonToolbar>
 		</IonHeader>

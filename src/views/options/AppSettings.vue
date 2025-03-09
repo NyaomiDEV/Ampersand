@@ -6,6 +6,8 @@
 	import { appConfig } from '../../lib/config';
 	import MD3SegmentButton from '../../components/MD3SegmentButton.vue';
 
+	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
+
 	const twelveHourClock = ref(appConfig.locale.twelveHourClock.toString());
 	const firstWeekOfDayIsSunday = ref(appConfig.locale.firstWeekOfDayIsSunday.toString());
 
@@ -24,7 +26,7 @@
 	<IonPage>
 		<IonHeader>
 			<IonToolbar>
-				<IonBackButton slot="start" defaultHref="/options/" />
+				<IonBackButton slot="start" :text="isIOS ? $t('other:back') : undefined" :icon="!isIOS ? backMD : undefined" defaultHref="/options/" />
 				<IonTitle>
 					{{ $t("appSettings:header") }}
 				</IonTitle>

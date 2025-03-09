@@ -21,6 +21,7 @@
 	import { getFilteredMembers } from '../lib/search.ts';
 	import { accessibilityConfig } from '../lib/config/index.ts';
 
+	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 	import addToFrontMD from "@material-symbols/svg-600/outlined/person_add.svg";
 	import removeFromFrontMD from "@material-symbols/svg-600/outlined/person_remove.svg";
@@ -167,7 +168,7 @@
 	<IonPage>
 		<IonHeader>
 			<IonToolbar>
-				<IonBackButton slot="start" />
+				<IonBackButton slot="start" :text="isIOS ? $t('other:back') : undefined" :icon="!isIOS ? backMD : undefined" />
 				<IonTitle>
 					{{ $t("members:header") }}
 				</IonTitle>

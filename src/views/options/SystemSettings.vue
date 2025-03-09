@@ -8,6 +8,7 @@
 	import { getMembers } from '../../lib/db/tables/members';
 	import ContentEditable from '../../components/ContentEditable.vue';
 
+	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import accountCircle from "@material-symbols/svg-600/outlined/account_circle.svg";
 	import pencilMD from "@material-symbols/svg-600/outlined/edit.svg"
 	import saveMD from "@material-symbols/svg-600/outlined/save.svg"
@@ -49,7 +50,7 @@
 	<IonPage>
 		<IonHeader>
 			<IonToolbar>
-				<IonBackButton slot="start" defaultHref="/options/" />
+				<IonBackButton slot="start" :text="isIOS ? $t('other:back') : undefined" :icon="!isIOS ? backMD : undefined" defaultHref="/options/" />
 				<IonTitle>
 					{{ $t("systemSettings:header") }}
 				</IonTitle>

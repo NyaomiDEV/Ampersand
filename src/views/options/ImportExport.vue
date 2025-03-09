@@ -11,6 +11,8 @@
 	import { importTupperBox } from '../../lib/db/external/tupperbox';
 	import { importSimplyPlural } from '../../lib/db/external/simplyplural';
 
+	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
+
 	const isIOS = inject<boolean>("isIOS");
 	const loading = ref(false);
 
@@ -192,7 +194,7 @@
 	<IonPage>
 		<IonHeader>
 			<IonToolbar>
-				<IonBackButton slot="start" defaultHref="/options/" />
+				<IonBackButton slot="start" :text="isIOS ? $t('other:back') : undefined" :icon="!isIOS ? backMD : undefined" defaultHref="/options/" />
 				<IonTitle>{{ $t("importExport:header") }}</IonTitle>
 				<IonProgressBar v-if="loading" type="indeterminate" />
 			</IonToolbar>

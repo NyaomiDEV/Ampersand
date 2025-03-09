@@ -5,6 +5,8 @@
 	import { securityConfig } from '../../lib/config';
 	import { useTranslation } from 'i18next-vue';
 
+	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
+
 	const isIOS = inject<boolean>("isIOS");
 	const i18next = useTranslation();
 
@@ -91,7 +93,7 @@
 	<IonPage>
 		<IonHeader>
 			<IonToolbar>
-				<IonBackButton slot="start" defaultHref="/options/" />
+				<IonBackButton slot="start" :text="isIOS ? $t('other:back') : undefined" :icon="!isIOS ? backMD : undefined" defaultHref="/options/" />
 				<IonTitle>
 					{{ $t("security:header") }}
 				</IonTitle>

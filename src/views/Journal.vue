@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { IonBackButton, IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
 	import { inject } from 'vue';
 
 	const isIOS = inject<boolean>("isIOS");
@@ -9,7 +9,6 @@
 	<IonPage>
 		<IonHeader>
 			<IonToolbar>
-				<IonBackButton slot="start" />
 				<IonTitle>
 					{{ $t("journal:header") }}
 				</IonTitle>
