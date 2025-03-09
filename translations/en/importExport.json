@@ -13,7 +13,7 @@
 		"imported": "The backup has been imported. Please restart the app.",
 		"importedSp": "The Simply Plural export has been imported. Please restart the app.",
 		"importedPk": "The PluralKit export has been imported. Please restart the app.",
-		"importedTu": "The PluralKit export has been imported. Please restart the app.",
+		"importedTu": "The Tupperbox export has been imported. Please restart the app.",
 		"exportedPwa": "The backup has been downloaded to your downloads folder.",
 		"exportedApp": "The backup has been exported to the location you chose.",
 		"errorExport": "Error while exporting the backup.",
