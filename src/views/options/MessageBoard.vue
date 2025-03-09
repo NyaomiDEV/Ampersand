@@ -2,7 +2,7 @@
 	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonFab, IonFabButton, IonIcon, IonSearchbar, IonLabel, IonItemDivider, IonButtons, IonButton, IonDatetime } from '@ionic/vue';
 	import { h, inject, onBeforeMount, onUnmounted, ref, shallowRef, watch } from 'vue';
 	import type { BoardMessage, BoardMessageComplete } from '../../lib/db/entities.d.ts';
-	import { getBoardMessagesOfDay, getBoardMessagesOffset } from '../../lib/db/tables/boardMessages';
+	import { getBoardMessagesDays, getBoardMessagesOfDay, getBoardMessagesOffset } from '../../lib/db/tables/boardMessages';
 	import BoardMessageEdit from "../../modals/BoardMessageEdit.vue";
 	import SpinnerFullscreen from '../../components/SpinnerFullscreen.vue';
 	import InfiniteScroll from '../../components/InfiniteScroll.vue';
@@ -30,6 +30,8 @@
 	const boardMessages = shallowRef<BoardMessage[]>();
 	const filteredBoardMessages = shallowRef<BoardMessageComplete[]>();
 
+	const boardMessagesDays = shallowRef<{date: string, backgroundColor: string}[]>();
+
 	const isCalendarView = ref(false);
 	const date = ref(dayjs().toISOString());
 	const eol = ref(false);
@@ -37,6 +39,7 @@
 	const listener = async (event: Event) => {
 		if(["members", "boardMessages"].includes((event as DatabaseEvent).data.table)){
 			await resetEntries();
+			await populateHighlightedDays();
 		}
 	}
 
@@ -55,6 +58,7 @@
 	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
 		await resetEntries();
+		await populateHighlightedDays();
 	});
 
 	onUnmounted(() => {
@@ -108,6 +112,13 @@
 		return [...map.entries()].sort((a, b) => dayjs(b[0]).valueOf() - dayjs(a[0]).valueOf());
 	}
 
+	async function populateHighlightedDays() {
+		boardMessagesDays.value = (await getBoardMessagesDays()).map(x => ({
+			date: dayjs(x).format("YYYY-MM-DD"),
+			backgroundColor: "var(--ion-background-color-step-200)"
+		}));
+	}
+
 	async function showModal(clickedBoardMessage?: BoardMessageComplete){
 		const vnode = h(BoardMessageEdit, {
 			boardMessage: clickedBoardMessage,
@@ -143,6 +154,7 @@
 				:firstDayOfWeek="firstWeekOfDayIsSunday ? 0 : 1"
 				v-model="date"
 				:locale="appConfig.locale.language || 'en'"
+				:highlightedDates="boardMessagesDays"
 				:datetime="dayjs().format('YYYY-MM-DDTHH:mm:ss')"/>
 			</div>
 		</IonHeader>

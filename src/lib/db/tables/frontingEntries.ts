@@ -57,3 +57,7 @@ export function getRecentlyFronted(){
 export function getFrontingEntriesOfDay(date: Date) {
 	return impl.getFrontingEntriesOfDay(date)
 }
+
+export function getFrontingEntriesDays() {
+	return impl.getFrontingEntriesDays();
+}

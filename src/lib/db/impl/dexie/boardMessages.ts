@@ -87,3 +87,7 @@ export async function getBoardMessagesOfDay(date: Date) {
 
 	return db.boardMessages.filter(x => dayjs(x.date).startOf('day').valueOf() === _date.valueOf()).toArray()
 }
+
+export async function getBoardMessagesDays() {
+	return [...new Set((await db.boardMessages.toArray()).map(x => dayjs(x.date).startOf('day').valueOf()))].map(x => new Date(x));
+}

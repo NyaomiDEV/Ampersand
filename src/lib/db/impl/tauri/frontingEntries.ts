@@ -165,3 +165,7 @@ export async function getFrontingEntriesOfDay(date: Date) {
 		.map(async x => await db.frontingEntries.get(x.uuid))
 	)).filter(x => !!x);
 }
+
+export async function getFrontingEntriesDays() {
+	return [...new Set(db.frontingEntries.index.map(x => dayjs(x.startTime!).startOf('day').valueOf()))].map(x => new Date(x));
+}

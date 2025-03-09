@@ -142,3 +142,7 @@ export async function getFrontingEntriesOfDay(date: Date) {
 
 	return db.frontingEntries.filter(x => dayjs(x.startTime).startOf('day').valueOf() === _date.valueOf()).toArray();
 }
+
+export async function getFrontingEntriesDays() {
+	return [...new Set((await db.frontingEntries.toArray()).map(x => dayjs(x.startTime).startOf('day').valueOf()))].map(x => new Date(x));
+}

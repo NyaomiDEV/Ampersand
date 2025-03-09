@@ -33,3 +33,7 @@ export function getRecentBoardMessages(){
 export function getBoardMessagesOfDay(date: Date){
 	return impl.getBoardMessagesOfDay(date);
 }
+
+export function getBoardMessagesDays() {
+	return impl.getBoardMessagesDays();
+}

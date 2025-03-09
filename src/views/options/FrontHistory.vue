@@ -4,7 +4,7 @@
 	import MemberAvatar from "../../components/member/MemberAvatar.vue";
 	import FrontingEntryLabel from "../../components/frontingEntry/FrontingEntryLabel.vue";
 	import type { FrontingEntry, FrontingEntryComplete } from '../../lib/db/entities.d.ts';
-	import { getFrontingEntriesOffset, getFrontingEntriesOfDay } from '../../lib/db/tables/frontingEntries';
+	import { getFrontingEntriesOffset, getFrontingEntriesOfDay, getFrontingEntriesDays } from '../../lib/db/tables/frontingEntries';
 	import { getFilteredFrontingEntries } from '../../lib/search.ts';
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
@@ -30,13 +30,17 @@
 	const frontingEntries = shallowRef<FrontingEntry[]>();
 	const filteredFrontingEntries = shallowRef<FrontingEntryComplete[]>();
 
+	const frontingEntriesDays = shallowRef<{date: string, backgroundColor: string}[]>();
+
 	const isCalendarView = ref(false);
 	const date = ref(dayjs().toISOString());
 	const eol = ref(false);
 
 	const listener = async (event: Event) => {
-		if(["frontingEntries", "members"].includes((event as DatabaseEvent).data.table))
+		if(["frontingEntries", "members"].includes((event as DatabaseEvent).data.table)){
 			await resetEntries();
+			await populateHighlightedDays();
+		}
 	};
 
 	watch(route, () => {
@@ -54,6 +58,7 @@
 	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
 		await resetEntries();
+		await populateHighlightedDays();
 	});
 
 	onUnmounted(async () => {
@@ -118,6 +123,13 @@
 		});
 	}
 
+	async function populateHighlightedDays() {
+		frontingEntriesDays.value = (await getFrontingEntriesDays()).map(x => ({
+			date: dayjs(x).format("YYYY-MM-DD"),
+			backgroundColor: "var(--ion-background-color-step-200)"
+		}));
+	}
+
 	async function showModal(clickedFrontingEntry?: FrontingEntryComplete){
 		const vnode = h(FrontingEntryEdit, {
 			frontingEntry: clickedFrontingEntry,
@@ -150,6 +162,7 @@
 			<div class="container" v-if="isCalendarView">
 				<IonDatetime presentation="date" :firstDayOfWeek="firstWeekOfDayIsSunday ? 0 : 1"
 					v-model="date" :locale="appConfig.locale.language || 'en'"
+					:highlightedDates="frontingEntriesDays"
 					:datetime="dayjs().format('YYYY-MM-DDTHH:mm:ss')" />
 			</div>
 		</IonHeader>
