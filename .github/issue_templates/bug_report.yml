@@ -1,0 +1,77 @@
+name: Bug Report
+description: File a bug report.
+labels: ["bug", "triage"]
+
+body:
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: What version of Ampersand are you running? (This refers to the version number in the About section, eg. 0.0.1+560)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: flavor
+    attributes:
+      label: Which flavor of Ampersand are you seeing the problem on?
+      multiple: false
+      options:
+        - PWA (app.ampersand.moe)
+        - Android APK
+    validations:
+      required: true
+
+  - type: textarea
+    id: device
+    attributes:
+      label: Device
+      description: |
+        On which device are you using Ampersand?
+
+        If you're on a desktop/laptop, specify:
+          - OS name and version
+          - Browser name and version
+          - CPU model, amount of RAM available (available means what's reported as available from your system information section)
+          - GPU model (optional, do include in case of graphical glitches)
+        Else, if you're on a mobile device, specify:
+          - if an iPhone, the exact model and iOS version;
+          - if an Android, the exact model and Android version, plus the following:
+            - If using a custom ROM, please tell us which flavor it is (eg. LineageOS, GrapheneOS);
+            - If using the APK, do tell us your WebView name and version (Settings -> Apps -> Show all apps -> Android WebView / Android System WebView / {Your vendor's name here, eg. Huawei} WebView);
+            - If using the PWA, do tell us your browser name and version.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: starting-database
+    attributes:
+      label: Did you import from other services?
+      multiple: false
+      options:
+        - No
+        - Yes, Simply Plural
+        - Yes, PluralKit
+        - Yes, TupperBox
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: |
+        Tell us all of the following:
+        - A brief description of the bug you're facing;
+        - The steps needed to reproduce this bug;
+        - If this bug is consistent (eg. you reboot the app and it's still there all the times);
+        - If this bug can be worked around, tell us how you did work around it as it might give us some clues as to what's broken;
+    validations:
+      required: true
+
+  - type: textarea
+    id: log
+    attributes:
+      label: Relevant log output
+      description: Please copy and paste any relevant log output.
+      render: shell
