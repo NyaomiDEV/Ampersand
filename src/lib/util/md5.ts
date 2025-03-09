@@ -1,8 +1,6 @@
+// Adapted from the Spark MD5 library
 function md5cycle(x: any[], k: number[]) {
-	let a = x[0],
-		b = x[1],
-		c = x[2],
-		d = x[3];
+	let [a, b, c, d] = x;
 
 	a += (b & c | ~b & d) + k[0] - 680876936 | 0;
 	a = (a << 7 | a >>> 25) + b | 0;
