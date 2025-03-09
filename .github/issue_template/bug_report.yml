@@ -34,6 +34,7 @@ body:
           - Browser name and version
           - CPU model, amount of RAM available (available means what's reported as available from your system information section)
           - GPU model (optional, do include in case of graphical glitches)
+        
         Else, if you're on a mobile device, specify:
           - if an iPhone, the exact model and iOS version;
           - if an Android, the exact model and Android version, plus the following:
