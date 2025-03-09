@@ -75,7 +75,7 @@ export async function updateBoardMessage(uuid: UUID, newContent: Partial<BoardMe
 export async function getRecentBoardMessages() {
 	return Promise.all((await Promise.all(
 		db.boardMessages.index
-			.filter(x => dayjs().startOf('day').valueOf() - dayjs(x.date).startOf('day').valueOf() <= 3 * 24 * 60 * 60 * 1000)
+			.filter(x => x.isPinned || dayjs().startOf('day').valueOf() - dayjs(x.date).startOf('day').valueOf() <= 3 * 24 * 60 * 60 * 1000)
 			.map(x => db.boardMessages.get(x.uuid))
 	)).filter(x => !!x).map(x => toBoardMessageComplete(x)));
 }
@@ -85,7 +85,7 @@ export async function getBoardMessagesOfDay(date: Date) {
 
 	return (await Promise.all(
 		db.boardMessages.index
-		.filter(x => x.isPinned || dayjs(x.date!).startOf('day').valueOf() === _date.valueOf())
+		.filter(x => dayjs(x.date!).startOf('day').valueOf() === _date.valueOf())
 		.map(async x => await db.boardMessages.get(x.uuid))
 	)).filter(x => !!x);
 }
