@@ -62,6 +62,7 @@ export async function unlockWithBiometrics(){
 		isLocked.value = false;
 		return true;
 	}catch(e){
+		console.error(e);
 		return false;
 	}
 }
