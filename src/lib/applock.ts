@@ -1,6 +1,7 @@
 import { authenticate, checkStatus } from "@tauri-apps/plugin-biometric";
 import { securityConfig } from "./config";
 import sha1 from "./util/sha1";
+import { md5 } from "./util/md5";
 import { t } from "i18next";
 import { ref } from "vue";
 import { isTauri } from "./mode";
@@ -9,6 +10,35 @@ export const isLocked = ref(false);
 
 if (securityConfig.password)
 	isLocked.value = true;
+
+function hashPassword(plaintext: string){
+	return "md5:" + Array.from(md5(new TextEncoder().encode(plaintext))).map(x => x.toString(16)).join("");
+}
+
+function comparePassword(plaintext: string){
+	const storedPassword = securityConfig.password?.split(":");
+	if(!storedPassword) return true;
+
+	let hashedPlaintext;
+	switch(storedPassword[0]){
+		case "md5":
+			hashedPlaintext = Array.from(md5(new TextEncoder().encode(plaintext))).map(x => x.toString(16)).join("");
+			break;
+		case "sha1":
+			hashedPlaintext = Array.from(sha1(new TextEncoder().encode(plaintext))).map(x => x.toString(16)).join("");
+			break;
+		default:
+			hashedPlaintext = new TextDecoder().decode(sha1(new TextEncoder().encode(plaintext))); // old and insecure
+			break;
+	}
+
+	if(storedPassword[1]) return storedPassword[1] === hashedPlaintext;
+	return storedPassword[0] === hashedPlaintext;
+}
+
+function isOldPassword(){
+	return securityConfig.password?.split(":").length === 2;
+}
 
 export function getLockedStatus(){
 	if (securityConfig.password === undefined || !securityConfig.usePassword) return false;
@@ -37,10 +67,13 @@ export async function unlockWithBiometrics(){
 }
 
 export function unlockWithPassword(plaintextPwd: string) {
-	const password = new TextDecoder().decode(sha1(new TextEncoder().encode(plaintextPwd)));
-
-	if(securityConfig.password === password) {
+	if(comparePassword(plaintextPwd)) {
 		isLocked.value = false;
+
+		// migrate people to md5
+		if(isOldPassword())
+			securityConfig.password = hashPassword(plaintextPwd);
+
 		return true;
 	}
 
@@ -48,9 +81,7 @@ export function unlockWithPassword(plaintextPwd: string) {
 }
 
 export function disableApplock(plaintextPwd: string) {
-	const password = new TextDecoder().decode(sha1(new TextEncoder().encode(plaintextPwd)));
-
-	if (securityConfig.password === password) {
+	if (comparePassword(plaintextPwd)) {
 		isLocked.value = false;
 		securityConfig.usePassword = false;
 		securityConfig.useBiometrics = false;
@@ -64,8 +95,7 @@ export function disableApplock(plaintextPwd: string) {
 export function enableApplock(plaintextPwd: string) {
 	if (isLocked.value) return false;
 
-	const password = new TextDecoder().decode(sha1(new TextEncoder().encode(plaintextPwd)));
-	securityConfig.password = password;
+	securityConfig.password = hashPassword(plaintextPwd);
 	securityConfig.usePassword = true;
 
 	return true;
