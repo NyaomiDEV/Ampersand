@@ -70,6 +70,8 @@ jobs:
           git push origin :refs/tags/dev || true
           git tag dev
           git push origin dev
+        env:
+          GH_TOKEN: ${{ github.token }}
       - name: Publish artifact
         uses: actions/upload-artifact@v4
         with:
