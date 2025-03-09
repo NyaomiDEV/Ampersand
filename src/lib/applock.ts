@@ -37,7 +37,7 @@ function comparePassword(plaintext: string){
 }
 
 function isOldPassword(){
-	return securityConfig.password?.split(":").length === 2;
+	return securityConfig.password?.split(":").length !== 2;
 }
 
 export function getLockedStatus(){
