@@ -1,5 +1,5 @@
 import Dexie from 'dexie';
-import { AmpersandDexieDatabase } from './types';
+import { AmpersandDexieDatabase, GetTableDexieExport } from './types';
 
 export const db = new Dexie("ampersandDatabase") as AmpersandDexieDatabase;
 
@@ -17,6 +17,10 @@ db.version(1).stores({
 	customFields: "uuid"
 });
 
-export function getTables(){
-	return db.tables;
+export function getTables() {
+	const _tables: Partial<GetTableDexieExport> = {};
+	for(const table of db.tables)
+		_tables[table.name] = table;
+
+	return _tables as GetTableDexieExport;
 }

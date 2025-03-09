@@ -23,7 +23,7 @@ const typeson = new Typeson({
 async function _exportDatabase(){
 	const config = { appConfig, accessibilityConfig, securityConfig };
 	const database: Record<string, any> = {};
-	for(const table of getTables()) database[table.name] = await table.toArray();
+	for(const [name, table] of Object.entries(getTables())) database[name] = await table.toArray();
 
 	return await typeson.encapsulate({ config, database });
 }
@@ -50,7 +50,7 @@ async function _importDatabase(tablesAndConfig){
 		Object.assign(securityConfig, revived.config.securityConfig);
 
 		for (const key of Object.getOwnPropertyNames(revived.database)) {
-			const table = getTables().find((x) => x.name === key);
+			const table = getTables()[key];
 			if (table) {
 				if(await table.clear() === false) return false;
 				if(await table.bulkAdd(revived.database[key]) === false) return false;

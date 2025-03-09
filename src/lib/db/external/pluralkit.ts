@@ -1,53 +1,57 @@
 import { FrontingEntry, Member, System, Tag } from "../entities";
-import { PartialBy } from "../../types";
-import { newSystem } from "../tables/system";
 import { getTables } from "..";
-import { newTag } from "../tables/tags";
-import { newMember } from "../tables/members";
-import { newFrontingEntry } from "../tables/frontingEntries";
 import { isTauri } from "../../mode";
 import { fetch as tauriFetch } from "@tauri-apps/plugin-http";
 import { nilUid } from "../../util/misc";
 
 const fetch = isTauri() ? tauriFetch : window.fetch;
 
-export async function importPluralKit(pkExport: any){
-	// WIPE AMPERSAND
-	await Promise.all(getTables().map(x => x.clear()));
-
-	// SYSTEM
-	const systemInfo: PartialBy<System, "uuid"> = {
+async function system(pkExport: any){
+	const systemInfo: System = {
 		name: pkExport.name,
 		description: pkExport.description,
-	}
+		uuid: window.crypto.randomUUID()
+	};
 	if (pkExport.avatar_url) {
-		try{
+		try {
 			const request = await fetch(pkExport.avatar_url);
 			systemInfo.image = new File([await request.blob()], pkExport.avatar_url.split("/").pop());
-		}catch(e) {
+		} catch (e) {
 			// whatever
 		}
 	}
-	await newSystem(systemInfo);
 
-	// TAGS
+	return systemInfo;
+}
+
+async function tag(pkExport: any){
 	const tagMapping = new Map<string, string>();
+	const tags: Tag[] = [];
+
 	for (const pkGroup of pkExport.groups) {
-		const tag: PartialBy<Tag, "uuid"> = {
+		const tag: Tag = {
 			name: pkGroup.display_name || pkGroup.name,
 			description: pkGroup.description || undefined,
 			color: pkGroup.color ? "#" + pkGroup.color : undefined,
-			type: "member"
+			type: "member",
+			uuid: window.crypto.randomUUID()
 		};
-		const uuid = await newTag(tag);
-		if(!uuid) return false;
-		tagMapping.set(pkGroup.id, uuid);
+		tags.push(tag);
+		tagMapping.set(pkGroup.id, tag.uuid);
 	}
 
-	// MEMBERS
+	return {
+		tags,
+		tagMapping
+	};
+}
+
+async function member(pkExport: any, tagMapping: Map<string, string>) {
 	const memberMapping = new Map<string, string>();
+	const members: Member[] = [];
+
 	for (const pkMember of pkExport.members) {
-		const member: PartialBy<Member, "uuid"> = {
+		const member: Member = {
 			name: pkMember.display_name || pkMember.name,
 			description: pkMember.description || undefined,
 			pronouns: pkMember.pronouns || undefined,
@@ -55,51 +59,84 @@ export async function importPluralKit(pkExport: any){
 			isArchived: false,
 			isCustomFront: false,
 			dateCreated: new Date(pkMember.created),
-			tags: pkExport.groups.filter(x => x.members.includes(pkMember.id)).map(x => tagMapping.get(x.id))
-		}
+			tags: pkExport.groups.filter(x => x.members.includes(pkMember.id)).map(x => tagMapping.get(x.id)),
+			uuid: window.crypto.randomUUID()
+		};
 		if (pkMember.avatar_url) {
-			try{
+			try {
 				const request = await fetch(pkMember.avatar_url);
 				member.image = new File([await request.blob()], pkMember.avatar_url.split("/").pop());
-			}catch(e){
+			} catch (e) {
 				// whatever, again
 			}
 		}
-		const uuid = await newMember(member);
-		if(!uuid) return false;
-		memberMapping.set(pkMember.id, uuid);
+		members.push(member);
+		memberMapping.set(pkMember.id, member.uuid);
 	}
 
-	// FRONTING ENTRIES
-	const frontingEntries = new Map<string, PartialBy<FrontingEntry, "uuid">>();
-	for(const pkSwitch of pkExport.switches.sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime())){
+	return {
+		members,
+		memberMapping
+	};
+}
+
+async function frontingEntry(pkExport: any, memberMapping: Map<string, string>){
+	const trackedFronting = new Map<string, FrontingEntry>();
+	const frontingEntries: FrontingEntry[] = [];
+
+	for (const pkSwitch of pkExport.switches.sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime())) {
 		const date = new Date(pkSwitch.timestamp);
 
 		// check who left
-		for(const id of frontingEntries.keys()){
-			if(!pkSwitch.members.includes(id)){
-				const frontingEntry = frontingEntries.get(id)!;
+		for (const id of trackedFronting.keys()) {
+			if (!pkSwitch.members.includes(id)) {
+				const frontingEntry = trackedFronting.get(id)!;
 				frontingEntry.endTime = date;
-				await newFrontingEntry(frontingEntry);
-				frontingEntries.delete(id);
+				frontingEntries.push(frontingEntry);
+				trackedFronting.delete(id);
 			}
 		}
 
 		// check who's new
-		for(const id of pkSwitch.members){
-			if(!frontingEntries.has(id)){
-				const frontingEntry: PartialBy<FrontingEntry, "uuid"> = {
+		for (const id of pkSwitch.members) {
+			if (!trackedFronting.has(id)) {
+				const frontingEntry: FrontingEntry = {
 					member: memberMapping.get(id) || nilUid,
 					startTime: date,
-					isMainFronter: false
-				}
-				frontingEntries.set(id, frontingEntry);
+					isMainFronter: false,
+					uuid: window.crypto.randomUUID()
+				};
+				trackedFronting.set(id, frontingEntry);
 			}
 		}
-
 	}
-	for(const frontingEntry of frontingEntries.values()){
-		await newFrontingEntry(frontingEntry);
+
+	// push whatever is still in the tracking map
+	for (const frontingEntry of trackedFronting.values())
+		frontingEntries.push(frontingEntry);
+
+	return frontingEntries;
+}
+
+export async function importPluralKit(pkExport: any){
+	const systemInfo = await system(pkExport);
+	const { tags, tagMapping } = await tag(pkExport);
+	const { members, memberMapping } = await member(pkExport, tagMapping);
+	const frontingEntries = await frontingEntry(pkExport, memberMapping);
+
+	try {
+		// WIPE AMPERSAND
+		await Promise.all(Object.values(getTables()).map(x => x.clear()));
+
+		// ADD TO DATABASE
+		const tables = getTables();
+		await tables.system.bulkAdd([systemInfo]);
+		await tables.tags.bulkAdd(tags);
+		await tables.members.bulkAdd(members);
+		await tables.frontingEntries.bulkAdd(frontingEntries);
+	} catch (e) {
+		console.error(e);
+		return false;
 	}
 
 	return true;

@@ -4,6 +4,7 @@ import { Typeson } from "typeson";
 import { blob, file, filelist, map, typedArrays, undef, set as Tset, imagebitmap, imagedata } from "typeson-registry";
 import { Asset, BoardMessage, Chat, ChatMessage, CustomField, FrontingEntry, JournalPost, Member, Reminder, System, Tag, UUIDable } from '../../entities';
 import { decode, encode } from '@msgpack/msgpack';
+import { AmpersandEntityMapping } from '../../types';
 
 type IndexEntry<T> = UUIDable & Partial<T>;
 type SecondaryKey<T> = (Exclude<keyof T, keyof UUIDable>);
@@ -246,8 +247,9 @@ async function makeTable<T extends UUIDable>(tableName: string, secondaryKeys: S
 	return table;
 }
 
-export function getTables(): ShittyTable<any>[] {
-	return Object.values(db);
+type GetTableTauriExport = {[T in keyof AmpersandEntityMapping]: ShittyTable<AmpersandEntityMapping[T]>};
+export function getTables(): GetTableTauriExport {
+	return { ...db };
 }
 
 export const db = {

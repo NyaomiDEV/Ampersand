@@ -1,59 +1,78 @@
-import { Member, System, Tag } from "../entities";
-import { PartialBy } from "../../types";
-import { newSystem } from "../tables/system";
+import { Member, Tag, System } from "../entities";
 import { getTables } from "..";
-import { newTag } from "../tables/tags";
-import { newMember } from "../tables/members";
 import { isTauri } from "../../mode";
 import { fetch as tauriFetch } from "@tauri-apps/plugin-http";
 
 const fetch = isTauri() ? tauriFetch : window.fetch;
 
-export async function importTupperBox(tuExport: any){
-	// WIPE AMPERSAND
-	await Promise.all(getTables().map(x => x.clear()));
-
-	// SYSTEM
-	const systemInfo: PartialBy<System, "uuid"> = {
-		name: "",
-		description: "",
-	}
-	await newSystem(systemInfo);
-
-	// TAGS
+async function tag(tuExport: any){
 	const tagMapping = new Map<number, string>();
+	const tags: Tag[] = [];
 	for (const tuGroup of tuExport.groups) {
-		const tag: PartialBy<Tag, "uuid"> = {
+		const tag: Tag = {
 			name: tuGroup.name,
 			description: tuGroup.description || undefined,
-			type: "member"
+			type: "member",
+			uuid: window.crypto.randomUUID()
 		};
-		const uuid = await newTag(tag);
-		if(!uuid) return false;
-		tagMapping.set(tuGroup.id, uuid);
+		tags.push(tag);
+		tagMapping.set(tuGroup.id, tag.uuid);
 	}
 
-	// MEMBERS
+	return {
+		tags,
+		tagMapping
+	};
+}
+
+async function member(tuExport: any, tagMapping: Map<number, string>){
+	const members: Member[] = [];
+
 	for (const tuMember of tuExport.tuppers) {
-		const member: PartialBy<Member, "uuid"> = {
+		const member: Member = {
 			name: tuMember.name,
 			description: tuMember.description || undefined,
 			pronouns: tuMember.pronouns || undefined,
 			isArchived: false,
 			isCustomFront: false,
 			dateCreated: new Date(tuMember.created_at),
-			tags: tuMember.group_id ? [tagMapping.get(tuMember.group_id)!] : []
-		}
+			tags: tuMember.group_id ? [tagMapping.get(tuMember.group_id)!] : [],
+			uuid: window.crypto.randomUUID()
+		};
 		if (tuMember.avatar_url) {
-			try{
+			try {
 				const request = await fetch(tuMember.avatar_url);
 				member.image = new File([await request.blob()], tuMember.avatar_url.split("/").pop());
-			}catch(e){
+			} catch (e) {
 				// whatever, again
 			}
 		}
-		const uuid = await newMember(member);
-		if(!uuid) return false;
+		members.push(member);
+	}
+
+	return members;
+}
+
+export async function importTupperBox(tuExport: any){
+	const { tags, tagMapping } = await tag(tuExport);
+	const members = await member(tuExport, tagMapping);
+
+	try {
+		// WIPE AMPERSAND
+		await Promise.all(Object.values(getTables()).map(x => x.clear()));
+
+		// ADD TO DATABASE
+		const tables = getTables();
+		await tables.system.bulkAdd([{
+			name: "",
+			description: "",
+			uuid: window.crypto.randomUUID()
+		}] as System[]);
+		await tables.tags.bulkAdd(tags);
+		await tables.members.bulkAdd(members);
+	}catch(e){
+		console.error(e);
+		return false;
 	}
 
 	return true;

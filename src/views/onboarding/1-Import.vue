@@ -28,7 +28,7 @@
 				if(!result) throw new Error("errored out");
 			}catch(e){
 				resetConfig();
-				await Promise.all(getTables().map(x => x.clear()));
+				await Promise.all(Object.values(getTables()).map(x => x.clear()));
 
 				const statusMessage = await toastController.create({
 					message: i18next.t("onboarding:importScreen.error"),
@@ -58,7 +58,7 @@
 				if (!result) throw new Error("errored out");
 			}catch(e){
 				console.error(e);
-				await Promise.all(getTables().map(x => x.clear()));
+				await Promise.all(Object.values(getTables()).map(x => x.clear()));
 
 				const statusMessage = await toastController.create({
 					message: i18next.t("onboarding:importScreen.errorSp"),
@@ -87,7 +87,7 @@
 
 				if(!result) throw new Error("errored out");
 			}catch(e){
-				await Promise.all(getTables().map(x => x.clear()));
+				await Promise.all(Object.values(getTables()).map(x => x.clear()));
 
 				const statusMessage = await toastController.create({
 					message: i18next.t("onboarding:importScreen.errorPk"),
@@ -116,7 +116,7 @@
 				
 				if(!result) throw new Error("errored out");
 			}catch(e){
-				await Promise.all(getTables().map(x => x.clear()));
+				await Promise.all(Object.values(getTables()).map(x => x.clear()));
 
 				const statusMessage = await toastController.create({
 					message: i18next.t("onboarding:importScreen.errorTu"),

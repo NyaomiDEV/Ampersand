@@ -1,22 +1,15 @@
 import { System, Member, FrontingEntry, Tag, BoardMessage, CustomField } from "../entities";
-import { PartialBy } from "../../types";
 import { getTables } from "..";
-import { getSystem, modifySystem, newSystem } from "../tables/system";
-import { newTag } from "../tables/tags";
-import { getMembers, newMember, updateMember } from "../tables/members";
-import { newFrontingEntry } from "../tables/frontingEntries";
-import { getBoardMessages, newBoardMessage, updateBoardMessage } from "../tables/boardMessages";
 import { t } from "i18next";
 import { isTauri } from "../../mode";
 import { fetch as tauriFetch } from "@tauri-apps/plugin-http";
-import { newCustomField } from "../tables/customFields";
 import { resizeImage } from "../../util/image";
 import { nilUid } from "../../util/misc";
 
 const fetch = isTauri() ? tauriFetch : window.fetch;
 
-function normalizeSPColor(color: string) {
-	if (!color.length) return undefined;
+function normalizeSPColor(color?: string) {
+	if (!color || !color.length) return undefined;
 
 	if (color.startsWith("#"))
 		color = color.substring(1);
@@ -61,18 +54,14 @@ async function getAvatarFromUuid(systemId: string, avatarUuid: string){
 	}
 }
 
-export async function importSimplyPlural(spExport) {
-	// WIPE AMPERSAND
-	await Promise.all(getTables().map(x => x.clear()));
-
-	// SYSTEM
+async function system(spExport: any){
 	const spSystem = spExport.users[0];
-	if(!spSystem) return false;
-	console.debug("[SP] Creating system:", spSystem);
+	if (!spSystem) return;
 
-	const systemInfo: PartialBy<System, "uuid"> = {
+	const systemInfo: System = {
 		name: spSystem.username,
 		description: spSystem.desc,
+		uuid: window.crypto.randomUUID()
 	};
 
 	if (spSystem.avatarUrl?.length) {
@@ -87,50 +76,67 @@ export async function importSimplyPlural(spExport) {
 		}
 	} else if (spSystem.avatarUuid?.length) {
 		const image = await getAvatarFromUuid(spSystem.uid, spSystem.avatarUuid);
-		if(image) systemInfo.image = await resizeImage(image);
+		if (image) systemInfo.image = await resizeImage(image);
 	}
 
-	if(!await newSystem(systemInfo)) return false;
+	return {
+		systemInfo,
+		systemUid: spSystem.uid
+	};
+}
 
-	console.debug("[SP] System created");
-
-	// TAGS
+async function tag(spExport: any){
 	const tagMapping = new Map<string, string>();
+	const tags: Tag[] = [];
+
 	for (const spGroup of spExport.groups) {
-		console.debug("[SP] Creating tag for group:", spGroup);
-		const tag: PartialBy<Tag, "uuid"> = {
+		const tag: Tag = {
 			name: spGroup.name,
 			description: spGroup.desc?.length ? spGroup.desc : undefined,
 			color: normalizeSPColor(spGroup.color),
-			type: "member"
+			type: "member",
+			uuid: window.crypto.randomUUID()
 		};
 
-		const uuid = await newTag(tag);
-		if(!uuid) return false;
-		tagMapping.set(spGroup._id, uuid);
-		console.debug("[SP] Created tag for group:", spGroup, "with UUID:", uuid);
+		tags.push(tag);
+		tagMapping.set(spGroup._id, tag.uuid);
 	}
+	
+	return {
+		tags,
+		tagMapping
+	};
+}
 
-	// CUSTOM FIELDS
+async function customField(spExport: any){
 	const customFieldMapping = new Map<string, [string, number]>();
+	const customFields: CustomField[] = [];
+
 	for (const spCustomField of spExport.customFields) {
-		console.debug("[SP] Creating custom field for:", spCustomField);
-		const customField: PartialBy<CustomField, "uuid"> = {
+		const customField: CustomField = {
 			name: spCustomField.name,
-			default: false
+			default: false,
+			uuid: window.crypto.randomUUID()
 		};
 
-		const uuid = await newCustomField(customField);
-		if (!uuid) return false;
-		customFieldMapping.set(spCustomField._id, [uuid, spCustomField.type]);
-		console.debug("[SP] Created custom field for:", spCustomField, "with UUID:", uuid);
+		customFields.push(customField);
+		customFieldMapping.set(spCustomField._id, [customField.uuid, spCustomField.type]);
 	}
+
+	return {
+		customFields,
+		customFieldMapping
+	};
+}
+
+export async function member(spExport: any, systemUid: string, tagMapping: Map<string, string>, customFieldMapping: Map<string, [string, number]>){
+	const memberMapping = new Map<string, string>();
+	const members: Member[] = [];
 
 	// MEMBERS
-	const memberMapping = new Map<string, string>();
 	for (const spMember of spExport.members) {
 		console.debug("[SP] Creating member for:", spMember);
-		const member: PartialBy<Member, "uuid"> = {
+		const member: Member = {
 			name: spMember.name,
 			pronouns: spMember.pronouns?.length ? spMember.pronouns : undefined,
 			description: spMember.desc?.length ? spMember.desc : undefined,
@@ -145,14 +151,15 @@ export async function importSimplyPlural(spExport) {
 			],
 			customFields: new Map(
 				Object.entries(spMember.info || {})
-				.filter(([_, v]) => (v as string).length)
-				.map(([_id, value]) => {
-					const mapped = customFieldMapping.get(_id);
-					if(!mapped) return undefined;
-					return [ mapped[0], mapCustomFieldType(mapped[1], value)] as [string, string];
-				})
-				.filter(x => !!x)
+					.filter(([_, v]) => (v as string).length)
+					.map(([_id, value]) => {
+						const mapped = customFieldMapping.get(_id);
+						if (!mapped) return undefined;
+						return [mapped[0], mapCustomFieldType(mapped[1], value)] as [string, string];
+					})
+					.filter(x => !!x)
 			),
+			uuid: window.crypto.randomUUID()
 		};
 
 		if (spMember.avatarUrl?.length) {
@@ -166,20 +173,20 @@ export async function importSimplyPlural(spExport) {
 				// whatever
 			}
 		} else if (spMember.avatarUuid?.length) {
-			const image = await getAvatarFromUuid(spSystem.uid, spMember.avatarUuid);
-			if(image) member.image = await resizeImage(image);
+			const image = await getAvatarFromUuid(systemUid, spMember.avatarUuid);
+			if (image) member.image = await resizeImage(image);
 		}
 
-		const uuid = await newMember(member);
-		if(!uuid) return false;
-		memberMapping.set(spMember._id, uuid);
-		console.debug("[SP] Created member for:", spMember, "with UUID:", uuid);
+		members.push(member);
+		memberMapping.set(spMember._id, member.uuid);
+		console.debug("[SP] Created member for:", spMember, "with UUID:", member.uuid);
 	}
+	// END MEMBERS
 
 	// CUSTOM FRONTS
 	for (const spCustomFront of spExport.frontStatuses) {
 		console.debug("[SP] Creating member for custom front:", spCustomFront);
-		const member: PartialBy<Member, "uuid"> = {
+		const member: Member = {
 			name: spCustomFront.name,
 			description: spCustomFront.desc?.length ? spCustomFront.desc : undefined,
 			color: normalizeSPColor(spCustomFront.color),
@@ -187,63 +194,80 @@ export async function importSimplyPlural(spExport) {
 			isCustomFront: true,
 			tags: [],
 			dateCreated: spCustomFront.created ? new Date(spCustomFront.created) : new Date(),
+			uuid: window.crypto.randomUUID()
 		};
+
 		if (spCustomFront.avatarUrl?.length) {
 			try {
 				const image = new File(
 					[await (await fetch(spCustomFront.avatarUrl)).blob()],
 					spCustomFront.avatarUrl.split("/").pop()
 				);
-				member.image = await resizeImage(image)
+				member.image = await resizeImage(image);
 			} catch (e) {
 				// whatever
 			}
 		} else if (spCustomFront.avatarUuid?.length) {
-			member.image = await getAvatarFromUuid(spSystem.uid, spCustomFront.avatarUuid);
+			member.image = await getAvatarFromUuid(systemUid, spCustomFront.avatarUuid);
 		}
 
-		const uuid = await newMember(member);
-		if (!uuid) return false;
-		memberMapping.set(spCustomFront._id, uuid);
-		console.debug("[SP] Created member for custom front:", spCustomFront, "with UUID:", uuid);
+		members.push(member);
+		memberMapping.set(spCustomFront._id, member.uuid);
+		console.debug("[SP] Created member for custom front:", spCustomFront, "with UUID:", member.uuid);
 	}
+	// END CUSTOM FRONTS
 
-	// FRONTING ENTRIES
+	return {
+		members,
+		memberMapping
+	};
+}
+
+async function frontingEntry(spExport: any, memberMapping: Map<string, string>){
+	const frontingEntries: FrontingEntry[] = [];
+
 	for (const spFrontHistory of spExport.frontHistory) {
-		if(!spFrontHistory.startTime) continue; // front entries without startTime are null for us
+		if (!spFrontHistory.startTime) continue; // front entries without startTime are null for us
 		console.debug("[SP] Creating fronting entry for:", spFrontHistory);
-		const frontingEntry: PartialBy<FrontingEntry, "uuid"> = {
+		const frontingEntry: FrontingEntry = {
 			member: memberMapping.get(spFrontHistory.member) || nilUid,
 			startTime: new Date(spFrontHistory.startTime),
 			endTime: spFrontHistory.endTime ? new Date(spFrontHistory.endTime) : undefined,
 			customStatus: spFrontHistory.customStatus?.length ? spFrontHistory.customStatus : undefined,
-			isMainFronter: false
-		}
-		
-		const uuid = await newFrontingEntry(frontingEntry);
-		if(!uuid) return false;
-		console.debug("[SP] Created fronting entry for:", spFrontHistory, "with UUID:", uuid);
+			isMainFronter: false,
+			uuid: window.crypto.randomUUID()
+		};
+
+		frontingEntries.push(frontingEntry);
+		console.debug("[SP] Created fronting entry for:", spFrontHistory, "with UUID:", frontingEntry.uuid);
 	}
 
+	return frontingEntries;
+}
+
+async function boardMessage(spExport: any, memberMapping: Map<string, string>){
+	const boardMessages: BoardMessage[] = [];
+
 	// BOARD MESSAGES
-	for (const spBoardMessage of spExport.boardMessages){
+	for (const spBoardMessage of spExport.boardMessages) {
 		console.debug("[SP] Creating message board entry for:", spBoardMessage);
-		const boardMessage: PartialBy<BoardMessage, "uuid"> = {
+		const boardMessage: BoardMessage = {
 			member: memberMapping.get(spBoardMessage.writtenBy) || nilUid,
 			title: spBoardMessage.title,
 			body: `@<m:${memberMapping.get(spBoardMessage.writtenFor)}>\n\n` + (spBoardMessage.message?.length ? spBoardMessage.message : ""),
-			date: spBoardMessage.writtenAt ? new Date(spBoardMessage.writtenAt) : new Date()
+			date: spBoardMessage.writtenAt ? new Date(spBoardMessage.writtenAt) : new Date(),
+			uuid: window.crypto.randomUUID()
 		};
-		
-		const uuid = await newBoardMessage(boardMessage);
-		if (!uuid) return false;
-		console.debug("[SP] Created message board entry for:", spBoardMessage, "with UUID:", uuid);
-	}
 
-	// POLLS AS BOARD MESSAGES
+		boardMessages.push(boardMessage);
+		console.debug("[SP] Created message board entry for:", spBoardMessage, "with UUID:", boardMessage.uuid);
+	}
+	// END BOARD MESSAGES
+
+	// POLLS
 	for (const spPoll of spExport.polls) {
 		console.debug("[SP] Creating message board entry for poll:", spPoll);
-		const boardMessage: PartialBy<BoardMessage, "uuid"> = {
+		const boardMessage: BoardMessage = {
 			member: nilUid,
 			title: spPoll.name,
 			body: spPoll.desc?.length ? spPoll.desc : undefined,
@@ -298,42 +322,72 @@ export async function importSimplyPlural(spExport) {
 								}))
 						} : undefined,
 					].filter(Boolean)
-			}
+			},
+			uuid: window.crypto.randomUUID()
 		};
-		
-		const uuid = await newBoardMessage(boardMessage);
-		if(!uuid) return false;
-		console.debug("[SP] Created message board entry for poll:", spPoll, "with UUID:", uuid);
+
+		boardMessages.push(boardMessage);
+		console.debug("[SP] Created message board entry for poll:", spPoll, "with UUID:", boardMessage.uuid);
 	}
+	// END POLLS
 
-	// REMAP ALL MEMBER MENTIONS
-	console.debug("[SP] Performing remappings");
+	return boardMessages;
+}
 
-	const systemDesc = (await getSystem())?.description;
-	if (systemDesc)
-		if (!await modifySystem({
-			description: systemDesc.replace(/<###@(\w+)###>/g, (_, p1) => `@<m:${memberMapping.get(p1) || nilUid}>`)
-		})) return false;
+function remap(
+	memberMapping: Map<string, string>,
+	systemInfo: System,
+	members: Member[],
+	boardMessages: BoardMessage[],
+){
+	if (systemInfo.description)
+		systemInfo.description = systemInfo.description.replace(/<###@(\w+)###>/g, (_, p1) => `@<m:${memberMapping.get(p1) || nilUid}>`);
 
-	for (const member of await getMembers()) {
-		const update: Partial<Member> = {};
+	for (const member of members) {
 		if (member.description)
-			update.description = member.description.replace(/<###@(\w+)###>/g, (_, p1) => `@<m:${memberMapping.get(p1) || nilUid}>`);
+			member.description = member.description.replace(/<###@(\w+)###>/g, (_, p1) => `@<m:${memberMapping.get(p1) || nilUid}>`);
 
-		if(member.customFields)
-			update.customFields = new Map(Array.from(member.customFields.entries()).map(([k, v]) => [k, v.replace(/<###@(\w+)###>/g, (_, p1) => `@<m:${memberMapping.get(p1) || nilUid}>`)]));
-
-		if (!await updateMember(member.uuid, update)) return false;
+		if (member.customFields)
+			member.customFields = new Map(Array.from(member.customFields.entries()).map(([k, v]) => [k, v.replace(/<###@(\w+)###>/g, (_, p1) => `@<m:${memberMapping.get(p1) || nilUid}>`)]));
 	}
 
-	for (const boardMessage of await getBoardMessages()) {
+	for (const boardMessage of boardMessages) {
 		if (boardMessage.body)
-			if (!await updateBoardMessage(boardMessage.uuid, {
-				body: boardMessage.body.replace(/<###@(\w+)###>/g, (_, p1) => `@<m:${memberMapping.get(p1) || nilUid}>`)
-			})) return false;
+			boardMessage.body = boardMessage.body.replace(/<###@(\w+)###>/g, (_, p1) => `@<m:${memberMapping.get(p1) || nilUid}>`);
 	}
+}
 
-	console.debug("[SP] Performed remappings");
+export async function importSimplyPlural(spExport: any) {
+	const _system = await system(spExport);
+	if(!_system) return false;
+	const { systemInfo, systemUid } = _system;
+	
+	const { tags, tagMapping } = await tag(spExport);
+	const { customFields, customFieldMapping } = await customField(spExport);
+	const { members, memberMapping } = await member(spExport, systemUid, tagMapping, customFieldMapping);
+	const frontingEntries = await frontingEntry(spExport, memberMapping);
+	const boardMessages = await boardMessage(spExport, memberMapping);
+
+	remap(
+		memberMapping,
+		systemInfo, members, boardMessages
+	);
+
+	try{
+		// WIPE AMPERSAND
+		await Promise.all(Object.values(getTables()).map(x => x.clear()));
+
+		// ADD TO DATABASE
+		const tables = getTables();
+		await tables.system.bulkAdd([systemInfo]);
+		await tables.tags.bulkAdd(tags);
+		await tables.customFields.bulkAdd(customFields);
+		await tables.members.bulkAdd(members);
+		await tables.frontingEntries.bulkAdd(frontingEntries);
+		await tables.boardMessages.bulkAdd(boardMessages);
+	}catch(e){
+		return false;
+	}
 
 	return true;
 }
