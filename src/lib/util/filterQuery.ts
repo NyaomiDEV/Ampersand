@@ -5,6 +5,7 @@ export type MemberFilterQuery = {
 	query: string,
 	tags: string[],
 	all?: boolean,
+	isPinned?: boolean,
 	isArchived?: boolean,
 	isCustomFront?: boolean,
 	pronouns?: string,
@@ -121,6 +122,25 @@ export async function parseMemberFilterQuery(search: string): Promise<MemberFilt
 						} else
 							result.isCustomFront = true;
 						
+						break;
+					case "pinned":
+						if (tokenParts[1]) {
+							switch (tokenParts[1]?.toLowerCase()) {
+								case "yes":
+								case "true":
+									result.isPinned = true;
+									break;
+								case "no":
+								case "false":
+									result.isPinned = false;
+									break;
+								default:
+									queryTokens.push(token);
+									break;
+							}
+						} else
+							result.isPinned = true;
+
 						break;
 					case "pronouns":
 						result.pronouns = tokenParts[1];
