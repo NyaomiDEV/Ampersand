@@ -1,21 +1,21 @@
 {
-    "languageName": {
-        "local": "Romănă",
-        "inEnglish": "Romanian"
-    },
-    "genericDeleteDesc": "Atenție! Nu veți putea anula această acțiune!",
-    "storagePersistence": {
-        "header": "Atenție",
-        "content": "Ampersand nu poate stoca date persistent pe dispozitivul dumneavoastră. Dacă sunteți pe Firefox, vă rugăm să îi acordați această permisiune. Dacă sunteți pe un browser bazat pe Chromium (Cum ar fi Google Chrome, Microsoft Edge, Opera, Vivaldi, etc...), vă rugăm să instalați Ampersand ca și o aplicație web sau să o adăugați pe Desktop sau în ecranul de start. Dacă mesajul acesta nu dispare, faceți backup des din ecranul Import/Export."
-    },
-    "alerts": {
-        "ok": "Ok",
-        "cancel": "Anulați"
-    },
-    "timeSizes": {
-        "weekdays": {
-            "monday": "Luni",
-            "sunday": "Duminică"
-        }
-    }
+	"languageName": {
+		"local": "Romănă",
+		"inEnglish": "Romanian"
+	},
+	"genericDeleteDesc": "Atenție! Nu veți putea anula această acțiune!",
+	"storagePersistence": {
+		"header": "Atenție",
+		"content": "Ampersand nu poate stoca date persistent pe dispozitivul dumneavoastră. Dacă sunteți pe Firefox, vă rugăm să îi acordați această permisiune. Dacă sunteți pe un browser bazat pe Chromium (Cum ar fi Google Chrome, Microsoft Edge, Opera, Vivaldi, etc...), vă rugăm să instalați Ampersand ca și o aplicație web sau să o adăugați pe Desktop sau în ecranul de start. Dacă mesajul acesta nu dispare, faceți backup des din ecranul Import/Export."
+	},
+	"alerts": {
+		"ok": "Ok",
+		"cancel": "Anulați"
+	},
+	"timeSizes": {
+		"weekdays": {
+			"monday": "Luni",
+			"sunday": "Duminică"
+		}
+	}
 }

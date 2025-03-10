@@ -1,49 +1,49 @@
 {
-    "remindersAreNotFinished": {
-        "header": "I promemoria non sono finiti!",
-        "content": "Al momento, tutto questo è solo un'anteprima dell'interfaccia utente! A un certo punto potrete salvare i vostri promemoria, ma tenete presente che nulla è ancora collegato ad alcun sistema di notifica! Se siete su Android dovreste già essere in grado di configurare alcune cose che funzioneranno quando avremo completato il sistema sottostante, ma tenete presente che questo non funzionerà sulla versione Web, quindi non fatevi prendere dall'entusiasmo di usare i promemoria sul vostro computer. Inoltre, se siete sviluppatori, aiutateci!"
-    },
-    "header": "Promemoria",
-    "eventBasedHeader": "Promemoria eventi",
-    "periodicHeader": "Promemoria periodici",
-    "edit": {
-        "header": "Modifica promemoria",
-        "name": "Nome del promemoria",
-        "title": "Titolo di notifica del promemoria",
-        "message": "Messaggio di notifica del promemoria",
-        "type": {
-            "title": "Tipo di promemoria",
-            "eventBased": "Evento",
-            "periodic": "Periodico"
-        },
-        "eventBased": {
-            "title": "Evento scatenante",
-            "addedToFront": "Dopo che unə membrə è statə aggiuntə al front",
-            "removedFromFront": "Dopo che unə membrə è statə rimossə dal front",
-            "memberFilterQuery": "Filtro deɜ membrɜ",
-            "timing": "Tempismo",
-            "delay": {
-                "title": "Ritardo",
-                "desc": "Dopo {{delay}}"
-            }
-        },
-        "periodic": {
-            "title": "Intervallo di tempo",
-            "timeOfDay": {
-                "title": "Orario",
-                "desc": "Alle {{timeOfDay}}"
-            },
-            "dayOfMonth": {
-                "title": "Giorno del mese",
-                "desc_undefined": "Ripeti ogni giorno",
-                "desc_ordinal_one": "Ripeti ogni {{count}}° giorno del mese",
-                "desc_ordinal_many": "Ripeti ogni {{count}}° giorno del mese",
-                "desc_ordinal_other": "Ripeti ogni {{count}}° giorno del mese"
-            }
-        },
-        "delete": {
-            "title": "Elimina promemoria",
-            "confirm": "Vuoi davvero eliminare questo promemoria?"
-        }
-    }
+	"remindersAreNotFinished": {
+		"header": "I promemoria non sono finiti!",
+		"content": "Al momento, tutto questo è solo un'anteprima dell'interfaccia utente! A un certo punto potrete salvare i vostri promemoria, ma tenete presente che nulla è ancora collegato ad alcun sistema di notifica! Se siete su Android dovreste già essere in grado di configurare alcune cose che funzioneranno quando avremo completato il sistema sottostante, ma tenete presente che questo non funzionerà sulla versione Web, quindi non fatevi prendere dall'entusiasmo di usare i promemoria sul vostro computer. Inoltre, se siete sviluppatori, aiutateci!"
+	},
+	"header": "Promemoria",
+	"eventBasedHeader": "Promemoria eventi",
+	"periodicHeader": "Promemoria periodici",
+	"edit": {
+		"header": "Modifica promemoria",
+		"name": "Nome del promemoria",
+		"title": "Titolo di notifica del promemoria",
+		"message": "Messaggio di notifica del promemoria",
+		"type": {
+			"title": "Tipo di promemoria",
+			"eventBased": "Evento",
+			"periodic": "Periodico"
+		},
+		"eventBased": {
+			"title": "Evento scatenante",
+			"addedToFront": "Dopo che unə membrə è statə aggiuntə al front",
+			"removedFromFront": "Dopo che unə membrə è statə rimossə dal front",
+			"memberFilterQuery": "Filtro deɜ membrɜ",
+			"timing": "Tempismo",
+			"delay": {
+				"title": "Ritardo",
+				"desc": "Dopo {{delay}}"
+			}
+		},
+		"periodic": {
+			"title": "Intervallo di tempo",
+			"timeOfDay": {
+				"title": "Orario",
+				"desc": "Alle {{timeOfDay}}"
+			},
+			"dayOfMonth": {
+				"title": "Giorno del mese",
+				"desc_undefined": "Ripeti ogni giorno",
+				"desc_ordinal_one": "Ripeti ogni {{count}}° giorno del mese",
+				"desc_ordinal_many": "Ripeti ogni {{count}}° giorno del mese",
+				"desc_ordinal_other": "Ripeti ogni {{count}}° giorno del mese"
+			}
+		},
+		"delete": {
+			"title": "Elimina promemoria",
+			"confirm": "Vuoi davvero eliminare questo promemoria?"
+		}
+	}
 }

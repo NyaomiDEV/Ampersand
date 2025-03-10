@@ -1,43 +1,43 @@
 {
-    "header": "Bacheca dei messaggi",
-    "searchPlaceholder": "Cerca tra i messaggi...",
-    "polls": {
-        "boardMessageContainsPoll": "Contiene un sondaggio",
-        "voteCast": {
-            "voter": "Seleziona lə votantə",
-            "reason": "Dai la ragione",
-            "reasonHint": "Ragione",
-            "retractConfirmation": "Vuoi veramente rescindere il voto?"
-        },
-        "resultsHeader": "Risultati dei voti",
-        "resultsButton": "Mostra i risultati del sondaggio",
-        "choice": {
-            "desc_one": "{{count}} votantə",
-            "desc_many": "{{count}} votantɜ",
-            "desc_other": "{{count}} votantɜ"
-        },
-        "defaultPollValues": {
-            "yes": "Sì",
-            "no": "No",
-            "veto": "Veto",
-            "abstain": "Astenutə"
-        }
-    },
-    "edit": {
-        "header": "Modifica messaggio",
-        "member": "Modifica autorə del messaggio",
-        "title": "Titolo",
-        "body": "Corpo del messaggio",
-        "isPinned": "Fissato",
-        "attachPoll": "Allega un sondaggio al messaggio",
-        "deleteAttachedPoll": "Elimina il sondaggio allegato",
-        "pollIsMultipleChoice": "Consenti più di una scelta",
-        "pollAddNewChoice": "Aggiungi una nuova scelta al sondaggio",
-        "pollChoice": "Descrizione della scelta",
-        "pollEditWarning": "I voti verranno resettati se cambi un qualsiasi dettaglio del sondaggio!",
-        "delete": {
-            "title": "Elimina messaggio dalla bacheca",
-            "confirm": "Vuoi veramente eliminare questo messaggio?"
-        }
-    }
+	"header": "Bacheca dei messaggi",
+	"searchPlaceholder": "Cerca tra i messaggi...",
+	"polls": {
+		"boardMessageContainsPoll": "Contiene un sondaggio",
+		"voteCast": {
+			"voter": "Seleziona lə votantə",
+			"reason": "Dai la ragione",
+			"reasonHint": "Ragione",
+			"retractConfirmation": "Vuoi veramente rescindere il voto?"
+		},
+		"resultsHeader": "Risultati dei voti",
+		"resultsButton": "Mostra i risultati del sondaggio",
+		"choice": {
+			"desc_one": "{{count}} votantə",
+			"desc_many": "{{count}} votantɜ",
+			"desc_other": "{{count}} votantɜ"
+		},
+		"defaultPollValues": {
+			"yes": "Sì",
+			"no": "No",
+			"veto": "Veto",
+			"abstain": "Astenutə"
+		}
+	},
+	"edit": {
+		"header": "Modifica messaggio",
+		"member": "Modifica autorə del messaggio",
+		"title": "Titolo",
+		"body": "Corpo del messaggio",
+		"isPinned": "Fissato",
+		"attachPoll": "Allega un sondaggio al messaggio",
+		"deleteAttachedPoll": "Elimina il sondaggio allegato",
+		"pollIsMultipleChoice": "Consenti più di una scelta",
+		"pollAddNewChoice": "Aggiungi una nuova scelta al sondaggio",
+		"pollChoice": "Descrizione della scelta",
+		"pollEditWarning": "I voti verranno resettati se cambi un qualsiasi dettaglio del sondaggio!",
+		"delete": {
+			"title": "Elimina messaggio dalla bacheca",
+			"confirm": "Vuoi veramente eliminare questo messaggio?"
+		}
+	}
 }

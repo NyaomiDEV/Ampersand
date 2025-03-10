@@ -1,52 +1,52 @@
 {
-    "languageName": {
-        "local": "Italiano",
-        "inEnglish": "Italian"
-    },
-    "genericDeleteDesc": "Non potrai annullare questa azione!",
-    "storagePersistence": {
-        "header": "Attenzione",
-        "content": "Ampersand non può immagazzinare i dati in modo persistente sul tuo dispositivo Se sei su Firefox, si prega di dare ad Ampersand il permesso per poterlo fare. Se sei su un browser basato su Chromium (come Chrome, Edge, Opera GX, Vivaldi, ecc...), si prega di installare Ampersand come una web app / aggiungerlo alla schermata home. Se questo messaggio non sparisce, si consideri di fare spesso il backup dei dati dalla sezione Importa/Esporta."
-    },
-    "alerts": {
-        "ok": "Ok",
-        "cancel": "Annulla"
-    },
-    "back": "Indietro",
-    "time": "Ora",
-    "timeSizes": {
-        "years": {
-            "long": "anni",
-            "short": "Y"
-        },
-        "months": {
-            "long": "mesi",
-            "short": "M"
-        },
-        "days": {
-            "long": "giorni",
-            "short": "D"
-        },
-        "weekdays": {
-            "monday": "Lunedì",
-            "tuesday": "Martedi",
-            "wednesday": "Mercoledi",
-            "thursday": "Giovedi",
-            "friday": "Venerdi",
-            "saturday": "Sabato",
-            "sunday": "Domenica"
-        },
-        "hours": {
-            "long": "ore",
-            "short": "h"
-        },
-        "minutes": {
-            "long": "minuti",
-            "short": "m"
-        },
-        "seconds": {
-            "long": "secondi",
-            "short": "s"
-        }
-    }
+	"languageName": {
+		"local": "Italiano",
+		"inEnglish": "Italian"
+	},
+	"genericDeleteDesc": "Non potrai annullare questa azione!",
+	"storagePersistence": {
+		"header": "Attenzione",
+		"content": "Ampersand non può immagazzinare i dati in modo persistente sul tuo dispositivo Se sei su Firefox, si prega di dare ad Ampersand il permesso per poterlo fare. Se sei su un browser basato su Chromium (come Chrome, Edge, Opera GX, Vivaldi, ecc...), si prega di installare Ampersand come una web app / aggiungerlo alla schermata home. Se questo messaggio non sparisce, si consideri di fare spesso il backup dei dati dalla sezione Importa/Esporta."
+	},
+	"alerts": {
+		"ok": "Ok",
+		"cancel": "Annulla"
+	},
+	"back": "Indietro",
+	"time": "Ora",
+	"timeSizes": {
+		"years": {
+			"long": "anni",
+			"short": "Y"
+		},
+		"months": {
+			"long": "mesi",
+			"short": "M"
+		},
+		"days": {
+			"long": "giorni",
+			"short": "D"
+		},
+		"weekdays": {
+			"monday": "Lunedì",
+			"tuesday": "Martedi",
+			"wednesday": "Mercoledi",
+			"thursday": "Giovedi",
+			"friday": "Venerdi",
+			"saturday": "Sabato",
+			"sunday": "Domenica"
+		},
+		"hours": {
+			"long": "ore",
+			"short": "h"
+		},
+		"minutes": {
+			"long": "minuti",
+			"short": "m"
+		},
+		"seconds": {
+			"long": "secondi",
+			"short": "s"
+		}
+	}
 }
