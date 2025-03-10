@@ -6,6 +6,7 @@ export type AppConfig = {
 	},
 	view: ViewName,
 	showSystemDescriptionInDashboard: boolean,
+	showMembersBeforeCustomFronts: boolean,
 	defaultFilterQueries: {
 		members?: string,
 		tags?: string,

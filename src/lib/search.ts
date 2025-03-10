@@ -16,6 +16,11 @@ export async function getFilteredMembers(search: string, members?: Member[]){
 	const filtered: Member[] = [];
 	const parsed = await parseMemberFilterQuery(search.length ? search : appConfig.defaultFilterQueries.members || "");
 	const sorted = members.sort((a, b) => {
+		if(appConfig.showMembersBeforeCustomFronts){
+			if (!a.isCustomFront && b.isCustomFront) return -1;
+			if (a.isCustomFront && !b.isCustomFront) return 1;
+		}
+
 		if(a.isPinned && !b.isPinned) return -1;
 		if(!a.isPinned && b.isPinned) return 1;
 
@@ -46,6 +51,11 @@ export async function getFilteredMembers(search: string, members?: Member[]){
 
 		if (parsed.role) {
 			if (!x.role || x.role.toLowerCase() !== parsed.role.toLowerCase())
+				continue;
+		}
+
+		if (parsed.isPinned !== undefined) {
+			if (x.isPinned !== parsed.isPinned)
 				continue;
 		}
 

@@ -10,6 +10,7 @@ const defaultAppConfig: AppConfig = {
 		twelveHourClock: false,
 	},
 	showSystemDescriptionInDashboard: false,
+	showMembersBeforeCustomFronts: true,
 	view: "dashboard",
 	defaultFilterQueries: {
 		members: "@archived:no"

@@ -104,6 +104,14 @@
 			</IonList>
 
 			<IonItem button detail="false">
+				<IonToggle v-model="appConfig.showMembersBeforeCustomFronts">
+					<IonLabel>
+						{{ $t("appSettings:showMembersBeforeCustomFronts") }}
+					</IonLabel>
+				</IonToggle>
+			</IonItem>
+
+			<IonItem button detail="false">
 				<IonToggle v-model="appConfig.showSystemDescriptionInDashboard">
 					<IonLabel>
 						{{ $t("appSettings:showSystemDescriptionInDashboard") }}
