@@ -1,0 +1,31 @@
+{
+    "remindersAreNotFinished": {
+        "header": "Erinnerungen sind nicht [ vollendet / fertig / vollständig ?]!",
+        "content": "Aktuell ist alles hier nur eine [ui preview]! [You may be able to save your reminders at some point], aber denke daran, dass dies noch nicht zu einem Benachrichtigungs-System verbunden ist! Wenn du ein Android-System nutzt, solltest du bereits Einiges konfigurieren können, das funktionieren sollte wenn wir das [underlying system] [finish]. Aber bitte denk daran, dass dies nicht auf der Web-Version funktionieren wird, also freue dich nicht zu sehr, Erinnerungen auf deinem Computer zu nutzen. Außerdem, falls du ein [developer] bist, bitte hilf uns aus!"
+    },
+    "header": "Erinnerungen",
+    "periodicHeader": "Regelmäßige Erinnerungen",
+    "edit": {
+        "header": "Erinnerung bearbeiten",
+        "name": "Name der Erinnerung",
+        "title": "Erinnerung Benachrichtigungs-Titel",
+        "type": {
+            "title": "Art der Erinnerung",
+            "periodic": "Regelmäßig"
+        },
+        "eventBased": {
+            "addedToFront": "Nachdem ein [member] zur [front] hinzugefügt wurde",
+            "removedFromFront": "Nachdem ein [member] von der [front] entfernt wurde"
+        },
+        "periodic": {
+            "dayOfMonth": {
+                "title": "Tag des Monats",
+                "desc_undefined": "Jeden Tag wiederholen ((check context for wording!))"
+            }
+        },
+        "delete": {
+            "title": "Erinnerung löschen",
+            "confirm": "Bist du dir sicher, dass du diese Erinnerung löschen möchtest?"
+        }
+    }
+}
