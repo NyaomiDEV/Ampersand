@@ -1,24 +1,24 @@
 {
-    "dbImportDesc": "Achtung! Es wird jegliche existierende Daten überschrieben",
-    "status": {
-        "errorTu": "Fehler beim Importieren des Tupperbox-Exports.",
-        "importedPk": "Der Pluralkit-Export wurde importiert. Bitte die App neustarten.",
-        "imported": "Die Sicherheitskopie wurde importiert. Bitte die App neustarten.",
-        "importedSp": "Der Simply Plural-Export wurde importiert. Bitte die App neustarten.",
-        "importedTu": "Der Tupperbox-Export wurde importiert. Bitte die App neustarten.",
-        "exportedApp": "Die Sicherheitskopie wurde zu dem gewählten Speicherort exportiert.",
-        "errorExport": "Fehler beim Exportieren der Sicherheitskopie.",
-        "errorSp": "Fehler beim Importieren des Simply Plural-Exports.",
-        "errorPk": "Fehler beim Importieren des PluralKit-Exports.",
-        "error": "Fehler beim Importieren der Sicherheitskopie."
-    },
-    "header": "Importieren / Exportieren",
-    "dbExport": {
-        "title": "Exportiere deine Daten",
-        "desc": "Sichere deine aktuelle Daten auf einer Datei, die du woanders speichern kannst"
-    },
-    "dbImport": "Importiere deine Dateien von einer Sicherheitskopie",
-    "pkImport": "Importiere deine Daten von einem PluralKit-Export",
-    "tuImport": "Importiere deine Daten von einem Tupperbox-Export",
-    "spImport": "Importiere deine Daten von einem Simply Plural-Export"
+	"dbImportDesc": "Achtung! Es wird jegliche existierende Daten überschrieben",
+	"status": {
+		"errorTu": "Fehler beim Importieren des Tupperbox-Exports.",
+		"importedPk": "Der Pluralkit-Export wurde importiert. Bitte die App neustarten.",
+		"imported": "Die Sicherheitskopie wurde importiert. Bitte die App neustarten.",
+		"importedSp": "Der Simply Plural-Export wurde importiert. Bitte die App neustarten.",
+		"importedTu": "Der Tupperbox-Export wurde importiert. Bitte die App neustarten.",
+		"exportedApp": "Die Sicherheitskopie wurde zu dem gewählten Speicherort exportiert.",
+		"errorExport": "Fehler beim Exportieren der Sicherheitskopie.",
+		"errorSp": "Fehler beim Importieren des Simply Plural-Exports.",
+		"errorPk": "Fehler beim Importieren des PluralKit-Exports.",
+		"error": "Fehler beim Importieren der Sicherheitskopie."
+	},
+	"header": "Importieren / Exportieren",
+	"dbExport": {
+		"title": "Exportiere deine Daten",
+		"desc": "Sichere deine aktuelle Daten auf einer Datei, die du woanders speichern kannst"
+	},
+	"dbImport": "Importiere deine Dateien von einer Sicherheitskopie",
+	"pkImport": "Importiere deine Daten von einem PluralKit-Export",
+	"tuImport": "Importiere deine Daten von einem Tupperbox-Export",
+	"spImport": "Importiere deine Daten von einem Simply Plural-Export"
 }

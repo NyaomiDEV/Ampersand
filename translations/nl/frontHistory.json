@@ -1,21 +1,21 @@
 {
-    "header": "Frontgeschiedenis",
-    "currentlyFronting": "Nu aan het fronten",
-    "edit": {
-        "header": "Wijzig front-item",
-        "member": "Wijzig frontend lid",
-        "customStatus": "Aangepaste status",
-        "startTime": "Starttijd",
-        "endTime": "Eindtijd",
-        "removeFromFront": {
-            "title": "Verwijder uit front",
-            "desc": "Je kan deze actie niet ongedaan maken na het opslaan!"
-        },
-        "isMainFronter": "Zet als belangrijkste fronter",
-        "delete": {
-            "title": "Verwijder front-item",
-            "confirm": "Weet je zeker dat je dit front-item wilt verwijderen?"
-        }
-    },
-    "searchPlaceholder": "Zoek in de frontgeschiedenis..."
+	"header": "Frontgeschiedenis",
+	"currentlyFronting": "Nu aan het fronten",
+	"edit": {
+		"header": "Wijzig front-item",
+		"member": "Wijzig frontend lid",
+		"customStatus": "Aangepaste status",
+		"startTime": "Starttijd",
+		"endTime": "Eindtijd",
+		"removeFromFront": {
+			"title": "Verwijder uit front",
+			"desc": "Je kan deze actie niet ongedaan maken na het opslaan!"
+		},
+		"isMainFronter": "Zet als belangrijkste fronter",
+		"delete": {
+			"title": "Verwijder front-item",
+			"confirm": "Weet je zeker dat je dit front-item wilt verwijderen?"
+		}
+	},
+	"searchPlaceholder": "Zoek in de frontgeschiedenis..."
 }

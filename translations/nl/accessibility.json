@@ -1,7 +1,7 @@
 {
-    "header": "Toegankelijkheid",
-    "highLegibilityFont": {
-        "title": "Duidelijk leesbaar lettertype",
-        "desc": "Gebruik een duidelijk leesbaar lettertype in plaats van het standaardlettertype van je apparaat"
-    }
+	"header": "Toegankelijkheid",
+	"highLegibilityFont": {
+		"title": "Duidelijk leesbaar lettertype",
+		"desc": "Gebruik een duidelijk leesbaar lettertype in plaats van het standaardlettertype van je apparaat"
+	}
 }

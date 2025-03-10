@@ -1,18 +1,18 @@
 {
-    "header": "Aangepaste velden",
-    "select": "Selecteer aangepaste velden",
-    "searchPlaceholder": "Zoek aangepaste velden...",
-    "edit": {
-        "headerAdd": "Voeg aangepast veld toe",
-        "header": "Wijzig aangepast veld",
-        "name": "Naam van aangepast veld",
-        "default": {
-            "title": "Schakel standaard aan/uit",
-            "desc": "Standaard aangepaste velden zullen altijd verschijnen op het leden aanpassen scherm"
-        },
-        "delete": {
-            "title": "Verwijder aangepast veld",
-            "confirm": "Weet je zeker dat je dit aangepast veld wilt verwijderen?"
-        }
-    }
+	"header": "Aangepaste velden",
+	"select": "Selecteer aangepaste velden",
+	"searchPlaceholder": "Zoek aangepaste velden...",
+	"edit": {
+		"headerAdd": "Voeg aangepast veld toe",
+		"header": "Wijzig aangepast veld",
+		"name": "Naam van aangepast veld",
+		"default": {
+			"title": "Schakel standaard aan/uit",
+			"desc": "Standaard aangepaste velden zullen altijd verschijnen op het leden aanpassen scherm"
+		},
+		"delete": {
+			"title": "Verwijder aangepast veld",
+			"confirm": "Weet je zeker dat je dit aangepast veld wilt verwijderen?"
+		}
+	}
 }
