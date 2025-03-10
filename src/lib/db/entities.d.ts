@@ -54,7 +54,8 @@ export interface FrontingEntry extends UUIDable {
 	startTime: Date,
 	endTime?: Date,
 	isMainFronter: boolean,
-	customStatus?: string
+	customStatus?: string,
+	comment?: string
 }
 
 export interface FrontingEntryComplete extends FrontingEntry {

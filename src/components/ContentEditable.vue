@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { ref, inject } from 'vue';
+	import { ref, inject, onMounted, nextTick, useTemplateRef } from 'vue';
 	import { IonLabel, IonTextarea } from '@ionic/vue';
 	import Markdown from './Markdown.vue';
 	
@@ -10,14 +10,26 @@
 	}>();
 	const model = defineModel<string>({default: ""});
 	const focused = ref(false);
+	const textarea = useTemplateRef("textarea");
+
+	onMounted(() => {
+		if(model.value === undefined)
+			model.value = "";
+	});
+
+	function clickHandler() {
+		focused.value = true;
+		nextTick(() => textarea.$el.setFocus());
+	}
 </script>
 
 <template>
-	<IonLabel position="stacked" v-if="!focused && props.label">{{ props.label }}</IonLabel>
-	<div v-if="!focused" @click="() => {
-		focused = true;
-		$nextTick(() => ($refs.textarea as any).$el.setFocus());
-	}"><Markdown :markdown="model" /></div>
+	<IonLabel
+		position="stacked"
+		v-if="!focused && props.label"
+		@click="clickHandler"
+	>{{ props.label }}</IonLabel>
+	<div class="preview" v-if="!focused" @click="clickHandler"><Markdown :markdown="model" /></div>
 	<IonTextarea
 		v-show="focused"
 		v-model="model"
@@ -30,8 +42,17 @@
 	/>
 </template>
 
-<style>
+<style scoped>
+	ion-label {
+		padding-inline-start: 21px;
+	}
+
 	div.preview {
 		width: 100%;
+		min-height: 2em;
+		border-radius: 4px;
+		padding-left: 16px;
+		padding-right: 16px;
+		border-bottom: .5px solid var(--ion-text-color-step-600);
 	}
 </style>

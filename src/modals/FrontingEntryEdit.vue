@@ -32,6 +32,7 @@
 	import MemberSelect from "./MemberSelect.vue";
 	import MemberAvatar from "../components/member/MemberAvatar.vue";
 	import DatePopupPicker from "../components/DatePopupPicker.vue";
+	import ContentEditable from "../components/ContentEditable.vue";
 
 	import { PartialBy } from "../lib/types";
 	import { formatDate } from "../lib/util/misc";
@@ -143,6 +144,9 @@
 					</IonItem>
 					<IonItem>
 						<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('frontHistory:edit.customStatus')" labelPlacement="floating" v-model="frontingEntry.customStatus" />
+					</IonItem>
+					<IonItem>
+						<ContentEditable :label="$t('frontHistory:edit.comment')" v-model="frontingEntry.comment" />
 					</IonItem>
 					<IonItem button @click="($refs.startTimePicker as any)?.$el.present()">
 						<IonLabel>

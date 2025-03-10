@@ -6,6 +6,7 @@
 		"header": "Edit fronting entry",
 		"member": "Edit fronting member",
 		"customStatus": "Custom status",
+		"comment": "Comment",
 		"startTime": "Start time",
 		"endTime": "End time",
 		"removeFromFront": {
