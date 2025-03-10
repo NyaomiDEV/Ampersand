@@ -24,7 +24,7 @@
 		
 		<IonContent>
 			<IonList :inset="isIOS">
-				<IonItem>
+				<IonItem button detail="false">
 					<IonToggle v-model="accessibilityConfig.highLegibility">
 						<IonLabel>
 							<h3>{{ $t("accessibility:highLegibilityFont.title") }}</h3>
@@ -33,7 +33,7 @@
 					</IonToggle>
 				</IonItem>
 
-				<IonItem>
+				<IonItem v-if="accessibilityConfig.highLegibility">
 					<IonSelect :label="$t('accessibility:highLegibilityFontType.title')" interface="popover" v-model="accessibilityConfig.highLegibilityType">
 						<IonSelectOption value="atkinson">
 							{{ $t("accessibility:highLegibilityFontType.atkinson") }}
@@ -155,3 +155,9 @@
 		</IonContent>
 	</IonPage>
 </template>
+
+<style scoped>
+	ion-select::part(label) {
+		max-width: unset;
+	}
+</style>
