@@ -6,11 +6,12 @@
 
 	import LockMD from '@material-symbols/svg-600/outlined/lock.svg';
 
+	import SystemDescriptionAccordion from '../components/dashboard/SystemDescriptionAccordion.vue';
 	import CurrentFrontersCarousel from '../components/dashboard/CurrentFrontersCarousel.vue';
 	import MessageBoardCarousel from '../components/dashboard/MessageBoardCarousel.vue';
 	import FrontingHistoryCarousel from '../components/dashboard/FrontingHistoryCarousel.vue';
 	import { DatabaseEvents, DatabaseEvent } from '../lib/db/events.ts';
-	import { securityConfig } from '../lib/config/index.ts';
+	import { appConfig, securityConfig } from '../lib/config/index.ts';
 	import { lock } from '../lib/applock.ts';
 
 	const mainFronter = shallowRef<Member>();
@@ -51,6 +52,7 @@
 		</IonHeader>
 		
 		<IonContent>
+			<SystemDescriptionAccordion v-if="appConfig.showSystemDescriptionInDashboard" />
 			<CurrentFrontersCarousel />
 			<MessageBoardCarousel />
 			<FrontingHistoryCarousel />

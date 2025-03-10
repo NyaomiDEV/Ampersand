@@ -5,6 +5,7 @@ export type AppConfig = {
 		twelveHourClock: boolean
 	},
 	view: ViewName,
+	showSystemDescriptionInDashboard: boolean,
 	defaultFilterQueries: {
 		members?: string,
 		tags?: string,

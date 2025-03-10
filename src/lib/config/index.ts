@@ -9,6 +9,7 @@ const defaultAppConfig: AppConfig = {
 		firstWeekOfDayIsSunday: false,
 		twelveHourClock: false,
 	},
+	showSystemDescriptionInDashboard: false,
 	view: "dashboard",
 	defaultFilterQueries: {
 		members: "@archived:no"

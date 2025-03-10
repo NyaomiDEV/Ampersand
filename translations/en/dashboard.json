@@ -2,6 +2,7 @@
 	"header": "Dashboard",
 	"header_salute": "Hello!",
 	"header_mainfronter": "Hi, {{fronterName}}!",
+	"systemDescription": "System description",
 	"nowFronting": "Now fronting",
 	"recentFrontingHistory": "Recently switched out",
 	"messageBoard": {
