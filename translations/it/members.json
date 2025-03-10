@@ -21,6 +21,7 @@
 		"tags": "Modifica i tag",
 		"description": "Descrizione",
 		"noDescription": "Nessuna descrizione",
+		"isPinned": "Fissa membrə nella parte alta della lista membrɜ",
 		"customFront": "Front personalizzato",
 		"isCustomFront": "Imposta come front personalizzato",
 		"archived": "Archiviatə",
