@@ -21,6 +21,7 @@
 		"tags": "Edit tags",
 		"description": "Description",
 		"noDescription": "No description",
+		"isPinned": "Pin member on top of the member list",
 		"customFront": "Custom front",
 		"isCustomFront": "Set as custom front",
 		"archived": "Archived",

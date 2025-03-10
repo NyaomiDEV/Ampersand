@@ -82,6 +82,7 @@ export interface Member extends UUIDable {
 	image?: File,
 	color?: string,
 	customFields?: Map<UUID, string>,
+	isPinned?: boolean,
 	isArchived: boolean,
 	isCustomFront: boolean,
 	tags: UUID[] // array of UUIDs

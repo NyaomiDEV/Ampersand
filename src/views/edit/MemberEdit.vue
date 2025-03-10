@@ -220,7 +220,8 @@
 	<IonPage>
 		<IonHeader>
 			<IonToolbar>
-				<IonBackButton slot="start" :text="isIOS ? $t('other:back') : undefined" :icon="!isIOS ? backMD : undefined" defaultHref="/members/" />
+				<IonBackButton slot="start" :text="isIOS ? $t('other:back') : undefined"
+					:icon="!isIOS ? backMD : undefined" defaultHref="/members/" />
 				<IonTitle>{{ !member.uuid ? $t("members:edit.headerAdd") : $t("members:edit.headerEdit") }}</IonTitle>
 			</IonToolbar>
 		</IonHeader>
@@ -243,7 +244,8 @@
 			</div>
 
 			<div class="member-tags" v-if="!isEditing">
-				<TagChip v-if="tags?.length" v-for="tag in member.tags" :key="tag" :tag="tags.find(x => x.uuid === tag)!" />
+				<TagChip v-if="tags?.length" v-for="tag in member.tags" :key="tag"
+					:tag="tags.find(x => x.uuid === tag)!" />
 			</div>
 
 			<div class="member-description" v-if="!isEditing">
@@ -251,7 +253,9 @@
 				<Markdown :markdown="member.description || $t('members:edit.noDescription')" />
 			</div>
 
-			<div class="member-custom-field" v-if="!isEditing && member.customFields" v-for="customField in customFields.sort((a, b) => a.name.localeCompare(b.name)).filter(x => Array.from(member.customFields!.keys()).includes(x.uuid))" :key="customField.uuid">
+			<div class="member-custom-field" v-if="!isEditing && member.customFields"
+				v-for="customField in customFields.sort((a, b) => a.name.localeCompare(b.name)).filter(x => Array.from(member.customFields!.keys()).includes(x.uuid))"
+				:key="customField.uuid">
 				<IonLabel>{{ customField.name }}</IonLabel>
 				<Markdown :markdown="member.customFields.get(customField.uuid)!" />
 			</div>
@@ -269,16 +273,21 @@
 
 			<IonList class="member-edit" v-if="isEditing" inset>
 				<IonItem>
-					<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('members:edit.name')" labelPlacement="floating" v-model="member.name" />
+					<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('members:edit.name')"
+						labelPlacement="floating" v-model="member.name" />
 				</IonItem>
 				<IonItem>
-					<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('members:edit.pronouns')" labelPlacement="floating" v-model="member.pronouns" />
+					<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('members:edit.pronouns')"
+						labelPlacement="floating" v-model="member.pronouns" />
 				</IonItem>
 				<IonItem>
-					<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('members:edit.role')" labelPlacement="floating" v-model="member.role" />
+					<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('members:edit.role')"
+						labelPlacement="floating" v-model="member.role" />
 				</IonItem>
 				<IonItem>
-					<IonTextarea :fill="!isIOS ? 'outline' : undefined" auto-grow :label="$t('members:edit.description')" labelPlacement="floating" v-model="member.description" />
+					<IonTextarea :fill="!isIOS ? 'outline' : undefined" auto-grow
+						:label="$t('members:edit.description')" labelPlacement="floating"
+						v-model="member.description" />
 				</IonItem>
 				<IonItem button detail="false">
 					<Color v-model="member.color" @update:model-value="updateColors">
@@ -288,22 +297,26 @@
 					</Color>
 				</IonItem>
 
-				<IonItem v-for="customField in customFieldsToShow.sort((a, b) => a.name.localeCompare(b.name))" :key="customField.uuid" v-if="member.customFields">
-					<IonInput
-						:fill="!isIOS ? 'outline' : undefined"
-						:label="customField.name"
-						labelPlacement="floating"
+				<IonItem v-for="customField in customFieldsToShow.sort((a, b) => a.name.localeCompare(b.name))"
+					:key="customField.uuid" v-if="member.customFields">
+					<IonInput :fill="!isIOS ? 'outline' : undefined" :label="customField.name" labelPlacement="floating"
 						:modelValue="member.customFields.get(customField.uuid)"
 						@update:modelValue="(v) => member.customFields?.set(customField.uuid, v)" />
 				</IonItem>
 
 				<IonItem button @click="customFieldsSelectionModal?.$el.present()">
-					<IonIcon :icon="addMD" slot="start" aria-hidden="true"/>
+					<IonIcon :icon="addMD" slot="start" aria-hidden="true" />
 					<IonLabel>
 						{{ $t("members:edit.customFieldsAdd") }}
 					</IonLabel>
 				</IonItem>
-
+				<IonItem button detail="false">
+					<IonToggle v-model="member.isPinned">
+						<IonLabel>
+							{{ $t("members:edit.isPinned") }}
+						</IonLabel>
+					</IonToggle>
+				</IonItem>
 				<IonItem button detail="false">
 					<IonToggle v-model="member.isCustomFront">
 						<IonLabel>
@@ -323,12 +336,13 @@
 					<IonLabel>
 						{{ $t("members:edit.tags") }}
 						<div class="member-tags">
-							<TagChip v-if="tags?.length" v-for="tag in member.tags" :key="tag" :tag="tags.find(x => x.uuid === tag)!" />
+							<TagChip v-if="tags?.length" v-for="tag in member.tags" :key="tag"
+								:tag="tags.find(x => x.uuid === tag)!" />
 						</div>
 					</IonLabel>
 				</IonItem>
 				<IonItem button detail="false" v-if="member.uuid" @click="removeMember">
-					<IonIcon :icon="trashMD" slot="start" aria-hidden="true" color="danger"/>
+					<IonIcon :icon="trashMD" slot="start" aria-hidden="true" color="danger" />
 					<IonLabel color="danger">
 						<h3>{{ $t("members:edit.delete.title") }}</h3>
 						<p>{{ $t("other:genericDeleteDesc") }}</p>
@@ -342,7 +356,8 @@
 				</IonItem>
 				<IonItem detail="false" v-if="member.dateCreated" button @click="copyIdToClipboard">
 					<IonLabel>
-						<p>{{ $t("members:edit.dateCreated", { dateCreated: formatDate(member.dateCreated, "expanded") }) }}</p>
+						<p>{{ $t("members:edit.dateCreated", { dateCreated: formatDate(member.dateCreated, "expanded")
+							}) }}</p>
 					</IonLabel>
 				</IonItem>
 			</IonList>
@@ -353,21 +368,15 @@
 				</IonFabButton>
 			</IonFab>
 
-			<CustomFieldsSelect
-				ref="customFieldsSelectionModal"
-				:modelValue="customFieldsToShow"
-				@update:modelValue="_customFields => {
+			<CustomFieldsSelect ref="customFieldsSelectionModal" :modelValue="customFieldsToShow" @update:modelValue="_customFields => {
 					customFieldsToShow = customFields.filter(x => {
 						return x.default || _customFields.map(y => y.uuid).includes(x.uuid)
 					});
-				}"	
-			/>
+				}" />
 
-			<TagListSelect
-				ref="tagSelectionModal"
+			<TagListSelect ref="tagSelectionModal"
 				:modelValue="member.tags.map(uuid => tags.find(x => x.uuid === uuid)!)"
-				@update:modelValue="tags => { member.tags = tags.map(x => x.uuid) }"
-			/>
+				@update:modelValue="tags => { member.tags = tags.map(x => x.uuid) }" />
 		</IonContent>
 	</IonPage>
 </template>

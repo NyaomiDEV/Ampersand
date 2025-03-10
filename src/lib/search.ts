@@ -16,6 +16,9 @@ export async function getFilteredMembers(search: string, members?: Member[]){
 	const filtered: Member[] = [];
 	const parsed = await parseMemberFilterQuery(search.length ? search : appConfig.defaultFilterQueries.members || "");
 	const sorted = members.sort((a, b) => {
+		if(a.isPinned && !b.isPinned) return -1;
+		if(!a.isPinned && b.isPinned) return 1;
+
 		switch(parsed.sort){
 			case "name-asc":
 			default:

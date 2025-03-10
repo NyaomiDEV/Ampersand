@@ -23,6 +23,7 @@
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
+	import pinMD from "@material-symbols/svg-600/outlined/keep.svg";
 	import addToFrontMD from "@material-symbols/svg-600/outlined/person_add.svg";
 	import removeFromFrontMD from "@material-symbols/svg-600/outlined/person_remove.svg";
 	import setMainFronterMD from "@material-symbols/svg-600/outlined/arrow_circle_up.svg";
@@ -201,6 +202,7 @@
 					>
 						<MemberAvatar slot="start" :member />
 						<MemberLabel :member />
+						<IonIcon slot="end" :icon="pinMD" v-if="member.isPinned" />
 						<IonIcon slot="end" :icon="archivedMD" v-if="member.isArchived" />
 						<IonIcon slot="end" :icon="mainFronterMD" v-if="frontingEntries.get(member)?.isMainFronter" />
 					</IonItem>
