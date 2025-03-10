@@ -19,7 +19,7 @@
 
 	function clickHandler() {
 		focused.value = true;
-		nextTick(() => textarea.$el.setFocus());
+		nextTick(() => (textarea as any).$el.setFocus());
 	}
 </script>
 
