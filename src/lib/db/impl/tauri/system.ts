@@ -21,7 +21,7 @@ export async function newSystem(system: Omit<System, keyof UUIDable>){
 }
 
 // Extra because there shall only be one
-export async function getSystem(){
+export async function getSystem(): Promise<System | undefined> {
 	return (await db.system.toArray())[0];
 }
 
