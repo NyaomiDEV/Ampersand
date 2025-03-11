@@ -354,7 +354,7 @@
 						<p>{{ $t("members:edit.memberID", { memberID: member.uuid }) }}</p>
 					</IonLabel>
 				</IonItem>
-				<IonItem detail="false" v-if="member.dateCreated" button @click="copyIdToClipboard">
+				<IonItem detail="false" v-if="member.dateCreated">
 					<IonLabel>
 						<p>{{ $t("members:edit.dateCreated", { dateCreated: formatDate(member.dateCreated, "expanded")
 							}) }}</p>
