@@ -160,10 +160,10 @@
 			</div>
 		</IonHeader>
 
-		<SpinnerFullscreen v-if="!filteredBoardMessages" />
+		<SpinnerFullscreen v-if="!filteredBoardMessages && !boardMessages" />
 		<IonContent v-else>
 			<IonList :inset="isIOS">
-				<template v-for="tuple in getGrouped(filteredBoardMessages)" :key="tuple[0]">
+				<template v-for="tuple in getGrouped(filteredBoardMessages || [])" :key="tuple[0]">
 					<IonItemDivider sticky>
 						<IonLabel>{{ dayjs(tuple[0]).format("LL") }}</IonLabel>
 					</IonItemDivider>

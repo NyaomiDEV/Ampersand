@@ -168,10 +168,10 @@
 			</div>
 		</IonHeader>
 
-		<SpinnerFullscreen v-if="!filteredFrontingEntries" />
+		<SpinnerFullscreen v-if="!filteredFrontingEntries && !frontingEntries" />
 		<IonContent v-else>
 			<IonList :inset="isIOS">
-				<template v-for="tuple in getGrouped(filteredFrontingEntries)" :key="tuple[0]">
+				<template v-for="tuple in getGrouped(filteredFrontingEntries || [])" :key="tuple[0]">
 					<IonItemDivider sticky>
 						<IonLabel>{{
 							tuple[0] === "currentlyFronting"
