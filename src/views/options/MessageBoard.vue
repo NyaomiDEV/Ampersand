@@ -49,7 +49,7 @@
 	});
 
 	watch([search, boardMessages], async () => {
-		filteredBoardMessages.value = await getFilteredBoardMessages(search.value, boardMessages.value) || [];
+		filteredBoardMessages.value = await getFilteredBoardMessages(search.value, boardMessages.value);
 	}, { immediate: true });
 
 	watch([isCalendarView, date], async () => {

@@ -49,7 +49,7 @@
 	});
 
 	watch([search, frontingEntries], async () => {
-		filteredFrontingEntries.value = await getFilteredFrontingEntries(search.value, frontingEntries.value) || [];
+		filteredFrontingEntries.value = await getFilteredFrontingEntries(search.value, frontingEntries.value);
 	}, { immediate: true });
 
 	watch([isCalendarView, date], async () => {
