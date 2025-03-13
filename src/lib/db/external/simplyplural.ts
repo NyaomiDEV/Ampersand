@@ -236,7 +236,12 @@ async function frontingEntry(spExport: any, memberMapping: Map<string, string>){
 			endTime: spFrontHistory.endTime ? new Date(spFrontHistory.endTime) : undefined,
 			customStatus: spFrontHistory.customStatus?.length ? spFrontHistory.customStatus : undefined,
 			isMainFronter: false,
-			uuid: window.crypto.randomUUID()
+			uuid: window.crypto.randomUUID(),
+			comment: spExport.comments
+				.filter(x => x.collection === "frontHistory" && x.documentId === spFrontHistory._id)
+				.sort((a, b) => a.time - b.time)
+				.map(x => `<t:${Math.round(x.time / 1000) }:f> - ` + x.text)
+				.join("\n\n")
 		};
 
 		frontingEntries.push(frontingEntry);
