@@ -26,6 +26,7 @@
 		"isCustomFront": "Set as custom front",
 		"archived": "Archived",
 		"isArchived": "Set as archived",
+		"showFrontingEntries": "Show fronting entries",
 		"showBoardEntries": "Show board messages",
 		"showJournalEntries": "Show journal posts",
 		"memberID": "Member ID: {{memberID}}",

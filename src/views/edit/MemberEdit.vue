@@ -32,6 +32,7 @@
 	import journalMD from "@material-symbols/svg-600/outlined/book.svg";
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
+	import FrontHistoryMD from '@material-symbols/svg-600/outlined/show_chart.svg';
 
 	import { CustomField, Member, Tag } from "../../lib/db/entities";
 	import { newMember, deleteMember, updateMember, defaultMember, getMember } from '../../lib/db/tables/members';
@@ -261,6 +262,10 @@
 			</div>
 
 			<IonList class="member-actions" v-if="!isEditing">
+				<IonItem button detail :router-link="`/options/frontHistory?q=@member:${member.uuid}`">
+					<IonIcon :icon="FrontHistoryMD" slot="start" aria-hidden="true" />
+					<IonLabel>{{ $t("members:edit.showFrontingEntries") }}</IonLabel>
+				</IonItem>
 				<IonItem button detail :router-link="`/options/messageBoard?q=@member:${member.uuid}`">
 					<IonIcon :icon="newspaperMD" slot="start" aria-hidden="true" />
 					<IonLabel>{{ $t("members:edit.showBoardEntries") }}</IonLabel>

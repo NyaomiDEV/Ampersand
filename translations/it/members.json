@@ -26,6 +26,7 @@
 		"isCustomFront": "Imposta come front personalizzato",
 		"archived": "Archiviatə",
 		"isArchived": "Imposta come archiviatə",
+		"showFrontingEntries": "Mostra le voci di front",
 		"showBoardEntries": "Mostra i messaggi sulla bacheca",
 		"showJournalEntries": "Mostra le pagine sul diario",
 		"memberID": "ID dellə membrə: {{memberID}}",
