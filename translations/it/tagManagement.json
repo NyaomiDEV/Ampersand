@@ -14,6 +14,7 @@
 		"name": "Nome del tag",
 		"description": "Descrizione del tag",
 		"color": "Colore del tag",
+		"viewInLists": "Mostra nelle liste",
 		"type": {
 			"header": "Tipo del tag",
 			"member": "Membrə",

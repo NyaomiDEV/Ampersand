@@ -77,7 +77,7 @@ p {
 	text-wrap: wrap;
 }
 
-ion-label.nowrap > * {
+ion-label.nowrap > *:not(div) {
 	text-wrap: nowrap !important;
 	text-overflow: ellipsis !important;
 	overflow: hidden !important;

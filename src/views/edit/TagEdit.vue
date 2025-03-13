@@ -16,7 +16,8 @@
 		IonSegment,
 		IonTextarea,
 		useIonRouter,
-		alertController
+		alertController,
+		IonToggle
 	} from "@ionic/vue";
 	import MD3SegmentButton from "../../components/MD3SegmentButton.vue";
 	import Color from "../../components/Color.vue";
@@ -48,7 +49,8 @@
 
 	const emptyTag: PartialBy<Tag, "uuid"> = {
 		name: "",
-		type: "member"
+		type: "member",
+		viewInLists: false
 	};
 	const tag = ref({...emptyTag});
 
@@ -199,6 +201,14 @@
 								{{ $t("tagManagement:edit.color") }}
 							</IonLabel>
 						</Color>
+					</IonItem>
+
+					<IonItem button detail="false">
+						<IonToggle v-model="tag.viewInLists">
+							<IonLabel>
+								{{ $t("tagManagement:edit.viewInLists") }}
+							</IonLabel>
+						</IonToggle>
 					</IonItem>
 
 					<IonItem v-if="!tag.uuid">

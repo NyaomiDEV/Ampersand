@@ -201,7 +201,7 @@
 						@pointerleave="endPress(member, true)"
 					>
 						<MemberAvatar slot="start" :member />
-						<MemberLabel :member />
+						<MemberLabel :member showTagChips />
 						<IonIcon slot="end" :icon="pinMD" v-if="member.isPinned" />
 						<IonIcon slot="end" :icon="archivedMD" v-if="member.isArchived" />
 						<IonIcon slot="end" :icon="mainFronterMD" v-if="frontingEntries.get(member)?.isMainFronter" />

@@ -161,7 +161,8 @@ export interface Tag extends UUIDable {
 	name: string,
 	description?: string,
 	type: "member" | "journal",
-	color?: string
+	color?: string,
+	viewInLists: boolean
 }
 
 export interface Asset extends UUIDable {
