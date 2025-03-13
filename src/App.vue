@@ -7,6 +7,7 @@
 	import ModalContainer from "./components/ModalContainer.vue";
 
 	provide("isIOS", computed(isIOSIonicMode));
+	provide("isDev", computed(() => import.meta.env.MODE === 'development'));
 
 	const router = useIonRouter();
 	

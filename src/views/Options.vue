@@ -24,9 +24,8 @@
 
 	const router = useIonRouter();
 	const isIOS = inject<boolean>("isIOS");
-
-	const isDev = import.meta.env.MODE === 'development';
-
+	const isDev = inject<boolean>("isDev");
+	
 	function lockImmediately(){
 		if(lock())
 			router.replace("/lock");
