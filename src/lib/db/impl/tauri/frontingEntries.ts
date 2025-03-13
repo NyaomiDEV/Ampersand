@@ -62,7 +62,12 @@ export async function deleteFrontingEntry(uuid: UUID) {
 export async function updateFrontingEntry(uuid: UUID, newContent: Partial<FrontingEntry>) {
 	try{
 		if(newContent.isMainFronter){
-			const toUpdate = (await db.frontingEntries.toArray()).filter(x => !x.endTime && x.member !== uuid).map(x => x.uuid);
+			const toUpdate = (await Promise.all(
+				db.frontingEntries.index.filter(x => !x.endTime)
+				.map(x => db.frontingEntries.get(x.uuid))
+			))
+				.filter(x => x?.member !== uuid)
+				.map(x => x!.uuid);
 
 			for (const _uuid of toUpdate)
 				await updateFrontingEntry(_uuid, { isMainFronter: false });
@@ -99,7 +104,7 @@ export async function setMainFronter(member: Member, value: boolean){
 
 export async function setSoleFronter(member: Member) {
 	const toUpdate = (await Promise.all(
-		db.frontingEntries.index.filter(x => !x.endTime).map(async x => await db.frontingEntries.get(x.uuid))
+		db.frontingEntries.index.filter(x => !x.endTime).map(x => db.frontingEntries.get(x.uuid))
 	)).filter(x => !!x)
 	.filter(x => x.member !== member.uuid)
 	.map(x => x.uuid);
@@ -119,14 +124,20 @@ export async function setSoleFronter(member: Member) {
 }
 
 export async function getCurrentFrontEntryForMember(member: Member){
-	const _uuid = db.frontingEntries.index.find(x => x.endTime === undefined && x.member === member.uuid)?.uuid;
+	const _uuid = db.frontingEntries.index.find(x => !x.endTime && x.member === member.uuid)?.uuid;
 	if(!_uuid) return;
 
 	return db.frontingEntries.get(_uuid);
 }
 
 export async function getMainFronter(){
-	const mainFronterIndexEntry = db.frontingEntries.index.find(x => x.endTime === undefined && x.isMainFronter);
+	const mainFronterIndexEntry = (await Promise.all(
+		db.frontingEntries.index
+		.filter(x => !x.endTime)
+		.map(x => db.frontingEntries.get(x.uuid))
+	))
+		.filter(x => !!x)
+		.find(x => x.isMainFronter);
 	if(!mainFronterIndexEntry) return;
 
 	const mainFronterEntry = await db.frontingEntries.get(mainFronterIndexEntry.uuid);
@@ -136,7 +147,7 @@ export async function getMainFronter(){
 }
 
 export async function getFronting() {
-	const frontersIndexEntries = db.frontingEntries.index.filter(x => x.endTime === undefined);
+	const frontersIndexEntries = db.frontingEntries.index.filter(x => !x.endTime);
 	const frontingEntries: FrontingEntryComplete[] = [];
 	for(const entry of frontersIndexEntries){
 		const frontingEntry = await db.frontingEntries.get(entry.uuid);
@@ -162,7 +173,7 @@ export async function getFrontingEntriesOfDay(date: Date) {
 	return (await Promise.all(
 		db.frontingEntries.index
 		.filter(x => dayjs(x.startTime!).startOf('day').valueOf() === _date.valueOf())
-		.map(async x => await db.frontingEntries.get(x.uuid))
+		.map(x => db.frontingEntries.get(x.uuid))
 	)).filter(x => !!x);
 }
 
