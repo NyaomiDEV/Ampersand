@@ -13,6 +13,7 @@ async function tag(tuExport: any){
 			name: tuGroup.name,
 			description: tuGroup.description || undefined,
 			type: "member",
+			viewInLists: false,
 			uuid: window.crypto.randomUUID()
 		};
 		tags.push(tag);

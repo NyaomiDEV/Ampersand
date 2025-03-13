@@ -95,6 +95,7 @@ async function tag(spExport: any){
 			description: spGroup.desc?.length ? spGroup.desc : undefined,
 			color: normalizeSPColor(spGroup.color),
 			type: "member",
+			viewInLists: false,
 			uuid: window.crypto.randomUUID()
 		};
 

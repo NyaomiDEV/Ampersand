@@ -34,6 +34,7 @@ async function tag(pkExport: any){
 			description: pkGroup.description || undefined,
 			color: pkGroup.color ? "#" + pkGroup.color : undefined,
 			type: "member",
+			viewInLists: false,
 			uuid: window.crypto.randomUUID()
 		};
 		tags.push(tag);
