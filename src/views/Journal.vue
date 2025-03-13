@@ -1,8 +1,14 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
-	import { inject } from 'vue';
+	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonSearchbar } from '@ionic/vue';
+	import { inject, ref, watch } from 'vue';
+	import { useRoute } from 'vue-router';
 
+	const route = useRoute();
 	const isIOS = inject<boolean>("isIOS");
+	const search = ref(route.query.q as string || "");
+	watch(route, () => {
+		search.value = route.query.q as string || "";
+	});
 </script>
 
 <template>
@@ -12,6 +18,16 @@
 				<IonTitle>
 					{{ $t("journal:header") }}
 				</IonTitle>
+			</IonToolbar>
+			<IonToolbar>
+				<IonSearchbar
+					:animated="true"
+					:placeholder="$t('journal:searchPlaceholder')"
+					showCancelButton="focus"
+					showClearButton="focus"
+					:spellcheck="false"
+					v-model="search"
+				/>
 			</IonToolbar>
 		</IonHeader>
 		

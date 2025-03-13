@@ -270,7 +270,7 @@
 					<IonIcon :icon="newspaperMD" slot="start" aria-hidden="true" />
 					<IonLabel>{{ $t("members:edit.showBoardEntries") }}</IonLabel>
 				</IonItem>
-				<IonItem button detail>
+				<IonItem button detail :router-link="`/journal?q=@member:${member.uuid}`">
 					<IonIcon :icon="journalMD" slot="start" aria-hidden="true" />
 					<IonLabel>{{ $t("members:edit.showJournalEntries") }}</IonLabel>
 				</IonItem>

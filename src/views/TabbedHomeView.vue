@@ -8,7 +8,9 @@
 	import OptionsMD from '@material-symbols/svg-600/outlined/menu.svg';
 	import { slideAnimation } from "../lib/util/misc";
 	import { useRoute } from "vue-router";
-	import { ref, useTemplateRef } from "vue";
+	import { inject, ref, useTemplateRef } from "vue";
+
+	const isDev = inject<boolean>("isDev");
 
 	const router = useIonRouter();
 	const route = useRoute();
@@ -49,7 +51,7 @@
 					{{ $t("members:header") }}
 				</IonTabButton>
 
-				<IonTabButton tab="journal" href="/journal" @click="clickReplaceHandler('/journal')" v-if="false">
+				<IonTabButton tab="journal" href="/journal" @click="clickReplaceHandler('/journal')" v-if="isDev">
 					<IonIcon :icon="JournalMD" />
 					{{ $t("journal:header") }}
 				</IonTabButton>
