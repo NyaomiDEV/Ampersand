@@ -68,7 +68,9 @@ export interface JournalPost extends UUIDable {
 	title: string,
 	body: string,
 	cover?: File,
-	tags: UUID[] // array of UUIDs
+	tags: UUID[], // array of UUIDs
+	isPrivate: boolean,
+	contentWarning?: string
 }
 
 export interface JournalPostComplete extends JournalPost {
