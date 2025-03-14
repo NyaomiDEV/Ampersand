@@ -69,7 +69,7 @@
 	let offset = 0;
 	async function getEntries(_date?: Date){
 		if(_date){
-			const dateEntries = await getFrontingEntriesOfDay(_date);
+			const dateEntries = await getFrontingEntriesOfDay(_date, true);
 			frontingEntries.value = dateEntries;
 			eol.value = true;
 			return;
@@ -125,10 +125,24 @@
 	}
 
 	async function populateHighlightedDays() {
-		frontingEntriesDays.value = (await getFrontingEntriesDays()).map(x => ({
-			date: dayjs(x).format("YYYY-MM-DD"),
-			backgroundColor: "var(--ion-background-color-step-200)"
-		}));
+		const days = await getFrontingEntriesDays();
+
+		frontingEntriesDays.value = Array.from(days.entries()).map(([date, occurrences]) => {
+			let step = "200";
+
+			if(occurrences >= 7) {
+				step = "350";
+			} else if(occurrences >= 5) {
+				step = "300";
+			} else if(occurrences >= 3) {
+				step = "250";
+			}
+
+			return {
+				date: dayjs(date).format("YYYY-MM-DD"),
+				backgroundColor: `var(--ion-background-color-step-${step})`
+			}
+		});
 	}
 
 	async function showModal(clickedFrontingEntry?: FrontingEntryComplete){
