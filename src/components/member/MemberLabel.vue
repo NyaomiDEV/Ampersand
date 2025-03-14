@@ -5,7 +5,7 @@
 
 	import { Member, Tag } from '../../lib/db/entities';
 	import TagChip from "../tag/TagChip.vue";
-	import { onBeforeMount, shallowRef } from "vue";
+	import { isReactive, onBeforeMount, shallowRef, watch, WatchStopHandle } from "vue";
 	import { getTag } from "../../lib/db/tables/tags";
 
 	const props = defineProps<{
@@ -15,10 +15,26 @@
 
 	const tags = shallowRef<Tag[]>();
 
-	onBeforeMount(async () => {
+	async function updateTags(){
 		if(props.showTagChips)
 			tags.value = (await Promise.all(props.member.tags.map(async x => await getTag(x)))).filter(x => x?.viewInLists) as Tag[];
-	})
+	}
+
+	onBeforeMount(async () => {
+		await updateTags();
+	});
+
+	let watchHandle: WatchStopHandle | undefined;
+	watch(props, () => {
+		updateTags();
+		if(isReactive(props.member))
+			watchHandle = watch(props.member, updateTags);
+		else
+			if(watchHandle){
+				watchHandle();
+				watchHandle = undefined;
+			}
+	}, { immediate: true });
 </script>
 
 <template>
@@ -34,6 +50,9 @@
 		<h2>
 			{{ props.member.name }}
 		</h2>
+		<h3>
+			{{ props.member.pronouns }}
+		</h3>
 		<div v-if="props.showTagChips" class="tags">
 			<TagChip v-for="tag in tags" :tag="tag" />
 		</div>
@@ -42,6 +61,7 @@
 
 <style scoped>
 	div.tags {
+		white-space: nowrap;
 		overflow-x: scroll;
 		overflow-y: hidden;
 		scrollbar-width: none;
