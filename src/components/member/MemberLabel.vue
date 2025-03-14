@@ -53,7 +53,10 @@
 		<h3>
 			{{ props.member.pronouns }}
 		</h3>
-		<div v-if="props.showTagChips" class="tags">
+		<div v-if="props.showTagChips" class="tags"
+			@pointerdown="(e) => e.stopPropagation()"
+			@touchstart="(e) => e.stopPropagation()"
+		>
 			<TagChip v-for="tag in tags" :tag="tag" />
 		</div>
 	</IonLabel>
