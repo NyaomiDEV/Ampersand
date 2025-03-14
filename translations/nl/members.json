@@ -1,3 +1,39 @@
 {
-	"header": "Leden"
+	"header": "Leden",
+	"searchPlaceholder": "Zoek leden...",
+	"select": "Selecteer een lid",
+	"deletedMember": "Verwijderd lid",
+	"actions": {
+		"addToFront": "Voeg toe aan front",
+		"setMainFronter": "Plaats als belangrijkste fronter",
+		"unsetMainFronter": "Verwijder als belangrijkste fronter",
+		"setSoleFronter": "Plaats als front",
+		"removeFromFront": "Verwijder uit front"
+	},
+	"edit": {
+		"headerAdd": "Voeg lid toe",
+		"headerEdit": "Wijzig lid",
+		"name": "Naam",
+		"pronouns": "Voornaamwoorden",
+		"role": "Rol",
+		"color": "Favoriete kleur",
+		"customFieldsAdd": "Voeg aangepaste velden toe",
+		"tags": "Pas tags aan",
+		"description": "Beschrijving",
+		"noDescription": "Geen beschrijving",
+		"customFront": "Aangepast front",
+		"isCustomFront": "Plaats als aangepast front",
+		"isPinned": "Zet lid bovenaan de ledenlijst",
+		"archived": "Gearchiveerd",
+		"isArchived": "Archiveer",
+		"showBoardEntries": "Laat berichten op het prikbord zien",
+		"showJournalEntries": "Laat dagboek-posts zien",
+		"memberID": "Lid ID: {{memberID}}",
+		"dateCreated": "Datum gecreëerd: {{dateCreated}}",
+		"memberIDcopiedToClipboard": "Lid ID in vermelden-formaat gekopieërd naar klembord!",
+		"delete": {
+			"confirm": "Weet je zeker dat je dit lid wilt verwijderen?",
+			"title": "Verwijder lid"
+		}
+	}
 }

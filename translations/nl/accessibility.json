@@ -3,5 +3,38 @@
 	"highLegibilityFont": {
 		"title": "Duidelijk leesbaar lettertype",
 		"desc": "Gebruik een duidelijk leesbaar lettertype in plaats van het standaardlettertype van je apparaat"
+	},
+	"highLegibilityFontType": {
+		"atkinson": "Atkinson Hyperlegible",
+		"opendyslexic": "OpenDyslexic",
+		"lexend": "Lexend",
+		"title": "Duidelijk leesbaar lettertype-soort"
+	},
+	"uiVariant": {
+		"title": "UI variant",
+		"auto": "Automatisch",
+		"light": "Licht",
+		"dark": "Donker"
+	},
+	"useMaterialTheming": {
+		"title": "Material Design thema",
+		"desc": "Kleur jouw ervaring op basis van de Material standaard (zou oogvermoeidheid kunnen veroorzaken)"
+	},
+	"useAccentColor": {
+		"title": "Accentkleur",
+		"desc": "Gebruik een aangepaste accentkleur"
+	},
+	"accentColor": {
+		"title": "Kies de accentkleur"
+	},
+	"reducedMotion": {
+		"title": "Verminderde beweging",
+		"desc": "Zet animaties in de app uit"
+	},
+	"fontScale": {
+		"title": "UI grootte"
+	},
+	"chatFontScale": {
+		"title": "Chat UI grootte"
 	}
 }

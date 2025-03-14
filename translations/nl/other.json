@@ -1,1 +1,10 @@
-{}
+{
+	"languageName": {
+		"inEnglish": "Dutch",
+		"local": "Nederlands"
+	},
+	"genericDeleteDesc": "Je zal deze actie niet ongedaan kunnen maken!",
+	"storagePersistence": {
+		"header": "Waarschuwing"
+	}
+}

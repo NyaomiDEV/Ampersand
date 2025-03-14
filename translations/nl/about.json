@@ -1,1 +1,5 @@
-{}
+{
+	"version": "Versie {{version}}",
+	"header": "Over de app",
+	"madein": "Met liefde gemaakt in Italië"
+}
