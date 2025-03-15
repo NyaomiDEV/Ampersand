@@ -76,15 +76,15 @@
 		}
 
 		const newEntries = await getJournalPostsOffset(offset, 20);
-		if (newEntries.length) {
-			offset += newEntries.length;
-			if (!posts.value)
-				posts.value = newEntries;
-			else
-				posts.value = [...posts.value, ...newEntries];
-		} else {
+
+		if (!newEntries.length)
 			eol.value = true;
-		}
+
+		offset += newEntries.length;
+		if (!posts.value)
+			posts.value = newEntries;
+		else
+			posts.value = [...posts.value, ...newEntries];
 	}
 
 	async function resetEntries(_date?: Date) {

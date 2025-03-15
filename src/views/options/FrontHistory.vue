@@ -76,15 +76,14 @@
 		}
 
 		const newEntries = await getFrontingEntriesOffset(offset, 20);
-		if(newEntries.length){
-			offset += newEntries.length;
-			if(!frontingEntries.value)
-				frontingEntries.value = newEntries;
-			else
-				frontingEntries.value = [...frontingEntries.value, ...newEntries];
-		} else {
+		if (!newEntries.length)
 			eol.value = true;
-		}
+
+		offset += newEntries.length;
+		if (!frontingEntries.value)
+			frontingEntries.value = newEntries;
+		else
+			frontingEntries.value = [...frontingEntries.value, ...newEntries];
 	}
 
 	async function resetEntries(_date?: Date){

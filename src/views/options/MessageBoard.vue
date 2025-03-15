@@ -76,15 +76,15 @@
 		}
 
 		const newEntries = await getBoardMessagesOffset(offset, 20);
-		if(newEntries.length){
-			offset += newEntries.length;
-			if(!boardMessages.value)
-				boardMessages.value = newEntries;
-			else
-				boardMessages.value = [...boardMessages.value, ...newEntries];
-		} else {
+
+		if (!newEntries.length)
 			eol.value = true;
-		}
+
+		offset += newEntries.length;
+		if (!boardMessages.value)
+			boardMessages.value = newEntries;
+		else
+			boardMessages.value = [...boardMessages.value, ...newEntries];
 	}
 
 	async function resetEntries(_date?: Date){
