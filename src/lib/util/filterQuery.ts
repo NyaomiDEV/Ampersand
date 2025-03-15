@@ -51,6 +51,16 @@ export type CustomFieldFilterQuery = {
 	default?: boolean
 }
 
+export type JournalPostFilterQuery = {
+	query: string,
+	all?: boolean,
+	dateString?: string,
+	day?: number,
+	month?: number,
+	year?: number,
+	member?: UUID;
+};
+
 export async function parseMemberFilterQuery(search: string): Promise<MemberFilterQuery> {
 	const tokens = search.split(" ");
 
@@ -442,6 +452,69 @@ export function parseCustomFieldFilterQuery(search: string) {
 						} else
 							result.default = true;
 
+						break;
+					default:
+						queryTokens.push(token);
+						break;
+				}
+				break;
+			default:
+				queryTokens.push(token);
+				break;
+		}
+	}
+
+	result.query = queryTokens.filter(Boolean).join(" ");
+	return result;
+}
+
+export function parseJournalPostFilterQuery(search: string) {
+	const tokens = search.split(" ");
+
+	const queryTokens: string[] = [];
+
+	const result: JournalPostFilterQuery = {
+		query: "",
+	};
+
+	for (const token of tokens) {
+		switch (token.charAt(0)) {
+			case "@":
+				const tokenParts = token.slice(1).split(":");
+				switch (tokenParts[0].toLowerCase()) {
+					case "all":
+						if (tokenParts[1]) {
+							switch (tokenParts[1].toLowerCase()) {
+								case "yes":
+								case "true":
+									result.all = true;
+									break;
+								case "no":
+								case "false":
+									result.all = false;
+									break;
+								default:
+									queryTokens.push(token);
+									break;
+							}
+						} else
+							result.all = true;
+
+						break;
+					case "date":
+						result.dateString = tokenParts[1];
+						break;
+					case "day":
+						result.day = Number(tokenParts[1]);
+						break;
+					case "month":
+						result.month = Number(tokenParts[1]);
+						break;
+					case "year":
+						result.year = Number(tokenParts[1]);
+						break;
+					case "member":
+						result.member = tokenParts[1];
 						break;
 					default:
 						queryTokens.push(token);

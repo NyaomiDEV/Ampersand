@@ -1,10 +1,11 @@
 
-import { Member, Tag, FrontingEntry, FrontingEntryComplete, BoardMessage, BoardMessageComplete, Asset, CustomField } from "./db/entities";
-import { parseAssetFilterQuery, parseBoardMessageFilterQuery, parseCustomFieldFilterQuery, parseFrontingHistoryFilterQuery, parseMemberFilterQuery } from "./util/filterQuery";
+import { Member, Tag, FrontingEntry, FrontingEntryComplete, BoardMessage, BoardMessageComplete, Asset, CustomField, JournalPost, JournalPostComplete } from "./db/entities";
+import { parseAssetFilterQuery, parseBoardMessageFilterQuery, parseCustomFieldFilterQuery, parseFrontingHistoryFilterQuery, parseJournalPostFilterQuery, parseMemberFilterQuery } from "./util/filterQuery";
 import dayjs from "dayjs";
 import { toBoardMessageComplete } from "./db/tables/boardMessages";
 import { toFrontingEntryComplete } from "./db/tables/frontingEntries";
 import { appConfig } from "./config";
+import { toJournalPostComplete } from "./db/tables/journalPosts";
 
 const sortingFunctions = {
 	alphabetic: (a: string, b: string) => a.localeCompare(b),
@@ -259,6 +260,56 @@ export function getFilteredCustomFields(search: string, customFields?: CustomFie
 
 		if (parsed.default) {
 			if (!x.default)
+				continue;
+		}
+
+		filtered.push(x);
+	}
+
+	return filtered;
+}
+
+export async function getFilteredJournalPosts(search: string, posts?: JournalPost[]) {
+	if (!posts) return;
+	const filtered: JournalPostComplete[] = [];
+	const parsed = parseJournalPostFilterQuery(search.length ? search : appConfig.defaultFilterQueries.messageBoard || "");
+	const complete = await Promise.all(posts.map(async x => await toJournalPostComplete(x)));
+
+	if (parsed.all) return complete;
+
+	for (const x of complete) {
+
+		if (
+			![
+				x.title.toLowerCase().split(" "),
+				x.member.name.toLowerCase().split(" ")
+			].flat().find(x => x.startsWith(parsed.query.toLowerCase()))
+		)
+			continue;
+
+		if (parsed.member) {
+			if (x.member.uuid !== parsed.member)
+				continue;
+		}
+
+		if (parsed.dateString) {
+			const date = dayjs(parsed.dateString).startOf("day");
+			if (date.valueOf() !== dayjs(x.date).startOf("day").valueOf())
+				continue;
+		}
+
+		if (parsed.day) {
+			if (parsed.day !== dayjs(x.date).get("date"))
+				continue;
+		}
+
+		if (parsed.month) {
+			if (parsed.month !== dayjs(x.date).get("month") + 1)
+				continue;
+		}
+
+		if (parsed.year) {
+			if (parsed.year !== dayjs(x.date).get("year"))
 				continue;
 		}
 
