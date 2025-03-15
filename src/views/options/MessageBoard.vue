@@ -75,7 +75,6 @@
 			return;
 		}
 
-		console.log("leaked", _date);
 		const newEntries = await getBoardMessagesOffset(offset, 20);
 
 		if (!newEntries.length)
