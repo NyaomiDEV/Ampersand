@@ -23,6 +23,7 @@
 
 	const props = defineProps<{
 		customTitle?: string,
+		type: "member" | "journal"
 		modelValue?: Tag[]
 	}>();
 
@@ -44,7 +45,7 @@
 	}, { immediate: true })
 
 	onBeforeMount(async () => {
-		tags.value = await getTags();
+		tags.value = (await getTags()).filter(x => x.type === props.type);
 	});
 
 	function check(tag: Tag, checked: boolean){

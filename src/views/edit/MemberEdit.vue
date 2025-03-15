@@ -379,7 +379,9 @@
 					});
 				}" />
 
-			<TagListSelect ref="tagSelectionModal"
+			<TagListSelect
+				ref="tagSelectionModal"
+				type="member"
 				:modelValue="member.tags.map(uuid => tags.find(x => x.uuid === uuid)!)"
 				@update:modelValue="tags => { member.tags = tags.map(x => x.uuid) }" />
 		</IonContent>
