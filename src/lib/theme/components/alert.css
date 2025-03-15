@@ -11,6 +11,17 @@
 	padding-bottom: 16px;
 }
 
+.md3 ion-alert.md .alert-sub-title {
+	margin-top: 16px;
+}
+
+.md3 ion-alert.md .alert-message {
+	padding-top: 0;
+	padding-left: 0;
+	padding-right: 0;
+	padding-bottom: 0;
+}
+
 .md3 ion-alert.md .alert-input-group {
 	padding-top: 0;
 	padding-left: 0;
