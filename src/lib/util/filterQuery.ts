@@ -53,6 +53,7 @@ export type CustomFieldFilterQuery = {
 
 export type JournalPostFilterQuery = {
 	query: string,
+	tags: string[],
 	all?: boolean,
 	dateString?: string,
 	day?: number,
@@ -468,13 +469,14 @@ export function parseCustomFieldFilterQuery(search: string) {
 	return result;
 }
 
-export function parseJournalPostFilterQuery(search: string) {
+export async function parseJournalPostFilterQuery(search: string) {
 	const tokens = search.split(" ");
 
 	const queryTokens: string[] = [];
 
 	const result: JournalPostFilterQuery = {
 		query: "",
+		tags: []
 	};
 
 	for (const token of tokens) {
@@ -520,6 +522,15 @@ export function parseJournalPostFilterQuery(search: string) {
 						queryTokens.push(token);
 						break;
 				}
+				break;
+			case "#":
+				const probableTag = token.slice(1);
+				const tag = await getTagFromNameHashtag(probableTag);
+				if (tag)
+					result.tags.push(tag.uuid);
+				else
+					queryTokens.push(token);
+
 				break;
 			default:
 				queryTokens.push(token);

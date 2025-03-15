@@ -272,7 +272,7 @@ export function getFilteredCustomFields(search: string, customFields?: CustomFie
 export async function getFilteredJournalPosts(search: string, posts?: JournalPost[]) {
 	if (!posts) return;
 	const filtered: JournalPostComplete[] = [];
-	const parsed = parseJournalPostFilterQuery(search.length ? search : appConfig.defaultFilterQueries.messageBoard || "");
+	const parsed = await parseJournalPostFilterQuery(search.length ? search : appConfig.defaultFilterQueries.messageBoard || "");
 	const complete = await Promise.all(posts.map(async x => await toJournalPostComplete(x)));
 
 	if (parsed.all) return complete;
@@ -311,6 +311,12 @@ export async function getFilteredJournalPosts(search: string, posts?: JournalPos
 		if (parsed.year) {
 			if (parsed.year !== dayjs(x.date).get("year"))
 				continue;
+		}
+
+		if (parsed.tags.length) {
+			if (!parsed.tags.every(uuid => x.tags.includes(uuid))) {
+				continue;
+			}
 		}
 
 		filtered.push(x);
