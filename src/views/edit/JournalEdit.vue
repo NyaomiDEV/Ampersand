@@ -28,7 +28,7 @@
 
 	import { JournalPostComplete, Tag } from "../../lib/db/entities";
 	import { newJournalPost, updateJournalPost, deleteJournalPost, getJournalPost, toJournalPostComplete } from '../../lib/db/tables/journalPosts';
-	import { getFiles } from "../../lib/util/misc";
+	import { getFiles, formatDate } from "../../lib/util/misc";
 	import { resizeImage } from "../../lib/util/image";
 	import { inject, onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
 	import Markdown from "../../components/Markdown.vue";
@@ -198,6 +198,7 @@
 					<MemberAvatar slot="start" :member="post.member" />
 					<IonLabel>
 						<h2>{{ post.member.name }}</h2>
+						<p v-if="post.date">{{ formatDate(post.date, "expanded") }}</p>
 					</IonLabel>
 				</IonItem>
 
