@@ -1,11 +1,12 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonSearchbar, IonFab, IonFabButton, IonIcon, IonButton, IonButtons, IonLabel, IonDatetime, IonItemDivider, useIonRouter, alertController } from '@ionic/vue';
+	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonSearchbar, IonFab, IonFabButton, IonIcon, IonButton, IonButtons, IonLabel, IonDatetime, IonItemDivider, useIonRouter, alertController, IonBackButton } from '@ionic/vue';
 	import { inject, onBeforeMount, onUnmounted, ref, shallowRef, watch } from 'vue';
 	import { useRoute } from 'vue-router';
 	import SpinnerFullscreen from '../components/SpinnerFullscreen.vue';
 	import JournalPostCard from '../components/JournalPostCard.vue';
 	import InfiniteScroll from '../components/InfiniteScroll.vue';
 
+	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import calendarMD from "@material-symbols/svg-600/outlined/calendar_month.svg";
 	import listMD from "@material-symbols/svg-600/outlined/list.svg";
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
@@ -170,6 +171,7 @@
 	<IonPage>
 		<IonHeader>
 			<IonToolbar>
+				<IonBackButton slot="start" :text="isIOS ? $t('other:back') : undefined" :icon="!isIOS ? backMD : undefined" />
 				<IonTitle>
 					{{ $t("journal:header") }}
 				</IonTitle>
