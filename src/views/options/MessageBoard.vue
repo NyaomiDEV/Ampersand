@@ -75,6 +75,7 @@
 			return;
 		}
 
+		console.log("leaked", _date);
 		const newEntries = await getBoardMessagesOffset(offset, 20);
 
 		if (!newEntries.length)
@@ -170,7 +171,7 @@
 					<MessageBoardCard :boardMessage v-for="boardMessage in tuple[1]" :key="boardMessage.uuid" @click="showModal(boardMessage)" />
 				</template>
 			</IonList>
-			<InfiniteScroll v-if="!eol" :callback="getEntries" />
+			<InfiniteScroll v-if="!eol && !isCalendarView" :callback="getEntries" />
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
 				<IonFabButton @click="showModal()">

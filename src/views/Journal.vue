@@ -202,7 +202,7 @@
 					<JournalPostCard :post v-for="post in tuple[1]" :key="post.uuid" @click="openPost(post)" />
 				</template>
 			</IonList>
-			<InfiniteScroll v-if="!eol" :callback="getEntries" />
+			<InfiniteScroll v-if="!eol && !isCalendarView" :callback="getEntries" />
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
 				<IonFabButton routerLink="/journal/edit/">

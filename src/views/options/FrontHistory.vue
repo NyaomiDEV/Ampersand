@@ -198,7 +198,7 @@
 					</IonItem>
 				</template>
 			</IonList>
-			<InfiniteScroll v-if="!eol" :callback="getEntries" />
+			<InfiniteScroll v-if="!eol && !isCalendarView" :callback="getEntries" />
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
 				<IonFabButton @click="showModal()">
