@@ -4,7 +4,7 @@
 
 	import AmpersandLogo from "../../assets/ampersand_logo.svg"
 	import CodebergLogo from "../../assets/codeberg_logo.svg";
-	import GithubLogo from "../../assets/github_logo.svg";
+	import DiscordLogo from "../../assets/discord_logo.svg";
 	import LiberapayLogo from "../../assets/liberapay_logo.svg";
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
@@ -71,11 +71,11 @@
 
 				<div class="buttons">
 					<IonButton class="tonal" shape="round" @click="openDiscord">
-						<IonIcon slot="icon-only" :icon="CodebergLogo"></IonIcon>
+						<IonIcon slot="icon-only" :icon="DiscordLogo"></IonIcon>
 					</IonButton>
 
 					<IonButton class="tonal" shape="round" @click="openRepo">
-						<IonIcon slot="icon-only" :icon="GithubLogo" ></IonIcon>
+						<IonIcon slot="icon-only" :icon="CodebergLogo" ></IonIcon>
 					</IonButton>
 
 					<IonButton class="tonal" shape="round" @click="openLiberapay" v-if="!isAppStore()">
