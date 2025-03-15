@@ -1,4 +1,23 @@
 {
 	"header": "Journal",
-	"searchPlaceholder": "Search journal..."
+	"searchPlaceholder": "Search the journal...",
+	"contentWarning": "This post has sensitive content inside",
+	"private": "This post is private",
+	"alertSubheader": "Do you really want to read this post?",
+	"edit": {
+		"header": "Post",
+		"headerAdd": "Add new post",
+		"headerEdit": "Edit post",
+		"author": "Author",
+		"title": "Title",
+		"subtitle": "Subtitle",
+		"body": "Post body",
+		"tags": "Tags",
+		"isPrivate": "Set as private",
+		"contentWarning": "Content warning",
+		"delete": {
+			"title": "Delete journal post",
+			"confirm": "Are you sure you want to delete this post?"
+		}
+	}
 }

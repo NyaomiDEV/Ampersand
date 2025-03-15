@@ -66,6 +66,7 @@ export interface JournalPost extends UUIDable {
 	member: UUID,
 	date: Date,
 	title: string,
+	subtitle?: string,
 	body: string,
 	cover?: File,
 	tags: UUID[], // array of UUIDs

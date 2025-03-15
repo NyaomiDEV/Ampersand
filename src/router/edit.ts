@@ -7,6 +7,11 @@ const edit: Array<RouteRecordRaw> = [
 		component: () => import("../views/edit/MemberEdit.vue")
 	},
 	{
+		path: "/journal/edit",
+		name: "JournalEdit",
+		component: () => import("../views/edit/JournalEdit.vue")
+	},
+	{
 		path: "/options/tagManagement/edit",
 		name: "TagEdit",
 		component: () => import("../views/edit/TagEdit.vue")

@@ -1,3 +1,23 @@
 {
-	"header": "Diario"
+	"header": "Diario",
+	"searchPlaceholder": "Cerca nel diario...",
+	"contentWarning": "Questo post ha del contenuto sensibile",
+	"private": "Questo post è privato",
+	"alertSubheader": "Vuoi veramente leggere questo post?",
+	"edit": {
+		"header": "Post",
+		"headerAdd": "Aggiungi nuovo post",
+		"headerEdit": "Modifica post",
+		"author": "Autorə",
+		"title": "Titolo",
+		"subtitle": "Sottotitolo",
+		"body": "Corpo del post",
+		"tags": "Tag",
+		"isPrivate": "Imposta come privato",
+		"contentWarning": "Avviso sul contenuto sensibile",
+		"delete": {
+			"title": "Elimina post dal diario",
+			"confirm": "Vuoi veramente eliminare questo post?"
+		}
+	}
 }
