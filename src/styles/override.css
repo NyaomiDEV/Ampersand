@@ -83,7 +83,7 @@ ion-label.nowrap > *:not(div) {
 	overflow: hidden !important;
 }
 
-.md ion-input,
-.md ion-textarea {
-	margin: 16px 0;
+.md ion-input.input-label-placement-floating,
+.md ion-textarea.input-label-placement-floating {
+	margin: 16px 0 0 0;
 }
