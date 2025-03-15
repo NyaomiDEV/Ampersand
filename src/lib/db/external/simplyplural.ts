@@ -1,4 +1,4 @@
-import { System, Member, FrontingEntry, Tag, BoardMessage, CustomField } from "../entities";
+import { System, Member, FrontingEntry, Tag, BoardMessage, CustomField, JournalPost } from "../entities";
 import { getTables } from "..";
 import { t } from "i18next";
 import { isTauri } from "../../mode";
@@ -277,7 +277,7 @@ async function boardMessage(spExport: any, memberMapping: Map<string, string>){
 			member: nilUid,
 			title: spPoll.name,
 			body: spPoll.desc?.length ? spPoll.desc : undefined,
-			date: new Date(),
+			date: spPoll.lastOperationTime ? new Date(spPoll.lastOperationTime) : new Date(),
 			poll: {
 				multipleChoice: false,
 				entries: spPoll.custom
@@ -340,11 +340,31 @@ async function boardMessage(spExport: any, memberMapping: Map<string, string>){
 	return boardMessages;
 }
 
+async function journalPost(spExport: any, memberMapping: Map<string, string>){
+	const posts: JournalPost[] = [];
+
+	for(const spNote of spExport.notes){
+		const post: JournalPost = {
+			title: spNote.title || "--",
+			body: spNote.note,
+			member: spNote.member ? memberMapping.get(spNote.member) || nilUid : nilUid,
+			tags: [],
+			isPrivate: false,
+			date: new Date(spNote.date || spNote.lastOperationTime),
+			uuid: window.crypto.randomUUID()
+		}
+		posts.push(post);
+	}
+
+	return posts;
+}
+
 function remap(
 	memberMapping: Map<string, string>,
 	systemInfo: System,
 	members: Member[],
 	boardMessages: BoardMessage[],
+	posts: JournalPost[]
 ){
 	if (systemInfo.description)
 		systemInfo.description = systemInfo.description.replace(/<###@(\w+)###>/g, (_, p1) => `@<m:${memberMapping.get(p1) || nilUid}>`);
@@ -361,6 +381,10 @@ function remap(
 		if (boardMessage.body)
 			boardMessage.body = boardMessage.body.replace(/<###@(\w+)###>/g, (_, p1) => `@<m:${memberMapping.get(p1) || nilUid}>`);
 	}
+
+	for (const post of posts) {
+		post.body = post.body.replace(/<###@(\w+)###>/g, (_, p1) => `@<m:${memberMapping.get(p1) || nilUid}>`);
+	}
 }
 
 export async function importSimplyPlural(spExport: any) {
@@ -373,10 +397,11 @@ export async function importSimplyPlural(spExport: any) {
 	const { members, memberMapping } = await member(spExport, systemUid, tagMapping, customFieldMapping);
 	const frontingEntries = await frontingEntry(spExport, memberMapping);
 	const boardMessages = await boardMessage(spExport, memberMapping);
+	const posts = await journalPost(spExport, memberMapping);
 
 	remap(
 		memberMapping,
-		systemInfo, members, boardMessages
+		systemInfo, members, boardMessages, posts
 	);
 
 	try{
@@ -391,6 +416,7 @@ export async function importSimplyPlural(spExport: any) {
 		await tables.members.bulkAdd(members);
 		await tables.frontingEntries.bulkAdd(frontingEntries);
 		await tables.boardMessages.bulkAdd(boardMessages);
+		await tables.journalPosts.bulkAdd(posts);
 	}catch(e){
 		return false;
 	}
