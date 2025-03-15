@@ -11,6 +11,7 @@
 		"removeFromFront": "Rimuovi dal front"
 	},
 	"edit": {
+		"header": "Membrə",
 		"headerAdd": "Aggiungi membrə",
 		"headerEdit": "Modifica membrə",
 		"name": "Nome",

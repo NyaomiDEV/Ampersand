@@ -223,7 +223,7 @@
 			<IonToolbar>
 				<IonBackButton slot="start" :text="isIOS ? $t('other:back') : undefined"
 					:icon="!isIOS ? backMD : undefined" defaultHref="/members/" />
-				<IonTitle>{{ !member.uuid ? $t("members:edit.headerAdd") : $t("members:edit.headerEdit") }}</IonTitle>
+				<IonTitle>{{ !isEditing ? $t("members:edit.header") : !member.uuid ? $t("members:edit.headerAdd") : $t("members:edit.headerEdit") }}</IonTitle>
 			</IonToolbar>
 		</IonHeader>
 

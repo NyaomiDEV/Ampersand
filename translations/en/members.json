@@ -11,6 +11,7 @@
 		"removeFromFront": "Remove from front"
 	},
 	"edit": {
+		"header": "Member",
 		"headerAdd": "Add member",
 		"headerEdit": "Edit member",
 		"name": "Name",
