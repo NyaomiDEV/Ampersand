@@ -3,7 +3,7 @@
 	import { inject } from 'vue';
 
 	import AmpersandLogo from "../../assets/ampersand_logo.svg"
-	import DiscordLogo from "../../assets/discord_logo.svg";
+	import CodebergLogo from "../../assets/codeberg_logo.svg";
 	import GithubLogo from "../../assets/github_logo.svg";
 	import LiberapayLogo from "../../assets/liberapay_logo.svg";
 
@@ -22,8 +22,8 @@
 		}
 	}
 
-	function openGithub(){
-		const url = "https://github.com/NyaomiDEV/Ampersand";
+	function openRepo(){
+		const url = "https://codeberg.org/NyaomiDEV/Ampersand";
 		if(!('isTauri' in window)){
 			open(url, "_blank");
 		} else {
@@ -71,10 +71,10 @@
 
 				<div class="buttons">
 					<IonButton class="tonal" shape="round" @click="openDiscord">
-						<IonIcon slot="icon-only" :icon="DiscordLogo"></IonIcon>
+						<IonIcon slot="icon-only" :icon="CodebergLogo"></IonIcon>
 					</IonButton>
 
-					<IonButton class="tonal" shape="round" @click="openGithub">
+					<IonButton class="tonal" shape="round" @click="openRepo">
 						<IonIcon slot="icon-only" :icon="GithubLogo" ></IonIcon>
 					</IonButton>
 
