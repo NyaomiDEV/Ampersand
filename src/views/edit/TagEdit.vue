@@ -238,7 +238,7 @@
 						</IonLabel>
 					</IonItem>
 
-					<IonItem button v-if="tag.uuid && tag.type === 'journal'" :routerLink="`/s/journal/?q=#${tag.name.toLowerCase().replace(/\s+/g, '')}`">
+					<IonItem button v-if="tag.uuid && tag.type === 'journal'" :routerLink="`/s/journal/?q=${encodeURIComponent('#' + tag.name.toLowerCase().replace(/\s+/g, ''))}`">
 						<IonIcon :icon="journalMD" slot="start" aria-hidden="true" />
 						<IonLabel>
 							<h3>{{ $t("tagManagement:edit.showJournal.title") }}</h3>
