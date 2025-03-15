@@ -42,8 +42,10 @@ export async function getFilteredMembers(search: string, members?: Member[]){
 
 	for(const x of sorted){
 
-		if (!x.name.toLowerCase().startsWith(parsed.query.toLowerCase()))
-			continue;
+		if (parsed.query.length){
+			if (!x.name.toLowerCase().startsWith(parsed.query.toLowerCase()))
+				continue;
+		}
 
 		if (parsed.pronouns) {
 			if (!x.pronouns || x.pronouns.toLowerCase() !== parsed.pronouns.toLowerCase())
@@ -102,8 +104,10 @@ export async function getFilteredFrontingEntries(search: string, frontingEntries
 	if(parsed.all) return complete;
 
 	for (const x of complete) {
-		if (!x.member.name.toLowerCase().startsWith(parsed.query.toLowerCase()))
-			continue;
+		if(parsed.query.length){
+			if (!x.member.name.toLowerCase().startsWith(parsed.query.toLowerCase()))
+				continue;
+		}
 
 		if (parsed.member) {
 			if (x.member.uuid !== parsed.member)
@@ -180,13 +184,15 @@ export async function getFilteredBoardMessages(search: string, boardMessages?: B
 				continue;
 		}
 
-		if (
-			![
-				x.title.toLowerCase().split(" "),
-				x.member.name.toLowerCase().split(" ")
-			].flat().find(x => x.startsWith(parsed.query.toLowerCase()))
-		)
-			continue;
+		if(parsed.query.length){
+			if (
+				![
+					x.title.toLowerCase().split(" "),
+					x.member.name.toLowerCase().split(" ")
+				].flat().find(x => x.startsWith(parsed.query.toLowerCase()))
+			)
+				continue;
+		}
 
 		if (parsed.member) {
 			if (x.member.uuid !== parsed.member)
@@ -229,8 +235,10 @@ export function getFilteredAssets(search: string, assets?: Asset[]) {
 	if(parsed.all) return sorted;
 
 	for (const x of sorted) {
-			if (!x.friendlyName.toLowerCase().startsWith(parsed.query.toLowerCase()))
-				continue;
+			if(parsed.query.length){
+				if (!x.friendlyName.toLowerCase().startsWith(parsed.query.toLowerCase()))
+					continue;
+			}
 
 			if (parsed.type) {
 				if (x.file.type.split("/")[1].toLowerCase() !== parsed.type.toLowerCase())
@@ -255,8 +263,10 @@ export function getFilteredCustomFields(search: string, customFields?: CustomFie
 	const sorted = customFields.sort((a, b) => sortingFunctions.alphabetic(a.name, b.name));
 
 	for (const x of sorted) {
-		if (!x.name.toLowerCase().startsWith(parsed.query.toLowerCase()))
-			continue;
+		if(parsed.query.length) {
+			if (!x.name.toLowerCase().startsWith(parsed.query.toLowerCase()))
+				continue;
+		}
 
 		if (parsed.default) {
 			if (!x.default)
@@ -278,14 +288,15 @@ export async function getFilteredJournalPosts(search: string, posts?: JournalPos
 	if (parsed.all) return complete;
 
 	for (const x of complete) {
-
-		if (
-			![
-				x.title.toLowerCase().split(" "),
-				x.member.name.toLowerCase().split(" ")
-			].flat().find(x => x.startsWith(parsed.query.toLowerCase()))
-		)
-			continue;
+		if(parsed.query.length){
+			if (
+				![
+					x.title.toLowerCase().split(" "),
+					x.member.name.toLowerCase().split(" ")
+				].flat().find(x => x.startsWith(parsed.query.toLowerCase()))
+			)
+				continue;
+		}
 
 		if (parsed.member) {
 			if (x.member.uuid !== parsed.member)
