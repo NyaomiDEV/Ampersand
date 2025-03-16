@@ -1,1 +1,7 @@
-{}
+{
+	"title": "Die App ist gesperrt",
+	"biometrics": {
+		"title": "Die App ist gesperrt",
+		"reason": "Anwendung entsperren"
+	}
+}

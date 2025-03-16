@@ -1,1 +1,5 @@
-{}
+{
+	"welcomeScreen": {
+		"header": "Willkommen bei Ampersand!"
+	}
+}

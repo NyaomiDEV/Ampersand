@@ -1,1 +1,6 @@
-{}
+{
+	"polls": {
+		"boardMessageContainsPoll": "Enthält Umfrage"
+	},
+	"searchPlaceholder": "Suche nach Nachrichten..."
+}
