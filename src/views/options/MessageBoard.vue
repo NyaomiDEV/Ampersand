@@ -170,7 +170,7 @@
 					<MessageBoardCard :boardMessage v-for="boardMessage in tuple[1]" :key="boardMessage.uuid" @click="showModal(boardMessage)" />
 				</template>
 			</IonList>
-			<InfiniteScroll v-if="!eol || !isCalendarView" :callback="getEntries" />
+			<InfiniteScroll v-if="!(isCalendarView || eol)" :callback="getEntries" />
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
 				<IonFabButton @click="showModal()">
