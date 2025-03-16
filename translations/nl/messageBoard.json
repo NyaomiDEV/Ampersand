@@ -1,1 +1,13 @@
-{}
+{
+	"searchPlaceholder": "Zoek naar berichten...",
+	"polls": {
+		"boardMessageContainsPoll": "Bevat peiling",
+		"voteCast": {
+			"voter": "Selecteer de kiezer"
+		}
+	},
+	"header": "Prikbord",
+	"edit": {
+		"title": "Titel"
+	}
+}

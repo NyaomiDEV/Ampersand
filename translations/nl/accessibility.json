@@ -36,5 +36,8 @@
 	},
 	"chatFontScale": {
 		"title": "Chat UI grootte"
+	},
+	"longPressDuration": {
+		"title": "Lang indrukken duur"
 	}
 }

@@ -15,7 +15,8 @@
 		"delete": {
 			"title": "Verwijder front-item",
 			"confirm": "Weet je zeker dat je dit front-item wilt verwijderen?"
-		}
+		},
+		"comment": "Commentaar"
 	},
 	"searchPlaceholder": "Zoek in de frontgeschiedenis..."
 }

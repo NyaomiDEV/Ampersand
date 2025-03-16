@@ -1,1 +1,13 @@
-{}
+{
+	"recentFrontingHistory": "Recent uitgeswitchet",
+	"messageBoard": {
+		"header": "Prikbord",
+		"add": "Voeg to aan prikbord",
+		"view": "Zie meer"
+	},
+	"header": "Dashboard",
+	"header_salute": "Hallo!",
+	"header_mainfronter": "Hallo, {{fronterName}}!",
+	"nowFronting": "Nu aan het fronten",
+	"systemDescription": "Systeem-beschrijving"
+}

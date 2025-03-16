@@ -1,3 +1,23 @@
 {
-	"header": "Dagboek"
+	"header": "Dagboek",
+	"searchPlaceholder": "Zoek in het dagboek...",
+	"private": "Deze post is privé",
+	"alertSubheader": "Wil je echt deze post lezen?",
+	"edit": {
+		"header": "Post",
+		"headerAdd": "Voeg nieuwe post toe",
+		"headerEdit": "Wijzig post",
+		"author": "Auteur",
+		"title": "Titel",
+		"subtitle": "Ondertitel",
+		"body": "Post inhoud",
+		"tags": "Tags",
+		"isPrivate": "Maak privé",
+		"delete": {
+			"title": "Verwijder dagboek-post",
+			"confirm": "Weet je zeker dat je deze post wilt verwijderen?"
+		},
+		"contentWarning": "Contentwaarschuwing"
+	},
+	"contentWarning": "Deze post bevat gevoelige inhoud"
 }

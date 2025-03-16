@@ -23,7 +23,7 @@
 		"noDescription": "Geen beschrijving",
 		"customFront": "Aangepast front",
 		"isCustomFront": "Plaats als aangepast front",
-		"isPinned": "Zet lid bovenaan de ledenlijst",
+		"isPinned": "Lid vastmaken",
 		"archived": "Gearchiveerd",
 		"isArchived": "Archiveer",
 		"showBoardEntries": "Laat berichten op het prikbord zien",
@@ -34,6 +34,8 @@
 		"delete": {
 			"confirm": "Weet je zeker dat je dit lid wilt verwijderen?",
 			"title": "Verwijder lid"
-		}
+		},
+		"header": "Lid",
+		"showFrontingEntries": "Laat fronting items zien"
 	}
 }

@@ -1,1 +1,19 @@
-{}
+{
+	"header": "Beveiliging",
+	"applock": {
+		"title": "App vergrendelen",
+		"desc": "Vergrendel de app met een paswoord"
+	},
+	"biometrics": {
+		"title": "Gebruik biometrie",
+		"desc": "Ontgrendel met je vingerafdruk of gezicht"
+	},
+	"editPassword": "Wijzig paswoord",
+	"inputPassword": {
+		"titleAdd": "Voer je nieuwe paswoord in",
+		"titleModifyOld": "Voer je oude paswoord in",
+		"titleModifyNew": "Voer je nieuwe paswoord in",
+		"titleDisable": "Voer je paswoord in",
+		"hint": "Paswoord"
+	}
+}

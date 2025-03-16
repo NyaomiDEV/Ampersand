@@ -1,1 +1,8 @@
-{}
+{
+	"hint": "Voer je app-paswoord alstublieft in",
+	"biometrics": {
+		"reason": "Ontgrendel de app",
+		"title": "De app is vergrendeld"
+	},
+	"title": "De app is vergrendeld"
+}
