@@ -1,3 +1,6 @@
 {
-	"header": "Sicherheitsausrüstung"
+	"header": "Sicherheitsausrüstung",
+	"applock": {
+		"title": "App-Sperre"
+	}
 }
