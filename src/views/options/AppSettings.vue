@@ -99,6 +99,9 @@
 						<IonSelectOption value="members">
 							{{ $t("members:header") }}
 						</IonSelectOption>
+						<IonSelectOption value="journal">
+							{{ $t("journal:header") }}
+						</IonSelectOption>
 					</IonSelect>
 				</IonItem>
 			</IonList>
