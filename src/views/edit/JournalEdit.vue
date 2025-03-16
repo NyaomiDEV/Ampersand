@@ -239,10 +239,6 @@
 					<IonInput :placeholder="$t('journal:edit.subtitle')" v-model="post.subtitle" />
 				</IonItem>
 
-				<IonItem>
-					<IonTextarea auto-grow :placeholder="$t('journal:edit.body')" v-model="post.body" />
-				</IonItem>
-
 				<IonItem button @click="tagSelectionModal?.$el.present()">
 					<IonLabel>
 						{{ $t("journal:edit.tags") }}
@@ -251,6 +247,10 @@
 								:tag="tags.find(x => x.uuid === tag)!" />
 						</div>
 					</IonLabel>
+				</IonItem>
+
+				<IonItem>
+					<IonTextarea auto-grow :placeholder="$t('journal:edit.body')" v-model="post.body" />
 				</IonItem>
 
 				<IonItem button detail="false">
