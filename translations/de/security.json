@@ -2,5 +2,13 @@
 	"header": "Sicherheit",
 	"applock": {
 		"title": "App-Sperre"
-	}
+	},
+	"inputPassword": {
+		"titleAdd": "Neues Passwort eingeben",
+		"titleModifyNew": "Neues Passwort eingeben",
+		"titleDisable": "Passwort eingeben",
+		"hint": "Passwort",
+		"titleModifyOld": "Altes Passwort eingeben"
+	},
+	"editPassword": "Passwort ändern"
 }

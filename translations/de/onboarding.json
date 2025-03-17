@@ -1,5 +1,13 @@
 {
 	"welcomeScreen": {
 		"header": "Willkommen bei Ampersand!"
+	},
+	"importScreen": {
+		"header": "Möchtest du deine Daten importieren?",
+		"simplyPlural": "Ja, Simply Plural",
+		"pluralKit": "Ja, PluralKit",
+		"tupperbox": "Ja, Tupperbox",
+		"startFromScratch": "Nein, ich starte neu",
+		"pleaseWait": "Bitte warte, während wir deine Daten importieren"
 	}
 }
