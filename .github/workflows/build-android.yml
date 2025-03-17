@@ -76,7 +76,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Android APK
-          path: ./src-tauri/gen/android/app/build/outputs/apk/*/release/*.apk
+          path: ./src-tauri/gen/android/app/build/outputs/apk/universal/release/ampersand-ci-universal-release.apk
       - name: Publish to release
         uses: softprops/action-gh-release@v2.2.1
         with:
@@ -85,4 +85,4 @@ jobs:
           tag_name: dev
           generate_release_notes: true
           files: |
-            ./src-tauri/gen/android/app/build/outputs/apk/*/release/*.apk
+            ./src-tauri/gen/android/app/build/outputs/apk/universal/release/ampersand-ci-universal-release.apk
