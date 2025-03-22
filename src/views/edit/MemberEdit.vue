@@ -304,7 +304,7 @@
 
 				<IonItem v-for="customField in customFieldsToShow.sort((a, b) => a.name.localeCompare(b.name))"
 					:key="customField.uuid" v-if="member.customFields">
-					<IonInput :fill="!isIOS ? 'outline' : undefined" :label="customField.name" labelPlacement="floating"
+					<IonTextarea :fill="!isIOS ? 'outline' : undefined" auto-grow :label="customField.name" labelPlacement="floating"
 						:modelValue="member.customFields.get(customField.uuid)"
 						@update:modelValue="(v) => member.customFields?.set(customField.uuid, v)" />
 				</IonItem>
