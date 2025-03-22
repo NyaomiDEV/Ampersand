@@ -1,3 +1,5 @@
 {
-	"header": "Tag management"
+	"header": "Tag management",
+	"searchPlaceholder": "Zoeken naar tags...",
+	"select": "Selecteer een aantal tags"
 }
