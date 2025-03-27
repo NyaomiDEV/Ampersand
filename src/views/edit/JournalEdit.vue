@@ -182,7 +182,7 @@
 		<SpinnerFullscreen v-if="loading" />
 		<IonContent v-else>
 
-			<div class="cover">
+			<div class="cover" v-if="post.cover || isEditing">
 				<img :src="getObjectURL(post.cover)" v-if="post.cover">
 				<div class="no-img" v-else>
 					<IonIcon :icon="imageMD" />
