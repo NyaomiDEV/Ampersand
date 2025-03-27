@@ -4,7 +4,7 @@
 	import MemberAvatar from "../../components/member/MemberAvatar.vue";
 	import FrontingEntryLabel from "../../components/frontingEntry/FrontingEntryLabel.vue";
 	import type { FrontingEntry, FrontingEntryComplete } from '../../lib/db/entities.d.ts';
-	import { getFrontingEntriesOffset, getFrontingEntriesOfDay, getFrontingEntriesDays } from '../../lib/db/tables/frontingEntries';
+	import { getFrontingEntriesOfDay, getFrontingEntriesDays } from '../../lib/db/tables/frontingEntries';
 	import { getFilteredFrontingEntries } from '../../lib/search.ts';
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
@@ -19,7 +19,6 @@
 	import { DatabaseEvents, DatabaseEvent } from '../../lib/db/events';
 	import { addModal, removeModal } from '../../lib/modals.ts';
 	import { useRoute } from 'vue-router';
-	import InfiniteScroll from '../../components/InfiniteScroll.vue';
 
 	const route = useRoute();
 
@@ -33,9 +32,8 @@
 
 	const frontingEntriesDays = shallowRef<{date: string, backgroundColor: string}[]>();
 
-	const isCalendarView = ref(false);
+	const isCalendarView = ref(true);
 	const date = ref(dayjs().toISOString());
-	const eol = ref(false);
 
 	const listener = async (event: Event) => {
 		if(["frontingEntries", "members"].includes((event as DatabaseEvent).data.table)){
@@ -66,34 +64,15 @@
 		DatabaseEvents.removeEventListener("updated", listener);
 	});
 
-	let offset = 0;
-	async function getEntries(_date?: Date){
-		if(_date){
-			const dateEntries = await getFrontingEntriesOfDay(_date, true);
-			frontingEntries.value = dateEntries;
-			eol.value = true;
-			return;
-		}
-
-		const newEntries = await getFrontingEntriesOffset(offset, 20);
-		if (!newEntries.length)
-			eol.value = true;
-
-		offset += newEntries.length;
-		if (!frontingEntries.value)
-			frontingEntries.value = newEntries;
-		else
-			frontingEntries.value = [...frontingEntries.value, ...newEntries];
+	async function getEntries(_date: Date){
+		const dateEntries = await getFrontingEntriesOfDay(_date, true);
+		frontingEntries.value = dateEntries;
+		return;
 	}
 
-	async function resetEntries(_date?: Date){
-		offset = 0;
+	async function resetEntries(){
 		frontingEntries.value = undefined;
-		eol.value = false;
-		await getEntries(isCalendarView.value
-			? dayjs(date.value).toDate()
-			: undefined
-		);
+		await getEntries(dayjs(date.value).toDate());
 	}
 
 	function getGrouped(entries: FrontingEntryComplete[]){
@@ -198,7 +177,6 @@
 					</IonItem>
 				</template>
 			</IonList>
-			<InfiniteScroll v-if="!(isCalendarView || eol)" :callback="getEntries" />
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
 				<IonFabButton @click="showModal()">

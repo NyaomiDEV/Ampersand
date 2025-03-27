@@ -2,10 +2,9 @@
 	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonFab, IonFabButton, IonIcon, IonSearchbar, IonLabel, IonItemDivider, IonButtons, IonButton, IonDatetime } from '@ionic/vue';
 	import { h, inject, onBeforeMount, onUnmounted, ref, shallowRef, watch } from 'vue';
 	import type { BoardMessage, BoardMessageComplete } from '../../lib/db/entities.d.ts';
-	import { getBoardMessagesDays, getBoardMessagesOfDay, getBoardMessagesOffset } from '../../lib/db/tables/boardMessages';
+	import { getBoardMessagesDays, getBoardMessagesOfDay } from '../../lib/db/tables/boardMessages';
 	import BoardMessageEdit from "../../modals/BoardMessageEdit.vue";
 	import SpinnerFullscreen from '../../components/SpinnerFullscreen.vue';
-	import InfiniteScroll from '../../components/InfiniteScroll.vue';
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import calendarMD from "@material-symbols/svg-600/outlined/calendar_month.svg";
@@ -33,9 +32,8 @@
 
 	const boardMessagesDays = shallowRef<{date: string, backgroundColor: string}[]>();
 
-	const isCalendarView = ref(false);
+	const isCalendarView = ref(true);
 	const date = ref(dayjs().toISOString());
-	const eol = ref(false);
 
 	const listener = async (event: Event) => {
 		if(["members", "boardMessages"].includes((event as DatabaseEvent).data.table)){
@@ -66,35 +64,16 @@
 		DatabaseEvents.removeEventListener("updated", listener);
 	});
 
-	let offset = 0;
-	async function getEntries(_date?: Date){
-		if(_date){
-			const dateEntries = await getBoardMessagesOfDay(_date);
-			boardMessages.value = dateEntries;
-			eol.value = true;
-			return;
+	async function getEntries(_date: Date){
+		const dateEntries = await getBoardMessagesOfDay(_date);
+		boardMessages.value = dateEntries;
+		return;
 		}
 
-		const newEntries = await getBoardMessagesOffset(offset, 20);
 
-		if (!newEntries.length)
-			eol.value = true;
-
-		offset += newEntries.length;
-		if (!boardMessages.value)
-			boardMessages.value = newEntries;
-		else
-			boardMessages.value = [...boardMessages.value, ...newEntries];
-	}
-
-	async function resetEntries(_date?: Date){
-		offset = 0;
+	async function resetEntries(){
 		boardMessages.value = undefined;
-		eol.value = false;
-		await getEntries(isCalendarView.value
-			? dayjs(date.value).toDate()
-			: undefined
-		);
+		await getEntries(dayjs(date.value).toDate())
 	}
 
 	function getGrouped(entries: BoardMessageComplete[]){
@@ -170,7 +149,6 @@
 					<MessageBoardCard :boardMessage v-for="boardMessage in tuple[1]" :key="boardMessage.uuid" @click="showModal(boardMessage)" />
 				</template>
 			</IonList>
-			<InfiniteScroll v-if="!(isCalendarView || eol)" :callback="getEntries" />
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
 				<IonFabButton @click="showModal()">

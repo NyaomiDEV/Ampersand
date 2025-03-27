@@ -4,7 +4,6 @@
 	import { useRoute } from 'vue-router';
 	import SpinnerFullscreen from '../components/SpinnerFullscreen.vue';
 	import JournalPostCard from '../components/JournalPostCard.vue';
-	import InfiniteScroll from '../components/InfiniteScroll.vue';
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import calendarMD from "@material-symbols/svg-600/outlined/calendar_month.svg";
@@ -14,7 +13,7 @@
 	import { JournalPost, JournalPostComplete } from '../lib/db/entities';
 	import dayjs from 'dayjs';
 	import { DatabaseEvent, DatabaseEvents } from '../lib/db/events';
-	import { getJournalPostsDays, getJournalPostsOfDay, getJournalPostsOffset } from '../lib/db/tables/journalPosts';
+	import { getJournalPostsDays, getJournalPostsOfDay } from '../lib/db/tables/journalPosts';
 	import { appConfig } from '../lib/config';
 	import { getFilteredJournalPosts } from '../lib/search';
 	import { useTranslation } from 'i18next-vue';
@@ -32,9 +31,8 @@
 
 	const postsDays = shallowRef<{ date: string, backgroundColor: string; }[]>();
 
-	const isCalendarView = ref(false);
+	const isCalendarView = ref(true);
 	const date = ref(dayjs().toISOString());
-	const eol = ref(false);
 
 	const search = ref(route.query.q as string || "");
 
@@ -67,35 +65,16 @@
 		DatabaseEvents.removeEventListener("updated", listener);
 	});
 
-	let offset = 0;
-	async function getEntries(_date?: Date) {
-		if (_date) {
-			const dateEntries = await getJournalPostsOfDay(_date);
-			posts.value = dateEntries;
-			eol.value = true;
-			return;
+	async function getEntries(_date: Date) {
+		const dateEntries = await getJournalPostsOfDay(_date);
+		posts.value = dateEntries;
+		return;
 		}
 
-		const newEntries = await getJournalPostsOffset(offset, 20);
 
-		if (!newEntries.length)
-			eol.value = true;
-
-		offset += newEntries.length;
-		if (!posts.value)
-			posts.value = newEntries;
-		else
-			posts.value = [...posts.value, ...newEntries];
-	}
-
-	async function resetEntries(_date?: Date) {
-		offset = 0;
+	async function resetEntries() {
 		posts.value = undefined;
-		eol.value = false;
-		await getEntries(isCalendarView.value
-			? dayjs(date.value).toDate()
-			: undefined
-		);
+		await getEntries(dayjs(date.value).toDate())
 	}
 
 	function getGrouped(entries: JournalPostComplete[]) {
@@ -202,7 +181,6 @@
 					<JournalPostCard :post v-for="post in tuple[1]" :key="post.uuid" @click="openPost(post)" />
 				</template>
 			</IonList>
-			<InfiniteScroll v-if="!(isCalendarView || eol)" :callback="getEntries" />
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
 				<IonFabButton routerLink="/journal/edit/">
