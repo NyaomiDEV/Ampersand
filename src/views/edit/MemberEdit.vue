@@ -325,14 +325,14 @@
 				<IonItem button detail="false">
 					<IonToggle v-model="member.isCustomFront">
 						<IonLabel>
-							{{ $t("members:edit.isCustomFront") }}
+							{{ $t("members:edit.customFront") }}
 						</IonLabel>
 					</IonToggle>
 				</IonItem>
 				<IonItem button detail="false">
 					<IonToggle v-model="member.isArchived">
 						<IonLabel>
-							{{ $t("members:edit.isArchived") }}
+							{{ $t("members:edit.archived") }}
 						</IonLabel>
 					</IonToggle>
 				</IonItem>

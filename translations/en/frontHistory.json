@@ -13,7 +13,7 @@
 			"title": "Remove from front",
 			"desc": "You won't be able to undo this action after saving!"
 		},
-		"isMainFronter": "Set as main fronter",
+		"isMainFronter": "Main fronter",
 		"delete": {
 			"title": "Delete fronting entry",
 			"confirm": "Are you sure you want to delete this fronting entry?"

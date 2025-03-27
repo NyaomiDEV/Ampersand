@@ -13,7 +13,7 @@
 			"title": "Rimuovi dal front",
 			"desc": "Non potrai annullare questa azione dopo aver salvato!"
 		},
-		"isMainFronter": "Imposta come fronter principale",
+		"isMainFronter": "Fronter principale",
 		"delete": {
 			"title": "Elimina voce di front",
 			"confirm": "Vuoi davvero eliminare questa voce di front?"
