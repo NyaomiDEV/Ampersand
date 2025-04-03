@@ -1,3 +1,8 @@
 {
-	"header": "Importeren / Exporteren"
+	"header": "Importeren / Exporteren",
+	"dbExport": {
+		"title": "Exporteer jouw data",
+		"desc": "Maak een backup van jouw data die je ergens anders kan opslaan"
+	},
+	"dbImportDesc": "Waarschuwing! Het zal bestaande data overschrijven"
 }
