@@ -356,9 +356,13 @@
 
 	ion-item.title {
 		font-size: 1.95rem;
+		--inner-padding-top: 0;
+		--inner-padding-bottom: 0;
 	}
 
 	ion-item.subtitle {
 		font-size: 1.625rem;
+		--inner-padding-top: 0;
+		--inner-padding-bottom: 0;
 	}
 </style>
