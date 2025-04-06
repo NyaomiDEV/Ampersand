@@ -262,7 +262,7 @@
 				</IonItem>
 
 				<IonItem>
-					<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('journal:edit.contentWarning')"
+					<IonTextarea :fill="!isIOS ? 'outline' : undefined" auto-grow :label="$t('journal:edit.contentWarning')"
 						labelPlacement="floating" v-model="post.contentWarning" />
 				</IonItem>
 
