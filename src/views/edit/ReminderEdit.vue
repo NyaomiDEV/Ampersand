@@ -376,7 +376,7 @@
 	</IonPage>
 </template>
 
-<style>
+<style scoped>
 
 	ion-radio::part(label) {
 		text-wrap-mode: wrap;

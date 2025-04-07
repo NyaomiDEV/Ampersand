@@ -172,7 +172,7 @@
 							: dayjs(tuple[0]).format("LL")
 							}}</IonLabel>
 					</IonItemDivider>
-					<IonItem button v-for="entry in tuple[1]" :key="entry.uuid" @click="showModal(entry)">
+					<IonItem button v-for="entry in tuple[1]" :key="entry.uuid" @click="showModal(entry)" :class="{'main-fronter': entry.isMainFronter}">
 						<MemberAvatar slot="start" :member="entry.member" />
 						<IonIcon v-if="entry.comment?.length" :icon="commentMD" slot="end" />
 						<FrontingEntryLabel :entry />
@@ -198,5 +198,9 @@
 	ion-datetime {
 		margin: auto;
 		--background: var(--ion-toolbar-background);
+	}
+
+	ion-item.main-fronter {
+		--background: var(--ion-background-color-step-250);
 	}
 </style>
