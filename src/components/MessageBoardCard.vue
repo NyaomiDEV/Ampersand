@@ -19,6 +19,8 @@
 		hidePoll?: boolean
 	}>();
 
+	/* Wait for Firefox and Safari to implement field-sizing in CSS and then use that instead of rows: 4 */
+
 	function showReasonAlert(): Promise<string | undefined>{
 		return new Promise(async (resolve) => {
 			const alert = await alertController.create({
@@ -38,7 +40,10 @@
 				inputs: [
 					{
 						name: "reason",
-						type: "text",
+						type: "textarea",
+						attributes: {
+							rows: 4
+						},
 						placeholder: i18next.t("messageBoard:polls.voteCast.reasonHint")
 					}
 				]
