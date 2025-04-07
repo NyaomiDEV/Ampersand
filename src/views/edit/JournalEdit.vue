@@ -190,6 +190,9 @@
 				<IonButton shape="round" @click="modifyCover" v-if="isEditing">
 					<IonIcon slot="icon-only" :icon="pencilMD" />
 				</IonButton>
+				<IonButton class="delete" shape="round" color="danger" @click="post.cover = undefined" v-if="isEditing && post.cover">
+					<IonIcon slot="icon-only" :icon="trashMD" />
+				</IonButton>
 			</div>
 
 			<IonList inset v-if="!isEditing">
@@ -328,6 +331,14 @@
 		z-index: 2;
 		bottom: 8px;
 		right: 8px;
+	}
+
+	div.cover > ion-button.delete {
+		position: absolute;
+		z-index: 2;
+		bottom: 8px;
+		left: 8px;
+		right: unset;
 	}
 
 	div.journal-tags {
