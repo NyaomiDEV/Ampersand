@@ -220,7 +220,7 @@
 							</IonRadio>
 						</IonItem>
 						<IonItem>
-							<IonRadio value="memberRemoved" justify="space-between">
+							<IonRadio  value="memberRemoved" justify="space-between">
 								{{ $t("reminders:edit.eventBased.removedFromFront") }}
 							</IonRadio>
 						</IonItem>
@@ -375,3 +375,11 @@
 		</IonContent>
 	</IonPage>
 </template>
+
+<style>
+
+	ion-radio::part(label) {
+		text-wrap-mode: wrap;
+	}
+
+</style>
