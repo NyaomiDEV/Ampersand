@@ -14,6 +14,7 @@
 	import calendarMD from "@material-symbols/svg-600/outlined/calendar_month.svg";
 	import listMD from "@material-symbols/svg-600/outlined/list.svg";
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
+	import commentMD from "@material-symbols/svg-600/outlined/comment.svg"
 
 	import { appConfig } from '../../lib/config';
 	import { DatabaseEvents, DatabaseEvent } from '../../lib/db/events';
@@ -26,7 +27,7 @@
 	const isIOS = inject<boolean>("isIOS");
 
 	const search = ref(route.query.q as string || "");
-	
+
 	const frontingEntries = shallowRef<FrontingEntry[]>();
 	const filteredFrontingEntries = shallowRef<FrontingEntryComplete[]>();
 
@@ -173,6 +174,7 @@
 					</IonItemDivider>
 					<IonItem button v-for="entry in tuple[1]" :key="entry.uuid" @click="showModal(entry)">
 						<MemberAvatar slot="start" :member="entry.member" />
+						<IonIcon v-if="entry.comment?.length" :icon="commentMD" slot="end" />
 						<FrontingEntryLabel :entry />
 					</IonItem>
 				</template>
