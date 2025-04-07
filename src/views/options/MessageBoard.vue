@@ -50,7 +50,7 @@
 		filteredBoardMessages.value = await getFilteredBoardMessages(search.value, boardMessages.value);
 	}, { immediate: true });
 
-	watch([isCalendarView, date], async () => {
+	watch([date], async () => {
 		await resetEntries();
 	});
 

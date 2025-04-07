@@ -51,7 +51,7 @@
 		filteredPosts.value = await getFilteredJournalPosts(search.value, posts.value);
 	}, { immediate: true });
 
-	watch([isCalendarView, date], async () => {
+	watch([date], async () => {
 		await resetEntries();
 	});
 

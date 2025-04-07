@@ -50,7 +50,7 @@
 		filteredFrontingEntries.value = await getFilteredFrontingEntries(search.value, frontingEntries.value);
 	}, { immediate: true });
 
-	watch([isCalendarView, date], async () => {
+	watch([date], async () => {
 		await resetEntries();
 	});
 
