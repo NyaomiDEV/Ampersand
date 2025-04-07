@@ -91,3 +91,7 @@ ion-label.wrap {
 .md ion-textarea.textarea-label-placement-floating {
 	margin: 16px 0 0 0;
 }
+
+ion-datetime {
+	max-width: 100%;
+}
