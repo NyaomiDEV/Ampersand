@@ -1,6 +1,7 @@
 @import url(ios.css);
 @import url(markdown.css);
 
+
 @supports (padding-top: 20px) {
 	html {
 		--ion-safe-area-top: var(--device-inset-top, 0px);
@@ -94,4 +95,8 @@ ion-label.wrap {
 
 ion-datetime {
 	max-width: 100%;
+}
+
+.md3 ion-datetime {
+	--wheel-fade-background-rgb: var(--md3-surface-container);
 }
