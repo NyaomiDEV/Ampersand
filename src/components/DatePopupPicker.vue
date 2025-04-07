@@ -7,6 +7,7 @@
 	const props = defineProps<{
 		presentation?: string,
 		showDefaultButtons?: boolean,
+		highlightedDates?: any,
 		min?: Date,
 		max?: Date,
 		title?: string
@@ -27,6 +28,7 @@
 			:locale="appConfig.locale.language || 'en'"
 			:min="props.min ? dayjs(props.min).format() : undefined"
 			:max="props.max ? dayjs(props.max).format() : undefined"
+			:highlightedDates="props.highlightedDates"
 			:doneText="$t('other:alerts.ok')"
 			:cancelText="$t('other:alerts.cancel')"
 			v-model="innerModel"
