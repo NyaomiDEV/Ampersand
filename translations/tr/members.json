@@ -18,8 +18,8 @@
 		"color": "Tercih edilen renk",
 		"customFieldsAdd": "Özelleştirilmiş alanlar ekle",
 		"tags": "Etiketleri düzenle",
-		"description": "Tanım",
-		"noDescription": "Tanım yok",
+		"description": "Açıklama",
+		"noDescription": "Açıklama yok",
 		"isPinned": "Üye sabitle",
 		"customFront": "Özelleştirilmiş ön",
 		"archived": "Arşivlenmiş",
@@ -32,6 +32,8 @@
 		"delete": {
 			"title": "Üye sil",
 			"confirm": "Bu üyeyi silmek istediğinize emin misiniz?"
-		}
+		},
+		"pronouns": "Zamirler",
+		"role": "Rol"
 	}
 }
