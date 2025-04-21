@@ -1,0 +1,15 @@
+{
+	"header": "Varlık yöneticisi",
+	"searchPlaceholder": "Varlıkları ara...",
+	"add": {
+		"header": "Varlık ekle"
+	},
+	"edit": {
+		"header": "Varlığı düzenle",
+		"attachment": "Eki yenisiyle değiştir",
+		"delete": {
+			"title": "Varlığı sil",
+			"confirm": "Bu varlığı silmek istediğinize emin misiniz?"
+		}
+	}
+}
