@@ -2,7 +2,8 @@
 	"header": "Varlık yöneticisi",
 	"searchPlaceholder": "Varlıkları ara...",
 	"add": {
-		"header": "Varlık ekle"
+		"header": "Varlık ekle",
+		"attachment": "Eki ekle"
 	},
 	"edit": {
 		"header": "Varlığı düzenle",
@@ -10,6 +11,7 @@
 		"delete": {
 			"title": "Varlığı sil",
 			"confirm": "Bu varlığı silmek istediğinize emin misiniz?"
-		}
+		},
+		"friendlyName": "İsmi düzenle"
 	}
 }
