@@ -25,11 +25,11 @@
 		},
 		"days": {
 			"long": "gün",
-			"short": "G"
+			"short": "D"
 		},
 		"hours": {
 			"long": "saat",
-			"short": "s"
+			"short": "sa"
 		},
 		"minutes": {
 			"long": "dakika",
