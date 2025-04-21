@@ -1,0 +1,48 @@
+{
+	"remindersAreNotFinished": {
+		"header": "Hatırlatıcılar bitmedi!",
+		"content": "Artık, bu sadece bir kullanıcı arabirimi önizlemesi. Hatırlatıcılarınızı bazı yerlerde saklayabilirsiniz ama unutmayın ki henüz herhangi bir bildirim sistemine bağlanmadılar. Android kullanıyorsanız, altta yatan sistemi tamamladığımızda çalışacak şekilde bazı şeyleri yapılandırabileceksiniz. Ama unutmayın ki bu Web sürümünde çalışmayacak, bu yüzden hatırlatıcıları bilgisayarında kullanmak konusunda çok heyecanlanmayın. Ayrıca, program geliştirici iseniz, lütfen bize yardım edin!"
+	},
+	"header": "Hatırlatıcı",
+	"eventBasedHeader": "Olay temelli hatırlatıcı",
+	"periodicHeader": "Düzenli hatırlatıcı",
+	"edit": {
+		"header": "Hatırlatıcıyı düzenle",
+		"name": "Hatırlatıcı adı",
+		"title": "Hatırlatıcı bildirim başlığı",
+		"message": "Hatırlatıcı bildirim mesajı",
+		"type": {
+			"title": "Hatırlatıcı tipi",
+			"eventBased": "Olay temelli",
+			"periodic": "Düzenli"
+		},
+		"eventBased": {
+			"title": "Tetikleyen olay",
+			"addedToFront": "Öncülere üye eklendiğinde",
+			"removedFromFront": "Öncülerden üye silindiğinde",
+			"memberFilterQuery": "Üye filtre sorgusu",
+			"timing": "Zamanlama",
+			"delay": {
+				"title": "Gecikme",
+				"desc": "{{delay}}'den sonra"
+			}
+		},
+		"periodic": {
+			"title": "Zaman aralığı",
+			"timeOfDay": {
+				"title": "Günün saati",
+				"desc": "Şu zamanda: {{timeOfDay}}"
+			},
+			"dayOfMonth": {
+				"title": "Ayın günü",
+				"desc_undefined": "Hergün tekrarla",
+				"desc_ordinal_one": "Ayın her {{count}}. gününde tekrarla",
+				"desc_ordinal_other": "Ayın her {{count}}. gününde tekrarla"
+			}
+		},
+		"delete": {
+			"title": "Hatırlatıcıyı sil",
+			"confirm": "Bu hatırlatıcıyı silmek istediğinize emin misiniz?"
+		}
+	}
+}

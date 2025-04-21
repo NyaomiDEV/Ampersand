@@ -1,6 +1,19 @@
 {
 	"header": "Güvenlik",
 	"applock": {
-		"title": "Uygulama Kilidi"
+		"title": "Uygulama kilidi",
+		"desc": "Uygulamayı parolayla kilitle"
+	},
+	"biometrics": {
+		"title": "Biyokimlik kullan",
+		"desc": "Parmak izinizle veya yüzünüzle kilit aç"
+	},
+	"editPassword": "Parolayı değiştir",
+	"inputPassword": {
+		"titleAdd": "Yeni parolanızı girin",
+		"titleModifyOld": "Eski parolanızı girin",
+		"titleModifyNew": "Yeni parolanızı girin",
+		"titleDisable": "Parolanızı girin",
+		"hint": "Parola"
 	}
 }

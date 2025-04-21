@@ -1,0 +1,41 @@
+{
+	"languageName": {
+		"local": "İngilizce",
+		"inEnglish": "İngilizce"
+	},
+	"genericDeleteDesc": "Bu eylemi geri alamayacaksınız!",
+	"storagePersistence": {
+		"header": "Uyarı",
+		"content": "Ampersand cihazınız üzerinde kalıcı veri tutamıyor. Firefox kullanıyorsanız, lütfen Ampersand'a gerekli izni verin. Chromium temelli (Chrome, Edge, Opera vs..) bir tarayıcı kullanıyorsanız, lütfen Ampersand'ı bir web uygulaması olarak kurun / Mmasaüstüne/Ev dizinine ekleyin. Bu mesaj yine çıkarsa, İçeri Al/Dışarı Al bölümünü kullanarak sık sık yedek alma çözümünü düşünebilirsiniz."
+	},
+	"alerts": {
+		"ok": "Tamam",
+		"cancel": "İptal"
+	},
+	"back": "Geri",
+	"time": "Zaman",
+	"timeSizes": {
+		"years": {
+			"short": "Y"
+		},
+		"months": {
+			"short": "A"
+		},
+		"days": {
+			"long": "gün",
+			"short": "G"
+		},
+		"hours": {
+			"long": "saat",
+			"short": "s"
+		},
+		"minutes": {
+			"long": "dakika",
+			"short": "d"
+		},
+		"seconds": {
+			"long": "saniye",
+			"short": "s"
+		}
+	}
+}

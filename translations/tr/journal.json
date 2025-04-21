@@ -1,0 +1,23 @@
+{
+	"header": "Günlük",
+	"searchPlaceholder": "Günlüğü ara...",
+	"contentWarning": "Bu gönderide hassas içerik var",
+	"private": "Bu gönderi özeldir",
+	"alertSubheader": "Bu gönderiyi okumak istediğinize emin misiniz?",
+	"edit": {
+		"header": "İleti",
+		"headerAdd": "Yeni ileti ekle",
+		"headerEdit": "İletiyi düzenle",
+		"author": "Yazar",
+		"title": "Başlık",
+		"subtitle": "Altbaşlık",
+		"body": "İleti gövdesi",
+		"tags": "Etiketler",
+		"isPrivate": "Özel olarak ayarla",
+		"delete": {
+			"title": "Günlük iletisini sil",
+			"confirm": "Bu iletiyi silmek istediğinize emin misiniz?"
+		},
+		"contentWarning": "İçerik uyarısı"
+	}
+}

@@ -1,0 +1,38 @@
+{
+	"header": "Etiket yönetimi",
+	"searchPlaceholder": "Etiket ara...",
+	"select": "Etiketleri seç",
+	"selector": {
+		"member": "Üye etiketleri",
+		"journal": "Günlük etiketleri"
+	},
+	"edit": {
+		"header": {
+			"member": "Üye etiketini düzenle",
+			"journal": "Günlülk etiketini düzenle"
+		},
+		"name": "Etiket adı",
+		"description": "Etiket açıklaması",
+		"color": "Etiket rengi",
+		"viewInLists": "Listede görüntüle",
+		"type": {
+			"header": "Etiket tipi",
+			"member": "Üye",
+			"desc": "Not: etiket tipini sadece yaratırken tanımlayabilirsiniz!"
+		},
+		"members": {
+			"title": "Bu etiketi kullanarak üyeleri seçin",
+			"desc_one": "{{count}} üye bu etiketi kullanıyor",
+			"desc_other": "{{count}} üye bu etiketi kullanıyor"
+		},
+		"showJournal": {
+			"title": "Bu etikete sahip günlük iletilerini göster",
+			"desc_one": "{{count}} günlük iletisi bu etikete sahip",
+			"desc_other": "{{count}} günlük iletisi bu etikete sahip"
+		},
+		"delete": {
+			"confirm": "Bu etiketi silmek istediğinize emin misiniz?",
+			"title": "Etiketi sil"
+		}
+	}
+}
