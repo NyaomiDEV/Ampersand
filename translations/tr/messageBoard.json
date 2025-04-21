@@ -30,6 +30,13 @@
 		"pollIsMultipleChoice": "Birden fazla seçime izin ver",
 		"title": "Başlık",
 		"body": "Mesaj gövdesi",
-		"isPinned": "Sabitlenmiş"
+		"isPinned": "Sabitlenmiş",
+		"pollAddNewChoice": "Ankete yeni bir seçenek ekle",
+		"pollChoice": "Seçenek açıklaması",
+		"pollEditWarning": "Anketin herhangi bir ayrıntısının değiştirilmesi oyları sıfırlar!",
+		"delete": {
+			"title": "Panodaki mesajı sil",
+			"confirm": "Bu mesajı silmek istediğinize emin misiniz?"
+		}
 	}
 }

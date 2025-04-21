@@ -1,0 +1,33 @@
+{
+	"welcomeScreen": {
+		"header": "Ampersand'a hoşgeldiniz!",
+		"start": "Yolculuğunuza başlayın!"
+	},
+	"importScreen": {
+		"header": "Verinizi içeri aktarmak ister misiniz?",
+		"prevInstall": "Evet, önceki kurulum",
+		"simplyPlural": "Evet, Simply Plural",
+		"pluralKit": "Evet, PluralKit",
+		"tupperbox": "Evet, Tupperbox",
+		"startFromScratch": "Hayır, sıfırdan başlayacağım",
+		"pleaseWait": "Verinizi içeri aktarırken lütfen bekleyin",
+		"error": "Verinizi içeri aktarırken hata oluştu. Lütfen başka bir seçenek seçin.",
+		"errorSp": "Simply Plural dışarı aktarımınızı içeri aktarırken hata oluştu. Lütfen başka bir seçenek seçin.",
+		"errorPk": "PluralKit dışarı aktarımınızı içeri aktarırken hata oluştu. Lütfen başka bir seçenek seçin.",
+		"errorTu": "Tupperbox dışarı aktarımınızı içeri aktarırken hata oluştu. Lütfen başka bir seçenek seçin."
+	},
+	"systemInfo": {
+		"header": "Bize sisteminizden bahsedin!",
+		"name": "Topluluk adı",
+		"description": "Biraz sizden bahsedin..."
+	},
+	"memberInfo": {
+		"header": "Bize biraz daha kendinizi anlatın!",
+		"description": "Biraz kendinizden bahsedin...",
+		"invitation": "Başlangıcı tamamladıktan sonra profil kartınızı düzenlemeye devam edin!"
+	},
+	"endScreen": {
+		"header": "Ampersand'ı seçtiğiniz için teşekkür ederiz!",
+		"startButton": "Haydi başlayalım!"
+	}
+}

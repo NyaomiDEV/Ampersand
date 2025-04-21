@@ -16,7 +16,7 @@
 		"isPrivate": "Özel olarak ayarla",
 		"delete": {
 			"title": "Günlük gönderisini sil",
-			"confirm": "Bu gönderiyi silmek istediğine emin misin?"
+			"confirm": "Bu gönderiyi silmek istediğinize emin misiniz?"
 		},
 		"contentWarning": "İçerik uyarısı"
 	}
