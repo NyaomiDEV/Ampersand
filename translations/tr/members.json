@@ -1,0 +1,37 @@
+{
+	"header": "Üyeler",
+	"searchPlaceholder": "Üyeleri ara...",
+	"select": "Bir üye seç",
+	"deletedMember": "Silinmiş üye",
+	"actions": {
+		"addToFront": "Öne ekle",
+		"setMainFronter": "Ana öncü olarak ayarla",
+		"unsetMainFronter": "Ana öncü ayarını kaldır",
+		"setSoleFronter": "Ön olarak ayarla",
+		"removeFromFront": "Önden kaldır"
+	},
+	"edit": {
+		"header": "Üye",
+		"headerAdd": "Üye ekle",
+		"headerEdit": "Üye düzenle",
+		"name": "Ad",
+		"color": "Tercih edilen renk",
+		"customFieldsAdd": "Özelleştirilmiş alanlar ekle",
+		"tags": "Etiketleri düzenle",
+		"description": "Tanım",
+		"noDescription": "Tanım yok",
+		"isPinned": "Üye sabitle",
+		"customFront": "Özelleştirilmiş ön",
+		"archived": "Arşivlenmiş",
+		"showFrontingEntries": "Öncü kayıtlarını göster",
+		"showBoardEntries": "Pano mesajlarını göster",
+		"showJournalEntries": "Günlük iletilerini göster",
+		"memberID": "Üye No: {{memberID}}",
+		"dateCreated": "Yaratılma tarihi: {{dateCreated}}",
+		"memberIDcopiedToClipboard": "Belirilen biçimdeki Üye No geçici taşıma panosuna kopyalandı!",
+		"delete": {
+			"title": "Üye sil",
+			"confirm": "Bu üyeyi silmek istediğinize emin misiniz?"
+		}
+	}
+}

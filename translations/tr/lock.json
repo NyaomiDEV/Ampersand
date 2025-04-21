@@ -1,0 +1,8 @@
+{
+	"hint": "Lütfen uygulama şifrenizi girin",
+	"biometrics": {
+		"title": "Uygulama kilitlendi",
+		"reason": "Uygulamanın kilidini kaldır"
+	},
+	"title": "Uygulama kilitlendi"
+}

@@ -1,0 +1,10 @@
+{
+	"header_mainfronter": "Merhaba, {{fronterName}}!",
+	"nowFronting": "Yeni öncüleme",
+	"recentFrontingHistory": "Yakın zamanda yerine geçildi",
+	"messageBoard": {
+		"header": "Mesaj panosu",
+		"add": "Panoya ekle",
+		"view": "Daha fazla görünüm"
+	}
+}

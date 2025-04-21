@@ -1,0 +1,43 @@
+{
+	"highLegibilityFont": {
+		"title": "Yüksek okunurluklu font",
+		"desc": "Standart aygıt fontu yerine yüksek okunurluklu bir font kullan"
+	},
+	"highLegibilityFontType": {
+		"title": "Yüksek okunurluklu font ailesi",
+		"opendyslexic": "OpenDyslexic",
+		"lexend": "Lexend",
+		"atkinson": "Atkinson Hyperlegible"
+	},
+	"uiVariant": {
+		"title": "Kullanıcı arabirimi varyantı",
+		"auto": "Otomatik",
+		"light": "Aydınlık",
+		"dark": "Koyu"
+	},
+	"useMaterialTheming": {
+		"title": "Materyal Tasarımı temalaştırması",
+		"desc": "Deneyiminizi Materyal yönergelerine göre temalaştırın (göz zorlanmasına yol açabilir)"
+	},
+	"reducedMotion": {
+		"title": "Azaltılmış hareket",
+		"desc": "Uygulama için animasyonları etkisizleştir"
+	},
+	"fontScale": {
+		"title": "Kullanıcı arabirimi boyutu"
+	},
+	"chatFontScale": {
+		"title": "Sohbet kullanıcı arabirimi boyutu"
+	},
+	"longPressDuration": {
+		"title": "Uzun basma süresi"
+	},
+	"useAccentColor": {
+		"title": "Vurgu rengi",
+		"desc": "Özelleştirilmiş bir vurgu rengi kullan"
+	},
+	"accentColor": {
+		"title": "Vurgu rengini seç"
+	},
+	"header": "Erişilebilirlik"
+}
