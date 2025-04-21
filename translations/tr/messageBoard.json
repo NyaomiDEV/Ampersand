@@ -1,0 +1,32 @@
+{
+	"header": "Mesaj panosu",
+	"searchPlaceholder": "Mesajları ara...",
+	"polls": {
+		"boardMessageContainsPoll": "Anket içeriyor",
+		"voteCast": {
+			"voter": "Seçmeni seç",
+			"reasonHint": "Gerekçe",
+			"reason": "Gerekçeyi söyle",
+			"retractConfirmation": "Bu oyu geri almak istediğinize emin misiniz?"
+		},
+		"resultsHeader": "Seçim sonuçları",
+		"resultsButton": "Anket sonuçlarını göster",
+		"choice": {
+			"desc_one": "{{count}} seçmen",
+			"desc_other": "{{count}} seçmen"
+		},
+		"defaultPollValues": {
+			"yes": "Evet",
+			"no": "Hayır",
+			"veto": "Veto et",
+			"abstain": "Çekinser kal"
+		}
+	},
+	"edit": {
+		"header": "Mesajı düzenle",
+		"member": "Mesaj yazarını düzenle",
+		"attachPoll": "Bu mesaj bir anket bağla",
+		"deleteAttachedPoll": "Bağlı anketi sil",
+		"pollIsMultipleChoice": "Birden fazla seçenek seçilmesine izin ver"
+	}
+}

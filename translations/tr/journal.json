@@ -15,7 +15,7 @@
 		"tags": "Etiketler",
 		"isPrivate": "Özel olarak ayarla",
 		"delete": {
-			"title": "Günlük iletisini sil",
+			"title": "Günlük gönderisini sil",
 			"confirm": "Bu gönderiyi silmek istediğine emin misin?"
 		},
 		"contentWarning": "İçerik uyarısı"

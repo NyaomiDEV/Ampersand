@@ -1,0 +1,25 @@
+{
+	"header": "İçe Aktar / Dışa Aktar",
+	"dbExport": {
+		"title": "Verinizi dışarı aktarın",
+		"desc": "Verinizi başka bir yerde saklayabileceğiniz bir dosyaya yedekleyin"
+	},
+	"dbImportDesc": "Uyarı! Var olan verinin üzerine yazılacak",
+	"dbImport": "Verinizi bir yedekleme dosyasından içeri aktarın",
+	"pkImport": "Verinizi bir PluralKit dışarı aktarımından içeri aktarın",
+	"tuImport": "Verinizi bir Tupperbox dışarı aktarımından içeri aktarın",
+	"spImport": "Verinizi bir Simply Plural dışarı aktarımından içeri aktarın",
+	"status": {
+		"imported": "Yedek içeri aktarıldı. Lütfen uygulamayı yeniden başlatın.",
+		"importedSp": "Simply Plural dışarı aktarımı içeri aktarıldı. Lütfen uygulamayı yeniden başlatın.",
+		"importedPk": "PluralKit dışarı aktarımı içeri aktarıldı. Lütfen uygulamayı yeniden başlatın.",
+		"importedTu": "Tupperbox dışarı aktarımı içeri aktarıldı. Lütfen uygulamayı yeniden başlatın.",
+		"exportedPwa": "Yedek indirilenler dizininize indirildi.",
+		"exportedApp": "Yedek seçtiğiniz yere dışarı aktarıldı.",
+		"errorExport": "Yedekleme dışarı aktarılırken hata oluştu.",
+		"error": "Yedekleme içeri aktarılırken hata oluştu.",
+		"errorSp": "Simply Plural dışarı aktarımı içeri aktarılırken hata oluştu.",
+		"errorPk": "PluralKit dışarı aktarımı içeri aktarılırken hata oluştu.",
+		"errorTu": "Tupperbox dışarı aktarımı içeri aktarılırken hata oluştu."
+	}
+}

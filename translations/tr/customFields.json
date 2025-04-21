@@ -1,0 +1,18 @@
+{
+	"header": "Özelleştirilmiş alanlar",
+	"select": "Özelleştirilmiş alanları seç",
+	"searchPlaceholder": "Özelleştirilmiş alanları ara...",
+	"edit": {
+		"header": "Özelleştirilmiş alanı düzenle",
+		"headerAdd": "Özelleştirilmiş alan ekle",
+		"name": "Özelleştirilmiş alan adı",
+		"default": {
+			"title": "Öntanımı değiştir",
+			"desc": "Öntanımlı özelleştirilmiş alanlar her zaman üye düzenleme ekranında gözükecektir"
+		},
+		"delete": {
+			"title": "Özelleştirilmiş alanı sil",
+			"confirm": "Bu özelleştirilmiş alanı silmek istediğinize emin misiniz?"
+		}
+	}
+}
