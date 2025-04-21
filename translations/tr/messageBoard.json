@@ -27,6 +27,9 @@
 		"member": "Mesaj yazarını düzenle",
 		"attachPoll": "Bu mesaj bir anket bağla",
 		"deleteAttachedPoll": "Bağlı anketi sil",
-		"pollIsMultipleChoice": "Birden fazla seçenek seçilmesine izin ver"
+		"pollIsMultipleChoice": "Birden fazla seçime izin ver",
+		"title": "Başlık",
+		"body": "Mesaj gövdesi",
+		"isPinned": "Sabitlenmiş"
 	}
 }
