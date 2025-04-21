@@ -1,3 +1,6 @@
 {
-	"header": "Güvenlik"
+	"header": "Güvenlik",
+	"applock": {
+		"title": "Uygulama Kilidi"
+	}
 }
