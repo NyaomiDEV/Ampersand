@@ -16,10 +16,12 @@
 	"time": "Zaman",
 	"timeSizes": {
 		"years": {
-			"short": "Y"
+			"short": "Y",
+			"long": "yıl"
 		},
 		"months": {
-			"short": "A"
+			"short": "A",
+			"long": "ay"
 		},
 		"days": {
 			"long": "gün",
@@ -36,6 +38,15 @@
 		"seconds": {
 			"long": "saniye",
 			"short": "s"
+		},
+		"weekdays": {
+			"monday": "Pazartesi",
+			"tuesday": "Salı",
+			"wednesday": "Çarşamba",
+			"thursday": "Perşembe",
+			"friday": "Cuma",
+			"saturday": "Cumartesi",
+			"sunday": "Pazar"
 		}
 	}
 }

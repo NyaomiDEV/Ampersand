@@ -18,7 +18,8 @@
 		"type": {
 			"header": "Etiket tipi",
 			"member": "Üye",
-			"desc": "Not: etiket tipini sadece yaratırken tanımlayabilirsiniz!"
+			"desc": "Not: etiket tipini sadece yaratırken tanımlayabilirsiniz!",
+			"journal": "Günlük"
 		},
 		"members": {
 			"title": "Bu etiketi kullanarak üyeleri seçin",

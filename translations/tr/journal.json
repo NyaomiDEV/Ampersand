@@ -5,9 +5,9 @@
 	"private": "Bu gönderi özeldir",
 	"alertSubheader": "Bu gönderiyi okumak istediğinize emin misiniz?",
 	"edit": {
-		"header": "İleti",
-		"headerAdd": "Yeni ileti ekle",
-		"headerEdit": "İletiyi düzenle",
+		"header": "Gönder",
+		"headerAdd": "Yeni gönderi ekle",
+		"headerEdit": "Gönderiyi düzenle",
 		"author": "Yazar",
 		"title": "Başlık",
 		"subtitle": "Altbaşlık",
@@ -16,7 +16,7 @@
 		"isPrivate": "Özel olarak ayarla",
 		"delete": {
 			"title": "Günlük iletisini sil",
-			"confirm": "Bu iletiyi silmek istediğinize emin misiniz?"
+			"confirm": "Bu gönderiyi silmek istediğine emin misin?"
 		},
 		"contentWarning": "İçerik uyarısı"
 	}
