@@ -1,3 +1,5 @@
 {
-	"header": "Hakkında"
+	"header": "Hakkında",
+	"version": "Sürüm {{version}}",
+	"madein": "İtalya'da sevgiyle yapıldı"
 }
