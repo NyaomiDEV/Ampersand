@@ -18,7 +18,8 @@
 			"title": "Günlük gönderisini sil",
 			"confirm": "Bu gönderiyi silmek istediğinize emin misiniz?"
 		},
-		"contentWarning": "İçerik uyarısı"
+		"contentWarning": "İçerik uyarısı",
+		"isPinned": "Sabitlenmiş gönderi"
 	},
 	"pinnedPosts": "Sabitlenmiş iletiler"
 }
