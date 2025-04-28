@@ -1,6 +1,6 @@
 import { t } from "i18next";
 import { UUIDable, Member, UUID } from "../entities";
-import { nilUid } from "../../util/misc";
+import { maxUid, nilUid } from "../../util/misc";
 
 const impl = await ("isTauri" in window ? import('../impl/tauri/members') : import('../impl/dexie/members'));
 
@@ -31,4 +31,13 @@ export const defaultMember = (): Member => ({
 	dateCreated: new Date(0),
 	tags: [],
 	uuid: nilUid
+});
+
+export const defaultCustomFront = (): Member => ({
+	name: t("members:deletedCustomFront"),
+	isArchived: false,
+	isCustomFront: true,
+	dateCreated: new Date(0),
+	tags: [],
+	uuid: maxUid
 });
