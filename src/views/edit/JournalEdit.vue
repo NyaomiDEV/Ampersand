@@ -60,7 +60,8 @@
 		title: "",
 		body: "",
 		tags: [],
-		isPrivate: false
+		isPrivate: false,
+		isPinned: false
 	};
 
 	const post = ref({...emptyPost});
@@ -254,6 +255,14 @@
 
 				<IonItem>
 					<IonTextarea auto-grow :placeholder="$t('journal:edit.body')" v-model="post.body" />
+				</IonItem>
+
+				<IonItem button detail="false">
+					<IonToggle v-model="post.isPinned">
+						<IonLabel>
+							{{ $t("journal:edit.isPinned") }}
+						</IonLabel>
+					</IonToggle>
 				</IonItem>
 
 				<IonItem button detail="false">

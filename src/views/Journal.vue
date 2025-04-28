@@ -66,11 +66,10 @@
 	});
 
 	async function getEntries(_date: Date) {
-		const dateEntries = await getJournalPostsOfDay(_date);
+		const dateEntries = await getJournalPostsOfDay(_date, true);
 		posts.value = dateEntries;
 		return;
-		}
-
+	}
 
 	async function resetEntries() {
 		posts.value = undefined;
@@ -80,7 +79,15 @@
 	function getGrouped(entries: JournalPostComplete[]) {
 		const map = new Map<string, JournalPostComplete[]>();
 
-		for (const entry of entries.sort((a, b) => b.date.getTime() - a.date.getTime())) {
+		for(const entry of entries.filter(x => x.isPinned).sort((a, b) => b.date.getTime() - a.date.getTime())){
+			const collection = map.get("pinnedPosts");
+			if(!collection)
+				map.set("pinnedPosts", [entry])
+			else
+				collection.push(entry)
+		}
+
+		for (const entry of entries.filter(x => !x.isPinned).sort((a, b) => b.date.getTime() - a.date.getTime())) {
 			const key = dayjs(entry.date).startOf('day').toISOString();
 
 			const collection = map.get(key);
@@ -90,7 +97,7 @@
 				collection.push(entry);
 		}
 
-		return [...map.entries()].sort((a, b) => dayjs(b[0]).valueOf() - dayjs(a[0]).valueOf());
+		return [...map.entries()].sort((a, b) => a[0] === "pinnedPosts" ? -1 : dayjs(b[0]).valueOf() - dayjs(a[0]).valueOf());
 	}
 
 	async function populateHighlightedDays() {
@@ -176,7 +183,11 @@
 			<IonList :inset="isIOS">
 				<template v-for="tuple in getGrouped(filteredPosts || [])" :key="tuple[0]">
 					<IonItemDivider sticky>
-						<IonLabel>{{ dayjs(tuple[0]).format("LL") }}</IonLabel>
+						<IonLabel>{{
+							tuple[0] === "pinnedPosts"
+							? $t("journal:pinnedPosts")
+							: dayjs(tuple[0]).format("LL")
+							}}</IonLabel>
 					</IonItemDivider>
 					<JournalPostCard :post v-for="post in tuple[1]" :key="post.uuid" @click="openPost(post)" />
 				</template>

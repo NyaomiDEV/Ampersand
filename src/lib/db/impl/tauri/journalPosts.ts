@@ -76,12 +76,12 @@ export async function updateJournalPost(uuid: UUID, newContent: Partial<JournalP
 	}
 }
 
-export async function getJournalPostsOfDay(date: Date) {
+export async function getJournalPostsOfDay(date: Date, includePinned: boolean) {
 	const _date = dayjs(date).startOf("day");
 
 	return (await Promise.all(
 		db.journalPosts.index
-		.filter(x => dayjs(x.date!).startOf('day').valueOf() === _date.valueOf())
+		.filter(x => (includePinned && x.isPinned) || dayjs(x.date!).startOf('day').valueOf() === _date.valueOf())
 		.map(async x => await db.journalPosts.get(x.uuid))
 	)).filter(x => !!x);
 }

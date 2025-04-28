@@ -7,7 +7,7 @@ db.version(1).stores({
 	boardMessages: "uuid, date",
 	chats: "uuid, name",
 	chatMessages: "uuid, chat, date",
-	frontingEntries: "uuid, startTime, endTime",
+	frontingEntries: "uuid, member, startTime, endTime",
 	journalPosts: "uuid, date",
 	members: "uuid",
 	reminders: "uuid",

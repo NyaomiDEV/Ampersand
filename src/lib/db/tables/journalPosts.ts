@@ -30,8 +30,8 @@ export function updateJournalPost(uuid: UUID, newContent: Partial<JournalPost>){
 	return impl.updateJournalPost(uuid, newContent);
 }
 
-export function getJournalPostsOfDay(date: Date){
-	return impl.getJournalPostsOfDay(date);
+export function getJournalPostsOfDay(date: Date, includePinned: boolean){
+	return impl.getJournalPostsOfDay(date, includePinned);
 }
 
 export function getJournalPostsDays(){

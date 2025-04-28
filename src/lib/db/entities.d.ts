@@ -70,6 +70,7 @@ export interface JournalPost extends UUIDable {
 	body: string,
 	cover?: File,
 	tags: UUID[], // array of UUIDs
+	isPinned: boolean,
 	isPrivate: boolean,
 	contentWarning?: string
 }
