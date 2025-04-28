@@ -4,7 +4,7 @@ import { t } from "i18next";
 import { isTauri } from "../../mode";
 import { fetch as tauriFetch } from "@tauri-apps/plugin-http";
 import { resizeImage } from "../../util/image";
-import { nilUid } from "../../util/misc";
+import { maxUid, nilUid } from "../../util/misc";
 
 const fetch = isTauri() ? tauriFetch : window.fetch;
 
@@ -231,7 +231,7 @@ async function frontingEntry(spExport: any, memberMapping: Map<string, string>){
 		if (!spFrontHistory.startTime) continue; // front entries without startTime are null for us
 		console.debug("[SP] Creating fronting entry for:", spFrontHistory);
 		const frontingEntry: FrontingEntry = {
-			member: memberMapping.get(spFrontHistory.member) || nilUid,
+			member: memberMapping.get(spFrontHistory.member) || (spFrontHistory.custom ? maxUid : nilUid),
 			startTime: new Date(spFrontHistory.startTime),
 			endTime: spFrontHistory.endTime ? new Date(spFrontHistory.endTime) : undefined,
 			customStatus: spFrontHistory.customStatus?.length ? spFrontHistory.customStatus : undefined,
@@ -350,6 +350,7 @@ async function journalPost(spExport: any, memberMapping: Map<string, string>){
 			member: spNote.member ? memberMapping.get(spNote.member) || nilUid : nilUid,
 			tags: [],
 			isPrivate: false,
+			isPinned: false,
 			date: new Date(spNote.date || spNote.lastOperationTime),
 			uuid: window.crypto.randomUUID()
 		}
