@@ -3,6 +3,7 @@
 	"searchPlaceholder": "Search members...",
 	"select": "Select a member",
 	"deletedMember": "Deleted member",
+	"deletedCustomFront": "Deleted custom front",
 	"actions": {
 		"addToFront": "Add to front",
 		"setMainFronter": "Set as main fronter",

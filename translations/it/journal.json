@@ -3,6 +3,7 @@
 	"searchPlaceholder": "Cerca nel diario...",
 	"contentWarning": "Questo post ha del contenuto sensibile",
 	"private": "Questo post è privato",
+	"pinnedPosts": "Post fissati",
 	"alertSubheader": "Vuoi veramente leggere questo post?",
 	"edit": {
 		"header": "Post",
@@ -13,7 +14,8 @@
 		"subtitle": "Sottotitolo",
 		"body": "Corpo del post",
 		"tags": "Tag",
-		"isPrivate": "Imposta come privato",
+		"isPinned": "Post fissato",
+		"isPrivate": "Post privato",
 		"contentWarning": "Avviso sul contenuto sensibile",
 		"delete": {
 			"title": "Elimina post dal diario",

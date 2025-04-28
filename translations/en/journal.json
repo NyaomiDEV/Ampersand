@@ -3,6 +3,7 @@
 	"searchPlaceholder": "Search the journal...",
 	"contentWarning": "This post has sensitive content inside",
 	"private": "This post is private",
+	"pinnedPosts": "Pinned posts",
 	"alertSubheader": "Do you really want to read this post?",
 	"edit": {
 		"header": "Post",
@@ -13,7 +14,8 @@
 		"subtitle": "Subtitle",
 		"body": "Post body",
 		"tags": "Tags",
-		"isPrivate": "Set as private",
+		"isPinned": "Pinned post",
+		"isPrivate": "Private post",
 		"contentWarning": "Content warning",
 		"delete": {
 			"title": "Delete journal post",

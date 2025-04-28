@@ -27,7 +27,7 @@
 		"member": "Edit message author",
 		"title": "Title",
 		"body": "Message body",
-		"isPinned": "Pinned",
+		"isPinned": "Pin message",
 		"attachPoll": "Attach a poll to this message",
 		"deleteAttachedPoll": "Delete attached poll",
 		"pollIsMultipleChoice": "Allow selecting multiple choices",

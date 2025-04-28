@@ -28,7 +28,7 @@
 		"member": "Modifica autorə del messaggio",
 		"title": "Titolo",
 		"body": "Corpo del messaggio",
-		"isPinned": "Fissato",
+		"isPinned": "Fissa messaggio",
 		"attachPoll": "Allega un sondaggio al messaggio",
 		"deleteAttachedPoll": "Elimina il sondaggio allegato",
 		"pollIsMultipleChoice": "Consenti più di una scelta",
