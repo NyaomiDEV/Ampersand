@@ -4,6 +4,7 @@ import { Ref } from "vue";
 import { appConfig } from "../config";
 
 export const nilUid = "00000000-0000-0000-0000-000000000000";
+export const maxUid = "FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF";
 
 export function getFiles(contentType?: string, multiple?: boolean): Promise<File[]> {
 	return new Promise(resolve => {
