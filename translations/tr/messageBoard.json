@@ -30,7 +30,7 @@
 		"pollIsMultipleChoice": "Birden fazla seçime izin ver",
 		"title": "Başlık",
 		"body": "Mesaj gövdesi",
-		"isPinned": "Sabitlenmiş",
+		"isPinned": "Nesaj sabitle",
 		"pollAddNewChoice": "Ankete yeni bir seçenek ekle",
 		"pollChoice": "Seçenek açıklaması",
 		"pollEditWarning": "Anketin herhangi bir ayrıntısının değiştirilmesi oyları sıfırlar!",
