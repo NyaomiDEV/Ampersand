@@ -13,7 +13,7 @@
 		"subtitle": "Altbaşlık",
 		"body": "İleti gövdesi",
 		"tags": "Etiketler",
-		"isPrivate": "Özel olarak ayarla",
+		"isPrivate": "Özel gönderi",
 		"delete": {
 			"title": "Günlük gönderisini sil",
 			"confirm": "Bu gönderiyi silmek istediğinize emin misiniz?"
