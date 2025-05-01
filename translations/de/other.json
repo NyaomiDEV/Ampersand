@@ -15,13 +15,16 @@
 	"time": "Dauer",
 	"timeSizes": {
 		"years": {
-			"long": "Jahre"
+			"long": "Jahre",
+			"short": "Y"
 		},
 		"months": {
-			"long": "Monate"
+			"long": "Monate",
+			"short": "M"
 		},
 		"days": {
-			"long": "Tage"
+			"long": "Tage",
+			"short": "D"
 		},
 		"weekdays": {
 			"monday": "Montag",
@@ -33,13 +36,16 @@
 			"sunday": "Sonntag"
 		},
 		"hours": {
-			"long": "Stunden"
+			"long": "Stunden",
+			"short": "h"
 		},
 		"minutes": {
-			"long": "Minuten"
+			"long": "Minuten",
+			"short": "m"
 		},
 		"seconds": {
-			"long": "Sekunden"
+			"long": "Sekunden",
+			"short": "Sek"
 		}
 	}
 }
