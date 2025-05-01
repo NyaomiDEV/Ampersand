@@ -4,7 +4,8 @@
 		"defaultPollValues": {
 			"yes": "Ja",
 			"veto": "Dagegen",
-			"abstain": "Enthaltung"
+			"abstain": "Enthaltung",
+			"no": "Nein"
 		},
 		"voteCast": {
 			"reason": "Gebe einen Grund an",
