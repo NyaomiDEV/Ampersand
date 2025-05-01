@@ -10,10 +10,12 @@
 	"uiVariant": {
 		"title": "Benutzeroberflächen-Variante",
 		"auto": "Automatisch",
-		"light": "Hell"
+		"light": "Hell",
+		"dark": "Dunkel"
 	},
 	"useAccentColor": {
-		"desc": "Eigene Akzentfarbe nutzen"
+		"desc": "Eigene Akzentfarbe nutzen",
+		"title": "Akzentfarbe"
 	},
 	"accentColor": {
 		"title": "Akzentfarbe auswählen"

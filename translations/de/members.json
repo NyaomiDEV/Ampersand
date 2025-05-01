@@ -11,6 +11,13 @@
 		"isPinned": "Mitglied anpinnen",
 		"showBoardEntries": "Anschlagbrett-Nachrichten anzeigen",
 		"showJournalEntries": "Zeige Tagebuch-Einträge",
-		"memberID": "Mitgliedernummer: {{memberID}}"
+		"memberID": "Mitgliedernummer: {{memberID}}",
+		"name": "Name",
+		"pronouns": "Pronomen",
+		"role": "Rolle",
+		"description": "Beschreibung",
+		"noDescription": "Keine Beschreibung",
+		"archived": "Archiviert",
+		"header": "Mitglied"
 	}
 }
