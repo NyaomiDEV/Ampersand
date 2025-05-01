@@ -1,1 +1,17 @@
-{}
+{
+	"header": "Asset-Manager",
+	"searchPlaceholder": "Assets suchen …",
+	"add": {
+		"header": "Asset hinzufügen",
+		"attachment": "Anhang hinzufügen"
+	},
+	"edit": {
+		"header": "Asset bearbeiten",
+		"friendlyName": "Name bearbeiten",
+		"attachment": "Anhang ersetzen",
+		"delete": {
+			"title": "Asset löschen",
+			"confirm": "Bist du dir sicher, dass du dieses Asset löschen möchtest?"
+		}
+	}
+}
