@@ -1,3 +1,31 @@
 {
-	"header": "Barrierefreiheit"
+	"header": "Barrierefreiheit",
+	"highLegibilityFont": {
+		"title": "Lesbare Schriftart",
+		"desc": "Nutze eine lesbare Schriftart anstelle der Standard-Schriftart des Gerätes"
+	},
+	"highLegibilityFontType": {
+		"title": "Lesbare Schriftart"
+	},
+	"uiVariant": {
+		"title": "Benutzeroberflächen-Variante",
+		"auto": "Automatisch",
+		"light": "Hell"
+	},
+	"useAccentColor": {
+		"desc": "Eigene Akzentfarbe nutzen"
+	},
+	"accentColor": {
+		"title": "Akzentfarbe auswählen"
+	},
+	"reducedMotion": {
+		"title": "Reduzierte Bewegung",
+		"desc": "Animationen deaktivieren"
+	},
+	"fontScale": {
+		"title": "Größe der Benutzeroberfläche"
+	},
+	"chatFontScale": {
+		"title": "Größe der Chat-Benutzeroberfläche"
+	}
 }

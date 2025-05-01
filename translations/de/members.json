@@ -1,5 +1,16 @@
 {
 	"header": "Mitglieder",
 	"searchPlaceholder": "Mitglieder suchen...",
-	"select": "Mitglied auswählen"
+	"select": "Mitglied auswählen",
+	"deletedMember": "Mitglied löschen",
+	"edit": {
+		"headerAdd": "Mitglied hinzufügen",
+		"headerEdit": "Mitglied bearbeiten",
+		"color": "Bevorzugte Farbe",
+		"customFieldsAdd": "Eigenes Feld hinzufügen",
+		"isPinned": "Mitglied anpinnen",
+		"showBoardEntries": "Anschlagbrett-Nachrichten anzeigen",
+		"showJournalEntries": "Zeige Tagebuch-Einträge",
+		"memberID": "Mitgliedernummer: {{memberID}}"
+	}
 }

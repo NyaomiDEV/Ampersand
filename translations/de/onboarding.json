@@ -1,6 +1,7 @@
 {
 	"welcomeScreen": {
-		"header": "Willkommen bei Ampersand!"
+		"header": "Willkommen bei Ampersand!",
+		"start": "Starte dein Abenteuer!"
 	},
 	"importScreen": {
 		"header": "Möchtest du deine Daten importieren?",
@@ -8,6 +9,19 @@
 		"pluralKit": "Ja, PluralKit",
 		"tupperbox": "Ja, Tupperbox",
 		"startFromScratch": "Nein, ich starte neu",
-		"pleaseWait": "Bitte warte, während wir deine Daten importieren"
+		"pleaseWait": "Bitte warte, während wir deine Daten importieren",
+		"prevInstall": "Ja, von der vorherigen Installation",
+		"error": "Beim Importieren der Sicherheitskopie ist ein Fehler aufgetreten. Bitte wähle eine andere Option."
+	},
+	"memberInfo": {
+		"header": "Erzähle uns mehr über dich!",
+		"description": "Ein paar Informationen über dich..."
+	},
+	"systemInfo": {
+		"description": "Ein paar Informationen über euch alle..."
+	},
+	"endScreen": {
+		"header": "Danke, dass du Ampersand nutzt!",
+		"startButton": "Lass uns loslegen!"
 	}
 }

@@ -2,13 +2,36 @@
 	"polls": {
 		"boardMessageContainsPoll": "Enthält Umfrage",
 		"defaultPollValues": {
-			"yes": "Ja"
+			"yes": "Ja",
+			"veto": "Dagegen",
+			"abstain": "Enthaltung"
+		},
+		"voteCast": {
+			"reason": "Gebe einen Grund an",
+			"reasonHint": "Grund"
+		},
+		"resultsHeader": "Abstimmungsergebnisse",
+		"resultsButton": "Zeige Umfrageergebnisse",
+		"choice": {
+			"desc_one": "{{count}} Abstimmende/r",
+			"desc_other": "{{count}} Abstimmende"
 		}
 	},
 	"searchPlaceholder": "Suche nach Nachrichten...",
 	"edit": {
 		"title": "Titel",
 		"body": "Nachrichtentext",
-		"pollIsMultipleChoice": "Auswahl mehrerer Antworten erlauben"
-	}
+		"pollIsMultipleChoice": "Auswahl mehrerer Antworten erlauben",
+		"header": "Nachricht bearbeiten",
+		"isPinned": "Nachricht anheften",
+		"attachPoll": "Umfrage zu dieser Nachricht hinzufügen",
+		"deleteAttachedPoll": "Angefügte Umfrage löschen",
+		"pollAddNewChoice": "Auswahlmöglichkeit hinzufügen",
+		"pollChoice": "Auswahl-Beschreibung",
+		"delete": {
+			"title": "Nachricht auf dem Anschlagbrett löschen",
+			"confirm": "Bist du dir sicher, dass du die Nachricht löschen möchtest?"
+		}
+	},
+	"header": "Anschlagbrett"
 }
