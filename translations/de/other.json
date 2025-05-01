@@ -3,5 +3,43 @@
 		"local": "Deutsch",
 		"inEnglish": "German"
 	},
-	"genericDeleteDesc": "Du kannst diese Aktion nicht rückgängig machen!"
+	"genericDeleteDesc": "Du kannst diese Aktion nicht rückgängig machen!",
+	"storagePersistence": {
+		"header": "Warnung"
+	},
+	"alerts": {
+		"ok": "OK",
+		"cancel": "Abbrechen"
+	},
+	"back": "Zurück",
+	"time": "Dauer",
+	"timeSizes": {
+		"years": {
+			"long": "Jahre"
+		},
+		"months": {
+			"long": "Monate"
+		},
+		"days": {
+			"long": "Tage"
+		},
+		"weekdays": {
+			"monday": "Montag",
+			"tuesday": "Dienstag",
+			"wednesday": "Mittwoch",
+			"thursday": "Donnerstag",
+			"friday": "Freitag",
+			"saturday": "Samstag",
+			"sunday": "Sonntag"
+		},
+		"hours": {
+			"long": "Stunden"
+		},
+		"minutes": {
+			"long": "Minuten"
+		},
+		"seconds": {
+			"long": "Sekunden"
+		}
+	}
 }

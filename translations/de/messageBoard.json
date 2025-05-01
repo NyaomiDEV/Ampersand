@@ -1,6 +1,14 @@
 {
 	"polls": {
-		"boardMessageContainsPoll": "Enthält Umfrage"
+		"boardMessageContainsPoll": "Enthält Umfrage",
+		"defaultPollValues": {
+			"yes": "Ja"
+		}
 	},
-	"searchPlaceholder": "Suche nach Nachrichten..."
+	"searchPlaceholder": "Suche nach Nachrichten...",
+	"edit": {
+		"title": "Titel",
+		"body": "Nachrichtentext",
+		"pollIsMultipleChoice": "Auswahl mehrerer Antworten erlauben"
+	}
 }

@@ -11,7 +11,10 @@
 		"delete": {
 			"title": "Tagebucheintrag löschen",
 			"confirm": "Bist du sicher, dass du diesen Eintrag löschen möchtest?"
-		}
+		},
+		"subtitle": "Untertitel",
+		"contentWarning": "Inhaltswarnung",
+		"author": "Autor"
 	},
 	"header": "Tagebuch",
 	"searchPlaceholder": "Tagebuch durchsuchen...",
