@@ -1,1 +1,21 @@
-{}
+{
+	"pinnedPosts": "Angeheftete Einträge",
+	"edit": {
+		"isPinned": "Angehefteter Eintrag",
+		"body": "Text des Eintrages",
+		"isPrivate": "Privater Eintrag",
+		"title": "Titel",
+		"header": "Eintrag",
+		"headerAdd": "Eintrag hinzufügen",
+		"headerEdit": "Eintrag bearbeiten",
+		"delete": {
+			"title": "Tagebucheintrag löschen",
+			"confirm": "Bist du sicher, dass du diesen Eintrag löschen möchtest?"
+		}
+	},
+	"header": "Tagebuch",
+	"searchPlaceholder": "Tagebuch durchsuchen...",
+	"contentWarning": "Dieser Eintrag hat sensible Inhalte",
+	"private": "Dieser Eintrag ist privat",
+	"alertSubheader": "Möchtest du diesen Eintrag wirklich lesen?"
+}

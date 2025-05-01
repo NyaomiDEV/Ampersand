@@ -2,5 +2,6 @@
 	"languageName": {
 		"local": "Deutsch",
 		"inEnglish": "German"
-	}
+	},
+	"genericDeleteDesc": "Du kannst diese Aktion nicht rückgängig machen!"
 }
