@@ -5,7 +5,8 @@
 	},
 	"genericDeleteDesc": "Je zal deze actie niet ongedaan kunnen maken!",
 	"storagePersistence": {
-		"header": "Waarschuwing"
+		"header": "Waarschuwing",
+		"content": "Ampersand kan je data niet permanent op je apparaat opslaan. Als je op Firefox bent, geef Ampersand alstublieft toestemming om dit te doen. Als je op een browser bent die op Chromium gebaseerd is (zoals Chrome, Edge, Opera, Vivaldi, etc...), installeer dan alstublieft Ampersand als een web app / voeg het toe aan je Desktop / Home scherm. Als dit bericht niet verdwijnt, denk erover na om je data vaak te backuppen uit de Import/Export pagina."
 	},
 	"timeSizes": {
 		"years": {

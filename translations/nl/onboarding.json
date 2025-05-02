@@ -1,1 +1,33 @@
-{}
+{
+	"welcomeScreen": {
+		"header": "Welkom bij Ampersand!",
+		"start": "Begin je reis!"
+	},
+	"importScreen": {
+		"header": "Zou je je data willen importeren?",
+		"prevInstall": "Ja, vorige installatie",
+		"simplyPlural": "Ja, Simply Plural",
+		"pluralKit": "Ja, PluralKit",
+		"tupperbox": "Ja, Tupperbox",
+		"startFromScratch": "Nee, ik ga vanaf het begin beginnen",
+		"pleaseWait": "Wacht alstublieft terwijl we je data importeren",
+		"error": "Fout tijdens het importeren van de backup. Selecteer alstublieft een andere optie.",
+		"errorSp": "Fout tijdens het importeren van de Simply Plural export. Selecteer alstublieft een andere optie.",
+		"errorPk": "Fout tijdens het importeren van de PluralKit export. Selecteer alstublieft een andere optie.",
+		"errorTu": "Fout tijdens het importeren van de Tupperbox export. Selecteer alstublieft een andere optie."
+	},
+	"systemInfo": {
+		"header": "Vertel ons over je systeem!",
+		"name": "Collectieve naam",
+		"description": "Een beetje over jullie allemaal..."
+	},
+	"memberInfo": {
+		"header": "Vertels ons meer over jou!",
+		"description": "Een beetje over jezelf...",
+		"invitation": "Blijf je profiel aanpassen nadat je klaar bent met de introductie!"
+	},
+	"endScreen": {
+		"header": "Dankjewel voor Ampersand te kiezen!",
+		"startButton": "Laten we beginnen!"
+	}
+}

@@ -12,9 +12,9 @@
 		"subtitle": "Ondertitel",
 		"body": "Post inhoud",
 		"tags": "Tags",
-		"isPrivate": "Maak privé",
+		"isPrivate": "Privé post",
 		"delete": {
-			"title": "Verwijder dagboek-post",
+			"title": "Verwijder dagboek post",
 			"confirm": "Weet je zeker dat je deze post wilt verwijderen?"
 		},
 		"contentWarning": "Contentwaarschuwing",

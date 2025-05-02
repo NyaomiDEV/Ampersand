@@ -11,8 +11,27 @@
 			"member": "Pas lid tag aan",
 			"journal": "Pas dagboek tag aan"
 		},
-		"description": "Tagbeschrijving",
-		"color": "Tagkleur",
-		"name": "Tagnaam"
+		"description": "Tag beschrijving",
+		"color": "Tag kleur",
+		"name": "Tag naam",
+		"type": {
+			"header": "Tag soort",
+			"member": "Lid",
+			"desc": "Nota: je kan alleen de tag soort kiezen wanneer het gemaakt wordt!"
+		},
+		"members": {
+			"title": "Kies leden met deze tag",
+			"desc_one": "{{count}} lid gebruikt deze tag",
+			"desc_other": "{{count}} leden gebruiken deze tag"
+		},
+		"delete": {
+			"confirm": "Weet je zeker dat je deze tag wilt verwijderen?"
+		},
+		"showJournal": {
+			"title": "Laat dagboek posts zien die deze tag hebben",
+			"desc_one": "{{count}} dagboek post heeft deze tag",
+			"desc_other": "{{count}} dagboek posts hebben deze tag"
+		},
+		"viewInLists": "Laat zien in lijsten"
 	}
 }
