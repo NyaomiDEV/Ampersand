@@ -43,6 +43,9 @@
 		}
 	},
 	"alerts": {
-		"ok": "Oké"
-	}
+		"ok": "Oké",
+		"cancel": "Annuleren"
+	},
+	"back": "Terug",
+	"time": "Tijd"
 }

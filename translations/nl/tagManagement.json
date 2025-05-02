@@ -12,6 +12,7 @@
 			"journal": "Pas dagboek tag aan"
 		},
 		"description": "Tagbeschrijving",
-		"color": "Tagkleur"
+		"color": "Tagkleur",
+		"name": "Tagnaam"
 	}
 }
