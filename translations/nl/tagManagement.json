@@ -1,5 +1,17 @@
 {
 	"header": "Tag management",
 	"searchPlaceholder": "Zoeken naar tags...",
-	"select": "Selecteer een aantal tags"
+	"select": "Selecteer een aantal tags",
+	"selector": {
+		"journal": "Dagboek tags",
+		"member": "Lid tags"
+	},
+	"edit": {
+		"header": {
+			"member": "Pas lid tag aan",
+			"journal": "Pas dagboek tag aan"
+		},
+		"description": "Tagbeschrijving",
+		"color": "Tagkleur"
+	}
 }

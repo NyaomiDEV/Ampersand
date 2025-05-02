@@ -3,11 +3,40 @@
 	"polls": {
 		"boardMessageContainsPoll": "Bevat peiling",
 		"voteCast": {
-			"voter": "Selecteer de kiezer"
+			"voter": "Selecteer de kiezer",
+			"reason": "Vertel de reden",
+			"reasonHint": "Reden",
+			"retractConfirmation": "Weet je zeker dat je deze stem wilt weghalen?"
+		},
+		"resultsHeader": "Peiling resultaten",
+		"resultsButton": "Laat peiling resultaten zien",
+		"defaultPollValues": {
+			"yes": "Ja",
+			"no": "Nee",
+			"veto": "Veto",
+			"abstain": "Niet kiezen"
+		},
+		"choice": {
+			"desc_one": "{{count}} stemmer",
+			"desc_other": "{{count}} stemmers"
 		}
 	},
 	"header": "Prikbord",
 	"edit": {
-		"title": "Titel"
+		"title": "Titel",
+		"header": "Bericht aanpassen",
+		"member": "Bericht auteur aanpassen",
+		"body": "Bericht inhoud",
+		"isPinned": "Maak bericht vast",
+		"attachPoll": "Zet een peiling in dit bericht",
+		"deleteAttachedPoll": "Verwijder peiling",
+		"pollIsMultipleChoice": "Laat het selecteren van meerdere keuzes toe",
+		"pollAddNewChoice": "Voeg een nieuwe keuze toe aan de peiling",
+		"pollChoice": "Keuze beschrijving",
+		"pollEditWarning": "Het veranderen van eenderwelke peiling details zal de stemmen resetten!",
+		"delete": {
+			"title": "Verwijder bericht op prikbord",
+			"confirm": "Weet je zeker dat je dit bericht wilt verwijderen?"
+		}
 	}
 }

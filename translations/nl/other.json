@@ -6,5 +6,43 @@
 	"genericDeleteDesc": "Je zal deze actie niet ongedaan kunnen maken!",
 	"storagePersistence": {
 		"header": "Waarschuwing"
+	},
+	"timeSizes": {
+		"years": {
+			"long": "jaren",
+			"short": "J"
+		},
+		"months": {
+			"long": "maanden",
+			"short": "M"
+		},
+		"days": {
+			"long": "dagen",
+			"short": "D"
+		},
+		"weekdays": {
+			"monday": "Maandag",
+			"tuesday": "Dinsdag",
+			"wednesday": "Woensdag",
+			"thursday": "Donderdag",
+			"friday": "Vrijdag",
+			"saturday": "Zaterdag",
+			"sunday": "Zondag"
+		},
+		"hours": {
+			"long": "uren",
+			"short": "u"
+		},
+		"minutes": {
+			"long": "minuten",
+			"short": "m"
+		},
+		"seconds": {
+			"long": "seconden",
+			"short": "s"
+		}
+	},
+	"alerts": {
+		"ok": "Oké"
 	}
 }

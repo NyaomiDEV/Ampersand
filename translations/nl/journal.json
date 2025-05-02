@@ -17,7 +17,9 @@
 			"title": "Verwijder dagboek-post",
 			"confirm": "Weet je zeker dat je deze post wilt verwijderen?"
 		},
-		"contentWarning": "Contentwaarschuwing"
+		"contentWarning": "Contentwaarschuwing",
+		"isPinned": "Vastgemaakte post"
 	},
-	"contentWarning": "Deze post bevat gevoelige inhoud"
+	"contentWarning": "Deze post bevat gevoelige inhoud",
+	"pinnedPosts": "Vastgemaakte posts"
 }

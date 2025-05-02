@@ -1,5 +1,6 @@
 {
 	"remindersAreNotFinished": {
-		"header": "Reminders zijn nog niet klaar!"
-	}
+		"header": "Herinneringen zijn nog niet klaar!"
+	},
+	"header": "Herinneringen"
 }
