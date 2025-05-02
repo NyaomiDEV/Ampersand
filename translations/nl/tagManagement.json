@@ -17,7 +17,8 @@
 		"type": {
 			"header": "Tag soort",
 			"member": "Lid",
-			"desc": "Nota: je kan alleen de tag soort kiezen wanneer het gemaakt wordt!"
+			"desc": "Nota: je kan alleen de tag soort kiezen wanneer het gemaakt wordt!",
+			"journal": "Dagboek"
 		},
 		"members": {
 			"title": "Kies leden met deze tag",
@@ -25,7 +26,8 @@
 			"desc_other": "{{count}} leden gebruiken deze tag"
 		},
 		"delete": {
-			"confirm": "Weet je zeker dat je deze tag wilt verwijderen?"
+			"confirm": "Weet je zeker dat je deze tag wilt verwijderen?",
+			"title": "Tag verwijderen"
 		},
 		"showJournal": {
 			"title": "Laat dagboek posts zien die deze tag hebben",
