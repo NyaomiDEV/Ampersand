@@ -36,6 +36,7 @@
 	import TagChip from "../../components/tag/TagChip.vue";
 	import MemberSelect from "../../modals/MemberSelect.vue";
 	import TagListSelect from "../../modals/TagListSelect.vue";
+	import DatePopupPicker from "../../components/DatePopupPicker.vue";
 	import { PartialBy } from "../../lib/types";
 	import { useRoute } from "vue-router";
 	import { useTranslation } from "i18next-vue";
@@ -56,8 +57,9 @@
 	const tags = shallowRef<Tag[]>([]);
 	const tagSelectionModal = useTemplateRef("tagSelectionModal");
 
-	const emptyPost: PartialBy<JournalPostComplete, "uuid" | "member" | "date"> = {
+	const emptyPost: PartialBy<JournalPostComplete, "uuid" | "member"> = {
 		title: "",
+		date: new Date(),
 		body: "",
 		tags: [],
 		isPrivate: false,
@@ -234,6 +236,19 @@
 						</IonLabel>
 					</template>
 				</IonItem>
+
+				<IonItem button @click="($refs.datePicker as any)?.$el.present()">
+						<IonLabel>
+							<h2>{{ $t("journal:edit.date") }}</h2>
+							<p>{{ formatDate(post.date, "expanded") }}</p>
+						</IonLabel>
+						<DatePopupPicker
+							v-model="post.date"
+							showDefaultButtons
+							ref="datePicker"
+							:title="$t('journal:edit.date')"
+						/>
+					</IonItem>
 
 				<IonItem class="title">
 					<IonInput :placeholder="$t('journal:edit.title')" v-model="post.title" />
