@@ -67,4 +67,8 @@
 		text-overflow: ellipsis;
 		overflow: hidden;
 	}
+
+	p.custom-status {
+		text-wrap: wrap;
+	}
 </style>
