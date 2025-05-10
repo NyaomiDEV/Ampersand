@@ -19,7 +19,8 @@
 			"confirm": "Bu gönderiyi silmek istediğinize emin misiniz?"
 		},
 		"contentWarning": "İçerik uyarısı",
-		"isPinned": "Sabitlenmiş gönderi"
+		"isPinned": "Sabitlenmiş gönderi",
+		"date": "Tarihi düzenle"
 	},
 	"pinnedPosts": "Sabitlenmiş gönderiler"
 }
