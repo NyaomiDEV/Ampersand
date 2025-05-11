@@ -14,7 +14,9 @@
 		},
 		"subtitle": "Untertitel",
 		"contentWarning": "Inhaltswarnung",
-		"author": "Autor"
+		"author": "Autor",
+		"tags": "Schlagwörter",
+		"date": "Datum bearbeiten"
 	},
 	"header": "Tagebuch",
 	"searchPlaceholder": "Tagebuch durchsuchen...",
