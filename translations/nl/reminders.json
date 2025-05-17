@@ -2,5 +2,9 @@
 	"remindersAreNotFinished": {
 		"header": "Herinneringen zijn nog niet klaar!"
 	},
-	"header": "Herinneringen"
+	"header": "Herinneringen",
+	"edit": {
+		"header": "Wijzig reminder",
+		"name": "Reminder naam"
+	}
 }
