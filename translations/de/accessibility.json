@@ -5,7 +5,10 @@
 		"desc": "Nutze eine lesbare Schriftart anstelle der Standard-Schriftart des Gerätes"
 	},
 	"highLegibilityFontType": {
-		"title": "Lesbare Schriftart"
+		"title": "Lesbare Schriftart",
+		"atkinson": "Atkinson Hyperlegible",
+		"opendyslexic": "OpenDyslexic",
+		"lexend": "Lexend"
 	},
 	"uiVariant": {
 		"title": "Benutzeroberflächen-Variante",
@@ -29,5 +32,12 @@
 	},
 	"chatFontScale": {
 		"title": "Größe der Chat-Benutzeroberfläche"
+	},
+	"useMaterialTheming": {
+		"title": "Material-Design-Theme",
+		"desc": "Gestalte deine Erfahrung nach den Material-Richtlinien (könnte die Augen strapazieren)"
+	},
+	"longPressDuration": {
+		"title": "Zeitspanne für langes drücken"
 	}
 }

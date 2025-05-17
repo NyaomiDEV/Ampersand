@@ -5,7 +5,8 @@
 	},
 	"genericDeleteDesc": "Du kannst diese Aktion nicht rückgängig machen!",
 	"storagePersistence": {
-		"header": "Warnung"
+		"header": "Warnung",
+		"content": "Ampersand kann Daten nicht dauerhaft auf deinem Gerät speichern. Wenn du Firefox benutzt, erlaube Ampersand, dies zu tun. Wenn du einen Chromium-basierten Browser (wie zum Beispiel Chrome, Edge, Opera, Vivaldi, etc.) benutzt, installiere Ampersand bitte als Web-App auf deinem Desktop oder Home-Screen. Wenn die Meldung nicht weggeht, beachte, deine Daten häufig über Import/Export zu sichern."
 	},
 	"alerts": {
 		"ok": "OK",
