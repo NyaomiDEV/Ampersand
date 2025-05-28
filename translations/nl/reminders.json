@@ -5,6 +5,9 @@
 	"header": "Herinneringen",
 	"edit": {
 		"header": "Wijzig reminder",
-		"name": "Reminder naam"
+		"name": "Reminder naam",
+		"type": {
+			"title": "Soort reminder"
+		}
 	}
 }
