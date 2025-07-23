@@ -7,6 +7,7 @@
 		IonIcon,
 		IonList,
 		IonFab,
+		IonButton,
 		IonFabButton,
 		IonLabel,
 		IonToggle,
@@ -54,6 +55,7 @@
 	const frontingEntry = ref({...(props.frontingEntry || emptyFrontingEntry)});
 
 	const memberSelectModal = useTemplateRef("memberSelectModal");
+	const memberTagModal = useTemplateRef("memberTagModal");
 
 	async function save(){
 		const uuid = frontingEntry.value?.uuid;
@@ -184,6 +186,16 @@
 							</IonLabel>
 						</IonToggle>
 					</IonItem>
+
+					<IonItem>
+					<IonButton fill="clear" @click="frontingEntry.comment += '<t:' + Math.floor(Date.now() / 1000) + ':f>'">
+						{{ $t("other:addTimestamp") }}
+					</IonButton>
+					<IonButton fill="clear" @click="memberTagModal?.$el.present()">
+						{{ $t("other:memberMention") }}
+					</IonButton>
+					</IonItem>
+
 					<IonItem>
 						<ContentEditable :label="$t('frontHistory:edit.comment')" v-model="frontingEntry.comment" />
 					</IonItem>
@@ -209,6 +221,15 @@
 				:modelValue="frontingEntry.member ? [frontingEntry.member] : []"
 				@update:modelValue="(e) => { if(e[0]) frontingEntry.member = e[0] }"
 				ref="memberSelectModal"
+			/>
+
+			<MemberSelect
+				:onlyOne="true"
+				:discardOnSelect="true"
+				:hideCheckboxes="true"
+				:modelValue="frontingEntry.member ? [frontingEntry.member] : []"
+				@update:modelValue="(e) => { if(e[0] && frontingEntry.comment) frontingEntry.comment += '@<m:'+ e[0].uuid +'>' }"
+				ref="memberTagModal"
 			/>
 		</IonContent>
 	</IonModal>

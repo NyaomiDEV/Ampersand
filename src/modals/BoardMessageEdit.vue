@@ -55,6 +55,7 @@
 	const pollAtBeginning = structuredClone(toRaw(boardMessage.value.poll));
 
 	const memberSelectModal = useTemplateRef("memberSelectModal");
+	const memberTagModal = useTemplateRef("memberTagModal");
 
 	function promptDeletion(): Promise<boolean> {
 		return new Promise(async (resolve) => {
@@ -178,6 +179,15 @@
 					</IonItem>
 
 					<IonItem>
+					<IonButton fill="clear" @click="boardMessage.body += '<t:' + Math.floor(Date.now() / 1000) + ':f>'">
+						{{ $t("other:addTimestamp") }}
+					</IonButton>
+					<IonButton fill="clear" @click="memberTagModal?.$el.present()">
+						{{ $t("other:memberMention") }}
+					</IonButton>
+					</IonItem>
+
+					<IonItem>
 						<IonTextarea :fill="!isIOS ? 'outline' : undefined" auto-grow :label="$t('messageBoard:edit.body')" labelPlacement="floating" v-model="boardMessage.body" />
 					</IonItem>
 
@@ -257,6 +267,16 @@
 				@update:modelValue="(e) => { if(e[0]) boardMessage.member = e[0] }"
 				ref="memberSelectModal"
 			/>
+
+			<MemberSelect
+				:onlyOne="true"
+				:discardOnSelect="true"
+				:hideCheckboxes="true"
+				:modelValue="boardMessage.member ? [boardMessage.member] : []"
+				@update:modelValue="(e) => { if(e[0] && boardMessage.body) boardMessage.body += '@<m:'+e[0].uuid+'>' }"
+				ref="memberTagModal"
+			/>
+
 		</IonContent>
 	</IonModal>
 </template>

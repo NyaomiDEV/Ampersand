@@ -7,6 +7,8 @@
 		"member": "Modifica lə membrə a front",
 		"customStatus": "Status personalizzato",
 		"comment": "Commento",
+		"addTimestamp": "Aggiungi data e ora",
+		"memberMention": "Menziona unə membrə",
 		"startTime": "Data d'inizio",
 		"endTime": "Data di fine",
 		"removeFromFront": {
