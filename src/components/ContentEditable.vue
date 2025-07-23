@@ -24,26 +24,32 @@
 </script>
 
 <template>
-	<IonLabel
-		position="stacked"
-		v-if="!focused && props.label"
-		@click="clickHandler"
-	>{{ props.label }}</IonLabel>
-	<div class="preview" v-if="!focused" @click="clickHandler"><Markdown :markdown="model" /></div>
-	<IonTextarea
-		v-show="focused"
-		v-model="model"
-		:fill="!isIOS ? 'outline' : undefined"
-		auto-grow
-		:label="props.label"
-		labelPlacement="floating"
-		ref="textarea"
-		@["ion-blur"]="focused = false"
-	/>
+	<div>
+		<IonLabel
+			class="content-editable"
+			position="stacked"
+			v-if="!focused && props.label"
+			@click="clickHandler"
+		>{{ props.label }}
+		</IonLabel>
+
+		<div class="preview" v-if="!focused" @click="clickHandler"><Markdown :markdown="model" /></div>
+
+		<IonTextarea
+			v-show="focused"
+			v-model="model"
+			:fill="!isIOS ? 'outline' : undefined"
+			auto-grow
+			:label="props.label"
+			labelPlacement="floating"
+			ref="textarea"
+			@["ion-blur"]="focused = false"
+		/>
+	</div>
 </template>
 
 <style scoped>
-	ion-label {
+	ion-label.content-editable {
 		padding-inline-start: 21px;
 	}
 
