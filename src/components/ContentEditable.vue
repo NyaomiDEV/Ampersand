@@ -24,7 +24,7 @@
 </script>
 
 <template>
-	<div>
+	<div class="content-editable-wrapper">
 		<IonLabel
 			class="content-editable"
 			position="stacked"
@@ -49,6 +49,11 @@
 </template>
 
 <style scoped>
+	
+	div.content-editable-wrapper {
+		width: 100%;
+	}
+
 	ion-label.content-editable {
 		padding-inline-start: 21px;
 	}

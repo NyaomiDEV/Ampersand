@@ -145,9 +145,6 @@
 					<IonItem>
 						<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('frontHistory:edit.customStatus')" labelPlacement="floating" v-model="frontingEntry.customStatus" />
 					</IonItem>
-					<IonItem>
-						<ContentEditable :label="$t('frontHistory:edit.comment')" v-model="frontingEntry.comment" />
-					</IonItem>
 					<IonItem button @click="($refs.startTimePicker as any)?.$el.present()">
 						<IonLabel>
 							<h2>{{ $t("frontHistory:edit.startTime") }}</h2>
@@ -186,6 +183,9 @@
 								{{ $t("frontHistory:edit.isMainFronter") }}
 							</IonLabel>
 						</IonToggle>
+					</IonItem>
+					<IonItem>
+						<ContentEditable :label="$t('frontHistory:edit.comment')" v-model="frontingEntry.comment" />
 					</IonItem>
 					<IonItem button detail="false" v-if="frontingEntry.uuid" @click="removeFrontingEntry">
 						<IonIcon :ios="trashIOS" :md="trashMD" slot="start" aria-hidden="true" color="danger"/>
