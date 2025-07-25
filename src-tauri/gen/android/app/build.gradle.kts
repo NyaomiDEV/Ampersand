@@ -22,9 +22,10 @@ android {
     compileSdk = 36
     namespace = "moe.ampersand.app"
     defaultConfig {
-        manifestPlaceholders["usesCleartextTraffic"] = "false"
+        manifestPlaceholders += mapOf("usesCleartextTraffic" to "false")
         applicationId = "moe.ampersand.app"
         minSdk = 26
+        targetSdk = 36
         base.archivesName.set("ampersand")
         versionCode = tauriProperties.getProperty("tauri.android.versionCode", "1").toInt()
         versionName = tauriProperties.getProperty("tauri.android.versionName", "1.0")
