@@ -6,6 +6,7 @@ import mentionExtension from "./mentionExtension";
 import spoilerExtension from "./spoilerExtension";
 import timestampExtension from "./timestampExtension";
 import colorExtension from "./colorExtension";
+import textColorExtension from "./textColorExtension";
 
 export const marked = new Marked();
 
@@ -78,5 +79,6 @@ marked.use(
 	mentionExtension,
 	spoilerExtension,
 	timestampExtension,
-	colorExtension
+	colorExtension,
+	textColorExtension
 );
