@@ -10,7 +10,7 @@
 		"errorExport": "Fehler beim Exportieren der Sicherheitskopie.",
 		"errorSp": "Fehler beim Importieren des Simply Plural-Exports.",
 		"errorPk": "Fehler beim Importieren des PluralKit-Exports.",
-		"error": "Fehler beim Importieren der Sicherheitskopie.",
+		"error": "Fehler beim Importieren der Sicherheitskopie."
 	},
 	"header": "Importieren / Exportieren",
 	"dbExport": {
