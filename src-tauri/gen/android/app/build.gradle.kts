@@ -19,7 +19,7 @@ val localProperties = Properties()
 localProperties.load(FileInputStream(localPropertiesFile))
 
 android {
-    compileSdk = 35
+    compileSdk = 36
     namespace = "moe.ampersand.app"
     defaultConfig {
         manifestPlaceholders["usesCleartextTraffic"] = "false"

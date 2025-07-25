@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "moe.ampersand.app.plugin"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         minSdk = 26
