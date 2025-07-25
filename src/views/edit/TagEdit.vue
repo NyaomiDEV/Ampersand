@@ -195,7 +195,7 @@
 						<IonTextarea :fill="!isIOS ? 'outline' : undefined" auto-grow :label="$t('tagManagement:edit.description')" labelPlacement="floating" v-model="tag.description" />
 					</IonItem>
 
-					<IonItem button detail="false">
+					<IonItem button :detail="false">
 						<Color v-model="tag.color" @update:model-value="updateColors">
 							<IonLabel>
 								{{ $t("tagManagement:edit.color") }}
@@ -203,7 +203,7 @@
 						</Color>
 					</IonItem>
 
-					<IonItem button detail="false">
+					<IonItem button :detail="false">
 						<IonToggle v-model="tag.viewInLists">
 							<IonLabel>
 								{{ $t("tagManagement:edit.viewInLists") }}
@@ -246,7 +246,7 @@
 						</IonLabel>
 					</IonItem>
 
-					<IonItem button detail="false" v-if="tag.uuid" @click="deleteTag">
+					<IonItem button :detail="false" v-if="tag.uuid" @click="deleteTag">
 						<IonIcon :icon="trashMD" slot="start" aria-hidden="true" color="danger"/>
 						<IonLabel color="danger">
 							<h3>{{ $t("tagManagement:edit.delete.title") }}</h3>

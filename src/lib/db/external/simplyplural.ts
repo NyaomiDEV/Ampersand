@@ -1,12 +1,9 @@
 import { System, Member, FrontingEntry, Tag, BoardMessage, CustomField, JournalPost } from "../entities";
 import { getTables } from "..";
 import { t } from "i18next";
-import { isTauri } from "../../mode";
-import { fetch as tauriFetch } from "@tauri-apps/plugin-http";
+import { fetch } from "@tauri-apps/plugin-http";
 import { resizeImage } from "../../util/image";
 import { maxUid, nilUid } from "../../util/misc";
-
-const fetch = isTauri() ? tauriFetch : window.fetch;
 
 function normalizeSPColor(color?: string) {
 	if (!color || !color.length) return undefined;

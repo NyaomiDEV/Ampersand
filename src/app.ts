@@ -44,7 +44,6 @@ import "./styles/override.css";
 import { activateMaterialTheme, updateMaterialColors } from "./lib/theme";
 import "./lib/theme/style.css";
 
-import { tryPersistStorage } from "./lib/util/storageManager";
 import { getSystem } from "./lib/db/tables/system";
 import { appConfig } from "./lib/config";
 import { getLockedStatus } from "./lib/applock";
@@ -99,7 +98,6 @@ router.beforeEach(async (to) => {
 });
 
 await clearTempDir();
-await tryPersistStorage();
 
 const darkMode = window.matchMedia("(prefers-color-scheme: dark)");
 darkMode.addEventListener("change", updateDarkMode);

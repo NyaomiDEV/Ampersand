@@ -1,9 +1,6 @@
 import { Member, Tag, System } from "../entities";
 import { getTables } from "..";
-import { isTauri } from "../../mode";
-import { fetch as tauriFetch } from "@tauri-apps/plugin-http";
-
-const fetch = isTauri() ? tauriFetch : window.fetch;
+import { fetch } from "@tauri-apps/plugin-http";
 
 async function tag(tuExport: any){
 	const tagMapping = new Map<number, string>();

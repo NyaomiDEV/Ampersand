@@ -272,7 +272,7 @@
 					<IonTextarea auto-grow :placeholder="$t('journal:edit.body')" v-model="post.body" />
 				</IonItem>
 
-				<IonItem button detail="false">
+				<IonItem button :detail="false">
 					<IonToggle v-model="post.isPinned">
 						<IonLabel>
 							{{ $t("journal:edit.isPinned") }}
@@ -280,7 +280,7 @@
 					</IonToggle>
 				</IonItem>
 
-				<IonItem button detail="false">
+				<IonItem button :detail="false">
 					<IonToggle v-model="post.isPrivate">
 						<IonLabel>
 							{{ $t("journal:edit.isPrivate") }}
@@ -293,7 +293,7 @@
 						labelPlacement="floating" v-model="post.contentWarning" />
 				</IonItem>
 
-				<IonItem button detail="false" v-if="post.uuid" @click="removePost">
+				<IonItem button :detail="false" v-if="post.uuid" @click="removePost">
 					<IonIcon :icon="trashMD" slot="start" aria-hidden="true" color="danger" />
 					<IonLabel color="danger">
 						<h3>{{ $t("journal:edit.delete.title") }}</h3>

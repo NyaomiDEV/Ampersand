@@ -36,16 +36,6 @@ export function getFiles(contentType?: string, multiple?: boolean): Promise<File
 	});
 }
 
-export function downloadBlob(data: Uint8Array, fileName: string) {
-	const blob = new Blob([data], { type: "application/octet-stream" });
-	const url = window.URL.createObjectURL(blob);
-	const a = document.createElement("a");
-	a.href = url;
-	a.download = fileName;
-	a.click();
-	setTimeout(() => window.URL.revokeObjectURL(url), 1000);
-};
-
 export async function compressGzip(data: Uint8Array) {
 	const reader = new Blob([data])
 		.stream()

@@ -24,10 +24,6 @@ export function isIOS(){
 	return testUserAgent(/iPhone|iPod|iPad/i) || (isMobile() && testUserAgent(/Macintosh/i))
 }
 
-export function isTauri(): boolean { 
-	return !!window.isTauri;
-}
-
 export function isDarkMode() {
 	switch (accessibilityConfig.theme) {
 		case "dark":
@@ -59,8 +55,6 @@ export async function updateDarkMode() {
 }
 
 export async function updateInsets() {
-	if(!isTauri()) return;
-
 	const insets = await M3.getInsets();
 	if(insets && !('error' in insets)){
 		document.documentElement.style.setProperty("--device-inset-top", Number(insets.adjustedInsetTop) + "px");

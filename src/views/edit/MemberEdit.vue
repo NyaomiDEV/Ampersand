@@ -294,7 +294,7 @@
 						:label="$t('members:edit.description')" labelPlacement="floating"
 						v-model="member.description" />
 				</IonItem>
-				<IonItem button detail="false">
+				<IonItem button :detail="false">
 					<Color v-model="member.color" @update:model-value="updateColors">
 						<IonLabel>
 							{{ $t("members:edit.color") }}
@@ -315,21 +315,21 @@
 						{{ $t("members:edit.customFieldsAdd") }}
 					</IonLabel>
 				</IonItem>
-				<IonItem button detail="false">
+				<IonItem button :detail="false">
 					<IonToggle v-model="member.isPinned">
 						<IonLabel>
 							{{ $t("members:edit.isPinned") }}
 						</IonLabel>
 					</IonToggle>
 				</IonItem>
-				<IonItem button detail="false">
+				<IonItem button :detail="false">
 					<IonToggle v-model="member.isCustomFront">
 						<IonLabel>
 							{{ $t("members:edit.customFront") }}
 						</IonLabel>
 					</IonToggle>
 				</IonItem>
-				<IonItem button detail="false">
+				<IonItem button :detail="false">
 					<IonToggle v-model="member.isArchived">
 						<IonLabel>
 							{{ $t("members:edit.archived") }}
@@ -346,7 +346,7 @@
 						</div>
 					</IonLabel>
 				</IonItem>
-				<IonItem button detail="false" v-if="member.uuid" @click="removeMember">
+				<IonItem button :detail="false" v-if="member.uuid" @click="removeMember">
 					<IonIcon :icon="trashMD" slot="start" aria-hidden="true" color="danger" />
 					<IonLabel color="danger">
 						<h3>{{ $t("members:edit.delete.title") }}</h3>
@@ -354,12 +354,12 @@
 					</IonLabel>
 				</IonItem>
 
-				<IonItem detail="false" v-if="member.uuid" button @click="copyIdToClipboard">
+				<IonItem :detail="false" v-if="member.uuid" button @click="copyIdToClipboard">
 					<IonLabel>
 						<p>{{ $t("members:edit.memberID", { memberID: member.uuid }) }}</p>
 					</IonLabel>
 				</IonItem>
-				<IonItem detail="false" v-if="member.dateCreated">
+				<IonItem :detail="false" v-if="member.dateCreated">
 					<IonLabel>
 						<p>{{ $t("members:edit.dateCreated", { dateCreated: formatDate(member.dateCreated, "expanded")
 							}) }}</p>

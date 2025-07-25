@@ -168,7 +168,7 @@
 					</p>
 				</div>
 				<div class="poll" v-if="props.boardMessage.poll && !props.hidePoll" @click="(e) => e.stopPropagation()">
-					<IonItem button detail="false" v-for="choice in props.boardMessage.poll.entries" @click="voteFor(choice)" :key="choice.choice">
+					<IonItem button :detail="false" v-for="choice in props.boardMessage.poll.entries" @click="voteFor(choice)" :key="choice.choice">
 						<IonLabel>
 							<h3>{{ choice.choice }}</h3>
 							<p>{{ $t("messageBoard:polls.choice.desc", { count: choice.votes.length }) }} - {{ Math.floor(calcPercentageVoted(choice) * 100) }}%</p>

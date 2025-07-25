@@ -1,10 +1,7 @@
 import { FrontingEntry, Member, System, Tag } from "../entities";
 import { getTables } from "..";
-import { isTauri } from "../../mode";
-import { fetch as tauriFetch } from "@tauri-apps/plugin-http";
+import { fetch } from "@tauri-apps/plugin-http";
 import { nilUid } from "../../util/misc";
-
-const fetch = isTauri() ? tauriFetch : window.fetch;
 
 async function system(pkExport: any){
 	const systemInfo: System = {

@@ -1,4 +1,4 @@
-const impl = await ("isTauri" in window ? import('./impl/tauri') : import('./impl/dexie'));
+import * as impl from './impl/tauri';
 
 export function getTables() {
 	return impl.getTables();

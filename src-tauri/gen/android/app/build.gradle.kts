@@ -19,13 +19,12 @@ val localProperties = Properties()
 localProperties.load(FileInputStream(localPropertiesFile))
 
 android {
-    compileSdk = 34
+    compileSdk = 35
     namespace = "moe.ampersand.app"
     defaultConfig {
         manifestPlaceholders["usesCleartextTraffic"] = "false"
         applicationId = "moe.ampersand.app"
         minSdk = 26
-        targetSdk = 34
         base.archivesName.set("ampersand")
         versionCode = tauriProperties.getProperty("tauri.android.versionCode", "1").toInt()
         versionName = tauriProperties.getProperty("tauri.android.versionName", "1.0")

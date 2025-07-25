@@ -19,7 +19,7 @@
 
 	function clickHandler() {
 		focused.value = true;
-		nextTick(() => (textarea as any).$el.setFocus());
+		nextTick(() => (textarea.value as any).$el.setFocus());
 	}
 </script>
 
@@ -43,7 +43,7 @@
 			:label="props.label"
 			labelPlacement="floating"
 			ref="textarea"
-			@["ion-blur"]="focused = false"
+			@ionBlur="focused = false"
 		/>
 	</div>
 </template>

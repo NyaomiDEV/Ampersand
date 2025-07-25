@@ -1,6 +1,5 @@
 import { Asset, UUIDable, UUID } from '../entities';
-
-const impl = await ("isTauri" in window ? import('../impl/tauri/assets') : import('../impl/dexie/assets'));
+import * as impl from '../impl/tauri/assets';
 
 export function getAssets(){
 	return impl.getAssets();

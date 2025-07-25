@@ -1,6 +1,6 @@
 import { UUIDable, JournalPost, UUID, JournalPostComplete } from "../entities";
 
-const impl = await ("isTauri" in window ? import('../impl/tauri/journalPosts') : import('../impl/dexie/journalPosts'));
+import * as impl from '../impl/tauri/journalPosts';
 
 export function getJournalPosts(){
 	return impl.getJournalPosts();

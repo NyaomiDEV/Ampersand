@@ -2,6 +2,8 @@
 
 Default permissions for the Ampersand plugin
 
+#### This default permission set includes the following:
+
 - `allow-exit-app`
 - `allow-open-file`
 

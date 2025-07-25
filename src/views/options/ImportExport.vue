@@ -2,7 +2,7 @@
 	import { IonContent, IonHeader, IonList, IonItem, IonLabel, IonPage, IonTitle, IonToolbar, IonBackButton, IonProgressBar, toastController } from '@ionic/vue';
 	import { inject, ref } from 'vue';
 	import { importDatabaseFromBinary, exportDatabaseToBinary } from '../../lib/db/ioutils';
-	import { downloadBlob, getFiles } from '../../lib/util/misc';
+	import { getFiles } from '../../lib/util/misc';
 	import dayjs from 'dayjs';
 	import { save } from '@tauri-apps/plugin-dialog';
 	import { writeFile } from '@tauri-apps/plugin-fs';
@@ -151,35 +151,24 @@
 		const data = await exportDatabaseToBinary();
 		const date = dayjs().format("YYYY-MM-DD");
 
-		if('isTauri' in window){
-			const path = await save({
-				filters: [{
-					name: `ampersand-backup-${date}`,
-					extensions: ["ampdb"]
-				}]
+		const path = await save({
+			filters: [{
+				name: `ampersand-backup-${date}`,
+				extensions: ["ampdb"]
+			}]
+		});
+
+		if(path){
+			await writeFile(path, data);
+			const statusMessage = await toastController.create({
+				message: i18next.t("importExport:status.exportedApp"),
+				duration: 1500
 			});
 
-			if(path){
-				await writeFile(path, data);
-				const statusMessage = await toastController.create({
-					message: i18next.t("importExport:status.exportedApp"),
-					duration: 1500
-				});
-
-				await statusMessage.present();
-			} else {
-				const statusMessage = await toastController.create({
-					message: i18next.t("importExport:status.errorExport"),
-					duration: 1500
-				});
-
-				await statusMessage.present();
-			}
+			await statusMessage.present();
 		} else {
-			downloadBlob(data,`ampersand-backup-${date}.ampdb`);
-
 			const statusMessage = await toastController.create({
-				message: i18next.t("importExport:status.exportedPwa"),
+				message: i18next.t("importExport:status.errorExport"),
 				duration: 1500
 			});
 

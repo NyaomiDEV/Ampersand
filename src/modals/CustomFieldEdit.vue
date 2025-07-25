@@ -113,7 +113,7 @@
 					<IonItem>
 						<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('customFields:edit.name')" labelPlacement="floating" v-model="customField.name" />
 					</IonItem>
-					<IonItem button detail="false">
+					<IonItem button :detail="false">
 						<IonToggle v-model="customField.default">
 							<IonLabel>
 								<h3>{{ $t("customFields:edit.default.title") }}</h3>
@@ -121,7 +121,7 @@
 							</IonLabel>
 						</IonToggle>
 					</IonItem>
-					<IonItem button detail="false" v-if="customField.uuid" @click="removeCustomField">
+					<IonItem button :detail="false" v-if="customField.uuid" @click="removeCustomField">
 						<IonIcon :ios="trashIOS" :md="trashMD" slot="start" aria-hidden="true" color="danger"/>
 						<IonLabel color="danger">
 							<h3>{{ $t("customFields:edit.delete.title") }}</h3>

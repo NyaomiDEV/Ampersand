@@ -1,6 +1,6 @@
 import { BoardMessage, BoardMessageComplete, UUIDable, UUID } from '../entities';
 
-const impl = await ("isTauri" in window ? import('../impl/tauri/boardMessages') : import('../impl/dexie/boardMessages'));
+import * as impl from '../impl/tauri/boardMessages';
 
 export function getBoardMessages(){
 	return impl.getBoardMessages();

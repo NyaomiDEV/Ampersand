@@ -191,7 +191,7 @@
 						<IonTextarea :fill="!isIOS ? 'outline' : undefined" auto-grow :label="$t('messageBoard:edit.body')" labelPlacement="floating" v-model="boardMessage.body" />
 					</IonItem>
 
-					<IonItem button detail="false">
+					<IonItem button :detail="false">
 						<IonToggle v-model="boardMessage.isPinned">
 							<IonLabel>
 								{{ $t("messageBoard:edit.isPinned") }}
@@ -213,14 +213,14 @@
 							</IonLabel>
 						</IonItem>
 
-						<IonItem button detail="false" @click="() => { boardMessage.poll = undefined }">
+						<IonItem button :detail="false" @click="() => { boardMessage.poll = undefined }">
 							<IonIcon :ios="trashIOS" :md="trashMD" slot="start" aria-hidden="true" color="danger"/>
 							<IonLabel color="danger">
 								<h3>{{ $t("messageBoard:edit.deleteAttachedPoll") }}</h3>
 								<p>{{ $t("other:genericDeleteDesc") }}</p>
 							</IonLabel>
 						</IonItem>
-						<IonItem button detail="false">
+						<IonItem button :detail="false">
 							<IonToggle v-model="boardMessage.poll.multipleChoice">
 								<IonLabel>
 									{{ $t("messageBoard:edit.pollIsMultipleChoice") }}
@@ -228,7 +228,7 @@
 							</IonToggle>
 						</IonItem>
 
-						<IonItem v-for="entry in boardMessage.poll.entries" :key="entry">
+						<IonItem v-for="entry in boardMessage.poll.entries" :key="JSON.stringify(entry)">
 							<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('messageBoard:edit.pollChoice')" labelPlacement="floating" v-model="entry.choice" />
 							<IonButton slot="end" shape="round" fill="outline" size="default" @click="() => boardMessage.poll!.entries.splice(boardMessage.poll!.entries.indexOf(entry), 1)">
 								<IonIcon :ios="trashIOS" :md="trashMD" slot="icon-only" color="danger" />
@@ -243,7 +243,7 @@
 						</IonItem>
 					</template>
 
-					<IonItem button detail="false" v-if="boardMessage.uuid" @click="removeBoardMessage">
+					<IonItem button :detail="false" v-if="boardMessage.uuid" @click="removeBoardMessage">
 						<IonIcon :ios="trashIOS" :md="trashMD" slot="start" aria-hidden="true" color="danger"/>
 						<IonLabel color="danger">
 							<h3>{{ $t("messageBoard:edit.delete.title") }}</h3>

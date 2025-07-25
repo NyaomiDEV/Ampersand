@@ -2,7 +2,7 @@ import { t } from "i18next";
 import { UUIDable, Member, UUID } from "../entities";
 import { maxUid, nilUid } from "../../util/misc";
 
-const impl = await ("isTauri" in window ? import('../impl/tauri/members') : import('../impl/dexie/members'));
+import * as impl from '../impl/tauri/members';
 
 export function getMembers() {
 	return impl.getMembers();

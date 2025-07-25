@@ -179,7 +179,7 @@
 							:min="frontingEntry.startTime"
 						/>
 					</IonItem>
-					<IonItem button detail="false">
+					<IonItem button :detail="false">
 						<IonToggle v-model="frontingEntry.isMainFronter">
 							<IonLabel>
 								{{ $t("frontHistory:edit.isMainFronter") }}
@@ -199,7 +199,7 @@
 					<IonItem>
 						<ContentEditable :label="$t('frontHistory:edit.comment')" v-model="frontingEntry.comment" />
 					</IonItem>
-					<IonItem button detail="false" v-if="frontingEntry.uuid" @click="removeFrontingEntry">
+					<IonItem button :detail="false" v-if="frontingEntry.uuid" @click="removeFrontingEntry">
 						<IonIcon :ios="trashIOS" :md="trashMD" slot="start" aria-hidden="true" color="danger"/>
 						<IonLabel color="danger">
 							<h3>{{ $t("frontHistory:edit.delete.title") }}</h3>

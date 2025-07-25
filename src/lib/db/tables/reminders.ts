@@ -1,6 +1,6 @@
 import { Reminder, UUID, UUIDable } from '../entities';
 
-const impl = await ("isTauri" in window ? import('../impl/tauri/reminders') : import('../impl/dexie/reminders'));
+import * as impl from '../impl/tauri/reminders';
 
 export function getReminders(){
 	return impl.getReminders();

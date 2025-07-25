@@ -1,6 +1,6 @@
 import { CustomField, UUIDable, UUID } from '../entities';
 
-const impl = await ("isTauri" in window ? import('../impl/tauri/customFields') : import('../impl/dexie/customFields'));
+import * as impl from '../impl/tauri/customFields';
 
 export function getCustomFields(){
 	return impl.getCustomFields();

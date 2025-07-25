@@ -1,10 +1,7 @@
 import { resolve, tempDir } from "@tauri-apps/api/path"
 import { exists, mkdir, readDir, remove, writeFile } from "@tauri-apps/plugin-fs";
-import { isTauri } from "../mode";
 
 async function ourTempDir(){
-	if (!isTauri()) return "";
-
 	const path = await resolve(
 		await tempDir(),
 		"ampersandTemp"
@@ -22,8 +19,6 @@ async function ourTempDir(){
 }
 
 export async function clearTempDir(){
-	if (!isTauri()) return false;
-
 	try{
 		const _ourTempDir = await ourTempDir();
 		for (const f of await readDir(_ourTempDir)) {
@@ -36,8 +31,6 @@ export async function clearTempDir(){
 }
 
 export async function writeToTemp(file: File){
-	if (!isTauri()) return null;
-
 	try{
 		const path = await resolve(
 			await ourTempDir(),
@@ -52,8 +45,6 @@ export async function writeToTemp(file: File){
 }
 
 export async function deleteFromTemp(file: File | string){
-	if (!isTauri()) return false;
-
 	try {
 		const path = await resolve(
 			await ourTempDir(),

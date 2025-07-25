@@ -24,29 +24,17 @@
 
 	function openRepo(){
 		const url = "https://codeberg.org/NyaomiDEV/Ampersand";
-		if(!('isTauri' in window)){
-			open(url, "_blank");
-		} else {
-			openUrl(url);
-		}
+		openUrl(url);
 	}
 
 	function openDiscord() {
 		const url = "https://discord.com/invite/xCptGJKeKc";
-		if(!('isTauri' in window)){
-			open(url, "_blank");
-		} else {
-			openUrl(url);
-		}
+		openUrl(url);
 	}
 
 	function openLiberapay(){
 		const url = "https://liberapay.com/Ampersand/";
-		if(!('isTauri' in window)){
-			open(url, "_blank");
-		} else {
-			openUrl(url);
-		}
+		openUrl(url);
 	}
 </script>
 

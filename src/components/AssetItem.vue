@@ -10,7 +10,6 @@
 
 	import documentMD from "@material-symbols/svg-600/outlined/draft.svg";
 	import { openFile } from '../lib/native/opener';
-	import { isTauri } from '../lib/mode';
 
 	const props = defineProps<{
 		asset: PartialBy<Asset, "uuid">,
@@ -36,11 +35,6 @@
 	}
 
 	function open(){
-		if(!isTauri()){
-			window.open(getObjectURL(props.asset.file), "_blank");
-			return;
-		}
-
 		openFile(props.asset.file);
 	}
 </script>

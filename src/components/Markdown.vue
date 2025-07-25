@@ -3,7 +3,6 @@
 	import { marked } from '../lib/markdown';
 	import { openUrl } from '@tauri-apps/plugin-opener';
 	import { getFile } from '../lib/util/blob';
-	import { isTauri } from '../lib/mode';
 	import { openFile } from '../lib/native/opener';
 
 	const props = defineProps<{
@@ -16,11 +15,6 @@
 
 		evt.preventDefault();
 		const url = tag.href;
-
-		if(!isTauri()){
-			window.open(url, "_blank");
-			return;
-		}
 
 		try{
 			if(!url.startsWith("blob:")){

@@ -1,6 +1,6 @@
 import { UUIDable, Member, FrontingEntry, FrontingEntryComplete, UUID } from "../entities";
 
-const impl = await ("isTauri" in window ? import('../impl/tauri/frontingEntries') : import('../impl/dexie/frontingEntries'));
+import * as impl from '../impl/tauri/frontingEntries';
 
 export function getFrontingEntries(){
 	return impl.getFrontingEntries();

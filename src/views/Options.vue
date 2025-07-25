@@ -1,8 +1,6 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonFab, IonFabButton, IonList, IonItem, IonListHeader, IonLabel, IonPage, IonTitle, IonToolbar, IonIcon, useIonRouter } from '@ionic/vue';
 	import { inject } from 'vue';
-	import { wasPersisted } from '../lib/util/storageManager';
-	import StoragePersistenceMissing from "../components/StoragePersistenceMissing.vue";
 
 	import LockMD from '@material-symbols/svg-600/outlined/lock.svg';
 	import SparklesMD from '@material-symbols/svg-600/outlined/star.svg';
@@ -20,7 +18,6 @@
 
 	import { securityConfig } from '../lib/config';
 	import { lock } from '../lib/applock';
-	import { isTauri } from '../lib/mode';
 
 	const router = useIonRouter();
 	const isIOS = inject<boolean>("isIOS");
@@ -43,8 +40,6 @@
 		</IonHeader>
 
 		<IonContent>
-
-			<StoragePersistenceMissing v-if="!wasPersisted" />
 
 			<IonListHeader>
 				<IonLabel>{{ $t("options:managementLabel") }}</IonLabel>
@@ -82,7 +77,7 @@
 					<IonLabel>{{ $t("assetManager:header") }}</IonLabel>
 				</IonItem>
 
-				<IonItem button routerLink="/options/reminders" v-if="isDev || isTauri()">
+				<IonItem button routerLink="/options/reminders" v-if="isDev">
 					<IonIcon :icon="RemindersMD" slot="start" aria-hidden="true" />
 					<IonLabel>{{ $t("reminders:header") }}</IonLabel>
 				</IonItem>

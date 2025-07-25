@@ -1,11 +1,14 @@
 <script setup lang="ts">
+	//copied from ionic because they dont export it (??)
+	type DatetimePresentation = 'date-time' | 'time-date' | 'date' | 'time' | 'month' | 'year' | 'month-year';
+
 	import { IonModal, IonDatetime } from '@ionic/vue';
 	import { appConfig } from '../lib/config';
 	import { ref, watch } from 'vue';
 	import dayjs from "dayjs";
 
 	const props = defineProps<{
-		presentation?: string,
+		presentation?: DatetimePresentation,
 		showDefaultButtons?: boolean,
 		highlightedDates?: any,
 		min?: Date,

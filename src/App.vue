@@ -2,7 +2,7 @@
 	import { IonApp, IonRouterOutlet, useIonRouter, useBackButton } from "@ionic/vue";
 
 	import { computed, provide } from "vue";
-	import { isIOSIonicMode, isTauri } from "./lib/mode";
+	import { isIOSIonicMode } from "./lib/mode";
 	import { exitApp } from "./lib/native/ampersand";
 	import ModalContainer from "./components/ModalContainer.vue";
 
@@ -11,12 +11,10 @@
 
 	const router = useIonRouter();
 	
-	if (isTauri()) {
-		useBackButton(-1, () => {
-			if (!router.canGoBack())
-				exitApp();
-		});
-	}
+	useBackButton(-1, () => {
+		if (!router.canGoBack())
+			exitApp();
+	});
 </script>
 
 <template>

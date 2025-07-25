@@ -4,6 +4,8 @@ import { isIOSIonicMode, updateAccessibility, updateDarkMode, updatePWATitlebarC
 import { activateMaterialTheme, deactivateMaterialTheme, defaultColor, unsetMaterialColors, updateMaterialColors } from "../theme";
 import i18next from "i18next";
 
+import * as impl from './impl/tauri';
+
 const defaultAppConfig: AppConfig = {
 	locale: {
 		firstWeekOfDayIsSunday: false,
@@ -35,8 +37,6 @@ const defaultSecurityConfig: SecurityConfig = {
 	password: undefined,
 	useBiometrics: false
 }
-
-const impl = await ("isTauri" in window ? import('./impl/tauri') : import('./impl/localStorage'));
 
 export const appConfig = reactive<AppConfig>({...structuredClone(defaultAppConfig), ...await impl.get("appConfig") });
 export const accessibilityConfig = reactive<AccessibilityConfig>({ ...structuredClone(defaultAccessibilityConfig), ...await impl.get("accessibilityConfig") });
