@@ -17,7 +17,6 @@ body:
       label: Which flavor of Ampersand are you seeing the problem on?
       multiple: false
       options:
-        - PWA (app.ampersand.moe)
         - Android APK
     validations:
       required: true
@@ -40,7 +39,6 @@ body:
           - if an Android, the exact model and Android version, plus the following:
             - If using a custom ROM, please tell us which flavor it is (eg. LineageOS, GrapheneOS);
             - If using the APK, do tell us your WebView name and version (Settings -> Apps -> Show all apps -> Android WebView / Android System WebView / {Your vendor's name here, eg. Huawei} WebView);
-            - If using the PWA, do tell us your browser name and version.
     validations:
       required: true
 
