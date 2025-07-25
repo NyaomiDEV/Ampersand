@@ -15,12 +15,10 @@
 		member: PartialBy<Member, "uuid" | "dateCreated">,
 	}>();
 
-	const cssColor = ref("var(--ion-color-primary)");
+	const avatarColor = ref("var(--ion-color-primary)");
 
 	function updateColor() {
-		cssColor.value = props.member.color
-			? props.member.color
-			: "var(--ion-color-primary)";
+		avatarColor.value = props.member.color?.slice(0, 7) ?? "var(--ion-color-primary)";
 	}
 
 	let watchHandle: WatchStopHandle | undefined;
@@ -47,12 +45,12 @@
 	ion-avatar.with-outline {
 		outline-width: 2px;
 		outline-style: solid;
-		outline-color: v-bind('cssColor');
+		outline-color: v-bind('avatarColor');
 	}
 
 	ion-icon {
 		width: 100%;
 		height: 100%;
-		color: v-bind('cssColor');
+		color: v-bind('avatarColor');
 	}
 </style>

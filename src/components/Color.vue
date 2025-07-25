@@ -1,31 +1,35 @@
 <script setup lang="ts">
 	import { useTemplateRef } from 'vue';
 	import { IonModal } from '@ionic/vue';
-	import { ColorPicker } from 'vue-accessible-color-picker';
-	const model = defineModel<string>();
-	
-	const colorModal = useTemplateRef("colorModal");
+	import { ColorChangeDetail, ColorPicker } from 'vue-accessible-color-picker';
+	const colorModel = defineModel<string>();
+
+	const vacp = useTemplateRef("vacp");
 
 	const props = defineProps<{
 		alpha?: boolean
 	}>();
 
 	function open(){
-		colorModal.value?.$el.present();
+		vacp.value?.$el.present();
+	}
+	
+	function updateColor(e: ColorChangeDetail) {
+		colorModel.value = props.alpha ? e.colors.hex : e.colors.hex.slice(0, 7);
 	}
 </script>
 
 <template>
 	<div class="color-container" @click="open">
 		<slot></slot>
-		<div class="color" :style="{backgroundColor: model}" slot="end">
+		<div class="color" slot="end">
 		</div>
 	</div>
-	<IonModal class="color-modal" ref="colorModal">
+	<IonModal class="color-modal" ref="vacp">
 		<ColorPicker
 			:alpha-channel="props.alpha ? 'show' : 'hide'"
-			:color="model"
-			@color-change="(e) => model = e.colors.hex"
+			:color="colorModel"
+			@color-change="updateColor"
 			:visible-formats="['hex', 'rgb', 'hsl']"
 			default-format="hex"
 		/>
@@ -60,6 +64,7 @@
 		border-radius: 50%;
 		width: 36px;
 		aspect-ratio: 1;
+		background-color: v-bind('colorModel?.slice(0, 7)');
 	}
 
 	ion-modal.color-modal {

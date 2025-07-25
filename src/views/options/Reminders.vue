@@ -76,7 +76,7 @@
 						<IonToggle
 							:checked="!!eventReminder.nativeId"
 							@click="(e) => e.stopPropagation()"
-							@["ion-change"]="(e) => toggleReminder(eventReminder, e)"
+							@ionChange="(e) => toggleReminder(eventReminder, e)"
 						/>
 					</div>
 				</IonItem>
@@ -102,7 +102,7 @@
 						<IonToggle
 							:checked="!!periodicReminder.nativeId"
 							@click="(e) => e.stopPropagation()"
-							@["ion-change"]="(e) => toggleReminder(periodicReminder, e)"
+							@ionChange="(e) => toggleReminder(periodicReminder, e)"
 						/>
 					</div>
 				</IonItem>

@@ -44,7 +44,7 @@
 			<IonPickerColumn
 				v-for="column in props.content"
 				:key="column.name"
-				@["ion-change"]="(e) => { values.set(column.name, e.detail.value) }"
+				@ionChange="(e) => { values.set(column.name, e.detail.value) }"
 				:value="values.get(column.name) || column.values.find(x => x.default)?.value || undefined"
 			>
 				<div slot="prefix" v-if="column.prefix">{{ column.prefix }}</div>
