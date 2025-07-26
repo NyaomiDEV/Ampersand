@@ -18,6 +18,10 @@ impl<R: Runtime> Ampersand<R> {
     Ok(())
   }
 
+  pub fn set_can_go_back(&self, _can_go_back: bool) -> crate::Result<()> {
+    Ok(())
+  }
+
   pub fn open_file(&self, path: String) -> crate::Result<()> {
     self.0.opener().open_path(path, None::<&str>).map_err(Into::into)
   }

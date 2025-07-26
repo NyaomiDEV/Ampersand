@@ -319,10 +319,34 @@
           "markdownDescription": "Denies the open_file command without any pre-configured scope."
         },
         {
-          "description": "Default permissions for the Ampersand plugin\n#### This default permission set includes:\n\n- `allow-exit-app`\n- `allow-open-file`",
+          "description": "Enables the registerListener command without any pre-configured scope.",
+          "type": "string",
+          "const": "allow-registerListener",
+          "markdownDescription": "Enables the registerListener command without any pre-configured scope."
+        },
+        {
+          "description": "Denies the registerListener command without any pre-configured scope.",
+          "type": "string",
+          "const": "deny-registerListener",
+          "markdownDescription": "Denies the registerListener command without any pre-configured scope."
+        },
+        {
+          "description": "Enables the set_can_go_back command without any pre-configured scope.",
+          "type": "string",
+          "const": "allow-set-can-go-back",
+          "markdownDescription": "Enables the set_can_go_back command without any pre-configured scope."
+        },
+        {
+          "description": "Denies the set_can_go_back command without any pre-configured scope.",
+          "type": "string",
+          "const": "deny-set-can-go-back",
+          "markdownDescription": "Denies the set_can_go_back command without any pre-configured scope."
+        },
+        {
+          "description": "Default permissions for the Ampersand plugin\n#### This default permission set includes:\n\n- `allow-exit-app`\n- `allow-open-file`\n- `allow-set-can-go-back`\n- `allow-registerListener`",
           "type": "string",
           "const": "default",
-          "markdownDescription": "Default permissions for the Ampersand plugin\n#### This default permission set includes:\n\n- `allow-exit-app`\n- `allow-open-file`"
+          "markdownDescription": "Default permissions for the Ampersand plugin\n#### This default permission set includes:\n\n- `allow-exit-app`\n- `allow-open-file`\n- `allow-set-can-go-back`\n- `allow-registerListener`"
         }
       ]
     }

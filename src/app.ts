@@ -44,11 +44,13 @@ import "./styles/override.css";
 import { activateMaterialTheme, updateMaterialColors } from "./lib/theme";
 import "./lib/theme/style.css";
 
+// Other imports from frontend library
 import { getSystem } from "./lib/db/tables/system";
 import { appConfig } from "./lib/config";
 import { getLockedStatus } from "./lib/applock";
 import { clearTempDir } from "./lib/native/cache";
 import { slideAnimation } from "./lib/util/misc";
+import { addListener } from './lib/native/ampersand';
 
 const app = createApp(App).use(IonicVue, {
 	hardwareBackButton: true,
@@ -112,4 +114,8 @@ window.addEventListener("orientationchange",  () => updateInsets());
 
 router.isReady().then(async () => {
 	app.mount(document.body);
+
+	addListener("backbutton", () => {
+		document.dispatchEvent(new Event('backbutton'));
+	});
 });

@@ -9,7 +9,10 @@ import app.tauri.plugin.Plugin
 import app.tauri.plugin.Invoke
 
 import android.content.Intent
+import android.window.OnBackInvokedCallback
+import android.window.OnBackInvokedDispatcher.PRIORITY_DEFAULT
 import androidx.core.content.FileProvider
+import app.tauri.plugin.JSObject
 import java.io.File
 
 @InvokeArg
@@ -17,11 +20,29 @@ internal class OpenFileArgs {
   lateinit var path: String
 }
 
+@InvokeArg
+internal class SetCanGoBackArgs {
+    var canGoBack: Boolean = false
+}
+
 @TauriPlugin
 class AmpersandPlugin(private val activity: Activity): Plugin(activity) {
+    private val backCallback = OnBackInvokedCallback { trigger("backbutton", JSObject()) }
+
     @Command
     fun exitApp(invoke: Invoke) {
         activity.finish()
+        invoke.resolve()
+    }
+
+    @Command
+    fun setCanGoBack(invoke: Invoke){
+        val args = invoke.parseArgs(SetCanGoBackArgs::class.java)
+        if(args.canGoBack) {
+            activity.onBackInvokedDispatcher.registerOnBackInvokedCallback(PRIORITY_DEFAULT, backCallback)
+        } else {
+            activity.onBackInvokedDispatcher.unregisterOnBackInvokedCallback(backCallback)
+        }
         invoke.resolve()
     }
 

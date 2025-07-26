@@ -30,6 +30,12 @@ struct OpenFile {
   path: String
 }
 
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+struct SetCanGoBack {
+  can_go_back: bool
+}
+
 /// Access to the ampersand APIs.
 pub struct Ampersand<R: Runtime>(PluginHandle<R>);
 
@@ -38,6 +44,13 @@ impl<R: Runtime> Ampersand<R> {
     self
       .0
       .run_mobile_plugin("exitApp", ())
+      .map_err(Into::into)
+  }
+
+  pub fn set_can_go_back(&self, can_go_back: bool) -> crate::Result<()> {
+    self
+      .0
+      .run_mobile_plugin("setCanGoBack", SetCanGoBack { can_go_back })
       .map_err(Into::into)
   }
 
