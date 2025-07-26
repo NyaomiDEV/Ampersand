@@ -106,5 +106,8 @@
 }
 
 .markdown-content span.text-color {
-    color: var(--markdown-text-color, inherit);
+    background: linear-gradient(to right, var(--markdown-text-color-start), var(--markdown-text-color-end));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
