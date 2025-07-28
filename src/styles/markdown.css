@@ -94,6 +94,20 @@
     background-color: var(--ion-background-color-step-150);
 }
 
+.markdown-content span.timestamp::before {
+    content: "\A";
+    mask-image: url(/node_modules/@material-symbols/svg-600/outlined/nest_clock_farsight_analog.svg);
+    background-color: var(--ion-text-color);
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    display: inline-block;
+    width: 1.3em;
+    height: 1.3em;
+    aspect-ratio: 1;
+    vertical-align: bottom;
+    padding-right: 4px;
+}
+
 .markdown-content span.color::before {
     content: "\A";
     display: inline-block;
