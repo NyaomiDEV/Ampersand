@@ -83,7 +83,7 @@
 		<SpinnerFullscreen v-if="!tags" />
 		<IonContent v-else>
 			<IonList :inset="isIOS">
-				<IonItem button v-for="tag in filteredTags" :key="JSON.stringify(tag)" :routerLink="'/options/tagManagement/edit?uuid='+tag.uuid">
+				<IonItem button v-for="tag in filteredTags" :key="tag.uuid" :routerLink="'/options/tagManagement/edit?uuid='+tag.uuid">
 					<TagColor slot="start" :tag />
 					<TagLabel :tag />
 				</IonItem>
