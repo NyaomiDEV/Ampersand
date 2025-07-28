@@ -104,7 +104,7 @@
     width: 1.3em;
     height: 1.3em;
     aspect-ratio: 1;
-    vertical-align: bottom;
+    vertical-align: text-bottom;
     padding-right: 4px;
 }
 

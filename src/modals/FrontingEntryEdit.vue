@@ -188,6 +188,10 @@
 					</IonItem>
 
 					<IonItem>
+						<ContentEditable :label="$t('frontHistory:edit.comment')" v-model="frontingEntry.comment" />
+					</IonItem>
+
+					<IonItem>
 					<IonButton fill="clear" @click="frontingEntry.comment += '<t:' + Math.floor(Date.now() / 1000) + ':f>'">
 						{{ $t("other:addTimestamp") }}
 					</IonButton>
@@ -196,9 +200,6 @@
 					</IonButton>
 					</IonItem>
 
-					<IonItem>
-						<ContentEditable :label="$t('frontHistory:edit.comment')" v-model="frontingEntry.comment" />
-					</IonItem>
 					<IonItem button :detail="false" v-if="frontingEntry.uuid" @click="removeFrontingEntry">
 						<IonIcon :ios="trashIOS" :md="trashMD" slot="start" aria-hidden="true" color="danger"/>
 						<IonLabel color="danger">

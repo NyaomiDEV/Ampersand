@@ -179,16 +179,16 @@
 					</IonItem>
 
 					<IonItem>
+						<IonTextarea :fill="!isIOS ? 'outline' : undefined" auto-grow :label="$t('messageBoard:edit.body')" labelPlacement="floating" v-model="boardMessage.body" />
+					</IonItem>
+
+					<IonItem>
 					<IonButton fill="clear" @click="boardMessage.body += '<t:' + Math.floor(Date.now() / 1000) + ':f>'">
 						{{ $t("other:addTimestamp") }}
 					</IonButton>
 					<IonButton fill="clear" @click="memberTagModal?.$el.present()">
 						{{ $t("other:memberMention") }}
 					</IonButton>
-					</IonItem>
-
-					<IonItem>
-						<IonTextarea :fill="!isIOS ? 'outline' : undefined" auto-grow :label="$t('messageBoard:edit.body')" labelPlacement="floating" v-model="boardMessage.body" />
 					</IonItem>
 
 					<IonItem button :detail="false">
