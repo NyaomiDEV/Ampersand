@@ -31,8 +31,8 @@ export function getTag(uuid: UUID){
 export async function removeTag(uuid: UUID){
 	const tag = await db.tags.get(uuid);
 	if(tag?.type === "member"){
-		const members = await db.members.toArray();
-		for(const member of members){
+		const members = db.members.toGenerator();
+		for await (const member of members){
 			await db.members.update(member.uuid, {
 				tags: member.tags?.filter(tag => tag !== uuid)
 			});
@@ -43,8 +43,8 @@ export async function removeTag(uuid: UUID){
 			}));
 		}
 	} else if(tag?.type === "journal") {
-		const journalPosts = await db.journalPosts.toArray();
-		for (const journalPost of journalPosts) {
+		const journalPosts = db.journalPosts.toGenerator();
+		for await (const journalPost of journalPosts) {
 			await db.journalPosts.update(journalPost.uuid, {
 				tags: journalPost.tags?.filter(tag => tag !== uuid)
 			});
@@ -81,5 +81,10 @@ export async function updateTag(uuid: UUID, newContent: Partial<Tag>) {
 }
 
 export async function getTagFromNameHashtag(name: string){
-	return (await db.tags.toArray()).filter(x => x.name.toLowerCase().replace(/\s/g, "") === name.toLowerCase())[0];
+	for await (const x of db.tags.toGenerator()){
+		if(
+			x.name.toLowerCase().replace(/\s/g, "") === name.toLowerCase()
+		) return x;
+	}
+	return;
 }

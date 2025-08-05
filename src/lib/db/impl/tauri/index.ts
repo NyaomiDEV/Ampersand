@@ -73,7 +73,7 @@ class ShittyTable<T extends UUIDable> {
 		await this.saveIndexToDisk();
 	}
 
-	async initializeIndex() {		
+	async initializeIndex() {
 		const dir = await this.walkDir();
 		if (!dir) return;
 
@@ -137,6 +137,13 @@ class ShittyTable<T extends UUIDable> {
 		}
 
 		return arr;
+	}
+
+	async* toGenerator() {
+	  for (const x of this.index.map(x => x.uuid)) {
+      const data = await this.get(x);
+      if (data) yield data;
+		}
 	}
 
 	async write(uuid: string, data: T) {
@@ -266,4 +273,3 @@ export const db = {
 	assets: await makeTable<Asset>("assets", []),
 	customFields: await makeTable<CustomField>("customFields", [])
 }
-
