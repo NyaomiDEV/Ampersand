@@ -1,11 +1,9 @@
-import { resolve, tempDir } from "@tauri-apps/api/path"
+import { tempDir } from "@tauri-apps/api/path"
+import { SEP } from "./util";
 import { exists, mkdir, readDir, remove, writeFile } from "@tauri-apps/plugin-fs";
 
 async function ourTempDir(){
-	const path = await resolve(
-		await tempDir(),
-		"ampersandTemp"
-	);
+	const path = await tempDir() + SEP + "ampersandTemp";
 
 	if(!await exists(path)){
 		try{
@@ -22,7 +20,7 @@ export async function clearTempDir(){
 	try{
 		const _ourTempDir = await ourTempDir();
 		for (const f of await readDir(_ourTempDir)) {
-			await remove(await resolve(_ourTempDir, f.name));
+			await remove(_ourTempDir + SEP + f.name);
 		}
 	}catch(e){
 		return false;
@@ -32,10 +30,7 @@ export async function clearTempDir(){
 
 export async function writeToTemp(file: File){
 	try{
-		const path = await resolve(
-			await ourTempDir(),
-			file.name
-		);
+		const path = await ourTempDir() + SEP + file.name;
 		(window as any).file = file;
 		await writeFile(path, new Uint8Array(await file.arrayBuffer()));
 		return path;
@@ -46,10 +41,7 @@ export async function writeToTemp(file: File){
 
 export async function deleteFromTemp(file: File | string){
 	try {
-		const path = await resolve(
-			await ourTempDir(),
-			typeof file == "string" ? file : file.name
-		);
+		const path = await ourTempDir() + SEP + (typeof file == "string" ? file : file.name);
 		await remove(path);
 		return true;
 	} catch (e) {

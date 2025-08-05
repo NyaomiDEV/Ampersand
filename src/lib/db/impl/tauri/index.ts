@@ -5,6 +5,7 @@ import { blob, file, filelist, map, typedArrays, undef, set as Tset, imagebitmap
 import { Asset, BoardMessage, Chat, ChatMessage, CustomField, FrontingEntry, JournalPost, Member, Reminder, System, Tag, UUIDable } from '../../entities';
 import { decode, encode } from '@msgpack/msgpack';
 import { AmpersandEntityMapping } from '../../types';
+import { SEP } from '../../../native/util';
 
 type IndexEntry<T> = UUIDable & Partial<T>;
 type SecondaryKey<T> = (Exclude<keyof T, keyof UUIDable>);
@@ -23,7 +24,7 @@ class ShittyTable<T extends UUIDable> {
 	}
 
 	async getIndexFromDisk(){
-		const _path = await path.resolve(this.path, ".index");
+		const _path = this.path + SEP + ".index";
 		try {
 			const obj = decode(await fs.readFile(_path));
 			if (typeof obj !== "undefined") {
@@ -37,7 +38,7 @@ class ShittyTable<T extends UUIDable> {
 	}
 
 	async saveIndexToDisk() {
-		const _path = await path.resolve(this.path, ".index");
+		const _path = this.path + SEP + ".index";
 		try {
 			await fs.writeFile(_path, encode(await typeson.encapsulate(this.index)));
 			return true;
@@ -100,7 +101,7 @@ class ShittyTable<T extends UUIDable> {
 	}
 
 	async get(uuid: string) {
-		const _path = await path.resolve(this.path, uuid);
+		const _path = this.path + SEP + uuid;
 		try {
 			const obj = decode(await fs.readFile(_path));
 			if (typeof obj !== "undefined") {
@@ -139,7 +140,7 @@ class ShittyTable<T extends UUIDable> {
 	}
 
 	async write(uuid: string, data: T) {
-		const _path = await path.resolve(this.path, uuid);
+		const _path = this.path + SEP + uuid;
 		try{
 			await fs.writeFile(_path, encode(await typeson.encapsulate(data)));
 			await this.updateIndexWithData(data);
@@ -167,7 +168,7 @@ class ShittyTable<T extends UUIDable> {
 		for (const content of contents) {
 			// copy of add routine but just because we suck
 			if(!this.exists(content.uuid)) {
-				const _path = await path.resolve(this.path, content.uuid);
+				const _path = this.path + SEP + content.uuid;
 				try {
 					await fs.writeFile(_path, encode(await typeson.encapsulate(content)));
 					await this.updateIndexWithData(content, false);
@@ -195,7 +196,7 @@ class ShittyTable<T extends UUIDable> {
 	}
 
 	async delete(uuid: string) {
-		const _path = await path.resolve(this.path, uuid);
+		const _path = this.path + SEP + uuid;
 		try{
 			await fs.remove(_path);
 			await this.removeIndex(uuid);
@@ -212,7 +213,7 @@ class ShittyTable<T extends UUIDable> {
 			if(!_dir) return false;
 
 			for (const file of _dir){
-				await fs.remove(await path.resolve(this.path, file.name));
+				await fs.remove(this.path + SEP + file.name);
 				this.index = this.index.filter(x => x.uuid !== file.name);
 			}
 			return true;
@@ -238,7 +239,7 @@ const typeson = new Typeson().register([
 ]);
 
 async function makeTable<T extends UUIDable>(tableName: string, secondaryKeys: SecondaryKey<T>[]) {
-	const _path = await path.resolve(await path.appDataDir(), 'database', tableName);
+	const _path = await path.appDataDir() + SEP + 'database' + SEP + tableName;
 	await fs.mkdir(_path, { recursive: true });
 
 	const table = new ShittyTable<T>(tableName, _path, secondaryKeys);

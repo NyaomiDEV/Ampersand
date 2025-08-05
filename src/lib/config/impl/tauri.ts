@@ -2,8 +2,9 @@ import { Typeson } from "typeson";
 import { blob, file, filelist, map, typedArrays, undef, set as Tset, imagebitmap, imagedata } from "typeson-registry";
 import { load } from '@tauri-apps/plugin-store';
 import * as path from '@tauri-apps/api/path';
+import { SEP } from "../../native/util";
 
-const store = await load(await path.join(await path.appConfigDir(), "appConfig.json"));
+const store = await load(await path.appConfigDir() + SEP + "appConfig.json");
 
 const typeson = new Typeson({
 	sync: true
