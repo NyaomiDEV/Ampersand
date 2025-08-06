@@ -1,30 +1,20 @@
-import { sep, tempDir } from "@tauri-apps/api/path"
-import { exists, mkdir, readDir, remove, writeFile } from "@tauri-apps/plugin-fs";
+import { sep } from "@tauri-apps/api/path"
+import { remove, writeFile } from "@tauri-apps/plugin-fs";
+import { invoke } from "@tauri-apps/api/core";
 
 async function ourTempDir(){
-	const path = await tempDir() + sep() + "ampersandTemp";
-
-	if(!await exists(path)){
-		try{
-			await mkdir(path, { recursive: true });
-		}catch(e){
-			return "";
-		}
-	}
-
-	return path;
+	// Assuming we have a string at the other side, it will be passed just fine
+	return invoke<string>("our_temp_dir");
 }
 
 export async function clearTempDir(){
-	try{
-		const _ourTempDir = await ourTempDir();
-		for (const f of await readDir(_ourTempDir)) {
-			await remove(_ourTempDir + sep() + f.name);
-		}
+	// Result<T, Err> in Rust is mapped to a Promise<T> which rejects with Err
+	try {
+		await invoke<void>("clear_temp_dir");
+		return true;
 	}catch(e){
 		return false;
 	}
-	return true;
 }
 
 export async function writeToTemp(file: File){
@@ -47,4 +37,3 @@ export async function deleteFromTemp(file: File | string){
 		return false;
 	}
 }
-

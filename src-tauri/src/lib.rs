@@ -1,3 +1,5 @@
+mod commands;
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
@@ -8,6 +10,10 @@ pub fn run() {
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_ampersand::init())
+        .invoke_handler(tauri::generate_handler![
+            commands::our_temp_dir,
+            commands::clear_temp_dir
+        ])
         .setup(|_app: &mut tauri::App| {
             #[cfg(mobile)]
             _app.handle()
