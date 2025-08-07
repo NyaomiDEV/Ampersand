@@ -81,9 +81,8 @@ jobs:
           name: Development build for PC (${{ env.AMPERSAND_VERSION }})
           prerelease: false
           draft: false
+          overwrite_files: false
           tag_name: dev-pc
-          generate_release_notes: false
-          append_body: true
           files: |
             ./src-tauri/target/release/bundle/deb/Ampersand_*.deb
             ./src-tauri/target/release/bundle/dmg/Ampersand_*.dmg
