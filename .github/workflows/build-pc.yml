@@ -33,7 +33,7 @@ jobs:
           - platform: 'windows-latest'
             args: ''
     environment:
-      name: build-android
+      name: build-pc
     runs-on: ${{ matrix.platform }}
     steps:
       - name: Checkout
@@ -73,7 +73,10 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: PC build for ${{ matrix.platform }}
-          path: ./src-tauri/target/release/bundle/{**/*.deb,**/*.msi,**/*.dmg}
+          path: |
+            ./src-tauri/target/release/bundle/deb/Ampersand_*.deb
+            ./src-tauri/target/release/bundle/dmg/Ampersand_*.dmg
+            ./src-tauri/target/release/bundle/msi/Ampersand_*.msi
       - name: Publish to release
         uses: softprops/action-gh-release@v2.3.2
         with:
@@ -83,4 +86,6 @@ jobs:
           generate_release_notes: false
           append_body: true
           files: |
-            ./src-tauri/target/release/bundle/{**/*.deb,**/*.msi,**/*.dmg}
+            ./src-tauri/target/release/bundle/deb/Ampersand_*.deb
+            ./src-tauri/target/release/bundle/dmg/Ampersand_*.dmg
+            ./src-tauri/target/release/bundle/msi/Ampersand_*.msi
