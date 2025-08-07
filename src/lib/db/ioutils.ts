@@ -1,5 +1,5 @@
 import { Typeson } from "typeson";
-import { getTables } from ".";
+import { getTables } from "./tables";
 import { blob, file, filelist, imagebitmap, imagedata, map, set, typedArrays, undef } from "typeson-registry";
 import { decode, encode } from "@msgpack/msgpack";
 import { compressGzip, decompressGzip } from "../util/misc";
@@ -23,7 +23,7 @@ const typeson = new Typeson({
 async function _exportDatabase(){
 	const config = { appConfig, accessibilityConfig, securityConfig };
 	const database: Record<string, any> = {};
-	for(const [name, table] of Object.entries(getTables())) database[name] = await table.toArray();
+	for(const [name, table] of Object.entries(getTables())) database[name] = await Array.fromAsync<any>(table.iterate());
 
 	return await typeson.encapsulate({ config, database });
 }

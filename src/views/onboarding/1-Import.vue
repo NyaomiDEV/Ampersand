@@ -8,7 +8,7 @@
 	import { importTupperBox } from '../../lib/db/external/tupperbox';
 	import { importSimplyPlural } from '../../lib/db/external/simplyplural';
 	import { useTranslation } from 'i18next-vue';
-	import { getTables } from '../../lib/db';
+	import { getTables } from '../../lib/db/tables';
 	import { resetConfig } from '../../lib/config';
 
 	const loading = ref(false);

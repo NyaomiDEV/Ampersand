@@ -1,39 +1,94 @@
-import { BoardMessage, BoardMessageComplete, UUIDable, UUID } from '../entities';
-
-import * as impl from '../impl/tauri/boardMessages';
+import { db } from ".";
+import { DatabaseEvents, DatabaseEvent } from "../events";
+import { UUID, UUIDable, BoardMessage, BoardMessageComplete } from "../entities";
+import { defaultMember, getMember } from "../tables/members";
+import dayjs from "dayjs";
 
 export function getBoardMessages(){
-	return impl.getBoardMessages();
+	return db.boardMessages.iterate();
 }
 
-export function getBoardMessagesOffset(offset: number, limit?: number){
-	return impl.getBoardMessagesOffset(offset, limit);
+export async function getBoardMessagesOffset(offset: number, limit?: number){
+	return (await Promise.all(
+		db.boardMessages.index
+		.sort((a, b) => b.date!.getTime() - a.date!.getTime())
+		.slice(offset, limit ? offset + limit : undefined)
+		.map(x => db.boardMessages.get(x.uuid))
+	)).filter(x => !!x);
 }
 
-export function toBoardMessageComplete(boardMessage: BoardMessage): Promise<BoardMessageComplete> {
-	return impl.toBoardMessageComplete(boardMessage);
+export async function toBoardMessageComplete(boardMessage: BoardMessage): Promise<BoardMessageComplete> {
+	const member = (await getMember(boardMessage.member)) || defaultMember();
+	return { ...boardMessage, member };
 }
 
-export function newBoardMessage(boardMessage: Omit<BoardMessage, keyof UUIDable>) {
-	return impl.newBoardMessage(boardMessage);
+export async function newBoardMessage(boardMessage: Omit<BoardMessage, keyof UUIDable>) {
+	try{
+		const uuid = window.crypto.randomUUID();
+		await db.boardMessages.add(uuid, {
+			...boardMessage,
+			uuid
+		});
+		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
+			table: "boardMessages",
+			event: "new",
+			data: uuid
+		}));
+		return uuid;
+	}catch(error){
+		return false;
+	}
 }
 
-export function deleteBoardMessage(uuid: UUID) {
-	return impl.deleteBoardMessage(uuid);
+export async function deleteBoardMessage(uuid: UUID) {
+	try {
+		await db.boardMessages.delete(uuid);
+		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
+			table: "boardMessages",
+			event: "deleted",
+			data: uuid
+		}));
+		return true;
+	} catch (error) {
+		return false;
+	}
 }
 
-export function updateBoardMessage(uuid: UUID, newContent: Partial<BoardMessage>) {
-	return impl.updateBoardMessage(uuid, newContent);
+export async function updateBoardMessage(uuid: UUID, newContent: Partial<BoardMessage>) {
+	try{
+		const updated = await db.boardMessages.update(uuid, newContent);
+		if(updated) {
+			DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
+				table: "boardMessages",
+				event: "modified",
+				data: uuid
+			}));
+			return true;
+		}
+		return false;
+	}catch(error){
+		return false;
+	}
 }
 
-export function getRecentBoardMessages(){
-	return impl.getRecentBoardMessages();
+export async function getRecentBoardMessages() {
+	return Promise.all((await Promise.all(
+		db.boardMessages.index
+			.filter(x => x.isPinned || dayjs().startOf('day').valueOf() - dayjs(x.date).startOf('day').valueOf() <= 3 * 24 * 60 * 60 * 1000)
+			.map(x => db.boardMessages.get(x.uuid))
+	)).filter(x => !!x).map(x => toBoardMessageComplete(x)));
 }
 
-export function getBoardMessagesOfDay(date: Date){
-	return impl.getBoardMessagesOfDay(date);
+export async function getBoardMessagesOfDay(date: Date) {
+	const _date = dayjs(date).startOf("day");
+
+	return (await Promise.all(
+		db.boardMessages.index
+		.filter(x => dayjs(x.date!).startOf('day').valueOf() === _date.valueOf())
+		.map(async x => await db.boardMessages.get(x.uuid))
+	)).filter(x => !!x);
 }
 
-export function getBoardMessagesDays() {
-	return impl.getBoardMessagesDays();
+export async function getBoardMessagesDays() {
+	return [...new Set(db.boardMessages.index.map(x => dayjs(x.date!).startOf('day').valueOf()))].map(x => new Date(x));
 }

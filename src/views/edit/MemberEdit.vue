@@ -174,9 +174,14 @@
 
 		loading.value = true;
 
-		tags.value = (await getTags()).filter(x => x.type === "member");
+		const _tags: Tag[] = [];
+		for await (const tag of getTags()){
+			if(tag.type === "member")
+				_tags.push(tag);
+		}
+		tags.value = _tags;
 
-		customFields.value = await getCustomFields();
+		customFields.value = await Array.fromAsync(getCustomFields());
 
 		if(route.query.uuid){
 			const _member = await getMember(route.query.uuid as string);

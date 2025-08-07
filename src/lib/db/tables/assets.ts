@@ -1,22 +1,60 @@
-import { Asset, UUIDable, UUID } from '../entities';
-import * as impl from '../impl/tauri/assets';
+import { db } from ".";
+import { DatabaseEvents, DatabaseEvent } from "../events";
+import { UUID, UUIDable, Asset } from "../entities";
 
 export function getAssets(){
-	return impl.getAssets();
+	return db.assets.iterate();
 }
 
-export function newAsset(asset: Omit<Asset, keyof UUIDable>) {
-	return impl.newAsset(asset);
+export async function newAsset(asset: Omit<Asset, keyof UUIDable>) {
+	try{
+		const uuid = window.crypto.randomUUID();
+		await db.assets.add(uuid, {
+			...asset,
+			uuid
+		});
+		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
+			table: "assets",
+			event: "new",
+			data: uuid
+		}));
+		return uuid;
+	}catch(error){
+		return false;
+	}
 }
 
 export function getAsset(uuid: UUID){
-	return impl.getAsset(uuid);
+	return db.assets.get(uuid);
 }
 
-export function deleteAsset(uuid: UUID) {
-	return impl.deleteAsset(uuid);
+export async function deleteAsset(uuid: UUID) {
+	try {
+		await db.assets.delete(uuid);
+		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
+			table: "assets",
+			event: "deleted",
+			data: uuid
+		}));
+		return true;
+	} catch (error) {
+		return false;
+	}
 }
 
-export function updateAsset(uuid: UUID, newContent: Partial<Asset>) {
-	return impl.updateAsset(uuid, newContent);
+export async function updateAsset(uuid: UUID, newContent: Partial<Asset>) {
+	try{
+		const updated = await db.assets.update(uuid, newContent);
+		if(updated) {
+			DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
+				table: "assets",
+				event: "modified",
+				data: uuid
+			}));
+			return true;
+		}
+		return false;
+	}catch(error){
+		return false;
+	}
 }

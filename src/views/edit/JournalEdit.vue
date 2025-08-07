@@ -147,7 +147,12 @@
 
 		loading.value = true;
 
-		tags.value = (await getTags()).filter(x => x.type === "journal");
+		const _tags: Tag[] = [];
+		for await (const tag of getTags()){
+			if(tag.type === "journal")
+				_tags.push(tag);
+		}
+		tags.value = _tags;
 
 		if(route.query.uuid){
 			const _post = await getJournalPost(route.query.uuid as string);

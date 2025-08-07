@@ -30,13 +30,13 @@
 
 	const listener = async (event: Event) => {
 		if(["customFields"].includes((event as DatabaseEvent).data.table)){
-			customFields.value = await getCustomFields();
+			customFields.value = await Array.fromAsync(getCustomFields());
 		}
 	}
 
 	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
-		customFields.value = await getCustomFields();
+		customFields.value = await Array.fromAsync(getCustomFields());
 	});
 
 	onUnmounted(() => {

@@ -45,7 +45,12 @@
 	}, { immediate: true })
 
 	onBeforeMount(async () => {
-		tags.value = (await getTags()).filter(x => x.type === props.type);
+		const _tags: Tag[] = [];
+		for await (const tag of getTags()){
+			if(tag.type === props.type)
+				_tags.push(tag);
+		}
+		tags.value = _tags;
 	});
 
 	function check(tag: Tag, checked: boolean){

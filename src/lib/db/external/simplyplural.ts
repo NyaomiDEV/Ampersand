@@ -1,5 +1,5 @@
 import { System, Member, FrontingEntry, Tag, BoardMessage, CustomField, JournalPost } from "../entities";
-import { getTables } from "..";
+import { getTables } from "../tables";
 import { t } from "i18next";
 import { fetch } from "@tauri-apps/plugin-http";
 import { resizeImage } from "../../util/image";

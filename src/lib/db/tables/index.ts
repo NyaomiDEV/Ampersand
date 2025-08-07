@@ -2,10 +2,10 @@ import * as path from '@tauri-apps/api/path';
 import * as fs from '@tauri-apps/plugin-fs';
 import { Typeson } from "typeson";
 import { blob, file, filelist, map, typedArrays, undef, set as Tset, imagebitmap, imagedata } from "typeson-registry";
-import { Asset, BoardMessage, Chat, ChatMessage, CustomField, FrontingEntry, JournalPost, Member, Reminder, System, Tag, UUIDable } from '../../entities';
+import { Asset, BoardMessage, Chat, ChatMessage, CustomField, FrontingEntry, JournalPost, Member, Reminder, System, Tag, UUIDable } from '../entities';
 import { decode, encode } from '@msgpack/msgpack';
-import { AmpersandEntityMapping } from '../../types';
-import { SEP } from '../../../native/util';
+import { AmpersandEntityMapping } from '../types';
+import { SEP } from '../../native/util';
 
 type IndexEntry<T> = UUIDable & Partial<T>;
 type SecondaryKey<T> = (Exclude<keyof T, keyof UUIDable>);
@@ -129,20 +129,20 @@ class ShittyTable<T extends UUIDable> {
 		return this.index.length;
 	}
 
-	async toArray() {
-		const arr: T[] = [];
+	// async toArray() {
+	// 	const arr: T[] = [];
+	// 	for (const x of this.index.map(x => x.uuid)) {
+	// 		const data = await this.get(x);
+	// 		if (data) arr.push(data);
+	// 	}
+
+	// 	return arr;
+	// }
+
+	async* iterate() {
 		for (const x of this.index.map(x => x.uuid)) {
 			const data = await this.get(x);
-			if (data) arr.push(data);
-		}
-
-		return arr;
-	}
-
-	async* toGenerator() {
-	  for (const x of this.index.map(x => x.uuid)) {
-      const data = await this.get(x);
-      if (data) yield data;
+			if (data) yield data;
 		}
 	}
 

@@ -60,7 +60,7 @@
 	const count = ref(0);
 
 	async function tagMembers() {
-		const allMembers = await getMembers();
+		const allMembers = await Array.fromAsync(getMembers());
 		let members: Member[] = allMembers.filter(x => x.tags.includes(tag.value.uuid!));
 		const vnode = h(MemberSelect, {
 			customTitle: i18next.t("tagManagement:edit.members.title"),
@@ -87,7 +87,7 @@
 				// at this point the db is updated and we don't have
 				// the new values; besides, it's a non-issue to read
 				// from disk here
-				count.value = (await getMembers()).filter(x => x.tags.includes(tag.value.uuid!)).length;
+				count.value = (await Array.fromAsync(getMembers())).filter(x => x.tags.includes(tag.value.uuid!)).length;
 			},
 			"onUpdate:modelValue": v => { members = [...v] },
 		});
@@ -150,10 +150,21 @@
 			if(_tag){
 				tag.value = _tag;
 
-				if(tag.value.type === "member")
-					count.value = (await getMembers()).filter(x => x.tags.includes(tag.value.uuid!)).length;
-				else //journal
-					count.value = (await getJournalPosts()).filter(x => x.tags.includes(tag.value.uuid!)).length;
+				let _count = 0;
+
+				if(tag.value.type === "member"){
+					for await (const member of getMembers()){
+						if(member.tags.includes(tag.value.uuid!))
+							_count++;
+					}
+				} else { //journal
+					for await (const journalPost of getJournalPosts()){
+						if(journalPost.tags.includes(tag.value.uuid!))
+							_count++;
+					}
+				}
+
+				count.value = _count;
 			}
 			else tag.value = {...emptyTag};
 		} else tag.value = {...emptyTag};

@@ -29,13 +29,13 @@
 
 	const listener = async (event: Event) => {
 		if(["assets"].includes((event as DatabaseEvent).data.table)){
-			assets.value = await getAssets();
+			assets.value = await Array.fromAsync(getAssets());
 		}
 	}
 
 	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
-		assets.value = await getAssets();
+		assets.value = await Array.fromAsync(getAssets());
 	});
 
 	onUnmounted(() => {

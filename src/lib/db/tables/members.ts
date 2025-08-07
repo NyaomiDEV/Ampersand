@@ -1,27 +1,68 @@
 import { t } from "i18next";
+
+import { db } from ".";
+import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUIDable, Member, UUID } from "../entities";
 import { maxUid, nilUid } from "../../util/misc";
 
-import * as impl from '../impl/tauri/members';
-
-export function getMembers() {
-	return impl.getMembers();
+export function getMembers(){
+	return db.members.iterate();
 }
 
-export function newMember(member: Omit<Member, keyof UUIDable>) {
-	return impl.newMember(member);
+export async function newMember(member: Omit<Member, keyof UUIDable>) {
+	try{
+		const uuid = window.crypto.randomUUID();
+		await db.members.add(uuid, {
+			...member,
+			uuid
+		});
+		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
+			table: "members",
+			event: "new",
+			data: uuid
+		}));
+		return uuid;
+	}catch(error){
+		return false;
+	}
 }
 
-export function getMember(uuid: UUID){
-	return impl.getMember(uuid);
+export async function getMember(uuid: UUID){
+	if(uuid === nilUid) return undefined;
+	return await db.members.get(uuid);
 }
 
-export async function deleteMember(uuid: UUID){
-	return await impl.deleteMember(uuid);
+export async function deleteMember(uuid: UUID) {
+	if (uuid === nilUid) return false;
+	try {
+		await db.members.delete(uuid);
+		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
+			table: "members",
+			event: "deleted",
+			data: uuid
+		}));
+		return true;
+	} catch (error) {
+		return false;
+	}
 }
 
-export async function updateMember(uuid: UUID, newContent: Partial<Member>){
-	return impl.updateMember(uuid, newContent);
+export async function updateMember(uuid: UUID, newContent: Partial<Member>) {
+	if (uuid === nilUid) return undefined;
+	try{
+		const updated = await db.members.update(uuid, newContent);
+		if(updated) {
+			DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
+				table: "members",
+				event: "modified",
+				data: uuid
+			}));
+			return true;
+		}
+		return false;
+	}catch(error){
+		return false;
+	}
 }
 
 export const defaultMember = (): Member => ({

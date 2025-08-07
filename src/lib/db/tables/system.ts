@@ -1,20 +1,50 @@
-import { UUIDable, System } from "../entities";
+import { db } from ".";
+import { DatabaseEvents, DatabaseEvent } from "../events";
+import { UUIDable, System } from "../entities"
 
-import * as impl from '../impl/tauri/system';
-
-export function newSystem(system: Omit<System, keyof UUIDable>){
-	return impl.newSystem(system);
+export async function newSystem(system: Omit<System, keyof UUIDable>){
+	try{
+		const uuid = window.crypto.randomUUID();
+		await db.system.add(uuid, {
+			...system,
+			uuid
+		});
+		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
+			table: "system",
+			event: "new",
+			data: uuid
+		}));
+		return uuid;
+	}catch(error){
+		return false;
+	}
 }
 
 // Extra because there shall only be one
-export function getSystem(){
-	return impl.getSystem();
+export async function getSystem(): Promise<System | undefined> {
+	return (await db.system.iterate().next()).value || undefined;
 }
 
-export function getSystemUUID(){
-	return impl.getSystemUUID();
+export async function getSystemUUID(){
+	return (await db.system.iterate().next()).value?.uuid;
 }
 
-export function modifySystem(system: Partial<System>) {
-	return impl.modifySystem(system);
+export async function modifySystem(system: Partial<System>) {
+	try {
+		const uuid = await getSystemUUID();
+		if(!uuid) return false;
+		
+		const updated = await db.system.update(uuid, system);
+		if(updated){
+			DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
+				table: "system",
+				event: "modified",
+				data: uuid
+			}));
+			return true;
+		}
+		return false;
+	} catch (error) {
+		return false;
+	}
 }

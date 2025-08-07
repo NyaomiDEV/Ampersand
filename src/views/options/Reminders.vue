@@ -18,12 +18,12 @@
 
 	const listener = async (event: Event) => {
 		if(["reminders"].includes((event as DatabaseEvent).data.table))
-			reminders.value = await getReminders();
+			reminders.value = await Array.fromAsync(getReminders());
 	}
 
 	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
-		reminders.value = await getReminders();
+		reminders.value = await Array.fromAsync(getReminders());
 	});
 
 	onUnmounted(async () => {

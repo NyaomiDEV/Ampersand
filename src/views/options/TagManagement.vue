@@ -36,12 +36,12 @@
 
 	const listener = async (event: Event) => {
 		if((event as DatabaseEvent).data.table === "tags")
-			tags.value = await getTags();
+			tags.value = await Array.fromAsync(getTags());
 	}
 
 	onMounted(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
-		tags.value = await getTags();
+		tags.value = await Array.fromAsync(getTags());
 	});
 
 	onUnmounted(() => {

@@ -41,8 +41,17 @@
 
 	onMounted(async () => {
 		system.value = await getSystem();
-		memberCount.value = (await getMembers()).filter(x => !x.isCustomFront).length;
-		archivedMemberCount.value = (await getMembers()).filter(x => x.isArchived).length;
+		let _memberCount = 0;
+		let _archivedMemberCount = 0;
+		for await(const member of getMembers()){
+			if(!member.isCustomFront){
+				_memberCount++;
+				if(member.isArchived)
+					_archivedMemberCount++;
+			}
+		}
+		memberCount.value = _memberCount;
+		archivedMemberCount.value = _archivedMemberCount;
 	});
 </script>
 

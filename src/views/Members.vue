@@ -65,7 +65,7 @@
 	const listeners = [
 		async (event: Event) => {
 			if((event as DatabaseEvent).data.table === "members")
-				members.value = await getMembers();
+				members.value = await Array.fromAsync(getMembers());
 		},
 		async (event: Event) => {
 			if((event as DatabaseEvent).data.table === "frontingEntries"){
@@ -81,7 +81,7 @@
 	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listeners[0]);
 		DatabaseEvents.addEventListener("updated", listeners[1]);
-		members.value = await getMembers();
+		members.value = await Array.fromAsync(getMembers());
 		frontingEntries.clear();
 		for(const member of members.value)
 			frontingEntries.set(member, await getCurrentFrontEntryForMember(member));

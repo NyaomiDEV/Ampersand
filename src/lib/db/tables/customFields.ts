@@ -1,19 +1,56 @@
-import { CustomField, UUIDable, UUID } from '../entities';
-
-import * as impl from '../impl/tauri/customFields';
+import { db } from ".";
+import { DatabaseEvents, DatabaseEvent } from "../events";
+import { UUID, UUIDable, CustomField } from "../entities";
 
 export function getCustomFields(){
-	return impl.getCustomFields();
+	return db.customFields.iterate();
 }
 
-export function newCustomField(customField: Omit<CustomField, keyof UUIDable>) {
-	return impl.newCustomField(customField);
+export async function newCustomField(customField: Omit<CustomField, keyof UUIDable>) {
+	try{
+		const uuid = window.crypto.randomUUID();
+		await db.customFields.add(uuid, {
+			...customField,
+			uuid
+		});
+		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
+			table: "customFields",
+			event: "new",
+			data: uuid
+		}));
+		return uuid;
+	}catch(error){
+		return false;
+	}
 }
 
-export function deleteCustomField(uuid: UUID) {
-	return impl.deleteCustomField(uuid);
+export async function deleteCustomField(uuid: UUID) {
+	try {
+		await db.customFields.delete(uuid);
+		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
+			table: "customFields",
+			event: "deleted",
+			data: uuid
+		}));
+		return true;
+	} catch (error) {
+		return false;
+	}
 }
 
-export function updateCustomField(uuid: UUID, newContent: Partial<CustomField>) {
-	return impl.updateCustomField(uuid, newContent);
+export async function updateCustomField(uuid: UUID, newContent: Partial<CustomField>) {
+	try{
+		const updated = await db.customFields.update(uuid, newContent);
+		if(updated) {
+			DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
+				table: "customFields",
+				event: "modified",
+				data: uuid
+			}));
+			return true;
+		}
+		return false;
+	}catch(error){
+		return false;
+	}
 }

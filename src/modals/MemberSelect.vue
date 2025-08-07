@@ -42,7 +42,7 @@
 
 	const listener = async (event: Event) => {
 		if((event as DatabaseEvent).data.table == "members")
-			members.value = await getMembers();
+			members.value = await Array.fromAsync(getMembers());
 	}
 
 	watch(selectedMembers, () => {
@@ -55,7 +55,7 @@
 
 	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
-		members.value = await getMembers();
+		members.value = await Array.fromAsync(getMembers());
 	});
 
 	onUnmounted(() => {

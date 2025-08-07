@@ -1,7 +1,21 @@
-import { Chat, UUIDable } from '../entities';
+import { db } from ".";
+import { DatabaseEvents, DatabaseEvent } from "../events";
+import { UUIDable, Chat } from "../entities";
 
-import * as impl from '../impl/tauri/chats';
-
-export function newChat(chat: Omit<Chat, keyof UUIDable>) {
-	return impl.newChat(chat);
+export async function newChat(chat: Omit<Chat, keyof UUIDable>) {
+	try{
+		const uuid = window.crypto.randomUUID();
+		await db.chats.add(uuid, {
+			...chat,
+			uuid
+		});
+		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
+			table: "chats",
+			event: "new",
+			data: uuid
+		}));
+		return uuid;
+	}catch(error){
+		return false;
+	}
 }

@@ -43,7 +43,7 @@
 	}, { immediate: true })
 
 	onBeforeMount(async () => {
-		customFields.value = await getCustomFields();
+		customFields.value = await Array.fromAsync(getCustomFields());
 	});
 
 	function check(customField: CustomField, checked: boolean){

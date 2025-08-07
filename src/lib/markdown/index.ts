@@ -55,18 +55,22 @@ marked.use({
 				// then let's put the href to asset code
 				if(token.href.startsWith("@")){
 					const friendlyNameMaybe = token.href.slice(1);
-					const asset = (await getAssets()).find(x => x.friendlyName === friendlyNameMaybe);
-					if(asset){
-						token.href = getObjectURL(asset.file);
+					for await (const x of getAssets()) {
+						if (x.friendlyName === friendlyNameMaybe) {
+							token.href = getObjectURL(x.file);
+							break;
+						}
 					}
 				}
 				break;
 			case "link":
 				if (token.href.startsWith("@")) {
 					const friendlyNameMaybe = token.href.slice(1);
-					const asset = (await getAssets()).find(x => x.friendlyName === friendlyNameMaybe);
-					if (asset) {
-						token.href = getObjectURL(asset.file);
+					for await (const x of getAssets()){
+						if (x.friendlyName === friendlyNameMaybe){
+							token.href = getObjectURL(x.file);
+							break;
+						}
 					}
 				}
 				break;				

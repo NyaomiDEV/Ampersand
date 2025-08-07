@@ -1,5 +1,5 @@
 import { Member, Tag, System } from "../entities";
-import { getTables } from "..";
+import { getTables } from "../tables";
 import { fetch } from "@tauri-apps/plugin-http";
 
 async function tag(tuExport: any){
