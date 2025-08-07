@@ -81,7 +81,8 @@ jobs:
         uses: softprops/action-gh-release@v2.3.2
         with:
           name: Development build for PC (${{ env.AMPERSAND_VERSION }})
-          prerelease: true
+          prerelease: false
+          draft: false
           tag_name: dev-pc
           generate_release_notes: false
           append_body: true
