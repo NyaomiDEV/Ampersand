@@ -20,7 +20,6 @@ export async function clearTempDir(){
 export async function writeToTemp(file: File){
 	try{
 		const path = await ourTempDir() + sep() + file.name;
-		(window as any).file = file;
 		await writeFile(path, new Uint8Array(await file.arrayBuffer()));
 		return path;
 	}catch(e){
