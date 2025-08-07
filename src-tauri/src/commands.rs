@@ -7,7 +7,7 @@ use tauri_plugin_ampersand::Result;
 pub fn our_temp_dir() -> Result<String> {
     let mut temp_path = std::env::temp_dir();
     temp_path.push("ampersandTemp");
-    fs::create_dir_all(dbg!(temp_path.as_path()))
+    fs::create_dir_all(temp_path.as_path())
         .map_err(Into::into)
         .and(Ok(temp_path))
         .map(|x| x.into_os_string().into_string().unwrap())
