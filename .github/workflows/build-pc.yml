@@ -19,6 +19,20 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  prepare-dev-pc:
+    environment:
+      name: build-pc
+    runs-on: ubuntu-latest
+    steps:
+    - name: Update dev tag and remove old prerelease
+      run: |
+        gh release delete dev-pc -y || true
+        git tag -d dev-pc || true
+        git push origin :refs/tags/dev-pc || true
+        git tag dev-pc
+        git push origin dev-pc
+      env:
+        GH_TOKEN: ${{ github.token }}
   deploy-pc:
     strategy:
       fail-fast: false
@@ -58,15 +72,6 @@ jobs:
         run: yarn run upgrade-vcs
       - name: Build Ampersand
         run: yarn tauri build --ci
-      - name: Update dev tag and remove old prerelease
-        run: |
-          gh release delete dev-pc -y || true
-          git tag -d dev-pc || true
-          git push origin :refs/tags/dev-pc || true
-          git tag dev-pc
-          git push origin dev-pc
-        env:
-          GH_TOKEN: ${{ github.token }}
       - name: Publish artifact
         uses: actions/upload-artifact@v4
         with:
@@ -81,8 +86,8 @@ jobs:
           name: Development build for PC (${{ env.AMPERSAND_VERSION }})
           prerelease: false
           draft: false
-          overwrite_files: false
           tag_name: dev-pc
+          generate_release_notes: true
           files: |
             ./src-tauri/target/release/bundle/deb/Ampersand_*.deb
             ./src-tauri/target/release/bundle/dmg/Ampersand_*.dmg
