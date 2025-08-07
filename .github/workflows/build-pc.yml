@@ -1,0 +1,86 @@
+# Simple workflow for building Ampersand as a PC application
+name: Build for PC
+
+on:
+  # Runs on pushes targeting the default branch
+  push:
+    branches: [main]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets the GITHUB_TOKEN permissions to allow deployment
+permissions:
+  contents: write
+
+# Allow one concurrent deployment
+concurrency:
+  group: 'build-pc'
+  cancel-in-progress: true
+
+jobs:
+  deploy-pc:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: 'macos-latest' # for Arm based macs (M1 and above).
+            args: '--target aarch64-apple-darwin'
+          - platform: 'macos-latest' # for Intel based macs.
+            args: '--target x86_64-apple-darwin'
+          - platform: 'ubuntu-22.04' # for Tauri v1 you could replace this with ubuntu-20.04.
+            args: ''
+          - platform: 'windows-latest'
+            args: ''
+    environment:
+      name: build-android
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'yarn'
+      - name: Set up Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
+      - name: install dependencies (ubuntu only)
+        if: matrix.platform == 'ubuntu-22.04' # This must match the platform value defined above.
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
+      - name: Install frontend dependencies
+        run: yarn install --frozen-lockfile
+      - name: Update versioning
+        run: yarn run upgrade-vcs
+      - name: Build Ampersand
+        run: yarn tauri build --ci
+      - name: Update dev tag and remove old prerelease
+        run: |
+          gh release delete dev-pc -y || true
+          git tag -d dev-pc || true
+          git push origin :refs/tags/dev-pc || true
+          git tag dev-pc
+          git push origin dev-pc
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - name: Publish artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: PC build for ${{ matrix.platform }}
+          path: ./src-tauri/target/release/bundle/{**/*.deb,**/*.msi,**/*.dmg}
+      - name: Publish to release
+        uses: softprops/action-gh-release@v2.3.2
+        with:
+          name: Development build for PC (${{ env.AMPERSAND_VERSION }})
+          prerelease: true
+          tag_name: dev-pc
+          generate_release_notes: false
+          append_body: true
+          files: |
+            ./src-tauri/target/release/bundle/{**/*.deb,**/*.msi,**/*.dmg}
