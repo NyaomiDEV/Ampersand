@@ -3,6 +3,11 @@ use tauri::{command, AppHandle, Runtime};
 use crate::Result;
 use crate::AmpersandExt;
 
+// Platform dependent commands and code goes here.
+// We interface with the native (eg. mobile) device stuff here.
+// Commands that can be done independent of platform
+// go into src-tauri/src/commands.rs
+
 #[command]
 pub(crate) fn exit_app<R: Runtime>(app: AppHandle<R>) -> Result<()> {
     app.ampersand().exit_app()
