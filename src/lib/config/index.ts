@@ -6,8 +6,7 @@ import i18next from "i18next";
 import { Typeson } from "typeson";
 import { blob, file, filelist, map, typedArrays, undef, set as Tset, imagebitmap, imagedata } from "typeson-registry";
 import { load } from '@tauri-apps/plugin-store';
-import * as path from '@tauri-apps/api/path';
-import { SEP } from "../native/util";
+import { appConfigDir, sep } from '@tauri-apps/api/path';
 
 const defaultAppConfig: AppConfig = {
 	locale: {
@@ -45,7 +44,7 @@ export const appConfig = reactive<AppConfig>({...structuredClone(defaultAppConfi
 export const accessibilityConfig = reactive<AccessibilityConfig>({ ...structuredClone(defaultAccessibilityConfig), ...await get("accessibilityConfig") });
 export const securityConfig = reactive<SecurityConfig>({ ...structuredClone(defaultSecurityConfig), ...await get("securityConfig") });
 
-const store = await load(await path.appConfigDir() + SEP + "appConfig.json");
+const store = await load(await appConfigDir() + sep() + "appConfig.json");
 
 const typeson = new Typeson({
 	sync: true

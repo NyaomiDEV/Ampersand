@@ -4,7 +4,7 @@
 
 	import { computed, provide } from "vue";
 	import { isIOSIonicMode } from "./lib/mode";
-	import { setCanGoBack } from "./lib/native/ampersand";
+	import { setCanGoBack } from "./lib/native/plugin";
 	import ModalContainer from "./components/ModalContainer.vue";
 
 	provide("isIOS", computed(isIOSIonicMode));

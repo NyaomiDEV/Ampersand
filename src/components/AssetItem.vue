@@ -9,7 +9,7 @@
 	} from "ionicons/icons";
 
 	import documentMD from "@material-symbols/svg-600/outlined/draft.svg";
-	import { openFile } from '../lib/native/opener';
+	import { openFile } from '../lib/native/plugin';
 
 	const props = defineProps<{
 		asset: PartialBy<Asset, "uuid">,

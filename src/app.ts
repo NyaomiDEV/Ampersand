@@ -50,7 +50,7 @@ import { appConfig } from "./lib/config";
 import { getLockedStatus } from "./lib/applock";
 import { clearTempDir } from "./lib/native/cache";
 import { slideAnimation } from "./lib/util/misc";
-import { addListener } from './lib/native/ampersand';
+import { addListener } from './lib/native/plugin';
 
 const app = createApp(App).use(IonicVue, {
 	hardwareBackButton: true,

@@ -3,7 +3,7 @@
 	import { marked } from '../lib/markdown';
 	import { openUrl } from '@tauri-apps/plugin-opener';
 	import { getFile } from '../lib/util/blob';
-	import { openFile } from '../lib/native/opener';
+	import { openFile } from '../lib/native/plugin';
 
 	const props = defineProps<{
 		markdown: string
