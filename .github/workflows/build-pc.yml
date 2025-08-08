@@ -75,7 +75,7 @@ jobs:
       - name: Update versioning
         run: yarn run upgrade-vcs
       - name: Build Ampersand
-        run: yarn tauri build --ci
+        run: yarn tauri build --ci ${{ matrix.args }}
       - name: Publish artifact
         uses: actions/upload-artifact@v4
         with:
