@@ -36,7 +36,7 @@ export function getFiles(contentType?: string, multiple?: boolean): Promise<File
 	});
 }
 
-export async function compressGzip(data: Uint8Array) {
+export async function compressGzip(data: BufferSource) {
 	const reader = new Blob([data])
 		.stream()
 		.pipeThrough<Uint8Array>(new CompressionStream("gzip"))
@@ -59,7 +59,7 @@ export async function compressGzip(data: Uint8Array) {
 	return result;
 }
 
-export async function decompressGzip(data: Uint8Array) {
+export async function decompressGzip(data: BufferSource) {
 	const reader = new Blob([data])
 		.stream()
 		.pipeThrough<Uint8Array>(new DecompressionStream("gzip"))

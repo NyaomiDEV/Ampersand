@@ -31,14 +31,14 @@ async function _exportDatabase(){
 export async function exportDatabaseToBinary(){
 	const theEntireDatabase = await _exportDatabase();
 
-	return await compressGzip(encode(theEntireDatabase));
+	return await compressGzip(encode(theEntireDatabase) as Uint8Array<ArrayBuffer>);
 }
 
 export async function exportDatabaseToBinaryWithPassword(password: string){
 	const theEntireDatabase = await _exportDatabase();
-	const encodedDatabase = await encrypt(encode(theEntireDatabase), password);
+	const encodedDatabase = await encrypt(encode(theEntireDatabase) as Uint8Array<ArrayBuffer>, password);
 
-	return await compressGzip(encode(encodedDatabase));
+	return await compressGzip(encode(encodedDatabase) as Uint8Array<ArrayBuffer>);
 }
 
 async function _importDatabase(tablesAndConfig){
@@ -63,7 +63,7 @@ async function _importDatabase(tablesAndConfig){
 	return true;
 }
 
-export async function importDatabaseFromBinary(data: Uint8Array) {
+export async function importDatabaseFromBinary(data: Uint8Array<ArrayBuffer>) {
 	try{
 		const theEntireDatabase = decode(await decompressGzip(data)) as Record<string, any>;
 
@@ -73,7 +73,7 @@ export async function importDatabaseFromBinary(data: Uint8Array) {
 	}
 }
 
-export async function importDatabaseFromBinaryWithPassword(data: Uint8Array, password: string) {
+export async function importDatabaseFromBinaryWithPassword(data: Uint8Array<ArrayBuffer>, password: string) {
 	try{
 		const encodedDatabase = decode(await decompressGzip(data)) as EncryptedPayload;
 		const theEntireDatabase = decode(await decrypt(encodedDatabase, password)) as Record<string, any>;

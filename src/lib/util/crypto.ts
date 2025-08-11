@@ -1,7 +1,7 @@
 export type EncryptedPayload = {
-	iv: Uint8Array,
-	salt: Uint8Array,
-	data: Uint8Array
+	iv: BufferSource,
+	salt: BufferSource,
+	data: BufferSource
 };
 
 async function getKeyFromPassword(password: string) {
@@ -10,7 +10,7 @@ async function getKeyFromPassword(password: string) {
 	);
 }
 
-export async function encrypt(unencryptedData: Uint8Array, password: string) {
+export async function encrypt(unencryptedData: BufferSource, password: string) {
 	const dKey = await getKeyFromPassword(password);
 	const salt = crypto.getRandomValues(new Uint8Array(16));
 

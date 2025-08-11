@@ -82,6 +82,8 @@ jobs:
           name: PC build for ${{ matrix.platform }}
           path: |
             ./src-tauri/target/release/bundle/deb/Ampersand_*.deb
+            ./src-tauri/target/release/bundle/rpm/Ampersand_*.rpm
+            ./src-tauri/target/release/bundle/AppImage/Ampersand_*.AppImage
             ./src-tauri/target/universal-apple-darwin/release/bundle/dmg/Ampersand_*.dmg
             ./src-tauri/target/release/bundle/msi/Ampersand_*.msi
       - name: Publish to release
@@ -94,5 +96,7 @@ jobs:
           generate_release_notes: true
           files: |
             ./src-tauri/target/release/bundle/deb/Ampersand_*.deb
+            ./src-tauri/target/release/bundle/rpm/Ampersand_*.rpm
+            ./src-tauri/target/release/bundle/AppImage/Ampersand_*.AppImage
             ./src-tauri/target/universal-apple-darwin/release/bundle/dmg/Ampersand_*.dmg
             ./src-tauri/target/release/bundle/msi/Ampersand_*.msi
