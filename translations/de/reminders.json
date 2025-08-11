@@ -1,6 +1,6 @@
 {
 	"remindersAreNotFinished": {
-		"header": "Erinnerungen sind nicht [ vollendet / fertig / vollständig ?]!",
+		"header": "Erinnerungen sind nicht fertig!",
 		"content": "Aktuell ist alles hier nur eine [ui preview]! [You may be able to save your reminders at some point], aber denke daran, dass dies noch nicht zu einem Benachrichtigungs-System verbunden ist! Wenn du ein Android-System nutzt, solltest du bereits Einiges konfigurieren können, das funktionieren sollte wenn wir das [underlying system] [finish]. Aber bitte denk daran, dass dies nicht auf der Web-Version funktionieren wird, also freue dich nicht zu sehr, Erinnerungen auf deinem Computer zu nutzen. Außerdem, falls du ein [developer] bist, bitte hilf uns aus!"
 	},
 	"header": "Erinnerungen",
