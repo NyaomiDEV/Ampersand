@@ -50,7 +50,8 @@ import { appConfig } from "./lib/config";
 import { getLockedStatus } from "./lib/applock";
 import { clearTempDir } from "./lib/native/cache";
 import { slideAnimation } from "./lib/util/misc";
-import { addListener } from './lib/native/plugin';
+import { addMobileListener } from './lib/native/plugin';
+import { platform } from "@tauri-apps/plugin-os";
 
 const app = createApp(App).use(IonicVue, {
 	hardwareBackButton: true,
@@ -115,7 +116,9 @@ window.addEventListener("orientationchange",  () => updateInsets());
 router.isReady().then(async () => {
 	app.mount(document.body);
 
-	addListener("backbutton", () => {
-		document.dispatchEvent(new Event('backbutton'));
-	});
+	if(platform() === 'android' || platform() == 'ios'){
+		addMobileListener("backbutton", () => {
+			document.dispatchEvent(new Event('backbutton'));
+		});
+	}
 });

@@ -25,7 +25,7 @@ export async function openFile(file: File) {
 	}
 }
 
-export async function addListener(event: string, handler: () => void){
+export async function addMobileListener(event: string, handler: () => void){
 	try{
 		await addPluginListener("ampersand", event, handler);
 	}catch(e){
