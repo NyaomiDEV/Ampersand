@@ -8,6 +8,20 @@ import { blob, file, filelist, map, typedArrays, undef, set as Tset, imagebitmap
 import { load } from '@tauri-apps/plugin-store';
 import { appConfigDir, sep } from '@tauri-apps/api/path';
 
+const typeson = new Typeson({
+	sync: true
+}).register([
+	file,
+	filelist,
+	blob,
+	typedArrays,
+	undef,
+	map,
+	Tset,
+	imagebitmap,
+	imagedata
+]);
+
 const defaultAppConfig: AppConfig = {
 	locale: {
 		firstWeekOfDayIsSunday: false,
@@ -41,24 +55,9 @@ const defaultSecurityConfig: SecurityConfig = {
 }
 
 const store = await load(await appConfigDir() + sep() + "appConfig.json");
-
 export const appConfig = reactive<AppConfig>({...structuredClone(defaultAppConfig), ...await get("appConfig") });
 export const accessibilityConfig = reactive<AccessibilityConfig>({ ...structuredClone(defaultAccessibilityConfig), ...await get("accessibilityConfig") });
 export const securityConfig = reactive<SecurityConfig>({ ...structuredClone(defaultSecurityConfig), ...await get("securityConfig") });
-
-const typeson = new Typeson({
-	sync: true
-}).register([
-	file,
-	filelist,
-	blob,
-	typedArrays,
-	undef,
-	map,
-	Tset,
-	imagebitmap,
-	imagedata
-]);
 
 export function set(key: string, value: any): Promise<void> {
 	return store.set(key, typeson.encapsulate(value));
