@@ -10,7 +10,7 @@
     "upgrade-vcs": "node upgrade-vcs.mjs"
   },
   "dependencies": {
-    "@ionic/vue": "^8.7.0",
+    "@ionic/vue": "8.7.0",
     "@ionic/vue-router": "^8.7.2",
     "@material-symbols/svg-600": "^0.34.1",
     "@material/material-color-utilities": "^0.3.0",

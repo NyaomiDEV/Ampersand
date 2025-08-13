@@ -54,6 +54,15 @@
   dependencies:
     tslib "^2.4.0"
 
+"@ionic/core@8.7.0":
+  version "8.7.0"
+  resolved "https://registry.yarnpkg.com/@ionic/core/-/core-8.7.0.tgz#9b5cff9941707d186efad8643215fb79aa162d94"
+  integrity sha512-l/43DXwv3WB2iXfdOQlu0fBY1CP70kek1y75HCwe4C9UlXcSnaLYnr3F/4VLvo1sIjNOmJHxJURpv/ZR7CP4AQ==
+  dependencies:
+    "@stencil/core" "4.33.1"
+    ionicons "^8.0.13"
+    tslib "^2.1.0"
+
 "@ionic/core@8.7.2":
   version "8.7.2"
   resolved "https://registry.yarnpkg.com/@ionic/core/-/core-8.7.2.tgz#44c12613bd711c3b1967c0087059cea1601bd175"
@@ -70,7 +79,16 @@
   dependencies:
     "@ionic/vue" "8.7.2"
 
-"@ionic/vue@8.7.2", "@ionic/vue@^8.7.0":
+"@ionic/vue@8.7.0":
+  version "8.7.0"
+  resolved "https://registry.yarnpkg.com/@ionic/vue/-/vue-8.7.0.tgz#fafff483bc86ca48e1c682f446b1d056742fa2e1"
+  integrity sha512-lIq8zTIx794QrFUHqXpS02Z0QRPBDNcuX+lIL7dQYg4PXxYwdERppt5MStfXXbx1jNr6YDCOhYMdcuw9emmzGA==
+  dependencies:
+    "@ionic/core" "8.7.0"
+    "@stencil/vue-output-target" "0.10.7"
+    ionicons "^8.0.13"
+
+"@ionic/vue@8.7.2":
   version "8.7.2"
   resolved "https://registry.yarnpkg.com/@ionic/vue/-/vue-8.7.2.tgz#bd7188696b8824e7880a34a72dde4a76781961aa"
   integrity sha512-5sOMt15X4DRHbIyrotv8FyUK8805V7ePJ36Hx0IS8Grv5PXySg+G0cN/bYHR+eg3Oc525ldkBlaM/cYwu1GOzQ==
@@ -327,6 +345,20 @@
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@rspack/lite-tapable/-/lite-tapable-1.0.1.tgz#d4540a5d28bd6177164bc0ba0bee4bdec0458591"
   integrity sha512-VynGOEsVw2s8TAlLf/uESfrgfrq2+rcXB1muPJYBWbsm1Oa6r5qVQhjA5ggM6z/coYPrsVMgovl3Ff7Q7OCp1w==
+
+"@stencil/core@4.33.1":
+  version "4.33.1"
+  resolved "https://registry.yarnpkg.com/@stencil/core/-/core-4.33.1.tgz#5cc48b46cfd455d87833a6d72b7604323a2379a8"
+  integrity sha512-12k9xhAJBkpg598it+NRmaYIdEe6TSnsL/v6/KRXDcUyTK11VYwZQej2eHnMWtqot+znJ+GNTqb5YbiXi+5Low==
+  optionalDependencies:
+    "@rollup/rollup-darwin-arm64" "4.34.9"
+    "@rollup/rollup-darwin-x64" "4.34.9"
+    "@rollup/rollup-linux-arm64-gnu" "4.34.9"
+    "@rollup/rollup-linux-arm64-musl" "4.34.9"
+    "@rollup/rollup-linux-x64-gnu" "4.34.9"
+    "@rollup/rollup-linux-x64-musl" "4.34.9"
+    "@rollup/rollup-win32-arm64-msvc" "4.34.9"
+    "@rollup/rollup-win32-x64-msvc" "4.34.9"
 
 "@stencil/core@4.36.2", "@stencil/core@^4.35.3":
   version "4.36.2"
