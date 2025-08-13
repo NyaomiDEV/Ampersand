@@ -22,7 +22,7 @@
 </script>
 
 <template>
-	<IonModal>
+	<IonModal :keepContentsMounted="true">
 		<IonDatetime
 			:presentation="props.presentation"
 			:showDefaultButtons="props.showDefaultButtons"
