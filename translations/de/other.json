@@ -48,5 +48,6 @@
 			"long": "Sekunden",
 			"short": "Sek"
 		}
-	}
+	},
+	"addTimestamp": "Zeitstempel hinzufügen"
 }

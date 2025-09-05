@@ -1,3 +1,8 @@
 {
-	"header": "Benutzerdefinierte Felder"
+	"header": "Benutzerdefinierte Felder",
+	"searchPlaceholder": "Benutzerdefinierte Felder durchsuchen...",
+	"edit": {
+		"header": "Benutzerdefiniertes Feld bearbeiten",
+		"headerAdd": "Benutzerdefiniertes Felde hinzufügen"
+	}
 }
