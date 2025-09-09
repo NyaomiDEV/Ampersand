@@ -32,10 +32,10 @@
 		"desc": "Disable in-app animations"
 	},
 	"fontScale": {
-		"title": "UI size"
+		"title": "Font size"
 	},
 	"chatFontScale": {
-		"title": "Chat UI size"
+		"title": "Chat font size"
 	},
 	"longPressDuration": {
 		"title": "Long press duration"

@@ -120,7 +120,7 @@
 					</IonLabel>
 				</IonItem>
 
-				<IonItem>
+				<IonItem v-if="false">
 					<IonLabel class="more-padding">
 						<h3 class="centered-text">{{ $t("accessibility:chatFontScale.title") }}</h3>
 						<IonRange

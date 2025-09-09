@@ -32,10 +32,10 @@
 		"desc": "Disabilita le animazioni in app"
 	},
 	"fontScale": {
-		"title": "Dimensione dell'interfaccia"
+		"title": "Dimensione del testo"
 	},
 	"chatFontScale": {
-		"title": "Dimensione della chat"
+		"title": "Dimensione del testo nelle chat"
 	},
 	"longPressDuration": {
 		"title": "Durata della premuta"
