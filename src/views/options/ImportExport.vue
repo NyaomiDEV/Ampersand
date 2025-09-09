@@ -20,128 +20,100 @@
 
 	async function importDb(){
 		loading.value = true;
+		try{
+			const files = await getFiles(undefined, false);
+			if (!files.length) throw new Error("no files specified");
 
-		const files = await getFiles(undefined, false);
-		if(files.length){
-			const file = files[0];
-			try{
-				const result = await importDatabaseFromBinary(new Uint8Array(await file.arrayBuffer()));
+			const result = await importDatabaseFromBinary(new Uint8Array(await files[0].arrayBuffer()));
+			if(!result) throw new Error("errored out");
 
-				if(!result) throw new Error("errored out");
-
-				const statusMessage = await toastController.create({
-					message: i18next.t("importExport:status.imported"),
-					duration: 1500
-				});
-
-				await statusMessage.present();
-			}catch(e){
-				const statusMessage = await toastController.create({
-					message: i18next.t("importExport:status.error"),
-					duration: 1500
-				});
-
-				await statusMessage.present();
-			}
+			const statusMessage = await toastController.create({
+				message: i18next.t("importExport:status.imported"),
+				duration: 1500
+			});
+			await statusMessage.present();
+		}catch(e){
+			const statusMessage = await toastController.create({
+				message: i18next.t("importExport:status.error"),
+				duration: 1500
+			});
+			await statusMessage.present();
 		}
-
 		loading.value = false;
 	}
 
 	async function importSp() {
 		loading.value = true;
+		try{
+			const files = await getFiles(undefined, false);
+			if (!files.length) throw new Error("no files specified");
 
-		const files = await getFiles(undefined, false);
-		if(files.length){
-			const file = files[0];
+			const spExport = JSON.parse(await files[0].text());
+			const result = await importSimplyPlural(spExport);
+			if(!result) throw new Error("errored out");
 
-			try {
-				const spExport = JSON.parse(await file.text());
-				const result = await importSimplyPlural(spExport);
-
-				if(!result) throw new Error("errored out");
-
-				const statusMessage = await toastController.create({
-					message: i18next.t("importExport:status.importedSp"),
-					duration: 1500
-				});
-
-				await statusMessage.present();
-			}catch(e){
-				console.error(e);
-				const statusMessage = await toastController.create({
-					message: i18next.t("importExport:status.errorSp"),
-					duration: 1500
-				});
-
-				await statusMessage.present();
-			}
+			const statusMessage = await toastController.create({
+				message: i18next.t("importExport:status.importedSp"),
+				duration: 1500
+			});
+			await statusMessage.present();
+		}catch(e){
+			const statusMessage = await toastController.create({
+				message: i18next.t("importExport:status.errorSp"),
+				duration: 1500
+			});
+			await statusMessage.present();
 		}
-
 		loading.value = false;
 	}
 
 	async function importPk() {
 		loading.value = true;
+		try{
+			const files = await getFiles(undefined, false);
+			if (!files.length) throw new Error("no files specified");
 
-		const files = await getFiles(undefined, false);
-		if(files.length){
-			const file = files[0];
+			const pkExport = JSON.parse(await files[0].text());
+			const result = await importPluralKit(pkExport);
+			if(!result) throw new Error("errored out");
 
-			try{
-				const pkExport = JSON.parse(await file.text());
-				const result = await importPluralKit(pkExport);
-
-				if(!result) throw new Error("errored out");
-
-				const statusMessage = await toastController.create({
-					message: i18next.t("importExport:status.importedPk"),
-					duration: 1500
-				});
-
-				await statusMessage.present();
-			}catch(e){
-				const statusMessage = await toastController.create({
-					message: i18next.t("importExport:status.errorPk"),
-					duration: 1500
-				});
-
-				await statusMessage.present();
-			}
+			const statusMessage = await toastController.create({
+				message: i18next.t("importExport:status.importedPk"),
+				duration: 1500
+			});
+			await statusMessage.present();
+		}catch(e){
+			const statusMessage = await toastController.create({
+				message: i18next.t("importExport:status.errorPk"),
+				duration: 1500
+			});
+			await statusMessage.present();
 		}
-
 		loading.value = false;
 	}
 
 	async function importTu() {
 		loading.value = true;
+		try{
+			const files = await getFiles(undefined, false);
+			if (!files.length) throw new Error("no files specified");
 
-		const files = await getFiles(undefined, false);
-		if (files.length) {
-			const file = files[0];
+			const tuExport = JSON.parse(await files[0].text());
+			const result = await importTupperBox(tuExport);
+			if(!result) throw new Error("errored out");
 
-			try{
-				const tuExport = JSON.parse(await file.text());
-				const result = await importTupperBox(tuExport);
-
-				if(!result) throw new Error("errored out");
-
-				const statusMessage = await toastController.create({
-					message: i18next.t("importExport:status.importedTu"),
-					duration: 1500
-				});
-
-				await statusMessage.present();
-			}catch(e) {
-				const statusMessage = await toastController.create({
-					message: i18next.t("importExport:status.errorTu"),
-					duration: 1500
-				});
-
-				await statusMessage.present();
-			}
+			const statusMessage = await toastController.create({
+				message: i18next.t("importExport:status.importedTu"),
+				duration: 1500
+			});
+			await statusMessage.present();
+		}catch(e) {
+			const statusMessage = await toastController.create({
+				message: i18next.t("importExport:status.errorTu"),
+				duration: 1500
+			});
+			await statusMessage.present();
 		}
-
 		loading.value = false;
 	}
 
