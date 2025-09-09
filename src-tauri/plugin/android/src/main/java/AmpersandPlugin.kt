@@ -1,7 +1,6 @@
 package moe.ampersand.app.plugin
 
 import android.app.Activity
-
 import app.tauri.annotation.Command
 import app.tauri.annotation.InvokeArg
 import app.tauri.annotation.TauriPlugin
@@ -9,8 +8,10 @@ import app.tauri.plugin.Plugin
 import app.tauri.plugin.Invoke
 
 import android.content.Intent
-import android.window.OnBackInvokedCallback
-import android.window.OnBackInvokedDispatcher.PRIORITY_DEFAULT
+import android.util.Log
+import android.webkit.WebView
+import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import app.tauri.plugin.JSObject
 import java.io.File
@@ -27,7 +28,16 @@ internal class SetCanGoBackArgs {
 
 @TauriPlugin
 class AmpersandPlugin(private val activity: Activity): Plugin(activity) {
-    private val backCallback = OnBackInvokedCallback { trigger("backbutton", JSObject()) }
+    private val canGoBack = false
+    private val backCallback = object : OnBackPressedCallback(canGoBack) {
+        override fun handleOnBackPressed() {
+            trigger("backbutton", JSObject())
+        }
+    }
+
+    override fun load(webView: WebView) {
+        (activity as AppCompatActivity).onBackPressedDispatcher.addCallback(activity, backCallback)
+    }
 
     @Command
     fun exitApp(invoke: Invoke) {
@@ -38,11 +48,7 @@ class AmpersandPlugin(private val activity: Activity): Plugin(activity) {
     @Command
     fun setCanGoBack(invoke: Invoke){
         val args = invoke.parseArgs(SetCanGoBackArgs::class.java)
-        if(args.canGoBack) {
-            activity.onBackInvokedDispatcher.registerOnBackInvokedCallback(PRIORITY_DEFAULT, backCallback)
-        } else {
-            activity.onBackInvokedDispatcher.unregisterOnBackInvokedCallback(backCallback)
-        }
+        backCallback.isEnabled = args.canGoBack
         invoke.resolve()
     }
 
