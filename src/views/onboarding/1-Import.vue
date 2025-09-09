@@ -18,118 +18,85 @@
 
 	async function importFromPreviousInstallation() {
 		const files = await getFiles(undefined, false);
-		if (files.length) {
+		try{
+			if (!files.length) throw new Error("no files specified");
 			loading.value = true;
-			const file = files[0];
-
-			try{
-				const result = await importDatabaseFromBinary(new Uint8Array(await file.arrayBuffer()));
-
-				if(!result) throw new Error("errored out");
-			}catch(e){
-				resetConfig();
-				await Promise.all(Object.values(getTables()).map(x => x.clear()));
-
-				const statusMessage = await toastController.create({
-					message: i18next.t("onboarding:importScreen.error"),
-					duration: 1500
-				});
-				await statusMessage.present();
-
-				loading.value = false;
-
-				return;
-			}
+			const result = await importDatabaseFromBinary(new Uint8Array(await files[0].arrayBuffer()));
+			if(!result) throw new Error("errored out");
+		}catch(e){
+			resetConfig();
+			await Promise.all(Object.values(getTables()).map(x => x.clear()));
+			const statusMessage = await toastController.create({
+				message: i18next.t("onboarding:importScreen.error"),
+				duration: 1500
+			});
+			await statusMessage.present();
+			loading.value = false;
+			return;
 		}
-
 		router.replace("/onboarding/end/", slideAnimation);
 	}
 
 	async function importFromSimplyPlural() {
 		const files = await getFiles(undefined, false);
-		if (files.length) {
+		try{
+			if (!files.length) throw new Error("no files specified");
 			loading.value = true;
-			const file = files[0];
-
-			try{
-				const spExport = JSON.parse(await file.text());
-				const result = await importSimplyPlural(spExport);
-
-				if (!result) throw new Error("errored out");
-			}catch(e){
-				console.error(e);
-				await Promise.all(Object.values(getTables()).map(x => x.clear()));
-
-				const statusMessage = await toastController.create({
-					message: i18next.t("onboarding:importScreen.errorSp"),
-					duration: 1500
-				});
-				await statusMessage.present();
-
-				loading.value = false;
-
-				return;
-			}
+			const spExport = JSON.parse(await files[0].text());
+			const result = await importSimplyPlural(spExport);
+			if (!result) throw new Error("errored out");
+		}catch(e){
+			await Promise.all(Object.values(getTables()).map(x => x.clear()));
+			const statusMessage = await toastController.create({
+				message: i18next.t("onboarding:importScreen.errorSp"),
+				duration: 1500
+			});
+			await statusMessage.present();
+			loading.value = false;
+			return;
 		}
-
 		router.replace("/onboarding/end/", slideAnimation);
 	}
 
 	async function importFromPluralKit() {
 		const files = await getFiles(undefined, false);
-		if (files.length) {
+		try{
+			if (!files.length) throw new Error("no files specified");
 			loading.value = true;
-			const file = files[0];
-
-			try{
-				const pkExport = JSON.parse(await file.text());
-				const result = await importPluralKit(pkExport);
-
-				if(!result) throw new Error("errored out");
-			}catch(e){
-				await Promise.all(Object.values(getTables()).map(x => x.clear()));
-
-				const statusMessage = await toastController.create({
-					message: i18next.t("onboarding:importScreen.errorPk"),
-					duration: 1500
-				});
-				await statusMessage.present();
-
-				loading.value = false;
-
-				return;
-			}
+			const pkExport = JSON.parse(await files[0].text());
+			const result = await importPluralKit(pkExport);
+			if(!result) throw new Error("errored out");
+		}catch(e){
+			await Promise.all(Object.values(getTables()).map(x => x.clear()));
+			const statusMessage = await toastController.create({
+				message: i18next.t("onboarding:importScreen.errorPk"),
+				duration: 1500
+			});
+			await statusMessage.present();
+			loading.value = false;
+			return;
 		}
-
 		router.replace("/onboarding/end/", slideAnimation);
 	}
 
 	async function importFromTupperbox() {
 		const files = await getFiles(undefined, false);
-		if (files.length) {
+		try{
+			if (!files.length) throw new Error("no files specified");
 			loading.value = true;
-			const file = files[0];
-
-			try{
-				const tuExport = JSON.parse(await file.text());
-				const result = await importTupperBox(tuExport);
-				
-				if(!result) throw new Error("errored out");
-			}catch(e){
-				await Promise.all(Object.values(getTables()).map(x => x.clear()));
-
-				const statusMessage = await toastController.create({
-					message: i18next.t("onboarding:importScreen.errorTu"),
-					duration: 1500
-				});
-				await statusMessage.present();
-
-				loading.value = false;
-
-				return;
-			}
+			const tuExport = JSON.parse(await files[0].text());
+			const result = await importTupperBox(tuExport);
+			if(!result) throw new Error("errored out");
+		}catch(e){
+			await Promise.all(Object.values(getTables()).map(x => x.clear()));
+			const statusMessage = await toastController.create({
+				message: i18next.t("onboarding:importScreen.errorTu"),
+				duration: 1500
+			});
+			await statusMessage.present();
+			loading.value = false;
+			return;
 		}
-
 		router.replace("/onboarding/end/", slideAnimation);
 	}
 </script>
