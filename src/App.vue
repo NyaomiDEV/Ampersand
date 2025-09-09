@@ -4,8 +4,8 @@
 
 	import { computed, provide } from "vue";
 	import { isIOSIonicMode } from "./lib/mode";
-	import { setCanGoBack } from "./lib/native/plugin";
 	import ModalContainer from "./components/ModalContainer.vue";
+	import { setRouterCanGoBack } from "./lib/util/backbutton";
 
 	provide("isIOS", computed(isIOSIonicMode));
 	provide("isDev", computed(() => import.meta.env.MODE === 'development'));
@@ -13,15 +13,9 @@
 	const ionRouter = useIonRouter();
 	const vueRouter = useRouter();
 
-	let canGoBack = ionRouter.canGoBack();
-
+	setRouterCanGoBack(ionRouter.canGoBack());
 	vueRouter.afterEach(() => {
-		const newCanGoBack = ionRouter.canGoBack();
-
-		if(newCanGoBack !== canGoBack){
-			canGoBack = newCanGoBack;
-			setCanGoBack(newCanGoBack);
-		}
+		setRouterCanGoBack(ionRouter.canGoBack());
 	});
 
 </script>

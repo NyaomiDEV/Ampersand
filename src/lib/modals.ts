@@ -1,4 +1,5 @@
 import { Directive, reactive, VNode } from "vue"
+import { setModalCanGoBack } from "./util/backbutton";
 
 const renderArray = reactive<VNode[]>([]);
 
@@ -58,6 +59,7 @@ export function addModal(vnode: VNode): Promise<{el: HTMLElement, vnode: VNode}>
 		}
 
 		modalEvents.addEventListener("mounted", cb);
+		setModalCanGoBack(renderArray.length > 0);
 	});
 }
 
@@ -68,4 +70,6 @@ export function removeModal(vnode: VNode){
 			index,
 			1
 		);
+
+	setModalCanGoBack(renderArray.length > 0);
 }
