@@ -22,3 +22,8 @@ pub(crate) fn set_can_go_back<R: Runtime>(app: AppHandle<R>, can_go_back: bool) 
 pub(crate) fn open_file<R: Runtime>(app: AppHandle<R>, path: String) -> Result<()> {
 	app.ampersand().open_file(path)
 }
+
+#[command]
+pub(crate) fn get_webkit_version<R: Runtime>(app: AppHandle<R>) -> Result<String> {
+	app.ampersand().get_webkit_version()
+}

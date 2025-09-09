@@ -50,75 +50,85 @@ import { appConfig } from "./lib/config";
 import { getLockedStatus } from "./lib/applock";
 import { clearTempDir } from "./lib/native/cache";
 import { slideAnimation } from "./lib/util/misc";
-import { addMobileListener } from './lib/native/plugin';
+import { addMobileListener, getWebkitVersion } from './lib/native/plugin';
 import { platform } from "@tauri-apps/plugin-os";
 
-const app = createApp(App).use(IonicVue, {
-	hardwareBackButton: true,
-}).use(router).use(I18NextVue, { i18next: i18n });
+async function setupAmpersand(){
+	const app = createApp(App).use(IonicVue, {
+		hardwareBackButton: true,
+	}).use(router).use(I18NextVue, { i18next: i18n });
 
-const _navAnimation = window.Ionic.config.get("navAnimation");
-window.Ionic.config.set("navAnimation", isIOSIonicMode() ? _navAnimation : slideAnimation);
+	const _navAnimation = window.Ionic.config.get("navAnimation");
+	window.Ionic.config.set("navAnimation", isIOSIonicMode() ? _navAnimation : slideAnimation);
 
-router.beforeEach(async (to) => {
-	// lock flow
-	if (getLockedStatus()) {
-		if (to.path === "/lock")
-			return true;
+	router.beforeEach(async (to) => {
+		// lock flow
+		if (getLockedStatus()) {
+			if (to.path === "/lock")
+				return true;
 
-		return { path: "/lock", query: { wantedPath: to.fullPath } };
-	} else {
-		if (to.path === "/lock") // for the two people who get stuck in this
-			return { fullPath: "/" }; // just reset
-	}
-
-	// first time???
-	if (!(await getSystem())){
-		if (to.path.startsWith("/onboarding/") || to.path.startsWith("/options/accessibility"))
-			return true;
-
-		return { path: "/onboarding/start", replace: true };
-	}
-
-	// app just started???
-	if (to.fullPath === "/") {
-		// route to default view
-		switch (appConfig.view) {
-			case "members":
-				return { path: "/members", replace: true };
-			case "journal":
-				return { path: "/journal", replace: true };
-			case "dashboard":
-			default:
-				return { path: "/dashboard", replace: true };
-			case "chats":
-				return { path: "/chats", replace: true };
+			return { path: "/lock", query: { wantedPath: to.fullPath } };
+		} else {
+			if (to.path === "/lock") // for the two people who get stuck in this
+				return { fullPath: "/" }; // just reset
 		}
-	}
 
-	// assume normal navigation
-	return true;
-});
+		// first time???
+		if (!(await getSystem())){
+			if (to.path.startsWith("/onboarding/") || to.path.startsWith("/options/accessibility"))
+				return true;
 
-await clearTempDir();
+			return { path: "/onboarding/start", replace: true };
+		}
 
-const darkMode = window.matchMedia("(prefers-color-scheme: dark)");
-darkMode.addEventListener("change", updateDarkMode);
+		// app just started???
+		if (to.fullPath === "/") {
+			// route to default view
+			switch (appConfig.view) {
+				case "members":
+					return { path: "/members", replace: true };
+				case "journal":
+					return { path: "/journal", replace: true };
+				case "dashboard":
+				default:
+					return { path: "/dashboard", replace: true };
+				case "chats":
+					return { path: "/chats", replace: true };
+			}
+		}
 
-await updateDarkMode();
-activateMaterialTheme();
-updateMaterialColors();
-updatePWATitlebarColor(window.getComputedStyle(document.body).getPropertyValue("--ion-toolbar-background"));
-updateAccessibility();
-await updateInsets();
-window.addEventListener("orientationchange",  () => updateInsets());
+		// assume normal navigation
+		return true;
+	});
 
-router.isReady().then(async () => {
-	app.mount(document.body);
+	await clearTempDir();
 
-	if(platform() === 'android' || platform() == 'ios'){
-		addMobileListener("backbutton", () => {
-			document.dispatchEvent(new Event('backbutton'));
-		});
-	}
-});
+	const darkMode = window.matchMedia("(prefers-color-scheme: dark)");
+	darkMode.addEventListener("change", updateDarkMode);
+
+	await updateDarkMode();
+	activateMaterialTheme();
+	updateMaterialColors();
+	updatePWATitlebarColor(window.getComputedStyle(document.body).getPropertyValue("--ion-toolbar-background"));
+	updateAccessibility();
+	await updateInsets();
+	window.addEventListener("orientationchange",  () => updateInsets());
+
+	router.isReady().then(async () => {
+		app.mount(document.body);
+
+		if(platform() === 'android' || platform() == 'ios'){
+			addMobileListener("backbutton", () => {
+				document.dispatchEvent(new Event('backbutton'));
+			});
+		}
+	});
+}
+
+if (!window.isSecureContext) {
+	console.error("Cannot continue, this is not a safe environment!");
+	document.body.innerHTML = "<h1 style='text-align: center;'>Ampersand cannot run on non-HTTPS environments! We're sorry for the trouble.<br>If you think this is an issue, report it on Codeberg.</h1>";
+} else if (platform() === "android" && (await getWebkitVersion()).split(".").map(x => parseInt(x))[0] < 131)
+	document.body.innerHTML = "<h1 style='text-align: center;'>Ampersand cannot run on this WebKit version!<br>Please update your phone's OS version and all of your system apps.</h1>";
+else
+	await setupAmpersand();

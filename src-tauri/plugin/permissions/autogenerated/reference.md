@@ -7,6 +7,7 @@ Default permissions for the Ampersand plugin
 - `allow-exit-app`
 - `allow-open-file`
 - `allow-set-can-go-back`
+- `allow-get-webkit-version`
 - `allow-registerListener`
 
 ## Permission Table
@@ -40,6 +41,32 @@ Enables the exit_app command without any pre-configured scope.
 <td>
 
 Denies the exit_app command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`ampersand:allow-get-webkit-version`
+
+</td>
+<td>
+
+Enables the get_webkit_version command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`ampersand:deny-get-webkit-version`
+
+</td>
+<td>
+
+Denies the get_webkit_version command without any pre-configured scope.
 
 </td>
 </tr>

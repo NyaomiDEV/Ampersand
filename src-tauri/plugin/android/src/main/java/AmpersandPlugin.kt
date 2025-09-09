@@ -8,7 +8,6 @@ import app.tauri.plugin.Plugin
 import app.tauri.plugin.Invoke
 
 import android.content.Intent
-import android.util.Log
 import android.webkit.WebView
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
@@ -67,5 +66,12 @@ class AmpersandPlugin(private val activity: Activity): Plugin(activity) {
         }catch (e: Exception){
             invoke.reject(e.message)
         }
+    }
+
+    @Command
+    fun getWebkitVersion(invoke: Invoke) {
+        val ret = JSObject()
+        ret.put("version", WebView.getCurrentWebViewPackage()?.versionName ?: "")
+        invoke.resolve(ret)
     }
 }

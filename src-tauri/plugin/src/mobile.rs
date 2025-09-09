@@ -1,5 +1,5 @@
 use serde::de::DeserializeOwned;
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 use tauri::{
   plugin::{PluginApi, PluginHandle},
   AppHandle, Runtime,
@@ -36,6 +36,11 @@ struct SetCanGoBack {
   can_go_back: bool
 }
 
+#[derive(Deserialize)]
+struct WebkitVersion {
+  version: String
+}
+
 /// Access to the ampersand APIs.
 pub struct Ampersand<R: Runtime>(PluginHandle<R>);
 
@@ -58,6 +63,14 @@ impl<R: Runtime> Ampersand<R> {
     self
       .0
       .run_mobile_plugin("openFile", OpenFile { path })
+      .map_err(Into::into)
+  }
+
+  pub fn get_webkit_version(&self) -> crate::Result<String> {
+    self
+      .0
+      .run_mobile_plugin::<WebkitVersion>("getWebkitVersion", ())
+      .map(|x| x.version)
       .map_err(Into::into)
   }
 }

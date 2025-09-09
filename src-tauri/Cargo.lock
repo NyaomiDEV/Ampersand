@@ -4123,6 +4123,7 @@ dependencies = [
  "tauri-plugin",
  "tauri-plugin-opener",
  "thiserror 2.0.12",
+ "wry 0.53.3",
 ]
 
 [[package]]
@@ -4317,7 +4318,7 @@ dependencies = [
  "webkit2gtk",
  "webview2-com",
  "windows",
- "wry",
+ "wry 0.52.1",
 ]
 
 [[package]]
@@ -5655,6 +5656,51 @@ dependencies = [
  "block2 0.6.1",
  "cookie",
  "crossbeam-channel",
+ "dpi",
+ "dunce",
+ "gdkx11",
+ "gtk",
+ "html5ever",
+ "http",
+ "javascriptcore-rs",
+ "jni",
+ "kuchikiki",
+ "libc",
+ "ndk",
+ "objc2 0.6.1",
+ "objc2-app-kit",
+ "objc2-core-foundation",
+ "objc2-foundation 0.3.1",
+ "objc2-ui-kit",
+ "objc2-web-kit",
+ "once_cell",
+ "percent-encoding",
+ "raw-window-handle",
+ "sha2",
+ "soup3",
+ "tao-macros",
+ "thiserror 2.0.12",
+ "url",
+ "webkit2gtk",
+ "webkit2gtk-sys",
+ "webview2-com",
+ "windows",
+ "windows-core",
+ "windows-version",
+ "x11-dl",
+]
+
+[[package]]
+name = "wry"
+version = "0.53.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "31f0e9642a0d061f6236c54ccae64c2722a7879ad4ec7dff59bd376d446d8e90"
+dependencies = [
+ "base64 0.22.1",
+ "block2 0.6.1",
+ "cookie",
+ "crossbeam-channel",
+ "dirs",
  "dpi",
  "dunce",
  "gdkx11",

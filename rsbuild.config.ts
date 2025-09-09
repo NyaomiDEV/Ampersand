@@ -26,7 +26,7 @@ export default defineConfig({
 	},
 	source: {
 		entry: {
-			index: './src/main.ts',
+			index: './src/app.ts',
 		},
 		define: publicVars
 	},

@@ -25,4 +25,8 @@ impl<R: Runtime> Ampersand<R> {
   pub fn open_file(&self, path: String) -> crate::Result<()> {
     self.0.opener().open_path(path, None::<&str>).map_err(Into::into)
   }
+
+  pub fn get_webkit_version(&self) -> crate::Result<String> {
+    tauri::webview_version().map_err(|e| crate::Error::Other(e.to_string()))
+  }
 }
