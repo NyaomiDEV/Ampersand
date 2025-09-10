@@ -18,7 +18,7 @@
 		IonBackButton,
 	} from '@ionic/vue';
 	import { inject, onBeforeMount, onUnmounted, reactive, ref, shallowRef, useTemplateRef, watch } from 'vue';
-	import { accessibilityConfig } from '../lib/config/index.ts';
+	import { accessibilityConfig, appConfig } from '../lib/config/index.ts';
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
@@ -52,7 +52,7 @@
 	const members = shallowRef<Member[]>();
 
 	watch(search, async () => {
-		members.value = await Array.fromAsync(getFilteredMembers(search.value));
+		await updateMembers();
 	}, { immediate: true });
 
 	const frontingEntries = reactive(new Map<Member, FrontingEntry | undefined>());
@@ -63,8 +63,7 @@
 	const listeners = [
 		async (event: Event) => {
 			if((event as DatabaseEvent).data.table === "members")
-				members.value = await Array.fromAsync(getFilteredMembers(search.value));
-
+				await updateMembers();
 		},
 		async (event: Event) => {
 			if((event as DatabaseEvent).data.table === "frontingEntries"){
@@ -80,16 +79,33 @@
 	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listeners[0]);
 		DatabaseEvents.addEventListener("updated", listeners[1]);
-		members.value = await Array.fromAsync(getFilteredMembers(search.value));
+		await updateMembers();
 		frontingEntries.clear();
-		for(const member of members.value)
-			frontingEntries.set(member, await getCurrentFrontEntryForMember(member));
+		if(members.value){
+			for (const member of members.value)
+				frontingEntries.set(member, await getCurrentFrontEntryForMember(member));
+		}
 	});
 
 	onUnmounted(() => {
 		DatabaseEvents.removeEventListener("updated", listeners[0]);
 		DatabaseEvents.removeEventListener("updated", listeners[1]);
 	});
+
+	async function updateMembers(){
+		members.value = (await Array.fromAsync(getFilteredMembers(search.value)))
+			.sort((a, b) => {
+				if (appConfig.showMembersBeforeCustomFronts) {
+					if (!a.isCustomFront && b.isCustomFront) return -1;
+					if (a.isCustomFront && !b.isCustomFront) return 1;
+				}
+
+				if (a.isPinned && !b.isPinned) return -1;
+				if (!a.isPinned && b.isPinned) return 1;
+
+				return a.name.localeCompare(b.name)
+			});
+	}
 
 	function addFrontingEntry(member: Member) {
 		newFrontingEntry({
