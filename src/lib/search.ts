@@ -1,337 +1,380 @@
 
-import { Member, Tag, FrontingEntry, FrontingEntryComplete, BoardMessage, BoardMessageComplete, Asset, CustomField, JournalPost, JournalPostComplete } from "./db/entities";
+import { Member, Tag, Asset, CustomField, JournalPostComplete, BoardMessageComplete, FrontingEntryComplete, FrontingEntry, JournalPost, BoardMessage } from "./db/entities";
 import { parseAssetFilterQuery, parseBoardMessageFilterQuery, parseCustomFieldFilterQuery, parseFrontingHistoryFilterQuery, parseJournalPostFilterQuery, parseMemberFilterQuery } from "./util/filterQuery";
 import dayjs from "dayjs";
-import { toBoardMessageComplete } from "./db/tables/boardMessages";
-import { toFrontingEntryComplete } from "./db/tables/frontingEntries";
 import { appConfig } from "./config";
-import { toJournalPostComplete } from "./db/tables/journalPosts";
+import { IndexEntry } from "./db/tables";
 
-const sortingFunctions = {
-	alphabetic: (a: string, b: string) => a.localeCompare(b),
-	numeric: (a: number, b: number) => a - b
-}
-
-export async function getFilteredMembers(search: string, members?: Member[]){
-	if (!members) return;
-	const filtered: Member[] = [];
+export async function filterMember(search: string, member: Member){
 	const parsed = await parseMemberFilterQuery(search.length ? search : appConfig.defaultFilterQueries.members || "");
-	const sorted = members.sort((a, b) => {
-		if(appConfig.showMembersBeforeCustomFronts){
-			if (!a.isCustomFront && b.isCustomFront) return -1;
-			if (a.isCustomFront && !b.isCustomFront) return 1;
-		}
-
-		if(a.isPinned && !b.isPinned) return -1;
-		if(!a.isPinned && b.isPinned) return 1;
-
-		switch(parsed.sort){
-			case "name-asc":
-			default:
-				return sortingFunctions.alphabetic(a.name, b.name);
-			case "name-desc":
-				return sortingFunctions.alphabetic(b.name, a.name);
-			case "created-asc":
-				return sortingFunctions.numeric(a.dateCreated.getTime(), b.dateCreated.getTime());
-			case "created-desc":
-				return sortingFunctions.numeric(b.dateCreated.getTime(), a.dateCreated.getTime());
-		}
-	});
-
-	if(parsed.all) return sorted;
-
-	for(const x of sorted){
-
-		if (parsed.query.length){
-			if (!x.name.toLowerCase().startsWith(parsed.query.toLowerCase()))
-				continue;
-		}
-
-		if (parsed.pronouns) {
-			if (!x.pronouns || x.pronouns.toLowerCase() !== parsed.pronouns.toLowerCase())
-				continue;
-		}
-
-		if (parsed.role) {
-			if (!x.role || x.role.toLowerCase() !== parsed.role.toLowerCase())
-				continue;
-		}
-
-		if (parsed.isPinned !== undefined) {
-			if (x.isPinned !== parsed.isPinned)
-				continue;
-		}
-
-		if (parsed.isArchived !== undefined) {
-			if (x.isArchived !== parsed.isArchived)
-				continue;
-		}
-
-		if (parsed.isCustomFront !== undefined) {
-			if (x.isCustomFront !== parsed.isCustomFront)
-				continue;
-		}
-
-		if (parsed.tags.length) {
-			if (!parsed.tags.every(uuid => x.tags.includes(uuid))){
-				continue;
-			}
-		}
-
-		filtered.push(x);
+	if (parsed.query.length){
+		if (!member.name.toLowerCase().startsWith(parsed.query.toLowerCase()))
+			return false;
 	}
 
-	return filtered;
+	if (parsed.pronouns) {
+		if (!member.pronouns || member.pronouns.toLowerCase() !== parsed.pronouns.toLowerCase())
+			return false;
+	}
+
+	if (parsed.role) {
+		if (!member.role || member.role.toLowerCase() !== parsed.role.toLowerCase())
+			return false;
+	}
+
+	if (parsed.isPinned !== undefined) {
+		if (member.isPinned !== parsed.isPinned)
+			return false;
+	}
+
+	if (parsed.isArchived !== undefined) {
+		if (member.isArchived !== parsed.isArchived)
+			return false;
+	}
+
+	if (parsed.isCustomFront !== undefined) {
+		if (member.isCustomFront !== parsed.isCustomFront)
+			return false;
+	}
+
+	if (parsed.tags.length) {
+		if (!parsed.tags.every(uuid => member.tags.includes(uuid))){
+			return false;
+		}
+	}
+
+	return true;
 }
 
-export function getFilteredTags(search: string, tags?: Tag[]) {
-	if(!tags) return;
+export function filterTag(search: string, tag: Tag) {
 	const query = search.length ? search : appConfig.defaultFilterQueries.tags || "";
-	const sorted = tags.sort((a, b) => sortingFunctions.alphabetic(a.name, b.name));
 
 	if(!query.length)
-		return sorted;
+		return true;
 	else
-		return sorted.filter(x => x.name.toLowerCase().startsWith(query.toLowerCase()));
+		return tag.name.toLowerCase().startsWith(query.toLowerCase());
 }
 
-export async function getFilteredFrontingEntries(search: string, frontingEntries?: FrontingEntry[]){
-	if(!frontingEntries) return;
-	const filtered: FrontingEntryComplete[] = [];
+export function filterFrontingEntry(search: string, frontingEntry: FrontingEntryComplete){
 	const parsed = parseFrontingHistoryFilterQuery(search.length ? search : appConfig.defaultFilterQueries.frontingHistory || "");
-	const complete = await Promise.all(frontingEntries.sort((a, b) => sortingFunctions.numeric(b.startTime.getTime(), a.startTime.getTime())).map(x => toFrontingEntryComplete(x)));
 
-	if(parsed.all) return complete;
-
-	for (const x of complete) {
-		if(parsed.query.length){
-			if (!x.member.name.toLowerCase().startsWith(parsed.query.toLowerCase()))
-				continue;
-		}
-
-		if (parsed.member) {
-			if (x.member.uuid !== parsed.member)
-				continue;
-		}
-
-		if (parsed.currentlyFronting) {
-			if (x.endTime)
-				continue;
-		}
-
-		if (parsed.startDateString) {
-			const date = dayjs(parsed.startDateString).startOf("day");
-			if (date.valueOf() !== dayjs(x.startTime).startOf("day").valueOf())
-				continue;
-		}
-
-		if (parsed.endDateString) {
-			const date = dayjs(parsed.endDateString).startOf("day");
-			if (date.valueOf() !== dayjs(x.endTime).startOf("day").valueOf())
-				continue;
-		}
-
-		if (parsed.startDay) {
-			if (parsed.startDay !== dayjs(x.startTime).get("date"))
-				continue;
-		}
-
-		if (parsed.endDay) {
-			if (parsed.endDay !== dayjs(x.endTime).get("date"))
-				continue;
-		}
-
-		if (parsed.startMonth) {
-			if (parsed.startMonth !== dayjs(x.startTime).get("month") + 1)
-				continue;
-		}
-
-		if (parsed.endMonth) {
-			if (parsed.endMonth !== dayjs(x.endTime).get("month") + 1)
-				continue;
-		}
-
-		if (parsed.startYear) {
-			if (parsed.startYear !== dayjs(x.startTime).get("year"))
-				continue;
-		}
-
-		if (parsed.endYear) {
-			if (parsed.endYear !== dayjs(x.endTime).get("year"))
-				continue;
-		}
-
-		filtered.push(x)
+	if(parsed.query.length){
+		if (!frontingEntry.member.name.toLowerCase().startsWith(parsed.query.toLowerCase()))
+			return false;
 	}
 
-	return filtered;
+	if (parsed.member) {
+		if (frontingEntry.member.uuid !== parsed.member)
+			return false;
+	}
+
+	if (parsed.currentlyFronting) {
+		if (frontingEntry.endTime)
+			return false;
+	}
+
+	if (parsed.startDateString) {
+		const date = dayjs(parsed.startDateString).startOf("day");
+		if (date.valueOf() !== dayjs(frontingEntry.startTime).startOf("day").valueOf())
+			return false;
+	}
+
+	if (parsed.endDateString) {
+		const date = dayjs(parsed.endDateString).startOf("day");
+		if (date.valueOf() !== dayjs(frontingEntry.endTime).startOf("day").valueOf())
+			return false;
+	}
+
+	if (parsed.startDay) {
+		if (parsed.startDay !== dayjs(frontingEntry.startTime).get("date"))
+			return false;
+	}
+
+	if (parsed.endDay) {
+		if (parsed.endDay !== dayjs(frontingEntry.endTime).get("date"))
+			return false;
+	}
+
+	if (parsed.startMonth) {
+		if (parsed.startMonth !== dayjs(frontingEntry.startTime).get("month") + 1)
+			return false;
+	}
+
+	if (parsed.endMonth) {
+		if (parsed.endMonth !== dayjs(frontingEntry.endTime).get("month") + 1)
+			return false;
+	}
+
+	if (parsed.startYear) {
+		if (parsed.startYear !== dayjs(frontingEntry.startTime).get("year"))
+			return false;
+	}
+
+	if (parsed.endYear) {
+		if (parsed.endYear !== dayjs(frontingEntry.endTime).get("year"))
+			return false;
+	}
+
+	return true;
 }
 
-export async function getFilteredBoardMessages(search: string, boardMessages?: BoardMessage[]) {
-	if(!boardMessages) return;
-	const filtered: BoardMessageComplete[] = [];
+export function filterFrontingEntryIndex(search: string, frontingEntry: IndexEntry<FrontingEntry>) {
+	const parsed = parseFrontingHistoryFilterQuery(search.length ? search : appConfig.defaultFilterQueries.frontingHistory || "");
+
+	if (parsed.member) {
+		if (frontingEntry.member !== parsed.member)
+			return false;
+	}
+
+	if (parsed.currentlyFronting) {
+		if (frontingEntry.endTime)
+			return false;
+	}
+
+	if (parsed.startDateString) {
+		const date = dayjs(parsed.startDateString).startOf("day");
+		if (date.valueOf() !== dayjs(frontingEntry.startTime).startOf("day").valueOf())
+			return false;
+	}
+
+	if (parsed.endDateString) {
+		const date = dayjs(parsed.endDateString).startOf("day");
+		if (date.valueOf() !== dayjs(frontingEntry.endTime).startOf("day").valueOf())
+			return false;
+	}
+
+	if (parsed.startDay) {
+		if (parsed.startDay !== dayjs(frontingEntry.startTime).get("date"))
+			return false;
+	}
+
+	if (parsed.endDay) {
+		if (parsed.endDay !== dayjs(frontingEntry.endTime).get("date"))
+			return false;
+	}
+
+	if (parsed.startMonth) {
+		if (parsed.startMonth !== dayjs(frontingEntry.startTime).get("month") + 1)
+			return false;
+	}
+
+	if (parsed.endMonth) {
+		if (parsed.endMonth !== dayjs(frontingEntry.endTime).get("month") + 1)
+			return false;
+	}
+
+	if (parsed.startYear) {
+		if (parsed.startYear !== dayjs(frontingEntry.startTime).get("year"))
+			return false;
+	}
+
+	if (parsed.endYear) {
+		if (parsed.endYear !== dayjs(frontingEntry.endTime).get("year"))
+			return false;
+	}
+
+	return true;
+}
+
+export async function filterBoardMessage(search: string, boardMessage: BoardMessageComplete) {
 	const parsed = parseBoardMessageFilterQuery(search.length ? search : appConfig.defaultFilterQueries.messageBoard || "");
-	const complete = await Promise.all(boardMessages.map(async x => await toBoardMessageComplete(x)));
 
-	if (parsed.all) return complete;
-
-	for (const x of complete) {
-
-		if (parsed.pinned !== undefined) {
-			if(parsed.pinned && !x.isPinned)
-				continue;
-			else if(!parsed.pinned && x.isPinned)
-				continue;
-		}
-
-		if(parsed.query.length){
-			if (
-				![
-					x.title.toLowerCase().split(" "),
-					x.member.name.toLowerCase().split(" ")
-				].flat().find(x => x.startsWith(parsed.query.toLowerCase()))
-			)
-				continue;
-		}
-
-		if (parsed.member) {
-			if (x.member.uuid !== parsed.member)
-				continue;
-		}
-
-		if (parsed.dateString) {
-			const date = dayjs(parsed.dateString).startOf("day");
-			if (date.valueOf() !== dayjs(x.date).startOf("day").valueOf())
-				continue;
-		}
-
-		if (parsed.day) {
-			if (parsed.day !== dayjs(x.date).get("date"))
-				continue;
-		}
-
-		if (parsed.month) {
-			if (parsed.month !== dayjs(x.date).get("month") + 1)
-				continue;
-		}
-
-		if (parsed.year) {
-			if (parsed.year !== dayjs(x.date).get("year"))
-				continue;
-		}
-
-		filtered.push(x)
+	if (parsed.pinned !== undefined) {
+		if(parsed.pinned && !boardMessage.isPinned)
+			return false;
+		else if(!parsed.pinned && boardMessage.isPinned)
+			return false;
 	}
 
-	return filtered;
+	if(parsed.query.length){
+		if (
+			![
+				boardMessage.title.toLowerCase().split(" "),
+				boardMessage.member.name.toLowerCase().split(" ")
+			].flat().find(x => x.startsWith(parsed.query.toLowerCase()))
+		)
+			return false;
+	}
+
+	if (parsed.member) {
+		if (boardMessage.member.uuid !== parsed.member)
+			return false;
+	}
+
+	if (parsed.dateString) {
+		const date = dayjs(parsed.dateString).startOf("day");
+		if (date.valueOf() !== dayjs(boardMessage.date).startOf("day").valueOf())
+			return false;
+	}
+
+	if (parsed.day) {
+		if (parsed.day !== dayjs(boardMessage.date).get("date"))
+			return false;
+	}
+
+	if (parsed.month) {
+		if (parsed.month !== dayjs(boardMessage.date).get("month") + 1)
+			return false;
+	}
+
+	if (parsed.year) {
+		if (parsed.year !== dayjs(boardMessage.date).get("year"))
+			return false;
+	}
+	return true;
 }
 
-export function getFilteredAssets(search: string, assets?: Asset[]) {
-	if (!assets) return;
-	const filtered: Asset[] = [];
+export async function filterBoardMessageIndex(search: string, boardMessage: IndexEntry<BoardMessage>) {
+	const parsed = parseBoardMessageFilterQuery(search.length ? search : appConfig.defaultFilterQueries.messageBoard || "");
+
+	if (parsed.pinned !== undefined) {
+		if (parsed.pinned && !boardMessage.isPinned)
+			return false;
+		else if (!parsed.pinned && boardMessage.isPinned)
+			return false;
+	}
+
+	if (parsed.member) {
+		if (boardMessage.member !== parsed.member)
+			return false;
+	}
+
+	if (parsed.dateString) {
+		const date = dayjs(parsed.dateString).startOf("day");
+		if (date.valueOf() !== dayjs(boardMessage.date).startOf("day").valueOf())
+			return false;
+	}
+
+	if (parsed.day) {
+		if (parsed.day !== dayjs(boardMessage.date).get("date"))
+			return false;
+	}
+
+	if (parsed.month) {
+		if (parsed.month !== dayjs(boardMessage.date).get("month") + 1)
+			return false;
+	}
+
+	if (parsed.year) {
+		if (parsed.year !== dayjs(boardMessage.date).get("year"))
+			return false;
+	}
+	return true;
+}
+
+export function filterAsset(search: string, asset: Asset) {
 	const parsed = parseAssetFilterQuery(search.length ? search : appConfig.defaultFilterQueries.assetManager || "");
-	const sorted = assets.sort((a, b) => sortingFunctions.alphabetic(a.friendlyName, b.friendlyName));
 
-	if(parsed.all) return sorted;
+	if(parsed.query.length){
+		if (!asset.friendlyName.toLowerCase().startsWith(parsed.query.toLowerCase()))
+			return false;
+	}
 
-	for (const x of sorted) {
-			if(parsed.query.length){
-				if (!x.friendlyName.toLowerCase().startsWith(parsed.query.toLowerCase()))
-					continue;
-			}
+	if (parsed.type) {
+		if (asset.file.type.split("/")[1].toLowerCase() !== parsed.type.toLowerCase())
+			return false;
+	}
 
-			if (parsed.type) {
-				if (x.file.type.split("/")[1].toLowerCase() !== parsed.type.toLowerCase())
-					continue;
-			}
+	if (parsed.filename) {
+		if (asset.file.name.toLowerCase() !== parsed.filename.toLowerCase())
+			return false;
+	}
 
-			if (parsed.filename) {
-				if (x.file.name.toLowerCase() !== parsed.filename.toLowerCase())
-					continue;
-			}
-
-			filtered.push(x)
-		}
-
-	return filtered;
+	return true;
 }
 
-export function getFilteredCustomFields(search: string, customFields?: CustomField[]) {
-	if (!customFields) return;
-	const filtered: CustomField[] = [];
+export function filterCustomField(search: string, customField: CustomField) {
 	const parsed = parseCustomFieldFilterQuery(search.length ? search : appConfig.defaultFilterQueries.customFields || "");
-	const sorted = customFields.sort((a, b) => sortingFunctions.alphabetic(a.name, b.name));
 
-	for (const x of sorted) {
-		if(parsed.query.length) {
-			if (!x.name.toLowerCase().startsWith(parsed.query.toLowerCase()))
-				continue;
-		}
-
-		if (parsed.default) {
-			if (!x.default)
-				continue;
-		}
-
-		filtered.push(x);
+	if(parsed.query.length) {
+		if (!customField.name.toLowerCase().startsWith(parsed.query.toLowerCase()))
+			return false;
 	}
 
-	return filtered;
+	if (parsed.default) {
+		if (!customField.default)
+			return false;
+	}
+
+	return true;
 }
 
-export async function getFilteredJournalPosts(search: string, posts?: JournalPost[]) {
-	if (!posts) return;
-	const filtered: JournalPostComplete[] = [];
+export async function filterJournalPost(search: string, post: JournalPostComplete) {
 	const parsed = await parseJournalPostFilterQuery(search.length ? search : appConfig.defaultFilterQueries.messageBoard || "");
-	const complete = await Promise.all(posts.map(async x => await toJournalPostComplete(x)));
 
-	if (parsed.all) return complete;
-
-	for (const x of complete) {
-		if(parsed.query.length){
-			if (
-				![
-					x.title.toLowerCase().split(" "),
-					x.member.name.toLowerCase().split(" ")
-				].flat().find(x => x.startsWith(parsed.query.toLowerCase()))
-			)
-				continue;
-		}
-
-		if (parsed.member) {
-			if (x.member.uuid !== parsed.member)
-				continue;
-		}
-
-		if (parsed.dateString) {
-			const date = dayjs(parsed.dateString).startOf("day");
-			if (date.valueOf() !== dayjs(x.date).startOf("day").valueOf())
-				continue;
-		}
-
-		if (parsed.day) {
-			if (parsed.day !== dayjs(x.date).get("date"))
-				continue;
-		}
-
-		if (parsed.month) {
-			if (parsed.month !== dayjs(x.date).get("month") + 1)
-				continue;
-		}
-
-		if (parsed.year) {
-			if (parsed.year !== dayjs(x.date).get("year"))
-				continue;
-		}
-
-		if (parsed.tags.length) {
-			if (!parsed.tags.every(uuid => x.tags.includes(uuid))) {
-				continue;
-			}
-		}
-
-		filtered.push(x);
+	if(parsed.query.length){
+		if (
+			![
+				post.title.toLowerCase().split(" "),
+				post.member.name.toLowerCase().split(" ")
+			].flat().find(x => x.startsWith(parsed.query.toLowerCase()))
+		)
+			return false;
 	}
 
-	return filtered;
+	if (parsed.member) {
+		if (post.member.uuid !== parsed.member)
+			return false;
+	}
+
+	if (parsed.dateString) {
+		const date = dayjs(parsed.dateString).startOf("day");
+		if (date.valueOf() !== dayjs(post.date).startOf("day").valueOf())
+			return false;
+	}
+
+	if (parsed.day) {
+		if (parsed.day !== dayjs(post.date).get("date"))
+			return false;
+	}
+
+	if (parsed.month) {
+		if (parsed.month !== dayjs(post.date).get("month") + 1)
+			return false;
+	}
+
+	if (parsed.year) {
+		if (parsed.year !== dayjs(post.date).get("year"))
+			return false;
+	}
+
+	if (parsed.tags.length) {
+		if (!parsed.tags.every(uuid => post.tags.includes(uuid))) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+export async function filterJournalPostIndex(search: string, post: IndexEntry<JournalPost>) {
+	const parsed = await parseJournalPostFilterQuery(search.length ? search : appConfig.defaultFilterQueries.messageBoard || "");
+
+	if (parsed.member) {
+		if (post.member !== parsed.member)
+			return false;
+	}
+
+	if (parsed.dateString) {
+		const date = dayjs(parsed.dateString).startOf("day");
+		if (date.valueOf() !== dayjs(post.date).startOf("day").valueOf())
+			return false;
+	}
+
+	if (parsed.day) {
+		if (parsed.day !== dayjs(post.date).get("date"))
+			return false;
+	}
+
+	if (parsed.month) {
+		if (parsed.month !== dayjs(post.date).get("month") + 1)
+			return false;
+	}
+
+	if (parsed.year) {
+		if (parsed.year !== dayjs(post.date).get("year"))
+			return false;
+	}
+
+	return true;
 }

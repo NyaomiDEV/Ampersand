@@ -3,10 +3,9 @@
 	import { inject, onBeforeMount, onUnmounted, ref, shallowRef, watch } from 'vue';
 	import AssetItem from '../../components/AssetItem.vue';
 	import { Asset } from '../../lib/db/entities';
-	import { getAssets } from '../../lib/db/tables/assets';
+	import { getFilteredAssets } from '../../lib/db/tables/assets';
 	import { DatabaseEvent, DatabaseEvents } from '../../lib/db/events';
 	import { useRoute } from 'vue-router';
-	import { getFilteredAssets } from '../../lib/search';
 	import SpinnerFullscreen from '../../components/SpinnerFullscreen.vue';
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
@@ -22,20 +21,19 @@
 	});
 
 	const assets = shallowRef<Asset[]>();
-	const filteredAssets = shallowRef<Asset[]>();
-	watch([assets, search], () => {
-		filteredAssets.value = getFilteredAssets(search.value, assets.value);
+	watch(search, async () => {
+		assets.value = await Array.fromAsync(getFilteredAssets(search.value));
 	}, { immediate: true });
 
 	const listener = async (event: Event) => {
 		if(["assets"].includes((event as DatabaseEvent).data.table)){
-			assets.value = await Array.fromAsync(getAssets());
+			assets.value = await Array.fromAsync(getFilteredAssets(search.value));
 		}
 	}
 
 	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
-		assets.value = await Array.fromAsync(getAssets());
+		assets.value = await Array.fromAsync(getFilteredAssets(search.value));
 	});
 
 	onUnmounted(() => {
@@ -67,7 +65,7 @@
 		<SpinnerFullscreen v-if="!assets" />
 		<IonContent v-else>
 			<IonList :inset="isIOS">
-				<AssetItem routeToEditPage :asset v-for="asset in filteredAssets" :key="asset.uuid" />
+				<AssetItem routeToEditPage :asset v-for="asset in assets" :key="asset.uuid" />
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">

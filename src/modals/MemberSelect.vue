@@ -13,11 +13,10 @@
 	} from "@ionic/vue";
 
 	import { inject, onBeforeMount, onUnmounted, reactive, ref, shallowRef, toRaw, watch } from "vue";
-	import { getFilteredMembers } from "../lib/search.ts";
 	import MemberAvatar from "../components/member/MemberAvatar.vue";
 	import MemberLabel from "../components/member/MemberLabel.vue";
 	import type { Member } from "../lib/db/entities.d.ts";
-	import { getMembers } from "../lib/db/tables/members";
+	import { getFilteredMembers } from "../lib/db/tables/members";
 	import { DatabaseEvents, DatabaseEvent } from '../lib/db/events';
 	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
 
@@ -38,24 +37,23 @@
 	const selectedMembers = reactive<Member[]>([...props.modelValue || []]);
 	const search = ref("");
 	const members = shallowRef<Member[]>();
-	const filteredMembers = shallowRef<Member[]>();
 
 	const listener = async (event: Event) => {
 		if((event as DatabaseEvent).data.table == "members")
-			members.value = await Array.fromAsync(getMembers());
+			members.value = await Array.fromAsync(getFilteredMembers(search.value));
 	}
 
 	watch(selectedMembers, () => {
 		emit("update:modelValue", [...toRaw(selectedMembers)]);
 	});
 
-	watch([search, members], async () => {
-		filteredMembers.value = await getFilteredMembers(search.value, members.value);
+	watch(search, async () => {
+		members.value = await Array.fromAsync(getFilteredMembers(search.value));
 	}, { immediate: true });
 
 	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
-		members.value = await Array.fromAsync(getMembers());
+		members.value = await Array.fromAsync(getFilteredMembers(search.value));
 	});
 
 	onUnmounted(() => {
@@ -106,7 +104,7 @@
 		<SpinnerFullscreen v-if="!members" />
 		<IonContent v-else>
 			<IonList :inset="isIOS">
-				<IonItem button v-for="member in filteredMembers" :key="member.uuid">
+				<IonItem button v-for="member in members" :key="member.uuid">
 					<MemberAvatar slot="start" :member />
 					<IonCheckbox :value="member.uuid" :checked="!!selectedMembers.find(x => x.uuid === member.uuid)" @update:modelValue="value => check(member, value)">
 						<MemberLabel :member />

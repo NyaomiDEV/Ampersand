@@ -6,7 +6,7 @@ import { Asset, BoardMessage, Chat, ChatMessage, CustomField, FrontingEntry, Jou
 import { decode, encode } from '@msgpack/msgpack';
 import { AmpersandEntityMapping } from '../types';
 
-type IndexEntry<T> = UUIDable & Partial<T>;
+export type IndexEntry<T> = UUIDable & Partial<T>;
 type SecondaryKey<T> = (Exclude<keyof T, keyof UUIDable>);
 
 class ShittyTable<T extends UUIDable> {
@@ -78,12 +78,21 @@ class ShittyTable<T extends UUIDable> {
 
 		const diskIndex = await this.getIndexFromDisk();
 
-		if (diskIndex && diskIndex.length && this.secondaryKeys.reduce((v, i) => { v = Object.keys(diskIndex[0]).includes(i as string); return v }, true)){
+		if (diskIndex && diskIndex.length){
 			this.index = diskIndex;
 
 			for(const entry of this.index){
 				if(!dir.find(x => x.name === entry.uuid)){
 					this.index = this.index.filter(x => x.uuid !== entry.uuid);
+					continue;
+				}
+
+				for(const key of this.secondaryKeys){
+					if (!Object.keys(entry).includes(key as string)){
+						const contents = await this.get(entry.uuid);
+						if (!contents) continue;
+						await this.updateIndexWithData(contents, false);
+					}
 				}
 			}
 		}
@@ -260,11 +269,11 @@ export function getTables(): GetTableTauriExport {
 }
 
 export const db = {
-	boardMessages: await makeTable<BoardMessage>("boardMessages", ["date", "isPinned"]),
+	boardMessages: await makeTable<BoardMessage>("boardMessages", ["member", "date", "isPinned"]),
 	chats: await makeTable<Chat>("chats", ["name"]),
 	chatMessages: await makeTable<ChatMessage>("chatMessages", ["chat", "date"]),
 	frontingEntries: await makeTable<FrontingEntry>("frontingEntries", ["member", "startTime", "endTime"]),
-	journalPosts: await makeTable<JournalPost>("journalPosts", ["date", "isPinned"]),
+	journalPosts: await makeTable<JournalPost>("journalPosts", ["member", "date", "isPinned"]),
 	members: await makeTable<Member>("members", []),
 	reminders: await makeTable<Reminder>("reminders", []),
 	system: await makeTable<System>("system", []),

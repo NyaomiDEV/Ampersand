@@ -4,9 +4,17 @@ import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUIDable, Member, UUID } from "../entities";
 import { maxUid, nilUid } from "../../util/misc";
+import { filterMember } from "../../search";
 
 export function getMembers(){
 	return db.members.iterate();
+}
+
+export async function* getFilteredMembers(query: string){
+	for await (const member of getMembers()){
+		if(await filterMember(query, member))
+			yield member;
+	}
 }
 
 export async function newMember(member: Omit<Member, keyof UUIDable>) {

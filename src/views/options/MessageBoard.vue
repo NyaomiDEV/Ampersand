@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonFab, IonFabButton, IonIcon, IonSearchbar, IonLabel, IonItemDivider, IonButtons, IonButton, IonDatetime } from '@ionic/vue';
 	import { h, inject, onBeforeMount, onUnmounted, ref, shallowRef, watch } from 'vue';
-	import type { BoardMessage, BoardMessageComplete } from '../../lib/db/entities.d.ts';
+	import type { BoardMessageComplete } from '../../lib/db/entities.d.ts';
 	import { getBoardMessagesDays, getBoardMessagesOfDay } from '../../lib/db/tables/boardMessages';
 	import BoardMessageEdit from "../../modals/BoardMessageEdit.vue";
 	import SpinnerFullscreen from '../../components/SpinnerFullscreen.vue';
@@ -14,7 +14,6 @@
 	import dayjs from 'dayjs';
 
 	import { appConfig } from '../../lib/config';
-	import { getFilteredBoardMessages } from '../../lib/search.ts';
 	import MessageBoardCard from '../../components/MessageBoardCard.vue';
 	import { DatabaseEvents, DatabaseEvent } from '../../lib/db/events';
 	import { useRoute } from 'vue-router';
@@ -27,9 +26,7 @@
 
 	const search = ref(route.query.q as string || "");
 
-	const boardMessages = shallowRef<BoardMessage[]>();
-	const filteredBoardMessages = shallowRef<BoardMessageComplete[]>();
-
+	const boardMessages = shallowRef<BoardMessageComplete[]>();
 	const boardMessagesDays = shallowRef<{date: string, backgroundColor: string}[]>();
 
 	const isCalendarView = ref(true);
@@ -46,11 +43,11 @@
 		search.value = route.query.q as string || "";
 	});
 
-	watch([search, boardMessages], async () => {
-		filteredBoardMessages.value = await getFilteredBoardMessages(search.value, boardMessages.value);
+	watch(search, async () => {
+		await populateHighlightedDays();
 	}, { immediate: true });
 
-	watch([date], async () => {
+	watch([date, search], async () => {
 		await resetEntries();
 	});
 
@@ -65,11 +62,9 @@
 	});
 
 	async function getEntries(_date: Date){
-		const dateEntries = await getBoardMessagesOfDay(_date);
-		boardMessages.value = dateEntries;
+		boardMessages.value = await Array.fromAsync(getBoardMessagesOfDay(_date, search.value));
 		return;
-		}
-
+	}
 
 	async function resetEntries(){
 		boardMessages.value = undefined;
@@ -93,10 +88,24 @@
 	}
 
 	async function populateHighlightedDays() {
-		boardMessagesDays.value = (await getBoardMessagesDays()).map(x => ({
-			date: dayjs(x).format("YYYY-MM-DD"),
-			backgroundColor: "var(--ion-background-color-step-200)"
-		}));
+		const days = getBoardMessagesDays(search.value);
+
+		boardMessagesDays.value = Array.from(days.entries()).map(([date, occurrences]) => {
+			let step = "200";
+
+			if(occurrences >= 7) {
+				step = "350";
+			} else if(occurrences >= 5) {
+				step = "300";
+			} else if(occurrences >= 3) {
+				step = "250";
+			}
+
+			return {
+				date: dayjs(date).format("YYYY-MM-DD"),
+				backgroundColor: `var(--ion-background-color-step-${step})`
+			}
+		});
 	}
 
 	async function showModal(clickedBoardMessage?: BoardMessageComplete){
@@ -139,10 +148,10 @@
 			</div>
 		</IonHeader>
 
-		<SpinnerFullscreen v-if="!filteredBoardMessages && !boardMessages" />
+		<SpinnerFullscreen v-if="boardMessages === undefined" />
 		<IonContent v-else>
 			<IonList :inset="isIOS">
-				<template v-for="tuple in getGrouped(filteredBoardMessages || [])" :key="tuple[0]">
+				<template v-for="tuple in getGrouped(boardMessages)" :key="tuple[0]">
 					<IonItemDivider sticky>
 						<IonLabel>{{ dayjs(tuple[0]).format("LL") }}</IonLabel>
 					</IonItemDivider>

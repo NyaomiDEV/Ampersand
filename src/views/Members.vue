@@ -18,7 +18,6 @@
 		IonBackButton,
 	} from '@ionic/vue';
 	import { inject, onBeforeMount, onUnmounted, reactive, ref, shallowRef, useTemplateRef, watch } from 'vue';
-	import { getFilteredMembers } from '../lib/search.ts';
 	import { accessibilityConfig } from '../lib/config/index.ts';
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
@@ -32,7 +31,7 @@
 	import setAsFrontMD from "@material-symbols/svg-600/outlined/person_pin_circle.svg";
 	import archivedMD from "@material-symbols/svg-600/outlined/archive.svg";
 
-	import { getMembers } from '../lib/db/tables/members.ts';
+	import { getFilteredMembers } from '../lib/db/tables/members.ts';
 	import type { Member, FrontingEntry } from '../lib/db/entities';
 	import { getCurrentFrontEntryForMember, newFrontingEntry, removeFronter, setMainFronter, setSoleFronter } from '../lib/db/tables/frontingEntries.ts';
 	import MemberAvatar from '../components/member/MemberAvatar.vue';
@@ -51,10 +50,9 @@
 	});
 
 	const members = shallowRef<Member[]>();
-	const filteredMembers = shallowRef<Member[]>();
 
-	watch([search, members], async () => {
-		filteredMembers.value = await getFilteredMembers(search.value, members.value);
+	watch(search, async () => {
+		members.value = await Array.fromAsync(getFilteredMembers(search.value));
 	}, { immediate: true });
 
 	const frontingEntries = reactive(new Map<Member, FrontingEntry | undefined>());
@@ -65,7 +63,8 @@
 	const listeners = [
 		async (event: Event) => {
 			if((event as DatabaseEvent).data.table === "members")
-				members.value = await Array.fromAsync(getMembers());
+				members.value = await Array.fromAsync(getFilteredMembers(search.value));
+
 		},
 		async (event: Event) => {
 			if((event as DatabaseEvent).data.table === "frontingEntries"){
@@ -81,7 +80,7 @@
 	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listeners[0]);
 		DatabaseEvents.addEventListener("updated", listeners[1]);
-		members.value = await Array.fromAsync(getMembers());
+		members.value = await Array.fromAsync(getFilteredMembers(search.value));
 		frontingEntries.clear();
 		for(const member of members.value)
 			frontingEntries.set(member, await getCurrentFrontEntryForMember(member));
@@ -190,7 +189,7 @@
 		<IonContent v-else>
 			<IonList :inset="isIOS" ref="list">
 
-				<IonItemSliding v-for="member in filteredMembers" @ionDrag="endPress(member, true)" :key="member.uuid">
+				<IonItemSliding v-for="member in members" @ionDrag="endPress(member, true)" :key="member.uuid">
 					<IonItem
 						button
 						:class="{ archived: member.isArchived }"

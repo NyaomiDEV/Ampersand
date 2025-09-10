@@ -1,9 +1,17 @@
 import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUID, UUIDable, Tag } from "../entities";
+import { filterTag } from "../../search";
 
 export function getTags(){
 	return db.tags.iterate();
+}
+
+export async function* getFilteredTags(query: string){
+	for await (const tag of getTags()){
+		if(filterTag(query, tag))
+			yield tag;
+	}
 }
 
 export async function newTag(tag: Omit<Tag, keyof UUIDable>) {

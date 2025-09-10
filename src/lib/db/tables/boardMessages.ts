@@ -3,6 +3,7 @@ import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUID, UUIDable, BoardMessage, BoardMessageComplete } from "../entities";
 import { defaultMember, getMember } from "../tables/members";
 import dayjs from "dayjs";
+import { filterBoardMessage, filterBoardMessageIndex } from "../../search";
 
 export function getBoardMessages(){
 	return db.boardMessages.iterate();
@@ -79,16 +80,27 @@ export async function getRecentBoardMessages() {
 	)).filter(x => !!x).map(x => toBoardMessageComplete(x)));
 }
 
-export async function getBoardMessagesOfDay(date: Date) {
+export async function* getBoardMessagesOfDay(date: Date, query: string) {
 	const _date = dayjs(date).startOf("day");
 
-	return (await Promise.all(
-		db.boardMessages.index
-		.filter(x => dayjs(x.date!).startOf('day').valueOf() === _date.valueOf())
-		.map(async x => await db.boardMessages.get(x.uuid))
-	)).filter(x => !!x);
+	for(const entry of db.boardMessages.index){
+		if (dayjs(entry.date!).startOf('day').valueOf() !== _date.valueOf())
+			continue;
+
+		const boardMessage = await db.boardMessages.get(entry.uuid);
+		if(!boardMessage) continue;
+
+		const complete = await toBoardMessageComplete(boardMessage);
+		if(await filterBoardMessage(query, complete))
+			yield complete;
+	}
 }
 
-export async function getBoardMessagesDays() {
-	return [...new Set(db.boardMessages.index.map(x => dayjs(x.date!).startOf('day').valueOf()))].map(x => new Date(x));
+export function getBoardMessagesDays(query: string) {
+	const _map = db.frontingEntries.index.filter(x => filterBoardMessageIndex(query, x)).map(x => dayjs(x.startTime!).startOf('day').valueOf());
+
+	return _map.reduce((occurrences, current) => {
+		occurrences.set(current, (occurrences.get(current) || 0) + 1)
+		return occurrences;
+	}, new Map<number, number>());
 }

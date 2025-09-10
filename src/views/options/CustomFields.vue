@@ -2,10 +2,9 @@
 	import { IonBackButton, IonContent, IonHeader, IonSearchbar, IonList, IonIcon, IonPage, IonTitle, IonToolbar, IonFab, IonFabButton, IonItem, IonLabel } from '@ionic/vue';
 	import { h, inject, onBeforeMount, onUnmounted, ref, shallowRef, watch } from 'vue';
 	import { CustomField } from '../../lib/db/entities';
-	import { getCustomFields } from '../../lib/db/tables/customFields';
+	import { getFilteredCustomFields } from '../../lib/db/tables/customFields';
 	import { DatabaseEvent, DatabaseEvents } from '../../lib/db/events';
 	import { useRoute } from 'vue-router';
-	import { getFilteredCustomFields } from '../../lib/search';
 	import SpinnerFullscreen from '../../components/SpinnerFullscreen.vue';
 	import CustomFieldEdit from '../../modals/CustomFieldEdit.vue';
 	import { addModal, removeModal } from '../../lib/modals';
@@ -23,20 +22,20 @@
 	});
 
 	const customFields = shallowRef<CustomField[]>();
-	const filteredCustomFields = shallowRef<CustomField[]>();
-	watch([customFields, search], () => {
-		filteredCustomFields.value = getFilteredCustomFields(search.value, customFields.value);
+
+	watch(search, async () => {
+			customFields.value = await Array.fromAsync(getFilteredCustomFields(search.value));
 	}, { immediate: true });
 
 	const listener = async (event: Event) => {
 		if(["customFields"].includes((event as DatabaseEvent).data.table)){
-			customFields.value = await Array.fromAsync(getCustomFields());
+			customFields.value = await Array.fromAsync(getFilteredCustomFields(search.value));
 		}
 	}
 
 	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
-		customFields.value = await Array.fromAsync(getCustomFields());
+		customFields.value = await Array.fromAsync(getFilteredCustomFields(search.value));
 	});
 
 	onUnmounted(() => {

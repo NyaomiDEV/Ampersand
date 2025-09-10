@@ -1,9 +1,17 @@
 import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUID, UUIDable, CustomField } from "../entities";
+import { filterCustomField } from "../../search";
 
 export function getCustomFields(){
 	return db.customFields.iterate();
+}
+
+export async function* getFilteredCustomFields(query: string){
+	for await (const customField of getCustomFields()){
+		if (filterCustomField(query, customField))
+			yield customField;
+		}
 }
 
 export async function newCustomField(customField: Omit<CustomField, keyof UUIDable>) {

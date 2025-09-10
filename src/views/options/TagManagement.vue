@@ -8,8 +8,7 @@
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 
-	import { getFilteredTags } from '../../lib/search.ts';
-	import { getTags } from '../../lib/db/tables/tags';
+	import { getFilteredTags } from '../../lib/db/tables/tags';
 	import type { Tag } from '../../lib/db/entities.d.ts';
 	import { DatabaseEvents, DatabaseEvent } from '../../lib/db/events';
 
@@ -29,19 +28,18 @@
 	const type = ref("member");
 
 	const tags = shallowRef<Tag[]>();
-	const filteredTags = shallowRef<Tag[]>();
 	watch([search, tags, type], async () => {
-		filteredTags.value = getFilteredTags(search.value, tags.value?.filter(x => x.type === type.value));
+		tags.value = (await Array.fromAsync(getFilteredTags(search.value))).filter(x => x.type === type.value);
 	}, {immediate: true});
 
 	const listener = async (event: Event) => {
 		if((event as DatabaseEvent).data.table === "tags")
-			tags.value = await Array.fromAsync(getTags());
+			tags.value = (await Array.fromAsync(getFilteredTags(search.value))).filter(x => x.type === type.value);
 	}
 
 	onMounted(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
-		tags.value = await Array.fromAsync(getTags());
+		tags.value = (await Array.fromAsync(getFilteredTags(search.value))).filter(x => x.type === type.value);
 	});
 
 	onUnmounted(() => {
@@ -83,7 +81,7 @@
 		<SpinnerFullscreen v-if="!tags" />
 		<IonContent v-else>
 			<IonList :inset="isIOS">
-				<IonItem button v-for="tag in filteredTags" :key="tag.uuid" :routerLink="'/options/tagManagement/edit?uuid='+tag.uuid">
+				<IonItem button v-for="tag in tags" :key="tag.uuid" :routerLink="'/options/tagManagement/edit?uuid='+tag.uuid">
 					<TagColor slot="start" :tag />
 					<TagLabel :tag />
 				</IonItem>

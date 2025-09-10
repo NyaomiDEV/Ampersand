@@ -12,8 +12,7 @@
 	} from "@ionic/vue";
 
 	import { inject, onBeforeMount, reactive, ref, shallowRef, toRaw, watch } from "vue";
-	import { getFilteredTags } from "../lib/search";
-	import { getTags } from "../lib/db/tables/tags";
+	import { getFilteredTags } from "../lib/db/tables/tags";
 	import { Tag } from "../lib/db/entities";
 	import TagColor from "../components/tag/TagColor.vue";
 	import TagLabel from "../components/tag/TagLabel.vue";
@@ -34,23 +33,17 @@
 	const selectedTags = reactive<Tag[]>([...props.modelValue || []]);
 	const search = ref("");
 	const tags = shallowRef<Tag[]>();
-	const filteredTags = shallowRef<Tag[]>();
 
 	watch(selectedTags, () => {
 		emit("update:modelValue",  [...toRaw(selectedTags)]);
 	});
 
-	watch([search, tags], () => {
-		filteredTags.value = getFilteredTags(search.value, tags.value);
+	watch([search, tags], async () => {
+		tags.value = (await Array.fromAsync(getFilteredTags(search.value))).filter(x => x.type === props.type);
 	}, { immediate: true })
 
 	onBeforeMount(async () => {
-		const _tags: Tag[] = [];
-		for await (const tag of getTags()){
-			if(tag.type === props.type)
-				_tags.push(tag);
-		}
-		tags.value = _tags;
+		tags.value = (await Array.fromAsync(getFilteredTags(search.value))).filter(x => x.type === props.type);
 	});
 
 	function check(tag: Tag, checked: boolean){
@@ -79,7 +72,7 @@
 		<SpinnerFullscreen v-if="!tags" />
 		<IonContent v-else>
 			<IonList :inset="isIOS">
-				<IonItem button v-for="tag in filteredTags" :key="tag.uuid">
+				<IonItem button v-for="tag in tags" :key="tag.uuid">
 					<TagColor slot="start" :tag />
 					<IonCheckbox :value="tag.uuid" :checked="!!selectedTags.find(x => x.uuid === tag.uuid)" @update:modelValue="value => check(tag, value)">
 						<TagLabel :tag />

@@ -1,9 +1,17 @@
 import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUID, UUIDable, Asset } from "../entities";
+import { filterAsset } from "../../search";
 
 export function getAssets(){
 	return db.assets.iterate();
+}
+
+export async function* getFilteredAssets(query: string){
+	for await (const asset of getAssets()){
+		if (filterAsset(query, asset))
+			yield asset;
+	}
 }
 
 export async function newAsset(asset: Omit<Asset, keyof UUIDable>) {

@@ -3,6 +3,7 @@ import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUIDable, JournalPost, UUID } from "../entities";
 import { getMember, defaultMember } from "./members";
 import dayjs from "dayjs";
+import { filterJournalPost, filterJournalPostIndex } from "../../search";
 
 export function getJournalPosts(){
 	return db.journalPosts.iterate();
@@ -75,16 +76,35 @@ export async function updateJournalPost(uuid: UUID, newContent: Partial<JournalP
 	}
 }
 
-export async function getJournalPostsOfDay(date: Date, includePinned: boolean) {
+export async function* getJournalPostsOfDay(date: Date, includePinned: boolean, query: string) {
 	const _date = dayjs(date).startOf("day");
 
-	return (await Promise.all(
-		db.journalPosts.index
-		.filter(x => (includePinned && x.isPinned) || dayjs(x.date!).startOf('day').valueOf() === _date.valueOf())
-		.map(async x => await db.journalPosts.get(x.uuid))
-	)).filter(x => !!x);
+	for(const entry of db.journalPosts.index){
+		if ((includePinned && !entry.isPinned) && dayjs(entry.date!).startOf('day').valueOf() !== _date.valueOf())
+			continue;
+
+		const post = await db.journalPosts.get(entry.uuid);
+		if(!post) continue;
+
+		const completePost = await toJournalPostComplete(post);
+
+		if(await filterJournalPost(query, completePost))
+			yield completePost
+	}
 }
 
-export async function getJournalPostsDays() {
-	return [...new Set(db.journalPosts.index.map(x => dayjs(x.date!).startOf('day').valueOf()))].map(x => new Date(x));
+export async function getJournalPostsDays(query: string) {
+	const _map = await Promise.all(db.journalPosts.index.map(async x => {
+		if (await filterJournalPostIndex(query, x))
+			return dayjs(x.date!).startOf('day').valueOf();
+
+		return undefined;
+	}));
+	
+	return _map.reduce((occurrences, current) => {
+		if(current)
+			occurrences.set(current, (occurrences.get(current) || 0) + 1)
+
+		return occurrences;
+	}, new Map<number, number>());
 }

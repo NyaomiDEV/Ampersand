@@ -3,6 +3,7 @@ import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUIDable, Member, FrontingEntry, FrontingEntryComplete, UUID } from "../entities";
 import { defaultMember, getMember } from "./members";
 import dayjs from "dayjs";
+import { filterFrontingEntry, filterFrontingEntryIndex } from "../../search";
 
 export function getFrontingEntries(){
 	return db.frontingEntries.iterate();
@@ -166,7 +167,7 @@ export async function getRecentlyFronted() {
 	)).filter(x => !!x).map(x => toFrontingEntryComplete(x)));
 }
 
-export async function getFrontingEntriesOfDay(date: Date, currentlyFrontingToToday: boolean) {
+export async function* getFrontingEntriesOfDay(date: Date, currentlyFrontingToToday: boolean, query: string) {
 	const _date = dayjs(date).startOf("day");
 
 	let _filter = x => dayjs(x.startTime).startOf('day').valueOf() === _date.valueOf();
@@ -180,15 +181,21 @@ export async function getFrontingEntriesOfDay(date: Date, currentlyFrontingToTod
 		}
 	}
 
-	return (await Promise.all(
-		db.frontingEntries.index
-		.filter(_filter)
-		.map(x => db.frontingEntries.get(x.uuid))
-	)).filter(x => !!x);
+	for(const entry of db.frontingEntries.index){
+		if(!_filter(entry))
+			continue;
+
+		const frontingEntry = await db.frontingEntries.get(entry.uuid);
+		if(!frontingEntry) continue;
+
+		const complete = await toFrontingEntryComplete(frontingEntry);
+		if(filterFrontingEntry(query, complete))
+			yield complete;
+	}
 }
 
-export async function getFrontingEntriesDays() {
-	const _map = db.frontingEntries.index.map(x => dayjs(x.startTime!).startOf('day').valueOf());
+export async function getFrontingEntriesDays(query: string) {
+	const _map = db.frontingEntries.index.filter(x => filterFrontingEntryIndex(query, x)).map(x => dayjs(x.startTime!).startOf('day').valueOf());
 
 	return _map.reduce((occurrences, current) => {
 		occurrences.set(current, (occurrences.get(current) || 0) + 1)

@@ -3,9 +3,8 @@
 	import { h, inject, onBeforeMount, onUnmounted, ref, shallowRef, watch } from 'vue';
 	import MemberAvatar from "../../components/member/MemberAvatar.vue";
 	import FrontingEntryLabel from "../../components/frontingEntry/FrontingEntryLabel.vue";
-	import type { FrontingEntry, FrontingEntryComplete } from '../../lib/db/entities.d.ts';
+	import type { FrontingEntryComplete } from '../../lib/db/entities.d.ts';
 	import { getFrontingEntriesOfDay, getFrontingEntriesDays } from '../../lib/db/tables/frontingEntries';
-	import { getFilteredFrontingEntries } from '../../lib/search.ts';
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
 	import dayjs from 'dayjs';
@@ -28,8 +27,7 @@
 
 	const search = ref(route.query.q as string || "");
 
-	const frontingEntries = shallowRef<FrontingEntry[]>();
-	const filteredFrontingEntries = shallowRef<FrontingEntryComplete[]>();
+	const frontingEntries = shallowRef<FrontingEntryComplete[]>();
 
 	const frontingEntriesDays = shallowRef<{date: string, backgroundColor: string}[]>();
 
@@ -47,13 +45,13 @@
 		search.value = route.query.q as string || "";
 	});
 
-	watch([search, frontingEntries], async () => {
-		filteredFrontingEntries.value = await getFilteredFrontingEntries(search.value, frontingEntries.value);
-	}, { immediate: true });
-
-	watch([date], async () => {
-		await resetEntries();
+	watch(search, async () => {
+		await populateHighlightedDays();
 	});
+
+	watch([date, search], async () => {
+		await resetEntries();
+	}, { immediate: true });
 
 	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
@@ -66,9 +64,7 @@
 	});
 
 	async function getEntries(_date: Date){
-		const dateEntries = await getFrontingEntriesOfDay(_date, true);
-		frontingEntries.value = dateEntries;
-		return;
+		frontingEntries.value = await Array.fromAsync(getFrontingEntriesOfDay(_date, true, search.value));
 	}
 
 	async function resetEntries(){
@@ -104,7 +100,7 @@
 	}
 
 	async function populateHighlightedDays() {
-		const days = await getFrontingEntriesDays();
+		const days = await getFrontingEntriesDays(search.value);
 
 		frontingEntriesDays.value = Array.from(days.entries()).map(([date, occurrences]) => {
 			let step = "200";
@@ -161,10 +157,10 @@
 			</div>
 		</IonHeader>
 
-		<SpinnerFullscreen v-if="!filteredFrontingEntries && !frontingEntries" />
+		<SpinnerFullscreen v-if="frontingEntries === undefined" />
 		<IonContent v-else>
 			<IonList :inset="isIOS">
-				<template v-for="tuple in getGrouped(filteredFrontingEntries || [])" :key="tuple[0]">
+				<template v-for="tuple in getGrouped(frontingEntries)" :key="tuple[0]">
 					<IonItemDivider sticky>
 						<IonLabel>{{
 							tuple[0] === "currentlyFronting"

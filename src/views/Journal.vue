@@ -10,12 +10,11 @@
 	import listMD from "@material-symbols/svg-600/outlined/list.svg";
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 
-	import { JournalPost, JournalPostComplete } from '../lib/db/entities';
+	import { JournalPostComplete } from '../lib/db/entities';
 	import dayjs from 'dayjs';
 	import { DatabaseEvent, DatabaseEvents } from '../lib/db/events';
 	import { getJournalPostsDays, getJournalPostsOfDay } from '../lib/db/tables/journalPosts';
 	import { appConfig } from '../lib/config';
-	import { getFilteredJournalPosts } from '../lib/search';
 	import { useTranslation } from 'i18next-vue';
 
 	const route = useRoute();
@@ -26,8 +25,7 @@
 	const firstWeekOfDayIsSunday = appConfig.locale.firstWeekOfDayIsSunday;
 	const isIOS = inject<boolean>("isIOS");
 
-	const posts = shallowRef<JournalPost[]>();
-	const filteredPosts = shallowRef<JournalPostComplete[]>();
+	const posts = shallowRef<JournalPostComplete[]>();
 
 	const postsDays = shallowRef<{ date: string, backgroundColor: string; }[]>();
 
@@ -47,13 +45,13 @@
 		search.value = route.query.q as string || "";
 	});
 
-	watch([search, posts], async () => {
-		filteredPosts.value = await getFilteredJournalPosts(search.value, posts.value);
-	}, { immediate: true });
-
-	watch([date], async () => {
-		await resetEntries();
+	watch(search, async () => {
+		await populateHighlightedDays();
 	});
+
+	watch([date, search], async () => {
+		await resetEntries();
+	}, { immediate: true });
 
 	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
@@ -66,9 +64,7 @@
 	});
 
 	async function getEntries(_date: Date) {
-		const dateEntries = await getJournalPostsOfDay(_date, true);
-		posts.value = dateEntries;
-		return;
+		posts.value = await Array.fromAsync(getJournalPostsOfDay(_date, true, search.value));
 	}
 
 	async function resetEntries() {
@@ -101,10 +97,24 @@
 	}
 
 	async function populateHighlightedDays() {
-		postsDays.value = (await getJournalPostsDays()).map(x => ({
-			date: dayjs(x).format("YYYY-MM-DD"),
-			backgroundColor: "var(--ion-background-color-step-200)"
-		}));
+		const days = await getJournalPostsDays(search.value);
+
+		postsDays.value = Array.from(days.entries()).map(([date, occurrences]) => {
+			let step = "200";
+
+			if(occurrences >= 7) {
+				step = "350";
+			} else if(occurrences >= 5) {
+				step = "300";
+			} else if(occurrences >= 3) {
+				step = "250";
+			}
+
+			return {
+				date: dayjs(date).format("YYYY-MM-DD"),
+				backgroundColor: `var(--ion-background-color-step-${step})`
+			}
+		});
 	}
 
 	function prompt(header: string, subHeader: string, message?: string): Promise<boolean> {
@@ -178,10 +188,10 @@
 			</div>
 		</IonHeader>
 
-		<SpinnerFullscreen v-if="!filteredPosts && !posts" />
+		<SpinnerFullscreen v-if="posts === undefined" />
 		<IonContent v-else>
 			<IonList :inset="isIOS">
-				<template v-for="tuple in getGrouped(filteredPosts || [])" :key="tuple[0]">
+				<template v-for="tuple in getGrouped(posts)" :key="tuple[0]">
 					<IonItemDivider sticky>
 						<IonLabel>{{
 							tuple[0] === "pinnedPosts"
