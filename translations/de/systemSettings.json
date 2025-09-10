@@ -1,5 +1,8 @@
 {
 	"systemName": "Systemname",
 	"systemDescription": "Systembeschreibung",
-	"header": "Systemname und Foto"
+	"header": "Systemname und Foto",
+	"memberCount": "Anzahl der Mitglieder",
+	"memberCountText": "{{memberCount}} Mitglied(er), {{archivedMemberCount}} archiviert",
+	"tapToShow": "Antippen zum zeigen"
 }
