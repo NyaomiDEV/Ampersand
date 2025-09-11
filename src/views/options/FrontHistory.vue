@@ -1,17 +1,15 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonLabel, IonToolbar, IonBackButton, IonItem, IonItemDivider, IonDatetime, IonButtons, IonIcon, IonButton, IonSearchbar, IonFabButton, IonFab } from '@ionic/vue';
+	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonLabel, IonToolbar, IonBackButton, IonItem, IonItemDivider, IonDatetime, IonIcon, IonSearchbar, IonFabButton, IonFab } from '@ionic/vue';
 	import { h, inject, onBeforeMount, onUnmounted, ref, shallowRef, watch } from 'vue';
 	import MemberAvatar from "../../components/member/MemberAvatar.vue";
 	import FrontingEntryLabel from "../../components/frontingEntry/FrontingEntryLabel.vue";
 	import type { FrontingEntryComplete } from '../../lib/db/entities.d.ts';
 	import { getFrontingEntriesOfDay, getFrontingEntriesDays } from '../../lib/db/tables/frontingEntries';
-	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
+	import Spinner from "../../components/Spinner.vue";
 	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
 	import dayjs from 'dayjs';
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
-	import calendarMD from "@material-symbols/svg-600/outlined/calendar_month.svg";
-	import listMD from "@material-symbols/svg-600/outlined/list.svg";
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 	import commentMD from "@material-symbols/svg-600/outlined/comment.svg"
 
@@ -31,7 +29,6 @@
 
 	const frontingEntriesDays = shallowRef<{date: string, backgroundColor: string}[]>();
 
-	const isCalendarView = ref(true);
 	const date = ref(dayjs().toISOString());
 
 	const listener = async (event: Event) => {
@@ -139,27 +136,22 @@
 				<IonTitle>
 					{{ $t("frontHistory:header") }}
 				</IonTitle>
-				<IonButtons slot="secondary">
-					<IonButton @click="isCalendarView = !isCalendarView">
-						<IonIcon slot="icon-only" :icon="isCalendarView ? listMD : calendarMD" />
-					</IonButton>
-				</IonButtons>
 			</IonToolbar>
 			<IonToolbar>
 				<IonSearchbar :animated="true" :placeholder="$t('frontHistory:searchPlaceholder')"
 					showCancelButton="focus" showClearButton="focus" :spellcheck="false" v-model="search" />
 			</IonToolbar>
-			<div class="container" v-if="isCalendarView">
-				<IonDatetime presentation="date" :firstDayOfWeek="firstWeekOfDayIsSunday ? 0 : 1"
-					v-model="date" :locale="appConfig.locale.language || 'en'"
-					:highlightedDates="frontingEntriesDays"
-					:datetime="dayjs().format('YYYY-MM-DDTHH:mm:ss')" />
-			</div>
 		</IonHeader>
 
-		<SpinnerFullscreen v-if="frontingEntries === undefined" />
-		<IonContent v-else>
-			<IonList :inset="isIOS">
+		<IonContent>
+			<IonDatetime presentation="date" :firstDayOfWeek="firstWeekOfDayIsSunday ? 0 : 1"
+				v-model="date" :locale="appConfig.locale.language || 'en'"
+				:highlightedDates="frontingEntriesDays"
+				:datetime="dayjs().format('YYYY-MM-DDTHH:mm:ss')" />
+			<div class="spinner-container" v-if="frontingEntries === undefined">
+				<Spinner  size="72px" />
+			</div>
+			<IonList :inset="isIOS" v-else>
 				<template v-for="tuple in getGrouped(frontingEntries)" :key="tuple[0]">
 					<IonItemDivider sticky>
 						<IonLabel>{{
@@ -186,9 +178,12 @@
 </template>
 
 <style scoped>
-	.container {
-		background-color: var(--ion-toolbar-background);
-		z-index: 1;
+	.spinner-container {
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 16px;
 	}
 
 	ion-datetime {
