@@ -28,10 +28,6 @@ export type FrontingHistoryFilterQuery = {
 export type BoardMessageFilterQuery = {
 	query: string,
 	pinned?: boolean,
-	dateString?: string,
-	day?: number,
-	month?: number,
-	year?: number,
 	member?: UUID
 };
 
@@ -49,10 +45,6 @@ export type CustomFieldFilterQuery = {
 export type JournalPostFilterQuery = {
 	query: string,
 	tags: string[],
-	dateString?: string,
-	day?: number,
-	month?: number,
-	year?: number,
 	member?: UUID;
 };
 
@@ -250,18 +242,6 @@ export function parseBoardMessageFilterQuery(search: string) {
 							result.pinned = true;
 
 						break;
-					case "date":
-						result.dateString = tokenParts[1];
-						break;
-					case "day":
-						result.day = Number(tokenParts[1]);
-						break;
-					case "month":
-						result.month = Number(tokenParts[1]);
-						break;
-					case "year":
-						result.year = Number(tokenParts[1]);
-						break;
 					case "member":
 						result.member = tokenParts[1];
 						break;
@@ -378,18 +358,6 @@ export async function parseJournalPostFilterQuery(search: string) {
 			case "@":
 				const tokenParts = token.slice(1).split(":");
 				switch (tokenParts[0].toLowerCase()) {
-					case "date":
-						result.dateString = tokenParts[1];
-						break;
-					case "day":
-						result.day = Number(tokenParts[1]);
-						break;
-					case "month":
-						result.month = Number(tokenParts[1]);
-						break;
-					case "year":
-						result.year = Number(tokenParts[1]);
-						break;
 					case "member":
 						result.member = tokenParts[1];
 						break;

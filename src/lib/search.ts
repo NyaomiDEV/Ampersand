@@ -201,26 +201,6 @@ export function filterBoardMessage(search: string, boardMessage: BoardMessageCom
 			return false;
 	}
 
-	if (parsed.dateString) {
-		const date = dayjs(parsed.dateString).startOf("day");
-		if (date.valueOf() !== dayjs(boardMessage.date).startOf("day").valueOf())
-			return false;
-	}
-
-	if (parsed.day) {
-		if (parsed.day !== dayjs(boardMessage.date).get("date"))
-			return false;
-	}
-
-	if (parsed.month) {
-		if (parsed.month !== dayjs(boardMessage.date).get("month") + 1)
-			return false;
-	}
-
-	if (parsed.year) {
-		if (parsed.year !== dayjs(boardMessage.date).get("year"))
-			return false;
-	}
 	return true;
 }
 
@@ -239,26 +219,6 @@ export function filterBoardMessageIndex(search: string, boardMessage: IndexEntry
 			return false;
 	}
 
-	if (parsed.dateString) {
-		const date = dayjs(parsed.dateString).startOf("day");
-		if (date.valueOf() !== dayjs(boardMessage.date).startOf("day").valueOf())
-			return false;
-	}
-
-	if (parsed.day) {
-		if (parsed.day !== dayjs(boardMessage.date).get("date"))
-			return false;
-	}
-
-	if (parsed.month) {
-		if (parsed.month !== dayjs(boardMessage.date).get("month") + 1)
-			return false;
-	}
-
-	if (parsed.year) {
-		if (parsed.year !== dayjs(boardMessage.date).get("year"))
-			return false;
-	}
 	return true;
 }
 
@@ -317,33 +277,6 @@ export async function filterJournalPost(search: string, post: JournalPostComplet
 			return false;
 	}
 
-	if (parsed.dateString) {
-		const date = dayjs(parsed.dateString).startOf("day");
-		if (date.valueOf() !== dayjs(post.date).startOf("day").valueOf())
-			return false;
-	}
-
-	if (parsed.day) {
-		if (parsed.day !== dayjs(post.date).get("date"))
-			return false;
-	}
-
-	if (parsed.month) {
-		if (parsed.month !== dayjs(post.date).get("month") + 1)
-			return false;
-	}
-
-	if (parsed.year) {
-		if (parsed.year !== dayjs(post.date).get("year"))
-			return false;
-	}
-
-	if (parsed.tags.length) {
-		if (!parsed.tags.every(uuid => post.tags.includes(uuid))) {
-			return false;
-		}
-	}
-
 	return true;
 }
 
@@ -352,27 +285,6 @@ export async function filterJournalPostIndex(search: string, post: IndexEntry<Jo
 
 	if (parsed.member) {
 		if (post.member !== parsed.member)
-			return false;
-	}
-
-	if (parsed.dateString) {
-		const date = dayjs(parsed.dateString).startOf("day");
-		if (date.valueOf() !== dayjs(post.date).startOf("day").valueOf())
-			return false;
-	}
-
-	if (parsed.day) {
-		if (parsed.day !== dayjs(post.date).get("date"))
-			return false;
-	}
-
-	if (parsed.month) {
-		if (parsed.month !== dayjs(post.date).get("month") + 1)
-			return false;
-	}
-
-	if (parsed.year) {
-		if (parsed.year !== dayjs(post.date).get("year"))
 			return false;
 	}
 
