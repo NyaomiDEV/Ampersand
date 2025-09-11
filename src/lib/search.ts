@@ -176,7 +176,7 @@ export function filterFrontingEntryIndex(search: string, frontingEntry: IndexEnt
 	return true;
 }
 
-export async function filterBoardMessage(search: string, boardMessage: BoardMessageComplete) {
+export function filterBoardMessage(search: string, boardMessage: BoardMessageComplete) {
 	const parsed = parseBoardMessageFilterQuery(search.length ? search : appConfig.defaultFilterQueries.messageBoard || "");
 
 	if (parsed.pinned !== undefined) {
@@ -224,7 +224,7 @@ export async function filterBoardMessage(search: string, boardMessage: BoardMess
 	return true;
 }
 
-export async function filterBoardMessageIndex(search: string, boardMessage: IndexEntry<BoardMessage>) {
+export function filterBoardMessageIndex(search: string, boardMessage: IndexEntry<BoardMessage>) {
 	const parsed = parseBoardMessageFilterQuery(search.length ? search : appConfig.defaultFilterQueries.messageBoard || "");
 
 	if (parsed.pinned !== undefined) {

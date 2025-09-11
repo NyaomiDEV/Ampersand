@@ -91,7 +91,7 @@ export async function* getBoardMessagesOfDay(date: Date, query: string) {
 		if(!boardMessage) continue;
 
 		const complete = await toBoardMessageComplete(boardMessage);
-		if(await filterBoardMessage(query, complete))
+		if(filterBoardMessage(query, complete))
 			yield complete;
 	}
 }
