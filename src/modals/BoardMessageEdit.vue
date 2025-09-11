@@ -280,11 +280,3 @@
 		</IonContent>
 	</IonModal>
 </template>
-
-<style scoped>
-	ion-modal.board-message-edit-modal {
-		--height: 75dvh;
-		--min-height: 600px;
-		--border-radius: 16px;
-	}
-</style>

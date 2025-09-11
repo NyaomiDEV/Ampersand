@@ -138,11 +138,3 @@
 		</IonContent>
 	</IonModal>
 </template>
-
-<style scoped>
-	ion-modal.custom-field-edit-modal {
-		--height: 50dvh;
-		--min-height: 600px;
-		--border-radius: 16px;
-	}
-</style>

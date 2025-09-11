@@ -79,10 +79,3 @@
 		</IonContent>
 	</IonModal>
 </template>
-
-<style scoped>
-	ion-modal.custom-fields-select-modal {
-		--height: 100dvh;
-		--border-radius: 16px;
-	}
-</style>

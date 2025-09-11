@@ -58,7 +58,7 @@ ion-modal.modal-sheet ion-header ion-toolbar:first-of-type {
 }
 
 ion-modal.modal-sheet {
-	--max-height: 90%;
+	--border-radius: 16px;
 	--ion-safe-area-top: inherit;
 	--ion-safe-area-left: inherit;
 	--ion-safe-area-right: inherit;

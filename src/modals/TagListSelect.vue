@@ -84,11 +84,6 @@
 </template>
 
 <style scoped>
-	ion-modal.tag-select-modal {
-		--height: 100dvh;
-		--border-radius: 16px;
-	}
-
 	div {
 		position: relative;
 		top: 15%;

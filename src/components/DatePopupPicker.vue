@@ -43,10 +43,10 @@
 </template>
 
 <style scoped>
-ion-modal {
-	--backdrop-opacity: var(--ion-backdrop-opacity, 0.32) !important;
-	--border-radius: 16px;
-	--width: unset;
-	--height: unset;
-}
+	ion-modal {
+		--backdrop-opacity: var(--ion-backdrop-opacity, 0.32) !important;
+		--border-radius: 16px;
+		--width: unset;
+		--height: unset;
+	}
 </style>

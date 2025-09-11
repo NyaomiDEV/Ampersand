@@ -116,11 +116,6 @@
 </template>
 
 <style scoped>
-	ion-modal.member-select-modal {
-		--height: 100dvh;
-		--border-radius: 16px;
-	}
-
 	ion-checkbox::part(container) {
 		visibility: v-bind("!props.hideCheckboxes ? 'visible' : 'hidden'")
 	}

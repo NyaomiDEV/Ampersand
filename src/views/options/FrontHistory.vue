@@ -150,7 +150,7 @@
 				:highlightedDates="frontingEntriesDays"
 				:datetime="dayjs().format('YYYY-MM-DDTHH:mm:ss')" />
 			<div class="spinner-container" v-if="frontingEntries === undefined">
-				<Spinner  size="72px" />
+				<Spinner size="72px" />
 			</div>
 			<IonList :inset="isIOS" v-else>
 				<template v-for="tuple in getGrouped(frontingEntries)" :key="tuple[0]">

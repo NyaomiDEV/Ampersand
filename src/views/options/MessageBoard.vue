@@ -141,7 +141,7 @@
 				:highlightedDates="boardMessagesDays"
 				:datetime="dayjs().format('YYYY-MM-DDTHH:mm:ss')" />
 			<div class="spinner-container" v-if="boardMessages === undefined">
-				<Spinner  size="72px" />
+				<Spinner size="72px" />
 			</div>
 			<IonList :inset="isIOS" v-else>
 				<template v-for="tuple in getGrouped(boardMessages)" :key="tuple[0]">

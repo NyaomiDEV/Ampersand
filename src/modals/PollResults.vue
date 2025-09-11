@@ -68,10 +68,3 @@
 		</IonContent>
 	</IonModal>
 </template>
-
-<style scoped>
-	ion-modal.poll-results-modal {
-		--height: 100dvh;
-		--border-radius: 16px;
-	}
-</style>

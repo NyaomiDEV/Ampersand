@@ -181,7 +181,7 @@
 			    v-model="date" :locale="appConfig.locale.language || 'en'" :highlightedDates="postsDays"
 				:datetime="dayjs().format('YYYY-MM-DDTHH:mm:ss')" />
 			<div class="spinner-container" v-if="posts === undefined">
-				<Spinner  size="72px" />
+				<Spinner size="72px" />
 			</div>
 			<IonList :inset="isIOS" v-else>
 				<template v-for="tuple in getGrouped(posts)" :key="tuple[0]">
