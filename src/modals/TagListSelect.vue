@@ -38,7 +38,7 @@
 		emit("update:modelValue",  [...toRaw(selectedTags)]);
 	});
 
-	watch([search, tags], async () => {
+	watch(search, async () => {
 		tags.value = (await Array.fromAsync(getFilteredTags(search.value))).filter(x => x.type === props.type);
 	}, { immediate: true })
 
