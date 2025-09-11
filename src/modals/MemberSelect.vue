@@ -90,7 +90,7 @@
 </script>
 
 <template>
-	<IonModal class="member-select-modal" :breakpoints="[0,0.25,0.75,1]" initialBreakpoint="0.75">
+	<IonModal class="member-select-modal" :breakpoints="[0,0.75,1]" initialBreakpoint="1">
 		<IonHeader>
 			<IonToolbar>
 				<IonTitle>{{ props.customTitle ?? $t("members:select") }}</IonTitle>

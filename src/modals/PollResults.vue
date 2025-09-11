@@ -42,7 +42,7 @@
 </script>
 
 <template>
-	<IonModal class="poll-results-modal" :breakpoints="[0,0.25,0.75,1]" initialBreakpoint="0.75">
+	<IonModal class="poll-results-modal" :breakpoints="[0,0.75,1]" initialBreakpoint="1">
 		<IonHeader>
 			<IonToolbar>
 				<IonTitle>{{ $t("messageBoard:polls.resultsHeader") }}</IonTitle>
