@@ -46,7 +46,8 @@
 
 	const search = ref(route.query.q as string || "");
 	watch(route, () => {
-		search.value = route.query.q as string || "";
+		if(route.query.q)
+			search.value = route.query.q as string;
 	});
 
 	const members = shallowRef<Member[]>();
