@@ -29,7 +29,7 @@
 	const type = ref("member");
 
 	const tags = shallowRef<Tag[]>();
-	watch([search, tags, type], async () => {
+	watch([search, type], async () => {
 		tags.value = (await Array.fromAsync(getFilteredTags(search.value))).filter(x => x.type === type.value);
 	}, {immediate: true});
 
