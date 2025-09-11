@@ -5,21 +5,21 @@ let modalCanGoBack = false;
 
 let oldCanGoBack = false;
 
-export function setRouterCanGoBack(value: boolean){
+export async function setRouterCanGoBack(value: boolean){
 	routerCanGoBack = value;
-	processCanGoBack();
+	await processCanGoBack();
 }
 
-export function setModalCanGoBack(value: boolean) {
+export async function setModalCanGoBack(value: boolean) {
 	modalCanGoBack = value;
-	processCanGoBack();
+	await processCanGoBack();
 }
 
-function processCanGoBack(){
+async function processCanGoBack(){
 	const newCanGoBack = routerCanGoBack || modalCanGoBack;
 
 	if (newCanGoBack !== oldCanGoBack) {
 		oldCanGoBack = newCanGoBack;
-		setCanGoBack(newCanGoBack);
+		await setCanGoBack(newCanGoBack);
 	}
 }

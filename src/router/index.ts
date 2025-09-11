@@ -6,7 +6,7 @@ import edit from "./edit";
 import standaloneRoutes from "./standaloneRoutes";
 import onboarding from "./onboarding";
 
-const routes: Array<RouteRecordRaw> = [
+const routes: RouteRecordRaw[] = [
 	{
 		path: '/',
 		name: "TabbedHomeView",

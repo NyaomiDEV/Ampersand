@@ -6,8 +6,6 @@
 	const props = defineProps<{
 		member: PartialBy<Member, "uuid" | "dateCreated">,
 	}>();
-
-	console.log(props.member.cover)
 </script>
 
 <template>

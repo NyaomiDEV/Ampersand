@@ -1,6 +1,6 @@
 import { RouteRecordRaw } from "vue-router";
 
-const edit: Array<RouteRecordRaw> = [
+const edit: RouteRecordRaw[] = [
 	{
 		path: "/members/edit",
 		name: "MemberEdit",

@@ -141,11 +141,11 @@ function md5cycle(x: any[], k: number[]) {
 }
 
 function md5blk(a: Uint8Array) {
-	let md5blks: number[] = [];
+	const md5blks: number[] = [];
 
 	for (let i = 0; i < 64; i += 4)
 		md5blks[i >> 2] = a[i] + (a[i + 1] << 8) + (a[i + 2] << 16) + (a[i + 3] << 24);
-	
+
 	return md5blks;
 }
 

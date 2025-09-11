@@ -1,6 +1,6 @@
 import { RouteRecordRaw } from "vue-router";
 
-const standaloneRoutes: Array<RouteRecordRaw> = [
+const standaloneRoutes: RouteRecordRaw[] = [
 	{
 		path: '/s/members',
 		name: 'StandaloneMembers',

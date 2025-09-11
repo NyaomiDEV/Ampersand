@@ -48,7 +48,7 @@ export function useModalContainer(){
 }
 
 export function addModal(vnode: VNode): Promise<{el: HTMLElement, vnode: VNode}> {
-	return new Promise(resolve => {
+	return new Promise(async resolve => {
 		renderArray.push(vnode);
 
 		function cb(evt){
@@ -59,11 +59,11 @@ export function addModal(vnode: VNode): Promise<{el: HTMLElement, vnode: VNode}>
 		}
 
 		modalEvents.addEventListener("mounted", cb);
-		setModalCanGoBack(renderArray.length > 0);
+		await setModalCanGoBack(renderArray.length > 0);
 	});
 }
 
-export function removeModal(vnode: VNode){
+export async function removeModal(vnode: VNode){
 	const index = renderArray.indexOf(vnode);
 	if(index > -1)
 		renderArray.splice(
@@ -71,5 +71,5 @@ export function removeModal(vnode: VNode){
 			1
 		);
 
-	setModalCanGoBack(renderArray.length > 0);
+	await setModalCanGoBack(renderArray.length > 0);
 }

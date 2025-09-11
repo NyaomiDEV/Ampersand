@@ -1,7 +1,7 @@
 import { RouteRecordRaw } from "vue-router";
 
-const onboarding: Array<RouteRecordRaw> = [
-    { 
+const onboarding: RouteRecordRaw[] = [
+    {
         path: '/onboarding/start',
         name: 'OnboardingStart',
         component: () => import("../views/onboarding/0-Start.vue")

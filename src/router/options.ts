@@ -1,6 +1,6 @@
 import { RouteRecordRaw } from "vue-router";
 
-const options: Array<RouteRecordRaw> = [
+const options: RouteRecordRaw[] = [
 	{
 		path: '/options/testingGrounds',
 		name: 'TestingGrounds',

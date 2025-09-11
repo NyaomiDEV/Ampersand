@@ -13,7 +13,7 @@ class ShittyTable<T extends UUIDable> {
 	name: string;
 	path: string;
 	secondaryKeys: SecondaryKey<T>[];
-	index: Array<IndexEntry<T>>;
+	index: IndexEntry<T>[];
 
 	constructor(name: string, path: string, secondaryKeys: SecondaryKey<T>[]) {
 		this.name = name;
@@ -27,7 +27,7 @@ class ShittyTable<T extends UUIDable> {
 		try {
 			const obj = decode(await fs.readFile(_path));
 			if (typeof obj !== "undefined") {
-				return await typeson.revive(obj) as Array<IndexEntry<T>>;
+				return await typeson.revive(obj) as IndexEntry<T>[];
 			}
 		} catch (e) {
 			console.error(e);
@@ -236,7 +236,7 @@ class ShittyTable<T extends UUIDable> {
 			console.log(e);
 		}
 
-		this.saveIndexToDisk();
+		await this.saveIndexToDisk();
 		return false;
 	}
 }

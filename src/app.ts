@@ -114,11 +114,11 @@ async function setupAmpersand(){
 	await updateInsets();
 	window.addEventListener("orientationchange",  () => updateInsets());
 
-	router.isReady().then(async () => {
+	await router.isReady().then(async () => {
 		app.mount(document.body);
 
-		if(platform() === 'android' || platform() == 'ios'){
-			addMobileListener("backbutton", () => {
+		if(platform() === 'android' || platform() === 'ios'){
+			await addMobileListener("backbutton", () => {
 				document.dispatchEvent(new Event('backbutton'));
 			});
 		}
@@ -128,7 +128,7 @@ async function setupAmpersand(){
 if (!window.isSecureContext) {
 	console.error("Cannot continue, this is not a safe environment!");
 	document.body.innerHTML = "<h1 style='text-align: center;'>Ampersand cannot run on non-HTTPS environments! We're sorry for the trouble.<br>If you think this is an issue, report it on Codeberg.</h1>";
-} else if (platform() === "android" && (await getWebkitVersion()).split(".").map(x => parseInt(x))[0] < 131)
+} else if (platform() === "android" && (await getWebkitVersion()).split(".").map(x => parseInt(x, 10))[0] < 131)
 	document.body.innerHTML = "<h1 style='text-align: center;'>Ampersand cannot run on this WebKit version!<br>Please update your phone's OS version and all of your system apps.</h1>";
 else
 	await setupAmpersand();

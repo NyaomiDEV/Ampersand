@@ -19,9 +19,9 @@ function normalizeSPColor(color?: string) {
 
 function mapCustomFieldType(type: number, data: any) {
 	switch(type){
-		case 0: //text
+		case 0: // text
 			return String(data);
-		case 1: //color
+		case 1: // color
 			return `<${normalizeSPColor(data)}>`;
 		case 2: // date
 			return `<t:${Math.round(new Date(data).getTime() / 1000)}:D>`

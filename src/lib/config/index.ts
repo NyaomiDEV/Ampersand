@@ -94,12 +94,12 @@ export function resetConfig(){
 
 watch(appConfig, async () => {
 	await set("appConfig", { ...appConfig });
-	i18next.changeLanguage(appConfig.locale.language);
+	await i18next.changeLanguage(appConfig.locale.language);
 });
 
 watch(accessibilityConfig, async () => {
 	await set("accessibilityConfig", { ...accessibilityConfig });
-	updateDarkMode();
+	await updateDarkMode();
 
 	if(isIOSIonicMode()){
 		if(accessibilityConfig.useMaterialTheming)

@@ -1,6 +1,6 @@
 import { RouteRecordRaw } from "vue-router";
 
-const tabbedRoutes: Array<RouteRecordRaw> = [
+const tabbedRoutes: RouteRecordRaw[] = [
 	{
 		path: '/members',
 		name: 'Members',

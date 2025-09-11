@@ -87,7 +87,7 @@ export async function decompressGzip(data: BufferSource) {
 
 export function formatDate(date: Date, withDate?: "collapsed" | "expanded"){
 	if(withDate)
-		return dayjs(date).format(`${withDate == "expanded" ? "LL" : "ll"}, ${appConfig.locale.twelveHourClock ? 'hh:mm A' : "HH:mm"}`);
+		return dayjs(date).format(`${withDate === "expanded" ? "LL" : "ll"}, ${appConfig.locale.twelveHourClock ? 'hh:mm A' : "HH:mm"}`);
 	return dayjs(date).format(`${appConfig.locale.twelveHourClock ? 'hh:mm A' : "HH:mm"}`);
 }
 

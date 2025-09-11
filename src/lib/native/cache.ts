@@ -29,7 +29,7 @@ export async function writeToTemp(file: File){
 
 export async function deleteFromTemp(file: File | string){
 	try {
-		const path = await ourTempDir() + sep() + (typeof file == "string" ? file : file.name);
+		const path = await ourTempDir() + sep() + (typeof file === "string" ? file : file.name);
 		await remove(path);
 		return true;
 	} catch (e) {
