@@ -40,7 +40,7 @@
 
 	watch(search, async () => {
 		tags.value = (await Array.fromAsync(getFilteredTags(search.value))).filter(x => x.type === props.type);
-	}, { immediate: true })
+	});
 
 	onBeforeMount(async () => {
 		tags.value = (await Array.fromAsync(getFilteredTags(search.value))).filter(x => x.type === props.type);
@@ -65,7 +65,7 @@
 			</IonToolbar>
 			<IonToolbar>
 				<IonSearchbar :animated="true" :placeholder="$t('tagManagement:searchPlaceholder')"
-					showCancelButton="focus" showClearButton="focus" :spellcheck="false" v-model="search" />
+					showCancelButton="focus" showClearButton="focus" :spellcheck="false" @ionChange="e => search = e.detail.value || ''" />
 			</IonToolbar>
 		</IonHeader>
 

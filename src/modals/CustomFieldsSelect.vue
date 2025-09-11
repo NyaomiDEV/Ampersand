@@ -38,7 +38,7 @@
 
 	watch(search, async () => {
 		customFields.value = await Array.fromAsync(getFilteredCustomFields(search.value));
-	}, { immediate: true })
+	});
 
 	onBeforeMount(async () => {
 		customFields.value = await Array.fromAsync(getFilteredCustomFields(search.value));
@@ -63,7 +63,7 @@
 			</IonToolbar>
 			<IonToolbar>
 				<IonSearchbar :animated="true" :placeholder="$t('customFields:searchPlaceholder')"
-					showCancelButton="focus" showClearButton="focus" :spellcheck="false" v-model="search" />
+					showCancelButton="focus" showClearButton="focus" :spellcheck="false" @ionChange="e => search = e.detail.value || ''" />
 			</IonToolbar>
 		</IonHeader>
 

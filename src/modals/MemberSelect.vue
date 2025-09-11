@@ -49,7 +49,7 @@
 
 	watch(search, async () => {
 		members.value = await Array.fromAsync(getFilteredMembers(search.value));
-	}, { immediate: true });
+	});
 
 	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
@@ -97,7 +97,7 @@
 			</IonToolbar>
 			<IonToolbar>
 				<IonSearchbar :animated="true" :placeholder="$t('members:searchPlaceholder')"
-					showCancelButton="focus" showClearButton="focus" :spellcheck="false" v-model="search" />
+					showCancelButton="focus" showClearButton="focus" :spellcheck="false" @ionChange="e => search = e.detail.value || ''" />
 			</IonToolbar>
 		</IonHeader>
 

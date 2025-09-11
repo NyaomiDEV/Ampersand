@@ -26,7 +26,7 @@
 
 	watch(search, async () => {
 			customFields.value = await Array.fromAsync(getFilteredCustomFields(search.value));
-	}, { immediate: true });
+	});
 
 	const listener = async (event: Event) => {
 		if(["customFields"].includes((event as DatabaseEvent).data.table)){
@@ -70,7 +70,7 @@
 					showCancelButton="focus"
 					showClearButton="focus"
 					:spellcheck="false"
-					v-model="search"
+					@ionChange="e => search = e.detail.value || ''"
 				/>
 			</IonToolbar>
 		</IonHeader>

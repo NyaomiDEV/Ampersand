@@ -43,7 +43,7 @@
 
 	watch(search, async () => {
 		await populateHighlightedDays();
-	}, { immediate: true });
+	});
 
 	watch([date, search], async () => {
 		await resetEntries();
@@ -128,7 +128,7 @@
 			</IonToolbar>
 			<IonToolbar>
 				<IonSearchbar :animated="true" :placeholder="$t('messageBoard:searchPlaceholder')"
-					showCancelButton="focus" showClearButton="focus" :spellcheck="false" v-model="search" />
+					showCancelButton="focus" showClearButton="focus" :spellcheck="false" @ionChange="e => search = e.detail.value || ''" />
 			</IonToolbar>
 		</IonHeader>
 

@@ -64,7 +64,7 @@
 					showCancelButton="focus"
 					showClearButton="focus"
 					:spellcheck="false"
-					v-model="search"
+					@ionChange="e => search = e.detail.value || ''"
 				/>
 			</IonToolbar>
 			<IonToolbar>

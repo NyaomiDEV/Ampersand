@@ -55,7 +55,7 @@
 
 	watch(search, async () => {
 		await updateMembers();
-	}, { immediate: true });
+	});
 
 	const frontingEntries = reactive(new Map<Member, FrontingEntry | undefined>());
 
@@ -107,6 +107,7 @@
 
 				return a.name.localeCompare(b.name)
 			});
+		console.log(search.value, members.value)
 	}
 
 	function addFrontingEntry(member: Member) {
@@ -191,7 +192,7 @@
 					showCancelButton="focus"
 					showClearButton="focus"
 					:spellcheck="false"
-					v-model="search"
+					@ionChange="e => search = e.detail.value || ''"
 				/>
 			</IonToolbar>
 		</IonHeader>

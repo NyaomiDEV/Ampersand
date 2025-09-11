@@ -140,7 +140,7 @@
 			</IonToolbar>
 			<IonToolbar>
 				<IonSearchbar :animated="true" :placeholder="$t('frontHistory:searchPlaceholder')"
-					showCancelButton="focus" showClearButton="focus" :spellcheck="false" v-model="search" />
+					showCancelButton="focus" showClearButton="focus" :spellcheck="false" @ionChange="e => search = e.detail.value || ''" />
 			</IonToolbar>
 		</IonHeader>
 
