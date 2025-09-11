@@ -48,6 +48,7 @@
 	import { formatDate } from "../../lib/util/misc";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import MemberAvatar from "../../components/member/MemberAvatar.vue";
+	import MemberCover from "../../components/member/MemberCover.vue";
 	import { getCustomFields } from "../../lib/db/tables/customFields";
 	import CustomFieldsSelect from "../../modals/CustomFieldsSelect.vue";
 
@@ -118,6 +119,17 @@
 				return;
 			}
 			member.value.image = await resizeImage(files[0]);
+		}
+	}
+
+	async function modifyCover(){
+		const files = await getFiles();
+		if(files.length){
+			if(files[0].type == 'image/gif'){
+				member.value.cover = files[0];
+				return;
+			}
+			member.value.cover = await resizeImage(files[0], 1024);
 		}
 	}
 
@@ -234,11 +246,17 @@
 
 		<SpinnerFullscreen v-if="loading" />
 		<IonContent v-else>
-			<div class="avatar-container">
-				<MemberAvatar :member />
-				<IonButton shape="round" @click="modifyPicture" v-if="isEditing">
+			<div class="cover-container">
+				<MemberCover class="cover" :member />
+				<IonButton shape="round" @click="modifyCover" v-if="isEditing">
 					<IonIcon slot="icon-only" :icon="pencilMD" />
 				</IonButton>
+				<div class="avatar-container">
+					<MemberAvatar :member />
+					<IonButton shape="round" @click="modifyPicture" v-if="isEditing">
+						<IonIcon slot="icon-only" :icon="pencilMD" />
+					</IonButton>
+				</div>
 			</div>
 
 			<div class="member-info" v-if="!isEditing">
@@ -394,15 +412,37 @@
 </template>
 
 <style scoped>
+	div.cover-container {
+		position: relative;
+		display: flex;
+		justify-content: center;
+		align-items: end;
+		width: 100%;
+		height: 256px;
+		margin-bottom: 16px;
+	}
+
+	div.cover-container ion-button {
+		position: absolute;
+		bottom: 8px;
+		right: 24px;
+	}
+
+	img.cover {
+		mask-image: linear-gradient(black, transparent);
+		width: 100%;
+		height: 100%;
+		display: block;
+		object-fit: cover;
+		z-index: -1;
+		position: absolute;
+	}
+
 	div.avatar-container {
 		position: relative;
 		width: fit-content;
 		height: fit-content;
 		display: block;
-		margin-left: auto;
-		margin-right: auto;
-		margin-top: 24px;
-		margin-bottom: 16px;
 	}
 
 	div.member-tags {

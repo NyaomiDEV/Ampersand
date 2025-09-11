@@ -9,13 +9,16 @@ export const maxUid = "FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF";
 export function getFiles(contentType?: string, multiple?: boolean): Promise<File[]> {
 	return new Promise(resolve => {
 		const i = document.createElement("input");
+		document.body.appendChild(i);
 		i.type = "file";
+		i.style = "visibility: hidden";
 		if(multiple)
 			i.multiple = multiple;
 		if(contentType)
 			i.accept = contentType;
 
 		i.onchange = async () => {
+			document.body.removeChild(i);
 			if (!i.files) return resolve([]);
 
 			const arr: File[] = [];
@@ -28,11 +31,11 @@ export function getFiles(contentType?: string, multiple?: boolean): Promise<File
 		};
 
 		i.oncancel = () => {
+			document.body.removeChild(i);
 			resolve([]);
 		}
 
 		i.click();
-
 	});
 }
 

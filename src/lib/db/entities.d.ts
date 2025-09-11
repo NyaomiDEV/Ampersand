@@ -85,6 +85,7 @@ export interface Member extends UUIDable {
 	description?: string,
 	role?: string,
 	image?: File,
+	cover?: File,
 	color?: string,
 	customFields?: Map<UUID, string>,
 	isPinned?: boolean,

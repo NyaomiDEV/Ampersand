@@ -39,6 +39,7 @@
 	import { DatabaseEvents, DatabaseEvent } from '../lib/db/events.ts';
 	import SpinnerFullscreen from '../components/SpinnerFullscreen.vue';
 	import { useRoute } from 'vue-router';
+	import { getObjectURL } from '../lib/util/blob.ts';
 
 	const route = useRoute();
 
@@ -143,17 +144,10 @@
 				style["--background"] = "var(--ion-background-color-step-150)";
 		}
 
+		if(member.cover)
+			style["--data-cover"] = `url(${getObjectURL(member.cover)})`;
+
 		return style;
-	}
-
-	async function drag(member: Member){
-		const entry = await getCurrentFrontEntryForMember(member);
-		if(entry){
-			if(entry.isMainFronter)
-				return setMainFrontingEntry(member, false);
-
-			return setMainFrontingEntry(member, true);
-		}
 	}
 
 	const longPressHandlers = new Map<Member, any>();
@@ -222,17 +216,17 @@
 						<IonIcon slot="end" :icon="archivedMD" v-if="member.isArchived" />
 						<IonIcon slot="end" :icon="mainFronterMD" v-if="frontingEntries.get(member)?.isMainFronter" />
 					</IonItem>
-					<IonItemOptions @ionSwipe="drag(member)">
+					<IonItemOptions>
 						<IonItemOption v-if="!frontingEntries.get(member)" @click="addFrontingEntry(member)">
 							<IonIcon slot="icon-only" :icon="addToFrontMD"></IonIcon>
 						</IonItemOption>
 						<IonItemOption v-if="frontingEntries.get(member)" @click="removeFrontingEntry(member)" color="danger">
 							<IonIcon slot="icon-only" :icon="removeFromFrontMD"></IonIcon>
 						</IonItemOption>
-						<IonItemOption expandable v-if="frontingEntries.get(member) && !frontingEntries.get(member)?.isMainFronter" @click="setMainFrontingEntry(member, true)" color="secondary">
+						<IonItemOption v-if="frontingEntries.get(member) && !frontingEntries.get(member)?.isMainFronter" @click="setMainFrontingEntry(member, true)" color="secondary">
 							<IonIcon slot="icon-only" :icon="setMainFronterMD"></IonIcon>
 						</IonItemOption>
-						<IonItemOption expandable v-if="frontingEntries.get(member)?.isMainFronter" @click="setMainFrontingEntry(member, false)" color="secondary">
+						<IonItemOption v-if="frontingEntries.get(member)?.isMainFronter" @click="setMainFrontingEntry(member, false)" color="secondary">
 							<IonIcon slot="icon-only" :icon="unsetMainFronterMD"></IonIcon>
 						</IonItemOption>
 						<IonItemOption @click="setSoleFrontingEntry(member)" color="tertiary">
@@ -252,7 +246,57 @@
 </template>
 
 <style scoped>
+	ion-item {
+		margin: 4px 16px;
+		--background: var(--ion-background-color-step-100);
+	}
+
+	ion-item .cover {
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		z-index: -1;
+	}
+
 	ion-item.archived > * {
 		opacity: 0.5;
+	}
+
+	ion-item ion-avatar {
+		width: 56px;
+		height: 56px;
+	}
+
+	ion-item::part(native) {
+		border-radius: 16px;
+	}
+
+	ion-item::part(native)::before {
+		content: '\A';
+		background-image: var(--data-cover);
+		background-position: center;
+		background-size: cover;
+		width: calc(100% + 16px);
+		height: 100%;
+		display: block;
+		position: absolute;
+		z-index: -1;
+		left: -16px;
+		opacity: .25;
+		mask-image: radial-gradient(circle at 0% 100%, black, transparent 100%);
+	}
+
+	ion-item-option {
+		border-radius: 28px;
+		width: 56px;
+		height: 56px;
+		margin: auto 8px;
+	}
+
+	ion-item-option:last-child {
+		margin-right: 16px;
 	}
 </style>
