@@ -1,14 +1,12 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonFab, IonFabButton, IonIcon, IonSearchbar, IonLabel, IonItemDivider, IonButtons, IonButton, IonDatetime } from '@ionic/vue';
+	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonFab, IonFabButton, IonIcon, IonSearchbar, IonLabel, IonItemDivider, IonDatetime } from '@ionic/vue';
 	import { h, inject, onBeforeMount, onUnmounted, ref, shallowRef, watch } from 'vue';
 	import type { BoardMessageComplete } from '../../lib/db/entities.d.ts';
 	import { getBoardMessagesDays, getBoardMessagesOfDay } from '../../lib/db/tables/boardMessages';
 	import BoardMessageEdit from "../../modals/BoardMessageEdit.vue";
-	import SpinnerFullscreen from '../../components/SpinnerFullscreen.vue';
+	import Spinner from '../../components/Spinner.vue';
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
-	import calendarMD from "@material-symbols/svg-600/outlined/calendar_month.svg";
-	import listMD from "@material-symbols/svg-600/outlined/list.svg";
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 
 	import dayjs from 'dayjs';
@@ -29,7 +27,6 @@
 	const boardMessages = shallowRef<BoardMessageComplete[]>();
 	const boardMessagesDays = shallowRef<{date: string, backgroundColor: string}[]>();
 
-	const isCalendarView = ref(true);
 	const date = ref(dayjs().toISOString());
 
 	const listener = async (event: Event) => {
@@ -127,30 +124,25 @@
 				<IonTitle>
 					{{ $t("messageBoard:header") }}
 				</IonTitle>
-				<IonButtons slot="secondary">
-					<IonButton @click="isCalendarView = !isCalendarView">
-						<IonIcon slot="icon-only" :icon="isCalendarView ? listMD : calendarMD" />
-					</IonButton>
-				</IonButtons>
 			</IonToolbar>
 			<IonToolbar>
 				<IonSearchbar :animated="true" :placeholder="$t('messageBoard:searchPlaceholder')"
 					showCancelButton="focus" showClearButton="focus" :spellcheck="false" v-model="search" />
 			</IonToolbar>
-			<div class="container" v-if="isCalendarView">
-				<IonDatetime
+		</IonHeader>
+
+		<IonContent>
+			<IonDatetime
 				presentation="date"
 				:firstDayOfWeek="firstWeekOfDayIsSunday ? 0 : 1"
 				v-model="date"
 				:locale="appConfig.locale.language || 'en'"
 				:highlightedDates="boardMessagesDays"
-				:datetime="dayjs().format('YYYY-MM-DDTHH:mm:ss')"/>
+				:datetime="dayjs().format('YYYY-MM-DDTHH:mm:ss')" />
+			<div class="spinner-container" v-if="boardMessages === undefined">
+				<Spinner  size="72px" />
 			</div>
-		</IonHeader>
-
-		<SpinnerFullscreen v-if="boardMessages === undefined" />
-		<IonContent v-else>
-			<IonList :inset="isIOS">
+			<IonList :inset="isIOS" v-else>
 				<template v-for="tuple in getGrouped(boardMessages)" :key="tuple[0]">
 					<IonItemDivider sticky>
 						<IonLabel>{{ dayjs(tuple[0]).format("LL") }}</IonLabel>
@@ -169,9 +161,12 @@
 </template>
 
 <style scoped>
-	.container {
-		background-color: var(--ion-toolbar-background);
-		z-index: 1;
+	.spinner-container {
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 16px;
 	}
 
 	ion-datetime {
