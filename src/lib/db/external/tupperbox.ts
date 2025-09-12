@@ -45,6 +45,15 @@ async function member(tuExport: any, tagMapping: Map<number, string>){
 				// whatever, again
 			}
 		}
+		// This is assumed as we cannot subscribe to TupperBox Premium to figure out the exact format
+		if (tuMember.banner) {
+			try {
+				const request = await fetch(tuMember.banner);
+				member.cover = new File([await request.blob()], tuMember.banner.split("/").pop());
+			} catch (e) {
+				// whatever, again
+			}
+		}
 		members.push(member);
 	}
 

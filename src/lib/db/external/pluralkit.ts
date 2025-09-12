@@ -1,7 +1,15 @@
-import { FrontingEntry, Member, System, Tag } from "../entities";
+import { CustomField, FrontingEntry, Member, System, Tag } from "../entities";
 import { getTables } from "../tables";
 import { fetch } from "@tauri-apps/plugin-http";
 import { nilUid } from "../../util/misc";
+
+function pkCustomField(): CustomField {
+	return {
+		uuid: window.crypto.randomUUID(),
+		name: "PluralKit ID",
+		default: false
+	}
+}
 
 async function system(pkExport: any){
 	const systemInfo: System = {
@@ -44,7 +52,7 @@ async function tag(pkExport: any){
 	};
 }
 
-async function member(pkExport: any, tagMapping: Map<string, string>) {
+async function member(pkExport: any, tagMapping: Map<string, string>, pkField: CustomField) {
 	const memberMapping = new Map<string, string>();
 	const members: Member[] = [];
 
@@ -58,12 +66,21 @@ async function member(pkExport: any, tagMapping: Map<string, string>) {
 			isCustomFront: false,
 			dateCreated: new Date(pkMember.created),
 			tags: pkExport.groups.filter(x => x.members.includes(pkMember.id)).map(x => tagMapping.get(x.id)),
+			customFields: new Map([[pkField.uuid, pkMember.id]]),
 			uuid: window.crypto.randomUUID()
 		};
 		if (pkMember.avatar_url) {
 			try {
 				const request = await fetch(pkMember.avatar_url);
 				member.image = new File([await request.blob()], pkMember.avatar_url.split("/").pop());
+			} catch (e) {
+				// whatever, again
+			}
+		}
+		if (pkMember.banner) {
+			try {
+				const request = await fetch(pkMember.banner);
+				member.cover = new File([await request.blob()], pkMember.banner.split("/").pop());
 			} catch (e) {
 				// whatever, again
 			}
@@ -117,9 +134,10 @@ async function frontingEntry(pkExport: any, memberMapping: Map<string, string>){
 }
 
 export async function importPluralKit(pkExport: any){
+	const field = pkCustomField();
 	const systemInfo = await system(pkExport);
 	const { tags, tagMapping } = await tag(pkExport);
-	const { members, memberMapping } = await member(pkExport, tagMapping);
+	const { members, memberMapping } = await member(pkExport, tagMapping, field);
 	const frontingEntries = await frontingEntry(pkExport, memberMapping);
 
 	try {
@@ -128,6 +146,7 @@ export async function importPluralKit(pkExport: any){
 
 		// ADD TO DATABASE
 		const tables = getTables();
+		await tables.customFields.bulkAdd([field]);
 		await tables.system.bulkAdd([systemInfo]);
 		await tables.tags.bulkAdd(tags);
 		await tables.members.bulkAdd(members);
