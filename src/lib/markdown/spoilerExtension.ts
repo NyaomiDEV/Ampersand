@@ -12,7 +12,7 @@ const spoilerExtension: MarkedExtension = {
 				const match = rule.exec(src);
 				if (match) {
 					const token = {
-						type: 'spoiler',
+						type: "spoiler",
 						raw: match[0],
 						text: match[1],
 						tokens: this.lexer.inlineTokens(match[1])
@@ -22,7 +22,7 @@ const spoilerExtension: MarkedExtension = {
 				return;
 			},
 			renderer(token) {
-				return h('span', {
+				return h("span", {
 					tabindex: -1,
 					class: "spoiler"
 				}, token.tokens && token.tokens.length ? this.parser.parseInline(token.tokens) : token.text);

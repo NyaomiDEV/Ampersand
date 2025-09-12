@@ -17,15 +17,14 @@ export function getFiles(contentType?: string, multiple?: boolean): Promise<File
 		if(contentType)
 			i.accept = contentType;
 
-		i.onchange = async () => {
+		i.onchange = () => {
 			document.body.removeChild(i);
 			if (!i.files) return resolve([]);
 
 			const arr: File[] = [];
 
-			for(const file of i.files){
+			for(const file of i.files)
 				arr.push(file);
-			}
 
 			resolve(arr);
 		};
@@ -33,7 +32,7 @@ export function getFiles(contentType?: string, multiple?: boolean): Promise<File
 		i.oncancel = () => {
 			document.body.removeChild(i);
 			resolve([]);
-		}
+		};
 
 		i.click();
 	});
@@ -87,8 +86,8 @@ export async function decompressGzip(data: BufferSource) {
 
 export function formatDate(date: Date, withDate?: "collapsed" | "expanded"){
 	if(withDate)
-		return dayjs(date).format(`${withDate === "expanded" ? "LL" : "ll"}, ${appConfig.locale.twelveHourClock ? 'hh:mm A' : "HH:mm"}`);
-	return dayjs(date).format(`${appConfig.locale.twelveHourClock ? 'hh:mm A' : "HH:mm"}`);
+		return dayjs(date).format(`${withDate === "expanded" ? "LL" : "ll"}, ${appConfig.locale.twelveHourClock ? "hh:mm A" : "HH:mm"}`);
+	return dayjs(date).format(`${appConfig.locale.twelveHourClock ? "hh:mm A" : "HH:mm"}`);
 }
 
 export function formatWrittenTime(dateStart: Date, dateEnd: Date){
@@ -98,40 +97,39 @@ export function formatWrittenTime(dateStart: Date, dateEnd: Date){
 }
 
 export function slideAnimation(_: HTMLElement, opts: TransitionOptions, directionOverride?: Ref<string>) {
-	const transition = createAnimation().duration(200).easing('cubic-bezier(0.47,0,0.745,0.715)');
+	const transition = createAnimation().duration(200).easing("cubic-bezier(0.47,0,0.745,0.715)");
 
 	const directions = {
 		left: [40, 0, -40],
 		right: [-40, 0, 40]
-	}
+	};
 
 	const direction = directions[(directionOverride?.value || opts.direction) === "back" ? "right" : "left"];
 
 	if(opts.leavingEl){
 		const leavingPage = createAnimation().addElement(getIonPageElement(opts.leavingEl))
 			.onFinish((currentStep) => {
-				if (currentStep === 1 && leavingPage.elements.length > 0) {
-					leavingPage.elements[0].style.setProperty('display', 'none');
-				}
+				if (currentStep === 1 && leavingPage.elements.length > 0)
+					leavingPage.elements[0].style.setProperty("display", "none");
 			})
-			.fromTo('transform', `translateX(${direction[1]}px)`, `translateX(${direction[2]}px)`)
-			.fromTo('opacity', 1, 0);
+			.fromTo("transform", `translateX(${direction[1]}px)`, `translateX(${direction[2]}px)`)
+			.fromTo("opacity", 1, 0);
 
 		transition.addAnimation(leavingPage);
 	}
 
 	const enteringPage = createAnimation().addElement(getIonPageElement(opts.enteringEl))
-		.fill('both')
-		.beforeRemoveClass('ion-page-invisible')
-		.fromTo('transform', `translateX(${direction[0]}px)`, `translateX(${direction[1]}px)`)
-		.fromTo('opacity', 0, 1)
+		.fill("both")
+		.beforeRemoveClass("ion-page-invisible")
+		.fromTo("transform", `translateX(${direction[0]}px)`, `translateX(${direction[1]}px)`)
+		.fromTo("opacity", 0, 1)
 		.onFinish((currentStep) => {
-			if (currentStep === 1 && enteringPage.elements.length > 0) {
-				enteringPage.elements[0].style.removeProperty('display');
-			}
+			if (currentStep === 1 && enteringPage.elements.length > 0) 
+				enteringPage.elements[0].style.removeProperty("display");
+			
 		});
 
-	const enteringToolbarEle = getIonPageElement(opts.enteringEl).querySelector('ion-toolbar');
+	const enteringToolbarEle = getIonPageElement(opts.enteringEl).querySelector("ion-toolbar");
 	if(enteringToolbarEle){
 		const enteringToolBar = createAnimation();
 		enteringToolBar.addElement(enteringToolbarEle);

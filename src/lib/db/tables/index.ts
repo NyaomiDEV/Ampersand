@@ -1,15 +1,15 @@
-import { appDataDir, sep } from '@tauri-apps/api/path';
-import * as fs from '@tauri-apps/plugin-fs';
+import { appDataDir, sep } from "@tauri-apps/api/path";
+import * as fs from "@tauri-apps/plugin-fs";
 import { Typeson } from "typeson";
 import { blob, file, filelist, map, typedArrays, undef, set as Tset, imagebitmap, imagedata } from "typeson-registry";
-import { Asset, BoardMessage, Chat, ChatMessage, CustomField, FrontingEntry, JournalPost, Member, Reminder, System, Tag, UUIDable } from '../entities';
-import { decode, encode } from '@msgpack/msgpack';
-import { AmpersandEntityMapping } from '../types';
+import { Asset, BoardMessage, Chat, ChatMessage, CustomField, FrontingEntry, JournalPost, Member, Reminder, System, Tag, UUIDable } from "../entities";
+import { decode, encode } from "@msgpack/msgpack";
+import { AmpersandEntityMapping } from "../types";
 
 export type IndexEntry<T> = UUIDable & Partial<T>;
 type SecondaryKey<T> = (Exclude<keyof T, keyof UUIDable>);
 
-class ShittyTable<T extends UUIDable> {
+export class ShittyTable<T extends UUIDable> {
 	name: string;
 	path: string;
 	secondaryKeys: SecondaryKey<T>[];
@@ -26,9 +26,9 @@ class ShittyTable<T extends UUIDable> {
 		const _path = this.path + sep() + ".index";
 		try {
 			const obj = decode(await fs.readFile(_path));
-			if (typeof obj !== "undefined") {
+			if (typeof obj !== "undefined") 
 				return await typeson.revive(obj) as IndexEntry<T>[];
-			}
+			
 		} catch (e) {
 			console.error(e);
 		}
@@ -48,17 +48,17 @@ class ShittyTable<T extends UUIDable> {
 	}
 
 	async updateIndexWithData(data: T, saveAfterwards: boolean = true){
-		const indexEntry: any = {uuid: data.uuid};
-		for(const key of this.secondaryKeys){
+		const indexEntry: IndexEntry<T> = {uuid: data.uuid} as IndexEntry<T>;
+		for(const key of this.secondaryKeys)
 			indexEntry[key] = data[key];
-		}
+		
 
 		const _index = this.index.findIndex(x => data.uuid === x.uuid);
-		if(_index > -1){
+		if(_index > -1)
 			this.index[_index] = indexEntry;
-		} else {
+		 else 
 			this.index.push(indexEntry);
-		}
+		
 
 		if(saveAfterwards)
 			await this.saveIndexToDisk();
@@ -112,9 +112,9 @@ class ShittyTable<T extends UUIDable> {
 		const _path = this.path + sep() + uuid;
 		try {
 			const obj = decode(await fs.readFile(_path));
-			if (typeof obj !== "undefined") {
+			if (typeof obj !== "undefined") 
 				return await typeson.revive(obj) as T;
-			}
+			
 		} catch (e) {
 			console.error(e);
 		}
@@ -254,7 +254,7 @@ const typeson = new Typeson().register([
 ]);
 
 async function makeTable<T extends UUIDable>(tableName: string, secondaryKeys: SecondaryKey<T>[]) {
-	const _path = await appDataDir() + sep() + 'database' + sep() + tableName;
+	const _path = await appDataDir() + sep() + "database" + sep() + tableName;
 	await fs.mkdir(_path, { recursive: true });
 
 	const table = new ShittyTable<T>(tableName, _path, secondaryKeys);
@@ -280,4 +280,4 @@ export const db = {
 	tags: await makeTable<Tag>("tags", []),
 	assets: await makeTable<Asset>("assets", []),
 	customFields: await makeTable<CustomField>("customFields", [])
-}
+};

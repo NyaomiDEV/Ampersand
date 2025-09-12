@@ -1,16 +1,16 @@
 import { invoke, InvokeArgs, InvokeOptions, addPluginListener } from "@tauri-apps/api/core";
 import { writeToTemp } from "./cache";
 
-function invokePlugin(cmd: string, args?: InvokeArgs, opts?: InvokeOptions): Promise<any> {
+function invokePlugin(cmd: string, args?: InvokeArgs, opts?: InvokeOptions): Promise<unknown> {
 	return invoke("plugin:ampersand|" + cmd, args, opts);
 }
 
 export function exitApp(): Promise<void> {
-	return invokePlugin("exit_app");
+	return invokePlugin("exit_app") as Promise<void>;
 }
 
 export function setCanGoBack(canGoBack: boolean): Promise<void> {
-	return invokePlugin("set_can_go_back", { canGoBack });
+	return invokePlugin("set_can_go_back", { canGoBack }) as Promise<void>;
 }
 
 export async function openFile(file: File) {
@@ -20,13 +20,14 @@ export async function openFile(file: File) {
 	try {
 		await invokePlugin("open_file", { path });
 		return true;
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	} catch (e) {
 		return false;
 	}
 }
 
 export async function getWebkitVersion(): Promise<string> {
-	return invokePlugin("get_webkit_version");
+	return invokePlugin("get_webkit_version") as Promise<string>;
 }
 
 export async function addMobileListener(event: string, handler: () => void){

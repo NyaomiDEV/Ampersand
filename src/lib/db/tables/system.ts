@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
-import { UUIDable, System } from "../entities"
+import { UUIDable, System } from "../entities";
 
 export async function newSystem(system: Omit<System, keyof UUIDable>){
 	try{

@@ -1,4 +1,6 @@
-import { db } from ".";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
+import { db, IndexEntry } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUIDable, Member, FrontingEntry, FrontingEntryComplete, UUID } from "../entities";
 import { defaultMember, getMember } from "./members";
@@ -12,13 +14,13 @@ export function getFrontingEntries(){
 export async function getFrontingEntriesOffset(offset: number, limit?: number){
 	return (await Promise.all(
 		db.frontingEntries.index
-		.sort((a, b) => {
-			if(!a.endTime && b.endTime) return -1;
-			if(a.endTime && !b.endTime) return 1;
-			return b.startTime!.getTime() - a.startTime!.getTime();
-		})
-		.slice(offset, limit ? offset + limit : undefined)
-		.map(x => db.frontingEntries.get(x.uuid))
+			.sort((a, b) => {
+				if(!a.endTime && b.endTime) return -1;
+				if(a.endTime && !b.endTime) return 1;
+				return b.startTime!.getTime() - a.startTime!.getTime();
+			})
+			.slice(offset, limit ? offset + limit : undefined)
+			.map(x => db.frontingEntries.get(x.uuid))
 	)).filter(x => !!x);
 }
 
@@ -64,7 +66,7 @@ export async function updateFrontingEntry(uuid: UUID, newContent: Partial<Fronti
 		if(newContent.isMainFronter){
 			const toUpdate = (await Promise.all(
 				db.frontingEntries.index.filter(x => !x.endTime)
-				.map(x => db.frontingEntries.get(x.uuid))
+					.map(x => db.frontingEntries.get(x.uuid))
 			))
 				.filter(x => x?.member !== uuid)
 				.map(x => x!.uuid);
@@ -106,8 +108,8 @@ export async function setSoleFronter(member: Member) {
 	const toUpdate = (await Promise.all(
 		db.frontingEntries.index.filter(x => !x.endTime).map(x => db.frontingEntries.get(x.uuid))
 	)).filter(x => !!x)
-	.filter(x => x.member !== member.uuid)
-	.map(x => x.uuid);
+		.filter(x => x.member !== member.uuid)
+		.map(x => x.uuid);
 
 	const endTime = new Date();
 
@@ -133,8 +135,8 @@ export async function getCurrentFrontEntryForMember(member: Member){
 export async function getMainFronter(){
 	const mainFronterIndexEntry = (await Promise.all(
 		db.frontingEntries.index
-		.filter(x => !x.endTime)
-		.map(x => db.frontingEntries.get(x.uuid))
+			.filter(x => !x.endTime)
+			.map(x => db.frontingEntries.get(x.uuid))
 	))
 		.filter(x => !!x)
 		.find(x => x.isMainFronter);
@@ -170,15 +172,15 @@ export async function getRecentlyFronted() {
 export async function* getFrontingEntriesOfDay(date: Date, currentlyFrontingToToday: boolean, query: string) {
 	const _date = dayjs(date).startOf("day");
 
-	let _filter = x => dayjs(x.startTime).startOf('day').valueOf() === _date.valueOf();
+	let _filter = (x: IndexEntry<FrontingEntry>) => dayjs(x.startTime).startOf("day").valueOf() === _date.valueOf();
 
 	if(currentlyFrontingToToday){
-		_filter = x => x.endTime && dayjs(x.startTime).startOf('day').valueOf() === _date.valueOf();
+		_filter = (x: IndexEntry<FrontingEntry>) => !!x.endTime && dayjs(x.startTime).startOf("day").valueOf() === _date.valueOf();
 
 		const _today = dayjs().startOf("day");
-		if(_date.valueOf() === _today.valueOf()){
-			_filter = x => !x.endTime || dayjs(x.startTime).startOf('day').valueOf() === _date.valueOf();
-		}
+		if(_date.valueOf() === _today.valueOf())
+			_filter = (x: IndexEntry<FrontingEntry>) => !x.endTime || dayjs(x.startTime).startOf("day").valueOf() === _date.valueOf();
+		
 	}
 
 	for(const entry of db.frontingEntries.index){
@@ -194,11 +196,11 @@ export async function* getFrontingEntriesOfDay(date: Date, currentlyFrontingToTo
 	}
 }
 
-export async function getFrontingEntriesDays(query: string) {
-	const _map = db.frontingEntries.index.filter(x => filterFrontingEntryIndex(query, x)).map(x => dayjs(x.startTime!).startOf('day').valueOf());
+export function getFrontingEntriesDays(query: string) {
+	const _map = db.frontingEntries.index.filter(x => filterFrontingEntryIndex(query, x)).map(x => dayjs(x.startTime).startOf("day").valueOf());
 
 	return _map.reduce((occurrences, current) => {
-		occurrences.set(current, (occurrences.get(current) || 0) + 1)
+		occurrences.set(current, (occurrences.get(current) || 0) + 1);
 		return occurrences;
 	}, new Map<number, number>());
 }

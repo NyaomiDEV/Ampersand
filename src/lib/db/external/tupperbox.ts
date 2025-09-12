@@ -1,8 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { Member, Tag, System } from "../entities";
 import { getTables } from "../tables";
 import { fetch } from "@tauri-apps/plugin-http";
 
-async function tag(tuExport: any){
+function tag(tuExport: any){
 	const tagMapping = new Map<number, string>();
 	const tags: Tag[] = [];
 	for (const tuGroup of tuExport.groups) {
@@ -40,7 +43,7 @@ async function member(tuExport: any, tagMapping: Map<number, string>){
 		if (tuMember.avatar_url) {
 			try {
 				const request = await fetch(tuMember.avatar_url);
-				member.image = new File([await request.blob()], tuMember.avatar_url.split("/").pop());
+				member.image = new File([await request.blob()], (tuMember.avatar_url as string).split("/").pop()!);
 			} catch (e) {
 				// whatever, again
 			}
@@ -49,7 +52,7 @@ async function member(tuExport: any, tagMapping: Map<number, string>){
 		if (tuMember.banner) {
 			try {
 				const request = await fetch(tuMember.banner);
-				member.cover = new File([await request.blob()], tuMember.banner.split("/").pop());
+				member.cover = new File([await request.blob()], (tuMember.banner as string).split("/").pop()!);
 			} catch (e) {
 				// whatever, again
 			}
@@ -61,7 +64,7 @@ async function member(tuExport: any, tagMapping: Map<number, string>){
 }
 
 export async function importTupperBox(tuExport: any){
-	const { tags, tagMapping } = await tag(tuExport);
+	const { tags, tagMapping } = tag(tuExport);
 	const members = await member(tuExport, tagMapping);
 
 	try {

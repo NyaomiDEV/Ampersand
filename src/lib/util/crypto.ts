@@ -39,7 +39,7 @@ export async function encrypt(unencryptedData: BufferSource, password: string) {
 		iv,
 		salt,
 		data
-	}
+	};
 }
 
 export async function decrypt(payload: EncryptedPayload, password: string) {

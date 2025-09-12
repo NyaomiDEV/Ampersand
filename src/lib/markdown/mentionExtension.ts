@@ -19,7 +19,7 @@ const mentionExtension: MarkedExtension = {
 						break;
 				}
 				const token = {
-					type: 'mention',
+					type: "mention",
 					raw: match[0],
 					mentionedType,
 					uuid: match[2],
@@ -35,9 +35,9 @@ const mentionExtension: MarkedExtension = {
 					member: token.member,
 					clickable: true
 				});
-			} else {
-				return h('span', token.raw);
-			}
+			} else 
+				return h("span", token.raw);
+			
 		}
 	}],
 	async: true,

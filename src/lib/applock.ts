@@ -52,7 +52,7 @@ export function lock(){
 }
 
 export async function unlockWithBiometrics(){
-	if(!areBiometricsAvailable()) return false;
+	if(!await areBiometricsAvailable()) return false;
 	try{
 		await authenticate(t("lock:biometrics.reason"), {
 			confirmationRequired: true,

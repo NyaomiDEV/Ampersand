@@ -1,5 +1,5 @@
 // Adapted from the Spark MD5 library
-function md5cycle(x: any[], k: number[]) {
+function md5cycle(x: number[], k: number[]) {
 	let [a, b, c, d] = x;
 
 	a += (b & c | ~b & d) + k[0] - 680876936 | 0;

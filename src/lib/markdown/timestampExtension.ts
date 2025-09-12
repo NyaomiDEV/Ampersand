@@ -14,7 +14,7 @@ const timestampExtension: MarkedExtension = {
 				const match = rule.exec(src);
 				if (match) {
 					const token = {
-						type: 'timestamp',
+						type: "timestamp",
 						raw: match[0],
 						timestamp: Number(match[1]) * 1000,
 						format: match[2],
@@ -26,8 +26,8 @@ const timestampExtension: MarkedExtension = {
 			},
 			renderer(token) {
 				const formats = {
-					F: `LL, ${appConfig.locale.twelveHourClock ? 'hh:mm A' : "HH:mm"}`,
-					f: `ll, ${appConfig.locale.twelveHourClock ? 'hh:mm A' : "HH:mm"}`,
+					F: `LL, ${appConfig.locale.twelveHourClock ? "hh:mm A" : "HH:mm"}`,
+					f: `ll, ${appConfig.locale.twelveHourClock ? "hh:mm A" : "HH:mm"}`,
 
 					D: "LL",
 					d: "L",
@@ -48,7 +48,7 @@ const timestampExtension: MarkedExtension = {
 					t: appConfig.locale.twelveHourClock ? "hh:mm A" : "HH:mm",
 				};
 
-				return h('span', {
+				return h("span", {
 					class: "timestamp",
 					"data-timestamp": token.timestamp
 				}, dayjs(token.timestamp).format(formats[token.format]));

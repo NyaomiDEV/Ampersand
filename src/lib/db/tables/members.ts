@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { t } from "i18next";
 
 import { db } from ".";

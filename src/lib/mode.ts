@@ -2,9 +2,9 @@ import { M3 } from "tauri-plugin-m3";
 import { accessibilityConfig } from "./config";
 
 export function getIonicMode(): "ios" | "md" {
-	if (window.Ionic && window.Ionic.config) {
-		return window.Ionic.config.get("mode");
-	}
+	if (window.Ionic && window.Ionic.config) 
+		return window.Ionic.config.get("mode") as "ios" | "md";
+	
 	return "md";
 }
 
@@ -13,7 +13,7 @@ export function isIOSIonicMode(): boolean {
 }
 
 export function isMobile(){
-	return window.matchMedia('(any-pointer:coarse)').matches;
+	return window.matchMedia("(any-pointer:coarse)").matches;
 }
 
 function testUserAgent(regex: RegExp) {
@@ -21,7 +21,7 @@ function testUserAgent(regex: RegExp) {
 }
 
 export function isIOS(){
-	return testUserAgent(/iPhone|iPod|iPad/i) || (isMobile() && testUserAgent(/Macintosh/i))
+	return testUserAgent(/iPhone|iPod|iPad/i) || (isMobile() && testUserAgent(/Macintosh/i));
 }
 
 export function isDarkMode() {
@@ -31,12 +31,12 @@ export function isDarkMode() {
 		case "light":
 			return false;
 		case "auto":
-			return window.matchMedia('(prefers-color-scheme: dark)').matches;
+			return window.matchMedia("(prefers-color-scheme: dark)").matches;
 	}
 }
 
 export function updatePWATitlebarColor(color: string){
-	const query = document.head.querySelector('meta[name="theme-color"]')
+	const query = document.head.querySelector("meta[name=\"theme-color\"]");
 	if(query) {
 		query.setAttribute("content", color);
 		return;
@@ -56,7 +56,7 @@ export async function updateDarkMode() {
 
 export async function updateInsets() {
 	const insets = await M3.getInsets();
-	if(insets && !('error' in insets)){
+	if(insets && !("error" in insets)) {
 		document.documentElement.style.setProperty("--device-inset-top", Number(insets.adjustedInsetTop) + "px");
 		document.documentElement.style.setProperty("--device-inset-left", Number(insets.adjustedInsetLeft) + "px");
 		document.documentElement.style.setProperty("--device-inset-right", Number(insets.adjustedInsetRight) + "px");

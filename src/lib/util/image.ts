@@ -32,7 +32,7 @@ export async function resizeImage(image: File, maxWidthHeight = 512){
 		quality: 1
 	});
 
-	return new File([blob], image.name.replace(/\.[^\.]*?$/, ".webp"), {
+	return new File([blob], image.name.replace(/\.[^.]*?$/, ".webp"), {
 		lastModified: image.lastModified,
 		type: blob.type
 	});

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Fragment, h } from "vue";
 import { Marked } from "../../../vendor/marked-vue/marked";
 import { getAssets } from "../db/tables/assets";
@@ -16,14 +18,15 @@ marked.use({
 		image(token) {
 			// checking for lone surrogates the shitty way
 			try {
-				const href = encodeURI(token.href).replace(/%25/g, '%');
-				return h('img', {
+				const href = encodeURI(token.href).replace(/%25/g, "%");
+				return h("img", {
 					src: href,
 					alt: token.text,
 					title: token.title,
 					width: (token as any).width,
 					height: (token as any).height
 				});
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			} catch (e) {
 				return h(Text, token.text);
 			}
@@ -32,8 +35,9 @@ marked.use({
 			const inlineParsed = this.parser.parseInline(token.tokens);
 			// checking for lone surrogates the shitty way
 			try{
-				const href = encodeURI(token.href).replace(/%25/g, '%');
-				return h('a', { href, title: token.title }, inlineParsed);
+				const href = encodeURI(token.href).replace(/%25/g, "%");
+				return h("a", { href, title: token.title }, inlineParsed);
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			}catch(e){
 				return h(Fragment, inlineParsed);
 			}

@@ -38,9 +38,8 @@ export async function filterMember(search: string, member: Member){
 	}
 
 	if (parsed.tags.length) {
-		if (!parsed.tags.every(uuid => member.tags.includes(uuid))){
+		if (!parsed.tags.every(uuid => member.tags.includes(uuid)))
 			return false;
-		}
 	}
 
 	return true;

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUIDable, Reminder, UUID } from "../entities";
@@ -25,7 +27,7 @@ export async function newReminder(reminder: Omit<Reminder, keyof UUIDable>) {
 }
 
 export function getReminder(uuid: UUID){
-	return db.reminders.get(uuid)
+	return db.reminders.get(uuid);
 }
 
 export async function removeReminder(uuid: UUID) {

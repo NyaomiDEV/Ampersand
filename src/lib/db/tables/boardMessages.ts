@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUID, UUIDable, BoardMessage, BoardMessageComplete } from "../entities";
@@ -12,9 +14,9 @@ export function getBoardMessages(){
 export async function getBoardMessagesOffset(offset: number, limit?: number){
 	return (await Promise.all(
 		db.boardMessages.index
-		.sort((a, b) => b.date!.getTime() - a.date!.getTime())
-		.slice(offset, limit ? offset + limit : undefined)
-		.map(x => db.boardMessages.get(x.uuid))
+			.sort((a, b) => b.date!.getTime() - a.date!.getTime())
+			.slice(offset, limit ? offset + limit : undefined)
+			.map(x => db.boardMessages.get(x.uuid))
 	)).filter(x => !!x);
 }
 
@@ -75,7 +77,7 @@ export async function updateBoardMessage(uuid: UUID, newContent: Partial<BoardMe
 export async function getRecentBoardMessages() {
 	return Promise.all((await Promise.all(
 		db.boardMessages.index
-			.filter(x => x.isPinned || dayjs().startOf('day').valueOf() - dayjs(x.date).startOf('day').valueOf() <= 3 * 24 * 60 * 60 * 1000)
+			.filter(x => x.isPinned || dayjs().startOf("day").valueOf() - dayjs(x.date).startOf("day").valueOf() <= 3 * 24 * 60 * 60 * 1000)
 			.map(x => db.boardMessages.get(x.uuid))
 	)).filter(x => !!x).map(x => toBoardMessageComplete(x)));
 }
@@ -84,7 +86,7 @@ export async function* getBoardMessagesOfDay(date: Date, query: string) {
 	const _date = dayjs(date).startOf("day");
 
 	for(const entry of db.boardMessages.index){
-		if (dayjs(entry.date!).startOf('day').valueOf() !== _date.valueOf())
+		if (dayjs(entry.date).startOf("day").valueOf() !== _date.valueOf())
 			continue;
 
 		const boardMessage = await db.boardMessages.get(entry.uuid);
@@ -97,10 +99,10 @@ export async function* getBoardMessagesOfDay(date: Date, query: string) {
 }
 
 export function getBoardMessagesDays(query: string) {
-	const _map = db.boardMessages.index.filter(x => filterBoardMessageIndex(query, x)).map(x => dayjs(x.date!).startOf('day').valueOf());
+	const _map = db.boardMessages.index.filter(x => filterBoardMessageIndex(query, x)).map(x => dayjs(x.date).startOf("day").valueOf());
 
 	return _map.reduce((occurrences, current) => {
-		occurrences.set(current, (occurrences.get(current) || 0) + 1)
+		occurrences.set(current, (occurrences.get(current) || 0) + 1);
 		return occurrences;
 	}, new Map<number, number>());
 }

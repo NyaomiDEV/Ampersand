@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUID, UUIDable, CustomField } from "../entities";
@@ -11,7 +13,7 @@ export async function* getFilteredCustomFields(query: string){
 	for await (const customField of getCustomFields()){
 		if (filterCustomField(query, customField))
 			yield customField;
-		}
+	}
 }
 
 export async function newCustomField(customField: Omit<CustomField, keyof UUIDable>) {

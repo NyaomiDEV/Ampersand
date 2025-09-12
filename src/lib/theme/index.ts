@@ -5,59 +5,59 @@ import { isIOSIonicMode } from "../mode";
 
 const dynamicColorsWeWant = [
 	"primaryPaletteKeyColor",
-    "secondaryPaletteKeyColor",
-    "tertiaryPaletteKeyColor",
-    "neutralPaletteKeyColor",
-    "neutralVariantPaletteKeyColor",
-    "background",
-    "onBackground",
-    "surface",
-    "surfaceDim",
-    "surfaceBright",
-    "surfaceContainerLowest",
-    "surfaceContainerLow",
-    "surfaceContainer",
-    "surfaceContainerHigh",
-    "surfaceContainerHighest",
-    "onSurface",
-    "surfaceVariant",
-    "onSurfaceVariant",
-    "inverseSurface",
-    "inverseOnSurface",
-    "outline",
-    "outlineVariant",
-    "shadow",
-    "scrim",
-    "surfaceTint",
-    "primary",
-    "onPrimary",
-    "primaryContainer",
-    "onPrimaryContainer",
-    "inversePrimary",
-    "secondary",
-    "onSecondary",
-    "secondaryContainer",
-    "onSecondaryContainer",
-    "tertiary",
-    "onTertiary",
-    "tertiaryContainer",
-    "onTertiaryContainer",
-    "error",
-    "onError",
-    "errorContainer",
-    "onErrorContainer",
-    "primaryFixed",
-    "primaryFixedDim",
-    "onPrimaryFixed",
-    "onPrimaryFixedVariant",
-    "secondaryFixed",
-    "secondaryFixedDim",
-    "onSecondaryFixed",
-    "onSecondaryFixedVariant",
-    "tertiaryFixed",
-    "tertiaryFixedDim",
-    "onTertiaryFixed",
-    "onTertiaryFixedVariant",
+	"secondaryPaletteKeyColor",
+	"tertiaryPaletteKeyColor",
+	"neutralPaletteKeyColor",
+	"neutralVariantPaletteKeyColor",
+	"background",
+	"onBackground",
+	"surface",
+	"surfaceDim",
+	"surfaceBright",
+	"surfaceContainerLowest",
+	"surfaceContainerLow",
+	"surfaceContainer",
+	"surfaceContainerHigh",
+	"surfaceContainerHighest",
+	"onSurface",
+	"surfaceVariant",
+	"onSurfaceVariant",
+	"inverseSurface",
+	"inverseOnSurface",
+	"outline",
+	"outlineVariant",
+	"shadow",
+	"scrim",
+	"surfaceTint",
+	"primary",
+	"onPrimary",
+	"primaryContainer",
+	"onPrimaryContainer",
+	"inversePrimary",
+	"secondary",
+	"onSecondary",
+	"secondaryContainer",
+	"onSecondaryContainer",
+	"tertiary",
+	"onTertiary",
+	"tertiaryContainer",
+	"onTertiaryContainer",
+	"error",
+	"onError",
+	"errorContainer",
+	"onErrorContainer",
+	"primaryFixed",
+	"primaryFixedDim",
+	"onPrimaryFixed",
+	"onPrimaryFixedVariant",
+	"secondaryFixed",
+	"secondaryFixedDim",
+	"onSecondaryFixed",
+	"onSecondaryFixedVariant",
+	"tertiaryFixed",
+	"tertiaryFixedDim",
+	"onTertiaryFixed",
+	"onTertiaryFixedVariant",
 ];
 
 export const defaultColor = "#30628C";
@@ -73,7 +73,7 @@ function rgbFromArgb(argb: number){
 }
 
 export function rgbaToArgb(rgba: string) {
-	const matches = rgba.replace('#', "").match(/.{1,2}/g);
+	const matches = rgba.replace("#", "").match(/.{1,2}/g);
 
 	if(!matches) return rgba;
 	const [ r, g, b, a ] = matches;
@@ -108,10 +108,11 @@ export function deactivateMaterialTheme(target?: HTMLElement) {
 
 export function unsetMaterialColors(target?: HTMLElement){
 	// Clean up
-	if(target)
+	if(target) {
 		return Array.from(target.style)
 			.filter(x => x.startsWith("--md3"))
 			.forEach(x => target.style.removeProperty(x));
+	}
 
 	return Array.from(document.documentElement.style)
 		.filter(x => x.startsWith("--md3"))
@@ -130,12 +131,12 @@ export function addMaterialColors(hex: string, target?: HTMLElement){
 
 	for (const key of dynamicColorsWeWant) {
 		styleSheet.set(
-			`--md3-light-${key.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()}`,
+			`--md3-light-${key.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase()}`,
 			rgbFromArgb((MaterialDynamicColors[key] as DynamicColor).getArgb(tonalSpotLight))
 		);
 
 		styleSheet.set(
-			`--md3-dark-${key.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()}`,
+			`--md3-dark-${key.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase()}`,
 			rgbFromArgb((MaterialDynamicColors[key] as DynamicColor).getArgb(tonalSpotDark))
 		);
 	}

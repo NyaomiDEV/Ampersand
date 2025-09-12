@@ -12,7 +12,7 @@ const colorExtension: MarkedExtension = {
 				const match = rule.exec(src);
 				if (match) {
 					const token = {
-						type: 'color',
+						type: "color",
 						raw: match[0],
 						color: match[1]
 					};
@@ -21,7 +21,7 @@ const colorExtension: MarkedExtension = {
 				return;
 			},
 			renderer(token) {
-				return h('span', {
+				return h("span", {
 					class: "color",
 					style: {
 						"--color": token.color

@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { CustomField, FrontingEntry, Member, System, Tag } from "../entities";
 import { getTables } from "../tables";
 import { fetch } from "@tauri-apps/plugin-http";
@@ -8,7 +12,7 @@ function pkCustomField(): CustomField {
 		uuid: window.crypto.randomUUID(),
 		name: "PluralKit ID",
 		default: false
-	}
+	};
 }
 
 async function system(pkExport: any){
@@ -20,7 +24,7 @@ async function system(pkExport: any){
 	if (pkExport.avatar_url) {
 		try {
 			const request = await fetch(pkExport.avatar_url);
-			systemInfo.image = new File([await request.blob()], pkExport.avatar_url.split("/").pop());
+			systemInfo.image = new File([await request.blob()], (pkExport.avatar_url as string).split("/").pop()!);
 		} catch (e) {
 			// whatever
 		}
@@ -29,7 +33,7 @@ async function system(pkExport: any){
 	return systemInfo;
 }
 
-async function tag(pkExport: any){
+function tag(pkExport: any){
 	const tagMapping = new Map<string, string>();
 	const tags: Tag[] = [];
 
@@ -65,7 +69,7 @@ async function member(pkExport: any, tagMapping: Map<string, string>, pkField: C
 			isArchived: false,
 			isCustomFront: false,
 			dateCreated: new Date(pkMember.created),
-			tags: pkExport.groups.filter(x => x.members.includes(pkMember.id)).map(x => tagMapping.get(x.id)),
+			tags: pkExport.groups.filter(x => (x.members as string[]).includes(pkMember.id)).map(x => tagMapping.get(x.id)),
 			customFields: new Map([[pkField.uuid, pkMember.id]]),
 			uuid: window.crypto.randomUUID()
 		};
@@ -95,7 +99,7 @@ async function member(pkExport: any, tagMapping: Map<string, string>, pkField: C
 	};
 }
 
-async function frontingEntry(pkExport: any, memberMapping: Map<string, string>){
+function frontingEntry(pkExport: any, memberMapping: Map<string, string>){
 	const trackedFronting = new Map<string, FrontingEntry>();
 	const frontingEntries: FrontingEntry[] = [];
 
@@ -136,9 +140,9 @@ async function frontingEntry(pkExport: any, memberMapping: Map<string, string>){
 export async function importPluralKit(pkExport: any){
 	const field = pkCustomField();
 	const systemInfo = await system(pkExport);
-	const { tags, tagMapping } = await tag(pkExport);
+	const { tags, tagMapping } = tag(pkExport);
 	const { members, memberMapping } = await member(pkExport, tagMapping, field);
-	const frontingEntries = await frontingEntry(pkExport, memberMapping);
+	const frontingEntries = frontingEntry(pkExport, memberMapping);
 
 	try {
 		// WIPE AMPERSAND

@@ -16,23 +16,23 @@ import { isIOSIonicMode, updateAccessibility, updateDarkMode, updateInsets, upda
 import App from "./App.vue";
 
 // Core CSS required for Ionic components to work properly
-import '@ionic/vue/css/core.css';
+import "@ionic/vue/css/core.css";
 
 // Basic CSS for apps built with Ionic
-import '@ionic/vue/css/normalize.css';
-import '@ionic/vue/css/structure.css';
-import '@ionic/vue/css/typography.css';
+import "@ionic/vue/css/normalize.css";
+import "@ionic/vue/css/structure.css";
+import "@ionic/vue/css/typography.css";
 
 // Optional CSS utils that can be commented out
-import '@ionic/vue/css/padding.css';
-import '@ionic/vue/css/float-elements.css';
-import '@ionic/vue/css/text-alignment.css';
-import '@ionic/vue/css/text-transformation.css';
-import '@ionic/vue/css/flex-utils.css';
-import '@ionic/vue/css/display.css';
+import "@ionic/vue/css/padding.css";
+import "@ionic/vue/css/float-elements.css";
+import "@ionic/vue/css/text-alignment.css";
+import "@ionic/vue/css/text-transformation.css";
+import "@ionic/vue/css/flex-utils.css";
+import "@ionic/vue/css/display.css";
 
 // Dark mode CSS class
-import '@ionic/vue/css/palettes/dark.class.css';
+import "@ionic/vue/css/palettes/dark.class.css";
 
 // Import fonts
 import "./styles/fonts/fonts.css";
@@ -50,7 +50,7 @@ import { appConfig } from "./lib/config";
 import { getLockedStatus } from "./lib/applock";
 import { clearTempDir } from "./lib/native/cache";
 import { slideAnimation } from "./lib/util/misc";
-import { addMobileListener, getWebkitVersion } from './lib/native/plugin';
+import { addMobileListener, getWebkitVersion } from "./lib/native/plugin";
 import { platform } from "@tauri-apps/plugin-os";
 
 async function setupAmpersand(){
@@ -104,22 +104,22 @@ async function setupAmpersand(){
 	await clearTempDir();
 
 	const darkMode = window.matchMedia("(prefers-color-scheme: dark)");
-	darkMode.addEventListener("change", updateDarkMode);
-
 	await updateDarkMode();
+
+	darkMode.addEventListener("change", () => void updateDarkMode());
 	activateMaterialTheme();
 	updateMaterialColors();
 	updatePWATitlebarColor(window.getComputedStyle(document.body).getPropertyValue("--ion-toolbar-background"));
 	updateAccessibility();
 	await updateInsets();
-	window.addEventListener("orientationchange",  () => updateInsets());
+	window.addEventListener("orientationchange",  () => void updateInsets());
 
 	await router.isReady().then(async () => {
 		app.mount(document.body);
 
-		if(platform() === 'android' || platform() === 'ios'){
+		if(platform() === "android" || platform() === "ios"){
 			await addMobileListener("backbutton", () => {
-				document.dispatchEvent(new Event('backbutton'));
+				document.dispatchEvent(new Event("backbutton"));
 			});
 		}
 	});

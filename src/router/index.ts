@@ -8,7 +8,7 @@ import onboarding from "./onboarding";
 
 const routes: RouteRecordRaw[] = [
 	{
-		path: '/',
+		path: "/",
 		name: "TabbedHomeView",
 		component: () => import("../views/TabbedHomeView.vue"),
 		children: [

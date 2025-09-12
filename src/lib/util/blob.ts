@@ -25,8 +25,8 @@ export function getFile(url: string): File | undefined {
 }
 
 export function getDataURL(url: string): Promise<string | null> {
-	return new Promise(async resolve => {
-		const file = await getFile(url);
+	return new Promise(resolve => {
+		const file = getFile(url);
 		if(!file) return resolve(null);
 		const reader = new FileReader();
 		reader.addEventListener("load", () => {

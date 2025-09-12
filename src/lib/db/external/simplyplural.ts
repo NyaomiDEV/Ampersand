@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { System, Member, FrontingEntry, Tag, BoardMessage, CustomField, JournalPost } from "../entities";
 import { getTables } from "../tables";
 import { t } from "i18next";
@@ -24,17 +28,17 @@ function mapCustomFieldType(type: number, data: any) {
 		case 1: // color
 			return `<${normalizeSPColor(data)}>`;
 		case 2: // date
-			return `<t:${Math.round(new Date(data).getTime() / 1000)}:D>`
+			return `<t:${Math.round(new Date(data).getTime() / 1000)}:D>`;
 		case 3: // month
-			return `<t:${Math.round(new Date(data).getTime() / 1000)}:M>`
+			return `<t:${Math.round(new Date(data).getTime() / 1000)}:M>`;
 		case 4: // year
-			return `<t:${Math.round(new Date(data).getTime() / 1000)}:Y>`
+			return `<t:${Math.round(new Date(data).getTime() / 1000)}:Y>`;
 		case 5: // month + year
-			return `<t:${Math.round(new Date(data).getTime() / 1000)}:K>`
+			return `<t:${Math.round(new Date(data).getTime() / 1000)}:K>`;
 		case 6: // timestamp
-			return `<t:${Math.round(new Date(data).getTime() / 1000)}:F>`
+			return `<t:${Math.round(new Date(data).getTime() / 1000)}:F>`;
 		case 7: // month + day
-			return `<t:${Math.round(new Date(data).getTime() / 1000)}:G>`
+			return `<t:${Math.round(new Date(data).getTime() / 1000)}:G>`;
 	}
 
 	return "";
@@ -82,7 +86,7 @@ async function system(spExport: any){
 	};
 }
 
-async function tag(spExport: any){
+function tag(spExport: any){
 	const tagMapping = new Map<string, string>();
 	const tags: Tag[] = [];
 
@@ -106,7 +110,7 @@ async function tag(spExport: any){
 	};
 }
 
-async function customField(spExport: any){
+function customField(spExport: any){
 	const customFieldMapping = new Map<string, [string, number]>();
 	const customFields: CustomField[] = [];
 
@@ -144,7 +148,7 @@ export async function member(spExport: any, systemUid: string, tagMapping: Map<s
 			dateCreated: spMember.created ? new Date(spMember.created) : new Date(),
 			tags: [
 				...spExport.groups
-					.filter(x => x.members?.includes(spMember._id))
+					.filter(x => (x.members as string | undefined)?.includes(spMember._id))
 					.map(x => tagMapping.get(x._id))
 			],
 			customFields: new Map(
@@ -205,9 +209,9 @@ export async function member(spExport: any, systemUid: string, tagMapping: Map<s
 			} catch (e) {
 				// whatever
 			}
-		} else if (spCustomFront.avatarUuid?.length) {
+		} else if (spCustomFront.avatarUuid?.length) 
 			member.image = await getAvatarFromUuid(systemUid, spCustomFront.avatarUuid);
-		}
+		
 
 		members.push(member);
 		memberMapping.set(spCustomFront._id, member.uuid);
@@ -221,7 +225,7 @@ export async function member(spExport: any, systemUid: string, tagMapping: Map<s
 	};
 }
 
-async function frontingEntry(spExport: any, memberMapping: Map<string, string>){
+function frontingEntry(spExport: any, memberMapping: Map<string, string>){
 	const frontingEntries: FrontingEntry[] = [];
 
 	for (const spFrontHistory of spExport.frontHistory) {
@@ -248,7 +252,7 @@ async function frontingEntry(spExport: any, memberMapping: Map<string, string>){
 	return frontingEntries;
 }
 
-async function boardMessage(spExport: any, memberMapping: Map<string, string>){
+function boardMessage(spExport: any, memberMapping: Map<string, string>){
 	const boardMessages: BoardMessage[] = [];
 
 	// BOARD MESSAGES
@@ -288,43 +292,43 @@ async function boardMessage(spExport: any, memberMapping: Map<string, string>){
 							}))
 					}))
 					: [
-						{
-							choice: t("messageBoard:polls.defaultPollValues.yes"),
-							votes: spPoll.votes
-								.filter(x => x.vote === "yes")
-								.map(x => ({
-									member: memberMapping.get(x.id) || nilUid,
-									reason: x.comment?.length ? x.comment : undefined
-								}))
-						},
-						{
-							choice: t("messageBoard:polls.defaultPollValues.no"),
-							votes: spPoll.votes
-								.filter(x => x.vote === "no")
-								.map(x => ({
-									member: memberMapping.get(x.id) || nilUid,
-									reason: x.comment?.length ? x.comment : undefined
-								}))
-						},
-						spPoll.allowVeto ? {
-							choice: t("messageBoard:polls.defaultPollValues.veto"),
-							votes: spPoll.votes
-								.filter(x => x.vote === "veto")
-								.map(x => ({
-									member: memberMapping.get(x.id) || nilUid,
-									reason: x.comment?.length ? x.comment : undefined
-								}))
-						} : undefined,
-						spPoll.allowAbstain ? {
-							choice: t("messageBoard:polls.defaultPollValues.abstain"),
-							votes: spPoll.votes
-								.filter(x => x.vote === "abstain")
-								.map(x => ({
-									member: memberMapping.get(x.id) || nilUid,
-									reason: x.comment?.length ? x.comment : undefined
-								}))
-						} : undefined,
-					].filter(Boolean)
+							{
+								choice: t("messageBoard:polls.defaultPollValues.yes"),
+								votes: spPoll.votes
+									.filter(x => x.vote === "yes")
+									.map(x => ({
+										member: memberMapping.get(x.id) || nilUid,
+										reason: x.comment?.length ? x.comment : undefined
+									}))
+							},
+							{
+								choice: t("messageBoard:polls.defaultPollValues.no"),
+								votes: spPoll.votes
+									.filter(x => x.vote === "no")
+									.map(x => ({
+										member: memberMapping.get(x.id) || nilUid,
+										reason: x.comment?.length ? x.comment : undefined
+									}))
+							},
+							spPoll.allowVeto ? {
+								choice: t("messageBoard:polls.defaultPollValues.veto"),
+								votes: spPoll.votes
+									.filter(x => x.vote === "veto")
+									.map(x => ({
+										member: memberMapping.get(x.id) || nilUid,
+										reason: x.comment?.length ? x.comment : undefined
+									}))
+							} : undefined,
+							spPoll.allowAbstain ? {
+								choice: t("messageBoard:polls.defaultPollValues.abstain"),
+								votes: spPoll.votes
+									.filter(x => x.vote === "abstain")
+									.map(x => ({
+										member: memberMapping.get(x.id) || nilUid,
+										reason: x.comment?.length ? x.comment : undefined
+									}))
+							} : undefined,
+						].filter(Boolean)
 			},
 			uuid: window.crypto.randomUUID()
 		};
@@ -337,7 +341,7 @@ async function boardMessage(spExport: any, memberMapping: Map<string, string>){
 	return boardMessages;
 }
 
-async function journalPost(spExport: any, memberMapping: Map<string, string>){
+function journalPost(spExport: any, memberMapping: Map<string, string>){
 	const posts: JournalPost[] = [];
 
 	for(const spNote of spExport.notes){
@@ -350,7 +354,7 @@ async function journalPost(spExport: any, memberMapping: Map<string, string>){
 			isPinned: false,
 			date: new Date(spNote.date || spNote.lastOperationTime),
 			uuid: window.crypto.randomUUID()
-		}
+		};
 		posts.push(post);
 	}
 
@@ -380,9 +384,9 @@ function remap(
 			boardMessage.body = boardMessage.body.replace(/<###@(\w+)###>/g, (_, p1) => `@<m:${memberMapping.get(p1) || nilUid}>`);
 	}
 
-	for (const post of posts) {
+	for (const post of posts) 
 		post.body = post.body.replace(/<###@(\w+)###>/g, (_, p1) => `@<m:${memberMapping.get(p1) || nilUid}>`);
-	}
+	
 }
 
 export async function importSimplyPlural(spExport: any) {
@@ -390,12 +394,12 @@ export async function importSimplyPlural(spExport: any) {
 	if(!_system) return false;
 	const { systemInfo, systemUid } = _system;
 	
-	const { tags, tagMapping } = await tag(spExport);
-	const { customFields, customFieldMapping } = await customField(spExport);
+	const { tags, tagMapping } = tag(spExport);
+	const { customFields, customFieldMapping } = customField(spExport);
 	const { members, memberMapping } = await member(spExport, systemUid, tagMapping, customFieldMapping);
-	const frontingEntries = await frontingEntry(spExport, memberMapping);
-	const boardMessages = await boardMessage(spExport, memberMapping);
-	const posts = await journalPost(spExport, memberMapping);
+	const frontingEntries = frontingEntry(spExport, memberMapping);
+	const boardMessages = boardMessage(spExport, memberMapping);
+	const posts = journalPost(spExport, memberMapping);
 
 	remap(
 		memberMapping,

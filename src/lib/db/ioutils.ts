@@ -1,10 +1,13 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { Typeson } from "typeson";
-import { getTables } from "./tables";
+import { getTables, ShittyTable } from "./tables";
 import { blob, file, filelist, imagebitmap, imagedata, map, set, typedArrays, undef } from "typeson-registry";
 import { decode, encode } from "@msgpack/msgpack";
 import { compressGzip, decompressGzip } from "../util/misc";
 import { EncryptedPayload, decrypt, encrypt } from "../util/crypto";
 import { accessibilityConfig, appConfig, securityConfig } from "../config";
+import { UUIDable } from "./entities";
 
 const typeson = new Typeson({
 	sync: false
@@ -22,9 +25,10 @@ const typeson = new Typeson({
 
 async function _exportDatabase(){
 	const config = { appConfig, accessibilityConfig, securityConfig };
-	const database: Record<string, any> = {};
-	for(const [name, table] of Object.entries(getTables())) database[name] = await Array.fromAsync<any>(table.iterate());
+	const database: Record<string, unknown> = {};
+	for(const [name, table] of Object.entries(getTables())) database[name] = await Array.fromAsync<unknown>(table.iterate());
 
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 	return await typeson.encapsulate({ config, database });
 }
 
@@ -50,7 +54,7 @@ async function _importDatabase(tablesAndConfig){
 		Object.assign(securityConfig, revived.config.securityConfig);
 
 		for (const key of Object.getOwnPropertyNames(revived.database)) {
-			const table = getTables()[key];
+			const table: ShittyTable<UUIDable> = getTables()[key];
 			if (table) {
 				if(await table.clear() === false) return false;
 				if(await table.bulkAdd(revived.database[key]) === false) return false;
@@ -65,7 +69,7 @@ async function _importDatabase(tablesAndConfig){
 
 export async function importDatabaseFromBinary(data: Uint8Array<ArrayBuffer>) {
 	try{
-		const theEntireDatabase = decode(await decompressGzip(data)) as Record<string, any>;
+		const theEntireDatabase = decode(await decompressGzip(data)) as Record<string, unknown>;
 
 		return await _importDatabase(theEntireDatabase);
 	}catch(e){
@@ -76,7 +80,7 @@ export async function importDatabaseFromBinary(data: Uint8Array<ArrayBuffer>) {
 export async function importDatabaseFromBinaryWithPassword(data: Uint8Array<ArrayBuffer>, password: string) {
 	try{
 		const encodedDatabase = decode(await decompressGzip(data)) as EncryptedPayload;
-		const theEntireDatabase = decode(await decrypt(encodedDatabase, password)) as Record<string, any>;
+		const theEntireDatabase = decode(await decrypt(encodedDatabase, password)) as Record<string, unknown>;
 
 		return await _importDatabase(theEntireDatabase);
 	}catch(e){

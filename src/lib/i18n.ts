@@ -10,13 +10,13 @@ const context = import.meta.webpackContext("../../translations/", {
 	regExp: /\.json$/
 });
 
-const translations: Map<string, any> = new Map();
+const translations: Map<string, unknown> = new Map();
 
-for(const path of context.keys()){
+for(const path of context.keys())
 	translations.set(path, context(path));
-}
 
-i18next.on("languageChanged", async (lng) => {
+
+i18next.on("languageChanged", (lng) => {
 	dayjs.locale(lng);
 });
 

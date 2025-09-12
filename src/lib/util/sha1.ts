@@ -52,13 +52,11 @@ export default function sha1(_bytes: Uint8Array): Uint8Array {
 	for (let i = 0; i < N; ++i) {
 		const W = new Uint32Array(80);
 
-		for (let t = 0; t < 16; ++t) {
+		for (let t = 0; t < 16; ++t)
 			W[t] = M[i][t];
-		}
 
-		for (let t = 16; t < 80; ++t) {
+		for (let t = 16; t < 80; ++t)
 			W[t] = ROTL(W[t - 3] ^ W[t - 8] ^ W[t - 14] ^ W[t - 16], 1);
-		}
 
 		let a = H[0];
 		let b = H[1];

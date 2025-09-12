@@ -135,7 +135,7 @@ export async function parseMemberFilterQuery(search: string): Promise<MemberFilt
 				const probableTag = token.slice(1);
 				const tag = await getTagFromNameHashtag(probableTag);
 				if(tag)
-					result.tags.push(tag.uuid)
+					result.tags.push(tag.uuid);
 				else
 					queryTokens.push(token);
 				

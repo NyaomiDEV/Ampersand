@@ -1,4 +1,4 @@
-import { Directive, reactive, VNode } from "vue"
+import { Directive, reactive, VNode } from "vue";
 import { setModalCanGoBack } from "./util/backbutton";
 
 const renderArray = reactive<VNode[]>([]);
@@ -41,35 +41,35 @@ const modalDirective: Directive = {
 			detail: { el, vnode, originalVnode: binding.value.originalVnode }
 		}));
 	}
-}
+};
 
 export function useModalContainer(){
 	return { renderArray, modalDirective };
 }
 
-export function addModal(vnode: VNode): Promise<{el: HTMLElement, vnode: VNode}> {
-	return new Promise(async resolve => {
-		renderArray.push(vnode);
+export async function addModal(vnode: VNode): Promise<{el: HTMLElement, vnode: VNode}> {
+	renderArray.push(vnode);
+	await setModalCanGoBack(renderArray.length > 0);
 
-		function cb(evt){
-			if(evt.detail.originalVnode === vnode){
-				resolve({el: evt.detail.el, vnode: evt.detail.vnode});
+	return new Promise(resolve => {
+		function cb(evt) {
+			if (evt.detail.originalVnode === vnode) {
+				resolve({ el: evt.detail.el, vnode: evt.detail.vnode });
 				modalEvents.removeEventListener("mounted", cb);
 			}
 		}
-
 		modalEvents.addEventListener("mounted", cb);
-		await setModalCanGoBack(renderArray.length > 0);
 	});
 }
 
 export async function removeModal(vnode: VNode){
 	const index = renderArray.indexOf(vnode);
-	if(index > -1)
+	if(index > -1){
 		renderArray.splice(
 			index,
 			1
 		);
+	}
 
 	await setModalCanGoBack(renderArray.length > 0);
 }
