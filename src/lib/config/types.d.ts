@@ -16,7 +16,7 @@ export type AppConfig = {
 		assetManager?: string,
 		customFields?: string
 	}
-}
+};
 
 type ViewName = "members" | "journal" | "dashboard" | "chats";
 
@@ -31,10 +31,10 @@ export type AccessibilityConfig = {
 	fontScale: number,
 	chatFontScale: number,
 	longPressDuration: number
-}
+};
 
 export type SecurityConfig = {
 	usePassword: boolean,
 	password?: string,
 	useBiometrics: boolean
-}
+};

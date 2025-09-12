@@ -25,7 +25,7 @@
 	}>();
 
 	const emit = defineEmits<{
-		'update:modelValue': [CustomField[]],
+		"update:modelValue": [CustomField[]],
 	}>();
 
 	const selectedCustomFields = reactive<CustomField[]>([...props.modelValue || []]);
@@ -56,22 +56,33 @@
 </script>
 
 <template>
-	<IonModal class="custom-fields-select-modal" :breakpoints="[0,0.75,1]" initialBreakpoint="0.75">
+	<IonModal class="custom-fields-select-modal" :breakpoints="[0,0.75,1]" initial-breakpoint="0.75">
 		<IonHeader>
 			<IonToolbar>
 				<IonTitle>{{ props.customTitle ?? $t("customFields:select") }}</IonTitle>
 			</IonToolbar>
 			<IonToolbar>
-				<IonSearchbar :animated="true" :placeholder="$t('customFields:searchPlaceholder')"
-					showCancelButton="focus" showClearButton="focus" :spellcheck="false" @ionChange="e => search = e.detail.value || ''" />
+				<IonSearchbar
+					:animated="true"
+					:placeholder="$t('customFields:searchPlaceholder')"
+					show-cancel-button="focus"
+					show-clear-button="focus"
+					:spellcheck="false"
+					@ion-change="e => search = e.detail.value || ''"
+				/>
 			</IonToolbar>
 		</IonHeader>
 
 		<SpinnerFullscreen v-if="!customFields" />
 		<IonContent v-else>
 			<IonList :inset="isIOS">
-				<IonItem button v-for="customField in customFields" :key="customField.uuid">
-					<IonCheckbox :disabled="customField.default" :value="customField.uuid" :checked="!!selectedCustomFields.find(x => x.uuid === customField.uuid)" @update:modelValue="value => check(customField, value)">
+				<IonItem v-for="customField in customFields" :key="customField.uuid" button>
+					<IonCheckbox
+						:disabled="customField.default"
+						:value="customField.uuid"
+						:checked="!!selectedCustomFields.find(x => x.uuid === customField.uuid)"
+						@update:model-value="value => check(customField, value)"
+					>
 						<IonLabel>{{ customField.name }}</IonLabel>
 					</IonCheckbox>
 				</IonItem>

@@ -3,7 +3,7 @@
 		IonLabel,
 	} from "@ionic/vue";
 
-	import { Member, Tag } from '../../lib/db/entities';
+	import { Member, Tag } from "../../lib/db/entities";
 	import TagChip from "../tag/TagChip.vue";
 	import { isReactive, onBeforeMount, shallowRef, watch, WatchStopHandle } from "vue";
 	import { getTag } from "../../lib/db/tables/tags";
@@ -25,8 +25,8 @@
 	});
 
 	let watchHandle: WatchStopHandle | undefined;
-	watch(props, () => {
-		updateTags();
+	watch(props, async () => {
+		await updateTags();
 		if(isReactive(props.member))
 			watchHandle = watch(props.member, updateTags);
 		else
@@ -53,11 +53,13 @@
 		<h3>
 			{{ props.member.pronouns }}
 		</h3>
-		<div v-if="props.showTagChips" class="tags"
+		<div
+			v-if="props.showTagChips"
+			class="tags"
 			@pointerdown="(e) => e.stopPropagation()"
 			@touchstart="(e) => e.stopPropagation()"
 		>
-			<TagChip v-for="tag in tags" :tag="tag" />
+			<TagChip v-for="tag in tags" :key="tag.uuid" :tag="tag" />
 		</div>
 	</IonLabel>
 </template>

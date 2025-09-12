@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { Member, Tag, System } from "../entities";
@@ -44,7 +43,7 @@ async function member(tuExport: any, tagMapping: Map<number, string>){
 			try {
 				const request = await fetch(tuMember.avatar_url);
 				member.image = new File([await request.blob()], (tuMember.avatar_url as string).split("/").pop()!);
-			} catch (e) {
+			} catch (_e) {
 				// whatever, again
 			}
 		}
@@ -53,7 +52,7 @@ async function member(tuExport: any, tagMapping: Map<number, string>){
 			try {
 				const request = await fetch(tuMember.banner);
 				member.cover = new File([await request.blob()], (tuMember.banner as string).split("/").pop()!);
-			} catch (e) {
+			} catch (_e) {
 				// whatever, again
 			}
 		}

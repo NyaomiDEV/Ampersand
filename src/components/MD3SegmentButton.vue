@@ -1,13 +1,13 @@
 <script setup lang="ts">
 	import { IonSegmentButton, IonIcon } from "@ionic/vue";
 
-	import CheckMD from '@material-symbols/svg-600/outlined/check.svg';
+	import CheckMD from "@material-symbols/svg-600/outlined/check.svg";
 </script>
 
 <template>
 	<IonSegmentButton layout="icon-start">
-		<IonIcon :md="CheckMD" aria-hidden="true"/>
-		<slot></slot>
+		<IonIcon :md="CheckMD" aria-hidden="true" />
+		<slot />
 	</IonSegmentButton>
 </template>
 

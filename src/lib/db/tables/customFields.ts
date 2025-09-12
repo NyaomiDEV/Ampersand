@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUID, UUIDable, CustomField } from "../entities";
@@ -29,7 +27,7 @@ export async function newCustomField(customField: Omit<CustomField, keyof UUIDab
 			data: uuid
 		}));
 		return uuid;
-	}catch(error){
+	}catch(_error){
 		return false;
 	}
 }
@@ -43,7 +41,7 @@ export async function deleteCustomField(uuid: UUID) {
 			data: uuid
 		}));
 		return true;
-	} catch (error) {
+	} catch (_error) {
 		return false;
 	}
 }
@@ -60,7 +58,7 @@ export async function updateCustomField(uuid: UUID, newContent: Partial<CustomFi
 			return true;
 		}
 		return false;
-	}catch(error){
+	}catch(_error){
 		return false;
 	}
 }

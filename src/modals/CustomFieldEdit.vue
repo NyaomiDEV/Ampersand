@@ -17,16 +17,11 @@
 		alertController
 	} from "@ionic/vue";
 
-	import {
-		saveOutline as saveIOS,
-		trashBinOutline as trashIOS
-	} from "ionicons/icons";
-
 	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
 
 	import { CustomField } from "../lib/db/entities";
-	import { newCustomField, updateCustomField, deleteCustomField } from '../lib/db/tables/customFields';
+	import { newCustomField, updateCustomField, deleteCustomField } from "../lib/db/tables/customFields";
 	import { inject, ref, toRaw } from "vue";
 
 	import { PartialBy } from "../lib/types";
@@ -62,31 +57,33 @@
 
 		try{
 			await modalController.dismiss(null, "modified");
-		}catch(_){}
+		}catch(_){ /* empty */ }
 		// catch an error because the type might get changed, causing the parent to be removed from DOM
 		// however it's safe for us to ignore
 	}
 
 	function promptDeletion(): Promise<boolean> {
-		return new Promise(async (resolve) => {
-			const alert = await alertController.create({
-				header: i18next.t("customFields:edit.delete.title"),
-				subHeader: i18next.t("customFields:edit.delete.confirm"),
-				buttons: [
-					{
-						text: i18next.t("other:alerts.cancel"),
-						role: "cancel",
-						handler: () => resolve(false)
-					},
-					{
-						text: i18next.t("other:alerts.ok"),
-						role: "confirm",
-						handler: () => resolve(true)
-					}
-				]
-			});
+		return new Promise((resolve) => {
+			void (async () => {
+				const alert = await alertController.create({
+					header: i18next.t("customFields:edit.delete.title"),
+					subHeader: i18next.t("customFields:edit.delete.confirm"),
+					buttons: [
+						{
+							text: i18next.t("other:alerts.cancel"),
+							role: "cancel",
+							handler: () => resolve(false)
+						},
+						{
+							text: i18next.t("other:alerts.ok"),
+							role: "confirm",
+							handler: () => resolve(true)
+						}
+					]
+				});
 
-			await alert.present();
+				await alert.present();
+			})();
 		});
 	}
 
@@ -95,13 +92,13 @@
 			await deleteCustomField(customField.value.uuid!);
 			try{
 				await modalController.dismiss(undefined, "deleted");
-			}catch(_){}
+			}catch(_){ /* empty */ }
 		}
 	}
 </script>
 
 <template>
-	<IonModal class="custom-field-edit-modal" :breakpoints="[0,1]" initialBreakpoint="1">
+	<IonModal class="custom-field-edit-modal" :breakpoints="[0,1]" initial-breakpoint="1">
 		<IonHeader>
 			<IonToolbar>
 				<IonTitle>{{ !customField.uuid ? $t("customFields:edit.headerAdd") : $t("customFields:edit.header") }}</IonTitle>
@@ -110,24 +107,40 @@
 
 		<IonContent>
 			<IonList inset>
-					<IonItem>
-						<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('customFields:edit.name')" labelPlacement="floating" v-model="customField.name" />
-					</IonItem>
-					<IonItem button :detail="false">
-						<IonToggle v-model="customField.default">
-							<IonLabel>
-								<h3>{{ $t("customFields:edit.default.title") }}</h3>
-								<p>{{ $t("customFields:edit.default.desc") }}</p>
-							</IonLabel>
-						</IonToggle>
-					</IonItem>
-					<IonItem button :detail="false" v-if="customField.uuid" @click="removeCustomField">
-						<IonIcon :ios="trashIOS" :md="trashMD" slot="start" aria-hidden="true" color="danger"/>
-						<IonLabel color="danger">
-							<h3>{{ $t("customFields:edit.delete.title") }}</h3>
-							<p>{{ $t("other:genericDeleteDesc") }}</p>
+				<IonItem>
+					<IonInput
+						v-model="customField.name"
+						:fill="!isIOS ? 'outline' : undefined"
+						:label="$t('customFields:edit.name')"
+						label-placement="floating"
+					/>
+				</IonItem>
+				<IonItem button :detail="false">
+					<IonToggle v-model="customField.default">
+						<IonLabel>
+							<h3>{{ $t("customFields:edit.default.title") }}</h3>
+							<p>{{ $t("customFields:edit.default.desc") }}</p>
 						</IonLabel>
-					</IonItem>
+					</IonToggle>
+				</IonItem>
+				<IonItem
+					v-if="customField.uuid"
+					button
+					:detail="false"
+					@click="removeCustomField"
+				>
+					<IonIcon
+						slot="start"
+						:ios="trashIOS"
+						:md="trashMD"
+						aria-hidden="true"
+						color="danger"
+					/>
+					<IonLabel color="danger">
+						<h3>{{ $t("customFields:edit.delete.title") }}</h3>
+						<p>{{ $t("other:genericDeleteDesc") }}</p>
+					</IonLabel>
+				</IonItem>
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">

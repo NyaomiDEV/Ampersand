@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUIDable, JournalPost, UUID } from "../entities";
@@ -38,7 +36,7 @@ export async function newJournalPost(journalPost: Omit<JournalPost, keyof UUIDab
 			data: uuid
 		}));
 		return uuid;
-	}catch(error){
+	}catch(_error){
 		return false;
 	}
 }
@@ -56,7 +54,7 @@ export async function deleteJournalPost(uuid: UUID) {
 			data: uuid
 		}));
 		return true;
-	} catch (error) {
+	} catch (_error) {
 		return false;
 	}
 }
@@ -73,7 +71,7 @@ export async function updateJournalPost(uuid: UUID, newContent: Partial<JournalP
 			return true;
 		}
 		return false;
-	}catch(error){
+	}catch(_error){
 		return false;
 	}
 }

@@ -12,7 +12,7 @@ export type AmpersandEntityMapping = {
 	tags: Tag,
 	assets: Asset,
 	customFields: CustomField
-}
+};
 
 export type DatabaseEventData = {
 	table: keyof AmpersandEntityMapping,

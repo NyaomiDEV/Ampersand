@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUID, UUIDable, BoardMessage, BoardMessageComplete } from "../entities";
@@ -38,7 +36,7 @@ export async function newBoardMessage(boardMessage: Omit<BoardMessage, keyof UUI
 			data: uuid
 		}));
 		return uuid;
-	}catch(error){
+	}catch(_error){
 		return false;
 	}
 }
@@ -52,7 +50,7 @@ export async function deleteBoardMessage(uuid: UUID) {
 			data: uuid
 		}));
 		return true;
-	} catch (error) {
+	} catch (_error) {
 		return false;
 	}
 }
@@ -69,7 +67,7 @@ export async function updateBoardMessage(uuid: UUID, newContent: Partial<BoardMe
 			return true;
 		}
 		return false;
-	}catch(error){
+	}catch(_error){
 		return false;
 	}
 }

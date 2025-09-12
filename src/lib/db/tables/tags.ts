@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUID, UUIDable, Tag } from "../entities";
@@ -29,7 +27,7 @@ export async function newTag(tag: Omit<Tag, keyof UUIDable>) {
 			data: uuid
 		}));
 		return uuid;
-	}catch(error){
+	}catch(_error){
 		return false;
 	}
 }
@@ -85,7 +83,7 @@ export async function updateTag(uuid: UUID, newContent: Partial<Tag>) {
 			return true;
 		}
 		return false;
-	}catch(error){
+	}catch(_error){
 		return false;
 	}
 }

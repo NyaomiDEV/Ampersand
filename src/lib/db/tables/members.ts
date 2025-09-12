@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 import { t } from "i18next";
 
 import { db } from ".";
@@ -32,7 +30,7 @@ export async function newMember(member: Omit<Member, keyof UUIDable>) {
 			data: uuid
 		}));
 		return uuid;
-	}catch(error){
+	}catch(_error){
 		return false;
 	}
 }
@@ -52,7 +50,7 @@ export async function deleteMember(uuid: UUID) {
 			data: uuid
 		}));
 		return true;
-	} catch (error) {
+	} catch (_error) {
 		return false;
 	}
 }
@@ -70,7 +68,7 @@ export async function updateMember(uuid: UUID, newContent: Partial<Member>) {
 			return true;
 		}
 		return false;
-	}catch(error){
+	}catch(_error){
 		return false;
 	}
 }

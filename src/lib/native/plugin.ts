@@ -20,8 +20,7 @@ export async function openFile(file: File) {
 	try {
 		await invokePlugin("open_file", { path });
 		return true;
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	} catch (e) {
+	} catch (_e) {
 		return false;
 	}
 }

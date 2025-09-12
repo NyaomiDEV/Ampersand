@@ -1,9 +1,8 @@
 <script setup lang="ts">
-	import { IonContent, IonPage, IonButton, IonIcon, useIonRouter } from '@ionic/vue';
-	import { accessibilityOutline as AccessibilityIOS } from "ionicons/icons";
+	import { IonContent, IonPage, IonButton, IonIcon, useIonRouter } from "@ionic/vue";
 	import AccessibilityMD from "@material-symbols/svg-600/outlined/accessibility_new.svg";
-	import AmpersandLogo from "../../assets/ampersand_logo.svg"
-	import { slideAnimation } from '../../lib/util/misc';
+	import AmpersandLogo from "../../assets/ampersand_logo.svg";
+	import { slideAnimation } from "../../lib/util/misc";
 
 	const router = useIonRouter();
 </script>
@@ -20,8 +19,8 @@
 				</IonButton>
 
 				<div class="button">
-					<IonButton class="tonal" shape="round" routerLink="/options/accessibility/">
-						<IonIcon slot="icon-only" :md="AccessibilityMD" :ios="AccessibilityIOS"></IonIcon>
+					<IonButton class="tonal" shape="round" router-link="/options/accessibility/">
+						<IonIcon slot="icon-only" :icon="AccessibilityMD" />
 					</IonButton>
 				</div>
 			</div>

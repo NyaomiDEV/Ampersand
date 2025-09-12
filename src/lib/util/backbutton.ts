@@ -15,7 +15,7 @@ export async function setModalCanGoBack(value: boolean) {
 	await processCanGoBack();
 }
 
-async function processCanGoBack(){
+async function processCanGoBack() {
 	const newCanGoBack = routerCanGoBack || modalCanGoBack;
 
 	if (newCanGoBack !== oldCanGoBack) {

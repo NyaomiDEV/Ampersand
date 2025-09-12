@@ -12,9 +12,11 @@
 
 <template>
 	<IonAvatar v-if="props.tag.color">
-		<div :style="{
-			backgroundColor: props.tag.color
-		}"></div>
+		<div
+			:style="{
+				backgroundColor: props.tag.color
+			}"
+		/>
 	</IonAvatar>
 </template>
 

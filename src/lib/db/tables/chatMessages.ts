@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUIDable, ChatMessage } from "../entities";
@@ -17,7 +15,7 @@ export async function newChatMessage(chatMessage: Omit<ChatMessage, keyof UUIDab
 			data: uuid
 		}));
 		return uuid;
-	}catch(error){
+	}catch(_error){
 		return false;
 	}
 }

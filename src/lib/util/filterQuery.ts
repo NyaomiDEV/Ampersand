@@ -40,7 +40,7 @@ export type AssetFilterQuery = {
 export type CustomFieldFilterQuery = {
 	query: string,
 	default?: boolean
-}
+};
 
 export type JournalPostFilterQuery = {
 	query: string,

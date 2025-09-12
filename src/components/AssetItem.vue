@@ -1,15 +1,11 @@
 <script setup lang="ts">
-	import { IonThumbnail, IonLabel, IonItem, IonIcon } from '@ionic/vue'
-	import { Asset } from '../lib/db/entities';
-	import { getObjectURL } from '../lib/util/blob';
-	import { PartialBy } from '../lib/types';
-
-	import {
-		documentOutline as documentIOS
-	} from "ionicons/icons";
+	import { IonThumbnail, IonLabel, IonItem, IonIcon } from "@ionic/vue";
+	import { Asset } from "../lib/db/entities";
+	import { getObjectURL } from "../lib/util/blob";
+	import { PartialBy } from "../lib/types";
 
 	import documentMD from "@material-symbols/svg-600/outlined/draft.svg";
-	import { openFile } from '../lib/native/plugin';
+	import { openFile } from "../lib/native/plugin";
 
 	const props = defineProps<{
 		asset: PartialBy<Asset, "uuid">,
@@ -34,21 +30,21 @@
 		return;
 	}
 
-	function open(){
-		openFile(props.asset.file);
+	async function open(){
+		await openFile(props.asset.file);
 	}
 </script>
 
 <template>
 	<IonItem
 		button
-		:routerLink="props.routeToEditPage ? '/options/assetManager/edit/?uuid=' + props.asset.uuid : undefined"
+		:router-link="props.routeToEditPage ? '/options/assetManager/edit/?uuid=' + props.asset.uuid : undefined"
 		@click="props.routeToOpenFile ? open() : undefined"
 	>
-		<IonThumbnail slot="start" v-if="generatePreview()">
+		<IonThumbnail v-if="generatePreview()" slot="start">
 			<img :src="getObjectURL(props.asset.file)" />
 		</IonThumbnail>
-		<IonIcon v-else slot="start" :ios="documentIOS" :md="documentMD" />
+		<IonIcon v-else slot="start" :icon="documentMD" />
 		<IonLabel class="nowrap">
 			<template v-if="props.showFilenameAndType">
 				<h2>{{ asset.file.name }}</h2>

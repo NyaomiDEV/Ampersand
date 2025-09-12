@@ -1,16 +1,31 @@
 <script setup lang="ts">
-	//copied from ionic because they dont export it (??)
-	type DatetimePresentation = 'date-time' | 'time-date' | 'date' | 'time' | 'month' | 'year' | 'month-year';
-
-	import { IonModal, IonDatetime } from '@ionic/vue';
-	import { appConfig } from '../lib/config';
-	import { ref, watch } from 'vue';
+	import { IonModal, IonDatetime } from "@ionic/vue";
+	import { appConfig } from "../lib/config";
+	import { ref, watch } from "vue";
 	import dayjs from "dayjs";
+
+	// copied from ionic because they dont export it (??)
+	type DatetimePresentation = "date-time" | "time-date" | "date" | "time" | "month" | "year" | "month-year";
+	type DatetimeHighlight = {
+		date: string;
+	} & DatetimeHighlightStyle;
+	type DatetimeHighlightCallback = (dateIsoString: string) => DatetimeHighlightStyle | undefined;
+	type DatetimeHighlightStyle = {
+		textColor?: string;
+		backgroundColor?: string;
+		border?: string;
+	} & ({
+		textColor: string;
+	} | {
+		backgroundColor: string;
+	} | {
+		border: string;
+	});
 
 	const props = defineProps<{
 		presentation?: DatetimePresentation,
 		showDefaultButtons?: boolean,
-		highlightedDates?: any,
+		highlightedDates?: DatetimeHighlight[] | DatetimeHighlightCallback,
 		min?: Date,
 		max?: Date,
 		title?: string
@@ -22,21 +37,21 @@
 </script>
 
 <template>
-	<IonModal :keepContentsMounted="true">
+	<IonModal :keep-contents-mounted="true">
 		<IonDatetime
+			v-model="innerModel"
 			:presentation="props.presentation"
-			:showDefaultButtons="props.showDefaultButtons"
-			:hourCycle="appConfig.locale.twelveHourClock ? 'h12' : 'h23'"
-			:firstDayOfWeek="appConfig.locale.twelveHourClock ? 0 : 1"
+			:show-default-buttons="props.showDefaultButtons"
+			:hour-cycle="appConfig.locale.twelveHourClock ? 'h12' : 'h23'"
+			:first-day-of-week="appConfig.locale.twelveHourClock ? 0 : 1"
 			:locale="appConfig.locale.language || 'en'"
 			:min="props.min ? dayjs(props.min).format() : undefined"
 			:max="props.max ? dayjs(props.max).format() : undefined"
-			:highlightedDates="props.highlightedDates"
-			:doneText="$t('other:alerts.ok')"
-			:cancelText="$t('other:alerts.cancel')"
-			v-model="innerModel"
+			:highlighted-dates="props.highlightedDates"
+			:done-text="$t('other:alerts.ok')"
+			:cancel-text="$t('other:alerts.cancel')"
 		>
-			<span slot="title" v-if="props.title">{{ props.title }}</span>
+			<span v-if="props.title" slot="title">{{ props.title }}</span>
 			<span slot="time-label">{{ $t("other:time") }}</span>
 		</IonDatetime>
 	</IonModal>

@@ -1,13 +1,13 @@
 <script setup lang="ts">
-	import { IonCard, IonCardContent, IonLabel, IonListHeader } from '@ionic/vue';
-	import MemberAvatar from '../member/MemberAvatar.vue';
-	import { h, onBeforeMount, onUnmounted, ref, shallowRef } from 'vue';
-	import type { FrontingEntryComplete } from '../../lib/db/entities.d.ts';
-	import { getFronting } from '../../lib/db/tables/frontingEntries';
+	import { IonCard, IonCardContent, IonLabel, IonListHeader } from "@ionic/vue";
+	import MemberAvatar from "../member/MemberAvatar.vue";
+	import { h, onBeforeMount, onUnmounted, ref, shallowRef } from "vue";
+	import type { FrontingEntryComplete } from "../../lib/db/entities.d.ts";
+	import { getFronting } from "../../lib/db/tables/frontingEntries";
 	import { formatWrittenTime } from "../../lib/util/misc";
-	import FrontingEntryEdit from '../../modals/FrontingEntryEdit.vue';
-	import { DatabaseEvents, DatabaseEvent } from '../../lib/db/events';
-	import { addModal, removeModal } from '../../lib/modals.ts';
+	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
+	import { DatabaseEvents, DatabaseEvent } from "../../lib/db/events";
+	import { addModal, removeModal } from "../../lib/modals.ts";
 
 	const frontingEntries = shallowRef<FrontingEntryComplete[]>([]);
 
@@ -19,10 +19,10 @@
 		frontingEntries.value = await getFronting();
 	}
 
-	const listener = async (event: Event) => {
+	const listener = (event: Event) => {
 		if(["members", "frontingEntries"].includes((event as DatabaseEvent).data.table))
-			await updateFrontingEntries();
-	}
+			void updateFrontingEntries();
+	};
 
 	onBeforeMount(async () => {
 		interval = setInterval(() => now.value = new Date(), 1000);
@@ -42,6 +42,7 @@
 		});
 
 		const modal = await addModal(vnode);
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-call
 		await (modal.el as any).present();
 	}
 </script>
@@ -50,8 +51,14 @@
 	<IonListHeader v-if="frontingEntries.length">
 		<IonLabel>{{ $t("dashboard:nowFronting") }}</IonLabel>
 	</IonListHeader>
-	<div class="carousel" v-if="frontingEntries.length">
-		<IonCard button :class="{outlined: !fronting.isMainFronter, elevated: fronting.isMainFronter}" @click="showModal(fronting)" v-for="fronting in frontingEntries" :key="fronting.uuid">
+	<div v-if="frontingEntries.length" class="carousel">
+		<IonCard
+			v-for="fronting in frontingEntries"
+			:key="fronting.uuid"
+			button
+			:class="{outlined: !fronting.isMainFronter, elevated: fronting.isMainFronter}"
+			@click="showModal(fronting)"
+		>
 			<IonCardContent>
 				<MemberAvatar :member="fronting.member" />
 				<IonLabel>

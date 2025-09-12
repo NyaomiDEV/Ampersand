@@ -22,87 +22,95 @@
 	/* Wait for Firefox and Safari to implement field-sizing in CSS and then use that instead of rows: 4 */
 
 	function showReasonAlert(): Promise<string | undefined>{
-		return new Promise(async (resolve) => {
-			const alert = await alertController.create({
-				header: i18next.t("messageBoard:polls.voteCast.reason"),
-				buttons: [
-					{
-						text: i18next.t("other:alerts.cancel"),
-						role: "cancel",
-						handler: () => resolve(undefined)
-					},
-					{
-						text: i18next.t("other:alerts.ok"),
-						role: "confirm",
-						handler: (e) => resolve(e.reason.length ? e.reason : null)
-					}
-				],
-				inputs: [
-					{
-						name: "reason",
-						type: "textarea",
-						attributes: {
-							rows: 4
+		return new Promise((resolve) => {
+			void (async () => {
+				const alert = await alertController.create({
+					header: i18next.t("messageBoard:polls.voteCast.reason"),
+					buttons: [
+						{
+							text: i18next.t("other:alerts.cancel"),
+							role: "cancel",
+							handler: () => resolve(undefined)
 						},
-						placeholder: i18next.t("messageBoard:polls.voteCast.reasonHint")
-					}
-				]
-			});
+						{
+							text: i18next.t("other:alerts.ok"),
+							role: "confirm",
+							handler: (e) => resolve(e.reason.length ? e.reason : null)
+						}
+					],
+					inputs: [
+						{
+							name: "reason",
+							type: "textarea",
+							attributes: {
+								rows: 4
+							},
+							placeholder: i18next.t("messageBoard:polls.voteCast.reasonHint")
+						}
+					]
+				});
 
-			await alert.present();
+				await alert.present();
+			})();
 		});
 	}
 
 	function showRetractCastAlert(): Promise<boolean>{
-		return new Promise(async (resolve) => {
-			const alert = await alertController.create({
-				header: i18next.t("messageBoard:polls.voteCast.retractConfirmation"),
-				buttons: [
-					{
-						text: i18next.t("other:alerts.cancel"),
-						role: "cancel",
-						handler: () => resolve(false)
-					},
-					{
-						text: i18next.t("other:alerts.ok"),
-						role: "confirm",
-						handler: () => resolve(true)
-					}
-				]
-			});
+		return new Promise((resolve) => {
+			void (async () => {
+				const alert = await alertController.create({
+					header: i18next.t("messageBoard:polls.voteCast.retractConfirmation"),
+					buttons: [
+						{
+							text: i18next.t("other:alerts.cancel"),
+							role: "cancel",
+							handler: () => resolve(false)
+						},
+						{
+							text: i18next.t("other:alerts.ok"),
+							role: "confirm",
+							handler: () => resolve(true)
+						}
+					]
+				});
 
-			await alert.present();
+				await alert.present();
+			})();
 		});
 	}
 
 	function getVoter(): Promise<Member | undefined> {
-		return new Promise(async resolve => {
-			let member: Member | undefined;
-			const vnode = h(MemberSelect, {
-				onlyOne: true,
-				discardOnSelect: true,
-				hideCheckboxes: true,
-				customTitle: i18next.t("messageBoard:polls.voteCast.voter"),
-				onDidDismiss: () => {
-					removeModal(vnode);
-					resolve(member);
-				},
-				"onUpdate:modelValue": v => { if(v[0]) member = v[0] },
-			});
+		return new Promise(resolve => {
+			void (async () => {
+				let member: Member | undefined;
+				const vnode = h(MemberSelect, {
+					onlyOne: true,
+					discardOnSelect: true,
+					hideCheckboxes: true,
+					customTitle: i18next.t("messageBoard:polls.voteCast.voter"),
+					onDidDismiss: () => {
+						removeModal(vnode);
+						resolve(member);
+					},
+					"onUpdate:modelValue": v => { if(v[0]) member = v[0]; },
+				});
 
-			const modal = await addModal(vnode);
-			await (modal.el as any).present();
-		})
+				const modal = await addModal(vnode);
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-explicit-any
+				await (modal.el as any).present();
+			})();
+		});
 	}
 
 	async function showPollResults(){
-			const vnode = h(PollResults, {
-				onDidDismiss: () => removeModal(vnode),
-				poll: props.boardMessage.poll!
-			});
+		const vnode = h(PollResults, {
+			onDidDismiss: () => removeModal(vnode),
+			poll: props.boardMessage.poll!
+		});
 
-			const modal = await addModal(vnode);
-			await (modal.el as any).present();
+		const modal = await addModal(vnode);
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-explicit-any
+		await (modal.el as any).present();
 	}
 
 	async function voteFor(choice: PollEntry){
@@ -134,7 +142,7 @@
 					.filter(x => choice !== x)
 					.forEach(x => {
 						const index = x.votes.findIndex(x => x.member === voter.uuid);
-						if(index > -1) x.votes.splice(index, 1)
+						if(index > -1) x.votes.splice(index, 1);
 					});
 			}
 		}
@@ -163,16 +171,22 @@
 				<div class="contents">
 					<h1>{{ props.boardMessage.title }}</h1>
 					<Markdown :markdown="props.boardMessage.body" />
-					<p class="contains-poll" v-if="props.boardMessage.poll && props.hidePoll">
+					<p v-if="props.boardMessage.poll && props.hidePoll" class="contains-poll">
 						{{ $t("messageBoard:polls.boardMessageContainsPoll") }}
 					</p>
 				</div>
-				<div class="poll" v-if="props.boardMessage.poll && !props.hidePoll" @click="(e) => e.stopPropagation()">
-					<IonItem button :detail="false" v-for="choice in props.boardMessage.poll.entries" @click="voteFor(choice)" :key="choice.choice">
+				<div v-if="props.boardMessage.poll && !props.hidePoll" class="poll" @click="(e) => e.stopPropagation()">
+					<IonItem
+						v-for="choice in props.boardMessage.poll.entries"
+						:key="choice.choice"
+						button
+						:detail="false"
+						@click="voteFor(choice)"
+					>
 						<IonLabel>
 							<h3>{{ choice.choice }}</h3>
 							<p>{{ $t("messageBoard:polls.choice.desc", { count: choice.votes.length }) }} - {{ Math.floor(calcPercentageVoted(choice) * 100) }}%</p>
-							<div class="percentage" :style="{'--vote-percentage': (Math.max(0.005, calcPercentageVoted(choice)) * 100) + '%'}"></div>
+							<div class="percentage" :style="{'--vote-percentage': (Math.max(0.005, calcPercentageVoted(choice)) * 100) + '%'}" />
 						</IonLabel>
 					</IonItem>
 					<IonButton @click="showPollResults">{{ $t("messageBoard:polls.resultsButton") }}</IonButton>

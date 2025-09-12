@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 import { Typeson } from "typeson";
 import { getTables, ShittyTable } from "./tables";
 import { blob, file, filelist, imagebitmap, imagedata, map, set, typedArrays, undef } from "typeson-registry";
@@ -60,7 +58,7 @@ async function _importDatabase(tablesAndConfig){
 				if(await table.bulkAdd(revived.database[key]) === false) return false;
 			}
 		}
-	}catch(e){
+	}catch(_e){
 		return false;
 	}
 
@@ -72,7 +70,7 @@ export async function importDatabaseFromBinary(data: Uint8Array<ArrayBuffer>) {
 		const theEntireDatabase = decode(await decompressGzip(data)) as Record<string, unknown>;
 
 		return await _importDatabase(theEntireDatabase);
-	}catch(e){
+	}catch(_e){
 		return false;
 	}
 }
@@ -83,7 +81,7 @@ export async function importDatabaseFromBinaryWithPassword(data: Uint8Array<Arra
 		const theEntireDatabase = decode(await decrypt(encodedDatabase, password)) as Record<string, unknown>;
 
 		return await _importDatabase(theEntireDatabase);
-	}catch(e){
+	}catch(_e){
 		return false;
 	}
 }

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonFab, IonListHeader, IonFabButton, IonIcon, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonLabel, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonItem, IonToggle, ToggleChangeEventDetail } from '@ionic/vue';
 	import { inject, onBeforeMount, onUnmounted, shallowRef } from 'vue';
-	import { addOutline as addIOS } from "ionicons/icons";
 
 	import { Reminder } from '../../lib/db/entities';
 	import { getReminders } from '../../lib/db/tables/reminders';
@@ -110,7 +109,7 @@
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
 				<IonFabButton routerLink="/options/reminders/edit">
-					<IonIcon :ios="addIOS" :md="addMD" />
+					<IonIcon :icon="addMD" />
 				</IonFabButton>
 			</IonFab>
 		</IonContent>

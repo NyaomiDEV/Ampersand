@@ -27,7 +27,7 @@
 	}>();
 
 	const emit = defineEmits<{
-		'update:modelValue': [Tag[]],
+		"update:modelValue": [Tag[]],
 	}>();
 
 	const selectedTags = reactive<Tag[]>([...props.modelValue || []]);
@@ -58,23 +58,29 @@
 </script>
 
 <template>
-	<IonModal class="tag-select-modal" :breakpoints="[0,0.75,1]" initialBreakpoint="1">
+	<IonModal class="tag-select-modal" :breakpoints="[0,0.75,1]" initial-breakpoint="1">
 		<IonHeader>
 			<IonToolbar>
 				<IonTitle>{{ props.customTitle ?? $t("tagManagement:select") }}</IonTitle>
 			</IonToolbar>
 			<IonToolbar>
-				<IonSearchbar :animated="true" :placeholder="$t('tagManagement:searchPlaceholder')"
-					showCancelButton="focus" showClearButton="focus" :spellcheck="false" @ionChange="e => search = e.detail.value || ''" />
+				<IonSearchbar
+					:animated="true"
+					:placeholder="$t('tagManagement:searchPlaceholder')"
+					show-cancel-button="focus"
+					show-clear-button="focus"
+					:spellcheck="false"
+					@ion-change="e => search = e.detail.value || ''"
+				/>
 			</IonToolbar>
 		</IonHeader>
 
 		<SpinnerFullscreen v-if="!tags" />
 		<IonContent v-else>
 			<IonList :inset="isIOS">
-				<IonItem button v-for="tag in tags" :key="tag.uuid">
+				<IonItem v-for="tag in tags" :key="tag.uuid" button>
 					<TagColor slot="start" :tag />
-					<IonCheckbox :value="tag.uuid" :checked="!!selectedTags.find(x => x.uuid === tag.uuid)" @update:modelValue="value => check(tag, value)">
+					<IonCheckbox :value="tag.uuid" :checked="!!selectedTags.find(x => x.uuid === tag.uuid)" @update:model-value="value => check(tag, value)">
 						<TagLabel :tag />
 					</IonCheckbox>
 				</IonItem>

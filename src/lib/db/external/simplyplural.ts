@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { System, Member, FrontingEntry, Tag, BoardMessage, CustomField, JournalPost } from "../entities";
@@ -50,7 +49,7 @@ async function getAvatarFromUuid(systemId: string, avatarUuid: string){
 		const url = `https://spaces.apparyllis.com/avatars/${systemId}/${avatarUuid}`;
 		const req = await (await fetch(url)).blob();
 		return new File([req], avatarUuid + "." + req.type.split("/")[1]);
-	}catch(e){
+	}catch(_e){
 		return undefined;
 	}
 }
@@ -72,7 +71,7 @@ async function system(spExport: any){
 				spSystem.avatarUrl.split("/").pop()
 			);
 			systemInfo.image = await resizeImage(image);
-		} catch (e) {
+		} catch (_e) {
 			// whatever
 		}
 	} else if (spSystem.avatarUuid?.length) {
@@ -171,7 +170,7 @@ export async function member(spExport: any, systemUid: string, tagMapping: Map<s
 					spMember.avatarUrl.split("/").pop()
 				);
 				member.image = await resizeImage(image);
-			} catch (e) {
+			} catch (_e) {
 				// whatever
 			}
 		} else if (spMember.avatarUuid?.length) {
@@ -206,7 +205,7 @@ export async function member(spExport: any, systemUid: string, tagMapping: Map<s
 					spCustomFront.avatarUrl.split("/").pop()
 				);
 				member.image = await resizeImage(image);
-			} catch (e) {
+			} catch (_e) {
 				// whatever
 			}
 		} else if (spCustomFront.avatarUuid?.length) 
@@ -283,14 +282,14 @@ function boardMessage(spExport: any, memberMapping: Map<string, string>){
 				multipleChoice: false,
 				entries: spPoll.custom
 					? spPoll.options.map(x => ({
-						choice: x.name,
-						votes: spPoll.votes
-							.filter(y => y.vote === x.name)
-							.map(y => ({
-								member: memberMapping.get(y.id) || nilUid,
-								reason: y.comment?.length ? y.comment : undefined
-							}))
-					}))
+							choice: x.name,
+							votes: spPoll.votes
+								.filter(y => y.vote === x.name)
+								.map(y => ({
+									member: memberMapping.get(y.id) || nilUid,
+									reason: y.comment?.length ? y.comment : undefined
+								}))
+						}))
 					: [
 							{
 								choice: t("messageBoard:polls.defaultPollValues.yes"),
@@ -419,7 +418,7 @@ export async function importSimplyPlural(spExport: any) {
 		await tables.frontingEntries.bulkAdd(frontingEntries);
 		await tables.boardMessages.bulkAdd(boardMessages);
 		await tables.journalPosts.bulkAdd(posts);
-	}catch(e){
+	}catch(_e){
 		return false;
 	}
 

@@ -17,7 +17,7 @@
 	import MemberLabel from "../components/member/MemberLabel.vue";
 	import type { Member } from "../lib/db/entities.d.ts";
 	import { getFilteredMembers } from "../lib/db/tables/members";
-	import { DatabaseEvents, DatabaseEvent } from '../lib/db/events';
+	import { DatabaseEvents, DatabaseEvent } from "../lib/db/events";
 	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
 
 	const isIOS = inject<boolean>("isIOS");
@@ -38,10 +38,10 @@
 	const search = ref("");
 	const members = shallowRef<Member[]>();
 
-	const listener = async (event: Event) => {
-		if((event as DatabaseEvent).data.table == "members")
-			members.value = await Array.fromAsync(getFilteredMembers(search.value));
-	}
+	const listener = (event: Event) => {
+		if((event as DatabaseEvent).data.table === "members")
+			void Array.fromAsync(getFilteredMembers(search.value)).then(res => members.value = res);
+	};
 
 	watch(selectedMembers, () => {
 		emit("update:modelValue", [...toRaw(selectedMembers)]);
@@ -74,39 +74,43 @@
 					// selected the one who was already selected since we're in "selection mode"
 					// we will just not uncheck it
 					// (hideCheckboxes implies onlyOne)
-					if(props.discardOnSelect){
-						modalController.dismiss();
-					}
+					if(props.discardOnSelect)
+						void modalController.dismiss();
 					return;
 				}
 				selectedMembers.splice(index, 1);
 			}
 		}
 
-		if(onlyOne && props.discardOnSelect){
-			modalController.dismiss();
-		}
+		if(onlyOne && props.discardOnSelect)
+			void modalController.dismiss();
 	}
 </script>
 
 <template>
-	<IonModal class="member-select-modal" :breakpoints="[0,0.75,1]" initialBreakpoint="1">
+	<IonModal class="member-select-modal" :breakpoints="[0,0.75,1]" initial-breakpoint="1">
 		<IonHeader>
 			<IonToolbar>
 				<IonTitle>{{ props.customTitle ?? $t("members:select") }}</IonTitle>
 			</IonToolbar>
 			<IonToolbar>
-				<IonSearchbar :animated="true" :placeholder="$t('members:searchPlaceholder')"
-					showCancelButton="focus" showClearButton="focus" :spellcheck="false" @ionChange="e => search = e.detail.value || ''" />
+				<IonSearchbar
+					:animated="true"
+					:placeholder="$t('members:searchPlaceholder')"
+					show-cancel-button="focus"
+					show-clear-button="focus"
+					:spellcheck="false"
+					@ion-change="e => search = e.detail.value || ''"
+				/>
 			</IonToolbar>
 		</IonHeader>
 
 		<SpinnerFullscreen v-if="!members" />
 		<IonContent v-else>
 			<IonList :inset="isIOS">
-				<IonItem button v-for="member in members" :key="member.uuid">
+				<IonItem v-for="member in members" :key="member.uuid" button>
 					<MemberAvatar slot="start" :member />
-					<IonCheckbox :value="member.uuid" :checked="!!selectedMembers.find(x => x.uuid === member.uuid)" @update:modelValue="value => check(member, value)">
+					<IonCheckbox :value="member.uuid" :checked="!!selectedMembers.find(x => x.uuid === member.uuid)" @update:model-value="value => check(member, value)">
 						<MemberLabel :member />
 					</IonCheckbox>
 				</IonItem>

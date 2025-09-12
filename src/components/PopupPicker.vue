@@ -1,13 +1,13 @@
 <script setup lang="ts">
-	import { IonModal, IonPicker, IonPickerColumn, IonPickerColumnOption } from '@ionic/vue';
-	import { onMounted, reactive, watch } from 'vue';
+	import { IonModal, IonPicker, IonPickerColumn, IonPickerColumnOption } from "@ionic/vue";
+	import { onMounted, reactive, watch } from "vue";
 
 	type ColumnContent = {
 		name: string,
 		values: PickerValue[],
 		prefix?: string,
 		suffix?: string
-	}
+	};
 
 	type PickerValue = {
 		name: string,
@@ -15,7 +15,7 @@
 		default?: boolean,
 		disabled?: boolean,
 		color?: string
-	}
+	};
 
 	const props = defineProps<{
 		content: ColumnContent[],
@@ -23,7 +23,7 @@
 	}>();
 
 	const emit = defineEmits<{
-		'update:modelValue': [Map<string, string | number | undefined>],
+		"update:modelValue": [Map<string, string | number | undefined>],
 	}>();
 
 	const values = reactive(new Map<string, string | number | undefined>(props.modelValue));
@@ -44,14 +44,20 @@
 			<IonPickerColumn
 				v-for="column in props.content"
 				:key="column.name"
-				@ionChange="(e) => { values.set(column.name, e.detail.value) }"
 				:value="values.get(column.name) || column.values.find(x => x.default)?.value || undefined"
+				@ion-change="(e) => { values.set(column.name, e.detail.value) }"
 			>
-				<div slot="prefix" v-if="column.prefix">{{ column.prefix }}</div>
-				<IonPickerColumnOption v-for="option in column.values" :key="option.value" :value="option.value" :color="option.color" :disabled="option.disabled">
+				<div v-if="column.prefix" slot="prefix">{{ column.prefix }}</div>
+				<IonPickerColumnOption
+					v-for="option in column.values"
+					:key="option.value"
+					:value="option.value"
+					:color="option.color"
+					:disabled="option.disabled"
+				>
 					{{ option.name }}
 				</IonPickerColumnOption>
-				<div slot="suffix" v-if="column.suffix">{{ column.suffix }}</div>
+				<div v-if="column.suffix" slot="suffix">{{ column.suffix }}</div>
 			</IonPickerColumn>
 		</IonPicker>
 	</IonModal>

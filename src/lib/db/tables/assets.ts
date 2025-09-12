@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUID, UUIDable, Asset } from "../entities";
@@ -29,7 +27,7 @@ export async function newAsset(asset: Omit<Asset, keyof UUIDable>) {
 			data: uuid
 		}));
 		return uuid;
-	}catch(error){
+	}catch(_error){
 		return false;
 	}
 }
@@ -47,7 +45,7 @@ export async function deleteAsset(uuid: UUID) {
 			data: uuid
 		}));
 		return true;
-	} catch (error) {
+	} catch (_error) {
 		return false;
 	}
 }
@@ -64,7 +62,7 @@ export async function updateAsset(uuid: UUID, newContent: Partial<Asset>) {
 			return true;
 		}
 		return false;
-	}catch(error){
+	}catch(_error){
 		return false;
 	}
 }

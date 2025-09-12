@@ -1,13 +1,13 @@
 <script setup lang="ts">
-	import { IonList, IonItem, IonListHeader, IonLabel } from '@ionic/vue';
-	import { h, inject, onBeforeMount, onUnmounted, shallowRef } from 'vue';
+	import { IonList, IonItem, IonListHeader, IonLabel } from "@ionic/vue";
+	import { h, inject, onBeforeMount, onUnmounted, shallowRef } from "vue";
 	import MemberAvatar from "../member/MemberAvatar.vue";
 	import FrontingEntryLabel from "../frontingEntry/FrontingEntryLabel.vue";
-	import type { FrontingEntryComplete } from '../../lib/db/entities.d.ts';
-	import { getRecentlyFronted } from '../../lib/db/tables/frontingEntries';
+	import type { FrontingEntryComplete } from "../../lib/db/entities.d.ts";
+	import { getRecentlyFronted } from "../../lib/db/tables/frontingEntries";
 	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
-	import { DatabaseEvents, DatabaseEvent } from '../../lib/db/events';
-	import { addModal, removeModal } from '../../lib/modals.ts';
+	import { DatabaseEvents, DatabaseEvent } from "../../lib/db/events";
+	import { addModal, removeModal } from "../../lib/modals.ts";
 
 	const isIOS = inject<boolean>("isIOS");
 
@@ -17,10 +17,10 @@
 		frontingEntries.value = await getRecentlyFronted();
 	}
 
-	const listener = async (event: Event) => {
+	const listener = (event: Event) => {
 		if(["members", "frontingEntries"].includes((event as DatabaseEvent).data.table))
-			await updateFrontingEntries();
-	}
+			void updateFrontingEntries();
+	};
 
 	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
@@ -38,6 +38,7 @@
 		});
 
 		const modal = await addModal(vnode);
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-call
 		await (modal.el as any).present();
 	}
 </script>
@@ -47,8 +48,13 @@
 		<IonLabel>{{ $t("dashboard:recentFrontingHistory") }}</IonLabel>
 	</IonListHeader>
 
-	<IonList :inset="isIOS" v-if="frontingEntries">
-		<IonItem button v-for="entry in frontingEntries" :key="entry.uuid" @click="showModal(entry)">
+	<IonList v-if="frontingEntries" :inset="isIOS">
+		<IonItem
+			v-for="entry in frontingEntries"
+			:key="entry.uuid"
+			button
+			@click="showModal(entry)"
+		>
 			<MemberAvatar slot="start" :member="entry.member" />
 			<FrontingEntryLabel :entry />
 		</IonItem>

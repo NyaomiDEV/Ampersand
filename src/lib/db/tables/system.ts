@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUIDable, System } from "../entities";
@@ -17,7 +15,7 @@ export async function newSystem(system: Omit<System, keyof UUIDable>){
 			data: uuid
 		}));
 		return uuid;
-	}catch(error){
+	}catch(_error){
 		return false;
 	}
 }
@@ -46,7 +44,7 @@ export async function modifySystem(system: Partial<System>) {
 			return true;
 		}
 		return false;
-	} catch (error) {
+	} catch (_error) {
 		return false;
 	}
 }

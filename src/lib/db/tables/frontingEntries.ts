@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 import { db, IndexEntry } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUIDable, Member, FrontingEntry, FrontingEntryComplete, UUID } from "../entities";
@@ -42,7 +40,7 @@ export async function newFrontingEntry(frontingEntry: Omit<FrontingEntry, keyof 
 			data: uuid
 		}));
 		return uuid;
-	}catch(error){
+	}catch(_error){
 		return false;
 	}
 }
@@ -56,7 +54,7 @@ export async function deleteFrontingEntry(uuid: UUID) {
 			data: uuid
 		}));
 		return true;
-	} catch (error) {
+	} catch (_error) {
 		return false;
 	}
 }
@@ -85,7 +83,7 @@ export async function updateFrontingEntry(uuid: UUID, newContent: Partial<Fronti
 			return true;
 		}
 		return false;
-	}catch(error){
+	}catch(_error){
 		return false;
 	}
 }

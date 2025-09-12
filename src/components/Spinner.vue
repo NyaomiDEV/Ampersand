@@ -12,10 +12,10 @@
 	<div class="parent">
 		<div class="spinner">
 			<div class="left">
-				<div class="circle"></div>
+				<div class="circle" />
 			</div>
 			<div class="right">
-				<div class="circle"></div>
+				<div class="circle" />
 			</div>
 		</div>
 	</div>

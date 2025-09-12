@@ -26,8 +26,7 @@ marked.use({
 					width: (token as any).width,
 					height: (token as any).height
 				});
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
-			} catch (e) {
+			} catch (_e) {
 				return h(Text, token.text);
 			}
 		},
@@ -37,8 +36,7 @@ marked.use({
 			try{
 				const href = encodeURI(token.href).replace(/%25/g, "%");
 				return h("a", { href, title: token.title }, inlineParsed);
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
-			}catch(e){
+			}catch(_e){
 				return h(Fragment, inlineParsed);
 			}
 		},

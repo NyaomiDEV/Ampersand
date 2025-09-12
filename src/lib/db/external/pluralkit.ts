@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { CustomField, FrontingEntry, Member, System, Tag } from "../entities";
@@ -25,7 +24,7 @@ async function system(pkExport: any){
 		try {
 			const request = await fetch(pkExport.avatar_url);
 			systemInfo.image = new File([await request.blob()], (pkExport.avatar_url as string).split("/").pop()!);
-		} catch (e) {
+		} catch (_e) {
 			// whatever
 		}
 	}
@@ -77,7 +76,7 @@ async function member(pkExport: any, tagMapping: Map<string, string>, pkField: C
 			try {
 				const request = await fetch(pkMember.avatar_url);
 				member.image = new File([await request.blob()], pkMember.avatar_url.split("/").pop());
-			} catch (e) {
+			} catch (_e) {
 				// whatever, again
 			}
 		}
@@ -85,7 +84,7 @@ async function member(pkExport: any, tagMapping: Map<string, string>, pkField: C
 			try {
 				const request = await fetch(pkMember.banner);
 				member.cover = new File([await request.blob()], pkMember.banner.split("/").pop());
-			} catch (e) {
+			} catch (_e) {
 				// whatever, again
 			}
 		}

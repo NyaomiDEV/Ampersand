@@ -56,7 +56,7 @@ export class ShittyTable<T extends UUIDable> {
 		const _index = this.index.findIndex(x => data.uuid === x.uuid);
 		if(_index > -1)
 			this.index[_index] = indexEntry;
-		 else 
+		else 
 			this.index.push(indexEntry);
 		
 

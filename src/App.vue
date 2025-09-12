@@ -8,14 +8,14 @@
 	import { setRouterCanGoBack } from "./lib/util/backbutton";
 
 	provide("isIOS", computed(isIOSIonicMode));
-	provide("isDev", computed(() => import.meta.env.MODE === 'development'));
+	provide("isDev", computed(() => import.meta.env.MODE === "development"));
 
 	const ionRouter = useIonRouter();
 	const vueRouter = useRouter();
 
-	setRouterCanGoBack(ionRouter.canGoBack());
-	vueRouter.afterEach(() => {
-		setRouterCanGoBack(ionRouter.canGoBack());
+	void setRouterCanGoBack(ionRouter.canGoBack());
+	vueRouter.afterEach(async () => {
+		await setRouterCanGoBack(ionRouter.canGoBack());
 	});
 
 </script>

@@ -3,8 +3,6 @@
 	import { inject, onMounted, onUnmounted, ref, shallowRef, watch } from 'vue';
 	import { useRoute } from 'vue-router';
 
-	import { addOutline as addIOS } from "ionicons/icons";
-
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 
@@ -90,7 +88,7 @@
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
 				<IonFabButton routerLink="/options/tagManagement/edit">
-					<IonIcon :ios="addIOS" :md="addMD" />
+					<IonIcon :icon="addMD" />
 				</IonFabButton>
 			</IonFab>
 		</IonContent>

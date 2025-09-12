@@ -1,7 +1,7 @@
 <script setup lang="ts">
-	import { useTemplateRef } from 'vue';
-	import { IonModal } from '@ionic/vue';
-	import { ColorChangeDetail, ColorPicker } from 'vue-accessible-color-picker';
+	import { useTemplateRef } from "vue";
+	import { IonModal } from "@ionic/vue";
+	import { ColorChangeDetail, ColorPicker } from "vue-accessible-color-picker";
 	const colorModel = defineModel<string>();
 
 	const vacp = useTemplateRef("vacp");
@@ -11,6 +11,7 @@
 	}>();
 
 	function open(){
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 		vacp.value?.$el.present();
 	}
 	
@@ -21,17 +22,16 @@
 
 <template>
 	<div class="color-container" @click="open">
-		<slot></slot>
-		<div class="color" slot="end">
-		</div>
+		<slot />
+		<div slot="end" class="color" />
 	</div>
-	<IonModal class="color-modal" ref="vacp">
+	<IonModal ref="vacp" class="color-modal">
 		<ColorPicker
 			:alpha-channel="props.alpha ? 'show' : 'hide'"
 			:color="colorModel"
-			@color-change="updateColor"
 			:visible-formats="['hex', 'rgb', 'hsl']"
 			default-format="hex"
+			@color-change="updateColor"
 		/>
 	</IonModal>
 </template>

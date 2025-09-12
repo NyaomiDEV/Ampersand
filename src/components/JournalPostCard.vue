@@ -24,8 +24,8 @@
 	});
 
 	let watchHandle: WatchStopHandle | undefined;
-	watch(props, () => {
-		updateTags();
+	watch(props, async () => {
+		await updateTags();
 		if (isReactive(props.post))
 			watchHandle = watch(props.post, updateTags);
 		else
@@ -51,10 +51,10 @@
 						<h1>{{ props.post.title }}</h1>
 						<h2 v-if="props.post.subtitle?.length">{{ props.post.subtitle }}</h2>
 						<div class="tags">
-							<TagChip v-for="tag in tags" :tag="tag" />
+							<TagChip v-for="tag in tags" :key="tag.uuid" :tag="tag" />
 						</div>
 					</div>
-					<img v-if="props.post.cover" class="cover" :src="getObjectURL(props.post.cover)">
+					<img v-if="props.post.cover" class="cover" :src="getObjectURL(props.post.cover)" />
 				</div>
 			</div>
 		</div>

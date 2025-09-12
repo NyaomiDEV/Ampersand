@@ -4,8 +4,8 @@
 		IonIcon,
 	} from "@ionic/vue";
 
-	import { Member } from '../../lib/db/entities';
-	import { getObjectURL } from '../../lib/util/blob';
+	import { Member } from "../../lib/db/entities";
+	import { getObjectURL } from "../../lib/util/blob";
 	import { PartialBy } from "../../lib/types";
 
 	import accountCircle from "@material-symbols/svg-600/outlined/account_circle.svg";
@@ -36,8 +36,8 @@
 
 <template>
 	<IonAvatar class="with-outline">
-		<img aria-hidden="true" :src="getObjectURL(props.member.image)" v-if="props.member.image" />
-		<IonIcon :icon="accountCircle" v-else />
+		<img v-if="props.member.image" aria-hidden="true" :src="getObjectURL(props.member.image)" />
+		<IonIcon v-else :icon="accountCircle" />
 	</IonAvatar>
 </template>
 

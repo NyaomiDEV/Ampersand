@@ -16,7 +16,7 @@
 	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
 	import type { Member, Poll } from "../lib/db/entities";
 	import { defaultMember, getMembers } from "../lib/db/tables/members.ts";
-	import { DatabaseEvents, DatabaseEvent } from '../lib/db/events.ts';
+	import { DatabaseEvents, DatabaseEvent } from "../lib/db/events.ts";
 
 	const isIOS = inject<boolean>("isIOS");
 
@@ -26,10 +26,10 @@
 
 	const members = shallowRef<Member[]>();
 
-	const listener = async (event: Event) => {
-		if((event as DatabaseEvent).data.table == "members")
-			members.value = await Array.fromAsync(getMembers());
-	}
+	const listener = (event: Event) => {
+		if((event as DatabaseEvent).data.table === "members")
+			void Array.fromAsync(getMembers()).then(res => members.value = res);
+	};
 
 	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
@@ -42,7 +42,7 @@
 </script>
 
 <template>
-	<IonModal class="poll-results-modal" :breakpoints="[0,0.75,1]" initialBreakpoint="1">
+	<IonModal class="poll-results-modal" :breakpoints="[0,0.75,1]" initial-breakpoint="1">
 		<IonHeader>
 			<IonToolbar>
 				<IonTitle>{{ $t("messageBoard:polls.resultsHeader") }}</IonTitle>

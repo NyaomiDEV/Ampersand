@@ -3,7 +3,7 @@
 		IonLabel,
 	} from "@ionic/vue";
 
-	import { FrontingEntryComplete } from '../../lib/db/entities';
+	import { FrontingEntryComplete } from "../../lib/db/entities";
 	import dayjs from "dayjs";
 	import { onMounted, onUnmounted, ref } from "vue";
 	import { formatDate, formatWrittenTime } from "../../lib/util/misc";
@@ -25,7 +25,7 @@
 		const start = dayjs(startTime);
 		const end = dayjs(endTime);
 
-		if(end.valueOf() - start.endOf('day').valueOf() <= 0) // same day
+		if(end.valueOf() - start.endOf("day").valueOf() <= 0) // same day
 			return formatDate(startTime) + "~" + formatDate(endTime);
 		
 		return formatDate(startTime, "expanded") + " - " + formatDate(endTime, "expanded");
@@ -52,7 +52,7 @@
 		<h2>
 			{{ props.entry.member.name }}
 		</h2>
-		<p class="custom-status" v-if="props.entry.customStatus" style="color: inherit;">
+		<p v-if="props.entry.customStatus" class="custom-status" style="color: inherit;">
 			{{ props.entry.customStatus }}
 		</p>
 		<p>

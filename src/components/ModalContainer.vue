@@ -1,16 +1,16 @@
 <script setup lang="ts">
-	import { withDirectives } from 'vue';
-	import { useModalContainer } from '../lib/modals';
+	import { withDirectives } from "vue";
+	import { useModalContainer } from "../lib/modals";
 
 	const { renderArray, modalDirective } = useModalContainer();
 </script>
 
 <template>
-	<template>
-		<component :is="() => 
+	<component
+		:is="() => 
 			renderArray.map(x => withDirectives(x, [
 				[modalDirective, { originalVnode: x }]
 			]))
-		" />
-	</template>
+		"
+	/>
 </template>

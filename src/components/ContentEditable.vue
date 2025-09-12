@@ -1,7 +1,7 @@
 <script setup lang="ts">
-	import { ref, inject, onMounted, nextTick, useTemplateRef } from 'vue';
-	import { IonLabel, IonTextarea } from '@ionic/vue';
-	import Markdown from './Markdown.vue';
+	import { ref, inject, onMounted, nextTick, useTemplateRef } from "vue";
+	import { IonLabel, IonTextarea } from "@ionic/vue";
+	import Markdown from "./Markdown.vue";
 	
 	const isIOS = inject<boolean>("isIOS");
 
@@ -17,33 +17,37 @@
 			model.value = "";
 	});
 
-	function clickHandler() {
+	async function clickHandler() {
 		focused.value = true;
-		nextTick(() => (textarea.value as any).$el.setFocus());
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-return
+		await nextTick(() => (textarea.value as any).$el.setFocus());
 	}
 </script>
 
 <template>
 	<div class="content-editable-wrapper">
 		<IonLabel
+			v-if="!focused && props.label"
 			class="content-editable"
 			position="stacked"
-			v-if="!focused && props.label"
 			@click="clickHandler"
-		>{{ props.label }}
+		>
+			{{ props.label }}
 		</IonLabel>
 
-		<div class="preview" v-if="!focused" @click="clickHandler"><Markdown :markdown="model" /></div>
+		<div v-if="!focused" class="preview" @click="clickHandler">
+			<Markdown :markdown="model" />
+		</div>
 
 		<IonTextarea
 			v-show="focused"
+			ref="textarea"
 			v-model="model"
 			:fill="!isIOS ? 'outline' : undefined"
 			auto-grow
 			:label="props.label"
-			labelPlacement="floating"
-			ref="textarea"
-			@ionBlur="focused = false"
+			label-placement="floating"
+			@ion-blur="focused = false"
 		/>
 	</div>
 </template>
