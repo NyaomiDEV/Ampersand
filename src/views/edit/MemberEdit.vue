@@ -122,6 +122,10 @@
 		}
 	}
 
+	function deletePicture(){
+		delete member.value.image;
+	}
+
 	async function modifyCover(){
 		const files = await getFiles();
 		if(files.length){
@@ -131,6 +135,10 @@
 			}
 			member.value.cover = await resizeImage(files[0], 1024);
 		}
+	}
+
+	function deleteCover(){
+		delete member.value.cover;
 	}
 
 	function promptDeletion(): Promise<boolean> {
@@ -248,14 +256,25 @@
 		<IonContent v-else>
 			<div class="cover-container">
 				<MemberCover class="cover" :member />
-				<IonButton v-if="isEditing" shape="round" @click="modifyCover">
-					<IonIcon slot="icon-only" :icon="pencilMD" />
-				</IonButton>
-				<div class="avatar-container">
-					<MemberAvatar :member />
-					<IonButton v-if="isEditing" shape="round" @click="modifyPicture">
+				<div v-if="isEditing" class="edit-buttons">
+					<IonButton shape="round" @click="modifyCover">
 						<IonIcon slot="icon-only" :icon="pencilMD" />
 					</IonButton>
+					<IonButton shape="round" color="danger" @click="deleteCover">
+						<IonIcon slot="icon-only" :icon="trashMD" />
+					</IonButton>
+				</div>
+
+				<div class="avatar-container">
+					<MemberAvatar :member />
+					<div v-if="isEditing" class="edit-buttons">
+						<IonButton shape="round" @click="modifyPicture">
+							<IonIcon slot="icon-only" :icon="pencilMD" />
+						</IonButton>
+						<IonButton shape="round" color="danger" @click="deletePicture">
+							<IonIcon slot="icon-only" :icon="trashMD" />
+						</IonButton>
+					</div>
 				</div>
 			</div>
 
@@ -477,9 +496,12 @@
 		margin-bottom: 16px;
 	}
 
-	div.cover-container ion-button {
+	div.cover-container > div.edit-buttons {
 		position: absolute;
 		bottom: 8px;
+		display: flex;
+		flex-direction: row-reverse;
+		gap: 16px;
 		right: 24px;
 	}
 
@@ -500,6 +522,19 @@
 		display: block;
 	}
 
+	div.avatar-container > div.edit-buttons {
+		position: absolute;
+		bottom: 8px;
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		flex-direction: row-reverse;
+	}
+
+	div.edit-buttons ion-button {
+		margin: 0;
+	}
+
 	div.member-tags {
 		display: flex;
 		flex-direction: row;
@@ -517,12 +552,6 @@
 		width: 192px;
 		height: 192px;
 		outline-width: 8px !important;
-	}
-
-	div.avatar-container ion-button {
-		position: absolute;
-		bottom: 8px;
-		right: 8px;
 	}
 
 	div.member-info {

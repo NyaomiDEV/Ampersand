@@ -12,6 +12,7 @@
 	import accountCircle from "@material-symbols/svg-600/outlined/account_circle.svg";
 	import pencilMD from "@material-symbols/svg-600/outlined/edit.svg";
 	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
+	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
 
 	const isIOS = inject<boolean>("isIOS");
 
@@ -30,6 +31,10 @@
 			}
 			system.value.image = await resizeImage(files[0]);	
 		}
+	}
+
+	function deletePicture(){
+		delete system.value.image;
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -80,9 +85,14 @@
 					<IonIcon v-else :icon="accountCircle" />
 				</IonAvatar>
 
-				<IonButton shape="round" @click="modifyPicture">
-					<IonIcon slot="icon-only" :icon="pencilMD" />
-				</IonButton>
+				<div class="edit-buttons">
+					<IonButton shape="round" @click="modifyPicture">
+						<IonIcon slot="icon-only" :icon="pencilMD" />
+					</IonButton>
+					<IonButton shape="round" color="danger" @click="deletePicture">
+						<IonIcon slot="icon-only" :icon="trashMD" />
+					</IonButton>
+				</div>
 			</div>
 
 			<IonList v-if="system" inset>
@@ -130,10 +140,13 @@
 		height: 192px;
 	}
 
-	div.avatar-container ion-button {
+	div.avatar-container > div.edit-buttons {
 		position: absolute;
 		bottom: 8px;
-		right: 8px;
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		flex-direction: row-reverse;
 	}
 
 	div.avatar-container ion-avatar ion-icon {

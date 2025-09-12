@@ -14,7 +14,8 @@
 	} from "@ionic/vue";
 
 	import pencilMD from "@material-symbols/svg-600/outlined/edit.svg";
-	import ArrowMD from "@material-symbols/svg-600/outlined/arrow_forward.svg";
+	import arrowMD from "@material-symbols/svg-600/outlined/arrow_forward.svg";
+	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
 
 	import { Member } from "../../lib/db/entities";
 	import { newMember } from "../../lib/db/tables/members";
@@ -47,6 +48,10 @@
 		}
 	}
 
+	function deletePicture(){
+		delete member.value.image;
+	}
+
 	async function save(){
 		const _member = toRaw(member.value);
 		await newMember({
@@ -64,9 +69,14 @@
 				<h1> {{ $t('onboarding:memberInfo.header') }}</h1>
 				<div class="avatar-container">
 					<MemberAvatar :member />
-					<IonButton shape="round" @click="modifyPicture">
-						<IonIcon slot="icon-only" :icon="pencilMD" />
-					</IonButton>
+					<div class="edit-buttons">
+						<IonButton shape="round" @click="modifyPicture">
+							<IonIcon slot="icon-only" :icon="pencilMD" />
+						</IonButton>
+						<IonButton shape="round" color="danger" @click="deletePicture">
+							<IonIcon slot="icon-only" :icon="trashMD" />
+						</IonButton>
+					</div>
 				</div>
 
 				<IonList class="member-edit" inset>
@@ -104,7 +114,7 @@
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
 				<IonFabButton v-if="member.name.length" @click="save">
-					<IonIcon :icon="ArrowMD" />
+					<IonIcon :icon="arrowMD" />
 				</IonFabButton>
 			</IonFab>
 		</IonContent>
@@ -144,9 +154,12 @@
 		outline-width: 8px !important;
 	}
 
-	div.avatar-container ion-button {
+	div.avatar-container > div.edit-buttons {
 		position: absolute;
 		bottom: 8px;
-		right: 8px;
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		flex-direction: row-reverse;
 	}
 </style>
