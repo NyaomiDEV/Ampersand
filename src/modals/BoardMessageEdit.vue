@@ -207,8 +207,7 @@
 				<IonItem v-if="!boardMessage.poll" button @click="() => { boardMessage.poll = { multipleChoice: false, entries: [] } }">
 					<IonIcon
 						slot="start"
-						:ios="chartIOS"
-						:md="chartMD"
+						:icon="chartMD"
 						aria-hidden="true"
 					/>
 					<IonLabel>
@@ -226,8 +225,7 @@
 					<IonItem button :detail="false" @click="() => { boardMessage.poll = undefined }">
 						<IonIcon
 							slot="start"
-							:ios="trashIOS"
-							:md="trashMD"
+							:icon="trashMD"
 							aria-hidden="true"
 							color="danger"
 						/>
@@ -260,8 +258,7 @@
 						>
 							<IonIcon
 								slot="icon-only"
-								:ios="trashIOS"
-								:md="trashMD"
+								:icon="trashMD"
 								color="danger"
 							/>
 						</IonButton>
@@ -270,8 +267,7 @@
 					<IonItem button @click="() => { boardMessage.poll!.entries.push({ votes: [], choice: '' }) }">
 						<IonIcon
 							slot="start"
-							:ios="addIOS"
-							:md="addMD"
+							:icon="addMD"
 							aria-hidden="true"
 						/>
 						<IonLabel>
@@ -288,8 +284,7 @@
 				>
 					<IonIcon
 						slot="start"
-						:ios="trashIOS"
-						:md="trashMD"
+						:icon="trashMD"
 						aria-hidden="true"
 						color="danger"
 					/>
@@ -302,7 +297,7 @@
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
 				<IonFabButton v-if="boardMessage.title.length > 0 && boardMessage.member" @click="save">
-					<IonIcon :ios="saveIOS" :md="saveMD" />
+					<IonIcon :icon="saveMD" />
 				</IonFabButton>
 			</IonFab>
 

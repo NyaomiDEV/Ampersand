@@ -131,8 +131,7 @@
 				>
 					<IonIcon
 						slot="start"
-						:ios="trashIOS"
-						:md="trashMD"
+						:icon="trashMD"
 						aria-hidden="true"
 						color="danger"
 					/>
@@ -145,7 +144,7 @@
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
 				<IonFabButton @click="save">
-					<IonIcon :ios="saveIOS" :md="saveMD" />
+					<IonIcon :icon="saveMD" />
 				</IonFabButton>
 			</IonFab>
 		</IonContent>
