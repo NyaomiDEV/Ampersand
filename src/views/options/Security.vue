@@ -1,9 +1,9 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonLabel, IonItem, IonList, IonPage, IonTitle, IonToolbar, IonToggle, IonBackButton, alertController } from '@ionic/vue';
-	import { inject, ref, onMounted } from 'vue';
-	import { disableApplock, enableApplock, areBiometricsAvailable } from '../../lib/applock';
-	import { securityConfig } from '../../lib/config';
-	import { useTranslation } from 'i18next-vue';
+	import { IonContent, IonHeader, IonLabel, IonItem, IonList, IonPage, IonTitle, IonToolbar, IonToggle, IonBackButton, alertController } from "@ionic/vue";
+	import { inject, ref, onMounted } from "vue";
+	import { disableApplock, enableApplock, areBiometricsAvailable } from "../../lib/applock";
+	import { securityConfig } from "../../lib/config";
+	import { useTranslation } from "i18next-vue";
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 
@@ -18,31 +18,33 @@
 	});
 
 	function enterPasswordAlert(prompt: string): Promise<string | null>{
-		return new Promise(async (resolve) => {
-			const alert = await alertController.create({
-				header: prompt,
-				buttons: [
-					{
-						text: i18next.t("other:alerts.cancel"),
-						role: "cancel",
-						handler: () => resolve(null)
-					},
-					{
-						text: i18next.t("other:alerts.ok"),
-						role: "confirm",
-						handler: (e) => resolve(e.password)
-					}
-				],
-				inputs: [
-					{
-						name: "password",
-						type: "password",
-						placeholder: i18next.t("security:inputPassword.hint")
-					}
-				]
-			});
+		return new Promise((resolve) => {
+			void (async () => {
+				const alert = await alertController.create({
+					header: prompt,
+					buttons: [
+						{
+							text: i18next.t("other:alerts.cancel"),
+							role: "cancel",
+							handler: () => resolve(null)
+						},
+						{
+							text: i18next.t("other:alerts.ok"),
+							role: "confirm",
+							handler: (e) => resolve(e.password)
+						}
+					],
+					inputs: [
+						{
+							name: "password",
+							type: "password",
+							placeholder: i18next.t("security:inputPassword.hint")
+						}
+					]
+				});
 
-			await alert.present();
+				await alert.present();
+			})();
 		});
 	}
 
@@ -52,9 +54,9 @@
 		if(password){
 			const result = enableApplock(password);
 			usePassword.value = result;
-		} else {
+		} else 
 			usePassword.value = false;
-		}
+		
 	}
 
 	async function modifyPassword() {
@@ -81,9 +83,9 @@
 	}
 
 	function toggle(){
-		if(usePassword.value) {
+		if(usePassword.value) 
 			return addPassword();
-		}
+		
 
 		return disablePassword();		
 	}
@@ -93,7 +95,12 @@
 	<IonPage>
 		<IonHeader>
 			<IonToolbar>
-				<IonBackButton slot="start" :text="isIOS ? $t('other:back') : undefined" :icon="!isIOS ? backMD : undefined" defaultHref="/options/" />
+				<IonBackButton
+					slot="start"
+					:text="isIOS ? $t('other:back') : undefined"
+					:icon="!isIOS ? backMD : undefined"
+					default-href="/options/"
+				/>
 				<IonTitle>
 					{{ $t("security:header") }}
 				</IonTitle>
@@ -103,7 +110,7 @@
 		<IonContent>
 			<IonList :inset="isIOS">
 				<IonItem>
-					<IonToggle @ionChange="toggle" v-model="usePassword">
+					<IonToggle v-model="usePassword" @ion-change="toggle">
 						<IonLabel>
 							<h3>{{ $t("security:applock.title") }}</h3>
 							<p>{{ $t("security:applock.desc") }}</p>
@@ -111,7 +118,12 @@
 					</IonToggle>
 				</IonItem>
 
-				<IonItem button :detail="true" @click="modifyPassword" :disabled="!securityConfig.password">
+				<IonItem
+					button
+					:detail="true"
+					:disabled="!securityConfig.password"
+					@click="modifyPassword"
+				>
 					<IonLabel>
 						<h3>{{ $t("security:editPassword") }}</h3>
 					</IonLabel>

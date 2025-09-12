@@ -22,7 +22,7 @@
 	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
 
-	import { newAsset, deleteAsset, updateAsset, getAsset } from '../../lib/db/tables/assets';
+	import { newAsset, deleteAsset, updateAsset, getAsset } from "../../lib/db/tables/assets";
 	import { Asset } from "../../lib/db/entities";
 	import { inject, onBeforeMount, ref, watch } from "vue";
 	import { PartialBy } from "../../lib/types";
@@ -47,9 +47,9 @@
 
 	async function updateFile() {
 		const files = await getFiles();
-		if (files.length > 0) {
+		if (files.length > 0) 
 			asset.value.file = files[0];
-		}
+		
 	}
 
 	async function save(){
@@ -69,32 +69,34 @@
 	}
 
 	function promptDeletion(): Promise<boolean> {
-		return new Promise(async (resolve) => {
-			const alert = await alertController.create({
-				header: i18next.t("assetManager:edit.delete.title"),
-				subHeader: i18next.t("assetManager:edit.delete.confirm"),
-				buttons: [
-					{
-						text: i18next.t("other:alerts.cancel"),
-						role: "cancel",
-						handler: () => resolve(false)
-					},
-					{
-						text: i18next.t("other:alerts.ok"),
-						role: "confirm",
-						handler: () => resolve(true)
-					}
-				]
-			});
+		return new Promise((resolve) => {
+			void (async () => {
+				const alert = await alertController.create({
+					header: i18next.t("assetManager:edit.delete.title"),
+					subHeader: i18next.t("assetManager:edit.delete.confirm"),
+					buttons: [
+						{
+							text: i18next.t("other:alerts.cancel"),
+							role: "cancel",
+							handler: () => resolve(false)
+						},
+						{
+							text: i18next.t("other:alerts.ok"),
+							role: "confirm",
+							handler: () => resolve(true)
+						}
+					]
+				});
 
-			await alert.present();
+				await alert.present();
+			})();
 		});
 	}
 
 	async function removeAsset(){
-		if(await promptDeletion()){
+		if(await promptDeletion())
 			await deleteAsset(asset.value.uuid!);
-		}
+		
 	}
 
 	async function updateRoute(){
@@ -120,7 +122,12 @@
 	<IonPage>
 		<IonHeader>
 			<IonToolbar>
-				<IonBackButton slot="start" :text="isIOS ? $t('other:back') : undefined" :icon="!isIOS ? backMD : undefined" defaultHref="/options/assetManager/" />
+				<IonBackButton
+					slot="start"
+					:text="isIOS ? $t('other:back') : undefined"
+					:icon="!isIOS ? backMD : undefined"
+					default-href="/options/assetManager/"
+				/>
 				<IonTitle>
 					{{ !asset.uuid ? $t("assetManager:add.header") : $t("assetManager:edit.header") }}
 				</IonTitle>
@@ -131,7 +138,12 @@
 		<IonContent v-else>
 			<IonList :inset="isIOS">
 
-				<AssetItem v-if="asset.file.size" :asset routeToOpenFile :showFilenameAndType="true" />
+				<AssetItem
+					v-if="asset.file.size"
+					:asset
+					route-to-open-file
+					:show-filename-and-type="true"
+				/>
 
 				<IonItem>
 					<IonButton @click="updateFile">
@@ -140,11 +152,26 @@
 				</IonItem>
 
 				<IonItem>
-					<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('assetManager:edit.friendlyName')" labelPlacement="floating" v-model="asset.friendlyName" />
+					<IonInput
+						v-model="asset.friendlyName"
+						:fill="!isIOS ? 'outline' : undefined"
+						:label="$t('assetManager:edit.friendlyName')"
+						label-placement="floating"
+					/>
 				</IonItem>
 
-				<IonItem button :detail="false" v-if="asset.uuid" @click="removeAsset">
-					<IonIcon :icon="trashMD" slot="start" aria-hidden="true" color="danger"/>
+				<IonItem
+					v-if="asset.uuid"
+					button
+					:detail="false"
+					@click="removeAsset"
+				>
+					<IonIcon
+						slot="start"
+						:icon="trashMD"
+						aria-hidden="true"
+						color="danger"
+					/>
 					<IonLabel color="danger">
 						<h3>{{ $t("assetManager:edit.delete.title") }}</h3>
 						<p>{{ $t("other:genericDeleteDesc") }}</p>
@@ -153,7 +180,7 @@
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton @click="save" v-if="asset.friendlyName.length > 0">
+				<IonFabButton v-if="asset.friendlyName.length > 0" @click="save">
 					<IonIcon :icon="saveMD" />
 				</IonFabButton>
 			</IonFab>

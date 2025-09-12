@@ -1,16 +1,16 @@
 <script setup lang="ts">
-	import { IonContent, IonList, IonPage, IonAvatar, IonButton, IonIcon, IonInput, IonFab, IonFabButton, IonItem, IonTextarea, useIonRouter} from '@ionic/vue';
-	import { inject, onBeforeMount, ref, toRaw } from 'vue';
-	import { getObjectURL } from '../../lib/util/blob';
-	import { getFiles, slideAnimation } from '../../lib/util/misc';
-	import { resizeImage } from '../../lib/util/image';
-	import { getSystem, modifySystem, newSystem } from '../../lib/db/tables/system';
+	import { IonContent, IonList, IonPage, IonAvatar, IonButton, IonIcon, IonInput, IonFab, IonFabButton, IonItem, IonTextarea, useIonRouter} from "@ionic/vue";
+	import { inject, onBeforeMount, ref, toRaw } from "vue";
+	import { getObjectURL } from "../../lib/util/blob";
+	import { getFiles, slideAnimation } from "../../lib/util/misc";
+	import { resizeImage } from "../../lib/util/image";
+	import { getSystem, modifySystem, newSystem } from "../../lib/db/tables/system";
 
 	import accountCircle from "@material-symbols/svg-600/outlined/account_circle.svg";
 	import pencilMD from "@material-symbols/svg-600/outlined/edit.svg";
 	import ArrowMD from "@material-symbols/svg-600/outlined/arrow_forward.svg";
-	import { System } from '../../lib/db/entities';
-	import { PartialBy } from '../../lib/types';
+	import { System } from "../../lib/db/entities";
+	import { PartialBy } from "../../lib/types";
 
 	const isIOS = inject<boolean>("isIOS");
 
@@ -22,7 +22,7 @@
 	async function modifyPicture(){
 		const files = await getFiles();
 		if(files.length){
-			if(files[0].type == 'image/gif'){
+			if(files[0].type === "image/gif"){
 				system.value.image = files[0];
 				return;
 			}
@@ -52,8 +52,8 @@
 				<h1> {{ $t('onboarding:systemInfo.header') }}</h1>
 				<div class="avatar-container">
 					<IonAvatar>
-						<img aria-hidden="true" :src="getObjectURL(system.image)" v-if="system?.image"/>
-						<IonIcon :icon="accountCircle" v-else />
+						<img v-if="system?.image" aria-hidden="true" :src="getObjectURL(system.image)" />
+						<IonIcon v-else :icon="accountCircle" />
 					</IonAvatar>
 
 					<IonButton shape="round" @click="modifyPicture">
@@ -61,13 +61,24 @@
 					</IonButton>
 				</div>
 
-				<IonList inset v-if="system">
+				<IonList v-if="system" inset>
 					<IonItem>
-						<IonInput :fill="!isIOS ? 'outline' : undefined" labelPlacement="floating" :label="$t('onboarding:systemInfo.name')" v-model="system.name" />
+						<IonInput
+							v-model="system.name"
+							:fill="!isIOS ? 'outline' : undefined"
+							label-placement="floating"
+							:label="$t('onboarding:systemInfo.name')"
+						/>
 					</IonItem>
 
 					<IonItem>
-						<IonTextarea :fill="!isIOS ? 'outline' : undefined" auto-grow :label="$t('onboarding:systemInfo.description')" labelPlacement="floating" v-model="system.description" />
+						<IonTextarea
+							v-model="system.description"
+							:fill="!isIOS ? 'outline' : undefined"
+							auto-grow
+							:label="$t('onboarding:systemInfo.description')"
+							label-placement="floating"
+						/>
 					</IonItem>
 				</IonList>
 			</div>

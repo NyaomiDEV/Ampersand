@@ -1,12 +1,12 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonFab, IonListHeader, IonFabButton, IonIcon, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonLabel, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonItem, IonToggle, ToggleChangeEventDetail } from '@ionic/vue';
-	import { inject, onBeforeMount, onUnmounted, shallowRef } from 'vue';
+	import { IonContent, IonHeader, IonFab, IonListHeader, IonFabButton, IonIcon, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonLabel, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonItem, IonToggle, ToggleChangeEventDetail } from "@ionic/vue";
+	import { inject, onBeforeMount, onUnmounted, shallowRef } from "vue";
 
-	import { Reminder } from '../../lib/db/entities';
-	import { getReminders } from '../../lib/db/tables/reminders';
-	import { DatabaseEvent, DatabaseEvents } from '../../lib/db/events';
+	import { Reminder } from "../../lib/db/entities";
+	import { getReminders } from "../../lib/db/tables/reminders";
+	import { DatabaseEvent, DatabaseEvents } from "../../lib/db/events";
 
-	import SpinnerFullscreen from '../../components/SpinnerFullscreen.vue';
+	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
@@ -15,17 +15,17 @@
 
 	const reminders = shallowRef<Reminder[]>();
 
-	const listener = async (event: Event) => {
+	const listener = (event: Event) => {
 		if(["reminders"].includes((event as DatabaseEvent).data.table))
-			reminders.value = await Array.fromAsync(getReminders());
-	}
+			void Array.fromAsync(getReminders()).then(res => reminders.value = res);
+	};
 
 	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
 		reminders.value = await Array.fromAsync(getReminders());
 	});
 
-	onUnmounted(async () => {
+	onUnmounted(() => {
 		DatabaseEvents.removeEventListener("updated", listener);
 	});
 
@@ -38,7 +38,12 @@
 	<IonPage>
 		<IonHeader>
 			<IonToolbar>
-				<IonBackButton slot="start" :text="isIOS ? $t('other:back') : undefined" :icon="!isIOS ? backMD : undefined" defaultHref="/options/" />
+				<IonBackButton
+					slot="start"
+					:text="isIOS ? $t('other:back') : undefined"
+					:icon="!isIOS ? backMD : undefined"
+					default-href="/options/"
+				/>
 				<IonTitle>
 					{{ $t("reminders:header") }}
 				</IonTitle>
@@ -62,10 +67,11 @@
 			</IonListHeader>
 
 			<IonList :inset="isIOS">
-				<IonItem button
+				<IonItem
 					v-for="eventReminder in reminders?.filter(x => x.type === 'event')"
 					:key="eventReminder.uuid"
-					:routerLink="'/options/reminders/edit?uuid='+eventReminder.uuid"
+					button
+					:router-link="'/options/reminders/edit?uuid='+eventReminder.uuid"
 				>
 					<IonLabel>
 						{{ eventReminder.name }}
@@ -75,7 +81,7 @@
 						<IonToggle
 							:checked="!!eventReminder.nativeId"
 							@click="(e) => e.stopPropagation()"
-							@ionChange="(e) => toggleReminder(eventReminder, e)"
+							@ion-change="(e) => toggleReminder(eventReminder, e)"
 						/>
 					</div>
 				</IonItem>
@@ -88,10 +94,11 @@
 			</IonListHeader>
 
 			<IonList :inset="isIOS">
-				<IonItem button
+				<IonItem
 					v-for="periodicReminder in reminders?.filter(x => x.type === 'periodic')"
 					:key="periodicReminder.uuid"
-					:routerLink="'/options/reminders/edit?uuid='+periodicReminder.uuid"
+					button
+					:router-link="'/options/reminders/edit?uuid='+periodicReminder.uuid"
 				>
 					<IonLabel>
 						{{ periodicReminder.name }}
@@ -101,14 +108,14 @@
 						<IonToggle
 							:checked="!!periodicReminder.nativeId"
 							@click="(e) => e.stopPropagation()"
-							@ionChange="(e) => toggleReminder(periodicReminder, e)"
+							@ion-change="(e) => toggleReminder(periodicReminder, e)"
 						/>
 					</div>
 				</IonItem>
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton routerLink="/options/reminders/edit">
+				<IonFabButton router-link="/options/reminders/edit">
 					<IonIcon :icon="addMD" />
 				</IonFabButton>
 			</IonFab>

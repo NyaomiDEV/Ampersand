@@ -1,21 +1,21 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonFab, IonFabButton, IonIcon, IonSearchbar, IonLabel, IonItemDivider, IonDatetime } from '@ionic/vue';
-	import { h, inject, onBeforeMount, onUnmounted, ref, shallowRef, watch } from 'vue';
-	import type { BoardMessageComplete } from '../../lib/db/entities.d.ts';
-	import { getBoardMessagesDays, getBoardMessagesOfDay } from '../../lib/db/tables/boardMessages';
+	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonFab, IonFabButton, IonIcon, IonSearchbar, IonLabel, IonItemDivider, IonDatetime } from "@ionic/vue";
+	import { h, inject, onBeforeMount, onUnmounted, ref, shallowRef, watch } from "vue";
+	import type { BoardMessageComplete } from "../../lib/db/entities.d.ts";
+	import { getBoardMessagesDays, getBoardMessagesOfDay } from "../../lib/db/tables/boardMessages";
 	import BoardMessageEdit from "../../modals/BoardMessageEdit.vue";
-	import Spinner from '../../components/Spinner.vue';
+	import Spinner from "../../components/Spinner.vue";
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 
-	import dayjs from 'dayjs';
+	import dayjs from "dayjs";
 
-	import { appConfig } from '../../lib/config';
-	import MessageBoardCard from '../../components/MessageBoardCard.vue';
-	import { DatabaseEvents, DatabaseEvent } from '../../lib/db/events';
-	import { useRoute } from 'vue-router';
-	import { addModal, removeModal } from '../../lib/modals.ts';
+	import { appConfig } from "../../lib/config";
+	import MessageBoardCard from "../../components/MessageBoardCard.vue";
+	import { DatabaseEvents, DatabaseEvent } from "../../lib/db/events";
+	import { useRoute } from "vue-router";
+	import { addModal, removeModal } from "../../lib/modals.ts";
 
 	const route = useRoute();
 
@@ -29,20 +29,18 @@
 
 	const date = ref(dayjs().toISOString());
 
-	const listener = async (event: Event) => {
-		if(["members", "boardMessages"].includes((event as DatabaseEvent).data.table)){
-			await resetEntries();
-			await populateHighlightedDays();
-		}
-	}
+	const listener = (event: Event) => {
+		if(["members", "boardMessages"].includes((event as DatabaseEvent).data.table))
+			void resetEntries().then(() => populateHighlightedDays());
+	};
 
 	watch(route, () => {
 		if(route.query.q)
 			search.value = route.query.q as string;
 	});
 
-	watch(search, async () => {
-		await populateHighlightedDays();
+	watch(search, () => {
+		populateHighlightedDays();
 	});
 
 	watch([date, search], async () => {
@@ -52,7 +50,7 @@
 	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
 		await resetEntries();
-		await populateHighlightedDays();
+		populateHighlightedDays();
 	});
 
 	onUnmounted(() => {
@@ -66,43 +64,43 @@
 
 	async function resetEntries(){
 		boardMessages.value = undefined;
-		await getEntries(dayjs(date.value).toDate())
+		await getEntries(dayjs(date.value).toDate());
 	}
 
 	function getGrouped(entries: BoardMessageComplete[]){
 		const map = new Map<string, BoardMessageComplete[]>();
 
 		for(const entry of entries.sort((a, b) => b.date.getTime() - a.date.getTime())){
-			const key = dayjs(entry.date).startOf('day').toISOString();
+			const key = dayjs(entry.date).startOf("day").toISOString();
 			
 			const collection = map.get(key);
 			if(!collection)
-				map.set(key, [entry])
+				map.set(key, [entry]);
 			else
-				collection.push(entry)
+				collection.push(entry);
 		}
 
 		return [...map.entries()].sort((a, b) => dayjs(b[0]).valueOf() - dayjs(a[0]).valueOf());
 	}
 
-	async function populateHighlightedDays() {
+	function populateHighlightedDays() {
 		const days = getBoardMessagesDays(search.value);
 
 		boardMessagesDays.value = Array.from(days.entries()).map(([date, occurrences]) => {
 			let step = "200";
 
-			if(occurrences >= 7) {
+			if(occurrences >= 7) 
 				step = "350";
-			} else if(occurrences >= 5) {
+			else if(occurrences >= 5) 
 				step = "300";
-			} else if(occurrences >= 3) {
+			else if(occurrences >= 3) 
 				step = "250";
-			}
+			
 
 			return {
 				date: dayjs(date).format("YYYY-MM-DD"),
 				backgroundColor: `var(--ion-background-color-step-${step})`
-			}
+			};
 		});
 	}
 
@@ -113,6 +111,7 @@
 		});
 
 		const modal = await addModal(vnode);
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-explicit-any
 		await (modal.el as any).present();
 	}
 </script>
@@ -121,34 +120,51 @@
 	<IonPage>
 		<IonHeader>
 			<IonToolbar>
-				<IonBackButton slot="start" :text="isIOS ? $t('other:back') : undefined" :icon="!isIOS ? backMD : undefined" defaultHref="/options/" />
+				<IonBackButton
+					slot="start"
+					:text="isIOS ? $t('other:back') : undefined"
+					:icon="!isIOS ? backMD : undefined"
+					default-href="/options/"
+				/>
 				<IonTitle>
 					{{ $t("messageBoard:header") }}
 				</IonTitle>
 			</IonToolbar>
 			<IonToolbar>
-				<IonSearchbar :animated="true" :placeholder="$t('messageBoard:searchPlaceholder')"
-					showCancelButton="focus" showClearButton="focus" :spellcheck="false" @ionChange="e => search = e.detail.value || ''" />
+				<IonSearchbar
+					:animated="true"
+					:placeholder="$t('messageBoard:searchPlaceholder')"
+					show-cancel-button="focus"
+					show-clear-button="focus"
+					:spellcheck="false"
+					@ion-change="e => search = e.detail.value || ''"
+				/>
 			</IonToolbar>
 		</IonHeader>
 
 		<IonContent>
 			<IonDatetime
-				presentation="date"
-				:firstDayOfWeek="firstWeekOfDayIsSunday ? 0 : 1"
 				v-model="date"
+				presentation="date"
+				:first-day-of-week="firstWeekOfDayIsSunday ? 0 : 1"
 				:locale="appConfig.locale.language || 'en'"
-				:highlightedDates="boardMessagesDays"
-				:datetime="dayjs().format('YYYY-MM-DDTHH:mm:ss')" />
-			<div class="spinner-container" v-if="boardMessages === undefined">
+				:highlighted-dates="boardMessagesDays"
+				:datetime="dayjs().format('YYYY-MM-DDTHH:mm:ss')"
+			/>
+			<div v-if="boardMessages === undefined" class="spinner-container">
 				<Spinner size="72px" />
 			</div>
-			<IonList :inset="isIOS" v-else>
+			<IonList v-else :inset="isIOS">
 				<template v-for="tuple in getGrouped(boardMessages)" :key="tuple[0]">
 					<IonItemDivider sticky>
 						<IonLabel>{{ dayjs(tuple[0]).format("LL") }}</IonLabel>
 					</IonItemDivider>
-					<MessageBoardCard :boardMessage v-for="boardMessage in tuple[1]" :key="boardMessage.uuid" @click="showModal(boardMessage)" />
+					<MessageBoardCard
+						v-for="boardMessage in tuple[1]"
+						:key="boardMessage.uuid"
+						:board-message
+						@click="showModal(boardMessage)"
+					/>
 				</template>
 			</IonList>
 

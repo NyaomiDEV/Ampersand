@@ -1,15 +1,15 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonList, IonItem, IonLabel, IonPage, IonTitle, IonToolbar, IonBackButton, IonProgressBar, toastController } from '@ionic/vue';
-	import { inject, ref } from 'vue';
-	import { importDatabaseFromBinary, exportDatabaseToBinary } from '../../lib/db/ioutils';
-	import { getFiles } from '../../lib/util/misc';
-	import dayjs from 'dayjs';
-	import { save } from '@tauri-apps/plugin-dialog';
-	import { writeFile } from '@tauri-apps/plugin-fs';
-	import { useTranslation } from 'i18next-vue';
-	import { importPluralKit } from '../../lib/db/external/pluralkit';
-	import { importTupperBox } from '../../lib/db/external/tupperbox';
-	import { importSimplyPlural } from '../../lib/db/external/simplyplural';
+	import { IonContent, IonHeader, IonList, IonItem, IonLabel, IonPage, IonTitle, IonToolbar, IonBackButton, IonProgressBar, toastController } from "@ionic/vue";
+	import { inject, ref } from "vue";
+	import { importDatabaseFromBinary, exportDatabaseToBinary } from "../../lib/db/ioutils";
+	import { getFiles } from "../../lib/util/misc";
+	import dayjs from "dayjs";
+	import { save } from "@tauri-apps/plugin-dialog";
+	import { writeFile } from "@tauri-apps/plugin-fs";
+	import { useTranslation } from "i18next-vue";
+	import { importPluralKit } from "../../lib/db/external/pluralkit";
+	import { importTupperBox } from "../../lib/db/external/tupperbox";
+	import { importSimplyPlural } from "../../lib/db/external/simplyplural";
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 
@@ -32,7 +32,7 @@
 				duration: 1500
 			});
 			await statusMessage.present();
-		}catch(e){
+		}catch(_e){
 			const statusMessage = await toastController.create({
 				message: i18next.t("importExport:status.error"),
 				duration: 1500
@@ -57,7 +57,7 @@
 				duration: 1500
 			});
 			await statusMessage.present();
-		}catch(e){
+		}catch(_e){
 			const statusMessage = await toastController.create({
 				message: i18next.t("importExport:status.errorSp"),
 				duration: 1500
@@ -82,7 +82,7 @@
 				duration: 1500
 			});
 			await statusMessage.present();
-		}catch(e){
+		}catch(_e){
 			const statusMessage = await toastController.create({
 				message: i18next.t("importExport:status.errorPk"),
 				duration: 1500
@@ -107,7 +107,7 @@
 				duration: 1500
 			});
 			await statusMessage.present();
-		}catch(e) {
+		}catch(_e) {
 			const statusMessage = await toastController.create({
 				message: i18next.t("importExport:status.errorTu"),
 				duration: 1500
@@ -155,7 +155,12 @@
 	<IonPage>
 		<IonHeader>
 			<IonToolbar>
-				<IonBackButton slot="start" :text="isIOS ? $t('other:back') : undefined" :icon="!isIOS ? backMD : undefined" defaultHref="/options/" />
+				<IonBackButton
+					slot="start"
+					:text="isIOS ? $t('other:back') : undefined"
+					:icon="!isIOS ? backMD : undefined"
+					default-href="/options/"
+				/>
 				<IonTitle>{{ $t("importExport:header") }}</IonTitle>
 				<IonProgressBar v-if="loading" type="indeterminate" />
 			</IonToolbar>
@@ -164,35 +169,35 @@
 		<IonContent>
 			<IonList :inset="isIOS">
 
-				<IonItem button @click="exportDb" :detail="true">
+				<IonItem button :detail="true" @click="exportDb">
 					<IonLabel>
 						<h3>{{ $t("importExport:dbExport.title") }}</h3>
 						<p>{{ $t("importExport:dbExport.desc") }}</p>
 					</IonLabel>
 				</IonItem>
 
-				<IonItem button @click="importDb" :detail="true">
+				<IonItem button :detail="true" @click="importDb">
 					<IonLabel>
 						<h3>{{ $t("importExport:dbImport") }}</h3>
 						<p>{{ $t("importExport:dbImportDesc") }}</p>
 					</IonLabel>
 				</IonItem>
 
-				<IonItem button @click="importSp" :detail="true">
+				<IonItem button :detail="true" @click="importSp">
 					<IonLabel>
 						<h3>{{ $t("importExport:spImport") }}</h3>
 						<p>{{ $t("importExport:dbImportDesc") }}</p>
 					</IonLabel>
 				</IonItem>
 
-				<IonItem button @click="importPk" :detail="true">
+				<IonItem button :detail="true" @click="importPk">
 					<IonLabel>
 						<h3>{{ $t("importExport:pkImport") }}</h3>
 						<p>{{ $t("importExport:dbImportDesc") }}</p>
 					</IonLabel>
 				</IonItem>
 
-				<IonItem button @click="importTu" :detail="true">
+				<IonItem button :detail="true" @click="importTu">
 					<IonLabel>
 						<h3>{{ $t("importExport:tuImport") }}</h3>
 						<p>{{ $t("importExport:dbImportDesc") }}</p>

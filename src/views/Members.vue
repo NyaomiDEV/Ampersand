@@ -16,9 +16,9 @@
 		IonItemOption,
 		useIonRouter,
 		IonBackButton,
-	} from '@ionic/vue';
-	import { inject, onBeforeMount, onUnmounted, reactive, ref, shallowRef, useTemplateRef, watch } from 'vue';
-	import { accessibilityConfig, appConfig } from '../lib/config/index.ts';
+	} from "@ionic/vue";
+	import { inject, onBeforeMount, onUnmounted, reactive, ref, shallowRef, useTemplateRef, watch } from "vue";
+	import { accessibilityConfig, appConfig } from "../lib/config/index.ts";
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
@@ -31,15 +31,15 @@
 	import setAsFrontMD from "@material-symbols/svg-600/outlined/person_pin_circle.svg";
 	import archivedMD from "@material-symbols/svg-600/outlined/archive.svg";
 
-	import { getFilteredMembers } from '../lib/db/tables/members.ts';
-	import type { Member, FrontingEntry } from '../lib/db/entities';
-	import { getCurrentFrontEntryForMember, newFrontingEntry, removeFronter, setMainFronter, setSoleFronter } from '../lib/db/tables/frontingEntries.ts';
-	import MemberAvatar from '../components/member/MemberAvatar.vue';
-	import MemberLabel from '../components/member/MemberLabel.vue';
-	import { DatabaseEvents, DatabaseEvent } from '../lib/db/events.ts';
-	import SpinnerFullscreen from '../components/SpinnerFullscreen.vue';
-	import { useRoute } from 'vue-router';
-	import { getObjectURL } from '../lib/util/blob.ts';
+	import { getFilteredMembers } from "../lib/db/tables/members.ts";
+	import type { Member, FrontingEntry } from "../lib/db/entities";
+	import { getCurrentFrontEntryForMember, newFrontingEntry, removeFronter, setMainFronter, setSoleFronter } from "../lib/db/tables/frontingEntries.ts";
+	import MemberAvatar from "../components/member/MemberAvatar.vue";
+	import MemberLabel from "../components/member/MemberLabel.vue";
+	import { DatabaseEvents, DatabaseEvent } from "../lib/db/events.ts";
+	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
+	import { useRoute } from "vue-router";
+	import { getObjectURL } from "../lib/util/blob.ts";
 
 	const route = useRoute();
 
@@ -59,24 +59,24 @@
 
 	const frontingEntries = reactive(new Map<Member, FrontingEntry | undefined>());
 
-	const list = useTemplateRef('list');
+	const list = useTemplateRef("list");
 	const router = useIonRouter();
 
 	const listeners = [
-		async (event: Event) => {
+		(event: Event) => {
 			if((event as DatabaseEvent).data.table === "members")
-				await updateMembers();
+				void updateMembers();
 		},
-		async (event: Event) => {
+		(event: Event) => {
 			if((event as DatabaseEvent).data.table === "frontingEntries"){
 				frontingEntries.clear();
 				if(members.value){
 					for(const member of members.value)
-						frontingEntries.set(member, await getCurrentFrontEntryForMember(member));
+						void (async () => frontingEntries.set(member, await getCurrentFrontEntryForMember(member)))();
 				}
 			}
 		}
-	]
+	];
 
 	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listeners[0]);
@@ -105,32 +105,36 @@
 				if (a.isPinned && !b.isPinned) return -1;
 				if (!a.isPinned && b.isPinned) return 1;
 
-				return a.name.localeCompare(b.name)
+				return a.name.localeCompare(b.name);
 			});
-		console.log(search.value, members.value)
+		console.log(search.value, members.value);
 	}
 
-	function addFrontingEntry(member: Member) {
-		newFrontingEntry({
+	async function addFrontingEntry(member: Member) {
+		await newFrontingEntry({
 			member: member.uuid,
 			startTime: new Date(),
 			isMainFronter: false
 		});
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 		list.value?.$el.closeSlidingItems();
 	}
 
-	function removeFrontingEntry(member: Member) {
-		removeFronter(member);
+	async function removeFrontingEntry(member: Member) {
+		await removeFronter(member);
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 		list.value?.$el.closeSlidingItems();
 	}
 
-	function setMainFrontingEntry(member: Member, value: boolean){
-		setMainFronter(member, value);
+	async function setMainFrontingEntry(member: Member, value: boolean){
+		await setMainFronter(member, value);
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 		list.value?.$el.closeSlidingItems();
 	}
 
-	function setSoleFrontingEntry(member: Member){
-		setSoleFronter(member);
+	async function setSoleFrontingEntry(member: Member){
+		await setSoleFronter(member);
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 		list.value?.$el.closeSlidingItems();
 	}
 
@@ -151,16 +155,16 @@
 		return style;
 	}
 
-	const longPressHandlers = new Map<Member, any>();
+	const longPressHandlers = new Map<Member, number>();
 	function startPress(member: Member){
 		longPressHandlers.set(
 			member,
 			setTimeout(async () => {
-			const entry = await getCurrentFrontEntryForMember(member);
+				const entry = await getCurrentFrontEntryForMember(member);
 				if(entry)
-					removeFrontingEntry(member);
+					await removeFrontingEntry(member);
 				else
-					addFrontingEntry(member);
+					await addFrontingEntry(member);
 
 				longPressHandlers.delete(member);
 			}, accessibilityConfig.longPressDuration)
@@ -189,19 +193,19 @@
 				<IonSearchbar
 					:animated="true"
 					:placeholder="$t('members:searchPlaceholder')"
-					showCancelButton="focus"
-					showClearButton="focus"
+					show-cancel-button="focus"
+					show-clear-button="focus"
 					:spellcheck="false"
-					@ionChange="e => search = e.detail.value || ''"
+					@ion-change="e => search = e.detail.value || ''"
 				/>
 			</IonToolbar>
 		</IonHeader>
 		
 		<SpinnerFullscreen v-if="!members" />
 		<IonContent v-else>
-			<IonList :inset="isIOS" ref="list">
+			<IonList ref="list" :inset="isIOS">
 
-				<IonItemSliding v-for="member in members" @ionDrag="endPress(member, true)" :key="member.uuid">
+				<IonItemSliding v-for="member in members" :key="member.uuid" @ion-drag="endPress(member, true)">
 					<IonItem
 						button
 						:class="{ archived: member.isArchived }"
@@ -212,33 +216,33 @@
 						@pointerleave="endPress(member, true)"
 					>
 						<MemberAvatar slot="start" :member />
-						<MemberLabel :member showTagChips />
-						<IonIcon slot="end" :icon="pinMD" v-if="member.isPinned" />
-						<IonIcon slot="end" :icon="archivedMD" v-if="member.isArchived" />
-						<IonIcon slot="end" :icon="mainFronterMD" v-if="frontingEntries.get(member)?.isMainFronter" />
+						<MemberLabel :member show-tag-chips />
+						<IonIcon v-if="member.isPinned" slot="end" :icon="pinMD" />
+						<IonIcon v-if="member.isArchived" slot="end" :icon="archivedMD" />
+						<IonIcon v-if="frontingEntries.get(member)?.isMainFronter" slot="end" :icon="mainFronterMD" />
 					</IonItem>
 					<IonItemOptions>
 						<IonItemOption v-if="!frontingEntries.get(member)" @click="addFrontingEntry(member)">
-							<IonIcon slot="icon-only" :icon="addToFrontMD"></IonIcon>
+							<IonIcon slot="icon-only" :icon="addToFrontMD" />
 						</IonItemOption>
-						<IonItemOption v-if="frontingEntries.get(member)" @click="removeFrontingEntry(member)" color="danger">
-							<IonIcon slot="icon-only" :icon="removeFromFrontMD"></IonIcon>
+						<IonItemOption v-if="frontingEntries.get(member)" color="danger" @click="removeFrontingEntry(member)">
+							<IonIcon slot="icon-only" :icon="removeFromFrontMD" />
 						</IonItemOption>
-						<IonItemOption v-if="frontingEntries.get(member) && !frontingEntries.get(member)?.isMainFronter" @click="setMainFrontingEntry(member, true)" color="secondary">
-							<IonIcon slot="icon-only" :icon="setMainFronterMD"></IonIcon>
+						<IonItemOption v-if="frontingEntries.get(member) && !frontingEntries.get(member)?.isMainFronter" color="secondary" @click="setMainFrontingEntry(member, true)">
+							<IonIcon slot="icon-only" :icon="setMainFronterMD" />
 						</IonItemOption>
-						<IonItemOption v-if="frontingEntries.get(member)?.isMainFronter" @click="setMainFrontingEntry(member, false)" color="secondary">
-							<IonIcon slot="icon-only" :icon="unsetMainFronterMD"></IonIcon>
+						<IonItemOption v-if="frontingEntries.get(member)?.isMainFronter" color="secondary" @click="setMainFrontingEntry(member, false)">
+							<IonIcon slot="icon-only" :icon="unsetMainFronterMD" />
 						</IonItemOption>
-						<IonItemOption @click="setSoleFrontingEntry(member)" color="tertiary">
-							<IonIcon slot="icon-only" :icon="setAsFrontMD"></IonIcon>
+						<IonItemOption color="tertiary" @click="setSoleFrontingEntry(member)">
+							<IonIcon slot="icon-only" :icon="setAsFrontMD" />
 						</IonItemOption>
 					</IonItemOptions>
 				</IonItemSliding>
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton routerLink="/members/edit/">
+				<IonFabButton router-link="/members/edit/">
 					<IonIcon :icon="addMD" />
 				</IonFabButton>
 			</IonFab>

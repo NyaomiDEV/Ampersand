@@ -1,6 +1,6 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
-	import { inject } from 'vue';
+	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar } from "@ionic/vue";
+	import { inject } from "vue";
 
 	const isIOS = inject<boolean>("isIOS");
 </script>
@@ -16,9 +16,7 @@
 		</IonHeader>
 		
 		<IonContent>
-			<IonList :inset="isIOS">
-
-			</IonList>
+			<IonList :inset="isIOS" />
 		</IonContent>
 	</IonPage>
 </template>

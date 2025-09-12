@@ -1,11 +1,11 @@
 <script setup lang="ts">
 	import { IonPage, IonTabs, IonTabBar, IonRouterOutlet, IonTabButton, IonIcon, useIonRouter } from "@ionic/vue";
 
-	import PeopleMD from '@material-symbols/svg-600/outlined/group.svg';
-	import JournalMD from '@material-symbols/svg-600/outlined/book.svg';
-	import HomeMD from '@material-symbols/svg-600/outlined/home.svg';
-	import ChatMD from '@material-symbols/svg-600/outlined/chat.svg';
-	import OptionsMD from '@material-symbols/svg-600/outlined/menu.svg';
+	import PeopleMD from "@material-symbols/svg-600/outlined/group.svg";
+	import JournalMD from "@material-symbols/svg-600/outlined/book.svg";
+	import HomeMD from "@material-symbols/svg-600/outlined/home.svg";
+	import ChatMD from "@material-symbols/svg-600/outlined/chat.svg";
+	import OptionsMD from "@material-symbols/svg-600/outlined/menu.svg";
 	import { slideAnimation } from "../lib/util/misc";
 	import { useRoute } from "vue-router";
 	import { ref, useTemplateRef } from "vue";
@@ -19,7 +19,9 @@
 	const directionOverride = ref("forward");
 
 	function clickReplaceHandler(location){
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 		const prevIndex = tabBar.value!.tabVnodes.findIndex(x => x.props?.href === route.path);
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 		const curIndex = tabBar.value!.tabVnodes.findIndex(x => x.props?.href === location);
 
 		// we control the value here so we can update it
@@ -28,11 +30,11 @@
 		router.replace(
 			location,
 			// THIS ARROW FUNCTION GETS CACHED!
-			(el, opts) => {
+			(el, opts) => 
 				// pass directionOverride here so that we have a ref to a value we can control
-				return slideAnimation(el, opts, directionOverride);
+				slideAnimation(el, opts, directionOverride)
 				// and just like this the direction is under our control
-			}
+			
 		);
 	}
 
@@ -59,7 +61,12 @@
 					{{ $t("dashboard:header") }}
 				</IonTabButton>
 
-				<IonTabButton tab="chats" href="/chats" @click="clickReplaceHandler('/chats')" v-if="false">
+				<IonTabButton
+					v-if="false"
+					tab="chats"
+					href="/chats"
+					@click="clickReplaceHandler('/chats')"
+				>
 					<IonIcon :icon="ChatMD" />
 					{{ $t("chats:header") }}
 				</IonTabButton>

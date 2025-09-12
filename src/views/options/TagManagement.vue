@@ -1,18 +1,18 @@
 <script setup lang="ts">
-	import { IonContent, IonSearchbar, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonSegment, IonSegmentButton, IonLabel, IonFab, IonFabButton, IonIcon, IonItem } from '@ionic/vue';
-	import { inject, onMounted, onUnmounted, ref, shallowRef, watch } from 'vue';
-	import { useRoute } from 'vue-router';
+	import { IonContent, IonSearchbar, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonSegment, IonSegmentButton, IonLabel, IonFab, IonFabButton, IonIcon, IonItem } from "@ionic/vue";
+	import { inject, onMounted, onUnmounted, ref, shallowRef, watch } from "vue";
+	import { useRoute } from "vue-router";
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 
-	import { getFilteredTags } from '../../lib/db/tables/tags';
-	import type { Tag } from '../../lib/db/entities.d.ts';
-	import { DatabaseEvents, DatabaseEvent } from '../../lib/db/events';
+	import { getFilteredTags } from "../../lib/db/tables/tags";
+	import type { Tag } from "../../lib/db/entities.d.ts";
+	import { DatabaseEvents, DatabaseEvent } from "../../lib/db/events";
 
-	import SpinnerFullscreen from '../../components/SpinnerFullscreen.vue';
-	import TagColor from '../../components/tag/TagColor.vue';
-	import TagLabel from '../../components/tag/TagLabel.vue';
+	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
+	import TagColor from "../../components/tag/TagColor.vue";
+	import TagLabel from "../../components/tag/TagLabel.vue";
 
 	const route = useRoute();
 
@@ -31,10 +31,10 @@
 		tags.value = (await Array.fromAsync(getFilteredTags(search.value))).filter(x => x.type === type.value);
 	}, {immediate: true});
 
-	const listener = async (event: Event) => {
+	const listener = (event: Event) => {
 		if((event as DatabaseEvent).data.table === "tags")
-			tags.value = (await Array.fromAsync(getFilteredTags(search.value))).filter(x => x.type === type.value);
-	}
+			void Array.fromAsync(getFilteredTags(search.value)).then(res => tags.value = res.filter(x => x.type === type.value));
+	};
 
 	onMounted(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
@@ -50,7 +50,12 @@
 	<IonPage>
 		<IonHeader>
 			<IonToolbar>
-				<IonBackButton slot="start" :text="isIOS ? $t('other:back') : undefined" :icon="!isIOS ? backMD : undefined" defaultHref="/options/" />
+				<IonBackButton
+					slot="start"
+					:text="isIOS ? $t('other:back') : undefined"
+					:icon="!isIOS ? backMD : undefined"
+					default-href="/options/"
+				/>
 				<IonTitle>
 					{{ $t("tagManagement:header") }}
 				</IonTitle>
@@ -59,10 +64,10 @@
 				<IonSearchbar
 					:animated="true"
 					:placeholder="$t('tagManagement:searchPlaceholder')"
-					showCancelButton="focus"
-					showClearButton="focus"
+					show-cancel-button="focus"
+					show-clear-button="focus"
 					:spellcheck="false"
-					@ionChange="e => search = e.detail.value || ''"
+					@ion-change="e => search = e.detail.value || ''"
 				/>
 			</IonToolbar>
 			<IonToolbar>
@@ -80,14 +85,19 @@
 		<SpinnerFullscreen v-if="!tags" />
 		<IonContent v-else>
 			<IonList :inset="isIOS">
-				<IonItem button v-for="tag in tags" :key="tag.uuid" :routerLink="'/options/tagManagement/edit?uuid='+tag.uuid">
+				<IonItem
+					v-for="tag in tags"
+					:key="tag.uuid"
+					button
+					:router-link="'/options/tagManagement/edit?uuid='+tag.uuid"
+				>
 					<TagColor slot="start" :tag />
 					<TagLabel :tag />
 				</IonItem>
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton routerLink="/options/tagManagement/edit">
+				<IonFabButton router-link="/options/tagManagement/edit">
 					<IonIcon :icon="addMD" />
 				</IonFabButton>
 			</IonFab>

@@ -32,10 +32,10 @@
 	import journalMD from "@material-symbols/svg-600/outlined/book.svg";
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
-	import FrontHistoryMD from '@material-symbols/svg-600/outlined/show_chart.svg';
+	import FrontHistoryMD from "@material-symbols/svg-600/outlined/show_chart.svg";
 
 	import { CustomField, Member, Tag } from "../../lib/db/entities";
-	import { newMember, deleteMember, updateMember, defaultMember, getMember } from '../../lib/db/tables/members';
+	import { newMember, deleteMember, updateMember, defaultMember, getMember } from "../../lib/db/tables/members";
 	import { getTags } from "../../lib/db/tables/tags";
 	import { getFiles } from "../../lib/util/misc";
 	import { resizeImage } from "../../lib/util/image";
@@ -114,7 +114,7 @@
 	async function modifyPicture(){
 		const files = await getFiles();
 		if(files.length){
-			if(files[0].type == 'image/gif'){
+			if(files[0].type === "image/gif"){
 				member.value.image = files[0];
 				return;
 			}
@@ -125,7 +125,7 @@
 	async function modifyCover(){
 		const files = await getFiles();
 		if(files.length){
-			if(files[0].type == 'image/gif'){
+			if(files[0].type === "image/gif"){
 				member.value.cover = files[0];
 				return;
 			}
@@ -134,25 +134,27 @@
 	}
 
 	function promptDeletion(): Promise<boolean> {
-		return new Promise(async (resolve) => {
-			const alert = await alertController.create({
-				header: i18next.t("members:edit.delete.title"),
-				subHeader: i18next.t("members:edit.delete.confirm"),
-				buttons: [
-					{
-						text: i18next.t("other:alerts.cancel"),
-						role: "cancel",
-						handler: () => resolve(false)
-					},
-					{
-						text: i18next.t("other:alerts.ok"),
-						role: "confirm",
-						handler: () => resolve(true)
-					}
-				]
-			});
+		return new Promise((resolve) => {
+			void (async () => {
+				const alert = await alertController.create({
+					header: i18next.t("members:edit.delete.title"),
+					subHeader: i18next.t("members:edit.delete.confirm"),
+					buttons: [
+						{
+							text: i18next.t("other:alerts.cancel"),
+							role: "cancel",
+							handler: () => resolve(false)
+						},
+						{
+							text: i18next.t("other:alerts.ok"),
+							role: "confirm",
+							handler: () => resolve(true)
+						}
+					]
+				});
 
-			await alert.present();
+				await alert.present();
+			})();
 		});
 	}
 
@@ -175,7 +177,7 @@
 				});
 
 				await toast.present();
-			}catch(e){
+			}catch(_e){
 				return;
 			}
 		}
@@ -195,17 +197,17 @@
 			else member.value = defaultMember();
 		} else member.value = {...emptyMember};
 
-		if(!member.value.customFields){
+		if(!member.value.customFields)
 			member.value.customFields = new Map();
-		}
+		
 
 		customFieldsToShow.value = customFields.value.filter(x => x.default || (member.value.customFields?.has(x.uuid) && member.value.customFields?.get(x.uuid)?.length));
 
-		if(route.query.disallowEditing){
+		if(route.query.disallowEditing)
 			canEdit.value = false;
-		} else {
+		else 
 			canEdit.value = true;
-		}
+		
 
 		// are we editing?
 		isEditing.value = !member.value.uuid;
@@ -219,9 +221,9 @@
 	function updateColors(){
 		if(member.value.color){
 			if(self?.vnode.el) addMaterialColors(rgbaToArgb(member.value.color), self?.vnode.el as HTMLElement);
-		} else {
+		} else 
 			if(self?.vnode.el) unsetMaterialColors(self?.vnode.el as HTMLElement);
-		}
+		
 	}
 
 	watch(route, updateRoute);
@@ -232,8 +234,12 @@
 	<IonPage>
 		<IonHeader>
 			<IonToolbar>
-				<IonBackButton slot="start" :text="isIOS ? $t('other:back') : undefined"
-					:icon="!isIOS ? backMD : undefined" defaultHref="/members/" />
+				<IonBackButton
+					slot="start"
+					:text="isIOS ? $t('other:back') : undefined"
+					:icon="!isIOS ? backMD : undefined"
+					default-href="/members/"
+				/>
 				<IonTitle>{{ !isEditing ? $t("members:edit.header") : !member.uuid ? $t("members:edit.headerAdd") : $t("members:edit.headerEdit") }}</IonTitle>
 			</IonToolbar>
 		</IonHeader>
@@ -242,18 +248,18 @@
 		<IonContent v-else>
 			<div class="cover-container">
 				<MemberCover class="cover" :member />
-				<IonButton shape="round" @click="modifyCover" v-if="isEditing">
+				<IonButton v-if="isEditing" shape="round" @click="modifyCover">
 					<IonIcon slot="icon-only" :icon="pencilMD" />
 				</IonButton>
 				<div class="avatar-container">
 					<MemberAvatar :member />
-					<IonButton shape="round" @click="modifyPicture" v-if="isEditing">
+					<IonButton v-if="isEditing" shape="round" @click="modifyPicture">
 						<IonIcon slot="icon-only" :icon="pencilMD" />
 					</IonButton>
 				</div>
 			</div>
 
-			<div class="member-info" v-if="!isEditing">
+			<div v-if="!isEditing" class="member-info">
 				<h1>{{ member.name }}</h1>
 				<p>{{ member.pronouns }}</p>
 				<p>{{ member.role }}</p>
@@ -261,55 +267,78 @@
 				<p v-if="member.isArchived">{{ $t("members:edit.archived") }}</p>
 			</div>
 
-			<div class="member-tags" v-if="!isEditing">
-				<TagChip v-if="tags?.length" v-for="tag in member.tags" :key="tag"
-					:tag="tags.find(x => x.uuid === tag)!" />
+			<div v-if="!isEditing && tags?.length" class="member-tags">
+				<TagChip
+					v-for="tag in member.tags"
+					:key="tag"
+					:tag="tags.find(x => x.uuid === tag)!"
+				/>
 			</div>
 
-			<div class="member-description" v-if="!isEditing">
+			<div v-if="!isEditing" class="member-description">
 				<IonLabel>{{ $t("members:edit.description") }}</IonLabel>
 				<Markdown :markdown="member.description || $t('members:edit.noDescription')" />
 			</div>
 
-			<div class="member-custom-field" v-if="!isEditing && member.customFields"
-				v-for="customField in customFields.sort((a, b) => a.name.localeCompare(b.name)).filter(x => Array.from(member.customFields!.keys()).includes(x.uuid))"
-				:key="customField.uuid">
-				<IonLabel>{{ customField.name }}</IonLabel>
-				<Markdown :markdown="member.customFields.get(customField.uuid)!" />
-			</div>
+			<template v-for="customField in customFields.sort((a, b) => a.name.localeCompare(b.name)).filter(x => Array.from(member.customFields!.keys()).includes(x.uuid))" :key="customField.uuid">
+				<div
+					v-if="!isEditing"
+					class="member-custom-field"
+				>
+					<IonLabel>{{ customField.name }}</IonLabel>
+					<Markdown :markdown="member.customFields?.get(customField.uuid)!" />
+				</div>
+			</template>
 
-			<IonList class="member-actions" v-if="!isEditing">
+
+			<IonList v-if="!isEditing" class="member-actions">
 				<IonItem button detail :router-link="`/options/frontHistory?q=@member:${member.uuid}`">
-					<IonIcon :icon="FrontHistoryMD" slot="start" aria-hidden="true" />
+					<IonIcon slot="start" :icon="FrontHistoryMD" aria-hidden="true" />
 					<IonLabel>{{ $t("members:edit.showFrontingEntries") }}</IonLabel>
 				</IonItem>
 				<IonItem button detail :router-link="`/options/messageBoard?q=@member:${member.uuid}`">
-					<IonIcon :icon="newspaperMD" slot="start" aria-hidden="true" />
+					<IonIcon slot="start" :icon="newspaperMD" aria-hidden="true" />
 					<IonLabel>{{ $t("members:edit.showBoardEntries") }}</IonLabel>
 				</IonItem>
 				<IonItem button detail :router-link="`/journal?q=@member:${member.uuid}`">
-					<IonIcon :icon="journalMD" slot="start" aria-hidden="true" />
+					<IonIcon slot="start" :icon="journalMD" aria-hidden="true" />
 					<IonLabel>{{ $t("members:edit.showJournalEntries") }}</IonLabel>
 				</IonItem>
 			</IonList>
 
-			<IonList class="member-edit" v-if="isEditing" inset>
+			<IonList v-if="isEditing" class="member-edit" inset>
 				<IonItem>
-					<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('members:edit.name')"
-						labelPlacement="floating" v-model="member.name" />
+					<IonInput
+						v-model="member.name"
+						:fill="!isIOS ? 'outline' : undefined"
+						:label="$t('members:edit.name')"
+						label-placement="floating"
+					/>
 				</IonItem>
 				<IonItem>
-					<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('members:edit.pronouns')"
-						labelPlacement="floating" v-model="member.pronouns" />
+					<IonInput
+						v-model="member.pronouns"
+						:fill="!isIOS ? 'outline' : undefined"
+						:label="$t('members:edit.pronouns')"
+						label-placement="floating"
+					/>
 				</IonItem>
 				<IonItem>
-					<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('members:edit.role')"
-						labelPlacement="floating" v-model="member.role" />
+					<IonInput
+						v-model="member.role"
+						:fill="!isIOS ? 'outline' : undefined"
+						:label="$t('members:edit.role')"
+						label-placement="floating"
+					/>
 				</IonItem>
 				<IonItem>
-					<IonTextarea :fill="!isIOS ? 'outline' : undefined" auto-grow
-						:label="$t('members:edit.description')" labelPlacement="floating"
-						v-model="member.description" />
+					<IonTextarea
+						v-model="member.description"
+						:fill="!isIOS ? 'outline' : undefined"
+						auto-grow
+						:label="$t('members:edit.description')"
+						label-placement="floating"
+					/>
 				</IonItem>
 				<IonItem button :detail="false">
 					<Color v-model="member.color" @update:model-value="updateColors">
@@ -319,15 +348,22 @@
 					</Color>
 				</IonItem>
 
-				<IonItem v-for="customField in customFieldsToShow.sort((a, b) => a.name.localeCompare(b.name))"
-					:key="customField.uuid" v-if="member.customFields">
-					<IonTextarea :fill="!isIOS ? 'outline' : undefined" auto-grow :label="customField.name" labelPlacement="floating"
-						:modelValue="member.customFields.get(customField.uuid)"
-						@update:modelValue="(v) => member.customFields?.set(customField.uuid, v)" />
+				<IonItem
+					v-for="customField in customFieldsToShow.sort((a, b) => a.name.localeCompare(b.name))"
+					:key="customField.uuid"
+				>
+					<IonTextarea
+						:fill="!isIOS ? 'outline' : undefined"
+						auto-grow
+						:label="customField.name"
+						label-placement="floating"
+						:model-value="member.customFields?.get(customField.uuid)"
+						@update:model-value="(v) => member.customFields?.set(customField.uuid, v)"
+					/>
 				</IonItem>
 
 				<IonItem button @click="customFieldsSelectionModal?.$el.present()">
-					<IonIcon :icon="addMD" slot="start" aria-hidden="true" />
+					<IonIcon slot="start" :icon="addMD" aria-hidden="true" />
 					<IonLabel>
 						{{ $t("members:edit.customFieldsAdd") }}
 					</IonLabel>
@@ -357,50 +393,75 @@
 				<IonItem button @click="tagSelectionModal?.$el.present()">
 					<IonLabel>
 						{{ $t("members:edit.tags") }}
-						<div class="member-tags">
-							<TagChip v-if="tags?.length" v-for="tag in member.tags" :key="tag"
-								:tag="tags.find(x => x.uuid === tag)!" />
+						<div v-if="tags?.length" class="member-tags">
+							<TagChip
+								v-for="tag in member.tags"
+								:key="tag"
+								:tag="tags.find(x => x.uuid === tag)!"
+							/>
 						</div>
 					</IonLabel>
 				</IonItem>
-				<IonItem button :detail="false" v-if="member.uuid" @click="removeMember">
-					<IonIcon :icon="trashMD" slot="start" aria-hidden="true" color="danger" />
+				<IonItem
+					v-if="member.uuid"
+					button
+					:detail="false"
+					@click="removeMember"
+				>
+					<IonIcon
+						slot="start"
+						:icon="trashMD"
+						aria-hidden="true"
+						color="danger"
+					/>
 					<IonLabel color="danger">
 						<h3>{{ $t("members:edit.delete.title") }}</h3>
 						<p>{{ $t("other:genericDeleteDesc") }}</p>
 					</IonLabel>
 				</IonItem>
 
-				<IonItem :detail="false" v-if="member.uuid" button @click="copyIdToClipboard">
+				<IonItem
+					v-if="member.uuid"
+					:detail="false"
+					button
+					@click="copyIdToClipboard"
+				>
 					<IonLabel>
 						<p>{{ $t("members:edit.memberID", { memberID: member.uuid }) }}</p>
 					</IonLabel>
 				</IonItem>
-				<IonItem :detail="false" v-if="member.dateCreated">
+				<IonItem v-if="member.dateCreated" :detail="false">
 					<IonLabel>
-						<p>{{ $t("members:edit.dateCreated", { dateCreated: formatDate(member.dateCreated, "expanded")
-							}) }}</p>
+						<p>
+							{{ $t("members:edit.dateCreated", { dateCreated: formatDate(member.dateCreated, "expanded")
+							}) }}
+						</p>
 					</IonLabel>
 				</IonItem>
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton @click="toggleEditing" v-if="member.name.length > 0 && canEdit">
+				<IonFabButton v-if="member.name.length > 0 && canEdit" @click="toggleEditing">
 					<IonIcon :icon="isEditing ? saveMD : pencilMD" />
 				</IonFabButton>
 			</IonFab>
 
-			<CustomFieldsSelect ref="customFieldsSelectionModal" :modelValue="customFieldsToShow" @update:modelValue="_customFields => {
+			<CustomFieldsSelect
+				ref="customFieldsSelectionModal"
+				:model-value="customFieldsToShow"
+				@update:model-value="_customFields => {
 					customFieldsToShow = customFields.filter(x => {
 						return x.default || _customFields.map(y => y.uuid).includes(x.uuid)
 					});
-				}" />
+				}"
+			/>
 
 			<TagListSelect
 				ref="tagSelectionModal"
 				type="member"
-				:modelValue="member.tags.map(uuid => tags.find(x => x.uuid === uuid)!)"
-				@update:modelValue="tags => { member.tags = tags.map(x => x.uuid) }" />
+				:model-value="member.tags.map(uuid => tags.find(x => x.uuid === uuid)!)"
+				@update:model-value="tags => { member.tags = tags.map(x => x.uuid) }"
+			/>
 		</IonContent>
 	</IonPage>
 </template>

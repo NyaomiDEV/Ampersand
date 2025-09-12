@@ -9,15 +9,15 @@
 	const route = useRoute();
 
 	onMounted(async () => {
-		if(securityConfig.useBiometrics && await unlockWithBiometrics()) {
-			router.replace(route.query.wantedPath || "/")
-		}
+		if(securityConfig.useBiometrics && await unlockWithBiometrics()) 
+			router.replace(route.query.wantedPath || "/");
+		
 	});
 
 	function checkAndTryUnlocking(input: string){
-		if(unlockWithPassword(input)){
-			router.replace(route.query.wantedPath || "/")
-		}
+		if(unlockWithPassword(input))
+			router.replace(route.query.wantedPath || "/");
+		
 	}
 </script>
 
@@ -32,10 +32,10 @@
 				<IonInput
 					fill="outline"
 					type="password"
-					labelPlacement="floating"
+					label-placement="floating"
 					:label="$t('lock:hint')"
-					@update:modelValue="checkAndTryUnlocking"
-				></IonInput>
+					@update:model-value="checkAndTryUnlocking"
+				/>
 			</div>
 
 		</IonContent>

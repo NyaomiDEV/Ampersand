@@ -1,8 +1,8 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonIcon, IonBackButton } from '@ionic/vue';
-	import { inject } from 'vue';
+	import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonIcon, IonBackButton } from "@ionic/vue";
+	import { inject } from "vue";
 
-	import AmpersandLogo from "../../assets/ampersand_logo.svg"
+	import AmpersandLogo from "../../assets/ampersand_logo.svg";
 	import CodebergLogo from "../../assets/codeberg_logo.svg";
 	import DiscordLogo from "../../assets/discord_logo.svg";
 	import LiberapayLogo from "../../assets/liberapay_logo.svg";
@@ -10,31 +10,31 @@
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 
 	import { version } from "../../../package.json";
-	import { openUrl } from '@tauri-apps/plugin-opener';
+	import { openUrl } from "@tauri-apps/plugin-opener";
 
 	const isIOS = inject<boolean>("isIOS");
 
 	function isAppStore() {
 		try{
 			return !!import.meta.env.AMPERSAND_IS_APP_STORE;
-		}catch(e){
-		 	return false;
+		}catch(_e){
+			return false;
 		}
 	}
 
-	function openRepo(){
+	async function openRepo(){
 		const url = "https://codeberg.org/NyaomiDEV/Ampersand";
-		openUrl(url);
+		await openUrl(url);
 	}
 
-	function openDiscord() {
+	async function openDiscord() {
 		const url = "https://discord.com/invite/xCptGJKeKc";
-		openUrl(url);
+		await openUrl(url);
 	}
 
-	function openLiberapay(){
+	async function openLiberapay(){
 		const url = "https://liberapay.com/Ampersand/";
-		openUrl(url);
+		await openUrl(url);
 	}
 </script>
 
@@ -42,7 +42,12 @@
 	<IonPage>
 		<IonHeader>
 			<IonToolbar>
-				<IonBackButton slot="start" :text="isIOS ? $t('other:back') : undefined" :icon="!isIOS ? backMD : undefined" defaultHref="/options/" />
+				<IonBackButton
+					slot="start"
+					:text="isIOS ? $t('other:back') : undefined"
+					:icon="!isIOS ? backMD : undefined"
+					default-href="/options/"
+				/>
 				<IonTitle>
 					{{ $t("about:header") }}
 				</IonTitle>
@@ -59,15 +64,20 @@
 
 				<div class="buttons">
 					<IonButton class="tonal" shape="round" @click="openDiscord">
-						<IonIcon slot="icon-only" :icon="DiscordLogo"></IonIcon>
+						<IonIcon slot="icon-only" :icon="DiscordLogo" />
 					</IonButton>
 
 					<IonButton class="tonal" shape="round" @click="openRepo">
-						<IonIcon slot="icon-only" :icon="CodebergLogo" ></IonIcon>
+						<IonIcon slot="icon-only" :icon="CodebergLogo" />
 					</IonButton>
 
-					<IonButton class="tonal" shape="round" @click="openLiberapay" v-if="!isAppStore()">
-						<IonIcon slot="icon-only" :icon="LiberapayLogo" ></IonIcon>
+					<IonButton
+						v-if="!isAppStore()"
+						class="tonal"
+						shape="round"
+						@click="openLiberapay"
+					>
+						<IonIcon slot="icon-only" :icon="LiberapayLogo" />
 					</IonButton>
 				</div>
 			</div>

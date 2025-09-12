@@ -1,19 +1,19 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonSearchbar, IonFab, IonFabButton, IonIcon, IonLabel, IonDatetime, IonItemDivider, useIonRouter, alertController, IonBackButton } from '@ionic/vue';
-	import { inject, onBeforeMount, onUnmounted, ref, shallowRef, watch } from 'vue';
-	import { useRoute } from 'vue-router';
-	import Spinner from '../components/Spinner.vue';
-	import JournalPostCard from '../components/JournalPostCard.vue';
+	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonSearchbar, IonFab, IonFabButton, IonIcon, IonLabel, IonDatetime, IonItemDivider, useIonRouter, alertController, IonBackButton } from "@ionic/vue";
+	import { inject, onBeforeMount, onUnmounted, ref, shallowRef, watch } from "vue";
+	import { useRoute } from "vue-router";
+	import Spinner from "../components/Spinner.vue";
+	import JournalPostCard from "../components/JournalPostCard.vue";
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 
-	import { JournalPostComplete } from '../lib/db/entities';
-	import dayjs from 'dayjs';
-	import { DatabaseEvent, DatabaseEvents } from '../lib/db/events';
-	import { getJournalPostsDays, getJournalPostsOfDay } from '../lib/db/tables/journalPosts';
-	import { appConfig } from '../lib/config';
-	import { useTranslation } from 'i18next-vue';
+	import { JournalPostComplete } from "../lib/db/entities";
+	import dayjs from "dayjs";
+	import { DatabaseEvent, DatabaseEvents } from "../lib/db/events";
+	import { getJournalPostsDays, getJournalPostsOfDay } from "../lib/db/tables/journalPosts";
+	import { appConfig } from "../lib/config";
+	import { useTranslation } from "i18next-vue";
 
 	const route = useRoute();
 	const router = useIonRouter();
@@ -31,12 +31,10 @@
 
 	const search = ref(route.query.q as string || "");
 
-	const listener = async (event: Event) => {
-		if (["members", "journalPosts"].includes((event as DatabaseEvent).data.table)) {
-			await resetEntries();
-			await populateHighlightedDays();
-		}
-	}
+	const listener = (event: Event) => {
+		if (["members", "journalPosts"].includes((event as DatabaseEvent).data.table))
+			void resetEntries().then(() => populateHighlightedDays());
+	};
 
 	watch(route, () => {
 		if(route.query.q)
@@ -67,7 +65,7 @@
 
 	async function resetEntries() {
 		posts.value = undefined;
-		await getEntries(dayjs(date.value).toDate())
+		await getEntries(dayjs(date.value).toDate());
 	}
 
 	function getGrouped(entries: JournalPostComplete[]) {
@@ -76,13 +74,13 @@
 		for(const entry of entries.filter(x => x.isPinned).sort((a, b) => b.date.getTime() - a.date.getTime())){
 			const collection = map.get("pinnedPosts");
 			if(!collection)
-				map.set("pinnedPosts", [entry])
+				map.set("pinnedPosts", [entry]);
 			else
-				collection.push(entry)
+				collection.push(entry);
 		}
 
 		for (const entry of entries.filter(x => !x.isPinned).sort((a, b) => b.date.getTime() - a.date.getTime())) {
-			const key = dayjs(entry.date).startOf('day').toISOString();
+			const key = dayjs(entry.date).startOf("day").toISOString();
 
 			const collection = map.get(key);
 			if (!collection)
@@ -100,42 +98,44 @@
 		postsDays.value = Array.from(days.entries()).map(([date, occurrences]) => {
 			let step = "200";
 
-			if(occurrences >= 7) {
+			if(occurrences >= 7) 
 				step = "350";
-			} else if(occurrences >= 5) {
+			else if(occurrences >= 5) 
 				step = "300";
-			} else if(occurrences >= 3) {
+			else if(occurrences >= 3) 
 				step = "250";
-			}
+			
 
 			return {
 				date: dayjs(date).format("YYYY-MM-DD"),
 				backgroundColor: `var(--ion-background-color-step-${step})`
-			}
+			};
 		});
 	}
 
 	function prompt(header: string, subHeader: string, message?: string): Promise<boolean> {
-		return new Promise(async (resolve) => {
-			const alert = await alertController.create({
-				header,
-				subHeader,
-				message,
-				buttons: [
-					{
-						text: i18next.t("other:alerts.cancel"),
-						role: "cancel",
-						handler: () => resolve(false)
-					},
-					{
-						text: i18next.t("other:alerts.ok"),
-						role: "confirm",
-						handler: () => resolve(true)
-					}
-				]
-			});
+		return new Promise((resolve) => {
+			void (async () => {
+				const alert = await alertController.create({
+					header,
+					subHeader,
+					message,
+					buttons: [
+						{
+							text: i18next.t("other:alerts.cancel"),
+							role: "cancel",
+							handler: () => resolve(false)
+						},
+						{
+							text: i18next.t("other:alerts.ok"),
+							role: "confirm",
+							handler: () => resolve(true)
+						}
+					]
+				});
 
-			await alert.present();
+				await alert.present();
+			})();
 		});
 	}
 
@@ -171,33 +171,51 @@
 				</IonTitle>
 			</IonToolbar>
 			<IonToolbar>
-				<IonSearchbar :animated="true" :placeholder="$t('journal:searchPlaceholder')" showCancelButton="focus"
-					showClearButton="focus" :spellcheck="false" @ionChange="e => search = e.detail.value || ''" />
+				<IonSearchbar
+					:animated="true"
+					:placeholder="$t('journal:searchPlaceholder')"
+					show-cancel-button="focus"
+					show-clear-button="focus"
+					:spellcheck="false"
+					@ion-change="e => search = e.detail.value || ''"
+				/>
 			</IonToolbar>
 		</IonHeader>
 
 		<IonContent>
-			<IonDatetime presentation="date" :firstDayOfWeek="firstWeekOfDayIsSunday ? 0 : 1" 
-			    v-model="date" :locale="appConfig.locale.language || 'en'" :highlightedDates="postsDays"
-				:datetime="dayjs().format('YYYY-MM-DDTHH:mm:ss')" />
-			<div class="spinner-container" v-if="posts === undefined">
+			<IonDatetime
+				v-model="date"
+				presentation="date" 
+				:first-day-of-week="firstWeekOfDayIsSunday ? 0 : 1"
+				:locale="appConfig.locale.language || 'en'"
+				:highlighted-dates="postsDays"
+				:datetime="dayjs().format('YYYY-MM-DDTHH:mm:ss')"
+			/>
+			<div v-if="posts === undefined" class="spinner-container">
 				<Spinner size="72px" />
 			</div>
-			<IonList :inset="isIOS" v-else>
+			<IonList v-else :inset="isIOS">
 				<template v-for="tuple in getGrouped(posts)" :key="tuple[0]">
 					<IonItemDivider sticky>
-						<IonLabel>{{
-							tuple[0] === "pinnedPosts"
-							? $t("journal:pinnedPosts")
-							: dayjs(tuple[0]).format("LL")
-							}}</IonLabel>
+						<IonLabel>
+							{{
+								tuple[0] === "pinnedPosts"
+									? $t("journal:pinnedPosts")
+									: dayjs(tuple[0]).format("LL")
+							}}
+						</IonLabel>
 					</IonItemDivider>
-					<JournalPostCard :post v-for="post in tuple[1]" :key="post.uuid" @click="openPost(post)" />
+					<JournalPostCard
+						v-for="post in tuple[1]"
+						:key="post.uuid"
+						:post
+						@click="openPost(post)"
+					/>
 				</template>
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton routerLink="/journal/edit/">
+				<IonFabButton router-link="/journal/edit/">
 					<IonIcon :icon="addMD" />
 				</IonFabButton>
 			</IonFab>

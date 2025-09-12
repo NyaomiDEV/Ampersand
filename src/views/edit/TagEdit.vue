@@ -28,7 +28,7 @@
 	import personMD from "@material-symbols/svg-600/outlined/person.svg";
 	import journalMD from "@material-symbols/svg-600/outlined/book.svg";
 
-	import { getTag, newTag, removeTag, updateTag } from '../../lib/db/tables/tags';
+	import { getTag, newTag, removeTag, updateTag } from "../../lib/db/tables/tags";
 	import { Member, Tag } from "../../lib/db/entities";
 	import { getCurrentInstance, h, inject, onBeforeMount, ref, watch } from "vue";
 	import { addMaterialColors, rgbaToArgb, unsetMaterialColors } from "../../lib/theme";
@@ -78,7 +78,7 @@
 
 						await updateMember(member.uuid, {
 							tags: [...member.tags.filter(x => x !== tag.value.uuid!)]
-						})
+						});
 					}
 				}
 				removeModal(vnode);
@@ -89,10 +89,11 @@
 				// from disk here
 				count.value = (await Array.fromAsync(getMembers())).filter(x => x.tags.includes(tag.value.uuid!)).length;
 			},
-			"onUpdate:modelValue": v => { members = [...v] },
+			"onUpdate:modelValue": v => { members = [...v]; },
 		});
 
 		const modal = await addModal(vnode);
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-explicit-any
 		await (modal.el as any).present();
 	}
 
@@ -111,25 +112,27 @@
 	}
 
 	function promptDeletion(): Promise<boolean> {
-		return new Promise(async (resolve) => {
-			const alert = await alertController.create({
-				header: i18next.t("tagManagement:edit.delete.title"),
-				subHeader: i18next.t("tagManagement:edit.delete.confirm"),
-				buttons: [
-					{
-						text: i18next.t("other:alerts.cancel"),
-						role: "cancel",
-						handler: () => resolve(false)
-					},
-					{
-						text: i18next.t("other:alerts.ok"),
-						role: "confirm",
-						handler: () => resolve(true)
-					}
-				]
-			});
+		return new Promise((resolve) => {
+			void (async () => {
+				const alert = await alertController.create({
+					header: i18next.t("tagManagement:edit.delete.title"),
+					subHeader: i18next.t("tagManagement:edit.delete.confirm"),
+					buttons: [
+						{
+							text: i18next.t("other:alerts.cancel"),
+							role: "cancel",
+							handler: () => resolve(false)
+						},
+						{
+							text: i18next.t("other:alerts.ok"),
+							role: "confirm",
+							handler: () => resolve(true)
+						}
+					]
+				});
 
-			await alert.present();
+				await alert.present();
+			})();
 		});
 	}
 
@@ -177,9 +180,9 @@
 	function updateColors(){
 		if(tag.value.color){
 			if(self?.vnode.el) addMaterialColors(rgbaToArgb(tag.value.color), self?.vnode.el as HTMLElement);
-		} else {
+		} else 
 			if(self?.vnode.el) unsetMaterialColors(self?.vnode.el as HTMLElement);
-		}
+		
 	}
 
 	watch(route, updateRoute);
@@ -190,7 +193,12 @@
 	<IonPage>
 		<IonHeader>
 			<IonToolbar>
-				<IonBackButton slot="start" :text="isIOS ? $t('other:back') : undefined" :icon="!isIOS ? backMD : undefined" defaultHref="/options/tagManagement/" />
+				<IonBackButton
+					slot="start"
+					:text="isIOS ? $t('other:back') : undefined"
+					:icon="!isIOS ? backMD : undefined"
+					default-href="/options/tagManagement/"
+				/>
 				<IonTitle>{{ tag.type === "member" ? $t("tagManagement:edit.header.member") : $t("tagManagement:edit.header.journal") }}</IonTitle>
 			</IonToolbar>
 		</IonHeader>
@@ -198,76 +206,97 @@
 		<SpinnerFullscreen v-if="loading" />
 		<IonContent v-else>
 			<IonList inset>
-					<IonItem>
-						<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('tagManagement:edit.name')" labelPlacement="floating" v-model="tag.name" />
-					</IonItem>
+				<IonItem>
+					<IonInput
+						v-model="tag.name"
+						:fill="!isIOS ? 'outline' : undefined"
+						:label="$t('tagManagement:edit.name')"
+						label-placement="floating"
+					/>
+				</IonItem>
 
-					<IonItem>
-						<IonTextarea :fill="!isIOS ? 'outline' : undefined" auto-grow :label="$t('tagManagement:edit.description')" labelPlacement="floating" v-model="tag.description" />
-					</IonItem>
+				<IonItem>
+					<IonTextarea
+						v-model="tag.description"
+						:fill="!isIOS ? 'outline' : undefined"
+						auto-grow
+						:label="$t('tagManagement:edit.description')"
+						label-placement="floating"
+					/>
+				</IonItem>
 
-					<IonItem button :detail="false">
-						<Color v-model="tag.color" @update:model-value="updateColors">
-							<IonLabel>
-								{{ $t("tagManagement:edit.color") }}
-							</IonLabel>
-						</Color>
-					</IonItem>
-
-					<IonItem button :detail="false">
-						<IonToggle v-model="tag.viewInLists">
-							<IonLabel>
-								{{ $t("tagManagement:edit.viewInLists") }}
-							</IonLabel>
-						</IonToggle>
-					</IonItem>
-
-					<IonItem v-if="!tag.uuid">
+				<IonItem button :detail="false">
+					<Color v-model="tag.color" @update:model-value="updateColors">
 						<IonLabel>
-							<h3 class="centered-text">{{ $t("tagManagement:edit.type.header") }}</h3>
-							<IonSegment class="segment-alt" v-model="tag.type">
-								<MD3SegmentButton value="member">
-									<IonLabel>
-										{{ $t("tagManagement:edit.type.member") }}
-									</IonLabel>
-								</MD3SegmentButton>
-								<MD3SegmentButton value="journal">
-									<IonLabel>
-										{{ $t("tagManagement:edit.type.journal") }}
-									</IonLabel>
-								</MD3SegmentButton>
-							</IonSegment>
-							<p class="centered-text">{{ $t("tagManagement:edit.type.desc") }}</p>
+							{{ $t("tagManagement:edit.color") }}
 						</IonLabel>
-					</IonItem>
+					</Color>
+				</IonItem>
 
-					<IonItem button v-if="tag.uuid && tag.type === 'member'" @click="tagMembers">
-						<IonIcon :icon="personMD" slot="start" aria-hidden="true" />
+				<IonItem button :detail="false">
+					<IonToggle v-model="tag.viewInLists">
 						<IonLabel>
-							<h3>{{ $t("tagManagement:edit.members.title") }}</h3>
-							<p>{{ $t("tagManagement:edit.members.desc", { count }) }}</p>
+							{{ $t("tagManagement:edit.viewInLists") }}
 						</IonLabel>
-					</IonItem>
+					</IonToggle>
+				</IonItem>
 
-					<IonItem button v-if="tag.uuid && tag.type === 'journal'" :routerLink="`/s/journal/?q=${encodeURIComponent('#' + tag.name.toLowerCase().replace(/\s+/g, ''))}`">
-						<IonIcon :icon="journalMD" slot="start" aria-hidden="true" />
-						<IonLabel>
-							<h3>{{ $t("tagManagement:edit.showJournal.title") }}</h3>
-							<p>{{ $t("tagManagement:edit.showJournal.desc", { count }) }}</p>
-						</IonLabel>
-					</IonItem>
+				<IonItem v-if="!tag.uuid">
+					<IonLabel>
+						<h3 class="centered-text">{{ $t("tagManagement:edit.type.header") }}</h3>
+						<IonSegment v-model="tag.type" class="segment-alt">
+							<MD3SegmentButton value="member">
+								<IonLabel>
+									{{ $t("tagManagement:edit.type.member") }}
+								</IonLabel>
+							</MD3SegmentButton>
+							<MD3SegmentButton value="journal">
+								<IonLabel>
+									{{ $t("tagManagement:edit.type.journal") }}
+								</IonLabel>
+							</MD3SegmentButton>
+						</IonSegment>
+						<p class="centered-text">{{ $t("tagManagement:edit.type.desc") }}</p>
+					</IonLabel>
+				</IonItem>
 
-					<IonItem button :detail="false" v-if="tag.uuid" @click="deleteTag">
-						<IonIcon :icon="trashMD" slot="start" aria-hidden="true" color="danger"/>
-						<IonLabel color="danger">
-							<h3>{{ $t("tagManagement:edit.delete.title") }}</h3>
-							<p>{{ $t("other:genericDeleteDesc") }}</p>
-						</IonLabel>
-					</IonItem>
+				<IonItem v-if="tag.uuid && tag.type === 'member'" button @click="tagMembers">
+					<IonIcon slot="start" :icon="personMD" aria-hidden="true" />
+					<IonLabel>
+						<h3>{{ $t("tagManagement:edit.members.title") }}</h3>
+						<p>{{ $t("tagManagement:edit.members.desc", { count }) }}</p>
+					</IonLabel>
+				</IonItem>
+
+				<IonItem v-if="tag.uuid && tag.type === 'journal'" button :router-link="`/s/journal/?q=${encodeURIComponent('#' + tag.name.toLowerCase().replace(/\s+/g, ''))}`">
+					<IonIcon slot="start" :icon="journalMD" aria-hidden="true" />
+					<IonLabel>
+						<h3>{{ $t("tagManagement:edit.showJournal.title") }}</h3>
+						<p>{{ $t("tagManagement:edit.showJournal.desc", { count }) }}</p>
+					</IonLabel>
+				</IonItem>
+
+				<IonItem
+					v-if="tag.uuid"
+					button
+					:detail="false"
+					@click="deleteTag"
+				>
+					<IonIcon
+						slot="start"
+						:icon="trashMD"
+						aria-hidden="true"
+						color="danger"
+					/>
+					<IonLabel color="danger">
+						<h3>{{ $t("tagManagement:edit.delete.title") }}</h3>
+						<p>{{ $t("other:genericDeleteDesc") }}</p>
+					</IonLabel>
+				</IonItem>
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton @click="save" v-if="tag.name.length > 0">
+				<IonFabButton v-if="tag.name.length > 0" @click="save">
 					<IonIcon :icon="saveMD" />
 				</IonFabButton>
 			</IonFab>

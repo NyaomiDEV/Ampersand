@@ -17,7 +17,7 @@
 	import ArrowMD from "@material-symbols/svg-600/outlined/arrow_forward.svg";
 
 	import { Member } from "../../lib/db/entities";
-	import { newMember } from '../../lib/db/tables/members';
+	import { newMember } from "../../lib/db/tables/members";
 	import { getFiles, slideAnimation } from "../../lib/util/misc";
 	import { resizeImage } from "../../lib/util/image";
 	import { inject, ref, toRaw } from "vue";
@@ -39,7 +39,7 @@
 	async function modifyPicture(){
 		const files = await getFiles();
 		if(files.length){
-			if(files[0].type == 'image/gif'){
+			if(files[0].type === "image/gif"){
 				member.value.image = files[0];
 				return;
 			}
@@ -70,24 +70,40 @@
 				</div>
 
 				<IonList class="member-edit" inset>
-						<IonItem>
-							<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('members:edit.name')" labelPlacement="floating" v-model="member.name" />
-						</IonItem>
+					<IonItem>
+						<IonInput
+							v-model="member.name"
+							:fill="!isIOS ? 'outline' : undefined"
+							:label="$t('members:edit.name')"
+							label-placement="floating"
+						/>
+					</IonItem>
 
-						<IonItem>
-							<IonInput :fill="!isIOS ? 'outline' : undefined" :label="$t('members:edit.pronouns')" labelPlacement="floating" v-model="member.pronouns" />
-						</IonItem>
+					<IonItem>
+						<IonInput
+							v-model="member.pronouns"
+							:fill="!isIOS ? 'outline' : undefined"
+							:label="$t('members:edit.pronouns')"
+							label-placement="floating"
+						/>
+					</IonItem>
 
-						<IonItem>
-							<IonTextarea :fill="!isIOS ? 'outline' : undefined" auto-grow :label="$t('onboarding:memberInfo.description')" labelPlacement="floating" v-model="member.description" />
-						</IonItem>
+					<IonItem>
+						<IonTextarea
+							v-model="member.description"
+							:fill="!isIOS ? 'outline' : undefined"
+							auto-grow
+							:label="$t('onboarding:memberInfo.description')"
+							label-placement="floating"
+						/>
+					</IonItem>
 				</IonList>
 
 				<p>{{ $t("onboarding:memberInfo:invitation") }}</p>
 			</div>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton @click="save" v-if="member.name.length">
+				<IonFabButton v-if="member.name.length" @click="save">
 					<IonIcon :icon="ArrowMD" />
 				</IonFabButton>
 			</IonFab>

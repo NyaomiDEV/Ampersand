@@ -1,15 +1,15 @@
 <script setup lang="ts">
-	import { IonContent, IonPage, IonButton, useIonRouter, toastController } from '@ionic/vue';
-	import { ref } from 'vue';
-	import Spinner from '../../components/Spinner.vue';
-	import { importDatabaseFromBinary } from '../../lib/db/ioutils';
-	import { getFiles, slideAnimation } from '../../lib/util/misc';
-	import { importPluralKit } from '../../lib/db/external/pluralkit';
-	import { importTupperBox } from '../../lib/db/external/tupperbox';
-	import { importSimplyPlural } from '../../lib/db/external/simplyplural';
-	import { useTranslation } from 'i18next-vue';
-	import { getTables } from '../../lib/db/tables';
-	import { resetConfig } from '../../lib/config';
+	import { IonContent, IonPage, IonButton, useIonRouter, toastController } from "@ionic/vue";
+	import { ref } from "vue";
+	import Spinner from "../../components/Spinner.vue";
+	import { importDatabaseFromBinary } from "../../lib/db/ioutils";
+	import { getFiles, slideAnimation } from "../../lib/util/misc";
+	import { importPluralKit } from "../../lib/db/external/pluralkit";
+	import { importTupperBox } from "../../lib/db/external/tupperbox";
+	import { importSimplyPlural } from "../../lib/db/external/simplyplural";
+	import { useTranslation } from "i18next-vue";
+	import { getTables } from "../../lib/db/tables";
+	import { resetConfig } from "../../lib/config";
 
 	const loading = ref(false);
 
@@ -23,7 +23,7 @@
 			loading.value = true;
 			const result = await importDatabaseFromBinary(new Uint8Array(await files[0].arrayBuffer()));
 			if(!result) throw new Error("errored out");
-		}catch(e){
+		}catch(_e){
 			resetConfig();
 			await Promise.all(Object.values(getTables()).map(x => x.clear()));
 			const statusMessage = await toastController.create({
@@ -45,7 +45,7 @@
 			const spExport = JSON.parse(await files[0].text());
 			const result = await importSimplyPlural(spExport);
 			if (!result) throw new Error("errored out");
-		}catch(e){
+		}catch(_e){
 			await Promise.all(Object.values(getTables()).map(x => x.clear()));
 			const statusMessage = await toastController.create({
 				message: i18next.t("onboarding:importScreen.errorSp"),
@@ -66,7 +66,7 @@
 			const pkExport = JSON.parse(await files[0].text());
 			const result = await importPluralKit(pkExport);
 			if(!result) throw new Error("errored out");
-		}catch(e){
+		}catch(_e){
 			await Promise.all(Object.values(getTables()).map(x => x.clear()));
 			const statusMessage = await toastController.create({
 				message: i18next.t("onboarding:importScreen.errorPk"),
@@ -87,7 +87,7 @@
 			const tuExport = JSON.parse(await files[0].text());
 			const result = await importTupperBox(tuExport);
 			if(!result) throw new Error("errored out");
-		}catch(e){
+		}catch(_e){
 			await Promise.all(Object.values(getTables()).map(x => x.clear()));
 			const statusMessage = await toastController.create({
 				message: i18next.t("onboarding:importScreen.errorTu"),
@@ -105,32 +105,32 @@
 	<IonPage>
 		<IonContent>
 			<Transition name="slide">
-			<div class="import-container" v-if="!loading">
-				<h1>{{ $t("onboarding:importScreen.header") }}</h1>
+				<div v-if="!loading" class="import-container">
+					<h1>{{ $t("onboarding:importScreen.header") }}</h1>
 
-				<IonButton @click="importFromPreviousInstallation">
-					{{ $t("onboarding:importScreen.prevInstall") }}
-				</IonButton>
+					<IonButton @click="importFromPreviousInstallation">
+						{{ $t("onboarding:importScreen.prevInstall") }}
+					</IonButton>
 
-				<IonButton class="tonal" @click="importFromSimplyPlural">
-					{{ $t("onboarding:importScreen.simplyPlural") }}
-				</IonButton>
+					<IonButton class="tonal" @click="importFromSimplyPlural">
+						{{ $t("onboarding:importScreen.simplyPlural") }}
+					</IonButton>
 
-				<IonButton class="tonal" @click="importFromPluralKit">
-					{{ $t("onboarding:importScreen.pluralKit") }}
-				</IonButton>
+					<IonButton class="tonal" @click="importFromPluralKit">
+						{{ $t("onboarding:importScreen.pluralKit") }}
+					</IonButton>
 
-				<IonButton class="tonal" @click="importFromTupperbox">
-					{{ $t("onboarding:importScreen.tupperbox") }}
-				</IonButton>
+					<IonButton class="tonal" @click="importFromTupperbox">
+						{{ $t("onboarding:importScreen.tupperbox") }}
+					</IonButton>
 		
-				<IonButton fill="clear" @click="router.replace('/onboarding/system/', slideAnimation)">
-					{{ $t("onboarding:importScreen.startFromScratch") }}
-				</IonButton>
-			</div>
+					<IonButton fill="clear" @click="router.replace('/onboarding/system/', slideAnimation)">
+						{{ $t("onboarding:importScreen.startFromScratch") }}
+					</IonButton>
+				</div>
 			</Transition>
 			<Transition name="slide">
-				<div class="import-loading-container" v-if="loading">
+				<div v-if="loading" class="import-loading-container">
 					<h1>{{ $t("onboarding:importScreen.pleaseWait") }}</h1>
 					<Spinner />
 				</div>

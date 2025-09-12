@@ -1,17 +1,17 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonAvatar, IonButton, IonIcon, IonInput, IonFab, IonFabButton, IonItem, IonLabel } from '@ionic/vue';
-	import { inject, onMounted, ref } from 'vue';
-	import { getObjectURL } from '../../lib/util/blob';
-	import { getFiles } from '../../lib/util/misc';
-	import { resizeImage } from '../../lib/util/image';
-	import { getSystem, modifySystem } from '../../lib/db/tables/system';
-	import { getMembers } from '../../lib/db/tables/members';
-	import ContentEditable from '../../components/ContentEditable.vue';
+	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonAvatar, IonButton, IonIcon, IonInput, IonFab, IonFabButton, IonItem, IonLabel } from "@ionic/vue";
+	import { inject, onMounted, ref } from "vue";
+	import { getObjectURL } from "../../lib/util/blob";
+	import { getFiles } from "../../lib/util/misc";
+	import { resizeImage } from "../../lib/util/image";
+	import { getSystem, modifySystem } from "../../lib/db/tables/system";
+	import { getMembers } from "../../lib/db/tables/members";
+	import ContentEditable from "../../components/ContentEditable.vue";
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import accountCircle from "@material-symbols/svg-600/outlined/account_circle.svg";
-	import pencilMD from "@material-symbols/svg-600/outlined/edit.svg"
-	import saveMD from "@material-symbols/svg-600/outlined/save.svg"
+	import pencilMD from "@material-symbols/svg-600/outlined/edit.svg";
+	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
 
 	const isIOS = inject<boolean>("isIOS");
 
@@ -24,7 +24,7 @@
 	async function modifyPicture(){
 		const files = await getFiles();
 		if(files.length){
-			if(files[0].type == 'image/gif'){
+			if(files[0].type === "image/gif"){
 				system.value.image = files[0];
 				return;
 			}
@@ -32,10 +32,12 @@
 		}
 	}
 
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const router: any = inject("navManager");
 
 	async function save() {
 		await modifySystem({...system.value});
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 		router.handleNavigateBack("/options/");
 	}
 
@@ -59,7 +61,12 @@
 	<IonPage>
 		<IonHeader>
 			<IonToolbar>
-				<IonBackButton slot="start" :text="isIOS ? $t('other:back') : undefined" :icon="!isIOS ? backMD : undefined" defaultHref="/options/" />
+				<IonBackButton
+					slot="start"
+					:text="isIOS ? $t('other:back') : undefined"
+					:icon="!isIOS ? backMD : undefined"
+					default-href="/options/"
+				/>
 				<IonTitle>
 					{{ $t("systemSettings:header") }}
 				</IonTitle>
@@ -69,8 +76,8 @@
 		<IonContent>
 			<div class="avatar-container">
 				<IonAvatar>
-					<img aria-hidden="true" :src="getObjectURL(system.image)" v-if="system?.image"/>
-					<IonIcon :icon="accountCircle" v-else />
+					<img v-if="system?.image" aria-hidden="true" :src="getObjectURL(system.image)" />
+					<IonIcon v-else :icon="accountCircle" />
 				</IonAvatar>
 
 				<IonButton shape="round" @click="modifyPicture">
@@ -78,17 +85,22 @@
 				</IonButton>
 			</div>
 
-			<IonList inset v-if="system">
+			<IonList v-if="system" inset>
 				<IonItem>
-					<IonInput :fill="!isIOS ? 'outline' : undefined" labelPlacement="floating" :label="$t('systemSettings:systemName')" v-model="system.name" />
+					<IonInput
+						v-model="system.name"
+						:fill="!isIOS ? 'outline' : undefined"
+						label-placement="floating"
+						:label="$t('systemSettings:systemName')"
+					/>
 				</IonItem>
 				<IonItem>
-					<ContentEditable :label="$t('systemSettings:systemDescription')" v-model="system.description" />
+					<ContentEditable v-model="system.description" :label="$t('systemSettings:systemDescription')" />
 				</IonItem>
 				<IonItem>
 					<IonLabel>{{ $t("systemSettings:memberCount") }}</IonLabel>
-					<IonButton slot="end" v-if="!membersShowed" @click="membersShowed = true">{{ $t("systemSettings:tapToShow") }}</IonButton>
-					<IonLabel slot="end" v-if="membersShowed">{{ $t("systemSettings:memberCountText", { memberCount, archivedMemberCount }) }}</IonLabel>
+					<IonButton v-if="!membersShowed" slot="end" @click="membersShowed = true">{{ $t("systemSettings:tapToShow") }}</IonButton>
+					<IonLabel v-if="membersShowed" slot="end">{{ $t("systemSettings:memberCountText", { memberCount, archivedMemberCount }) }}</IonLabel>
 				</IonItem>
 			</IonList>
 

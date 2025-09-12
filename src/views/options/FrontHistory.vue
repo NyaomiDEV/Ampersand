@@ -1,22 +1,22 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonLabel, IonToolbar, IonBackButton, IonItem, IonItemDivider, IonDatetime, IonIcon, IonSearchbar, IonFabButton, IonFab } from '@ionic/vue';
-	import { h, inject, onBeforeMount, onUnmounted, ref, shallowRef, watch } from 'vue';
+	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonLabel, IonToolbar, IonBackButton, IonItem, IonItemDivider, IonDatetime, IonIcon, IonSearchbar, IonFabButton, IonFab } from "@ionic/vue";
+	import { h, inject, onBeforeMount, onUnmounted, ref, shallowRef, watch } from "vue";
 	import MemberAvatar from "../../components/member/MemberAvatar.vue";
 	import FrontingEntryLabel from "../../components/frontingEntry/FrontingEntryLabel.vue";
-	import type { FrontingEntryComplete } from '../../lib/db/entities.d.ts';
-	import { getFrontingEntriesOfDay, getFrontingEntriesDays } from '../../lib/db/tables/frontingEntries';
+	import type { FrontingEntryComplete } from "../../lib/db/entities.d.ts";
+	import { getFrontingEntriesOfDay, getFrontingEntriesDays } from "../../lib/db/tables/frontingEntries";
 	import Spinner from "../../components/Spinner.vue";
 	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
-	import dayjs from 'dayjs';
+	import dayjs from "dayjs";
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
-	import commentMD from "@material-symbols/svg-600/outlined/comment.svg"
+	import commentMD from "@material-symbols/svg-600/outlined/comment.svg";
 
-	import { appConfig } from '../../lib/config';
-	import { DatabaseEvents, DatabaseEvent } from '../../lib/db/events';
-	import { addModal, removeModal } from '../../lib/modals.ts';
-	import { useRoute } from 'vue-router';
+	import { appConfig } from "../../lib/config";
+	import { DatabaseEvents, DatabaseEvent } from "../../lib/db/events";
+	import { addModal, removeModal } from "../../lib/modals.ts";
+	import { useRoute } from "vue-router";
 
 	const route = useRoute();
 
@@ -31,11 +31,9 @@
 
 	const date = ref(dayjs().toISOString());
 
-	const listener = async (event: Event) => {
-		if(["frontingEntries", "members"].includes((event as DatabaseEvent).data.table)){
-			await resetEntries();
-			await populateHighlightedDays();
-		}
+	const listener = (event: Event) => {
+		if(["frontingEntries", "members"].includes((event as DatabaseEvent).data.table))
+			void resetEntries().then(() => populateHighlightedDays());
 	};
 
 	watch(route, () => {
@@ -43,8 +41,8 @@
 			search.value = route.query.q as string;
 	});
 
-	watch(search, async () => {
-		await populateHighlightedDays();
+	watch(search, () => {
+		populateHighlightedDays();
 	});
 
 	watch([date, search], async () => {
@@ -54,10 +52,10 @@
 	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
 		await resetEntries();
-		await populateHighlightedDays();
+		populateHighlightedDays();
 	});
 
-	onUnmounted(async () => {
+	onUnmounted(() => {
 		DatabaseEvents.removeEventListener("updated", listener);
 	});
 
@@ -76,45 +74,45 @@
 		for(const entry of entries.filter(x => !x.endTime).sort((a, b) => b.startTime.getTime() - a.startTime.getTime())){
 			const collection = map.get("currentlyFronting");
 			if(!collection)
-				map.set("currentlyFronting", [entry])
+				map.set("currentlyFronting", [entry]);
 			else
-				collection.push(entry)
+				collection.push(entry);
 		}
 
 		for(const entry of entries.filter(x => x.endTime).sort((a, b) => b.startTime.getTime() - a.startTime.getTime())){
-			const key = dayjs(entry.startTime).startOf('day').toISOString();
+			const key = dayjs(entry.startTime).startOf("day").toISOString();
 			
 			const collection = map.get(key);
 			if(!collection)
-				map.set(key, [entry])
+				map.set(key, [entry]);
 			else
-				collection.push(entry)
+				collection.push(entry);
 		}
 
 		return [...map.entries()].sort((a, b) => {
 			if(a[0] === "currentlyFronting") return -1;
-			return dayjs(b[0]).valueOf() - dayjs(a[0]).valueOf()
+			return dayjs(b[0]).valueOf() - dayjs(a[0]).valueOf();
 		});
 	}
 
-	async function populateHighlightedDays() {
-		const days = await getFrontingEntriesDays(search.value);
+	function populateHighlightedDays() {
+		const days = getFrontingEntriesDays(search.value);
 
 		frontingEntriesDays.value = Array.from(days.entries()).map(([date, occurrences]) => {
 			let step = "200";
 
-			if(occurrences >= 7) {
+			if(occurrences >= 7) 
 				step = "350";
-			} else if(occurrences >= 5) {
+			else if(occurrences >= 5) 
 				step = "300";
-			} else if(occurrences >= 3) {
+			else if(occurrences >= 3) 
 				step = "250";
-			}
+			
 
 			return {
 				date: dayjs(date).format("YYYY-MM-DD"),
 				backgroundColor: `var(--ion-background-color-step-${step})`
-			}
+			};
 		});
 	}
 
@@ -125,6 +123,7 @@
 		});
 
 		const modal = await addModal(vnode);
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-explicit-any
 		await (modal.el as any).present();
 	}
 </script>
@@ -133,37 +132,60 @@
 	<IonPage>
 		<IonHeader>
 			<IonToolbar>
-				<IonBackButton slot="start" :text="isIOS ? $t('other:back') : undefined" :icon="!isIOS ? backMD : undefined" defaultHref="/options/" />
+				<IonBackButton
+					slot="start"
+					:text="isIOS ? $t('other:back') : undefined"
+					:icon="!isIOS ? backMD : undefined"
+					default-href="/options/"
+				/>
 				<IonTitle>
 					{{ $t("frontHistory:header") }}
 				</IonTitle>
 			</IonToolbar>
 			<IonToolbar>
-				<IonSearchbar :animated="true" :placeholder="$t('frontHistory:searchPlaceholder')"
-					showCancelButton="focus" showClearButton="focus" :spellcheck="false" @ionChange="e => search = e.detail.value || ''" />
+				<IonSearchbar
+					:animated="true"
+					:placeholder="$t('frontHistory:searchPlaceholder')"
+					show-cancel-button="focus"
+					show-clear-button="focus"
+					:spellcheck="false"
+					@ion-change="e => search = e.detail.value || ''"
+				/>
 			</IonToolbar>
 		</IonHeader>
 
 		<IonContent>
-			<IonDatetime presentation="date" :firstDayOfWeek="firstWeekOfDayIsSunday ? 0 : 1"
-				v-model="date" :locale="appConfig.locale.language || 'en'"
-				:highlightedDates="frontingEntriesDays"
-				:datetime="dayjs().format('YYYY-MM-DDTHH:mm:ss')" />
-			<div class="spinner-container" v-if="frontingEntries === undefined">
+			<IonDatetime
+				v-model="date"
+				presentation="date"
+				:first-day-of-week="firstWeekOfDayIsSunday ? 0 : 1"
+				:locale="appConfig.locale.language || 'en'"
+				:highlighted-dates="frontingEntriesDays"
+				:datetime="dayjs().format('YYYY-MM-DDTHH:mm:ss')"
+			/>
+			<div v-if="frontingEntries === undefined" class="spinner-container">
 				<Spinner size="72px" />
 			</div>
-			<IonList :inset="isIOS" v-else>
+			<IonList v-else :inset="isIOS">
 				<template v-for="tuple in getGrouped(frontingEntries)" :key="tuple[0]">
 					<IonItemDivider sticky>
-						<IonLabel>{{
-							tuple[0] === "currentlyFronting"
-							? $t("frontHistory:currentlyFronting")
-							: dayjs(tuple[0]).format("LL")
-							}}</IonLabel>
+						<IonLabel>
+							{{
+								tuple[0] === "currentlyFronting"
+									? $t("frontHistory:currentlyFronting")
+									: dayjs(tuple[0]).format("LL")
+							}}
+						</IonLabel>
 					</IonItemDivider>
-					<IonItem button v-for="entry in tuple[1]" :key="entry.uuid" @click="showModal(entry)" :class="{'main-fronter': entry.isMainFronter}">
+					<IonItem
+						v-for="entry in tuple[1]"
+						:key="entry.uuid"
+						button
+						:class="{'main-fronter': entry.isMainFronter}"
+						@click="showModal(entry)"
+					>
 						<MemberAvatar slot="start" :member="entry.member" />
-						<IonIcon v-if="entry.comment?.length" :icon="commentMD" slot="end" />
+						<IonIcon v-if="entry.comment?.length" slot="end" :icon="commentMD" />
 						<FrontingEntryLabel :entry />
 					</IonItem>
 				</template>

@@ -1,10 +1,10 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonItem, IonRange, IonLabel, IonToggle, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonSegment, IonSelect, IonSelectOption } from '@ionic/vue';
-	import { inject } from 'vue';
-	import { accessibilityConfig } from '../../lib/config';
-	import Color from '../../components/Color.vue';
+	import { IonContent, IonHeader, IonItem, IonRange, IonLabel, IonToggle, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonSegment, IonSelect, IonSelectOption } from "@ionic/vue";
+	import { inject } from "vue";
+	import { accessibilityConfig } from "../../lib/config";
+	import Color from "../../components/Color.vue";
 
-	import MD3SegmentButton from '../../components/MD3SegmentButton.vue';
+	import MD3SegmentButton from "../../components/MD3SegmentButton.vue";
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 
@@ -15,7 +15,12 @@
 	<IonPage>
 		<IonHeader>
 			<IonToolbar>
-				<IonBackButton slot="start" :text="isIOS ? $t('other:back') : undefined" :icon="!isIOS ? backMD : undefined" defaultHref="/options/" />
+				<IonBackButton
+					slot="start"
+					:text="isIOS ? $t('other:back') : undefined"
+					:icon="!isIOS ? backMD : undefined"
+					default-href="/options/"
+				/>
 				<IonTitle>
 					{{ $t("accessibility:header") }}
 				</IonTitle>
@@ -34,7 +39,7 @@
 				</IonItem>
 
 				<IonItem v-if="accessibilityConfig.highLegibility">
-					<IonSelect :label="$t('accessibility:highLegibilityFontType.title')" interface="popover" v-model="accessibilityConfig.highLegibilityType">
+					<IonSelect v-model="accessibilityConfig.highLegibilityType" :label="$t('accessibility:highLegibilityFontType.title')" interface="popover">
 						<IonSelectOption value="atkinson">
 							{{ $t("accessibility:highLegibilityFontType.atkinson") }}
 						</IonSelectOption>
@@ -52,7 +57,7 @@
 				<IonItem>
 					<IonLabel>
 						<h3 class="centered-text">{{ $t("accessibility:uiVariant.title") }}</h3>
-						<IonSegment class="segment-alt" value="ui-variant" v-model="accessibilityConfig.theme">
+						<IonSegment v-model="accessibilityConfig.theme" class="segment-alt" value="ui-variant">
 
 							<MD3SegmentButton value="auto">
 								<IonLabel>{{ $t("accessibility:uiVariant.auto") }}</IonLabel>
@@ -87,7 +92,12 @@
 					</IonToggle>
 				</IonItem>
 
-				<IonItem button :detail="false" :disabled="!accessibilityConfig.useAccentColor && !accessibilityConfig.useMaterialTheming" v-if="accessibilityConfig.useMaterialTheming || !isIOS">
+				<IonItem
+					v-if="accessibilityConfig.useMaterialTheming || !isIOS"
+					button
+					:detail="false"
+					:disabled="!accessibilityConfig.useAccentColor && !accessibilityConfig.useMaterialTheming"
+				>
 					<Color v-model="accessibilityConfig.accentColor">
 						<IonLabel>
 							<h3>{{ $t("accessibility:accentColor.title") }}</h3>
@@ -115,7 +125,7 @@
 							:snaps="true"
 							:ticks="false"
 							:pin="true"
-							:pinFormatter="(v) => `${v}`"
+							:pin-formatter="(v) => `${v}`"
 						/>
 					</IonLabel>
 				</IonItem>
@@ -131,7 +141,7 @@
 							:snaps="true"
 							:ticks="false"
 							:pin="true"
-							:pinFormatter="(v) => `${v}`"
+							:pin-formatter="(v) => `${v}`"
 						/>
 					</IonLabel>
 				</IonItem>
@@ -147,7 +157,7 @@
 							:snaps="true"
 							:ticks="false"
 							:pin="true"
-							:pinFormatter="(v) => `${v / 1000}`"
+							:pin-formatter="(v) => `${v / 1000}`"
 						/>
 					</IonLabel>
 				</IonItem>

@@ -27,7 +27,7 @@
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
 
 	import { JournalPostComplete, Tag } from "../../lib/db/entities";
-	import { newJournalPost, updateJournalPost, deleteJournalPost, getJournalPost, toJournalPostComplete } from '../../lib/db/tables/journalPosts';
+	import { newJournalPost, updateJournalPost, deleteJournalPost, getJournalPost, toJournalPostComplete } from "../../lib/db/tables/journalPosts";
 	import { getFiles, formatDate } from "../../lib/util/misc";
 	import { resizeImage } from "../../lib/util/image";
 	import { inject, onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
@@ -104,7 +104,7 @@
 	async function modifyCover(){
 		const files = await getFiles();
 		if(files.length){
-			if(files[0].type == 'image/gif'){
+			if(files[0].type === "image/gif"){
 				post.value.cover = files[0];
 				return;
 			}
@@ -113,25 +113,27 @@
 	}
 
 	function promptDeletion(): Promise<boolean> {
-		return new Promise(async (resolve) => {
-			const alert = await alertController.create({
-				header: i18next.t("journal:edit.delete.title"),
-				subHeader: i18next.t("journal:edit.delete.confirm"),
-				buttons: [
-					{
-						text: i18next.t("other:alerts.cancel"),
-						role: "cancel",
-						handler: () => resolve(false)
-					},
-					{
-						text: i18next.t("other:alerts.ok"),
-						role: "confirm",
-						handler: () => resolve(true)
-					}
-				]
-			});
+		return new Promise((resolve) => {
+			void (async () => {
+				const alert = await alertController.create({
+					header: i18next.t("journal:edit.delete.title"),
+					subHeader: i18next.t("journal:edit.delete.confirm"),
+					buttons: [
+						{
+							text: i18next.t("other:alerts.cancel"),
+							role: "cancel",
+							handler: () => resolve(false)
+						},
+						{
+							text: i18next.t("other:alerts.ok"),
+							role: "confirm",
+							handler: () => resolve(true)
+						}
+					]
+				});
 
-			await alert.present();
+				await alert.present();
+			})();
 		});
 	}
 
@@ -160,11 +162,10 @@
 			else post.value = { ...emptyPost };
 		} else post.value = { ...emptyPost };
 
-		if(route.query.disallowEditing){
+		if(route.query.disallowEditing)
 			canEdit.value = false;
-		} else {
+		else 
 			canEdit.value = true;
-		}
 
 		// are we editing?
 		isEditing.value = !post.value.uuid;
@@ -180,30 +181,42 @@
 	<IonPage>
 		<IonHeader>
 			<IonToolbar>
-				<IonBackButton slot="start" :text="isIOS ? $t('other:back') : undefined"
-					:icon="!isIOS ? backMD : undefined" defaultHref="/journal/" />
-				<IonTitle>{{ !isEditing ? $t("journal:edit.header") : !post.uuid ? $t("journal:edit.headerAdd") :
-					$t("journal:edit.headerEdit") }}</IonTitle>
+				<IonBackButton
+					slot="start"
+					:text="isIOS ? $t('other:back') : undefined"
+					:icon="!isIOS ? backMD : undefined"
+					default-href="/journal/"
+				/>
+				<IonTitle>
+					{{ !isEditing ? $t("journal:edit.header") : !post.uuid ? $t("journal:edit.headerAdd") :
+						$t("journal:edit.headerEdit") }}
+				</IonTitle>
 			</IonToolbar>
 		</IonHeader>
 
 		<SpinnerFullscreen v-if="loading" />
 		<IonContent v-else>
 
-			<div class="cover" v-if="post.cover || isEditing">
-				<img :src="getObjectURL(post.cover)" v-if="post.cover">
-				<div class="no-img" v-else>
+			<div v-if="post.cover || isEditing" class="cover">
+				<img v-if="post.cover" :src="getObjectURL(post.cover)" />
+				<div v-else class="no-img">
 					<IonIcon :icon="imageMD" />
 				</div>
-				<IonButton shape="round" @click="modifyCover" v-if="isEditing">
+				<IonButton v-if="isEditing" shape="round" @click="modifyCover">
 					<IonIcon slot="icon-only" :icon="pencilMD" />
 				</IonButton>
-				<IonButton class="delete" shape="round" color="danger" @click="post.cover = undefined" v-if="isEditing && post.cover">
+				<IonButton
+					v-if="isEditing && post.cover"
+					class="delete"
+					shape="round"
+					color="danger"
+					@click="post.cover = undefined"
+				>
 					<IonIcon slot="icon-only" :icon="trashMD" />
 				</IonButton>
 			</div>
 
-			<IonList inset v-if="!isEditing">
+			<IonList v-if="!isEditing" inset>
 
 				<IonItem v-if="post.member">
 					<MemberAvatar slot="start" :member="post.member" />
@@ -216,16 +229,19 @@
 				<div class="post-body">
 					<h1>{{ post.title }}</h1>
 					<h2 v-if="post.subtitle?.length">{{ post.subtitle }}</h2>
-					<div class="journal-tags" v-if="!isEditing">
-						<TagChip v-if="tags?.length" v-for="tag in post.tags" :key="tag"
-							:tag="tags.find(x => x.uuid === tag)!" />
+					<div v-if="!isEditing && tags?.length" class="journal-tags">
+						<TagChip
+							v-for="tag in post.tags"
+							:key="tag"
+							:tag="tags.find(x => x.uuid === tag)!"
+						/>
 					</div>
 					<Markdown :markdown="post.body" />
 				</div>
 
 			</IonList>
 
-			<IonList inset v-else>
+			<IonList v-else inset>
 
 				<IonItem button @click="memberSelectModal?.$el.present()">
 					<template v-if="post.member">
@@ -243,38 +259,41 @@
 				</IonItem>
 
 				<IonItem button @click="($refs.datePicker as any)?.$el.present()">
-						<IonLabel>
-							<h2>{{ $t("journal:edit.date") }}</h2>
-							<p>{{ formatDate(post.date, "expanded") }}</p>
-						</IonLabel>
-						<DatePopupPicker
-							v-model="post.date"
-							showDefaultButtons
-							ref="datePicker"
-							:title="$t('journal:edit.date')"
-						/>
-					</IonItem>
+					<IonLabel>
+						<h2>{{ $t("journal:edit.date") }}</h2>
+						<p>{{ formatDate(post.date, "expanded") }}</p>
+					</IonLabel>
+					<DatePopupPicker
+						ref="datePicker"
+						v-model="post.date"
+						show-default-buttons
+						:title="$t('journal:edit.date')"
+					/>
+				</IonItem>
 
 				<IonItem class="title">
-					<IonInput :placeholder="$t('journal:edit.title')" v-model="post.title" />
+					<IonInput v-model="post.title" :placeholder="$t('journal:edit.title')" />
 				</IonItem>
 
 				<IonItem class="subtitle">
-					<IonInput :placeholder="$t('journal:edit.subtitle')" v-model="post.subtitle" />
+					<IonInput v-model="post.subtitle" :placeholder="$t('journal:edit.subtitle')" />
 				</IonItem>
 
 				<IonItem button @click="tagSelectionModal?.$el.present()">
 					<IonLabel>
 						{{ $t("journal:edit.tags") }}
-						<div class="journal-tags">
-							<TagChip v-if="tags?.length" v-for="tag in post.tags" :key="tag"
-								:tag="tags.find(x => x.uuid === tag)!" />
+						<div v-if="tags?.length" class="journal-tags">
+							<TagChip
+								v-for="tag in post.tags"
+								:key="tag"
+								:tag="tags.find(x => x.uuid === tag)!"
+							/>
 						</div>
 					</IonLabel>
 				</IonItem>
 
 				<IonItem>
-					<IonTextarea auto-grow :placeholder="$t('journal:edit.body')" v-model="post.body" />
+					<IonTextarea v-model="post.body" auto-grow :placeholder="$t('journal:edit.body')" />
 				</IonItem>
 
 				<IonItem button :detail="false">
@@ -294,12 +313,27 @@
 				</IonItem>
 
 				<IonItem>
-					<IonTextarea :fill="!isIOS ? 'outline' : undefined" auto-grow :label="$t('journal:edit.contentWarning')"
-						labelPlacement="floating" v-model="post.contentWarning" />
+					<IonTextarea
+						v-model="post.contentWarning"
+						:fill="!isIOS ? 'outline' : undefined"
+						auto-grow
+						:label="$t('journal:edit.contentWarning')"
+						label-placement="floating"
+					/>
 				</IonItem>
 
-				<IonItem button :detail="false" v-if="post.uuid" @click="removePost">
-					<IonIcon :icon="trashMD" slot="start" aria-hidden="true" color="danger" />
+				<IonItem
+					v-if="post.uuid"
+					button
+					:detail="false"
+					@click="removePost"
+				>
+					<IonIcon
+						slot="start"
+						:icon="trashMD"
+						aria-hidden="true"
+						color="danger"
+					/>
 					<IonLabel color="danger">
 						<h3>{{ $t("journal:edit.delete.title") }}</h3>
 						<p>{{ $t("other:genericDeleteDesc") }}</p>
@@ -309,18 +343,26 @@
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton @click="toggleEditing" v-if="post.title.length > 0 && canEdit">
+				<IonFabButton v-if="post.title.length > 0 && canEdit" @click="toggleEditing">
 					<IonIcon :icon="isEditing ? saveMD : pencilMD" />
 				</IonFabButton>
 			</IonFab>
 
-			<TagListSelect ref="tagSelectionModal" type="journal"
-				:modelValue="post.tags.map(uuid => tags.find(x => x.uuid === uuid)!)"
-				@update:modelValue="tags => { post.tags = tags.map(x => x.uuid); }" />
+			<TagListSelect
+				ref="tagSelectionModal"
+				type="journal"
+				:model-value="post.tags.map(uuid => tags.find(x => x.uuid === uuid)!)"
+				@update:model-value="tags => { post.tags = tags.map(x => x.uuid); }"
+			/>
 
-			<MemberSelect :onlyOne="true" :discardOnSelect="true" :hideCheckboxes="true"
-				:modelValue="post.member ? [post.member] : []"
-				@update:modelValue="(e) => { if (e[0]) post.member = e[0]; }" ref="memberSelectModal" />
+			<MemberSelect
+				ref="memberSelectModal"
+				:only-one="true"
+				:discard-on-select="true"
+				:hide-checkboxes="true"
+				:model-value="post.member ? [post.member] : []"
+				@update:model-value="(e) => { if (e[0]) post.member = e[0]; }"
+			/>
 
 		</IonContent>
 	</IonPage>
