@@ -500,8 +500,8 @@
 		position: absolute;
 		bottom: 8px;
 		display: flex;
-		flex-direction: row-reverse;
-		gap: 16px;
+		flex-direction: column-reverse;
+		gap: 8px;
 		right: 24px;
 	}
 
