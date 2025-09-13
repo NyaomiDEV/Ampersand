@@ -44,7 +44,6 @@ const defaultAccessibilityConfig: AccessibilityConfig = {
 	accentColor: isIOSIonicMode() ? defaultColor : undefined,
 	reducedMotion: false,
 	fontScale: 1,
-	chatFontScale: 1,
 	longPressDuration: 750
 };
 

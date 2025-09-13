@@ -18,7 +18,7 @@ export type AppConfig = {
 	}
 };
 
-type ViewName = "members" | "journal" | "dashboard" | "chats";
+type ViewName = "members" | "journal" | "dashboard";
 
 export type AccessibilityConfig = {
 	highLegibility: boolean,
@@ -29,7 +29,6 @@ export type AccessibilityConfig = {
 	accentColor?: string,
 	reducedMotion: boolean,
 	fontScale: number,
-	chatFontScale: number,
 	longPressDuration: number
 };
 

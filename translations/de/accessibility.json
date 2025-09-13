@@ -30,9 +30,6 @@
 	"fontScale": {
 		"title": "Größe der Benutzeroberfläche"
 	},
-	"chatFontScale": {
-		"title": "Größe der Chat-Benutzeroberfläche"
-	},
 	"useMaterialTheming": {
 		"title": "Material-Design-Theme",
 		"desc": "Gestalte deine Erfahrung nach den Material-Richtlinien (könnte die Augen strapazieren)"

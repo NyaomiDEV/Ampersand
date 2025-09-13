@@ -17,11 +17,6 @@ const tabbedRoutes: RouteRecordRaw[] = [
 		component: () => import("../views/Dashboard.vue"),
 	},
 	{
-		path: "/chats",
-		name: "Chats",
-		component: () => import("../views/Chats.vue"),
-	},
-	{
 		path: "/options",
 		name: "Options",
 		component: () => import("../views/Options.vue"),

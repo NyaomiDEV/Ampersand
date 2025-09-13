@@ -4,7 +4,6 @@
 	import PeopleMD from "@material-symbols/svg-600/outlined/group.svg";
 	import JournalMD from "@material-symbols/svg-600/outlined/book.svg";
 	import HomeMD from "@material-symbols/svg-600/outlined/home.svg";
-	import ChatMD from "@material-symbols/svg-600/outlined/chat.svg";
 	import OptionsMD from "@material-symbols/svg-600/outlined/menu.svg";
 	import { slideAnimation } from "../lib/util/misc";
 	import { useRoute } from "vue-router";
@@ -59,16 +58,6 @@
 				<IonTabButton tab="dashboard" href="/dashboard" @click="clickReplaceHandler('/dashboard')">
 					<IonIcon :icon="HomeMD" />
 					{{ $t("dashboard:header") }}
-				</IonTabButton>
-
-				<IonTabButton
-					v-if="false"
-					tab="chats"
-					href="/chats"
-					@click="clickReplaceHandler('/chats')"
-				>
-					<IonIcon :icon="ChatMD" />
-					{{ $t("chats:header") }}
 				</IonTabButton>
 
 				<IonTabButton tab="options" href="/options" @click="clickReplaceHandler('/options')">

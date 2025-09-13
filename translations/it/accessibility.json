@@ -34,9 +34,6 @@
 	"fontScale": {
 		"title": "Dimensione del testo"
 	},
-	"chatFontScale": {
-		"title": "Dimensione del testo nelle chat"
-	},
 	"longPressDuration": {
 		"title": "Durata della premuta"
 	}

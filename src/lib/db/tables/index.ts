@@ -2,7 +2,7 @@ import { appDataDir, sep } from "@tauri-apps/api/path";
 import * as fs from "@tauri-apps/plugin-fs";
 import { Typeson } from "typeson";
 import { blob, file, filelist, map, typedArrays, undef, set as Tset, imagebitmap, imagedata } from "typeson-registry";
-import { Asset, BoardMessage, Chat, ChatMessage, CustomField, FrontingEntry, JournalPost, Member, Reminder, System, Tag, UUIDable } from "../entities";
+import { Asset, BoardMessage, CustomField, FrontingEntry, JournalPost, Member, Reminder, System, Tag, UUIDable } from "../entities";
 import { decode, encode } from "@msgpack/msgpack";
 import { AmpersandEntityMapping } from "../types";
 
@@ -270,8 +270,6 @@ export function getTables(): GetTableTauriExport {
 
 export const db = {
 	boardMessages: await makeTable<BoardMessage>("boardMessages", ["member", "date", "isPinned"]),
-	chats: await makeTable<Chat>("chats", ["name"]),
-	chatMessages: await makeTable<ChatMessage>("chatMessages", ["chat", "date"]),
 	frontingEntries: await makeTable<FrontingEntry>("frontingEntries", ["member", "startTime", "endTime"]),
 	journalPosts: await makeTable<JournalPost>("journalPosts", ["member", "date", "isPinned"]),
 	members: await makeTable<Member>("members", []),

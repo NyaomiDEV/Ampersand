@@ -26,9 +26,6 @@
 	"fontScale": {
 		"title": "Kullanıcı arabirimi boyutu"
 	},
-	"chatFontScale": {
-		"title": "Sohbet kullanıcı arabirimi boyutu"
-	},
 	"longPressDuration": {
 		"title": "Uzun basma süresi"
 	},

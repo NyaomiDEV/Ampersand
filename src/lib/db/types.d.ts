@@ -1,9 +1,7 @@
-import { BoardMessage, Chat, ChatMessage, FrontingEntry, JournalPost, Member, Reminder, System, Tag, Asset, CustomField } from "./entities";
+import { BoardMessage, FrontingEntry, JournalPost, Member, Reminder, System, Tag, Asset, CustomField } from "./entities";
 
 export type AmpersandEntityMapping = {
 	boardMessages: BoardMessage
-	chats: Chat
-	chatMessages: ChatMessage
 	frontingEntries: FrontingEntry
 	journalPosts: JournalPost
 	members: Member

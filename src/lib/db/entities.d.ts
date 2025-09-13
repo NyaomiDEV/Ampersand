@@ -32,23 +32,6 @@ export interface Vote {
 	reason?: string
 }
 
-export interface Chat extends UUIDable {
-	name: string,
-	image?: File
-}
-
-export interface ChatMessage extends UUIDable {
-	chat: UUID,
-	member: UUID,
-	date: Date,
-	message: string,
-}
-
-export interface ChatMessageComplete extends ChatMessage {
-	chat: Chat,
-	member: Member
-}
-
 export interface FrontingEntry extends UUIDable {
 	member: UUID,
 	startTime: Date,

@@ -10,11 +10,6 @@ const standaloneRoutes: RouteRecordRaw[] = [
 		path: "/s/journal",
 		name: "StandaloneJournal",
 		component: () => import("../views/Journal.vue"),
-	},
-	{
-		path: "/s/chats",
-		name: "StandaloneChats",
-		component: () => import("../views/Chats.vue"),
 	}
 ];
 

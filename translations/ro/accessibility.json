@@ -30,9 +30,6 @@
 	"fontScale": {
 		"title": "Mărime interfață"
 	},
-	"chatFontScale": {
-		"title": "Mărimea interfeței chat"
-	},
 	"longPressDuration": {
 		"title": "Durata apăsării lungi"
 	}

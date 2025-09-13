@@ -130,22 +130,6 @@
 					</IonLabel>
 				</IonItem>
 
-				<IonItem v-if="false">
-					<IonLabel class="more-padding">
-						<h3 class="centered-text">{{ $t("accessibility:chatFontScale.title") }}</h3>
-						<IonRange
-							v-model="accessibilityConfig.chatFontScale"
-							:min="0.5"
-							:max="1.5"
-							:step="0.1"
-							:snaps="true"
-							:ticks="false"
-							:pin="true"
-							:pin-formatter="(v) => `${v}`"
-						/>
-					</IonLabel>
-				</IonItem>
-
 				<IonItem>
 					<IonLabel class="more-padding">
 						<h3 class="centered-text">{{ $t("accessibility:longPressDuration.title") }}</h3>

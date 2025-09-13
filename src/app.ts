@@ -92,8 +92,6 @@ async function setupAmpersand(){
 				case "dashboard":
 				default:
 					return { path: "/dashboard", replace: true };
-				case "chats":
-					return { path: "/chats", replace: true };
 			}
 		}
 
