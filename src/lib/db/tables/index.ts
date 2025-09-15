@@ -223,7 +223,7 @@ export class ShittyTable<T extends UUIDable> {
 			}
 			return true;
 		} catch(e) {
-			console.log(e);
+			console.error(e);
 		}
 
 		await this.saveIndexToDisk();
