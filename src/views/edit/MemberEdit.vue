@@ -260,7 +260,12 @@
 					<IonButton shape="round" @click="modifyCover">
 						<IonIcon slot="icon-only" :icon="pencilMD" />
 					</IonButton>
-					<IonButton shape="round" color="danger" @click="deleteCover">
+					<IonButton
+						v-if="member.cover"
+						shape="round"
+						color="danger"
+						@click="deleteCover"
+					>
 						<IonIcon slot="icon-only" :icon="trashMD" />
 					</IonButton>
 				</div>
@@ -271,7 +276,12 @@
 						<IonButton shape="round" @click="modifyPicture">
 							<IonIcon slot="icon-only" :icon="pencilMD" />
 						</IonButton>
-						<IonButton shape="round" color="danger" @click="deletePicture">
+						<IonButton
+							v-if="member.image"
+							shape="round"
+							color="danger"
+							@click="deletePicture"
+						>
 							<IonIcon slot="icon-only" :icon="trashMD" />
 						</IonButton>
 					</div>

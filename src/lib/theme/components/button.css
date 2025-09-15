@@ -27,10 +27,6 @@
 	--padding-end: 0;
 }
 
-.md.md3 :not(ion-buttons) > ion-button ion-icon,
-.md.md3 :not(ion-buttons) > ion-button[fill=solid] ion-icon {
-	color: rgb(var(--md3-on-primary));
-}
 .md.md3 :not(ion-buttons) > ion-button:has(ion-icon[slot=start]) {
 	--padding-start: 16px;
 }
