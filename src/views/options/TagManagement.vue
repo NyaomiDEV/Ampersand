@@ -28,17 +28,17 @@
 
 	const tags = shallowRef<Tag[]>();
 	watch([search, type], async () => {
-		tags.value = (await Array.fromAsync(getFilteredTags(search.value))).filter(x => x.type === type.value);
+		tags.value = (await Array.fromAsync(getFilteredTags(search.value))).filter(x => x.type === type.value).sort((a, b) => a.name.localeCompare(b.name));
 	}, {immediate: true});
 
 	const listener = (event: Event) => {
 		if((event as DatabaseEvent).data.table === "tags")
-			void Array.fromAsync(getFilteredTags(search.value)).then(res => tags.value = res.filter(x => x.type === type.value));
+			void Array.fromAsync(getFilteredTags(search.value)).then(res => tags.value = res.filter(x => x.type === type.value).sort((a, b) => a.name.localeCompare(b.name)));
 	};
 
 	onMounted(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
-		tags.value = (await Array.fromAsync(getFilteredTags(search.value))).filter(x => x.type === type.value);
+		tags.value = (await Array.fromAsync(getFilteredTags(search.value))).filter(x => x.type === type.value).sort((a, b) => a.name.localeCompare(b.name));
 	});
 
 	onUnmounted(() => {

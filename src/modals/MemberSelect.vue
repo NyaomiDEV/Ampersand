@@ -19,6 +19,7 @@
 	import { getFilteredMembers } from "../lib/db/tables/members";
 	import { DatabaseEvents, DatabaseEvent } from "../lib/db/events";
 	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
+	import { appConfig } from "../lib/config/index.ts";
 
 	const isIOS = inject<boolean>("isIOS");
 
@@ -48,17 +49,32 @@
 	});
 
 	watch(search, async () => {
-		members.value = await Array.fromAsync(getFilteredMembers(search.value));
+		await updateMembers();
 	});
 
 	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
-		members.value = await Array.fromAsync(getFilteredMembers(search.value));
+		await updateMembers();
 	});
 
 	onUnmounted(() => {
 		DatabaseEvents.removeEventListener("updated", listener);
 	});
+
+	async function updateMembers(){
+		members.value = (await Array.fromAsync(getFilteredMembers(search.value)))
+			.sort((a, b) => {
+				if (appConfig.showMembersBeforeCustomFronts) {
+					if (!a.isCustomFront && b.isCustomFront) return -1;
+					if (a.isCustomFront && !b.isCustomFront) return 1;
+				}
+
+				if (a.isPinned && !b.isPinned) return -1;
+				if (!a.isPinned && b.isPinned) return 1;
+
+				return a.name.localeCompare(b.name);
+			});
+	}
 
 	function check(member: Member, checked: boolean){
 		// hideCheckboxes implies onlyOne

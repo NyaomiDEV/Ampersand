@@ -107,7 +107,6 @@
 
 				return a.name.localeCompare(b.name);
 			});
-		console.log(search.value, members.value);
 	}
 
 	async function addFrontingEntry(member: Member) {

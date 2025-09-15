@@ -39,11 +39,11 @@
 	});
 
 	watch(search, async () => {
-		tags.value = (await Array.fromAsync(getFilteredTags(search.value))).filter(x => x.type === props.type);
+		tags.value = (await Array.fromAsync(getFilteredTags(search.value))).filter(x => x.type === props.type).sort((a, b) => a.name.localeCompare(b.name));
 	});
 
 	onBeforeMount(async () => {
-		tags.value = (await Array.fromAsync(getFilteredTags(search.value))).filter(x => x.type === props.type);
+		tags.value = (await Array.fromAsync(getFilteredTags(search.value))).filter(x => x.type === props.type).sort((a, b) => a.name.localeCompare(b.name));
 	});
 
 	function check(tag: Tag, checked: boolean){
