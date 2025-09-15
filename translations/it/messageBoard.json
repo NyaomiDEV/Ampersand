@@ -29,6 +29,7 @@
 		"title": "Titolo",
 		"body": "Corpo del messaggio",
 		"isPinned": "Fissa messaggio",
+		"isArchived": "Archivia messaggio",
 		"attachPoll": "Allega un sondaggio al messaggio",
 		"deleteAttachedPoll": "Elimina il sondaggio allegato",
 		"pollIsMultipleChoice": "Consenti più di una scelta",

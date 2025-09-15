@@ -42,7 +42,8 @@
 	const emptyBoardMessage: PartialBy<BoardMessageComplete, "uuid" | "member"> = {
 		title: "",
 		body: "",
-		date: new Date()
+		date: new Date(),
+		isArchived: false
 	};
 	const boardMessage = ref(props.boardMessage || {...emptyBoardMessage});
 	const pollAtBeginning = structuredClone(toRaw(boardMessage.value.poll));
@@ -200,6 +201,14 @@
 					<IonToggle v-model="boardMessage.isPinned">
 						<IonLabel>
 							{{ $t("messageBoard:edit.isPinned") }}
+						</IonLabel>
+					</IonToggle>
+				</IonItem>
+
+				<IonItem button :detail="false">
+					<IonToggle v-model="boardMessage.isArchived">
+						<IonLabel>
+							{{ $t("messageBoard:edit.isArchived") }}
 						</IonLabel>
 					</IonToggle>
 				</IonItem>

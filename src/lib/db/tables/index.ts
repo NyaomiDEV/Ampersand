@@ -259,7 +259,7 @@ export function getTables(): GetTableTauriExport {
 }
 
 export const db = {
-	boardMessages: await makeTable<BoardMessage>("boardMessages", ["member", "date", "isPinned"]),
+	boardMessages: await makeTable<BoardMessage>("boardMessages", ["member", "date", "isPinned", "isArchived"]),
 	frontingEntries: await makeTable<FrontingEntry>("frontingEntries", ["member", "startTime", "endTime", "isLocked"]),
 	journalPosts: await makeTable<JournalPost>("journalPosts", ["member", "date", "isPinned"]),
 	members: await makeTable<Member>("members", []),

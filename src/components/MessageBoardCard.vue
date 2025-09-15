@@ -160,7 +160,7 @@
 </script>
 
 <template>
-	<IonCard button :class="{filled: props.boardMessage.isPinned}">
+	<IonCard button :class="{filled: props.boardMessage.isPinned, archived: props.boardMessage.isArchived}">
 		<div class="card-inner">
 			<MemberAvatar :member="props.boardMessage.member" />
 			<div class="flexbox">
@@ -197,6 +197,10 @@
 </template>
 
 <style scoped>
+	ion-card.archived > * {
+		opacity: 0.5;
+	}
+
 	ion-card ion-item {
 		--background: transparent;
 	}

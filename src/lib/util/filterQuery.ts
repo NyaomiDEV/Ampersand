@@ -27,7 +27,8 @@ export type FrontingHistoryFilterQuery = {
 
 export type BoardMessageFilterQuery = {
 	query: string,
-	pinned?: boolean,
+	isPinned?: boolean,
+	isArchived?: boolean,
 	member?: UUID
 };
 
@@ -228,18 +229,37 @@ export function parseBoardMessageFilterQuery(search: string) {
 							switch (tokenParts[1].toLowerCase()) {
 								case "yes":
 								case "true":
-									result.pinned = true;
+									result.isPinned = true;
 									break;
 								case "no":
 								case "false":
-									result.pinned = false;
+									result.isPinned = false;
 									break;
 								default:
 									queryTokens.push(token);
 									break;
 							}
 						} else
-							result.pinned = true;
+							result.isPinned = true;
+
+						break;
+					case "archived":
+						if (tokenParts[1]) {
+							switch (tokenParts[1].toLowerCase()) {
+								case "yes":
+								case "true":
+									result.isArchived = true;
+									break;
+								case "no":
+								case "false":
+									result.isArchived = false;
+									break;
+								default:
+									queryTokens.push(token);
+									break;
+							}
+						} else
+							result.isArchived = true;
 
 						break;
 					case "member":

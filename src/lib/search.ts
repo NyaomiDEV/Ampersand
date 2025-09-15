@@ -178,10 +178,17 @@ export function filterFrontingEntryIndex(search: string, frontingEntry: IndexEnt
 export function filterBoardMessage(search: string, boardMessage: BoardMessageComplete) {
 	const parsed = parseBoardMessageFilterQuery(search.length ? search : appConfig.defaultFilterQueries.messageBoard || "");
 
-	if (parsed.pinned !== undefined) {
-		if(parsed.pinned && !boardMessage.isPinned)
+	if (parsed.isPinned !== undefined) {
+		if(parsed.isPinned && !boardMessage.isPinned)
 			return false;
-		else if(!parsed.pinned && boardMessage.isPinned)
+		else if(!parsed.isPinned && boardMessage.isPinned)
+			return false;
+	}
+
+	if (parsed.isArchived !== undefined) {
+		if (parsed.isArchived && !boardMessage.isArchived)
+			return false;
+		else if (!parsed.isArchived && boardMessage.isArchived)
 			return false;
 	}
 
@@ -206,10 +213,17 @@ export function filterBoardMessage(search: string, boardMessage: BoardMessageCom
 export function filterBoardMessageIndex(search: string, boardMessage: IndexEntry<BoardMessage>) {
 	const parsed = parseBoardMessageFilterQuery(search.length ? search : appConfig.defaultFilterQueries.messageBoard || "");
 
-	if (parsed.pinned !== undefined) {
-		if (parsed.pinned && !boardMessage.isPinned)
+	if (parsed.isPinned !== undefined) {
+		if (parsed.isPinned && !boardMessage.isPinned)
 			return false;
-		else if (!parsed.pinned && boardMessage.isPinned)
+		else if (!parsed.isPinned && boardMessage.isPinned)
+			return false;
+	}
+
+	if (parsed.isArchived !== undefined) {
+		if (parsed.isArchived && !boardMessage.isArchived)
+			return false;
+		else if (!parsed.isArchived && boardMessage.isArchived)
 			return false;
 	}
 

@@ -32,7 +32,8 @@ const defaultAppConfig: AppConfig = {
 	hideFrontingTimer: false,
 	view: "dashboard",
 	defaultFilterQueries: {
-		members: "@archived:no"
+		members: "@archived:no",
+		messageBoard: "@archived:no"
 	}
 };
 

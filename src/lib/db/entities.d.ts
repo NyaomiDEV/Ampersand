@@ -10,6 +10,7 @@ export interface BoardMessage extends UUIDable {
 	body: string,
 	date: Date,
 	isPinned?: boolean,
+	isArchived: boolean,
 	poll?: Poll
 }
 

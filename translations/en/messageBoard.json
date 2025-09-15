@@ -28,6 +28,7 @@
 		"title": "Title",
 		"body": "Message body",
 		"isPinned": "Pin message",
+		"isArchived": "Archive message",
 		"attachPoll": "Attach a poll to this message",
 		"deleteAttachedPoll": "Delete attached poll",
 		"pollIsMultipleChoice": "Allow selecting multiple choices",
