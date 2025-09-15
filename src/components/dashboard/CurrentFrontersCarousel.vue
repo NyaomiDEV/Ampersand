@@ -103,7 +103,7 @@
 		display: flex;
 		flex-direction: row;
 		flex-wrap: nowrap;
-		overflow-x: scroll;
+		overflow-x: auto;
 	}
 
 	ion-card {

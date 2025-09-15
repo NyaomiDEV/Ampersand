@@ -107,3 +107,8 @@ input[type="search"]::-webkit-search-results-button,
 input[type="search"]::-webkit-search-results-decoration {
 	display: none !important;
 }
+
+* {
+	scrollbar-width: thin;
+	scrollbar-color: var(--ion-color-primary) transparent;
+}
