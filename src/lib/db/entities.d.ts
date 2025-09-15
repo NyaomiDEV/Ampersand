@@ -161,5 +161,6 @@ export interface Asset extends UUIDable {
 
 export interface CustomField extends UUIDable {
 	name: string,
-	default?: boolean
+	priority: number,
+	default?: boolean,
 }

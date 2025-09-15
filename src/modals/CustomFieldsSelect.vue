@@ -37,12 +37,16 @@
 	});
 
 	watch(search, async () => {
-		customFields.value = await Array.fromAsync(getFilteredCustomFields(search.value));
+		await getCustomFields();
 	});
 
 	onBeforeMount(async () => {
-		customFields.value = await Array.fromAsync(getFilteredCustomFields(search.value));
+		await getCustomFields();
 	});
+
+	async function getCustomFields(){
+		customFields.value = (await Array.fromAsync(getFilteredCustomFields(search.value))).sort((a, b) => a.priority - b.priority);
+	}
 
 	function check(customField: CustomField, checked: boolean){
 		if(checked)

@@ -197,7 +197,7 @@
 		loading.value = true;
 
 		tags.value = (await Array.fromAsync(getTags())).filter(x => x.type === "member");
-		customFields.value = await Array.fromAsync(getCustomFields());
+		customFields.value = (await Array.fromAsync(getCustomFields())).sort((a, b) => a.priority - b.priority);
 
 		if(route.query.uuid){
 			const _member = await getMember(route.query.uuid as string);
@@ -392,7 +392,7 @@
 				</IonItem>
 
 				<IonItem
-					v-for="customField in customFieldsToShow.sort((a, b) => a.name.localeCompare(b.name))"
+					v-for="customField in customFieldsToShow"
 					:key="customField.uuid"
 				>
 					<IonTextarea

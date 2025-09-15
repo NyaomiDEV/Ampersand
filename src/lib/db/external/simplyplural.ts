@@ -117,6 +117,7 @@ function customField(spExport: any){
 		const customField: CustomField = {
 			name: spCustomField.name,
 			default: false,
+			priority: 1,
 			uuid: window.crypto.randomUUID()
 		};
 

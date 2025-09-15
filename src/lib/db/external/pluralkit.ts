@@ -10,6 +10,7 @@ function pkCustomField(): CustomField {
 	return {
 		uuid: window.crypto.randomUUID(),
 		name: "PluralKit ID",
+		priority: 1,
 		default: false
 	};
 }

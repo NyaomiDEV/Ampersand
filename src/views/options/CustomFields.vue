@@ -1,8 +1,8 @@
 <script setup lang="ts">
-	import { IonBackButton, IonContent, IonHeader, IonSearchbar, IonList, IonIcon, IonPage, IonTitle, IonToolbar, IonFab, IonFabButton, IonItem, IonLabel } from "@ionic/vue";
+	import { IonBackButton, IonContent, IonHeader, IonSearchbar, IonList, IonIcon, IonPage, IonTitle, IonToolbar, IonFab, IonFabButton, IonItem, IonLabel, IonReorderGroup, IonReorder, IonButtons, IonButton, ReorderEndCustomEvent } from "@ionic/vue";
 	import { h, inject, onBeforeMount, onUnmounted, ref, shallowRef, watch } from "vue";
 	import { CustomField } from "../../lib/db/entities";
-	import { getFilteredCustomFields } from "../../lib/db/tables/customFields";
+	import { getFilteredCustomFields, updateCustomField } from "../../lib/db/tables/customFields";
 	import { DatabaseEvent, DatabaseEvents } from "../../lib/db/events";
 	import { useRoute } from "vue-router";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
@@ -11,6 +11,8 @@
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
+	import reorderMD from "@material-symbols/svg-600/outlined/reorder.svg";
+	import doneMD from "@material-symbols/svg-600/outlined/done_all.svg";
 
 	const route = useRoute();
 
@@ -24,24 +26,29 @@
 
 	const customFields = shallowRef<CustomField[]>();
 
+	const isReordering = ref(false);
+
 	watch(search, async () => {
-		customFields.value = await Array.fromAsync(getFilteredCustomFields(search.value));
+		await getCustomFields();
 	});
 
 	const listener = (event: Event) => {
 		if(["customFields"].includes((event as DatabaseEvent).data.table))
-			void Array.fromAsync(getFilteredCustomFields(search.value)).then(res => customFields.value = res);
-		
+			void getCustomFields();
 	};
 
 	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
-		customFields.value = await Array.fromAsync(getFilteredCustomFields(search.value));
+		await getCustomFields();
 	});
 
 	onUnmounted(() => {
 		DatabaseEvents.removeEventListener("updated", listener);
 	});
+
+	async function getCustomFields(){
+		customFields.value = (await Array.fromAsync(getFilteredCustomFields(search.value))).sort((a, b) => a.priority - b.priority);
+	}
 
 	async function showModal(clickedCustomField?: CustomField){
 		const vnode = h(CustomFieldEdit, {
@@ -53,6 +60,34 @@
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-explicit-any
 		await (modal.el as any).present();
 	}
+
+	async function handleReorder(e: ReorderEndCustomEvent){
+		// remove the database listener to commit crimes against humanity
+		DatabaseEvents.removeEventListener("updated", listener);
+
+		// actual reorder code
+		e.detail.complete();
+		if(!customFields.value) return;
+		if(e.detail.from === e.detail.to) return;
+
+		const _customFields = [...customFields.value.map(x => x.uuid)];
+		const element = _customFields[e.detail.from];
+		_customFields.splice(e.detail.from, 1);
+		_customFields.splice(e.detail.to, 0, element);
+
+		for(const field of customFields.value){
+			const oldPriority = field.priority;
+			const newPriority = _customFields.findIndex(x => x === field.uuid);
+			if(oldPriority === newPriority) continue;
+			await updateCustomField(field.uuid, { priority: newPriority });
+		}
+
+		// now that we committed crimes against humanity, register the listener again
+		DatabaseEvents.addEventListener("updated", listener);
+		// and grab ordered list
+		await getCustomFields();
+	}
+
 </script>
 
 <template>
@@ -68,6 +103,11 @@
 				<IonTitle>
 					{{ $t("customFields:header") }}
 				</IonTitle>
+				<IonButtons slot="secondary">
+					<IonButton @click="isReordering = !isReordering">
+						<IonIcon slot="icon-only" :icon="isReordering ? doneMD : reorderMD" />
+					</IonButton>
+				</IonButtons>
 			</IonToolbar>
 			<IonToolbar>
 				<IonSearchbar
@@ -84,18 +124,21 @@
 		<SpinnerFullscreen v-if="!customFields" />
 		<IonContent v-else>
 			<IonList :inset="isIOS">
-				<IonItem
-					v-for="customField in customFields"
-					:key="customField.uuid"
-					button
-					@click="showModal(customField)"
-				>
-					<IonLabel>{{ customField.name }}</IonLabel>
-				</IonItem>
+				<IonReorderGroup :disabled="!isReordering" @ion-reorder-end="handleReorder">
+					<IonItem
+						v-for="customField in customFields"
+						:key="customField.uuid"
+						button
+						@click="() => { if(!isReordering) void showModal(customField); }"
+					>
+						<IonLabel>{{ customField.name }}</IonLabel>
+						<IonReorder slot="end" />
+					</IonItem>
+				</IonReorderGroup>
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton @click="showModal()">
+				<IonFabButton @click="void showModal()">
 					<IonIcon :icon="addMD" />
 				</IonFabButton>
 			</IonFab>
