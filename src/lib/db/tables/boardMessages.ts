@@ -19,8 +19,10 @@ export async function getBoardMessagesOffset(offset: number, limit?: number){
 }
 
 export async function toBoardMessageComplete(boardMessage: BoardMessage): Promise<BoardMessageComplete> {
-	const member = (await getMember(boardMessage.member)) || defaultMember();
-	return { ...boardMessage, member };
+	return {
+		...boardMessage,
+		member: (await getMember(boardMessage.member)) || defaultMember()
+	};
 }
 
 export async function newBoardMessage(boardMessage: Omit<BoardMessage, keyof UUIDable>) {

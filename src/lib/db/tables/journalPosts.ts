@@ -19,8 +19,10 @@ export async function getJournalPostsOffset(offset: number, limit?: number) {
 }
 
 export async function toJournalPostComplete(journalPost: JournalPost){
-	const member = (await getMember(journalPost.member)) || defaultMember();
-	return { ...journalPost, member };
+	return {
+		...journalPost,
+		member: (await getMember(journalPost.member)) || defaultMember()
+	};
 }
 
 export async function newJournalPost(journalPost: Omit<JournalPost, keyof UUIDable>) {
