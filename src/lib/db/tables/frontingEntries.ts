@@ -1,4 +1,4 @@
-import { db, IndexEntry } from ".";
+import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUIDable, Member, FrontingEntry, FrontingEntryComplete, UUID } from "../entities";
 import { defaultMember, getMember } from "./members";
@@ -171,29 +171,20 @@ export async function getRecentlyFronted() {
 	)).filter(x => !!x).map(x => toFrontingEntryComplete(x)));
 }
 
-export async function* getFrontingEntriesOfDay(date: Date, currentlyFrontingToToday: boolean, query: string) {
-	const _date = dayjs(date).startOf("day");
-
-	let _filter = (x: IndexEntry<FrontingEntry>) => dayjs(x.startTime).startOf("day").valueOf() === _date.valueOf();
-
-	if(currentlyFrontingToToday){
-		_filter = (x: IndexEntry<FrontingEntry>) => !!x.endTime && dayjs(x.startTime).startOf("day").valueOf() === _date.valueOf();
-
-		const _today = dayjs().startOf("day");
-		if(_date.valueOf() === _today.valueOf())
-			_filter = (x: IndexEntry<FrontingEntry>) => !x.endTime || dayjs(x.startTime).startOf("day").valueOf() === _date.valueOf();
-		
-	}
+export async function* getFrontingEntriesOfDay(date: Date, query: string) {
+	const _date = dayjs(date).startOf("day").valueOf();
 
 	for(const entry of db.frontingEntries.index){
-		if(!_filter(entry))
-			continue;
+		const startDay = dayjs(entry.startTime).startOf("day").valueOf();
+		const endDay = entry.endTime ? dayjs(entry.endTime).endOf("day").valueOf() : dayjs().endOf("day").valueOf();
 
+		if(_date < startDay || _date > endDay) continue;
+		
 		const frontingEntry = await db.frontingEntries.get(entry.uuid);
-		if(!frontingEntry) continue;
+		if (!frontingEntry) continue;
 
 		const complete = await toFrontingEntryComplete(frontingEntry);
-		if(filterFrontingEntry(query, complete))
+		if (filterFrontingEntry(query, complete))
 			yield complete;
 	}
 }

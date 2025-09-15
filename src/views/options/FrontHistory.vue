@@ -17,8 +17,10 @@
 	import { DatabaseEvents, DatabaseEvent } from "../../lib/db/events";
 	import { addModal, removeModal } from "../../lib/modals.ts";
 	import { useRoute } from "vue-router";
+	import { useTranslation } from "i18next-vue";
 
 	const route = useRoute();
+	const i18next = useTranslation();
 
 	const firstWeekOfDayIsSunday = appConfig.locale.firstWeekOfDayIsSunday;
 	const isIOS = inject<boolean>("isIOS");
@@ -59,40 +61,58 @@
 		DatabaseEvents.removeEventListener("updated", listener);
 	});
 
-	async function getEntries(_date: Date){
-		frontingEntries.value = await Array.fromAsync(getFrontingEntriesOfDay(_date, true, search.value));
+	async function getEntries(){
+		frontingEntries.value = await Array.fromAsync(getFrontingEntriesOfDay(dayjs(date.value).toDate(), search.value));
 	}
 
 	async function resetEntries(){
 		frontingEntries.value = undefined;
-		await getEntries(dayjs(date.value).toDate());
+		await getEntries();
 	}
 
 	function getGrouped(entries: FrontingEntryComplete[]){
 		const map = new Map<string, FrontingEntryComplete[]>();
 
-		for(const entry of entries.filter(x => !x.endTime).sort((a, b) => b.startTime.getTime() - a.startTime.getTime())){
-			const collection = map.get("currentlyFronting");
-			if(!collection)
-				map.set("currentlyFronting", [entry]);
-			else
-				collection.push(entry);
+		for(const entry of entries.sort((a, b) => b.startTime.getTime() - a.startTime.getTime())){
+			if(!entry.endTime){
+				const collection = map.get("currentlyFronting");
+				if(!collection)
+					map.set("currentlyFronting", [entry]);
+				else
+					collection.push(entry);
+			} else if(dayjs(date.value).startOf("day").valueOf() === dayjs(entry.startTime).startOf("day").valueOf()) {
+				const collection = map.get("frontedThatDay");
+				if(!collection)
+					map.set("frontedThatDay", [entry]);
+				else
+					collection.push(entry);
+			} else {			
+				const collection = map.get("wasFronting");
+				if(!collection)
+					map.set("wasFronting", [entry]);
+				else
+					collection.push(entry);
+			}
 		}
 
-		for(const entry of entries.filter(x => x.endTime).sort((a, b) => b.startTime.getTime() - a.startTime.getTime())){
-			const key = dayjs(entry.startTime).startOf("day").toISOString();
-			
-			const collection = map.get(key);
-			if(!collection)
-				map.set(key, [entry]);
-			else
-				collection.push(entry);
-		}
-
-		return [...map.entries()].sort((a, b) => {
-			if(a[0] === "currentlyFronting") return -1;
-			return dayjs(b[0]).valueOf() - dayjs(a[0]).valueOf();
+		return [...map.entries()].sort((a, _b) => {
+			if(a[0] === "currentlyFronting") return -2;
+			if(a[0] === "wasFronting") return -1;
+			if(a[0] === "frontedThatDay") return 0;
+			return 1;
 		});
+	}
+
+	function getLabel(name: string){
+		switch(name){
+			case "currentlyFronting":
+				return i18next.t("frontHistory:currentlyFronting");
+			case "wasFronting":
+				return i18next.t("frontHistory:wasFronting");
+			case "frontedThatDay":
+				return i18next.t("frontHistory:frontedThatDay");
+		}
+		return "";
 	}
 
 	function populateHighlightedDays() {
@@ -169,13 +189,7 @@
 			<IonList v-else :inset="isIOS">
 				<template v-for="tuple in getGrouped(frontingEntries)" :key="tuple[0]">
 					<IonItemDivider sticky>
-						<IonLabel>
-							{{
-								tuple[0] === "currentlyFronting"
-									? $t("frontHistory:currentlyFronting")
-									: dayjs(tuple[0]).format("LL")
-							}}
-						</IonLabel>
+						<IonLabel>{{ getLabel(tuple[0]) }}</IonLabel>
 					</IonItemDivider>
 					<IonItem
 						v-for="entry in tuple[1]"

@@ -2,6 +2,8 @@
 	"header": "Cronologia del front",
 	"searchPlaceholder": "Cerca tra la cronologia del front...",
 	"currentlyFronting": "Correntemente al front",
+	"wasFronting": "Era ancora al front",
+	"frontedThatDay": "Ha frontato quel giorno",
 	"influencing": "Influenza {{influencedMember}}",
 	"edit": {
 		"header": "Modifica voce di front",

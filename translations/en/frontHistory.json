@@ -2,6 +2,8 @@
 	"header": "Front history",
 	"searchPlaceholder": "Search the fronting history...",
 	"currentlyFronting": "Currently fronting",
+	"wasFronting": "Was still fronting",
+	"frontedThatDay": "Fronted that day",
 	"influencing": "Influencing {{influencedMember}}",
 	"edit": {
 		"header": "Edit fronting entry",
