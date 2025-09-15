@@ -53,6 +53,7 @@
 
 	const loading = ref(false);
 	const memberSelectModal = useTemplateRef("memberSelectModal");
+	const memberTagModal = useTemplateRef("memberTagModal");
 
 	const tags = shallowRef<Tag[]>([]);
 	const tagSelectionModal = useTemplateRef("tagSelectionModal");
@@ -296,6 +297,15 @@
 					<IonTextarea v-model="post.body" auto-grow :placeholder="$t('journal:edit.body')" />
 				</IonItem>
 
+				<IonItem>
+					<IonButton fill="clear" @click="post.body += '<t:' + Math.floor(Date.now() / 1000) + ':f>'">
+						{{ $t("other:addTimestamp") }}
+					</IonButton>
+					<IonButton fill="clear" @click="memberTagModal?.$el.present()">
+						{{ $t("other:memberMention") }}
+					</IonButton>
+				</IonItem>
+
 				<IonItem button :detail="false">
 					<IonToggle v-model="post.isPinned">
 						<IonLabel>
@@ -362,6 +372,15 @@
 				:hide-checkboxes="true"
 				:model-value="post.member ? [post.member] : []"
 				@update:model-value="(e) => { if (e[0]) post.member = e[0]; }"
+			/>
+
+			<MemberSelect
+				ref="memberTagModal"
+				:only-one="true"
+				:discard-on-select="true"
+				:hide-checkboxes="true"
+				:model-value="[]"
+				@update:model-value="(e) => { if(e[0] && post.body) post.body += '@<m:'+e[0].uuid+'>' }"
 			/>
 
 		</IonContent>
