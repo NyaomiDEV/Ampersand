@@ -8,6 +8,7 @@
 	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
 	import { DatabaseEvents, DatabaseEvent } from "../../lib/db/events";
 	import { addModal, removeModal } from "../../lib/modals.ts";
+	import { appConfig } from "../../lib/config/index.ts";
 
 	const frontingEntries = shallowRef<FrontingEntryComplete[]>([]);
 
@@ -33,13 +34,17 @@
 	};
 
 	onBeforeMount(async () => {
-		interval = setInterval(() => now.value = new Date(), 1000);
+		if(!appConfig.hideFrontingTimer)
+			interval = setInterval(() => now.value = new Date(), 1000);
+
 		DatabaseEvents.addEventListener("updated", listener);
 		await updateFrontingEntries();
 	});
 
 	onUnmounted(() => {
-		clearInterval(interval);
+		if(!appConfig.hideFrontingTimer)
+			clearInterval(interval);
+
 		DatabaseEvents.removeEventListener("updated", listener);
 	});
 
@@ -78,7 +83,7 @@
 					<h2>
 						{{ fronting.member.name }}
 					</h2>
-					<p>
+					<p v-if="!appConfig.hideFrontingTimer">
 						{{ formatWrittenTime(now, fronting.startTime) }}
 					</p>
 					<p v-if="fronting.influencing">

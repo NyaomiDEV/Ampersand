@@ -133,6 +133,14 @@
 				</IonToggle>
 			</IonItem>
 
+			<IonItem button :detail="false">
+				<IonToggle v-model="appConfig.hideFrontingTimer">
+					<IonLabel class="wrap">
+						{{ $t("appSettings:hideFrontingTimer") }}
+					</IonLabel>
+				</IonToggle>
+			</IonItem>
+
 			<IonListHeader>
 				<IonLabel>{{ $t("appSettings:defaultFilterLabel") }}</IonLabel>
 			</IonListHeader>

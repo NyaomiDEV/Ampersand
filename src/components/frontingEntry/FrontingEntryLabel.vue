@@ -7,6 +7,7 @@
 	import dayjs from "dayjs";
 	import { onMounted, onUnmounted, ref } from "vue";
 	import { formatDate, formatWrittenTime } from "../../lib/util/misc";
+	import { appConfig } from "../../lib/config";
 
 	const props = defineProps<{
 		entry: FrontingEntryComplete,
@@ -32,7 +33,7 @@
 	}
 
 	onMounted(() => {
-		if(!props.entry.endTime){
+		if(!props.entry.endTime && !appConfig.hideFrontingTimer){
 			intervalRef = setInterval(() => {
 				interval.value = formatWrittenTime(new Date(), props.entry.startTime);
 			}, 1000);
@@ -40,13 +41,14 @@
 	});
 
 	onUnmounted(() => {
-		clearInterval(intervalRef);
+		if(!props.entry.endTime && !appConfig.hideFrontingTimer)
+			clearInterval(intervalRef);
 	});
 </script>
 
 <template>
 	<IonLabel>
-		<h3 style="float: right">
+		<h3 v-if="!appConfig.hideFrontingTimer" style="float: right">
 			{{ interval }}
 		</h3>
 		<h2>

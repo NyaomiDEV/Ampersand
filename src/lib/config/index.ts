@@ -29,6 +29,7 @@ const defaultAppConfig: AppConfig = {
 	},
 	showSystemDescriptionInDashboard: false,
 	showMembersBeforeCustomFronts: true,
+	hideFrontingTimer: false,
 	view: "dashboard",
 	defaultFilterQueries: {
 		members: "@archived:no"
