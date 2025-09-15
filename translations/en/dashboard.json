@@ -4,6 +4,7 @@
 	"header_mainfronter": "Hi, {{fronterName}}!",
 	"systemDescription": "System description",
 	"nowFronting": "Now fronting",
+	"fronterInfluencing": "Influencing {{influencedMember}}",
 	"recentFrontingHistory": "Recently switched out",
 	"messageBoard": {
 		"header": "Message board",

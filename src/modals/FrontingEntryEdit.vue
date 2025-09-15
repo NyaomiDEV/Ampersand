@@ -46,10 +46,12 @@
 		isMainFronter: false,
 		startTime: new Date(),
 		endTime: new Date(),
+		isLocked: false
 	};
 	const frontingEntry = ref({...(props.frontingEntry || emptyFrontingEntry)});
 
 	const memberSelectModal = useTemplateRef("memberSelectModal");
+	const memberInfluencingModal = useTemplateRef("memberInfluencingModal");
 	const memberTagModal = useTemplateRef("memberTagModal");
 
 	async function save(){
@@ -58,8 +60,11 @@
 
 		if(!_frontingEntry.member) return;
 
+		if(_frontingEntry.isMainFronter)
+			delete _frontingEntry.influencing;
+
 		if(!uuid) {
-			await newFrontingEntry({..._frontingEntry, member: _frontingEntry.member.uuid });
+			await newFrontingEntry({..._frontingEntry, member: _frontingEntry.member.uuid, influencing: _frontingEntry.influencing?.uuid });
 
 			await modalController.dismiss(null, "added");
 
@@ -68,7 +73,8 @@
 
 		await updateFrontingEntry(uuid, {
 			..._frontingEntry,
-			member: _frontingEntry.member.uuid
+			member: _frontingEntry.member.uuid,
+			influencing: _frontingEntry.influencing?.uuid
 		});
 
 		try{
@@ -149,6 +155,34 @@
 						label-placement="floating"
 					/>
 				</IonItem>
+				<IonItem v-if="!frontingEntry.isMainFronter" button @click="memberInfluencingModal?.$el.present()">
+					<template v-if="frontingEntry.influencing">
+						<MemberAvatar slot="start" :member="frontingEntry.influencing" />
+						<IonLabel>
+							<p>{{ $t("frontHistory:edit.influencing.currentlyInfluencing") }}</p>
+							<h2>{{ frontingEntry.influencing.name }}</h2>
+						</IonLabel>
+					</template>
+					<template v-else>
+						<IonLabel>
+							<h2>{{ $t("frontHistory:edit.influencing.select") }}</h2>
+						</IonLabel>
+					</template>
+					<IonButton
+						v-if="frontingEntry.influencing"
+						slot="end"
+						shape="round"
+						fill="outline"
+						size="default"
+						@click="(e) => { e.stopPropagation(); frontingEntry.influencing = undefined }"
+					>
+						<IonIcon
+							slot="icon-only"
+							:icon="trashMD"
+							color="danger"
+						/>
+					</IonButton>
+				</IonItem>
 				<IonItem button @click="($refs.startTimePicker as any)?.$el.present()">
 					<IonLabel>
 						<h2>{{ $t("frontHistory:edit.startTime") }}</h2>
@@ -185,6 +219,13 @@
 					<IonToggle v-model="frontingEntry.isMainFronter">
 						<IonLabel>
 							{{ $t("frontHistory:edit.isMainFronter") }}
+						</IonLabel>
+					</IonToggle>
+				</IonItem>
+				<IonItem button :detail="false">
+					<IonToggle v-model="frontingEntry.isLocked">
+						<IonLabel>
+							{{ $t("frontHistory:edit.isLocked") }}
 						</IonLabel>
 					</IonToggle>
 				</IonItem>
@@ -234,6 +275,15 @@
 				:hide-checkboxes="true"
 				:model-value="frontingEntry.member ? [frontingEntry.member] : []"
 				@update:model-value="(e) => { if(e[0]) frontingEntry.member = e[0] }"
+			/>
+
+			<MemberSelect
+				ref="memberInfluencingModal"
+				:only-one="true"
+				:discard-on-select="true"
+				:hide-checkboxes="true"
+				:model-value="frontingEntry.influencing ? [frontingEntry.influencing] : []"
+				@update:model-value="(e) => { if(e[0]) frontingEntry.influencing = e[0] }"
 			/>
 
 			<MemberSelect

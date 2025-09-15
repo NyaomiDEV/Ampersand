@@ -23,8 +23,11 @@ export async function getFrontingEntriesOffset(offset: number, limit?: number){
 }
 
 export async function toFrontingEntryComplete(frontingEntry: FrontingEntry): Promise<FrontingEntryComplete> {
-	const member = (await getMember(frontingEntry.member)) || defaultMember();
-	return { ...frontingEntry, member };
+	return {
+		...frontingEntry,
+		member: (await getMember(frontingEntry.member)) || defaultMember(),
+		influencing: frontingEntry.influencing ? (await getMember(frontingEntry.influencing)) || defaultMember() : undefined,
+	};
 }
 
 export async function newFrontingEntry(frontingEntry: Omit<FrontingEntry, keyof UUIDable>) {
@@ -104,7 +107,7 @@ export async function setMainFronter(member: Member, value: boolean){
 
 export async function setSoleFronter(member: Member) {
 	const toUpdate = (await Promise.all(
-		db.frontingEntries.index.filter(x => !x.endTime).map(x => db.frontingEntries.get(x.uuid))
+		db.frontingEntries.index.filter(x => !x.endTime && !x.isLocked).map(x => db.frontingEntries.get(x.uuid))
 	)).filter(x => !!x)
 		.filter(x => x.member !== member.uuid)
 		.map(x => x.uuid);
@@ -118,7 +121,8 @@ export async function setSoleFronter(member: Member) {
 		await newFrontingEntry({
 			member: member.uuid,
 			startTime: endTime,
-			isMainFronter: false
+			isMainFronter: false,
+			isLocked: false
 		});
 	}
 }

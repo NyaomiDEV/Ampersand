@@ -114,7 +114,8 @@
 		await newFrontingEntry({
 			member: member.uuid,
 			startTime: new Date(),
-			isMainFronter: false
+			isMainFronter: false,
+			isLocked: false
 		});
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 		list.value?.$el.closeSlidingItems();

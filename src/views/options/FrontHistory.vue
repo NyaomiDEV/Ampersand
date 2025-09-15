@@ -181,7 +181,7 @@
 						v-for="entry in tuple[1]"
 						:key="entry.uuid"
 						button
-						:class="{'main-fronter': entry.isMainFronter}"
+						:class="{'main-fronter': entry.isMainFronter, 'influencing': !!entry.influencing}"
 						@click="showModal(entry)"
 					>
 						<MemberAvatar slot="start" :member="entry.member" />
@@ -216,5 +216,9 @@
 
 	ion-item.main-fronter {
 		--background: var(--ion-background-color-step-250);
+	}
+
+	ion-item.influencing {
+		opacity: .5;
 	}
 </style>

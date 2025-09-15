@@ -16,7 +16,15 @@
 	let interval: number;
 
 	async function updateFrontingEntries() {
-		frontingEntries.value = await getFronting();
+		frontingEntries.value = (await getFronting()).sort((a, b) => {
+			if(a.isMainFronter && !b.isMainFronter) return -1;
+			if(!a.isMainFronter && b.isMainFronter) return 1;
+
+			if(a.influencing && !b.influencing) return 1;
+			if(!a.influencing && b.influencing) return -1;
+
+			return a.member.name.localeCompare(b.member.name);
+		});
 	}
 
 	const listener = (event: Event) => {
@@ -56,7 +64,12 @@
 			v-for="fronting in frontingEntries"
 			:key="fronting.uuid"
 			button
-			:class="{outlined: !fronting.isMainFronter, elevated: fronting.isMainFronter}"
+			:class="{
+				influenced: frontingEntries.findIndex(x => x.influencing?.uuid === fronting.member.uuid) > 0,
+				outlined: !fronting.isMainFronter,
+				elevated: fronting.isMainFronter,
+				influencing: !!fronting.influencing,
+			}"
 			@click="showModal(fronting)"
 		>
 			<IonCardContent>
@@ -67,6 +80,9 @@
 					</h2>
 					<p>
 						{{ formatWrittenTime(now, fronting.startTime) }}
+					</p>
+					<p v-if="fronting.influencing">
+						{{ $t("dashboard:fronterInfluencing", {influencedMember: fronting.influencing.name}) }}
 					</p>
 					<p v-if="fronting.customStatus">
 						{{ fronting.customStatus }}
@@ -96,5 +112,13 @@
 
 	ion-card ion-card-content {
 		text-align: center;
+	}
+
+	ion-card.influencing {
+		opacity: .5;
+	}
+
+	ion-card.influenced {
+		outline: 2px solid rgb(var(--md3-primary)) !important;
 	}
 </style>

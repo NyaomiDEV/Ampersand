@@ -122,6 +122,7 @@ function frontingEntry(pkExport: any, memberMapping: Map<string, string>){
 					member: memberMapping.get(id) || nilUid,
 					startTime: date,
 					isMainFronter: false,
+					isLocked: false,
 					uuid: window.crypto.randomUUID()
 				};
 				trackedFronting.set(id, frontingEntry);

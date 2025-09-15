@@ -2,13 +2,16 @@
 	"header": "Cronologia del front",
 	"searchPlaceholder": "Cerca tra la cronologia del front...",
 	"currentlyFronting": "Correntemente al front",
+	"influencing": "Influenza {{influencedMember}}",
 	"edit": {
 		"header": "Modifica voce di front",
 		"member": "Modifica lə membrə a front",
 		"customStatus": "Status personalizzato",
 		"comment": "Commento",
-		"addTimestamp": "Aggiungi data e ora",
-		"memberMention": "Menziona unə membrə",
+		"influencing": {
+			"select": "Seleziona unə membrə da influenzare",
+			"currentlyInfluencing": "Sta influenzando"
+		},
 		"startTime": "Data d'inizio",
 		"endTime": "Data di fine",
 		"removeFromFront": {
@@ -16,6 +19,7 @@
 			"desc": "Non potrai annullare questa azione dopo aver salvato!"
 		},
 		"isMainFronter": "Fronter principale",
+		"isLocked": "Blocca fronter",
 		"delete": {
 			"title": "Elimina voce di front",
 			"confirm": "Vuoi davvero eliminare questa voce di front?"

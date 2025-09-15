@@ -236,6 +236,7 @@ function frontingEntry(spExport: any, memberMapping: Map<string, string>){
 			endTime: spFrontHistory.endTime ? new Date(spFrontHistory.endTime) : undefined,
 			customStatus: spFrontHistory.customStatus?.length ? spFrontHistory.customStatus : undefined,
 			isMainFronter: false,
+			isLocked: false,
 			uuid: window.crypto.randomUUID(),
 			comment: spExport.comments
 				.filter(x => x.collection === "frontHistory" && x.documentId === spFrontHistory._id)

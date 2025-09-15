@@ -37,12 +37,15 @@ export interface FrontingEntry extends UUIDable {
 	startTime: Date,
 	endTime?: Date,
 	isMainFronter: boolean,
+	isLocked: boolean,
 	customStatus?: string,
+	influencing?: UUID,
 	comment?: string
 }
 
 export interface FrontingEntryComplete extends FrontingEntry {
-	member: Member
+	member: Member,
+	influencing?: Member
 }
 
 export interface JournalPost extends UUIDable {

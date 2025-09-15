@@ -52,6 +52,9 @@
 		<h2>
 			{{ props.entry.member.name }}
 		</h2>
+		<p v-if="props.entry.influencing" class="influencing" style="color: inherit;">
+			{{ $t("frontHistory:influencing", {influencedMember: props.entry.influencing.name}) }}
+		</p>
 		<p v-if="props.entry.customStatus" class="custom-status" style="color: inherit;">
 			{{ props.entry.customStatus }}
 		</p>

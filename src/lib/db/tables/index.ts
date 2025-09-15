@@ -137,16 +137,6 @@ export class ShittyTable<T extends UUIDable> {
 		return this.index.length;
 	}
 
-	// async toArray() {
-	// 	const arr: T[] = [];
-	// 	for (const x of this.index.map(x => x.uuid)) {
-	// 		const data = await this.get(x);
-	// 		if (data) arr.push(data);
-	// 	}
-
-	// 	return arr;
-	// }
-
 	async* iterate() {
 		for (const x of this.index.map(x => x.uuid)) {
 			const data = await this.get(x);
@@ -270,7 +260,7 @@ export function getTables(): GetTableTauriExport {
 
 export const db = {
 	boardMessages: await makeTable<BoardMessage>("boardMessages", ["member", "date", "isPinned"]),
-	frontingEntries: await makeTable<FrontingEntry>("frontingEntries", ["member", "startTime", "endTime"]),
+	frontingEntries: await makeTable<FrontingEntry>("frontingEntries", ["member", "startTime", "endTime", "isLocked"]),
 	journalPosts: await makeTable<JournalPost>("journalPosts", ["member", "date", "isPinned"]),
 	members: await makeTable<Member>("members", []),
 	reminders: await makeTable<Reminder>("reminders", []),

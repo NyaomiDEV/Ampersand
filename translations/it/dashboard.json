@@ -4,6 +4,7 @@
 	"header_mainfronter": "Ciao, {{fronterName}}!",
 	"systemDescription": "Descrizione del sistema",
 	"nowFronting": "Ora a front",
+	"fronterInfluencing": "Influenzando {{influencedMember}}",
 	"recentFrontingHistory": "Uscitə dal front recentemente",
 	"messageBoard": {
 		"header": "Bacheca dei messaggi",
