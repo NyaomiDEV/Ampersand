@@ -1,5 +1,6 @@
 <script setup lang="ts">
 	import {
+		IonButton,
 		IonContent,
 		IonHeader,
 		IonToolbar,
@@ -231,6 +232,20 @@
 							{{ $t("tagManagement:edit.color") }}
 						</IonLabel>
 					</Color>
+					<IonButton
+						v-if="tag.color"
+						slot="end"
+						shape="round"
+						fill="outline"
+						size="default"
+						@click="(e) => { e.stopPropagation(); tag.color = undefined; updateColors() }"
+					>
+						<IonIcon
+							slot="icon-only"
+							:icon="trashMD"
+							color="danger"
+						/>
+					</IonButton>
 				</IonItem>
 
 				<IonItem button :detail="false">

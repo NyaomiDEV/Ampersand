@@ -365,6 +365,20 @@
 							{{ $t("members:edit.color") }}
 						</IonLabel>
 					</Color>
+					<IonButton
+						v-if="member.color"
+						slot="end"
+						shape="round"
+						fill="outline"
+						size="default"
+						@click="(e) => { e.stopPropagation(); member.color = undefined; updateColors() }"
+					>
+						<IonIcon
+							slot="icon-only"
+							:icon="trashMD"
+							color="danger"
+						/>
+					</IonButton>
 				</IonItem>
 
 				<IonItem
