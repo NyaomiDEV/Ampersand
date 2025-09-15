@@ -199,7 +199,7 @@ export async function* getFrontingEntriesOfDay(date: Date, currentlyFrontingToTo
 }
 
 export function getFrontingEntriesDays(query: string) {
-	const _map = db.frontingEntries.index.filter(x => filterFrontingEntryIndex(query, x)).map(x => dayjs(x.startTime).startOf("day").valueOf());
+	const _map = db.frontingEntries.index.filter(x => !!x.endTime && filterFrontingEntryIndex(query, x)).map(x => dayjs(x.startTime).startOf("day").valueOf());
 
 	return _map.reduce((occurrences, current) => {
 		occurrences.set(current, (occurrences.get(current) || 0) + 1);
