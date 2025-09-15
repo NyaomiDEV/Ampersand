@@ -115,6 +115,15 @@
 				</IonItem>
 
 				<IonItem>
+					<IonToggle v-model="accessibilityConfig.disableMemberCoversInList">
+						<IonLabel>
+							<h3>{{ $t("accessibility:disableMemberCoversInList.title") }}</h3>
+							<p>{{ $t("accessibility:disableMemberCoversInList.desc") }}</p>
+						</IonLabel>
+					</IonToggle>
+				</IonItem>
+
+				<IonItem>
 					<IonLabel class="more-padding">
 						<h3 class="centered-text">{{ $t("accessibility:fontScale.title") }}</h3>
 						<IonRange

@@ -203,7 +203,7 @@
 		
 		<SpinnerFullscreen v-if="!members" />
 		<IonContent v-else>
-			<IonList ref="list" :inset="isIOS">
+			<IonList ref="list" :class="{compact: accessibilityConfig.disableMemberCoversInList }" :inset="isIOS">
 
 				<IonItemSliding v-for="member in members" :key="member.uuid" @ion-drag="endPress(member, true)">
 					<IonItem
@@ -251,21 +251,6 @@
 </template>
 
 <style scoped>
-	ion-item {
-		margin: 4px 16px;
-		--background: var(--ion-background-color-step-100);
-	}
-
-	ion-item .cover {
-		position: absolute;
-		top: 0px;
-		left: 0px;
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-		z-index: -1;
-	}
-
 	ion-item.archived > * {
 		opacity: 0.5;
 	}
@@ -275,11 +260,27 @@
 		height: 56px;
 	}
 
-	ion-item::part(native) {
+	ion-item-option {
+		border-radius: 28px;
+		width: 56px;
+		height: 56px;
+		margin: auto 8px;
+	}
+
+	ion-item-option:last-child {
+		margin-right: 16px;
+	}
+
+	ion-list:not(.compact) ion-item {
+		margin: 4px 16px;
+		--background: var(--ion-background-color-step-100);
+	}
+
+	ion-list:not(.compact) ion-item::part(native) {
 		border-radius: 16px;
 	}
 
-	ion-item::part(native)::before {
+	ion-list:not(.compact) ion-item::part(native)::before {
 		content: '\A';
 		background-image: var(--data-cover);
 		background-position: center;
@@ -292,16 +293,5 @@
 		left: -16px;
 		opacity: .25;
 		mask-image: radial-gradient(circle at 0% 100%, black, transparent 100%);
-	}
-
-	ion-item-option {
-		border-radius: 28px;
-		width: 56px;
-		height: 56px;
-		margin: auto 8px;
-	}
-
-	ion-item-option:last-child {
-		margin-right: 16px;
 	}
 </style>

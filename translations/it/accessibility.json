@@ -31,6 +31,10 @@
 		"title": "Movimenti ridotti",
 		"desc": "Disabilita le animazioni in app"
 	},
+	"disableMemberCoversInList": {
+		"title": "Disabilita le copertine dei membri nell'elenco",
+		"desc": "Se abilitato, i membri nell'elenco principale verranno visualizzati in modo più compatto"
+	},
 	"fontScale": {
 		"title": "Dimensione del testo"
 	},

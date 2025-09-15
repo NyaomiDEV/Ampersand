@@ -44,6 +44,7 @@ const defaultAccessibilityConfig: AccessibilityConfig = {
 	useAccentColor: false,
 	accentColor: isIOSIonicMode() ? defaultColor : undefined,
 	reducedMotion: false,
+	disableMemberCoversInList: false,
 	fontScale: 1,
 	longPressDuration: 750
 };

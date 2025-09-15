@@ -29,6 +29,7 @@ export type AccessibilityConfig = {
 	useAccentColor: boolean,
 	accentColor?: string,
 	reducedMotion: boolean,
+	disableMemberCoversInList: boolean,
 	fontScale: number,
 	longPressDuration: number
 };

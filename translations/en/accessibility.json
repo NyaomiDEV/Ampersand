@@ -31,6 +31,10 @@
 		"title": "Reduced motion",
 		"desc": "Disable in-app animations"
 	},
+	"disableMemberCoversInList": {
+		"title": "Disable member covers in list",
+		"desc": "If enabled, members in the main list will also display in a more compact way"
+	},
 	"fontScale": {
 		"title": "Font size"
 	},
