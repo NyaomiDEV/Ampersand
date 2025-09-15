@@ -16,8 +16,11 @@
 	const tags = shallowRef<Tag[]>();
 
 	async function updateTags(){
-		if(props.showTagChips)
-			tags.value = (await Promise.all(props.member.tags.map(async x => await getTag(x)))).filter(x => x?.viewInLists) as Tag[];
+		if(props.showTagChips){
+			tags.value = (await Promise.all(props.member.tags.map(async x => await getTag(x))))
+				.filter(x => x!.viewInLists)
+				.sort((a, b) => a!.name.localeCompare(b!.name)) as Tag[];
+		}
 	}
 
 	onBeforeMount(async () => {
