@@ -49,358 +49,278 @@ export type JournalPostFilterQuery = {
 	member?: UUID;
 };
 
-export async function parseMemberFilterQuery(search: string): Promise<MemberFilterQuery> {
-	const tokens = search.split(" ");
+function splitTokens(search: string){
+	const rawTokens = Array.from(search.matchAll(/(?=\S)[^'"\s]*(?:['"][^\\'"]*(?:\\[\s\S][^\\'"]*)*['"][^'"\s]*)*/g)).map(x => x[0]);
 
-	const queryTokens: string[] = [];
+	const tags: string[] = [];
+	const queryParts: string[] = [];
+	const variables = new Map<string, string>();
 
-	const result: MemberFilterQuery = {
-		query: "",
-		tags: []
-	};
-
-	for(const token of tokens){
+	for(const token of rawTokens){
 		switch(token.charAt(0)){
 			case "@":
 				const tokenParts = token.slice(1).split(":");
-				switch(tokenParts[0].toLowerCase()){
-					case "archived":
-						if(tokenParts[1]){
-							switch (tokenParts[1].toLowerCase()) {
-								case "yes":
-								case "true":
-									result.isArchived = true;
-									break;
-								case "no":
-								case "false":
-									result.isArchived = false;
-									break;
-								default:
-									queryTokens.push(token);
-									break;
-							}
-						} else
-							result.isArchived = true;
-						
-						break;
-					case "customfront":
-						if(tokenParts[1]){
-							switch (tokenParts[1]?.toLowerCase()) {
-								case "yes":
-								case "true":
-									result.isCustomFront = true;
-									break;
-								case "no":
-								case "false":
-									result.isCustomFront = false;
-									break;
-								default:
-									queryTokens.push(token);
-									break;
-							}
-						} else
-							result.isCustomFront = true;
-						
-						break;
-					case "pinned":
-						if (tokenParts[1]) {
-							switch (tokenParts[1]?.toLowerCase()) {
-								case "yes":
-								case "true":
-									result.isPinned = true;
-									break;
-								case "no":
-								case "false":
-									result.isPinned = false;
-									break;
-								default:
-									queryTokens.push(token);
-									break;
-							}
-						} else
-							result.isPinned = true;
-
-						break;
-					case "pronouns":
-						result.pronouns = tokenParts[1];
-						break;
-					case "role":
-						result.role = tokenParts[1];
-						break;
-					default:
-						queryTokens.push(token);
-						break;
-				}
+				if(tokenParts[1])
+					variables.set(tokenParts[0], tokenParts[1].replace(/['"]/g, ""));
+				else 
+					variables.set(tokenParts[0], "");
 				break;
 			case "#":
-				const probableTag = token.slice(1);
-				const tag = await getTagFromNameHashtag(probableTag);
-				if(tag)
-					result.tags.push(tag.uuid);
-				else
-					queryTokens.push(token);
-				
+				tags.push(token.slice(1));
 				break;
 			default:
-				queryTokens.push(token);
+				queryParts.push(token);
 				break;
 		}
 	}
 
-	result.query = queryTokens.filter(Boolean).join(" ");
+	return {
+		tags,
+		variables,
+		query: queryParts.filter(Boolean).join(" ")
+	};
+}
+
+export async function parseMemberFilterQuery(search: string): Promise<MemberFilterQuery> {
+	const rawParsed = splitTokens(search);
+
+	const result: MemberFilterQuery = {
+		query: rawParsed.query,
+		tags: []
+	};
+
+	for(const _tag of rawParsed.tags){
+		const tag = await getTagFromNameHashtag(_tag);
+		if (tag) result.tags.push(tag.uuid);
+	}
+
+	for(const [variable, value] of rawParsed.variables){
+		switch(variable.toLowerCase()){
+			case "archived":
+				if(value.length){
+					switch (value.toLowerCase()) {
+						case "yes":
+						case "true":
+							result.isArchived = true;
+							break;
+						case "no":
+						case "false":
+							result.isArchived = false;
+							break;
+					}
+				} else
+					result.isArchived = true;
+				break;
+			case "customfront":
+				if (value.length){
+					switch (value.toLowerCase()) {
+						case "yes":
+						case "true":
+							result.isCustomFront = true;
+							break;
+						case "no":
+						case "false":
+							result.isCustomFront = false;
+							break;
+					}
+				} else
+					result.isCustomFront = true;
+				break;
+			case "pinned":
+				if (value.length) {
+					switch (value.toLowerCase()) {
+						case "yes":
+						case "true":
+							result.isPinned = true;
+							break;
+						case "no":
+						case "false":
+							result.isPinned = false;
+							break;
+					}
+				} else
+					result.isPinned = true;
+				break;
+			case "pronouns":
+				result.pronouns = value;
+				break;
+			case "role":
+				result.role = value;
+				break;
+		}
+	}
 	return result;
 }
 
 export function parseFrontingHistoryFilterQuery(search: string) {
-	const tokens = search.split(" ");
-
-	const queryTokens: string[] = [];
+	const rawParsed = splitTokens(search);
 
 	const result: FrontingHistoryFilterQuery = {
-		query: "",
+		query: rawParsed.query,
 	};
 
-	for (const token of tokens) {
-		switch (token.charAt(0)) {
-			case "@":
-				const tokenParts = token.slice(1).split(":");
-				switch (tokenParts[0].toLowerCase()) {
-					case "current":
-						result.currentlyFronting = true;
-						break;
-					case "date":
-						result.startDateString = tokenParts[1];
-						break;
-					case "day":
-						result.startDay = Number(tokenParts[1]);
-						break;
-					case "month":
-						result.startMonth = Number(tokenParts[1]);
-						break;
-					case "year":
-						result.startYear = Number(tokenParts[1]);
-						break;
-					case "enddate":
-						result.endDateString = tokenParts[1];
-						break;
-					case "endday":
-						result.endDay = Number(tokenParts[1]);
-						break;
-					case "endmonth":
-						result.endMonth = Number(tokenParts[1]);
-						break;
-					case "endyear":
-						result.endYear = Number(tokenParts[1]);
-						break;
-					case "member":
-						result.member = tokenParts[1];
-						break;
-					default:
-						queryTokens.push(token);
-						break;
-				}
+	for (const [variable, value] of rawParsed.variables) {
+		switch (variable.toLowerCase()) {
+			case "current":
+				result.currentlyFronting = true;
 				break;
-			default:
-				queryTokens.push(token);
+			case "date":
+				result.startDateString = value;
+				break;
+			case "day":
+				result.startDay = Number(value);
+				break;
+			case "month":
+				result.startMonth = Number(value);
+				break;
+			case "year":
+				result.startYear = Number(value);
+				break;
+			case "enddate":
+				result.endDateString = value;
+				break;
+			case "endday":
+				result.endDay = Number(value);
+				break;
+			case "endmonth":
+				result.endMonth = Number(value);
+				break;
+			case "endyear":
+				result.endYear = Number(value);
+				break;
+			case "member":
+				result.member = value;
 				break;
 		}
+		break;
 	}
 
-	result.query = queryTokens.filter(Boolean).join(" ");
 	return result;
 }
 
 export function parseBoardMessageFilterQuery(search: string) {
-	const tokens = search.split(" ");
-
-	const queryTokens: string[] = [];
+	const rawParsed = splitTokens(search);
 
 	const result: BoardMessageFilterQuery = {
-		query: "",
+		query: rawParsed.query,
 	};
 
-	for (const token of tokens) {
-		switch (token.charAt(0)) {
-			case "@":
-				const tokenParts = token.slice(1).split(":");
-				switch (tokenParts[0].toLowerCase()) {
-					case "pinned":
-						if (tokenParts[1]) {
-							switch (tokenParts[1].toLowerCase()) {
-								case "yes":
-								case "true":
-									result.isPinned = true;
-									break;
-								case "no":
-								case "false":
-									result.isPinned = false;
-									break;
-								default:
-									queryTokens.push(token);
-									break;
-							}
-						} else
+	for (const [variable, value] of rawParsed.variables) {
+		switch (variable.toLowerCase()) {
+			case "pinned":
+				if (value) {
+					switch (value.toLowerCase()) {
+						case "yes":
+						case "true":
 							result.isPinned = true;
-
-						break;
-					case "archived":
-						if (tokenParts[1]) {
-							switch (tokenParts[1].toLowerCase()) {
-								case "yes":
-								case "true":
-									result.isArchived = true;
-									break;
-								case "no":
-								case "false":
-									result.isArchived = false;
-									break;
-								default:
-									queryTokens.push(token);
-									break;
-							}
-						} else
-							result.isArchived = true;
-
-						break;
-					case "member":
-						result.member = tokenParts[1];
-						break;
-					default:
-						queryTokens.push(token);
-						break;
-				}
+							break;
+						case "no":
+						case "false":
+							result.isPinned = false;
+							break;
+					}
+				} else
+					result.isPinned = true;
 				break;
-			default:
-				queryTokens.push(token);
+			case "archived":
+				if (value) {
+					switch (value.toLowerCase()) {
+						case "yes":
+						case "true":
+							result.isArchived = true;
+							break;
+						case "no":
+						case "false":
+							result.isArchived = false;
+							break;
+					}
+				} else
+					result.isArchived = true;
+				break;
+			case "member":
+				result.member = value;
 				break;
 		}
+		break;
 	}
 
-	result.query = queryTokens.filter(Boolean).join(" ");
 	return result;
 }
 
 export function parseAssetFilterQuery(search: string) {
-	const tokens = search.split(" ");
-
-	const queryTokens: string[] = [];
+	const rawParsed = splitTokens(search);
 
 	const result: AssetFilterQuery = {
-		query: "",
+		query: rawParsed.query,
 	};
 
-	for (const token of tokens) {
-		switch (token.charAt(0)) {
-			case "@":
-				const tokenParts = token.slice(1).split(":");
-				switch (tokenParts[0].toLowerCase()) {
-					case "type":
-						result.type = tokenParts[1];
-						break;
-					case "filename":
-						result.filename = tokenParts[1];
-						break;
-					default:
-						queryTokens.push(token);
-						break;
-				}
+	for (const [variable, value] of rawParsed.variables) {
+		switch (variable.toLowerCase()) {
+			case "type":
+				result.type = value;
 				break;
-			default:
-				queryTokens.push(token);
+			case "filename":
+				result.filename = value;
 				break;
 		}
+		break;
 	}
 
-	result.query = queryTokens.filter(Boolean).join(" ");
 	return result;
 }
 
 export function parseCustomFieldFilterQuery(search: string) {
-	const tokens = search.split(" ");
-
-	const queryTokens: string[] = [];
+	const rawParsed = splitTokens(search);
 
 	const result: CustomFieldFilterQuery = {
-		query: "",
+		query: rawParsed.query,
 	};
 
-	for (const token of tokens) {
-		switch (token.charAt(0)) {
-			case "@":
-				const tokenParts = token.slice(1).split(":");
-				switch (tokenParts[0].toLowerCase()) {
-					case "default":
-						if (tokenParts[1]) {
-							switch (tokenParts[1].toLowerCase()) {
-								case "yes":
-								case "true":
-									result.default = true;
-									break;
-								case "no":
-								case "false":
-									result.default = false;
-									break;
-								default:
-									queryTokens.push(token);
-									break;
-							}
-						} else
+	for (const [variable, value] of rawParsed.variables) {
+		switch (variable.toLowerCase()) {
+			case "default":
+				if (value) {
+					switch (value.toLowerCase()) {
+						case "yes":
+						case "true":
 							result.default = true;
-
-						break;
-					default:
-						queryTokens.push(token);
-						break;
-				}
-				break;
-			default:
-				queryTokens.push(token);
+							break;
+						case "no":
+						case "false":
+							result.default = false;
+							break;
+					}
+				} else
+					result.default = true;
 				break;
 		}
+		break;
 	}
 
-	result.query = queryTokens.filter(Boolean).join(" ");
 	return result;
 }
 
 export async function parseJournalPostFilterQuery(search: string) {
-	const tokens = search.split(" ");
-
-	const queryTokens: string[] = [];
+	const rawParsed = splitTokens(search);
 
 	const result: JournalPostFilterQuery = {
-		query: "",
+		query: rawParsed.query,
 		tags: []
 	};
 
-	for (const token of tokens) {
-		switch (token.charAt(0)) {
-			case "@":
-				const tokenParts = token.slice(1).split(":");
-				switch (tokenParts[0].toLowerCase()) {
-					case "member":
-						result.member = tokenParts[1];
-						break;
-					default:
-						queryTokens.push(token);
-						break;
-				}
-				break;
-			case "#":
-				const probableTag = token.slice(1);
-				const tag = await getTagFromNameHashtag(probableTag);
-				if (tag)
-					result.tags.push(tag.uuid);
-				else
-					queryTokens.push(token);
-
-				break;
-			default:
-				queryTokens.push(token);
-				break;
-		}
+	for (const _tag of rawParsed.tags) {
+		const tag = await getTagFromNameHashtag(_tag);
+		if (tag) result.tags.push(tag.uuid);
 	}
 
-	result.query = queryTokens.filter(Boolean).join(" ");
+	for (const [variable, value] of rawParsed.variables) {
+		switch (variable.toLowerCase()) {
+			case "member":
+				result.member = value;
+				break;
+		}
+		break;
+	}
+
 	return result;
 }
