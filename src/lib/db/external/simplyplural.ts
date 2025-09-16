@@ -264,6 +264,7 @@ function boardMessage(spExport: any, memberMapping: Map<string, string>){
 			title: spBoardMessage.title,
 			body: `@<m:${memberMapping.get(spBoardMessage.writtenFor)}>\n\n` + (spBoardMessage.message?.length ? spBoardMessage.message : ""),
 			date: spBoardMessage.writtenAt ? new Date(spBoardMessage.writtenAt) : new Date(),
+			isArchived: false,
 			uuid: window.crypto.randomUUID()
 		};
 
@@ -331,6 +332,7 @@ function boardMessage(spExport: any, memberMapping: Map<string, string>){
 							} : undefined,
 						].filter(Boolean)
 			},
+			isArchived: false,
 			uuid: window.crypto.randomUUID()
 		};
 
