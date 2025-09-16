@@ -13,14 +13,6 @@ export type MemberFilterQuery = {
 
 export type FrontingHistoryFilterQuery = {
 	query: string,
-	startDateString?: string,
-	endDateString?: string,
-	startDay?: number,
-	endDay?: number,
-	startMonth?: number,
-	endMonth?: number,
-	startYear?: number,
-	endYear?: number,
 	currentlyFronting?: boolean,
 	member?: UUID
 };
@@ -162,31 +154,19 @@ export function parseFrontingHistoryFilterQuery(search: string) {
 	for (const [variable, value] of rawParsed.variables) {
 		switch (variable.toLowerCase()) {
 			case "current":
-				result.currentlyFronting = true;
-				break;
-			case "date":
-				result.startDateString = value;
-				break;
-			case "day":
-				result.startDay = Number(value);
-				break;
-			case "month":
-				result.startMonth = Number(value);
-				break;
-			case "year":
-				result.startYear = Number(value);
-				break;
-			case "enddate":
-				result.endDateString = value;
-				break;
-			case "endday":
-				result.endDay = Number(value);
-				break;
-			case "endmonth":
-				result.endMonth = Number(value);
-				break;
-			case "endyear":
-				result.endYear = Number(value);
+				if (value) {
+					switch (value.toLowerCase()) {
+						case "yes":
+						case "true":
+							result.currentlyFronting = true;
+							break;
+						case "no":
+						case "false":
+							result.currentlyFronting = false;
+							break;
+					}
+				} else
+					result.currentlyFronting = true;
 				break;
 			case "member":
 				result.member = value;

@@ -1,7 +1,6 @@
 
 import { Member, Tag, Asset, CustomField, JournalPostComplete, BoardMessageComplete, FrontingEntryComplete, FrontingEntry, JournalPost, BoardMessage } from "./db/entities";
 import { parseAssetFilterQuery, parseBoardMessageFilterQuery, parseCustomFieldFilterQuery, parseFrontingHistoryFilterQuery, parseJournalPostFilterQuery, parseMemberFilterQuery } from "./util/filterQuery";
-import dayjs from "dayjs";
 import { appConfig } from "./config";
 import { IndexEntry } from "./db/tables";
 
@@ -72,48 +71,6 @@ export function filterFrontingEntry(search: string, frontingEntry: FrontingEntry
 			return false;
 	}
 
-	if (parsed.startDateString) {
-		const date = dayjs(parsed.startDateString).startOf("day");
-		if (date.valueOf() !== dayjs(frontingEntry.startTime).startOf("day").valueOf())
-			return false;
-	}
-
-	if (parsed.endDateString) {
-		const date = dayjs(parsed.endDateString).startOf("day");
-		if (date.valueOf() !== dayjs(frontingEntry.endTime).startOf("day").valueOf())
-			return false;
-	}
-
-	if (parsed.startDay) {
-		if (parsed.startDay !== dayjs(frontingEntry.startTime).get("date"))
-			return false;
-	}
-
-	if (parsed.endDay) {
-		if (parsed.endDay !== dayjs(frontingEntry.endTime).get("date"))
-			return false;
-	}
-
-	if (parsed.startMonth) {
-		if (parsed.startMonth !== dayjs(frontingEntry.startTime).get("month") + 1)
-			return false;
-	}
-
-	if (parsed.endMonth) {
-		if (parsed.endMonth !== dayjs(frontingEntry.endTime).get("month") + 1)
-			return false;
-	}
-
-	if (parsed.startYear) {
-		if (parsed.startYear !== dayjs(frontingEntry.startTime).get("year"))
-			return false;
-	}
-
-	if (parsed.endYear) {
-		if (parsed.endYear !== dayjs(frontingEntry.endTime).get("year"))
-			return false;
-	}
-
 	return true;
 }
 
@@ -127,48 +84,6 @@ export function filterFrontingEntryIndex(search: string, frontingEntry: IndexEnt
 
 	if (parsed.currentlyFronting) {
 		if (frontingEntry.endTime)
-			return false;
-	}
-
-	if (parsed.startDateString) {
-		const date = dayjs(parsed.startDateString).startOf("day");
-		if (date.valueOf() !== dayjs(frontingEntry.startTime).startOf("day").valueOf())
-			return false;
-	}
-
-	if (parsed.endDateString) {
-		const date = dayjs(parsed.endDateString).startOf("day");
-		if (date.valueOf() !== dayjs(frontingEntry.endTime).startOf("day").valueOf())
-			return false;
-	}
-
-	if (parsed.startDay) {
-		if (parsed.startDay !== dayjs(frontingEntry.startTime).get("date"))
-			return false;
-	}
-
-	if (parsed.endDay) {
-		if (parsed.endDay !== dayjs(frontingEntry.endTime).get("date"))
-			return false;
-	}
-
-	if (parsed.startMonth) {
-		if (parsed.startMonth !== dayjs(frontingEntry.startTime).get("month") + 1)
-			return false;
-	}
-
-	if (parsed.endMonth) {
-		if (parsed.endMonth !== dayjs(frontingEntry.endTime).get("month") + 1)
-			return false;
-	}
-
-	if (parsed.startYear) {
-		if (parsed.startYear !== dayjs(frontingEntry.startTime).get("year"))
-			return false;
-	}
-
-	if (parsed.endYear) {
-		if (parsed.endYear !== dayjs(frontingEntry.endTime).get("year"))
 			return false;
 	}
 
