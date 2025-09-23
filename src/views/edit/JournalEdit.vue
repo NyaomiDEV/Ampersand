@@ -17,7 +17,8 @@
 		IonPage,
 		alertController,
 		IonInput,
-		IonItem
+		IonItem,
+		toastController
 	} from "@ionic/vue";
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
@@ -142,6 +143,24 @@
 		if(await promptDeletion()){
 			await deleteJournalPost(post.value.uuid!);
 			router.back();
+		}
+	}
+
+	async function copyIdToClipboard(){
+		if(post.value.uuid){
+			try{
+				await window.navigator.clipboard.writeText("@<j:" + post.value.uuid + ">");
+
+				const toast = await toastController.create({
+					message: i18next.t("journal:edit.postIDcopiedToClipboard"),
+					duration: 1500,
+					position: "bottom",
+				});
+
+				await toast.present();
+			}catch(_e){
+				return;
+			}
 		}
 	}
 
@@ -347,6 +366,17 @@
 					<IonLabel color="danger">
 						<h3>{{ $t("journal:edit.delete.title") }}</h3>
 						<p>{{ $t("other:genericDeleteDesc") }}</p>
+					</IonLabel>
+				</IonItem>
+
+				<IonItem
+					v-if="post.uuid"
+					:detail="false"
+					button
+					@click="copyIdToClipboard"
+				>
+					<IonLabel>
+						<p>{{ $t("journal:edit.postID", { postID: post.uuid }) }}</p>
 					</IonLabel>
 				</IonItem>
 

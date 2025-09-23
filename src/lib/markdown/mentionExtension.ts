@@ -1,7 +1,9 @@
 import { h } from "vue";
 import MemberChip from "../../components/member/MemberChip.vue";
+import JournalChip from "../../components/JournalChip.vue";
 import { MarkedExtension } from "../../../vendor/marked-vue/marked";
 import { getMember } from "../db/tables/members";
+import { getJournalPost } from "../db/tables/journalPosts";
 
 const mentionExtension: MarkedExtension = {
 	extensions: [{
@@ -9,13 +11,17 @@ const mentionExtension: MarkedExtension = {
 		level: "inline",
 		start(src: string) { return src.match(/@</)?.index; },
 		tokenizer(src: string) {
-			const rule = /^@<([m]):(.+?)>/;
+			const rule = /^@<([mj]):(.+?)>/;
 			const match = rule.exec(src);
 			if (match) {
 				let mentionedType: string = "";
 				switch (match[1]) {
 					case "m":
 						mentionedType = "member";
+						break;
+
+					case "j":
+						mentionedType = "journal";
 						break;
 				}
 				const token = {
@@ -35,9 +41,13 @@ const mentionExtension: MarkedExtension = {
 					member: token.member,
 					clickable: true
 				});
+			} else if (token.post) {
+				return h(JournalChip, {
+					post: token.post,
+					clickable: true
+				});
 			} else 
 				return h("span", token.raw);
-			
 		}
 	}],
 	async: true,
@@ -47,6 +57,10 @@ const mentionExtension: MarkedExtension = {
 				switch (token.mentionedType) {
 					case "member":
 						token.member = await getMember(token.uuid);
+						break;
+
+					case "journal":
+						token.post = await getJournalPost(token.uuid);
 						break;
 				}
 				break;

@@ -18,6 +18,8 @@
 		"isPinned": "Pinned post",
 		"isPrivate": "Private post",
 		"contentWarning": "Content warning",
+		"postID": "Post ID: {{postID}}",
+		"postIDcopiedToClipboard": "Post ID in mention format copied to clipboard!",
 		"delete": {
 			"title": "Delete journal post",
 			"confirm": "Are you sure you want to delete this post?"

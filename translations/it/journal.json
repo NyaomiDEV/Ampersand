@@ -18,6 +18,8 @@
 		"isPinned": "Post fissato",
 		"isPrivate": "Post privato",
 		"contentWarning": "Avviso sul contenuto sensibile",
+		"postID": "ID del post: {{postID}}",
+		"postIDcopiedToClipboard": "ID del post in formato menzione copiato negli appunti!",
 		"delete": {
 			"title": "Elimina post dal diario",
 			"confirm": "Vuoi veramente eliminare questo post?"
