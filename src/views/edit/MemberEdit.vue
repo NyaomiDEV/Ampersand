@@ -73,7 +73,8 @@
 	const tagSelectionModal = useTemplateRef("tagSelectionModal");
 
 	const customFields = shallowRef<CustomField[]>([]);
-	const customFieldsToShow = shallowRef<CustomField[]>([]);
+	const customFieldsToShowInEditMode = shallowRef<CustomField[]>([]);
+	const customFieldsToShowInViewMode = shallowRef<CustomField[]>([]);
 	const customFieldsSelectionModal = useTemplateRef("customFieldsSelectionModal");
 
 	const canEdit = ref(true);
@@ -92,6 +93,8 @@
 					member.value.customFields!.delete(k);
 			});
 		}
+
+		customFieldsToShowInViewMode.value = customFields.value.filter(x => (member.value.customFields?.has(x.uuid)));
 
 		const uuid = member.value.uuid;
 		const _member = toRaw(member.value);
@@ -209,7 +212,8 @@
 			member.value.customFields = new Map();
 		
 
-		customFieldsToShow.value = customFields.value.filter(x => x.default || (member.value.customFields?.has(x.uuid) && member.value.customFields?.get(x.uuid)?.length));
+		customFieldsToShowInEditMode.value = customFields.value.filter(x => x.default || (member.value.customFields?.has(x.uuid) && member.value.customFields?.get(x.uuid)?.length));
+		customFieldsToShowInViewMode.value = customFields.value.filter(x => (member.value.customFields?.has(x.uuid)));
 
 		if(route.query.disallowEditing)
 			canEdit.value = false;
@@ -309,7 +313,7 @@
 				<Markdown :markdown="member.description || $t('members:edit.noDescription')" />
 			</div>
 
-			<template v-for="customField in customFields.sort((a, b) => a.name.localeCompare(b.name)).filter(x => Array.from(member.customFields!.keys()).includes(x.uuid))" :key="customField.uuid">
+			<template v-for="customField in customFieldsToShowInViewMode" :key="customField.uuid">
 				<div
 					v-if="!isEditing"
 					class="member-custom-field"
@@ -392,7 +396,7 @@
 				</IonItem>
 
 				<IonItem
-					v-for="customField in customFieldsToShow"
+					v-for="customField in customFieldsToShowInEditMode"
 					:key="customField.uuid"
 				>
 					<IonTextarea
@@ -491,9 +495,9 @@
 
 			<CustomFieldsSelect
 				ref="customFieldsSelectionModal"
-				:model-value="customFieldsToShow"
+				:model-value="customFieldsToShowInEditMode"
 				@update:model-value="_customFields => {
-					customFieldsToShow = customFields.filter(x => {
+					customFieldsToShowInEditMode = customFields.filter(x => {
 						return x.default || _customFields.map(y => y.uuid).includes(x.uuid)
 					});
 				}"
