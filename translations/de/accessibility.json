@@ -28,7 +28,7 @@
 		"desc": "Animationen deaktivieren"
 	},
 	"fontScale": {
-		"title": "Größe der Benutzeroberfläche"
+		"title": "Schriftgröße"
 	},
 	"useMaterialTheming": {
 		"title": "Material-Design-Theme",
