@@ -114,6 +114,8 @@
 	async function removeFrontingEntry(){
 		if(await promptDeletion()){
 			await deleteFrontingEntry(frontingEntry.value.uuid!);
+			await sendFrontingChangedEvent();
+
 			try{
 				await modalController.dismiss(undefined, "deleted");
 			}catch(_){ /* empty */ }
