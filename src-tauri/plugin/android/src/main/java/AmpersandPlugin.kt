@@ -25,6 +25,11 @@ internal class SetCanGoBackArgs {
     var canGoBack: Boolean = false
 }
 
+@InvokeArg
+internal class BroadcastEventArgs {
+    lateinit var payload: String
+}
+
 @TauriPlugin
 class AmpersandPlugin(private val activity: Activity): Plugin(activity) {
     private val canGoBack = false
@@ -73,5 +78,14 @@ class AmpersandPlugin(private val activity: Activity): Plugin(activity) {
         val ret = JSObject()
         ret.put("version", WebView.getCurrentWebViewPackage()?.versionName ?: "")
         invoke.resolve(ret)
+    }
+
+    @Command
+    fun broadcastEvent(invoke: Invoke) {
+        val args = invoke.parseArgs(BroadcastEventArgs::class.java)
+        val intent = Intent("moe.ampersand.app.EVENT")
+        intent.putExtra("data", args.payload)
+        activity.applicationContext?.sendBroadcast(intent)
+        invoke.resolve()
     }
 }

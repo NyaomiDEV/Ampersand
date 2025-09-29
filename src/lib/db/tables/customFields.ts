@@ -24,7 +24,8 @@ export async function newCustomField(customField: Omit<CustomField, keyof UUIDab
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "customFields",
 			event: "new",
-			data: uuid
+			uuid,
+			delta: customField
 		}));
 		return uuid;
 	}catch(_error){
@@ -38,7 +39,8 @@ export async function deleteCustomField(uuid: UUID) {
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "customFields",
 			event: "deleted",
-			data: uuid
+			uuid,
+			delta: {}
 		}));
 		return true;
 	} catch (_error) {
@@ -53,7 +55,8 @@ export async function updateCustomField(uuid: UUID, newContent: Partial<CustomFi
 			DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 				table: "customFields",
 				event: "modified",
-				data: uuid
+				uuid,
+				delta: newContent
 			}));
 			return true;
 		}

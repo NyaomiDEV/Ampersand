@@ -27,3 +27,8 @@ pub(crate) fn open_file<R: Runtime>(app: AppHandle<R>, path: String) -> Result<(
 pub(crate) fn get_webkit_version<R: Runtime>(app: AppHandle<R>) -> Result<String> {
 	app.ampersand().get_webkit_version()
 }
+
+#[command]
+pub(crate) fn broadcast_event<R: Runtime>(app: AppHandle<R>, payload: String) -> Result<()> {
+	app.ampersand().broadcast_event(payload)
+}

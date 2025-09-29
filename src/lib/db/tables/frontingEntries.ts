@@ -4,6 +4,8 @@ import { UUIDable, Member, FrontingEntry, FrontingEntryComplete, UUID } from "..
 import { defaultMember, getMember } from "./members";
 import dayjs from "dayjs";
 import { filterFrontingEntry, filterFrontingEntryIndex } from "../../search";
+import { appConfig } from "../../config";
+import { broadcastEvent } from "../../native/plugin";
 
 export function getFrontingEntries(){
 	return db.frontingEntries.iterate();
@@ -40,8 +42,10 @@ export async function newFrontingEntry(frontingEntry: Omit<FrontingEntry, keyof 
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "frontingEntries",
 			event: "new",
-			data: uuid
+			uuid,
+			delta: frontingEntry
 		}));
+		await sendFrontingChangedEvent();
 		return uuid;
 	}catch(_error){
 		return false;
@@ -54,8 +58,10 @@ export async function deleteFrontingEntry(uuid: UUID) {
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "frontingEntries",
 			event: "deleted",
-			data: uuid
+			uuid,
+			delta: {}
 		}));
+		await sendFrontingChangedEvent();
 		return true;
 	} catch (_error) {
 		return false;
@@ -81,8 +87,10 @@ export async function updateFrontingEntry(uuid: UUID, newContent: Partial<Fronti
 			DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 				table: "frontingEntries",
 				event: "modified",
-				data: uuid
+				uuid,
+				delta: newContent
 			}));
+			await sendFrontingChangedEvent();
 			return true;
 		}
 		return false;
@@ -196,4 +204,11 @@ export function getFrontingEntriesDays(query: string) {
 		occurrences.set(current, (occurrences.get(current) || 0) + 1);
 		return occurrences;
 	}, new Map<number, number>());
+}
+
+export async function sendFrontingChangedEvent(){
+	const fronting = await getFronting();
+
+	if(appConfig.useIPC)
+		await broadcastEvent(JSON.stringify(fronting));
 }

@@ -27,7 +27,8 @@ export async function newMember(member: Omit<Member, keyof UUIDable>) {
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "members",
 			event: "new",
-			data: uuid
+			uuid,
+			delta: member
 		}));
 		return uuid;
 	}catch(_error){
@@ -47,7 +48,8 @@ export async function deleteMember(uuid: UUID) {
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "members",
 			event: "deleted",
-			data: uuid
+			uuid,
+			delta: {}
 		}));
 		return true;
 	} catch (_error) {
@@ -63,7 +65,8 @@ export async function updateMember(uuid: UUID, newContent: Partial<Member>) {
 			DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 				table: "members",
 				event: "modified",
-				data: uuid
+				uuid,
+				delta: newContent
 			}));
 			return true;
 		}

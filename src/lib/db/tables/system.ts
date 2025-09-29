@@ -12,7 +12,8 @@ export async function newSystem(system: Omit<System, keyof UUIDable>){
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "system",
 			event: "new",
-			data: uuid
+			uuid,
+			delta: system
 		}));
 		return uuid;
 	}catch(_error){
@@ -39,7 +40,8 @@ export async function modifySystem(system: Partial<System>) {
 			DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 				table: "system",
 				event: "modified",
-				data: uuid
+				uuid,
+				delta: system
 			}));
 			return true;
 		}

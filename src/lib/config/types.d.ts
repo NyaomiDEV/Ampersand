@@ -8,6 +8,7 @@ export type AppConfig = {
 	showSystemDescriptionInDashboard: boolean,
 	showMembersBeforeCustomFronts: boolean,
 	hideFrontingTimer: boolean,
+	useIPC: boolean,
 	defaultFilterQueries: {
 		members?: string,
 		tags?: string,

@@ -24,7 +24,8 @@ export async function newAsset(asset: Omit<Asset, keyof UUIDable>) {
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "assets",
 			event: "new",
-			data: uuid
+			uuid,
+			delta: asset
 		}));
 		return uuid;
 	}catch(_error){
@@ -42,7 +43,8 @@ export async function deleteAsset(uuid: UUID) {
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "assets",
 			event: "deleted",
-			data: uuid
+			uuid,
+			delta: {}
 		}));
 		return true;
 	} catch (_error) {
@@ -57,7 +59,8 @@ export async function updateAsset(uuid: UUID, newContent: Partial<Asset>) {
 			DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 				table: "assets",
 				event: "modified",
-				data: uuid
+				uuid,
+				delta: newContent
 			}));
 			return true;
 		}

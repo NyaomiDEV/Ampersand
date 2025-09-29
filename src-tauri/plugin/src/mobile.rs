@@ -36,6 +36,11 @@ struct SetCanGoBack {
   can_go_back: bool
 }
 
+#[derive(Serialize)]
+struct BroadcastEvent {
+  payload: String
+}
+
 #[derive(Deserialize)]
 struct WebkitVersion {
   version: String
@@ -71,6 +76,13 @@ impl<R: Runtime> Ampersand<R> {
       .0
       .run_mobile_plugin::<WebkitVersion>("getWebkitVersion", ())
       .map(|x| x.version)
+      .map_err(Into::into)
+  }
+
+  pub fn broadcast_event(&self, payload: String) -> crate::Result<()> {
+    self
+      .0
+      .run_mobile_plugin("broadcastEvent", BroadcastEvent { payload })
       .map_err(Into::into)
   }
 }

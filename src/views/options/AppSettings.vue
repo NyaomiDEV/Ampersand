@@ -1,6 +1,7 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonList, IonPage, IonLabel, IonListHeader, IonTitle, IonToolbar, IonBackButton, IonItem, IonSegment, IonSelect, IonSelectOption, IonInput, IonToggle } from "@ionic/vue";
 	import { inject, ref, watch } from "vue";
+	import { platform } from "@tauri-apps/plugin-os";
 
 	import NotDoneYet from "../../components/NotDoneYet.vue";
 	import { appConfig } from "../../lib/config";
@@ -137,6 +138,14 @@
 				<IonToggle v-model="appConfig.hideFrontingTimer">
 					<IonLabel class="wrap">
 						{{ $t("appSettings:hideFrontingTimer") }}
+					</IonLabel>
+				</IonToggle>
+			</IonItem>
+
+			<IonItem v-if="platform() === 'android'" button :detail="false">
+				<IonToggle v-model="appConfig.useIPC">
+					<IonLabel class="wrap">
+						{{ $t("appSettings:useIPC") }}
 					</IonLabel>
 				</IonToggle>
 			</IonItem>

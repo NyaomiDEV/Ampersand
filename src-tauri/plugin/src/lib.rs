@@ -35,7 +35,8 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
     commands::exit_app,
     commands::set_can_go_back,
     commands::open_file,
-    commands::get_webkit_version
+    commands::get_webkit_version,
+    commands::broadcast_event
   ])
     .setup(|app, api: tauri::plugin::PluginApi<R, ()>| {
       #[cfg(mobile)]

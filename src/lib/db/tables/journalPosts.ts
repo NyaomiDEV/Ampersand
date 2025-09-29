@@ -35,7 +35,8 @@ export async function newJournalPost(journalPost: Omit<JournalPost, keyof UUIDab
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "journalPosts",
 			event: "new",
-			data: uuid
+			uuid,
+			delta: journalPost
 		}));
 		return uuid;
 	}catch(_error){
@@ -53,7 +54,8 @@ export async function deleteJournalPost(uuid: UUID) {
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "journalPosts",
 			event: "deleted",
-			data: uuid
+			uuid,
+			delta: {}
 		}));
 		return true;
 	} catch (_error) {
@@ -68,7 +70,8 @@ export async function updateJournalPost(uuid: UUID, newContent: Partial<JournalP
 			DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 				table: "journalPosts",
 				event: "modified",
-				data: uuid
+				uuid,
+				delta: newContent
 			}));
 			return true;
 		}

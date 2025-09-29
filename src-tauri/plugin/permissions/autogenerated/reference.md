@@ -8,6 +8,7 @@ Default permissions for the Ampersand plugin
 - `allow-open-file`
 - `allow-set-can-go-back`
 - `allow-get-webkit-version`
+- `allow-broadcast-event`
 - `allow-registerListener`
 
 ## Permission Table
@@ -18,6 +19,32 @@ Default permissions for the Ampersand plugin
 <th>Description</th>
 </tr>
 
+
+<tr>
+<td>
+
+`ampersand:allow-broadcast-event`
+
+</td>
+<td>
+
+Enables the broadcast_event command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`ampersand:deny-broadcast-event`
+
+</td>
+<td>
+
+Denies the broadcast_event command without any pre-configured scope.
+
+</td>
+</tr>
 
 <tr>
 <td>

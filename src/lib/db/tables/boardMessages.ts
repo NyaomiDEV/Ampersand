@@ -35,7 +35,8 @@ export async function newBoardMessage(boardMessage: Omit<BoardMessage, keyof UUI
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "boardMessages",
 			event: "new",
-			data: uuid
+			uuid,
+			delta: boardMessage
 		}));
 		return uuid;
 	}catch(_error){
@@ -49,7 +50,8 @@ export async function deleteBoardMessage(uuid: UUID) {
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "boardMessages",
 			event: "deleted",
-			data: uuid
+			uuid,
+			delta: {}
 		}));
 		return true;
 	} catch (_error) {
@@ -64,7 +66,8 @@ export async function updateBoardMessage(uuid: UUID, newContent: Partial<BoardMe
 			DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 				table: "boardMessages",
 				event: "modified",
-				data: uuid
+				uuid,
+				delta: newContent
 			}));
 			return true;
 		}

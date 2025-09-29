@@ -29,6 +29,10 @@ export async function getWebkitVersion(): Promise<string> {
 	return invokePlugin("get_webkit_version") as Promise<string>;
 }
 
+export async function broadcastEvent(payload: string): Promise<void> {
+	return invokePlugin("broadcast_event", { payload }) as Promise<void>;
+}
+
 export async function addMobileListener(event: string, handler: () => void){
 	try{
 		await addPluginListener("ampersand", event, handler);

@@ -16,7 +16,8 @@ export async function newReminder(reminder: Omit<Reminder, keyof UUIDable>) {
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "reminders",
 			event: "new",
-			data: uuid
+			uuid,
+			delta: reminder
 		}));
 		return uuid;
 	}catch(_error){
@@ -34,7 +35,8 @@ export async function removeReminder(uuid: UUID) {
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "reminders",
 			event: "deleted",
-			data: uuid
+			uuid,
+			delta: {}
 		}));
 		return true;
 	} catch (_error) {
@@ -49,7 +51,8 @@ export async function updateReminder(uuid: UUID, newContent: Partial<Reminder>) 
 			DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 				table: "reminders",
 				event: "modified",
-				data: uuid
+				uuid,
+				delta: newContent
 			}));
 			return true;
 		}
