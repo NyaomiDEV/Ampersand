@@ -10,7 +10,7 @@ import i18n from "./lib/i18n";
 import I18NextVue from "i18next-vue";
 
 // Dark mode
-import { isIOSIonicMode, updateAccessibility, updateDarkMode, updateInsets, updatePWATitlebarColor } from "./lib/mode";
+import { isIOSIonicMode, updateAccessibility, updateDarkMode, updateInsets } from "./lib/mode";
 
 // App
 import App from "./App.vue";
@@ -107,7 +107,6 @@ async function setupAmpersand(){
 	darkMode.addEventListener("change", () => void updateDarkMode());
 	activateMaterialTheme();
 	updateMaterialColors();
-	updatePWATitlebarColor(window.getComputedStyle(document.body).getPropertyValue("--ion-toolbar-background"));
 	updateAccessibility();
 	await updateInsets();
 	window.addEventListener("orientationchange",  () => void updateInsets());
