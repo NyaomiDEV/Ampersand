@@ -45,7 +45,6 @@ export async function newFrontingEntry(frontingEntry: Omit<FrontingEntry, keyof 
 			uuid,
 			delta: frontingEntry
 		}));
-		await sendFrontingChangedEvent();
 		return uuid;
 	}catch(_error){
 		return false;
@@ -61,7 +60,6 @@ export async function deleteFrontingEntry(uuid: UUID) {
 			uuid,
 			delta: {}
 		}));
-		await sendFrontingChangedEvent();
 		return true;
 	} catch (_error) {
 		return false;
@@ -90,7 +88,6 @@ export async function updateFrontingEntry(uuid: UUID, newContent: Partial<Fronti
 				uuid,
 				delta: newContent
 			}));
-			await sendFrontingChangedEvent();
 			return true;
 		}
 		return false;

@@ -22,7 +22,7 @@
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
 
 	import { FrontingEntryComplete } from "../lib/db/entities";
-	import { newFrontingEntry, updateFrontingEntry, deleteFrontingEntry } from "../lib/db/tables/frontingEntries";
+	import { newFrontingEntry, updateFrontingEntry, deleteFrontingEntry, sendFrontingChangedEvent } from "../lib/db/tables/frontingEntries";
 	import { inject, ref, toRaw, useTemplateRef } from "vue";
 
 	import MemberSelect from "./MemberSelect.vue";
@@ -65,6 +65,7 @@
 
 		if(!uuid) {
 			await newFrontingEntry({..._frontingEntry, member: _frontingEntry.member.uuid, influencing: _frontingEntry.influencing?.uuid });
+			await sendFrontingChangedEvent();
 
 			await modalController.dismiss(null, "added");
 
@@ -76,6 +77,7 @@
 			member: _frontingEntry.member.uuid,
 			influencing: _frontingEntry.influencing?.uuid
 		});
+		await sendFrontingChangedEvent();
 
 		try{
 			await modalController.dismiss(null, "modified");

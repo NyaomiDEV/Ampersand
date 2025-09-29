@@ -33,7 +33,7 @@
 
 	import { getFilteredMembers } from "../lib/db/tables/members.ts";
 	import type { Member, FrontingEntry } from "../lib/db/entities";
-	import { getCurrentFrontEntryForMember, newFrontingEntry, removeFronter, setMainFronter, setSoleFronter } from "../lib/db/tables/frontingEntries.ts";
+	import { getCurrentFrontEntryForMember, newFrontingEntry, removeFronter, sendFrontingChangedEvent, setMainFronter, setSoleFronter } from "../lib/db/tables/frontingEntries.ts";
 	import MemberAvatar from "../components/member/MemberAvatar.vue";
 	import MemberLabel from "../components/member/MemberLabel.vue";
 	import { DatabaseEvents, DatabaseEvent } from "../lib/db/events.ts";
@@ -116,24 +116,32 @@
 			isMainFronter: false,
 			isLocked: false
 		});
+		await sendFrontingChangedEvent();
+
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 		list.value?.$el.closeSlidingItems();
 	}
 
 	async function removeFrontingEntry(member: Member) {
 		await removeFronter(member);
+		await sendFrontingChangedEvent();
+
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 		list.value?.$el.closeSlidingItems();
 	}
 
 	async function setMainFrontingEntry(member: Member, value: boolean){
 		await setMainFronter(member, value);
+		await sendFrontingChangedEvent();
+
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 		list.value?.$el.closeSlidingItems();
 	}
 
 	async function setSoleFrontingEntry(member: Member){
 		await setSoleFronter(member);
+		await sendFrontingChangedEvent();
+		
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 		list.value?.$el.closeSlidingItems();
 	}
