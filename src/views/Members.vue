@@ -17,7 +17,7 @@
 		useIonRouter,
 		IonBackButton,
 	} from "@ionic/vue";
-	import { inject, onBeforeMount, onUnmounted, reactive, ref, shallowRef, useTemplateRef, watch } from "vue";
+	import { onBeforeMount, onUnmounted, reactive, ref, shallowRef, useTemplateRef, watch } from "vue";
 	import { accessibilityConfig, appConfig } from "../lib/config/index.ts";
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
@@ -42,8 +42,6 @@
 	import { getObjectURL } from "../lib/util/blob.ts";
 
 	const route = useRoute();
-
-	const isIOS = inject<boolean>("isIOS");
 
 	const search = ref(route.query.q as string || "");
 	watch(route, () => {
@@ -192,7 +190,7 @@
 	<IonPage>
 		<IonHeader>
 			<IonToolbar>
-				<IonBackButton slot="start" :text="isIOS ? $t('other:back') : undefined" :icon="!isIOS ? backMD : undefined" />
+				<IonBackButton slot="start" :icon="backMD" />
 				<IonTitle>
 					{{ $t("members:header") }}
 				</IonTitle>
@@ -211,7 +209,7 @@
 		
 		<SpinnerFullscreen v-if="!members" />
 		<IonContent v-else>
-			<IonList ref="list" :class="{compact: accessibilityConfig.disableMemberCoversInList }" :inset="isIOS">
+			<IonList ref="list" :class="{compact: accessibilityConfig.disableMemberCoversInList }">
 
 				<IonItemSliding v-for="member in members" :key="member.uuid" @ion-drag="endPress(member, true)">
 					<IonItem

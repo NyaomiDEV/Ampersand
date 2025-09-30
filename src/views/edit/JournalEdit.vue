@@ -31,7 +31,7 @@
 	import { newJournalPost, updateJournalPost, deleteJournalPost, getJournalPost, toJournalPostComplete } from "../../lib/db/tables/journalPosts";
 	import { getFiles, formatDate } from "../../lib/util/misc";
 	import { resizeImage } from "../../lib/util/image";
-	import { inject, onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
+	import { onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
 	import Markdown from "../../components/Markdown.vue";
 	import MemberAvatar from "../../components/member/MemberAvatar.vue";
 	import TagChip from "../../components/tag/TagChip.vue";
@@ -46,8 +46,6 @@
 	import { getTags } from "../../lib/db/tables/tags";
 
 	const i18next = useTranslation();
-
-	const isIOS = inject<boolean>("isIOS")!;
 
 	const router = useIonRouter();
 	const route = useRoute();
@@ -203,8 +201,7 @@
 			<IonToolbar>
 				<IonBackButton
 					slot="start"
-					:text="isIOS ? $t('other:back') : undefined"
-					:icon="!isIOS ? backMD : undefined"
+					:icon="backMD"
 					default-href="/journal/"
 				/>
 				<IonTitle>
@@ -344,7 +341,7 @@
 				<IonItem>
 					<IonTextarea
 						v-model="post.contentWarning"
-						:fill="!isIOS ? 'outline' : undefined"
+						fill="outline"
 						auto-grow
 						:label="$t('journal:edit.contentWarning')"
 						label-placement="floating"

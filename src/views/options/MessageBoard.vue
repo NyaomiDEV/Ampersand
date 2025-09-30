@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonFab, IonFabButton, IonIcon, IonSearchbar, IonLabel, IonItemDivider, IonDatetime } from "@ionic/vue";
-	import { h, inject, onBeforeMount, onUnmounted, ref, shallowRef, watch } from "vue";
+	import { h, onBeforeMount, onUnmounted, ref, shallowRef, watch } from "vue";
 	import type { BoardMessageComplete } from "../../lib/db/entities.d.ts";
 	import { getBoardMessagesDays, getBoardMessagesOfDay } from "../../lib/db/tables/boardMessages";
 	import BoardMessageEdit from "../../modals/BoardMessageEdit.vue";
@@ -20,7 +20,6 @@
 	const route = useRoute();
 
 	const firstWeekOfDayIsSunday = appConfig.locale.firstWeekOfDayIsSunday;
-	const isIOS = inject<boolean>("isIOS");
 
 	const search = ref(route.query.q as string || "");
 
@@ -122,8 +121,7 @@
 			<IonToolbar>
 				<IonBackButton
 					slot="start"
-					:text="isIOS ? $t('other:back') : undefined"
-					:icon="!isIOS ? backMD : undefined"
+					:icon="backMD"
 					default-href="/options/"
 				/>
 				<IonTitle>
@@ -154,7 +152,7 @@
 			<div v-if="boardMessages === undefined" class="spinner-container">
 				<Spinner size="72px" />
 			</div>
-			<IonList v-else :inset="isIOS">
+			<IonList v-else>
 				<template v-for="tuple in getGrouped(boardMessages)" :key="tuple[0]">
 					<IonItemDivider sticky>
 						<IonLabel>{{ dayjs(tuple[0]).format("LL") }}</IonLabel>

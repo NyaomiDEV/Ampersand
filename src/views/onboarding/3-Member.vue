@@ -21,13 +21,11 @@
 	import { newMember } from "../../lib/db/tables/members";
 	import { getFiles, slideAnimation } from "../../lib/util/misc";
 	import { resizeImage } from "../../lib/util/image";
-	import { inject, ref, toRaw } from "vue";
+	import { ref, toRaw } from "vue";
 	import { PartialBy } from "../../lib/types";
 	import MemberAvatar from "../../components/member/MemberAvatar.vue";
 
 	const router = useIonRouter();
-
-	const isIOS = inject<boolean>("isIOS")!;
 
 	const emptyMember: PartialBy<Member, "uuid" | "dateCreated"> = {
 		name: "",
@@ -83,7 +81,7 @@
 					<IonItem>
 						<IonInput
 							v-model="member.name"
-							:fill="!isIOS ? 'outline' : undefined"
+							fill="outline"
 							:label="$t('members:edit.name')"
 							label-placement="floating"
 						/>
@@ -92,7 +90,7 @@
 					<IonItem>
 						<IonInput
 							v-model="member.pronouns"
-							:fill="!isIOS ? 'outline' : undefined"
+							fill="outline"
 							:label="$t('members:edit.pronouns')"
 							label-placement="floating"
 						/>
@@ -101,7 +99,7 @@
 					<IonItem>
 						<IonTextarea
 							v-model="member.description"
-							:fill="!isIOS ? 'outline' : undefined"
+							fill="outline"
 							auto-grow
 							:label="$t('onboarding:memberInfo.description')"
 							label-placement="floating"

@@ -1,7 +1,6 @@
 import { argbFromHex, blueFromArgb, DynamicColor, greenFromArgb, Hct, MaterialDynamicColors, redFromArgb, SchemeFidelity } from "@material/material-color-utilities";
 import { accessibilityConfig } from "../config";
 import { M3 } from "tauri-plugin-m3";
-import { isIOSIonicMode } from "../mode";
 
 const dynamicColorsWeWant = [
 	"primaryPaletteKeyColor",
@@ -85,7 +84,7 @@ export function rgbaToArgb(rgba: string) {
 }
 
 export function updateMaterialColors(target?: HTMLElement){
-	const useAccentColor = accessibilityConfig.useAccentColor || (isIOSIonicMode() && accessibilityConfig.useMaterialTheming);
+	const useAccentColor = accessibilityConfig.useAccentColor;
 	const accentColor = accessibilityConfig.accentColor;
 	if (useAccentColor && accentColor)
 		addMaterialColors(rgbaToArgb(accentColor), target);
@@ -93,17 +92,6 @@ export function updateMaterialColors(target?: HTMLElement){
 		addMaterialColors(rgbaToArgb(m3colors.primaryContainer), target);
 	else
 		addMaterialColors(defaultColor, target);
-}
-
-export function activateMaterialTheme(target?: HTMLElement) {
-	// don't add the md3 class if material theming is not enabled
-	if (isIOSIonicMode() && !accessibilityConfig.useMaterialTheming) return;
-
-	(target ?? document.documentElement).classList.add("md3");
-}
-
-export function deactivateMaterialTheme(target?: HTMLElement) {
-	(target ?? document.documentElement).classList.remove("md3");
 }
 
 export function unsetMaterialColors(target?: HTMLElement){
@@ -120,9 +108,6 @@ export function unsetMaterialColors(target?: HTMLElement){
 }
 
 export function addMaterialColors(hex: string, target?: HTMLElement){
-	// don't add material colors if material theming is deactivated
-	if (isIOSIonicMode() && !accessibilityConfig.useMaterialTheming) return;
-
 	// Generate new theme
 	const tonalSpotLight = new SchemeFidelity(Hct.fromInt(argbFromHex(hex)), false, 0);
 	const tonalSpotDark = new SchemeFidelity(Hct.fromInt(argbFromHex(hex)), true, 0);

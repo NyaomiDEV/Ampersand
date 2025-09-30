@@ -10,7 +10,7 @@ import i18n from "./lib/i18n";
 import I18NextVue from "i18next-vue";
 
 // Dark mode
-import { isIOSIonicMode, updateAccessibility, updateDarkMode, updateInsets } from "./lib/mode";
+import { updateAccessibility, updateDarkMode, updateInsets } from "./lib/mode";
 
 // App
 import App from "./App.vue";
@@ -41,7 +41,7 @@ import "./styles/fonts/fonts.css";
 import "./styles/override.css";
 
 // Branding theme
-import { activateMaterialTheme, updateMaterialColors } from "./lib/theme";
+import { updateMaterialColors } from "./lib/theme";
 import "./lib/theme/style.css";
 
 // Other imports from frontend library
@@ -58,8 +58,7 @@ async function setupAmpersand(){
 		hardwareBackButton: true,
 	}).use(router).use(I18NextVue, { i18next: i18n });
 
-	const _navAnimation = window.Ionic.config.get("navAnimation");
-	window.Ionic.config.set("navAnimation", isIOSIonicMode() ? _navAnimation : slideAnimation);
+	window.Ionic.config.set("navAnimation", slideAnimation);
 
 	router.beforeEach(async (to) => {
 		// lock flow
@@ -105,7 +104,6 @@ async function setupAmpersand(){
 	await updateDarkMode();
 
 	darkMode.addEventListener("change", () => void updateDarkMode());
-	activateMaterialTheme();
 	updateMaterialColors();
 	updateAccessibility();
 	await updateInsets();

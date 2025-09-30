@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { IonList, IonItem, IonListHeader, IonLabel } from "@ionic/vue";
-	import { h, inject, onBeforeMount, onUnmounted, shallowRef } from "vue";
+	import { h, onBeforeMount, onUnmounted, shallowRef } from "vue";
 	import MemberAvatar from "../member/MemberAvatar.vue";
 	import FrontingEntryLabel from "../frontingEntry/FrontingEntryLabel.vue";
 	import type { FrontingEntryComplete } from "../../lib/db/entities.d.ts";
@@ -8,8 +8,6 @@
 	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
 	import { DatabaseEvents, DatabaseEvent } from "../../lib/db/events";
 	import { addModal, removeModal } from "../../lib/modals.ts";
-
-	const isIOS = inject<boolean>("isIOS");
 
 	const frontingEntries = shallowRef<FrontingEntryComplete[]>();
 
@@ -48,7 +46,7 @@
 		<IonLabel>{{ $t("dashboard:recentFrontingHistory") }}</IonLabel>
 	</IonListHeader>
 
-	<IonList v-if="frontingEntries" :inset="isIOS">
+	<IonList v-if="frontingEntries">
 		<IonItem
 			v-for="entry in frontingEntries"
 			:key="entry.uuid"

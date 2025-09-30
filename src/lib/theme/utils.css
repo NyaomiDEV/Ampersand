@@ -1,5 +1,5 @@
 /* Corners */
-.md3 * {
+.md * {
 	--md3-corner-none: 0;
 	--md3-corner-extra-small: 4px;
 	--md3-corner-extra-small-top: 4px 4px 0 0;
@@ -14,7 +14,7 @@
 }
 
 /* Elevation */
-.md3 * {
+.md * {
 	--md3-elevation-0: 0px 0px 0px 0px rgba(var(--md3-shadow), 0.3), 0px 0px 0px 0px rgba(var(--md3-shadow), 0.15);
 	--md3-elevation-1: 0px 1px 2px 0px rgba(var(--md3-shadow), 0.3), 0px 1px 3px 1px rgba(var(--md3-shadow), 0.15);
 	--md3-elevation-2: 0px 1px 2px 0px rgba(var(--md3-shadow), 0.3), 0px 2px 6px 2px rgba(var(--md3-shadow), 0.15);

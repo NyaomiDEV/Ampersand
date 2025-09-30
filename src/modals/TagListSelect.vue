@@ -11,14 +11,12 @@
 		IonCheckbox,
 	} from "@ionic/vue";
 
-	import { inject, onBeforeMount, reactive, ref, shallowRef, toRaw, watch } from "vue";
+	import { onBeforeMount, reactive, ref, shallowRef, toRaw, watch } from "vue";
 	import { getFilteredTags } from "../lib/db/tables/tags";
 	import { Tag } from "../lib/db/entities";
 	import TagColor from "../components/tag/TagColor.vue";
 	import TagLabel from "../components/tag/TagLabel.vue";
 	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
-
-	const isIOS = inject<boolean>("isIOS");
 
 	const props = defineProps<{
 		customTitle?: string,
@@ -77,7 +75,7 @@
 
 		<SpinnerFullscreen v-if="!tags" />
 		<IonContent v-else>
-			<IonList :inset="isIOS">
+			<IonList>
 				<IonItem v-for="tag in tags" :key="tag.uuid" button>
 					<TagColor slot="start" :tag />
 					<IonCheckbox :value="tag.uuid" :checked="!!selectedTags.find(x => x.uuid === tag.uuid)" @update:model-value="value => check(tag, value)">

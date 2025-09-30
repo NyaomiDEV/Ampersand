@@ -1,14 +1,11 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonItem, IonRange, IonLabel, IonToggle, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonSegment, IonSelect, IonSelectOption } from "@ionic/vue";
-	import { inject } from "vue";
 	import { accessibilityConfig } from "../../lib/config";
 	import Color from "../../components/Color.vue";
 
 	import MD3SegmentButton from "../../components/MD3SegmentButton.vue";
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
-
-	const isIOS = inject<boolean>("isIOS");
 </script>
 
 <template>
@@ -17,8 +14,7 @@
 			<IonToolbar>
 				<IonBackButton
 					slot="start"
-					:text="isIOS ? $t('other:back') : undefined"
-					:icon="!isIOS ? backMD : undefined"
+					:icon="backMD"
 					default-href="/options/"
 				/>
 				<IonTitle>
@@ -28,7 +24,7 @@
 		</IonHeader>
 		
 		<IonContent>
-			<IonList :inset="isIOS">
+			<IonList>
 				<IonItem button :detail="false">
 					<IonToggle v-model="accessibilityConfig.highLegibility">
 						<IonLabel>
@@ -74,16 +70,7 @@
 					</IonLabel>
 				</IonItem>
 
-				<IonItem v-if="isIOS">
-					<IonToggle v-model="accessibilityConfig.useMaterialTheming" @ion-change="e => { if(isIOS) accessibilityConfig.useAccentColor = e.detail.checked }">
-						<IonLabel>
-							<h3>{{ $t("accessibility:useMaterialTheming.title") }}</h3>
-							<p>{{ $t("accessibility:useMaterialTheming.desc") }}</p>
-						</IonLabel>
-					</IonToggle>
-				</IonItem>
-
-				<IonItem v-if="!isIOS">
+				<IonItem>
 					<IonToggle v-model="accessibilityConfig.useAccentColor">
 						<IonLabel>
 							<h3>{{ $t("accessibility:useAccentColor.title") }}</h3>
@@ -93,10 +80,9 @@
 				</IonItem>
 
 				<IonItem
-					v-if="accessibilityConfig.useMaterialTheming || !isIOS"
 					button
 					:detail="false"
-					:disabled="!accessibilityConfig.useAccentColor && !accessibilityConfig.useMaterialTheming"
+					:disabled="!accessibilityConfig.useAccentColor"
 				>
 					<Color v-model="accessibilityConfig.accentColor">
 						<IonLabel>

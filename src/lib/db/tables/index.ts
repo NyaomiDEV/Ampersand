@@ -1,7 +1,7 @@
 import { appDataDir, sep } from "@tauri-apps/api/path";
 import * as fs from "@tauri-apps/plugin-fs";
 import { Typeson } from "typeson";
-import { blob, file, filelist, map, typedArrays, undef, set as Tset, imagebitmap, imagedata } from "typeson-registry";
+import { file, map, undef } from "typeson-registry";
 import { Asset, BoardMessage, CustomField, FrontingEntry, JournalPost, Member, Reminder, System, Tag, UUIDable } from "../entities";
 import { decode, encode } from "@msgpack/msgpack";
 import { AmpersandEntityMapping } from "../types";
@@ -233,14 +233,8 @@ export class ShittyTable<T extends UUIDable> {
 
 const typeson = new Typeson().register([
 	file,
-	filelist,
-	blob,
-	typedArrays,
 	undef,
-	map,
-	Tset,
-	imagebitmap,
-	imagedata
+	map
 ]);
 
 async function makeTable<T extends UUIDable>(tableName: string, secondaryKeys: SecondaryKey<T>[]) {

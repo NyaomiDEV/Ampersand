@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonSearchbar, IonFab, IonFabButton, IonIcon, IonLabel, IonDatetime, IonItemDivider, useIonRouter, alertController, IonBackButton } from "@ionic/vue";
-	import { inject, onBeforeMount, onUnmounted, ref, shallowRef, watch } from "vue";
+	import { onBeforeMount, onUnmounted, ref, shallowRef, watch } from "vue";
 	import { useRoute } from "vue-router";
 	import Spinner from "../components/Spinner.vue";
 	import JournalPostCard from "../components/JournalPostCard.vue";
@@ -21,7 +21,6 @@
 	const i18next = useTranslation();
 
 	const firstWeekOfDayIsSunday = appConfig.locale.firstWeekOfDayIsSunday;
-	const isIOS = inject<boolean>("isIOS");
 
 	const posts = shallowRef<JournalPostComplete[]>();
 
@@ -165,7 +164,7 @@
 	<IonPage>
 		<IonHeader>
 			<IonToolbar>
-				<IonBackButton slot="start" :text="isIOS ? $t('other:back') : undefined" :icon="!isIOS ? backMD : undefined" />
+				<IonBackButton slot="start" :icon="backMD" />
 				<IonTitle>
 					{{ $t("journal:header") }}
 				</IonTitle>
@@ -194,7 +193,7 @@
 			<div v-if="posts === undefined" class="spinner-container">
 				<Spinner size="72px" />
 			</div>
-			<IonList v-else :inset="isIOS">
+			<IonList v-else>
 				<template v-for="tuple in getGrouped(posts)" :key="tuple[0]">
 					<IonItemDivider sticky>
 						<IonLabel>

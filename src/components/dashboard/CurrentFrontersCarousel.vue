@@ -124,6 +124,6 @@
 	}
 
 	ion-card.influenced {
-		outline: 2px solid rgb(var(--md3-primary)) !important;
+		outline: 2px solid var(--ion-color-primary) !important;
 	}
 </style>

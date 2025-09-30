@@ -1,5 +1,5 @@
 /* FAB */
-.md.md3 ion-fab-button {
+.md ion-fab-button {
 	--background: rgb(var(--md3-primary-container));
 	--color: rgb(var(--md3-on-primary-container));
 
@@ -17,53 +17,53 @@
 	height: 56px;
 }
 
-.md.md3 ion-fab-button ion-icon {
+.md ion-fab-button ion-icon {
 	font-size: 24px;
 }
 
-.md.md3 ion-fab-button[size=small] {
+.md ion-fab-button[size=small] {
 	--border-radius: 12px;
 	width: 40px;
 	height: 40px;
 }
 
-.md.md3 ion-fab-button[size=large] {
+.md ion-fab-button[size=large] {
 	--border-radius: 28px;
 	width: 96px;
 	height: 96px;
 }
 
-.md.md3 ion-fab-button[size=large] ion-icon {
+.md ion-fab-button[size=large] ion-icon {
 	font-size: 36px;
 }
 
-.md.md3 ion-fab-button:hover {
+.md ion-fab-button:hover {
 	--box-shadow: var(--md3-elevation-4);
 }
 
-.md.md3 ion-fab-button.lowered {
+.md ion-fab-button.lowered {
 	--box-shadow: var(--md3-elevation-1);
 }
 
-.md.md3 ion-fab-button.lowered:hover {
+.md ion-fab-button.lowered:hover {
 	--box-shadow: var(--md3-elevation-2);
 }
 
-.md.md3 ion-fab-button.surface {
+.md ion-fab-button.surface {
 	--background: rgb(var(--md3-surface-container-high));
 	--color: rgb(var(--md3-primary));
 }
 
-.md.md3 ion-fab-button.lowered.surface {
+.md ion-fab-button.lowered.surface {
 	--background: rgb(var(--md3-surface-container-low));
 }
 
-.md.md3 ion-fab-button[color=secondary] {
+.md ion-fab-button[color=secondary] {
 	--background: rgb(var(--md3-secondary-container));
 	--color: rgb(var(--md3-on-secondary-container));
 }
 
-.md.md3 ion-fab-button[color=tertiary] {
+.md ion-fab-button[color=tertiary] {
 	--background: rgb(var(--md3-tertiary-container));
 	--color: rgb(var(--md3-on-tertiary-container));
 }

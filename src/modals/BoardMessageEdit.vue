@@ -26,14 +26,13 @@
 
 	import { BoardMessageComplete } from "../lib/db/entities";
 	import { updateBoardMessage, deleteBoardMessage, newBoardMessage } from "../lib/db/tables/boardMessages";
-	import { inject, ref, toRaw, useTemplateRef } from "vue";
+	import { ref, toRaw, useTemplateRef } from "vue";
 	import { PartialBy } from "../lib/types";
 	import MemberAvatar from "../components/member/MemberAvatar.vue";
 	import MemberSelect from "./MemberSelect.vue";
 	import { useTranslation } from "i18next-vue";
 
 	const i18next = useTranslation();
-	const isIOS = inject<boolean>("isIOS");
 
 	const props = defineProps<{
 		boardMessage?: PartialBy<BoardMessageComplete, "uuid" | "member">
@@ -172,7 +171,7 @@
 				<IonItem>
 					<IonInput
 						v-model="boardMessage.title"
-						:fill="!isIOS ? 'outline' : undefined"
+						fill="outline"
 						:label="$t('messageBoard:edit.title')"
 						label-placement="floating"
 					/>
@@ -181,7 +180,7 @@
 				<IonItem>
 					<IonTextarea
 						v-model="boardMessage.body"
-						:fill="!isIOS ? 'outline' : undefined"
+						fill="outline"
 						auto-grow
 						:label="$t('messageBoard:edit.body')"
 						label-placement="floating"
@@ -254,7 +253,7 @@
 					<IonItem v-for="entry in boardMessage.poll.entries" :key="boardMessage.poll.entries.indexOf(entry)">
 						<IonInput
 							v-model="entry.choice"
-							:fill="!isIOS ? 'outline' : undefined"
+							fill="outline"
 							:label="$t('messageBoard:edit.pollChoice')"
 							label-placement="floating"
 						/>

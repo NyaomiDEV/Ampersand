@@ -1,7 +1,6 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonIcon, IonBackButton } from "@ionic/vue";
-	import { inject } from "vue";
-
+	
 	import AmpersandLogo from "../../assets/ampersand_logo.svg";
 	import CodebergLogo from "../../assets/codeberg_logo.svg";
 	import DiscordLogo from "../../assets/discord_logo.svg";
@@ -11,8 +10,6 @@
 
 	import { version } from "../../../package.json";
 	import { openUrl } from "@tauri-apps/plugin-opener";
-
-	const isIOS = inject<boolean>("isIOS");
 
 	function isAppStore() {
 		try{
@@ -44,8 +41,7 @@
 			<IonToolbar>
 				<IonBackButton
 					slot="start"
-					:text="isIOS ? $t('other:back') : undefined"
-					:icon="!isIOS ? backMD : undefined"
+					:icon="backMD"
 					default-href="/options/"
 				/>
 				<IonTitle>

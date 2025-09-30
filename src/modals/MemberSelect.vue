@@ -12,7 +12,7 @@
 		modalController,
 	} from "@ionic/vue";
 
-	import { inject, onBeforeMount, onUnmounted, reactive, ref, shallowRef, toRaw, watch } from "vue";
+	import { onBeforeMount, onUnmounted, reactive, ref, shallowRef, toRaw, watch } from "vue";
 	import MemberAvatar from "../components/member/MemberAvatar.vue";
 	import MemberLabel from "../components/member/MemberLabel.vue";
 	import type { Member } from "../lib/db/entities.d.ts";
@@ -20,8 +20,6 @@
 	import { DatabaseEvents, DatabaseEvent } from "../lib/db/events";
 	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
 	import { appConfig } from "../lib/config/index.ts";
-
-	const isIOS = inject<boolean>("isIOS");
 
 	const props = defineProps<{
 		customTitle?: string,
@@ -123,7 +121,7 @@
 
 		<SpinnerFullscreen v-if="!members" />
 		<IonContent v-else>
-			<IonList :inset="isIOS">
+			<IonList>
 				<IonItem v-for="member in members" :key="member.uuid" button>
 					<MemberAvatar slot="start" :member />
 					<IonCheckbox :value="member.uuid" :checked="!!selectedMembers.find(x => x.uuid === member.uuid)" @update:model-value="value => check(member, value)">

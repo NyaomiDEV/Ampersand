@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonLabel, IonToolbar, IonBackButton, IonItem, IonItemDivider, IonDatetime, IonIcon, IonSearchbar, IonFabButton, IonFab } from "@ionic/vue";
-	import { h, inject, onBeforeMount, onUnmounted, ref, shallowRef, watch } from "vue";
+	import { h, onBeforeMount, onUnmounted, ref, shallowRef, watch } from "vue";
 	import MemberAvatar from "../../components/member/MemberAvatar.vue";
 	import FrontingEntryLabel from "../../components/frontingEntry/FrontingEntryLabel.vue";
 	import type { FrontingEntryComplete } from "../../lib/db/entities.d.ts";
@@ -23,7 +23,6 @@
 	const i18next = useTranslation();
 
 	const firstWeekOfDayIsSunday = appConfig.locale.firstWeekOfDayIsSunday;
-	const isIOS = inject<boolean>("isIOS");
 
 	const search = ref(route.query.q as string || "");
 
@@ -154,8 +153,7 @@
 			<IonToolbar>
 				<IonBackButton
 					slot="start"
-					:text="isIOS ? $t('other:back') : undefined"
-					:icon="!isIOS ? backMD : undefined"
+					:icon="backMD"
 					default-href="/options/"
 				/>
 				<IonTitle>
@@ -186,7 +184,7 @@
 			<div v-if="frontingEntries === undefined" class="spinner-container">
 				<Spinner size="72px" />
 			</div>
-			<IonList v-else :inset="isIOS">
+			<IonList v-else>
 				<template v-for="tuple in getGrouped(frontingEntries)" :key="tuple[0]">
 					<IonItemDivider sticky>
 						<IonLabel>{{ getLabel(tuple[0]) }}</IonLabel>

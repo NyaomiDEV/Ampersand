@@ -1,6 +1,6 @@
 <script setup lang="ts">
-	import { IonBackButton, IonContent, IonHeader, IonSearchbar, IonList, IonIcon, IonPage, IonTitle, IonToolbar, IonFab, IonFabButton, IonItem, IonLabel, IonReorderGroup, IonReorder, IonButtons, IonButton, ReorderEndCustomEvent } from "@ionic/vue";
-	import { h, inject, onBeforeMount, onUnmounted, ref, shallowRef, watch } from "vue";
+	import { IonBackButton, IonContent, IonHeader, IonSearchbar, IonList, IonIcon, IonPage, IonTitle, IonToolbar, IonFab, IonFabButton, IonItem, IonLabel, IonReorderGroup, IonReorder, IonButtons, IonButton } from "@ionic/vue";
+	import { h, onBeforeMount, onUnmounted, ref, shallowRef, watch } from "vue";
 	import { CustomField } from "../../lib/db/entities";
 	import { getFilteredCustomFields, updateCustomField } from "../../lib/db/tables/customFields";
 	import { DatabaseEvent, DatabaseEvents } from "../../lib/db/events";
@@ -16,8 +16,6 @@
 	import dragMD from "@material-symbols/svg-600/outlined/drag_handle.svg";
 
 	const route = useRoute();
-
-	const isIOS = inject<boolean>("isIOS");
 
 	const search = ref(route.query.q as string || "");
 	watch(route, () => {
@@ -62,11 +60,13 @@
 		await (modal.el as any).present();
 	}
 
-	async function handleReorder(e: ReorderEndCustomEvent){
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	async function handleReorder(e: any){
 		// remove the database listener to commit crimes against humanity
 		DatabaseEvents.removeEventListener("updated", listener);
 
 		// actual reorder code
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 		e.detail.complete();
 		if(!customFields.value) return;
 		if(e.detail.from === e.detail.to) return;
@@ -97,8 +97,7 @@
 			<IonToolbar>
 				<IonBackButton
 					slot="start"
-					:text="isIOS ? $t('other:back') : undefined"
-					:icon="!isIOS ? backMD : undefined"
+					:icon="backMD"
 					default-href="/options/"
 				/>
 				<IonTitle>
@@ -124,7 +123,7 @@
 		
 		<SpinnerFullscreen v-if="!customFields" />
 		<IonContent v-else>
-			<IonList :inset="isIOS">
+			<IonList>
 				<IonReorderGroup :disabled="!isReordering" @ion-reorder-end="handleReorder">
 					<IonItem
 						v-for="customField in customFields"

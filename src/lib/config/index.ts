@@ -1,7 +1,7 @@
 import { reactive, watch } from "vue";
 import { AccessibilityConfig, AppConfig, SecurityConfig } from "./types";
-import { isIOSIonicMode, updateAccessibility, updateDarkMode } from "../mode";
-import { activateMaterialTheme, deactivateMaterialTheme, defaultColor, unsetMaterialColors, updateMaterialColors } from "../theme";
+import { updateAccessibility, updateDarkMode } from "../mode";
+import { defaultColor, updateMaterialColors } from "../theme";
 import i18next from "i18next";
 import { load } from "@tauri-apps/plugin-store";
 import { appConfigDir, sep } from "@tauri-apps/api/path";
@@ -27,9 +27,8 @@ const defaultAccessibilityConfig: AccessibilityConfig = {
 	highLegibility: false,
 	highLegibilityType: "atkinson",
 	theme: "auto",
-	useMaterialTheming: false,
 	useAccentColor: false,
-	accentColor: isIOSIonicMode() ? defaultColor : undefined,
+	accentColor: defaultColor,
 	reducedMotion: false,
 	disableMemberCoversInList: false,
 	fontScale: 1,
@@ -84,15 +83,6 @@ watch(appConfig, async () => {
 watch(accessibilityConfig, async () => {
 	await set("accessibilityConfig", { ...accessibilityConfig });
 	await updateDarkMode();
-
-	if(isIOSIonicMode()){
-		if(accessibilityConfig.useMaterialTheming)
-			activateMaterialTheme();
-		else {
-			deactivateMaterialTheme();
-			unsetMaterialColors();
-		}
-	}
 
 	updateMaterialColors();
 	updateAccessibility();

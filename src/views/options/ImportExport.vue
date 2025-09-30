@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonList, IonItem, IonLabel, IonPage, IonTitle, IonToolbar, IonBackButton, IonProgressBar, toastController } from "@ionic/vue";
-	import { inject, ref } from "vue";
+	import { ref } from "vue";
 	import { importDatabaseFromBinary, exportDatabaseToBinary } from "../../lib/db/ioutils";
 	import { getFiles } from "../../lib/util/misc";
 	import dayjs from "dayjs";
@@ -13,7 +13,6 @@
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 
-	const isIOS = inject<boolean>("isIOS");
 	const loading = ref(false);
 
 	const i18next = useTranslation();
@@ -158,8 +157,7 @@
 			<IonToolbar>
 				<IonBackButton
 					slot="start"
-					:text="isIOS ? $t('other:back') : undefined"
-					:icon="!isIOS ? backMD : undefined"
+					:icon="backMD"
 					default-href="/options/"
 				/>
 				<IonTitle>{{ $t("importExport:header") }}</IonTitle>
@@ -168,7 +166,7 @@
 		</IonHeader>
 
 		<IonContent>
-			<IonList :inset="isIOS">
+			<IonList>
 
 				<IonItem button :detail="true" @click="exportDb">
 					<IonLabel>

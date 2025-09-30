@@ -3,11 +3,9 @@
 	import { useRouter } from "vue-router";
 
 	import { computed, provide } from "vue";
-	import { isIOSIonicMode } from "./lib/mode";
 	import ModalContainer from "./components/ModalContainer.vue";
 	import { setRouterCanGoBack } from "./lib/util/backbutton";
 
-	provide("isIOS", computed(isIOSIonicMode));
 	provide("isDev", computed(() => import.meta.env.MODE === "development"));
 
 	const ionRouter = useIonRouter();

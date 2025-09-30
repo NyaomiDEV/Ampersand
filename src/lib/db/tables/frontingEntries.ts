@@ -11,19 +11,6 @@ export function getFrontingEntries(){
 	return db.frontingEntries.iterate();
 }
 
-export async function getFrontingEntriesOffset(offset: number, limit?: number){
-	return (await Promise.all(
-		db.frontingEntries.index
-			.sort((a, b) => {
-				if(!a.endTime && b.endTime) return -1;
-				if(a.endTime && !b.endTime) return 1;
-				return b.startTime!.getTime() - a.startTime!.getTime();
-			})
-			.slice(offset, limit ? offset + limit : undefined)
-			.map(x => db.frontingEntries.get(x.uuid))
-	)).filter(x => !!x);
-}
-
 export async function toFrontingEntryComplete(frontingEntry: FrontingEntry): Promise<FrontingEntryComplete> {
 	return {
 		...frontingEntry,

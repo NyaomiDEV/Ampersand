@@ -1,13 +1,12 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonLabel, IonItem, IonList, IonPage, IonTitle, IonToolbar, IonToggle, IonBackButton, alertController } from "@ionic/vue";
-	import { inject, ref, onMounted } from "vue";
+	import { ref, onMounted } from "vue";
 	import { disableApplock, enableApplock, areBiometricsAvailable } from "../../lib/applock";
 	import { securityConfig } from "../../lib/config";
 	import { useTranslation } from "i18next-vue";
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 
-	const isIOS = inject<boolean>("isIOS");
 	const i18next = useTranslation();
 
 	const usePassword = ref(securityConfig.usePassword);
@@ -97,8 +96,7 @@
 			<IonToolbar>
 				<IonBackButton
 					slot="start"
-					:text="isIOS ? $t('other:back') : undefined"
-					:icon="!isIOS ? backMD : undefined"
+					:icon="backMD"
 					default-href="/options/"
 				/>
 				<IonTitle>
@@ -108,7 +106,7 @@
 		</IonHeader>
 
 		<IonContent>
-			<IonList :inset="isIOS">
+			<IonList>
 				<IonItem>
 					<IonToggle v-model="usePassword" @ion-change="toggle">
 						<IonLabel>

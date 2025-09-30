@@ -31,7 +31,7 @@
 
 	import { getTag, newTag, removeTag, updateTag } from "../../lib/db/tables/tags";
 	import { Member, Tag } from "../../lib/db/entities";
-	import { getCurrentInstance, h, inject, onBeforeMount, ref, watch } from "vue";
+	import { getCurrentInstance, h, onBeforeMount, ref, watch } from "vue";
 	import { addMaterialColors, rgbaToArgb, unsetMaterialColors } from "../../lib/theme";
 	import { PartialBy } from "../../lib/types";
 	import { getMembers, updateMember } from "../../lib/db/tables/members";
@@ -42,7 +42,6 @@
 	import { addModal, removeModal } from "../../lib/modals";
 	import MemberSelect from "../../modals/MemberSelect.vue";
 
-	const isIOS = inject<boolean>("isIOS");
 	const loading = ref(false);
 
 	const i18next = useTranslation();
@@ -196,8 +195,7 @@
 			<IonToolbar>
 				<IonBackButton
 					slot="start"
-					:text="isIOS ? $t('other:back') : undefined"
-					:icon="!isIOS ? backMD : undefined"
+					:icon="backMD"
 					default-href="/options/tagManagement/"
 				/>
 				<IonTitle>{{ tag.type === "member" ? $t("tagManagement:edit.header.member") : $t("tagManagement:edit.header.journal") }}</IonTitle>
@@ -210,7 +208,7 @@
 				<IonItem>
 					<IonInput
 						v-model="tag.name"
-						:fill="!isIOS ? 'outline' : undefined"
+						fill="outline"
 						:label="$t('tagManagement:edit.name')"
 						label-placement="floating"
 					/>
@@ -219,7 +217,7 @@
 				<IonItem>
 					<IonTextarea
 						v-model="tag.description"
-						:fill="!isIOS ? 'outline' : undefined"
+						fill="outline"
 						auto-grow
 						:label="$t('tagManagement:edit.description')"
 						label-placement="floating"

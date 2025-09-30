@@ -12,12 +12,10 @@
 		IonLabel,
 	} from "@ionic/vue";
 
-	import { inject, onBeforeMount, reactive, ref, shallowRef, toRaw, watch } from "vue";
+	import { onBeforeMount, reactive, ref, shallowRef, toRaw, watch } from "vue";
 	import { CustomField } from "../lib/db/entities";
 	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
 	import { getFilteredCustomFields } from "../lib/db/tables/customFields";
-
-	const isIOS = inject<boolean>("isIOS");
 
 	const props = defineProps<{
 		customTitle?: string,
@@ -79,7 +77,7 @@
 
 		<SpinnerFullscreen v-if="!customFields" />
 		<IonContent v-else>
-			<IonList :inset="isIOS">
+			<IonList>
 				<IonItem v-for="customField in customFields" :key="customField.uuid" button>
 					<IonCheckbox
 						:disabled="customField.default"

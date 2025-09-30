@@ -1,5 +1,5 @@
 /* Ranges / Sliders */
-.md.md3 ion-range {
+.md ion-range {
 	--bar-height: 24px;
 	--bar-border-radius: 24px;
 	--knob-background: var(--ion-color-primary);
@@ -7,26 +7,26 @@
 	--knob-border-radius: 64px;
 }
 
-.md.md3 ion-range.range-pressed::part(pin) {
+.md ion-range.range-pressed::part(pin) {
 	transform: translate3d(0px, -80px, 0px) scale(1);
 }
 
-.md.md3 ion-range::part(knob) {
+.md ion-range::part(knob) {
 	height: 64px;
 	outline: 12px solid var(--ion-background-color);
 	transform: none;
 	top: -29px;
 }
 
-.md.md3 ion-range.range-pressed::part(knob) {
+.md ion-range.range-pressed::part(knob) {
 	transform: scale(0.75, 1);
 }
 
-.md.md3 ion-range::part(knob)::before {
+.md ion-range::part(knob)::before {
 	display: none;
 }
 
-.md.md3 ion-range::part(bar)::after {
+.md ion-range::part(bar)::after {
 	content: "\A";
 	position: absolute;
 	right: 0;
@@ -38,11 +38,11 @@
 	background-color: var(--ion-color-primary);
 }
 
-.md.md3 ion-range::part(tick) {
+.md ion-range::part(tick) {
 	border-radius: 100%;
 	transform: scale(0.5);
 }
 
-.md.md3 ion-range::part(tick-active) {
+.md ion-range::part(tick-active) {
 	display: none;
 }

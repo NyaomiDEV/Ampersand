@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { IonList, IonLabel, IonButton, IonListHeader } from "@ionic/vue";
-	import { h, inject, onBeforeMount, onUnmounted, shallowRef } from "vue";
+	import { h, onBeforeMount, onUnmounted, shallowRef } from "vue";
 	import { getRecentBoardMessages } from "../../lib/db/tables/boardMessages";
 	import type { BoardMessageComplete } from "../../lib/db/entities.d.ts";
 	import BoardMessageEdit from "../../modals/BoardMessageEdit.vue";
@@ -8,8 +8,6 @@
 	import MessageBoardCard from "../MessageBoardCard.vue";
 	import { DatabaseEvents, DatabaseEvent } from "../../lib/db/events";
 	import { addModal, removeModal } from "../../lib/modals.ts";
-
-	const isIOS = inject<boolean>("isIOS");
 
 	const boardMessages = shallowRef<BoardMessageComplete[]>();
 
@@ -54,7 +52,7 @@
 		<IonLabel>{{ $t("dashboard:messageBoard.header") }}</IonLabel>
 	</IonListHeader>
 
-	<IonList :inset="isIOS">
+	<IonList>
 		<MessageBoardCard
 			v-for="boardMessage in boardMessages"
 			:key="boardMessage.uuid"

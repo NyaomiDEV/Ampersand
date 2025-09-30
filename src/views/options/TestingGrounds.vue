@@ -10,15 +10,13 @@
 		IonItem,
 		IonLabel
 	} from "@ionic/vue";
-	import { inject, ref } from "vue";
+	import { ref } from "vue";
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 
 	import ContentEditable from "../../components/ContentEditable.vue";
 
 	const model = ref("ciao");
-
-	const isIOS = inject<boolean>("isIOS");
 </script>
 
 <template>
@@ -27,8 +25,7 @@
 			<IonToolbar>
 				<IonBackButton
 					slot="start"
-					:text="isIOS ? $t('other:back') : undefined"
-					:icon="!isIOS ? backMD : undefined"
+					:icon="backMD"
 					default-href="/options/"
 				/>
 				<IonTitle>
@@ -38,7 +35,7 @@
 		</IonHeader>
 
 		<IonContent>
-			<IonList :inset="isIOS">
+			<IonList>
 				<ContentEditable v-model="model" label="test" />
 				<IonItem>
 					<IonLabel>Test</IonLabel>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonFab, IonListHeader, IonFabButton, IonIcon, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonLabel, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonItem, IonToggle, ToggleChangeEventDetail } from "@ionic/vue";
-	import { inject, onBeforeMount, onUnmounted, shallowRef } from "vue";
+	import { onBeforeMount, onUnmounted, shallowRef } from "vue";
 
 	import { Reminder } from "../../lib/db/entities";
 	import { getReminders } from "../../lib/db/tables/reminders";
@@ -10,8 +10,6 @@
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
-
-	const isIOS = inject<boolean>("isIOS");
 
 	const reminders = shallowRef<Reminder[]>();
 
@@ -40,8 +38,7 @@
 			<IonToolbar>
 				<IonBackButton
 					slot="start"
-					:text="isIOS ? $t('other:back') : undefined"
-					:icon="!isIOS ? backMD : undefined"
+					:icon="backMD"
 					default-href="/options/"
 				/>
 				<IonTitle>
@@ -66,7 +63,7 @@
 				</IonLabel>
 			</IonListHeader>
 
-			<IonList :inset="isIOS">
+			<IonList>
 				<IonItem
 					v-for="eventReminder in reminders?.filter(x => x.type === 'event')"
 					:key="eventReminder.uuid"
@@ -93,7 +90,7 @@
 				</IonLabel>
 			</IonListHeader>
 
-			<IonList :inset="isIOS">
+			<IonList>
 				<IonItem
 					v-for="periodicReminder in reminders?.filter(x => x.type === 'periodic')"
 					:key="periodicReminder.uuid"

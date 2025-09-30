@@ -23,7 +23,7 @@
 
 	import { FrontingEntryComplete } from "../lib/db/entities";
 	import { newFrontingEntry, updateFrontingEntry, deleteFrontingEntry, sendFrontingChangedEvent } from "../lib/db/tables/frontingEntries";
-	import { inject, ref, toRaw, useTemplateRef } from "vue";
+	import { ref, toRaw, useTemplateRef } from "vue";
 
 	import MemberSelect from "./MemberSelect.vue";
 	import MemberAvatar from "../components/member/MemberAvatar.vue";
@@ -36,7 +36,6 @@
 
 
 	const i18next = useTranslation();
-	const isIOS = inject<boolean>("isIOS");
 
 	const props = defineProps<{
 		frontingEntry?: PartialBy<FrontingEntryComplete, "uuid" | "member">
@@ -154,7 +153,7 @@
 				<IonItem>
 					<IonInput
 						v-model="frontingEntry.customStatus"
-						:fill="!isIOS ? 'outline' : undefined"
+						fill="outline"
 						:label="$t('frontHistory:edit.customStatus')"
 						label-placement="floating"
 					/>

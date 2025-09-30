@@ -39,7 +39,7 @@
 	import { getTags } from "../../lib/db/tables/tags";
 	import { getFiles } from "../../lib/util/misc";
 	import { resizeImage } from "../../lib/util/image";
-	import { getCurrentInstance, inject, onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
+	import { getCurrentInstance, onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
 	import Markdown from "../../components/Markdown.vue";
 	import { addMaterialColors, rgbaToArgb, unsetMaterialColors } from "../../lib/theme";
 	import { PartialBy } from "../../lib/types";
@@ -53,8 +53,6 @@
 	import CustomFieldsSelect from "../../modals/CustomFieldsSelect.vue";
 
 	const i18next = useTranslation();
-
-	const isIOS = inject<boolean>("isIOS")!;
 
 	const router = useIonRouter();
 	const route = useRoute();
@@ -248,8 +246,7 @@
 			<IonToolbar>
 				<IonBackButton
 					slot="start"
-					:text="isIOS ? $t('other:back') : undefined"
-					:icon="!isIOS ? backMD : undefined"
+					:icon="backMD"
 					default-href="/members/"
 				/>
 				<IonTitle>{{ !isEditing ? $t("members:edit.header") : !member.uuid ? $t("members:edit.headerAdd") : $t("members:edit.headerEdit") }}</IonTitle>
@@ -343,7 +340,7 @@
 				<IonItem>
 					<IonInput
 						v-model="member.name"
-						:fill="!isIOS ? 'outline' : undefined"
+						fill="outline"
 						:label="$t('members:edit.name')"
 						label-placement="floating"
 					/>
@@ -351,7 +348,7 @@
 				<IonItem>
 					<IonInput
 						v-model="member.pronouns"
-						:fill="!isIOS ? 'outline' : undefined"
+						fill="outline"
 						:label="$t('members:edit.pronouns')"
 						label-placement="floating"
 					/>
@@ -359,7 +356,7 @@
 				<IonItem>
 					<IonInput
 						v-model="member.role"
-						:fill="!isIOS ? 'outline' : undefined"
+						fill="outline"
 						:label="$t('members:edit.role')"
 						label-placement="floating"
 					/>
@@ -367,7 +364,7 @@
 				<IonItem>
 					<IonTextarea
 						v-model="member.description"
-						:fill="!isIOS ? 'outline' : undefined"
+						fill="outline"
 						auto-grow
 						:label="$t('members:edit.description')"
 						label-placement="floating"
@@ -400,7 +397,7 @@
 					:key="customField.uuid"
 				>
 					<IonTextarea
-						:fill="!isIOS ? 'outline' : undefined"
+						fill="outline"
 						auto-grow
 						:label="customField.name"
 						label-placement="floating"

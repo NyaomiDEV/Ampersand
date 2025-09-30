@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonList, IonPage, IonLabel, IonListHeader, IonTitle, IonToolbar, IonBackButton, IonItem, IonSegment, IonSelect, IonSelectOption, IonInput, IonToggle } from "@ionic/vue";
-	import { inject, ref, watch } from "vue";
+	import { ref, watch } from "vue";
 	import { platform } from "@tauri-apps/plugin-os";
 
 	import NotDoneYet from "../../components/NotDoneYet.vue";
@@ -19,8 +19,6 @@
 	watch(firstWeekOfDayIsSunday, () => {
 		appConfig.locale.firstWeekOfDayIsSunday = firstWeekOfDayIsSunday.value === "true" ? true : false;
 	});
-
-	const isIOS = inject<boolean>("isIOS");
 </script>
 
 <template>
@@ -29,8 +27,7 @@
 			<IonToolbar>
 				<IonBackButton
 					slot="start"
-					:text="isIOS ? $t('other:back') : undefined"
-					:icon="!isIOS ? backMD : undefined"
+					:icon="backMD"
 					default-href="/options/"
 				/>
 				<IonTitle>
@@ -46,7 +43,7 @@
 				<IonLabel>{{ $t("appSettings:localeLabel") }}</IonLabel>
 			</IonListHeader>
 
-			<IonList :inset="isIOS">
+			<IonList>
 				<IonItem>
 					<IonSelect
 						v-model="appConfig.locale.language"
@@ -100,7 +97,7 @@
 				<IonLabel>{{ $t("appSettings:behaviorLabel") }}</IonLabel>
 			</IonListHeader>
 
-			<IonList :inset="isIOS">
+			<IonList>
 				<IonItem>
 					<IonSelect v-model="appConfig.view" :label="$t('appSettings:view')" interface="popover">
 						<IonSelectOption value="dashboard">
@@ -152,11 +149,11 @@
 				<IonLabel>{{ $t("appSettings:defaultFilterLabel") }}</IonLabel>
 			</IonListHeader>
 
-			<IonList :inset="isIOS">
+			<IonList>
 				<IonItem>
 					<IonInput
 						v-model="appConfig.defaultFilterQueries.members"
-						:fill="!isIOS ? 'outline' : undefined"
+						fill="outline"
 						label-placement="floating"
 						:label="$t('members:header')"
 					/>
@@ -165,7 +162,7 @@
 				<IonItem>
 					<IonInput
 						v-model="appConfig.defaultFilterQueries.journal"
-						:fill="!isIOS ? 'outline' : undefined"
+						fill="outline"
 						label-placement="floating"
 						:label="$t('journal:header')"
 					/>
@@ -174,7 +171,7 @@
 				<IonItem>
 					<IonInput
 						v-model="appConfig.defaultFilterQueries.tags"
-						:fill="!isIOS ? 'outline' : undefined"
+						fill="outline"
 						label-placement="floating"
 						:label="$t('tagManagement:header')"
 					/>
@@ -183,7 +180,7 @@
 				<IonItem>
 					<IonInput
 						v-model="appConfig.defaultFilterQueries.frontingHistory"
-						:fill="!isIOS ? 'outline' : undefined"
+						fill="outline"
 						label-placement="floating"
 						:label="$t('frontHistory:header')"
 					/>
@@ -192,7 +189,7 @@
 				<IonItem>
 					<IonInput
 						v-model="appConfig.defaultFilterQueries.messageBoard"
-						:fill="!isIOS ? 'outline' : undefined"
+						fill="outline"
 						label-placement="floating"
 						:label="$t('messageBoard:header')"
 					/>
@@ -201,7 +198,7 @@
 				<IonItem>
 					<IonInput
 						v-model="appConfig.defaultFilterQueries.assetManager"
-						:fill="!isIOS ? 'outline' : undefined"
+						fill="outline"
 						label-placement="floating"
 						:label="$t('assetManager:header')"
 					/>
@@ -210,7 +207,7 @@
 				<IonItem>
 					<IonInput
 						v-model="appConfig.defaultFilterQueries.customFields"
-						:fill="!isIOS ? 'outline' : undefined"
+						fill="outline"
 						label-placement="floating"
 						:label="$t('customFields:header')"
 					/>

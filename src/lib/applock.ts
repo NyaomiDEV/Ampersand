@@ -1,6 +1,5 @@
 import { authenticate, checkStatus } from "@tauri-apps/plugin-biometric";
 import { securityConfig } from "./config";
-import sha1 from "./util/sha1";
 import { md5 } from "./util/md5";
 import { t } from "i18next";
 import { ref } from "vue";
@@ -22,12 +21,6 @@ function comparePassword(plaintext: string){
 	switch(storedPassword[0]){
 		case "md5":
 			hashedPlaintext = Array.from(md5(new TextEncoder().encode(plaintext))).map(x => x.toString(16)).join("");
-			break;
-		case "sha1":
-			hashedPlaintext = Array.from(sha1(new TextEncoder().encode(plaintext))).map(x => x.toString(16)).join("");
-			break;
-		default:
-			hashedPlaintext = new TextDecoder().decode(sha1(new TextEncoder().encode(plaintext))); // old and insecure
 			break;
 	}
 

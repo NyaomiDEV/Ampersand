@@ -1,10 +1,8 @@
 <script setup lang="ts">
-	import { ref, inject, onMounted, nextTick, useTemplateRef } from "vue";
+	import { ref, onMounted, nextTick, useTemplateRef } from "vue";
 	import { IonLabel, IonTextarea } from "@ionic/vue";
 	import Markdown from "./Markdown.vue";
 	
-	const isIOS = inject<boolean>("isIOS");
-
 	const props = defineProps<{
 		label?: string
 	}>();
@@ -43,7 +41,7 @@
 			v-show="focused"
 			ref="textarea"
 			v-model="model"
-			:fill="!isIOS ? 'outline' : undefined"
+			fill="outline"
 			auto-grow
 			:label="props.label"
 			label-placement="floating"

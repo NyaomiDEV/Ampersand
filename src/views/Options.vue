@@ -20,7 +20,6 @@
 	import { lock } from "../lib/applock";
 
 	const router = useIonRouter();
-	const isIOS = inject<boolean>("isIOS");
 	const isDev = inject<boolean>("isDev");
 	
 	function lockImmediately(){
@@ -45,7 +44,7 @@
 				<IonLabel>{{ $t("options:managementLabel") }}</IonLabel>
 			</IonListHeader>
 
-			<IonList :inset="isIOS">
+			<IonList>
 
 				<IonItem button router-link="/options/systemSettings">
 					<IonIcon slot="start" :icon="SystemMD" aria-hidden="true" />
@@ -88,7 +87,7 @@
 				<IonLabel>{{ $t("options:settingsLabel") }}</IonLabel>
 			</IonListHeader>
 
-			<IonList :inset="isIOS">
+			<IonList>
 
 				<IonItem button router-link="/options/appSettings">
 					<IonIcon slot="start" :icon="SettingsMD" aria-hidden="true" />

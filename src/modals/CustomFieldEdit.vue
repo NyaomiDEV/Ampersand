@@ -22,14 +22,13 @@
 
 	import { CustomField } from "../lib/db/entities";
 	import { newCustomField, updateCustomField, deleteCustomField } from "../lib/db/tables/customFields";
-	import { inject, ref, toRaw } from "vue";
+	import { ref, toRaw } from "vue";
 
 	import { PartialBy } from "../lib/types";
 	import { useTranslation } from "i18next-vue";
 
 
 	const i18next = useTranslation();
-	const isIOS = inject<boolean>("isIOS");
 
 	const props = defineProps<{
 		customField?: PartialBy<CustomField, "uuid">
@@ -111,7 +110,7 @@
 				<IonItem>
 					<IonInput
 						v-model="customField.name"
-						:fill="!isIOS ? 'outline' : undefined"
+						fill="outline"
 						:label="$t('customFields:edit.name')"
 						label-placement="floating"
 					/>

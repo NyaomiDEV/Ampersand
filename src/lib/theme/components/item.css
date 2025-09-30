@@ -1,4 +1,4 @@
-.md.md3 ion-item {
+.md ion-item {
 	--min-height: 56px;
 	--inner-padding-top: 8px;
 	--inner-padding-bottom: 8px;
@@ -8,14 +8,14 @@
 	--padding-end: 16px;
 }
 
-.md.md3 ion-item [slot="start"] {
+.md ion-item [slot="start"] {
 	margin-inline-end: 16px;
 }
 
-.md.md3 ion-item [slot="end"] {
+.md ion-item [slot="end"] {
 	margin-inline-start: 16px;
 }
 
-.md.md3 ion-item[lines="lines"] {
+.md ion-item[lines="lines"] {
 	--inner-border-width: unset;
 }

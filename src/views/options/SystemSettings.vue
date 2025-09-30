@@ -14,8 +14,6 @@
 	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
 
-	const isIOS = inject<boolean>("isIOS");
-
 	const membersShowed = ref(false);
 	const memberCount = ref(0);
 	const archivedMemberCount = ref(0);
@@ -68,8 +66,7 @@
 			<IonToolbar>
 				<IonBackButton
 					slot="start"
-					:text="isIOS ? $t('other:back') : undefined"
-					:icon="!isIOS ? backMD : undefined"
+					:icon="backMD"
 					default-href="/options/"
 				/>
 				<IonTitle>
@@ -99,7 +96,7 @@
 				<IonItem>
 					<IonInput
 						v-model="system.name"
-						:fill="!isIOS ? 'outline' : undefined"
+						fill="outline"
 						label-placement="floating"
 						:label="$t('systemSettings:systemName')"
 					/>

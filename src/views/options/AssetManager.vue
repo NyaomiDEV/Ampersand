@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { IonBackButton, IonContent, IonHeader, IonSearchbar, IonList, IonIcon, IonPage, IonTitle, IonToolbar, IonFab, IonFabButton } from "@ionic/vue";
-	import { inject, onBeforeMount, onUnmounted, ref, shallowRef, watch } from "vue";
+	import { onBeforeMount, onUnmounted, ref, shallowRef, watch } from "vue";
 	import AssetItem from "../../components/AssetItem.vue";
 	import { Asset } from "../../lib/db/entities";
 	import { getFilteredAssets } from "../../lib/db/tables/assets";
@@ -12,8 +12,6 @@
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 
 	const route = useRoute();
-
-	const isIOS = inject<boolean>("isIOS");
 
 	const search = ref(route.query.q as string || "");
 	watch(route, () => {
@@ -47,8 +45,7 @@
 			<IonToolbar>
 				<IonBackButton
 					slot="start"
-					:text="isIOS ? $t('other:back') : undefined"
-					:icon="!isIOS ? backMD : undefined"
+					:icon="backMD"
 					default-href="/options/"
 				/>
 				<IonTitle>
@@ -69,7 +66,7 @@
 		
 		<SpinnerFullscreen v-if="!assets" />
 		<IonContent v-else>
-			<IonList :inset="isIOS">
+			<IonList>
 				<AssetItem
 					v-for="asset in assets"
 					:key="asset.uuid"

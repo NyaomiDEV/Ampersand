@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { IonContent, IonSearchbar, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonSegment, IonSegmentButton, IonLabel, IonFab, IonFabButton, IonIcon, IonItem } from "@ionic/vue";
-	import { inject, onMounted, onUnmounted, ref, shallowRef, watch } from "vue";
+	import { onMounted, onUnmounted, ref, shallowRef, watch } from "vue";
 	import { useRoute } from "vue-router";
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
@@ -15,8 +15,6 @@
 	import TagLabel from "../../components/tag/TagLabel.vue";
 
 	const route = useRoute();
-
-	const isIOS = inject<boolean>("isIOS");
 
 	const search = ref(route.query.q as string || "");
 	watch(route, () => {
@@ -52,8 +50,7 @@
 			<IonToolbar>
 				<IonBackButton
 					slot="start"
-					:text="isIOS ? $t('other:back') : undefined"
-					:icon="!isIOS ? backMD : undefined"
+					:icon="backMD"
 					default-href="/options/"
 				/>
 				<IonTitle>
@@ -84,7 +81,7 @@
 		
 		<SpinnerFullscreen v-if="!tags" />
 		<IonContent v-else>
-			<IonList :inset="isIOS">
+			<IonList>
 				<IonItem
 					v-for="tag in tags"
 					:key="tag.uuid"

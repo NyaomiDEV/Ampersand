@@ -1,9 +1,8 @@
 import { Typeson } from "typeson";
 import { getTables, ShittyTable } from "./tables";
-import { blob, file, filelist, imagebitmap, imagedata, map, set, typedArrays, undef } from "typeson-registry";
+import { file, map, undef } from "typeson-registry";
 import { decode, encode } from "@msgpack/msgpack";
 import { compressGzip, decompressGzip } from "../util/misc";
-import { EncryptedPayload, decrypt, encrypt } from "../util/crypto";
 import { accessibilityConfig, appConfig, securityConfig } from "../config";
 import { UUIDable } from "./entities";
 
@@ -11,14 +10,8 @@ const typeson = new Typeson({
 	sync: false
 }).register([
 	file,
-	filelist,
-	blob,
-	typedArrays,
 	undef,
-	map,
-	set,
-	imagebitmap,
-	imagedata
+	map
 ]);
 
 async function _exportDatabase(){
@@ -34,13 +27,6 @@ export async function exportDatabaseToBinary(){
 	const theEntireDatabase = await _exportDatabase();
 
 	return await compressGzip(encode(theEntireDatabase) as Uint8Array<ArrayBuffer>);
-}
-
-export async function exportDatabaseToBinaryWithPassword(password: string){
-	const theEntireDatabase = await _exportDatabase();
-	const encodedDatabase = await encrypt(encode(theEntireDatabase) as Uint8Array<ArrayBuffer>, password);
-
-	return await compressGzip(encode(encodedDatabase) as Uint8Array<ArrayBuffer>);
 }
 
 async function _importDatabase(tablesAndConfig){
@@ -68,17 +54,6 @@ async function _importDatabase(tablesAndConfig){
 export async function importDatabaseFromBinary(data: Uint8Array<ArrayBuffer>) {
 	try{
 		const theEntireDatabase = decode(await decompressGzip(data)) as Record<string, unknown>;
-
-		return await _importDatabase(theEntireDatabase);
-	}catch(_e){
-		return false;
-	}
-}
-
-export async function importDatabaseFromBinaryWithPassword(data: Uint8Array<ArrayBuffer>, password: string) {
-	try{
-		const encodedDatabase = decode(await decompressGzip(data)) as EncryptedPayload;
-		const theEntireDatabase = decode(await decrypt(encodedDatabase, password)) as Record<string, unknown>;
 
 		return await _importDatabase(theEntireDatabase);
 	}catch(_e){

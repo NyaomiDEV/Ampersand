@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { IonContent, IonList, IonPage, IonAvatar, IonButton, IonIcon, IonInput, IonFab, IonFabButton, IonItem, IonTextarea, useIonRouter} from "@ionic/vue";
-	import { inject, onBeforeMount, ref, toRaw } from "vue";
+	import { onBeforeMount, ref, toRaw } from "vue";
 	import { getObjectURL } from "../../lib/util/blob";
 	import { getFiles, slideAnimation } from "../../lib/util/misc";
 	import { resizeImage } from "../../lib/util/image";
@@ -11,8 +11,6 @@
 	import ArrowMD from "@material-symbols/svg-600/outlined/arrow_forward.svg";
 	import { System } from "../../lib/db/entities";
 	import { PartialBy } from "../../lib/types";
-
-	const isIOS = inject<boolean>("isIOS");
 
 	const router = useIonRouter();
 
@@ -65,7 +63,7 @@
 					<IonItem>
 						<IonInput
 							v-model="system.name"
-							:fill="!isIOS ? 'outline' : undefined"
+							fill="outline"
 							label-placement="floating"
 							:label="$t('onboarding:systemInfo.name')"
 						/>
@@ -74,7 +72,7 @@
 					<IonItem>
 						<IonTextarea
 							v-model="system.description"
-							:fill="!isIOS ? 'outline' : undefined"
+							fill="outline"
 							auto-grow
 							:label="$t('onboarding:systemInfo.description')"
 							label-placement="floating"

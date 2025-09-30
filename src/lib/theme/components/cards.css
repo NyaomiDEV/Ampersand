@@ -1,29 +1,29 @@
 /* Cards */
-.md.md3 ion-card,
-.md.md3 ion-card.elevated {
+.md ion-card,
+.md ion-card.elevated {
 	--background: rgb(var(--md3-surface-container-low));
 	--color: rgb(var(--md3-on-surface));
 	box-shadow: var(--md3-elevation-1);
 	border-radius: 12px;
 }
 
-.md.md3 ion-card.filled {
+.md ion-card.filled {
 	--background: rgb(var(--md3-surface-container-highest));
 	box-shadow: var(--md3-elevation-0);
 }
 
-.md.md3 ion-card.outlined {
+.md ion-card.outlined {
 	--background: rgb(var(--md3-surface));
 	box-shadow: var(--md3-elevation-0);
 	outline: 1px solid rgb(var(--md3-outline));
 }
 
-.md.md3 ion-card ion-card-title,
-.md.md3 ion-card ion-card-subtitle {
+.md ion-card ion-card-title,
+.md ion-card ion-card-subtitle {
 	--color: rgb(var(--md3-on-surface));
 }
 
-.md.md3 ion-card :not(ion-avatar)>img {
+.md ion-card :not(ion-avatar)>img {
 	border-bottom-right-radius: 12px;
 	border-bottom-left-radius: 12px;
 }

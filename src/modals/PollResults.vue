@@ -11,14 +11,12 @@
 		IonLabel,
 	} from "@ionic/vue";
 
-	import { inject, onBeforeMount, onUnmounted, shallowRef } from "vue";
+	import { onBeforeMount, onUnmounted, shallowRef } from "vue";
 	import MemberAvatar from "../components/member/MemberAvatar.vue";
 	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
 	import type { Member, Poll } from "../lib/db/entities";
 	import { defaultMember, getMembers } from "../lib/db/tables/members.ts";
 	import { DatabaseEvents, DatabaseEvent } from "../lib/db/events.ts";
-
-	const isIOS = inject<boolean>("isIOS");
 
 	const props = defineProps<{
 		poll: Poll
@@ -51,7 +49,7 @@
 
 		<SpinnerFullscreen v-if="!members" />
 		<IonContent v-else>
-			<IonList :inset="isIOS">
+			<IonList>
 				<template v-for="choice in props.poll.entries.filter(x => x.votes.length)" :key="choice.choice">
 					<IonItemDivider sticky>
 						{{ choice.choice }} - {{ $t("messageBoard:polls.choice.desc", { count: choice.votes.length }) }}

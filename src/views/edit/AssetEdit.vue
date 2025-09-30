@@ -24,7 +24,7 @@
 
 	import { newAsset, deleteAsset, updateAsset, getAsset } from "../../lib/db/tables/assets";
 	import { Asset } from "../../lib/db/entities";
-	import { inject, onBeforeMount, ref, watch } from "vue";
+	import { onBeforeMount, ref, watch } from "vue";
 	import { PartialBy } from "../../lib/types";
 	import { useRoute } from "vue-router";
 	import { useTranslation } from "i18next-vue";
@@ -32,7 +32,6 @@
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import AssetItem from "../../components/AssetItem.vue";
 
-	const isIOS = inject<boolean>("isIOS");
 	const loading = ref(false);
 
 	const emptyAsset: PartialBy<Asset, "uuid"> = {
@@ -124,8 +123,7 @@
 			<IonToolbar>
 				<IonBackButton
 					slot="start"
-					:text="isIOS ? $t('other:back') : undefined"
-					:icon="!isIOS ? backMD : undefined"
+					:icon="backMD"
 					default-href="/options/assetManager/"
 				/>
 				<IonTitle>
@@ -136,7 +134,7 @@
 
 		<SpinnerFullscreen v-if="loading" />
 		<IonContent v-else>
-			<IonList :inset="isIOS">
+			<IonList>
 
 				<AssetItem
 					v-if="asset.file.size"
@@ -154,7 +152,7 @@
 				<IonItem>
 					<IonInput
 						v-model="asset.friendlyName"
-						:fill="!isIOS ? 'outline' : undefined"
+						fill="outline"
 						:label="$t('assetManager:edit.friendlyName')"
 						label-placement="floating"
 					/>

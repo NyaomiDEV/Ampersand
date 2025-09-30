@@ -1,4 +1,4 @@
-.md3 * {
+.md * {
 	--md3-primary-palette-key-color: var(--md3-light-primary-palette-key-color);
 	--md3-secondary-palette-key-color: var(--md3-light-secondary-palette-key-color);
 	--md3-tertiary-palette-key-color: var(--md3-light-tertiary-palette-key-color);
@@ -56,7 +56,7 @@
 }
 
 
-.ion-palette-dark.md3 * {
+.ion-palette-dark.md * {
 	--md3-primary-palette-key-color: var(--md3-dark-primary-palette-key-color);
 	--md3-secondary-palette-key-color: var(--md3-dark-secondary-palette-key-color);
 	--md3-tertiary-palette-key-color: var(--md3-dark-tertiary-palette-key-color);

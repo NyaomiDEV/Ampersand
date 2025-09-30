@@ -9,15 +9,6 @@ export function getBoardMessages(){
 	return db.boardMessages.iterate();
 }
 
-export async function getBoardMessagesOffset(offset: number, limit?: number){
-	return (await Promise.all(
-		db.boardMessages.index
-			.sort((a, b) => b.date!.getTime() - a.date!.getTime())
-			.slice(offset, limit ? offset + limit : undefined)
-			.map(x => db.boardMessages.get(x.uuid))
-	)).filter(x => !!x);
-}
-
 export async function toBoardMessageComplete(boardMessage: BoardMessage): Promise<BoardMessageComplete> {
 	return {
 		...boardMessage,

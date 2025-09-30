@@ -28,7 +28,7 @@
 	import MD3SegmentButton from "../../components/MD3SegmentButton.vue";
 	import PopupPicker from "../../components/PopupPicker.vue";
 
-	import { inject, onBeforeMount, ref, toRaw, useTemplateRef, watch } from "vue";
+	import { onBeforeMount, ref, toRaw, useTemplateRef, watch } from "vue";
 	import { EventReminder, Reminder } from "../../lib/db/entities";
 	import { getReminder, newReminder, removeReminder, updateReminder } from "../../lib/db/tables/reminders";
 	import { PartialBy } from "../../lib/types";
@@ -40,7 +40,6 @@
 	const router = useIonRouter();
 	const i18next = useTranslation();
 
-	const isIOS = inject<boolean>("isIOS")!;
 	const loading = ref(false);
 
 	const emptyReminder: PartialBy<Reminder, "uuid"> = {
@@ -166,8 +165,7 @@
 			<IonToolbar>
 				<IonBackButton
 					slot="start"
-					:text="isIOS ? $t('other:back') : undefined"
-					:icon="!isIOS ? backMD : undefined"
+					:icon="backMD"
 					default-href="/options/reminders/"
 				/>
 				<IonTitle>{{ $t("reminders:edit.header") }}</IonTitle>
@@ -177,12 +175,12 @@
 		<SpinnerFullscreen v-if="loading" />
 		<IonContent v-else>
 
-			<IonList :inset="isIOS">
+			<IonList>
 
 				<IonItem>
 					<IonInput
 						v-model="reminder.name"
-						:fill="!isIOS ? 'outline' : undefined"
+						fill="outline"
 						label-placement="floating"
 						:label="$t('reminders:edit.name')"
 					/>
@@ -191,7 +189,7 @@
 				<IonItem>
 					<IonInput
 						v-model="reminder.title"
-						:fill="!isIOS ? 'outline' : undefined"
+						fill="outline"
 						label-placement="floating"
 						:label="$t('reminders:edit.title')"
 					/>
@@ -200,7 +198,7 @@
 				<IonItem>
 					<IonInput
 						v-model="reminder.message"
-						:fill="!isIOS ? 'outline' : undefined"
+						fill="outline"
 						label-placement="floating"
 						:label="$t('reminders:edit.message')"
 					/>
@@ -236,7 +234,7 @@
 					</IonLabel>
 				</IonListHeader>
 
-				<IonList :inset="isIOS">
+				<IonList>
 					<IonRadioGroup v-model="(reminder as EventReminder).triggeringEvent.type">
 						<IonItem>
 							<IonRadio value="memberAdded" justify="space-between">
@@ -253,7 +251,7 @@
 					<IonItem>
 						<IonInput
 							v-model="(reminder as EventReminder).triggeringEvent.filterQuery"
-							:fill="!isIOS ? 'outline' : undefined"
+							fill="outline"
 							label-placement="floating"
 							:label="$t('reminders:edit.eventBased.memberFilterQuery')"
 						/>

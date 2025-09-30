@@ -23,15 +23,3 @@ export function getObjectURL(file: File){
 export function getFile(url: string): File | undefined {
 	return Array.from(dataURLs.values()).find(_obj => _obj.url === url)?.file;
 }
-
-export function getDataURL(url: string): Promise<string | null> {
-	return new Promise(resolve => {
-		const file = getFile(url);
-		if(!file) return resolve(null);
-		const reader = new FileReader();
-		reader.addEventListener("load", () => {
-			resolve(reader.result as string);
-		});
-		reader.readAsDataURL(file);
-	});
-}

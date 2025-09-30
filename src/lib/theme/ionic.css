@@ -1,5 +1,5 @@
 /* Light */
-.md3 * {
+.md * {
 	--ion-color-primary: rgb(var(--md3-primary));
 	--ion-color-primary-rgb: var(--md3-primary);
 	--ion-color-primary-contrast: rgb(var(--md3-on-primary));
@@ -109,7 +109,7 @@
 }
 
 /* Dark */
-.ion-palette-dark.md3 * {
+.ion-palette-dark.md * {
 	--ion-color-light: rgb(var(--md3-neutral-palette-tone-10));
 	--ion-color-light-rgb: var(--md3-neutral-palette-tone-10);
 	--ion-color-light-contrast: rgb(var(--md3-neutral-palette-tone-90));
@@ -170,8 +170,4 @@
 	--ion-background-color-step-850: rgb(var(--md3-neutral-palette-tone-85));
 	--ion-background-color-step-900: rgb(var(--md3-neutral-palette-tone-90));
 	--ion-background-color-step-950: rgb(var(--md3-neutral-palette-tone-95));
-}
-
-.ion-palette-dark.ios.md3 * {
-	--ion-item-background: rgb(var(--md3-neutral-palette-tone-12));
 }

@@ -26,7 +26,6 @@ export type AccessibilityConfig = {
 	highLegibility: boolean,
 	highLegibilityType: "atkinson" | "opendyslexic" | "lexend",
 	theme: "auto" | "dark" | "light",
-	useMaterialTheming: boolean,
 	useAccentColor: boolean,
 	accentColor?: string,
 	reducedMotion: boolean,

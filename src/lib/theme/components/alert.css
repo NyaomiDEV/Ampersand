@@ -1,41 +1,41 @@
-.md3 ion-alert.md .alert-wrapper {
+ion-alert.md .alert-wrapper {
 	border-radius: 28px;
 	padding: 24px;
 	box-shadow: var(--md3-elevation-3)
 }
 
-.md3 ion-alert.md .alert-head {
+ion-alert.md .alert-head {
 	padding-top: 0;
 	padding-left: 0;
 	padding-right: 0;
 	padding-bottom: 16px;
 }
 
-.md3 ion-alert.md .alert-sub-title {
+ion-alert.md .alert-sub-title {
 	margin-top: 16px;
 }
 
-.md3 ion-alert.md .alert-message {
+ion-alert.md .alert-message {
 	padding-top: 0;
 	padding-left: 0;
 	padding-right: 0;
 	padding-bottom: 0;
 }
 
-.md3 ion-alert.md .alert-input-group {
+ion-alert.md .alert-input-group {
 	padding-top: 0;
 	padding-left: 0;
 	padding-right: 0;
 	padding-bottom: 0;
 }
 
-.md3 ion-alert.md .alert-button-group {
+ion-alert.md .alert-button-group {
 	padding-top: 24px;
 	padding-left: 0;
 	padding-right: 0;
 	padding-bottom: 0;
 }
 
-.md3 ion-alert.md .alert-button {
+ion-alert.md .alert-button {
 	text-transform: none;
 }
