@@ -124,8 +124,9 @@
 		const date = dayjs().format("YYYY-MM-DD");
 
 		const path = await save({
+			defaultPath: `ampersand-backup-${date}.ampdb`,
 			filters: [{
-				name: `ampersand-backup-${date}`,
+				name: "Ampersand backups (.ampdb)",
 				extensions: ["ampdb"]
 			}]
 		});
