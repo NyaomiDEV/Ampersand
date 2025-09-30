@@ -11,8 +11,9 @@
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
-	import reorderMD from "@material-symbols/svg-600/outlined/reorder.svg";
+	import reorderMD from "@material-symbols/svg-600/outlined/swap_vert.svg";
 	import doneMD from "@material-symbols/svg-600/outlined/done_all.svg";
+	import dragMD from "@material-symbols/svg-600/outlined/drag_handle.svg";
 
 	const route = useRoute();
 
@@ -132,7 +133,9 @@
 						@click="() => { if(!isReordering) void showModal(customField); }"
 					>
 						<IonLabel>{{ customField.name }}</IonLabel>
-						<IonReorder slot="end" />
+						<IonReorder slot="end">
+							<IonIcon :icon="dragMD" />
+						</IonReorder>
 					</IonItem>
 				</IonReorderGroup>
 			</IonList>
@@ -146,3 +149,11 @@
 		</IonContent>
 	</IonPage>
 </template>
+
+<style scoped>
+ion-reorder > ion-icon {
+	width: 24px;
+	height: 24px;
+	color: rgba(var(--ion-text-color-rgb, 0, 0, 0) 0.54);
+}
+</style>
