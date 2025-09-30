@@ -229,7 +229,7 @@
 	}
 
 	ion-item.main-fronter {
-		--background: var(--ion-background-color-step-250);
+		--background: var(--ion-background-color-step-150);
 	}
 
 	ion-item.influencing {

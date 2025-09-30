@@ -130,6 +130,7 @@
 						v-for="customField in customFields"
 						:key="customField.uuid"
 						button
+						:class="{'default': customField.default}"
 						@click="() => { if(!isReordering) void showModal(customField); }"
 					>
 						<IonLabel>{{ customField.name }}</IonLabel>
@@ -155,5 +156,9 @@ ion-reorder > ion-icon {
 	width: 24px;
 	height: 24px;
 	color: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.54);
+}
+
+ion-item.default {
+	--background: var(--ion-background-color-step-150);
 }
 </style>
