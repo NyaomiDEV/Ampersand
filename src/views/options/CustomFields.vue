@@ -154,6 +154,6 @@
 ion-reorder > ion-icon {
 	width: 24px;
 	height: 24px;
-	color: rgba(var(--ion-text-color-rgb, 0, 0, 0) 0.54);
+	color: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.54);
 }
 </style>
