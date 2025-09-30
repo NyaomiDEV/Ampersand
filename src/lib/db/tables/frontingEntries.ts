@@ -207,5 +207,5 @@ export async function sendFrontingChangedEvent(){
 	const fronting = await getFronting();
 
 	if(appConfig.useIPC)
-		await broadcastEvent(JSON.stringify(fronting));
+		await broadcastEvent(fronting);
 }
