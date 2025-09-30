@@ -1,5 +1,6 @@
 import { invoke, InvokeArgs, InvokeOptions, addPluginListener } from "@tauri-apps/api/core";
 import { writeToTemp } from "./cache";
+import { replace } from "../json";
 
 function invokePlugin(cmd: string, args?: InvokeArgs, opts?: InvokeOptions): Promise<unknown> {
 	return invoke("plugin:ampersand|" + cmd, args, opts);
@@ -29,8 +30,8 @@ export async function getWebkitVersion(): Promise<string> {
 	return invokePlugin("get_webkit_version") as Promise<string>;
 }
 
-export async function broadcastEvent(payload: string): Promise<void> {
-	return invokePlugin("broadcast_event", { payload }) as Promise<void>;
+export async function broadcastEvent(payload: object): Promise<void> {
+	return invokePlugin("broadcast_event", { payload: JSON.stringify(payload, replace) }) as Promise<void>;
 }
 
 export async function addMobileListener(event: string, handler: () => void){
