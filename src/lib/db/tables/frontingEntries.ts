@@ -193,6 +193,11 @@ export function getFrontingEntriesDays(query: string) {
 export async function sendFrontingChangedEvent(){
 	const fronting = await getFronting();
 
-	if(appConfig.useIPC)
-		await broadcastEvent(fronting);
+	if(appConfig.useIPC){
+		await broadcastEvent(fronting.map(x => {
+			delete x.member.cover;
+			delete x.member.image;
+			return x;
+		}));
+	}
 }
