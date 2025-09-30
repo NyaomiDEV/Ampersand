@@ -47,21 +47,19 @@
 			</IonListHeader>
 
 			<IonList :inset="isIOS">
-
 				<IonItem>
 					<IonSelect
 						v-model="appConfig.locale.language"
 						:label="$t('appSettings:locale.language')"
 						interface="popover"
-						:value="appConfig.locale.language || 'en'"
+						:value="$i18next.languages.find(x => Object.keys($i18next.services.resourceStore.data).includes(x)) || $i18next.languages.toReversed()[0]"
 					>
 						<IonSelectOption
 							v-for="lng in Object.keys($i18next.services.resourceStore.data)"
 							:key="lng"
 							:value="lng"
 						>
-							{{ $t("other:languageName.local", { lng }) }} ({{ $t("other:languageName.inEnglish", { lng
-							}) }})
+							{{ $t("other:languageName.local", { lng }) }} ({{ $t("other:languageName.inEnglish", { lng }) }})
 						</IonSelectOption>
 					</IonSelect>
 				</IonItem>

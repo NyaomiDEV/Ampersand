@@ -3,27 +3,12 @@ import { AccessibilityConfig, AppConfig, SecurityConfig } from "./types";
 import { isIOSIonicMode, updateAccessibility, updateDarkMode } from "../mode";
 import { activateMaterialTheme, deactivateMaterialTheme, defaultColor, unsetMaterialColors, updateMaterialColors } from "../theme";
 import i18next from "i18next";
-import { Typeson } from "typeson";
-import { blob, file, filelist, map, typedArrays, undef, set as Tset, imagebitmap, imagedata } from "typeson-registry";
 import { load } from "@tauri-apps/plugin-store";
 import { appConfigDir, sep } from "@tauri-apps/api/path";
 
-const typeson = new Typeson({
-	sync: true
-}).register([
-	file,
-	filelist,
-	blob,
-	typedArrays,
-	undef,
-	map,
-	Tset,
-	imagebitmap,
-	imagedata
-]);
-
 const defaultAppConfig: AppConfig = {
 	locale: {
+		language: navigator.language,
 		firstWeekOfDayIsSunday: false,
 		twelveHourClock: false,
 	},
@@ -63,18 +48,14 @@ export const accessibilityConfig = reactive<AccessibilityConfig>({ ...structured
 export const securityConfig = reactive<SecurityConfig>({ ...structuredClone(defaultSecurityConfig), ...await get("securityConfig") });
 
 export function set(key: string, value: unknown): Promise<void> {
-	return store.set(key, typeson.encapsulate(value));
+	return store.set(key, value);
 }
 
 export async function get(key: string): Promise<object | undefined> {
-	const value: unknown = await store.get(key);
-
 	try {
-		if (typeof value !== "undefined" && value !== null) 
-			return typeson.revive(value) as object;
-		
+		return await store.get(key);
 	} catch (e) {
-		console.error(e, value);
+		console.error(e, key);
 	}
 
 	return undefined;
