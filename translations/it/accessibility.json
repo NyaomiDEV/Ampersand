@@ -8,7 +8,8 @@
 		"title": "Famiglia dei font ad alta leggibilità",
 		"atkinson": "Atkinson Hyperlegible",
 		"opendyslexic": "OpenDyslexic",
-		"lexend": "Lexend"
+		"lexend": "Lexend",
+		"system-font": "Font di sistema"
 	},
 	"uiVariant": {
 		"title": "Variante dell'interfaccia",

@@ -18,8 +18,8 @@
 	}
 }
 
-html {
-	--ion-font-family: 'Inter', var(--ion-default-font);
+html, html.md {
+	--ion-default-font: 'Inter', 'Roboto', sans-serif;
 }
 
 html.high-legibility.hl-atkinson {
@@ -32,6 +32,10 @@ html.high-legibility.hl-opendyslexic {
 
 html.high-legibility.hl-lexend {
 	--ion-font-family: 'Lexend', var(--ion-default-font);
+}
+
+html.high-legibility.hl-system-font {
+	--ion-font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 ion-content {

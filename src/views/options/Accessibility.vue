@@ -12,17 +12,13 @@
 	<IonPage>
 		<IonHeader>
 			<IonToolbar>
-				<IonBackButton
-					slot="start"
-					:icon="backMD"
-					default-href="/options/"
-				/>
+				<IonBackButton slot="start" :icon="backMD" default-href="/options/" />
 				<IonTitle>
 					{{ $t("accessibility:header") }}
 				</IonTitle>
 			</IonToolbar>
 		</IonHeader>
-		
+
 		<IonContent>
 			<IonList>
 				<IonItem button :detail="false">
@@ -35,17 +31,25 @@
 				</IonItem>
 
 				<IonItem v-if="accessibilityConfig.highLegibility">
-					<IonSelect v-model="accessibilityConfig.highLegibilityType" :label="$t('accessibility:highLegibilityFontType.title')" interface="popover">
-						<IonSelectOption value="atkinson">
+					<IonSelect
+						v-model="accessibilityConfig.highLegibilityType"
+						:label="$t('accessibility:highLegibilityFontType.title')"
+						interface="popover"
+					>
+						<IonSelectOption value="atkinson" class="hl-atkinson">
 							{{ $t("accessibility:highLegibilityFontType.atkinson") }}
 						</IonSelectOption>
 
-						<IonSelectOption value="opendyslexic">
+						<IonSelectOption value="opendyslexic" class="hl-opendyslexic">
 							{{ $t("accessibility:highLegibilityFontType.opendyslexic") }}
 						</IonSelectOption>
 
-						<IonSelectOption value="lexend">
+						<IonSelectOption value="lexend" class="hl-lexend">
 							{{ $t("accessibility:highLegibilityFontType.lexend") }}
+						</IonSelectOption>
+
+						<IonSelectOption value="system-font" class="hl-system-font">
+							{{ $t("accessibility:highLegibilityFontType.system-font") }}
 						</IonSelectOption>
 					</IonSelect>
 				</IonItem>
@@ -79,11 +83,7 @@
 					</IonToggle>
 				</IonItem>
 
-				<IonItem
-					button
-					:detail="false"
-					:disabled="!accessibilityConfig.useAccentColor"
-				>
+				<IonItem button :detail="false" :disabled="!accessibilityConfig.useAccentColor">
 					<Color v-model="accessibilityConfig.accentColor">
 						<IonLabel>
 							<h3>{{ $t("accessibility:accentColor.title") }}</h3>
@@ -144,6 +144,20 @@
 		</IonContent>
 	</IonPage>
 </template>
+
+<style>
+	ion-popover ion-item.hl-atkinson {
+		font-family: 'Atkinson Hyperlegible', var(--ion-font-family);
+	}
+	
+	ion-popover	ion-item.hl-opendyslexic {
+		font-family: 'OpenDyslexic', var(--ion-font-family);
+	}
+	
+	ion-popover	ion-item.hl-lexend {
+		font-family: 'Lexend', var(--ion-font-family);
+	}
+</style>
 
 <style scoped>
 	ion-select::part(label) {
