@@ -5,6 +5,7 @@ import { decode, encode } from "@msgpack/msgpack";
 import { compressGzip, decompressGzip } from "../util/misc";
 import { accessibilityConfig, appConfig, securityConfig } from "../config";
 import { UUIDable } from "./entities";
+import { replace, revive, walk } from "../json";
 
 const typeson = new Typeson({
 	sync: false
@@ -20,7 +21,7 @@ async function _exportDatabase(){
 	for(const [name, table] of Object.entries(getTables())) database[name] = await Array.fromAsync<unknown>(table.iterate());
 
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-return
-	return await typeson.encapsulate({ config, database });
+	return walk({ config, database }, replace);
 }
 
 export async function exportDatabaseToBinary(){
@@ -31,7 +32,12 @@ export async function exportDatabaseToBinary(){
 
 async function _importDatabase(tablesAndConfig){
 	try{
-		const revived = await typeson.revive(tablesAndConfig);
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		let revived: any;
+		if(tablesAndConfig.$types) // typeson
+			revived = await typeson.revive(tablesAndConfig);
+		else
+			revived = walk(tablesAndConfig, revive);
 
 		Object.assign(appConfig, revived.config.appConfig);
 		Object.assign(accessibilityConfig, revived.config.accessibilityConfig);
@@ -45,6 +51,7 @@ async function _importDatabase(tablesAndConfig){
 			}
 		}
 	}catch(_e){
+		console.error(_e);
 		return false;
 	}
 

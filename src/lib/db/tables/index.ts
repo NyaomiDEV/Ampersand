@@ -5,6 +5,7 @@ import { file, map, undef } from "typeson-registry";
 import { Asset, BoardMessage, CustomField, FrontingEntry, JournalPost, Member, Reminder, System, Tag, UUIDable } from "../entities";
 import { decode, encode } from "@msgpack/msgpack";
 import { AmpersandEntityMapping } from "../types";
+import { replace, revive, walk } from "../../json";
 
 export type IndexEntry<T> = UUIDable & Partial<T>;
 type SecondaryKey<T> = (Exclude<keyof T, keyof UUIDable>);
@@ -14,20 +15,28 @@ export class ShittyTable<T extends UUIDable> {
 	path: string;
 	secondaryKeys: SecondaryKey<T>[];
 	index: IndexEntry<T>[];
+	needsMigration: boolean;
 
 	constructor(name: string, path: string, secondaryKeys: SecondaryKey<T>[]) {
 		this.name = name;
 		this.path = path;
 		this.secondaryKeys = secondaryKeys;
 		this.index = [];
+		this.needsMigration = false;
 	}
 
 	async getIndexFromDisk(){
 		const _path = this.path + sep() + ".index";
 		try {
-			const obj = decode(await fs.readFile(_path));
-			if (typeof obj !== "undefined") 
-				return await typeson.revive(obj) as IndexEntry<T>[];
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			const obj: any = decode(await fs.readFile(_path));
+			if (typeof obj !== "undefined" && obj !== null){
+				if(obj.$types){
+					this.needsMigration = true;
+					return await typeson.revive(obj) as IndexEntry<T>[];
+				} else 
+					return walk(obj, revive) as IndexEntry<T>[];
+			}
 			
 		} catch (e) {
 			console.error(e);
@@ -39,7 +48,7 @@ export class ShittyTable<T extends UUIDable> {
 	async saveIndexToDisk() {
 		const _path = this.path + sep() + ".index";
 		try {
-			await fs.writeFile(_path, encode(await typeson.encapsulate(this.index)));
+			await fs.writeFile(_path, encode(walk(this.index, replace)));
 			return true;
 		} catch (e) {
 			console.error(e);
@@ -111,10 +120,14 @@ export class ShittyTable<T extends UUIDable> {
 	async get(uuid: string) {
 		const _path = this.path + sep() + uuid;
 		try {
-			const obj = decode(await fs.readFile(_path));
-			if (typeof obj !== "undefined") 
-				return await typeson.revive(obj) as T;
-			
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			const obj: any = decode(await fs.readFile(_path));
+			if (typeof obj !== "undefined" && obj !== null){
+				if(obj.$types)
+					return await typeson.revive(obj) as T;
+				else
+					return walk(obj, revive) as T;
+			}
 		} catch (e) {
 			console.error(e);
 		}
@@ -147,7 +160,7 @@ export class ShittyTable<T extends UUIDable> {
 	async write(uuid: string, data: T) {
 		const _path = this.path + sep() + uuid;
 		try{
-			await fs.writeFile(_path, encode(await typeson.encapsulate(data)));
+			await fs.writeFile(_path, encode(walk(data, replace)));
 			await this.updateIndexWithData(data);
 			return true;
 		}catch(e){
@@ -175,7 +188,7 @@ export class ShittyTable<T extends UUIDable> {
 			if(!this.exists(content.uuid)) {
 				const _path = this.path + sep() + content.uuid;
 				try {
-					await fs.writeFile(_path, encode(await typeson.encapsulate(content)));
+					await fs.writeFile(_path, encode(walk(content, replace)));
 					await this.updateIndexWithData(content, false);
 				} catch (e) {
 					console.error(e);
@@ -229,6 +242,17 @@ export class ShittyTable<T extends UUIDable> {
 		await this.saveIndexToDisk();
 		return false;
 	}
+
+	async migrateAll(){
+		if(this.needsMigration){
+			const dir = await this.walkDir();
+			if(!dir) return;
+			for(const file of dir){
+				const data = await this.get(file.name);
+				if (data) await this.write(file.name, data);
+			}
+		}
+	}
 }
 
 const typeson = new Typeson().register([
@@ -243,6 +267,7 @@ async function makeTable<T extends UUIDable>(tableName: string, secondaryKeys: S
 
 	const table = new ShittyTable<T>(tableName, _path, secondaryKeys);
 	await table.initializeIndex();
+	await table.migrateAll();
 
 	return table;
 }
