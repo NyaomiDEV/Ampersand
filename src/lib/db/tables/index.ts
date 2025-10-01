@@ -123,9 +123,12 @@ export class ShittyTable<T extends UUIDable> {
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			const obj: any = decode(await fs.readFile(_path));
 			if (typeof obj !== "undefined" && obj !== null){
-				if(obj.$types)
-					return await typeson.revive(obj) as T;
-				else
+				if(obj.$types){
+					// subtle migration
+					const data = await typeson.revive(obj) as T;
+					await this.write(uuid, data);
+					return data;
+				} else
 					return walk(obj, revive) as T;
 			}
 		} catch (e) {
