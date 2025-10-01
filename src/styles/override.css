@@ -38,6 +38,21 @@ html.high-legibility.hl-system-font {
 	--ion-font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
+html:is(.plt-tablet, .plt-desktop) ion-tabs {
+	flex-direction: row-reverse !important;
+}
+
+html:is(.plt-tablet, .plt-desktop) ion-tab-bar {
+	flex-direction: column;
+	justify-content: center;
+	height: 100%;
+	width: 80px;
+}
+
+html:is(.plt-tablet, .plt-desktop) ion-tab-button {
+	max-height: 96px;
+}
+
 ion-content {
 	--padding-bottom: var(--ion-safe-area-bottom, 0px);
 }
