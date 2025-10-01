@@ -15,14 +15,12 @@ export class ShittyTable<T extends UUIDable> {
 	path: string;
 	secondaryKeys: SecondaryKey<T>[];
 	index: IndexEntry<T>[];
-	needsMigration: boolean;
 
 	constructor(name: string, path: string, secondaryKeys: SecondaryKey<T>[]) {
 		this.name = name;
 		this.path = path;
 		this.secondaryKeys = secondaryKeys;
 		this.index = [];
-		this.needsMigration = false;
 	}
 
 	async getIndexFromDisk(){
@@ -31,10 +29,9 @@ export class ShittyTable<T extends UUIDable> {
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			const obj: any = decode(await fs.readFile(_path));
 			if (typeof obj !== "undefined" && obj !== null){
-				if(obj.$types){
-					this.needsMigration = true;
+				if(obj.$types)
 					return await typeson.revive(obj) as IndexEntry<T>[];
-				} else 
+				else 
 					return walk(obj, revive) as IndexEntry<T>[];
 			}
 			
@@ -247,11 +244,9 @@ export class ShittyTable<T extends UUIDable> {
 	}
 
 	async migrateAll(){
-		if(this.needsMigration){
-			const dir = await this.walkDir();
-			if(!dir) return;
-			for(const file of dir) await this.get(file.name);			
-		}
+		const dir = await this.walkDir();
+		if(!dir) return;
+		for(const file of dir) await this.get(file.name);
 	}
 }
 
@@ -267,7 +262,6 @@ async function makeTable<T extends UUIDable>(tableName: string, secondaryKeys: S
 
 	const table = new ShittyTable<T>(tableName, _path, secondaryKeys);
 	await table.initializeIndex();
-	await table.migrateAll();
 
 	return table;
 }
