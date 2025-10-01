@@ -250,10 +250,7 @@ export class ShittyTable<T extends UUIDable> {
 		if(this.needsMigration){
 			const dir = await this.walkDir();
 			if(!dir) return;
-			for(const file of dir){
-				const data = await this.get(file.name);
-				if (data) await this.write(file.name, data);
-			}
+			for(const file of dir) await this.get(file.name);			
 		}
 	}
 }
