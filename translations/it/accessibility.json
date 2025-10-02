@@ -36,6 +36,9 @@
 		"title": "Disabilita le copertine dei membri nell'elenco",
 		"desc": "Se abilitato, i membri nell'elenco principale verranno visualizzati in modo più compatto"
 	},
+	"contrastLevel": {
+		"title": "Livello di contrasto"
+	},
 	"fontScale": {
 		"title": "Dimensione del testo"
 	},

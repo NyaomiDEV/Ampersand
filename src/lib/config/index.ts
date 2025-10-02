@@ -31,6 +31,7 @@ const defaultAccessibilityConfig: AccessibilityConfig = {
 	accentColor: defaultColor,
 	reducedMotion: false,
 	disableMemberCoversInList: false,
+	contrastLevel: 0,
 	fontScale: 1,
 	longPressDuration: 750
 };

@@ -109,8 +109,8 @@ export function unsetMaterialColors(target?: HTMLElement){
 
 export function addMaterialColors(hex: string, target?: HTMLElement){
 	// Generate new theme
-	const tonalSpotLight = new SchemeFidelity(Hct.fromInt(argbFromHex(hex)), false, 0);
-	const tonalSpotDark = new SchemeFidelity(Hct.fromInt(argbFromHex(hex)), true, 0);
+	const tonalSpotLight = new SchemeFidelity(Hct.fromInt(argbFromHex(hex)), false, accessibilityConfig.contrastLevel);
+	const tonalSpotDark = new SchemeFidelity(Hct.fromInt(argbFromHex(hex)), true, accessibilityConfig.contrastLevel);
 
 	const styleSheet: Map<string, string> = new Map();
 

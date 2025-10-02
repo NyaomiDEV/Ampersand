@@ -111,6 +111,22 @@
 
 				<IonItem>
 					<IonLabel class="more-padding">
+						<h3 class="centered-text">{{ $t("accessibility:contrastLevel.title") }}</h3>
+						<IonRange
+							v-model="accessibilityConfig.contrastLevel"
+							:min="0"
+							:max="1"
+							:step="0.05"
+							:snaps="true"
+							:ticks="false"
+							:pin="true"
+							:pin-formatter="(v) => `${Math.floor(v * 100)}%`"
+						/>
+					</IonLabel>
+				</IonItem>
+
+				<IonItem>
+					<IonLabel class="more-padding">
 						<h3 class="centered-text">{{ $t("accessibility:fontScale.title") }}</h3>
 						<IonRange
 							v-model="accessibilityConfig.fontScale"
