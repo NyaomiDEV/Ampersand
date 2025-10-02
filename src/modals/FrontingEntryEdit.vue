@@ -178,7 +178,7 @@
 				</IonItem>
 				<IonItem v-if="!frontingEntry.endTime" button @click="removeFromFront">
 					<IonLabel>
-						{{ $t("frontHistory:edit.removeFromFront.title") }}
+						{{ $t("frontHistory:edit.removeFromFront") }}
 					</IonLabel>
 				</IonItem>
 				<IonItem v-else button @click="($refs.endTimePicker as any)?.$el.present()">
