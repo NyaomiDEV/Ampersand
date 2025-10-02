@@ -3,7 +3,6 @@
 	import { ref, watch } from "vue";
 	import { platform } from "@tauri-apps/plugin-os";
 
-	import NotDoneYet from "../../components/NotDoneYet.vue";
 	import { appConfig } from "../../lib/config";
 	import MD3SegmentButton from "../../components/MD3SegmentButton.vue";
 
