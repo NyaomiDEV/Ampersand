@@ -3,6 +3,7 @@
 	"searchPlaceholder": "Cerca tra i messaggi...",
 	"polls": {
 		"boardMessageContainsPoll": "Contiene un sondaggio",
+		"collapsePoll": "Nascondi sondaggio",
 		"voteCast": {
 			"voter": "Seleziona lə votantə",
 			"reason": "Dai la ragione",

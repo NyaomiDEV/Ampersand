@@ -6,7 +6,7 @@
 	import Markdown from "./Markdown.vue";
 	import MemberSelect from "../modals/MemberSelect.vue";
 	import { addModal, removeModal } from "../lib/modals";
-	import { h, toRaw } from "vue";
+	import { h, ref, toRaw } from "vue";
 	import { updateBoardMessage } from "../lib/db/tables/boardMessages";
 	import PollResults from "../modals/PollResults.vue";
 	import { useTranslation } from "i18next-vue";
@@ -18,6 +18,8 @@
 		boardMessage: BoardMessageComplete,
 		hidePoll?: boolean
 	}>();
+
+	const isPollHidden = ref(props.hidePoll);
 
 	/* Wait for Firefox and Safari to implement field-sizing in CSS and then use that instead of rows: 4 */
 
@@ -171,11 +173,15 @@
 				<div class="contents">
 					<h1>{{ props.boardMessage.title }}</h1>
 					<Markdown :markdown="props.boardMessage.body" />
-					<p v-if="props.boardMessage.poll && props.hidePoll" class="contains-poll">
+					<IonButton
+						v-if="props.boardMessage.poll && isPollHidden"
+						fill="clear"
+						@click="(e) => {e.stopPropagation(); isPollHidden = false}"
+					>
 						{{ $t("messageBoard:polls.boardMessageContainsPoll") }}
-					</p>
+					</IonButton>
 				</div>
-				<div v-if="props.boardMessage.poll && !props.hidePoll" class="poll" @click="(e) => e.stopPropagation()">
+				<div v-if="props.boardMessage.poll && !isPollHidden" class="poll" @click="(e) => e.stopPropagation()">
 					<IonItem
 						v-for="choice in props.boardMessage.poll.entries"
 						:key="choice.choice"
@@ -185,11 +191,24 @@
 					>
 						<IonLabel>
 							<h3>{{ choice.choice }}</h3>
-							<p>{{ $t("messageBoard:polls.choice.desc", { count: choice.votes.length }) }} - {{ Math.floor(calcPercentageVoted(choice) * 100) }}%</p>
-							<div class="percentage" :style="{'--vote-percentage': (Math.max(0.005, calcPercentageVoted(choice)) * 100) + '%'}" />
+							<p>
+								{{ $t("messageBoard:polls.choice.desc", { count: choice.votes.length }) }} - {{
+									Math.floor(calcPercentageVoted(choice) * 100) }}%
+							</p>
+							<div
+								class="percentage"
+								:style="{'--vote-percentage': (Math.max(0.005, calcPercentageVoted(choice)) * 100) + '%'}"
+							/>
 						</IonLabel>
 					</IonItem>
 					<IonButton @click="showPollResults">{{ $t("messageBoard:polls.resultsButton") }}</IonButton>
+					<IonButton
+						v-if="props.boardMessage.poll && props.hidePoll && !isPollHidden"
+						fill="clear"
+						@click="(e) => {e.stopPropagation(); isPollHidden = true}"
+					>
+						{{ $t("messageBoard:polls.collapsePoll") }}
+					</IonButton>
 				</div>
 			</div>
 		</div>
@@ -265,10 +284,6 @@
 	ion-card .contents > h1 {
 		font-size: 1.30em;
 		margin-bottom: 0;
-	}
-
-	ion-card .contents p.contains-poll {
-		opacity: .5;
 	}
 
 	ion-card .poll {

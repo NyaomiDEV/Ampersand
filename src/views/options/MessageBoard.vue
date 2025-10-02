@@ -161,6 +161,7 @@
 						v-for="boardMessage in tuple[1]"
 						:key="boardMessage.uuid"
 						:board-message
+						:hide-poll="boardMessage.isArchived"
 						@click="showModal(boardMessage)"
 					/>
 				</template>

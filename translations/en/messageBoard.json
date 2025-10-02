@@ -3,6 +3,7 @@
 	"searchPlaceholder": "Search for messages...",
 	"polls": {
 		"boardMessageContainsPoll": "Contains poll",
+		"collapsePoll": "Hide poll",
 		"voteCast": {
 			"voter": "Select the voter",
 			"reason": "Tell the reason",
