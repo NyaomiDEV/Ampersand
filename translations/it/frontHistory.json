@@ -16,10 +16,7 @@
 		},
 		"startTime": "Data d'inizio",
 		"endTime": "Data di fine",
-		"removeFromFront": {
-			"title": "Rimuovi dal front",
-			"desc": "Non potrai annullare questa azione dopo aver salvato!"
-		},
+		"removeFromFront": "Rimuovi dal front",
 		"isMainFronter": "Fronter principale",
 		"isLocked": "Blocca fronter",
 		"delete": {

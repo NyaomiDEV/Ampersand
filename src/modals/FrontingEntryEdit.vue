@@ -177,7 +177,7 @@
 						shape="round"
 						fill="outline"
 						size="default"
-						@click="(e) => { e.stopPropagation(); frontingEntry.influencing = undefined }"
+						@click="(e) => { e.stopPropagation(); delete frontingEntry.influencing }"
 					>
 						<IonIcon
 							slot="icon-only"
@@ -201,11 +201,10 @@
 				</IonItem>
 				<IonItem v-if="!frontingEntry.endTime" button @click="removeFromFront">
 					<IonLabel>
-						<h2>{{ $t("frontHistory:edit.removeFromFront.title") }}</h2>
-						<p>{{ $t("frontHistory:edit.removeFromFront.desc") }}</p>
+						{{ $t("frontHistory:edit.removeFromFront.title") }}
 					</IonLabel>
 				</IonItem>
-				<IonItem v-if="frontingEntry.endTime" button @click="($refs.endTimePicker as any)?.$el.present()">
+				<IonItem v-else button @click="($refs.endTimePicker as any)?.$el.present()">
 					<IonLabel>
 						<h2>{{ $t("frontHistory:edit.endTime") }}</h2>
 						<p>{{ formatDate(frontingEntry.endTime, "expanded") }}</p>
@@ -217,6 +216,19 @@
 						:title="$t('frontHistory:edit.endTime')"
 						:min="frontingEntry.startTime"
 					/>
+					<IonButton
+						slot="end"
+						shape="round"
+						fill="outline"
+						size="default"
+						@click="(e) => { e.stopPropagation(); delete frontingEntry.endTime }"
+					>
+						<IonIcon
+							slot="icon-only"
+							:icon="trashMD"
+							color="danger"
+						/>
+					</IonButton>
 				</IonItem>
 				<IonItem button :detail="false">
 					<IonToggle v-model="frontingEntry.isMainFronter">

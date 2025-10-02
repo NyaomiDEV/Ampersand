@@ -16,10 +16,7 @@
 		},
 		"startTime": "Start time",
 		"endTime": "End time",
-		"removeFromFront": {
-			"title": "Remove from front",
-			"desc": "You won't be able to undo this action after saving!"
-		},
+		"removeFromFront": "Remove from front",
 		"isMainFronter": "Main fronter",
 		"isLocked": "Lock fronter",
 		"delete": {

@@ -7,10 +7,7 @@
 		"customStatus": "Aangepaste status",
 		"startTime": "Starttijd",
 		"endTime": "Eindtijd",
-		"removeFromFront": {
-			"title": "Verwijder uit front",
-			"desc": "Je kan deze actie niet ongedaan maken na het opslaan!"
-		},
+		"removeFromFront": "Verwijder uit front",
 		"isMainFronter": "Belangrijkste fronter",
 		"delete": {
 			"title": "Verwijder front-item",

@@ -53,6 +53,10 @@ html:is(.plt-tablet, .plt-desktop) ion-tab-button {
 	max-height: 96px;
 }
 
+ion-item::part(native) {
+	border-bottom: 0px;
+}
+
 ion-content {
 	--padding-bottom: var(--ion-safe-area-bottom, 0px);
 }
