@@ -10,7 +10,7 @@
 	import { updateBoardMessage } from "../lib/db/tables/boardMessages";
 	import PollResults from "../modals/PollResults.vue";
 	import { useTranslation } from "i18next-vue";
-	import { formatDate } from "../lib/util/misc";
+	import { formatDate, promptOkCancel } from "../lib/util/misc";
 
 	const i18next = useTranslation();
 
@@ -48,30 +48,6 @@
 								rows: 4
 							},
 							placeholder: i18next.t("messageBoard:polls.voteCast.reasonHint")
-						}
-					]
-				});
-
-				await alert.present();
-			})();
-		});
-	}
-
-	function showRetractCastAlert(): Promise<boolean>{
-		return new Promise((resolve) => {
-			void (async () => {
-				const alert = await alertController.create({
-					header: i18next.t("messageBoard:polls.voteCast.retractConfirmation"),
-					buttons: [
-						{
-							text: i18next.t("other:alerts.cancel"),
-							role: "cancel",
-							handler: () => resolve(false)
-						},
-						{
-							text: i18next.t("other:alerts.ok"),
-							role: "confirm",
-							handler: () => resolve(true)
 						}
 					]
 				});
@@ -124,7 +100,7 @@
 		const _choice = poll.entries.find(x => choice === x);
 
 		if(_choice?.votes.map(x => x.member).includes(voter.uuid)){
-			const confirmation = await showRetractCastAlert();
+			const confirmation = await promptOkCancel(i18next.t("messageBoard:polls.voteCast.retractConfirmation"));
 
 			if(confirmation){
 				const index = _choice.votes.findIndex(x => x.member === voter.uuid);

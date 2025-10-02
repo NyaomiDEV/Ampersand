@@ -16,7 +16,6 @@
 		IonModal,
 		IonTextarea,
 		IonButton,
-		alertController
 	} from "@ionic/vue";
 
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
@@ -31,6 +30,7 @@
 	import MemberAvatar from "../components/member/MemberAvatar.vue";
 	import MemberSelect from "./MemberSelect.vue";
 	import { useTranslation } from "i18next-vue";
+	import { promptOkCancel } from "../lib/util/misc";
 
 	const i18next = useTranslation();
 
@@ -49,31 +49,6 @@
 
 	const memberSelectModal = useTemplateRef("memberSelectModal");
 	const memberTagModal = useTemplateRef("memberTagModal");
-
-	function promptDeletion(): Promise<boolean> {
-		return new Promise((resolve) => {
-			void (async () => {
-				const alert = await alertController.create({
-					header: i18next.t("messageBoard:edit.delete.title"),
-					subHeader: i18next.t("messageBoard:edit.delete.confirm"),
-					buttons: [
-						{
-							text: i18next.t("other:alerts.cancel"),
-							role: "cancel",
-							handler: () => resolve(false)
-						},
-						{
-							text: i18next.t("other:alerts.ok"),
-							role: "confirm",
-							handler: () => resolve(true)
-						}
-					]
-				});
-
-				await alert.present();
-			})();
-		});
-	}
 
 	async function save(){
 		const uuid = boardMessage.value?.uuid;
@@ -134,7 +109,10 @@
 	}
 
 	async function removeBoardMessage(){
-		if(await promptDeletion()){
+		if(await promptOkCancel(
+			i18next.t("messageBoard:edit.delete.title"),
+			i18next.t("messageBoard:edit.delete.confirm")
+		)){
 			await deleteBoardMessage(boardMessage.value.uuid!);
 			try{
 				await modalController.dismiss(null, "deleted");

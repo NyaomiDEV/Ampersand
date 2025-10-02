@@ -17,7 +17,6 @@
 		IonSegment,
 		IonTextarea,
 		useIonRouter,
-		alertController,
 		IonToggle
 	} from "@ionic/vue";
 	import MD3SegmentButton from "../../components/MD3SegmentButton.vue";
@@ -41,6 +40,7 @@
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import { addModal, removeModal } from "../../lib/modals";
 	import MemberSelect from "../../modals/MemberSelect.vue";
+	import { promptOkCancel } from "../../lib/util/misc";
 
 	const loading = ref(false);
 
@@ -111,33 +111,11 @@
 		router.back();
 	}
 
-	function promptDeletion(): Promise<boolean> {
-		return new Promise((resolve) => {
-			void (async () => {
-				const alert = await alertController.create({
-					header: i18next.t("tagManagement:edit.delete.title"),
-					subHeader: i18next.t("tagManagement:edit.delete.confirm"),
-					buttons: [
-						{
-							text: i18next.t("other:alerts.cancel"),
-							role: "cancel",
-							handler: () => resolve(false)
-						},
-						{
-							text: i18next.t("other:alerts.ok"),
-							role: "confirm",
-							handler: () => resolve(true)
-						}
-					]
-				});
-
-				await alert.present();
-			})();
-		});
-	}
-
 	async function deleteTag(){
-		if(await promptDeletion()){
+		if(await promptOkCancel(
+			i18next.t("tagManagement:edit.delete.title"),
+			i18next.t("tagManagement:edit.delete.confirm")
+		)){
 			await removeTag(tag.value.uuid!);
 			router.back();
 		}

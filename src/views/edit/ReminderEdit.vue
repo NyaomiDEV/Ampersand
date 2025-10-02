@@ -18,7 +18,6 @@
 		IonPage,
 		IonBackButton,
 		useIonRouter,
-		alertController
 	} from "@ionic/vue";
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
@@ -35,6 +34,7 @@
 	import { useRoute } from "vue-router";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import { useTranslation } from "i18next-vue";
+	import { promptOkCancel } from "../../lib/util/misc";
 
 	const route = useRoute();
 	const router = useIonRouter();
@@ -61,33 +61,11 @@
 	const periodicTimeOfDayPopupPicker = useTemplateRef("periodicTimeOfDayPopupPicker");
 	const periodicDayOfMonthPopupPicker = useTemplateRef("periodicDayOfMonthPopupPicker");
 
-	function promptDeletion(): Promise<boolean> {
-		return new Promise((resolve) => {
-			void (async () => {
-				const alert = await alertController.create({
-					header: i18next.t("reminders:edit.delete.title"),
-					subHeader: i18next.t("reminders:edit.delete.confirm"),
-					buttons: [
-						{
-							text: i18next.t("other:alerts.cancel"),
-							role: "cancel",
-							handler: () => resolve(false)
-						},
-						{
-							text: i18next.t("other:alerts.ok"),
-							role: "confirm",
-							handler: () => resolve(true)
-						}
-					]
-				});
-
-				await alert.present();
-			})();
-		});
-	}
-
 	async function deleteReminder(){
-		if(await promptDeletion()){
+		if(await promptOkCancel(
+			i18next.t("reminders:edit.delete.title"),
+			i18next.t("reminders:edit.delete.confirm")
+		)){
 			await removeReminder(reminder.value.uuid!);
 			router.back();
 		}

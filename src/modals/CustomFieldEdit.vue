@@ -14,7 +14,6 @@
 		IonItem,
 		modalController,
 		IonModal,
-		alertController
 	} from "@ionic/vue";
 
 	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
@@ -26,6 +25,7 @@
 
 	import { PartialBy } from "../lib/types";
 	import { useTranslation } from "i18next-vue";
+	import { promptOkCancel } from "../lib/util/misc";
 
 
 	const i18next = useTranslation();
@@ -62,33 +62,11 @@
 		// however it's safe for us to ignore
 	}
 
-	function promptDeletion(): Promise<boolean> {
-		return new Promise((resolve) => {
-			void (async () => {
-				const alert = await alertController.create({
-					header: i18next.t("customFields:edit.delete.title"),
-					subHeader: i18next.t("customFields:edit.delete.confirm"),
-					buttons: [
-						{
-							text: i18next.t("other:alerts.cancel"),
-							role: "cancel",
-							handler: () => resolve(false)
-						},
-						{
-							text: i18next.t("other:alerts.ok"),
-							role: "confirm",
-							handler: () => resolve(true)
-						}
-					]
-				});
-
-				await alert.present();
-			})();
-		});
-	}
-
 	async function removeCustomField(){
-		if(await promptDeletion()){
+		if (await promptOkCancel(
+			i18next.t("customFields:edit.delete.title"),
+			i18next.t("customFields:edit.delete.confirm")
+		)){
 			await deleteCustomField(customField.value.uuid!);
 			try{
 				await modalController.dismiss(undefined, "deleted");

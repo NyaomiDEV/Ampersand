@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonSearchbar, IonFab, IonFabButton, IonIcon, IonLabel, IonDatetime, IonItemDivider, useIonRouter, alertController, IonBackButton } from "@ionic/vue";
+	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonSearchbar, IonFab, IonFabButton, IonIcon, IonLabel, IonDatetime, IonItemDivider, useIonRouter, IonBackButton } from "@ionic/vue";
 	import { onBeforeMount, onUnmounted, ref, shallowRef, watch } from "vue";
 	import { useRoute } from "vue-router";
 	import Spinner from "../components/Spinner.vue";
@@ -14,6 +14,7 @@
 	import { getJournalPostsDays, getJournalPostsOfDay } from "../lib/db/tables/journalPosts";
 	import { appConfig } from "../lib/config";
 	import { useTranslation } from "i18next-vue";
+	import { promptOkCancel } from "../lib/util/misc";
 
 	const route = useRoute();
 	const router = useIonRouter();
@@ -112,35 +113,9 @@
 		});
 	}
 
-	function prompt(header: string, subHeader: string, message?: string): Promise<boolean> {
-		return new Promise((resolve) => {
-			void (async () => {
-				const alert = await alertController.create({
-					header,
-					subHeader,
-					message,
-					buttons: [
-						{
-							text: i18next.t("other:alerts.cancel"),
-							role: "cancel",
-							handler: () => resolve(false)
-						},
-						{
-							text: i18next.t("other:alerts.ok"),
-							role: "confirm",
-							handler: () => resolve(true)
-						}
-					]
-				});
-
-				await alert.present();
-			})();
-		});
-	}
-
 	async function openPost(post: JournalPostComplete){
 		if(post.isPrivate){
-			if(!await prompt(
+			if(!await promptOkCancel(
 				i18next.t("journal:private"),
 				i18next.t("journal:alertSubheader")
 			))
@@ -148,7 +123,7 @@
 		}
 
 		if(post.contentWarning?.length){
-			if(!await prompt(
+			if(!await promptOkCancel(
 				i18next.t("journal:contentWarning"),
 				i18next.t("journal:alertSubheader"),
 				post.contentWarning

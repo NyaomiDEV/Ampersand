@@ -15,10 +15,8 @@
 		IonBackButton,
 		useIonRouter,
 		IonPage,
-		alertController,
 		IonInput,
 		IonItem,
-		toastController
 	} from "@ionic/vue";
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
@@ -29,7 +27,7 @@
 
 	import { JournalPostComplete, Tag } from "../../lib/db/entities";
 	import { newJournalPost, updateJournalPost, deleteJournalPost, getJournalPost, toJournalPostComplete } from "../../lib/db/tables/journalPosts";
-	import { getFiles, formatDate } from "../../lib/util/misc";
+	import { getFiles, formatDate, toast, promptOkCancel } from "../../lib/util/misc";
 	import { resizeImage } from "../../lib/util/image";
 	import { onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
 	import Markdown from "../../components/Markdown.vue";
@@ -112,33 +110,11 @@
 		}
 	}
 
-	function promptDeletion(): Promise<boolean> {
-		return new Promise((resolve) => {
-			void (async () => {
-				const alert = await alertController.create({
-					header: i18next.t("journal:edit.delete.title"),
-					subHeader: i18next.t("journal:edit.delete.confirm"),
-					buttons: [
-						{
-							text: i18next.t("other:alerts.cancel"),
-							role: "cancel",
-							handler: () => resolve(false)
-						},
-						{
-							text: i18next.t("other:alerts.ok"),
-							role: "confirm",
-							handler: () => resolve(true)
-						}
-					]
-				});
-
-				await alert.present();
-			})();
-		});
-	}
-
 	async function removePost() {
-		if(await promptDeletion()){
+		if(await promptOkCancel(
+			i18next.t("journal:edit.delete.title"),
+			i18next.t("journal:edit.delete.confirm")
+		)){
 			await deleteJournalPost(post.value.uuid!);
 			router.back();
 		}
@@ -148,14 +124,7 @@
 		if(post.value.uuid){
 			try{
 				await window.navigator.clipboard.writeText("@<j:" + post.value.uuid + ">");
-
-				const toast = await toastController.create({
-					message: i18next.t("journal:edit.postIDcopiedToClipboard"),
-					duration: 1500,
-					position: "bottom",
-				});
-
-				await toast.present();
+				await toast(i18next.t("journal:edit.postIDcopiedToClipboard"));
 			}catch(_e){
 				return;
 			}

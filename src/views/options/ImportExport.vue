@@ -1,8 +1,8 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonList, IonItem, IonLabel, IonPage, IonTitle, IonToolbar, IonBackButton, IonProgressBar, toastController } from "@ionic/vue";
+	import { IonContent, IonHeader, IonList, IonItem, IonLabel, IonPage, IonTitle, IonToolbar, IonBackButton, IonProgressBar } from "@ionic/vue";
 	import { ref } from "vue";
 	import { importDatabaseFromBinary, exportDatabaseToBinary } from "../../lib/db/ioutils";
-	import { getFiles } from "../../lib/util/misc";
+	import { getFiles, toast } from "../../lib/util/misc";
 	import dayjs from "dayjs";
 	import { save } from "@tauri-apps/plugin-dialog";
 	import { writeFile } from "@tauri-apps/plugin-fs";
@@ -26,17 +26,9 @@
 			const result = await importDatabaseFromBinary(new Uint8Array(await files[0].arrayBuffer()));
 			if(!result) throw new Error("errored out");
 
-			const statusMessage = await toastController.create({
-				message: i18next.t("importExport:status.imported"),
-				duration: 1500
-			});
-			await statusMessage.present();
+			await toast(i18next.t("importExport:status.imported"));
 		}catch(_e){
-			const statusMessage = await toastController.create({
-				message: i18next.t("importExport:status.error"),
-				duration: 1500
-			});
-			await statusMessage.present();
+			await toast(i18next.t("importExport:status.error"));
 		}
 		loading.value = false;
 	}
@@ -51,17 +43,9 @@
 			const result = await importSimplyPlural(spExport);
 			if(!result) throw new Error("errored out");
 
-			const statusMessage = await toastController.create({
-				message: i18next.t("importExport:status.importedSp"),
-				duration: 1500
-			});
-			await statusMessage.present();
+			await toast(i18next.t("importExport:status.importedSp"));
 		}catch(_e){
-			const statusMessage = await toastController.create({
-				message: i18next.t("importExport:status.errorSp"),
-				duration: 1500
-			});
-			await statusMessage.present();
+			await toast(i18next.t("importExport:status.errorSp"));
 		}
 		loading.value = false;
 	}
@@ -76,17 +60,9 @@
 			const result = await importPluralKit(pkExport);
 			if(!result) throw new Error("errored out");
 
-			const statusMessage = await toastController.create({
-				message: i18next.t("importExport:status.importedPk"),
-				duration: 1500
-			});
-			await statusMessage.present();
+			await toast(i18next.t("importExport:status.importedPk"));
 		}catch(_e){
-			const statusMessage = await toastController.create({
-				message: i18next.t("importExport:status.errorPk"),
-				duration: 1500
-			});
-			await statusMessage.present();
+			await toast(i18next.t("importExport:status.errorPk"));
 		}
 		loading.value = false;
 	}
@@ -101,17 +77,9 @@
 			const result = await importTupperBox(tuExport);
 			if(!result) throw new Error("errored out");
 
-			const statusMessage = await toastController.create({
-				message: i18next.t("importExport:status.importedTu"),
-				duration: 1500
-			});
-			await statusMessage.present();
+			await toast(i18next.t("importExport:status.importedTu"));
 		}catch(_e) {
-			const statusMessage = await toastController.create({
-				message: i18next.t("importExport:status.errorTu"),
-				duration: 1500
-			});
-			await statusMessage.present();
+			await toast(i18next.t("importExport:status.errorTu"));
 		}
 		loading.value = false;
 	}
@@ -132,20 +100,10 @@
 
 		if(path){
 			await writeFile(path, data);
-			const statusMessage = await toastController.create({
-				message: i18next.t("importExport:status.exportedApp"),
-				duration: 1500
-			});
-
-			await statusMessage.present();
-		} else {
-			const statusMessage = await toastController.create({
-				message: i18next.t("importExport:status.errorExport"),
-				duration: 1500
-			});
-
-			await statusMessage.present();
-		}
+			await toast(i18next.t("importExport:status.exportedApp"));
+		} else 
+			await toast(i18next.t("importExport:status.errorExport"));
+		
 
 		loading.value = false;
 	}

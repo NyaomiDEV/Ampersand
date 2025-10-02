@@ -17,8 +17,6 @@
 		IonBackButton,
 		useIonRouter,
 		IonPage,
-		toastController,
-		alertController
 	} from "@ionic/vue";
 	import Color from "../../components/Color.vue";
 	import TagChip from "../../components/tag/TagChip.vue";
@@ -37,7 +35,7 @@
 	import { CustomField, Member, Tag } from "../../lib/db/entities";
 	import { newMember, deleteMember, updateMember, defaultMember, getMember } from "../../lib/db/tables/members";
 	import { getTags } from "../../lib/db/tables/tags";
-	import { getFiles } from "../../lib/util/misc";
+	import { getFiles, promptOkCancel, toast } from "../../lib/util/misc";
 	import { resizeImage } from "../../lib/util/image";
 	import { getCurrentInstance, onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
 	import Markdown from "../../components/Markdown.vue";
@@ -142,33 +140,11 @@
 		delete member.value.cover;
 	}
 
-	function promptDeletion(): Promise<boolean> {
-		return new Promise((resolve) => {
-			void (async () => {
-				const alert = await alertController.create({
-					header: i18next.t("members:edit.delete.title"),
-					subHeader: i18next.t("members:edit.delete.confirm"),
-					buttons: [
-						{
-							text: i18next.t("other:alerts.cancel"),
-							role: "cancel",
-							handler: () => resolve(false)
-						},
-						{
-							text: i18next.t("other:alerts.ok"),
-							role: "confirm",
-							handler: () => resolve(true)
-						}
-					]
-				});
-
-				await alert.present();
-			})();
-		});
-	}
-
 	async function removeMember() {
-		if(await promptDeletion()){
+		if(await promptOkCancel(
+			i18next.t("members:edit.delete.title"),
+			i18next.t("members:edit.delete.confirm")
+		)){
 			await deleteMember(member.value.uuid!);
 			router.back();
 		}
@@ -178,14 +154,7 @@
 		if(member.value.uuid){
 			try{
 				await window.navigator.clipboard.writeText("@<m:" + member.value.uuid + ">");
-
-				const toast = await toastController.create({
-					message: i18next.t("members:edit.memberIDcopiedToClipboard"),
-					duration: 1500,
-					position: "bottom",
-				});
-
-				await toast.present();
+				await toast(i18next.t("members:edit.memberIDcopiedToClipboard"));
 			}catch(_e){
 				return;
 			}

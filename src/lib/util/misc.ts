@@ -1,7 +1,8 @@
-import { createAnimation, getIonPageElement, TransitionOptions } from "@ionic/vue";
+import { alertController, createAnimation, getIonPageElement, toastController, TransitionOptions } from "@ionic/vue";
 import dayjs from "dayjs";
 import { Ref } from "vue";
 import { appConfig } from "../config";
+import i18next from "../i18n";
 
 export const nilUid = "00000000-0000-0000-0000-000000000000";
 export const maxUid = "FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF";
@@ -139,4 +140,44 @@ export function slideAnimation(_: HTMLElement, opts: TransitionOptions, directio
 	transition.addAnimation(enteringPage);
 
 	return transition;
+}
+
+export async function toast(message: string, duration = 1500){
+	try {
+		const toast = await toastController.create({
+			message,
+			duration,
+			position: "bottom",
+		});
+
+		await toast.present();
+	} catch (_e) {
+		return;
+	}
+}
+
+export async function promptOkCancel(header: string, subHeader?: string, message?: string){
+	return new Promise((resolve) => {
+		void (async () => {
+			const alert = await alertController.create({
+				header,
+				subHeader,
+				message,
+				buttons: [
+					{
+						text: i18next.t("other:alerts.cancel"),
+						role: "cancel",
+						handler: () => resolve(false)
+					},
+					{
+						text: i18next.t("other:alerts.ok"),
+						role: "confirm",
+						handler: () => resolve(true)
+					}
+				]
+			});
+
+			await alert.present();
+		})();
+	});
 }

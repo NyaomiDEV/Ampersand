@@ -15,7 +15,6 @@
 		IonItem,
 		modalController,
 		IonModal,
-		alertController
 	} from "@ionic/vue";
 
 	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
@@ -31,7 +30,7 @@
 	import ContentEditable from "../components/ContentEditable.vue";
 
 	import { PartialBy } from "../lib/types";
-	import { formatDate } from "../lib/util/misc";
+	import { formatDate, promptOkCancel } from "../lib/util/misc";
 	import { useTranslation } from "i18next-vue";
 
 
@@ -85,33 +84,11 @@
 		// however it's safe for us to ignore
 	}
 
-	function promptDeletion(): Promise<boolean> {
-		return new Promise((resolve) => {
-			void (async () => {
-				const alert = await alertController.create({
-					header: i18next.t("frontHistory:edit.delete.title"),
-					subHeader: i18next.t("frontHistory:edit.delete.confirm"),
-					buttons: [
-						{
-							text: i18next.t("other:alerts.cancel"),
-							role: "cancel",
-							handler: () => resolve(false)
-						},
-						{
-							text: i18next.t("other:alerts.ok"),
-							role: "confirm",
-							handler: () => resolve(true)
-						}
-					]
-				});
-
-				await alert.present();
-			})();
-		});
-	}
-
 	async function removeFrontingEntry(){
-		if(await promptDeletion()){
+		if(await promptOkCancel(
+			i18next.t("frontHistory:edit.delete.title"),
+			i18next.t("frontHistory:edit.delete.confirm"),
+		)){
 			await deleteFrontingEntry(frontingEntry.value.uuid!);
 			await sendFrontingChangedEvent();
 

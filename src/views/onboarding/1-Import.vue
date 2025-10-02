@@ -1,9 +1,9 @@
 <script setup lang="ts">
-	import { IonContent, IonPage, IonButton, useIonRouter, toastController } from "@ionic/vue";
+	import { IonContent, IonPage, IonButton, useIonRouter } from "@ionic/vue";
 	import { ref } from "vue";
 	import Spinner from "../../components/Spinner.vue";
 	import { importDatabaseFromBinary } from "../../lib/db/ioutils";
-	import { getFiles, slideAnimation } from "../../lib/util/misc";
+	import { getFiles, slideAnimation, toast } from "../../lib/util/misc";
 	import { importPluralKit } from "../../lib/db/external/pluralkit";
 	import { importTupperBox } from "../../lib/db/external/tupperbox";
 	import { importSimplyPlural } from "../../lib/db/external/simplyplural";
@@ -26,11 +26,7 @@
 		}catch(_e){
 			resetConfig();
 			await Promise.all(Object.values(getTables()).map(x => x.clear()));
-			const statusMessage = await toastController.create({
-				message: i18next.t("onboarding:importScreen.error"),
-				duration: 1500
-			});
-			await statusMessage.present();
+			await toast(i18next.t("onboarding:importScreen.error"));
 			loading.value = false;
 			return;
 		}
@@ -47,11 +43,7 @@
 			if (!result) throw new Error("errored out");
 		}catch(_e){
 			await Promise.all(Object.values(getTables()).map(x => x.clear()));
-			const statusMessage = await toastController.create({
-				message: i18next.t("onboarding:importScreen.errorSp"),
-				duration: 1500
-			});
-			await statusMessage.present();
+			await toast(i18next.t("onboarding:importScreen.errorSp"));
 			loading.value = false;
 			return;
 		}
@@ -68,11 +60,7 @@
 			if(!result) throw new Error("errored out");
 		}catch(_e){
 			await Promise.all(Object.values(getTables()).map(x => x.clear()));
-			const statusMessage = await toastController.create({
-				message: i18next.t("onboarding:importScreen.errorPk"),
-				duration: 1500
-			});
-			await statusMessage.present();
+			await toast(i18next.t("onboarding:importScreen.errorPk"));
 			loading.value = false;
 			return;
 		}
@@ -89,11 +77,7 @@
 			if(!result) throw new Error("errored out");
 		}catch(_e){
 			await Promise.all(Object.values(getTables()).map(x => x.clear()));
-			const statusMessage = await toastController.create({
-				message: i18next.t("onboarding:importScreen.errorTu"),
-				duration: 1500
-			});
-			await statusMessage.present();
+			await toast(i18next.t("onboarding:importScreen.errorTu"));
 			loading.value = false;
 			return;
 		}

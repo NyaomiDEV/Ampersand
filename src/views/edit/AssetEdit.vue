@@ -15,7 +15,6 @@
 		IonPage,
 		IonBackButton,
 		useIonRouter,
-		alertController,
 	} from "@ionic/vue";
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
@@ -28,7 +27,7 @@
 	import { PartialBy } from "../../lib/types";
 	import { useRoute } from "vue-router";
 	import { useTranslation } from "i18next-vue";
-	import { getFiles } from "../../lib/util/misc";
+	import { getFiles, promptOkCancel } from "../../lib/util/misc";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import AssetItem from "../../components/AssetItem.vue";
 
@@ -48,7 +47,6 @@
 		const files = await getFiles();
 		if (files.length > 0) 
 			asset.value.file = files[0];
-		
 	}
 
 	async function save(){
@@ -67,35 +65,12 @@
 		router.back();
 	}
 
-	function promptDeletion(): Promise<boolean> {
-		return new Promise((resolve) => {
-			void (async () => {
-				const alert = await alertController.create({
-					header: i18next.t("assetManager:edit.delete.title"),
-					subHeader: i18next.t("assetManager:edit.delete.confirm"),
-					buttons: [
-						{
-							text: i18next.t("other:alerts.cancel"),
-							role: "cancel",
-							handler: () => resolve(false)
-						},
-						{
-							text: i18next.t("other:alerts.ok"),
-							role: "confirm",
-							handler: () => resolve(true)
-						}
-					]
-				});
-
-				await alert.present();
-			})();
-		});
-	}
-
 	async function removeAsset(){
-		if(await promptDeletion())
+		if(await promptOkCancel(
+			i18next.t("assetManager:edit.delete.title"),
+			i18next.t("assetManager:edit.delete.confirm"),
+		))
 			await deleteAsset(asset.value.uuid!);
-		
 	}
 
 	async function updateRoute(){
