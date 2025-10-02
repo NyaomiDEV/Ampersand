@@ -1,14 +1,17 @@
 <script setup lang="ts">
-	import { IonCard, IonCardContent, IonLabel, IonListHeader } from "@ionic/vue";
+	import { IonCard, IonCardContent, IonLabel, IonListHeader, IonIcon } from "@ionic/vue";
 	import MemberAvatar from "../member/MemberAvatar.vue";
 	import { h, onBeforeMount, onUnmounted, ref, shallowRef } from "vue";
 	import type { FrontingEntryComplete } from "../../lib/db/entities.d.ts";
-	import { getFronting } from "../../lib/db/tables/frontingEntries";
+	import { getFronting, newFrontingEntry, sendFrontingChangedEvent } from "../../lib/db/tables/frontingEntries";
 	import { formatWrittenTime } from "../../lib/util/misc";
 	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
 	import { DatabaseEvents, DatabaseEvent } from "../../lib/db/events";
 	import { addModal, removeModal } from "../../lib/modals.ts";
 	import { appConfig } from "../../lib/config/index.ts";
+	import MemberSelect from "../../modals/MemberSelect.vue";
+
+	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 
 	const frontingEntries = shallowRef<FrontingEntryComplete[]>([]);
 
@@ -58,13 +61,35 @@
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-call
 		await (modal.el as any).present();
 	}
+
+	async function showModalFronting(){
+		const vnode = h(MemberSelect, {
+			onlyOne: true,
+			hideCheckboxes: true,
+			discardOnSelect: true,
+			modelValue: [],
+			"onUpdate:modelValue": async (members) => {
+				await newFrontingEntry({
+					member: members[0].uuid,
+					startTime: new Date(),
+					isMainFronter: false,
+					isLocked: false
+				});
+				await sendFrontingChangedEvent();
+			}
+		});
+
+		const modal = await addModal(vnode);
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-call
+		await (modal.el as any).present();
+	}
 </script>
 
 <template>
-	<IonListHeader v-if="frontingEntries.length">
+	<IonListHeader>
 		<IonLabel>{{ $t("dashboard:nowFronting") }}</IonLabel>
 	</IonListHeader>
-	<div v-if="frontingEntries.length" class="carousel">
+	<div class="carousel">
 		<IonCard
 			v-for="fronting in frontingEntries"
 			:key="fronting.uuid"
@@ -95,6 +120,18 @@
 				</IonLabel>
 			</IonCardContent>
 		</IonCard>
+		<IonCard
+			button
+			class="outlined add-fronting"
+			@click="showModalFronting"
+		>
+			<IonCardContent>
+				<IonIcon :icon="addMD" />
+				<IonLabel>
+					{{ $t("dashboard:addToFront") }}
+				</IonLabel>
+			</IonCardContent>
+		</IonCard>
 	</div>
 </template>
 
@@ -111,12 +148,23 @@
 		flex: none;
 	}
 
-	ion-card ion-avatar {
+	ion-card ion-avatar, ion-card ion-icon {
+		display: block;
 		margin: 16px auto;
+	}
+
+	ion-card ion-icon {
+		width: 48px;
+		height: 48px;
 	}
 
 	ion-card ion-card-content {
 		text-align: center;
+	}
+
+	ion-card.add-fronting {
+		opacity: .5;
+		outline-width: 0px;
 	}
 
 	ion-card.influencing {

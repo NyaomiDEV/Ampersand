@@ -5,6 +5,7 @@
 	"systemDescription": "System description",
 	"nowFronting": "Now fronting",
 	"fronterInfluencing": "Influencing {{influencedMember}}",
+	"addToFront": "Add to front",
 	"recentFrontingHistory": "Recently switched out",
 	"messageBoard": {
 		"header": "Message board",

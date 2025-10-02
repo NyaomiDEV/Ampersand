@@ -5,6 +5,7 @@
 	"systemDescription": "Descrizione del sistema",
 	"nowFronting": "Ora a front",
 	"fronterInfluencing": "Influenzando {{influencedMember}}",
+	"addToFront": "Aggiungi a front",
 	"recentFrontingHistory": "Uscitə dal front recentemente",
 	"messageBoard": {
 		"header": "Bacheca dei messaggi",
