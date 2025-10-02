@@ -11,6 +11,13 @@
 		"setSoleFronter": "Set as front",
 		"removeFromFront": "Remove from front"
 	},
+	"toasts": {
+		"addToFront": "Member added to front",
+		"setMainFronter": "Member set to main fronter",
+		"unsetMainFronter": "Member unset as main fronter",
+		"setSoleFronter": "Member set as sole fronter",
+		"removeFromFront": "Member removed from front"
+	},
 	"edit": {
 		"header": "Member",
 		"headerAdd": "Add member",

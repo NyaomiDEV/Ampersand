@@ -40,8 +40,11 @@
 	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
 	import { useRoute } from "vue-router";
 	import { getObjectURL } from "../lib/util/blob.ts";
+	import { toast } from "../lib/util/misc.ts";
+	import { useTranslation } from "i18next-vue";
 
 	const route = useRoute();
+	const i18next = useTranslation();
 
 	const search = ref(route.query.q as string || "");
 	watch(route, () => {
@@ -115,6 +118,7 @@
 			isLocked: false
 		});
 		await sendFrontingChangedEvent();
+		await toast(i18next.t("members:toasts.addToFront"));
 
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 		list.value?.$el.closeSlidingItems();
@@ -123,6 +127,7 @@
 	async function removeFrontingEntry(member: Member) {
 		await removeFronter(member);
 		await sendFrontingChangedEvent();
+		await toast(i18next.t("members:toasts.removeFromFront"));
 
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 		list.value?.$el.closeSlidingItems();
@@ -131,6 +136,8 @@
 	async function setMainFrontingEntry(member: Member, value: boolean){
 		await setMainFronter(member, value);
 		await sendFrontingChangedEvent();
+		if(value) await toast(i18next.t("members:toasts.setMainFronter"));
+		else await toast(i18next.t("members:toasts.unsetMainFronter"));
 
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 		list.value?.$el.closeSlidingItems();
@@ -139,6 +146,7 @@
 	async function setSoleFrontingEntry(member: Member){
 		await setSoleFronter(member);
 		await sendFrontingChangedEvent();
+		await toast(i18next.t("members:toasts.setSoleFronter"));
 		
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 		list.value?.$el.closeSlidingItems();

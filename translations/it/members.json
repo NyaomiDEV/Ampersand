@@ -8,8 +8,15 @@
 		"addToFront": "Aggiungi a front",
 		"setMainFronter": "Imposta come fronter principale",
 		"unsetMainFronter": "Disimposta come fronter principale",
-		"setSoleFronter": "Imposta a front",
+		"setSoleFronter": "Imposta come solo front",
 		"removeFromFront": "Rimuovi dal front"
+	},
+	"toasts": {
+		"addToFront": "Membrə aggiuntə a front",
+		"setMainFronter": "Membrə impostatə come fronter principale",
+		"unsetMainFronter": "Membrə toltə dal front principale",
+		"setSoleFronter": "Membrə impostatə come solo front",
+		"removeFromFront": "Membrə rimossə dal front"
 	},
 	"edit": {
 		"header": "Membrə",
