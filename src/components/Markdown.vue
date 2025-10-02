@@ -14,6 +14,7 @@
 		if(!tag || !(evt.currentTarget as HTMLElement).contains(tag)) return;
 
 		evt.preventDefault();
+		evt.stopPropagation();
 		const url = tag.href;
 
 		try{
