@@ -32,4 +32,5 @@
 	transition: background-color .2s ease-in-out,
 		padding .2s ease-in-out;
 	background: rgb(var(--md3-secondary-container));
+	color: rgb(var(--md3-on-secondary-container));
 }
