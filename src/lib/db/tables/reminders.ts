@@ -17,7 +17,7 @@ export async function newReminder(reminder: Omit<Reminder, keyof UUIDable>) {
 			table: "reminders",
 			event: "new",
 			uuid,
-			delta: reminder
+			newData: reminder
 		}));
 		return uuid;
 	}catch(_error){
@@ -52,7 +52,9 @@ export async function updateReminder(uuid: UUID, newContent: Partial<Reminder>) 
 				table: "reminders",
 				event: "modified",
 				uuid,
-				delta: newContent
+				delta: newContent,
+				oldData: updated.oldData,
+				newData: updated.newData
 			}));
 			return true;
 		}

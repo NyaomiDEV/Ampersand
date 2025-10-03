@@ -27,7 +27,7 @@ export async function newJournalPost(journalPost: Omit<JournalPost, keyof UUIDab
 			table: "journalPosts",
 			event: "new",
 			uuid,
-			delta: journalPost
+			newData: journalPost
 		}));
 		return uuid;
 	}catch(_error){
@@ -62,7 +62,9 @@ export async function updateJournalPost(uuid: UUID, newContent: Partial<JournalP
 				table: "journalPosts",
 				event: "modified",
 				uuid,
-				delta: newContent
+				delta: newContent,
+				oldData: updated.oldData,
+				newData: updated.newData
 			}));
 			return true;
 		}

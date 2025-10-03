@@ -13,7 +13,7 @@ export async function newSystem(system: Omit<System, keyof UUIDable>){
 			table: "system",
 			event: "new",
 			uuid,
-			delta: system
+			newData: system
 		}));
 		return uuid;
 	}catch(_error){

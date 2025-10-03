@@ -30,7 +30,7 @@ export async function newMember(member: Omit<Member, keyof UUIDable>) {
 			table: "members",
 			event: "new",
 			uuid,
-			delta: member
+			newData: member
 		}));
 		await sendMemberEvent("added", {...member, uuid});
 		return uuid;
@@ -70,9 +70,11 @@ export async function updateMember(uuid: UUID, newContent: Partial<Member>) {
 				table: "members",
 				event: "modified",
 				uuid,
-				delta: newContent
+				delta: newContent,
+				oldData: updated.oldData,
+				newData: updated.newData
 			}));
-			await sendMemberEvent("modified", {...newContent});
+			await sendMemberEvent("modified", {...updated.newData});
 			return true;
 		}
 		return false;

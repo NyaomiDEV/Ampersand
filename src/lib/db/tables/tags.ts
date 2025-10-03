@@ -25,7 +25,7 @@ export async function newTag(tag: Omit<Tag, keyof UUIDable>) {
 			table: "tags",
 			event: "new",
 			uuid,
-			delta: tag
+			newData: tag
 		}));
 		return uuid;
 	}catch(_error){
@@ -81,7 +81,9 @@ export async function updateTag(uuid: UUID, newContent: Partial<Tag>) {
 				table: "tags",
 				event: "modified",
 				uuid,
-				delta: newContent
+				delta: newContent,
+				oldData: updated.oldData,
+				newData: updated.newData
 			}));
 			return true;
 		}

@@ -25,7 +25,7 @@ export async function newAsset(asset: Omit<Asset, keyof UUIDable>) {
 			table: "assets",
 			event: "new",
 			uuid,
-			delta: asset
+			newData: asset
 		}));
 		return uuid;
 	}catch(_error){
@@ -60,7 +60,9 @@ export async function updateAsset(uuid: UUID, newContent: Partial<Asset>) {
 				table: "assets",
 				event: "modified",
 				uuid,
-				delta: newContent
+				delta: newContent,
+				oldData: updated.oldData,
+				newData: updated.newData
 			}));
 			return true;
 		}

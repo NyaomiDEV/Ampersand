@@ -27,7 +27,7 @@ export async function newBoardMessage(boardMessage: Omit<BoardMessage, keyof UUI
 			table: "boardMessages",
 			event: "new",
 			uuid,
-			delta: boardMessage
+			newData: boardMessage
 		}));
 		return uuid;
 	}catch(_error){
@@ -58,7 +58,9 @@ export async function updateBoardMessage(uuid: UUID, newContent: Partial<BoardMe
 				table: "boardMessages",
 				event: "modified",
 				uuid,
-				delta: newContent
+				delta: newContent,
+				oldData: updated.oldData,
+				newData: updated.newData
 			}));
 			return true;
 		}

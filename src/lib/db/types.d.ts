@@ -16,5 +16,7 @@ export type DatabaseEventData = {
 	table: keyof AmpersandEntityMapping,
 	event: "new" | "modified" | "deleted",
 	uuid: string,
-	delta: unknown
+	delta?: unknown,
+	oldData?: unknown,
+	newData?: unknown
 };

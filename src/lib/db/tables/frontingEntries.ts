@@ -30,7 +30,7 @@ export async function newFrontingEntry(frontingEntry: Omit<FrontingEntry, keyof 
 			table: "frontingEntries",
 			event: "new",
 			uuid,
-			delta: frontingEntry
+			newData: frontingEntry
 		}));
 		return uuid;
 	}catch(_error){
@@ -73,7 +73,9 @@ export async function updateFrontingEntry(uuid: UUID, newContent: Partial<Fronti
 				table: "frontingEntries",
 				event: "modified",
 				uuid,
-				delta: newContent
+				delta: newContent,
+				oldData: updated.oldData,
+				newData: updated.newData
 			}));
 			return true;
 		}

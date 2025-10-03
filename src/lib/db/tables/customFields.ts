@@ -25,7 +25,7 @@ export async function newCustomField(customField: Omit<CustomField, keyof UUIDab
 			table: "customFields",
 			event: "new",
 			uuid,
-			delta: customField
+			newData: customField
 		}));
 		return uuid;
 	}catch(_error){
@@ -56,7 +56,9 @@ export async function updateCustomField(uuid: UUID, newContent: Partial<CustomFi
 				table: "customFields",
 				event: "modified",
 				uuid,
-				delta: newContent
+				delta: newContent,
+				oldData: updated.oldData,
+				newData: updated.newData
 			}));
 			return true;
 		}
