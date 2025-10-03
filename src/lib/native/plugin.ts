@@ -30,8 +30,13 @@ export async function getWebkitVersion(): Promise<string> {
 	return invokePlugin("get_webkit_version") as Promise<string>;
 }
 
-export async function broadcastEvent(payload: object): Promise<void> {
-	return invokePlugin("broadcast_event", { payload: JSON.stringify(walk(payload, replace)) }) as Promise<void>;
+export async function broadcastEvent(event: string, payload: object): Promise<void> {
+	return invokePlugin("broadcast_event", {
+		payload: JSON.stringify({
+			event,
+			data: walk(payload, replace)
+		}) 
+	}) as Promise<void>;
 }
 
 export async function addMobileListener(event: string, handler: () => void){

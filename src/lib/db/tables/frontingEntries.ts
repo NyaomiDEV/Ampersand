@@ -194,7 +194,7 @@ export async function sendFrontingChangedEvent(){
 	const fronting = await getFronting();
 
 	if(appConfig.useIPC){
-		await broadcastEvent(fronting.map(x => {
+		await broadcastEvent("fronting_changed", fronting.map(x => {
 			delete x.member.cover;
 			delete x.member.image;
 			return x;

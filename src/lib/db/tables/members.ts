@@ -5,6 +5,8 @@ import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUIDable, Member, UUID } from "../entities";
 import { maxUid, nilUid } from "../../util/misc";
 import { filterMember } from "../../search";
+import { appConfig } from "../../config";
+import { broadcastEvent } from "../../native/plugin";
 
 export function getMembers(){
 	return db.members.iterate();
@@ -30,6 +32,7 @@ export async function newMember(member: Omit<Member, keyof UUIDable>) {
 			uuid,
 			delta: member
 		}));
+		await sendMemberEvent("added", {...member, uuid});
 		return uuid;
 	}catch(_error){
 		return false;
@@ -51,6 +54,7 @@ export async function deleteMember(uuid: UUID) {
 			uuid,
 			delta: {}
 		}));
+		await sendMemberEvent("deleted", { uuid });
 		return true;
 	} catch (_error) {
 		return false;
@@ -68,6 +72,7 @@ export async function updateMember(uuid: UUID, newContent: Partial<Member>) {
 				uuid,
 				delta: newContent
 			}));
+			await sendMemberEvent("modified", {...newContent});
 			return true;
 		}
 		return false;
@@ -93,3 +98,11 @@ export const defaultCustomFront = (): Member => ({
 	tags: [],
 	uuid: maxUid
 });
+
+export async function sendMemberEvent(type: "added" | "modified" | "deleted", data: Partial<Member>){
+	if(appConfig.useIPC){
+		if(data.image) delete data.image;
+		if(data.cover) delete data.cover;
+		await broadcastEvent("member_" + type, data);
+	}
+}
