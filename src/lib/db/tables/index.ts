@@ -5,7 +5,7 @@ import { file, map, undef } from "typeson-registry";
 import { Asset, BoardMessage, CustomField, FrontingEntry, JournalPost, Member, Reminder, System, Tag, UUIDable } from "../entities";
 import { decode, encode } from "@msgpack/msgpack";
 import { AmpersandEntityMapping } from "../types";
-import { replace, revive, walk } from "../../json";
+import { deleteNull, replace, revive, walk } from "../../json";
 
 export type IndexEntry<T> = UUIDable & Partial<T>;
 type SecondaryKey<T> = (Exclude<keyof T, keyof UUIDable>);
@@ -160,7 +160,7 @@ export class ShittyTable<T extends UUIDable> {
 	async write(uuid: string, data: T) {
 		const _path = this.path + sep() + uuid;
 		try{
-			await fs.writeFile(_path, encode(walk(data, replace)));
+			await fs.writeFile(_path, encode(deleteNull(walk(data, replace))));
 			await this.updateIndexWithData(data);
 			return true;
 		}catch(e){
@@ -188,7 +188,7 @@ export class ShittyTable<T extends UUIDable> {
 			if(!this.exists(content.uuid)) {
 				const _path = this.path + sep() + content.uuid;
 				try {
-					await fs.writeFile(_path, encode(walk(content, replace)));
+					await fs.writeFile(_path, encode(deleteNull(walk(content, replace))));
 					await this.updateIndexWithData(content, false);
 				} catch (e) {
 					console.error(e);

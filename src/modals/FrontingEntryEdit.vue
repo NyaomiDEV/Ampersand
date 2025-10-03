@@ -59,7 +59,7 @@
 		if(!_frontingEntry.member) return;
 
 		if(_frontingEntry.isMainFronter)
-			delete _frontingEntry.influencing;
+			_frontingEntry.influencing = undefined;
 
 		if(!uuid) {
 			await newFrontingEntry({..._frontingEntry, member: _frontingEntry.member.uuid, influencing: _frontingEntry.influencing?.uuid });
@@ -154,7 +154,7 @@
 						shape="round"
 						fill="outline"
 						size="default"
-						@click="(e) => { e.stopPropagation(); delete frontingEntry.influencing }"
+						@click="(e) => { e.stopPropagation(); frontingEntry.influencing = undefined }"
 					>
 						<IonIcon
 							slot="icon-only"
@@ -198,7 +198,7 @@
 						shape="round"
 						fill="outline"
 						size="default"
-						@click="(e) => { e.stopPropagation(); delete frontingEntry.endTime }"
+						@click="(e) => { e.stopPropagation(); frontingEntry.endTime = undefined }"
 					>
 						<IonIcon
 							slot="icon-only"

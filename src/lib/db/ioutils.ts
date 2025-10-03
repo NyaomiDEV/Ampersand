@@ -5,7 +5,7 @@ import { decode, encode } from "@msgpack/msgpack";
 import { compressGzip, decompressGzip } from "../util/misc";
 import { accessibilityConfig, appConfig, securityConfig } from "../config";
 import { UUIDable } from "./entities";
-import { replace, revive, walk } from "../json";
+import { deleteNull, replace, revive, walk } from "../json";
 
 const typeson = new Typeson({
 	sync: false
@@ -21,7 +21,7 @@ async function _exportDatabase(){
 	for(const [name, table] of Object.entries(getTables())) database[name] = await Array.fromAsync<unknown>(table.iterate());
 
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-return
-	return walk({ config, database }, replace);
+	return deleteNull(walk({ config, database }, replace));
 }
 
 export async function exportDatabaseToBinary(){

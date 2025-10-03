@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { isPlainObject } from "typeson";
+
 export function revive(value: any) {
 	if (typeof value === "object" && value !== null && "_meta" in value) {
 		switch (value._meta.type) {
@@ -87,4 +89,19 @@ export function walk(obj: object, replacer: (obj: any) => any) {
 	}
 
 	return newVal;
+}
+
+export function deleteNull(obj){
+	if (Array.isArray(obj)) 
+		return obj.filter(x => x !== null && typeof x !== "undefined");
+	// this next if just checks if object is plain
+	else if (isPlainObject(obj)){
+		return Object.fromEntries(
+			Object.entries(obj)
+				.filter(([_, v]) => v !== undefined && v !== null)
+				.map(([k, v]) => [k, deleteNull(v)])
+		);
+	}
+
+	return obj;
 }
