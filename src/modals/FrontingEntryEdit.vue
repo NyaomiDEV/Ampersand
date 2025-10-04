@@ -63,7 +63,7 @@
 
 		if(!uuid) {
 			await newFrontingEntry({..._frontingEntry, member: _frontingEntry.member.uuid, influencing: _frontingEntry.influencing?.uuid });
-			await sendFrontingChangedEvent();
+			void sendFrontingChangedEvent();
 
 			await modalController.dismiss(null, "added");
 
@@ -75,7 +75,7 @@
 			member: _frontingEntry.member.uuid,
 			influencing: _frontingEntry.influencing?.uuid
 		});
-		await sendFrontingChangedEvent();
+		void sendFrontingChangedEvent();
 
 		try{
 			await modalController.dismiss(null, "modified");
@@ -90,7 +90,7 @@
 			i18next.t("frontHistory:edit.delete.confirm"),
 		)){
 			await deleteFrontingEntry(frontingEntry.value.uuid!);
-			await sendFrontingChangedEvent();
+			void sendFrontingChangedEvent();
 
 			try{
 				await modalController.dismiss(undefined, "deleted");

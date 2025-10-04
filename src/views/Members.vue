@@ -117,7 +117,7 @@
 			isMainFronter: false,
 			isLocked: false
 		});
-		await sendFrontingChangedEvent();
+		void sendFrontingChangedEvent();
 		await toast(i18next.t("members:toasts.addToFront"));
 
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
@@ -126,7 +126,7 @@
 
 	async function removeFrontingEntry(member: Member) {
 		await removeFronter(member);
-		await sendFrontingChangedEvent();
+		void sendFrontingChangedEvent();
 		await toast(i18next.t("members:toasts.removeFromFront"));
 
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
@@ -135,7 +135,7 @@
 
 	async function setMainFrontingEntry(member: Member, value: boolean){
 		await setMainFronter(member, value);
-		await sendFrontingChangedEvent();
+		void sendFrontingChangedEvent();
 		if(value) await toast(i18next.t("members:toasts.setMainFronter"));
 		else await toast(i18next.t("members:toasts.unsetMainFronter"));
 
@@ -145,7 +145,7 @@
 
 	async function setSoleFrontingEntry(member: Member){
 		await setSoleFronter(member);
-		await sendFrontingChangedEvent();
+		void sendFrontingChangedEvent();
 		await toast(i18next.t("members:toasts.setSoleFronter"));
 		
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-call

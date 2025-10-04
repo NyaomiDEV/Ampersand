@@ -75,7 +75,7 @@
 					isMainFronter: false,
 					isLocked: false
 				});
-				await sendFrontingChangedEvent();
+				void sendFrontingChangedEvent();
 			}
 		});
 
