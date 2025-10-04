@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { isPlainObject } from "typeson";
+import { isPlainObject } from "./util/misc";
 
 export function revive(value: any) {
 	if (typeof value === "object" && value !== null && "_meta" in value) {
@@ -92,10 +92,11 @@ export function walk(obj: object, replacer: (obj: any) => any) {
 }
 
 export function deleteNull(obj){
-	if (Array.isArray(obj)) 
-		return obj.filter(x => x !== null && typeof x !== "undefined");
-	// this next if just checks if object is plain
-	else if (isPlainObject(obj)){
+	if (Array.isArray(obj)) {
+		return obj
+			.filter(x => x !== null && typeof x !== "undefined")
+			.map(x => deleteNull(x));
+	} else if (isPlainObject(obj)){
 		return Object.fromEntries(
 			Object.entries(obj)
 				.filter(([_, v]) => v !== undefined && v !== null)
@@ -105,3 +106,19 @@ export function deleteNull(obj){
 
 	return obj;
 }
+
+export function deleteFile(obj) {
+	if (Array.isArray(obj)) {
+		return obj
+			.filter(x => !(x instanceof File))
+			.map(x => deleteFile(x));
+	} else if (isPlainObject(obj)){
+		return Object.fromEntries(
+			Object.entries(obj)
+				.filter(([_, v]) => !(v instanceof File))
+				.map(([k, v]) => [k, deleteFile(v)])
+		);
+	}
+		
+	return obj;
+};
