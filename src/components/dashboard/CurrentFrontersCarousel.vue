@@ -112,7 +112,7 @@
 						{{ formatWrittenTime(now, fronting.startTime) }}
 					</p>
 					<p v-if="fronting.influencing">
-						{{ $t("dashboard:fronterInfluencing", {influencedMember: fronting.influencing.name}) }}
+						{{ $t("dashboard:fronterInfluencing", { influencedMember: fronting.influencing.name }) }}
 					</p>
 					<p v-if="fronting.customStatus">
 						{{ fronting.customStatus }}

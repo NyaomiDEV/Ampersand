@@ -63,7 +63,7 @@
 		isCustomFront: false,
 		tags: []
 	};
-	const member = ref({...emptyMember});
+	const member = ref({ ...emptyMember });
 
 	const tags = shallowRef<Tag[]>([]);
 	const tagSelectionModal = useTemplateRef("tagSelectionModal");
@@ -153,7 +153,7 @@
 	async function copyIdToClipboard(){
 		if(member.value.uuid){
 			try{
-				await window.navigator.clipboard.writeText("@<m:" + member.value.uuid + ">");
+				await window.navigator.clipboard.writeText(`@<m:${member.value.uuid}>`);
 				await toast(i18next.t("members:edit.memberIDcopiedToClipboard"));
 			}catch(_e){
 				return;
@@ -173,7 +173,7 @@
 			const _member = await getMember(route.query.uuid as string);
 			if(_member) member.value = _member;
 			else member.value = defaultMember();
-		} else member.value = {...emptyMember};
+		} else member.value = { ...emptyMember };
 
 		if(!member.value.customFields)
 			member.value.customFields = new Map();
@@ -446,8 +446,7 @@
 				<IonItem v-if="member.dateCreated" :detail="false">
 					<IonLabel>
 						<p>
-							{{ $t("members:edit.dateCreated", { dateCreated: formatDate(member.dateCreated, "expanded")
-							}) }}
+							{{ $t("members:edit.dateCreated", { dateCreated: formatDate(member.dateCreated, "expanded") }) }}
 						</p>
 					</IonLabel>
 				</IonItem>

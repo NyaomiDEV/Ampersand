@@ -41,7 +41,7 @@ function tag(pkExport: any){
 		const tag: Tag = {
 			name: pkGroup.display_name || pkGroup.name,
 			description: pkGroup.description || undefined,
-			color: pkGroup.color ? "#" + pkGroup.color : undefined,
+			color: pkGroup.color ? `#${pkGroup.color}` : undefined,
 			type: "member",
 			viewInLists: false,
 			uuid: window.crypto.randomUUID()
@@ -65,7 +65,7 @@ async function member(pkExport: any, tagMapping: Map<string, string>, pkField: C
 			name: pkMember.display_name || pkMember.name,
 			description: pkMember.description || undefined,
 			pronouns: pkMember.pronouns || undefined,
-			color: pkMember.color ? "#" + pkMember.color : undefined,
+			color: pkMember.color ? `#${pkMember.color}` : undefined,
 			isArchived: false,
 			isCustomFront: false,
 			dateCreated: new Date(pkMember.created),

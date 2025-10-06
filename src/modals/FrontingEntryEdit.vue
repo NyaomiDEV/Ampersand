@@ -46,7 +46,7 @@
 		endTime: new Date(),
 		isLocked: false
 	};
-	const frontingEntry = ref({...(props.frontingEntry || emptyFrontingEntry)});
+	const frontingEntry = ref({ ...(props.frontingEntry || emptyFrontingEntry) });
 
 	const memberSelectModal = useTemplateRef("memberSelectModal");
 	const memberInfluencingModal = useTemplateRef("memberInfluencingModal");
@@ -62,7 +62,7 @@
 			_frontingEntry.influencing = undefined;
 
 		if(!uuid) {
-			await newFrontingEntry({..._frontingEntry, member: _frontingEntry.member.uuid, influencing: _frontingEntry.influencing?.uuid });
+			await newFrontingEntry({ ..._frontingEntry, member: _frontingEntry.member.uuid, influencing: _frontingEntry.influencing?.uuid });
 			void sendFrontingChangedEvent();
 
 			await modalController.dismiss(null, "added");
@@ -227,7 +227,7 @@
 				</IonItem>
 
 				<IonItem>
-					<IonButton fill="clear" @click="frontingEntry.comment += '<t:' + Math.floor(Date.now() / 1000) + ':f>'">
+					<IonButton fill="clear" @click="frontingEntry.comment += `<t:${Math.floor(Date.now() / 1000)}:f>`">
 						{{ $t("other:addTimestamp") }}
 					</IonButton>
 					<IonButton fill="clear" @click="memberTagModal?.$el.present()">
@@ -284,7 +284,7 @@
 				:discard-on-select="true"
 				:hide-checkboxes="true"
 				:model-value="frontingEntry.member ? [frontingEntry.member] : []"
-				@update:model-value="(e) => { if(e[0] && frontingEntry.comment) frontingEntry.comment += '@<m:'+ e[0].uuid +'>' }"
+				@update:model-value="(e) => { if(e[0] && frontingEntry.comment) frontingEntry.comment += `@<m:${e[0].uuid}>` }"
 			/>
 		</IonContent>
 	</IonModal>

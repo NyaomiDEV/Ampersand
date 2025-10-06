@@ -52,7 +52,7 @@
 		type: "member",
 		viewInLists: false
 	};
-	const tag = ref({...emptyTag});
+	const tag = ref({ ...emptyTag });
 
 	const route = useRoute();
 	const router = useIonRouter();
@@ -147,8 +147,8 @@
 
 				count.value = _count;
 			}
-			else tag.value = {...emptyTag};
-		} else tag.value = {...emptyTag};
+			else tag.value = { ...emptyTag };
+		} else tag.value = { ...emptyTag };
 
 		updateColors();
 
@@ -259,7 +259,7 @@
 					</IonLabel>
 				</IonItem>
 
-				<IonItem v-if="tag.uuid && tag.type === 'journal'" button :router-link="`/s/journal/?q=${encodeURIComponent('#' + tag.name.toLowerCase().replace(/\s+/g, ''))}`">
+				<IonItem v-if="tag.uuid && tag.type === 'journal'" button :router-link="`/s/journal/?q=${encodeURIComponent(`#${tag.name.toLowerCase().replace(/\s+/g, '')}`)}`">
 					<IonIcon slot="start" :icon="journalMD" aria-hidden="true" />
 					<IonLabel>
 						<h3>{{ $t("tagManagement:edit.showJournal.title") }}</h3>

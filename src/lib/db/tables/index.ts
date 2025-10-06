@@ -24,7 +24,7 @@ export class ShittyTable<T extends UUIDable> {
 	}
 
 	async getIndexFromDisk(){
-		const _path = this.path + sep() + ".index";
+		const _path = `${this.path + sep()}.index`;
 		try {
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			const obj: any = decode(await fs.readFile(_path));
@@ -43,7 +43,7 @@ export class ShittyTable<T extends UUIDable> {
 	}
 
 	async saveIndexToDisk() {
-		const _path = this.path + sep() + ".index";
+		const _path = `${this.path + sep()}.index`;
 		try {
 			await fs.writeFile(_path, encode(walk(this.index, replace)));
 			return true;
@@ -54,7 +54,7 @@ export class ShittyTable<T extends UUIDable> {
 	}
 
 	async updateIndexWithData(data: T, saveAfterwards: boolean = true){
-		const indexEntry: IndexEntry<T> = {uuid: data.uuid} as IndexEntry<T>;
+		const indexEntry: IndexEntry<T> = { uuid: data.uuid } as IndexEntry<T>;
 		for(const key of this.secondaryKeys)
 			indexEntry[key] = data[key];
 		
@@ -206,9 +206,9 @@ export class ShittyTable<T extends UUIDable> {
 		const oldData = await this.get(uuid);
 
 		if (oldData) {
-			const data = {...oldData, ...newData} as T;
+			const data = { ...oldData, ...newData } as T;
 			if(await this.write(uuid, data))
-				return {oldData, newData: data};
+				return { oldData, newData: data };
 		}
 
 		return false;
@@ -258,7 +258,7 @@ const typeson = new Typeson().register([
 ]);
 
 async function makeTable<T extends UUIDable>(tableName: string, secondaryKeys: SecondaryKey<T>[]) {
-	const _path = await appDataDir() + sep() + "database" + sep() + tableName;
+	const _path = `${await appDataDir() + sep()}database${sep() + tableName}`;
 	await fs.mkdir(_path, { recursive: true });
 
 	const table = new ShittyTable<T>(tableName, _path, secondaryKeys);
@@ -267,7 +267,7 @@ async function makeTable<T extends UUIDable>(tableName: string, secondaryKeys: S
 	return table;
 }
 
-type GetTableTauriExport = {[T in keyof AmpersandEntityMapping]: ShittyTable<AmpersandEntityMapping[T]>};
+type GetTableTauriExport = { [T in keyof AmpersandEntityMapping]: ShittyTable<AmpersandEntityMapping[T]> };
 export function getTables(): GetTableTauriExport {
 	return { ...db };
 }

@@ -55,7 +55,7 @@
 			minutes: 0
 		}
 	};
-	const reminder = ref<PartialBy<Reminder, "uuid">>({...emptyReminder});
+	const reminder = ref<PartialBy<Reminder, "uuid">>({ ...emptyReminder });
 
 	const eventDelayPopupPicker = useTemplateRef("eventDelayPopupPicker");
 	const periodicTimeOfDayPopupPicker = useTemplateRef("periodicTimeOfDayPopupPicker");
@@ -87,7 +87,7 @@
 		}
 
 		if(!uuid) {
-			await newReminder({..._reminder });
+			await newReminder({ ..._reminder });
 			router.back();
 			return;
 		}
@@ -128,8 +128,8 @@
 		if(route.query.uuid){
 			const rem = await getReminder(route.query.uuid as string);
 			if(rem) reminder.value = rem;
-			else reminder.value = {...emptyReminder};
-		} else reminder.value = {...emptyReminder};
+			else reminder.value = { ...emptyReminder };
+		} else reminder.value = { ...emptyReminder };
 	}
 
 	watch(route, updateRoute);
@@ -247,7 +247,7 @@
 					<IonItem button :detail="true" @click="() => eventDelayPopupPicker?.$el.present()">
 						<IonLabel>
 							<h3>{{ $t("reminders:edit.eventBased.delay.title") }}</h3>
-							<p>{{ $t("reminders:edit.eventBased.delay.desc", {delay: reminder.delay?.hours.toString().padStart(2, "0") + ":" + reminder.delay?.minutes.toString().padStart(2, "0") }) }}</p>
+							<p>{{ $t("reminders:edit.eventBased.delay.desc", { delay: `${reminder.delay?.hours.toString().padStart(2, "0")}:${reminder.delay?.minutes.toString().padStart(2, "0")}` }) }}</p>
 						</IonLabel>
 					</IonItem>
 				</IonList>
@@ -258,7 +258,7 @@
 						{
 							name: 'hours',
 							suffix: $t('other:timeSizes.hours.short'),
-							values: Array.from({length: 24}, (_, i) => ({
+							values: Array.from({ length: 24 }, (_, i) => ({
 								name: i.toString(),
 								value: i
 							}))
@@ -266,7 +266,7 @@
 						{
 							name: 'minutes',
 							suffix: $t('other:timeSizes.minutes.short'),
-							values: Array.from({length: 60}, (_, i) => ({
+							values: Array.from({ length: 60 }, (_, i) => ({
 								name: i.toString(),
 								value: i
 							}))
@@ -293,7 +293,7 @@
 					<IonItem button :detail="true" @click="() => periodicTimeOfDayPopupPicker?.$el.present()">
 						<IonLabel>
 							<h3>{{ $t("reminders:edit.periodic.timeOfDay.title") }}</h3>
-							<p>{{ $t("reminders:edit.periodic.timeOfDay.desc", {timeOfDay: reminder.scheduleInterval?.hourOfDay?.toString().padStart(2, "0") + ":" + reminder.scheduleInterval?.minuteOfHour?.toString().padStart(2, "0") }) }}</p>
+							<p>{{ $t("reminders:edit.periodic.timeOfDay.desc", { timeOfDay: `${reminder.scheduleInterval?.hourOfDay?.toString().padStart(2, "0")}:${reminder.scheduleInterval?.minuteOfHour?.toString().padStart(2, "0")}` }) }}</p>
 						</IonLabel>
 					</IonItem>
 				</IonList>
@@ -304,14 +304,14 @@
 						{
 							name: 'hours',
 							suffix: ':',
-							values: Array.from({length: 24}, (_, i) => ({
+							values: Array.from({ length: 24 }, (_, i) => ({
 								name: i.toString(),
 								value: i
 							}))
 						},
 						{
 							name: 'minutes',
-							values: Array.from({length: 60}, (_, i) => ({
+							values: Array.from({ length: 60 }, (_, i) => ({
 								name: i.toString(),
 								value: i
 							}))
@@ -350,7 +350,7 @@
 									name: '-',
 									value: undefined
 								},
-								...Array.from({length: 31}, (_, i) => ({
+								...Array.from({ length: 31 }, (_, i) => ({
 									name: (i+1).toString(),
 									value: i+1
 								}))

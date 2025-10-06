@@ -50,7 +50,7 @@ export function useModalContainer(){
 	return { renderArray, modalDirective };
 }
 
-export function addModal(vnode: VNode): Promise<{el: HTMLElement, vnode: VNode}> {
+export function addModal(vnode: VNode): Promise<{ el: HTMLElement, vnode: VNode }> {
 	renderArray.push(vnode);
 	return new Promise(resolve => {
 		function cb(evt) {

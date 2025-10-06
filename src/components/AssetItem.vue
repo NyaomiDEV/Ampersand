@@ -38,7 +38,7 @@
 <template>
 	<IonItem
 		button
-		:router-link="props.routeToEditPage ? '/options/assetManager/edit/?uuid=' + props.asset.uuid : undefined"
+		:router-link="props.routeToEditPage ? `/options/assetManager/edit/?uuid=${props.asset.uuid}` : undefined"
 		@click="props.routeToOpenFile ? open() : undefined"
 	>
 		<IonThumbnail v-if="generatePreview()" slot="start">

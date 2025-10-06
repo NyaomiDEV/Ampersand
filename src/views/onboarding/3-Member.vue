@@ -33,7 +33,7 @@
 		isCustomFront: false,
 		tags: []
 	};
-	const member = ref({...emptyMember});
+	const member = ref({ ...emptyMember });
 
 	async function modifyPicture(){
 		const files = await getFiles();

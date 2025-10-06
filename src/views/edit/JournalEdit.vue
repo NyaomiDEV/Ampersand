@@ -64,7 +64,7 @@
 		isPinned: false
 	};
 
-	const post = ref({...emptyPost});
+	const post = ref({ ...emptyPost });
 
 	const canEdit = ref(true);
 	const isEditing = ref(false);
@@ -123,7 +123,7 @@
 	async function copyIdToClipboard(){
 		if(post.value.uuid){
 			try{
-				await window.navigator.clipboard.writeText("@<j:" + post.value.uuid + ">");
+				await window.navigator.clipboard.writeText(`@<j:${post.value.uuid}>`);
 				await toast(i18next.t("journal:edit.postIDcopiedToClipboard"));
 			}catch(_e){
 				return;
@@ -283,7 +283,7 @@
 				</IonItem>
 
 				<IonItem>
-					<IonButton fill="clear" @click="post.body += '<t:' + Math.floor(Date.now() / 1000) + ':f>'">
+					<IonButton fill="clear" @click="post.body += `<t:${Math.floor(Date.now() / 1000)}:f>`">
 						{{ $t("other:addTimestamp") }}
 					</IonButton>
 					<IonButton fill="clear" @click="memberTagModal?.$el.present()">
@@ -376,7 +376,7 @@
 				:discard-on-select="true"
 				:hide-checkboxes="true"
 				:model-value="[]"
-				@update:model-value="(e) => { if(e[0] && post.body) post.body += '@<m:'+e[0].uuid+'>' }"
+				@update:model-value="(e) => { if(e[0] && post.body) post.body += `@<m:${e[0].uuid}>` }"
 			/>
 
 		</IonContent>

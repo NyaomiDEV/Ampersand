@@ -129,7 +129,7 @@
 						v-for="customField in customFields"
 						:key="customField.uuid"
 						button
-						:class="{'default': customField.default}"
+						:class="{ 'default': customField.default }"
 						@click="() => { if(!isReordering) void showModal(customField); }"
 					>
 						<IonLabel>{{ customField.name }}</IonLabel>

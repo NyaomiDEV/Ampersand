@@ -39,14 +39,14 @@
 		priority: 1
 	};
 
-	const customField = ref({...(props.customField || emptyCustomField)});
+	const customField = ref({ ...(props.customField || emptyCustomField) });
 
 	async function save(){
 		const uuid = customField.value?.uuid;
 		const _customField = toRaw(customField.value);
 
 		if(!uuid) {
-			await newCustomField({..._customField });
+			await newCustomField({ ..._customField });
 
 			await modalController.dismiss(null, "added");
 

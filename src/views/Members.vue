@@ -190,7 +190,7 @@
 		if(!timeoutHandler) return;
 		clearTimeout(timeoutHandler);
 		longPressHandlers.delete(member);
-		if(!dragged) router.push("/members/edit?uuid=" + member.uuid);
+		if(!dragged) router.push(`/members/edit?uuid=${member.uuid}`);
 	}
 
 	function numberOfFronters() {
@@ -221,7 +221,7 @@
 		
 		<SpinnerFullscreen v-if="!members" />
 		<IonContent v-else>
-			<IonList ref="list" :class="{compact: accessibilityConfig.disableMemberCoversInList }">
+			<IonList ref="list" :class="{ compact: accessibilityConfig.disableMemberCoversInList }">
 
 				<IonItemSliding v-for="member in members" :key="member.uuid" @ion-drag="endPress(member, true)">
 					<IonItem

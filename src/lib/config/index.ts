@@ -42,8 +42,8 @@ const defaultSecurityConfig: SecurityConfig = {
 	useBiometrics: false
 };
 
-const store = await load(await appConfigDir() + sep() + "appConfig.json");
-export const appConfig = reactive<AppConfig>({...structuredClone(defaultAppConfig), ...await get("appConfig") });
+const store = await load(`${await appConfigDir() + sep()}appConfig.json`);
+export const appConfig = reactive<AppConfig>({ ...structuredClone(defaultAppConfig), ...await get("appConfig") });
 export const accessibilityConfig = reactive<AccessibilityConfig>({ ...structuredClone(defaultAccessibilityConfig), ...await get("accessibilityConfig") });
 export const securityConfig = reactive<SecurityConfig>({ ...structuredClone(defaultSecurityConfig), ...await get("securityConfig") });
 

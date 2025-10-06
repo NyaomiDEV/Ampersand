@@ -28,7 +28,7 @@
 
 	const frontingEntries = shallowRef<FrontingEntryComplete[]>();
 
-	const frontingEntriesDays = shallowRef<{date: string, backgroundColor: string}[]>();
+	const frontingEntriesDays = shallowRef<{ date: string, backgroundColor: string }[]>();
 
 	const date = ref(dayjs().toISOString());
 
@@ -193,7 +193,7 @@
 						v-for="entry in tuple[1]"
 						:key="entry.uuid"
 						button
-						:class="{'main-fronter': entry.isMainFronter, 'influencing': !!entry.influencing}"
+						:class="{ 'main-fronter': entry.isMainFronter, 'influencing': !!entry.influencing }"
 						@click="showModal(entry)"
 					>
 						<MemberAvatar slot="start" :member="entry.member" />

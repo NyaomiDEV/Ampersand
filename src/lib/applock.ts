@@ -10,7 +10,7 @@ if (securityConfig.password)
 	isLocked.value = true;
 
 function hashPassword(plaintext: string){
-	return "md5:" + Array.from(md5(new TextEncoder().encode(plaintext))).map(x => x.toString(16)).join("");
+	return `md5:${Array.from(md5(new TextEncoder().encode(plaintext))).map(x => x.toString(16)).join("")}`;
 }
 
 function comparePassword(plaintext: string){

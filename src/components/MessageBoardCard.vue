@@ -138,7 +138,7 @@
 </script>
 
 <template>
-	<IonCard button :class="{filled: props.boardMessage.isPinned, archived: props.boardMessage.isArchived}">
+	<IonCard button :class="{ filled: props.boardMessage.isPinned, archived: props.boardMessage.isArchived }">
 		<div class="card-inner">
 			<MemberAvatar :member="props.boardMessage.member" />
 			<div class="flexbox">
@@ -173,7 +173,7 @@
 							</p>
 							<div
 								class="percentage"
-								:style="{'--vote-percentage': (Math.max(0.005, calcPercentageVoted(choice)) * 100) + '%'}"
+								:style="{ '--vote-percentage': `${Math.max(0.005, calcPercentageVoted(choice)) * 100}%` }"
 							/>
 						</IonLabel>
 					</IonItem>

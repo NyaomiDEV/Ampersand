@@ -6,7 +6,7 @@
 	const props = defineProps<{
 		label?: string
 	}>();
-	const model = defineModel<string>({default: ""});
+	const model = defineModel<string>({ default: "" });
 	const focused = ref(false);
 	const textarea = useTemplateRef("textarea");
 

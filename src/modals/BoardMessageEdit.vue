@@ -44,7 +44,7 @@
 		date: new Date(),
 		isArchived: false
 	};
-	const boardMessage = ref(props.boardMessage || {...emptyBoardMessage});
+	const boardMessage = ref(props.boardMessage || { ...emptyBoardMessage });
 	const pollAtBeginning = structuredClone(toRaw(boardMessage.value.poll));
 
 	const memberSelectModal = useTemplateRef("memberSelectModal");
@@ -166,7 +166,7 @@
 				</IonItem>
 
 				<IonItem>
-					<IonButton fill="clear" @click="boardMessage.body += '<t:' + Math.floor(Date.now() / 1000) + ':f>'">
+					<IonButton fill="clear" @click="boardMessage.body += `<t:${Math.floor(Date.now() / 1000)}:f>`">
 						{{ $t("other:addTimestamp") }}
 					</IonButton>
 					<IonButton fill="clear" @click="memberTagModal?.$el.present()">
@@ -303,7 +303,7 @@
 				:discard-on-select="true"
 				:hide-checkboxes="true"
 				:model-value="boardMessage.member ? [boardMessage.member] : []"
-				@update:model-value="(e) => { if(e[0] && boardMessage.body) boardMessage.body += '@<m:'+e[0].uuid+'>' }"
+				@update:model-value="(e) => { if(e[0] && boardMessage.body) boardMessage.body += `@<m:${e[0].uuid}>` }"
 			/>
 
 		</IonContent>

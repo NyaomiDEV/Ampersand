@@ -27,9 +27,9 @@
 		const end = dayjs(endTime);
 
 		if(end.valueOf() - start.endOf("day").valueOf() <= 0) // same day
-			return formatDate(startTime) + "~" + formatDate(endTime);
+			return `${formatDate(startTime)}~${formatDate(endTime)}`;
 		
-		return formatDate(startTime, "expanded") + " - " + formatDate(endTime, "expanded");
+		return `${formatDate(startTime, "expanded")} - ${formatDate(endTime, "expanded")}`;
 	}
 
 	onMounted(() => {
@@ -55,7 +55,7 @@
 			{{ props.entry.member.name }}
 		</h2>
 		<p v-if="props.entry.influencing" class="influencing" style="color: inherit;">
-			{{ $t("frontHistory:influencing", {influencedMember: props.entry.influencing.name}) }}
+			{{ $t("frontHistory:influencing", { influencedMember: props.entry.influencing.name }) }}
 		</p>
 		<p v-if="props.entry.customStatus" class="custom-status" style="color: inherit;">
 			{{ props.entry.customStatus }}

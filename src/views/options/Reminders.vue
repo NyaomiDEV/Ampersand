@@ -68,7 +68,7 @@
 					v-for="eventReminder in reminders?.filter(x => x.type === 'event')"
 					:key="eventReminder.uuid"
 					button
-					:router-link="'/options/reminders/edit?uuid='+eventReminder.uuid"
+					:router-link="`/options/reminders/edit?uuid=${eventReminder.uuid}`"
 				>
 					<IonLabel>
 						{{ eventReminder.name }}
@@ -95,7 +95,7 @@
 					v-for="periodicReminder in reminders?.filter(x => x.type === 'periodic')"
 					:key="periodicReminder.uuid"
 					button
-					:router-link="'/options/reminders/edit?uuid='+periodicReminder.uuid"
+					:router-link="`/options/reminders/edit?uuid=${periodicReminder.uuid}`"
 				>
 					<IonLabel>
 						{{ periodicReminder.name }}

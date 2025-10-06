@@ -37,7 +37,7 @@
 		friendlyName: "",
 		file: new File([], "")
 	};
-	const asset = ref({...emptyAsset});
+	const asset = ref({ ...emptyAsset });
 
 	const route = useRoute();
 	const router = useIonRouter();
@@ -82,8 +82,8 @@
 			const _asset = await getAsset(route.query.uuid as string);
 			if(_asset)
 				asset.value = _asset;
-			else asset.value = {...emptyAsset};
-		} else asset.value = {...emptyAsset};
+			else asset.value = { ...emptyAsset };
+		} else asset.value = { ...emptyAsset };
 
 		loading.value = false;
 	}

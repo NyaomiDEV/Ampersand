@@ -77,10 +77,10 @@ export function rgbaToArgb(rgba: string) {
 	if(!matches) return rgba;
 	const [ r, g, b, a ] = matches;
 	if(!a)
-		return "#" + r + g + b;
+		return `#${r + g + b}`;
 
 	// else it does
-	return "#" + a + r + g + b;
+	return `#${a + r + g + b}`;
 }
 
 export function updateMaterialColors(target?: HTMLElement){

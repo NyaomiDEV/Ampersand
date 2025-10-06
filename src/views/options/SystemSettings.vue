@@ -39,7 +39,7 @@
 	const router: any = inject("navManager");
 
 	async function save() {
-		await modifySystem({...system.value});
+		await modifySystem({ ...system.value });
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 		router.handleNavigateBack("/options/");
 	}

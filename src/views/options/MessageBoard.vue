@@ -24,7 +24,7 @@
 	const search = ref(route.query.q as string || "");
 
 	const boardMessages = shallowRef<BoardMessageComplete[]>();
-	const boardMessagesDays = shallowRef<{date: string, backgroundColor: string}[]>();
+	const boardMessagesDays = shallowRef<{ date: string, backgroundColor: string }[]>();
 
 	const date = ref(dayjs().toISOString());
 

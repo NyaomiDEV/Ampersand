@@ -20,10 +20,10 @@ export async function updateDarkMode() {
 export async function updateInsets() {
 	const insets = await M3.getInsets();
 	if(insets && !("error" in insets)) {
-		document.documentElement.style.setProperty("--device-inset-top", Number(insets.adjustedInsetTop) + "px");
-		document.documentElement.style.setProperty("--device-inset-left", Number(insets.adjustedInsetLeft) + "px");
-		document.documentElement.style.setProperty("--device-inset-right", Number(insets.adjustedInsetRight) + "px");
-		document.documentElement.style.setProperty("--device-inset-bottom", Number(insets.adjustedInsetBottom) + "px");
+		document.documentElement.style.setProperty("--device-inset-top", `${Number(insets.adjustedInsetTop)}px`);
+		document.documentElement.style.setProperty("--device-inset-left", `${Number(insets.adjustedInsetLeft)}px`);
+		document.documentElement.style.setProperty("--device-inset-right", `${Number(insets.adjustedInsetRight)}px`);
+		document.documentElement.style.setProperty("--device-inset-bottom", `${Number(insets.adjustedInsetBottom)}px`);
 	}
 }
 
@@ -35,7 +35,7 @@ export function updateAccessibility() {
 		const highLegibilityType = accessibilityConfig.highLegibilityType;
 
 		document.documentElement.classList.remove(...[...document.documentElement.classList.values()].filter(x => x.startsWith("hl-")));
-		document.documentElement.classList.add("hl-" + highLegibilityType);
+		document.documentElement.classList.add(`hl-${highLegibilityType}`);
 	} else
 		document.documentElement.classList.remove("high-legibility", ...[...document.documentElement.classList.values()].filter(x => x.startsWith("hl-")));
 

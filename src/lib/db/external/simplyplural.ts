@@ -17,7 +17,7 @@ function normalizeSPColor(color?: string) {
 	if (color.length > 6) // argb
 		color = color.substring(2);
 
-	return "#" + color;
+	return `#${color}`;
 }
 
 function mapCustomFieldType(type: number, data: any) {
@@ -48,7 +48,7 @@ async function getAvatarFromUuid(systemId: string, avatarUuid: string){
 	try {
 		const url = `https://spaces.apparyllis.com/avatars/${systemId}/${avatarUuid}`;
 		const req = await (await fetch(url)).blob();
-		return new File([req], avatarUuid + "." + req.type.split("/")[1]);
+		return new File([req], `${avatarUuid}.${req.type.split("/")[1]}`);
 	}catch(_e){
 		return undefined;
 	}
@@ -242,7 +242,7 @@ function frontingEntry(spExport: any, memberMapping: Map<string, string>){
 			comment: spExport.comments
 				.filter(x => x.collection === "frontHistory" && x.documentId === spFrontHistory._id)
 				.sort((a, b) => a.time - b.time)
-				.map(x => `<t:${Math.round(x.time / 1000) }:f> - ` + x.text)
+				.map(x => `<t:${Math.round(x.time / 1000)}:f> - ${x.text}`)
 				.join("\n\n")
 		};
 
@@ -262,7 +262,7 @@ function boardMessage(spExport: any, memberMapping: Map<string, string>){
 		const boardMessage: BoardMessage = {
 			member: memberMapping.get(spBoardMessage.writtenBy) || nilUid,
 			title: spBoardMessage.title,
-			body: `@<m:${memberMapping.get(spBoardMessage.writtenFor)}>\n\n` + (spBoardMessage.message?.length ? spBoardMessage.message : ""),
+			body: `@<m:${memberMapping.get(spBoardMessage.writtenFor)}>\n\n${spBoardMessage.message?.length ? spBoardMessage.message : ""}`,
 			date: spBoardMessage.writtenAt ? new Date(spBoardMessage.writtenAt) : new Date(),
 			isArchived: false,
 			uuid: window.crypto.randomUUID()

@@ -27,7 +27,7 @@
 	const tags = shallowRef<Tag[]>();
 	watch([search, type], async () => {
 		tags.value = (await Array.fromAsync(getFilteredTags(search.value))).filter(x => x.type === type.value).sort((a, b) => a.name.localeCompare(b.name));
-	}, {immediate: true});
+	}, { immediate: true });
 
 	const listener = (event: Event) => {
 		if((event as DatabaseEvent).data.table === "tags")
@@ -86,7 +86,7 @@
 					v-for="tag in tags"
 					:key="tag.uuid"
 					button
-					:router-link="'/options/tagManagement/edit?uuid='+tag.uuid"
+					:router-link="`/options/tagManagement/edit?uuid=${tag.uuid}`"
 				>
 					<TagColor slot="start" :tag />
 					<TagLabel :tag />

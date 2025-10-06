@@ -3,7 +3,7 @@ import { writeToTemp } from "./cache";
 import { replace, walk } from "../json";
 
 function invokePlugin(cmd: string, args?: InvokeArgs, opts?: InvokeOptions): Promise<unknown> {
-	return invoke("plugin:ampersand|" + cmd, args, opts);
+	return invoke(`plugin:ampersand|${cmd}`, args, opts);
 }
 
 export function exitApp(): Promise<void> {

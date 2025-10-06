@@ -49,7 +49,7 @@ export function replace(value: any) {
 		req.open("GET", URL.createObjectURL(value), false);
 		req.send();
 		if (req.status !== 200 && req.status !== 0) 
-			throw new Error("Bad File access: " + req.status);
+			throw new Error(`Bad File access: ${req.status}`);
 			
 		return {
 			_meta: { type: "file", name: value.name, lastModified: value.lastModified, mimeType: value.type },

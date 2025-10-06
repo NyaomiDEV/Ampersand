@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { IonContent, IonList, IonPage, IonAvatar, IonButton, IonIcon, IonInput, IonFab, IonFabButton, IonItem, IonTextarea, useIonRouter} from "@ionic/vue";
+	import { IonContent, IonList, IonPage, IonAvatar, IonButton, IonIcon, IonInput, IonFab, IonFabButton, IonItem, IonTextarea, useIonRouter } from "@ionic/vue";
 	import { onBeforeMount, ref, toRaw } from "vue";
 	import { getObjectURL } from "../../lib/util/blob";
 	import { getFiles, slideAnimation } from "../../lib/util/misc";
@@ -14,8 +14,8 @@
 
 	const router = useIonRouter();
 
-	const emptySystem: PartialBy<System, "uuid"> = {name: ""};
-	const system = ref<PartialBy<System, "uuid">>({...emptySystem});
+	const emptySystem: PartialBy<System, "uuid"> = { name: "" };
+	const system = ref<PartialBy<System, "uuid">>({ ...emptySystem });
 
 	async function modifyPicture(){
 		const files = await getFiles();
@@ -30,9 +30,9 @@
 
 	async function save() {
 		if(!await getSystem())
-			await newSystem({...toRaw(system.value)});
+			await newSystem({ ...toRaw(system.value) });
 		else
-			await modifySystem({...toRaw(system.value)});
+			await modifySystem({ ...toRaw(system.value) });
 	
 		router.replace("/onboarding/member/", slideAnimation);
 	}

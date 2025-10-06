@@ -41,11 +41,13 @@ export default defineConfig([
 				allowArrowFunctions: true
 			}],
 			"curly": ["error", "multi-or-nest"],
-			"space-before-function-paren": ["warn", {
+			"space-before-function-paren": ["error", {
 				"anonymous": "never",
 				"named": "never",
 				"asyncArrow": "always"
 			}],
+			"object-shorthand": ["error", "always"],
+			"prefer-template": "error",
 			"@stylistic/function-call-spacing": ["error", "never"],
 			"@stylistic/indent": ["error", "tab", {
 				SwitchCase: 1,
@@ -67,11 +69,19 @@ export default defineConfig([
 			"@stylistic/linebreak-style": ["error", "unix"],
 			"@stylistic/quotes": ["error", "double"],
 			"@stylistic/semi": ["error", "always"],
+			"@stylistic/object-curly-spacing": ["error", "always"],
+			"@stylistic/object-curly-newline": ["error", {
+				consistent: true
+			}],
+			"@stylistic/object-property-newline": ["error", {
+				allowAllPropertiesOnSameLine: true
+			}],
+			"@stylistic/template-curly-spacing": ["error", "never"],
 			"@typescript-eslint/no-floating-promises": "error",
 			"@typescript-eslint/no-unsafe-assignment": "off",
 			"@typescript-eslint/no-unsafe-argument": "off",
 			"@typescript-eslint/no-unsafe-member-access": "off",
-			"@typescript-eslint/no-unused-vars": ["warn", {
+			"@typescript-eslint/no-unused-vars": ["error", {
 				args: "all",
 				argsIgnorePattern: "^_",
 				caughtErrors: "all",
@@ -80,7 +90,7 @@ export default defineConfig([
 				varsIgnorePattern: "^_",
 				ignoreRestSiblings: true
 			}],
-			"vue/html-indent": ["warn", "tab", {}],
+			"vue/html-indent": ["error", "tab", {}],
 			"vue/attribute-hyphenation": ["error", "always"],
 			"vue/v-on-event-hyphenation": ["error", "always"],
 			"vue/max-attributes-per-line": ["error", {
@@ -109,7 +119,17 @@ export default defineConfig([
 			}],
 			"vue/eqeqeq": ["error", "smart"],
 			"vue/dot-notation": ["error", { allowKeywords: true }],
-			"vue/func-call-spacing": ["error", "never"]
+			"vue/func-call-spacing": ["error", "never"],
+			"vue/object-curly-spacing": ["error", "always"],
+			"vue/object-curly-newline": ["error", {
+				consistent: true
+			}],
+			"vue/object-property-newline": ["error", {
+				allowAllPropertiesOnSameLine: true
+			}],
+			"vue/object-shorthand": ["error", "always"],
+			"vue/prefer-template": "error",
+			"vue/template-curly-spacing": ["error", "never"],
 		}
 	},
 	{
