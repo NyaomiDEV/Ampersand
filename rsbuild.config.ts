@@ -12,7 +12,8 @@ export default defineConfig({
 		watchFiles: [{
 			paths: "vendor",
 			type: "reload-page"
-		}]
+		}],
+		lazyCompilation: false
 	},
 	plugins: [
 		pluginVue(),

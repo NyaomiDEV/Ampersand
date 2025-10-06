@@ -11,11 +11,13 @@
     "eslint": "eslint src/"
   },
   "dependencies": {
+    "@ionic/core": "8.7.0",
     "@ionic/vue": "8.7.0",
     "@ionic/vue-router": "^8.7.2",
     "@material-symbols/svg-600": "^0.36.2",
     "@material/material-color-utilities": "^0.3.0",
     "@msgpack/msgpack": "3.1.2",
+    "@tauri-apps/api": "2.8.0",
     "@tauri-apps/plugin-biometric": "2.3.0",
     "@tauri-apps/plugin-dialog": "2.4.0",
     "@tauri-apps/plugin-fs": "2.4.2",
