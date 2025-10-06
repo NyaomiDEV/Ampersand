@@ -12,13 +12,11 @@
 	const boardMessages = shallowRef<BoardMessageComplete[]>();
 
 	async function updateBoardMessages(){
-		boardMessages.value = await Promise.all(
-			(await getRecentBoardMessages()).sort((a, b) => {
-				if(a.isPinned && !b.isPinned) return -1;
-				if(!a.isPinned && b.isPinned) return 1;
-				return a.date.getTime() - b.date.getTime();
-			})
-		);
+		boardMessages.value = (await getRecentBoardMessages()).sort((a, b) => {
+			if(a.isPinned && !b.isPinned) return -1;
+			if(!a.isPinned && b.isPinned) return 1;
+			return a.date.getTime() - b.date.getTime();
+		});
 	}
 
 	const listener = (event: Event) => {

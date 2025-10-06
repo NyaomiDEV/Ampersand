@@ -41,6 +41,11 @@ export default defineConfig([
 				allowArrowFunctions: true
 			}],
 			"curly": ["error", "multi-or-nest"],
+			"space-before-function-paren": ["warn", {
+				"anonymous": "never",
+				"named": "never",
+				"asyncArrow": "always"
+			}],
 			"@stylistic/function-call-spacing": ["error", "never"],
 			"@stylistic/indent": ["error", "tab", {
 				SwitchCase: 1,
