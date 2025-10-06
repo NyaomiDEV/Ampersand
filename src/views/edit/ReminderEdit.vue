@@ -205,7 +205,7 @@
 
 			</IonList>
 
-			<template v-if="reminder.type == 'event'">
+			<template v-if="reminder.type === 'event'">
 				<IonListHeader>
 					<IonLabel>
 						{{ $t("reminders:edit.eventBased.title") }}
@@ -282,7 +282,7 @@
 
 			</template>
 
-			<template v-if="reminder.type == 'periodic'">
+			<template v-if="reminder.type === 'periodic'">
 				<IonListHeader>
 					<IonLabel>
 						{{ $t("reminders:edit.periodic.title") }}

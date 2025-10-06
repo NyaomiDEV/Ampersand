@@ -106,7 +106,10 @@ export default defineConfig([
 				html: {
 					void: "always"
 				}
-			}]
+			}],
+			"vue/eqeqeq": ["error", "smart"],
+			"vue/dot-notation": ["error", { allowKeywords: true }],
+			"vue/func-call-spacing": ["error", "never"]
 		}
 	},
 	{
