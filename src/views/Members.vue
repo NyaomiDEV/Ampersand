@@ -240,7 +240,7 @@
 						<IonIcon v-if="frontingEntries.get(member)?.isMainFronter" slot="end" :icon="mainFronterMD" />
 					</IonItem>
 					<IonItemOptions>
-						<IonItemOption v-if="!frontingEntries.get(member) && numberOfFronters() != 0" @click="addFrontingEntry(member)">
+						<IonItemOption v-if="!frontingEntries.get(member) && numberOfFronters() !== 0" @click="addFrontingEntry(member)">
 							<IonIcon slot="icon-only" :icon="addToFrontMD" />
 						</IonItemOption>
 						<IonItemOption v-if="frontingEntries.get(member)" color="danger" @click="removeFrontingEntry(member)">
@@ -252,7 +252,7 @@
 						<IonItemOption v-if="frontingEntries.get(member)?.isMainFronter" color="secondary" @click="setMainFrontingEntry(member, false)">
 							<IonIcon slot="icon-only" :icon="unsetMainFronterMD" />
 						</IonItemOption>
-						<IonItemOption v-if="!(numberOfFronters() == 1 && frontingEntries.get(member))" color="tertiary" @click="setSoleFrontingEntry(member)">
+						<IonItemOption v-if="!(numberOfFronters() === 1 && frontingEntries.get(member))" color="tertiary" @click="setSoleFrontingEntry(member)">
 							<IonIcon slot="icon-only" :icon="setAsFrontMD" />
 						</IonItemOption>
 					</IonItemOptions>
