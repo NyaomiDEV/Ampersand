@@ -21,7 +21,7 @@
 			<IonItem slot="header">
 				<IonLabel>{{ $t("dashboard:systemDescription") }}</IonLabel>
 			</IonItem>
-			<div slot="content" class="ion-padding">
+			<div slot="content" class="content">
 				<Markdown :markdown="description" />
 			</div>
 		</IonAccordion>
@@ -31,5 +31,10 @@
 <style scoped>
 	ion-accordion {
 		background-color: inherit;
+	}
+
+	.content {
+		padding-left: 16px;
+		padding-right: 16px;
 	}
 </style>
