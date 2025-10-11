@@ -85,6 +85,7 @@ export declare namespace Tokens {
 		href: string;
 		title: string | null;
 		text: string;
+		tokens: Token[];
 	}
 	interface Link {
 		type: "link";
@@ -193,7 +194,7 @@ declare class _Renderer {
 	br(token: Tokens.Br): VNode;
 	del({ tokens }: Tokens.Del): VNode;
 	link({ href, title, tokens }: Tokens.Link): VNode;
-	image({ href, title, text }: Tokens.Image): VNode;
+	image({ href, title, text, tokens }: Tokens.Image): VNode;
 	text(token: Tokens.Text | Tokens.Escape): VNode;
 }
 /**
