@@ -495,7 +495,7 @@
 		display: flex;
 		flex-direction: column-reverse;
 		gap: 8px;
-		right: 24px;
+		right: calc(24px + var(--ion-safe-area-right, 0px));
 	}
 
 	img.cover {
@@ -558,7 +558,7 @@
 	}
 
 	div.member-description, div.member-custom-field {
-		padding: 16px 16px 0px 16px;
+		padding: 16px calc(16px + var(--ion-safe-area-right, 0px)) 0px calc(16px + var(--ion-safe-area-left, 0px));
 	}
 
 	div.member-description ion-label,

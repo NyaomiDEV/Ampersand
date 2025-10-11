@@ -1,5 +1,10 @@
 @import url(markdown.css);
 
+:root{
+	--device-inset-left: 20px;
+	--device-inset-right: 20px;
+}
+
 @supports (padding-top: 20px) {
 	html {
 		--ion-safe-area-top: var(--device-inset-top, 0px);
@@ -47,10 +52,15 @@ html:is(.plt-tablet, .plt-desktop) ion-tab-bar {
 	justify-content: center;
 	height: 100%;
 	width: 80px;
+	padding-right: 0;
 }
 
 html:is(.plt-tablet, .plt-desktop) ion-tab-button {
 	max-height: 96px;
+}
+
+html:is(.plt-tablet, .plt-desktop) ion-tabs :not(ion-tab-bar) {
+	--ion-safe-area-left: 0px;
 }
 
 ion-item::part(native) {
@@ -61,16 +71,16 @@ ion-content {
 	--padding-bottom: var(--ion-safe-area-bottom, 0px);
 }
 
-ion-content::part(scroll) {
-	padding-left: var(--ion-safe-area-left, 0px);
-	padding-right: var(--ion-safe-area-right, 0px);
-}
-
 ion-content:has(> ion-fab.fab-vertical-bottom[slot="fixed"] > ion-fab-button) {
 	--padding-bottom: calc(var(--ion-safe-area-bottom, 0px) + 80px);
 }
 
-ion-fab:not(ion-tabs *) {
+ion-content > ion-datetime {
+	padding-right: var(--ion-safe-area-right, 0px);
+	padding-left: var(--ion-safe-area-left, 0px);
+}
+
+ion-fab:not(html:not(.plt-tablet, .plt-desktop) ion-tabs *) {
 	margin-bottom: var(--ion-safe-area-bottom, 0px);
 }
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-	import { alertController, IonButton, IonCard, IonItem, IonLabel } from "@ionic/vue";
+	import { alertController, IonButton, IonItem, IonLabel } from "@ionic/vue";
 	import MemberAvatar from "./member/MemberAvatar.vue";
 	import { BoardMessageComplete, Member, PollEntry } from "../lib/db/entities";
 	import Markdown from "./Markdown.vue";
@@ -138,7 +138,7 @@
 </script>
 
 <template>
-	<IonCard button :class="{ filled: props.boardMessage.isPinned, archived: props.boardMessage.isArchived }">
+	<IonItem button :class="{ card: true, filled: props.boardMessage.isPinned, archived: props.boardMessage.isArchived }">
 		<div class="card-inner">
 			<MemberAvatar :member="props.boardMessage.member" />
 			<div class="flexbox">
@@ -188,31 +188,50 @@
 				</div>
 			</div>
 		</div>
-	</IonCard>
+	</IonItem>
 </template>
 
 <style scoped>
-	ion-card.archived > * {
+	ion-item.card {
+		--background: var(--ion-background-color-step-100);
+		margin: 8px calc(16px + var(--ion-safe-area-right, 0px)) 8px calc(16px + var(--ion-safe-area-left, 0px));
+	}
+
+	ion-item.card::part(native) {
+		border-radius: 12px;
+		box-shadow: var(--md3-elevation-1);
+
+		/* remove inner padding */
+		padding-left: var(--padding-start, 0px);
+		--inner-padding-end: calc(-1 * var(--ion-safe-area-right, 0px));
+	}
+
+	ion-item.filled {
+		--background: var(--ion-background-color-step-200);
+	}
+
+	ion-item.archived {
 		opacity: 0.5;
 	}
 
-	ion-card ion-item {
+	ion-item ion-item {
 		--background: transparent;
 	}
 
-	ion-card ion-list {
+	ion-item ion-list {
 		--background: transparent;
 	}
 
-	ion-card .card-inner {
+	.card-inner {
 		display: flex;
 		flex-direction: row;
 		align-items: top;
 		gap: 16px;
 		padding: 16px;
+		width: 100%;
 	}
 
-	ion-card .card-inner > ion-avatar {
+	.card-inner > ion-avatar {
 		width: 40px;
 		height: 40px;
 		align-self: flex-start;
@@ -220,68 +239,65 @@
 		flex-grow: 0;
 	}
 
-	ion-card .flexbox {
+	.flexbox {
 		display: flex;
 		flex-direction: column;
 		gap: .25em;
 		width: 100%;
 	}
 
-	ion-card .subheader {
+	.subheader {
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
 		align-items: center;
 	}
 
-	ion-card .subheader * {
+	.subheader * {
 		margin: 0;
 	}
 
-	ion-card .subheader span {
+	.subheader span {
 		font-size: 1.1em;
 		color: var(--ion-text-color-step-400);
 	}
 
-	ion-card .subheader p {
+	.subheader p {
 		text-align: right;
 	}
 
-	ion-card .contents {
+	.contents {
 		display: flex;
 		flex-direction: column;
 		gap: .25em;
 	}
 
-	ion-card .contents > * {
+	.contents > * {
 		margin: 0;
 	}
 
-	ion-card .contents > h1 {
+	.contents > h1 {
 		font-size: 1.30em;
 		margin-bottom: 0;
 	}
 
-	ion-card .poll {
+	.poll {
 		display: flex;
 		flex-direction: column;
 		gap: .5rem;
 		overflow: hidden;
 	}
 
-	ion-card .poll ion-item {
+	.poll ion-item {
 		--inner-padding-bottom: 4px;
 		--inner-padding-top: 4px;
+		--inner-padding-end: 0px;
 		--min-height: none;
 		border: 1px solid var(--ion-text-color-step-700);
 		border-radius: 16px;
 	}
 
-	ion-card .poll ion-item.md {
-		--inner-padding-end: 0px;
-	}
-
-	ion-card .percentage {
+	.percentage {
 		display: block;
 		box-sizing: border-box;
 		margin: 8px 0px 0px 0px;
@@ -292,7 +308,7 @@
 		border-radius: 4px;
 	}
 
-	ion-card .poll ion-item ion-label {
+	.poll ion-item ion-label {
 		margin: 8px 0px;
 	}
 </style>

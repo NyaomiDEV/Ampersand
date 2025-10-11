@@ -141,6 +141,12 @@
 		flex-direction: row;
 		flex-wrap: nowrap;
 		overflow-x: auto;
+		padding-left: calc(8px + var(--ion-safe-area-left, 0px));
+		padding-right: calc(8px + var(--ion-safe-area-right, 0px));
+	}
+
+	html:is(.plt-tablet, .plt-desktop) div {
+		padding-left: 8px;
 	}
 
 	ion-card {

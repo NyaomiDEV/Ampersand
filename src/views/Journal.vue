@@ -3,7 +3,7 @@
 	import { onBeforeMount, onUnmounted, ref, shallowRef, watch } from "vue";
 	import { useRoute } from "vue-router";
 	import Spinner from "../components/Spinner.vue";
-	import JournalPostCard from "../components/JournalPostCard.vue";
+	import JournalPostItem from "../components/JournalPostItem.vue";
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
@@ -179,7 +179,7 @@
 							}}
 						</IonLabel>
 					</IonItemDivider>
-					<JournalPostCard
+					<JournalPostItem
 						v-for="post in tuple[1]"
 						:key="post.uuid"
 						:post

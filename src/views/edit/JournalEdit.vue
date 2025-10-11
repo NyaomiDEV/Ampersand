@@ -215,7 +215,7 @@
 				<div class="post-body">
 					<h1>{{ post.title }}</h1>
 					<h2 v-if="post.subtitle?.length">{{ post.subtitle }}</h2>
-					<div v-if="!isEditing && tags?.length" class="journal-tags">
+					<div v-if="tags?.length" class="journal-tags">
 						<TagChip
 							v-for="tag in post.tags"
 							:key="tag"
@@ -349,7 +349,7 @@
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton v-if="post.title.length > 0 && canEdit" @click="toggleEditing">
+				<IonFabButton v-if="post.member && post.title.length > 0 && canEdit" @click="toggleEditing">
 					<IonIcon :icon="isEditing ? saveMD : pencilMD" />
 				</IonFabButton>
 			</IonFab>
@@ -386,9 +386,9 @@
 <style scoped>
 	div.cover {
 		height: 50vh;
-		width: calc(100% - 32px);
+		width: calc(100% - 32px - var(--ion-safe-area-left, 0px) - var(--ion-safe-area-right, 0px));
 		border-radius: 16px;
-		margin: 16px;
+		margin: 16px calc(16px + var(--ion-safe-area-right, 0px)) 16px calc(16px + var(--ion-safe-area-left, 0px));
 		position: relative;
 		display: block;
 		overflow: hidden;
@@ -438,7 +438,7 @@
 	}
 
 	div.post-body {
-		margin: 1rem 1rem 0 1rem;
+		margin: 1rem calc(1rem + var(--ion-safe-area-left, 0px)) 0 calc(1rem + var(--ion-safe-area-right, 0px));
 	}
 
 	div.post-body > h1 {
