@@ -109,10 +109,6 @@ export function slideAnimation(_: HTMLElement, opts: TransitionOptions, directio
 
 	if(opts.leavingEl){
 		const leavingPage = createAnimation().addElement(getIonPageElement(opts.leavingEl))
-			.onFinish((currentStep) => {
-				if (currentStep === 1 && leavingPage.elements.length > 0)
-					leavingPage.elements[0].style.setProperty("display", "none");
-			})
 			.fromTo("transform", `translateX(${direction[1]}px)`, `translateX(${direction[2]}px)`)
 			.fromTo("opacity", 1, 0);
 
@@ -121,14 +117,8 @@ export function slideAnimation(_: HTMLElement, opts: TransitionOptions, directio
 
 	const enteringPage = createAnimation().addElement(getIonPageElement(opts.enteringEl))
 		.fill("both")
-		.beforeRemoveClass("ion-page-invisible")
 		.fromTo("transform", `translateX(${direction[0]}px)`, `translateX(${direction[1]}px)`)
-		.fromTo("opacity", 0, 1)
-		.onFinish((currentStep) => {
-			if (currentStep === 1 && enteringPage.elements.length > 0) 
-				enteringPage.elements[0].style.removeProperty("display");
-			
-		});
+		.fromTo("opacity", 0, 1);
 
 	const enteringToolbarEle = getIonPageElement(opts.enteringEl).querySelector("ion-toolbar");
 	if(enteringToolbarEle){
