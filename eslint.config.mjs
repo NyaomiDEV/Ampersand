@@ -90,6 +90,9 @@ export default defineConfig([
 				varsIgnorePattern: "^_",
 				ignoreRestSiblings: true
 			}],
+			"@typescript-eslint/unbound-method": ["error", {
+				ignoreStatic: true
+			}],
 			"vue/html-indent": ["error", "tab", {}],
 			"vue/attribute-hyphenation": ["error", "always"],
 			"vue/v-on-event-hyphenation": ["error", "always"],

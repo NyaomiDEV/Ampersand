@@ -28,6 +28,7 @@
     "dayjs": "^1.11.18",
     "i18next": "^25.5.3",
     "i18next-vue": "^5.3.0",
+    "marked": "^16.4.0",
     "tauri-plugin-m3": "0.2.2",
     "typeson": "^9.0.4",
     "typeson-registry": "^12.0.0",

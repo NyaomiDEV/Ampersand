@@ -1,11 +1,11 @@
-import { h } from "vue";
+import { h, VNode } from "vue";
 import MemberChip from "../../components/member/MemberChip.vue";
 import JournalChip from "../../components/JournalChip.vue";
-import { MarkedExtension } from "../../../vendor/marked-vue/marked";
+import { MarkedExtension } from "marked";
 import { getMember } from "../db/tables/members";
 import { getJournalPost } from "../db/tables/journalPosts";
 
-const mentionExtension: MarkedExtension = {
+const mentionExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [{
 		name: "mention",
 		level: "inline",

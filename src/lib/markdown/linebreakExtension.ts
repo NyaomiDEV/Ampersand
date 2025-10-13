@@ -1,7 +1,7 @@
-import { h } from "vue";
-import { MarkedExtension } from "../../../vendor/marked-vue/marked";
+import { h, VNode } from "vue";
+import { MarkedExtension } from "marked";
 
-const linebreakExtension: MarkedExtension = {
+const linebreakExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [
 		{
 			name: "linebreak",

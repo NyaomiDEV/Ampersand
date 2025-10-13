@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Fragment, h } from "vue";
-import { Marked } from "../../../vendor/marked-vue/marked";
+import { Fragment, h, VNode } from "vue";
+import { Marked } from "marked";
 import { getAssets } from "../db/tables/assets";
 import { getObjectURL } from "../util/blob";
 import mentionExtension from "./mentionExtension";
@@ -14,8 +14,12 @@ import subscriptExtension from "./subscriptExtension";
 import underlineExtension from "./underlineExtension";
 import highlightExtension from "./highlightExtension";
 import linebreakExtension from "./linebreakExtension";
+import vueExtension from "./vue/vue";
 
-export const marked = new Marked();
+export const marked = new Marked<(VNode | string)[], VNode | string>();
+
+// Use Vue3
+marked.use(vueExtension);
 
 // Override image and link renderers
 marked.use({
