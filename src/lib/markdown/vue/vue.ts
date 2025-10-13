@@ -1,7 +1,7 @@
 import type { MarkedExtension } from "marked";
 import { Parser } from "./parser.ts";
 import { renderer } from "./renderer.ts";
-import { VNode } from "vue";
+import { type VNode } from "vue";
 
 const vueExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	hooks: {

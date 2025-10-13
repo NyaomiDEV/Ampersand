@@ -1,4 +1,4 @@
-import { h, VNode } from "vue";
+import { h, type VNode } from "vue";
 import { MarkedExtension } from "marked";
 import dayjs from "dayjs";
 import { appConfig } from "../config";

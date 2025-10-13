@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Fragment, h, VNode } from "vue";
+import { Fragment, h, type VNode } from "vue";
 import { Marked } from "marked";
 import { getAssets } from "../db/tables/assets";
 import { getObjectURL } from "../util/blob";

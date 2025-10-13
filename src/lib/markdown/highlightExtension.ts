@@ -1,4 +1,4 @@
-import { h, VNode } from "vue";
+import { h, type VNode } from "vue";
 import { MarkedExtension } from "marked";
 
 const highlightExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
