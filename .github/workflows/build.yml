@@ -39,11 +39,13 @@ jobs:
   build-android:
     uses: ./.github/workflows/build-android.yml
     needs: prepare-build
+    secrets: inherit
     permissions:
       contents: write
   build-pc:
     uses: ./.github/workflows/build-pc.yml
     needs: prepare-build
+    secrets: inherit
     permissions:
       contents: write
   release:

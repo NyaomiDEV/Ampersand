@@ -23,8 +23,6 @@ jobs:
             args: ''
           - platform: 'windows-latest'
             args: ''
-    environment:
-      name: build-pc
     runs-on: ${{ matrix.platform }}
     steps:
       - name: Checkout
