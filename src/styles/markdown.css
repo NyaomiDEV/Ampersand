@@ -70,6 +70,12 @@
     font-size: 0.9rem;
 }
 
+.markdown-content mark {
+    padding: 2px 4px;
+    border-radius: 4px;
+    background-color: rgba(var(--ion-color-primary-rgb), 0.85);
+}
+
 .markdown-content span.spoiler {
     border-radius: 4px;
     padding: 2px 4px;

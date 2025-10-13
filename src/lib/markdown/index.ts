@@ -9,6 +9,11 @@ import spoilerExtension from "./spoilerExtension";
 import timestampExtension from "./timestampExtension";
 import colorExtension from "./colorExtension";
 import textColorExtension from "./textColorExtension";
+import superscriptExtension from "./superscriptExtension";
+import subscriptExtension from "./subscriptExtension";
+import underlineExtension from "./underlineExtension";
+import highlightExtension from "./highlightExtension";
+import linebreakExtension from "./linebreakExtension";
 
 export const marked = new Marked();
 
@@ -101,5 +106,10 @@ marked.use(
 	spoilerExtension,
 	timestampExtension,
 	colorExtension,
-	textColorExtension
+	textColorExtension,
+	superscriptExtension,
+	subscriptExtension,
+	underlineExtension,
+	highlightExtension,
+	linebreakExtension
 );
