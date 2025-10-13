@@ -8,10 +8,8 @@ on:
 permissions:
   contents: write
 
-# Allow one concurrent deployment
 concurrency:
-  group: 'build'
-  cancel-in-progress: true
+  group: 'build-pc'
 
 jobs:
   deploy-pc:

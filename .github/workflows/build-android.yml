@@ -8,6 +8,9 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: 'build-android'
+
 jobs:
   # Single deploy job since we're just deploying
   deploy-android:
