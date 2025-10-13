@@ -3,6 +3,15 @@ name: Build for Android
 
 on:
   workflow_call:
+    secrets:
+      ANDROID_KEY_ALIAS:
+        required: true
+      ANDROID_KEY_PASSWORD:
+        required: true
+      ANDROID_KEY_BASE64:
+        required: true
+      ANDROID_STORE_PASSWORD:
+        required: true
 
 # Sets the GITHUB_TOKEN permissions to allow deployment
 permissions:
