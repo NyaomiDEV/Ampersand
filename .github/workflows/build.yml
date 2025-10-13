@@ -1,0 +1,74 @@
+name: Build Ampersand
+
+on:
+  # Runs on pushes targeting the default branch
+  push:
+    branches: [main]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets the GITHUB_TOKEN permissions to allow deployment
+permissions:
+  contents: write
+
+# Allow one concurrent deployment
+concurrency:
+  group: 'build'
+  cancel-in-progress: true
+
+jobs:
+  prepare-build:
+    environment:
+      name: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    - name: Update dev tag and remove old prerelease
+      run: |
+        gh release delete dev -y || true
+        git tag -d dev || true
+        git push origin :refs/tags/dev || true
+        git tag dev
+        git push origin dev
+      env:
+        GH_TOKEN: ${{ github.token }}
+  build-android:
+    uses: ./.github/workflows/build-android.yml
+    needs: prepare-build
+    permissions:
+      contents: write
+  build-pc:
+    uses: ./.github/workflows/build-pc.yml
+    needs: prepare-build
+    permissions:
+      contents: write
+  release:
+    environment:
+      name: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'yarn'
+      - name: Install frontend dependencies
+        run: yarn install --frozen-lockfile
+      - name: Get Ampersand version from upgrade-vcs script
+        run: NO_PATCH=1 yarn run upgrade-vcs
+      - name: Publish release
+        uses: softprops/action-gh-release@v2.3.2
+        with:
+          name: CI build (${{ env.AMPERSAND_VERSION }})
+          tag_name: dev
+          prerelease: false
+          draft: false
+          generate_release_notes: true

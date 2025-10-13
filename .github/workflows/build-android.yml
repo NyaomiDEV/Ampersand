@@ -2,21 +2,11 @@
 name: Build for Android
 
 on:
-  # Runs on pushes targeting the default branch
-  push:
-    branches: [main]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+  workflow_call:
 
 # Sets the GITHUB_TOKEN permissions to allow deployment
 permissions:
   contents: write
-
-# Allow one concurrent deployment
-concurrency:
-  group: 'build-android'
-  cancel-in-progress: true
 
 jobs:
   # Single deploy job since we're just deploying
@@ -80,10 +70,7 @@ jobs:
       - name: Publish to release
         uses: softprops/action-gh-release@v2.3.2
         with:
-          name: Development build for Android (${{ env.AMPERSAND_VERSION }})
           tag_name: dev
-          prerelease: false
-          draft: false
-          generate_release_notes: true
+          draft: true
           files: |
             ./src-tauri/gen/android/app/build/outputs/apk/universal/release/ampersand-ci-universal-release.apk

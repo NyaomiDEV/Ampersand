@@ -2,12 +2,7 @@
 name: Build for PC
 
 on:
-  # Runs on pushes targeting the default branch
-  push:
-    branches: [main]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+  workflow_call:
 
 # Sets the GITHUB_TOKEN permissions to allow deployment
 permissions:
@@ -15,28 +10,10 @@ permissions:
 
 # Allow one concurrent deployment
 concurrency:
-  group: 'build-pc'
+  group: 'build'
   cancel-in-progress: true
 
 jobs:
-  prepare-dev-pc:
-    environment:
-      name: build-pc
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-    - name: Update dev tag and remove old prerelease
-      run: |
-        gh release delete dev-pc -y || true
-        git tag -d dev-pc || true
-        git push origin :refs/tags/dev-pc || true
-        git tag dev-pc
-        git push origin dev-pc
-      env:
-        GH_TOKEN: ${{ github.token }}
   deploy-pc:
     strategy:
       fail-fast: false
@@ -89,11 +66,8 @@ jobs:
       - name: Publish to release
         uses: softprops/action-gh-release@v2.3.2
         with:
-          name: Development build for PC (${{ env.AMPERSAND_VERSION }})
-          prerelease: true
-          draft: false
-          tag_name: dev-pc
-          generate_release_notes: true
+          draft: true
+          tag_name: dev
           files: |
             ./src-tauri/target/release/bundle/deb/Ampersand_*.deb
             ./src-tauri/target/release/bundle/rpm/Ampersand-*.rpm
