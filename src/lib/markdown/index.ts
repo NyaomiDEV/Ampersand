@@ -18,10 +18,17 @@ import vueExtension from "./vue/vue";
 
 export const marked = new Marked<(VNode | string)[], VNode | string>();
 
+// Our configuration
+marked.use({
+	async: true,
+	gfm: true,
+	breaks: true
+});
+
 // Use Vue3
 marked.use(vueExtension);
 
-// Override image and link renderers
+// Override default tokenizers/renderers
 marked.use({
 	tokenizer: {
 		del(src: string){
@@ -65,7 +72,6 @@ marked.use({
 			}
 		},
 	},
-	async: true,
 	async walkTokens(token) {
 		switch(token.type){
 			case "image":
