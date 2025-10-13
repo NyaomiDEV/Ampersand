@@ -19,8 +19,6 @@ concurrency:
 
 jobs:
   prepare-build:
-    environment:
-      name: build
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
@@ -50,8 +48,6 @@ jobs:
       contents: write
   release:
     needs: [prepare-build, build-android, build-pc]
-    environment:
-      name: build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
