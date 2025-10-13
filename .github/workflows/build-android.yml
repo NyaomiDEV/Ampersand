@@ -69,7 +69,7 @@ jobs:
           name: Android APK
           path: ./src-tauri/gen/android/app/build/outputs/apk/universal/release/ampersand-ci-universal-release.apk
       - name: Publish to release
-        uses: softprops/action-gh-release@v2.3.2
+        uses: softprops/action-gh-release@v2.4.1
         with:
           tag_name: dev
           draft: true

@@ -60,10 +60,10 @@ jobs:
             ./src-tauri/target/universal-apple-darwin/release/bundle/dmg/Ampersand_*.dmg
             ./src-tauri/target/release/bundle/msi/Ampersand_*.msi
       - name: Publish to release
-        uses: softprops/action-gh-release@v2.3.2
+        uses: softprops/action-gh-release@v2.4.1
         with:
-          draft: true
           tag_name: dev
+          draft: true
           files: |
             ./src-tauri/target/release/bundle/deb/Ampersand_*.deb
             ./src-tauri/target/release/bundle/rpm/Ampersand-*.rpm

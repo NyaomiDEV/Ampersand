@@ -64,10 +64,11 @@ jobs:
       - name: Get Ampersand version from upgrade-vcs script
         run: NO_PATCH=1 yarn run upgrade-vcs
       - name: Publish release
-        uses: softprops/action-gh-release@v2.3.2
+        uses: softprops/action-gh-release@v2.4.1
         with:
           name: CI build (${{ env.AMPERSAND_VERSION }})
           tag_name: dev
           prerelease: false
           draft: false
           generate_release_notes: true
+          append_body: false
