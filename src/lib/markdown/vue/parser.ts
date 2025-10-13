@@ -75,6 +75,10 @@ export class Parser {
 					out.push(this.renderer.html(token));
 					break;
 				}
+				case "def": {
+					out.push(this.renderer.def(token));
+					break;
+				}
 				case "paragraph": {
 					out.push(this.renderer.paragraph(token));
 					break;

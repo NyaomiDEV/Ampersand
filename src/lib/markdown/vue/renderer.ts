@@ -112,9 +112,9 @@ export const renderer: Renderer<(VNode | string)[], VNode | string> = {
 	},
 
 	table(token: Tokens.Table): VNode {
-		const header = renderer.tablerow({ text: token.header.map(x => renderer.tablecell(x)) });
+		const header = renderer.tablerow({ text: token.header.map(x => renderer.tablecell.bind(this)(x)) });
 		const body = token.rows.map(row =>
-			renderer.tablerow({ text: row.map(cell => renderer.tablecell(cell)) }),
+			renderer.tablerow({ text: row.map(cell => renderer.tablecell.bind(this)(cell)) }),
 		);
 
 		return h("table", {}, [header, body]);
