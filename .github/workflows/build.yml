@@ -47,6 +47,7 @@ jobs:
     permissions:
       contents: write
   release:
+    needs: [prepare-build, build-android, build-pc]
     environment:
       name: build
     runs-on: ubuntu-latest
