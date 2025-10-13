@@ -175,7 +175,7 @@ declare class _Renderer {
 	space(token: Tokens.Space): VNode;
 	code({ text, lang, escaped }: Tokens.Code): VNode;
 	blockquote({ tokens }: Tokens.Blockquote): VNode;
-	html({ text }: Tokens.HTML | Tokens.Tag): VNode;
+	html(token: Tokens.HTML | Tokens.Tag): VNode;
 	heading({ tokens, depth }: Tokens.Heading): VNode;
 	hr(token: Tokens.Hr): VNode;
 	list(token: Tokens.List): VNode;
