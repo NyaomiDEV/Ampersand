@@ -8,7 +8,7 @@ const textColorExtension: MarkedExtension<(VNode | string)[], VNode | string> = 
 			level: "inline",
 			start(src: string) { return src.match(/\[#/)?.index; },
 			tokenizer(src: string) {
-				const rule = /^\[(#[a-fA-F0-9]{3,6})\](.+?)\[\/?(#[a-fA-F0-9]{3,6})?\]/;
+				const rule = /^\[(#[a-fA-F0-9]{3,6}(?:;#[a-fA-F0-9]{3,6})?)\](.+?)\[\/(#[a-fA-F0-9]{3,6}(?:;#[a-fA-F0-9]{3,6})?)?\]/;
 				const match = rule.exec(src);
 				if (match) {
 					const token = {
@@ -24,10 +24,28 @@ const textColorExtension: MarkedExtension<(VNode | string)[], VNode | string> = 
 				return;
 			},
 			renderer(token) {
-				return h("span", {
+				const color = (token.color as string).split(";");
+				const colorEnd = (token.colorEnd as string | undefined)?.split(";");
+
+				const text = h("span", {
 					class: "text-color",
-					style: `--markdown-text-color-start: ${token.color}; --markdown-text-color-end: ${token.colorEnd || token.color}`
+					style: `
+						--markdown-text-color-start: ${color[0]};
+						--markdown-text-color-end: ${colorEnd?.[0] || color[0]};
+					`
 				}, token.tokens && token.tokens.length ? this.parser.parseInline(token.tokens) : token.text);
+
+				if(color[1]){
+					return h("span", {
+						class: "text-color-bg",
+						style: `
+						--markdown-bg-color-start: ${color[1]};
+						--markdown-bg-color-end: ${colorEnd?.[1] || color[1]};
+					`
+					}, text);
+				}
+				
+				return text;
 			}
 		}
 	]

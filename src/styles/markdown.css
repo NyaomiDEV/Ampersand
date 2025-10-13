@@ -131,3 +131,7 @@
     background-clip: text;
     color: transparent;
 }
+
+.markdown-content span.text-color-bg {
+    background: linear-gradient(to right, var(--markdown-bg-color-start), var(--markdown-bg-color-end));
+}
