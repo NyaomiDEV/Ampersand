@@ -14,6 +14,21 @@ export const marked = new Marked();
 
 // Override image and link renderers
 marked.use({
+	tokenizer: {
+		del(src: string){
+			const regex = /^(~~)(?=[^\s~])((?:\\[\s\S]|[^\\])*?(?:\\[\s\S]|[^\s~\\]))\1(?=[^~]|$)/;
+			const cap = regex.exec(src);
+			if (cap) {
+				return {
+					type: "del",
+					raw: cap[0],
+					text: cap[2],
+					tokens: this.lexer.inlineTokens(cap[2]),
+				};
+			}
+			return;
+		}
+	},
 	renderer: {
 		image(token) {
 			// checking for lone surrogates the shitty way
