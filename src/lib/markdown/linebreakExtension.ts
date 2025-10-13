@@ -6,9 +6,9 @@ const linebreakExtension: MarkedExtension<(VNode | string)[], VNode | string> = 
 		{
 			name: "linebreak",
 			level: "block",
-			start(src: string) { return src.match(/-/)?.index; },
+			start(src: string) { return src.match(/^-/)?.index; },
 			tokenizer(src: string) {
-				const rule = /^-->$/;
+				const rule = /^((?:-){2,})>(?:\n+|$)/;
 				const match = rule.exec(src);
 				if (match) {
 					const token = {
@@ -20,7 +20,7 @@ const linebreakExtension: MarkedExtension<(VNode | string)[], VNode | string> = 
 				return;
 			},
 			renderer(_token) {
-				return h("p", h("br"));
+				return h("br");
 			}
 		}
 	]
