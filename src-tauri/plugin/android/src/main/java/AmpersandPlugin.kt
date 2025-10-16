@@ -1,19 +1,28 @@
 package moe.ampersand.app.plugin
 
 import android.app.Activity
-import app.tauri.annotation.Command
-import app.tauri.annotation.InvokeArg
-import app.tauri.annotation.TauriPlugin
-import app.tauri.plugin.Plugin
-import app.tauri.plugin.Invoke
-
+import android.content.res.AssetManager.ACCESS_BUFFER
 import android.content.Intent
 import android.webkit.WebView
+import android.os.ParcelFileDescriptor
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
+
+import app.tauri.annotation.Command
+import app.tauri.annotation.InvokeArg
+import app.tauri.annotation.TauriPlugin
+
+import app.tauri.plugin.Plugin
+import app.tauri.plugin.Invoke
 import app.tauri.plugin.JSObject
+import app.tauri.plugin.JSArray
+
 import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.InputStream
+import java.io.OutputStream
 
 @InvokeArg
 internal class OpenFileArgs {
@@ -28,6 +37,17 @@ internal class SetCanGoBackArgs {
 @InvokeArg
 internal class BroadcastEventArgs {
     lateinit var payload: String
+}
+
+@InvokeArg
+internal class GetFileDescriptorArgs {
+    lateinit var path: String
+    lateinit var mode: String
+}
+
+@InvokeArg
+internal class ListAssetsArgs {
+    lateinit var path: String
 }
 
 @TauriPlugin
@@ -88,4 +108,46 @@ class AmpersandPlugin(private val activity: Activity): Plugin(activity) {
         activity.applicationContext?.sendBroadcast(intent)
         invoke.resolve()
     }
+
+    @Command
+    fun getResourceFileDescriptor(invoke: Invoke) {
+        val args = invoke.parseArgs(GetFileDescriptorArgs::class.java)
+        val ret = JSObject()
+        try {
+            val fd = activity.assets.openFd(args.path).parcelFileDescriptor?.detachFd()
+            ret.put("fd", fd)
+        } catch (e: IOException) {
+            val cacheFile = File(activity.cacheDir, "_assets/${args.path}")
+            cacheFile.parentFile?.mkdirs()
+            val input = activity.assets.open(args.path, ACCESS_BUFFER)
+            input.use(fun(input) {
+                val output = FileOutputStream(cacheFile, false)
+                output.use(fun(output){
+                    val buf = ByteArray(1024)
+                    var len: Int
+                    while ((input.read(buf).also { len = it }) > 0) {
+                        output.write(buf, 0, len)
+                    }
+                })
+            })
+            val fd = ParcelFileDescriptor.open(cacheFile, ParcelFileDescriptor.parseMode(args.mode)).detachFd()
+            ret.put("fd", fd)
+        }
+        invoke.resolve(ret)
+    }
+
+    @Command
+    fun listAssets(invoke: Invoke) {
+        val args = invoke.parseArgs(ListAssetsArgs::class.java)
+        val ret = JSObject()
+
+        try{
+            val arr = JSArray(activity.assets.list(args.path))
+            ret.put("files", arr)
+            invoke.resolve(ret)
+        }catch(e: IOException){
+            invoke.reject(e.message)
+        }
+    }
+
 }

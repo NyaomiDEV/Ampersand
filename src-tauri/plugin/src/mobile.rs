@@ -41,9 +41,30 @@ struct BroadcastEvent {
   payload: String
 }
 
+#[derive(Serialize)]
+struct GetResourceFileDescriptor {
+  path: String,
+  mode: String
+}
+
+#[derive(Serialize)]
+struct ListAssets {
+  path: String
+}
+
 #[derive(Deserialize)]
 struct WebkitVersion {
   version: String
+}
+
+#[derive(Deserialize)]
+struct ResourceFileDescriptor {
+  fd: Option<i32>,
+}
+
+#[derive(Deserialize)]
+struct ListAssetsResponse {
+  files: Vec<String>
 }
 
 /// Access to the ampersand APIs.
@@ -83,6 +104,29 @@ impl<R: Runtime> Ampersand<R> {
     self
       .0
       .run_mobile_plugin("broadcastEvent", BroadcastEvent { payload })
+      .map_err(Into::into)
+  }
+
+  pub fn get_resource_file_descriptor(&self, path: String, mode: String) -> crate::Result<std::fs::File> {
+    let result = self
+      .0
+      .run_mobile_plugin::<ResourceFileDescriptor>("getResourceFileDescriptor", GetResourceFileDescriptor { path, mode })?;
+
+    if let Some(fd) = result.fd {
+      Ok(unsafe {
+        use std::os::fd::FromRawFd;
+        std::fs::File::from_raw_fd(fd)
+      })
+    } else {
+      Err(crate::Error::Other("couldn't get fd".to_owned()))
+    }
+  }
+
+  pub fn list_assets(&self, path: String) -> crate::Result<Vec<String>> {
+    self
+      .0
+      .run_mobile_plugin::<ListAssetsResponse>("listAssets", ListAssets { path })
+      .map(|x| x.files)
       .map_err(Into::into)
   }
 }
