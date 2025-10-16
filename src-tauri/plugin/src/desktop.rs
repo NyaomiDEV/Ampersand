@@ -1,7 +1,7 @@
 use rusqlite::Connection;
 use serde::de::DeserializeOwned;
 use std::sync::Mutex;
-use tauri::{plugin::PluginApi, AppHandle, Runtime};
+use tauri::{plugin::PluginApi, AppHandle, Manager, Runtime};
 use tauri_plugin_opener::OpenerExt;
 
 pub fn init<R: Runtime, C: DeserializeOwned>(
@@ -39,7 +39,21 @@ impl<R: Runtime> Ampersand<R> {
     Ok(()) // af_unix someday?
   }
 
-  pub fn list_assets(&self, _path: String) -> crate::Result<Vec<String>> {
-    Err(crate::Error::Other("Unimplemented on Desktops".to_owned()))
+  pub fn list_assets(&self, path: String) -> crate::Result<Vec<String>> {
+    Ok(self
+      .0
+      .path()
+      .resource_dir()
+      .map_err(Into::<crate::Error>::into)?
+      .join(path)
+      .read_dir()
+      .map_err(Into::<crate::Error>::into)?
+      .filter_map(|result| {
+        result
+          .ok()
+          .filter(|entry| entry.path().is_file())
+          .map(|entry| entry.file_name().to_string_lossy().to_string())
+      })
+      .collect())
   }
 }
