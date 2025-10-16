@@ -1,5 +1,7 @@
+use rusqlite::Connection;
 use serde::de::DeserializeOwned;
 use serde::{Deserialize, Serialize};
+use std::sync::Mutex;
 use tauri::{
     plugin::{PluginApi, PluginHandle},
     AppHandle, Runtime,
@@ -14,13 +16,14 @@ tauri::ios_plugin_binding!(init_plugin_ampersand);
 // initializes the Kotlin or Swift plugin classes
 pub fn init<R: Runtime, C: DeserializeOwned>(
     _app: &AppHandle<R>,
+    connection: Mutex<Connection>,
     api: PluginApi<R, C>,
 ) -> crate::Result<Ampersand<R>> {
     #[cfg(target_os = "android")]
     let handle = api.register_android_plugin(PLUGIN_IDENTIFIER, "AmpersandPlugin")?;
     #[cfg(target_os = "ios")]
     let handle = api.register_ios_plugin(init_plugin_ampersand)?;
-    Ok(Ampersand(handle))
+    Ok(Ampersand(handle, connection))
 }
 
 /// Structs to pass to the mobile APIs
@@ -68,7 +71,7 @@ struct ListAssetsResponse {
 }
 
 /// Access to the ampersand APIs.
-pub struct Ampersand<R: Runtime>(PluginHandle<R>);
+pub struct Ampersand<R: Runtime>(PluginHandle<R>, Mutex<Connection>);
 
 impl<R: Runtime> Ampersand<R> {
     pub fn exit_app(&self) -> crate::Result<()> {
@@ -85,6 +88,16 @@ impl<R: Runtime> Ampersand<R> {
         self.0
             .run_mobile_plugin("openFile", OpenFile { path })
             .map_err(Into::into)
+    }
+
+    pub fn test_db(&self) -> crate::Result<String> {
+        self.1
+            .lock()
+            .map_err(|_| crate::Error::Other(String::from("mutex lock failed")))?
+            .query_one("SELECT sqlite_version();", (), |row| {
+                row.get::<usize, String>(0)
+            })
+            .map_err(|_| crate::Error::Other(String::from("sql failed to execute")))
     }
 
     pub fn get_webkit_version(&self) -> crate::Result<String> {
