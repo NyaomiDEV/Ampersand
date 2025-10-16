@@ -14,6 +14,11 @@ pub(crate) fn open_file<R: Runtime>(app: AppHandle<R>, path: String) -> Result<(
 }
 
 #[command]
+pub(crate) fn test_db<R: Runtime>(app: AppHandle<R>) -> Result<String> {
+    app.ampersand().test_db()
+}
+
+#[command]
 pub(crate) fn broadcast_event<R: Runtime>(app: AppHandle<R>, payload: String) -> Result<()> {
 	app.ampersand().broadcast_event(payload)
 }
