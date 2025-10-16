@@ -30,6 +30,10 @@ export async function testDb(): Promise<string> {
 	return invokePlugin("test_db") as Promise<string>;
 }
 
+export async function listAssets(path: string): Promise<string[]> {
+	return invokePlugin("list_assets", { path }) as Promise<string[]>;
+}
+
 export async function getWebkitVersion(): Promise<string> {
 	return invokePlugin("get_webkit_version") as Promise<string>;
 }
