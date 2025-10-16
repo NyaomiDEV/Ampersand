@@ -7,6 +7,7 @@
 	],
 	"permissions": [
 		"ampersand:default",
+		"ampersand:allow-test-db",
 		"fs:allow-app-read-recursive",
 		"fs:allow-app-write-recursive",
 		"fs:allow-app-meta-recursive",
