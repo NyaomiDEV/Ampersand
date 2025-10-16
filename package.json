@@ -6,7 +6,8 @@
   "packageManager": "yarn@1.22.22",
   "scripts": {
     "dev": "tauri dev",
-    "build": "vue-tsc && tauri build",
+    "build": "tauri build",
+    "build:rsbuild": "vue-tsc && yarn rsbuild build",
     "upgrade-vcs": "node upgrade-vcs.mjs",
     "eslint": "eslint src/"
   },
