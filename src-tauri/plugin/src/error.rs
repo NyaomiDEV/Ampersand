@@ -8,6 +8,8 @@ pub enum Error {
     Io(#[from] std::io::Error),
     #[error(transparent)]
     Opener(#[from] tauri_plugin_opener::Error),
+    #[error(transparent)]
+    Tauri(#[from] tauri::Error),
     #[error("{0}")]
     Other(String),
     #[cfg(mobile)]
