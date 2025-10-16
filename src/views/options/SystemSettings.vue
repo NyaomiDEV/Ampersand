@@ -17,6 +17,8 @@
 	const membersShowed = ref(false);
 	const memberCount = ref(0);
 	const archivedMemberCount = ref(0);
+	const customFrontCount = ref(0);
+	const archivedCustomFrontCount = ref(0);
 
 	const system = ref();
 
@@ -48,15 +50,25 @@
 		system.value = await getSystem();
 		let _memberCount = 0;
 		let _archivedMemberCount = 0;
+		let _customFrontCount = 0;
+		let _archivedCustomFrontCount = 0;
 		for await(const member of getMembers()){
 			if(!member.isCustomFront){
-				_memberCount++;
 				if(member.isArchived)
 					_archivedMemberCount++;
+				else
+					_memberCount++;
+			} else {
+				if(member.isArchived)
+					_archivedCustomFrontCount++;
+				else
+					_customFrontCount++;
 			}
 		}
 		memberCount.value = _memberCount;
 		archivedMemberCount.value = _archivedMemberCount;
+		customFrontCount.value = _customFrontCount;
+		archivedCustomFrontCount.value = _archivedCustomFrontCount;
 	});
 </script>
 
@@ -107,7 +119,21 @@
 				<IonItem>
 					<IonLabel>{{ $t("systemSettings:memberCount") }}</IonLabel>
 					<IonButton v-if="!membersShowed" slot="end" @click="membersShowed = true">{{ $t("systemSettings:tapToShow") }}</IonButton>
-					<IonLabel v-if="membersShowed" slot="end">{{ $t("systemSettings:memberCountText", { memberCount, archivedMemberCount }) }}</IonLabel>
+					<IonLabel class="text-right" v-if="membersShowed" slot="end">
+						{{ $t("systemSettings:memberCountText", {
+							totalMemberCount: memberCount + archivedMemberCount,
+							memberCount,
+							archivedMemberCount
+						}) }}
+
+						<br />
+
+						{{ $t("systemSettings:customFrontCountText", {
+							totalCustomFrontCount: customFrontCount + archivedCustomFrontCount,
+							customFrontCount,
+							archivedCustomFrontCount
+						}) }}
+					</IonLabel>
 				</IonItem>
 			</IonList>
 
@@ -150,5 +176,9 @@
 		width: 100%;
 		height: 100%;
 		color: var(--ion-color-primary);
+	}
+
+	ion-label.text-right {
+		text-align: right;
 	}
 </style>
