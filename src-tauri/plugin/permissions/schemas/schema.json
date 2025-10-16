@@ -331,6 +331,18 @@
           "markdownDescription": "Denies the get_webkit_version command without any pre-configured scope."
         },
         {
+          "description": "Enables the list_assets command without any pre-configured scope.",
+          "type": "string",
+          "const": "allow-list-assets",
+          "markdownDescription": "Enables the list_assets command without any pre-configured scope."
+        },
+        {
+          "description": "Denies the list_assets command without any pre-configured scope.",
+          "type": "string",
+          "const": "deny-list-assets",
+          "markdownDescription": "Denies the list_assets command without any pre-configured scope."
+        },
+        {
           "description": "Enables the open_file command without any pre-configured scope.",
           "type": "string",
           "const": "allow-open-file",
@@ -367,10 +379,10 @@
           "markdownDescription": "Denies the set_can_go_back command without any pre-configured scope."
         },
         {
-          "description": "Default permissions for the Ampersand plugin\n#### This default permission set includes:\n\n- `allow-exit-app`\n- `allow-open-file`\n- `allow-set-can-go-back`\n- `allow-get-webkit-version`\n- `allow-broadcast-event`\n- `allow-registerListener`",
+          "description": "Default permissions for the Ampersand plugin\n#### This default permission set includes:\n\n- `allow-exit-app`\n- `allow-open-file`\n- `allow-set-can-go-back`\n- `allow-get-webkit-version`\n- `allow-broadcast-event`\n- `allow-list-assets`\n- `allow-registerListener`",
           "type": "string",
           "const": "default",
-          "markdownDescription": "Default permissions for the Ampersand plugin\n#### This default permission set includes:\n\n- `allow-exit-app`\n- `allow-open-file`\n- `allow-set-can-go-back`\n- `allow-get-webkit-version`\n- `allow-broadcast-event`\n- `allow-registerListener`"
+          "markdownDescription": "Default permissions for the Ampersand plugin\n#### This default permission set includes:\n\n- `allow-exit-app`\n- `allow-open-file`\n- `allow-set-can-go-back`\n- `allow-get-webkit-version`\n- `allow-broadcast-event`\n- `allow-list-assets`\n- `allow-registerListener`"
         }
       ]
     }

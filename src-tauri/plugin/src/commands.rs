@@ -32,3 +32,8 @@ pub(crate) fn get_webkit_version<R: Runtime>(app: AppHandle<R>) -> Result<String
 pub(crate) fn broadcast_event<R: Runtime>(app: AppHandle<R>, payload: String) -> Result<()> {
 	app.ampersand().broadcast_event(payload)
 }
+
+#[command]
+pub(crate) fn list_assets<R: Runtime>(app: AppHandle<R>, path: String) -> Result<Vec<String>> {
+    app.ampersand().list_assets(path)
+}

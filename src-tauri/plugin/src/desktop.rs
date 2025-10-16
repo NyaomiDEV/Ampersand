@@ -33,4 +33,8 @@ impl<R: Runtime> Ampersand<R> {
   pub fn broadcast_event(&self, _payload: String) -> crate::Result<()> {
     Ok(()) // af_unix someday?
   }
+
+  pub fn list_assets(&self, _path: String) -> crate::Result<Vec<String>> {
+    Err(crate::Error::Other("Unimplemented on Desktops".to_owned()))
+  }
 }

@@ -9,6 +9,7 @@ Default permissions for the Ampersand plugin
 - `allow-set-can-go-back`
 - `allow-get-webkit-version`
 - `allow-broadcast-event`
+- `allow-list-assets`
 - `allow-registerListener`
 
 ## Permission Table
@@ -94,6 +95,32 @@ Enables the get_webkit_version command without any pre-configured scope.
 <td>
 
 Denies the get_webkit_version command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`ampersand:allow-list-assets`
+
+</td>
+<td>
+
+Enables the list_assets command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`ampersand:deny-list-assets`
+
+</td>
+<td>
+
+Denies the list_assets command without any pre-configured scope.
 
 </td>
 </tr>

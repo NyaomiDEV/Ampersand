@@ -6,5 +6,6 @@ permissions = [
 	"allow-set-can-go-back",
 	"allow-get-webkit-version",
 	"allow-broadcast-event",
+	"allow-list-assets",
 	"allow-registerListener"
 ]
