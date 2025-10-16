@@ -1,6 +1,7 @@
 const COMMANDS: &[&str] = &[
     "exit_app",
     "open_file",
+    "test_db",
     "set_can_go_back",
     "get_webkit_version",
     "broadcast_event",

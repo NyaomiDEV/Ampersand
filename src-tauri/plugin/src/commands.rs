@@ -24,6 +24,11 @@ pub(crate) fn open_file<R: Runtime>(app: AppHandle<R>, path: String) -> Result<(
 }
 
 #[command]
+pub(crate) fn test_db<R: Runtime>(app: AppHandle<R>) -> Result<String> {
+    app.ampersand().test_db()
+}
+
+#[command]
 pub(crate) fn get_webkit_version<R: Runtime>(app: AppHandle<R>) -> Result<String> {
     app.ampersand().get_webkit_version()
 }

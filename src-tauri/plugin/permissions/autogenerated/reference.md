@@ -202,4 +202,30 @@ Denies the set_can_go_back command without any pre-configured scope.
 
 </td>
 </tr>
+
+<tr>
+<td>
+
+`ampersand:allow-test-db`
+
+</td>
+<td>
+
+Enables the test_db command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`ampersand:deny-test-db`
+
+</td>
+<td>
+
+Denies the test_db command without any pre-configured scope.
+
+</td>
+</tr>
 </table>
