@@ -1,3 +1,5 @@
+use rusqlite::Connection;
+use std::sync::Mutex;
 use tauri::{
   plugin::{Builder, TauriPlugin},
   Manager, Runtime,
@@ -35,15 +37,23 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
     commands::open_file,
     commands::broadcast_event,
     commands::list_assets,
-    commands::dismiss_splash
+    commands::dismiss_splash,
+    commands::test_db,
   ])
-    .setup(|app, api: tauri::plugin::PluginApi<R, ()>| {
+  .setup(|app, api: tauri::plugin::PluginApi<R, ()>| {
+      let db_path = app
+          .path()
+          .app_data_dir()
+          .map_err(Into::<tauri_plugin_opener::Error>::into)?
+          .join("db.sqlite");
+      let db = Connection::open(db_path)?;
+
       #[cfg(mobile)]
-      let ampersand = mobile::init(app, api)?;
+      let ampersand = mobile::init(app, Mutex::new(db), api)?;
       #[cfg(desktop)]
-      let ampersand = desktop::init(app, api)?;
+      let ampersand = desktop::init(app, Mutex::new(db), api)?;
       app.manage(ampersand);
       Ok(())
-    })
-    .build()
+  })
+  .build()
 }

@@ -27,6 +27,10 @@ export async function openFile(file: File) {
 	}
 }
 
+export async function testDb(): Promise<string> {
+	return invokePlugin("test_db") as Promise<string>;
+}
+
 export async function getWebkitVersion(): Promise<string> {
 	return invoke<string>("get_webkit_version");
 }
