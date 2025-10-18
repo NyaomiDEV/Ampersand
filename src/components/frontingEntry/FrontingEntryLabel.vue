@@ -5,7 +5,7 @@
 
 	import { FrontingEntryComplete } from "../../lib/db/entities";
 	import dayjs from "dayjs";
-	import { onMounted, onUnmounted, ref } from "vue";
+	import { onMounted, onUnmounted, ref, watch } from "vue";
 	import { formatDate, formatWrittenTime } from "../../lib/util/misc";
 	import { appConfig } from "../../lib/config";
 
@@ -13,10 +13,8 @@
 		entry: FrontingEntryComplete,
 	}>();
 
-	const interval = ref(props.entry.endTime
-		? formatWrittenTime(props.entry.endTime, props.entry.startTime)
-		: formatWrittenTime(new Date(), props.entry.startTime)
-	);
+	const interval = ref("");
+	updateInterval();
 
 	let intervalRef: number;
 
@@ -32,12 +30,17 @@
 		return `${formatDate(startTime, "expanded")} - ${formatDate(endTime, "expanded")}`;
 	}
 
+	function updateInterval(){
+		interval.value = props.entry.endTime
+			? formatWrittenTime(props.entry.endTime, props.entry.startTime)
+			: formatWrittenTime(new Date(), props.entry.startTime);
+	}
+
+	watch(props, updateInterval);
+
 	onMounted(() => {
-		if(!props.entry.endTime && !appConfig.hideFrontingTimer){
-			intervalRef = setInterval(() => {
-				interval.value = formatWrittenTime(new Date(), props.entry.startTime);
-			}, 1000);
-		}
+		if(!props.entry.endTime && !appConfig.hideFrontingTimer)
+			intervalRef = setInterval(updateInterval, 1000);
 	});
 
 	onUnmounted(() => {
