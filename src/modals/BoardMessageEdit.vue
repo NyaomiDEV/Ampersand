@@ -166,7 +166,7 @@
 				</IonItem>
 
 				<IonItem>
-					<IonButton fill="clear" @click="boardMessage.body += `<t:${Math.floor(Date.now() / 1000)}:f>`">
+					<IonButton fill="clear" @click="boardMessage.body = `${boardMessage.body}<t:${Math.floor(Date.now() / 1000)}:f>`">
 						{{ $t("other:addTimestamp") }}
 					</IonButton>
 					<IonButton fill="clear" @click="memberTagModal?.$el.present()">
@@ -302,8 +302,9 @@
 				:only-one="true"
 				:discard-on-select="true"
 				:hide-checkboxes="true"
-				:model-value="boardMessage.member ? [boardMessage.member] : []"
-				@update:model-value="(e) => { if(e[0] && boardMessage.body) boardMessage.body += `@<m:${e[0].uuid}>` }"
+				:always-emit="true"
+				:model-value="[]"
+				@update:model-value="(e) => { if(e[0]) boardMessage.body = `${boardMessage.body || ''}@<m:${e[0].uuid}>` }"
 			/>
 
 		</IonContent>

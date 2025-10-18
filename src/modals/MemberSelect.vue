@@ -24,6 +24,7 @@
 	const props = defineProps<{
 		customTitle?: string,
 		onlyOne?: boolean,
+		alwaysEmit?: boolean,
 		discardOnSelect?: boolean,
 		modelValue?: Member[],
 		hideCheckboxes?: boolean
@@ -41,10 +42,6 @@
 		if((event as DatabaseEvent).data.table === "members")
 			void Array.fromAsync(getFilteredMembers(search.value)).then(res => members.value = res);
 	};
-
-	watch(selectedMembers, () => {
-		emit("update:modelValue", [...toRaw(selectedMembers)]);
-	});
 
 	watch(search, async () => {
 		await updateMembers();
@@ -88,13 +85,18 @@
 					// selected the one who was already selected since we're in "selection mode"
 					// we will just not uncheck it
 					// (hideCheckboxes implies onlyOne)
-					if(props.discardOnSelect)
+					if(props.discardOnSelect){
 						void modalController.dismiss();
+						if(props.alwaysEmit)
+							emit("update:modelValue", [...toRaw(selectedMembers)]);
+					}
 					return;
 				}
 				selectedMembers.splice(index, 1);
 			}
 		}
+
+		emit("update:modelValue", [...toRaw(selectedMembers)]);
 
 		if(onlyOne && props.discardOnSelect)
 			void modalController.dismiss();

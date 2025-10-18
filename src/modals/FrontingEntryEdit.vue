@@ -227,7 +227,7 @@
 				</IonItem>
 
 				<IonItem>
-					<IonButton fill="clear" @click="frontingEntry.comment += `<t:${Math.floor(Date.now() / 1000)}:f>`">
+					<IonButton fill="clear" @click="frontingEntry.comment = `${frontingEntry.comment || ''}<t:${Math.floor(Date.now() / 1000)}:f>`">
 						{{ $t("other:addTimestamp") }}
 					</IonButton>
 					<IonButton fill="clear" @click="memberTagModal?.$el.present()">
@@ -283,8 +283,9 @@
 				:only-one="true"
 				:discard-on-select="true"
 				:hide-checkboxes="true"
-				:model-value="frontingEntry.member ? [frontingEntry.member] : []"
-				@update:model-value="(e) => { if(e[0] && frontingEntry.comment) frontingEntry.comment += `@<m:${e[0].uuid}>` }"
+				:always-emit="true"
+				:model-value="[]"
+				@update:model-value="(e) => { if(e[0]) frontingEntry.comment = `${frontingEntry.comment || ''}@<m:${e[0].uuid}>` }"
 			/>
 		</IonContent>
 	</IonModal>
