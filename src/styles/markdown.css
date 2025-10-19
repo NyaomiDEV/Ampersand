@@ -135,3 +135,8 @@
 .markdown-content span.text-color-bg {
     background: linear-gradient(to right, var(--markdown-bg-color-start), var(--markdown-bg-color-end));
 }
+
+.markdown-content ion-checkbox {
+    width: min-content;
+    --size: 1em;
+}

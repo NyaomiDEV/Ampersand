@@ -15,6 +15,7 @@ import underlineExtension from "./underlineExtension";
 import highlightExtension from "./highlightExtension";
 import linebreakExtension from "./linebreakExtension";
 import vueExtension from "./vue/vue";
+import { IonCheckbox } from "@ionic/vue";
 
 export const marked = new Marked<(VNode | string)[], VNode | string>();
 
@@ -71,6 +72,9 @@ marked.use({
 				return h(Fragment, inlineParsed);
 			}
 		},
+		checkbox({ checked }) {
+			return h(IonCheckbox, { checked, disabled: true });
+		}
 	},
 	async walkTokens(token) {
 		switch(token.type){
