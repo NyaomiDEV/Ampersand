@@ -52,8 +52,7 @@ internal class ListAssetsArgs {
 
 @TauriPlugin
 class AmpersandPlugin(private val activity: Activity): Plugin(activity) {
-    private val canGoBack = false
-    private val backCallback = object : OnBackPressedCallback(canGoBack) {
+    private val backCallback = object : OnBackPressedCallback(false) {
         override fun handleOnBackPressed() {
             trigger("backbutton", JSObject())
         }
@@ -70,7 +69,7 @@ class AmpersandPlugin(private val activity: Activity): Plugin(activity) {
     }
 
     @Command
-    fun setCanGoBack(invoke: Invoke){
+    fun setCanGoBack(invoke: Invoke) {
         val args = invoke.parseArgs(SetCanGoBackArgs::class.java)
         backCallback.isEnabled = args.canGoBack
         invoke.resolve()
