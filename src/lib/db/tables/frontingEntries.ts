@@ -6,6 +6,7 @@ import dayjs from "dayjs";
 import { filterFrontingEntry, filterFrontingEntryIndex } from "../../search";
 import { appConfig } from "../../config";
 import { broadcastEvent } from "../../native/plugin";
+import { deleteFile } from "../../json";
 
 export function getFrontingEntries(){
 	return db.frontingEntries.iterate();
@@ -195,11 +196,6 @@ export function getFrontingEntriesDays(query: string) {
 export async function sendFrontingChangedEvent(){
 	const fronting = await getFronting();
 
-	if(appConfig.useIPC){
-		await broadcastEvent("fronting_changed", fronting.map(x => {
-			delete x.member.cover;
-			delete x.member.image;
-			return x;
-		}));
-	}
+	if(appConfig.useIPC)
+		await broadcastEvent("fronting_changed", deleteFile(fronting));
 }
