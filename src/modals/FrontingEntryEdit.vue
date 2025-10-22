@@ -25,12 +25,13 @@
 	import { ref, toRaw, useTemplateRef } from "vue";
 
 	import MemberSelect from "./MemberSelect.vue";
+	import PresenceHistory from "./PresenceHistory.vue";
 	import MemberAvatar from "../components/member/MemberAvatar.vue";
 	import DatePopupPicker from "../components/DatePopupPicker.vue";
 	import ContentEditable from "../components/ContentEditable.vue";
 
 	import { PartialBy } from "../lib/types";
-	import { formatDate, promptOkCancel } from "../lib/util/misc";
+	import { formatDate, promptOkCancel, renderStars } from "../lib/util/misc";
 	import { useTranslation } from "i18next-vue";
 
 
@@ -48,11 +49,12 @@
 	};
 	const frontingEntry = ref({ ...(props.frontingEntry || emptyFrontingEntry) });
 
+	const presenceHistoryModal = useTemplateRef("presenceHistoryModal");
 	const memberSelectModal = useTemplateRef("memberSelectModal");
 	const memberInfluencingModal = useTemplateRef("memberInfluencingModal");
 	const memberTagModal = useTemplateRef("memberTagModal");
 
-	async function save(){
+	async function save(dismissAfter = true){
 		const uuid = frontingEntry.value?.uuid;
 		const _frontingEntry = toRaw(frontingEntry.value);
 
@@ -62,10 +64,16 @@
 			_frontingEntry.influencing = undefined;
 
 		if(!uuid) {
-			await newFrontingEntry({ ..._frontingEntry, member: _frontingEntry.member.uuid, influencing: _frontingEntry.influencing?.uuid });
+			await newFrontingEntry({
+				..._frontingEntry,
+				member: _frontingEntry.member.uuid,
+				influencing: _frontingEntry.influencing?.uuid,
+				presence: new Map(_frontingEntry.presence?.entries().map(([k, v]) => [k.valueOf(), v]))
+			});
 			void sendFrontingChangedEvent();
 
-			await modalController.dismiss(null, "added");
+			if(dismissAfter)
+				await modalController.dismiss(null, "added");
 
 			return;
 		}
@@ -73,12 +81,14 @@
 		await updateFrontingEntry(uuid, {
 			..._frontingEntry,
 			member: _frontingEntry.member.uuid,
-			influencing: _frontingEntry.influencing?.uuid
+			influencing: _frontingEntry.influencing?.uuid,
+			presence: new Map(_frontingEntry.presence?.entries().map(([k, v]) => [k.valueOf(), v]))
 		});
 		void sendFrontingChangedEvent();
 
 		try{
-			await modalController.dismiss(null, "modified");
+			if(dismissAfter)
+				await modalController.dismiss(null, "modified");
 		}catch(_){ /* empty */ }
 		// catch an error because the type might get changed, causing the parent to be removed from DOM
 		// however it's safe for us to ignore
@@ -100,6 +110,14 @@
 
 	function removeFromFront() {
 		frontingEntry.value.endTime = new Date();
+	}
+
+	function getMostRecentPresence(){
+		if(!frontingEntry.value.presence) return [undefined, undefined];
+
+		const presenceVal = Array.from(frontingEntry.value.presence.entries());
+
+		return presenceVal.sort((a, b) => a[0].valueOf() - b[0].valueOf()).pop() || [undefined, undefined];
 	}
 </script>
 
@@ -135,6 +153,16 @@
 						label-placement="floating"
 					/>
 				</IonItem>
+				<IonItem button @click="presenceHistoryModal?.$el.present()">
+					<IonLabel>
+						{{ $t("frontHistory:edit.presence.historyTitle") }}
+						<p v-if="frontingEntry.presence?.size">
+							{{ $t("frontHistory:edit.presence.lastPresence", { presence: getMostRecentPresence()[1] }) }}
+							-
+							{{ renderStars(getMostRecentPresence()[1]!) }}
+						</p>
+					</IonLabel>
+				</IonItem>
 				<IonItem v-if="!frontingEntry.isMainFronter" button @click="memberInfluencingModal?.$el.present()">
 					<template v-if="frontingEntry.influencing">
 						<MemberAvatar slot="start" :member="frontingEntry.influencing" />
@@ -145,7 +173,7 @@
 					</template>
 					<template v-else>
 						<IonLabel>
-							<h2>{{ $t("frontHistory:edit.influencing.select") }}</h2>
+							{{ $t("frontHistory:edit.influencing.select") }}
 						</IonLabel>
 					</template>
 					<IonButton
@@ -276,6 +304,12 @@
 				:hide-checkboxes="true"
 				:model-value="frontingEntry.influencing ? [frontingEntry.influencing] : []"
 				@update:model-value="(e) => { if(e[0]) frontingEntry.influencing = e[0] }"
+			/>
+
+			<PresenceHistory
+				ref="presenceHistoryModal"
+				:model-value="frontingEntry.presence"
+				@update:model-value="async (e) => { frontingEntry.presence = e; await save(false) }"
 			/>
 
 			<MemberSelect

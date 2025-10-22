@@ -10,6 +10,12 @@
 		"member": "Modifica lə membrə a front",
 		"customStatus": "Status personalizzato",
 		"comment": "Commento",
+		"presence": {
+			"historyTitle": "Storia della presenza",
+			"lastPresence": "L'ultima volta era {{presence}} / 10",
+			"addTitle": "Quanto sei presente in una scala da 0 a 10?",
+			"addButton": "Aggiungi alla storia"
+		},
 		"influencing": {
 			"select": "Seleziona unə membrə da influenzare",
 			"currentlyInfluencing": "Sta influenzando"

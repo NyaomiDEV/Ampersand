@@ -182,3 +182,17 @@ export function isPlainObject(value) {
 
 	return Object.getPrototypeOf(value) === proto;
 };
+
+export function renderStars(stars: number){
+	const emptyStar = "\u2606";
+	const fullStar = "\u2605";
+
+	let ret = "";
+	for(let i = 0; i < 10; i++){
+		if(i < stars)
+			ret += fullStar;
+		else 
+			ret += emptyStar;
+	}
+	return ret;
+}

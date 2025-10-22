@@ -17,6 +17,7 @@ export async function toFrontingEntryComplete(frontingEntry: FrontingEntry): Pro
 		...frontingEntry,
 		member: (await getMember(frontingEntry.member)) || defaultMember(),
 		influencing: frontingEntry.influencing ? (await getMember(frontingEntry.influencing)) || defaultMember() : undefined,
+		presence: frontingEntry.presence ? new Map<Date, number>(frontingEntry.presence.entries().map(([k,v]) => [new Date(k), v])) : undefined
 	};
 }
 
