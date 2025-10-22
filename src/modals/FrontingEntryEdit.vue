@@ -67,8 +67,7 @@
 			await newFrontingEntry({
 				..._frontingEntry,
 				member: _frontingEntry.member.uuid,
-				influencing: _frontingEntry.influencing?.uuid,
-				presence: new Map(_frontingEntry.presence?.entries().map(([k, v]) => [k.valueOf(), v]))
+				influencing: _frontingEntry.influencing?.uuid
 			});
 			void sendFrontingChangedEvent();
 
@@ -81,8 +80,7 @@
 		await updateFrontingEntry(uuid, {
 			..._frontingEntry,
 			member: _frontingEntry.member.uuid,
-			influencing: _frontingEntry.influencing?.uuid,
-			presence: new Map(_frontingEntry.presence?.entries().map(([k, v]) => [k.valueOf(), v]))
+			influencing: _frontingEntry.influencing?.uuid
 		});
 		void sendFrontingChangedEvent();
 

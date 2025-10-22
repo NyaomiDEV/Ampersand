@@ -41,14 +41,13 @@ export interface FrontingEntry extends UUIDable {
 	isLocked: boolean,
 	customStatus?: string,
 	influencing?: UUID,
-	presence?: Map<number, number>,
+	presence?: Map<Date, number>
 	comment?: string
 }
 
 export interface FrontingEntryComplete extends FrontingEntry {
 	member: Member,
-	influencing?: Member,
-	presence?: Map<Date, number>
+	influencing?: Member
 }
 
 export interface JournalPost extends UUIDable {
