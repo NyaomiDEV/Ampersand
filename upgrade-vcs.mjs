@@ -74,11 +74,11 @@ async function patchFiles(ciBuild) {
 const { revcount, packageVersion, version } = await getVersion();
 const isCiBuild = process.env.GITHUB_REF_NAME === "main";
 
-console.log("New version is", isCiBuild ? packageVersion : version);
+console.log("New version is", isCiBuild ? version : packageVersion);
 
 // If in CI, export as env
 if (process.env.GITHUB_ENV) {
-	await appendFile(process.env.GITHUB_ENV, `AMPERSAND_VERSION=${isCiBuild ? packageVersion : version}`, "utf-8");
+	await appendFile(process.env.GITHUB_ENV, `AMPERSAND_VERSION=${isCiBuild ? version : packageVersion}`, "utf-8");
 	console.log("Appended $AMPERSAND_VERSION to GitHub Actions environment.")
 }
 
