@@ -29,11 +29,9 @@ function spawnAsync(cmd, args, cwd){
 }
 
 async function getVersion(){
-	// support specifying a version so that we can easily upgrade
-	if(process.argv[2])
-		return process.argv[2];
+	const closestTag = (await spawnAsync("git", ["describe", "--tags", "--abbrev=0"], import.meta.dirname)).stdout;
 
-	const revcount = Number((await spawnAsync("git", ["rev-list", "--count", "HEAD"], import.meta.dirname)).stdout);
+	const revcount = Number((await spawnAsync("git", ["rev-list", "--count", !closestTag.startsWith("dev") ? `${closestTag}..HEAD` : "HEAD"], import.meta.dirname)).stdout);
 	const packageJson = JSON.parse(await readFile(resolve(import.meta.dirname, "package.json"), "utf-8"));
 	return {
 		revcount,
