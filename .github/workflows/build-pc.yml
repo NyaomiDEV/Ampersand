@@ -62,7 +62,7 @@ jobs:
       - name: Publish to release
         uses: softprops/action-gh-release@v2.4.1
         with:
-          tag_name: dev
+          tag_name: ${{ github.ref_name != 'main' && github.ref_name || 'dev' }}
           draft: true
           files: |
             ./src-tauri/target/release/bundle/deb/Ampersand_*.deb

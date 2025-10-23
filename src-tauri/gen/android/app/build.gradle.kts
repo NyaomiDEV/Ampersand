@@ -43,7 +43,7 @@ android {
             isMinifyEnabled = true
             manifestPlaceholders["appName"] = "@string/app_name"
             base.archivesName.set("ampersand")
-            if(System.getenv("CI") !== null) {
+            if(System.getenv("CI") !== null && System.getenv("AMPERSAND_RELEASE") === null) {
                 applicationIdSuffix = ".ci"
                 manifestPlaceholders["appName"] = "@string/app_name_ci"
                 base.archivesName.set("ampersand-ci")
@@ -58,6 +58,7 @@ android {
             applicationIdSuffix = ".debug"
             manifestPlaceholders["usesCleartextTraffic"] = "true"
             manifestPlaceholders["appName"] = "@string/app_name_debug"
+            base.archivesName.set("app")
             isDebuggable = true
             isJniDebuggable = true
             isMinifyEnabled = false

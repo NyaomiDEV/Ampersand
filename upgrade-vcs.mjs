@@ -37,41 +37,51 @@ async function getVersion(){
 	const packageJson = JSON.parse(await readFile(resolve(import.meta.dirname, "package.json"), "utf-8"));
 	return {
 		revcount,
+		packageVersion: packageJson.version,
 		version: packageJson.version + "+" + revcount
 	}
 }
 
-//
-// MAIN CODE
-//
-
-const { revcount, version } = await getVersion();
-console.log("New version is", version);
-
-async function patchFiles(){
+async function patchFiles(ciBuild) {
 	// Read manifest files
 	const packageJson = JSON.parse(await readFile(resolve(import.meta.dirname, "package.json"), "utf-8"));
 	const tauriConfJson = JSON.parse(await readFile(resolve(import.meta.dirname, "src-tauri", "tauri.conf.json"), "utf-8"));
 	const tauriCargoToml = TOML.parse(await readFile(resolve(import.meta.dirname, "src-tauri", "Cargo.toml"), "utf-8"));
 
 	// Modify parsed manifests
-	packageJson.version = version;
-	tauriConfJson.version = version;
 	tauriConfJson.bundle.android.versionCode = revcount;
-	tauriCargoToml.package.version = version;
+
+	// If this is a CI build, automate it
+	if (ciBuild) {
+		// Modify parsed manifests
+		packageJson.version = version;
+		tauriConfJson.version = version;
+		tauriCargoToml.package.version = version;
+
+		// Write modified manifests
+		await writeFile(resolve(import.meta.dirname, "package.json"), JSON.stringify(packageJson, undefined, 2), "utf-8");
+		await writeFile(resolve(import.meta.dirname, "src-tauri", "Cargo.toml"), TOML.stringify(tauriCargoToml), "utf-8");
+	}
 
 	// Write modified manifests
-	await writeFile(resolve(import.meta.dirname, "package.json"), JSON.stringify(packageJson, undefined, 2), "utf-8");
 	await writeFile(resolve(import.meta.dirname, "src-tauri", "tauri.conf.json"), JSON.stringify(tauriConfJson, undefined, 2), "utf-8");
-	await writeFile(resolve(import.meta.dirname, "src-tauri", "Cargo.toml"), TOML.stringify(tauriCargoToml), "utf-8");
 }
 
+//
+// MAIN CODE
+//
+
+const { revcount, packageVersion, version } = await getVersion();
+const isCiBuild = process.env.GITHUB_REF_NAME === "main";
+
+console.log("New version is", isCiBuild ? packageVersion : version);
+
 // If in CI, export as env
-if(process.env.GITHUB_ENV){
-	await appendFile(process.env.GITHUB_ENV, `AMPERSAND_VERSION=${version}`, "utf-8");
+if (process.env.GITHUB_ENV) {
+	await appendFile(process.env.GITHUB_ENV, `AMPERSAND_VERSION=${isCiBuild ? packageVersion : version}`, "utf-8");
 	console.log("Appended $AMPERSAND_VERSION to GitHub Actions environment.")
 }
 
 // If NO_PATCH is not set, patch files
 if(!process.env.NO_PATCH)
-	await patchFiles();
+	await patchFiles(isCiBuild);

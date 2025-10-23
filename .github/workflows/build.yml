@@ -4,6 +4,8 @@ on:
   # Runs on pushes targeting the default branch
   push:
     branches: [main]
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -19,6 +21,7 @@ concurrency:
 
 jobs:
   prepare-build:
+    if: ${{ github.ref_name == 'main' }}
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
@@ -62,12 +65,14 @@ jobs:
       - name: Install frontend dependencies
         run: yarn install --frozen-lockfile
       - name: Get Ampersand version from upgrade-vcs script
-        run: NO_PATCH=1 yarn run upgrade-vcs
+        run: yarn run upgrade-vcs
+        env:
+          NO_PATCH: 1
       - name: Publish release
         uses: softprops/action-gh-release@v2.4.1
         with:
-          name: CI build (${{ env.AMPERSAND_VERSION }})
-          tag_name: dev
+          name: ${{ github.ref_name != 'main' && format('Release ({0})', env.AMPERSAND_VERSION) || format('CI build ({0})', env.AMPERSAND_VERSION) }}
+          tag_name: ${{ github.ref_name != 'main' && github.ref_name || 'dev' }}
           prerelease: false
           draft: false
           generate_release_notes: true
