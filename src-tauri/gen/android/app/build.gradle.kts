@@ -58,7 +58,9 @@ android {
             applicationIdSuffix = ".debug"
             manifestPlaceholders["usesCleartextTraffic"] = "true"
             manifestPlaceholders["appName"] = "@string/app_name_debug"
-            base.archivesName.set("app")
+            if(System.getenv("TAURI_DEV_HOST") !== null) {
+                base.archivesName.set("app")
+            }
             isDebuggable = true
             isJniDebuggable = true
             isMinifyEnabled = false
