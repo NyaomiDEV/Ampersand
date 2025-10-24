@@ -117,23 +117,23 @@
 					<ContentEditable v-model="system.description" :label="$t('systemSettings:systemDescription')" />
 				</IonItem>
 				<IonItem>
-					<IonLabel>{{ $t("systemSettings:memberCount") }}</IonLabel>
-					<IonButton v-if="!membersShowed" slot="end" @click="membersShowed = true">{{ $t("systemSettings:tapToShow") }}</IonButton>
-					<IonLabel class="text-right" v-if="membersShowed" slot="end">
-						{{ $t("systemSettings:memberCountText", {
-							totalMemberCount: memberCount + archivedMemberCount,
-							memberCount,
-							archivedMemberCount
-						}) }}
-
-						<br />
-
-						{{ $t("systemSettings:customFrontCountText", {
-							totalCustomFrontCount: customFrontCount + archivedCustomFrontCount,
-							customFrontCount,
-							archivedCustomFrontCount
-						}) }}
+					<IonLabel>
+						<h2>{{ $t("systemSettings:memberCount") }}</h2>
+						<p v-if="membersShowed">
+							{{ $t("systemSettings:memberCountText", {
+								totalMemberCount: memberCount + archivedMemberCount,
+								memberCount,
+								archivedMemberCount
+							}) }}
+							<br />
+							{{ $t("systemSettings:customFrontCountText", {
+								totalCustomFrontCount: customFrontCount + archivedCustomFrontCount,
+								customFrontCount,
+								archivedCustomFrontCount
+							}) }}
+						</p>
 					</IonLabel>
+					<IonButton v-if="!membersShowed" slot="end" @click="membersShowed = true">{{ $t("systemSettings:tapToShow") }}</IonButton>
 				</IonItem>
 			</IonList>
 
@@ -176,9 +176,5 @@
 		width: 100%;
 		height: 100%;
 		color: var(--ion-color-primary);
-	}
-
-	ion-label.text-right {
-		text-align: right;
 	}
 </style>
