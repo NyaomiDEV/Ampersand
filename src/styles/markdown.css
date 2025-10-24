@@ -73,7 +73,8 @@
 .markdown-content mark {
     padding: 2px 4px;
     border-radius: 4px;
-    background-color: rgba(var(--ion-color-primary-rgb), 0.85);
+    background-color: rgba(var(--ion-color-primary-rgb), 0.15);
+    color: var(--ion-text-color);
 }
 
 .markdown-content span.spoiler {
@@ -133,10 +134,24 @@
 }
 
 .markdown-content span.text-color-bg {
+    border-radius: 4px;
+    padding: 2px 4px;
     background: linear-gradient(to right, var(--markdown-bg-color-start), var(--markdown-bg-color-end));
 }
 
 .markdown-content ion-checkbox {
     width: min-content;
+    vertical-align: sub;
     --size: 1em;
+    position: absolute;
+    left: -1.45em;
+    height: 1em;
+}
+
+.markdown-content li {
+    position: relative;
+}
+
+.markdown-content li:has(ion-checkbox) {
+    list-style-type: none;
 }
