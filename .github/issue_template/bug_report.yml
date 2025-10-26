@@ -7,7 +7,7 @@ body:
     id: version
     attributes:
       label: Version
-      description: What version of Ampersand are you running? (This refers to the version number in the About section, eg. 0.0.1+560)
+      description: What version of Ampersand are you running? (This refers to the version number in the About section, eg. 0.1.0+10)
     validations:
       required: true
 
