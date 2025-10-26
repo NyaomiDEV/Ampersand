@@ -29,10 +29,10 @@ function spawnAsync(cmd, args, cwd){
 }
 
 async function getVersion(){
-	const closestTag = (await spawnAsync("git", ["describe", "--tags", "--abbrev=0"], import.meta.dirname)).stdout.trim();
+	const closestTags = (await spawnAsync("git", ["tag", "--list", "--sort=-creatordate"], import.meta.dirname)).stdout.trim().split("\n").filter(x => x !== "dev");
 
 	const revcount = Number((await spawnAsync("git", ["rev-list", "--count", "HEAD"], import.meta.dirname)).stdout);
-	const deltaRevcount = Number((await spawnAsync("git", ["rev-list", "--count", closestTag], import.meta.dirname)).stdout);
+	const deltaRevcount = Number((await spawnAsync("git", ["rev-list", "--count", closestTags[0]], import.meta.dirname)).stdout);
 	const packageJson = JSON.parse(await readFile(resolve(import.meta.dirname, "package.json"), "utf-8"));
 
 	return {
