@@ -6,11 +6,11 @@
 </script>
 
 <template>
-	<component
-		:is="() => 
-			renderArray.map(x => withDirectives(x, [
-				[modalDirective, { originalVnode: x }]
-			]))
-		"
-	/>
+	<span v-for="item in renderArray" :key="renderArray.indexOf(item)">
+		<component
+			:is="withDirectives(item, [
+				[modalDirective, { originalVnode: item }]
+			])"
+		/>
+	</span>
 </template>
