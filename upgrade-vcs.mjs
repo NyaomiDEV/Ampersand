@@ -45,6 +45,7 @@ async function patchFiles(ciBuild) {
 	const packageJson = JSON.parse(await readFile(resolve(import.meta.dirname, "package.json"), "utf-8"));
 	const tauriConfJson = JSON.parse(await readFile(resolve(import.meta.dirname, "src-tauri", "tauri.conf.json"), "utf-8"));
 	const tauriCargoToml = TOML.parse(await readFile(resolve(import.meta.dirname, "src-tauri", "Cargo.toml"), "utf-8"));
+	const tauriPluginCargoToml = TOML.parse(await readFile(resolve(import.meta.dirname, "src-tauri", "plugin", "Cargo.toml"), "utf-8"));
 
 	// Modify parsed manifests
 	tauriConfJson.bundle.android.versionCode = revcount;
@@ -55,10 +56,12 @@ async function patchFiles(ciBuild) {
 		packageJson.version = version;
 		tauriConfJson.version = version;
 		tauriCargoToml.package.version = version;
+		tauriPluginCargoToml.package.version = version;
 
 		// Write modified manifests
 		await writeFile(resolve(import.meta.dirname, "package.json"), JSON.stringify(packageJson, undefined, 2), "utf-8");
 		await writeFile(resolve(import.meta.dirname, "src-tauri", "Cargo.toml"), TOML.stringify(tauriCargoToml), "utf-8");
+		await writeFile(resolve(import.meta.dirname, "src-tauri", "plugin", "Cargo.toml"), TOML.stringify(tauriPluginCargoToml), "utf-8");
 	}
 
 	// Write modified manifests
