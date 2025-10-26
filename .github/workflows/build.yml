@@ -72,7 +72,7 @@ jobs:
         with:
           name: ${{ github.ref_name != 'main' && format('Release ({0})', env.AMPERSAND_VERSION) || format('CI build ({0})', env.AMPERSAND_VERSION) }}
           tag_name: ${{ github.ref_name != 'main' && github.ref_name || 'dev' }}
-          prerelease: false
+          prerelease: ${{ github.ref_name == 'main' && true || false }}
           draft: false
           generate_release_notes: true
           append_body: false
