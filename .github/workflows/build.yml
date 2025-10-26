@@ -21,14 +21,15 @@ concurrency:
 
 jobs:
   prepare-build:
-    if: ${{ github.ref_name == 'main' }}
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
+      if: ${{ github.ref_name == 'main' }}
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
     - name: Remove old prerelease draft and create new dev tag
+      if: ${{ github.ref_name == 'main' }}
       run: |
         git tag dev
         git push origin dev
