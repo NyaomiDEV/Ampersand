@@ -73,7 +73,7 @@
 .markdown-content mark {
     padding: 2px 4px;
     border-radius: 4px;
-    background-color: rgba(var(--ion-color-primary-rgb), 0.15);
+    background-color: rgba(var(--ion-color-primary-rgb), 0.40);
     color: var(--ion-text-color);
 }
 
@@ -141,17 +141,26 @@
 
 .markdown-content ion-checkbox {
     width: min-content;
-    vertical-align: sub;
     --size: 1em;
-    position: absolute;
-    left: -1.45em;
-    height: 1em;
+    height: 1.5em;
+    flex: none;
 }
 
 .markdown-content li {
-    position: relative;
+    display: flex;
+    flex-direction: row;
+    gap: 0.5em;
+    flex-wrap: nowrap;
 }
 
-.markdown-content li:has(ion-checkbox) {
-    list-style-type: none;
+.markdown-content li:not(:has(ion-checkbox))::before {
+    content: "•";
+    width: 1em;
+    flex: none;
+    text-align: center;
+}
+
+.markdown-content ul {
+    margin-left: 0;
+    padding-left: 0;
 }
