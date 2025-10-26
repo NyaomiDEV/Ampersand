@@ -16,7 +16,7 @@ permissions:
 
 # Allow one concurrent deployment
 concurrency:
-  group: 'build'
+  group: ${{ github.ref_name == 'main' && 'build-dev' || 'build-release' }}
   cancel-in-progress: true
 
 jobs:

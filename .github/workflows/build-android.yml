@@ -18,7 +18,8 @@ permissions:
   contents: write
 
 concurrency:
-  group: 'build-android'
+  group: ${{ github.ref_name == 'main' && 'build-android-dev' || 'build-android-release' }}
+  cancel-in-progress: true
 
 jobs:
   # Single deploy job since we're just deploying

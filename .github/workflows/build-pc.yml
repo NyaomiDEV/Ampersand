@@ -9,7 +9,8 @@ permissions:
   contents: write
 
 concurrency:
-  group: 'build-pc'
+  group: ${{ github.ref_name == 'main' && 'build-pc-dev' || 'build-pc-release' }}
+  cancel-in-progress: true
 
 jobs:
   deploy-pc:
