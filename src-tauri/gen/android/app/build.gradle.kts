@@ -43,7 +43,7 @@ android {
             isMinifyEnabled = true
             manifestPlaceholders["appName"] = "@string/app_name"
             base.archivesName.set("ampersand")
-            if(System.getenv("CI") !== null && System.getenv("AMPERSAND_RELEASE") === null) {
+            if(System.getenv("CI") !== null && System.getenv("GITHUB_REF_NAME") === "main") {
                 applicationIdSuffix = ".ci"
                 manifestPlaceholders["appName"] = "@string/app_name_ci"
                 base.archivesName.set("ampersand-ci")
