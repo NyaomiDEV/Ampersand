@@ -33,3 +33,4 @@ test/*
 
 # Rust-analyzer stuff
 target/
+keystore-dev.jks
