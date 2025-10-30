@@ -37,3 +37,6 @@ target/
 # iOS stuff I may build
 *.xcarchive
 *.ipa
+
+# Loose developer keystores (Mae)
+keystore-dev.jks
