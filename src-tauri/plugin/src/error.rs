@@ -10,6 +10,10 @@ pub enum Error {
   Opener(#[from] tauri_plugin_opener::Error),
   #[error(transparent)]
   Tauri(#[from] tauri::Error),
+	#[error(transparent)]
+	Database(#[from] rusqlite::Error),
+	#[error("Mutex Lock Poisoned")]
+	Poison,
   #[error("{0}")]
   Other(String),
   #[cfg(mobile)]

@@ -13,6 +13,7 @@ mod mobile;
 mod commands;
 mod error;
 pub use error::{Error, Result};
+mod db;
 
 #[cfg(desktop)]
 use desktop::Ampersand;
@@ -32,13 +33,14 @@ impl<R: Runtime, T: Manager<R>> crate::AmpersandExt<R> for T {
 
 /// Initializes the plugin.
 pub fn init<R: Runtime>() -> TauriPlugin<R> {
-  Builder::new("ampersand")
+    Builder::new("ampersand")
   .invoke_handler(tauri::generate_handler![
     commands::open_file,
     commands::broadcast_event,
     commands::list_assets,
     commands::dismiss_splash,
     commands::test_db,
+    commands::run_db_migrations,
   ])
   .setup(|app, api: tauri::plugin::PluginApi<R, ()>| {
       let db_path = app

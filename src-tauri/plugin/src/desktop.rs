@@ -4,6 +4,8 @@ use std::sync::Mutex;
 use tauri::{plugin::PluginApi, AppHandle, Manager, Runtime};
 use tauri_plugin_opener::OpenerExt;
 
+use crate::db;
+
 pub fn init<R: Runtime, C: DeserializeOwned>(
   app: &AppHandle<R>,
   connection: Mutex<Connection>,
@@ -25,15 +27,13 @@ impl<R: Runtime> Ampersand<R> {
     self.0.opener().open_path(path, None::<&str>).map_err(Into::into)
   }
 
-  pub fn test_db(&self) -> crate::Result<String> {
-      self.1
-          .lock()
-          .map_err(|_| crate::Error::Other(String::from("mutex lock failed")))?
-          .query_one("SELECT sqlite_version();", (), |row| {
-              row.get::<usize, String>(0)
-          })
-          .map_err(|_| crate::Error::Other(String::from("sql failed to execute")))
-  }
+	pub fn test_db(&self) -> crate::Result<String> {
+		db::test_db(&self.1)
+	}
+
+	pub fn run_db_migrations(&self) -> crate::Result<()> {
+		db::run_db_migrations(&self.1, &self.0)
+	}
 
   pub fn broadcast_event(&self, _payload: String) -> crate::Result<()> {
     Ok(()) // af_unix someday?
