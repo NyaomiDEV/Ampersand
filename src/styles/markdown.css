@@ -126,8 +126,21 @@
     vertical-align: baseline;
 }
 
-.markdown-content span.text-color {
+.markdown-content span.text-color-legacy {
     background: linear-gradient(to right, var(--markdown-text-color-start), var(--markdown-text-color-end));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.markdown-content span.text-color-bg-legacy {
+    border-radius: 4px;
+    padding: 2px 4px;
+    background: linear-gradient(to right, var(--markdown-bg-color-start), var(--markdown-bg-color-end));
+}
+
+.markdown-content span.text-color-fg {
+    background: linear-gradient(to right, var(--markdown-text-colors));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -136,7 +149,7 @@
 .markdown-content span.text-color-bg {
     border-radius: 4px;
     padding: 2px 4px;
-    background: linear-gradient(to right, var(--markdown-bg-color-start), var(--markdown-bg-color-end));
+    background: linear-gradient(to right, var(--markdown-text-bg-colors));
 }
 
 .markdown-content ion-checkbox {

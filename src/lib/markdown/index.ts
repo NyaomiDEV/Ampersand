@@ -4,18 +4,21 @@ import { Fragment, h, type VNode } from "vue";
 import { Marked } from "marked";
 import { getAssets } from "../db/tables/assets";
 import { getObjectURL } from "../util/blob";
+import vueExtension from "./vue/vue";
+import { IonCheckbox } from "@ionic/vue";
+
 import mentionExtension from "./mentionExtension";
 import spoilerExtension from "./spoilerExtension";
 import timestampExtension from "./timestampExtension";
 import colorExtension from "./colorExtension";
-import textColorExtension from "./textColorExtension";
+import textColorLegacyExtension from "./textColorLegacyExtension";
 import superscriptExtension from "./superscriptExtension";
 import subscriptExtension from "./subscriptExtension";
 import underlineExtension from "./underlineExtension";
 import highlightExtension from "./highlightExtension";
 import linebreakExtension from "./linebreakExtension";
-import vueExtension from "./vue/vue";
-import { IonCheckbox } from "@ionic/vue";
+import textColorFgExtension from "./textColorFgExtension";
+import textColorBgExtension from "./textColorBgExtension";
 
 export const marked = new Marked<(VNode | string)[], VNode | string>();
 
@@ -120,7 +123,9 @@ marked.use(
 	spoilerExtension,
 	timestampExtension,
 	colorExtension,
-	textColorExtension,
+	textColorLegacyExtension,
+	textColorFgExtension,
+	textColorBgExtension,
 	superscriptExtension,
 	subscriptExtension,
 	underlineExtension,

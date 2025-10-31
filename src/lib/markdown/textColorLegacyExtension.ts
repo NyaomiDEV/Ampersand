@@ -1,10 +1,10 @@
 import { h, type VNode } from "vue";
 import { MarkedExtension } from "marked";
 
-const textColorExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
+const textColorLegacyExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [
 		{
-			name: "textColor",
+			name: "textColorLegacy",
 			level: "inline",
 			start(src: string) { return src.match(/\[#/)?.index; },
 			tokenizer(src: string) {
@@ -12,7 +12,7 @@ const textColorExtension: MarkedExtension<(VNode | string)[], VNode | string> = 
 				const match = rule.exec(src);
 				if (match) {
 					const token = {
-						type: "textColor",
+						type: "textColorLegacy",
 						raw: match[0],
 						color: match[1],
 						colorEnd: match[3],
@@ -49,7 +49,7 @@ const textColorExtension: MarkedExtension<(VNode | string)[], VNode | string> = 
 					"span",
 					cssTextStyle.length
 						?	{
-								class: "text-color",
+								class: "text-color-legacy",
 								style: cssTextStyle
 							}
 						: {},
@@ -57,7 +57,7 @@ const textColorExtension: MarkedExtension<(VNode | string)[], VNode | string> = 
 
 				if(cssBgStyle.length){
 					return h("span", {
-						class: "text-color-bg",
+						class: "text-color-bg-legacy",
 						style: cssBgStyle
 					}, text);
 				}
@@ -68,4 +68,4 @@ const textColorExtension: MarkedExtension<(VNode | string)[], VNode | string> = 
 	]
 };
 
-export default textColorExtension;
+export default textColorLegacyExtension;
