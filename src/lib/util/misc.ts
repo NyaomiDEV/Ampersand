@@ -138,6 +138,7 @@ export async function toast(message: string, duration = 1500){
 			message,
 			duration,
 			position: "bottom",
+			swipeGesture: "vertical"
 		});
 
 		await toast.present();
