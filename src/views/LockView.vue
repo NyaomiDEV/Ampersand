@@ -14,10 +14,9 @@
 		
 	});
 
-	function checkAndTryUnlocking(input: string){
-		if(unlockWithPassword(input))
+	function checkAndTryUnlocking(evt){
+		if(unlockWithPassword(evt.detail.value))
 			router.replace(route.query.wantedPath || "/");
-		
 	}
 </script>
 
@@ -34,7 +33,7 @@
 					type="password"
 					label-placement="floating"
 					:label="$t('lock:hint')"
-					@update:model-value="checkAndTryUnlocking"
+					@ion-change="checkAndTryUnlocking"
 				/>
 			</div>
 
