@@ -13,6 +13,7 @@ mod mobile;
 mod commands;
 mod error;
 pub use error::{Error, Result};
+mod db;
 
 #[cfg(desktop)]
 use desktop::Ampersand;
@@ -38,6 +39,7 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
 			commands::set_can_go_back,
 			commands::open_file,
 			commands::test_db,
+			commands::run_db_migrations,
 			commands::get_webkit_version,
 			commands::broadcast_event,
 			commands::list_assets
