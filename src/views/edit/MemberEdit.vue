@@ -403,7 +403,7 @@
 					</IonToggle>
 				</IonItem>
 
-				<IonItem button @click="tagSelectionModal?.$el.present()">
+				<IonItem button :detail="true" @click="tagSelectionModal?.$el.present()">
 					<IonLabel>
 						{{ $t("members:edit.tags") }}
 						<div v-if="tags?.length" class="member-tags">

@@ -229,7 +229,7 @@
 
 			<IonList v-else inset>
 
-				<IonItem button @click="memberSelectModal?.$el.present()">
+				<IonItem button :detail="true" @click="memberSelectModal?.$el.present()">
 					<template v-if="post.member">
 						<MemberAvatar slot="start" :member="post.member" />
 						<IonLabel>
@@ -244,7 +244,7 @@
 					</template>
 				</IonItem>
 
-				<IonItem button @click="($refs.datePicker as any)?.$el.present()">
+				<IonItem button :detail="true" @click="($refs.datePicker as any)?.$el.present()">
 					<IonLabel>
 						<h2>{{ $t("journal:edit.date") }}</h2>
 						<p>{{ formatDate(post.date, "expanded") }}</p>
@@ -265,7 +265,7 @@
 					<IonInput v-model="post.subtitle" :placeholder="$t('journal:edit.subtitle')" />
 				</IonItem>
 
-				<IonItem button @click="tagSelectionModal?.$el.present()">
+				<IonItem button :detail="true" @click="tagSelectionModal?.$el.present()">
 					<IonLabel>
 						{{ $t("journal:edit.tags") }}
 						<div v-if="tags?.length" class="journal-tags">

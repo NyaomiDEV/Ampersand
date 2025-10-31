@@ -129,7 +129,7 @@
 
 		<IonContent>
 			<IonList inset>
-				<IonItem button @click="memberSelectModal?.$el.present()">
+				<IonItem button :detail="true" @click="memberSelectModal?.$el.present()">
 					<template v-if="frontingEntry.member">
 						<MemberAvatar slot="start" :member="frontingEntry.member" />
 						<IonLabel>
@@ -151,7 +151,7 @@
 						label-placement="floating"
 					/>
 				</IonItem>
-				<IonItem button @click="presenceHistoryModal?.$el.present()">
+				<IonItem button :detail="true" @click="presenceHistoryModal?.$el.present()">
 					<IonLabel>
 						{{ $t("frontHistory:edit.presence.historyTitle") }}
 						<p v-if="frontingEntry.presence?.size">
@@ -161,7 +161,12 @@
 						</p>
 					</IonLabel>
 				</IonItem>
-				<IonItem v-if="!frontingEntry.isMainFronter" button @click="memberInfluencingModal?.$el.present()">
+				<IonItem 
+					v-if="!frontingEntry.isMainFronter" 
+					button 
+					:detail="!frontingEntry.influencing"
+					@click="memberInfluencingModal?.$el.present()"
+				>
 					<template v-if="frontingEntry.influencing">
 						<MemberAvatar slot="start" :member="frontingEntry.influencing" />
 						<IonLabel>
@@ -189,7 +194,7 @@
 						/>
 					</IonButton>
 				</IonItem>
-				<IonItem button @click="($refs.startTimePicker as any)?.$el.present()">
+				<IonItem button :detail="true" @click="($refs.startTimePicker as any)?.$el.present()">
 					<IonLabel>
 						<h2>{{ $t("frontHistory:edit.startTime") }}</h2>
 						<p>{{ formatDate(frontingEntry.startTime, "expanded") }}</p>
@@ -285,6 +290,7 @@
 					<IonIcon :icon="saveMD" />
 				</IonFabButton>
 			</IonFab>
+			
 
 			<MemberSelect
 				ref="memberSelectModal"
