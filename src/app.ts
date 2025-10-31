@@ -49,10 +49,10 @@ import "./lib/theme/style.css";
 import { clearTempDir } from "./lib/native/cache";
 import { slideAnimation } from "./lib/util/misc";
 import { nilUid } from "./lib/util/consts";
-import { addMobileListener, getWebkitVersion } from "./lib/native/plugin";
+import { addMobileListener, getWebkitVersion, runDbMigrations } from "./lib/native/plugin";
 import { platform } from "@tauri-apps/plugin-os";
 
-async function setupAmpersand(){
+async function setupAmpersand() {
 	const app = createApp(App).use(IonicVue, {
 		hardwareBackButton: true,
 	}).use(router).use(I18NextVue, { i18next: i18n });
@@ -85,6 +85,8 @@ async function setupAmpersand(){
 
 			return { path: "/onboarding/start", replace: true };
 		}
+
+		void runDbMigrations();
 
 		// app just started???
 		if (to.fullPath === "/") {
@@ -125,7 +127,7 @@ async function setupAmpersand(){
 	await router.isReady().then(async () => {
 		app.mount(document.body);
 
-		if(platform() === "android" || platform() === "ios"){
+		if (platform() === "android" || platform() === "ios") {
 			await addMobileListener("backbutton", () => {
 				document.dispatchEvent(new Event("backbutton"));
 			});

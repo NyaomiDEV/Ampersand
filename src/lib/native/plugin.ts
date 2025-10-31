@@ -30,6 +30,10 @@ export async function testDb(): Promise<string> {
 	return invokePlugin("test_db") as Promise<string>;
 }
 
+export async function runDbMigrations(): Promise<void> {
+	return invokePlugin("run_db_migrations") as Promise<void>;
+}
+
 export async function listAssets(path: string): Promise<string[]> {
 	return invokePlugin("list_assets", { path }) as Promise<string[]>;
 }
@@ -43,14 +47,14 @@ export async function broadcastEvent(event: string, payload: object): Promise<vo
 		payload: JSON.stringify({
 			event,
 			data: walk(payload, replace)
-		}) 
+		})
 	}) as Promise<void>;
 }
 
-export async function addMobileListener(event: string, handler: () => void){
-	try{
+export async function addMobileListener(event: string, handler: () => void) {
+	try {
 		await addPluginListener("ampersand", event, handler);
-	}catch(e){
+	} catch (e) {
 		console.error("Ampersand listener failed", e);
 	}
 }

@@ -331,6 +331,18 @@
           "markdownDescription": "Denies the get_webkit_version command without any pre-configured scope."
         },
         {
+          "description": "Enables the init_db command without any pre-configured scope.",
+          "type": "string",
+          "const": "allow-init-db",
+          "markdownDescription": "Enables the init_db command without any pre-configured scope."
+        },
+        {
+          "description": "Denies the init_db command without any pre-configured scope.",
+          "type": "string",
+          "const": "deny-init-db",
+          "markdownDescription": "Denies the init_db command without any pre-configured scope."
+        },
+        {
           "description": "Enables the list_assets command without any pre-configured scope.",
           "type": "string",
           "const": "allow-list-assets",
@@ -365,6 +377,18 @@
           "type": "string",
           "const": "deny-registerListener",
           "markdownDescription": "Denies the registerListener command without any pre-configured scope."
+        },
+        {
+          "description": "Enables the run_db_migrations command without any pre-configured scope.",
+          "type": "string",
+          "const": "allow-run-db-migrations",
+          "markdownDescription": "Enables the run_db_migrations command without any pre-configured scope."
+        },
+        {
+          "description": "Denies the run_db_migrations command without any pre-configured scope.",
+          "type": "string",
+          "const": "deny-run-db-migrations",
+          "markdownDescription": "Denies the run_db_migrations command without any pre-configured scope."
         },
         {
           "description": "Enables the set_can_go_back command without any pre-configured scope.",
