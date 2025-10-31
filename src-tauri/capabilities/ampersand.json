@@ -8,6 +8,7 @@
 	"permissions": [
 		"ampersand:default",
 		"ampersand:allow-test-db",
+		"ampersand:allow-run-db-migrations",
 		"fs:allow-app-read-recursive",
 		"fs:allow-app-write-recursive",
 		"fs:allow-app-meta-recursive",
@@ -18,10 +19,14 @@
 		"fs:allow-home-write-recursive",
 		"fs:allow-home-meta-recursive",
 		{
-			"identifier":"opener:allow-open-path",
+			"identifier": "opener:allow-open-path",
 			"allow": [
-				{"path": "$TEMP"},
-				{"path": "$TEMP/**"}
+				{
+					"path": "$TEMP"
+				},
+				{
+					"path": "$TEMP/**"
+				}
 			]
 		},
 		{

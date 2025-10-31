@@ -48,12 +48,12 @@ import "./lib/theme/style.css";
 // Other imports from frontend library
 import { clearTempDir } from "./lib/native/cache";
 import { slideAnimation } from "./lib/util/misc";
-import { dismissSplash, getWebkitVersion } from "./lib/native/plugin";
+import { dismissSplash, getWebkitVersion, runDbMigrations } from "./lib/native/plugin";
 import { platform } from "@tauri-apps/plugin-os";
 import { onBackButtonPress } from "@tauri-apps/api/app";
 import { maybeExit } from "./lib/util/backbutton";
 
-async function setupAmpersand(){
+async function setupAmpersand() {
 	const app = createApp(App).use(IonicVue, {
 		hardwareBackButton: true,
 		mode: "md",
@@ -88,6 +88,8 @@ async function setupAmpersand(){
 
 			return { path: "/onboarding/start", replace: true };
 		}
+
+		void runDbMigrations();
 
 		// app just started???
 		if (to.fullPath === "/") {

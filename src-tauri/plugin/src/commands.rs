@@ -19,6 +19,11 @@ pub(crate) fn test_db<R: Runtime>(app: AppHandle<R>) -> Result<String> {
 }
 
 #[command]
+pub(crate) fn run_db_migrations<R: Runtime>(app: AppHandle<R>) -> Result<()> {
+	app.ampersand().run_db_migrations()
+}
+
+#[command]
 pub(crate) fn broadcast_event<R: Runtime>(app: AppHandle<R>, payload: String) -> Result<()> {
 	app.ampersand().broadcast_event(payload)
 }
