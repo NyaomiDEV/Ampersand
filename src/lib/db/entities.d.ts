@@ -5,7 +5,7 @@ export interface UUIDable {
 export type UUID = string;
 
 export interface BoardMessage extends UUIDable {
-	member: UUID,
+	member?: UUID,
 	title: string,
 	body: string,
 	date: Date,
@@ -15,7 +15,7 @@ export interface BoardMessage extends UUIDable {
 }
 
 export interface BoardMessageComplete extends BoardMessage {
-	member: Member
+	member?: Member
 }
 
 export interface Poll {
@@ -51,7 +51,7 @@ export interface FrontingEntryComplete extends FrontingEntry {
 }
 
 export interface JournalPost extends UUIDable {
-	member: UUID,
+	member?: UUID,
 	date: Date,
 	title: string,
 	subtitle?: string,
@@ -64,7 +64,7 @@ export interface JournalPost extends UUIDable {
 }
 
 export interface JournalPostComplete extends JournalPost {
-	member: Member
+	member?: Member
 }
 
 export interface Member extends UUIDable {

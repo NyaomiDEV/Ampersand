@@ -30,7 +30,7 @@
 	import MemberAvatar from "../components/member/MemberAvatar.vue";
 	import MemberSelect from "./MemberSelect.vue";
 	import { useTranslation } from "i18next-vue";
-	import { promptOkCancel } from "../lib/util/misc";
+	import { formatDate, promptOkCancel } from "../lib/util/misc";
 
 	const i18next = useTranslation();
 
@@ -87,10 +87,11 @@
 
 		const _boardMessage = toRaw(boardMessage.value);
 
-		if(!_boardMessage.member) return;
+		if(!_boardMessage.title.length)
+			_boardMessage.title = formatDate(_boardMessage.date, "collapsed");
 
 		if(!uuid){
-			await newBoardMessage({ ..._boardMessage, member: _boardMessage.member.uuid });
+			await newBoardMessage({ ..._boardMessage, member: _boardMessage.member?.uuid || undefined });
 			await modalController.dismiss(null, "added");
 	
 			return;
@@ -98,7 +99,7 @@
 
 		await updateBoardMessage(uuid, {
 			..._boardMessage,
-			member: _boardMessage.member.uuid
+			member: _boardMessage.member?.uuid || undefined
 		});
 
 		try{
@@ -138,6 +139,19 @@
 							<h2>{{ boardMessage.member.name }}</h2>
 							<p>{{ $t("messageBoard:edit.member") }}</p>
 						</IonLabel>
+						<IonButton
+							slot="end"
+							shape="round"
+							fill="outline"
+							size="default"
+							@click="(e) => { e.stopPropagation(); boardMessage.member = undefined; }"
+						>
+							<IonIcon
+								slot="icon-only"
+								:icon="trashMD"
+								color="danger"
+							/>
+						</IonButton>
 					</template>
 					<template v-else>
 						<IonLabel>
@@ -282,7 +296,7 @@
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton :disabled="boardMessage.title.length === 0 || !boardMessage.member" @click="save">
+				<IonFabButton @click="save">
 					<IonIcon :icon="saveMD" />
 				</IonFabButton>
 			</IonFab>
@@ -293,6 +307,7 @@
 				:only-one="true"
 				:discard-on-select="true"
 				:hide-checkboxes="true"
+				:always-emit="true"
 				:model-value="boardMessage.member ? [boardMessage.member] : []"
 				@update:model-value="(e) => { if(e[0]) boardMessage.member = e[0] }"
 			/>

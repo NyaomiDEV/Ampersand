@@ -12,7 +12,7 @@ export function getBoardMessages(){
 export async function toBoardMessageComplete(boardMessage: BoardMessage): Promise<BoardMessageComplete> {
 	return {
 		...boardMessage,
-		member: (await getMember(boardMessage.member)) || defaultMember()
+		member: boardMessage.member ? (await getMember(boardMessage.member)) || defaultMember() : undefined
 	};
 }
 

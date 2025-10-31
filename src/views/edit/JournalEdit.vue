@@ -78,12 +78,13 @@
 		const uuid = post.value.uuid;
 		const _post = toRaw(post.value);
 
-		if (!_post.member) return;
+		if(!_post.title.length)
+			_post.title = formatDate(_post.date, "collapsed");
 
 		if(!uuid){
 			await newJournalPost({
 				..._post,
-				member: _post.member.uuid,
+				member: _post.member?.uuid || undefined,
 				date: new Date()
 			});
 			router.back();
@@ -93,7 +94,7 @@
 
 		await updateJournalPost(uuid, {
 			..._post,
-			member: _post.member.uuid
+			member: _post.member?.uuid || undefined
 		});
 
 		isEditing.value = false;
@@ -204,10 +205,10 @@
 
 			<IonList v-if="!isEditing" inset>
 
-				<IonItem v-if="post.member">
-					<MemberAvatar slot="start" :member="post.member" />
+				<IonItem>
+					<MemberAvatar v-if="post.member" slot="start" :member="post.member" />
 					<IonLabel>
-						<h2>{{ post.member.name }}</h2>
+						<h2 v-if="post.member">{{ post.member.name }}</h2>
 						<p v-if="post.date">{{ formatDate(post.date, "expanded") }}</p>
 					</IonLabel>
 				</IonItem>
@@ -236,6 +237,19 @@
 							<h2>{{ post.member.name }}</h2>
 							<p>{{ $t("journal:edit.author") }}</p>
 						</IonLabel>
+						<IonButton
+							slot="end"
+							shape="round"
+							fill="outline"
+							size="default"
+							@click="(e) => { e.stopPropagation(); post.member = undefined; }"
+						>
+							<IonIcon
+								slot="icon-only"
+								:icon="trashMD"
+								color="danger"
+							/>
+						</IonButton>
 					</template>
 					<template v-else>
 						<IonLabel>
@@ -349,7 +363,7 @@
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton v-if="canEdit" :disabled="!post.member || post.title.length === 0" @click="toggleEditing">
+				<IonFabButton v-if="canEdit" @click="toggleEditing">
 					<IonIcon :icon="isEditing ? saveMD : pencilMD" />
 				</IonFabButton>
 			</IonFab>
@@ -366,6 +380,7 @@
 				:only-one="true"
 				:discard-on-select="true"
 				:hide-checkboxes="true"
+				:always-emit="true"
 				:model-value="post.member ? [post.member] : []"
 				@update:model-value="(e) => { if (e[0]) post.member = e[0]; }"
 			/>

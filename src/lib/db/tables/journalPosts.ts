@@ -12,7 +12,7 @@ export function getJournalPosts(){
 export async function toJournalPostComplete(journalPost: JournalPost){
 	return {
 		...journalPost,
-		member: (await getMember(journalPost.member)) || defaultMember()
+		member: journalPost.member ? (await getMember(journalPost.member)) || defaultMember() : undefined
 	};
 }
 

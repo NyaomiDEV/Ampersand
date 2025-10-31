@@ -140,11 +140,13 @@
 <template>
 	<IonItem button :class="{ card: true, filled: props.boardMessage.isPinned, archived: props.boardMessage.isArchived }">
 		<div class="card-inner">
-			<MemberAvatar :member="props.boardMessage.member" />
+			<MemberAvatar v-if="props.boardMessage.member" :member="props.boardMessage.member" />
 			<div class="flexbox">
 				<div class="subheader">
-					<span>{{ props.boardMessage.member.name }}</span>
-					<p>{{ formatDate(props.boardMessage.date, "collapsed") }}</p>
+					<span v-if="props.boardMessage.member">{{ props.boardMessage.member.name }}</span>
+					<p v-if="formatDate(props.boardMessage.date, 'collapsed') !== props.boardMessage.title">
+						{{ formatDate(props.boardMessage.date, "collapsed") }}
+					</p>
 				</div>
 				<div class="contents">
 					<h1>{{ props.boardMessage.title }}</h1>
