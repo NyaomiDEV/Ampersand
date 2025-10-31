@@ -85,7 +85,6 @@
 			await newJournalPost({
 				..._post,
 				member: _post.member?.uuid || undefined,
-				date: new Date()
 			});
 			router.back();
 
