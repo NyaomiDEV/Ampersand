@@ -91,13 +91,11 @@ impl<R: Runtime> Ampersand<R> {
 	}
 
 	pub fn test_db(&self) -> crate::Result<String> {
-		self.1
-			.lock()
-			.map_err(|_| crate::Error::Other(String::from("mutex lock failed")))?
-			.query_one("SELECT sqlite_version();", (), |row| {
-				row.get::<usize, String>(0)
-			})
-			.map_err(|_| crate::Error::Other(String::from("sql failed to execute")))
+		db::test_db(&self.1)
+	}
+
+	pub fn run_db_migrations(&self) -> crate::Result<()> {
+		db::run_db_migrations(&self.1, &self.0.app())
 	}
 
 	pub fn get_webkit_version(&self) -> crate::Result<String> {
