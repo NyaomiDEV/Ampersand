@@ -30,3 +30,6 @@ self-signed.pem
 /test.mts
 /*.test.mts
 test/*
+
+# Rust-analyzer stuff
+target/
