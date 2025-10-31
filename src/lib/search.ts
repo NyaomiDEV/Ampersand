@@ -111,14 +111,14 @@ export function filterBoardMessage(search: string, boardMessage: BoardMessageCom
 		if (
 			![
 				boardMessage.title.toLowerCase().split(" "),
-				boardMessage.member.name.toLowerCase().split(" ")
-			].flat().find(x => x.startsWith(parsed.query.toLowerCase()))
+				boardMessage.member?.name.toLowerCase().split(" ")
+			].filter(x => !!x).flat().find(x => x.startsWith(parsed.query.toLowerCase()))
 		)
 			return false;
 	}
 
 	if (parsed.member) {
-		if (boardMessage.member.uuid !== parsed.member)
+		if (boardMessage.member?.uuid !== parsed.member)
 			return false;
 	}
 
@@ -194,14 +194,14 @@ export async function filterJournalPost(search: string, post: JournalPostComplet
 		if (
 			![
 				post.title.toLowerCase().split(" "),
-				post.member.name.toLowerCase().split(" ")
-			].flat().find(x => x.startsWith(parsed.query.toLowerCase()))
+				post.member?.name.toLowerCase().split(" ")
+			].filter(x => !!x).flat().find(x => x.startsWith(parsed.query.toLowerCase()))
 		)
 			return false;
 	}
 
 	if (parsed.member) {
-		if (post.member.uuid !== parsed.member)
+		if (post.member?.uuid !== parsed.member)
 			return false;
 	}
 
