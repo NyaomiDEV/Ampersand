@@ -11,6 +11,7 @@
 	"editPassword": "Modifica password",
 	"inputPassword": {
 		"titleAdd": "Inserisci una nuova password",
+		"titleReenter": "Reinserisci la password",
 		"titleModifyOld": "Inserisci la tua vecchia password",
 		"titleModifyNew": "Inserisci la tua nuova password",
 		"titleDisable": "Inserisci la tua password",
