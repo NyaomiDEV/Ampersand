@@ -71,6 +71,7 @@
 					v-for="asset in assets"
 					:key="asset.uuid"
 					route-to-edit-page
+					show-thumbnail
 					:asset
 				/>
 			</IonList>

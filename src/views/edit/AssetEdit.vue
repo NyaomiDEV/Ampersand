@@ -28,6 +28,7 @@
 	import { useRoute } from "vue-router";
 	import { useTranslation } from "i18next-vue";
 	import { getFiles, promptOkCancel } from "../../lib/util/misc";
+	import { getObjectURL } from "../../lib/util/blob";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import AssetItem from "../../components/AssetItem.vue";
 
@@ -47,6 +48,19 @@
 		const files = await getFiles();
 		if (files.length > 0) 
 			asset.value.file = files[0];
+	}
+
+	function showBigThumbnail(){
+		switch(asset.value.file.type){
+			case "image/png":
+			case "image/jpeg":
+			case "image/gif":
+			case "image/webp":
+				return true;
+			default:
+				break;
+		}
+		return false;
 	}
 
 	async function save(){
@@ -69,8 +83,10 @@
 		if(await promptOkCancel(
 			i18next.t("assetManager:edit.delete.title"),
 			i18next.t("assetManager:edit.delete.confirm"),
-		))
+		)){
 			await deleteAsset(asset.value.uuid!);
+			router.back();
+		}
 	}
 
 	async function updateRoute(){
@@ -111,11 +127,18 @@
 		<IonContent v-else>
 			<IonList>
 
+				<img
+					v-if="showBigThumbnail()"
+					:src="getObjectURL(asset.file)"
+					class="thumbnail"
+				/>
+
 				<AssetItem
 					v-if="asset.file.size"
 					:asset
 					route-to-open-file
 					:show-filename-and-type="true"
+					:show-thumbnail="!showBigThumbnail()"
 				/>
 
 				<IonItem>
@@ -153,7 +176,7 @@
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton v-if="asset.friendlyName.length > 0" @click="save">
+				<IonFabButton :disabled="!asset.friendlyName.length || !asset.file.name.length" @click="save">
 					<IonIcon :icon="saveMD" />
 				</IonFabButton>
 			</IonFab>
@@ -168,5 +191,13 @@
 
 	ion-thumbnail {
 		--border-radius: 16px;
+	}
+
+	img.thumbnail {
+		display: block;
+		border-radius: 16px;
+		margin: 16px auto;
+		box-sizing: border-box;
+		max-height: 50vh;
 	}
 </style>

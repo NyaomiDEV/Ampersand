@@ -11,7 +11,8 @@
 		asset: PartialBy<Asset, "uuid">,
 		routeToEditPage?: boolean,
 		routeToOpenFile?: boolean,
-		showFilenameAndType?: boolean
+		showFilenameAndType?: boolean,
+		showThumbnail?: boolean
 	}>();
 
 	function generatePreview(){
@@ -41,14 +42,16 @@
 		:router-link="props.routeToEditPage ? `/options/assetManager/edit/?uuid=${props.asset.uuid}` : undefined"
 		@click="props.routeToOpenFile ? open() : undefined"
 	>
-		<IonThumbnail v-if="generatePreview()" slot="start">
-			<img :src="getObjectURL(props.asset.file)" />
-		</IonThumbnail>
-		<IonIcon v-else slot="start" :icon="documentMD" />
+		<template v-if="props.showThumbnail">
+			<IonThumbnail v-if="generatePreview()" slot="start">
+				<img :src="getObjectURL(props.asset.file)" />
+			</IonThumbnail>
+			<IonIcon v-else slot="start" :icon="documentMD" />
+		</template>
 		<IonLabel class="nowrap">
 			<template v-if="props.showFilenameAndType">
 				<h2>{{ asset.file.name }}</h2>
-				<p>{{ asset.file.type.split("/")[1].replace(/^x-/, '').toUpperCase() }}</p>
+				<p>{{ asset.file.type?.split("/")[1]?.replace(/^x-/, '').toUpperCase() }}</p>
 			</template>
 			<template v-else>
 				{{ props.asset.friendlyName }}
