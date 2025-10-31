@@ -384,7 +384,7 @@
 			</IonItem>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton v-if="reminder.name.length > 0" @click="save">
+				<IonFabButton :disabled="!reminder.name.length" @click="save">
 					<IonIcon :icon="saveMD" />
 				</IonFabButton>
 			</IonFab>

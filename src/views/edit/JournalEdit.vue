@@ -349,7 +349,7 @@
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton v-if="post.member && post.title.length > 0 && canEdit" @click="toggleEditing">
+				<IonFabButton v-if="canEdit" :disabled="!post.member || post.title.length === 0" @click="toggleEditing">
 					<IonIcon :icon="isEditing ? saveMD : pencilMD" />
 				</IonFabButton>
 			</IonFab>

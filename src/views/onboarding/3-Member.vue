@@ -111,7 +111,7 @@
 			</div>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton v-if="member.name.length" @click="save">
+				<IonFabButton :disabled="!member.name.length" @click="save">
 					<IonIcon :icon="arrowMD" />
 				</IonFabButton>
 			</IonFab>

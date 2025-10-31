@@ -282,7 +282,7 @@
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton v-if="boardMessage.title.length > 0 && boardMessage.member" @click="save">
+				<IonFabButton :disabled="boardMessage.title.length === 0 || !boardMessage.member" @click="save">
 					<IonIcon :icon="saveMD" />
 				</IonFabButton>
 			</IonFab>

@@ -281,7 +281,7 @@
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton v-if="frontingEntry.member" @click="save">
+				<IonFabButton :disabled="!frontingEntry.member" @click="save">
 					<IonIcon :icon="saveMD" />
 				</IonFabButton>
 			</IonFab>

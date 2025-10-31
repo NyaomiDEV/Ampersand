@@ -287,7 +287,7 @@
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton v-if="tag.name.length > 0" @click="save">
+				<IonFabButton :disabled="!tag.name.length" @click="save">
 					<IonIcon :icon="saveMD" />
 				</IonFabButton>
 			</IonFab>
