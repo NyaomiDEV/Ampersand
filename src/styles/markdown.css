@@ -152,21 +152,21 @@
     background: linear-gradient(to right, var(--markdown-text-bg-colors));
 }
 
-.markdown-content ion-checkbox {
+.markdown-content ul ion-checkbox {
     width: min-content;
     --size: 1em;
     height: 1.5em;
     flex: none;
 }
 
-.markdown-content li {
+.markdown-content ul li {
     display: flex;
     flex-direction: row;
     gap: 0.5em;
     flex-wrap: nowrap;
 }
 
-.markdown-content li:not(:has(ion-checkbox))::before {
+.markdown-content ul li:not(:has(ion-checkbox))::before {
     content: "•";
     width: 1em;
     flex: none;
