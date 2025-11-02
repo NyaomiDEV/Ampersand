@@ -14,6 +14,7 @@
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 
 	const loading = ref(false);
+	const progress = ref(-1);
 
 	const i18next = useTranslation();
 
@@ -87,7 +88,20 @@
 	async function exportDb(){
 		loading.value = true;
 
-		const data = await exportDatabaseToBinary();
+		const exportData = exportDatabaseToBinary();
+
+		exportData.progress.addEventListener("start", () => {
+			progress.value = 0;
+		});
+		exportData.progress.addEventListener("progress", (evt) => {
+			progress.value = (evt as CustomEvent).detail.progress;
+		});
+		exportData.progress.addEventListener("finish", () => {
+			progress.value = -1;
+		});
+		
+		const data = await exportData.dbPromise;
+
 		const date = dayjs().format("YYYY-MM-DD");
 
 		const path = await save({
@@ -119,7 +133,7 @@
 					default-href="/options/"
 				/>
 				<IonTitle>{{ $t("importExport:header") }}</IonTitle>
-				<IonProgressBar v-if="loading" type="indeterminate" />
+				<IonProgressBar v-if="loading" :type="progress < 0 ? 'indeterminate' : 'determinate'" :value="progress < 0 ? progress : 0" />
 			</IonToolbar>
 		</IonHeader>
 

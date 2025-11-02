@@ -15,19 +15,37 @@ const typeson = new Typeson({
 	map
 ]);
 
-async function _exportDatabase(){
+async function _exportDatabase(progress: EventTarget){
+	progress.dispatchEvent(new Event("start"));
 	const config = { appConfig, accessibilityConfig, securityConfig };
-	const database: Record<string, unknown> = {};
-	for(const [name, table] of Object.entries(getTables())) database[name] = await Array.fromAsync<unknown>(table.iterate());
+	const database: Record<string, Array<unknown>> = {};
 
+	let progressTotal = 0;
+	for(const [_name, table] of Object.entries(getTables())) 
+		progressTotal += table.count();
+	
+	let progressCurrent = 0;
+	for (const [name, table] of Object.entries(getTables())) {
+		database[name] = [];
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+		for (const x of table.index.map(x => x.uuid)) {
+			const data = await table.get(x);
+			if (data) database[name].push(data);
+			progressCurrent++;
+			progress.dispatchEvent(new CustomEvent("progress", { detail: { progress: progressCurrent / progressTotal } }));
+		}
+	}
+
+	progress.dispatchEvent(new Event("finish"));
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 	return deleteNull(walk({ config, database }, replace));
 }
 
-export async function exportDatabaseToBinary(){
-	const theEntireDatabase = await _exportDatabase();
+export function exportDatabaseToBinary(){
+	const progress = new EventTarget();
+	const dbPromise = _exportDatabase(progress).then(res => compressGzip(encode(res) as Uint8Array<ArrayBuffer>));
 
-	return await compressGzip(encode(theEntireDatabase) as Uint8Array<ArrayBuffer>);
+	return { progress, dbPromise };
 }
 
 async function _importDatabase(tablesAndConfig){
