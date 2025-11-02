@@ -48,8 +48,9 @@ export function exportDatabaseToBinary(){
 	return { progress, dbPromise };
 }
 
-async function _importDatabase(tablesAndConfig){
+async function _importDatabase(tablesAndConfig: Record<string, unknown>, progress: EventTarget){
 	try{
+		progress.dispatchEvent(new Event("start"));
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		let revived: any;
 		if(tablesAndConfig.$types) // typeson
@@ -57,9 +58,17 @@ async function _importDatabase(tablesAndConfig){
 		else
 			revived = walk(tablesAndConfig, revive);
 
+		const progressTotal = Object.getOwnPropertyNames(revived.database).length + 3;
+		let progressCurrent = 0;
+
 		Object.assign(appConfig, revived.config.appConfig);
+		progressCurrent++;
+
 		Object.assign(accessibilityConfig, revived.config.accessibilityConfig);
+		progressCurrent++;
+
 		Object.assign(securityConfig, revived.config.securityConfig);
+		progressCurrent++;
 
 		for (const key of Object.getOwnPropertyNames(revived.database)) {
 			const table: ShittyTable<UUIDable> = getTables()[key];
@@ -67,21 +76,21 @@ async function _importDatabase(tablesAndConfig){
 				if(await table.clear() === false) return false;
 				if(await table.bulkAdd(revived.database[key]) === false) return false;
 			}
+			progressCurrent++;
+			progress.dispatchEvent(new CustomEvent("progress", { detail: { progress: progressCurrent / progressTotal } }));
 		}
 	}catch(_e){
 		console.error(_e);
 		return false;
 	}
 
+	progress.dispatchEvent(new Event("finish"));
 	return true;
 }
 
-export async function importDatabaseFromBinary(data: Uint8Array<ArrayBuffer>) {
-	try{
-		const theEntireDatabase = decode(await decompressGzip(data)) as Record<string, unknown>;
+export function importDatabaseFromBinary(data: Uint8Array<ArrayBuffer>) {
+	const progress = new EventTarget();
+	const dbPromise = decompressGzip(data).then(res => _importDatabase(decode(res) as Record<string, unknown>, progress));
 
-		return await _importDatabase(theEntireDatabase);
-	}catch(_e){
-		return false;
-	}
+	return { progress, dbPromise };
 }

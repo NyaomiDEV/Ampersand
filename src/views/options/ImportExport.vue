@@ -14,7 +14,7 @@
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 
 	const loading = ref(false);
-	const progress = ref(-1);
+	const barProgress = ref(-1);
 
 	const i18next = useTranslation();
 
@@ -24,7 +24,20 @@
 			const files = await getFiles(undefined, false);
 			if (!files.length) throw new Error("no files specified");
 
-			const result = await importDatabaseFromBinary(new Uint8Array(await files[0].arrayBuffer()));
+			const { progress, dbPromise } = importDatabaseFromBinary(new Uint8Array(await files[0].arrayBuffer()));
+
+			progress.addEventListener("start", () => {
+				barProgress.value = 0;
+			});
+			progress.addEventListener("progress", (evt) => {
+				barProgress.value = (evt as CustomEvent).detail.progress;
+			});
+			progress.addEventListener("finish", () => {
+				barProgress.value = -1;
+			});
+
+			const result = await dbPromise;
+
 			if(!result) throw new Error("errored out");
 
 			await toast(i18next.t("importExport:status.imported"));
@@ -88,22 +101,7 @@
 	async function exportDb(){
 		loading.value = true;
 
-		const exportData = exportDatabaseToBinary();
-
-		exportData.progress.addEventListener("start", () => {
-			progress.value = 0;
-		});
-		exportData.progress.addEventListener("progress", (evt) => {
-			progress.value = (evt as CustomEvent).detail.progress;
-		});
-		exportData.progress.addEventListener("finish", () => {
-			progress.value = -1;
-		});
-		
-		const data = await exportData.dbPromise;
-
 		const date = dayjs().format("YYYY-MM-DD");
-
 		const path = await save({
 			defaultPath: `ampersand-backup-${date}.ampdb`,
 			filters: [{
@@ -112,7 +110,22 @@
 			}]
 		});
 
-		if(path){
+		const { progress, dbPromise } = exportDatabaseToBinary();
+
+		progress.addEventListener("start", () => {
+			barProgress.value = 0;
+		});
+		progress.addEventListener("progress", (evt) => {
+			barProgress.value = (evt as CustomEvent).detail.progress;
+		});
+		progress.addEventListener("finish", () => {
+			barProgress.value = -1;
+		});
+		
+		const data = await dbPromise;
+
+
+		if(path && data){
 			await writeFile(path, data);
 			await toast(i18next.t("importExport:status.exportedApp"));
 		} else 
@@ -133,7 +146,7 @@
 					default-href="/options/"
 				/>
 				<IonTitle>{{ $t("importExport:header") }}</IonTitle>
-				<IonProgressBar v-if="loading" :type="progress < 0 ? 'indeterminate' : 'determinate'" :value="progress < 0 ? progress : 0" />
+				<IonProgressBar v-if="loading" :type="barProgress < 0 ? 'indeterminate' : 'determinate'" :value="barProgress > 0 ? barProgress : 0" />
 			</IonToolbar>
 		</IonHeader>
 

@@ -21,7 +21,7 @@
 		try{
 			if (!files.length) throw new Error("no files specified");
 			loading.value = true;
-			const result = await importDatabaseFromBinary(new Uint8Array(await files[0].arrayBuffer()));
+			const result = await importDatabaseFromBinary(new Uint8Array(await files[0].arrayBuffer())).dbPromise;
 			if(!result) throw new Error("errored out");
 		}catch(_e){
 			resetConfig();

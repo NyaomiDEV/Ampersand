@@ -40,49 +40,17 @@ export function getFiles(contentType?: string, multiple?: boolean): Promise<File
 }
 
 export async function compressGzip(data: BufferSource) {
-	const reader = new Blob([data])
+	const stream = new Blob([data])
 		.stream()
-		.pipeThrough<Uint8Array>(new CompressionStream("gzip"))
-		.getReader();
-
-	let result = new Uint8Array();
-
-	for(;;){
-		const { done, value } = await reader.read();
-		if (done) break;
-
-		if (value) {
-			const _new = new Uint8Array(result.length + value.length);
-			_new.set(result);
-			_new.set(value, result.length);
-			result = _new;
-		}
-	}
-
-	return result;
+		.pipeThrough<Uint8Array>(new CompressionStream("gzip"));
+	return new Uint8Array(await new Response(stream).arrayBuffer());
 }
 
 export async function decompressGzip(data: BufferSource) {
-	const reader = new Blob([data])
+	const stream = new Blob([data])
 		.stream()
-		.pipeThrough<Uint8Array>(new DecompressionStream("gzip"))
-		.getReader();
-
-	let result = new Uint8Array();
-
-	for (;;) {
-		const { done, value } = await reader.read();
-		if (done) break;
-
-		if (value) {
-			const _new = new Uint8Array(result.length + value.length);
-			_new.set(result);
-			_new.set(value, result.length);
-			result = _new;
-		}
-	}
-
-	return result;
+		.pipeThrough<Uint8Array>(new DecompressionStream("gzip"));
+	return new Uint8Array(await new Response(stream).arrayBuffer());
 }
 
 export function formatDate(date: Date, withDate?: "collapsed" | "expanded"){
