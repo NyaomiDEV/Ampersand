@@ -39,18 +39,16 @@ export function getFiles(contentType?: string, multiple?: boolean): Promise<File
 	});
 }
 
-export async function compressGzip(data: BufferSource) {
-	const stream = new Blob([data])
+export function compressGzip(data: BufferSource) {
+	return new Blob([data])
 		.stream()
 		.pipeThrough<Uint8Array>(new CompressionStream("gzip"));
-	return new Uint8Array(await new Response(stream).arrayBuffer());
 }
 
-export async function decompressGzip(data: BufferSource) {
-	const stream = new Blob([data])
+export function decompressGzip(data: BufferSource) {
+	return new Blob([data])
 		.stream()
 		.pipeThrough<Uint8Array>(new DecompressionStream("gzip"));
-	return new Uint8Array(await new Response(stream).arrayBuffer());
 }
 
 export function formatDate(date: Date, withDate?: "collapsed" | "expanded"){

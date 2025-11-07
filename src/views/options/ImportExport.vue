@@ -122,11 +122,11 @@
 			barProgress.value = -1;
 		});
 		
-		const data = await dbPromise;
+		const dataStream = await dbPromise;
 
 
-		if(path && data){
-			await writeFile(path, data);
+		if(path && dataStream){
+			await writeFile(path, dataStream);
 			await toast(i18next.t("importExport:status.exportedApp"));
 		} else 
 			await toast(i18next.t("importExport:status.errorExport"));

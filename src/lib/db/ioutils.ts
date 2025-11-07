@@ -90,7 +90,8 @@ async function _importDatabase(tablesAndConfig: Record<string, unknown>, progres
 
 export function importDatabaseFromBinary(data: Uint8Array<ArrayBuffer>) {
 	const progress = new EventTarget();
-	const dbPromise = decompressGzip(data).then(res => _importDatabase(decode(res) as Record<string, unknown>, progress));
+	const stream = decompressGzip(data);
+	const dbPromise = new Response(stream).bytes().then(res => _importDatabase(decode(res) as Record<string, unknown>, progress));
 
 	return { progress, dbPromise };
 }
