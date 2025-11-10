@@ -28,10 +28,7 @@ impl<R: Runtime> Ampersand<R> {
 	}
 
 	pub fn open_file(&self, path: String) -> crate::Result<()> {
-		self.0
-			.opener()
-			.open_path(path, None::<&str>)
-			.map_err(Into::into)
+		Ok(self.0.opener().open_path(path, None::<&str>)?)
 	}
 
 	pub fn test_db(&self) -> crate::Result<String> {
@@ -54,11 +51,9 @@ impl<R: Runtime> Ampersand<R> {
 		Ok(self
 			.0
 			.path()
-			.resource_dir()
-			.map_err(Into::<crate::Error>::into)?
+			.resource_dir()?
 			.join(path)
-			.read_dir()
-			.map_err(Into::<crate::Error>::into)?
+			.read_dir()?
 			.filter_map(|result| {
 				result
 					.ok()

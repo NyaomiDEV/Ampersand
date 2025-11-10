@@ -75,19 +75,17 @@ pub struct Ampersand<R: Runtime>(PluginHandle<R>, Mutex<Connection>);
 
 impl<R: Runtime> Ampersand<R> {
 	pub fn exit_app(&self) -> crate::Result<()> {
-		self.0.run_mobile_plugin("exitApp", ()).map_err(Into::into)
+		Ok(self.0.run_mobile_plugin("exitApp", ())?)
 	}
 
 	pub fn set_can_go_back(&self, can_go_back: bool) -> crate::Result<()> {
-		self.0
-			.run_mobile_plugin("setCanGoBack", SetCanGoBack { can_go_back })
-			.map_err(Into::into)
+		Ok(self
+			.0
+			.run_mobile_plugin("setCanGoBack", SetCanGoBack { can_go_back })?)
 	}
 
 	pub fn open_file(&self, path: String) -> crate::Result<()> {
-		self.0
-			.run_mobile_plugin("openFile", OpenFile { path })
-			.map_err(Into::into)
+		Ok(self.0.run_mobile_plugin("openFile", OpenFile { path })?)
 	}
 
 	pub fn test_db(&self) -> crate::Result<String> {
@@ -99,16 +97,16 @@ impl<R: Runtime> Ampersand<R> {
 	}
 
 	pub fn get_webkit_version(&self) -> crate::Result<String> {
-		self.0
+		Ok(self
+			.0
 			.run_mobile_plugin::<WebkitVersion>("getWebkitVersion", ())
-			.map(|x| x.version)
-			.map_err(Into::into)
+			.map(|x| x.version)?)
 	}
 
 	pub fn broadcast_event(&self, payload: String) -> crate::Result<()> {
-		self.0
-			.run_mobile_plugin("broadcastEvent", BroadcastEvent { payload })
-			.map_err(Into::into)
+		Ok(self
+			.0
+			.run_mobile_plugin("broadcastEvent", BroadcastEvent { payload })?)
 	}
 
 	pub fn get_resource_file_descriptor(
@@ -132,9 +130,9 @@ impl<R: Runtime> Ampersand<R> {
 	}
 
 	pub fn list_assets(&self, path: String) -> crate::Result<Vec<String>> {
-		self.0
+		Ok(self
+			.0
 			.run_mobile_plugin::<ListAssetsResponse>("listAssets", ListAssets { path })
-			.map(|x| x.files)
-			.map_err(Into::into)
+			.map(|x| x.files)?)
 	}
 }
