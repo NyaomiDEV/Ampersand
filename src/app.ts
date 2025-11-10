@@ -66,6 +66,8 @@ async function setupAmpersand() {
 			appConfig.defaultSystem = maybeSystem;
 	}
 
+	await runDbMigrations();
+
 	router.beforeEach((to) => {
 		// lock flow
 		if (getLockedStatus()) {
@@ -85,8 +87,6 @@ async function setupAmpersand() {
 
 			return { path: "/onboarding/start", replace: true };
 		}
-
-		void runDbMigrations();
 
 		// app just started???
 		if (to.fullPath === "/") {
