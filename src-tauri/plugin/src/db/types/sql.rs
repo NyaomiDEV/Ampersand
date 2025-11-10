@@ -1,7 +1,7 @@
 //! Datatypes for passing data between Rust and Sqlite
 
 use serde::{Deserialize, Serialize};
-use time::{OffsetDateTime, UtcDateTime};
+use time::UtcDateTime;
 use uuid::Uuid;
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
