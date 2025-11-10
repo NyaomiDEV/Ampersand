@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS fronting_entries (
 
 CREATE TABLE IF NOT EXISTS journal_posts (
 	id BLOB CHECK(length(id) = 16) PRIMARY KEY,
-	member BLOB CHECK(length(member) = 16) NOT NULL REFERENCES members,
+	member BLOB CHECK(length(member) = 16) REFERENCES members,
 	date DATETIME NOT NULL,
 	title TEXT NOT NULL,
 	subtitle TEXT,
@@ -121,6 +121,7 @@ CREATE TABLE IF NOT EXISTS custom_fields (
 
 CREATE TABLE IF NOT EXISTS custom_field_data (
 	id BLOB CHECK(length(id) = 16) PRIMARY KEY,
+	member BLOB CHECK(length(member) = 16) NOT NULL REFERENCES members,
 	field BLOB CHECK(length(field) = 16) NOT NULL REFERENCES custom_fields,
 	value TEXT NOT NULL
 );
