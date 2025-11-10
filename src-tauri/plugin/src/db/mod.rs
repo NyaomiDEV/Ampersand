@@ -5,21 +5,23 @@ use tauri_plugin_fs::FsExt;
 
 use crate::commands;
 
+pub mod types;
+
 pub const MIGRATIONS_PATH: &str = "migrations";
 
 pub fn test_db(conn: &Mutex<Connection>) -> crate::Result<String> {
-	Ok(conn.lock().map_err(|_| crate::Error::Poison)?.query_one(
-		"SELECT sqlite_version();",
-		(),
-		|row| row.get::<usize, String>(0),
-	)?)
+	Ok(conn
+		.lock()?
+		.query_one("SELECT sqlite_version();", (), |row| {
+			row.get::<usize, String>(0)
+		})?)
 }
 
 pub fn run_db_migrations<R: Runtime>(
 	conn: &Mutex<Connection>,
 	handle: &AppHandle<R>,
 ) -> crate::Result<()> {
-	let db_lock = conn.lock().map_err(|_| crate::Error::Poison)?;
+	let db_lock = conn.lock()?;
 	let migrations_table_exists = db_lock.table_exists(None, "migrations").unwrap_or_default();
 
 	let completed_migrations = if migrations_table_exists {
