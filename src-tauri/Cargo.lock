@@ -4144,7 +4144,6 @@ dependencies = [
 name = "tauri-plugin-ampersand"
 version = "0.1.11"
 dependencies = [
- "msgpack-time",
  "rmp-serde",
  "rmpv",
  "rusqlite",
