@@ -45,11 +45,7 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
 			commands::list_assets
 		])
 		.setup(|app, api: tauri::plugin::PluginApi<R, ()>| {
-			let db_path = app
-				.path()
-				.app_data_dir()
-				.map_err(Into::<tauri_plugin_opener::Error>::into)?
-				.join("db.sqlite");
+			let db_path = app.path().app_data_dir()?.join("db.sqlite");
 			let db = Connection::open(db_path)?;
 
 			#[cfg(mobile)]
