@@ -2278,16 +2278,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "msgpack-time"
-version = "1.0.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fe2cc4f51d4cb4e7a379972e7c51362a1b90fcb2b1c01d25e090559eea9c8e80"
-dependencies = [
- "rmpv",
- "time",
-]
-
-[[package]]
 name = "muda"
 version = "0.17.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4338,7 +4328,6 @@ dependencies = [
 name = "tauri-plugin-ampersand"
 version = "0.1.2"
 dependencies = [
- "msgpack-time",
  "rmp-serde",
  "rmpv",
  "rusqlite",
