@@ -11,7 +11,7 @@ use std::{
 use rusqlite::Connection;
 use serde::{Deserialize, Serialize};
 use strum_macros::Display;
-use time::{OffsetDateTime, UtcDateTime};
+use time::UtcDateTime;
 use uuid::Uuid;
 
 use super::sql;
