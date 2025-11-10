@@ -65,17 +65,11 @@ pub struct Ampersand<R: Runtime>(PluginHandle<R>, Mutex<Connection>);
 impl<R: Runtime> Ampersand<R> {
 
   pub fn dismiss_splash(&self) -> crate::Result<()> {
-    self
-      .0
-      .run_mobile_plugin("dismissSplash", ())
-      .map_err(Into::into)
+    Ok(self.0.run_mobile_plugin("dismissSplash", ())?)
   }
 
   pub fn open_file(&self, path: String) -> crate::Result<()> {
-    self
-      .0
-      .run_mobile_plugin("openFile", OpenFile { path })
-      .map_err(Into::into)
+    Ok(self.0.run_mobile_plugin("openFile", OpenFile { path })?)
   }
 
   pub fn test_db(&self) -> crate::Result<String> {
@@ -87,10 +81,9 @@ impl<R: Runtime> Ampersand<R> {
 	}
 
   pub fn broadcast_event(&self, payload: String) -> crate::Result<()> {
-    self
-      .0
-      .run_mobile_plugin("broadcastEvent", BroadcastEvent { payload })
-      .map_err(Into::into)
+		Ok(self
+			.0
+			.run_mobile_plugin("broadcastEvent", BroadcastEvent { payload })?)
   }
 
   pub fn get_resource_file_descriptor(&self, path: String, mode: String) -> crate::Result<std::fs::File> {
@@ -98,21 +91,20 @@ impl<R: Runtime> Ampersand<R> {
       .0
       .run_mobile_plugin::<ResourceFileDescriptor>("getResourceFileDescriptor", GetResourceFileDescriptor { path, mode })?;
 
-    if let Some(fd) = result.fd {
-      Ok(unsafe {
-        use std::os::fd::FromRawFd;
-        std::fs::File::from_raw_fd(fd)
-      })
-    } else {
-      Err(crate::Error::Other("couldn't get fd".to_owned()))
-    }
+		if let Some(fd) = result.fd {
+			Ok(unsafe {
+				use std::os::fd::FromRawFd;
+				std::fs::File::from_raw_fd(fd)
+			})
+		} else {
+			Err(crate::Error::Other("couldn't get fd".to_owned()))
+		}
   }
 
   pub fn list_assets(&self, path: String) -> crate::Result<Vec<String>> {
-    self
-      .0
-      .run_mobile_plugin::<ListAssetsResponse>("listAssets", ListAssets { path })
-      .map(|x| x.files)
-      .map_err(Into::into)
+		Ok(self
+			.0
+			.run_mobile_plugin::<ListAssetsResponse>("listAssets", ListAssets { path })
+			.map(|x| x.files)?)
   }
 }

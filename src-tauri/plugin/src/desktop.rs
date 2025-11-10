@@ -24,7 +24,7 @@ impl<R: Runtime> Ampersand<R> {
   }
 
   pub fn open_file(&self, path: String) -> crate::Result<()> {
-    self.0.opener().open_path(path, None::<&str>).map_err(Into::into)
+		Ok(self.0.opener().open_path(path, None::<&str>)?)
   }
 
 	pub fn test_db(&self) -> crate::Result<String> {
@@ -39,21 +39,19 @@ impl<R: Runtime> Ampersand<R> {
     Ok(()) // af_unix someday?
   }
 
-  pub fn list_assets(&self, path: String) -> crate::Result<Vec<String>> {
-    Ok(self
-      .0
-      .path()
-      .resource_dir()
-      .map_err(Into::<crate::Error>::into)?
-      .join(path)
-      .read_dir()
-      .map_err(Into::<crate::Error>::into)?
-      .filter_map(|result| {
-        result
-          .ok()
-          .filter(|entry| entry.path().is_file())
-          .map(|entry| entry.file_name().to_string_lossy().to_string())
-      })
-      .collect())
-  }
+	pub fn list_assets(&self, path: String) -> crate::Result<Vec<String>> {
+		Ok(self
+			.0
+			.path()
+			.resource_dir()?
+			.join(path)
+			.read_dir()?
+			.filter_map(|result| {
+				result
+					.ok()
+					.filter(|entry| entry.path().is_file())
+					.map(|entry| entry.file_name().to_string_lossy().to_string())
+			})
+			.collect())
+	}
 }

@@ -9,12 +9,11 @@ use tauri_plugin_ampersand::Result;
 
 #[command]
 pub fn our_temp_dir() -> Result<String> {
-    let mut temp_path = std::env::temp_dir();
-    temp_path.push("ampersandTemp");
-    fs::create_dir_all(temp_path.as_path())
-        .map_err(Into::into)
-        .and(Ok(temp_path))
-        .map(|x| x.into_os_string().into_string().unwrap())
+	let mut temp_path = std::env::temp_dir();
+	temp_path.push("ampersandTemp");
+	Ok(fs::create_dir_all(temp_path.as_path())
+		.and(Ok(temp_path))
+		.map(|x| x.into_os_string().into_string().unwrap())?)
 }
 
 #[command]
