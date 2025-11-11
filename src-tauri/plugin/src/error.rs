@@ -16,6 +16,8 @@ pub enum Error {
 	Poison,
   #[error("{0}")]
   Other(String),
+	#[error(transparent)]
+	Conversion(#[from] crate::db::types::msgpack::Error),
   #[cfg(mobile)]
   #[error(transparent)]
   PluginInvoke(#[from] tauri::plugin::mobile::PluginInvokeError),

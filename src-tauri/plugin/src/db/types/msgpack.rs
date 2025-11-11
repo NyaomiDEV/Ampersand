@@ -137,7 +137,7 @@ pub struct FileMetadata {
 	pub mime_type: String,
 }
 
-pub fn msgpack_to_json<R: Read>(r: R) -> Result<String, Box<dyn std::error::Error>> {
+pub fn msgpack_to_json<R: Read>(r: R) -> Result<String, Error> {
 	let mut buf = Vec::new();
 
 	let mut de = rmp_serde::Deserializer::new(r);
@@ -536,6 +536,10 @@ pub enum Error {
 	Poison,
 	#[error(transparent)]
 	Rusqlite(#[from] rusqlite::Error),
+	#[error(transparent)]
+	Json(#[from] serde_json::Error),
+	#[error(transparent)]
+	FromUtf8(#[from] std::string::FromUtf8Error),
 }
 impl<T> From<std::sync::PoisonError<T>> for Error {
 	fn from(_: std::sync::PoisonError<T>) -> Self {
