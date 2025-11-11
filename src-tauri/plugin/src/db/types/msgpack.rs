@@ -11,7 +11,7 @@ use std::{
 use rusqlite::Connection;
 use serde::{Deserialize, Serialize};
 use strum_macros::Display;
-use time::UtcDateTime;
+use time::{OffsetDateTime, UtcDateTime};
 use uuid::Uuid;
 
 use super::sql;
@@ -319,7 +319,7 @@ pub fn convert_custom_field(field: CustomField) -> Result<sql::CustomField, Erro
 		id: field.uuid,
 		name: field.name,
 		priority: field.priority,
-		is_default: field.default,
+		is_default: field.default.unwrap_or_default(),
 	})
 }
 
@@ -346,10 +346,10 @@ pub fn convert_member(
 				.map(|file| convert_and_save_file(file, data_path, conn))
 				.transpose()?,
 			color: member.color,
-			is_pinned: member.is_pinned,
+			is_pinned: member.is_pinned.unwrap_or_default(),
 			is_archived: member.is_archived.unwrap_or_default(),
 			is_custom_front: member.is_custom_front.unwrap_or_default(),
-			date_created: convert_datetime(member.date_created)?,
+			date_created: convert_datetime(member.date_created)?.into(),
 		},
 		member
 			.custom_fields
@@ -386,7 +386,7 @@ pub fn convert_post(
 	Ok(sql::JournalPost {
 		id: post.uuid,
 		member: post.member,
-		date: convert_datetime(post.date)?,
+		date: convert_datetime(post.date)?.into(),
 		title: post.title,
 		subtitle: post.subtitle,
 		body: post.body,
@@ -400,21 +400,40 @@ pub fn convert_post(
 	})
 }
 
-pub fn convert_fronting_entry(entry: FrontingEntry) -> Result<sql::FrontingEntry, Error> {
-	Ok(sql::FrontingEntry {
-		id: entry.uuid,
-		member: entry.member,
-		start_time: convert_datetime(entry.start_time)?,
-		end_time: entry
-			.end_time
-			.map(|end_time| convert_datetime(end_time))
-			.transpose()?,
-		is_main_fronter: entry.is_main_fronter.unwrap_or_default(),
-		is_locked: entry.is_locked.unwrap_or_default(),
-		custom_status: entry.custom_status,
-		influencing: entry.influencing,
-		comment: entry.comment,
-	})
+pub fn convert_fronting_entry(
+	entry: FrontingEntry,
+	conn: &Mutex<Connection>,
+) -> Result<(sql::FrontingEntry, Vec<sql::PresenceEntry>), Error> {
+	Ok((
+		sql::FrontingEntry {
+			id: entry.uuid,
+			member: entry.member,
+			start_time: convert_datetime(entry.start_time)?.into(),
+			end_time: entry
+				.end_time
+				.map(|end_time| convert_datetime(end_time))
+				.transpose()?
+				.map(Into::into),
+			is_main_fronter: entry.is_main_fronter.unwrap_or_default(),
+			is_locked: entry.is_locked.unwrap_or_default(),
+			custom_status: entry.custom_status,
+			influencing: entry.influencing,
+			comment: entry.comment,
+		},
+		entry
+			.presence
+			.unwrap_or_default()
+			.into_iter()
+			.map(|(k, v)| {
+				Ok(sql::PresenceEntry {
+					id: Uuid::new_v4(),
+					fronting_entry: entry.uuid,
+					date: OffsetDateTime::from(convert_datetime(k)?),
+					presence: v,
+				})
+			})
+			.collect::<Result<Vec<sql::PresenceEntry>, Error>>()?,
+	))
 }
 
 pub fn convert_message(
@@ -426,7 +445,7 @@ pub fn convert_message(
 		member: message.member,
 		title: message.title,
 		body: message.body,
-		date: convert_datetime(message.date)?,
+		date: convert_datetime(message.date)?.into(),
 		is_pinned: message.is_pinned.unwrap_or_default(),
 		is_archived: message.is_archived.unwrap_or_default(),
 		poll: message
