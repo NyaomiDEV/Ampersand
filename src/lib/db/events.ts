@@ -35,7 +35,7 @@ DatabaseEvents.addEventListener("updated", (event) => {
 			eventName = "reminder";
 			break;
 		case "systems":
-			eventName = "systems";
+			eventName = "system";
 			break;
 		case "tags":
 			eventName = "tag";
