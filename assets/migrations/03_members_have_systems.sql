@@ -1,1 +1,0 @@
-ALTER TABLE members ADD COLUMN system BLOB CHECK(length(system) = 16) REFERENCES systems;
