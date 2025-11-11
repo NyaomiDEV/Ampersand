@@ -36,7 +36,8 @@
 
 	const emptyCustomField: PartialBy<CustomField, "uuid"> = {
 		name: "",
-		priority: 1
+		priority: 1,
+		default: false
 	};
 
 	const customField = ref({ ...(props.customField || emptyCustomField) });

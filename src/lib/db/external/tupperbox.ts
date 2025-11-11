@@ -36,6 +36,7 @@ async function member(tuExport: any, systemInfo: System, tagMapping: Map<number,
 			pronouns: tuMember.pronouns || undefined,
 			isArchived: false,
 			isCustomFront: false,
+			isPinned: false,
 			dateCreated: new Date(tuMember.created_at),
 			tags: tuMember.group_id ? [tagMapping.get(tuMember.group_id)!] : [],
 			uuid: window.crypto.randomUUID()

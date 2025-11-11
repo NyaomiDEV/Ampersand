@@ -144,6 +144,7 @@ export async function member(spExport: any, systemInfo: System, systemUid: strin
 			pronouns: spMember.pronouns?.length ? spMember.pronouns : undefined,
 			description: spMember.desc?.length ? spMember.desc : undefined,
 			color: normalizeSPColor(spMember.color),
+			isPinned: false,
 			isArchived: spMember.archived || false,
 			isCustomFront: false,
 			dateCreated: spMember.created ? new Date(spMember.created) : new Date(),
@@ -194,6 +195,7 @@ export async function member(spExport: any, systemInfo: System, systemUid: strin
 			system: systemInfo.uuid,
 			description: spCustomFront.desc?.length ? spCustomFront.desc : undefined,
 			color: normalizeSPColor(spCustomFront.color),
+			isPinned: false,
 			isArchived: false,
 			isCustomFront: true,
 			tags: [],
@@ -267,6 +269,7 @@ function boardMessage(spExport: any, memberMapping: Map<string, string>){
 			body: `@<m:${memberMapping.get(spBoardMessage.writtenFor)}>\n\n${spBoardMessage.message?.length ? spBoardMessage.message : ""}`,
 			date: spBoardMessage.writtenAt ? new Date(spBoardMessage.writtenAt) : new Date(),
 			isArchived: false,
+			isPinned: false,
 			uuid: window.crypto.randomUUID()
 		};
 
@@ -335,6 +338,7 @@ function boardMessage(spExport: any, memberMapping: Map<string, string>){
 						].filter(Boolean)
 			},
 			isArchived: false,
+			isPinned: false,
 			uuid: window.crypto.randomUUID()
 		};
 

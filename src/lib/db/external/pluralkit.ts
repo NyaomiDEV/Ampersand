@@ -68,6 +68,7 @@ async function member(pkExport: any, tagMapping: Map<string, string>, systemInfo
 			pronouns: pkMember.pronouns || undefined,
 			color: pkMember.color ? `#${pkMember.color}` : undefined,
 			isArchived: false,
+			isPinned: false,
 			isCustomFront: false,
 			dateCreated: new Date(pkMember.created),
 			tags: pkExport.groups.filter(x => (x.members as string[]).includes(pkMember.id)).map(x => tagMapping.get(x.id)),

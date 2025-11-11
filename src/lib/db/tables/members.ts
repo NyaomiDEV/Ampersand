@@ -83,6 +83,7 @@ export const defaultMember = (): Member => ({
 	system: nilUid,
 	isArchived: false,
 	isCustomFront: false,
+	isPinned: false,
 	dateCreated: new Date(0),
 	tags: [],
 	uuid: nilUid
@@ -93,6 +94,7 @@ export const defaultCustomFront = (): Member => ({
 	system: nilUid,
 	isArchived: false,
 	isCustomFront: true,
+	isPinned: false,
 	dateCreated: new Date(0),
 	tags: [],
 	uuid: maxUid

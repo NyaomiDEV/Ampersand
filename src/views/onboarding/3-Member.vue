@@ -33,6 +33,7 @@
 		system: appConfig.defaultSystem,
 		isArchived: false,
 		isCustomFront: false,
+		isPinned: false,
 		tags: []
 	};
 	const member = ref({ ...emptyMember });

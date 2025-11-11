@@ -42,6 +42,7 @@
 		title: "",
 		body: "",
 		date: new Date(),
+		isPinned: false,
 		isArchived: false
 	};
 	const boardMessage = ref(props.boardMessage || { ...emptyBoardMessage });

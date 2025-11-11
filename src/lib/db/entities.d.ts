@@ -9,7 +9,7 @@ export interface BoardMessage extends UUIDable {
 	title: string,
 	body: string,
 	date: Date,
-	isPinned?: boolean,
+	isPinned: boolean,
 	isArchived: boolean,
 	poll?: Poll
 }
@@ -77,7 +77,7 @@ export interface Member extends UUIDable {
 	cover?: File,
 	color?: string,
 	customFields?: Map<UUID, string>,
-	isPinned?: boolean,
+	isPinned: boolean,
 	isArchived: boolean,
 	isCustomFront: boolean,
 	tags: UUID[] // array of UUIDs
@@ -165,5 +165,5 @@ export interface Asset extends UUIDable {
 export interface CustomField extends UUIDable {
 	name: string,
 	priority: number,
-	default?: boolean,
+	default: boolean,
 }
