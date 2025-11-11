@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS board_messages (
 	id BLOB CHECK(length(id) = 16) PRIMARY KEY,
-	member BLOB CHECK(length(member) = 16) NOT NULL REFERENCES members,
-	title TEXT NOT NULL,
+	member BLOB CHECK(length(member) = 16) REFERENCES members,
+	title TEXT,
 	body TEXT NOT NULL,
 	date DATETIME NOT NULL,
 	is_pinned BOOLEAN,
@@ -60,6 +60,7 @@ CREATE TABLE IF NOT EXISTS journal_post_tags (
 
 CREATE TABLE IF NOT EXISTS members (
 	id BLOB CHECK(length(id) = 16) PRIMARY KEY,
+	system BLOB CHECK(length(system) = 16) REFERENCES systems,
 	name TEXT NOT NULL,
 	pronouns TEXT,
 	description TEXT,
@@ -124,6 +125,13 @@ CREATE TABLE IF NOT EXISTS custom_field_data (
 	member BLOB CHECK(length(member) = 16) NOT NULL REFERENCES members,
 	field BLOB CHECK(length(field) = 16) NOT NULL REFERENCES custom_fields,
 	value TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS presence_entries (
+	id BLOB CHECK(length(id) = 16) PRIMARY KEY,
+	fronting_entry BLOB CHECK(length(fronting_entry) = 16) NOT NULL REFERENCES fronting_entries,
+	date DATETIME NOT NULL,
+	presence INTEGER CHECK(presence >0 AND presence <=10) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS migrations (
