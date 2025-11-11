@@ -1,7 +1,7 @@
 import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUIDable, System, UUID } from "../entities";
-import { nilUid } from "../../util/misc";
+import { nilUid } from "../../util/consts";
 
 export function getSystems(){
 	return db.systems.iterate();

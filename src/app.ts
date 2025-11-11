@@ -1,6 +1,15 @@
 // Vue and Ionic
-import { createApp } from "vue";
+import { createApp, watch } from "vue";
 import { IonicVue } from "@ionic/vue";
+
+// App configuration
+import { accessibilityConfig, appConfig } from "./lib/config";
+
+// Database
+import { db } from "./lib/db/tables";
+
+// App Lock
+import { getLockedStatus } from "./lib/applock";
 
 // Router
 import router from "./router";
@@ -37,11 +46,9 @@ import { updateMaterialColors } from "./lib/theme";
 import "./lib/theme/style.css";
 
 // Other imports from frontend library
-import { getSystems } from "./lib/db/tables/system";
-import { appConfig } from "./lib/config";
-import { getLockedStatus } from "./lib/applock";
 import { clearTempDir } from "./lib/native/cache";
 import { slideAnimation } from "./lib/util/misc";
+import { nilUid } from "./lib/util/consts";
 import { addMobileListener, getWebkitVersion } from "./lib/native/plugin";
 import { platform } from "@tauri-apps/plugin-os";
 
@@ -52,7 +59,14 @@ async function setupAmpersand(){
 
 	window.Ionic.config.set("navAnimation", slideAnimation);
 
-	router.beforeEach(async (to) => {
+	const maybeSystem = db.systems.index[0]?.uuid || undefined;
+
+	if (appConfig.defaultSystem === nilUid) {
+		if (maybeSystem)
+			appConfig.defaultSystem = maybeSystem;
+	}
+
+	router.beforeEach((to) => {
 		// lock flow
 		if (getLockedStatus()) {
 			if (to.path === "/lock")
@@ -65,7 +79,7 @@ async function setupAmpersand(){
 		}
 
 		// first time???
-		if (!(await getSystems().next()).value){
+		if (!db.systems.index.length){
 			if (to.path.startsWith("/onboarding/") || to.path.startsWith("/options/accessibility"))
 				return true;
 
@@ -99,6 +113,13 @@ async function setupAmpersand(){
 	updateMaterialColors();
 	updateAccessibility();
 	await updateInsets();
+
+	watch(accessibilityConfig, async () => {
+		await updateDarkMode();
+		updateMaterialColors();
+		updateAccessibility();
+	});
+
 	window.addEventListener("orientationchange",  () => void updateInsets());
 
 	await router.isReady().then(async () => {

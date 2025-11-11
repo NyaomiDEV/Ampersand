@@ -2,10 +2,6 @@ import { alertController, createAnimation, getIonPageElement, toastController, T
 import dayjs from "dayjs";
 import { Ref } from "vue";
 import { appConfig } from "../config";
-import i18next from "../i18n";
-
-export const nilUid = "00000000-0000-0000-0000-000000000000";
-export const maxUid = "FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF";
 
 export function getFiles(contentType?: string, multiple?: boolean): Promise<File[]> {
 	return new Promise(resolve => {
@@ -116,6 +112,7 @@ export async function toast(message: string, duration = 1500){
 export async function promptOkCancel(header: string, subHeader?: string, message?: string){
 	return new Promise((resolve) => {
 		void (async () => {
+			const i18next = (await import("../i18n")).default;
 			const alert = await alertController.create({
 				header,
 				subHeader,

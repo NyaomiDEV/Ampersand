@@ -59,7 +59,7 @@ const dynamicColorsWeWant = [
 	"onTertiaryFixedVariant",
 ];
 
-export const defaultColor = "#30628C";
+const defaultColor = "#30628C";
 
 const m3colors = await M3.getColors("system");
 

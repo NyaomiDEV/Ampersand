@@ -4,7 +4,7 @@
 import { CustomField, FrontingEntry, Member, System, Tag } from "../entities";
 import { getTables } from "../tables";
 import { fetch } from "@tauri-apps/plugin-http";
-import { nilUid } from "../../util/misc";
+import { nilUid } from "../../util/consts";
 
 function pkCustomField(): CustomField {
 	return {

@@ -6,7 +6,7 @@ import { getTables } from "../tables";
 import { t } from "i18next";
 import { fetch } from "@tauri-apps/plugin-http";
 import { resizeImage } from "../../util/image";
-import { maxUid, nilUid } from "../../util/misc";
+import { maxUid, nilUid } from "../../util/consts";
 
 function normalizeSPColor(color?: string) {
 	if (!color || !color.length) return undefined;

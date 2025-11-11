@@ -1,0 +1,2 @@
+export const nilUid = "00000000-0000-0000-0000-000000000000";
+export const maxUid = "FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF";

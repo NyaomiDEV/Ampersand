@@ -4,6 +4,7 @@ import Duration from "dayjs/plugin/duration";
 import i18next from "i18next";
 
 import { appConfig } from "./config";
+import { watch } from "vue";
 
 const context = import.meta.webpackContext("../../translations/", {
 	recursive: true,
@@ -35,5 +36,9 @@ for(const [path, translation] of translations.entries()){
 dayjs.extend(LocalizedFormat);
 dayjs.extend(Duration);
 dayjs.locale(i18next.language);
+
+watch(appConfig, async () => {
+	await i18next.changeLanguage(appConfig.locale.language);
+});
 
 export default i18next;

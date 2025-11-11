@@ -2,10 +2,11 @@ import { appDataDir, sep } from "@tauri-apps/api/path";
 import * as fs from "@tauri-apps/plugin-fs";
 import { Typeson } from "typeson";
 import { file, map, undef } from "typeson-registry";
-import { Asset, BoardMessage, CustomField, FrontingEntry, JournalPost, Member, Reminder, System, Tag, UUIDable } from "../entities";
+import type { Asset, BoardMessage, CustomField, FrontingEntry, JournalPost, Member, Reminder, System, Tag, UUIDable } from "../entities";
 import { decode, encode } from "@msgpack/msgpack";
-import { AmpersandEntityMapping } from "../types";
+import type { AmpersandEntityMapping, MigrationsMapping } from "../types";
 import { deleteNull, replace, revive, walk } from "../../json";
+import { members } from "./migrations";
 
 export type IndexEntry<T> = UUIDable & Partial<T>;
 type SecondaryKey<T> = (Exclude<keyof T, keyof UUIDable>);
@@ -137,7 +138,7 @@ export class ShittyTable<T extends UUIDable> {
 
 	async walkDir() {
 		try {
-			const dir = (await fs.readDir(this.path)).filter(x => x.name !== ".index");
+			const dir = (await fs.readDir(this.path)).filter(x => x.name !== ".index" && x.name !== ".migrations");
 			return dir;
 		} catch (e) {
 			console.error(e);
@@ -244,10 +245,37 @@ export class ShittyTable<T extends UUIDable> {
 		return false;
 	}
 
-	async migrateAll(){
-		const dir = await this.walkDir();
-		if(!dir) return;
-		for(const file of dir) await this.get(file.name);
+	async getMigrationVersion(){
+		const _path = `${this.path + sep()}.migrations`;
+		try {
+			const migrations = decode(await fs.readFile(_path)) as MigrationsMapping;
+			return migrations.version;
+		} catch (e) {
+			console.error(e);
+		}
+		return 0;
+	}
+
+	async saveMigrationVersion(version: number){
+		const _path = `${this.path + sep()}.migrations`;
+		try {
+			await fs.writeFile(_path, encode({ version }));
+			return true;
+		} catch (e) {
+			console.error(e);
+		}
+		return false;
+	}
+
+	async migrate(){
+		let version = await this.getMigrationVersion() || 0;
+		switch (this.name) {
+			case "members":
+				version = await members(this as unknown as ShittyTable<Member>, version);
+				console.log("new version", version);
+				break;
+		}
+		await this.saveMigrationVersion(version);
 	}
 }
 
@@ -263,6 +291,7 @@ async function makeTable<T extends UUIDable>(tableName: string, secondaryKeys: S
 
 	const table = new ShittyTable<T>(tableName, _path, secondaryKeys);
 	await table.initializeIndex();
+	await table.migrate();
 
 	return table;
 }
@@ -276,7 +305,7 @@ export const db = {
 	boardMessages: await makeTable<BoardMessage>("boardMessages", ["member", "date", "isPinned", "isArchived"]),
 	frontingEntries: await makeTable<FrontingEntry>("frontingEntries", ["member", "startTime", "endTime", "isLocked"]),
 	journalPosts: await makeTable<JournalPost>("journalPosts", ["member", "date", "isPinned"]),
-	members: await makeTable<Member>("members", []),
+	members: await makeTable<Member>("members", ["system"]),
 	reminders: await makeTable<Reminder>("reminders", []),
 	systems: await makeTable<System>("system", []),
 	tags: await makeTable<Tag>("tags", []),

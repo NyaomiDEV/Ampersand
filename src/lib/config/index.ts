@@ -1,12 +1,8 @@
 import { reactive, watch } from "vue";
-import { AccessibilityConfig, AppConfig, SecurityConfig } from "./types";
-import { updateAccessibility, updateDarkMode } from "../mode";
-import { defaultColor, updateMaterialColors } from "../theme";
-import i18next from "i18next";
+import type { AccessibilityConfig, AppConfig, SecurityConfig } from "./types";
 import { load } from "@tauri-apps/plugin-store";
 import { appConfigDir, sep } from "@tauri-apps/api/path";
-import { nilUid } from "../util/misc";
-import { getSystems } from "../db/tables/system";
+import { nilUid } from "../util/consts";
 
 const defaultAppConfig: AppConfig = {
 	locale: {
@@ -14,7 +10,7 @@ const defaultAppConfig: AppConfig = {
 		firstWeekOfDayIsSunday: false,
 		twelveHourClock: false,
 	},
-	defaultSystem: (await getSystems().next()).value?.uuid || nilUid,
+	defaultSystem: nilUid,
 	showSystemDescriptionInDashboard: false,
 	showMembersBeforeCustomFronts: true,
 	hideFrontingTimer: false,
@@ -31,7 +27,7 @@ const defaultAccessibilityConfig: AccessibilityConfig = {
 	highLegibilityType: "atkinson",
 	theme: "auto",
 	useAccentColor: false,
-	accentColor: defaultColor,
+	accentColor: "#30628C",
 	reducedMotion: false,
 	disableMemberCoversInList: false,
 	contrastLevel: 0,
@@ -46,9 +42,9 @@ const defaultSecurityConfig: SecurityConfig = {
 };
 
 const store = await load(`${await appConfigDir() + sep()}appConfig.json`);
-export const appConfig = reactive<AppConfig>({ ...structuredClone(defaultAppConfig), ...await get("appConfig") });
-export const accessibilityConfig = reactive<AccessibilityConfig>({ ...structuredClone(defaultAccessibilityConfig), ...await get("accessibilityConfig") });
-export const securityConfig = reactive<SecurityConfig>({ ...structuredClone(defaultSecurityConfig), ...await get("securityConfig") });
+const appConfig = reactive<AppConfig>({ ...structuredClone(defaultAppConfig), ...await get("appConfig") });
+const accessibilityConfig = reactive<AccessibilityConfig>({ ...structuredClone(defaultAccessibilityConfig), ...await get("accessibilityConfig") });
+const securityConfig = reactive<SecurityConfig>({ ...structuredClone(defaultSecurityConfig), ...await get("securityConfig") });
 
 export function set(key: string, value: unknown): Promise<void> {
 	return store.set(key, value);
@@ -81,17 +77,18 @@ export function resetConfig(){
 
 watch(appConfig, async () => {
 	await set("appConfig", { ...appConfig });
-	await i18next.changeLanguage(appConfig.locale.language);
 });
 
 watch(accessibilityConfig, async () => {
 	await set("accessibilityConfig", { ...accessibilityConfig });
-	await updateDarkMode();
-
-	updateMaterialColors();
-	updateAccessibility();
 });
 
 watch(securityConfig, async () => {
 	await set("securityConfig", { ...securityConfig });
 });
+
+export {
+	appConfig,
+	accessibilityConfig,
+	securityConfig
+};

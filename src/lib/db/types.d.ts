@@ -12,6 +12,10 @@ export type AmpersandEntityMapping = {
 	customFields: CustomField
 };
 
+export type MigrationsMapping = {
+	version: number,
+};
+
 export type DatabaseEventData = {
 	table: keyof AmpersandEntityMapping,
 	event: "new" | "modified" | "deleted",
