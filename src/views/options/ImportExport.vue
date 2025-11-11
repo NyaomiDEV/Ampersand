@@ -109,28 +109,28 @@
 				extensions: ["ampdb"]
 			}]
 		});
+		if(path){
+			const { progress, dbPromise } = exportDatabaseToBinary();
 
-		const { progress, dbPromise } = exportDatabaseToBinary();
-
-		progress.addEventListener("start", () => {
-			barProgress.value = 0;
-		});
-		progress.addEventListener("progress", (evt) => {
-			barProgress.value = (evt as CustomEvent).detail.progress;
-		});
-		progress.addEventListener("finish", () => {
-			barProgress.value = -1;
-		});
-		
-		const dataStream = await dbPromise;
+			progress.addEventListener("start", () => {
+				barProgress.value = 0;
+			});
+			progress.addEventListener("progress", (evt) => {
+				barProgress.value = (evt as CustomEvent).detail.progress;
+			});
+			progress.addEventListener("finish", () => {
+				barProgress.value = -1;
+			});
+			
+			const dataStream = await dbPromise;
 
 
-		if(path && dataStream){
-			await writeFile(path, dataStream);
-			await toast(i18next.t("importExport:status.exportedApp"));
+			if(dataStream){
+				await writeFile(path, dataStream);
+				await toast(i18next.t("importExport:status.exportedApp"));
+			}
 		} else 
 			await toast(i18next.t("importExport:status.errorExport"));
-		
 
 		loading.value = false;
 	}
