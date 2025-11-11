@@ -25,7 +25,7 @@ pub struct BoardMessage {
 	pub body: String,
 	pub date: DateTimeData,
 	pub is_pinned: Option<bool>,
-	pub is_archived: bool,
+	pub is_archived: Option<bool>,
 	pub poll: Option<Poll>,
 }
 
@@ -33,7 +33,7 @@ pub struct BoardMessage {
 #[serde(rename_all = "camelCase")]
 pub struct Poll {
 	pub entries: Vec<PollEntry>,
-	pub multiple_choice: bool,
+	pub multiple_choice: Option<bool>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
@@ -55,7 +55,7 @@ pub struct FrontingEntry {
 	pub member: Uuid,
 	pub start_time: DateTimeData,
 	pub end_time: Option<DateTimeData>,
-	pub is_main_fronter: bool,
+	pub is_main_fronter: Option<bool>,
 	pub is_locked: Option<bool>,
 	pub custom_status: Option<String>,
 	pub influencing: Option<Uuid>,
@@ -74,8 +74,8 @@ pub struct JournalPost {
 	pub body: String,
 	pub cover: Option<File>,
 	pub tags: Vec<Uuid>,
-	pub is_pinned: bool,
-	pub is_private: bool,
+	pub is_pinned: Option<bool>,
+	pub is_private: Option<bool>,
 	pub content_warning: Option<String>,
 }
 
@@ -95,7 +95,7 @@ pub struct Tag {
 	pub description: Option<String>,
 	pub r#type: TagType,
 	pub color: Option<String>,
-	pub view_in_lists: bool,
+	pub view_in_lists: Option<bool>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, Display)]
@@ -161,8 +161,8 @@ pub struct Member {
 	pub color: Option<String>,
 	pub custom_fields: Option<CustomFieldsData>,
 	pub is_pinned: Option<bool>,
-	pub is_archived: bool,
-	pub is_custom_front: bool,
+	pub is_archived: Option<bool>,
+	pub is_custom_front: Option<bool>,
 	pub tags: Vec<Uuid>,
 	pub date_created: DateTimeData,
 }
@@ -265,15 +265,11 @@ pub fn convert_tag(tag: Tag, conn: &Mutex<Connection>) -> Result<sql::Tag, Error
 		description: tag.description,
 		r#type: type_id,
 		color: tag.color,
-		view_in_lists: tag.view_in_lists,
+		view_in_lists: tag.view_in_lists.unwrap_or_default(),
 	})
 }
 
-pub fn convert_file(
-	file: File,
-	data_path: &PathBuf,
-	conn: &Mutex<Connection>,
-) -> Result<sql::File, Error> {
+pub fn convert_file(file: File, data_path: &PathBuf) -> Result<sql::File, Error> {
 	let data = file.value.as_bytes();
 	let id = Uuid::new_v4();
 	let path = data_path.join("files").join(id.to_string());
@@ -294,7 +290,7 @@ pub fn convert_and_save_file(
 	data_path: &PathBuf,
 	conn: &Mutex<Connection>,
 ) -> Result<Uuid, Error> {
-	let new_file = convert_file(file, data_path, conn)?;
+	let new_file = convert_file(file, data_path)?;
 	conn.lock()?.execute(
 		"INSERT INTO files (id, path, friendly_name) VALUES (?1, ?2, ?3);",
 		(&new_file.id, &new_file.path, &new_file.friendly_name),
@@ -351,8 +347,8 @@ pub fn convert_member(
 				.transpose()?,
 			color: member.color,
 			is_pinned: member.is_pinned,
-			is_archived: member.is_archived,
-			is_custom_front: member.is_custom_front,
+			is_archived: member.is_archived.unwrap_or_default(),
+			is_custom_front: member.is_custom_front.unwrap_or_default(),
 			date_created: convert_datetime(member.date_created)?,
 		},
 		member
@@ -398,8 +394,8 @@ pub fn convert_post(
 			.cover
 			.map(|file| convert_and_save_file(file, data_path, conn))
 			.transpose()?,
-		is_pinned: post.is_pinned,
-		is_private: post.is_private,
+		is_pinned: post.is_pinned.unwrap_or_default(),
+		is_private: post.is_private.unwrap_or_default(),
 		content_warning: post.content_warning,
 	})
 }
@@ -413,7 +409,7 @@ pub fn convert_fronting_entry(entry: FrontingEntry) -> Result<sql::FrontingEntry
 			.end_time
 			.map(|end_time| convert_datetime(end_time))
 			.transpose()?,
-		is_main_fronter: entry.is_main_fronter,
+		is_main_fronter: entry.is_main_fronter.unwrap_or_default(),
 		is_locked: entry.is_locked.unwrap_or_default(),
 		custom_status: entry.custom_status,
 		influencing: entry.influencing,
@@ -432,7 +428,7 @@ pub fn convert_message(
 		body: message.body,
 		date: convert_datetime(message.date)?,
 		is_pinned: message.is_pinned.unwrap_or_default(),
-		is_archived: message.is_archived,
+		is_archived: message.is_archived.unwrap_or_default(),
 		poll: message
 			.poll
 			.map(|poll| convert_and_save_poll(poll, conn))
@@ -446,7 +442,7 @@ pub fn convert_poll(poll: Poll) -> Result<(sql::Poll, Vec<sql::PollEntry>, Vec<s
 	Ok((
 		sql::Poll {
 			id,
-			multiple_choice: poll.multiple_choice,
+			multiple_choice: poll.multiple_choice.unwrap_or_default(),
 		},
 		entries,
 		votes,
