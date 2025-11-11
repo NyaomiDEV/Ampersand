@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS board_messages (
 	title TEXT,
 	body TEXT NOT NULL,
 	date DATETIME NOT NULL,
-	is_pinned BOOLEAN,
+	is_pinned BOOLEAN NOT NULL,
 	is_archived BOOLEAN NOT NULL,
 	poll BLOB CHECK(length(poll) = 16) REFERENCES polls
 );
@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS members (
 	image BLOB CHECK(length(image) = 16) REFERENCES files,
 	cover BLOB CHECK(length(cover) = 16) REFERENCES files,
 	color TEXT,
-	is_pinned BOOLEAN,
+	is_pinned BOOLEAN NOT NULL,
 	is_archived BOOLEAN NOT NULL,
 	is_custom_front BOOLEAN NOT NULL,
 	date_created DATETIME NOT NULL
