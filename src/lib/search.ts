@@ -117,9 +117,14 @@ export function filterBoardMessage(search: string, boardMessage: BoardMessageCom
 			return false;
 	}
 
-	if (parsed.member) {
-		if (boardMessage.member?.uuid !== parsed.member)
-			return false;
+	if (typeof parsed.member !== "undefined") {
+		if(boardMessage.member){
+			if(parsed.member === false)
+				return false;
+
+			if (boardMessage.member.uuid !== parsed.member)
+				return false;
+		}
 	}
 
 	return true;
@@ -142,9 +147,14 @@ export function filterBoardMessageIndex(search: string, boardMessage: IndexEntry
 			return false;
 	}
 
-	if (parsed.member) {
-		if (boardMessage.member !== parsed.member)
-			return false;
+	if (typeof parsed.member !== "undefined") {
+		if (boardMessage.member) {
+			if (parsed.member === false)
+				return false;
+
+			if (boardMessage.member !== parsed.member)
+				return false;
+		}
 	}
 
 	return true;
@@ -200,9 +210,14 @@ export async function filterJournalPost(search: string, post: JournalPostComplet
 			return false;
 	}
 
-	if (parsed.member) {
-		if (post.member?.uuid !== parsed.member)
-			return false;
+	if (typeof parsed.member !== "undefined") {
+		if (post.member) {
+			if (parsed.member === false)
+				return false;
+
+			if (post.member.uuid !== parsed.member)
+				return false;
+		}
 	}
 
 	return true;
@@ -211,9 +226,14 @@ export async function filterJournalPost(search: string, post: JournalPostComplet
 export async function filterJournalPostIndex(search: string, post: IndexEntry<JournalPost>) {
 	const parsed = await parseJournalPostFilterQuery(search.length ? search : appConfig.defaultFilterQueries.messageBoard || "");
 
-	if (parsed.member) {
-		if (post.member !== parsed.member)
-			return false;
+	if (typeof parsed.member !== "undefined") {
+		if (post.member) {
+			if (parsed.member === false)
+				return false;
+
+			if (post.member !== parsed.member)
+				return false;
+		}
 	}
 
 	return true;

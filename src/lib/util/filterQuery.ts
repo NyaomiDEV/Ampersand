@@ -21,7 +21,7 @@ export type BoardMessageFilterQuery = {
 	query: string,
 	isPinned?: boolean,
 	isArchived?: boolean,
-	member?: UUID
+	member?: UUID | boolean
 };
 
 export type AssetFilterQuery = {
@@ -38,7 +38,7 @@ export type CustomFieldFilterQuery = {
 export type JournalPostFilterQuery = {
 	query: string,
 	tags: string[],
-	member?: UUID;
+	member?: UUID | boolean;
 };
 
 function splitTokens(search: string){
@@ -218,7 +218,15 @@ export function parseBoardMessageFilterQuery(search: string) {
 					result.isArchived = true;
 				break;
 			case "member":
-				result.member = value;
+				switch (value.toLowerCase()) {
+					case "no":
+					case "false":
+						result.member = false;
+						break;
+					default:
+						result.member = value;
+						break;
+				}
 				break;
 		}
 		break;
@@ -296,7 +304,15 @@ export async function parseJournalPostFilterQuery(search: string) {
 	for (const [variable, value] of rawParsed.variables) {
 		switch (variable.toLowerCase()) {
 			case "member":
-				result.member = value;
+				switch (value.toLowerCase()) {
+					case "no":
+					case "false":
+						result.member = false;
+						break;
+					default:
+						result.member = value;
+						break;
+				}
 				break;
 		}
 		break;
