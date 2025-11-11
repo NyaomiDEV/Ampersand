@@ -56,7 +56,7 @@ pub struct FrontingEntry {
 	pub start_time: DateTimeData,
 	pub end_time: Option<DateTimeData>,
 	pub is_main_fronter: bool,
-	pub is_locked: bool,
+	pub is_locked: Option<bool>,
 	pub custom_status: Option<String>,
 	pub influencing: Option<Uuid>,
 	pub presence: Option<HashMap<DateTimeData, u8>>,
@@ -414,7 +414,7 @@ pub fn convert_fronting_entry(entry: FrontingEntry) -> Result<sql::FrontingEntry
 			.map(|end_time| convert_datetime(end_time))
 			.transpose()?,
 		is_main_fronter: entry.is_main_fronter,
-		is_locked: entry.is_locked,
+		is_locked: entry.is_locked.unwrap_or_default(),
 		custom_status: entry.custom_status,
 		influencing: entry.influencing,
 		comment: entry.comment,
