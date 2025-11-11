@@ -328,7 +328,7 @@ pub fn convert_member(
 	system_id: Uuid,
 	data_path: &PathBuf,
 	conn: &Mutex<Connection>,
-) -> Result<(sql::Member, Vec<sql::CustomFieldDatum>), Error> {
+) -> Result<(sql::Member, Vec<sql::CustomFieldDatum>, Vec<sql::MemberTag>), Error> {
 	Ok((
 		sql::Member {
 			id: member.uuid,
@@ -363,6 +363,15 @@ pub fn convert_member(
 				value,
 			})
 			.collect(),
+		member
+			.tags
+			.into_iter()
+			.map(|tag| sql::MemberTag {
+				id: Uuid::new_v4(),
+				member: member.uuid,
+				tag,
+			})
+			.collect(),
 	))
 }
 
@@ -382,22 +391,32 @@ pub fn convert_post(
 	post: JournalPost,
 	data_path: &PathBuf,
 	conn: &Mutex<Connection>,
-) -> Result<sql::JournalPost, Error> {
-	Ok(sql::JournalPost {
-		id: post.uuid,
-		member: post.member,
-		date: convert_datetime(post.date)?.into(),
-		title: post.title,
-		subtitle: post.subtitle,
-		body: post.body,
-		cover: post
-			.cover
-			.map(|file| convert_and_save_file(file, data_path, conn))
-			.transpose()?,
-		is_pinned: post.is_pinned.unwrap_or_default(),
-		is_private: post.is_private.unwrap_or_default(),
-		content_warning: post.content_warning,
-	})
+) -> Result<(sql::JournalPost, Vec<sql::JournalPostTag>), Error> {
+	Ok((
+		sql::JournalPost {
+			id: post.uuid,
+			member: post.member,
+			date: convert_datetime(post.date)?.into(),
+			title: post.title,
+			subtitle: post.subtitle,
+			body: post.body,
+			cover: post
+				.cover
+				.map(|file| convert_and_save_file(file, data_path, conn))
+				.transpose()?,
+			is_pinned: post.is_pinned.unwrap_or_default(),
+			is_private: post.is_private.unwrap_or_default(),
+			content_warning: post.content_warning,
+		},
+		post.tags
+			.into_iter()
+			.map(|tag| sql::JournalPostTag {
+				id: Uuid::new_v4(),
+				post: post.uuid,
+				tag,
+			})
+			.collect(),
+	))
 }
 
 pub fn convert_fronting_entry(

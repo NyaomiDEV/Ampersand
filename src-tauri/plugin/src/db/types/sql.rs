@@ -126,6 +126,20 @@ pub struct TagType {
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct MemberTag {
+	pub id: Uuid,
+	pub member: Uuid,
+	pub tag: Uuid,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct JournalPostTag {
+	pub id: Uuid,
+	pub post: Uuid,
+	pub tag: Uuid,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Asset {
 	pub id: Uuid,
 	pub file: Uuid,
