@@ -1,7 +1,7 @@
 //! Datatypes for passing data between Rust and Sqlite
 
 use serde::{Deserialize, Serialize};
-use time::UtcDateTime;
+use time::OffsetDateTime;
 use uuid::Uuid;
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
@@ -10,7 +10,7 @@ pub struct BoardMessage {
 	pub member: Option<Uuid>,
 	pub title: Option<String>,
 	pub body: String,
-	pub date: UtcDateTime,
+	pub date: OffsetDateTime,
 	pub is_pinned: bool,
 	pub is_archived: bool,
 	pub poll: Option<Uuid>,
@@ -39,8 +39,8 @@ pub struct Vote {
 pub struct FrontingEntry {
 	pub id: Uuid,
 	pub member: Uuid,
-	pub start_time: UtcDateTime,
-	pub end_time: Option<UtcDateTime>,
+	pub start_time: OffsetDateTime,
+	pub end_time: Option<OffsetDateTime>,
 	pub is_main_fronter: bool,
 	pub is_locked: bool,
 	pub custom_status: Option<String>,
@@ -52,7 +52,7 @@ pub struct FrontingEntry {
 pub struct PresenceEntry {
 	pub id: Uuid,
 	pub fronting_entry: Uuid,
-	pub date: UtcDateTime,
+	pub date: OffsetDateTime,
 	pub presence: u8,
 }
 
@@ -60,7 +60,7 @@ pub struct PresenceEntry {
 pub struct JournalPost {
 	pub id: Uuid,
 	pub member: Option<Uuid>,
-	pub date: UtcDateTime,
+	pub date: OffsetDateTime,
 	pub title: String,
 	pub subtitle: Option<String>,
 	pub body: String,
@@ -81,10 +81,10 @@ pub struct Member {
 	pub image: Option<Uuid>,
 	pub cover: Option<Uuid>,
 	pub color: Option<String>,
-	pub is_pinned: Option<bool>,
+	pub is_pinned: bool,
 	pub is_archived: bool,
 	pub is_custom_front: bool,
-	pub date_created: UtcDateTime,
+	pub date_created: OffsetDateTime,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
@@ -92,7 +92,7 @@ pub struct CustomField {
 	pub id: Uuid,
 	pub name: String,
 	pub priority: i8,
-	pub is_default: Option<bool>,
+	pub is_default: bool,
 }
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct CustomFieldDatum {
