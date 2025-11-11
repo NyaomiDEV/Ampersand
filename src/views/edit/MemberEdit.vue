@@ -49,6 +49,7 @@
 	import MemberCover from "../../components/member/MemberCover.vue";
 	import { getCustomFields } from "../../lib/db/tables/customFields";
 	import CustomFieldsSelect from "../../modals/CustomFieldsSelect.vue";
+	import { appConfig } from "../../lib/config";
 
 	const i18next = useTranslation();
 
@@ -59,6 +60,7 @@
 
 	const emptyMember: PartialBy<Member, "uuid" | "dateCreated"> = {
 		name: "",
+		system: appConfig.defaultSystem,
 		isArchived: false,
 		isCustomFront: false,
 		tags: []

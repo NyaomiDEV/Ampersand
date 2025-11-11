@@ -11,6 +11,7 @@
 	import ArrowMD from "@material-symbols/svg-600/outlined/arrow_forward.svg";
 	import { System } from "../../lib/db/entities";
 	import { PartialBy } from "../../lib/types";
+	import { appConfig } from "../../lib/config";
 
 	const router = useIonRouter();
 
@@ -29,16 +30,17 @@
 	}
 
 	async function save() {
-		if(!await getSystem())
-			await newSystem({ ...toRaw(system.value) });
-		else
-			await modifySystem({ ...toRaw(system.value) });
+		if(!await getSystem(appConfig.defaultSystem)) {
+			const uuid = await newSystem({ ...toRaw(system.value) });
+			if(uuid) appConfig.defaultSystem = uuid;
+		} else
+			await modifySystem(appConfig.defaultSystem, { ...toRaw(system.value) });
 	
 		router.replace("/onboarding/member/", slideAnimation);
 	}
 
 	onBeforeMount(async () => {
-		const sys = await getSystem();
+		const sys = await getSystem(appConfig.defaultSystem);
 		if(sys) system.value = sys;
 	});
 </script>

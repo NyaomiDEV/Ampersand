@@ -56,13 +56,14 @@ function tag(pkExport: any){
 	};
 }
 
-async function member(pkExport: any, tagMapping: Map<string, string>, pkField: CustomField) {
+async function member(pkExport: any, tagMapping: Map<string, string>, systemInfo: System, pkField: CustomField) {
 	const memberMapping = new Map<string, string>();
 	const members: Member[] = [];
 
 	for (const pkMember of pkExport.members) {
 		const member: Member = {
 			name: pkMember.display_name || pkMember.name,
+			system: systemInfo.uuid,
 			description: pkMember.description || undefined,
 			pronouns: pkMember.pronouns || undefined,
 			color: pkMember.color ? `#${pkMember.color}` : undefined,
@@ -142,7 +143,7 @@ export async function importPluralKit(pkExport: any){
 	const field = pkCustomField();
 	const systemInfo = await system(pkExport);
 	const { tags, tagMapping } = tag(pkExport);
-	const { members, memberMapping } = await member(pkExport, tagMapping, field);
+	const { members, memberMapping } = await member(pkExport, tagMapping, systemInfo, field);
 	const frontingEntries = frontingEntry(pkExport, memberMapping);
 
 	try {
@@ -152,7 +153,7 @@ export async function importPluralKit(pkExport: any){
 		// ADD TO DATABASE
 		const tables = getTables();
 		await tables.customFields.bulkAdd([field]);
-		await tables.system.bulkAdd([systemInfo]);
+		await tables.systems.bulkAdd([systemInfo]);
 		await tables.tags.bulkAdd(tags);
 		await tables.members.bulkAdd(members);
 		await tables.frontingEntries.bulkAdd(frontingEntries);

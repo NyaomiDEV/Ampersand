@@ -80,6 +80,7 @@ export async function updateMember(uuid: UUID, newContent: Partial<Member>) {
 
 export const defaultMember = (): Member => ({
 	name: t("members:deletedMember"),
+	system: nilUid,
 	isArchived: false,
 	isCustomFront: false,
 	dateCreated: new Date(0),
@@ -89,6 +90,7 @@ export const defaultMember = (): Member => ({
 
 export const defaultCustomFront = (): Member => ({
 	name: t("members:deletedCustomFront"),
+	system: nilUid,
 	isArchived: false,
 	isCustomFront: true,
 	dateCreated: new Date(0),

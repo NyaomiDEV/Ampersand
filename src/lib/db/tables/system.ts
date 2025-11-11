@@ -1,16 +1,21 @@
 import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
-import { UUIDable, System } from "../entities";
+import { UUIDable, System, UUID } from "../entities";
+import { nilUid } from "../../util/misc";
+
+export function getSystems(){
+	return db.systems.iterate();
+}
 
 export async function newSystem(system: Omit<System, keyof UUIDable>){
 	try{
 		const uuid = window.crypto.randomUUID();
-		await db.system.add(uuid, {
+		await db.systems.add(uuid, {
 			...system,
 			uuid
 		});
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
-			table: "system",
+			table: "systems",
 			event: "new",
 			uuid,
 			newData: system
@@ -21,24 +26,33 @@ export async function newSystem(system: Omit<System, keyof UUIDable>){
 	}
 }
 
-// Extra because there shall only be one
-export async function getSystem(): Promise<System | undefined> {
-	return (await db.system.iterate().next()).value || undefined;
+export async function getSystem(uuid: UUID){
+	if(uuid === nilUid) return undefined;
+	return await db.systems.get(uuid);
 }
 
-export async function getSystemUUID(){
-	return (await db.system.iterate().next()).value?.uuid;
-}
-
-export async function modifySystem(system: Partial<System>) {
+export async function deleteMember(uuid: UUID) {
+	if (uuid === nilUid) return false;
 	try {
-		const uuid = await getSystemUUID();
-		if(!uuid) return false;
-		
-		const updated = await db.system.update(uuid, system);
+		await db.systems.delete(uuid);
+		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
+			table: "systems",
+			event: "deleted",
+			uuid,
+			delta: {}
+		}));
+		return true;
+	} catch (_error) {
+		return false;
+	}
+}
+
+export async function modifySystem(uuid: UUID, system: Partial<System>) {
+	try {
+		const updated = await db.systems.update(uuid, system);
 		if(updated){
 			DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
-				table: "system",
+				table: "systems",
 				event: "modified",
 				uuid,
 				delta: system

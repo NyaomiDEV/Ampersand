@@ -24,11 +24,13 @@
 	import { ref, toRaw } from "vue";
 	import { PartialBy } from "../../lib/types";
 	import MemberAvatar from "../../components/member/MemberAvatar.vue";
+	import { appConfig } from "../../lib/config";
 
 	const router = useIonRouter();
 
 	const emptyMember: PartialBy<Member, "uuid" | "dateCreated"> = {
 		name: "",
+		system: appConfig.defaultSystem,
 		isArchived: false,
 		isCustomFront: false,
 		tags: []

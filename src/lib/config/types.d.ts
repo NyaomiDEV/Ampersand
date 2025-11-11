@@ -1,3 +1,5 @@
+import { UUID } from "../db/entities";
+
 export type AppConfig = {
 	locale: {
 		language: string,
@@ -5,6 +7,7 @@ export type AppConfig = {
 		twelveHourClock: boolean
 	},
 	view: ViewName,
+	defaultSystem: UUID,
 	showSystemDescriptionInDashboard: boolean,
 	showMembersBeforeCustomFronts: boolean,
 	hideFrontingTimer: boolean,

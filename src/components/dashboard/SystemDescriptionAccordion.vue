@@ -6,11 +6,12 @@
 
 	import { getSystem } from "../../lib/db/tables/system";
 	import Markdown from "../Markdown.vue";
+	import { appConfig } from "../../lib/config";
 
 	const description = ref("");
 
 	onBeforeMount(async () => {
-		const _description = (await getSystem())?.description;
+		const _description = (await getSystem(appConfig.defaultSystem))?.description;
 		if(_description) description.value = _description;
 	});
 </script>

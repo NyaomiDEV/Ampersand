@@ -131,7 +131,7 @@ function customField(spExport: any){
 	};
 }
 
-export async function member(spExport: any, systemUid: string, tagMapping: Map<string, string>, customFieldMapping: Map<string, [string, number]>){
+export async function member(spExport: any, systemInfo: System, systemUid: string, tagMapping: Map<string, string>, customFieldMapping: Map<string, [string, number]>){
 	const memberMapping = new Map<string, string>();
 	const members: Member[] = [];
 
@@ -140,6 +140,7 @@ export async function member(spExport: any, systemUid: string, tagMapping: Map<s
 		console.debug("[SP] Creating member for:", spMember);
 		const member: Member = {
 			name: spMember.name,
+			system: systemInfo.uuid,
 			pronouns: spMember.pronouns?.length ? spMember.pronouns : undefined,
 			description: spMember.desc?.length ? spMember.desc : undefined,
 			color: normalizeSPColor(spMember.color),
@@ -190,6 +191,7 @@ export async function member(spExport: any, systemUid: string, tagMapping: Map<s
 		console.debug("[SP] Creating member for custom front:", spCustomFront);
 		const member: Member = {
 			name: spCustomFront.name,
+			system: systemInfo.uuid,
 			description: spCustomFront.desc?.length ? spCustomFront.desc : undefined,
 			color: normalizeSPColor(spCustomFront.color),
 			isArchived: false,
@@ -399,7 +401,7 @@ export async function importSimplyPlural(spExport: any) {
 	
 	const { tags, tagMapping } = tag(spExport);
 	const { customFields, customFieldMapping } = customField(spExport);
-	const { members, memberMapping } = await member(spExport, systemUid, tagMapping, customFieldMapping);
+	const { members, memberMapping } = await member(spExport, systemInfo, systemUid, tagMapping, customFieldMapping);
 	const frontingEntries = frontingEntry(spExport, memberMapping);
 	const boardMessages = boardMessage(spExport, memberMapping);
 	const posts = journalPost(spExport, memberMapping);
@@ -415,7 +417,7 @@ export async function importSimplyPlural(spExport: any) {
 
 		// ADD TO DATABASE
 		const tables = getTables();
-		await tables.system.bulkAdd([systemInfo]);
+		await tables.systems.bulkAdd([systemInfo]);
 		await tables.tags.bulkAdd(tags);
 		await tables.customFields.bulkAdd(customFields);
 		await tables.members.bulkAdd(members);

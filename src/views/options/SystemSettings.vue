@@ -13,6 +13,7 @@
 	import pencilMD from "@material-symbols/svg-600/outlined/edit.svg";
 	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
+	import { appConfig } from "../../lib/config";
 
 	const membersShowed = ref(false);
 	const memberCount = ref(0);
@@ -41,13 +42,13 @@
 	const router: any = inject("navManager");
 
 	async function save() {
-		await modifySystem({ ...system.value });
+		await modifySystem(appConfig.defaultSystem, { ...system.value });
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 		router.handleNavigateBack("/options/");
 	}
 
 	onMounted(async () => {
-		system.value = await getSystem();
+		system.value = await getSystem(appConfig.defaultSystem);
 		let _memberCount = 0;
 		let _archivedMemberCount = 0;
 		let _customFrontCount = 0;

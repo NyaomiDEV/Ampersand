@@ -6,7 +6,7 @@ export type AmpersandEntityMapping = {
 	journalPosts: JournalPost
 	members: Member
 	reminders: Reminder
-	system: System
+	systems: System
 	tags: Tag,
 	assets: Asset,
 	customFields: CustomField

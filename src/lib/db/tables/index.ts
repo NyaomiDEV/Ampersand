@@ -278,7 +278,7 @@ export const db = {
 	journalPosts: await makeTable<JournalPost>("journalPosts", ["member", "date", "isPinned"]),
 	members: await makeTable<Member>("members", []),
 	reminders: await makeTable<Reminder>("reminders", []),
-	system: await makeTable<System>("system", []),
+	systems: await makeTable<System>("system", []),
 	tags: await makeTable<Tag>("tags", []),
 	assets: await makeTable<Asset>("assets", []),
 	customFields: await makeTable<CustomField>("customFields", [])

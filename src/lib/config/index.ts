@@ -5,6 +5,8 @@ import { defaultColor, updateMaterialColors } from "../theme";
 import i18next from "i18next";
 import { load } from "@tauri-apps/plugin-store";
 import { appConfigDir, sep } from "@tauri-apps/api/path";
+import { nilUid } from "../util/misc";
+import { getSystems } from "../db/tables/system";
 
 const defaultAppConfig: AppConfig = {
 	locale: {
@@ -12,6 +14,7 @@ const defaultAppConfig: AppConfig = {
 		firstWeekOfDayIsSunday: false,
 		twelveHourClock: false,
 	},
+	defaultSystem: (await getSystems().next()).value?.uuid || nilUid,
 	showSystemDescriptionInDashboard: false,
 	showMembersBeforeCustomFronts: true,
 	hideFrontingTimer: false,

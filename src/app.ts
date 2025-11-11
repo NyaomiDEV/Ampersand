@@ -37,7 +37,7 @@ import { updateMaterialColors } from "./lib/theme";
 import "./lib/theme/style.css";
 
 // Other imports from frontend library
-import { getSystem } from "./lib/db/tables/system";
+import { getSystems } from "./lib/db/tables/system";
 import { appConfig } from "./lib/config";
 import { getLockedStatus } from "./lib/applock";
 import { clearTempDir } from "./lib/native/cache";
@@ -65,7 +65,7 @@ async function setupAmpersand(){
 		}
 
 		// first time???
-		if (!(await getSystem())){
+		if (!(await getSystems().next()).value){
 			if (to.path.startsWith("/onboarding/") || to.path.startsWith("/options/accessibility"))
 				return true;
 

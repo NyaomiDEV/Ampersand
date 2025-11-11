@@ -25,12 +25,13 @@ function tag(tuExport: any){
 	};
 }
 
-async function member(tuExport: any, tagMapping: Map<number, string>){
+async function member(tuExport: any, systemInfo: System, tagMapping: Map<number, string>){
 	const members: Member[] = [];
 
 	for (const tuMember of tuExport.tuppers) {
 		const member: Member = {
 			name: tuMember.name,
+			system: systemInfo.uuid,
 			description: tuMember.description || undefined,
 			pronouns: tuMember.pronouns || undefined,
 			isArchived: false,
@@ -64,7 +65,12 @@ async function member(tuExport: any, tagMapping: Map<number, string>){
 
 export async function importTupperBox(tuExport: any){
 	const { tags, tagMapping } = tag(tuExport);
-	const members = await member(tuExport, tagMapping);
+	const systemInfo = {
+		name: "",
+		description: "",
+		uuid: window.crypto.randomUUID()
+	} as System;
+	const members = await member(tuExport, systemInfo, tagMapping);
 
 	try {
 		// WIPE AMPERSAND
@@ -72,11 +78,7 @@ export async function importTupperBox(tuExport: any){
 
 		// ADD TO DATABASE
 		const tables = getTables();
-		await tables.system.bulkAdd([{
-			name: "",
-			description: "",
-			uuid: window.crypto.randomUUID()
-		}] as System[]);
+		await tables.systems.bulkAdd([systemInfo]);
 		await tables.tags.bulkAdd(tags);
 		await tables.members.bulkAdd(members);
 	}catch(e){

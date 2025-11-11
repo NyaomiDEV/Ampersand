@@ -68,6 +68,7 @@ export interface JournalPostComplete extends JournalPost {
 }
 
 export interface Member extends UUIDable {
+	system: UUID,
 	name: string,
 	pronouns?: string,
 	description?: string,
