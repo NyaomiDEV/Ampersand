@@ -421,7 +421,6 @@ pub fn convert_post(
 
 pub fn convert_fronting_entry(
 	entry: FrontingEntry,
-	conn: &Mutex<Connection>,
 ) -> Result<(sql::FrontingEntry, Vec<sql::PresenceEntry>), Error> {
 	Ok((
 		sql::FrontingEntry {
