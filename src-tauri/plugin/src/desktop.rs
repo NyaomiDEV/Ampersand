@@ -35,6 +35,10 @@ impl<R: Runtime> Ampersand<R> {
 		db::run_db_migrations(&self.1, &self.0)
 	}
 
+	pub fn migrate_old_db(&self) -> crate::Result<()> {
+		db::migrate_old_db(&self.1, &self.0)
+	}
+
   pub fn broadcast_event(&self, _payload: String) -> crate::Result<()> {
     Ok(()) // af_unix someday?
   }
