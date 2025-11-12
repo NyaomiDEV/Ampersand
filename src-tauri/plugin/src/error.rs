@@ -18,6 +18,8 @@ pub enum Error {
 	Other(String),
 	#[error(transparent)]
 	Conversion(#[from] crate::db::types::msgpack::Error),
+	#[error(transparent)]
+	Json(#[from] serde_json::Error),
 	#[cfg(mobile)]
 	#[error(transparent)]
 	PluginInvoke(#[from] tauri::plugin::mobile::PluginInvokeError),

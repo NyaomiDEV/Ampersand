@@ -40,6 +40,7 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
 			commands::open_file,
 			commands::test_db,
 			commands::run_db_migrations,
+			commands::migrate_old_db,
 			commands::get_webkit_version,
 			commands::broadcast_event,
 			commands::list_assets
