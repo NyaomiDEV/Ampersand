@@ -3,6 +3,7 @@
 use std::{
 	collections::HashMap,
 	io::{Read, Write},
+	ops::Deref,
 	path::PathBuf,
 	sync::Mutex,
 	time::{Duration, SystemTime},
@@ -257,8 +258,8 @@ pub fn convert_datetime(data: DateTimeData) -> Result<UtcDateTime, Error> {
 	}
 }
 
-pub fn convert_tag(tag: Tag, conn: &Mutex<Connection>) -> Result<sql::Tag, Error> {
-	let type_id = conn.lock()?.query_one("INSERT INTO tag_types (id, label) VALUES (?1, ?2) WHERE NOT EXISTS ( SELECT * FROM tag_types WHERE label = ?2); SELECT id FROM tag_types WHERE label = ?2;", (uuid::Uuid::new_v4(), tag.r#type.to_string()), |v| v.get::<usize, uuid::Uuid>(0))?;
+pub fn convert_tag<D: Deref<Target = Connection>>(tag: Tag, conn: &D) -> Result<sql::Tag, Error> {
+	let type_id = conn.query_one("INSERT INTO tag_types (id, label) VALUES (?1, ?2) WHERE NOT EXISTS ( SELECT * FROM tag_types WHERE label = ?2); SELECT id FROM tag_types WHERE label = ?2;", (uuid::Uuid::new_v4(), tag.r#type.to_string()), |v| v.get::<usize, uuid::Uuid>(0))?;
 	Ok(sql::Tag {
 		id: Uuid::new_v4(),
 		name: tag.name,
@@ -272,6 +273,7 @@ pub fn convert_tag(tag: Tag, conn: &Mutex<Connection>) -> Result<sql::Tag, Error
 pub fn convert_file(file: File, data_path: &PathBuf) -> Result<sql::File, Error> {
 	let data = file.value.as_bytes();
 	let id = Uuid::new_v4();
+	std::fs::create_dir_all(data_path.join("files"))?;
 	let path = data_path.join("files").join(id.to_string());
 	std::fs::File::create(path)?.write(data)?;
 	Ok(sql::File {
@@ -285,23 +287,23 @@ pub fn convert_file(file: File, data_path: &PathBuf) -> Result<sql::File, Error>
 	})
 }
 
-pub fn convert_and_save_file(
+pub fn convert_and_save_file<D: Deref<Target = Connection>>(
 	file: File,
 	data_path: &PathBuf,
-	conn: &Mutex<Connection>,
+	conn: &D,
 ) -> Result<Uuid, Error> {
 	let new_file = convert_file(file, data_path)?;
-	conn.lock()?.execute(
+	conn.execute(
 		"INSERT INTO files (id, path, friendly_name) VALUES (?1, ?2, ?3);",
 		(&new_file.id, &new_file.path, &new_file.friendly_name),
 	)?;
 	Ok(new_file.id)
 }
 
-pub fn convert_system(
+pub fn convert_system<D: Deref<Target = Connection>>(
 	system: System,
 	data_path: &PathBuf,
-	conn: &Mutex<Connection>,
+	conn: &D,
 ) -> Result<sql::System, Error> {
 	Ok(sql::System {
 		id: Uuid::new_v4(),
@@ -323,11 +325,11 @@ pub fn convert_custom_field(field: CustomField) -> Result<sql::CustomField, Erro
 	})
 }
 
-pub fn convert_member(
+pub fn convert_member<D: Deref<Target = Connection>>(
 	member: Member,
 	system_id: Uuid,
 	data_path: &PathBuf,
-	conn: &Mutex<Connection>,
+	conn: &D,
 ) -> Result<(sql::Member, Vec<sql::CustomFieldDatum>, Vec<sql::MemberTag>), Error> {
 	Ok((
 		sql::Member {
@@ -375,10 +377,10 @@ pub fn convert_member(
 	))
 }
 
-pub fn convert_asset(
+pub fn convert_asset<D: Deref<Target = Connection>>(
 	asset: Asset,
 	data_path: &PathBuf,
-	conn: &Mutex<Connection>,
+	conn: &D,
 ) -> Result<sql::Asset, Error> {
 	Ok(sql::Asset {
 		id: asset.uuid,
@@ -387,10 +389,10 @@ pub fn convert_asset(
 	})
 }
 
-pub fn convert_post(
+pub fn convert_post<D: Deref<Target = Connection>>(
 	post: JournalPost,
 	data_path: &PathBuf,
-	conn: &Mutex<Connection>,
+	conn: &D,
 ) -> Result<(sql::JournalPost, Vec<sql::JournalPostTag>), Error> {
 	Ok((
 		sql::JournalPost {

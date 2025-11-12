@@ -112,7 +112,7 @@ pub fn migrate_old_db<R: Runtime>(
 	{
 		let json = msgpack::msgpack_to_json(File::open(path)?)?;
 		let system: msgpack::System = serde_json::from_str(&json)?;
-		let system = msgpack::convert_system(system, &data_path, conn)?;
+		let system = msgpack::convert_system(system, &data_path, &transaction)?;
 		system_id = Some(system.id);
 		transaction.execute(
 			"INSERT INTO systems (id, name, description, image) VALUES (?1, ?2, ?3, ?4);",
@@ -156,9 +156,9 @@ pub fn migrate_old_db<R: Runtime>(
 	{
 		let json = msgpack::msgpack_to_json(File::open(path)?)?;
 		let tag: msgpack::Tag = serde_json::from_str(&json)?;
-		let tag = msgpack::convert_tag(tag, conn)?;
+		let tag = msgpack::convert_tag(tag, &transaction)?;
 		transaction.execute(
-				"INSERT INTO custom_fields (id, name, description, type, color, view_in_lists) VALUES (?1, ?2, ?3, ?4, ?5, ?6);",
+				"INSERT INTO tags (id, name, description, type, color, view_in_lists) VALUES (?1, ?2, ?3, ?4, ?5, ?6);",
 				(tag.id, tag.name, tag.description, tag.r#type, tag.color, tag.view_in_lists),
 			)?;
 	}
@@ -179,7 +179,7 @@ pub fn migrate_old_db<R: Runtime>(
 			member,
 			system_id.ok_or(crate::Error::Other("No system found".to_string()))?,
 			&data_path,
-			conn,
+			&transaction,
 		)?;
 
 		transaction.execute(
@@ -217,7 +217,7 @@ pub fn migrate_old_db<R: Runtime>(
 		let (entry, presence_entries) = msgpack::convert_fronting_entry(entry)?;
 
 		transaction.execute(
-				"INSERT INTO custom_fields (id, member, start_time, end_time, is_main_fronter, is_locked, custom_status, influencing, comment) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9);",
+				"INSERT INTO fronting_entries (id, member, start_time, end_time, is_main_fronter, is_locked, custom_status, influencing, comment) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9);",
 				(entry.id, entry.member, entry.start_time, entry.end_time, entry.is_main_fronter, entry.is_locked, entry.custom_status, entry.influencing, entry.comment),
 			)?;
 
@@ -258,7 +258,7 @@ pub fn migrate_old_db<R: Runtime>(
 	{
 		let json = msgpack::msgpack_to_json(File::open(path)?)?;
 		let post: msgpack::JournalPost = serde_json::from_str(&json)?;
-		let (post, tags) = msgpack::convert_post(post, &data_path, conn)?;
+		let (post, tags) = msgpack::convert_post(post, &data_path, &transaction)?;
 
 		transaction.execute(
 				"INSERT INTO journal_posts (id, member, date, title, subtitle, body, cover, is_pinned, is_private, content_warning) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10);",
@@ -285,7 +285,7 @@ pub fn migrate_old_db<R: Runtime>(
 	{
 		let json = msgpack::msgpack_to_json(File::open(path)?)?;
 		let tag: msgpack::Asset = serde_json::from_str(&json)?;
-		let tag = msgpack::convert_asset(tag, &data_path, conn)?;
+		let tag = msgpack::convert_asset(tag, &data_path, &transaction)?;
 		transaction.execute(
 			"INSERT INTO assets (id, file, friendly_name) VALUES (?1, ?2, ?3);",
 			(tag.id, tag.file, tag.friendly_name),
