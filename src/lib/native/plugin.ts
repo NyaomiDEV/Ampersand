@@ -34,6 +34,10 @@ export async function runDbMigrations(): Promise<void> {
 	return invokePlugin("run_db_migrations") as Promise<void>;
 }
 
+export async function migrateOldDb(): Promise<void> {
+	return invokePlugin("migrate_old_db") as Promise<void>;
+}
+
 export async function listAssets(path: string): Promise<string[]> {
 	return invokePlugin("list_assets", { path }) as Promise<string[]>;
 }

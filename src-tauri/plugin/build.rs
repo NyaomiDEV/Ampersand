@@ -3,6 +3,7 @@ const COMMANDS: &[&str] = &[
 	"open_file",
 	"test_db",
 	"run_db_migrations",
+	"migrate_old_db",
 	"set_can_go_back",
 	"get_webkit_version",
 	"broadcast_event",
