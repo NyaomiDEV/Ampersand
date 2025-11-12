@@ -1,0 +1,13 @@
+# Automatically generated - DO NOT EDIT!
+
+"$schema" = "../../schemas/schema.json"
+
+[[permission]]
+identifier = "allow-migrate-old-db"
+description = "Enables the migrate_old_db command without any pre-configured scope."
+commands.allow = ["migrate_old_db"]
+
+[[permission]]
+identifier = "deny-migrate-old-db"
+description = "Denies the migrate_old_db command without any pre-configured scope."
+commands.deny = ["migrate_old_db"]

@@ -24,6 +24,11 @@ pub(crate) fn run_db_migrations<R: Runtime>(app: AppHandle<R>) -> Result<()> {
 }
 
 #[command]
+pub(crate) fn migrate_old_db<R: Runtime>(app: AppHandle<R>) -> Result<()> {
+	app.ampersand().migrate_old_db()
+}
+
+#[command]
 pub(crate) fn broadcast_event<R: Runtime>(app: AppHandle<R>, payload: String) -> Result<()> {
 	app.ampersand().broadcast_event(payload)
 }

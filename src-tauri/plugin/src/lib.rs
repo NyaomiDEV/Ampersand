@@ -41,6 +41,7 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
     commands::dismiss_splash,
     commands::test_db,
     commands::run_db_migrations,
+    commands::migrate_old_db,
   ])
   .setup(|app, api: tauri::plugin::PluginApi<R, ()>| {
 			let db_path = app.path().app_data_dir()?.join("db.sqlite");
