@@ -154,6 +154,32 @@ Denies the list_assets command without any pre-configured scope.
 <tr>
 <td>
 
+`ampersand:allow-migrate-old-db`
+
+</td>
+<td>
+
+Enables the migrate_old_db command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`ampersand:deny-migrate-old-db`
+
+</td>
+<td>
+
+Denies the migrate_old_db command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
 `ampersand:allow-open-file`
 
 </td>

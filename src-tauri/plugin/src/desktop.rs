@@ -39,6 +39,10 @@ impl<R: Runtime> Ampersand<R> {
 		db::run_db_migrations(&self.1, &self.0)
 	}
 
+	pub fn migrate_old_db(&self) -> crate::Result<()> {
+		db::migrate_old_db(&self.1, &self.0)
+	}
+
 	pub fn get_webkit_version(&self) -> crate::Result<String> {
 		tauri::webview_version().map_err(|e| crate::Error::Other(e.to_string()))
 	}

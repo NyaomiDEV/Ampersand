@@ -34,6 +34,11 @@ pub(crate) fn run_db_migrations<R: Runtime>(app: AppHandle<R>) -> Result<()> {
 }
 
 #[command]
+pub(crate) fn migrate_old_db<R: Runtime>(app: AppHandle<R>) -> Result<()> {
+	app.ampersand().migrate_old_db()
+}
+
+#[command]
 pub(crate) fn get_webkit_version<R: Runtime>(app: AppHandle<R>) -> Result<String> {
 	app.ampersand().get_webkit_version()
 }
