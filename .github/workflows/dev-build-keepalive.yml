@@ -1,0 +1,35 @@
+name: CI Build Keepalive
+
+on:
+  # Runs on pushes not targeting the default branch
+  push:
+    branches-ignore: ['main']
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets the GITHUB_TOKEN permissions to allow deployment
+permissions:
+  contents: write
+
+# Allow one concurrent deployment
+concurrency:
+  group: 'dev-build-keepalive'
+  cancel-in-progress: true
+
+jobs:
+  keepalive:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        ref: main
+    - name: Republish dev tag and release
+      run: |
+        git tag dev
+        git push origin dev
+        gh release edit dev --draft=false --prerelease || true
+      env:
+        GH_TOKEN: ${{ github.token }}
