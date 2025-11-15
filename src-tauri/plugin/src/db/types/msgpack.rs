@@ -2,15 +2,17 @@
 
 use std::{
 	collections::HashMap,
-	io::{Read, Write},
+	io::Write,
 	ops::Deref,
 	path::PathBuf,
+	str::FromStr,
 	sync::Mutex,
 	time::{Duration, SystemTime},
 };
 
 use rusqlite::Connection;
 use serde::{Deserialize, Serialize};
+use serde_bytes::ByteBuf;
 use strum_macros::Display;
 use time::{OffsetDateTime, UtcDateTime};
 use uuid::Uuid;
@@ -20,11 +22,11 @@ use super::sql;
 #[derive(Serialize, Deserialize, Debug, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct BoardMessage {
-	pub uuid: Uuid,
-	pub member: Option<Uuid>,
+	pub uuid: String,
+	pub member: Option<String>,
 	pub title: Option<String>,
 	pub body: String,
-	pub date: DateTimeData,
+	pub date: ExtStruct,
 	pub is_pinned: Option<bool>,
 	pub is_archived: Option<bool>,
 	pub poll: Option<Poll>,
@@ -45,36 +47,36 @@ pub struct PollEntry {
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Vote {
-	pub member: Uuid,
+	pub member: String,
 	pub reason: Option<String>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct FrontingEntry {
-	pub uuid: Uuid,
-	pub member: Uuid,
-	pub start_time: DateTimeData,
-	pub end_time: Option<DateTimeData>,
+	pub uuid: String,
+	pub member: String,
+	pub start_time: ExtStruct,
+	pub end_time: Option<ExtStruct>,
 	pub is_main_fronter: Option<bool>,
 	pub is_locked: Option<bool>,
 	pub custom_status: Option<String>,
-	pub influencing: Option<Uuid>,
-	pub presence: Option<HashMap<DateTimeData, u8>>,
+	pub influencing: Option<String>,
+	pub presence: Option<HashMap<ExtStruct, u8>>,
 	pub comment: Option<String>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct JournalPost {
-	pub uuid: Uuid,
-	pub member: Option<Uuid>,
-	pub date: DateTimeData,
+	pub uuid: String,
+	pub member: Option<String>,
+	pub date: ExtStruct,
 	pub title: String,
 	pub subtitle: Option<String>,
 	pub body: String,
 	pub cover: Option<File>,
-	pub tags: Vec<Uuid>,
+	pub tags: Vec<String>,
 	pub is_pinned: Option<bool>,
 	pub is_private: Option<bool>,
 	pub content_warning: Option<String>,
@@ -82,7 +84,7 @@ pub struct JournalPost {
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct System {
-	pub uuid: Uuid,
+	pub uuid: String,
 	pub name: String,
 	pub description: Option<String>,
 	pub image: Option<File>,
@@ -91,7 +93,7 @@ pub struct System {
 #[derive(Serialize, Deserialize, Debug, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct Tag {
-	pub uuid: Uuid,
+	pub uuid: String,
 	pub name: String,
 	pub description: Option<String>,
 	pub r#type: TagType,
@@ -110,14 +112,14 @@ pub enum TagType {
 #[derive(Serialize, Deserialize, Debug, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct Asset {
-	pub uuid: Uuid,
+	pub uuid: String,
 	pub file: File,
 	pub friendly_name: String,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct CustomField {
-	pub uuid: Uuid,
+	pub uuid: String,
 	pub name: String,
 	pub priority: i8,
 	pub default: Option<bool>,
@@ -138,21 +140,10 @@ pub struct FileMetadata {
 	pub mime_type: String,
 }
 
-pub fn msgpack_to_json<R: Read>(r: R) -> Result<String, Error> {
-	let mut buf = Vec::new();
-
-	let mut de = rmp_serde::Deserializer::new(r);
-	let mut se = serde_json::Serializer::pretty(&mut buf);
-	serde_transcode::transcode(&mut de, &mut se)?;
-
-	let string = String::from_utf8(buf)?;
-	Ok(string)
-}
-
 #[derive(Serialize, Deserialize, Debug, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct Member {
-	pub uuid: Uuid,
+	pub uuid: String,
 	pub name: String,
 	pub pronouns: Option<String>,
 	pub description: Option<String>,
@@ -164,37 +155,26 @@ pub struct Member {
 	pub is_pinned: Option<bool>,
 	pub is_archived: Option<bool>,
 	pub is_custom_front: Option<bool>,
-	pub tags: Vec<Uuid>,
-	pub date_created: DateTimeData,
+	pub tags: Vec<String>,
+	pub date_created: ExtStruct,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct CustomFieldsData {
-	pub value: Vec<(Uuid, String)>,
+	pub value: Vec<(String, String)>,
 }
 
-pub type DateTimeData = Vec<DateTimeDatum>;
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq, Hash)]
+#[serde(rename = "_ExtStruct")]
+pub struct ExtStruct((i8, ByteBuf));
 
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, Hash)]
-#[serde(untagged)]
-pub enum DateTimeDatum {
-	Ext(i8),
-	Val(Vec<u8>),
-}
-
-pub fn convert_datetime(data: DateTimeData) -> Result<UtcDateTime, Error> {
-	let (ext, bytes) = data
-		.into_iter()
-		.fold((None, None), |(ext, bytes), datum| match datum {
-			DateTimeDatum::Ext(v) => (Some(v), bytes),
-			DateTimeDatum::Val(v) => (ext, Some(v)),
-		});
-	let ext = ext.ok_or(Error::NotExt)?;
+pub fn convert_datetime(data: ExtStruct) -> Result<UtcDateTime, Error> {
+	let ExtStruct((ext, bytes)) = data;
 	if ext != -1 {
 		return Err(Error::ExtNotDateTime);
 	}
-	let bytes = bytes.ok_or(Error::InvalidLength)?;
+	let bytes = bytes.into_vec();
 
 	match bytes.len() {
 		4 => {
@@ -271,11 +251,12 @@ pub fn convert_tag<D: Deref<Target = Connection>>(tag: Tag, conn: &D) -> Result<
 }
 
 pub fn convert_file(file: File, data_path: &PathBuf) -> Result<sql::File, Error> {
-	let data = file.value.as_bytes();
+	let data = file.value;
 	let id = Uuid::new_v4();
 	std::fs::create_dir_all(data_path.join("files"))?;
 	let path = data_path.join("files").join(id.to_string());
-	std::fs::File::create(path)?.write(data)?;
+	std::fs::File::create(path)?
+		.write(&data.encode_utf16().map(|c| c as u8).collect::<Vec<u8>>())?;
 	Ok(sql::File {
 		id,
 		path: PathBuf::from("files")
@@ -318,7 +299,7 @@ pub fn convert_system<D: Deref<Target = Connection>>(
 
 pub fn convert_custom_field(field: CustomField) -> Result<sql::CustomField, Error> {
 	Ok(sql::CustomField {
-		id: field.uuid,
+		id: Uuid::from_str(&field.uuid)?,
 		name: field.name,
 		priority: field.priority,
 		is_default: field.default.unwrap_or_default(),
@@ -333,7 +314,7 @@ pub fn convert_member<D: Deref<Target = Connection>>(
 ) -> Result<(sql::Member, Vec<sql::CustomFieldDatum>, Vec<sql::MemberTag>), Error> {
 	Ok((
 		sql::Member {
-			id: member.uuid,
+			id: Uuid::from_str(&member.uuid)?,
 			system: system_id,
 			name: member.name,
 			pronouns: member.pronouns,
@@ -358,22 +339,26 @@ pub fn convert_member<D: Deref<Target = Connection>>(
 			.map(|v| v.value)
 			.unwrap_or_default()
 			.into_iter()
-			.map(|(field, value)| sql::CustomFieldDatum {
-				id: Uuid::new_v4(),
-				member: member.uuid,
-				field,
-				value,
+			.map(|(field, value)| {
+				Ok(sql::CustomFieldDatum {
+					id: Uuid::new_v4(),
+					member: Uuid::from_str(&member.uuid)?,
+					field: Uuid::from_str(&field)?,
+					value,
+				})
 			})
-			.collect(),
+			.collect::<Result<_, Error>>()?,
 		member
 			.tags
 			.into_iter()
-			.map(|tag| sql::MemberTag {
-				id: Uuid::new_v4(),
-				member: member.uuid,
-				tag,
+			.map(|tag| {
+				Ok(sql::MemberTag {
+					id: Uuid::new_v4(),
+					member: Uuid::from_str(&member.uuid)?,
+					tag: Uuid::from_str(&tag)?,
+				})
 			})
-			.collect(),
+			.collect::<Result<_, Error>>()?,
 	))
 }
 
@@ -383,7 +368,7 @@ pub fn convert_asset<D: Deref<Target = Connection>>(
 	conn: &D,
 ) -> Result<sql::Asset, Error> {
 	Ok(sql::Asset {
-		id: asset.uuid,
+		id: Uuid::from_str(&asset.uuid)?,
 		file: convert_and_save_file(asset.file, data_path, conn)?,
 		friendly_name: asset.friendly_name,
 	})
@@ -396,8 +381,11 @@ pub fn convert_post<D: Deref<Target = Connection>>(
 ) -> Result<(sql::JournalPost, Vec<sql::JournalPostTag>), Error> {
 	Ok((
 		sql::JournalPost {
-			id: post.uuid,
-			member: post.member,
+			id: Uuid::from_str(&post.uuid)?,
+			member: post
+				.member
+				.map(|member| Uuid::from_str(&member))
+				.transpose()?,
 			date: convert_datetime(post.date)?.into(),
 			title: post.title,
 			subtitle: post.subtitle,
@@ -412,12 +400,14 @@ pub fn convert_post<D: Deref<Target = Connection>>(
 		},
 		post.tags
 			.into_iter()
-			.map(|tag| sql::JournalPostTag {
-				id: Uuid::new_v4(),
-				post: post.uuid,
-				tag,
+			.map(|tag| {
+				Ok(sql::JournalPostTag {
+					id: Uuid::new_v4(),
+					post: Uuid::from_str(&post.uuid)?,
+					tag: Uuid::from_str(&tag)?,
+				})
 			})
-			.collect(),
+			.collect::<Result<Vec<sql::JournalPostTag>, Error>>()?,
 	))
 }
 
@@ -426,8 +416,8 @@ pub fn convert_fronting_entry(
 ) -> Result<(sql::FrontingEntry, Vec<sql::PresenceEntry>), Error> {
 	Ok((
 		sql::FrontingEntry {
-			id: entry.uuid,
-			member: entry.member,
+			id: Uuid::from_str(&entry.uuid)?,
+			member: Uuid::from_str(&entry.member)?,
 			start_time: convert_datetime(entry.start_time)?.into(),
 			end_time: entry
 				.end_time
@@ -437,7 +427,10 @@ pub fn convert_fronting_entry(
 			is_main_fronter: entry.is_main_fronter.unwrap_or_default(),
 			is_locked: entry.is_locked.unwrap_or_default(),
 			custom_status: entry.custom_status,
-			influencing: entry.influencing,
+			influencing: entry
+				.influencing
+				.map(|influencing| Uuid::from_str(&influencing))
+				.transpose()?,
 			comment: entry.comment,
 		},
 		entry
@@ -447,7 +440,7 @@ pub fn convert_fronting_entry(
 			.map(|(k, v)| {
 				Ok(sql::PresenceEntry {
 					id: Uuid::new_v4(),
-					fronting_entry: entry.uuid,
+					fronting_entry: Uuid::from_str(&entry.uuid)?,
 					date: OffsetDateTime::from(convert_datetime(k)?),
 					presence: v,
 				})
@@ -461,8 +454,11 @@ pub fn convert_message(
 	conn: &Mutex<Connection>,
 ) -> Result<sql::BoardMessage, Error> {
 	Ok(sql::BoardMessage {
-		id: message.uuid,
-		member: message.member,
+		id: Uuid::from_str(&message.uuid)?,
+		member: message
+			.member
+			.map(|member| Uuid::from_str(&member))
+			.transpose()?,
 		title: message.title,
 		body: message.body,
 		date: convert_datetime(message.date)?.into(),
@@ -511,14 +507,16 @@ pub fn convert_poll_entries(
 			.into_iter()
 			.map(|(entry, votes)| (entry.id, votes))
 			.flat_map(|(entry, votes)| {
-				votes.into_iter().map(move |vote| sql::Vote {
-					id: Uuid::new_v4(),
-					entry: entry,
-					member: vote.member,
-					reason: vote.reason,
+				votes.into_iter().map(move |vote| {
+					Ok(sql::Vote {
+						id: Uuid::new_v4(),
+						entry: entry,
+						member: Uuid::from_str(&vote.member)?,
+						reason: vote.reason,
+					})
 				})
 			})
-			.collect(),
+			.collect::<Result<Vec<sql::Vote>, Error>>()?,
 	))
 }
 
@@ -572,9 +570,9 @@ pub enum Error {
 	#[error(transparent)]
 	Rusqlite(#[from] rusqlite::Error),
 	#[error(transparent)]
-	Json(#[from] serde_json::Error),
-	#[error(transparent)]
 	FromUtf8(#[from] std::string::FromUtf8Error),
+	#[error(transparent)]
+	Uuid(#[from] uuid::Error),
 }
 impl<T> From<std::sync::PoisonError<T>> for Error {
 	fn from(_: std::sync::PoisonError<T>) -> Self {
