@@ -19,7 +19,7 @@ pub enum Error {
 	#[error(transparent)]
 	Conversion(#[from] crate::db::types::msgpack::Error),
 	#[error(transparent)]
-	Json(#[from] serde_json::Error),
+	RmpSerdeDecode(#[from] rmp_serde::decode::Error),
 	#[cfg(mobile)]
 	#[error(transparent)]
 	PluginInvoke(#[from] tauri::plugin::mobile::PluginInvokeError),
