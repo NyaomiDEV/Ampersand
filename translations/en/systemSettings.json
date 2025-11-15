@@ -1,9 +1,0 @@
-{
-	"header": "System name and photo",
-	"systemName": "System name",
-	"systemDescription": "System description",
-	"memberCount": "Member count",
-	"memberCountText": "{{totalMemberCount}} member(s), {{memberCount}} active, {{archivedMemberCount}} archived",
-	"customFrontCountText": "{{totalCustomFrontCount}} custom front(s), {{customFrontCount}} active, {{archivedCustomFrontCount}} archived",
-	"tapToShow": "Tap to show"
-}

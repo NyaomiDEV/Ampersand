@@ -1,0 +1,10 @@
+{
+	"edit": {
+		"header": "Numele sistemului și poza",
+		"name": "Numele sistemului",
+		"description": "Descrierea sistemului",
+		"memberCount": "Numărul de membri",
+		"memberCountText": "{{memberCount}} membri, {{archivedMemberCount}} arhivați",
+		"tapToShow": "Atingeți pentru a afișa"
+	}
+}

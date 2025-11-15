@@ -31,7 +31,7 @@ export async function getSystem(uuid: UUID){
 	return await db.systems.get(uuid);
 }
 
-export async function deleteMember(uuid: UUID) {
+export async function deleteSystem(uuid: UUID) {
 	if (uuid === nilUid) return false;
 	try {
 		await db.systems.delete(uuid);
@@ -47,7 +47,7 @@ export async function deleteMember(uuid: UUID) {
 	}
 }
 
-export async function modifySystem(uuid: UUID, system: Partial<System>) {
+export async function updateSystem(uuid: UUID, system: Partial<System>) {
 	try {
 		const updated = await db.systems.update(uuid, system);
 		if(updated){

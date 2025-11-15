@@ -6,11 +6,7 @@ const options: RouteRecordRaw[] = [
 		name: "TestingGrounds",
 		component: () => import("../views/options/TestingGrounds.vue"),
 	},
-	{
-		path: "/options/systemSettings",
-		name: "SystemSettings",
-		component: () => import("../views/options/SystemSettings.vue"),
-	},
+	// system list goes here whenever
 	{
 		path: "/options/customFields",
 		name: "CustomFields",

@@ -4,7 +4,7 @@
 	import { getObjectURL } from "../../lib/util/blob";
 	import { getFiles, slideAnimation } from "../../lib/util/misc";
 	import { resizeImage } from "../../lib/util/image";
-	import { getSystem, modifySystem, newSystem } from "../../lib/db/tables/system";
+	import { getSystem, newSystem, updateSystem } from "../../lib/db/tables/system";
 
 	import accountCircle from "@material-symbols/svg-600/outlined/account_circle.svg";
 	import pencilMD from "@material-symbols/svg-600/outlined/edit.svg";
@@ -34,7 +34,7 @@
 			const uuid = await newSystem({ ...toRaw(system.value) });
 			if(uuid) appConfig.defaultSystem = uuid;
 		} else
-			await modifySystem(appConfig.defaultSystem, { ...toRaw(system.value) });
+			await updateSystem(appConfig.defaultSystem, { ...toRaw(system.value) });
 	
 		router.replace("/onboarding/member/", slideAnimation);
 	}
@@ -84,7 +84,7 @@
 			</div>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton @click="save">
+				<IonFabButton :disabled="!system.name.length" @click="save">
 					<IonIcon :icon="ArrowMD" />
 				</IonFabButton>
 			</IonFab>

@@ -1,0 +1,20 @@
+{
+	"edit": {
+		"header": "Sistema",
+		"headerAdd": "Aggiungi sistema",
+		"headerEdit": "Modifica sistema",
+		"name": "Nome del sistema",
+		"description": "Descrizione del sistema",
+		"noDescription": "Nessuna descrizione",
+		"memberCount": "Numero di membrɜ",
+		"memberCountText": "{{totalMemberCount}} membrə/ɜ, {{memberCount}} attivə/ɜ, {{archivedMemberCount}} archiviatə/ɜ",
+		"customFrontCountText": "{{totalCustomFrontCount}} front personalizzato/i, {{customFrontCount}} attivo/i, {{archivedCustomFrontCount}} archiviato/i",
+		"tapToShow": "Clicca per mostrare",
+		"delete": {
+			"title": "Elimina sistema",
+			"confirm": "Vuoi davvero eliminare questo sistema?"
+		},
+		"systemID": "ID sistema: {{systemID}}",
+		"systemIDcopiedToClipboard": "ID del sistema in formato menzione copiato negli appunti!"
+	}
+}

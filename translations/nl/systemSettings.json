@@ -1,8 +1,0 @@
-{
-	"systemDescription": "Systeem-beschrijving",
-	"header": "Systeem naam en foto",
-	"systemName": "Systeem naam",
-	"memberCount": "Systeem beschrijving",
-	"memberCountText": "{{memberCount}} lid/leden, {{archivedMemberCount}} gearchiveerd",
-	"tapToShow": "Klik op te laten zien"
-}

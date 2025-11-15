@@ -16,7 +16,7 @@
 	import FolderMD from "@material-symbols/svg-600/outlined/folder_open.svg";
 	import CustomFieldsMD from "@material-symbols/svg-600/outlined/format_list_bulleted_add.svg";
 
-	import { securityConfig } from "../lib/config";
+	import { appConfig, securityConfig } from "../lib/config";
 	import { lock } from "../lib/applock";
 
 	const router = useIonRouter();
@@ -46,9 +46,9 @@
 
 			<IonList>
 
-				<IonItem button router-link="/options/systemSettings">
+				<IonItem button :router-link="`/options/systems/edit?uuid=${appConfig.defaultSystem}`">
 					<IonIcon slot="start" :icon="SystemMD" aria-hidden="true" />
-					<IonLabel>{{ $t("systemSettings:header") }}</IonLabel>
+					<IonLabel>{{ $t("systems:edit.header") }}</IonLabel>
 				</IonItem>
 
 				<IonItem button router-link="/options/customFields">

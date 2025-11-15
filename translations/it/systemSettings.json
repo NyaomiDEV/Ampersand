@@ -1,9 +1,0 @@
-{
-	"header": "Nome del sistema e foto",
-	"systemName": "Nome del sistema",
-	"systemDescription": "Descrizione del sistema",
-	"memberCount": "Numero di membrɜ",
-	"memberCountText": "{{totalMemberCount}} membrə/ɜ, {{memberCount}} attivə/ɜ, {{archivedMemberCount}} archiviatə/ɜ",
-	"customFrontCountText": "{{totalCustomFrontCount}} front personalizzato/i, {{customFrontCount}} attivo/i, {{archivedCustomFrontCount}} archiviato/i",
-	"tapToShow": "Clicca per mostrare"
-}

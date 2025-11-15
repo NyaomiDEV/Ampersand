@@ -1,0 +1,10 @@
+{
+	"edit": {
+		"name": "Sistem adı",
+		"description": "Sistem tanımı",
+		"memberCount": "Üye sayısı",
+		"memberCountText": "{{memberCount}} üye, {{archivedMemberCount}} arşivlendi",
+		"tapToShow": "Göstermek için dokunun",
+		"header": "Sistem adı ve resmi"
+	}
+}
