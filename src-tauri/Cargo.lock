@@ -3512,12 +3512,14 @@ dependencies = [
 ]
 
 [[package]]
-name = "serde-transcode"
-version = "1.1.1"
+name = "serde-untagged"
+version = "0.1.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "590c0e25c2a5bb6e85bf5c1bce768ceb86b316e7a01bdf07d2cb4ec2271990e2"
+checksum = "299d9c19d7d466db4ab10addd5703e4c615dec2a5a16dbbafe191045e87ee66e"
 dependencies = [
+ "erased-serde",
  "serde",
+ "typeid",
 ]
 
 [[package]]
@@ -3526,7 +3528,6 @@ version = "0.1.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f9faf48a4a2d2693be24c6289dbe26552776eb7737074e6722891fadbe6c5058"
 dependencies = [
- "erased-serde",
  "serde",
  "serde_core",
  "typeid",
@@ -4145,12 +4146,9 @@ name = "tauri-plugin-ampersand"
 version = "0.1.11"
 dependencies = [
  "rmp-serde",
- "rmpv",
  "rusqlite",
  "serde",
- "serde-transcode",
- "serde_json",
- "serde_with",
+ "serde_bytes",
  "strum_macros",
  "tauri",
  "tauri-plugin",
