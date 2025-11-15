@@ -110,8 +110,7 @@ pub fn migrate_old_db<R: Runtime>(
 		})
 		.map(|entry| entry.path())
 	{
-		let json = msgpack::msgpack_to_json(File::open(path)?)?;
-		let system: msgpack::System = serde_json::from_str(&json)?;
+		let system: msgpack::System = rmp_serde::from_read(&mut File::open(&path)?)?;
 		let system = msgpack::convert_system(system, &data_path, &transaction)?;
 		system_id = Some(system.id);
 		transaction.execute(
@@ -130,8 +129,7 @@ pub fn migrate_old_db<R: Runtime>(
 		})
 		.map(|entry| entry.path())
 	{
-		let json = msgpack::msgpack_to_json(File::open(path)?)?;
-		let custom_field: msgpack::CustomField = serde_json::from_str(&json)?;
+		let custom_field: msgpack::CustomField = rmp_serde::from_read(&mut File::open(&path)?)?;
 		let custom_field = msgpack::convert_custom_field(custom_field)?;
 		transaction.execute(
 			"INSERT INTO custom_fields (id, name, priority, is_default) VALUES (?1, ?2, ?3, ?4);",
@@ -154,8 +152,7 @@ pub fn migrate_old_db<R: Runtime>(
 		})
 		.map(|entry| entry.path())
 	{
-		let json = msgpack::msgpack_to_json(File::open(path)?)?;
-		let tag: msgpack::Tag = serde_json::from_str(&json)?;
+		let tag: msgpack::Tag = rmp_serde::from_read(&mut File::open(&path)?)?;
 		let tag = msgpack::convert_tag(tag, &transaction)?;
 		transaction.execute(
 				"INSERT INTO tags (id, name, description, type, color, view_in_lists) VALUES (?1, ?2, ?3, ?4, ?5, ?6);",
@@ -173,8 +170,7 @@ pub fn migrate_old_db<R: Runtime>(
 		})
 		.map(|entry| entry.path())
 	{
-		let json = msgpack::msgpack_to_json(File::open(path)?)?;
-		let member: msgpack::Member = serde_json::from_str(&json)?;
+		let member: msgpack::Member = rmp_serde::from_read(&mut File::open(&path)?)?;
 		let (member, custom_fields, tags) = msgpack::convert_member(
 			member,
 			system_id.ok_or(crate::Error::Other("No system found".to_string()))?,
@@ -212,8 +208,7 @@ pub fn migrate_old_db<R: Runtime>(
 		})
 		.map(|entry| entry.path())
 	{
-		let json = msgpack::msgpack_to_json(File::open(path)?)?;
-		let entry: msgpack::FrontingEntry = serde_json::from_str(&json)?;
+		let entry: msgpack::FrontingEntry = rmp_serde::from_read(&mut File::open(&path)?)?;
 		let (entry, presence_entries) = msgpack::convert_fronting_entry(entry)?;
 
 		transaction.execute(
@@ -237,8 +232,7 @@ pub fn migrate_old_db<R: Runtime>(
 		})
 		.map(|entry| entry.path())
 	{
-		let json = msgpack::msgpack_to_json(File::open(path)?)?;
-		let message: msgpack::BoardMessage = serde_json::from_str(&json)?;
+		let message: msgpack::BoardMessage = rmp_serde::from_read(&mut File::open(&path)?)?;
 		let message = msgpack::convert_message(message, conn)?;
 		transaction.execute(
 				"INSERT INTO board_messages (id, member, title, body, date, is_pinned, is_archived, poll) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8);",
@@ -256,8 +250,7 @@ pub fn migrate_old_db<R: Runtime>(
 		})
 		.map(|entry| entry.path())
 	{
-		let json = msgpack::msgpack_to_json(File::open(path)?)?;
-		let post: msgpack::JournalPost = serde_json::from_str(&json)?;
+		let post: msgpack::JournalPost = rmp_serde::from_read(&mut File::open(&path)?)?;
 		let (post, tags) = msgpack::convert_post(post, &data_path, &transaction)?;
 
 		transaction.execute(
@@ -283,8 +276,7 @@ pub fn migrate_old_db<R: Runtime>(
 		})
 		.map(|entry| entry.path())
 	{
-		let json = msgpack::msgpack_to_json(File::open(path)?)?;
-		let tag: msgpack::Asset = serde_json::from_str(&json)?;
+		let tag: msgpack::Asset = rmp_serde::from_read(&mut File::open(&path)?)?;
 		let tag = msgpack::convert_asset(tag, &data_path, &transaction)?;
 		transaction.execute(
 			"INSERT INTO assets (id, file, friendly_name) VALUES (?1, ?2, ?3);",
