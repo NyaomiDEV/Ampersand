@@ -1,0 +1,8 @@
+{
+	"welcomeScreen": {
+		"header": "Bienvenue sur Ampersand !"
+	},
+	"importScreen": {
+		"header": "Souhaitez-vous importer vos données ?"
+	}
+}

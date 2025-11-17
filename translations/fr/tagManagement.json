@@ -1,0 +1,22 @@
+{
+	"searchPlaceholder": "Rechercher des tags...",
+	"select": "Sélectionner des tags",
+	"selector": {
+		"member": "Tags des membres",
+		"journal": "Tags du journal"
+	},
+	"edit": {
+		"type": {
+			"desc": "Note : vous ne pouvez définir le tag qu'au moment de sa création !",
+			"header": "Type du tag",
+			"member": "Membre",
+			"journal": "Journal"
+		},
+		"name": "Nom du tag",
+		"description": "Description du tag",
+		"color": "Couleur du tag",
+		"delete": {
+			"confirm": "Êtes-vous sûr de vouloir supprimer ce tag ?"
+		}
+	}
+}

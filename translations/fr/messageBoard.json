@@ -1,0 +1,7 @@
+{
+	"searchPlaceholder": "Rechercher des messages...",
+	"polls": {
+		"collapsePoll": "Cacher le sondage",
+		"boardMessageContainsPoll": "Contient un sondage"
+	}
+}
