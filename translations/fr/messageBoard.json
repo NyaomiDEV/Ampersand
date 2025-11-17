@@ -2,11 +2,39 @@
 	"searchPlaceholder": "Rechercher des messages...",
 	"polls": {
 		"collapsePoll": "Cacher le sondage",
-		"boardMessageContainsPoll": "Contient un sondage"
+		"boardMessageContainsPoll": "Contient un sondage",
+		"voteCast": {
+			"voter": "Sélectionner le votant",
+			"reason": "Raison du vote",
+			"reasonHint": "Raison"
+		},
+		"resultsHeader": "Résultats du vote",
+		"resultsButton": "Afficher les résultats du sondage",
+		"choice": {
+			"desc_one": "{{count}} votant",
+			"desc_many": "{{count}} votants",
+			"desc_other": "{{count}} votants"
+		},
+		"defaultPollValues": {
+			"veto": "Véto",
+			"yes": "Oui",
+			"no": "Non",
+			"abstain": "S’abstenir"
+		}
 	},
 	"edit": {
 		"delete": {
 			"confirm": "Êtes-vous certain·e de vouloir supprimer ce message ?"
-		}
+		},
+		"title": "Titre",
+		"body": "Corps du message",
+		"isPinned": "Épingler ce message",
+		"isArchived": "Archiver ce message",
+		"attachPoll": "Ajouter un sondage à ce message",
+		"deleteAttachedPoll": "Supprimer le sondage",
+		"pollIsMultipleChoice": "Autoriser les choix multiples",
+		"pollAddNewChoice": "Ajouter un choix au sondage",
+		"pollChoice": "Description du choix",
+		"pollEditWarning": "Toute modification du sondage entraînera la réinitialisation des votes !"
 	}
 }
