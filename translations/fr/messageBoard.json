@@ -3,5 +3,10 @@
 	"polls": {
 		"collapsePoll": "Cacher le sondage",
 		"boardMessageContainsPoll": "Contient un sondage"
+	},
+	"edit": {
+		"delete": {
+			"confirm": "Êtes-vous certain·e de vouloir supprimer ce message ?"
+		}
 	}
 }
