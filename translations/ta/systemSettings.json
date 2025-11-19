@@ -1,0 +1,9 @@
+{
+	"header": "கணினி பெயர் மற்றும் புகைப்படம்",
+	"systemName": "கணினி பெயர்",
+	"systemDescription": "கணினி குறிப்பு",
+	"memberCount": "உறுப்பினர் எண்ணிக்கை",
+	"memberCountText": "{{totalMemberCount}} உறுப்பினர் (கள்), {{memberCount}} செயலில், {{archivedMemberCount}} காப்பகப்படுத்தப்பட்டது",
+	"customFrontCountText": "{{totalCustomFrontCount}} விருப்ப முன்(கள்), {{customFrontCount}} செயலில், {{archivedCustomFrontCount}} காப்பகப்படுத்தப்பட்டது",
+	"tapToShow": "காண்பிக்க தட்டவும்"
+}

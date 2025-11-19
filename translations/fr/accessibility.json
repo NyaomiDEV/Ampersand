@@ -1,0 +1,43 @@
+{
+	"header": "Accessibilité",
+	"highLegibilityFont": {
+		"title": "Police facile à lire",
+		"desc": "Utilise une police à lisibilité élevée plutôt que la police standard de votre appareil"
+	},
+	"uiVariant": {
+		"auto": "Automatique",
+		"light": "Clair",
+		"dark": "Sombre",
+		"title": "Thème d’affichage"
+	},
+	"fontScale": {
+		"title": "Taille de la police"
+	},
+	"contrastLevel": {
+		"title": "Niveau de contraste"
+	},
+	"useAccentColor": {
+		"title": "Couleur d’accent",
+		"desc": "Personnaliser la couleur d’accent"
+	},
+	"disableMemberCoversInList": {
+		"desc": "Si cette option est activée, les membres de la liste principale apparaîtront aussi de façon plus compacte",
+		"title": "Cacher les bannières des membres dans la liste"
+	},
+	"reducedMotion": {
+		"title": "Mouvement réduit",
+		"desc": "Désactive les animations de l’application"
+	},
+	"longPressDuration": {
+		"title": "Durée de l’appui long"
+	},
+	"accentColor": {
+		"title": "Choix de la couleur d’accent"
+	},
+	"highLegibilityFontType": {
+		"opendyslexic": "OpenDyslexic",
+		"lexend": "Lexend",
+		"atkinson": "Atkinson Hyperlegible",
+		"system-font": "Police du système"
+	}
+}

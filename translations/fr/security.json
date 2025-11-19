@@ -1,0 +1,10 @@
+{
+	"header": "Sécurité",
+	"applock": {
+		"title": "Verrouillage de l'application",
+		"desc": "Verrouiller l'application avec un mot de passe"
+	},
+	"biometrics": {
+		"title": "Utiliser les données biométriques"
+	}
+}

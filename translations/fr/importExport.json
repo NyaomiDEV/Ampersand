@@ -1,0 +1,7 @@
+{
+	"header": "Importer / Exporter",
+	"dbExport": {
+		"title": "Exportez vos données",
+		"desc": "Sauvegarde vos données actuelles dans un fichier que vous pouvez conserver"
+	}
+}

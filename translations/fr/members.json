@@ -1,0 +1,27 @@
+{
+	"header": "Membres",
+	"searchPlaceholder": "Recherchez des membres...",
+	"select": "Sélectionner un membre",
+	"edit": {
+		"name": "Nom",
+		"pronouns": "Pronoms",
+		"delete": {
+			"confirm": "Êtes-vous sûr de vouloir supprimer ce membre ?"
+		},
+		"role": "Rôle",
+		"customFront": "Front personnalisé",
+		"header": "Membre",
+		"memberID": "ID du membre : {{memberID}}",
+		"dateCreated": "Date de création : {{dateCreated}}",
+		"memberIDcopiedToClipboard": "L'ID du membre a été copié dans le presse-papier !",
+		"description": "Description",
+		"isPinned": "Épingler le membre",
+		"archived": "Archivé"
+	},
+	"toasts": {
+		"removeFromFront": "Membre retiré du front",
+		"addToFront": "Membre ajouté au front"
+	},
+	"deletedMember": "Membre supprimé",
+	"deletedCustomFront": "Front personnalisé supprimé"
+}

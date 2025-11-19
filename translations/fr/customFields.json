@@ -1,0 +1,17 @@
+{
+	"header": "Champs personnalisés",
+	"select": "Sélectionner des champs personnalisés",
+	"searchPlaceholder": "Rechercher des champs personnalisés...",
+	"edit": {
+		"header": "Modifier le champ personnalisé",
+		"headerAdd": "Ajouter un champ personnalisé",
+		"name": "Nom du champ personnalisé",
+		"default": {
+			"desc": "Les champs personnalisés par défaut apparaissent sur l’écran de modification du membre"
+		},
+		"delete": {
+			"title": "Supprimer le champ personnalisé",
+			"confirm": "Souhaitez-vous vraiment supprimer ce champ personnalisé ?"
+		}
+	}
+}

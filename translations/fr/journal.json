@@ -1,0 +1,8 @@
+{
+	"header": "Journal",
+	"searchPlaceholder": "Rechercher dans le journal...",
+	"contentWarning": "The post comprend du contenu sensible",
+	"edit": {
+		"title": "Titre"
+	}
+}

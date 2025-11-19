@@ -1,0 +1,8 @@
+{
+	"title": "L'application est verrouillée",
+	"hint": "Veuillez entrer le mot de passe de l'application",
+	"biometrics": {
+		"title": "L'application est verrouillée",
+		"reason": "Déverrouiller l’application"
+	}
+}
