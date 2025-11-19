@@ -54,8 +54,6 @@ Of course you can! And if you're not able to contribute code, you can still hang
 
 We'd be very glad to receive funds, and we've set [Liberapay](https://liberapay.com/Ampersand/) to collect them. Please donate!
 
-If you want to send money specifically to the main developer, you can donate on [nao's Ko-fi](https://ko-fi.com/nyaomipic).
-
 ## Who's developing this app for now?
 
 - @NyaomiDEV: Most "backend" app logic;
