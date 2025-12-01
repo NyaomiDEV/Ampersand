@@ -38,6 +38,7 @@
 		"opendyslexic": "OpenDyslexic",
 		"lexend": "Lexend",
 		"atkinson": "Atkinson Hyperlegible",
-		"system-font": "Police du système"
+		"system-font": "Police du système",
+		"title": "Police"
 	}
 }

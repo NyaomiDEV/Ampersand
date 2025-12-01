@@ -1,7 +1,23 @@
 {
 	"header": "Importer / Exporter",
 	"dbExport": {
-		"title": "Exportez vos données",
+		"title": "Exporter les données",
 		"desc": "Sauvegarde vos données actuelles dans un fichier que vous pouvez conserver"
+	},
+	"dbImportDesc": "Attention ! Cela remplacera toutes les données existantes",
+	"dbImport": "Importer des données depuis un fichier de sauvegarde",
+	"pkImport": "Importer des données depuis un export PluralKit",
+	"tuImport": "Importer des données depuis un export Tupperbox",
+	"spImport": "Importer des données depuis un export Simply Plural",
+	"status": {
+		"imported": "La sauvegarde a été importée. Veuillez redémarrer l’application.",
+		"importedSp": "L’export Simply Plural a été importé. Veuillez redémarrer l’application.",
+		"importedPk": "L’export PluralKit a été importé. Veuillez redémarrer l’application.",
+		"importedTu": "L’export Tupperbox a été importé. Veuillez redémarrer l’application.",
+		"errorExport": "Erreur survenue lors de l’exportation du fichier.",
+		"error": "Erreur survenue lors de l’importation du fichier.",
+		"errorSp": "Erreur survenue lors de l’importation des données de Simply Plural.",
+		"errorPk": "Erreur survenue lors de l’importation des données de PluralKit.",
+		"errorTu": "Erreur survenue lors de l’importation des données de Tupperbox."
 	}
 }

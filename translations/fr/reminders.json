@@ -1,3 +1,47 @@
 {
-	"header": "Rappels"
+	"header": "Rappels",
+	"periodicHeader": "Rappels périodiques",
+	"edit": {
+		"header": "Modifier le rappel",
+		"name": "Nom du rappel",
+		"title": "Titre de la notification du rappel",
+		"message": "Message de la notification du rappel",
+		"type": {
+			"title": "Type de rappel",
+			"periodic": "Périodique",
+			"eventBased": "Basé sur un événement"
+		},
+		"eventBased": {
+			"title": "Événement déclencheur",
+			"addedToFront": "Après qu’un membre ait été ajouté au front",
+			"removedFromFront": "Après qu’un membre ait été retiré du front",
+			"delay": {
+				"title": "Délai",
+				"desc": "Après {{delay}}"
+			}
+		},
+		"periodic": {
+			"dayOfMonth": {
+				"desc_ordinal_one": "Se répète chaque {{count}}er jour du mois",
+				"desc_ordinal_many": "Se répète chaque {{count}}ème jour du mois",
+				"desc_ordinal_other": "Se répète chaque {{count}}ème jour du mois",
+				"desc_undefined": "Se répète tous les jours",
+				"title": "Jour du mois"
+			},
+			"timeOfDay": {
+				"desc": "À {{timeOfDay}}",
+				"title": "Moment de la journée"
+			},
+			"title": "Intervalle de temps"
+		},
+		"delete": {
+			"title": "Supprimer le rappel",
+			"confirm": "Êtes-vous certain·e de vouloir supprimer ce rappel ?"
+		}
+	},
+	"remindersAreNotFinished": {
+		"header": "Les rappels ne sont pas terminés !",
+		"content": "Pour l’instant, tout ceci n’est qu’un aperçu de ce à quoi ressemblera l’interface utilisateur ! Il sera un jour possible de sauvegarder des rappels, mais cette fonctionnalité n’est encore fixée à aucun système de notifications. Si vous êtes sur Android, vous devriez pouvoir configurer quelques éléments qui devraient fonctionner une fois que nous en aurons fini avec tout ça, mais sachez que ça ne fonctionnera pas sur la version Web. Et si vous êtes un développeur, aidez-nous, s’il vous plaît !"
+	},
+	"eventBasedHeader": "Rappels basés sur un événement"
 }

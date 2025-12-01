@@ -6,7 +6,8 @@
 		"name": "Nom",
 		"pronouns": "Pronoms",
 		"delete": {
-			"confirm": "Êtes-vous sûr de vouloir supprimer ce membre ?"
+			"confirm": "Êtes-vous sûr de vouloir supprimer ce membre ?",
+			"title": "Supprimer le membre"
 		},
 		"role": "Rôle",
 		"customFront": "Front personnalisé",
@@ -16,12 +17,29 @@
 		"memberIDcopiedToClipboard": "L'ID du membre a été copié dans le presse-papier !",
 		"description": "Description",
 		"isPinned": "Épingler le membre",
-		"archived": "Archivé"
+		"archived": "Archivé",
+		"showJournalEntries": "Afficher les posts du journal",
+		"headerAdd": "Ajouter un membre",
+		"headerEdit": "Modifier le membre",
+		"showFrontingEntries": "Afficher les entrées de front",
+		"showBoardEntries": "Afficher les messages du tableau",
+		"customFieldsAdd": "Ajouter des champs personnalisés",
+		"color": "Couleur",
+		"noDescription": "Pas de description",
+		"tags": "Modifier les tags"
 	},
 	"toasts": {
 		"removeFromFront": "Membre retiré du front",
-		"addToFront": "Membre ajouté au front"
+		"addToFront": "Membre ajouté au front",
+		"setMainFronter": "Membre défini comme fronter principal",
+		"setSoleFronter": "Définir ce membre comme fronter unique"
 	},
 	"deletedMember": "Membre supprimé",
-	"deletedCustomFront": "Front personnalisé supprimé"
+	"deletedCustomFront": "Front personnalisé supprimé",
+	"actions": {
+		"addToFront": "Ajouter au front",
+		"removeFromFront": "Retirer du front",
+		"setSoleFronter": "Définir comme fronter",
+		"setMainFronter": "Définir comme fronter principal"
+	}
 }

@@ -3,5 +3,52 @@
 		"local": "Français",
 		"inEnglish": "French"
 	},
-	"genericDeleteDesc": "Vous ne pourrez pas annuler cette action !"
+	"genericDeleteDesc": "Vous ne pourrez pas annuler cette action !",
+	"timeSizes": {
+		"months": {
+			"short": "M",
+			"long": "mois"
+		},
+		"days": {
+			"long": "jours",
+			"short": "J"
+		},
+		"weekdays": {
+			"monday": "Lundi",
+			"tuesday": "Mardi",
+			"wednesday": "Mercredi",
+			"thursday": "Jeudi",
+			"friday": "Vendredi",
+			"saturday": "Samedi",
+			"sunday": "Dimanche"
+		},
+		"hours": {
+			"long": "heures",
+			"short": "h"
+		},
+		"minutes": {
+			"long": "minutes",
+			"short": "m"
+		},
+		"seconds": {
+			"long": "secondes",
+			"short": "s"
+		},
+		"years": {
+			"long": "années",
+			"short": "A"
+		}
+	},
+	"alerts": {
+		"ok": "Ok",
+		"cancel": "Annuler"
+	},
+	"back": "Retour",
+	"memberMention": "Mentionner un membre",
+	"addTimestamp": "Ajouter un horodatage",
+	"storagePersistence": {
+		"content": "Ampersand ne peut pas stocker de données sur votre appareil. Si vous utilisez Firefox, veuillez donner à Ampersand la permission nécessaire. Si vous utilisez un navigateur basé sur Chromium (Chrome, Edge, Opera, Vivaldi, etc…), veuillez installer Ampersand en tant que web app, ou l’ajouter à votre bureau/écran d’accueil. Si ce message continue d’apparaître, pensez à souvent sauvegarder vos données dans la section Importer/Exporter.",
+		"header": "Attention"
+	},
+	"time": "Temps"
 }

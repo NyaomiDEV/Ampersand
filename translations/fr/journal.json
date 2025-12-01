@@ -1,8 +1,28 @@
 {
 	"header": "Journal",
 	"searchPlaceholder": "Rechercher dans le journal...",
-	"contentWarning": "The post comprend du contenu sensible",
+	"contentWarning": "Ce post comprend du contenu sensible",
 	"edit": {
-		"title": "Titre"
-	}
+		"title": "Titre",
+		"header": "Post",
+		"headerAdd": "Ajouter un nouveau post",
+		"headerEdit": "Modifier le post",
+		"author": "Modifier l’auteur",
+		"date": "Modifier la date",
+		"subtitle": "Sous-titre",
+		"body": "Corps du post",
+		"tags": "Tags",
+		"isPinned": "Épingler le post",
+		"isPrivate": "Rendre privé",
+		"contentWarning": "Avertissement de contenu",
+		"postID": "ID du post : {{postID}}",
+		"postIDcopiedToClipboard": "L’ID du post a été copié dans le presse-papiers !",
+		"delete": {
+			"title": "Supprimer ce post du journal",
+			"confirm": "Êtes vous certain·e de vouloir supprimer ce post ?"
+		}
+	},
+	"private": "Ce post est privé",
+	"pinnedPosts": "Posts épinglés",
+	"alertSubheader": "Êtes vous certain·e de vouloir lire ce post ?"
 }

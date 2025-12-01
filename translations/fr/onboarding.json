@@ -3,6 +3,29 @@
 		"header": "Bienvenue sur Ampersand !"
 	},
 	"importScreen": {
-		"header": "Souhaitez-vous importer vos données ?"
+		"header": "Souhaitez-vous importer des données ?",
+		"simplyPlural": "Oui, depuis Simply Plural",
+		"pluralKit": "Oui, depuis PluralKit",
+		"tupperbox": "Oui, depuis Tupperbox",
+		"startFromScratch": "Non, je vais partir de zéro",
+		"prevInstall": "Oui, depuis une installation précédente",
+		"pleaseWait": "Veuillez patienter le temps que vos données soient importées",
+		"error": "Erreur survenue lors de l’importation du fichier. Veuillez choisir une autre option.",
+		"errorSp": "Erreur survenue lors de l’importation des données de Simply Plural. Veuillez choisir une autre option.",
+		"errorPk": "Erreur survenue lors de l’importation des données de PluralKit. Veuillez choisir une autre option.",
+		"errorTu": "Erreur survenue lors de l’importation des données de Tupperbox. Veuillez choisir une autre option."
+	},
+	"systemInfo": {
+		"header": "Dites-en plus sur votre système !",
+		"name": "Nom collectif",
+		"description": "Quelques infos sur vous tous…"
+	},
+	"memberInfo": {
+		"header": "Dites-en plus sur vous !",
+		"description": "Quelques infos sur vous…"
+	},
+	"endScreen": {
+		"header": "Merci d’avoir choisi Ampersand !",
+		"startButton": "Commençons !"
 	}
 }

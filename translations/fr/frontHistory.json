@@ -1,5 +1,33 @@
 {
 	"header": "Historique de fronts",
 	"searchPlaceholder": "Rechercher dans l'historique de fronts...",
-	"currentlyFronting": "Actuellement au front"
+	"currentlyFronting": "Actuellement au front",
+	"edit": {
+		"member": "Modifier le membre au front",
+		"customStatus": "Statut personnalisé",
+		"comment": "Commentaire",
+		"presence": {
+			"historyTitle": "Historique de présence",
+			"lastPresence": "La dernière fois, c’était {{presence}} / 10",
+			"addTitle": "À quel point vous sentez-vous présent·e sur une échelle de 0 à 10 ?",
+			"addButton": "L’ajouter à l’historique"
+		},
+		"influencing": {
+			"select": "Sélectionner un membre à influencer",
+			"currentlyInfluencing": "Influence actuellement"
+		},
+		"startTime": "Début",
+		"endTime": "Fin",
+		"removeFromFront": "Retirer du front",
+		"isMainFronter": "Fronter principal",
+		"isLocked": "Verrouiller le fronter",
+		"delete": {
+			"title": "Supprimer l’entrée de front",
+			"confirm": "Êtes-vous certain·e de vouloir supprimer cette entrée de front ?"
+		},
+		"header": "Modifier l’entrée de front"
+	},
+	"influencing": "Influence {{influencedMember}}",
+	"wasFronting": "Était encore au front",
+	"frontedThatDay": "À fronté ce jour"
 }

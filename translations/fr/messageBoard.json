@@ -6,7 +6,8 @@
 		"voteCast": {
 			"voter": "Sélectionner le votant",
 			"reason": "Raison du vote",
-			"reasonHint": "Raison"
+			"reasonHint": "Raison",
+			"retractConfirmation": "Êtes-vous certain·e de vouloir retirer ce vote ?"
 		},
 		"resultsHeader": "Résultats du vote",
 		"resultsButton": "Afficher les résultats du sondage",
@@ -24,7 +25,8 @@
 	},
 	"edit": {
 		"delete": {
-			"confirm": "Êtes-vous certain·e de vouloir supprimer ce message ?"
+			"confirm": "Êtes-vous certain·e de vouloir supprimer ce message ?",
+			"title": "Supprimer le message du tableau"
 		},
 		"title": "Titre",
 		"body": "Corps du message",
@@ -35,6 +37,9 @@
 		"pollIsMultipleChoice": "Autoriser les choix multiples",
 		"pollAddNewChoice": "Ajouter un choix au sondage",
 		"pollChoice": "Description du choix",
-		"pollEditWarning": "Toute modification du sondage entraînera la réinitialisation des votes !"
-	}
+		"pollEditWarning": "Toute modification du sondage entraînera la réinitialisation des votes !",
+		"header": "Modifier le message",
+		"member": "Modifier l’auteur du message"
+	},
+	"header": "Tableau d’affichage"
 }

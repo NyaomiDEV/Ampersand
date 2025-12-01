@@ -5,6 +5,16 @@
 		"desc": "Verrouiller l'application avec un mot de passe"
 	},
 	"biometrics": {
-		"title": "Utiliser les données biométriques"
+		"title": "Utiliser les données biométriques",
+		"desc": "Déverrouiller l’application avec votre empreinte digitale ou votre visage"
+	},
+	"editPassword": "Modifier le mot de passe",
+	"inputPassword": {
+		"titleAdd": "Entrez votre nouveau mot de passe",
+		"titleReenter": "Entrez à nouveau le mot de passe",
+		"titleModifyOld": "Entrez votre ancien mot de passe",
+		"titleModifyNew": "Entrez votre nouveau mot de passe",
+		"titleDisable": "Entrez votre mot de passe",
+		"hint": "Mot de passe"
 	}
 }

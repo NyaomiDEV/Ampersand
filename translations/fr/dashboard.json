@@ -4,9 +4,12 @@
 	"header_mainfronter": "Bonjour, {{fronterName}} !",
 	"systemDescription": "Description du système",
 	"messageBoard": {
-		"view": "Voir plus"
+		"view": "Voir plus",
+		"header": "Tableau d’affichage",
+		"add": "Ajouter au tableau"
 	},
 	"nowFronting": "Actuellement au front",
 	"fronterInfluencing": "Influence {{influencedMember}}",
-	"addToFront": "Ajouter au front"
+	"addToFront": "Ajouter au front",
+	"recentFrontingHistory": "A récemment quitté le front"
 }

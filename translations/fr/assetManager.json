@@ -1,1 +1,17 @@
-{}
+{
+	"add": {
+		"attachment": "Ajouter un fichier",
+		"header": "Ajouter un asset"
+	},
+	"header": "Gestion des assets",
+	"searchPlaceholder": "Rechercher des assets…",
+	"edit": {
+		"header": "Modifier un asset",
+		"friendlyName": "Modifier le nom",
+		"attachment": "Remplacer le fichier",
+		"delete": {
+			"title": "Supprimer l’asset",
+			"confirm": "Êtes-vous certain·e de vouloir supprimer cet asset ?"
+		}
+	}
+}

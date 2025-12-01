@@ -7,7 +7,7 @@
 	},
 	"edit": {
 		"type": {
-			"desc": "Note : vous ne pouvez définir le tag qu'au moment de sa création !",
+			"desc": "Note : vous ne pouvez définir le type du tag qu'au moment de sa création !",
 			"header": "Type du tag",
 			"member": "Membre",
 			"journal": "Journal"
@@ -16,7 +16,26 @@
 		"description": "Description du tag",
 		"color": "Couleur du tag",
 		"delete": {
-			"confirm": "Êtes-vous sûr de vouloir supprimer ce tag ?"
+			"confirm": "Êtes-vous certain·e de vouloir supprimer ce tag ?",
+			"title": "Supprimer le tag"
+		},
+		"header": {
+			"member": "Modifier un tag de membre",
+			"journal": "Modifier un tag du journal"
+		},
+		"viewInLists": "Rendre visible dans les listes",
+		"members": {
+			"title": "Choisir les membres utilisant ce tag",
+			"desc_one": "{{count}} membre utilise ce tag",
+			"desc_many": "{{count}} membres utilisent ce tag",
+			"desc_other": "{{count}} membres utilisent ce tag"
+		},
+		"showJournal": {
+			"title": "Afficher les posts du journal ayant ce tag",
+			"desc_one": "{{count}} post du journal a ce tag",
+			"desc_many": "{{count}} posts du journal ont ce tag",
+			"desc_other": "{{count}} posts du journal ont ce tag"
 		}
-	}
+	},
+	"header": "Gestion des tags"
 }
