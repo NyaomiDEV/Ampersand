@@ -20,9 +20,9 @@
 	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
 
-	import { FrontingEntryComplete } from "../lib/db/entities";
+	import { FrontingEntry } from "../lib/db/entities";
 	import { newFrontingEntry, updateFrontingEntry, deleteFrontingEntry, sendFrontingChangedEvent } from "../lib/db/tables/frontingEntries";
-	import { ref, toRaw, useTemplateRef } from "vue";
+	import { onBeforeMount, ref, shallowReactive, toRaw, useTemplateRef } from "vue";
 
 	import MemberSelect from "./MemberSelect.vue";
 	import PresenceHistory from "./PresenceHistory.vue";
@@ -34,15 +34,15 @@
 	import { formatDate, promptOkCancel } from "../lib/util/misc";
 	import { useTranslation } from "i18next-vue";
 	import PresenceRating from "../components/PresenceRating.vue";
-
+	import { deletePresenceEntry, getPresenceEntriesForFrontEntry, newPresenceEntry } from "../lib/db/tables/presenceEntries";
 
 	const i18next = useTranslation();
 
 	const props = defineProps<{
-		frontingEntry?: PartialBy<FrontingEntryComplete, "uuid" | "member">
+		frontingEntry?: PartialBy<FrontingEntry, "id" | "member">
 	}>();
 
-	const emptyFrontingEntry: PartialBy<FrontingEntryComplete, "uuid" | "member"> = {
+	const emptyFrontingEntry: PartialBy<FrontingEntry, "id" | "member"> = {
 		isMainFronter: false,
 		startTime: new Date(),
 		endTime: new Date(),
@@ -50,13 +50,15 @@
 	};
 	const frontingEntry = ref({ ...(props.frontingEntry || emptyFrontingEntry) });
 
+	const presence = shallowReactive(new Map<Date, number>());
+
 	const presenceHistoryModal = useTemplateRef("presenceHistoryModal");
 	const memberSelectModal = useTemplateRef("memberSelectModal");
 	const memberInfluencingModal = useTemplateRef("memberInfluencingModal");
 	const memberTagModal = useTemplateRef("memberTagModal");
 
 	async function save(dismissAfter = true){
-		const uuid = frontingEntry.value?.uuid;
+		let id = frontingEntry.value?.id;
 		const _frontingEntry = toRaw(frontingEntry.value);
 
 		if(!_frontingEntry.member) return;
@@ -64,30 +66,34 @@
 		if(_frontingEntry.isMainFronter)
 			_frontingEntry.influencing = undefined;
 
-		if(!uuid) {
-			await newFrontingEntry({
-				..._frontingEntry,
-				member: _frontingEntry.member.uuid,
-				influencing: _frontingEntry.influencing?.uuid
-			});
-			void sendFrontingChangedEvent();
+		if(!id)
+			id = (await newFrontingEntry({ ..._frontingEntry } as FrontingEntry))?.id;
+		else 
+			await updateFrontingEntry(id, { ..._frontingEntry });
 
-			if(dismissAfter)
-				await modalController.dismiss(null, "added");
-
-			return;
-		}
-
-		await updateFrontingEntry(uuid, {
-			..._frontingEntry,
-			member: _frontingEntry.member.uuid,
-			influencing: _frontingEntry.influencing?.uuid
-		});
 		void sendFrontingChangedEvent();
+
+		if(id){
+			let _presences = Array.from(toRaw(presence).entries());
+			const allPresences = await Array.fromAsync(getPresenceEntriesForFrontEntry({ ..._frontingEntry, id } as FrontingEntry));
+			for(const presence of allPresences){
+				const tuple = _presences.find(x => x[0].valueOf() === presence.date.valueOf());
+				if(!tuple)
+					await deletePresenceEntry(presence.id);
+				else _presences = _presences.filter(x => x !== tuple);
+			}
+			for(const remainingPresence of _presences){
+				await newPresenceEntry({
+					date: remainingPresence[0],
+					presence: remainingPresence[1],
+					frontingEntry: { ..._frontingEntry, id } as FrontingEntry
+				});
+			}
+		}
 
 		try{
 			if(dismissAfter)
-				await modalController.dismiss(null, "modified");
+				await modalController.dismiss(null);
 		}catch(_){ /* empty */ }
 		// catch an error because the type might get changed, causing the parent to be removed from DOM
 		// however it's safe for us to ignore
@@ -98,7 +104,7 @@
 			i18next.t("frontHistory:edit.delete.title"),
 			i18next.t("frontHistory:edit.delete.confirm"),
 		)){
-			await deleteFrontingEntry(frontingEntry.value.uuid!);
+			await deleteFrontingEntry(frontingEntry.value.id!);
 			void sendFrontingChangedEvent();
 
 			try{
@@ -112,9 +118,9 @@
 	}
 
 	function getMostRecentPresence(){
-		if(!frontingEntry.value.presence) return [undefined, undefined];
+		if(!presence) return [undefined, undefined];
 
-		const presenceVal = Array.from(frontingEntry.value.presence.entries());
+		const presenceVal = Array.from(presence.entries());
 
 		return presenceVal.sort((a, b) => a[0].valueOf() - b[0].valueOf()).pop() || [undefined, undefined];
 	}
@@ -141,6 +147,14 @@
 		}
 		return "";
 	}
+
+	onBeforeMount(async () => {
+		if(frontingEntry.value.id){
+			const presences = await Array.fromAsync(getPresenceEntriesForFrontEntry(frontingEntry.value as FrontingEntry));
+			for(const _presence of presences)
+				presence.set(_presence.date, _presence.presence);
+		}
+	});
 </script>
 
 <template>
@@ -177,7 +191,7 @@
 				<IonItem button :detail="true" @click="presenceHistoryModal?.$el.present()">
 					<IonLabel>
 						{{ $t("frontHistory:edit.presence.historyTitle") }}
-						<p v-if="frontingEntry.presence?.size">
+						<p v-if="presence">
 							{{ presencePhrase(getMostRecentPresence()[1] ?? 0) }}
 							<br />
 							<PresenceRating :rating="getMostRecentPresence()[1] ?? 0" />
@@ -290,7 +304,7 @@
 				</IonItem>
 
 				<IonItem
-					v-if="frontingEntry.uuid"
+					v-if="frontingEntry.id"
 					button
 					:detail="false"
 					@click="removeFrontingEntry"
@@ -335,8 +349,7 @@
 
 			<PresenceHistory
 				ref="presenceHistoryModal"
-				:model-value="frontingEntry.presence"
-				@update:model-value="async (e) => { frontingEntry.presence = e; await save(false) }"
+				:model-value="presence"
 			/>
 
 			<MemberSelect
@@ -346,7 +359,7 @@
 				:hide-checkboxes="true"
 				:always-emit="true"
 				:model-value="[]"
-				@update:model-value="(e) => { if(e[0]) frontingEntry.comment = `${frontingEntry.comment || ''}@<m:${e[0].uuid}>` }"
+				@update:model-value="(e) => { if(e[0]) frontingEntry.comment = `${frontingEntry.comment || ''}@<m:${e[0].id}>` }"
 			/>
 		</IonContent>
 	</IonModal>

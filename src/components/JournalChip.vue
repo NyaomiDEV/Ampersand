@@ -11,7 +11,7 @@
 		clickable?: boolean
 	}>();
 
-	const routerLink = props.clickable ? `/journal/edit?uuid=${props.post.uuid}` : undefined;
+	const routerLink = props.clickable ? `/journal/edit?uuid=${props.post.id}` : undefined;
 </script>
 
 <template>

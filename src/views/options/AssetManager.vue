@@ -70,7 +70,7 @@
 			<IonList>
 				<AssetItem
 					v-for="asset in assets"
-					:key="asset.uuid"
+					:key="asset.id"
 					route-to-edit-page
 					show-thumbnail
 					:asset

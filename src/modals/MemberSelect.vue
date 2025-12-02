@@ -79,7 +79,7 @@
 				selectedMembers.length = 0;
 			selectedMembers.push(member);
 		} else {
-			const index = selectedMembers.findIndex(x => x.uuid === member.uuid);
+			const index = selectedMembers.findIndex(x => x.id === member.id);
 			if(index > -1){
 				if(selectedMembers.length === 1 && onlyOne){
 					// selected the one who was already selected since we're in "selection mode"
@@ -125,9 +125,9 @@
 		<SpinnerFullscreen v-if="!members" />
 		<IonContent v-else>
 			<IonList>
-				<IonItem v-for="member in members" :key="member.uuid" button>
+				<IonItem v-for="member in members" :key="member.id" button>
 					<MemberAvatar slot="start" :member />
-					<IonCheckbox :value="member.uuid" :checked="!!selectedMembers.find(x => x.uuid === member.uuid)" @update:model-value="value => check(member, value)">
+					<IonCheckbox :value="member.id" :checked="!!selectedMembers.find(x => x.id === member.id)" @update:model-value="value => check(member, value)">
 						<MemberLabel :member />
 					</IonCheckbox>
 				</IonItem>

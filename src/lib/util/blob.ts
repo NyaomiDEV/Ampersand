@@ -1,19 +1,20 @@
-import { md5 } from "./md5";
+import { SQLFile } from "../db/entities";
+import { fileToJSFile } from "../db/tables/files";
 
 const dataURLs = new Map<string, {
 	file: File,
 	url: string
 }>();
 
-export function getObjectURL(file: File){
-	const hash = Array.from(md5(new TextEncoder().encode(file.name + file.lastModified + file.size))).map(x => x.toString(16)).join("");
-	if(dataURLs.has(hash))
-		return dataURLs.get(hash)!.url;
+export async function getObjectURL(file: SQLFile){
+	if(dataURLs.has(file.id))
+		return dataURLs.get(file.id)!.url;
 
-	const url = URL.createObjectURL(file);
+	const jsfile = await fileToJSFile(file);
+	const url = URL.createObjectURL(jsfile);
 
-	dataURLs.set(hash, {
-		file,
+	dataURLs.set(file.id, {
+		file: jsfile,
 		url
 	});
 

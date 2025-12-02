@@ -2,14 +2,14 @@
 	import { IonList, IonLabel, IonButton, IonListHeader } from "@ionic/vue";
 	import { h, onBeforeMount, onUnmounted, shallowRef } from "vue";
 	import { getRecentBoardMessages } from "../../lib/db/tables/boardMessages";
-	import type { BoardMessageComplete } from "../../lib/db/entities.d.ts";
+	import type { BoardMessage } from "../../lib/db/entities.d.ts";
 	import BoardMessageEdit from "../../modals/BoardMessageEdit.vue";
 
 	import MessageBoardCard from "../MessageBoardCard.vue";
 	import { DatabaseEvents, DatabaseEvent } from "../../lib/db/events";
 	import { addModal, removeModal } from "../../lib/modals.ts";
 
-	const boardMessages = shallowRef<BoardMessageComplete[]>();
+	const boardMessages = shallowRef<BoardMessage[]>();
 
 	async function updateBoardMessages(){
 		boardMessages.value = (await getRecentBoardMessages()).sort((a, b) => {
@@ -33,7 +33,7 @@
 		DatabaseEvents.removeEventListener("updated", listener);
 	});
 
-	async function showModal(clickedBoardMessage?: BoardMessageComplete){
+	async function showModal(clickedBoardMessage?: BoardMessage){
 		const vnode = h(BoardMessageEdit, {
 			boardMessage: clickedBoardMessage,
 			onDidDismiss: () => removeModal(vnode)
@@ -53,7 +53,7 @@
 	<IonList>
 		<MessageBoardCard
 			v-for="boardMessage in boardMessages"
-			:key="boardMessage.uuid"
+			:key="boardMessage.id"
 			:board-message
 			:hide-poll="!boardMessage.isPinned"
 			@click="showModal(boardMessage)"
