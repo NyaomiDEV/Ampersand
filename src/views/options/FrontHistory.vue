@@ -3,7 +3,7 @@
 	import { h, onBeforeMount, onUnmounted, ref, shallowRef, watch } from "vue";
 	import MemberAvatar from "../../components/member/MemberAvatar.vue";
 	import FrontingEntryLabel from "../../components/frontingEntry/FrontingEntryLabel.vue";
-	import type { FrontingEntryComplete } from "../../lib/db/entities.d.ts";
+	import type { FrontingEntry } from "../../lib/db/entities.d.ts";
 	import { getFrontingEntriesOfDay, getFrontingEntriesDays } from "../../lib/db/tables/frontingEntries";
 	import Spinner from "../../components/Spinner.vue";
 	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
@@ -26,7 +26,7 @@
 
 	const search = ref(route.query.q as string || "");
 
-	const frontingEntries = shallowRef<FrontingEntryComplete[]>();
+	const frontingEntries = shallowRef<FrontingEntry[]>();
 
 	const frontingEntriesDays = shallowRef<{ date: string, backgroundColor: string }[]>();
 
@@ -42,8 +42,8 @@
 			search.value = route.query.q as string;
 	});
 
-	watch(search, () => {
-		populateHighlightedDays();
+	watch(search, async () => {
+		await populateHighlightedDays();
 	});
 
 	watch([date, search], async () => {
@@ -53,7 +53,7 @@
 	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
 		await resetEntries();
-		populateHighlightedDays();
+		await populateHighlightedDays();
 	});
 
 	onUnmounted(() => {
@@ -69,8 +69,8 @@
 		await getEntries();
 	}
 
-	function getGrouped(entries: FrontingEntryComplete[]){
-		const map = new Map<string, FrontingEntryComplete[]>();
+	function getGrouped(entries: FrontingEntry[]){
+		const map = new Map<string, FrontingEntry[]>();
 
 		for(const entry of entries.sort((a, b) => b.startTime.getTime() - a.startTime.getTime())){
 			if(!entry.endTime){
@@ -114,8 +114,8 @@
 		return "";
 	}
 
-	function populateHighlightedDays() {
-		const days = getFrontingEntriesDays(search.value);
+	async function populateHighlightedDays() {
+		const days = await getFrontingEntriesDays(search.value);
 
 		frontingEntriesDays.value = Array.from(days.entries()).map(([date, occurrences]) => {
 			let step = "200";
@@ -135,7 +135,7 @@
 		});
 	}
 
-	async function showModal(clickedFrontingEntry?: FrontingEntryComplete){
+	async function showModal(clickedFrontingEntry?: FrontingEntry){
 		const vnode = h(FrontingEntryEdit, {
 			frontingEntry: clickedFrontingEntry,
 			onDidDismiss: () => removeModal(vnode)
@@ -192,7 +192,7 @@
 					</IonItemDivider>
 					<IonItem
 						v-for="entry in tuple[1]"
-						:key="entry.uuid"
+						:key="entry.id"
 						button
 						:class="{ 'main-fronter': entry.isMainFronter, 'influencing': !!entry.influencing }"
 						@click="showModal(entry)"

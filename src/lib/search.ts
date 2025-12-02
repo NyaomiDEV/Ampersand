@@ -1,8 +1,9 @@
 
-import { Member, Tag, Asset, CustomField, JournalPostComplete, BoardMessageComplete, FrontingEntryComplete, FrontingEntry, JournalPost, BoardMessage, System } from "./db/entities";
+import { Member, Tag, Asset, CustomField, FrontingEntry, JournalPost, BoardMessage, System } from "./db/entities";
 import { parseAssetFilterQuery, parseBoardMessageFilterQuery, parseCustomFieldFilterQuery, parseFrontingHistoryFilterQuery, parseJournalPostFilterQuery, parseMemberFilterQuery, parseSystemFilterQuery } from "./util/filterQuery";
 import { appConfig } from "./config";
-import { IndexEntry } from "./db/tables";
+import { getMemberTagsForMember } from "./db/tables/memberTags";
+import { getJournalPostTagsForPost } from "./db/tables/journalPostTags";
 
 export function filterSystem(search: string, system: System) {
 	const parsed = parseSystemFilterQuery(search.length ? search : appConfig.defaultFilterQueries.systems || "");
@@ -12,7 +13,7 @@ export function filterSystem(search: string, system: System) {
 	}
 
 	if (parsed.isDefault) {
-		if (appConfig.defaultSystem !== system.uuid)
+		if (appConfig.defaultSystem !== system.id)
 			return false;
 	}
 
@@ -51,8 +52,10 @@ export async function filterMember(search: string, member: Member){
 			return false;
 	}
 
+	// how do we speed this up?
 	if (parsed.tags.length) {
-		if (!parsed.tags.every(uuid => member.tags.includes(uuid)))
+		const memberTags = await Array.fromAsync(getMemberTagsForMember(member));
+		if (!parsed.tags.every(tag => memberTags.find(x => x.tag.id === tag.id)))
 			return false;
 	}
 
@@ -68,7 +71,7 @@ export function filterTag(search: string, tag: Tag) {
 		return tag.name.toLowerCase().startsWith(query.toLowerCase());
 }
 
-export function filterFrontingEntry(search: string, frontingEntry: FrontingEntryComplete){
+export function filterFrontingEntry(search: string, frontingEntry: FrontingEntry){
 	const parsed = parseFrontingHistoryFilterQuery(search.length ? search : appConfig.defaultFilterQueries.frontingHistory || "");
 
 	if(parsed.query.length){
@@ -77,7 +80,7 @@ export function filterFrontingEntry(search: string, frontingEntry: FrontingEntry
 	}
 
 	if (parsed.member) {
-		if (frontingEntry.member.uuid !== parsed.member)
+		if (frontingEntry.member.id !== parsed.member)
 			return false;
 	}
 
@@ -89,23 +92,7 @@ export function filterFrontingEntry(search: string, frontingEntry: FrontingEntry
 	return true;
 }
 
-export function filterFrontingEntryIndex(search: string, frontingEntry: IndexEntry<FrontingEntry>) {
-	const parsed = parseFrontingHistoryFilterQuery(search.length ? search : appConfig.defaultFilterQueries.frontingHistory || "");
-
-	if (parsed.member) {
-		if (frontingEntry.member !== parsed.member)
-			return false;
-	}
-
-	if (parsed.currentlyFronting) {
-		if (frontingEntry.endTime)
-			return false;
-	}
-
-	return true;
-}
-
-export function filterBoardMessage(search: string, boardMessage: BoardMessageComplete) {
+export function filterBoardMessage(search: string, boardMessage: BoardMessage) {
 	const parsed = parseBoardMessageFilterQuery(search.length ? search : appConfig.defaultFilterQueries.messageBoard || "");
 
 	if (parsed.isPinned !== undefined) {
@@ -137,37 +124,7 @@ export function filterBoardMessage(search: string, boardMessage: BoardMessageCom
 			if(parsed.member === false)
 				return false;
 
-			if (boardMessage.member.uuid !== parsed.member)
-				return false;
-		}
-	}
-
-	return true;
-}
-
-export function filterBoardMessageIndex(search: string, boardMessage: IndexEntry<BoardMessage>) {
-	const parsed = parseBoardMessageFilterQuery(search.length ? search : appConfig.defaultFilterQueries.messageBoard || "");
-
-	if (parsed.isPinned !== undefined) {
-		if (parsed.isPinned && !boardMessage.isPinned)
-			return false;
-		else if (!parsed.isPinned && boardMessage.isPinned)
-			return false;
-	}
-
-	if (parsed.isArchived !== undefined) {
-		if (parsed.isArchived && !boardMessage.isArchived)
-			return false;
-		else if (!parsed.isArchived && boardMessage.isArchived)
-			return false;
-	}
-
-	if (typeof parsed.member !== "undefined") {
-		if (boardMessage.member) {
-			if (parsed.member === false)
-				return false;
-
-			if (boardMessage.member !== parsed.member)
+			if (boardMessage.member.id !== parsed.member)
 				return false;
 		}
 	}
@@ -184,12 +141,12 @@ export function filterAsset(search: string, asset: Asset) {
 	}
 
 	if (parsed.type) {
-		if (asset.file.type.split("/")[1].toLowerCase() !== parsed.type.toLowerCase())
+		if (asset.file.friendlyName.split(".").pop()?.toLowerCase() !== parsed.type.toLowerCase())
 			return false;
 	}
 
 	if (parsed.filename) {
-		if (asset.file.name.toLowerCase() !== parsed.filename.toLowerCase())
+		if (asset.file.friendlyName.toLowerCase() !== parsed.filename.toLowerCase())
 			return false;
 	}
 
@@ -212,7 +169,7 @@ export function filterCustomField(search: string, customField: CustomField) {
 	return true;
 }
 
-export async function filterJournalPost(search: string, post: JournalPostComplete) {
+export async function filterJournalPost(search: string, post: JournalPost) {
 	const parsed = await parseJournalPostFilterQuery(search.length ? search : appConfig.defaultFilterQueries.journal || "");
 	if(parsed.query.length){
 		if (
@@ -228,26 +185,14 @@ export async function filterJournalPost(search: string, post: JournalPostComplet
 		if(parsed.member === false && post.member)
 			return false;
 
-		if (post.member?.uuid !== parsed.member)
+		if (post.member?.id !== parsed.member)
 			return false;
 	}
 
+	// how do we speed this up?
 	if (parsed.tags.length) {
-		if (!parsed.tags.every(uuid => post.tags.includes(uuid)))
-			return false;
-	}
-
-	return true;
-}
-
-export async function filterJournalPostIndex(search: string, post: IndexEntry<JournalPost>) {
-	const parsed = await parseJournalPostFilterQuery(search.length ? search : appConfig.defaultFilterQueries.journal || "");
-
-	if (typeof parsed.member !== "undefined") {
-		if (parsed.member === false && post.member)
-			return false;
-
-		if (post.member !== parsed.member)
+		const postTags = await Array.fromAsync(getJournalPostTagsForPost(post));
+		if (!parsed.tags.every(tag => postTags.find(x => x.tag.id === tag.id)))
 			return false;
 	}
 

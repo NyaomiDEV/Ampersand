@@ -66,13 +66,13 @@
 			i18next.t("reminders:edit.delete.title"),
 			i18next.t("reminders:edit.delete.confirm")
 		)){
-			await removeReminder(reminder.value.uuid!);
+			await removeReminder(reminder.value.id!);
 			router.back();
 		}
 	}
 
 	async function save(){
-		const uuid = reminder.value?.uuid;
+		const uuid = reminder.value?.id;
 		const _reminder = toRaw(reminder.value);
 
 		if(_reminder.type === "event"){
@@ -366,7 +366,7 @@
 			</template>
 
 			<IonItem
-				v-if="reminder.uuid"
+				v-if="reminder.id"
 				button
 				:detail="false"
 				@click="deleteReminder"

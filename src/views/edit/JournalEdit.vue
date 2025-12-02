@@ -29,8 +29,8 @@
 	import personAddMD from "@material-symbols/svg-600/outlined/person_add.svg";
 	import clockAddMD from "@material-symbols/svg-600/outlined/more_time.svg";
 
-	import { JournalPostComplete, Tag } from "../../lib/db/entities";
-	import { newJournalPost, updateJournalPost, getJournalPost, toJournalPostComplete } from "../../lib/db/tables/journalPosts";
+	import { JournalPost, Tag } from "../../lib/db/entities";
+	import { newJournalPost, updateJournalPost, getJournalPost } from "../../lib/db/tables/journalPosts";
 	import { getFiles, formatDate } from "../../lib/util/misc";
 	import { resizeImage } from "../../lib/util/image";
 	import { h, onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
@@ -43,7 +43,8 @@
 	import { useRoute } from "vue-router";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import { getObjectURL } from "../../lib/util/blob";
-	import { getTags } from "../../lib/db/tables/tags";
+	import { deleteFile, newFile, updateFile } from "../../lib/db/tables/files";
+	import { deleteJournalPostTag, getJournalPostTagsForPost, newJournalPostTag } from "../../lib/db/tables/journalPostTags";
 	import { addModal, removeModal } from "../../lib/modals";
 
 	const router = useIonRouter();
@@ -55,16 +56,16 @@
 
 	const tags = shallowRef<Tag[]>([]);
 
-	const emptyPost: PartialBy<JournalPostComplete, "uuid" | "member"> = {
+	const emptyPost: PartialBy<JournalPost, "id" | "member"> = {
 		title: "",
 		date: new Date(),
 		body: "",
-		tags: [],
 		isPrivate: false,
 		isPinned: false
 	};
 
 	const post = ref({ ...emptyPost });
+	const coverUri = ref();
 
 	const canEdit = ref(true);
 	const isEditing = ref(false);
@@ -75,26 +76,40 @@
 			return;
 		}
 
-		const uuid = post.value.uuid;
+		let id = post.value.id;
 		const _post = toRaw(post.value);
 
 		if(!_post.title.length)
 			_post.title = formatDate(_post.date, "collapsed");
 
-		if(!uuid){
-			await newJournalPost({
-				..._post,
-				member: _post.member?.uuid || undefined,
-			});
-			router.back();
+		let isNew = false;
+		if(!id){
+			isNew = true;
+			id = (await newJournalPost({ ..._post }))?.id;
+		} else 
+			await updateJournalPost(id, {	..._post });
 
-			return;
+		if(id){
+			let _tags = toRaw(tags.value);
+			const allJournalTags = await Array.fromAsync(getJournalPostTagsForPost({ ..._post, id } as JournalPost));
+			for(const journalTag of allJournalTags){
+				const tag = _tags.find(x => x.id === journalTag.tag.id);
+				if(!tag)
+					await deleteJournalPostTag(journalTag.id);
+				else _tags = _tags.filter(x => x !== tag);
+			}
+			for(const remainingTag of _tags){
+				await newJournalPostTag({
+					tag: remainingTag,
+					post: { ..._post, id } as JournalPost
+				});
+			}
 		}
 
-		await updateJournalPost(uuid, {
-			..._post,
-			member: _post.member?.uuid || undefined
-		});
+		if(isNew){
+			router.back();
+			return;
+		}
 
 		isEditing.value = false;
 	}
@@ -102,12 +117,30 @@
 	async function modifyCover(){
 		const files = await getFiles();
 		if(files.length){
-			if(files[0].type === "image/gif"){
-				post.value.cover = files[0];
-				return;
-			}
-			post.value.cover = await resizeImage(files[0]);
+			let _file: File;
+			if(files[0].type === "image/gif")
+				_file = files[0];
+			else
+				_file = await resizeImage(files[0]);
+			if(post.value.cover)
+				await updateFile(post.value.cover.id, undefined, _file.stream());
+			else 
+				post.value.cover = await newFile(_file.name, _file.stream());
 		}
+
+		await updateCoverUri();
+	}
+
+	async function deleteCover(){
+		if(post.value.cover){
+			await deleteFile(post.value.cover.id);
+			post.value.cover = undefined;
+		}
+	}
+
+	async function updateCoverUri(){
+		if(post.value.cover)
+			coverUri.value = await getObjectURL(post.value.cover);
 	}
 
 	async function showJournalOptions(){
@@ -127,18 +160,19 @@
 
 		loading.value = true;
 
-		const _tags: Tag[] = [];
-		for await (const tag of getTags()){
-			if(tag.type === "journal")
-				_tags.push(tag);
-		}
-		tags.value = _tags;
-
 		if(route.query.uuid){
 			const _post = await getJournalPost(route.query.uuid as string);
-			if(_post) post.value = await toJournalPostComplete(_post);
+			if(_post) post.value = _post;
 			else post.value = { ...emptyPost };
 		} else post.value = { ...emptyPost };
+
+		await updateCoverUri();
+		
+		if(post.value.id){
+			tags.value = (await Array.fromAsync(getJournalPostTagsForPost(post.value as JournalPost)))
+				.map(x => x.tag)
+				.sort((a, b) => a.name.localeCompare(b.name));
+		}
 
 		if(route.query.disallowEditing)
 			canEdit.value = false;
@@ -146,7 +180,7 @@
 			canEdit.value = true;
 
 		// are we editing?
-		isEditing.value = !post.value.uuid;
+		isEditing.value = !post.value.id;
 
 		loading.value = false;
 	}
@@ -165,7 +199,7 @@
 					default-href="/journal/"
 				/>
 				<IonTitle>
-					{{ !isEditing ? $t("journal:edit.header") : !post.uuid ? $t("journal:edit.headerAdd") :
+					{{ !isEditing ? $t("journal:edit.header") : !post.id ? $t("journal:edit.headerAdd") :
 						$t("journal:edit.headerEdit") }}
 				</IonTitle>
 			</IonToolbar>
@@ -174,8 +208,8 @@
 		<SpinnerFullscreen v-if="loading" />
 		<IonContent v-else>
 
-			<div v-if="post.cover || isEditing" class="cover">
-				<img v-if="post.cover" :src="getObjectURL(post.cover)" />
+			<div v-if="coverUri || isEditing" class="cover">
+				<img v-if="coverUri" :src="coverUri" />
 				<div v-else class="no-img">
 					<IonIcon :icon="imageMD" />
 				</div>
@@ -187,7 +221,7 @@
 					class="delete"
 					shape="round"
 					color="danger"
-					@click="post.cover = undefined"
+					@click="deleteCover"
 				>
 					<IonIcon slot="icon-only" :icon="trashMD" />
 				</IonButton>
@@ -208,9 +242,9 @@
 					<h2 v-if="post.subtitle?.length">{{ post.subtitle }}</h2>
 					<div v-if="tags?.length" class="journal-tags">
 						<TagChip
-							v-for="tag in post.tags"
-							:key="tag"
-							:tag="tags.find(x => x.uuid === tag)!"
+							v-for="tag in tags"
+							:key="tag.id"
+							:tag
 						/>
 					</div>
 					<Markdown :markdown="post.body" />
@@ -285,7 +319,7 @@
 				:hide-checkboxes="true"
 				:always-emit="true"
 				:model-value="[]"
-				@update:model-value="(e) => { if(e[0]) post.body = `${post.body || ''}@<m:${e[0].uuid}>` }"
+				@update:model-value="(e) => { if(e[0]) post.body = `${post.body || ''}@<m:${e[0].id}>` }"
 			/>
 
 		</IonContent>

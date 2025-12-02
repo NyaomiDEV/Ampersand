@@ -11,32 +11,12 @@
 		IonLabel,
 	} from "@ionic/vue";
 
-	import { onBeforeMount, onUnmounted, shallowRef } from "vue";
 	import MemberAvatar from "../components/member/MemberAvatar.vue";
-	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
-	import type { Member, Poll } from "../lib/db/entities";
-	import { defaultMember, getMembers } from "../lib/db/tables/members.ts";
-	import { DatabaseEvents, DatabaseEvent } from "../lib/db/events.ts";
+	import type { PollEntry, Vote } from "../lib/db/entities";
 
 	const props = defineProps<{
-		poll: Poll
+		pollVotes: Map<PollEntry, Vote[]>
 	}>();
-
-	const members = shallowRef<Member[]>();
-
-	const listener = (event: Event) => {
-		if((event as DatabaseEvent).data.table === "members")
-			void Array.fromAsync(getMembers()).then(res => members.value = res);
-	};
-
-	onBeforeMount(async () => {
-		DatabaseEvents.addEventListener("updated", listener);
-		members.value = await Array.fromAsync(getMembers());
-	});
-
-	onUnmounted(() => {
-		DatabaseEvents.removeEventListener("updated", listener);
-	});
 </script>
 
 <template>
@@ -47,17 +27,16 @@
 			</IonToolbar>
 		</IonHeader>
 
-		<SpinnerFullscreen v-if="!members" />
-		<IonContent v-else>
+		<IonContent>
 			<IonList>
-				<template v-for="choice in props.poll.entries.filter(x => x.votes.length)" :key="choice.choice">
+				<template v-for="choice in props.pollVotes.entries().filter(([_k,v]) => v.length)" :key="choice[0].choice">
 					<IonItemDivider sticky>
-						{{ choice.choice }} - {{ $t("messageBoard:polls.choice.desc", { count: choice.votes.length }) }}
+						{{ choice[0].choice }} - {{ $t("messageBoard:polls.choice.desc", { count: choice[1].length }) }}
 					</IonItemDivider>
-					<IonItem v-for="vote in choice.votes" :key="vote.member">
-						<MemberAvatar slot="start" :member="members.find(x => vote.member === x.uuid) || defaultMember()" />
+					<IonItem v-for="vote in choice[1]" :key="vote.member.id">
+						<MemberAvatar slot="start" :member="vote.member" />
 						<IonLabel>
-							<h2>{{ (members.find(x => vote.member === x.uuid) || defaultMember()).name }}</h2>
+							<h2>{{ vote.member.name }}</h2>
 							<p>{{ vote.reason }}</p>
 						</IonLabel>
 					</IonItem>

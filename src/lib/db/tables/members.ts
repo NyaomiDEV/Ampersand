@@ -19,36 +19,39 @@ export async function* getFilteredMembers(query: string){
 
 export async function newMember(member: Omit<Member, keyof UUIDable>) {
 	try{
-		const uuid = window.crypto.randomUUID();
-		await db.members.add(uuid, {
+		const id = window.crypto.randomUUID();
+		await db.members.add(id, {
 			...member,
-			uuid
+			id
 		});
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "members",
 			event: "new",
-			uuid,
+			id,
 			newData: member
 		}));
-		return uuid;
+		return {
+			...member,
+			id
+		};
 	}catch(_error){
-		return false;
+		return;
 	}
 }
 
-export async function getMember(uuid: UUID){
-	if(uuid === nilUid) return undefined;
-	return await db.members.get(uuid);
+export async function getMember(id: UUID){
+	if(id === nilUid) return undefined;
+	return await db.members.get(id);
 }
 
-export async function deleteMember(uuid: UUID) {
-	if (uuid === nilUid) return false;
+export async function deleteMember(id: UUID) {
+	if (id === nilUid) return false;
 	try {
-		await db.members.delete(uuid);
+		await db.members.delete(id);
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "members",
 			event: "deleted",
-			uuid,
+			id,
 			delta: {}
 		}));
 		return true;
@@ -57,15 +60,15 @@ export async function deleteMember(uuid: UUID) {
 	}
 }
 
-export async function updateMember(uuid: UUID, newContent: Partial<Member>) {
-	if (uuid === nilUid) return undefined;
+export async function updateMember(id: UUID, newContent: Partial<Member>) {
+	if (id === nilUid) return undefined;
 	try{
-		const updated = await db.members.update(uuid, newContent);
+		const updated = await db.members.update(id, newContent);
 		if(updated) {
 			DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 				table: "members",
 				event: "modified",
-				uuid,
+				id,
 				delta: newContent,
 				oldData: updated.oldData,
 				newData: updated.newData
@@ -80,23 +83,27 @@ export async function updateMember(uuid: UUID, newContent: Partial<Member>) {
 
 export const defaultMember = (): Member => ({
 	name: t("members:deletedMember"),
-	system: nilUid,
+	system: {
+		id: nilUid,
+		name: ""
+	},
 	isArchived: false,
 	isCustomFront: false,
 	isPinned: false,
 	dateCreated: new Date(0),
-	tags: [],
-	uuid: nilUid
+	id: nilUid
 });
 
 export const defaultCustomFront = (): Member => ({
 	name: t("members:deletedCustomFront"),
-	system: nilUid,
+	system: {
+		id: nilUid,
+		name: ""
+	},
 	isArchived: false,
 	isCustomFront: true,
 	isPinned: false,
 	dateCreated: new Date(0),
-	tags: [],
-	uuid: maxUid
+	id: maxUid
 });
 

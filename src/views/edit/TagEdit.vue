@@ -33,23 +33,23 @@
 	import { getCurrentInstance, h, onBeforeMount, ref, watch } from "vue";
 	import { addMaterialColors, rgbaToArgb, unsetMaterialColors } from "../../lib/theme";
 	import { PartialBy } from "../../lib/types";
-	import { getMembers, updateMember } from "../../lib/db/tables/members";
-	import { getJournalPosts } from "../../lib/db/tables/journalPosts";
 	import { useTranslation } from "i18next-vue";
 	import { useRoute } from "vue-router";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import { addModal, removeModal } from "../../lib/modals";
 	import MemberSelect from "../../modals/MemberSelect.vue";
 	import { promptOkCancel } from "../../lib/util/misc";
+	import { deleteMemberTag, getMemberTags, newMemberTag } from "../../lib/db/tables/memberTags";
+	import { getJournalPostTags } from "../../lib/db/tables/journalPostTags";
 
 	const loading = ref(false);
 
 	const i18next = useTranslation();
 	const self = getCurrentInstance();
 
-	const emptyTag: PartialBy<Tag, "uuid"> = {
+	const emptyTag: PartialBy<Tag, "id"> = {
 		name: "",
-		type: "member",
+		type: 0,
 		viewInLists: false
 	};
 	const tag = ref({ ...emptyTag });
@@ -60,34 +60,38 @@
 	const count = ref(0);
 
 	async function tagMembers() {
-		const allMembers = await Array.fromAsync(getMembers());
-		let members: Member[] = allMembers.filter(x => x.tags.includes(tag.value.uuid!));
+		const allMemberTags = await Array.fromAsync(getMemberTags());
+		let members: Member[] = allMemberTags.filter(x => x.tag.id === tag.value.id).map(x => x.member);
 		const vnode = h(MemberSelect, {
 			customTitle: i18next.t("tagManagement:edit.members.title"),
 			modelValue: members,
 			onDidDismiss: async () => {
-				for(const member of allMembers){
-					if(members.map(x => x.uuid).includes(member.uuid)){
-						if(member.tags.includes(tag.value.uuid!)) continue;
+				for(const memberTag of allMemberTags){
+					if(memberTag.tag.id !== tag.value.id) continue;
 
-						await updateMember(member.uuid, {
-							tags: [...member.tags, tag.value.uuid!]
-						});
-					} else {
-						if(!member.tags.includes(tag.value.uuid!)) continue;
-
-						await updateMember(member.uuid, {
-							tags: [...member.tags.filter(x => x !== tag.value.uuid!)]
-						});
-					}
+					const member = members.find(x => x.id === memberTag.member.id);
+					if(!member)
+						await deleteMemberTag(memberTag.id);
+					else members = members.filter(x => x !== member);
+				}
+				for(const remainingMember of members){
+					await newMemberTag({
+						tag: tag.value as Tag,
+						member: remainingMember
+					});
 				}
 				removeModal(vnode);
 
-				// we can't use allMembers here again because
+				// we can't use allMemberTags here again because
 				// at this point the db is updated and we don't have
 				// the new values; besides, it's a non-issue to read
 				// from disk here
-				count.value = (await Array.fromAsync(getMembers())).filter(x => x.tags.includes(tag.value.uuid!)).length;
+				let _count = 0;
+				for await (const memberTag of getMemberTags()){
+					if(memberTag.tag.id === tag.value.id)
+						_count++;
+				}
+				count.value = _count;
 			},
 			"onUpdate:modelValue": v => { members = [...v]; },
 		});
@@ -98,7 +102,7 @@
 	}
 
 	async function save(){
-		const uuid = tag.value.uuid;
+		const uuid = tag.value.id;
 		const _tag = tag.value;
 
 		if(!uuid){
@@ -116,7 +120,7 @@
 			i18next.t("tagManagement:edit.delete.title"),
 			i18next.t("tagManagement:edit.delete.confirm")
 		)){
-			await removeTag(tag.value.uuid!);
+			await removeTag(tag.value.id!);
 			router.back();
 		}
 	}
@@ -133,14 +137,14 @@
 
 				let _count = 0;
 
-				if(tag.value.type === "member"){
-					for await (const member of getMembers()){
-						if(member.tags.includes(tag.value.uuid!))
+				if(tag.value.type === 0){
+					for await (const memberTag of getMemberTags()){
+						if(memberTag.tag.id === tag.value.id)
 							_count++;
 					}
 				} else { //journal
-					for await (const journalPost of getJournalPosts()){
-						if(journalPost.tags.includes(tag.value.uuid!))
+					for await (const journalPostTag of getJournalPostTags()){
+						if(journalPostTag.tag.id === tag.value.id)
 							_count++;
 					}
 				}
@@ -176,7 +180,7 @@
 					:icon="backMD"
 					default-href="/options/tagManagement/"
 				/>
-				<IonTitle>{{ tag.type === "member" ? $t("tagManagement:edit.header.member") : $t("tagManagement:edit.header.journal") }}</IonTitle>
+				<IonTitle>{{ tag.type === 0 ? $t("tagManagement:edit.header.member") : $t("tagManagement:edit.header.journal") }}</IonTitle>
 			</IonToolbar>
 		</IonHeader>
 
@@ -232,7 +236,7 @@
 					</IonToggle>
 				</IonItem>
 
-				<IonItem v-if="!tag.uuid">
+				<IonItem v-if="!tag.id">
 					<IonLabel>
 						<h3 class="centered-text">{{ $t("tagManagement:edit.type.header") }}</h3>
 						<IonSegment v-model="tag.type" class="segment-alt">
@@ -251,7 +255,7 @@
 					</IonLabel>
 				</IonItem>
 
-				<IonItem v-if="tag.uuid && tag.type === 'member'" button @click="tagMembers">
+				<IonItem v-if="tag.id && tag.type === 0" button @click="tagMembers">
 					<IonIcon slot="start" :icon="personMD" aria-hidden="true" />
 					<IonLabel>
 						<h3>{{ $t("tagManagement:edit.members.title") }}</h3>
@@ -259,7 +263,7 @@
 					</IonLabel>
 				</IonItem>
 
-				<IonItem v-if="tag.uuid && tag.type === 'journal'" button :router-link="`/s/journal/?q=${encodeURIComponent(`#${tag.name.toLowerCase().replace(/\s+/g, '')}`)}`">
+				<IonItem v-if="tag.id && tag.type === 1" button :router-link="`/s/journal/?q=${encodeURIComponent(`#${tag.name.toLowerCase().replace(/\s+/g, '')}`)}`">
 					<IonIcon slot="start" :icon="journalMD" aria-hidden="true" />
 					<IonLabel>
 						<h3>{{ $t("tagManagement:edit.showJournal.title") }}</h3>
@@ -268,7 +272,7 @@
 				</IonItem>
 
 				<IonItem
-					v-if="tag.uuid"
+					v-if="tag.id"
 					button
 					:detail="false"
 					@click="deleteTag"

@@ -62,7 +62,7 @@ async function system(spExport: any){
 	const systemInfo: System = {
 		name: spSystem.username,
 		description: spSystem.desc,
-		uuid: window.crypto.randomUUID()
+		id: window.crypto.randomUUID()
 	};
 
 	if (spSystem.avatarUrl?.length && securityConfig.allowRemoteContent) {
@@ -87,7 +87,7 @@ async function system(spExport: any){
 }
 
 function tag(spExport: any){
-	const tagMapping = new Map<string, string>();
+	const tagMapping = new Map<string, Tag>();
 	const tags: Tag[] = [];
 
 	for (const spGroup of spExport.groups) {
@@ -95,13 +95,13 @@ function tag(spExport: any){
 			name: spGroup.name,
 			description: spGroup.desc?.length ? spGroup.desc : undefined,
 			color: normalizeSPColor(spGroup.color),
-			type: "member",
+			type: 0,
 			viewInLists: false,
-			uuid: window.crypto.randomUUID()
+			id: window.crypto.randomUUID()
 		};
 
 		tags.push(tag);
-		tagMapping.set(spGroup._id, tag.uuid);
+		tagMapping.set(spGroup._id, tag);
 	}
 	
 	return {
@@ -111,7 +111,7 @@ function tag(spExport: any){
 }
 
 function customField(spExport: any){
-	const customFieldMapping = new Map<string, [string, number]>();
+	const customFieldMapping = new Map<string, [CustomField, number]>();
 	const customFields: CustomField[] = [];
 
 	for (const spCustomField of spExport.customFields) {
@@ -119,11 +119,11 @@ function customField(spExport: any){
 			name: spCustomField.name,
 			default: false,
 			priority: 1,
-			uuid: window.crypto.randomUUID()
+			id: window.crypto.randomUUID()
 		};
 
 		customFields.push(customField);
-		customFieldMapping.set(spCustomField._id, [customField.uuid, spCustomField.type]);
+		customFieldMapping.set(spCustomField._id, [customField, spCustomField.type]);
 	}
 
 	return {
@@ -132,8 +132,8 @@ function customField(spExport: any){
 	};
 }
 
-export async function member(spExport: any, systemInfo: System, systemUid: string, tagMapping: Map<string, string>, customFieldMapping: Map<string, [string, number]>){
-	const memberMapping = new Map<string, string>();
+export async function member(spExport: any, systemInfo: System, systemUid: string, tagMapping: Map<string, Tag>, customFieldMapping: Map<string, [CustomField, number]>){
+	const memberMapping = new Map<string, Member>();
 	const members: Member[] = [];
 
 	// MEMBERS
@@ -141,7 +141,7 @@ export async function member(spExport: any, systemInfo: System, systemUid: strin
 		console.debug("[SP] Creating member for:", spMember);
 		const member: Member = {
 			name: spMember.name,
-			system: systemInfo.uuid,
+			system: systemInfo,
 			pronouns: spMember.pronouns?.length ? spMember.pronouns : undefined,
 			description: spMember.desc?.length ? spMember.desc : undefined,
 			color: normalizeSPColor(spMember.color),
@@ -154,17 +154,16 @@ export async function member(spExport: any, systemInfo: System, systemUid: strin
 					.filter(x => (x.members as string | undefined)?.includes(spMember._id))
 					.map(x => tagMapping.get(x._id))
 			],
-			customFields: new Map(
-				Object.entries(spMember.info || {})
-					.filter(([_, v]) => (v as string).length)
-					.map(([_id, value]) => {
-						const mapped = customFieldMapping.get(_id);
-						if (!mapped) return undefined;
-						return [mapped[0], mapCustomFieldType(mapped[1], value)] as [string, string];
-					})
-					.filter(x => !!x)
-			),
-			uuid: window.crypto.randomUUID()
+			customFields: new Map(Object.entries(spMember.info || {})
+				.map(([_id, value]) => {
+					if (!(value as string).length) return undefined;
+					const mapped = customFieldMapping.get(_id);
+					if (!mapped) return undefined;
+
+					return [mapped[0], mapCustomFieldType(mapped[1], value)] as [CustomField, string];
+				})
+				.filter(x => !!x)),
+			id: window.crypto.randomUUID()
 		};
 
 		if (spMember.avatarUrl?.length && securityConfig.allowRemoteContent) {
@@ -183,8 +182,8 @@ export async function member(spExport: any, systemInfo: System, systemUid: strin
 		}
 
 		members.push(member);
-		memberMapping.set(spMember._id, member.uuid);
-		console.debug("[SP] Created member for:", spMember, "with UUID:", member.uuid);
+		memberMapping.set(spMember._id, member);
+		console.debug("[SP] Created member for:", spMember, "with UUID:", member.id);
 	}
 	// END MEMBERS
 
@@ -193,7 +192,7 @@ export async function member(spExport: any, systemInfo: System, systemUid: strin
 		console.debug("[SP] Creating member for custom front:", spCustomFront);
 		const member: Member = {
 			name: spCustomFront.name,
-			system: systemInfo.uuid,
+			system: systemInfo,
 			description: spCustomFront.desc?.length ? spCustomFront.desc : undefined,
 			color: normalizeSPColor(spCustomFront.color),
 			isPinned: false,
@@ -201,7 +200,7 @@ export async function member(spExport: any, systemInfo: System, systemUid: strin
 			isCustomFront: true,
 			tags: [],
 			dateCreated: spCustomFront.created ? new Date(spCustomFront.created) : new Date(),
-			uuid: window.crypto.randomUUID()
+			id: window.crypto.randomUUID()
 		};
 
 		if (spCustomFront.avatarUrl?.length && securityConfig.allowRemoteContent) {
@@ -219,8 +218,8 @@ export async function member(spExport: any, systemInfo: System, systemUid: strin
 		
 
 		members.push(member);
-		memberMapping.set(spCustomFront._id, member.uuid);
-		console.debug("[SP] Created member for custom front:", spCustomFront, "with UUID:", member.uuid);
+		memberMapping.set(spCustomFront._id, member);
+		console.debug("[SP] Created member for custom front:", spCustomFront, "with UUID:", member.id);
 	}
 	// END CUSTOM FRONTS
 
@@ -230,20 +229,20 @@ export async function member(spExport: any, systemInfo: System, systemUid: strin
 	};
 }
 
-function frontingEntry(spExport: any, memberMapping: Map<string, string>){
+function frontingEntry(spExport: any, memberMapping: Map<string, Member>){
 	const frontingEntries: FrontingEntry[] = [];
 
 	for (const spFrontHistory of spExport.frontHistory) {
 		if (!spFrontHistory.startTime) continue; // front entries without startTime are null for us
 		console.debug("[SP] Creating fronting entry for:", spFrontHistory);
 		const frontingEntry: FrontingEntry = {
-			member: memberMapping.get(spFrontHistory.member) || (spFrontHistory.custom ? maxUid : nilUid),
+			member: memberMapping.get(spFrontHistory.member) || (spFrontHistory.custom ? defaultCustomFront() : defaultMember()),
 			startTime: new Date(spFrontHistory.startTime),
 			endTime: spFrontHistory.endTime ? new Date(spFrontHistory.endTime) : undefined,
 			customStatus: spFrontHistory.customStatus?.length ? spFrontHistory.customStatus : undefined,
 			isMainFronter: false,
 			isLocked: false,
-			uuid: window.crypto.randomUUID(),
+			id: window.crypto.randomUUID(),
 			comment: spExport.comments
 				.filter(x => x.collection === "frontHistory" && x.documentId === spFrontHistory._id)
 				.sort((a, b) => a.time - b.time)
@@ -252,30 +251,30 @@ function frontingEntry(spExport: any, memberMapping: Map<string, string>){
 		};
 
 		frontingEntries.push(frontingEntry);
-		console.debug("[SP] Created fronting entry for:", spFrontHistory, "with UUID:", frontingEntry.uuid);
+		console.debug("[SP] Created fronting entry for:", spFrontHistory, "with UUID:", frontingEntry.id);
 	}
 
 	return frontingEntries;
 }
 
-function boardMessage(spExport: any, memberMapping: Map<string, string>){
+function boardMessage(spExport: any, memberMapping: Map<string, Member>){
 	const boardMessages: BoardMessage[] = [];
 
 	// BOARD MESSAGES
 	for (const spBoardMessage of spExport.boardMessages) {
 		console.debug("[SP] Creating message board entry for:", spBoardMessage);
 		const boardMessage: BoardMessage = {
-			member: memberMapping.get(spBoardMessage.writtenBy) || nilUid,
+			member: memberMapping.get(spBoardMessage.writtenBy) || defaultMember(),
 			title: spBoardMessage.title,
-			body: `@<m:${memberMapping.get(spBoardMessage.writtenFor)}>\n\n${spBoardMessage.message?.length ? spBoardMessage.message : ""}`,
+			body: `@<m:${memberMapping.get(spBoardMessage.writtenFor)!.id}>\n\n${spBoardMessage.message?.length ? spBoardMessage.message : ""}`,
 			date: spBoardMessage.writtenAt ? new Date(spBoardMessage.writtenAt) : new Date(),
 			isArchived: false,
 			isPinned: false,
-			uuid: window.crypto.randomUUID()
+			id: window.crypto.randomUUID()
 		};
 
 		boardMessages.push(boardMessage);
-		console.debug("[SP] Created message board entry for:", spBoardMessage, "with UUID:", boardMessage.uuid);
+		console.debug("[SP] Created message board entry for:", spBoardMessage, "with UUID:", boardMessage.id);
 	}
 	// END BOARD MESSAGES
 
@@ -283,7 +282,7 @@ function boardMessage(spExport: any, memberMapping: Map<string, string>){
 	for (const spPoll of spExport.polls) {
 		console.debug("[SP] Creating message board entry for poll:", spPoll);
 		const boardMessage: BoardMessage = {
-			member: nilUid,
+			member: defaultMember(),
 			title: spPoll.name,
 			body: spPoll.desc?.length ? spPoll.desc : undefined,
 			date: spPoll.lastOperationTime ? new Date(spPoll.lastOperationTime) : new Date(),
@@ -340,30 +339,30 @@ function boardMessage(spExport: any, memberMapping: Map<string, string>){
 			},
 			isArchived: false,
 			isPinned: false,
-			uuid: window.crypto.randomUUID()
+			id: window.crypto.randomUUID()
 		};
 
 		boardMessages.push(boardMessage);
-		console.debug("[SP] Created message board entry for poll:", spPoll, "with UUID:", boardMessage.uuid);
+		console.debug("[SP] Created message board entry for poll:", spPoll, "with UUID:", boardMessage.id);
 	}
 	// END POLLS
 
 	return boardMessages;
 }
 
-function journalPost(spExport: any, memberMapping: Map<string, string>){
+function journalPost(spExport: any, memberMapping: Map<string, Member>){
 	const posts: JournalPost[] = [];
 
 	for(const spNote of spExport.notes){
 		const post: JournalPost = {
 			title: spNote.title || "--",
 			body: spNote.note,
-			member: spNote.member ? memberMapping.get(spNote.member) || nilUid : nilUid,
+			member: spNote.member ? memberMapping.get(spNote.member) || defaultMember() : defaultMember(),
 			tags: [],
 			isPrivate: false,
 			isPinned: false,
 			date: new Date(spNote.date || spNote.lastOperationTime),
-			uuid: window.crypto.randomUUID()
+			id: window.crypto.randomUUID()
 		};
 		posts.push(post);
 	}
@@ -372,30 +371,30 @@ function journalPost(spExport: any, memberMapping: Map<string, string>){
 }
 
 function remap(
-	memberMapping: Map<string, string>,
+	memberMapping: Map<string, Member>,
 	systemInfo: System,
 	members: Member[],
 	boardMessages: BoardMessage[],
 	posts: JournalPost[]
 ){
 	if (systemInfo.description)
-		systemInfo.description = systemInfo.description.replace(/<###@(\w+)###>/g, (_, p1) => `@<m:${memberMapping.get(p1) || nilUid}>`);
+		systemInfo.description = systemInfo.description.replace(/<###@(\w+)###>/g, (_, p1) => `@<m:${memberMapping.get(p1)!.id || nilUid}>`);
 
 	for (const member of members) {
 		if (member.description)
-			member.description = member.description.replace(/<###@(\w+)###>/g, (_, p1) => `@<m:${memberMapping.get(p1) || nilUid}>`);
+			member.description = member.description.replace(/<###@(\w+)###>/g, (_, p1) => `@<m:${memberMapping.get(p1)!.id || nilUid}>`);
 
 		if (member.customFields)
-			member.customFields = new Map(Array.from(member.customFields.entries()).map(([k, v]) => [k, v.replace(/<###@(\w+)###>/g, (_, p1) => `@<m:${memberMapping.get(p1) || nilUid}>`)]));
+			member.customFields = new Map(Array.from(member.customFields.entries()).map(([k, v]) => [k, v.replace(/<###@(\w+)###>/g, (_, p1) => `@<m:${memberMapping.get(p1)!.id || nilUid}>`)]));
 	}
 
 	for (const boardMessage of boardMessages) {
 		if (boardMessage.body)
-			boardMessage.body = boardMessage.body.replace(/<###@(\w+)###>/g, (_, p1) => `@<m:${memberMapping.get(p1) || nilUid}>`);
+			boardMessage.body = boardMessage.body.replace(/<###@(\w+)###>/g, (_, p1) => `@<m:${memberMapping.get(p1)!.id || nilUid}>`);
 	}
 
 	for (const post of posts) 
-		post.body = post.body.replace(/<###@(\w+)###>/g, (_, p1) => `@<m:${memberMapping.get(p1) || nilUid}>`);
+		post.body = post.body.replace(/<###@(\w+)###>/g, (_, p1) => `@<m:${memberMapping.get(p1)!.id || nilUid}>`);
 	
 }
 

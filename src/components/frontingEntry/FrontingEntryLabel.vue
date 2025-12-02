@@ -3,14 +3,14 @@
 		IonLabel,
 	} from "@ionic/vue";
 
-	import { FrontingEntryComplete } from "../../lib/db/entities";
+	import { FrontingEntry } from "../../lib/db/entities";
 	import dayjs from "dayjs";
 	import { onMounted, onUnmounted, ref, watch } from "vue";
 	import { formatDate, formatWrittenTime } from "../../lib/util/misc";
 	import { appConfig } from "../../lib/config";
 
 	const props = defineProps<{
-		entry: FrontingEntryComplete,
+		entry: FrontingEntry,
 	}>();
 
 	const interval = ref("");

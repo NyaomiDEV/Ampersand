@@ -25,16 +25,19 @@
 	import { PartialBy } from "../../lib/types";
 	import MemberAvatar from "../../components/member/MemberAvatar.vue";
 	import { appConfig } from "../../lib/config";
+	import { newFile } from "../../lib/db/tables/files";
 
 	const router = useIonRouter();
 
-	const emptyMember: PartialBy<Member, "uuid" | "dateCreated"> = {
+	const emptyMember: PartialBy<Member, "id" | "dateCreated"> = {
 		name: "",
-		system: appConfig.defaultSystem,
+		system: { // TODO: Make it more elegant and make sure it won't break
+			id: appConfig.defaultSystem,
+			name: ""
+		},
 		isArchived: false,
 		isCustomFront: false,
-		isPinned: false,
-		tags: []
+		isPinned: false
 	};
 	const member = ref({ ...emptyMember });
 
@@ -42,10 +45,12 @@
 		const files = await getFiles();
 		if(files.length){
 			if(files[0].type === "image/gif"){
-				member.value.image = files[0];
+				const file = await newFile(files[0].name, files[0].stream());
+				member.value.image = file;
 				return;
 			}
-			member.value.image = await resizeImage(files[0]);
+			const file = await newFile(files[0].name, (await resizeImage(files[0])).stream());
+			member.value.image = file;
 		}
 	}
 

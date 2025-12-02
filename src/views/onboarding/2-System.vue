@@ -12,27 +12,41 @@
 	import { System } from "../../lib/db/entities";
 	import { PartialBy } from "../../lib/types";
 	import { appConfig } from "../../lib/config";
+	import { newFile, updateFile } from "../../lib/db/tables/files";
 
 	const router = useIonRouter();
 
-	const emptySystem: PartialBy<System, "uuid"> = { name: "" };
-	const system = ref<PartialBy<System, "uuid">>({ ...emptySystem });
+	const emptySystem: PartialBy<System, "id"> = { name: "" };
+	const system = ref<PartialBy<System, "id">>({ ...emptySystem });
+	const systemAvatarUri = ref();
 
 	async function modifyPicture(){
 		const files = await getFiles();
 		if(files.length){
+			let _file: File;
 			if(files[0].type === "image/gif"){
-				system.value.image = files[0];
+				_file = files[0];
 				return;
 			}
-			system.value.image = await resizeImage(files[0]);	
+			_file = await resizeImage(files[0]);
+			if(system.value.image)
+				await updateFile(system.value.image.id, undefined, _file.stream());
+			else 
+				system.value.image = await newFile(_file.name, _file.stream());
 		}
+
+		await updateAvatarUri();
+	}
+
+	async function updateAvatarUri(){
+		if(system.value.image)
+			systemAvatarUri.value = await getObjectURL(system.value.image);
 	}
 
 	async function save() {
 		if(!await getSystem(appConfig.defaultSystem)) {
-			const uuid = await newSystem({ ...toRaw(system.value) });
-			if(uuid) appConfig.defaultSystem = uuid;
+			const id = (await newSystem({ ...toRaw(system.value) }))?.id;
+			if(id) appConfig.defaultSystem = id;
 		} else
 			await updateSystem(appConfig.defaultSystem, { ...toRaw(system.value) });
 	
@@ -42,6 +56,7 @@
 	onBeforeMount(async () => {
 		const sys = await getSystem(appConfig.defaultSystem);
 		if(sys) system.value = sys;
+		await updateAvatarUri();
 	});
 </script>
 
@@ -52,7 +67,7 @@
 				<h1> {{ $t('onboarding:systemInfo.header') }}</h1>
 				<div class="avatar-container">
 					<IonAvatar>
-						<img v-if="system?.image" aria-hidden="true" :src="getObjectURL(system.image)" />
+						<img v-if="systemAvatarUri" aria-hidden="true" :src="systemAvatarUri" />
 						<IonIcon v-else :icon="accountCircle" />
 					</IonAvatar>
 

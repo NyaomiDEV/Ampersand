@@ -106,7 +106,7 @@ marked.use({
 					const friendlyNameMaybe = token.href.slice(1);
 					for await (const x of getAssets()) {
 						if (x.friendlyName === friendlyNameMaybe) {
-							token.href = getObjectURL(x.file);
+							token.href = await getObjectURL(x.file);
 							blocked = false; // we have this asset, unblock
 							break;
 						}
@@ -127,7 +127,7 @@ marked.use({
 					const friendlyNameMaybe = token.href.slice(1);
 					for await (const x of getAssets()){
 						if (x.friendlyName === friendlyNameMaybe){
-							token.href = getObjectURL(x.file);
+							token.href = `ampersand-file://${x.file.id}`;
 							blocked = false;
 							break;
 						}
