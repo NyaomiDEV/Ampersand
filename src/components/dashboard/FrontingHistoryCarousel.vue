@@ -3,13 +3,13 @@
 	import { h, onBeforeMount, onUnmounted, shallowRef } from "vue";
 	import MemberAvatar from "../member/MemberAvatar.vue";
 	import FrontingEntryLabel from "../frontingEntry/FrontingEntryLabel.vue";
-	import type { FrontingEntryComplete } from "../../lib/db/entities.d.ts";
+	import type { FrontingEntry } from "../../lib/db/entities.d.ts";
 	import { getRecentlyFronted } from "../../lib/db/tables/frontingEntries";
 	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
 	import { DatabaseEvents, DatabaseEvent } from "../../lib/db/events";
 	import { addModal, removeModal } from "../../lib/modals.ts";
 
-	const frontingEntries = shallowRef<FrontingEntryComplete[]>();
+	const frontingEntries = shallowRef<FrontingEntry[]>();
 
 	async function updateFrontingEntries(){
 		frontingEntries.value = await getRecentlyFronted();
@@ -29,7 +29,7 @@
 		DatabaseEvents.removeEventListener("updated", listener);
 	});
 
-	async function showModal(clickedFrontingEntry: FrontingEntryComplete){
+	async function showModal(clickedFrontingEntry: FrontingEntry){
 		const vnode = h(FrontingEntryEdit, {
 			frontingEntry: clickedFrontingEntry,
 			onDidDismiss: () => removeModal(vnode)
@@ -49,7 +49,7 @@
 	<IonList v-if="frontingEntries">
 		<IonItem
 			v-for="entry in frontingEntries"
-			:key="entry.uuid"
+			:key="entry.id"
 			button
 			@click="showModal(entry)"
 		>

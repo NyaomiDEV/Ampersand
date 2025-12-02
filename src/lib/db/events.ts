@@ -31,9 +31,6 @@ DatabaseEvents.addEventListener("updated", (event) => {
 		case "members":
 			eventName = "member";
 			break;
-		case "reminders":
-			eventName = "reminder";
-			break;
 		case "systems":
 			eventName = "system";
 			break;
@@ -45,6 +42,27 @@ DatabaseEvents.addEventListener("updated", (event) => {
 			break;
 		case "customFields":
 			eventName = "customField";
+			break;
+		case "polls":
+			eventName = "poll";
+			break;
+		case "pollEntries":
+			eventName = "pollEntry";
+			break;
+		case "votes":
+			eventName = "vote";
+			break;
+		case "presenceEntries":
+			eventName = "presenceEntry";
+			break;
+		case "customFieldData":
+			eventName = "customFieldDatum";
+			break;
+		case "memberTags":
+			eventName = "memberTag";
+			break;
+		case "journalPostTags":
+			eventName = "journalPostTag";
 			break;
 	}
 
@@ -59,7 +77,7 @@ DatabaseEvents.addEventListener("updated", (event) => {
 			break;
 		case "deleted":
 			eventName += "_removed";
-			payload = { uuid: (event as DatabaseEvent).data.uuid };
+			payload = { uuid: (event as DatabaseEvent).data.id };
 			break;
 	}
 

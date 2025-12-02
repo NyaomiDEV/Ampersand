@@ -12,7 +12,7 @@
 	import { isReactive, ref, watch, WatchStopHandle } from "vue";
 
 	const props = defineProps<{
-		member: PartialBy<Member, "uuid" | "dateCreated">,
+		member: PartialBy<Member, "id" | "dateCreated">,
 	}>();
 
 	const avatarColor = ref("var(--ion-color-primary)");

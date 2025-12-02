@@ -4,7 +4,7 @@
 	import { PartialBy } from "../../lib/types";
 
 	const props = defineProps<{
-		member: PartialBy<Member, "uuid" | "dateCreated">,
+		member: PartialBy<Member, "id" | "dateCreated">,
 	}>();
 </script>
 

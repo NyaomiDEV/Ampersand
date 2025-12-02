@@ -7,9 +7,6 @@
 	],
 	"permissions": [
 		"ampersand:default",
-		"ampersand:allow-test-db",
-		"ampersand:allow-run-db-migrations",
-		"ampersand:allow-migrate-old-db",
 		"fs:allow-app-read-recursive",
 		"fs:allow-app-write-recursive",
 		"fs:allow-temp-write-recursive",

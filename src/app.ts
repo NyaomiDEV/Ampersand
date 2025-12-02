@@ -59,14 +59,14 @@ async function setupAmpersand() {
 
 	window.Ionic.config.set("navAnimation", slideAnimation);
 
-	const maybeSystem = db.systems.index[0]?.uuid || undefined;
+	await runDbMigrations();
+
+	const systems = await Array.fromAsync(db.systems.iterate());
 
 	if (appConfig.defaultSystem === nilUid) {
-		if (maybeSystem)
-			appConfig.defaultSystem = maybeSystem;
+		if (systems[0])
+			appConfig.defaultSystem = systems[0].id;
 	}
-
-	await runDbMigrations();
 
 	router.beforeEach((to) => {
 		// lock flow
@@ -81,7 +81,7 @@ async function setupAmpersand() {
 		}
 
 		// first time???
-		if (!db.systems.index.length){
+		if (appConfig.defaultSystem === nilUid){
 			if (to.path.startsWith("/onboarding/") || to.path.startsWith("/options/accessibility"))
 				return true;
 

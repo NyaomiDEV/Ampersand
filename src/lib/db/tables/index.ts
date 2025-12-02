@@ -1,314 +1,135 @@
-import { appDataDir, sep } from "@tauri-apps/api/path";
-import * as fs from "@tauri-apps/plugin-fs";
-import { Typeson } from "typeson";
-import { file, map, undef } from "typeson-registry";
-import type { Asset, BoardMessage, CustomField, FrontingEntry, JournalPost, Member, Reminder, System, Tag, UUIDable } from "../entities";
-import { decode, encode } from "@msgpack/msgpack";
-import type { AmpersandEntityMapping, MigrationsMapping } from "../types";
-import { deleteNull, replace, revive, walk } from "../../json";
-import { members } from "./migrations";
+import { 
+	CustomFieldDatum,
+	JournalPostTag,
+	MemberTag,
+	PollEntry,
+	PresenceEntry,
+	Vote,
+	Asset,
+	BoardMessage,
+	CustomField,
+	FrontingEntry,
+	JournalPost,
+	Member,
+	Poll,
+	System,
+	Tag,
+	UUIDable
+} from "../entities";
+import { invokePlugin } from "../../native/plugin";
+import { TableIter } from "../types";
 
-export type IndexEntry<T> = UUIDable & Partial<T>;
-type SecondaryKey<T> = (Exclude<keyof T, keyof UUIDable>);
-
-export class ShittyTable<T extends UUIDable> {
+export class DecentTable<T extends UUIDable> {
 	name: string;
-	path: string;
-	secondaryKeys: SecondaryKey<T>[];
-	index: IndexEntry<T>[];
 
-	constructor(name: string, path: string, secondaryKeys: SecondaryKey<T>[]) {
+	constructor(name: string) {
 		this.name = name;
-		this.path = path;
-		this.secondaryKeys = secondaryKeys;
-		this.index = [];
 	}
 
-	async getIndexFromDisk(){
-		const _path = `${this.path + sep()}.index`;
-		try {
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			const obj: any = decode(await fs.readFile(_path));
-			if (typeof obj !== "undefined" && obj !== null){
-				if(obj.$types)
-					return await typeson.revive(obj) as IndexEntry<T>[];
-				else 
-					return walk(obj, revive) as IndexEntry<T>[];
-			}
-			
-		} catch (e) {
-			console.error(e);
-		}
-
-		return undefined;
+	async get(id: string) {
+		return invokePlugin<T>("db_get", {
+			table: this.name,
+			id
+		});
 	}
 
-	async saveIndexToDisk() {
-		const _path = `${this.path + sep()}.index`;
-		try {
-			await fs.writeFile(_path, encode(walk(this.index, replace)));
-			return true;
-		} catch (e) {
-			console.error(e);
+	async update(id: string, newData: Partial<T>) {
+		const oldData = await this.get(id);
+
+		if (oldData) {
+			if (await invokePlugin<number>("db_update", {
+				table: this.name,
+				id,
+				data: newData
+			}) > 0)
+				return { oldData, newData: { ...oldData, ...newData } };
 		}
+
 		return false;
 	}
 
-	async updateIndexWithData(data: T, saveAfterwards: boolean = true){
-		const indexEntry: IndexEntry<T> = { uuid: data.uuid } as IndexEntry<T>;
-		for(const key of this.secondaryKeys)
-			indexEntry[key] = data[key];
-		
-
-		const _index = this.index.findIndex(x => data.uuid === x.uuid);
-		if(_index > -1)
-			this.index[_index] = indexEntry;
-		else 
-			this.index.push(indexEntry);
-		
-
-		if(saveAfterwards)
-			await this.saveIndexToDisk();
+	async delete(id: string) {
+		return await invokePlugin<number>("db_delete", {
+			table: this.name,
+			id,
+		}) > 0;
 	}
 
-	async removeIndex(uuid: string) {
-		const _entry = this.index.find(x => uuid === x.uuid);
-		if (!_entry) return;
-
-		this.index = this.index.filter(x => x !== _entry);
-		await this.saveIndexToDisk();
+	async clear() {
+		return invokePlugin<boolean>("db_drop", {
+			table: this.name
+		});
 	}
 
-	async initializeIndex() {
-		const dir = await this.walkDir();
-		if (!dir) return;
-
-		const diskIndex = await this.getIndexFromDisk();
-
-		if (diskIndex && diskIndex.length){
-			this.index = diskIndex;
-
-			for(const entry of this.index){
-				if(!dir.find(x => x.name === entry.uuid)){
-					this.index = this.index.filter(x => x.uuid !== entry.uuid);
-					continue;
-				}
-
-				for(const key of this.secondaryKeys){
-					if (!Object.keys(entry).includes(key as string)){
-						const contents = await this.get(entry.uuid);
-						if (!contents) continue;
-						await this.updateIndexWithData(contents, false);
-					}
-				}
-			}
-		}
-
-		for (const file of dir) {
-			if (!this.index.find(x => x.uuid === file.name)) {
-				const contents = await this.get(file.name);
-				if (!contents) continue;
-				await this.updateIndexWithData(contents, false);
-			}
-		}
-
-		await this.saveIndexToDisk();
-	}
-
-	async get(uuid: string) {
-		const _path = this.path + sep() + uuid;
-		try {
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			const obj: any = decode(await fs.readFile(_path));
-			if (typeof obj !== "undefined" && obj !== null){
-				if(obj.$types){
-					// subtle migration
-					const data = await typeson.revive(obj) as T;
-					await this.write(uuid, data);
-					return data;
-				} else
-					return walk(obj, revive) as T;
-			}
-		} catch (e) {
-			console.error(e);
-		}
-
-		return undefined;
-	}
-
-	async walkDir() {
-		try {
-			const dir = (await fs.readDir(this.path)).filter(x => x.name !== ".index" && x.name !== ".migrations");
-			return dir;
-		} catch (e) {
-			console.error(e);
-		}
-
-		return undefined;
-	}
-
-	count() {
-		return this.index.length;
+	async count() {
+		return invokePlugin<number>("db_count", {
+			table: this.name
+		});
 	}
 
 	async* iterate() {
-		for (const x of this.index.map(x => x.uuid)) {
-			const data = await this.get(x);
-			if (data) yield data;
-		}
+		// yeah how are we going to make a generator?
+		const cursorToken = window.crypto.randomUUID();
+		let end = false;
+		do {
+			const result = await invokePlugin<TableIter<T>>("db_iter", {
+				cursorToken, // the idea here is that we create a sql cursor and use that to iterate row by row
+				table: this.name
+			});
+			yield result.result;
+			if(result.end) end = true;
+		}while(!end);
+		// idk how we should discard the cursor midway through though
 	}
 
-	async write(uuid: string, data: T) {
-		const _path = this.path + sep() + uuid;
-		try{
-			await fs.writeFile(_path, encode(deleteNull(walk(data, replace))));
-			await this.updateIndexWithData(data);
-			return true;
-		}catch(e){
-			console.error(e);
-		}
-		return false;
+	async write(data: T) {
+		return invokePlugin<number>("db_write", {
+			table: this.name,
+			// do we need to use the id?
+			data
+		});
 	}
 
-	exists(uuid: string) {
-		return !!this.index.find(x => uuid === x.uuid);
+	async exists(id: string) {
+		return !!await invokePlugin<number>("db_get", {
+			table: this.name,
+			id
+		});
 	}
 
-	async add(uuid: string, data: T) {
-		if (!this.exists(uuid)) {
-			await this.write(uuid, data);
-			return true;
-		}
-		return false;
+	async add(id: string, data: T) {
+		if (!await this.exists(id)) 
+			return await this.write(data);
+		return undefined;
 	}
 
 	async bulkAdd(contents: T[]) {
 		let res = true;
 		for (const content of contents) {
-			// copy of add routine but just because we suck
-			if(!this.exists(content.uuid)) {
-				const _path = this.path + sep() + content.uuid;
-				try {
-					await fs.writeFile(_path, encode(deleteNull(walk(content, replace))));
-					await this.updateIndexWithData(content, false);
-				} catch (e) {
-					console.error(e);
-					res = false;
-					break;
-				}
-			}
+			if (!await this.exists(content.id))
+				res = !!await this.write(content); // should work, right?
 		}
-
-		await this.saveIndexToDisk();
 		return res;
 	}
-
-	async update(uuid: string, newData: Partial<T>) {
-		const oldData = await this.get(uuid);
-
-		if (oldData) {
-			const data = { ...oldData, ...newData } as T;
-			if(await this.write(uuid, data))
-				return { oldData, newData: data };
-		}
-
-		return false;
-	}
-
-	async delete(uuid: string) {
-		const _path = this.path + sep() + uuid;
-		try{
-			await fs.remove(_path);
-			await this.removeIndex(uuid);
-			return true;
-		}catch(e){
-			console.error(e);
-		}
-		return false;
-	}
-
-	async clear() {
-		try {
-			const _dir = await this.walkDir();
-			if(!_dir) return false;
-
-			for (const file of _dir){
-				await fs.remove(this.path + sep() + file.name);
-				this.index = this.index.filter(x => x.uuid !== file.name);
-			}
-			return true;
-		} catch(e) {
-			console.error(e);
-		}
-
-		await this.saveIndexToDisk();
-		return false;
-	}
-
-	async getMigrationVersion(){
-		const _path = `${this.path + sep()}.migrations`;
-		try {
-			const migrations = decode(await fs.readFile(_path)) as MigrationsMapping;
-			return migrations.version;
-		} catch (e) {
-			console.error(e);
-		}
-		return 0;
-	}
-
-	async saveMigrationVersion(version: number){
-		const _path = `${this.path + sep()}.migrations`;
-		try {
-			await fs.writeFile(_path, encode({ version }));
-			return true;
-		} catch (e) {
-			console.error(e);
-		}
-		return false;
-	}
-
-	async migrate(){
-		let version = await this.getMigrationVersion() || 0;
-		switch (this.name) {
-			case "members":
-				version = await members(this as unknown as ShittyTable<Member>, version);
-				console.log("new version", version);
-				break;
-		}
-		await this.saveMigrationVersion(version);
-	}
 }
-
-const typeson = new Typeson().register([
-	file,
-	undef,
-	map
-]);
-
-async function makeTable<T extends UUIDable>(tableName: string, secondaryKeys: SecondaryKey<T>[]) {
-	const _path = `${await appDataDir() + sep()}database${sep() + tableName}`;
-	await fs.mkdir(_path, { recursive: true });
-
-	const table = new ShittyTable<T>(tableName, _path, secondaryKeys);
-	await table.initializeIndex();
-	await table.migrate();
-
-	return table;
-}
-
-type GetTableTauriExport = { [T in keyof AmpersandEntityMapping]: ShittyTable<AmpersandEntityMapping[T]> };
-export function getTables(): GetTableTauriExport {
+export function getTables() {
 	return { ...db };
 }
 
 export const db = {
-	boardMessages: await makeTable<BoardMessage>("boardMessages", ["member", "date", "isPinned", "isArchived"]),
-	frontingEntries: await makeTable<FrontingEntry>("frontingEntries", ["member", "startTime", "endTime", "isLocked"]),
-	journalPosts: await makeTable<JournalPost>("journalPosts", ["member", "date", "isPinned"]),
-	members: await makeTable<Member>("members", ["system"]),
-	reminders: await makeTable<Reminder>("reminders", []),
-	systems: await makeTable<System>("system", []),
-	tags: await makeTable<Tag>("tags", []),
-	assets: await makeTable<Asset>("assets", []),
-	customFields: await makeTable<CustomField>("customFields", [])
+	assets: new DecentTable<Asset>("assets"),
+	boardMessages: new DecentTable<BoardMessage>("board_messages"),
+	customFieldData: new DecentTable<CustomFieldDatum>("custom_field_data"),
+	customFields: new DecentTable<CustomField>("custom_fields"),
+	frontingEntries: new DecentTable<FrontingEntry>("fronting_entries"),
+	journalPosts: new DecentTable<JournalPost>("journal_posts"),
+	journalPostTags: new DecentTable<JournalPostTag>("journal_post_tags"),
+	members: new DecentTable<Member>("members"),
+	memberTags: new DecentTable<MemberTag>("member_tags"),
+	polls: new DecentTable<Poll>("polls"),
+	pollEntries: new DecentTable<PollEntry>("poll_entries"),
+	presenceEntries: new DecentTable<PresenceEntry>("presence_entries"),
+	systems: new DecentTable<System>("systems"),
+	tags: new DecentTable<Tag>("tags"),
+	votes: new DecentTable<Vote>("votes"),
 };

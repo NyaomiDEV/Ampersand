@@ -1,14 +1,15 @@
 const COMMANDS: &[&str] = &[
 	"exit_app",
 	"open_file",
-	"test_db",
-	"run_db_migrations",
-	"migrate_old_db",
 	"set_can_go_back",
 	"get_webkit_version",
 	"broadcast_event",
 	"list_assets",
 	"registerListener",
+	// db commands after this comment please
+	"db_test",
+	"db_run_migrations",
+	"db_migrate_old",
 ];
 
 fn main() {

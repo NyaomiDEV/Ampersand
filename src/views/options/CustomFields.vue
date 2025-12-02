@@ -71,16 +71,16 @@
 		if(!customFields.value) return;
 		if(e.detail.from === e.detail.to) return;
 
-		const _customFields = [...customFields.value.map(x => x.uuid)];
+		const _customFields = [...customFields.value.map(x => x.id)];
 		const element = _customFields[e.detail.from];
 		_customFields.splice(e.detail.from, 1);
 		_customFields.splice(e.detail.to, 0, element);
 
 		for(const field of customFields.value){
 			const oldPriority = field.priority;
-			const newPriority = _customFields.findIndex(x => x === field.uuid);
+			const newPriority = _customFields.findIndex(x => x === field.id);
 			if(oldPriority === newPriority) continue;
-			await updateCustomField(field.uuid, { priority: newPriority });
+			await updateCustomField(field.id, { priority: newPriority });
 		}
 
 		// now that we committed crimes against humanity, register the listener again
@@ -127,7 +127,7 @@
 				<IonReorderGroup :disabled="!isReordering" @ion-reorder-end="handleReorder">
 					<IonItem
 						v-for="customField in customFields"
-						:key="customField.uuid"
+						:key="customField.id"
 						button
 						:class="{ 'default': customField.default }"
 						@click="() => { if(!isReordering) void showModal(customField); }"

@@ -307,6 +307,42 @@
           "markdownDescription": "Denies the broadcast_event command without any pre-configured scope."
         },
         {
+          "description": "Enables the db_migrate_old command without any pre-configured scope.",
+          "type": "string",
+          "const": "allow-db-migrate-old",
+          "markdownDescription": "Enables the db_migrate_old command without any pre-configured scope."
+        },
+        {
+          "description": "Denies the db_migrate_old command without any pre-configured scope.",
+          "type": "string",
+          "const": "deny-db-migrate-old",
+          "markdownDescription": "Denies the db_migrate_old command without any pre-configured scope."
+        },
+        {
+          "description": "Enables the db_run_migrations command without any pre-configured scope.",
+          "type": "string",
+          "const": "allow-db-run-migrations",
+          "markdownDescription": "Enables the db_run_migrations command without any pre-configured scope."
+        },
+        {
+          "description": "Denies the db_run_migrations command without any pre-configured scope.",
+          "type": "string",
+          "const": "deny-db-run-migrations",
+          "markdownDescription": "Denies the db_run_migrations command without any pre-configured scope."
+        },
+        {
+          "description": "Enables the db_test command without any pre-configured scope.",
+          "type": "string",
+          "const": "allow-db-test",
+          "markdownDescription": "Enables the db_test command without any pre-configured scope."
+        },
+        {
+          "description": "Denies the db_test command without any pre-configured scope.",
+          "type": "string",
+          "const": "deny-db-test",
+          "markdownDescription": "Denies the db_test command without any pre-configured scope."
+        },
+        {
           "description": "Enables the exit_app command without any pre-configured scope.",
           "type": "string",
           "const": "allow-exit-app",
@@ -427,10 +463,10 @@
           "markdownDescription": "Denies the test_db command without any pre-configured scope."
         },
         {
-          "description": "Default permissions for the Ampersand plugin\n#### This default permission set includes:\n\n- `allow-exit-app`\n- `allow-open-file`\n- `allow-set-can-go-back`\n- `allow-get-webkit-version`\n- `allow-broadcast-event`\n- `allow-list-assets`\n- `allow-registerListener`",
+          "description": "Default permissions for the Ampersand plugin\n#### This default permission set includes:\n\n- `allow-exit-app`\n- `allow-open-file`\n- `allow-set-can-go-back`\n- `allow-get-webkit-version`\n- `allow-broadcast-event`\n- `allow-list-assets`\n- `allow-registerListener`\n- `allow-db-test`\n- `allow-db-migrate-old`\n- `allow-db-run-migrations`",
           "type": "string",
           "const": "default",
-          "markdownDescription": "Default permissions for the Ampersand plugin\n#### This default permission set includes:\n\n- `allow-exit-app`\n- `allow-open-file`\n- `allow-set-can-go-back`\n- `allow-get-webkit-version`\n- `allow-broadcast-event`\n- `allow-list-assets`\n- `allow-registerListener`"
+          "markdownDescription": "Default permissions for the Ampersand plugin\n#### This default permission set includes:\n\n- `allow-exit-app`\n- `allow-open-file`\n- `allow-set-can-go-back`\n- `allow-get-webkit-version`\n- `allow-broadcast-event`\n- `allow-list-assets`\n- `allow-registerListener`\n- `allow-db-test`\n- `allow-db-migrate-old`\n- `allow-db-run-migrations`"
         }
       ]
     }

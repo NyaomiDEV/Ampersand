@@ -5,7 +5,6 @@
 	import { getFiles, toast } from "../../lib/util/misc";
 	import dayjs from "dayjs";
 	import { save } from "@tauri-apps/plugin-dialog";
-	import { writeFile } from "@tauri-apps/plugin-fs";
 	import { useTranslation } from "i18next-vue";
 	import { importPluralKit } from "../../lib/db/external/pluralkit";
 	import { importTupperBox } from "../../lib/db/external/tupperbox";
@@ -122,13 +121,7 @@
 				barProgress.value = -1;
 			});
 			
-			const dataStream = await dbPromise;
-
-
-			if(dataStream){
-				await writeFile(path, dataStream);
-				await toast(i18next.t("importExport:status.exportedApp"));
-			}
+			await dbPromise; // TODO
 		} else 
 			await toast(i18next.t("importExport:status.errorExport"));
 

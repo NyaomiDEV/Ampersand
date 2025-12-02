@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonFab, IonFabButton, IonIcon, IonSearchbar, IonLabel, IonItemDivider, IonDatetime } from "@ionic/vue";
 	import { h, onBeforeMount, onUnmounted, ref, shallowRef, watch } from "vue";
-	import type { BoardMessageComplete } from "../../lib/db/entities.d.ts";
+	import type { BoardMessage } from "../../lib/db/entities.d.ts";
 	import { getBoardMessagesDays, getBoardMessagesOfDay } from "../../lib/db/tables/boardMessages";
 	import BoardMessageEdit from "../../modals/BoardMessageEdit.vue";
 	import Spinner from "../../components/Spinner.vue";
@@ -23,7 +23,7 @@
 
 	const search = ref(route.query.q as string || "");
 
-	const boardMessages = shallowRef<BoardMessageComplete[]>();
+	const boardMessages = shallowRef<BoardMessage[]>();
 	const boardMessagesDays = shallowRef<{ date: string, backgroundColor: string }[]>();
 
 	const date = ref(dayjs().toISOString());
@@ -39,7 +39,7 @@
 	});
 
 	watch(search, () => {
-		populateHighlightedDays();
+		void populateHighlightedDays();
 	});
 
 	watch([date, search], async () => {
@@ -49,7 +49,7 @@
 	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
 		await resetEntries();
-		populateHighlightedDays();
+		void populateHighlightedDays();
 	});
 
 	onUnmounted(() => {
@@ -66,8 +66,8 @@
 		await getEntries(dayjs(date.value).toDate());
 	}
 
-	function getGrouped(entries: BoardMessageComplete[]){
-		const map = new Map<string, BoardMessageComplete[]>();
+	function getGrouped(entries: BoardMessage[]){
+		const map = new Map<string, BoardMessage[]>();
 
 		for(const entry of entries.sort((a, b) => b.date.getTime() - a.date.getTime())){
 			const key = dayjs(entry.date).startOf("day").toISOString();
@@ -82,8 +82,8 @@
 		return [...map.entries()].sort((a, b) => dayjs(b[0]).valueOf() - dayjs(a[0]).valueOf());
 	}
 
-	function populateHighlightedDays() {
-		const days = getBoardMessagesDays(search.value);
+	async function populateHighlightedDays() {
+		const days = await getBoardMessagesDays(search.value);
 
 		boardMessagesDays.value = Array.from(days.entries()).map(([date, occurrences]) => {
 			let step = "200";
@@ -103,7 +103,7 @@
 		});
 	}
 
-	async function showModal(clickedBoardMessage?: BoardMessageComplete){
+	async function showModal(clickedBoardMessage?: BoardMessage){
 		const vnode = h(BoardMessageEdit, {
 			boardMessage: clickedBoardMessage,
 			onDidDismiss: () => removeModal(vnode)
@@ -159,7 +159,7 @@
 					</IonItemDivider>
 					<MessageBoardCard
 						v-for="boardMessage in tuple[1]"
-						:key="boardMessage.uuid"
+						:key="boardMessage.id"
 						:board-message
 						:hide-poll="boardMessage.isArchived"
 						@click="showModal(boardMessage)"

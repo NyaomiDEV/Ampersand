@@ -2,7 +2,7 @@
 
 	import { alertController, IonButton, IonItem, IonLabel } from "@ionic/vue";
 	import MemberAvatar from "./member/MemberAvatar.vue";
-	import { BoardMessageComplete, Member, PollEntry } from "../lib/db/entities";
+	import { BoardMessage, Member, PollEntry } from "../lib/db/entities";
 	import Markdown from "./Markdown.vue";
 	import MemberSelect from "../modals/MemberSelect.vue";
 	import { addModal, removeModal } from "../lib/modals";
@@ -15,7 +15,7 @@
 	const i18next = useTranslation();
 
 	const props = defineProps<{
-		boardMessage: BoardMessageComplete,
+		boardMessage: BoardMessage,
 		hidePoll?: boolean
 	}>();
 
@@ -99,11 +99,11 @@
 		const poll = toRaw(props.boardMessage.poll);
 		const _choice = poll.entries.find(x => choice === x);
 
-		if(_choice?.votes.map(x => x.member).includes(voter.uuid)){
+		if(_choice?.votes.map(x => x.member).find(x => x.id === voter.id)){
 			const confirmation = await promptOkCancel(i18next.t("messageBoard:polls.voteCast.retractConfirmation"));
 
 			if(confirmation){
-				const index = _choice.votes.findIndex(x => x.member === voter.uuid);
+				const index = _choice.votes.findIndex(x => x.member.id === voter.id);
 				_choice.votes.splice(index, 1);
 			}
 		} else {
@@ -111,7 +111,7 @@
 			if(reason === undefined) return;
 
 			_choice?.votes.push({
-				member: voter.uuid,
+				member: voter,
 				reason: reason ?? undefined
 			});
 
@@ -119,13 +119,13 @@
 				poll.entries
 					.filter(x => choice !== x)
 					.forEach(x => {
-						const index = x.votes.findIndex(x => x.member === voter.uuid);
+						const index = x.votes.findIndex(x => x.member.id === voter.id);
 						if(index > -1) x.votes.splice(index, 1);
 					});
 			}
 		}
 
-		await updateBoardMessage(props.boardMessage.uuid, { poll });
+		await updateBoardMessage(props.boardMessage.id, { poll });
 	}
 
 	function calcPercentageVoted(choice: PollEntry){

@@ -2,16 +2,16 @@ import { invoke, InvokeArgs, InvokeOptions, addPluginListener } from "@tauri-app
 import { writeToTemp } from "./cache";
 import { replace, walk } from "../json";
 
-function invokePlugin(cmd: string, args?: InvokeArgs, opts?: InvokeOptions): Promise<unknown> {
-	return invoke(`plugin:ampersand|${cmd}`, args, opts);
+export function invokePlugin<T>(cmd: string, args?: InvokeArgs, opts?: InvokeOptions){
+	return invoke<T>(`plugin:ampersand|${cmd}`, args, opts);
 }
 
 export function exitApp(): Promise<void> {
-	return invokePlugin("exit_app") as Promise<void>;
+	return invokePlugin<void>("exit_app");
 }
 
 export function setCanGoBack(canGoBack: boolean): Promise<void> {
-	return invokePlugin("set_can_go_back", { canGoBack }) as Promise<void>;
+	return invokePlugin<void>("set_can_go_back", { canGoBack });
 }
 
 export async function openFile(file: File) {
@@ -27,23 +27,23 @@ export async function openFile(file: File) {
 }
 
 export async function testDb(): Promise<string> {
-	return invokePlugin("test_db") as Promise<string>;
+	return invokePlugin<string>("db_test");
 }
 
 export async function runDbMigrations(): Promise<void> {
-	return invokePlugin("run_db_migrations") as Promise<void>;
+	return invokePlugin<void>("db_run_migrations");
 }
 
 export async function migrateOldDb(): Promise<void> {
-	return invokePlugin("migrate_old_db") as Promise<void>;
+	return invokePlugin<void>("db_migrate_old");
 }
 
 export async function listAssets(path: string): Promise<string[]> {
-	return invokePlugin("list_assets", { path }) as Promise<string[]>;
+	return invokePlugin("list_assets", { path });
 }
 
 export async function getWebkitVersion(): Promise<string> {
-	return invokePlugin("get_webkit_version") as Promise<string>;
+	return invokePlugin("get_webkit_version");
 }
 
 export async function broadcastEvent(event: string, payload: object): Promise<void> {
@@ -52,7 +52,7 @@ export async function broadcastEvent(event: string, payload: object): Promise<vo
 			event,
 			data: walk(payload, replace)
 		})
-	}) as Promise<void>;
+	});
 }
 
 export async function addMobileListener(event: string, handler: () => void) {

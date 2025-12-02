@@ -31,10 +31,10 @@
 	const i18next = useTranslation();
 
 	const props = defineProps<{
-		customField?: PartialBy<CustomField, "uuid">
+		customField?: PartialBy<CustomField, "id">
 	}>();
 
-	const emptyCustomField: PartialBy<CustomField, "uuid"> = {
+	const emptyCustomField: PartialBy<CustomField, "id"> = {
 		name: "",
 		priority: 1,
 		default: false
@@ -43,10 +43,10 @@
 	const customField = ref({ ...(props.customField || emptyCustomField) });
 
 	async function save(){
-		const uuid = customField.value?.uuid;
+		const id = customField.value?.id;
 		const _customField = toRaw(customField.value);
 
-		if(!uuid) {
+		if(!id) {
 			await newCustomField({ ..._customField });
 
 			await modalController.dismiss(null, "added");
@@ -54,7 +54,7 @@
 			return;
 		}
 
-		await updateCustomField(uuid, { ..._customField });
+		await updateCustomField(id, { ..._customField });
 
 		try{
 			await modalController.dismiss(null, "modified");
@@ -68,7 +68,7 @@
 			i18next.t("customFields:edit.delete.title"),
 			i18next.t("customFields:edit.delete.confirm")
 		)){
-			await deleteCustomField(customField.value.uuid!);
+			await deleteCustomField(customField.value.id!);
 			try{
 				await modalController.dismiss(undefined, "deleted");
 			}catch(_){ /* empty */ }
@@ -80,7 +80,7 @@
 	<IonModal class="custom-field-edit-modal" :breakpoints="[0,1]" initial-breakpoint="1">
 		<IonHeader>
 			<IonToolbar>
-				<IonTitle>{{ !customField.uuid ? $t("customFields:edit.headerAdd") : $t("customFields:edit.header") }}</IonTitle>
+				<IonTitle>{{ !customField.id ? $t("customFields:edit.headerAdd") : $t("customFields:edit.header") }}</IonTitle>
 			</IonToolbar>
 		</IonHeader>
 
@@ -103,7 +103,7 @@
 					</IonToggle>
 				</IonItem>
 				<IonItem
-					v-if="customField.uuid"
+					v-if="customField.id"
 					button
 					:detail="false"
 					@click="removeCustomField"

@@ -115,7 +115,7 @@ pub struct Tag {
 	pub id: Uuid,
 	pub name: String,
 	pub description: Option<String>,
-	pub r#type: Uuid,
+	pub r#type: Uuid, // TODO: change to number
 	pub color: Option<String>,
 	pub view_in_lists: bool,
 }

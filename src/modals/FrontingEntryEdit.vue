@@ -20,9 +20,9 @@
 	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
 
-	import { FrontingEntryComplete } from "../lib/db/entities";
+	import { FrontingEntry } from "../lib/db/entities";
 	import { newFrontingEntry, updateFrontingEntry, deleteFrontingEntry, sendFrontingChangedEvent } from "../lib/db/tables/frontingEntries";
-	import { ref, toRaw, useTemplateRef } from "vue";
+	import { reactive, ref, toRaw, useTemplateRef } from "vue";
 
 	import MemberSelect from "./MemberSelect.vue";
 	import PresenceHistory from "./PresenceHistory.vue";
@@ -38,10 +38,10 @@
 	const i18next = useTranslation();
 
 	const props = defineProps<{
-		frontingEntry?: PartialBy<FrontingEntryComplete, "uuid" | "member">
+		frontingEntry?: PartialBy<FrontingEntry, "id" | "member">
 	}>();
 
-	const emptyFrontingEntry: PartialBy<FrontingEntryComplete, "uuid" | "member"> = {
+	const emptyFrontingEntry: PartialBy<FrontingEntry, "id" | "member"> = {
 		isMainFronter: false,
 		startTime: new Date(),
 		endTime: new Date(),
@@ -49,13 +49,15 @@
 	};
 	const frontingEntry = ref({ ...(props.frontingEntry || emptyFrontingEntry) });
 
+	const presence = reactive(new Map<Date, number>()); // TODO
+
 	const presenceHistoryModal = useTemplateRef("presenceHistoryModal");
 	const memberSelectModal = useTemplateRef("memberSelectModal");
 	const memberInfluencingModal = useTemplateRef("memberInfluencingModal");
 	const memberTagModal = useTemplateRef("memberTagModal");
 
 	async function save(dismissAfter = true){
-		const uuid = frontingEntry.value?.uuid;
+		const id = frontingEntry.value?.id;
 		const _frontingEntry = toRaw(frontingEntry.value);
 
 		if(!_frontingEntry.member) return;
@@ -63,12 +65,8 @@
 		if(_frontingEntry.isMainFronter)
 			_frontingEntry.influencing = undefined;
 
-		if(!uuid) {
-			await newFrontingEntry({
-				..._frontingEntry,
-				member: _frontingEntry.member.uuid,
-				influencing: _frontingEntry.influencing?.uuid
-			});
+		if(!id) {
+			await newFrontingEntry({ ..._frontingEntry } as FrontingEntry);
 			void sendFrontingChangedEvent();
 
 			if(dismissAfter)
@@ -77,11 +75,7 @@
 			return;
 		}
 
-		await updateFrontingEntry(uuid, {
-			..._frontingEntry,
-			member: _frontingEntry.member.uuid,
-			influencing: _frontingEntry.influencing?.uuid
-		});
+		await updateFrontingEntry(id, { ..._frontingEntry });
 		void sendFrontingChangedEvent();
 
 		try{
@@ -97,7 +91,7 @@
 			i18next.t("frontHistory:edit.delete.title"),
 			i18next.t("frontHistory:edit.delete.confirm"),
 		)){
-			await deleteFrontingEntry(frontingEntry.value.uuid!);
+			await deleteFrontingEntry(frontingEntry.value.id!);
 			void sendFrontingChangedEvent();
 
 			try{
@@ -111,9 +105,9 @@
 	}
 
 	function getMostRecentPresence(){
-		if(!frontingEntry.value.presence) return [undefined, undefined];
+		if(!presence) return [undefined, undefined];
 
-		const presenceVal = Array.from(frontingEntry.value.presence.entries());
+		const presenceVal = Array.from(presence.entries());
 
 		return presenceVal.sort((a, b) => a[0].valueOf() - b[0].valueOf()).pop() || [undefined, undefined];
 	}
@@ -154,7 +148,7 @@
 				<IonItem button :detail="true" @click="presenceHistoryModal?.$el.present()">
 					<IonLabel>
 						{{ $t("frontHistory:edit.presence.historyTitle") }}
-						<p v-if="frontingEntry.presence?.size">
+						<p v-if="presence">
 							{{ $t("frontHistory:edit.presence.lastPresence", { presence: getMostRecentPresence()[1] }) }}
 							-
 							{{ renderStars(getMostRecentPresence()[1]!) }}
@@ -267,7 +261,7 @@
 				</IonItem>
 
 				<IonItem
-					v-if="frontingEntry.uuid"
+					v-if="frontingEntry.id"
 					button
 					:detail="false"
 					@click="removeFrontingEntry"
@@ -312,8 +306,7 @@
 
 			<PresenceHistory
 				ref="presenceHistoryModal"
-				:model-value="frontingEntry.presence"
-				@update:model-value="async (e) => { frontingEntry.presence = e; await save(false) }"
+				:model-value="presence"
 			/>
 
 			<MemberSelect
@@ -323,7 +316,7 @@
 				:hide-checkboxes="true"
 				:always-emit="true"
 				:model-value="[]"
-				@update:model-value="(e) => { if(e[0]) frontingEntry.comment = `${frontingEntry.comment || ''}@<m:${e[0].uuid}>` }"
+				@update:model-value="(e) => { if(e[0]) frontingEntry.comment = `${frontingEntry.comment || ''}@<m:${e[0].id}>` }"
 			/>
 		</IonContent>
 	</IonModal>

@@ -34,7 +34,7 @@
 
 	const loading = ref(false);
 
-	const emptyAsset: PartialBy<Asset, "uuid"> = {
+	const emptyAsset: PartialBy<Asset, "id"> = {
 		friendlyName: "",
 		file: new File([], "")
 	};
@@ -64,13 +64,13 @@
 	}
 
 	async function save(){
-		const uuid = asset.value.uuid;
+		const uuid = asset.value.id;
 		const _asset = asset.value;
 
 		if(!_asset.file.size) return;
 
 		if(!uuid){
-			await newAsset(_asset as PartialBy<Asset, "uuid">);
+			await newAsset(_asset as PartialBy<Asset, "id">);
 			router.back();
 			return;
 		}
@@ -84,7 +84,7 @@
 			i18next.t("assetManager:edit.delete.title"),
 			i18next.t("assetManager:edit.delete.confirm"),
 		)){
-			await deleteAsset(asset.value.uuid!);
+			await deleteAsset(asset.value.id!);
 			router.back();
 		}
 	}
@@ -118,7 +118,7 @@
 					default-href="/options/assetManager/"
 				/>
 				<IonTitle>
-					{{ !asset.uuid ? $t("assetManager:add.header") : $t("assetManager:edit.header") }}
+					{{ !asset.id ? $t("assetManager:add.header") : $t("assetManager:edit.header") }}
 				</IonTitle>
 			</IonToolbar>
 		</IonHeader>
@@ -157,7 +157,7 @@
 				</IonItem>
 
 				<IonItem
-					v-if="asset.uuid"
+					v-if="asset.id"
 					button
 					:detail="false"
 					@click="removeAsset"

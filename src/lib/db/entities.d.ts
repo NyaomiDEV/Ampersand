@@ -1,11 +1,11 @@
 export interface UUIDable {
-	uuid: UUID
+	id: UUID,
 };
 
 export type UUID = string;
 
 export interface BoardMessage extends UUIDable {
-	member?: UUID,
+	member?: Member,
 	title: string,
 	body: string,
 	date: Date,
@@ -14,75 +14,115 @@ export interface BoardMessage extends UUIDable {
 	poll?: Poll
 }
 
-export interface BoardMessageComplete extends BoardMessage {
-	member?: Member
-}
-
-export interface Poll {
-	entries: PollEntry[],
+export interface Poll extends UUIDable {
 	multipleChoice: boolean
 }
 
-export interface PollEntry {
+export interface PollEntry extends UUIDable {
+	poll: Poll,
 	choice: string,
-	votes: Vote[]
 }
 
-export interface Vote {
-	member: UUID,
+export interface Vote extends UUIDable {
+	entry: PollEntry,
+	member: Member,
 	reason?: string
 }
 
 export interface FrontingEntry extends UUIDable {
-	member: UUID,
+	member: Member,
 	startTime: Date,
 	endTime?: Date,
 	isMainFronter: boolean,
 	isLocked: boolean,
 	customStatus?: string,
-	influencing?: UUID,
-	presence?: Map<Date, number>
+	influencing?: Member,
 	comment?: string
 }
 
-export interface FrontingEntryComplete extends FrontingEntry {
-	member: Member,
-	influencing?: Member
+export interface PresenceEntry extends UUIDable {
+	frontingEntry: FrontingEntry,
+	date: Date,
+	presence: number,
 }
 
 export interface JournalPost extends UUIDable {
-	member?: UUID,
+	member?: Member,
 	date: Date,
 	title: string,
 	subtitle?: string,
 	body: string,
-	cover?: File,
-	tags: UUID[], // array of UUIDs
+	cover?: SQLFile,
 	isPinned: boolean,
 	isPrivate: boolean,
 	contentWarning?: string
 }
 
-export interface JournalPostComplete extends JournalPost {
-	member?: Member
-}
-
 export interface Member extends UUIDable {
-	system: UUID,
+	system: System,
 	name: string,
 	pronouns?: string,
 	description?: string,
 	role?: string,
-	image?: File,
-	cover?: File,
+	image?: SQLFile,
+	cover?: SQLFile,
 	color?: string,
-	customFields?: Map<UUID, string>,
 	isPinned: boolean,
 	isArchived: boolean,
 	isCustomFront: boolean,
-	tags: UUID[] // array of UUIDs
 	dateCreated: Date
 }
+
+export interface CustomField extends UUIDable {
+	name: string,
+	priority: number,
+	default: boolean,
+}
+
+export interface CustomFieldDatum extends UUIDable {
+	member: Member,
+	field: CustomField,
+	value: string
+}
+
+
+export interface System extends UUIDable {
+	name: string,
+	description?: string,
+	image?: SQLFile
+}
+
+export interface Tag extends UUIDable {
+	name: string,
+	description?: string,
+	type: number, // 0: member, 1: journal
+	color?: string,
+	viewInLists: boolean
+}
+
+export interface MemberTag extends UUIDable {
+	member: Member,
+	tag: Tag
+}
+
+export interface JournalPostTag extends UUIDable {
+	post: JournalPost,
+	tag: Tag
+}
+
+export interface Asset extends UUIDable {
+	file: SQLFile,
+	friendlyName: string
+}
+
+export interface SQLFile extends UUIDable {
+	path: string,
+	friendlyName: string
+}
+
+
+// WALL OF SHAME
+/*
 
 interface ReminderBase extends UUIDable {
 	name: string,
@@ -106,7 +146,7 @@ interface EventReminder extends ReminderBase {
 	scheduleInterval?: never
 }
 
-/*
+/\*
 	periodic reminders are strange in how they work.
 	let's suppose you want a notification every day at 7.30:
 	you'd set the minutes at 30, the hours at 7
@@ -123,7 +163,7 @@ interface EventReminder extends ReminderBase {
 
 	the problem is that we can't do stuff "every two days, every three days" in this way,
 	and Tauri doesn't give us any better ways, sadly.
-*/
+*\/
 interface PeriodicReminder extends ReminderBase {
 	type: "periodic",
 	scheduleInterval?: {
@@ -134,36 +174,12 @@ interface PeriodicReminder extends ReminderBase {
 		hourOfDay?: number,
 		minuteOfHour?: number,
 		//secondOfMinute?: number // nah won't bother
-	}
+	};
 
 	// make it either-or in regards to EventReminder
 	triggeringEvent?: never,
-	delay?: never
+	delay?: never;
 }
 
 export type Reminder = EventReminder | PeriodicReminder;
-
-export interface System extends UUIDable {
-	name: string,
-	description?: string,
-	image?: File
-}
-
-export interface Tag extends UUIDable {
-	name: string,
-	description?: string,
-	type: "member" | "journal",
-	color?: string,
-	viewInLists: boolean
-}
-
-export interface Asset extends UUIDable {
-	file: File,
-	friendlyName: string
-}
-
-export interface CustomField extends UUIDable {
-	name: string,
-	priority: number,
-	default: boolean,
-}
+*/

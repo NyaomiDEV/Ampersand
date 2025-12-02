@@ -11,6 +11,9 @@ Default permissions for the Ampersand plugin
 - `allow-broadcast-event`
 - `allow-list-assets`
 - `allow-registerListener`
+- `allow-db-test`
+- `allow-db-migrate-old`
+- `allow-db-run-migrations`
 
 ## Permission Table
 
@@ -43,6 +46,84 @@ Enables the broadcast_event command without any pre-configured scope.
 <td>
 
 Denies the broadcast_event command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`ampersand:allow-db-migrate-old`
+
+</td>
+<td>
+
+Enables the db_migrate_old command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`ampersand:deny-db-migrate-old`
+
+</td>
+<td>
+
+Denies the db_migrate_old command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`ampersand:allow-db-run-migrations`
+
+</td>
+<td>
+
+Enables the db_run_migrations command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`ampersand:deny-db-run-migrations`
+
+</td>
+<td>
+
+Denies the db_run_migrations command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`ampersand:allow-db-test`
+
+</td>
+<td>
+
+Enables the db_test command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`ampersand:deny-db-test`
+
+</td>
+<td>
+
+Denies the db_test command without any pre-configured scope.
 
 </td>
 </tr>
