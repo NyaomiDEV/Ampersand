@@ -198,7 +198,7 @@ export function filterCustomField(search: string, customField: CustomField) {
 }
 
 export async function filterJournalPost(search: string, post: JournalPostComplete) {
-	const parsed = await parseJournalPostFilterQuery(search.length ? search : appConfig.defaultFilterQueries.messageBoard || "");
+	const parsed = await parseJournalPostFilterQuery(search.length ? search : appConfig.defaultFilterQueries.journal || "");
 
 	if(parsed.query.length){
 		if (
@@ -220,11 +220,16 @@ export async function filterJournalPost(search: string, post: JournalPostComplet
 		}
 	}
 
+	if (parsed.tags.length) {
+		if (!parsed.tags.every(uuid => post.tags.includes(uuid)))
+			return false;
+	}
+
 	return true;
 }
 
 export async function filterJournalPostIndex(search: string, post: IndexEntry<JournalPost>) {
-	const parsed = await parseJournalPostFilterQuery(search.length ? search : appConfig.defaultFilterQueries.messageBoard || "");
+	const parsed = await parseJournalPostFilterQuery(search.length ? search : appConfig.defaultFilterQueries.journal || "");
 
 	if (typeof parsed.member !== "undefined") {
 		if (post.member) {
