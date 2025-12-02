@@ -32,11 +32,11 @@ const options: RouteRecordRaw[] = [
 		name: "AssetManager",
 		component: () => import("../views/options/AssetManager.vue"),
 	},
-	{
-		path: "/options/reminders",
-		name: "Reminders",
-		component: () => import("../views/options/Reminders.vue"),
-	},
+	//{
+	//	path: "/options/reminders",
+	//	name: "Reminders",
+	//	component: () => import("../views/options/Reminders.vue"),
+	//},
 	{
 		path: "/options/appSettings",
 		name: "AppSettings",

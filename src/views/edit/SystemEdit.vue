@@ -19,6 +19,7 @@
 	import { System } from "../../lib/db/entities";
 	import { useTranslation } from "i18next-vue";
 	import Markdown from "../../components/Markdown.vue";
+	import { deleteFile, newFile, updateFile } from "../../lib/db/tables/files";
 
 	const i18next = useTranslation();
 
@@ -27,10 +28,11 @@
 
 	const loading = ref(false);
 
-	const emptySystem: PartialBy<System, "uuid"> = {
+	const emptySystem: PartialBy<System, "id"> = {
 		name: ""
 	};
 	const system = ref({ ...emptySystem });
+	const systemAvatarUri = ref();
 
 	const membersShowed = ref(false);
 	const memberCount = ref(0);
@@ -47,7 +49,7 @@
 			return;
 		}
 
-		const uuid = system.value.uuid;
+		const uuid = system.value.id;
 		const _system = toRaw(system.value);
 
 		if(!uuid){
@@ -67,16 +69,31 @@
 	async function modifyPicture(){
 		const files = await getFiles();
 		if(files.length){
-			if(files[0].type === "image/gif"){
-				system.value.image = files[0];
-				return;
-			}
-			system.value.image = await resizeImage(files[0]);	
+			let _file: File;
+			if(files[0].type === "image/gif")
+				_file = files[0];
+			else
+				_file = await resizeImage(files[0]);
+
+			if(system.value.image)
+				await updateFile(system.value.image.id, undefined, _file.stream());
+			else 
+				system.value.image = await newFile(_file.name, _file.stream());
+		}
+
+		await updateAvatarUri();
+	}
+
+	async function deletePicture(){
+		if(system.value.image) {
+			await deleteFile(system.value.image.id);
+			system.value.image = undefined;
 		}
 	}
 
-	function deletePicture(){
-		system.value.image = undefined;
+	async function updateAvatarUri(){
+		if(system.value.image)
+			systemAvatarUri.value = await getObjectURL(system.value.image);
 	}
 
 	async function removeSystem() {
@@ -84,15 +101,15 @@
 			i18next.t("systems:edit.delete.title"),
 			i18next.t("systems:edit.delete.confirm")
 		)){
-			await deleteSystem(system.value.uuid!);
+			await deleteSystem(system.value.id!);
 			router.back();
 		}
 	}
 
 	async function copyIdToClipboard(){
-		if(system.value.uuid){
+		if(system.value.id){
 			try{
-				await window.navigator.clipboard.writeText(`@<s:${system.value.uuid}>`);
+				await window.navigator.clipboard.writeText(`@<s:${system.value.id}>`);
 				await toast(i18next.t("systems:edit.systemIDcopiedToClipboard"));
 			}catch(_e){
 				return;
@@ -109,6 +126,8 @@
 			const _system = await getSystem(route.query.uuid as string);
 			if(_system) system.value = _system;
 		} else system.value = { ...emptySystem };
+		
+		await updateAvatarUri();
 
 		let _memberCount = 0;
 		let _archivedMemberCount = 0;
@@ -116,7 +135,7 @@
 		let _archivedCustomFrontCount = 0;
 
 		for await(const member of getMembers()){
-			if(member.system !== system.value.uuid)
+			if(member.system.id !== system.value.id)
 				continue;
 
 			if(!member.isCustomFront){
@@ -143,7 +162,7 @@
 			canEdit.value = true;
 		
 		// are we editing?
-		isEditing.value = !system.value.uuid;
+		isEditing.value = !system.value.id;
 
 		loading.value = false;
 	}
@@ -164,7 +183,7 @@
 				<IonTitle>
 					{{ !isEditing
 						? $t("systems:edit.header")
-						: !system.uuid ? $t("systems:edit.headerAdd") : $t("systems:edit.headerEdit")
+						: !system.id ? $t("systems:edit.headerAdd") : $t("systems:edit.headerEdit")
 					}}
 				</IonTitle>
 			</IonToolbar>
@@ -174,7 +193,7 @@
 		<IonContent v-else>
 			<div class="avatar-container">
 				<IonAvatar>
-					<img v-if="system?.image" aria-hidden="true" :src="getObjectURL(system.image)" />
+					<img v-if="systemAvatarUri" aria-hidden="true" :src="systemAvatarUri" />
 					<IonIcon v-else :icon="accountCircle" />
 				</IonAvatar>
 
@@ -240,7 +259,7 @@
 				</IonItem>
 
 				<IonItem
-					v-if="system.uuid && appConfig.defaultSystem !== system.uuid"
+					v-if="system.id && appConfig.defaultSystem !== system.id"
 					button
 					:detail="false"
 					@click="removeSystem"
@@ -258,13 +277,13 @@
 				</IonItem>
 
 				<IonItem
-					v-if="system.uuid"
+					v-if="system.id"
 					:detail="false"
 					button
 					@click="copyIdToClipboard"
 				>
 					<IonLabel>
-						<p>{{ $t("systems:edit.systemID", { systemID: system.uuid }) }}</p>
+						<p>{{ $t("systems:edit.systemID", { systemID: system.id }) }}</p>
 					</IonLabel>
 				</IonItem>
 			</IonList>

@@ -1,9 +1,7 @@
 <script setup lang="ts">
 	import { watch, shallowRef, VNode } from "vue";
 	import { marked } from "../lib/markdown";
-	import { openUrl } from "@tauri-apps/plugin-opener";
-	import { getFile } from "../lib/util/blob";
-	import { openFile } from "../lib/native/plugin";
+	import { openSQLFileByID } from "../lib/db/tables/files";
 
 	const props = defineProps<{
 		markdown: string
@@ -15,22 +13,15 @@
 		const tag = (evt.target as HTMLElement).closest("a");
 		if(!tag || !(evt.currentTarget as HTMLElement).contains(tag)) return;
 
-		evt.preventDefault();
-		evt.stopPropagation();
 		const url = tag.href;
 
-		try{
-			if(!url.startsWith("blob:")){
-				await openUrl(url);
-				return;
-			}
+		if(url.startsWith("ampersand-file://")){
+			evt.preventDefault();
+			evt.stopPropagation();
 
-			const file = getFile(url);
-			if(!file) return;
+			const fileID = url.substring(17);
 
-			await openFile(file);
-		}catch(_e){
-			// whatever?
+			await openSQLFileByID(fileID);
 		}
 	}
 

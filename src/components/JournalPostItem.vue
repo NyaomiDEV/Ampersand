@@ -3,20 +3,26 @@
 	import { IonItem, IonLabel } from "@ionic/vue";
 	import MemberAvatar from "./member/MemberAvatar.vue";
 	import TagChip from "./tag/TagChip.vue";
-	import { JournalPostComplete, Tag } from "../lib/db/entities";
+	import { JournalPost, Tag } from "../lib/db/entities";
 	import { formatDate } from "../lib/util/misc";
-	import { isReactive, onBeforeMount, shallowRef, watch, WatchStopHandle } from "vue";
-	import { getTag } from "../lib/db/tables/tags";
+	import { isReactive, onBeforeMount, ref, shallowRef, watch, WatchStopHandle } from "vue";
 	import { getObjectURL } from "../lib/util/blob";
+	import { getJournalPostTagsForPost } from "../lib/db/tables/journalPostTags";
 
 	const tags = shallowRef<Tag[]>();
+	const coverUri = ref();
 
 	const props = defineProps<{
-		post: JournalPostComplete
+		post: JournalPost
 	}>();
 
 	async function updateTags() {
-		tags.value = (await Promise.all(props.post.tags.map(async x => await getTag(x)))).filter(x => x?.viewInLists) as Tag[];
+		tags.value = (await Array.fromAsync(getJournalPostTagsForPost(props.post))).map(x => x.tag).filter(x => x.viewInLists);
+	}
+
+	async function updateCoverUri(){
+		if(props.post.cover)
+			coverUri.value = await getObjectURL(props.post.cover);
 	}
 
 	onBeforeMount(async () => {
@@ -26,13 +32,16 @@
 	let watchHandle: WatchStopHandle | undefined;
 	watch(props, async () => {
 		await updateTags();
-		if (isReactive(props.post))
-			watchHandle = watch(props.post, updateTags);
-		else
-			if (watchHandle) {
-				watchHandle();
-				watchHandle = undefined;
-			}
+		await updateCoverUri();
+		if (isReactive(props.post)){
+			watchHandle = watch(props.post, async () => {
+				await updateTags();
+				await updateCoverUri();
+			});
+		} else if (watchHandle) {
+			watchHandle();
+			watchHandle = undefined;
+		}
 	}, { immediate: true });
 
 </script>
@@ -41,7 +50,7 @@
 	<IonItem button>
 		<MemberAvatar v-if="props.post.member" slot="start" :member="props.post.member" />
 		<IonLabel>
-			<img v-if="props.post.cover" class="cover" :src="getObjectURL(props.post.cover)" />
+			<img v-if="props.post.cover" class="cover" :src="coverUri" />
 			<p v-if="formatDate(props.post.date, 'collapsed') !== props.post.title">
 				{{ formatDate(props.post.date, "collapsed") }}
 			</p>
@@ -50,7 +59,7 @@
 			<h2 v-if="props.post.subtitle?.length">{{ props.post.subtitle }}</h2>
 			
 			<div class="tags">
-				<TagChip v-for="tag in tags" :key="tag.uuid" :tag="tag" />
+				<TagChip v-for="tag in tags" :key="tag.id" :tag="tag" />
 			</div>
 		</IonLabel>
 	</IonItem>

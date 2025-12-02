@@ -31,14 +31,16 @@
 	import { getObjectURL } from "../../lib/util/blob";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import AssetItem from "../../components/AssetItem.vue";
+	import { newFile, updateFile as updateFileTable } from "../../lib/db/tables/files";
 
 	const loading = ref(false);
 
-	const emptyAsset: PartialBy<Asset, "uuid"> = {
+	const emptyAsset: PartialBy<Asset, "id" | "file"> = {
 		friendlyName: "",
-		file: new File([], "")
 	};
 	const asset = ref({ ...emptyAsset });
+
+	const assetThumbnailUri = ref();
 
 	const route = useRoute();
 	const router = useIonRouter();
@@ -46,31 +48,41 @@
 
 	async function updateFile() {
 		const files = await getFiles();
-		if (files.length > 0) 
-			asset.value.file = files[0];
+		if (files[0]){
+			if(asset.value.file)
+				await updateFileTable(asset.value.file.id, files[0].name, files[0].stream());
+			else {
+				const file = await newFile(files[0].name, files[0].stream());
+				if(file) asset.value.file = file;
+			}
+		}
 	}
 
-	function showBigThumbnail(){
-		switch(asset.value.file.type){
-			case "image/png":
-			case "image/jpeg":
-			case "image/gif":
-			case "image/webp":
-				return true;
-			default:
-				break;
+	async function generatePreview(){
+		if(asset.value.file){
+			const file = asset.value.file;
+			switch(file.friendlyName.split(".")[1].toLowerCase()){
+				case "png":
+				case "jpeg":
+				case "jpg":
+				case "gif":
+				case "webp":
+					return await getObjectURL(file);
+				default:
+					break;
+			}
 		}
-		return false;
+		return;
 	}
 
 	async function save(){
-		const uuid = asset.value.uuid;
+		const uuid = asset.value.id;
 		const _asset = asset.value;
 
-		if(!_asset.file.size) return;
+		if(!_asset.file) return;
 
 		if(!uuid){
-			await newAsset(_asset as PartialBy<Asset, "uuid">);
+			await newAsset(_asset as PartialBy<Asset, "id">);
 			router.back();
 			return;
 		}
@@ -84,7 +96,7 @@
 			i18next.t("assetManager:edit.delete.title"),
 			i18next.t("assetManager:edit.delete.confirm"),
 		)){
-			await deleteAsset(asset.value.uuid!);
+			await deleteAsset(asset.value.id!);
 			router.back();
 		}
 	}
@@ -100,6 +112,8 @@
 				asset.value = _asset;
 			else asset.value = { ...emptyAsset };
 		} else asset.value = { ...emptyAsset };
+
+		assetThumbnailUri.value = await generatePreview();
 
 		loading.value = false;
 	}
@@ -118,7 +132,7 @@
 					default-href="/options/assetManager/"
 				/>
 				<IonTitle>
-					{{ !asset.uuid ? $t("assetManager:add.header") : $t("assetManager:edit.header") }}
+					{{ !asset.id ? $t("assetManager:add.header") : $t("assetManager:edit.header") }}
 				</IonTitle>
 			</IonToolbar>
 		</IonHeader>
@@ -128,22 +142,22 @@
 			<IonList>
 
 				<img
-					v-if="showBigThumbnail()"
-					:src="getObjectURL(asset.file)"
+					v-if="assetThumbnailUri"
+					:src="assetThumbnailUri"
 					class="thumbnail"
 				/>
 
 				<AssetItem
-					v-if="asset.file.size"
+					v-if="asset.file"
 					:asset
 					route-to-open-file
 					:show-filename-and-type="true"
-					:show-thumbnail="!showBigThumbnail()"
+					:show-thumbnail="!assetThumbnailUri"
 				/>
 
 				<IonItem>
 					<IonButton @click="updateFile">
-						{{ !asset.file.size ? $t("assetManager:add.attachment") : $t("assetManager:edit.attachment") }}
+						{{ !asset.file ? $t("assetManager:add.attachment") : $t("assetManager:edit.attachment") }}
 					</IonButton>
 				</IonItem>
 
@@ -157,7 +171,7 @@
 				</IonItem>
 
 				<IonItem
-					v-if="asset.uuid"
+					v-if="asset.id"
 					button
 					:detail="false"
 					@click="removeAsset"
@@ -176,7 +190,7 @@
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton :disabled="!asset.friendlyName.length || !asset.file.name.length" @click="save">
+				<IonFabButton :disabled="!asset.friendlyName.length || !asset.file" @click="save">
 					<IonIcon :icon="saveMD" />
 				</IonFabButton>
 			</IonFab>
