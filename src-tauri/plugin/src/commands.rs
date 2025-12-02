@@ -24,18 +24,18 @@ pub(crate) fn open_file<R: Runtime>(app: AppHandle<R>, path: String) -> Result<(
 }
 
 #[command]
-pub(crate) fn test_db<R: Runtime>(app: AppHandle<R>) -> Result<String> {
-	app.ampersand().test_db()
+pub(crate) fn db_test<R: Runtime>(app: AppHandle<R>) -> Result<String> {
+	app.ampersand().db_test()
 }
 
 #[command]
-pub(crate) fn run_db_migrations<R: Runtime>(app: AppHandle<R>) -> Result<()> {
-	app.ampersand().run_db_migrations()
+pub(crate) fn db_run_migrations<R: Runtime>(app: AppHandle<R>) -> Result<()> {
+	app.ampersand().db_run_migrations()
 }
 
 #[command]
-pub(crate) fn migrate_old_db<R: Runtime>(app: AppHandle<R>) -> Result<()> {
-	app.ampersand().migrate_old_db()
+pub(crate) fn db_migrate_old<R: Runtime>(app: AppHandle<R>) -> Result<()> {
+	app.ampersand().db_migrate_old()
 }
 
 #[command]

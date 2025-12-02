@@ -23,7 +23,7 @@
 	import chartMD from "@material-symbols/svg-600/outlined/bar_chart.svg";
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
 
-	import { BoardMessageComplete } from "../lib/db/entities";
+	import { BoardMessage } from "../lib/db/entities";
 	import { updateBoardMessage, deleteBoardMessage, newBoardMessage } from "../lib/db/tables/boardMessages";
 	import { ref, toRaw, useTemplateRef } from "vue";
 	import { PartialBy } from "../lib/types";
@@ -35,10 +35,10 @@
 	const i18next = useTranslation();
 
 	const props = defineProps<{
-		boardMessage?: PartialBy<BoardMessageComplete, "uuid" | "member">
+		boardMessage?: PartialBy<BoardMessage, "id" | "member">
 	}>();
 
-	const emptyBoardMessage: PartialBy<BoardMessageComplete, "uuid" | "member"> = {
+	const emptyBoardMessage: PartialBy<BoardMessage, "id" | "member"> = {
 		title: "",
 		body: "",
 		date: new Date(),
@@ -52,7 +52,7 @@
 	const memberTagModal = useTemplateRef("memberTagModal");
 
 	async function save(){
-		const uuid = boardMessage.value?.uuid;
+		const id = boardMessage.value?.id;
 
 		if(boardMessage.value.poll && boardMessage.value.poll.entries.length === 0) {
 			boardMessage.value.poll.entries = [
@@ -91,17 +91,14 @@
 		if(!_boardMessage.title.length)
 			_boardMessage.title = formatDate(_boardMessage.date, "collapsed");
 
-		if(!uuid){
-			await newBoardMessage({ ..._boardMessage, member: _boardMessage.member?.uuid || undefined });
+		if(!id){
+			await newBoardMessage({ ..._boardMessage });
 			await modalController.dismiss(null, "added");
 	
 			return;
 		}
 
-		await updateBoardMessage(uuid, {
-			..._boardMessage,
-			member: _boardMessage.member?.uuid || undefined
-		});
+		await updateBoardMessage(id, { ..._boardMessage });
 
 		try{
 			await modalController.dismiss(null, "modified");
@@ -115,7 +112,7 @@
 			i18next.t("messageBoard:edit.delete.title"),
 			i18next.t("messageBoard:edit.delete.confirm")
 		)){
-			await deleteBoardMessage(boardMessage.value.uuid!);
+			await deleteBoardMessage(boardMessage.value.id!);
 			try{
 				await modalController.dismiss(null, "deleted");
 			}catch(_){ /* empty */ }
@@ -278,7 +275,7 @@
 				</template>
 
 				<IonItem
-					v-if="boardMessage.uuid"
+					v-if="boardMessage.id"
 					button
 					:detail="false"
 					@click="removeBoardMessage"
@@ -320,7 +317,7 @@
 				:hide-checkboxes="true"
 				:always-emit="true"
 				:model-value="[]"
-				@update:model-value="(e) => { if(e[0]) boardMessage.body = `${boardMessage.body || ''}@<m:${e[0].uuid}>` }"
+				@update:model-value="(e) => { if(e[0]) boardMessage.body = `${boardMessage.body || ''}@<m:${e[0].id}>` }"
 			/>
 
 		</IonContent>

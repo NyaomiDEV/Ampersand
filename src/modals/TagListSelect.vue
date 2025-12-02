@@ -48,7 +48,7 @@
 		if(checked)
 			selectedTags.push(tag);
 		else {
-			const index = selectedTags.findIndex(x => x.uuid === tag.uuid);
+			const index = selectedTags.findIndex(x => x.id === tag.id);
 			if(index > -1)
 				selectedTags.splice(index, 1);
 		}
@@ -76,9 +76,9 @@
 		<SpinnerFullscreen v-if="!tags" />
 		<IonContent v-else>
 			<IonList>
-				<IonItem v-for="tag in tags" :key="tag.uuid" button>
+				<IonItem v-for="tag in tags" :key="tag.id" button>
 					<TagColor slot="start" :tag />
-					<IonCheckbox :value="tag.uuid" :checked="!!selectedTags.find(x => x.uuid === tag.uuid)" @update:model-value="value => check(tag, value)">
+					<IonCheckbox :value="tag.id" :checked="!!selectedTags.find(x => x.id === tag.id)" @update:model-value="value => check(tag, value)">
 						<TagLabel :tag />
 					</IonCheckbox>
 				</IonItem>

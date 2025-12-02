@@ -1,9 +1,9 @@
 import { getTagFromNameHashtag } from "../db/tables/tags";
-import { UUID } from "../db/entities";
+import { Tag, UUID } from "../db/entities";
 
 export type MemberFilterQuery = {
 	query: string,
-	tags: string[],
+	tags: Tag[],
 	isPinned?: boolean,
 	isArchived?: boolean,
 	isCustomFront?: boolean,
@@ -37,7 +37,7 @@ export type CustomFieldFilterQuery = {
 
 export type JournalPostFilterQuery = {
 	query: string,
-	tags: string[],
+	tags: Tag[],
 	member?: UUID | boolean;
 };
 
@@ -83,7 +83,7 @@ export async function parseMemberFilterQuery(search: string): Promise<MemberFilt
 
 	for(const _tag of rawParsed.tags){
 		const tag = await getTagFromNameHashtag(_tag);
-		if (tag) result.tags.push(tag.uuid);
+		if (tag) result.tags.push(tag);
 	}
 
 	for(const [variable, value] of rawParsed.variables){
@@ -298,7 +298,7 @@ export async function parseJournalPostFilterQuery(search: string) {
 
 	for (const _tag of rawParsed.tags) {
 		const tag = await getTagFromNameHashtag(_tag);
-		if (tag) result.tags.push(tag.uuid);
+		if (tag) result.tags.push(tag);
 	}
 
 	for (const [variable, value] of rawParsed.variables) {

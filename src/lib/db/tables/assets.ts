@@ -16,34 +16,34 @@ export async function* getFilteredAssets(query: string){
 
 export async function newAsset(asset: Omit<Asset, keyof UUIDable>) {
 	try{
-		const uuid = window.crypto.randomUUID();
-		await db.assets.add(uuid, {
+		const id = window.crypto.randomUUID();
+		await db.assets.add(id, {
 			...asset,
-			uuid
+			id
 		});
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "assets",
 			event: "new",
-			uuid,
+			id,
 			newData: asset
 		}));
-		return uuid;
+		return id;
 	}catch(_error){
 		return false;
 	}
 }
 
-export function getAsset(uuid: UUID){
-	return db.assets.get(uuid);
+export function getAsset(id: UUID){
+	return db.assets.get(id);
 }
 
-export async function deleteAsset(uuid: UUID) {
+export async function deleteAsset(id: UUID) {
 	try {
-		await db.assets.delete(uuid);
+		await db.assets.delete(id);
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "assets",
 			event: "deleted",
-			uuid,
+			id,
 			delta: {}
 		}));
 		return true;
@@ -52,14 +52,14 @@ export async function deleteAsset(uuid: UUID) {
 	}
 }
 
-export async function updateAsset(uuid: UUID, newContent: Partial<Asset>) {
+export async function updateAsset(id: UUID, newContent: Partial<Asset>) {
 	try{
-		const updated = await db.assets.update(uuid, newContent);
+		const updated = await db.assets.update(id, newContent);
 		if(updated) {
 			DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 				table: "assets",
 				event: "modified",
-				uuid,
+				id,
 				delta: newContent,
 				oldData: updated.oldData,
 				newData: updated.newData

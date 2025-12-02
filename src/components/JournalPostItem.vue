@@ -3,20 +3,20 @@
 	import { IonItem, IonLabel } from "@ionic/vue";
 	import MemberAvatar from "./member/MemberAvatar.vue";
 	import TagChip from "./tag/TagChip.vue";
-	import { JournalPostComplete, Tag } from "../lib/db/entities";
+	import { JournalPost, Tag } from "../lib/db/entities";
 	import { formatDate } from "../lib/util/misc";
 	import { isReactive, onBeforeMount, shallowRef, watch, WatchStopHandle } from "vue";
-	import { getTag } from "../lib/db/tables/tags";
 	import { getObjectURL } from "../lib/util/blob";
+	import { getJournalPostTagsForPost } from "../lib/db/tables/journalPostTags";
 
 	const tags = shallowRef<Tag[]>();
 
 	const props = defineProps<{
-		post: JournalPostComplete
+		post: JournalPost
 	}>();
 
 	async function updateTags() {
-		tags.value = (await Promise.all(props.post.tags.map(async x => await getTag(x)))).filter(x => x?.viewInLists) as Tag[];
+		tags.value = (await Array.fromAsync(getJournalPostTagsForPost(props.post))).map(x => x.tag).filter(x => x.viewInLists);
 	}
 
 	onBeforeMount(async () => {
@@ -54,7 +54,7 @@
 			<h2 v-if="props.post.subtitle?.length">{{ props.post.subtitle }}</h2>
 			
 			<div class="tags">
-				<TagChip v-for="tag in tags" :key="tag.uuid" :tag="tag" />
+				<TagChip v-for="tag in tags" :key="tag.id" :tag="tag" />
 			</div>
 		</IonLabel>
 	</IonItem>

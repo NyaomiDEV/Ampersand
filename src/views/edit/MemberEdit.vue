@@ -58,7 +58,7 @@
 
 	const loading = ref(false);
 
-	const emptyMember: PartialBy<Member, "uuid" | "dateCreated"> = {
+	const emptyMember: PartialBy<Member, "id" | "dateCreated"> = {
 		name: "",
 		system: appConfig.defaultSystem,
 		isArchived: false,
@@ -93,9 +93,9 @@
 			});
 		}
 
-		customFieldsToShowInViewMode.value = customFields.value.filter(x => (member.value.customFields?.has(x.uuid)));
+		customFieldsToShowInViewMode.value = customFields.value.filter(x => (member.value.customFields?.has(x)));
 
-		const uuid = member.value.uuid;
+		const uuid = member.value.id;
 		const _member = toRaw(member.value);
 
 		if(!uuid){
@@ -148,15 +148,15 @@
 			i18next.t("members:edit.delete.title"),
 			i18next.t("members:edit.delete.confirm")
 		)){
-			await deleteMember(member.value.uuid!);
+			await deleteMember(member.value.id!);
 			router.back();
 		}
 	}
 
 	async function copyIdToClipboard(){
-		if(member.value.uuid){
+		if(member.value.id){
 			try{
-				await window.navigator.clipboard.writeText(`@<m:${member.value.uuid}>`);
+				await window.navigator.clipboard.writeText(`@<m:${member.value.id}>`);
 				await toast(i18next.t("members:edit.memberIDcopiedToClipboard"));
 			}catch(_e){
 				return;
@@ -182,8 +182,8 @@
 			member.value.customFields = new Map();
 		
 
-		customFieldsToShowInEditMode.value = customFields.value.filter(x => x.default || (member.value.customFields?.has(x.uuid) && member.value.customFields?.get(x.uuid)?.length));
-		customFieldsToShowInViewMode.value = customFields.value.filter(x => (member.value.customFields?.has(x.uuid)));
+		customFieldsToShowInEditMode.value = customFields.value.filter(x => x.default || (member.value.customFields?.has(x) && member.value.customFields?.get(x)?.length));
+		customFieldsToShowInViewMode.value = customFields.value.filter(x => (member.value.customFields?.has(x)));
 
 		if(route.query.disallowEditing)
 			canEdit.value = false;
@@ -192,7 +192,7 @@
 		
 
 		// are we editing?
-		isEditing.value = !member.value.uuid;
+		isEditing.value = !member.value.id;
 
 		// set color
 		updateColors();
@@ -221,7 +221,7 @@
 					:icon="backMD"
 					default-href="/members/"
 				/>
-				<IonTitle>{{ !isEditing ? $t("members:edit.header") : !member.uuid ? $t("members:edit.headerAdd") : $t("members:edit.headerEdit") }}</IonTitle>
+				<IonTitle>{{ !isEditing ? $t("members:edit.header") : !member.id ? $t("members:edit.headerAdd") : $t("members:edit.headerEdit") }}</IonTitle>
 			</IonToolbar>
 		</IonHeader>
 
@@ -272,8 +272,8 @@
 			<div v-if="!isEditing && tags?.length" class="member-tags">
 				<TagChip
 					v-for="tag in member.tags"
-					:key="tag"
-					:tag="tags.find(x => x.uuid === tag)!"
+					:key="tag.id"
+					:tag="tags.find(x => x.id === tag.id)!"
 				/>
 			</div>
 
@@ -282,27 +282,27 @@
 				<Markdown :markdown="member.description || $t('members:edit.noDescription')" />
 			</div>
 
-			<template v-for="customField in customFieldsToShowInViewMode" :key="customField.uuid">
+			<template v-for="customField in customFieldsToShowInViewMode" :key="customField.id">
 				<div
 					v-if="!isEditing"
 					class="member-custom-field"
 				>
 					<IonLabel>{{ customField.name }}</IonLabel>
-					<Markdown :markdown="member.customFields?.get(customField.uuid)!" />
+					<Markdown :markdown="member.customFields?.get(customField)!" />
 				</div>
 			</template>
 
 
 			<IonList v-if="!isEditing" class="member-actions">
-				<IonItem button detail :router-link="`/options/frontHistory?q=@member:${member.uuid}`">
+				<IonItem button detail :router-link="`/options/frontHistory?q=@member:${member.id}`">
 					<IonIcon slot="start" :icon="FrontHistoryMD" aria-hidden="true" />
 					<IonLabel>{{ $t("members:edit.showFrontingEntries") }}</IonLabel>
 				</IonItem>
-				<IonItem button detail :router-link="`/options/messageBoard?q=@member:${member.uuid}`">
+				<IonItem button detail :router-link="`/options/messageBoard?q=@member:${member.id}`">
 					<IonIcon slot="start" :icon="newspaperMD" aria-hidden="true" />
 					<IonLabel>{{ $t("members:edit.showBoardEntries") }}</IonLabel>
 				</IonItem>
-				<IonItem button detail :router-link="`/journal?q=@member:${member.uuid}`">
+				<IonItem button detail :router-link="`/journal?q=@member:${member.id}`">
 					<IonIcon slot="start" :icon="journalMD" aria-hidden="true" />
 					<IonLabel>{{ $t("members:edit.showJournalEntries") }}</IonLabel>
 				</IonItem>
@@ -366,15 +366,15 @@
 
 				<IonItem
 					v-for="customField in customFieldsToShowInEditMode"
-					:key="customField.uuid"
+					:key="customField.id"
 				>
 					<IonTextarea
 						fill="outline"
 						auto-grow
 						:label="customField.name"
 						label-placement="floating"
-						:model-value="member.customFields?.get(customField.uuid)"
-						@update:model-value="(v) => member.customFields?.set(customField.uuid, v)"
+						:model-value="member.customFields?.get(customField)"
+						@update:model-value="(v) => member.customFields?.set(customField, v)"
 					/>
 				</IonItem>
 
@@ -412,14 +412,14 @@
 						<div v-if="tags?.length" class="member-tags">
 							<TagChip
 								v-for="tag in member.tags"
-								:key="tag"
-								:tag="tags.find(x => x.uuid === tag)!"
+								:key="tag.id"
+								:tag="tags.find(x => x.id === tag.id)!"
 							/>
 						</div>
 					</IonLabel>
 				</IonItem>
 				<IonItem
-					v-if="member.uuid"
+					v-if="member.id"
 					button
 					:detail="false"
 					@click="removeMember"
@@ -437,13 +437,13 @@
 				</IonItem>
 
 				<IonItem
-					v-if="member.uuid"
+					v-if="member.id"
 					:detail="false"
 					button
 					@click="copyIdToClipboard"
 				>
 					<IonLabel>
-						<p>{{ $t("members:edit.memberID", { memberID: member.uuid }) }}</p>
+						<p>{{ $t("members:edit.memberID", { memberID: member.id }) }}</p>
 					</IonLabel>
 				</IonItem>
 				<IonItem v-if="member.dateCreated" :detail="false">
@@ -466,7 +466,7 @@
 				:model-value="customFieldsToShowInEditMode"
 				@update:model-value="_customFields => {
 					customFieldsToShowInEditMode = customFields.filter(x => {
-						return x.default || _customFields.map(y => y.uuid).includes(x.uuid)
+						return x.default || _customFields.map(y => y.id).includes(x.id)
 					});
 				}"
 			/>
@@ -474,8 +474,7 @@
 			<TagListSelect
 				ref="tagSelectionModal"
 				type="member"
-				:model-value="member.tags.map(uuid => tags.find(x => x.uuid === uuid)!)"
-				@update:model-value="tags => { member.tags = tags.map(x => x.uuid) }"
+				:model-value="member.tags"
 			/>
 		</IonContent>
 	</IonPage>

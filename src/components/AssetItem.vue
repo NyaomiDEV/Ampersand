@@ -6,9 +6,10 @@
 
 	import documentMD from "@material-symbols/svg-600/outlined/draft.svg";
 	import { openFile } from "../lib/native/plugin";
+	import { ref } from "vue";
 
 	const props = defineProps<{
-		asset: PartialBy<Asset, "uuid">,
+		asset: PartialBy<Asset, "id">,
 		routeToEditPage?: boolean,
 		routeToOpenFile?: boolean,
 		showFilenameAndType?: boolean,
@@ -39,7 +40,7 @@
 <template>
 	<IonItem
 		button
-		:router-link="props.routeToEditPage ? `/options/assetManager/edit/?uuid=${props.asset.uuid}` : undefined"
+		:router-link="props.routeToEditPage ? `/options/assetManager/edit/?uuid=${props.asset.id}` : undefined"
 		@click="props.routeToOpenFile ? open() : undefined"
 	>
 		<template v-if="props.showThumbnail">

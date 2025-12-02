@@ -1,47 +1,39 @@
 import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
-import { UUID, UUIDable, BoardMessage, BoardMessageComplete } from "../entities";
-import { defaultMember, getMember } from "../tables/members";
+import { UUID, UUIDable, BoardMessage } from "../entities";
 import dayjs from "dayjs";
-import { filterBoardMessage, filterBoardMessageIndex } from "../../search";
+import { filterBoardMessage } from "../../search";
 
 export function getBoardMessages(){
 	return db.boardMessages.iterate();
 }
 
-export async function toBoardMessageComplete(boardMessage: BoardMessage): Promise<BoardMessageComplete> {
-	return {
-		...boardMessage,
-		member: boardMessage.member ? (await getMember(boardMessage.member)) || defaultMember() : undefined
-	};
-}
-
 export async function newBoardMessage(boardMessage: Omit<BoardMessage, keyof UUIDable>) {
 	try{
-		const uuid = window.crypto.randomUUID();
-		await db.boardMessages.add(uuid, {
+		const id = window.crypto.randomUUID();
+		await db.boardMessages.add(id, {
 			...boardMessage,
-			uuid
+			id
 		});
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "boardMessages",
 			event: "new",
-			uuid,
+			id,
 			newData: boardMessage
 		}));
-		return uuid;
+		return id;
 	}catch(_error){
 		return false;
 	}
 }
 
-export async function deleteBoardMessage(uuid: UUID) {
+export async function deleteBoardMessage(id: UUID) {
 	try {
-		await db.boardMessages.delete(uuid);
+		await db.boardMessages.delete(id);
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "boardMessages",
 			event: "deleted",
-			uuid,
+			id,
 			delta: {}
 		}));
 		return true;
@@ -50,14 +42,14 @@ export async function deleteBoardMessage(uuid: UUID) {
 	}
 }
 
-export async function updateBoardMessage(uuid: UUID, newContent: Partial<BoardMessage>) {
+export async function updateBoardMessage(id: UUID, newContent: Partial<BoardMessage>) {
 	try{
-		const updated = await db.boardMessages.update(uuid, newContent);
+		const updated = await db.boardMessages.update(id, newContent);
 		if(updated) {
 			DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 				table: "boardMessages",
 				event: "modified",
-				uuid,
+				id,
 				delta: newContent,
 				oldData: updated.oldData,
 				newData: updated.newData
@@ -71,31 +63,25 @@ export async function updateBoardMessage(uuid: UUID, newContent: Partial<BoardMe
 }
 
 export async function getRecentBoardMessages() {
-	return Promise.all((await Promise.all(
-		db.boardMessages.index
-			.filter(x => !x.isArchived && (x.isPinned || dayjs().startOf("day").valueOf() - dayjs(x.date).startOf("day").valueOf() <= 3 * 24 * 60 * 60 * 1000))
-			.map(x => db.boardMessages.get(x.uuid))
-	)).filter(x => !!x).map(x => toBoardMessageComplete(x)));
+	return (await Array.fromAsync(db.boardMessages.iterate()))
+		.filter(x => !x.isArchived && (x.isPinned || dayjs().startOf("day").valueOf() - dayjs(x.date).startOf("day").valueOf() <= 3 * 24 * 60 * 60 * 1000));
 }
 
 export async function* getBoardMessagesOfDay(date: Date, query: string) {
 	const _date = dayjs(date).startOf("day");
 
-	for(const entry of db.boardMessages.index){
-		if (dayjs(entry.date).startOf("day").valueOf() !== _date.valueOf())
+	for await(const boardMessage of db.boardMessages.iterate()){
+		if (dayjs(boardMessage.date).startOf("day").valueOf() !== _date.valueOf())
 			continue;
 
-		const boardMessage = await db.boardMessages.get(entry.uuid);
-		if(!boardMessage) continue;
-
-		const complete = await toBoardMessageComplete(boardMessage);
-		if(filterBoardMessage(query, complete))
-			yield complete;
+		if(filterBoardMessage(query, boardMessage))
+			yield boardMessage;
 	}
 }
 
-export function getBoardMessagesDays(query: string) {
-	const _map = db.boardMessages.index.filter(x => filterBoardMessageIndex(query, x)).map(x => dayjs(x.date).startOf("day").valueOf());
+export async function getBoardMessagesDays(query: string) {
+	const _map = (await Array.fromAsync(db.boardMessages.iterate()))
+		.filter(x => filterBoardMessage(query, x)).map(x => dayjs(x.date).startOf("day").valueOf());
 
 	return _map.reduce((occurrences, current) => {
 		occurrences.set(current, (occurrences.get(current) || 0) + 1);

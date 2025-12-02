@@ -61,23 +61,23 @@
 
 	async function tagMembers() {
 		const allMembers = await Array.fromAsync(getMembers());
-		let members: Member[] = allMembers.filter(x => x.tags.includes(tag.value.uuid!));
+		let members: Member[] = allMembers.filter(x => x.tags.includes(tag.value.id!));
 		const vnode = h(MemberSelect, {
 			customTitle: i18next.t("tagManagement:edit.members.title"),
 			modelValue: members,
 			onDidDismiss: async () => {
 				for(const member of allMembers){
-					if(members.map(x => x.uuid).includes(member.uuid)){
-						if(member.tags.includes(tag.value.uuid!)) continue;
+					if(members.map(x => x.id).includes(member.uuid)){
+						if(member.tags.includes(tag.value.id!)) continue;
 
 						await updateMember(member.uuid, {
-							tags: [...member.tags, tag.value.uuid!]
+							tags: [...member.tags, tag.value.id!]
 						});
 					} else {
-						if(!member.tags.includes(tag.value.uuid!)) continue;
+						if(!member.tags.includes(tag.value.id!)) continue;
 
 						await updateMember(member.uuid, {
-							tags: [...member.tags.filter(x => x !== tag.value.uuid!)]
+							tags: [...member.tags.filter(x => x !== tag.value.id!)]
 						});
 					}
 				}
@@ -87,7 +87,7 @@
 				// at this point the db is updated and we don't have
 				// the new values; besides, it's a non-issue to read
 				// from disk here
-				count.value = (await Array.fromAsync(getMembers())).filter(x => x.tags.includes(tag.value.uuid!)).length;
+				count.value = (await Array.fromAsync(getMembers())).filter(x => x.tags.includes(tag.value.id!)).length;
 			},
 			"onUpdate:modelValue": v => { members = [...v]; },
 		});
@@ -98,7 +98,7 @@
 	}
 
 	async function save(){
-		const uuid = tag.value.uuid;
+		const uuid = tag.value.id;
 		const _tag = tag.value;
 
 		if(!uuid){
@@ -116,7 +116,7 @@
 			i18next.t("tagManagement:edit.delete.title"),
 			i18next.t("tagManagement:edit.delete.confirm")
 		)){
-			await removeTag(tag.value.uuid!);
+			await removeTag(tag.value.id!);
 			router.back();
 		}
 	}
@@ -135,12 +135,12 @@
 
 				if(tag.value.type === "member"){
 					for await (const member of getMembers()){
-						if(member.tags.includes(tag.value.uuid!))
+						if(member.tags.includes(tag.value.id!))
 							_count++;
 					}
 				} else { //journal
 					for await (const journalPost of getJournalPosts()){
-						if(journalPost.tags.includes(tag.value.uuid!))
+						if(journalPost.tags.includes(tag.value.id!))
 							_count++;
 					}
 				}
@@ -232,7 +232,7 @@
 					</IonToggle>
 				</IonItem>
 
-				<IonItem v-if="!tag.uuid">
+				<IonItem v-if="!tag.id">
 					<IonLabel>
 						<h3 class="centered-text">{{ $t("tagManagement:edit.type.header") }}</h3>
 						<IonSegment v-model="tag.type" class="segment-alt">
@@ -251,7 +251,7 @@
 					</IonLabel>
 				</IonItem>
 
-				<IonItem v-if="tag.uuid && tag.type === 'member'" button @click="tagMembers">
+				<IonItem v-if="tag.id && tag.type === 'member'" button @click="tagMembers">
 					<IonIcon slot="start" :icon="personMD" aria-hidden="true" />
 					<IonLabel>
 						<h3>{{ $t("tagManagement:edit.members.title") }}</h3>
@@ -259,7 +259,7 @@
 					</IonLabel>
 				</IonItem>
 
-				<IonItem v-if="tag.uuid && tag.type === 'journal'" button :router-link="`/s/journal/?q=${encodeURIComponent(`#${tag.name.toLowerCase().replace(/\s+/g, '')}`)}`">
+				<IonItem v-if="tag.id && tag.type === 'journal'" button :router-link="`/s/journal/?q=${encodeURIComponent(`#${tag.name.toLowerCase().replace(/\s+/g, '')}`)}`">
 					<IonIcon slot="start" :icon="journalMD" aria-hidden="true" />
 					<IonLabel>
 						<h3>{{ $t("tagManagement:edit.showJournal.title") }}</h3>
@@ -268,7 +268,7 @@
 				</IonItem>
 
 				<IonItem
-					v-if="tag.uuid"
+					v-if="tag.id"
 					button
 					:detail="false"
 					@click="deleteTag"

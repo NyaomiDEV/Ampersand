@@ -38,9 +38,9 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
 			commands::exit_app,
 			commands::set_can_go_back,
 			commands::open_file,
-			commands::test_db,
-			commands::run_db_migrations,
-			commands::migrate_old_db,
+			commands::db_test,
+			commands::db_run_migrations,
+			commands::db_migrate_old,
 			commands::get_webkit_version,
 			commands::broadcast_event,
 			commands::list_assets

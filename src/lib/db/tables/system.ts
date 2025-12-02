@@ -9,18 +9,18 @@ export function getSystems(){
 
 export async function newSystem(system: Omit<System, keyof UUIDable>){
 	try{
-		const uuid = window.crypto.randomUUID();
-		await db.systems.add(uuid, {
+		const id = window.crypto.randomUUID();
+		await db.systems.add(id, {
 			...system,
-			uuid
+			id
 		});
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "systems",
 			event: "new",
-			uuid,
+			id,
 			newData: system
 		}));
-		return uuid;
+		return id;
 	}catch(_error){
 		return false;
 	}
@@ -31,14 +31,14 @@ export async function getSystem(uuid: UUID){
 	return await db.systems.get(uuid);
 }
 
-export async function deleteSystem(uuid: UUID) {
-	if (uuid === nilUid) return false;
+export async function deleteSystem(id: UUID) {
+	if (id === nilUid) return false;
 	try {
-		await db.systems.delete(uuid);
+		await db.systems.delete(id);
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "systems",
 			event: "deleted",
-			uuid,
+			id,
 			delta: {}
 		}));
 		return true;
@@ -47,14 +47,14 @@ export async function deleteSystem(uuid: UUID) {
 	}
 }
 
-export async function updateSystem(uuid: UUID, system: Partial<System>) {
+export async function updateSystem(id: UUID, system: Partial<System>) {
 	try {
-		const updated = await db.systems.update(uuid, system);
+		const updated = await db.systems.update(id, system);
 		if(updated){
 			DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 				table: "systems",
 				event: "modified",
-				uuid,
+				id,
 				delta: system
 			}));
 			return true;

@@ -6,7 +6,6 @@
 	import { Member, Tag } from "../../lib/db/entities";
 	import TagChip from "../tag/TagChip.vue";
 	import { isReactive, onBeforeMount, shallowRef, watch, WatchStopHandle } from "vue";
-	import { getTag } from "../../lib/db/tables/tags";
 
 	const props = defineProps<{
 		member: Member,
@@ -15,21 +14,18 @@
 
 	const tags = shallowRef<Tag[]>();
 
-	async function updateTags(){
-		if(props.showTagChips){
-			tags.value = (await Promise.all(props.member.tags.map(async x => await getTag(x))))
-				.filter(x => x!.viewInLists)
-				.sort((a, b) => a!.name.localeCompare(b!.name)) as Tag[];
-		}
+	function updateTags(){
+		if(props.showTagChips)
+			tags.value = props.member.tags.filter(x => x.viewInLists).sort((a, b) => a.name.localeCompare(b.name));
 	}
 
-	onBeforeMount(async () => {
-		await updateTags();
+	onBeforeMount(() => {
+		updateTags();
 	});
 
 	let watchHandle: WatchStopHandle | undefined;
-	watch(props, async () => {
-		await updateTags();
+	watch(props, () => {
+		updateTags();
 		if(isReactive(props.member))
 			watchHandle = watch(props.member, updateTags);
 		else
@@ -62,7 +58,7 @@
 			@pointerdown="(e) => e.stopPropagation()"
 			@touchstart="(e) => e.stopPropagation()"
 		>
-			<TagChip v-for="tag in tags" :key="tag.uuid" :tag="tag" />
+			<TagChip v-for="tag in tags" :key="tag.id" :tag="tag" />
 		</div>
 	</IonLabel>
 </template>

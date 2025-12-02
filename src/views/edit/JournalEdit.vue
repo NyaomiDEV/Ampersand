@@ -25,8 +25,8 @@
 	import imageMD from "@material-symbols/svg-600/outlined/image.svg";
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
 
-	import { JournalPostComplete, Tag } from "../../lib/db/entities";
-	import { newJournalPost, updateJournalPost, deleteJournalPost, getJournalPost, toJournalPostComplete } from "../../lib/db/tables/journalPosts";
+	import { JournalPost, Tag } from "../../lib/db/entities";
+	import { newJournalPost, updateJournalPost, deleteJournalPost, getJournalPost } from "../../lib/db/tables/journalPosts";
 	import { getFiles, formatDate, toast, promptOkCancel } from "../../lib/util/misc";
 	import { resizeImage } from "../../lib/util/image";
 	import { onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
@@ -55,7 +55,7 @@
 	const tags = shallowRef<Tag[]>([]);
 	const tagSelectionModal = useTemplateRef("tagSelectionModal");
 
-	const emptyPost: PartialBy<JournalPostComplete, "uuid" | "member"> = {
+	const emptyPost: PartialBy<JournalPost, "id" | "member"> = {
 		title: "",
 		date: new Date(),
 		body: "",
@@ -75,26 +75,20 @@
 			return;
 		}
 
-		const uuid = post.value.uuid;
+		const uuid = post.value.id;
 		const _post = toRaw(post.value);
 
 		if(!_post.title.length)
 			_post.title = formatDate(_post.date, "collapsed");
 
 		if(!uuid){
-			await newJournalPost({
-				..._post,
-				member: _post.member?.uuid || undefined,
-			});
+			await newJournalPost({ ..._post });
 			router.back();
 
 			return;
 		}
 
-		await updateJournalPost(uuid, {
-			..._post,
-			member: _post.member?.uuid || undefined
-		});
+		await updateJournalPost(uuid, {	..._post });
 
 		isEditing.value = false;
 	}
@@ -115,15 +109,15 @@
 			i18next.t("journal:edit.delete.title"),
 			i18next.t("journal:edit.delete.confirm")
 		)){
-			await deleteJournalPost(post.value.uuid!);
+			await deleteJournalPost(post.value.id!);
 			router.back();
 		}
 	}
 
 	async function copyIdToClipboard(){
-		if(post.value.uuid){
+		if(post.value.id){
 			try{
-				await window.navigator.clipboard.writeText(`@<j:${post.value.uuid}>`);
+				await window.navigator.clipboard.writeText(`@<j:${post.value.id}>`);
 				await toast(i18next.t("journal:edit.postIDcopiedToClipboard"));
 			}catch(_e){
 				return;
@@ -145,7 +139,7 @@
 
 		if(route.query.uuid){
 			const _post = await getJournalPost(route.query.uuid as string);
-			if(_post) post.value = await toJournalPostComplete(_post);
+			if(_post) post.value = _post;
 			else post.value = { ...emptyPost };
 		} else post.value = { ...emptyPost };
 
@@ -155,7 +149,7 @@
 			canEdit.value = true;
 
 		// are we editing?
-		isEditing.value = !post.value.uuid;
+		isEditing.value = !post.value.id;
 
 		loading.value = false;
 	}
@@ -174,7 +168,7 @@
 					default-href="/journal/"
 				/>
 				<IonTitle>
-					{{ !isEditing ? $t("journal:edit.header") : !post.uuid ? $t("journal:edit.headerAdd") :
+					{{ !isEditing ? $t("journal:edit.header") : !post.id ? $t("journal:edit.headerAdd") :
 						$t("journal:edit.headerEdit") }}
 				</IonTitle>
 			</IonToolbar>
@@ -218,8 +212,8 @@
 					<div v-if="tags?.length" class="journal-tags">
 						<TagChip
 							v-for="tag in post.tags"
-							:key="tag"
-							:tag="tags.find(x => x.uuid === tag)!"
+							:key="tag.id"
+							:tag="tags.find(x => x.id === tag.id)!"
 						/>
 					</div>
 					<Markdown :markdown="post.body" />
@@ -284,8 +278,8 @@
 						<div v-if="tags?.length" class="journal-tags">
 							<TagChip
 								v-for="tag in post.tags"
-								:key="tag"
-								:tag="tags.find(x => x.uuid === tag)!"
+								:key="tag.id"
+								:tag="tags.find(x => x.id === tag.id)!"
 							/>
 						</div>
 					</IonLabel>
@@ -331,7 +325,7 @@
 				</IonItem>
 
 				<IonItem
-					v-if="post.uuid"
+					v-if="post.id"
 					button
 					:detail="false"
 					@click="removePost"
@@ -349,13 +343,13 @@
 				</IonItem>
 
 				<IonItem
-					v-if="post.uuid"
+					v-if="post.id"
 					:detail="false"
 					button
 					@click="copyIdToClipboard"
 				>
 					<IonLabel>
-						<p>{{ $t("journal:edit.postID", { postID: post.uuid }) }}</p>
+						<p>{{ $t("journal:edit.postID", { postID: post.id }) }}</p>
 					</IonLabel>
 				</IonItem>
 
@@ -370,8 +364,7 @@
 			<TagListSelect
 				ref="tagSelectionModal"
 				type="journal"
-				:model-value="post.tags.map(uuid => tags.find(x => x.uuid === uuid)!)"
-				@update:model-value="tags => { post.tags = tags.map(x => x.uuid); }"
+				:model-value="post.tags"
 			/>
 
 			<MemberSelect
@@ -391,7 +384,7 @@
 				:hide-checkboxes="true"
 				:always-emit="true"
 				:model-value="[]"
-				@update:model-value="(e) => { if(e[0]) post.body = `${post.body || ''}@<m:${e[0].uuid}>` }"
+				@update:model-value="(e) => { if(e[0]) post.body = `${post.body || ''}@<m:${e[0].id}>` }"
 			/>
 
 		</IonContent>

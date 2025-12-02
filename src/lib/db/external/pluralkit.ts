@@ -4,11 +4,11 @@
 import { CustomField, FrontingEntry, Member, System, Tag } from "../entities";
 import { getTables } from "../tables";
 import { fetch } from "@tauri-apps/plugin-http";
-import { nilUid } from "../../util/consts";
+import { defaultMember } from "../tables/members";
 
 function pkCustomField(): CustomField {
 	return {
-		uuid: window.crypto.randomUUID(),
+		id: window.crypto.randomUUID(),
 		name: "PluralKit ID",
 		priority: 1,
 		default: false
@@ -19,7 +19,7 @@ async function system(pkExport: any){
 	const systemInfo: System = {
 		name: pkExport.name,
 		description: pkExport.description,
-		uuid: window.crypto.randomUUID()
+		id: window.crypto.randomUUID()
 	};
 	if (pkExport.avatar_url) {
 		try {
@@ -34,7 +34,7 @@ async function system(pkExport: any){
 }
 
 function tag(pkExport: any){
-	const tagMapping = new Map<string, string>();
+	const tagMapping = new Map<string, Tag>();
 	const tags: Tag[] = [];
 
 	for (const pkGroup of pkExport.groups) {
@@ -44,10 +44,10 @@ function tag(pkExport: any){
 			color: pkGroup.color ? `#${pkGroup.color}` : undefined,
 			type: "member",
 			viewInLists: false,
-			uuid: window.crypto.randomUUID()
+			id: window.crypto.randomUUID()
 		};
 		tags.push(tag);
-		tagMapping.set(pkGroup.id, tag.uuid);
+		tagMapping.set(pkGroup.id, tag);
 	}
 
 	return {
@@ -56,14 +56,14 @@ function tag(pkExport: any){
 	};
 }
 
-async function member(pkExport: any, tagMapping: Map<string, string>, systemInfo: System, pkField: CustomField) {
-	const memberMapping = new Map<string, string>();
+async function member(pkExport: any, tagMapping: Map<string, Tag>, systemInfo: System, pkField: CustomField) {
+	const memberMapping = new Map<string, Member>();
 	const members: Member[] = [];
 
 	for (const pkMember of pkExport.members) {
 		const member: Member = {
 			name: pkMember.display_name || pkMember.name,
-			system: systemInfo.uuid,
+			system: systemInfo,
 			description: pkMember.description || undefined,
 			pronouns: pkMember.pronouns || undefined,
 			color: pkMember.color ? `#${pkMember.color}` : undefined,
@@ -72,8 +72,8 @@ async function member(pkExport: any, tagMapping: Map<string, string>, systemInfo
 			isCustomFront: false,
 			dateCreated: new Date(pkMember.created),
 			tags: pkExport.groups.filter(x => (x.members as string[]).includes(pkMember.id)).map(x => tagMapping.get(x.id)),
-			customFields: new Map([[pkField.uuid, pkMember.id]]),
-			uuid: window.crypto.randomUUID()
+			customFields: new Map([[pkField, pkMember.id]]),
+			id: window.crypto.randomUUID()
 		};
 		if (pkMember.avatar_url) {
 			try {
@@ -92,7 +92,7 @@ async function member(pkExport: any, tagMapping: Map<string, string>, systemInfo
 			}
 		}
 		members.push(member);
-		memberMapping.set(pkMember.id, member.uuid);
+		memberMapping.set(pkMember.id, member);
 	}
 
 	return {
@@ -101,7 +101,7 @@ async function member(pkExport: any, tagMapping: Map<string, string>, systemInfo
 	};
 }
 
-function frontingEntry(pkExport: any, memberMapping: Map<string, string>){
+function frontingEntry(pkExport: any, memberMapping: Map<string, Member>){
 	const trackedFronting = new Map<string, FrontingEntry>();
 	const frontingEntries: FrontingEntry[] = [];
 
@@ -122,11 +122,11 @@ function frontingEntry(pkExport: any, memberMapping: Map<string, string>){
 		for (const id of pkSwitch.members) {
 			if (!trackedFronting.has(id)) {
 				const frontingEntry: FrontingEntry = {
-					member: memberMapping.get(id) || nilUid,
+					member: memberMapping.get(id) || defaultMember(),
 					startTime: date,
 					isMainFronter: false,
 					isLocked: false,
-					uuid: window.crypto.randomUUID()
+					id: window.crypto.randomUUID()
 				};
 				trackedFronting.set(id, frontingEntry);
 			}

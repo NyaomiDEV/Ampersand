@@ -47,7 +47,7 @@
 			return;
 		}
 
-		const uuid = system.value.uuid;
+		const uuid = system.value.id;
 		const _system = toRaw(system.value);
 
 		if(!uuid){
@@ -84,15 +84,15 @@
 			i18next.t("systems:edit.delete.title"),
 			i18next.t("systems:edit.delete.confirm")
 		)){
-			await deleteSystem(system.value.uuid!);
+			await deleteSystem(system.value.id!);
 			router.back();
 		}
 	}
 
 	async function copyIdToClipboard(){
-		if(system.value.uuid){
+		if(system.value.id){
 			try{
-				await window.navigator.clipboard.writeText(`@<s:${system.value.uuid}>`);
+				await window.navigator.clipboard.writeText(`@<s:${system.value.id}>`);
 				await toast(i18next.t("systems:edit.systemIDcopiedToClipboard"));
 			}catch(_e){
 				return;
@@ -116,7 +116,7 @@
 		let _archivedCustomFrontCount = 0;
 
 		for await(const member of getMembers()){
-			if(member.system !== system.value.uuid)
+			if(member.system !== system.value.id)
 				continue;
 
 			if(!member.isCustomFront){
@@ -143,7 +143,7 @@
 			canEdit.value = true;
 		
 		// are we editing?
-		isEditing.value = !system.value.uuid;
+		isEditing.value = !system.value.id;
 
 		loading.value = false;
 	}
@@ -164,7 +164,7 @@
 				<IonTitle>
 					{{ !isEditing
 						? $t("systems:edit.header")
-						: !system.uuid ? $t("systems:edit.headerAdd") : $t("systems:edit.headerEdit")
+						: !system.id ? $t("systems:edit.headerAdd") : $t("systems:edit.headerEdit")
 					}}
 				</IonTitle>
 			</IonToolbar>
@@ -240,7 +240,7 @@
 				</IonItem>
 
 				<IonItem
-					v-if="system.uuid && appConfig.defaultSystem !== system.uuid"
+					v-if="system.id && appConfig.defaultSystem !== system.id"
 					button
 					:detail="false"
 					@click="removeSystem"
@@ -258,13 +258,13 @@
 				</IonItem>
 
 				<IonItem
-					v-if="system.uuid"
+					v-if="system.id"
 					:detail="false"
 					button
 					@click="copyIdToClipboard"
 				>
 					<IonLabel>
-						<p>{{ $t("systems:edit.systemID", { systemID: system.uuid }) }}</p>
+						<p>{{ $t("systems:edit.systemID", { systemID: system.id }) }}</p>
 					</IonLabel>
 				</IonItem>
 			</IonList>

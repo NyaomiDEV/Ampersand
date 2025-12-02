@@ -1,9 +1,8 @@
 import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
-import { UUIDable, Member, FrontingEntry, FrontingEntryComplete, UUID } from "../entities";
-import { defaultMember, getMember } from "./members";
+import { UUIDable, Member, FrontingEntry, UUID } from "../entities";
 import dayjs from "dayjs";
-import { filterFrontingEntry, filterFrontingEntryIndex } from "../../search";
+import { filterFrontingEntry } from "../../search";
 import { appConfig } from "../../config";
 import { broadcastEvent } from "../../native/plugin";
 import { deleteFile } from "../../json";
@@ -12,40 +11,32 @@ export function getFrontingEntries(){
 	return db.frontingEntries.iterate();
 }
 
-export async function toFrontingEntryComplete(frontingEntry: FrontingEntry): Promise<FrontingEntryComplete> {
-	return {
-		...frontingEntry,
-		member: (await getMember(frontingEntry.member)) || defaultMember(),
-		influencing: frontingEntry.influencing ? (await getMember(frontingEntry.influencing)) || defaultMember() : undefined
-	};
-}
-
 export async function newFrontingEntry(frontingEntry: Omit<FrontingEntry, keyof UUIDable>) {
 	try{
-		const uuid = window.crypto.randomUUID();
-		await db.frontingEntries.add(uuid, {
+		const id = window.crypto.randomUUID();
+		await db.frontingEntries.add(id, {
 			...frontingEntry,
-			uuid
+			id
 		});
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "frontingEntries",
 			event: "new",
-			uuid,
+			id,
 			newData: frontingEntry
 		}));
-		return uuid;
+		return id;
 	}catch(_error){
 		return false;
 	}
 }
 
-export async function deleteFrontingEntry(uuid: UUID) {
+export async function deleteFrontingEntry(id: UUID) {
 	try {
-		await db.frontingEntries.delete(uuid);
+		await db.frontingEntries.delete(id);
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "frontingEntries",
 			event: "deleted",
-			uuid,
+			id,
 			delta: {}
 		}));
 		return true;
@@ -54,26 +45,22 @@ export async function deleteFrontingEntry(uuid: UUID) {
 	}
 }
 
-export async function updateFrontingEntry(uuid: UUID, newContent: Partial<FrontingEntry>) {
+export async function updateFrontingEntry(id: UUID, newContent: Partial<FrontingEntry>) {
 	try{
 		if(newContent.isMainFronter){
-			const toUpdate = (await Promise.all(
-				db.frontingEntries.index.filter(x => !x.endTime)
-					.map(x => db.frontingEntries.get(x.uuid))
-			))
-				.filter(x => x?.member !== uuid)
-				.map(x => x!.uuid);
+			const toUpdate = (await Array.fromAsync(db.frontingEntries.iterate()))
+				.filter(x => !x.endTime && x.member.id !== id);
 
-			for (const _uuid of toUpdate)
-				await updateFrontingEntry(_uuid, { isMainFronter: false });
+			for (const _entry of toUpdate)
+				await updateFrontingEntry(_entry.id, { isMainFronter: false });
 		}
 
-		const updated = await db.frontingEntries.update(uuid, newContent);
+		const updated = await db.frontingEntries.update(id, newContent);
 		if(updated) {
 			DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 				table: "frontingEntries",
 				event: "modified",
-				uuid,
+				id,
 				delta: newContent,
 				oldData: updated.oldData,
 				newData: updated.newData
@@ -90,31 +77,28 @@ export async function removeFronter(member: Member) {
 	const f = await getCurrentFrontEntryForMember(member);
 	if(!f) return false;
 
-	return await updateFrontingEntry(f.uuid, { endTime: new Date() });
+	return await updateFrontingEntry(f.id, { endTime: new Date() });
 }
 
 export async function setMainFronter(member: Member, value: boolean){
 	const f = await getCurrentFrontEntryForMember(member);
 	if (!f) return false;
 	
-	return await updateFrontingEntry(f.uuid, { isMainFronter: value });
+	return await updateFrontingEntry(f.id, { isMainFronter: value });
 }
 
 export async function setSoleFronter(member: Member) {
-	const toUpdate = (await Promise.all(
-		db.frontingEntries.index.filter(x => !x.endTime && !x.isLocked).map(x => db.frontingEntries.get(x.uuid))
-	)).filter(x => !!x)
-		.filter(x => x.member !== member.uuid)
-		.map(x => x.uuid);
+	const toUpdate = (await Array.fromAsync(db.frontingEntries.iterate()))
+		.filter(x => !x.endTime && !x.isLocked && x.member.id !== member.id);
 
 	const endTime = new Date();
 
-	for(const uuid of toUpdate)
-		await updateFrontingEntry(uuid, { endTime });
+	for(const _entry of toUpdate)
+		await updateFrontingEntry(_entry.id, { endTime });
 
 	if(!await getCurrentFrontEntryForMember(member)){
 		await newFrontingEntry({
-			member: member.uuid,
+			member,
 			startTime: endTime,
 			isMainFronter: false,
 			isLocked: false
@@ -123,69 +107,54 @@ export async function setSoleFronter(member: Member) {
 }
 
 export async function getCurrentFrontEntryForMember(member: Member){
-	const _uuid = db.frontingEntries.index.find(x => !x.endTime && x.member === member.uuid)?.uuid;
-	if(!_uuid) return;
+	const _id = (await Array.fromAsync(db.frontingEntries.iterate())).find(x => !x.endTime && x.member.id === member.id)?.id;
+	if(!_id) return;
 
-	return db.frontingEntries.get(_uuid);
+	return db.frontingEntries.get(_id);
 }
 
 export async function getMainFronter(){
-	const mainFronterIndexEntry = (await Promise.all(
-		db.frontingEntries.index
-			.filter(x => !x.endTime)
-			.map(x => db.frontingEntries.get(x.uuid))
-	))
-		.filter(x => !!x)
+	const mainFronterEntry = (await Array.fromAsync(db.frontingEntries.iterate()))
+		.filter(x => !x.endTime)
 		.find(x => x.isMainFronter);
-	if(!mainFronterIndexEntry) return;
 
-	const mainFronterEntry = await db.frontingEntries.get(mainFronterIndexEntry.uuid);
 	if(!mainFronterEntry) return;
-
-	return await getMember(mainFronterEntry.member);
+	return mainFronterEntry.member;
 }
 
 export async function getFronting() {
-	const frontersIndexEntries = db.frontingEntries.index.filter(x => !x.endTime);
-	const frontingEntries: FrontingEntryComplete[] = [];
-	for(const entry of frontersIndexEntries){
-		const frontingEntry = await db.frontingEntries.get(entry.uuid);
-		if(!frontingEntry) continue;
-		
-		frontingEntries.push(await toFrontingEntryComplete(frontingEntry));
+	const frontingEntries: FrontingEntry[] = [];
+	for await (const entry of db.frontingEntries.iterate()){
+		if (!entry.endTime)
+			frontingEntries.push(entry);
 	}
 	return frontingEntries;
 }
 
 export async function getRecentlyFronted() {
-	return Promise.all((await Promise.all(
-		db.frontingEntries.index
-			.filter(x => x.endTime && Date.now() - x.endTime.getTime() <= 48 * 60 * 60 * 1000)
-			.sort((a, b) => b.endTime!.getTime() - a.endTime!.getTime())
-			.map(x => db.frontingEntries.get(x.uuid))
-	)).filter(x => !!x).map(x => toFrontingEntryComplete(x)));
+	return (await Array.fromAsync(db.frontingEntries.iterate()))
+		.filter(x => x.endTime && Date.now() - x.endTime.getTime() <= 48 * 60 * 60 * 1000)
+		.sort((a, b) => b.endTime!.getTime() - a.endTime!.getTime());
 }
 
 export async function* getFrontingEntriesOfDay(date: Date, query: string) {
 	const _date = dayjs(date).startOf("day").valueOf();
 
-	for(const entry of db.frontingEntries.index){
+	for await(const entry of db.frontingEntries.iterate()){
 		const startDay = dayjs(entry.startTime).startOf("day").valueOf();
 		const endDay = entry.endTime ? dayjs(entry.endTime).endOf("day").valueOf() : dayjs().endOf("day").valueOf();
 
 		if(_date < startDay || _date > endDay) continue;
-		
-		const frontingEntry = await db.frontingEntries.get(entry.uuid);
-		if (!frontingEntry) continue;
 
-		const complete = await toFrontingEntryComplete(frontingEntry);
-		if (filterFrontingEntry(query, complete))
-			yield complete;
+		if (filterFrontingEntry(query, entry))
+			yield entry;
 	}
 }
 
-export function getFrontingEntriesDays(query: string) {
-	const _map = db.frontingEntries.index.filter(x => !!x.endTime && filterFrontingEntryIndex(query, x)).map(x => dayjs(x.startTime).startOf("day").valueOf());
+export async function getFrontingEntriesDays(query: string) {
+	const _map = (await Array.fromAsync(db.frontingEntries.iterate()))
+		.filter(x => !!x.endTime && filterFrontingEntry(query, x))
+		.map(x => dayjs(x.startTime).startOf("day").valueOf());
 
 	return _map.reduce((occurrences, current) => {
 		occurrences.set(current, (occurrences.get(current) || 0) + 1);

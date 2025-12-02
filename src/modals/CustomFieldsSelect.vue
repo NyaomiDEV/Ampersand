@@ -50,7 +50,7 @@
 		if(checked)
 			selectedCustomFields.push(customField);
 		else {
-			const index = selectedCustomFields.findIndex(x => x.uuid === customField.uuid);
+			const index = selectedCustomFields.findIndex(x => x.id === customField.id);
 			if(index > -1)
 				selectedCustomFields.splice(index, 1);
 		}
@@ -78,11 +78,11 @@
 		<SpinnerFullscreen v-if="!customFields" />
 		<IonContent v-else>
 			<IonList>
-				<IonItem v-for="customField in customFields" :key="customField.uuid" button>
+				<IonItem v-for="customField in customFields" :key="customField.id" button>
 					<IonCheckbox
 						:disabled="customField.default"
-						:value="customField.uuid"
-						:checked="!!selectedCustomFields.find(x => x.uuid === customField.uuid)"
+						:value="customField.id"
+						:checked="!!selectedCustomFields.find(x => x.id === customField.id)"
 						@update:model-value="value => check(customField, value)"
 					>
 						<IonLabel>{{ customField.name }}</IonLabel>

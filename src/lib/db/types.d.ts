@@ -1,26 +1,47 @@
-import { BoardMessage, FrontingEntry, JournalPost, Member, Reminder, System, Tag, Asset, CustomField } from "./entities";
+export type TableName =
+	"board_messages" |
+	"polls" |
+	"poll_entries" |
+	"votes" |
+	"fronting_entries" |
+	"presence_entries" |
+	"journal_posts" |
+	"members" |
+	"custom_fields" |
+	"custom_field_data" |
+	"systems" |
+	"tags" |
+	"member_tags" |
+	"journal_post_tags" |
+	"assets";
 
-export type AmpersandEntityMapping = {
-	boardMessages: BoardMessage
-	frontingEntries: FrontingEntry
-	journalPosts: JournalPost
-	members: Member
-	reminders: Reminder
-	systems: System
-	tags: Tag,
-	assets: Asset,
-	customFields: CustomField
-};
-
-export type MigrationsMapping = {
-	version: number,
-};
+export type TableNameCamelCase =
+	"boardMessages" |
+	"polls" |
+	"pollEntries" |
+	"votes" |
+	"frontingEntries" |
+	"presenceEntries" |
+	"journalPosts" |
+	"members" |
+	"customFields" |
+	"customFieldData" |
+	"systems" |
+	"tags" |
+	"memberTags" |
+	"journalPostTags" |
+	"assets";
 
 export type DatabaseEventData = {
-	table: keyof AmpersandEntityMapping,
+	table: TableNameCamelCase,
 	event: "new" | "modified" | "deleted",
-	uuid: string,
+	id: string,
 	delta?: unknown,
 	oldData?: unknown,
 	newData?: unknown
+};
+
+export type TableIter<T> = {
+	result: T,
+	end: boolean
 };

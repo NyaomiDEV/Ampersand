@@ -112,7 +112,7 @@
 
 	async function addFrontingEntry(member: Member) {
 		await newFrontingEntry({
-			member: member.uuid,
+			member: member.id,
 			startTime: new Date(),
 			isMainFronter: false,
 			isLocked: false
@@ -190,7 +190,7 @@
 		if(!timeoutHandler) return;
 		clearTimeout(timeoutHandler);
 		longPressHandlers.delete(member);
-		if(!dragged) router.push(`/members/edit?uuid=${member.uuid}`);
+		if(!dragged) router.push(`/members/edit?uuid=${member.id}`);
 	}
 
 	function numberOfFronters() {
@@ -223,7 +223,7 @@
 		<IonContent v-else>
 			<IonList ref="list" :class="{ compact: accessibilityConfig.disableMemberCoversInList }">
 
-				<IonItemSliding v-for="member in members" :key="member.uuid" @ion-drag="endPress(member, true)">
+				<IonItemSliding v-for="member in members" :key="member.id" @ion-drag="endPress(member, true)">
 					<IonItem
 						button
 						:class="{ archived: member.isArchived }"

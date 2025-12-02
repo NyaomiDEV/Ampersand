@@ -55,9 +55,9 @@
 						{{ choice.choice }} - {{ $t("messageBoard:polls.choice.desc", { count: choice.votes.length }) }}
 					</IonItemDivider>
 					<IonItem v-for="vote in choice.votes" :key="vote.member">
-						<MemberAvatar slot="start" :member="members.find(x => vote.member === x.uuid) || defaultMember()" />
+						<MemberAvatar slot="start" :member="members.find(x => vote.member === x.id) || defaultMember()" />
 						<IonLabel>
-							<h2>{{ (members.find(x => vote.member === x.uuid) || defaultMember()).name }}</h2>
+							<h2>{{ (members.find(x => vote.member === x.id) || defaultMember()).name }}</h2>
 							<p>{{ vote.reason }}</p>
 						</IonLabel>
 					</IonItem>

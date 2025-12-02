@@ -84,9 +84,9 @@
 			<IonList>
 				<IonItem
 					v-for="tag in tags"
-					:key="tag.uuid"
+					:key="tag.id"
 					button
-					:router-link="`/options/tagManagement/edit?uuid=${tag.uuid}`"
+					:router-link="`/options/tagManagement/edit?uuid=${tag.id}`"
 				>
 					<TagColor slot="start" :tag />
 					<TagLabel :tag />

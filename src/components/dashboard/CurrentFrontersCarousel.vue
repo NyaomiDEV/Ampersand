@@ -2,7 +2,7 @@
 	import { IonCard, IonCardContent, IonLabel, IonListHeader, IonIcon } from "@ionic/vue";
 	import MemberAvatar from "../member/MemberAvatar.vue";
 	import { h, onBeforeMount, onUnmounted, ref, shallowRef } from "vue";
-	import type { FrontingEntryComplete } from "../../lib/db/entities.d.ts";
+	import type { FrontingEntry } from "../../lib/db/entities.d.ts";
 	import { getFronting, newFrontingEntry, sendFrontingChangedEvent } from "../../lib/db/tables/frontingEntries";
 	import { formatWrittenTime } from "../../lib/util/misc";
 	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
@@ -13,7 +13,7 @@
 
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 
-	const frontingEntries = shallowRef<FrontingEntryComplete[]>([]);
+	const frontingEntries = shallowRef<FrontingEntry[]>([]);
 
 	const now = ref(new Date());
 
@@ -51,7 +51,7 @@
 		DatabaseEvents.removeEventListener("updated", listener);
 	});
 
-	async function showModal(clickedFrontingEntry: FrontingEntryComplete){
+	async function showModal(clickedFrontingEntry: FrontingEntry){
 		const vnode = h(FrontingEntryEdit, {
 			frontingEntry: clickedFrontingEntry,
 			onDidDismiss: () => removeModal(vnode)
@@ -70,7 +70,7 @@
 			modelValue: [],
 			"onUpdate:modelValue": async (members) => {
 				await newFrontingEntry({
-					member: members[0].uuid,
+					member: members[0],
 					startTime: new Date(),
 					isMainFronter: false,
 					isLocked: false
@@ -92,10 +92,10 @@
 	<div class="carousel">
 		<IonCard
 			v-for="fronting in frontingEntries"
-			:key="fronting.uuid"
+			:key="fronting.id"
 			button
 			:class="{
-				influenced: frontingEntries.findIndex(x => x.influencing?.uuid === fronting.member.uuid) > 0,
+				influenced: frontingEntries.findIndex(x => x.influencing?.id === fronting.member.id) > 0,
 				outlined: !fronting.isMainFronter,
 				elevated: fronting.isMainFronter,
 				influencing: !!fronting.influencing,

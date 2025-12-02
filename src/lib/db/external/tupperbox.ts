@@ -5,7 +5,7 @@ import { getTables } from "../tables";
 import { fetch } from "@tauri-apps/plugin-http";
 
 function tag(tuExport: any){
-	const tagMapping = new Map<number, string>();
+	const tagMapping = new Map<number, Tag>();
 	const tags: Tag[] = [];
 	for (const tuGroup of tuExport.groups) {
 		const tag: Tag = {
@@ -13,10 +13,10 @@ function tag(tuExport: any){
 			description: tuGroup.description || undefined,
 			type: "member",
 			viewInLists: false,
-			uuid: window.crypto.randomUUID()
+			id: window.crypto.randomUUID()
 		};
 		tags.push(tag);
-		tagMapping.set(tuGroup.id, tag.uuid);
+		tagMapping.set(tuGroup.id, tag);
 	}
 
 	return {
@@ -25,13 +25,13 @@ function tag(tuExport: any){
 	};
 }
 
-async function member(tuExport: any, systemInfo: System, tagMapping: Map<number, string>){
+async function member(tuExport: any, systemInfo: System, tagMapping: Map<number, Tag>){
 	const members: Member[] = [];
 
 	for (const tuMember of tuExport.tuppers) {
 		const member: Member = {
 			name: tuMember.name,
-			system: systemInfo.uuid,
+			system: systemInfo,
 			description: tuMember.description || undefined,
 			pronouns: tuMember.pronouns || undefined,
 			isArchived: false,
@@ -39,7 +39,7 @@ async function member(tuExport: any, systemInfo: System, tagMapping: Map<number,
 			isPinned: false,
 			dateCreated: new Date(tuMember.created_at),
 			tags: tuMember.group_id ? [tagMapping.get(tuMember.group_id)!] : [],
-			uuid: window.crypto.randomUUID()
+			id: window.crypto.randomUUID()
 		};
 		if (tuMember.avatar_url) {
 			try {
@@ -69,7 +69,7 @@ export async function importTupperBox(tuExport: any){
 	const systemInfo = {
 		name: "",
 		description: "",
-		uuid: window.crypto.randomUUID()
+		id: window.crypto.randomUUID()
 	} as System;
 	const members = await member(tuExport, systemInfo, tagMapping);
 
