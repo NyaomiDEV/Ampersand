@@ -1,7 +1,10 @@
 import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUID, UUIDable, Tag } from "../entities";
-import { filterTag } from "../../search";
+import { filterTag } from "../search";
+import { deleteMemberTag, getMemberTags } from "./memberTags";
+import { deleteJournalPostTag, getJournalPostTags } from "./journalPostTags";
+import { PartialBy } from "../../types";
 
 export function getTags(){
 	return db.tags.iterate();
@@ -16,20 +19,23 @@ export async function* getFilteredTags(query: string){
 
 export async function newTag(tag: Omit<Tag, keyof UUIDable>) {
 	try{
-		const uuid = window.crypto.randomUUID();
-		await db.tags.add(uuid, {
+		const id = window.crypto.randomUUID();
+		await db.tags.add(id, {
 			...tag,
-			uuid
+			id
 		});
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "tags",
 			event: "new",
-			uuid,
+			id,
 			newData: tag
 		}));
-		return uuid;
+		return {
+			...tag,
+			id
+		};
 	}catch(_error){
-		return false;
+		return;
 	}
 }
 
@@ -37,50 +43,40 @@ export function getTag(uuid: UUID){
 	return db.tags.get(uuid);
 }
 
-export async function removeTag(uuid: UUID){
-	const tag = await db.tags.get(uuid);
-	if(tag?.type === "member"){
-		const members = db.members.iterate();
-		for await (const member of members){
-			const delta = { tags: member.tags?.filter(tag => tag !== uuid) };
-			await db.members.update(member.uuid, delta);
-			DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
-				table: "members",
-				event: "modified",
-				uuid: member.uuid,
-				delta
-			}));
-		}
-	} else if(tag?.type === "journal") {
-		const journalPosts = db.journalPosts.iterate();
-		for await (const journalPost of journalPosts) {
-			const delta = { tags: journalPost.tags?.filter(tag => tag !== uuid) };
-			await db.journalPosts.update(journalPost.uuid, delta);
-			DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
-				table: "journalPosts",
-				event: "modified",
-				uuid: journalPost.uuid,
-				delta
-			}));
-		}
-	}
-	await db.tags.delete(uuid);
+export async function removeTag(tag: Tag | UUID){
+	const id = typeof tag === "string" ? tag : tag.id;
+	await removeTagAssociations(await db.tags.get(id));
+	await db.tags.delete(id);
 	DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 		table: "tags",
 		event: "deleted",
-		uuid,
+		id,
 		delta: {}
 	}));
 }
 
-export async function updateTag(uuid: UUID, newContent: Partial<Tag>) {
+export async function removeTagAssociations(tag: Tag){
+	if (tag.type === 0) {
+		for await (const tag of getMemberTags()) {
+			if (tag.tag.id === tag.id)
+				await deleteMemberTag(tag.id);
+		}
+	} else if (tag?.type === 1) {
+		for await (const tag of getJournalPostTags()) {
+			if (tag.tag.id === tag.id)
+				await deleteJournalPostTag(tag.id);
+		}
+	}
+}
+
+export async function updateTag(id: UUID, newContent: Partial<Tag>) {
 	try{
-		const updated = await db.tags.update(uuid, newContent);
+		const updated = await db.tags.update(id, newContent);
 		if(updated) {
 			DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 				table: "tags",
 				event: "modified",
-				uuid,
+				id,
 				delta: newContent,
 				oldData: updated.oldData,
 				newData: updated.newData
@@ -100,4 +96,12 @@ export async function getTagFromNameHashtag(name: string){
 		) return x;
 	}
 	return;
+}
+
+export async function saveTag(tag: PartialBy<Tag, keyof UUIDable>){
+	if (tag.id){
+		await updateTag(tag.id, { ...tag });
+		return tag as Tag;
+	}
+	return await newTag({ ...tag });
 }

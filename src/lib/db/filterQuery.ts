@@ -1,5 +1,5 @@
-import { getTagFromNameHashtag } from "../db/tables/tags";
-import { UUID } from "../db/entities";
+import { getTagFromNameHashtag } from "./tables/tags";
+import { Tag, UUID } from "./entities";
 
 export type SystemFilterQuery = {
 	query: string,
@@ -8,7 +8,7 @@ export type SystemFilterQuery = {
 
 export type MemberFilterQuery = {
 	query: string,
-	tags: string[],
+	tags: Tag[],
 	isPinned?: boolean,
 	isArchived?: boolean,
 	isCustomFront?: boolean,
@@ -42,7 +42,7 @@ export type CustomFieldFilterQuery = {
 
 export type JournalPostFilterQuery = {
 	query: string,
-	tags: string[],
+	tags: Tag[],
 	member?: UUID | boolean;
 };
 
@@ -118,7 +118,7 @@ export async function parseMemberFilterQuery(search: string): Promise<MemberFilt
 
 	for(const _tag of rawParsed.tags){
 		const tag = await getTagFromNameHashtag(_tag);
-		if (tag) result.tags.push(tag.uuid);
+		if (tag) result.tags.push(tag);
 	}
 
 	for(const [variable, value] of rawParsed.variables){
@@ -204,7 +204,7 @@ export function parseFrontingHistoryFilterQuery(search: string) {
 					result.currentlyFronting = true;
 				break;
 			case "member":
-				result.member = value;
+				result.member = value as UUID;
 				break;
 		}
 		break;
@@ -259,7 +259,7 @@ export function parseBoardMessageFilterQuery(search: string) {
 						result.member = false;
 						break;
 					default:
-						result.member = value;
+						result.member = value as UUID;
 						break;
 				}
 				break;
@@ -333,7 +333,7 @@ export async function parseJournalPostFilterQuery(search: string) {
 
 	for (const _tag of rawParsed.tags) {
 		const tag = await getTagFromNameHashtag(_tag);
-		if (tag) result.tags.push(tag.uuid);
+		if (tag) result.tags.push(tag);
 	}
 
 	for (const [variable, value] of rawParsed.variables) {
@@ -345,7 +345,7 @@ export async function parseJournalPostFilterQuery(search: string) {
 						result.member = false;
 						break;
 					default:
-						result.member = value;
+						result.member = value as UUID;
 						break;
 				}
 				break;

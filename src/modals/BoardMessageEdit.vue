@@ -23,22 +23,24 @@
 	import chartMD from "@material-symbols/svg-600/outlined/bar_chart.svg";
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
 
-	import { BoardMessageComplete } from "../lib/db/entities";
-	import { updateBoardMessage, deleteBoardMessage, newBoardMessage } from "../lib/db/tables/boardMessages";
-	import { ref, toRaw, useTemplateRef } from "vue";
+	import { BoardMessage, Member, PollEntry } from "../lib/db/entities";
+	import { deleteBoardMessage, saveBoardMessage } from "../lib/db/tables/boardMessages";
+	import { onBeforeMount, ref, toRaw, useTemplateRef, watch } from "vue";
 	import { PartialBy } from "../lib/types";
 	import MemberAvatar from "../components/member/MemberAvatar.vue";
 	import MemberSelect from "./MemberSelect.vue";
 	import { useTranslation } from "i18next-vue";
-	import { formatDate, promptOkCancel } from "../lib/util/misc";
+	import { promptOkCancel } from "../lib/util/misc";
+	import { deletePollEntry, getPollEntriesForPoll, newPollEntry, updatePollEntry as updatePollEntryTable } from "../lib/db/tables/pollEntries";
+	import { deletePoll, newPoll, updatePoll as updatePollTable } from "../lib/db/tables/polls";
 
 	const i18next = useTranslation();
 
 	const props = defineProps<{
-		boardMessage?: PartialBy<BoardMessageComplete, "uuid" | "member">
+		boardMessage?: PartialBy<BoardMessage, "id" | "member">
 	}>();
 
-	const emptyBoardMessage: PartialBy<BoardMessageComplete, "uuid" | "member"> = {
+	const emptyBoardMessage: PartialBy<BoardMessage, "id" | "member"> = {
 		title: "",
 		body: "",
 		date: new Date(),
@@ -46,81 +48,101 @@
 		isArchived: false
 	};
 	const boardMessage = ref(props.boardMessage || { ...emptyBoardMessage });
-	const pollAtBeginning = structuredClone(toRaw(boardMessage.value.poll));
+	const pollEntries = ref<PollEntry[]>([]);
+
+	let anythingChanged = false;
+	watch([boardMessage, pollEntries], () => {
+		anythingChanged = true;
+	});
 
 	const memberSelectModal = useTemplateRef("memberSelectModal");
 	const memberTagModal = useTemplateRef("memberTagModal");
 
-	async function save(){
-		const uuid = boardMessage.value?.uuid;
-
-		if(boardMessage.value.poll && boardMessage.value.poll.entries.length === 0) {
-			boardMessage.value.poll.entries = [
-				{
-					choice: i18next.t("messageBoard:polls.defaultPollValues.yes"),
-					votes: []
-				},
-				{
-					choice: i18next.t("messageBoard:polls.defaultPollValues.no"),
-					votes: []
-				},
-				{
-					choice: i18next.t("messageBoard:polls.defaultPollValues.veto"),
-					votes: []
-				},
-				{
-					choice: i18next.t("messageBoard:polls.defaultPollValues.abstain"),
-					votes: []
-				}
-			];
-		}
-
-		// Reset the voters if the poll part has changed
-		if(
-			pollAtBeginning && boardMessage.value.poll &&
-			(
-				pollAtBeginning.multipleChoice !== boardMessage.value.poll.multipleChoice ||
-				pollAtBeginning.entries.map((x, i) => String(i + x.choice)).join("") !==
-				boardMessage.value.poll.entries.map((x, i) => String(i + x.choice)).join("")
-			)
-		)
-			boardMessage.value.poll.entries.forEach(x => { x.votes = []; });
-
-		const _boardMessage = toRaw(boardMessage.value);
-
-		if(!_boardMessage.title.length)
-			_boardMessage.title = formatDate(_boardMessage.date, "collapsed");
-
-		if(!uuid){
-			await newBoardMessage({ ..._boardMessage, member: _boardMessage.member?.uuid || undefined });
-			await modalController.dismiss(null, "added");
-	
-			return;
-		}
-
-		await updateBoardMessage(uuid, {
-			..._boardMessage,
-			member: _boardMessage.member?.uuid || undefined
+	async function createPoll(){
+		boardMessage.value.poll = await newPoll({
+			multipleChoice: false,
 		});
 
+		// Populate poll with default entries
+		await createPollEntry(
+			i18next.t("messageBoard:polls.defaultPollValues.yes")
+		);
+		await createPollEntry(
+			i18next.t("messageBoard:polls.defaultPollValues.no")
+		);
+		await createPollEntry(
+			i18next.t("messageBoard:polls.defaultPollValues.veto")
+		);
+		await createPollEntry(
+			i18next.t("messageBoard:polls.defaultPollValues.abstain")
+		);
+	}
+
+	async function removePoll() {
+		if(boardMessage.value.poll){
+			await deletePoll(boardMessage.value.poll.id);
+			boardMessage.value.poll = undefined;
+		}
+	}
+
+	async function createPollEntry(choice?: string){
+		if(boardMessage.value.poll){
+			const pollEntry = await newPollEntry({
+				poll: boardMessage.value.poll,
+				choice: choice || ""
+			});
+			if(pollEntry)
+				pollEntries.value.push(pollEntry);
+		}
+	}
+
+	async function removePollEntry(entry: PollEntry){
+		await deletePollEntry(entry.id);
+		pollEntries.value = pollEntries.value.filter(x => x !== entry);
+	}
+
+	async function getPollEntries(){
+		if(boardMessage.value.poll)
+			pollEntries.value = (await Array.fromAsync(getPollEntriesForPoll(boardMessage.value.poll.id)));
+	}
+
+	async function save(){
 		try{
-			await modalController.dismiss(null, "modified");
-		}catch(_){ /* empty */ }
-		// catch an error because the type might get changed, causing the parent to be removed from DOM
-		// however it's safe for us to ignore
+			if(anythingChanged){
+				if(boardMessage.value.poll){
+					await updatePollTable(boardMessage.value.poll?.id, boardMessage.value.poll);
+					for(const entry of pollEntries.value)
+						await updatePollEntryTable(entry.id, entry);
+				}
+
+				await saveBoardMessage(toRaw(boardMessage.value));
+			}
+
+			anythingChanged = false;
+			await modalController.dismiss();
+		}catch(_){
+			// error here eventually
+		}
 	}
 
 	async function removeBoardMessage(){
-		if(await promptOkCancel(
+		if(!await promptOkCancel(
 			i18next.t("messageBoard:edit.delete.title"),
 			i18next.t("messageBoard:edit.delete.confirm")
-		)){
-			await deleteBoardMessage(boardMessage.value.uuid!);
-			try{
-				await modalController.dismiss(null, "deleted");
-			}catch(_){ /* empty */ }
+		)) return;
+
+		try{
+			await removePoll();
+			await deleteBoardMessage(boardMessage.value.id!);
+			await modalController.dismiss();
+		}catch(_){
+			// error here eventually
 		}
 	}
+
+	onBeforeMount(async () => {
+		await getPollEntries();
+	});
 </script>
 
 <template>
@@ -135,7 +157,7 @@
 			<IonList>
 				<IonItem button :detail="!boardMessage.member" @click="memberSelectModal?.$el.present()">
 					<template v-if="boardMessage.member">
-						<MemberAvatar slot="start" :member="boardMessage.member" />
+						<MemberAvatar slot="start" :member="boardMessage.member as Member" />
 						<IonLabel>
 							<h2>{{ boardMessage.member.name }}</h2>
 							<p>{{ $t("messageBoard:edit.member") }}</p>
@@ -203,7 +225,7 @@
 					</IonToggle>
 				</IonItem>
 
-				<IonItem v-if="!boardMessage.poll" button @click="() => { boardMessage.poll = { multipleChoice: false, entries: [] } }">
+				<IonItem v-if="!boardMessage.poll" button @click="createPoll">
 					<IonIcon
 						slot="start"
 						:icon="chartMD"
@@ -214,14 +236,14 @@
 					</IonLabel>
 				</IonItem>
 
-				<template v-if="boardMessage.poll">
+				<template v-else>
 					<IonItem>
 						<IonLabel>
 							<p>{{ $t("messageBoard:edit.pollEditWarning") }}</p>
 						</IonLabel>
 					</IonItem>
 
-					<IonItem button :detail="false" @click="() => { boardMessage.poll = undefined }">
+					<IonItem button :detail="false" @click="removePoll">
 						<IonIcon
 							slot="start"
 							:icon="trashMD"
@@ -241,7 +263,7 @@
 						</IonToggle>
 					</IonItem>
 
-					<IonItem v-for="entry in boardMessage.poll.entries" :key="boardMessage.poll.entries.indexOf(entry)">
+					<IonItem v-for="entry in pollEntries" :key="entry.id">
 						<IonInput
 							v-model="entry.choice"
 							:label="$t('messageBoard:edit.pollChoice')"
@@ -252,7 +274,7 @@
 							shape="round"
 							fill="outline"
 							size="default"
-							@click="() => boardMessage.poll!.entries.splice(boardMessage.poll!.entries.indexOf(entry), 1)"
+							@click="removePollEntry(entry)"
 						>
 							<IonIcon
 								slot="icon-only"
@@ -262,7 +284,7 @@
 						</IonButton>
 					</IonItem>
 
-					<IonItem button @click="() => { boardMessage.poll!.entries.push({ votes: [], choice: '' }) }">
+					<IonItem button @click="createPollEntry()">
 						<IonIcon
 							slot="start"
 							:icon="addMD"
@@ -275,7 +297,7 @@
 				</template>
 
 				<IonItem
-					v-if="boardMessage.uuid"
+					v-if="boardMessage.id"
 					button
 					:detail="false"
 					@click="removeBoardMessage"
@@ -306,7 +328,7 @@
 				:discard-on-select="true"
 				:hide-checkboxes="true"
 				:always-emit="true"
-				:model-value="boardMessage.member ? [boardMessage.member] : []"
+				:model-value="boardMessage.member ? [boardMessage.member as Member] : []"
 				@update:model-value="(e) => { if(e[0]) boardMessage.member = e[0] }"
 			/>
 
@@ -317,7 +339,7 @@
 				:hide-checkboxes="true"
 				:always-emit="true"
 				:model-value="[]"
-				@update:model-value="(e) => { if(e[0]) boardMessage.body = `${boardMessage.body || ''}@<m:${e[0].uuid}>` }"
+				@update:model-value="(e) => { if(e[0]) boardMessage.body = `${boardMessage.body || ''}@<m:${e[0].id}>` }"
 			/>
 
 		</IonContent>

@@ -4,29 +4,37 @@
 		IonIcon,
 	} from "@ionic/vue";
 
-	import { Member } from "../../lib/db/entities";
+	import { Member, SQLFile } from "../../lib/db/entities";
 	import { getObjectURL } from "../../lib/util/blob";
-	import { PartialBy } from "../../lib/types";
 
 	import accountCircle from "@material-symbols/svg-600/outlined/account_circle.svg";
 	import { isReactive, ref, watch, WatchStopHandle } from "vue";
 
 	const props = defineProps<{
-		member: PartialBy<Member, "uuid" | "dateCreated">,
+		member: Member,
 	}>();
 
 	const avatarColor = ref("var(--ion-color-primary)");
+	const avatarUri = ref();
 
 	function updateColor() {
 		avatarColor.value = props.member.color?.slice(0, 7) ?? "var(--ion-color-primary)";
 	}
 
+	async function updateAvatarUri() {
+		if(props.member.image) avatarUri.value = await getObjectURL(props.member?.image as SQLFile);
+	}
+
 	let watchHandle: WatchStopHandle | undefined;
-	watch(props, () => {
+	watch(props, async () => {
 		updateColor();
-		if(isReactive(props.member))
-			watchHandle = watch(props.member, updateColor);
-		else
+		await updateAvatarUri();
+		if(isReactive(props.member)){
+			watchHandle = watch(props.member, async () => {
+				updateColor();
+				await updateAvatarUri();
+			});
+		} else
 			if(watchHandle){
 				watchHandle();
 				watchHandle = undefined;
@@ -36,7 +44,7 @@
 
 <template>
 	<IonAvatar class="with-outline">
-		<img v-if="props.member.image" aria-hidden="true" :src="getObjectURL(props.member.image)" />
+		<img v-if="avatarUri" aria-hidden="true" :src="avatarUri" />
 		<IonIcon v-else :icon="accountCircle" />
 	</IonAvatar>
 </template>

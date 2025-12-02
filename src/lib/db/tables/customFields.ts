@@ -1,7 +1,8 @@
 import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUID, UUIDable, CustomField } from "../entities";
-import { filterCustomField } from "../../search";
+import { filterCustomField } from "../search";
+import { PartialBy } from "../../types";
 
 export function getCustomFields(){
 	return db.customFields.iterate();
@@ -16,30 +17,34 @@ export async function* getFilteredCustomFields(query: string){
 
 export async function newCustomField(customField: Omit<CustomField, keyof UUIDable>) {
 	try{
-		const uuid = window.crypto.randomUUID();
-		await db.customFields.add(uuid, {
+		const id = window.crypto.randomUUID();
+		await db.customFields.add(id, {
 			...customField,
-			uuid
+			id
 		});
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "customFields",
 			event: "new",
-			uuid,
+			id,
 			newData: customField
 		}));
-		return uuid;
+		return {
+			...customField,
+			id
+		};
 	}catch(_error){
-		return false;
+		return;
 	}
 }
 
-export async function deleteCustomField(uuid: UUID) {
+export async function deleteCustomField(customField: CustomField | UUID) {
+	const id = typeof customField === "string" ? customField : customField.id;
 	try {
-		await db.customFields.delete(uuid);
+		await db.customFields.delete(id);
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "customFields",
 			event: "deleted",
-			uuid,
+			id,
 			delta: {}
 		}));
 		return true;
@@ -48,14 +53,14 @@ export async function deleteCustomField(uuid: UUID) {
 	}
 }
 
-export async function updateCustomField(uuid: UUID, newContent: Partial<CustomField>) {
+export async function updateCustomField(id: UUID, newContent: Partial<CustomField>) {
 	try{
-		const updated = await db.customFields.update(uuid, newContent);
+		const updated = await db.customFields.update(id, newContent);
 		if(updated) {
 			DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 				table: "customFields",
 				event: "modified",
-				uuid,
+				id,
 				delta: newContent,
 				oldData: updated.oldData,
 				newData: updated.newData
@@ -66,4 +71,12 @@ export async function updateCustomField(uuid: UUID, newContent: Partial<CustomFi
 	}catch(_error){
 		return false;
 	}
+}
+
+export async function saveCustomField(customField: PartialBy<CustomField, keyof UUIDable>){
+	if (customField.id){
+		await updateCustomField(customField.id, { ...customField });
+		return customField as CustomField;
+	}
+	return await newCustomField({ ...customField });
 }

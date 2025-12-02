@@ -2,7 +2,8 @@ import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUIDable, System, UUID } from "../entities";
 import { nilUid } from "../../util/consts";
-import { filterSystem } from "../../search";
+import { filterSystem } from "../search";
+import { PartialBy } from "../../types";
 
 export function getSystems(){
 	return db.systems.iterate();
@@ -17,36 +18,40 @@ export async function* getFilteredSystems(query: string){
 
 export async function newSystem(system: Omit<System, keyof UUIDable>){
 	try{
-		const uuid = window.crypto.randomUUID();
-		await db.systems.add(uuid, {
+		const id = window.crypto.randomUUID();
+		await db.systems.add(id, {
 			...system,
-			uuid
+			id
 		});
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "systems",
 			event: "new",
-			uuid,
+			id,
 			newData: system
 		}));
-		return uuid;
+		return {
+			...system,
+			id
+		};
 	}catch(_error){
-		return false;
+		return;
 	}
 }
 
-export async function getSystem(uuid: UUID){
-	if(uuid === nilUid) return undefined;
-	return await db.systems.get(uuid);
+export async function getSystem(id: UUID){
+	if(id === nilUid) return undefined;
+	return await db.systems.get(id);
 }
 
-export async function deleteSystem(uuid: UUID) {
-	if (uuid === nilUid) return false;
+export async function deleteSystem(system: System | UUID) {
+	const id = typeof system === "string" ? system : system.id;
+	if (id === nilUid) return false;
 	try {
-		await db.systems.delete(uuid);
+		await db.systems.delete(id);
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "systems",
 			event: "deleted",
-			uuid,
+			id,
 			delta: {}
 		}));
 		return true;
@@ -55,14 +60,14 @@ export async function deleteSystem(uuid: UUID) {
 	}
 }
 
-export async function updateSystem(uuid: UUID, system: Partial<System>) {
+export async function updateSystem(id: UUID, system: Partial<System>) {
 	try {
-		const updated = await db.systems.update(uuid, system);
+		const updated = await db.systems.update(id, system);
 		if(updated){
 			DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 				table: "systems",
 				event: "modified",
-				uuid,
+				id,
 				delta: system
 			}));
 			return true;
@@ -71,4 +76,12 @@ export async function updateSystem(uuid: UUID, system: Partial<System>) {
 	} catch (_error) {
 		return false;
 	}
+}
+
+export async function saveSystem(system: PartialBy<System, keyof UUIDable>) {
+	if (system.id){
+		await updateSystem(system.id, { ...system });
+		return system as System;
+	}
+	return await newSystem({ ...system });
 }

@@ -19,34 +19,28 @@
 
 	import { Member } from "../../lib/db/entities";
 	import { newMember } from "../../lib/db/tables/members";
-	import { getFiles, slideAnimation } from "../../lib/util/misc";
-	import { resizeImage } from "../../lib/util/image";
+	import { slideAnimation } from "../../lib/util/misc";
 	import { ref, toRaw } from "vue";
 	import { PartialBy } from "../../lib/types";
 	import MemberAvatar from "../../components/member/MemberAvatar.vue";
 	import { appConfig } from "../../lib/config";
+	import { uploadImage } from "../../lib/db/tables/files";
 
 	const router = useIonRouter();
 
-	const emptyMember: PartialBy<Member, "uuid" | "dateCreated"> = {
+	const emptyMember: PartialBy<Member, "id" | "dateCreated"> = {
 		name: "",
-		system: appConfig.defaultSystem,
+		system: {
+			id: appConfig.defaultSystem,
+		},
 		isArchived: false,
 		isCustomFront: false,
-		isPinned: false,
-		tags: []
+		isPinned: false
 	};
 	const member = ref({ ...emptyMember });
 
 	async function modifyPicture(){
-		const files = await getFiles();
-		if(files.length){
-			if(files[0].type === "image/gif"){
-				member.value.image = files[0];
-				return;
-			}
-			member.value.image = await resizeImage(files[0]);
-		}
+		member.value.image = await uploadImage();
 	}
 
 	function deletePicture(){
@@ -69,7 +63,7 @@
 			<div class="container">
 				<h1> {{ $t('onboarding:memberInfo.header') }}</h1>
 				<div class="avatar-container">
-					<MemberAvatar :member />
+					<MemberAvatar :member="member as Member" />
 					<div class="edit-buttons">
 						<IonButton shape="round" @click="modifyPicture">
 							<IonIcon slot="icon-only" :icon="pencilMD" />

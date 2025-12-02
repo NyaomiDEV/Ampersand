@@ -45,13 +45,12 @@ import "./styles/override.css";
 import { updateMaterialColors } from "./lib/theme";
 import "./lib/theme/style.css";
 
-// Other imports from frontend library
-import { clearTempDir } from "./lib/native/cache";
 import { slideAnimation } from "./lib/util/misc";
-import { dismissSplash, getWebkitVersion, runDbMigrations } from "./lib/native/plugin";
+import { dismissSplash, getWebkitVersion } from "./lib/native/plugin";
 import { platform } from "@tauri-apps/plugin-os";
 import { onBackButtonPress } from "@tauri-apps/api/app";
 import { maybeExit } from "./lib/util/backbutton";
+import { invoke } from "@tauri-apps/api/core";
 
 async function setupAmpersand() {
 	const app = createApp(App).use(IonicVue, {
@@ -62,14 +61,15 @@ async function setupAmpersand() {
 
 	window.Ionic.config.set("navAnimation", slideAnimation);
 
-	const maybeSystem = db.systems.index[0]?.uuid || undefined;
+	await invoke<void>("db_run_migrations");
 
-	if (!db.systems.index.map(x => x.uuid).includes(appConfig.defaultSystem)) {
+	const systems = await Array.fromAsync(db.systems.iterate());
+	const maybeSystem = systems[0].id || undefined;
+
+	if (systems.map(x => x.id).includes(appConfig.defaultSystem)) { 
 		if (maybeSystem)
 			appConfig.defaultSystem = maybeSystem;
 	}
-
-	await runDbMigrations();
 
 	router.beforeEach((to) => {
 		// lock flow
@@ -84,7 +84,7 @@ async function setupAmpersand() {
 		}
 
 		// first time???
-		if (!db.systems.index.length){
+		if (!systems.length){
 			if (to.path.startsWith("/onboarding/") || to.path.startsWith("/options/accessibility"))
 				return true;
 
@@ -108,8 +108,6 @@ async function setupAmpersand() {
 		// assume normal navigation
 		return true;
 	});
-
-	await clearTempDir();
 
 	const darkMode = window.matchMedia("(prefers-color-scheme: dark)");
 	await updateDarkMode();

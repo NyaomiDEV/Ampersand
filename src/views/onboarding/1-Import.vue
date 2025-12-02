@@ -3,10 +3,7 @@
 	import { ref } from "vue";
 	import Spinner from "../../components/Spinner.vue";
 	import { importDatabaseFromBinary } from "../../lib/db/ioutils";
-	import { getFiles, promptYesNo, slideAnimation, toast } from "../../lib/util/misc";
-	import { importPluralKit } from "../../lib/db/external/pluralkit";
-	import { importTupperBox } from "../../lib/db/external/tupperbox";
-	import { importSimplyPlural } from "../../lib/db/external/simplyplural";
+	import { promptYesNo, slideAnimation, toast } from "../../lib/util/misc";
 	import { useTranslation } from "i18next-vue";
 	import { getTables } from "../../lib/db/tables";
 	import { resetConfig, securityConfig } from "../../lib/config";
@@ -16,6 +13,8 @@
 	const i18next = useTranslation();
 	const router = useIonRouter();
 
+	// @ts-expect-error will be used after some time
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	async function promptRemoteConnection(){
 		if(await promptYesNo(
 			i18next.t("onboarding:importScreen.allowRemoteContent.header"),
@@ -27,12 +26,9 @@
 	}
 
 	async function importFromPreviousInstallation() {
-		const files = await getFiles(undefined, false);
 		try{
-			if (!files.length) throw new Error("no files specified");
 			loading.value = true;
-			const result = await importDatabaseFromBinary(new Uint8Array(await files[0].arrayBuffer())).dbPromise;
-			if(!result) throw new Error("errored out");
+			await importDatabaseFromBinary().dbPromise;
 		}catch(_e){
 			resetConfig();
 			await Promise.all(Object.values(getTables()).map(x => x.clear()));
@@ -43,9 +39,10 @@
 		router.replace("/onboarding/end/", slideAnimation);
 	}
 
+	/*
 	async function importFromSimplyPlural() {
 		await promptRemoteConnection();
-		const files = await getFiles(undefined, false);
+		const files = await showFileModal(undefined, false);
 		try{
 			if (!files.length) throw new Error("no files specified");
 			loading.value = true;
@@ -63,7 +60,7 @@
 
 	async function importFromPluralKit() {
 		await promptRemoteConnection();
-		const files = await getFiles(undefined, false);
+		const files = await showFileModal(undefined, false);
 		try{
 			if (!files.length) throw new Error("no files specified");
 			loading.value = true;
@@ -81,7 +78,7 @@
 
 	async function importFromTupperbox() {
 		await promptRemoteConnection();
-		const files = await getFiles(undefined, false);
+		const files = await showFileModal(undefined, false);
 		try{
 			if (!files.length) throw new Error("no files specified");
 			loading.value = true;
@@ -96,6 +93,7 @@
 		}
 		router.replace("/onboarding/end/", slideAnimation);
 	}
+	*/
 </script>
 
 <template>
@@ -109,6 +107,7 @@
 						{{ $t("onboarding:importScreen.prevInstall") }}
 					</IonButton>
 
+					<!--
 					<IonButton class="tonal" @click="importFromSimplyPlural">
 						{{ $t("onboarding:importScreen.simplyPlural") }}
 					</IonButton>
@@ -120,6 +119,7 @@
 					<IonButton class="tonal" @click="importFromTupperbox">
 						{{ $t("onboarding:importScreen.tupperbox") }}
 					</IonButton>
+					-->
 		
 					<IonButton fill="clear" @click="router.replace('/onboarding/system/', slideAnimation)">
 						{{ $t("onboarding:importScreen.startFromScratch") }}

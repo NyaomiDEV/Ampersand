@@ -17,7 +17,7 @@
 		useIonRouter,
 		IonBackButton,
 	} from "@ionic/vue";
-	import { onBeforeMount, onUnmounted, reactive, ref, shallowRef, useTemplateRef, watch } from "vue";
+	import { onBeforeMount, onUnmounted, reactive, ref, shallowReactive, shallowRef, useTemplateRef, watch } from "vue";
 	import { accessibilityConfig, appConfig } from "../lib/config/index.ts";
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
@@ -32,7 +32,7 @@
 	import archivedMD from "@material-symbols/svg-600/outlined/archive.svg";
 
 	import { getFilteredMembers } from "../lib/db/tables/members.ts";
-	import type { Member, FrontingEntry } from "../lib/db/entities";
+	import type { Member, FrontingEntry, SQLFile } from "../lib/db/entities";
 	import { getCurrentFrontEntryForMember, newFrontingEntry, removeFronter, sendFrontingChangedEvent, setMainFronter, setSoleFronter } from "../lib/db/tables/frontingEntries.ts";
 	import MemberAvatar from "../components/member/MemberAvatar.vue";
 	import MemberLabel from "../components/member/MemberLabel.vue";
@@ -53,6 +53,7 @@
 	});
 
 	const members = shallowRef<Member[]>();
+	const memberStyles = shallowReactive<Map<Member, Record<string, string>>>(new Map());
 
 	watch(search, async () => {
 		await updateMembers();
@@ -108,11 +109,14 @@
 
 				return a.name.localeCompare(b.name);
 			});
+		memberStyles.clear();
+		for(const member of members.value)
+			memberStyles.set(member, await getStyle(member));
 	}
 
 	async function addFrontingEntry(member: Member) {
 		await newFrontingEntry({
-			member: member.uuid,
+			member,
 			startTime: new Date(),
 			isMainFronter: false,
 			isLocked: false
@@ -152,7 +156,7 @@
 		list.value?.$el.closeSlidingItems();
 	}
 
-	function getStyle(member: Member){
+	async function getStyle(member: Member){
 		const style: Record<string, string> = {};
 
 		const entry = frontingEntries.get(member);
@@ -164,7 +168,7 @@
 		}
 
 		if(member.cover)
-			style["--data-cover"] = `url(${getObjectURL(member.cover)})`;
+			style["--data-cover"] = `url(${await getObjectURL(member.cover as SQLFile)})`;
 
 		return style;
 	}
@@ -190,7 +194,7 @@
 		if(!timeoutHandler) return;
 		clearTimeout(timeoutHandler);
 		longPressHandlers.delete(member);
-		if(!dragged) router.push(`/members/edit?uuid=${member.uuid}`);
+		if(!dragged) router.push(`/members/edit?uuid=${member.id}`);
 	}
 
 	function numberOfFronters() {
@@ -224,11 +228,11 @@
 		<IonContent v-else>
 			<IonList ref="list" :class="{ compact: accessibilityConfig.disableMemberCoversInList }">
 
-				<IonItemSliding v-for="member in members" :key="member.uuid" @ion-drag="endPress(member, true)">
+				<IonItemSliding v-for="member in members" :key="member.id" @ion-drag="endPress(member, true)">
 					<IonItem
 						button
 						:class="{ archived: member.isArchived }"
-						:style="getStyle(member)"
+						:style="memberStyles.get(member)"
 						@pointerdown="startPress(member)"
 						@pointerup="endPress(member, false)"
 						@pointercancel="endPress(member, true)"

@@ -20,7 +20,7 @@
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
 
 	import { CustomField } from "../lib/db/entities";
-	import { newCustomField, updateCustomField, deleteCustomField } from "../lib/db/tables/customFields";
+	import { deleteCustomField, saveCustomField } from "../lib/db/tables/customFields";
 	import { ref, toRaw } from "vue";
 
 	import { PartialBy } from "../lib/types";
@@ -31,10 +31,10 @@
 	const i18next = useTranslation();
 
 	const props = defineProps<{
-		customField?: PartialBy<CustomField, "uuid">
+		customField?: PartialBy<CustomField, "id">
 	}>();
 
-	const emptyCustomField: PartialBy<CustomField, "uuid"> = {
+	const emptyCustomField: PartialBy<CustomField, "id"> = {
 		name: "",
 		priority: 1,
 		default: false
@@ -43,35 +43,25 @@
 	const customField = ref({ ...(props.customField || emptyCustomField) });
 
 	async function save(){
-		const uuid = customField.value?.uuid;
-		const _customField = toRaw(customField.value);
-
-		if(!uuid) {
-			await newCustomField({ ..._customField });
-
-			await modalController.dismiss(null, "added");
-
-			return;
-		}
-
-		await updateCustomField(uuid, { ..._customField });
-
 		try{
-			await modalController.dismiss(null, "modified");
-		}catch(_){ /* empty */ }
-		// catch an error because the type might get changed, causing the parent to be removed from DOM
-		// however it's safe for us to ignore
+			await saveCustomField(toRaw(customField.value));
+			await modalController.dismiss();
+		}catch(_){
+			// error handling here
+		}
 	}
 
 	async function removeCustomField(){
-		if (await promptOkCancel(
+		if (!await promptOkCancel(
 			i18next.t("customFields:edit.delete.title"),
 			i18next.t("customFields:edit.delete.confirm")
-		)){
-			await deleteCustomField(customField.value.uuid!);
-			try{
-				await modalController.dismiss(undefined, "deleted");
-			}catch(_){ /* empty */ }
+		)) return;
+
+		try{
+			await deleteCustomField(customField.value.id!);
+			await modalController.dismiss();
+		}catch(_){
+			// handle error here
 		}
 	}
 </script>
@@ -80,7 +70,7 @@
 	<IonModal class="custom-field-edit-modal" :breakpoints="[0,1]" initial-breakpoint="1">
 		<IonHeader>
 			<IonToolbar>
-				<IonTitle>{{ !customField.uuid ? $t("customFields:edit.headerAdd") : $t("customFields:edit.header") }}</IonTitle>
+				<IonTitle>{{ !customField.id ? $t("customFields:edit.headerAdd") : $t("customFields:edit.header") }}</IonTitle>
 			</IonToolbar>
 		</IonHeader>
 
@@ -102,7 +92,7 @@
 					</IonToggle>
 				</IonItem>
 				<IonItem
-					v-if="customField.uuid"
+					v-if="customField.id"
 					button
 					:detail="false"
 					@click="removeCustomField"

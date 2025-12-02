@@ -2,9 +2,8 @@
 	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonAvatar, IonButton, IonIcon, IonInput, IonFab, IonFabButton, IonItem, IonLabel, useIonRouter, IonTextarea } from "@ionic/vue";
 	import { onBeforeMount, ref, toRaw, watch } from "vue";
 	import { getObjectURL } from "../../lib/util/blob";
-	import { getFiles, promptOkCancel, toast } from "../../lib/util/misc";
-	import { resizeImage } from "../../lib/util/image";
-	import { deleteSystem, getSystem, newSystem, updateSystem } from "../../lib/db/tables/system";
+	import { promptOkCancel, toast } from "../../lib/util/misc";
+	import { deleteSystem, getSystem, saveSystem } from "../../lib/db/tables/system";
 	import { getMembers } from "../../lib/db/tables/members";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 
@@ -16,9 +15,10 @@
 	import { appConfig } from "../../lib/config";
 	import { useRoute } from "vue-router";
 	import { PartialBy } from "../../lib/types";
-	import { System } from "../../lib/db/entities";
+	import { SQLFile, System, UUID } from "../../lib/db/entities";
 	import { useTranslation } from "i18next-vue";
 	import Markdown from "../../components/Markdown.vue";
+	import { uploadImage } from "../../lib/db/tables/files";
 
 	const i18next = useTranslation();
 
@@ -27,10 +27,11 @@
 
 	const loading = ref(false);
 
-	const emptySystem: PartialBy<System, "uuid"> = {
+	const emptySystem: PartialBy<System, "id"> = {
 		name: ""
 	};
 	const system = ref({ ...emptySystem });
+	const systemAvatarUri = ref();
 
 	const membersShowed = ref(false);
 	const memberCount = ref(0);
@@ -41,63 +42,50 @@
 	const canEdit = ref(true);
 	const isEditing = ref(false);
 
+	async function modifyPicture(){
+		system.value.image = await uploadImage();
+		await updateAvatarUri();
+	}
+
+	function deletePicture(){
+		if(system.value.image)
+			delete system.value.image;
+	}
+
+	async function updateAvatarUri(){
+		if(system.value.image)
+			systemAvatarUri.value = await getObjectURL(system.value.image as SQLFile);
+	}
+
+	async function removeSystem() {
+		if(!await promptOkCancel(
+			i18next.t("systems:edit.delete.title"),
+			i18next.t("systems:edit.delete.confirm")
+		)) return;
+		await deleteSystem(system.value.id!);
+		router.back();
+	}
+
+	async function copyIdToClipboard(){
+		if(!system.value.id) return;
+
+		try{
+			await window.navigator.clipboard.writeText(`@<s:${system.value.id}>`);
+			await toast(i18next.t("systems:edit.systemIDcopiedToClipboard"));
+		}catch(_e){
+			return;
+		}
+	}
+
 	async function toggleEditing(){
 		if(!isEditing.value){
 			isEditing.value = true;
 			return;
 		}
 
-		const uuid = system.value.uuid;
-		const _system = toRaw(system.value);
-
-		if(!uuid){
-			await newSystem({
-				..._system
-			});
-			router.back();
-
-			return;
-		}
-
-		await updateSystem(uuid, _system);
+		await saveSystem(toRaw(system.value));
 
 		isEditing.value = false;
-	}
-
-	async function modifyPicture(){
-		const files = await getFiles();
-		if(files.length){
-			if(files[0].type === "image/gif"){
-				system.value.image = files[0];
-				return;
-			}
-			system.value.image = await resizeImage(files[0]);	
-		}
-	}
-
-	function deletePicture(){
-		system.value.image = undefined;
-	}
-
-	async function removeSystem() {
-		if(await promptOkCancel(
-			i18next.t("systems:edit.delete.title"),
-			i18next.t("systems:edit.delete.confirm")
-		)){
-			await deleteSystem(system.value.uuid!);
-			router.back();
-		}
-	}
-
-	async function copyIdToClipboard(){
-		if(system.value.uuid){
-			try{
-				await window.navigator.clipboard.writeText(`@<s:${system.value.uuid}>`);
-				await toast(i18next.t("systems:edit.systemIDcopiedToClipboard"));
-			}catch(_e){
-				return;
-			}
-		}
 	}
 
 	async function updateRoute(){
@@ -106,9 +94,11 @@
 		loading.value = true;
 
 		if(route.query.uuid){
-			const _system = await getSystem(route.query.uuid as string);
+			const _system = await getSystem(route.query.uuid as UUID);
 			if(_system) system.value = _system;
 		} else system.value = { ...emptySystem };
+		
+		await updateAvatarUri();
 
 		let _memberCount = 0;
 		let _archivedMemberCount = 0;
@@ -116,7 +106,7 @@
 		let _archivedCustomFrontCount = 0;
 
 		for await(const member of getMembers()){
-			if(member.system !== system.value.uuid)
+			if(member.system.id !== system.value.id)
 				continue;
 
 			if(!member.isCustomFront){
@@ -143,7 +133,7 @@
 			canEdit.value = true;
 		
 		// are we editing?
-		isEditing.value = !system.value.uuid;
+		isEditing.value = !system.value.id;
 
 		loading.value = false;
 	}
@@ -164,7 +154,7 @@
 				<IonTitle>
 					{{ !isEditing
 						? $t("systems:edit.header")
-						: !system.uuid ? $t("systems:edit.headerAdd") : $t("systems:edit.headerEdit")
+						: !system.id ? $t("systems:edit.headerAdd") : $t("systems:edit.headerEdit")
 					}}
 				</IonTitle>
 			</IonToolbar>
@@ -174,7 +164,7 @@
 		<IonContent v-else>
 			<div class="avatar-container">
 				<IonAvatar>
-					<img v-if="system?.image" aria-hidden="true" :src="getObjectURL(system.image)" />
+					<img v-if="systemAvatarUri" aria-hidden="true" :src="systemAvatarUri" />
 					<IonIcon v-else :icon="accountCircle" />
 				</IonAvatar>
 
@@ -242,7 +232,7 @@
 				</IonItem>
 
 				<IonItem
-					v-if="system.uuid && appConfig.defaultSystem !== system.uuid"
+					v-if="system.id && appConfig.defaultSystem !== system.id"
 					button
 					:detail="false"
 					@click="removeSystem"
@@ -260,13 +250,13 @@
 				</IonItem>
 
 				<IonItem
-					v-if="system.uuid"
+					v-if="system.id"
 					:detail="false"
 					button
 					@click="copyIdToClipboard"
 				>
 					<IonLabel>
-						<p>{{ $t("systems:edit.systemID", { systemID: system.uuid }) }}</p>
+						<p>{{ $t("systems:edit.systemID", { systemID: system.id }) }}</p>
 					</IonLabel>
 				</IonItem>
 			</IonList>

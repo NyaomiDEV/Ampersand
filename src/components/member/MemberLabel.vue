@@ -3,27 +3,27 @@
 		IonLabel,
 	} from "@ionic/vue";
 
-	import { Member, Tag, System } from "../../lib/db/entities";
+	import { Member, MemberTag, System, Tag } from "../../lib/db/entities";
 	import TagChip from "../tag/TagChip.vue";
 	import { isReactive, onBeforeMount, shallowRef, watch, WatchStopHandle } from "vue";
-	import { getTag } from "../../lib/db/tables/tags";
 	import SystemChip from "../SystemChip.vue";
 	import { getSystem } from "../../lib/db/tables/system";
 	import { appConfig } from "../../lib/config";
+	import { getMemberTagsForMember } from "../../lib/db/tables/memberTags";
 
 	const props = defineProps<{
 		member: Member,
 		showTagChips?: boolean
 	}>();
 
-	const system = shallowRef<System>({ name: "", uuid: props.member.system });
-	const tags = shallowRef<Tag[]>();
+	const system = shallowRef<System>({ name: "", ...props.member.system });
+	const tags = shallowRef<MemberTag[]>();
 
 	async function updateTags(){
 		if(props.showTagChips){
-			tags.value = (await Promise.all(props.member.tags.map(async x => await getTag(x))))
-				.filter(x => x!.viewInLists)
-				.sort((a, b) => a!.name.localeCompare(b!.name)) as Tag[];
+			tags.value = (await Array.fromAsync(getMemberTagsForMember(props.member)))
+				.filter(x => x.tag.viewInLists)
+				.sort((a, b) => (a.tag as Tag).name.localeCompare((b.tag as Tag).name));
 		}
 	}
 
@@ -33,11 +33,11 @@
 
 	let watchHandle: WatchStopHandle | undefined;
 	watch(props, async () => {
-		const _sys = await getSystem(props.member.system);
+		const _sys = await getSystem(props.member.system.id);
 		if (_sys) system.value = _sys;
 		await updateTags();
 		if(isReactive(props.member))
-			watchHandle = watch(props.member, updateTags);
+			watchHandle = watch(props.member, async () => await updateTags());
 		else
 			if(watchHandle){
 				watchHandle();
@@ -68,9 +68,9 @@
 			@pointerdown="(e) => e.stopPropagation()"
 			@touchstart="(e) => e.stopPropagation()"
 		>
-			<SystemChip v-if="system.uuid !== appConfig.defaultSystem || appConfig.showDefaultSystemInMemberList" :system />
+			<SystemChip v-if="system.id !== appConfig.defaultSystem || appConfig.showDefaultSystemInMemberList" :system />
 			<div v-if="tags?.length" class="tag-chips">
-				<TagChip v-for="tag in tags" :key="tag.uuid" :tag="tag" />
+				<TagChip v-for="tag in tags" :key="tag.tag.id" :tag="tag.tag as Tag" />
 			</div>
 		</div>
 	</IonLabel>

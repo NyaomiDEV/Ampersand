@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import { Ref } from "vue";
 import { appConfig } from "../config";
 
-export function getFiles(contentType?: string, multiple?: boolean): Promise<File[]> {
+export function showFileModal(contentType?: string, multiple?: boolean): Promise<File[]> {
 	return new Promise(resolve => {
 		const i = document.createElement("input");
 		document.body.appendChild(i);
@@ -33,18 +33,6 @@ export function getFiles(contentType?: string, multiple?: boolean): Promise<File
 
 		i.click();
 	});
-}
-
-export function compressGzip(data: BufferSource) {
-	return new Blob([data])
-		.stream()
-		.pipeThrough<Uint8Array>(new CompressionStream("gzip"));
-}
-
-export function decompressGzip(data: BufferSource) {
-	return new Blob([data])
-		.stream()
-		.pipeThrough<Uint8Array>(new DecompressionStream("gzip"));
 }
 
 export function formatDate(date: Date, withDate?: "collapsed" | "expanded"){

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 	import { IonCard, IonCardContent, IonLabel, IonListHeader, IonIcon, IonButton } from "@ionic/vue";
 	import MemberAvatar from "../member/MemberAvatar.vue";
-	import { h, onBeforeMount, onUnmounted, ref, shallowRef } from "vue";
-	import type { FrontingEntryComplete } from "../../lib/db/entities.d.ts";
+	import { h, onBeforeMount, onUnmounted, ref, shallowReactive, shallowRef } from "vue";
+	import type { FrontingEntry, Member } from "../../lib/db/entities.d.ts";
 	import { getFronting, newFrontingEntry, sendFrontingChangedEvent, updateFrontingEntry } from "../../lib/db/tables/frontingEntries";
 	import { formatWrittenTime } from "../../lib/util/misc";
 	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
@@ -14,8 +14,10 @@
 
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 	import removeFromFrontMD from "@material-symbols/svg-600/outlined/person_remove.svg";
+	import { getPresenceEntriesForFrontEntry } from "../../lib/db/tables/presenceEntries.ts";
 
-	const frontingEntries = shallowRef<FrontingEntryComplete[]>([]);
+	const frontingEntries = shallowRef<FrontingEntry[]>([]);
+	const presences = shallowReactive(new Map<FrontingEntry, [Date | undefined, number | undefined]>());
 
 	const now = ref(new Date());
 
@@ -31,7 +33,7 @@
 			if(a.influencing && !b.influencing) return 1;
 			if(!a.influencing && b.influencing) return -1;
 
-			return a.member.name.localeCompare(b.member.name);
+			return (a.member as Member).name.localeCompare((b.member as Member).name);
 		});
 	}
 
@@ -55,7 +57,7 @@
 		DatabaseEvents.removeEventListener("updated", listener);
 	});
 
-	async function showModal(clickedFrontingEntry: FrontingEntryComplete){
+	async function showModal(clickedFrontingEntry: FrontingEntry){
 		const vnode = h(FrontingEntryEdit, {
 			frontingEntry: clickedFrontingEntry,
 			onDidDismiss: () => removeModal(vnode)
@@ -66,8 +68,8 @@
 		await (modal.el as any).present();
 	}
 
-	async function quickRemoveFronter(clickedFrontingEntry: FrontingEntryComplete){
-		await updateFrontingEntry(clickedFrontingEntry.uuid, {
+	async function quickRemoveFronter(clickedFrontingEntry: FrontingEntry){
+		await updateFrontingEntry(clickedFrontingEntry.id, {
 			endTime: new Date()
 		});
 
@@ -83,7 +85,7 @@
 			modelValue: [],
 			"onUpdate:modelValue": async (members) => {
 				await newFrontingEntry({
-					member: members[0].uuid,
+					member: members[0],
 					startTime: new Date(),
 					isMainFronter: false,
 					isLocked: false
@@ -97,13 +99,20 @@
 		await (modal.el as any).present();
 	}
 
-	function getMostRecentPresence(frontingEntry: FrontingEntryComplete){
-		if(!frontingEntry.presence) return [undefined, undefined];
+	async function getMostRecentPresence(entry: FrontingEntry){
+		const presence = new Map<Date, number>();
+		const presences = await Array.fromAsync(getPresenceEntriesForFrontEntry(entry));
+		for(const _presence of presences)
+			presence.set(_presence.date, _presence.presence);
 
-		const presenceVal = Array.from(frontingEntry.presence.entries());
-
+		const presenceVal = Array.from(presence.entries());
 		return presenceVal.sort((a, b) => a[0].valueOf() - b[0].valueOf()).pop() || [undefined, undefined];
 	}
+
+	onBeforeMount(async () => {
+		for(const entry of frontingEntries.value)
+			presences.set(entry, await getMostRecentPresence(entry));
+	});
 </script>
 
 <template>
@@ -122,10 +131,10 @@
 	<div class="carousel">
 		<IonCard
 			v-for="fronting in frontingEntries"
-			:key="fronting.uuid"
+			:key="fronting.id"
 			button
 			:class="{
-				influenced: frontingEntries.findIndex(x => x.influencing?.uuid === fronting.member.uuid) > 0,
+				influenced: frontingEntries.findIndex(x => x.influencing?.id === fronting.member.id) > 0,
 				outlined: !fronting.isMainFronter,
 				elevated: fronting.isMainFronter,
 				influencing: !!fronting.influencing,
@@ -133,7 +142,7 @@
 			@click="quickDelete ? quickRemoveFronter(fronting) : showModal(fronting)"
 		>
 			<IonCardContent>
-				<MemberAvatar :member="fronting.member" />
+				<MemberAvatar :member="fronting.member as Member" />
 				<IonLabel>
 					<h2>
 						{{ fronting.member.name }}
@@ -148,8 +157,8 @@
 					<p v-if="fronting.customStatus">
 						{{ fronting.customStatus }}
 					</p>
-					<p v-if="fronting.presence">
-						<PresenceRating :rating="getMostRecentPresence(fronting)[1] ?? 0" />
+					<p v-if="presences.has(fronting)">
+						<PresenceRating :rating="presences.get(fronting)?.[1] ?? 0" />
 					</p>
 				</IonLabel>
 			</IonCardContent>
