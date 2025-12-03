@@ -46,6 +46,7 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
 			commands::list_assets
 		])
 		.setup(|app, api: tauri::plugin::PluginApi<R, ()>| {
+			std::fs::create_dir_all(app.path().app_data_dir()?)?;
 			let db_path = app.path().app_data_dir()?.join("db.sqlite");
 			let db = Connection::open(db_path)?;
 
