@@ -27,9 +27,12 @@ export async function newAsset(asset: Omit<Asset, keyof UUIDable>) {
 			id,
 			newData: asset
 		}));
-		return id;
+		return {
+			...asset,
+			id
+		};
 	}catch(_error){
-		return false;
+		return;
 	}
 }
 

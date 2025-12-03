@@ -26,9 +26,12 @@ export async function newPollEntry(pollEntry: Omit<PollEntry, keyof UUIDable>) {
 			id,
 			newData: pollEntry
 		}));
-		return id;
+		return {
+			...pollEntry,
+			id
+		};
 	}catch(_error){
-		return false;
+		return;
 	}
 }
 

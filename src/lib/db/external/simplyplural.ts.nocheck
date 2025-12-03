@@ -95,7 +95,7 @@ function tag(spExport: any){
 			name: spGroup.name,
 			description: spGroup.desc?.length ? spGroup.desc : undefined,
 			color: normalizeSPColor(spGroup.color),
-			type: "member",
+			type: 0,
 			viewInLists: false,
 			id: window.crypto.randomUUID()
 		};

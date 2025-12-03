@@ -4,9 +4,6 @@
 	import Spinner from "../../components/Spinner.vue";
 	import { importDatabaseFromBinary } from "../../lib/db/ioutils";
 	import { getFiles, slideAnimation, toast } from "../../lib/util/misc";
-	import { importPluralKit } from "../../lib/db/external/pluralkit";
-	import { importTupperBox } from "../../lib/db/external/tupperbox";
-	import { importSimplyPlural } from "../../lib/db/external/simplyplural";
 	import { useTranslation } from "i18next-vue";
 	import { getTables } from "../../lib/db/tables";
 	import { resetConfig } from "../../lib/config";
@@ -21,8 +18,7 @@
 		try{
 			if (!files.length) throw new Error("no files specified");
 			loading.value = true;
-			const result = await importDatabaseFromBinary(new Uint8Array(await files[0].arrayBuffer())).dbPromise;
-			if(!result) throw new Error("errored out");
+			await importDatabaseFromBinary().dbPromise;
 		}catch(_e){
 			resetConfig();
 			await Promise.all(Object.values(getTables()).map(x => x.clear()));
@@ -33,6 +29,7 @@
 		router.replace("/onboarding/end/", slideAnimation);
 	}
 
+	/*
 	async function importFromSimplyPlural() {
 		const files = await getFiles(undefined, false);
 		try{
@@ -83,6 +80,7 @@
 		}
 		router.replace("/onboarding/end/", slideAnimation);
 	}
+	*/
 </script>
 
 <template>
@@ -96,6 +94,7 @@
 						{{ $t("onboarding:importScreen.prevInstall") }}
 					</IonButton>
 
+					<!--
 					<IonButton class="tonal" @click="importFromSimplyPlural">
 						{{ $t("onboarding:importScreen.simplyPlural") }}
 					</IonButton>
@@ -107,6 +106,7 @@
 					<IonButton class="tonal" @click="importFromTupperbox">
 						{{ $t("onboarding:importScreen.tupperbox") }}
 					</IonButton>
+					-->
 		
 					<IonButton fill="clear" @click="router.replace('/onboarding/system/', slideAnimation)">
 						{{ $t("onboarding:importScreen.startFromScratch") }}

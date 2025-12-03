@@ -34,7 +34,6 @@
 
 	import { CustomField, Member, Tag } from "../../lib/db/entities";
 	import { newMember, deleteMember, updateMember, defaultMember, getMember } from "../../lib/db/tables/members";
-	import { getTags } from "../../lib/db/tables/tags";
 	import { getFiles, promptOkCancel, toast } from "../../lib/util/misc";
 	import { resizeImage } from "../../lib/util/image";
 	import { getCurrentInstance, onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
@@ -50,6 +49,9 @@
 	import { getCustomFields } from "../../lib/db/tables/customFields";
 	import CustomFieldsSelect from "../../modals/CustomFieldsSelect.vue";
 	import { appConfig } from "../../lib/config";
+	import { deleteMemberTag, getMemberTagsForMember, newMemberTag } from "../../lib/db/tables/memberTags";
+	import { deleteCustomFieldDatum, getCustomFieldDataForMember, newCustomFieldDatum, updateCustomFieldDatum } from "../../lib/db/tables/customFieldData";
+	import { deleteFile, newFile, updateFile } from "../../lib/db/tables/files";
 
 	const i18next = useTranslation();
 
@@ -60,18 +62,21 @@
 
 	const emptyMember: PartialBy<Member, "id" | "dateCreated"> = {
 		name: "",
-		system: appConfig.defaultSystem,
+		system: { // TODO: Make it more elegant and make sure it won't break
+			id: appConfig.defaultSystem,
+			name: ""
+		},
 		isArchived: false,
 		isCustomFront: false,
-		isPinned: false,
-		tags: []
+		isPinned: false
 	};
 	const member = ref({ ...emptyMember });
 
 	const tags = shallowRef<Tag[]>([]);
 	const tagSelectionModal = useTemplateRef("tagSelectionModal");
 
-	const customFields = shallowRef<CustomField[]>([]);
+	const customFields = shallowRef<Map<CustomField, string>>(new Map());
+
 	const customFieldsToShowInEditMode = shallowRef<CustomField[]>([]);
 	const customFieldsToShowInViewMode = shallowRef<CustomField[]>([]);
 	const customFieldsSelectionModal = useTemplateRef("customFieldsSelectionModal");
@@ -86,29 +91,64 @@
 			return;
 		}
 
-		if(member.value.customFields){
-			member.value.customFields.forEach((v, k) => {
-				if(!v.length)
-					member.value.customFields!.delete(k);
-			});
-		}
-
-		customFieldsToShowInViewMode.value = customFields.value.filter(x => (member.value.customFields?.has(x)));
-
-		const uuid = member.value.id;
+		let id = member.value.id;
 		const _member = toRaw(member.value);
+		let isNew = false;
 
-		if(!uuid){
-			await newMember({
+		if(!id){
+			isNew = true;
+			id = (await newMember({
 				..._member,
 				dateCreated: new Date()
-			});
-			router.back();
+			}))?.id;
+		} else
+			await updateMember(id, _member);
 
-			return;
+		if(id){
+			let _tags = toRaw(tags.value);
+			const allMemberTags = await Array.fromAsync(getMemberTagsForMember({ ..._member, id } as Member));
+			for(const memberTag of allMemberTags){
+				const tag = _tags.find(x => x.id === memberTag.tag.id);
+				if(!tag)
+					await deleteMemberTag(memberTag.id);
+				else _tags = _tags.filter(x => x !== tag);
+			}
+			for(const remainingTag of _tags){
+				await newMemberTag({
+					tag: remainingTag,
+					member: { ..._member, id } as Member
+				});
+			}
+
+			let _customFields = Array.from(toRaw(customFields.value).entries());
+			const customFieldData = await Array.fromAsync(getCustomFieldDataForMember({ ..._member, id } as Member));
+			for(const customFieldDatum of customFieldData){
+				const field = _customFields.find(x => x[0].id === customFieldDatum.field.id);
+				if(!field || !field[1].length)
+					await deleteCustomFieldDatum(customFieldDatum.id);
+				else {
+					await updateCustomFieldDatum(customFieldDatum.id, {
+						value: field[1]
+					});
+					_customFields = _customFields.filter(x => x !== field);
+				}
+			}
+
+			for(const remainingField of _customFields){
+				if(remainingField[1].length){
+					await newCustomFieldDatum({
+						value: remainingField[1],
+						member: { ..._member, id } as Member,
+						field: remainingField[0]
+					});
+				}
+			}
 		}
 
-		await updateMember(uuid, _member);
+		if(isNew){
+			router.back();
+			return;
+		}
 
 		isEditing.value = false;
 	}
@@ -116,31 +156,47 @@
 	async function modifyPicture(){
 		const files = await getFiles();
 		if(files.length){
+			let _file: File;
 			if(files[0].type === "image/gif"){
-				member.value.image = files[0];
+				_file = files[0];
 				return;
 			}
-			member.value.image = await resizeImage(files[0]);
+			_file = await resizeImage(files[0]);
+			if(member.value.image)
+				await updateFile(member.value.image.id, undefined, _file.stream());
+			else 
+				member.value.image = await newFile(_file.name, _file.stream());
 		}
 	}
 
-	function deletePicture(){
-		delete member.value.image;
+	async function deletePicture(){
+		if(member.value.image){
+			await deleteFile(member.value.image.id);
+			delete member.value.image;
+		}
 	}
 
 	async function modifyCover(){
 		const files = await getFiles();
 		if(files.length){
+			let _file: File;
 			if(files[0].type === "image/gif"){
-				member.value.cover = files[0];
+				_file = files[0];
 				return;
 			}
-			member.value.cover = await resizeImage(files[0], 1024);
+			_file = await resizeImage(files[0], 1024);
+			if(member.value.cover)
+				await updateFile(member.value.cover.id, undefined, _file.stream());
+			else 
+				member.value.cover = await newFile(_file.name, _file.stream());
 		}
 	}
 
-	function deleteCover(){
-		delete member.value.cover;
+	async function deleteCover(){
+		if(member.value.cover){
+			await deleteFile(member.value.cover.id);
+			delete member.value.cover;
+		}
 	}
 
 	async function removeMember() {
@@ -169,8 +225,7 @@
 
 		loading.value = true;
 
-		tags.value = (await Array.fromAsync(getTags())).filter(x => x.type === "member").sort((a, b) => a.name.localeCompare(b.name));
-		customFields.value = (await Array.fromAsync(getCustomFields())).sort((a, b) => a.priority - b.priority);
+		const allCustomFields = (await Array.fromAsync(getCustomFields())).sort((a, b) => a.priority - b.priority);
 
 		if(route.query.uuid){
 			const _member = await getMember(route.query.uuid as string);
@@ -178,12 +233,20 @@
 			else member.value = defaultMember();
 		} else member.value = { ...emptyMember };
 
-		if(!member.value.customFields)
-			member.value.customFields = new Map();
-		
+		customFieldsToShowInEditMode.value = allCustomFields.filter(x => x.default);
 
-		customFieldsToShowInEditMode.value = customFields.value.filter(x => x.default || (member.value.customFields?.has(x) && member.value.customFields?.get(x)?.length));
-		customFieldsToShowInViewMode.value = customFields.value.filter(x => (member.value.customFields?.has(x)));
+		if(member.value.id){
+			tags.value = (await Array.fromAsync(getMemberTagsForMember(member.value as Member)))
+				.map(x => x.tag)
+				.sort((a, b) => a.name.localeCompare(b.name));
+
+			const customFieldData = (await Array.fromAsync(getCustomFieldDataForMember(member.value as Member)));
+			for(const datum of customFieldData)
+				customFields.value.set(datum.field, datum.value);
+
+			customFieldsToShowInViewMode.value = customFieldData.filter(x => x.value.length).map(x => x.field);
+			customFieldsToShowInEditMode.value = allCustomFields.filter(x => x.default || customFieldData.find(y => y.field.id === x.id)?.value.length);
+		}
 
 		if(route.query.disallowEditing)
 			canEdit.value = false;
@@ -271,9 +334,9 @@
 
 			<div v-if="!isEditing && tags?.length" class="member-tags">
 				<TagChip
-					v-for="tag in member.tags"
+					v-for="tag in tags"
 					:key="tag.id"
-					:tag="tags.find(x => x.id === tag.id)!"
+					:tag
 				/>
 			</div>
 
@@ -288,7 +351,7 @@
 					class="member-custom-field"
 				>
 					<IonLabel>{{ customField.name }}</IonLabel>
-					<Markdown :markdown="member.customFields?.get(customField)!" />
+					<Markdown :markdown="customFields.get(customField) || ''" />
 				</div>
 			</template>
 
@@ -373,8 +436,8 @@
 						auto-grow
 						:label="customField.name"
 						label-placement="floating"
-						:model-value="member.customFields?.get(customField)"
-						@update:model-value="(v) => member.customFields?.set(customField, v)"
+						:model-value="customFields.get(customField)"
+						@update:model-value="(v) => customFields.set(customField, v)"
 					/>
 				</IonItem>
 
@@ -411,9 +474,9 @@
 						{{ $t("members:edit.tags") }}
 						<div v-if="tags?.length" class="member-tags">
 							<TagChip
-								v-for="tag in member.tags"
+								v-for="tag in tags"
 								:key="tag.id"
-								:tag="tags.find(x => x.id === tag.id)!"
+								:tag
 							/>
 						</div>
 					</IonLabel>
@@ -464,8 +527,8 @@
 			<CustomFieldsSelect
 				ref="customFieldsSelectionModal"
 				:model-value="customFieldsToShowInEditMode"
-				@update:model-value="_customFields => {
-					customFieldsToShowInEditMode = customFields.filter(x => {
+				@update:model-value="async _customFields => {
+					customFieldsToShowInEditMode = (await Array.fromAsync(getCustomFields())).filter(x => {
 						return x.default || _customFields.map(y => y.id).includes(x.id)
 					});
 				}"
@@ -473,8 +536,8 @@
 
 			<TagListSelect
 				ref="tagSelectionModal"
-				type="member"
-				:model-value="member.tags"
+				:type="0"
+				:model-value="tags"
 			/>
 		</IonContent>
 	</IonPage>

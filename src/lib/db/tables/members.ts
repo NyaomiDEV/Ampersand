@@ -30,9 +30,12 @@ export async function newMember(member: Omit<Member, keyof UUIDable>) {
 			id,
 			newData: member
 		}));
-		return id;
+		return {
+			...member,
+			id
+		};
 	}catch(_error){
-		return false;
+		return;
 	}
 }
 

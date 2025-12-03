@@ -19,9 +19,12 @@ export async function newPoll(poll: Omit<Poll, keyof UUIDable>) {
 			id,
 			newData: poll
 		}));
-		return id;
+		return {
+			...poll,
+			id
+		};
 	}catch(_error){
-		return false;
+		return;
 	}
 }
 

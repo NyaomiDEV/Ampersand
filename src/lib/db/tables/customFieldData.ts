@@ -1,9 +1,16 @@
 import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
-import { UUID, UUIDable, CustomFieldDatum } from "../entities";
+import { UUID, UUIDable, CustomFieldDatum, Member } from "../entities";
 
 export function getCustomFieldData(){
 	return db.customFieldData.iterate();
+}
+
+export async function* getCustomFieldDataForMember(member: Member){
+	for await(const datum of getCustomFieldData()){
+		if(datum.member.id === member.id)
+			yield datum;
+	}
 }
 
 export async function newCustomFieldDatum(customFieldDatum: Omit<CustomFieldDatum, keyof UUIDable>) {
@@ -19,9 +26,12 @@ export async function newCustomFieldDatum(customFieldDatum: Omit<CustomFieldDatu
 			id,
 			newData: customFieldDatum
 		}));
-		return id;
+		return {
+			...customFieldDatum,
+			id
+		};
 	}catch(_error){
-		return false;
+		return;
 	}
 }
 

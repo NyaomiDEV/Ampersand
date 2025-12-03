@@ -21,9 +21,12 @@ export async function newJournalPost(journalPost: Omit<JournalPost, keyof UUIDab
 			id,
 			newData: journalPost
 		}));
-		return id;
+		return {
+			...journalPost,
+			id
+		};
 	}catch(_error){
-		return false;
+		return;
 	}
 }
 

@@ -22,6 +22,9 @@ DatabaseEvents.addEventListener("updated", (event) => {
 		case "boardMessages":
 			eventName = "boardMessage";
 			break;
+		case "files":
+			eventName = "file";
+			break;
 		case "frontingEntries":
 			eventName = "frontingEntry";
 			break;

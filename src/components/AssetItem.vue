@@ -5,26 +5,29 @@
 	import { PartialBy } from "../lib/types";
 
 	import documentMD from "@material-symbols/svg-600/outlined/draft.svg";
-	import { openFile } from "../lib/native/plugin";
-	import { ref } from "vue";
+	import { openSQLFile } from "../lib/db/tables/files";
+	import { onBeforeMount, ref } from "vue";
 
 	const props = defineProps<{
-		asset: PartialBy<Asset, "id">,
+		asset: PartialBy<Asset, "id" | "file">,
 		routeToEditPage?: boolean,
 		routeToOpenFile?: boolean,
 		showFilenameAndType?: boolean,
 		showThumbnail?: boolean
 	}>();
 
-	function generatePreview(){
-		if(props.asset.file.size){
+	const previewUri = ref();
+
+	async function generatePreview(){
+		if(props.asset.file){
 			const file = props.asset.file;
-			switch(file.type){
-				case "image/png":
-				case "image/jpeg":
-				case "image/gif":
-				case "image/webp":
-					return getObjectURL(file);
+			switch(file.friendlyName.split(".")[1].toLowerCase()){
+				case "png":
+				case "jpeg":
+				case "jpg":
+				case "gif":
+				case "webp":
+					return await getObjectURL(file);
 				default:
 					break;
 			}
@@ -33,8 +36,13 @@
 	}
 
 	async function open(){
-		await openFile(props.asset.file);
+		if(props.asset.file)
+			await openSQLFile(props.asset.file);
 	}
+
+	onBeforeMount(async () => {
+		await generatePreview();
+	});
 </script>
 
 <template>
@@ -44,15 +52,15 @@
 		@click="props.routeToOpenFile ? open() : undefined"
 	>
 		<template v-if="props.showThumbnail">
-			<IonThumbnail v-if="generatePreview()" slot="start">
-				<img :src="getObjectURL(props.asset.file)" />
+			<IonThumbnail v-if="previewUri" slot="start">
+				<img :src="previewUri" />
 			</IonThumbnail>
 			<IonIcon v-else slot="start" :icon="documentMD" />
 		</template>
 		<IonLabel class="nowrap">
 			<template v-if="props.showFilenameAndType">
-				<h2>{{ asset.file.name }}</h2>
-				<p>{{ asset.file.type?.split("/")[1]?.replace(/^x-/, '').toUpperCase() }}</p>
+				<h2>{{ asset.file?.friendlyName }}</h2>
+				<p>{{ asset.file?.friendlyName?.split(".").pop()?.toUpperCase() }}</p>
 			</template>
 			<template v-else>
 				{{ props.asset.friendlyName }}

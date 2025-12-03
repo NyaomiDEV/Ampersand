@@ -23,14 +23,16 @@
 	import chartMD from "@material-symbols/svg-600/outlined/bar_chart.svg";
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
 
-	import { BoardMessage } from "../lib/db/entities";
+	import { BoardMessage, PollEntry } from "../lib/db/entities";
 	import { updateBoardMessage, deleteBoardMessage, newBoardMessage } from "../lib/db/tables/boardMessages";
-	import { ref, toRaw, useTemplateRef } from "vue";
+	import { onBeforeMount, ref, shallowRef, toRaw, useTemplateRef } from "vue";
 	import { PartialBy } from "../lib/types";
 	import MemberAvatar from "../components/member/MemberAvatar.vue";
 	import MemberSelect from "./MemberSelect.vue";
 	import { useTranslation } from "i18next-vue";
 	import { formatDate, promptOkCancel } from "../lib/util/misc";
+	import { getPollEntriesForPoll } from "../lib/db/tables/pollEntries";
+	import { deletePoll, newPoll } from "../lib/db/tables/polls";
 
 	const i18next = useTranslation();
 
@@ -46,40 +48,49 @@
 		isArchived: false
 	};
 	const boardMessage = ref(props.boardMessage || { ...emptyBoardMessage });
-	const pollAtBeginning = structuredClone(toRaw(boardMessage.value.poll));
 
+	const pollEntries = shallowRef<PollEntry[]>();
+	
 	const memberSelectModal = useTemplateRef("memberSelectModal");
 	const memberTagModal = useTemplateRef("memberTagModal");
+
+	async function createPoll(){
+		boardMessage.value.poll = await newPoll({
+			multipleChoice: false,
+		});
+	}
+
+	async function removePoll() {
+		if(boardMessage.value.poll){
+			await deletePoll(boardMessage.value.poll.id);
+			boardMessage.value.poll = undefined;
+		}
+	}
+
+	async function getPollEntries(){
+		if(boardMessage.value.poll)
+			pollEntries.value = (await Array.fromAsync(getPollEntriesForPoll(boardMessage.value.poll)));
+	}
+
+	// TODO: Finish this
 
 	async function save(){
 		const id = boardMessage.value?.id;
 
-		if(boardMessage.value.poll && boardMessage.value.poll.entries.length === 0) {
-			boardMessage.value.poll.entries = [
-				{
-					choice: i18next.t("messageBoard:polls.defaultPollValues.yes"),
-					votes: []
-				},
-				{
-					choice: i18next.t("messageBoard:polls.defaultPollValues.no"),
-					votes: []
-				},
-				{
-					choice: i18next.t("messageBoard:polls.defaultPollValues.veto"),
-					votes: []
-				},
-				{
-					choice: i18next.t("messageBoard:polls.defaultPollValues.abstain"),
-					votes: []
-				}
+		if(boardMessage.value.poll && pollChoices.value.length === 0) {
+			pollChoices.value = [
+				i18next.t("messageBoard:polls.defaultPollValues.yes"),
+				i18next.t("messageBoard:polls.defaultPollValues.no"),
+				i18next.t("messageBoard:polls.defaultPollValues.veto"),
+				i18next.t("messageBoard:polls.defaultPollValues.abstain"),
 			];
 		}
 
 		// Reset the voters if the poll part has changed
 		if(
-			pollAtBeginning && boardMessage.value.poll &&
+			pollChoicesAtBeginning.value && boardMessage.value.poll &&
 			(
-				pollAtBeginning.multipleChoice !== boardMessage.value.poll.multipleChoice ||
+				wasMultipleChoiceAtBeginning !== boardMessage.value.poll.multipleChoice ||
 				pollAtBeginning.entries.map((x, i) => String(i + x.choice)).join("") !==
 				boardMessage.value.poll.entries.map((x, i) => String(i + x.choice)).join("")
 			)
@@ -118,6 +129,10 @@
 			}catch(_){ /* empty */ }
 		}
 	}
+
+	onBeforeMount(async () => {
+		await getPollEntries();
+	});
 </script>
 
 <template>
@@ -202,7 +217,7 @@
 					</IonToggle>
 				</IonItem>
 
-				<IonItem v-if="!boardMessage.poll" button @click="() => { boardMessage.poll = { multipleChoice: false, entries: [] } }">
+				<IonItem v-if="!poll" button @click="createPoll">
 					<IonIcon
 						slot="start"
 						:icon="chartMD"
@@ -213,14 +228,14 @@
 					</IonLabel>
 				</IonItem>
 
-				<template v-if="boardMessage.poll">
+				<template v-else>
 					<IonItem>
 						<IonLabel>
 							<p>{{ $t("messageBoard:edit.pollEditWarning") }}</p>
 						</IonLabel>
 					</IonItem>
 
-					<IonItem button :detail="false" @click="() => { boardMessage.poll = undefined }">
+					<IonItem button :detail="false" @click="removePoll">
 						<IonIcon
 							slot="start"
 							:icon="trashMD"
@@ -233,16 +248,16 @@
 						</IonLabel>
 					</IonItem>
 					<IonItem button :detail="false">
-						<IonToggle v-model="boardMessage.poll.multipleChoice">
+						<IonToggle v-model="poll.multipleChoice">
 							<IonLabel>
 								{{ $t("messageBoard:edit.pollIsMultipleChoice") }}
 							</IonLabel>
 						</IonToggle>
 					</IonItem>
 
-					<IonItem v-for="entry in boardMessage.poll.entries" :key="boardMessage.poll.entries.indexOf(entry)">
+					<IonItem v-for="entry in poll.choices" :key="poll.choices.indexOf(entry)">
 						<IonInput
-							v-model="entry.choice"
+							v-model="entry"
 							fill="outline"
 							:label="$t('messageBoard:edit.pollChoice')"
 							label-placement="floating"
@@ -262,7 +277,7 @@
 						</IonButton>
 					</IonItem>
 
-					<IonItem button @click="() => { boardMessage.poll!.entries.push({ votes: [], choice: '' }) }">
+					<IonItem button @click="() => { pollChoices.push('') }">
 						<IonIcon
 							slot="start"
 							:icon="addMD"

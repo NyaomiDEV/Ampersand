@@ -5,11 +5,12 @@
 	import TagChip from "./tag/TagChip.vue";
 	import { JournalPost, Tag } from "../lib/db/entities";
 	import { formatDate } from "../lib/util/misc";
-	import { isReactive, onBeforeMount, shallowRef, watch, WatchStopHandle } from "vue";
+	import { isReactive, onBeforeMount, ref, shallowRef, watch, WatchStopHandle } from "vue";
 	import { getObjectURL } from "../lib/util/blob";
 	import { getJournalPostTagsForPost } from "../lib/db/tables/journalPostTags";
 
 	const tags = shallowRef<Tag[]>();
+	const coverUri = ref();
 
 	const props = defineProps<{
 		post: JournalPost
@@ -19,6 +20,11 @@
 		tags.value = (await Array.fromAsync(getJournalPostTagsForPost(props.post))).map(x => x.tag).filter(x => x.viewInLists);
 	}
 
+	async function updateCoverUri(){
+		if(props.post.cover)
+			coverUri.value = await getObjectURL(props.post.cover);
+	}
+
 	onBeforeMount(async () => {
 		await updateTags();
 	});
@@ -26,13 +32,16 @@
 	let watchHandle: WatchStopHandle | undefined;
 	watch(props, async () => {
 		await updateTags();
-		if (isReactive(props.post))
-			watchHandle = watch(props.post, updateTags);
-		else
-			if (watchHandle) {
-				watchHandle();
-				watchHandle = undefined;
-			}
+		await updateCoverUri();
+		if (isReactive(props.post)){
+			watchHandle = watch(props.post, async () => {
+				await updateTags();
+				await updateCoverUri();
+			});
+		} else if (watchHandle) {
+			watchHandle();
+			watchHandle = undefined;
+		}
 	}, { immediate: true });
 
 </script>
@@ -49,7 +58,7 @@
 			</p>
 			<p v-if="props.post.member">{{ props.post.member.name }}</p>
 
-			<img v-if="props.post.cover" class="cover" :src="getObjectURL(props.post.cover)" />
+			<img v-if="coverUri" class="cover" :src="coverUri" />
 			<h1>{{ props.post.title }}</h1>
 			<h2 v-if="props.post.subtitle?.length">{{ props.post.subtitle }}</h2>
 			

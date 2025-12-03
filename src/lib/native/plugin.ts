@@ -1,5 +1,4 @@
 import { invoke, InvokeArgs, InvokeOptions, addPluginListener } from "@tauri-apps/api/core";
-import { writeToTemp } from "./cache";
 import { replace, walk } from "../json";
 
 export function invokePlugin<T>(cmd: string, args?: InvokeArgs, opts?: InvokeOptions){
@@ -14,10 +13,7 @@ export function setCanGoBack(canGoBack: boolean): Promise<void> {
 	return invokePlugin<void>("set_can_go_back", { canGoBack });
 }
 
-export async function openFile(file: File) {
-	const path = await writeToTemp(file);
-	if (!path) return false;
-
+export async function openFile(path: string) {
 	try {
 		await invokePlugin("open_file", { path });
 		return true;

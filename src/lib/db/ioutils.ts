@@ -25,7 +25,7 @@ export function exportDatabaseToBinary() {
 
 // Ideally, Rust should call the OS to get the path, we don't want to make the frontend do much anymore
 // TODO: Drop _data parameter
-export function importDatabaseFromBinary(_data: unknown) {
+export function importDatabaseFromBinary() {
 	// Tauri Channel for progress
 	const progressChannel = new Channel<Progress>();
 

@@ -1,6 +1,6 @@
 import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
-import { UUID, UUIDable, MemberTag, Member } from "../entities";
+import { UUID, UUIDable, MemberTag, Member, Tag } from "../entities";
 
 export function getMemberTags(){
 	return db.memberTags.iterate();
@@ -11,6 +11,15 @@ export async function* getMemberTagsForMember(member: Member){
 		if(entry.member.id === member.id)
 			yield entry;
 	}
+}
+
+export async function memberHasTag(member: Member, tag: Tag){
+	for await (const entry of getMemberTags()){
+		if(entry.member.id === member.id && entry.tag.id === tag.id)
+			return true;
+	}
+
+	return false;
 }
 
 export async function newMemberTag(memberTag: Omit<MemberTag, keyof UUIDable>) {
@@ -26,9 +35,12 @@ export async function newMemberTag(memberTag: Omit<MemberTag, keyof UUIDable>) {
 			id,
 			newData: memberTag
 		}));
-		return id;
+		return {
+			...memberTag,
+			id
+		};
 	}catch(_error){
-		return false;
+		return;
 	}
 }
 

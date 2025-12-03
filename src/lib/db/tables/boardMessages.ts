@@ -21,9 +21,12 @@ export async function newBoardMessage(boardMessage: Omit<BoardMessage, keyof UUI
 			id,
 			newData: boardMessage
 		}));
-		return id;
+		return {
+			...boardMessage,
+			id
+		};
 	}catch(_error){
-		return false;
+		return;
 	}
 }
 

@@ -24,9 +24,12 @@ export async function newFrontingEntry(frontingEntry: Omit<FrontingEntry, keyof 
 			id,
 			newData: frontingEntry
 		}));
-		return id;
+		return {
+			...frontingEntry,
+			id
+		};
 	}catch(_error){
-		return false;
+		return;
 	}
 }
 

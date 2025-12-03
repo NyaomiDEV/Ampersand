@@ -19,6 +19,7 @@
 	import { System } from "../../lib/db/entities";
 	import { useTranslation } from "i18next-vue";
 	import Markdown from "../../components/Markdown.vue";
+	import { deleteFile, newFile, updateFile } from "../../lib/db/tables/files";
 
 	const i18next = useTranslation();
 
@@ -27,10 +28,11 @@
 
 	const loading = ref(false);
 
-	const emptySystem: PartialBy<System, "uuid"> = {
+	const emptySystem: PartialBy<System, "id"> = {
 		name: ""
 	};
 	const system = ref({ ...emptySystem });
+	const systemAvatarUri = ref();
 
 	const membersShowed = ref(false);
 	const memberCount = ref(0);
@@ -67,16 +69,31 @@
 	async function modifyPicture(){
 		const files = await getFiles();
 		if(files.length){
+			let _file: File;
 			if(files[0].type === "image/gif"){
-				system.value.image = files[0];
+				_file = files[0];
 				return;
 			}
-			system.value.image = await resizeImage(files[0]);	
+			_file = await resizeImage(files[0]);
+			if(system.value.image)
+				await updateFile(system.value.image.id, undefined, _file.stream());
+			else 
+				system.value.image = await newFile(_file.name, _file.stream());
+		}
+
+		await updateAvatarUri();
+	}
+
+	async function deletePicture(){
+		if(system.value.image) {
+			await deleteFile(system.value.image.id);
+			delete system.value.image;
 		}
 	}
 
-	function deletePicture(){
-		delete system.value.image;
+	async function updateAvatarUri(){
+		if(system.value.image)
+			systemAvatarUri.value = await getObjectURL(system.value.image);
 	}
 
 	async function removeSystem() {
@@ -109,6 +126,8 @@
 			const _system = await getSystem(route.query.uuid as string);
 			if(_system) system.value = _system;
 		} else system.value = { ...emptySystem };
+		
+		await updateAvatarUri();
 
 		let _memberCount = 0;
 		let _archivedMemberCount = 0;
@@ -116,7 +135,7 @@
 		let _archivedCustomFrontCount = 0;
 
 		for await(const member of getMembers()){
-			if(member.system !== system.value.id)
+			if(member.system.id !== system.value.id)
 				continue;
 
 			if(!member.isCustomFront){
@@ -174,7 +193,7 @@
 		<IonContent v-else>
 			<div class="avatar-container">
 				<IonAvatar>
-					<img v-if="system?.image" aria-hidden="true" :src="getObjectURL(system.image)" />
+					<img v-if="systemAvatarUri" aria-hidden="true" :src="systemAvatarUri" />
 					<IonIcon v-else :icon="accountCircle" />
 				</IonAvatar>
 

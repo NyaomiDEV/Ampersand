@@ -3,6 +3,7 @@ export type TableName =
 	"polls" |
 	"poll_entries" |
 	"votes" |
+	"files" |
 	"fronting_entries" |
 	"presence_entries" |
 	"journal_posts" |
@@ -20,6 +21,7 @@ export type TableNameCamelCase =
 	"polls" |
 	"pollEntries" |
 	"votes" |
+	"files" |
 	"frontingEntries" |
 	"presenceEntries" |
 	"journalPosts" |

@@ -29,9 +29,12 @@ export async function newTag(tag: Omit<Tag, keyof UUIDable>) {
 			id,
 			newData: tag
 		}));
-		return id;
+		return {
+			...tag,
+			id
+		};
 	}catch(_error){
-		return false;
+		return;
 	}
 }
 

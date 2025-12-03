@@ -20,9 +20,12 @@ export async function newSystem(system: Omit<System, keyof UUIDable>){
 			id,
 			newData: system
 		}));
-		return id;
+		return {
+			...system,
+			id
+		};
 	}catch(_error){
-		return false;
+		return;
 	}
 }
 

@@ -26,9 +26,12 @@ export async function newVote(vote: Omit<Vote, keyof UUIDable>) {
 			id,
 			newData: vote
 		}));
-		return id;
+		return {
+			...vote,
+			id
+		};
 	}catch(_error){
-		return false;
+		return;
 	}
 }
 
