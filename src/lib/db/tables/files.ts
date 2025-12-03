@@ -29,7 +29,7 @@ export async function newFile(name: string, data: Uint8Array | ReadableStream<Ui
 		const id = window.crypto.randomUUID();
 		await writeFile(`${filePath}${id}`, data);
 		await db.files.add(id, {
-			path: `${filePath}${id}`,
+			path: `files${sep()}${id}`,
 			friendlyName: name,
 			id
 		});

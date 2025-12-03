@@ -31,8 +31,9 @@
 	import MemberSelect from "./MemberSelect.vue";
 	import { useTranslation } from "i18next-vue";
 	import { formatDate, promptOkCancel } from "../lib/util/misc";
-	import { getPollEntriesForPoll } from "../lib/db/tables/pollEntries";
-	import { deletePoll, newPoll } from "../lib/db/tables/polls";
+	import { deletePollEntry, getPollEntriesForPoll, newPollEntry, updatePollEntry as updatePollEntryTable } from "../lib/db/tables/pollEntries";
+	import { deletePoll, newPoll, updatePoll as updatePollTable } from "../lib/db/tables/polls";
+	import { deleteVote, getVotesForPollEntry } from "../lib/db/tables/votes";
 
 	const i18next = useTranslation();
 
@@ -49,8 +50,9 @@
 	};
 	const boardMessage = ref(props.boardMessage || { ...emptyBoardMessage });
 
-	const pollEntries = shallowRef<PollEntry[]>();
-	
+	const pollEntries = shallowRef<PollEntry[]>([]);
+	const pollHasChanged = ref(false);
+
 	const memberSelectModal = useTemplateRef("memberSelectModal");
 	const memberTagModal = useTemplateRef("memberTagModal");
 
@@ -60,11 +62,49 @@
 		});
 	}
 
+	async function updatePollMultipleChoice(value: boolean){
+		if(boardMessage.value.poll){
+			await updatePollTable(boardMessage.value.poll?.id, { multipleChoice: value });
+			pollHasChanged.value = true;
+		}
+	}
+
 	async function removePoll() {
 		if(boardMessage.value.poll){
+			for(const entry of pollEntries.value){
+				const votes = getVotesForPollEntry(entry);
+				for await (const vote of votes)
+					await deleteVote(vote.id);
+				await removePollEntry(entry);
+			}
 			await deletePoll(boardMessage.value.poll.id);
 			boardMessage.value.poll = undefined;
+			pollHasChanged.value = false;
 		}
+	}
+
+	async function createPollEntry(choice?: string){
+		if(boardMessage.value.poll){
+			const pollEntry = await newPollEntry({
+				poll: boardMessage.value.poll,
+				choice: choice || ""
+			});
+			if(pollEntry){
+				pollEntries.value.push(pollEntry);
+				pollHasChanged.value = true;
+			}
+		}
+	}
+
+	async function removePollEntry(entry: PollEntry){
+		await deletePollEntry(entry.id);
+		pollEntries.value = pollEntries.value.filter(x => x !== entry);
+		pollHasChanged.value = true;
+	}
+
+	async function updatePollEntryChoice(entry: PollEntry, choice: string) {
+		await updatePollEntryTable(entry.id, { choice });
+		pollHasChanged.value = true;
 	}
 
 	async function getPollEntries(){
@@ -77,25 +117,33 @@
 	async function save(){
 		const id = boardMessage.value?.id;
 
-		if(boardMessage.value.poll && pollChoices.value.length === 0) {
-			pollChoices.value = [
-				i18next.t("messageBoard:polls.defaultPollValues.yes"),
-				i18next.t("messageBoard:polls.defaultPollValues.no"),
-				i18next.t("messageBoard:polls.defaultPollValues.veto"),
-				i18next.t("messageBoard:polls.defaultPollValues.abstain"),
-			];
-		}
+		if(boardMessage.value.poll){
+			// Add default poll entries if none are there
+			if(!pollEntries.value.length){
+				await createPollEntry(
+					i18next.t("messageBoard:polls.defaultPollValues.yes")
+				);
+				await createPollEntry(
+					i18next.t("messageBoard:polls.defaultPollValues.no")
+				);
+				await createPollEntry(
+					i18next.t("messageBoard:polls.defaultPollValues.veto")
+				);
+				await createPollEntry(
+					i18next.t("messageBoard:polls.defaultPollValues.abstain")
+				);
+			}
 
-		// Reset the voters if the poll part has changed
-		if(
-			pollChoicesAtBeginning.value && boardMessage.value.poll &&
-			(
-				wasMultipleChoiceAtBeginning !== boardMessage.value.poll.multipleChoice ||
-				pollAtBeginning.entries.map((x, i) => String(i + x.choice)).join("") !==
-				boardMessage.value.poll.entries.map((x, i) => String(i + x.choice)).join("")
-			)
-		)
-			boardMessage.value.poll.entries.forEach(x => { x.votes = []; });
+			// Delete all the votes if the poll part has changed
+			if(pollHasChanged.value){
+				for(const entry of pollEntries.value){
+					const votes = getVotesForPollEntry(entry);
+					for await (const vote of votes)
+						await deleteVote(vote.id);
+				}
+			}
+			pollHasChanged.value = false;
+		}
 
 		const _boardMessage = toRaw(boardMessage.value);
 
@@ -103,16 +151,13 @@
 			_boardMessage.title = formatDate(_boardMessage.date, "collapsed");
 
 		if(!id){
-			await newBoardMessage({ ..._boardMessage });
-			await modalController.dismiss(null, "added");
-	
+			await newBoardMessage({ ..._boardMessage });	
 			return;
-		}
-
-		await updateBoardMessage(id, { ..._boardMessage });
+		} else
+			await updateBoardMessage(id, { ..._boardMessage });
 
 		try{
-			await modalController.dismiss(null, "modified");
+			await modalController.dismiss(null);
 		}catch(_){ /* empty */ }
 		// catch an error because the type might get changed, causing the parent to be removed from DOM
 		// however it's safe for us to ignore
@@ -123,6 +168,7 @@
 			i18next.t("messageBoard:edit.delete.title"),
 			i18next.t("messageBoard:edit.delete.confirm")
 		)){
+			await removePoll();
 			await deleteBoardMessage(boardMessage.value.id!);
 			try{
 				await modalController.dismiss(null, "deleted");
@@ -217,7 +263,7 @@
 					</IonToggle>
 				</IonItem>
 
-				<IonItem v-if="!poll" button @click="createPoll">
+				<IonItem v-if="!boardMessage.poll" button @click="createPoll">
 					<IonIcon
 						slot="start"
 						:icon="chartMD"
@@ -248,26 +294,30 @@
 						</IonLabel>
 					</IonItem>
 					<IonItem button :detail="false">
-						<IonToggle v-model="poll.multipleChoice">
+						<IonToggle
+							:checked="boardMessage.poll.multipleChoice"
+							@ion-change="async (e) => await updatePollMultipleChoice(e.detail.checked)"
+						>
 							<IonLabel>
 								{{ $t("messageBoard:edit.pollIsMultipleChoice") }}
 							</IonLabel>
 						</IonToggle>
 					</IonItem>
 
-					<IonItem v-for="entry in poll.choices" :key="poll.choices.indexOf(entry)">
+					<IonItem v-for="entry in pollEntries" :key="entry.id">
 						<IonInput
-							v-model="entry"
+							:value="entry.choice"
 							fill="outline"
 							:label="$t('messageBoard:edit.pollChoice')"
 							label-placement="floating"
+							@ion-change="(e) => updatePollEntryChoice(entry, e.detail.value || '')"
 						/>
 						<IonButton
 							slot="end"
 							shape="round"
 							fill="outline"
 							size="default"
-							@click="() => boardMessage.poll!.entries.splice(boardMessage.poll!.entries.indexOf(entry), 1)"
+							@click="removePollEntry(entry)"
 						>
 							<IonIcon
 								slot="icon-only"
@@ -277,7 +327,7 @@
 						</IonButton>
 					</IonItem>
 
-					<IonItem button @click="() => { pollChoices.push('') }">
+					<IonItem button @click="createPollEntry()">
 						<IonIcon
 							slot="start"
 							:icon="addMD"
