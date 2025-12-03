@@ -27,9 +27,12 @@ export async function newCustomField(customField: Omit<CustomField, keyof UUIDab
 			id,
 			newData: customField
 		}));
-		return id;
+		return {
+			...customField,
+			id
+		};
 	}catch(_error){
-		return false;
+		return;
 	}
 }
 

@@ -2,13 +2,8 @@
 	import { IonContent, IonHeader, IonList, IonItem, IonLabel, IonPage, IonTitle, IonToolbar, IonBackButton, IonProgressBar } from "@ionic/vue";
 	import { ref } from "vue";
 	import { importDatabaseFromBinary, exportDatabaseToBinary } from "../../lib/db/ioutils";
-	import { getFiles, toast } from "../../lib/util/misc";
-	import dayjs from "dayjs";
-	import { save } from "@tauri-apps/plugin-dialog";
+	import { toast } from "../../lib/util/misc";
 	import { useTranslation } from "i18next-vue";
-	import { importPluralKit } from "../../lib/db/external/pluralkit";
-	import { importTupperBox } from "../../lib/db/external/tupperbox";
-	import { importSimplyPlural } from "../../lib/db/external/simplyplural";
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 
@@ -17,13 +12,34 @@
 
 	const i18next = useTranslation();
 
+	async function exportDb(){
+		loading.value = true;
+
+		const { progress, dbPromise } = exportDatabaseToBinary();
+
+		progress.addEventListener("start", () => {
+			barProgress.value = 0;
+		});
+		progress.addEventListener("progress", (evt) => {
+			barProgress.value = (evt as CustomEvent).detail.progress;
+		});
+		progress.addEventListener("finish", () => {
+			barProgress.value = -1;
+		});
+
+		try{
+			await dbPromise;
+		} catch(e) {
+			await toast(i18next.t("importExport:status.errorExport"));
+		}
+
+		loading.value = false;
+	}
+
 	async function importDb(){
 		loading.value = true;
 		try{
-			const files = await getFiles(undefined, false);
-			if (!files.length) throw new Error("no files specified");
-
-			const { progress, dbPromise } = importDatabaseFromBinary(new Uint8Array(await files[0].arrayBuffer()));
+			const { progress, dbPromise } = importDatabaseFromBinary();
 
 			progress.addEventListener("start", () => {
 				barProgress.value = 0;
@@ -35,10 +51,7 @@
 				barProgress.value = -1;
 			});
 
-			const result = await dbPromise;
-
-			if(!result) throw new Error("errored out");
-
+			await dbPromise;
 			await toast(i18next.t("importExport:status.imported"));
 		}catch(_e){
 			await toast(i18next.t("importExport:status.error"));
@@ -46,7 +59,7 @@
 		loading.value = false;
 	}
 
-	async function importSp() {
+	/*async function importSp() {
 		loading.value = true;
 		try{
 			const files = await getFiles(undefined, false);
@@ -95,38 +108,7 @@
 			await toast(i18next.t("importExport:status.errorTu"));
 		}
 		loading.value = false;
-	}
-
-	async function exportDb(){
-		loading.value = true;
-
-		const date = dayjs().format("YYYY-MM-DD");
-		const path = await save({
-			defaultPath: `ampersand-backup-${date}.ampdb`,
-			filters: [{
-				name: "Ampersand backups (.ampdb)",
-				extensions: ["ampdb"]
-			}]
-		});
-		if(path){
-			const { progress, dbPromise } = exportDatabaseToBinary();
-
-			progress.addEventListener("start", () => {
-				barProgress.value = 0;
-			});
-			progress.addEventListener("progress", (evt) => {
-				barProgress.value = (evt as CustomEvent).detail.progress;
-			});
-			progress.addEventListener("finish", () => {
-				barProgress.value = -1;
-			});
-			
-			await dbPromise; // TODO
-		} else 
-			await toast(i18next.t("importExport:status.errorExport"));
-
-		loading.value = false;
-	}
+	}*/
 </script>
 
 <template>
@@ -159,7 +141,8 @@
 						<p>{{ $t("importExport:dbImportDesc") }}</p>
 					</IonLabel>
 				</IonItem>
-
+				
+				<!--
 				<IonItem button :detail="true" @click="importSp">
 					<IonLabel>
 						<h3>{{ $t("importExport:spImport") }}</h3>
@@ -180,6 +163,7 @@
 						<p>{{ $t("importExport:dbImportDesc") }}</p>
 					</IonLabel>
 				</IonItem>
+				-->
 			</IonList>
 		</IonContent>
 	</IonPage>

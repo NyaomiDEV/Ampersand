@@ -14,7 +14,8 @@ import {
 	Poll,
 	System,
 	Tag,
-	UUIDable
+	UUIDable,
+	SQLFile
 } from "../entities";
 import { invokePlugin } from "../../native/plugin";
 import { TableIter } from "../types";
@@ -121,6 +122,7 @@ export const db = {
 	boardMessages: new DecentTable<BoardMessage>("board_messages"),
 	customFieldData: new DecentTable<CustomFieldDatum>("custom_field_data"),
 	customFields: new DecentTable<CustomField>("custom_fields"),
+	files: new DecentTable<SQLFile>("files"),
 	frontingEntries: new DecentTable<FrontingEntry>("fronting_entries"),
 	journalPosts: new DecentTable<JournalPost>("journal_posts"),
 	journalPostTags: new DecentTable<JournalPostTag>("journal_post_tags"),

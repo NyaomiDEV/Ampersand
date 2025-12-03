@@ -22,7 +22,7 @@
 
 	import { FrontingEntry } from "../lib/db/entities";
 	import { newFrontingEntry, updateFrontingEntry, deleteFrontingEntry, sendFrontingChangedEvent } from "../lib/db/tables/frontingEntries";
-	import { reactive, ref, toRaw, useTemplateRef } from "vue";
+	import { onBeforeMount, ref, shallowReactive, toRaw, useTemplateRef } from "vue";
 
 	import MemberSelect from "./MemberSelect.vue";
 	import PresenceHistory from "./PresenceHistory.vue";
@@ -33,7 +33,7 @@
 	import { PartialBy } from "../lib/types";
 	import { formatDate, promptOkCancel, renderStars } from "../lib/util/misc";
 	import { useTranslation } from "i18next-vue";
-
+	import { deletePresenceEntry, getPresenceEntriesForFrontEntry, newPresenceEntry } from "../lib/db/tables/presenceEntries";
 
 	const i18next = useTranslation();
 
@@ -49,7 +49,7 @@
 	};
 	const frontingEntry = ref({ ...(props.frontingEntry || emptyFrontingEntry) });
 
-	const presence = reactive(new Map<Date, number>()); // TODO
+	const presence = shallowReactive(new Map<Date, number>());
 
 	const presenceHistoryModal = useTemplateRef("presenceHistoryModal");
 	const memberSelectModal = useTemplateRef("memberSelectModal");
@@ -57,7 +57,7 @@
 	const memberTagModal = useTemplateRef("memberTagModal");
 
 	async function save(dismissAfter = true){
-		const id = frontingEntry.value?.id;
+		let id = frontingEntry.value?.id;
 		const _frontingEntry = toRaw(frontingEntry.value);
 
 		if(!_frontingEntry.member) return;
@@ -65,22 +65,34 @@
 		if(_frontingEntry.isMainFronter)
 			_frontingEntry.influencing = undefined;
 
-		if(!id) {
-			await newFrontingEntry({ ..._frontingEntry } as FrontingEntry);
-			void sendFrontingChangedEvent();
+		if(!id)
+			id = (await newFrontingEntry({ ..._frontingEntry } as FrontingEntry))?.id;
+		else 
+			await updateFrontingEntry(id, { ..._frontingEntry });
 
-			if(dismissAfter)
-				await modalController.dismiss(null, "added");
-
-			return;
-		}
-
-		await updateFrontingEntry(id, { ..._frontingEntry });
 		void sendFrontingChangedEvent();
+
+		if(id){
+			let _presences = Array.from(toRaw(presence).entries());
+			const allPresences = await Array.fromAsync(getPresenceEntriesForFrontEntry({ ..._frontingEntry, id } as FrontingEntry));
+			for(const presence of allPresences){
+				const tuple = _presences.find(x => x[0].valueOf() === presence.date.valueOf());
+				if(!tuple)
+					await deletePresenceEntry(presence.id);
+				else _presences = _presences.filter(x => x !== tuple);
+			}
+			for(const remainingPresence of _presences){
+				await newPresenceEntry({
+					date: remainingPresence[0],
+					presence: remainingPresence[1],
+					frontingEntry: { ..._frontingEntry, id } as FrontingEntry
+				});
+			}
+		}
 
 		try{
 			if(dismissAfter)
-				await modalController.dismiss(null, "modified");
+				await modalController.dismiss(null);
 		}catch(_){ /* empty */ }
 		// catch an error because the type might get changed, causing the parent to be removed from DOM
 		// however it's safe for us to ignore
@@ -111,6 +123,14 @@
 
 		return presenceVal.sort((a, b) => a[0].valueOf() - b[0].valueOf()).pop() || [undefined, undefined];
 	}
+
+	onBeforeMount(async () => {
+		if(frontingEntry.value.id){
+			const presences = await Array.fromAsync(getPresenceEntriesForFrontEntry(frontingEntry.value as FrontingEntry));
+			for(const _presence of presences)
+				presence.set(_presence.date, _presence.presence);
+		}
+	});
 </script>
 
 <template>

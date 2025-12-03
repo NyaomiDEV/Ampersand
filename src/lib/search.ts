@@ -2,6 +2,8 @@
 import { Member, Tag, Asset, CustomField, FrontingEntry, JournalPost, BoardMessage } from "./db/entities";
 import { parseAssetFilterQuery, parseBoardMessageFilterQuery, parseCustomFieldFilterQuery, parseFrontingHistoryFilterQuery, parseJournalPostFilterQuery, parseMemberFilterQuery } from "./util/filterQuery";
 import { appConfig } from "./config";
+import { getMemberTagsForMember } from "./db/tables/memberTags";
+import { getJournalPostTagsForPost } from "./db/tables/journalPostTags";
 
 export async function filterMember(search: string, member: Member){
 	const parsed = await parseMemberFilterQuery(search.length ? search : appConfig.defaultFilterQueries.members || "");
@@ -35,8 +37,10 @@ export async function filterMember(search: string, member: Member){
 			return false;
 	}
 
+	// how do we speed this up?
 	if (parsed.tags.length) {
-		if (!parsed.tags.every(tag => member.tags.find(x => x.id === tag.id)))
+		const memberTags = await Array.fromAsync(getMemberTagsForMember(member));
+		if (!parsed.tags.every(tag => memberTags.find(x => x.tag.id === tag.id)))
 			return false;
 	}
 
@@ -122,12 +126,12 @@ export function filterAsset(search: string, asset: Asset) {
 	}
 
 	if (parsed.type) {
-		if (asset.file.type.split("/")[1].toLowerCase() !== parsed.type.toLowerCase())
+		if (asset.file.friendlyName.split(".").pop()?.toLowerCase() !== parsed.type.toLowerCase())
 			return false;
 	}
 
 	if (parsed.filename) {
-		if (asset.file.name.toLowerCase() !== parsed.filename.toLowerCase())
+		if (asset.file.friendlyName.toLowerCase() !== parsed.filename.toLowerCase())
 			return false;
 	}
 
@@ -173,8 +177,10 @@ export async function filterJournalPost(search: string, post: JournalPost) {
 		}
 	}
 
+	// how do we speed this up?
 	if (parsed.tags.length) {
-		if (!parsed.tags.every(tag => post.tags.find(x => x.id === tag.id)))
+		const postTags = await Array.fromAsync(getJournalPostTagsForPost(post));
+		if (!parsed.tags.every(tag => postTags.find(x => x.tag.id === tag.id)))
 			return false;
 	}
 

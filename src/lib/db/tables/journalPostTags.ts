@@ -1,6 +1,6 @@
 import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
-import { UUID, UUIDable, JournalPostTag, JournalPost } from "../entities";
+import { UUID, UUIDable, JournalPostTag, JournalPost, Tag } from "../entities";
 
 export function getJournalPostTags(){
 	return db.journalPostTags.iterate();
@@ -11,6 +11,15 @@ export async function* getJournalPostTagsForPost(journalPost: JournalPost){
 		if(entry.post.id === journalPost.id)
 			yield entry;
 	}
+}
+
+export async function journalPostHasTag(journalPost: JournalPost, tag: Tag){
+	for await (const entry of getJournalPostTags()){
+		if(entry.post.id === journalPost.id && entry.tag.id === tag.id)
+			return true;
+	}
+
+	return false;
 }
 
 export async function newJournalPostTag(journalPostTag: Omit<JournalPostTag, keyof UUIDable>) {
@@ -26,9 +35,12 @@ export async function newJournalPostTag(journalPostTag: Omit<JournalPostTag, key
 			id,
 			newData: journalPostTag
 		}));
-		return id;
+		return {
+			...journalPostTag,
+			id
+		};
 	}catch(_error){
-		return false;
+		return;
 	}
 }
 

@@ -8,7 +8,7 @@
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 
-	import { JournalPostComplete } from "../lib/db/entities";
+	import { JournalPost } from "../lib/db/entities";
 	import dayjs from "dayjs";
 	import { DatabaseEvent, DatabaseEvents } from "../lib/db/events";
 	import { getJournalPostsDays, getJournalPostsOfDay } from "../lib/db/tables/journalPosts";
@@ -23,7 +23,7 @@
 
 	const firstWeekOfDayIsSunday = appConfig.locale.firstWeekOfDayIsSunday;
 
-	const posts = shallowRef<JournalPostComplete[]>();
+	const posts = shallowRef<JournalPost[]>();
 
 	const postsDays = shallowRef<{ date: string, backgroundColor: string; }[]>();
 
@@ -68,8 +68,8 @@
 		await getEntries(dayjs(date.value).toDate());
 	}
 
-	function getGrouped(entries: JournalPostComplete[]) {
-		const map = new Map<string, JournalPostComplete[]>();
+	function getGrouped(entries: JournalPost[]) {
+		const map = new Map<string, JournalPost[]>();
 
 		for(const entry of entries.filter(x => x.isPinned).sort((a, b) => b.date.getTime() - a.date.getTime())){
 			const collection = map.get("pinnedPosts");
@@ -113,7 +113,7 @@
 		});
 	}
 
-	async function openPost(post: JournalPostComplete){
+	async function openPost(post: JournalPost){
 		if(post.isPrivate){
 			if(!await promptOkCancel(
 				i18next.t("journal:private"),
@@ -131,7 +131,7 @@
 				return;
 		}
 
-		router.push(`/journal/edit/?uuid=${post.uuid}`);
+		router.push(`/journal/edit/?uuid=${post.id}`);
 	}
 </script>
 
@@ -181,7 +181,7 @@
 					</IonItemDivider>
 					<JournalPostItem
 						v-for="post in tuple[1]"
-						:key="post.uuid"
+						:key="post.id"
 						:post
 						@click="openPost(post)"
 					/>

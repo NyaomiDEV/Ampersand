@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { CustomField, FrontingEntry, Member, System, Tag } from "../entities";
+import { CustomField, CustomFieldDatum, FrontingEntry, Member, MemberTag, System, Tag } from "../entities";
 import { getTables } from "../tables";
-import { fetch } from "@tauri-apps/plugin-http";
+//import { fetch } from "@tauri-apps/plugin-http";
 import { defaultMember } from "../tables/members";
 
 function pkCustomField(): CustomField {
@@ -15,6 +15,7 @@ function pkCustomField(): CustomField {
 	};
 }
 
+// eslint-disable-next-line @typescript-eslint/require-await
 async function system(pkExport: any){
 	const systemInfo: System = {
 		name: pkExport.name,
@@ -23,8 +24,9 @@ async function system(pkExport: any){
 	};
 	if (pkExport.avatar_url) {
 		try {
-			const request = await fetch(pkExport.avatar_url);
-			systemInfo.image = new File([await request.blob()], (pkExport.avatar_url as string).split("/").pop()!);
+			// TODO: SQLFile
+			//const request = await fetch(pkExport.avatar_url);
+			//systemInfo.image = new File([await request.blob()], (pkExport.avatar_url as string).split("/").pop()!);
 		} catch (_e) {
 			// whatever
 		}
@@ -42,7 +44,7 @@ function tag(pkExport: any){
 			name: pkGroup.display_name || pkGroup.name,
 			description: pkGroup.description || undefined,
 			color: pkGroup.color ? `#${pkGroup.color}` : undefined,
-			type: "member",
+			type: 0,
 			viewInLists: false,
 			id: window.crypto.randomUUID()
 		};
@@ -56,9 +58,12 @@ function tag(pkExport: any){
 	};
 }
 
+// eslint-disable-next-line @typescript-eslint/require-await
 async function member(pkExport: any, tagMapping: Map<string, Tag>, systemInfo: System, pkField: CustomField) {
 	const memberMapping = new Map<string, Member>();
 	const members: Member[] = [];
+	const memberTags: MemberTag[] = [];
+	const memberCustomFields: CustomFieldDatum[] = [];
 
 	for (const pkMember of pkExport.members) {
 		const member: Member = {
@@ -71,32 +76,49 @@ async function member(pkExport: any, tagMapping: Map<string, Tag>, systemInfo: S
 			isPinned: false,
 			isCustomFront: false,
 			dateCreated: new Date(pkMember.created),
-			tags: pkExport.groups.filter(x => (x.members as string[]).includes(pkMember.id)).map(x => tagMapping.get(x.id)),
-			customFields: new Map([[pkField, pkMember.id]]),
 			id: window.crypto.randomUUID()
 		};
 		if (pkMember.avatar_url) {
 			try {
-				const request = await fetch(pkMember.avatar_url);
-				member.image = new File([await request.blob()], pkMember.avatar_url.split("/").pop());
+				// TODO: SQLFile
+				//const request = await fetch(pkMember.avatar_url);
+				//member.image = new File([await request.blob()], pkMember.avatar_url.split("/").pop());
 			} catch (_e) {
 				// whatever, again
 			}
 		}
 		if (pkMember.banner) {
 			try {
-				const request = await fetch(pkMember.banner);
-				member.cover = new File([await request.blob()], pkMember.banner.split("/").pop());
+				// TODO: SQLFile
+				//const request = await fetch(pkMember.banner);
+				//member.cover = new File([await request.blob()], pkMember.banner.split("/").pop());
 			} catch (_e) {
 				// whatever, again
 			}
 		}
+
+		for(const tag of pkExport.groups.filter(x => (x.members as string[]).includes(pkMember.id)).map(x => tagMapping.get(x.id))){
+			memberTags.push({
+				id: window.crypto.randomUUID(),
+				member,
+				tag
+			});
+		}
+
 		members.push(member);
+		memberCustomFields.push({
+			id: window.crypto.randomUUID(),
+			member,
+			field: pkField,
+			value: pkMember.id
+		});
 		memberMapping.set(pkMember.id, member);
 	}
 
 	return {
 		members,
+		memberTags,
+		memberCustomFields,
 		memberMapping
 	};
 }
@@ -144,7 +166,7 @@ export async function importPluralKit(pkExport: any){
 	const field = pkCustomField();
 	const systemInfo = await system(pkExport);
 	const { tags, tagMapping } = tag(pkExport);
-	const { members, memberMapping } = await member(pkExport, tagMapping, systemInfo, field);
+	const { members, memberTags, memberCustomFields, memberMapping } = await member(pkExport, tagMapping, systemInfo, field);
 	const frontingEntries = frontingEntry(pkExport, memberMapping);
 
 	try {
@@ -157,6 +179,8 @@ export async function importPluralKit(pkExport: any){
 		await tables.systems.bulkAdd([systemInfo]);
 		await tables.tags.bulkAdd(tags);
 		await tables.members.bulkAdd(members);
+		await tables.memberTags.bulkAdd(memberTags);
+		await tables.customFieldData.bulkAdd(memberCustomFields);
 		await tables.frontingEntries.bulkAdd(frontingEntries);
 	} catch (e) {
 		console.error(e);

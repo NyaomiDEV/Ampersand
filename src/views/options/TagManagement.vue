@@ -22,7 +22,7 @@
 			search.value = route.query.q as string;
 	});
 
-	const type = ref("member");
+	const type = ref(0);
 
 	const tags = shallowRef<Tag[]>();
 	watch([search, type], async () => {
@@ -69,10 +69,10 @@
 			</IonToolbar>
 			<IonToolbar>
 				<IonSegment v-model="type" value="member">
-					<IonSegmentButton value="member">
+					<IonSegmentButton value="0">
 						<IonLabel>{{ $t("tagManagement:selector.member") }}</IonLabel>
 					</IonSegmentButton>
-					<IonSegmentButton value="journal">
+					<IonSegmentButton value="1">
 						<IonLabel>{{ $t("tagManagement:selector.journal") }}</IonLabel>
 					</IonSegmentButton>
 				</IonSegment>

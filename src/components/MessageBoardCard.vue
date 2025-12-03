@@ -2,15 +2,16 @@
 
 	import { alertController, IonButton, IonItem, IonLabel } from "@ionic/vue";
 	import MemberAvatar from "./member/MemberAvatar.vue";
-	import { BoardMessage, Member, PollEntry } from "../lib/db/entities";
+	import { BoardMessage, Member, PollEntry, Vote } from "../lib/db/entities";
 	import Markdown from "./Markdown.vue";
 	import MemberSelect from "../modals/MemberSelect.vue";
 	import { addModal, removeModal } from "../lib/modals";
-	import { h, ref, toRaw } from "vue";
-	import { updateBoardMessage } from "../lib/db/tables/boardMessages";
+	import { h, onBeforeMount, ref, shallowReactive } from "vue";
 	import PollResults from "../modals/PollResults.vue";
 	import { useTranslation } from "i18next-vue";
 	import { formatDate, promptOkCancel } from "../lib/util/misc";
+	import { getPollEntriesForPoll } from "../lib/db/tables/pollEntries";
+	import { deleteVote, getVotesForPollEntry, newVote } from "../lib/db/tables/votes";
 
 	const i18next = useTranslation();
 
@@ -20,6 +21,7 @@
 	}>();
 
 	const isPollHidden = ref(props.hidePoll);
+	const pollVotes = shallowReactive<Map<PollEntry, Vote[]>>(new Map());
 
 	/* Wait for Firefox and Safari to implement field-sizing in CSS and then use that instead of rows: 4 */
 
@@ -83,7 +85,7 @@
 	async function showPollResults(){
 		const vnode = h(PollResults, {
 			onDidDismiss: () => removeModal(vnode),
-			poll: props.boardMessage.poll!
+			pollVotes
 		});
 
 		const modal = await addModal(vnode);
@@ -92,49 +94,61 @@
 	}
 
 	async function voteFor(choice: PollEntry){
-		if(!props.boardMessage.poll) return;
 		const voter = await getVoter();
 		if(!voter) return;
 
-		const poll = toRaw(props.boardMessage.poll);
-		const _choice = poll.entries.find(x => choice === x);
+		const votes = pollVotes.get(choice) || [];
 
-		if(_choice?.votes.map(x => x.member).find(x => x.id === voter.id)){
+		if(votes.find(x => x.member.id === voter.id)){
 			const confirmation = await promptOkCancel(i18next.t("messageBoard:polls.voteCast.retractConfirmation"));
 
 			if(confirmation){
-				const index = _choice.votes.findIndex(x => x.member.id === voter.id);
-				_choice.votes.splice(index, 1);
+				const id = votes.find(x => x.member.id === voter.id)?.id;
+				if(id) await deleteVote(id);
 			}
 		} else {
 			const reason = await showReasonAlert();
 			if(reason === undefined) return;
 
-			_choice?.votes.push({
+			await newVote({
 				member: voter,
-				reason: reason ?? undefined
+				entry: choice,
+				reason,
 			});
 
-			if(!poll.multipleChoice){
-				poll.entries
-					.filter(x => choice !== x)
-					.forEach(x => {
-						const index = x.votes.findIndex(x => x.member.id === voter.id);
-						if(index > -1) x.votes.splice(index, 1);
-					});
+			if(!props.boardMessage.poll!.multipleChoice){
+				const otherEntries = pollVotes.keys().filter(x => choice !== x);
+				for(const _entry of otherEntries){
+					const votes = pollVotes.get(_entry) || [];
+					const vote = votes.find(x => x.member.id === voter.id);
+					if(vote) await deleteVote(vote.id);
+				}
 			}
 		}
 
-		await updateBoardMessage(props.boardMessage.id, { poll });
+		await updatePoll();
 	}
 
 	function calcPercentageVoted(choice: PollEntry){
 		if(!props.boardMessage.poll) return 0;
-		const allVotes = props.boardMessage.poll?.entries.reduce((i, x) => i + x.votes.length, 0);
+		const allVotes = pollVotes.values().reduce((i, x) => i + x.length, 0);
 		if(allVotes === 0) return 0;
-		return choice.votes.length / allVotes;
+		return pollVotes.get(choice)?.length || 0 / allVotes;
 	}
 
+	async function updatePoll(){
+		if(props.boardMessage.poll){
+			const entries = await Array.fromAsync(getPollEntriesForPoll(props.boardMessage.poll));
+			for(const entry of entries){
+				const votes = await Array.fromAsync(getVotesForPollEntry(entry));
+				pollVotes.set(entry, votes);
+			}
+		}
+	}
+
+	onBeforeMount(async () => {
+		await updatePoll();
+	});
 </script>
 
 <template>
@@ -161,7 +175,7 @@
 				</div>
 				<div v-if="props.boardMessage.poll && !isPollHidden" class="poll" @click="(e) => e.stopPropagation()">
 					<IonItem
-						v-for="choice in props.boardMessage.poll.entries"
+						v-for="choice in pollVotes.keys()"
 						:key="choice.choice"
 						button
 						:detail="false"
@@ -170,7 +184,7 @@
 						<IonLabel>
 							<h3>{{ choice.choice }}</h3>
 							<p>
-								{{ $t("messageBoard:polls.choice.desc", { count: choice.votes.length }) }} - {{
+								{{ $t("messageBoard:polls.choice.desc", { count: pollVotes.get(choice)?.length || 0 }) }} - {{
 									Math.floor(calcPercentageVoted(choice) * 100) }}%
 							</p>
 							<div

@@ -26,9 +26,12 @@ export async function newPresenceEntry(presenceEntry: Omit<PresenceEntry, keyof 
 			id,
 			newData: presenceEntry
 		}));
-		return id;
+		return {
+			...presenceEntry,
+			id
+		};
 	}catch(_error){
-		return false;
+		return;
 	}
 }
 
