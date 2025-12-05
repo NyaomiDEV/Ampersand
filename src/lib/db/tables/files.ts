@@ -4,6 +4,8 @@ import { UUID, SQLFile } from "../entities";
 import { openFile } from "../../native/plugin";
 import { readFile, remove, writeFile } from "@tauri-apps/plugin-fs";
 import { appDataDir, sep } from "@tauri-apps/api/path";
+import { showFileModal } from "../../util/misc";
+import { resizeImage } from "../../util/image";
 
 const filePath = `${await appDataDir() + sep()}files${sep()}`;
 
@@ -92,4 +94,26 @@ export async function updateFile(id: UUID, friendlyName?: string, data?: Uint8Ar
 	}catch(_error){
 		return false;
 	}
+}
+
+export async function uploadImage(maxDimension = 512){
+	const files = await showFileModal();
+
+	if(!files[0]) throw new Error("file not chosen");
+
+	return await newFile(
+		files[0].name,
+		(await resizeImage(files[0], maxDimension)).stream()
+	);
+}
+
+export async function uploadFile(){
+	const files = await showFileModal();
+
+	if (!files[0]) throw new Error("file not chosen");
+
+	return await newFile(
+		files[0].name,
+		files[0].stream()
+	);
 }

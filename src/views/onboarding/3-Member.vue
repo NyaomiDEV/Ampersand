@@ -19,21 +19,19 @@
 
 	import { Member } from "../../lib/db/entities";
 	import { newMember } from "../../lib/db/tables/members";
-	import { getFiles, slideAnimation } from "../../lib/util/misc";
-	import { resizeImage } from "../../lib/util/image";
+	import { slideAnimation } from "../../lib/util/misc";
 	import { ref, toRaw } from "vue";
 	import { PartialBy } from "../../lib/types";
 	import MemberAvatar from "../../components/member/MemberAvatar.vue";
 	import { appConfig } from "../../lib/config";
-	import { newFile } from "../../lib/db/tables/files";
+	import { uploadImage } from "../../lib/db/tables/files";
 
 	const router = useIonRouter();
 
 	const emptyMember: PartialBy<Member, "id" | "dateCreated"> = {
 		name: "",
-		system: { // TODO: Make it more elegant and make sure it won't break
+		system: {
 			id: appConfig.defaultSystem,
-			name: ""
 		},
 		isArchived: false,
 		isCustomFront: false,
@@ -42,16 +40,7 @@
 	const member = ref({ ...emptyMember });
 
 	async function modifyPicture(){
-		const files = await getFiles();
-		if(files.length){
-			if(files[0].type === "image/gif"){
-				const file = await newFile(files[0].name, files[0].stream());
-				member.value.image = file;
-				return;
-			}
-			const file = await newFile(files[0].name, (await resizeImage(files[0])).stream());
-			member.value.image = file;
-		}
+		member.value.image = await uploadImage();
 	}
 
 	function deletePicture(){

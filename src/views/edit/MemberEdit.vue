@@ -36,8 +36,7 @@
 
 	import { CustomField, Member, System, Tag, UUID } from "../../lib/db/entities";
 	import { newMember, deleteMember, updateMember, defaultMember, getMember } from "../../lib/db/tables/members";
-	import { getFiles, promptOkCancel, toast } from "../../lib/util/misc";
-	import { resizeImage } from "../../lib/util/image";
+	import { promptOkCancel, toast } from "../../lib/util/misc";
 	import { getCurrentInstance, onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
 	import Markdown from "../../components/Markdown.vue";
 	import { addMaterialColors, rgbaToArgb, unsetMaterialColors } from "../../lib/theme";
@@ -54,10 +53,9 @@
 	import { appConfig } from "../../lib/config";
 	import { deleteMemberTag, getMemberTagsForMember, newMemberTag } from "../../lib/db/tables/memberTags";
 	import { deleteCustomFieldDatum, getCustomFieldDataForMember, newCustomFieldDatum, updateCustomFieldDatum } from "../../lib/db/tables/customFieldData";
-	import { deleteFile, newFile, updateFile } from "../../lib/db/tables/files";
-	import { getSystem } from "../../lib/db/tables/system";
+	import { deleteFile, uploadImage } from "../../lib/db/tables/files";
 	import { getObjectURL } from "../../lib/util/blob";
-	import SystemChip from "../../components/SystemChip.vue";
+	import { getSystem } from "../../lib/db/tables/system";
 
 	const i18next = useTranslation();
 
@@ -68,9 +66,8 @@
 
 	const emptyMember: PartialBy<Member, "id" | "dateCreated"> = {
 		name: "",
-		system: { // TODO: Make it more elegant and make sure it won't break
+		system: {
 			id: appConfig.defaultSystem,
-			name: ""
 		},
 		isArchived: false,
 		isCustomFront: false,
@@ -93,6 +90,49 @@
 	const canEdit = ref(true);
 	const isEditing = ref(false);
 	const self = getCurrentInstance();
+
+	async function modifyPicture(){
+		member.value.image = await uploadImage(); 
+	}
+
+	async function deletePicture(){
+		if(member.value.image){
+			await deleteFile(member.value.image.id);
+			member.value.image = undefined;
+		}
+	}
+
+	async function modifyCover(){
+		member.value.cover = await uploadImage(1024); 
+	}
+
+	async function deleteCover(){
+		if(member.value.cover){
+			await deleteFile(member.value.cover.id);
+			member.value.cover = undefined;
+		}
+	}
+
+	async function removeMember() {
+		if(await promptOkCancel(
+			i18next.t("members:edit.delete.title"),
+			i18next.t("members:edit.delete.confirm")
+		)){
+			await deleteMember(member.value.id!);
+			router.back();
+		}
+	}
+
+	async function copyIdToClipboard(){
+		if(member.value.id){
+			try{
+				await window.navigator.clipboard.writeText(`@<m:${member.value.id}>`);
+				await toast(i18next.t("members:edit.memberIDcopiedToClipboard"));
+			}catch(_e){
+				return;
+			}
+		}
+	}
 
 	async function toggleEditing(){
 		if(!isEditing.value){
@@ -162,73 +202,6 @@
 		}
 
 		isEditing.value = false;
-	}
-
-	async function modifyPicture(){
-		const files = await getFiles();
-		if(files.length){
-			let _file: File;
-			if(files[0].type === "image/gif")
-				_file = files[0];
-			else
-				_file = await resizeImage(files[0]);
-
-			if(member.value.image)
-				await updateFile(member.value.image.id, undefined, _file.stream());
-			else 
-				member.value.image = await newFile(_file.name, _file.stream());
-		}
-	}
-
-	async function deletePicture(){
-		if(member.value.image){
-			await deleteFile(member.value.image.id);
-			member.value.image = undefined;
-		}
-	}
-
-	async function modifyCover(){
-		const files = await getFiles();
-		if(files.length){
-			let _file: File;
-			if(files[0].type === "image/gif")
-				_file = files[0];
-			else
-				_file = await resizeImage(files[0], 1024);
-
-			if(member.value.cover)
-				await updateFile(member.value.cover.id, undefined, _file.stream());
-			else 
-				member.value.cover = await newFile(_file.name, _file.stream());
-		}
-	}
-
-	async function deleteCover(){
-		if(member.value.cover){
-			await deleteFile(member.value.cover.id);
-			member.value.cover = undefined;
-		}
-	}
-
-	async function removeMember() {
-		if(await promptOkCancel(
-			i18next.t("members:edit.delete.title"),
-			i18next.t("members:edit.delete.confirm")
-		)){
-			await deleteMember(member.value.id!);
-			router.back();
-		}
-	}
-
-	async function copyIdToClipboard(){
-		if(member.value.id){
-			try{
-				await window.navigator.clipboard.writeText(`@<m:${member.value.id}>`);
-				await toast(i18next.t("members:edit.memberIDcopiedToClipboard"));
-			}catch(_e){
-				return;
-			}
-		}
 	}
 
 	async function updateRoute() {

@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import { Ref } from "vue";
 import { appConfig } from "../config";
 
-export function getFiles(contentType?: string, multiple?: boolean): Promise<File[]> {
+export function showFileModal(contentType?: string, multiple?: boolean): Promise<File[]> {
 	return new Promise(resolve => {
 		const i = document.createElement("input");
 		document.body.appendChild(i);

@@ -2,8 +2,7 @@
 	import { IonContent, IonList, IonPage, IonAvatar, IonButton, IonIcon, IonInput, IonFab, IonFabButton, IonItem, IonTextarea, useIonRouter } from "@ionic/vue";
 	import { onBeforeMount, ref, toRaw } from "vue";
 	import { getObjectURL } from "../../lib/util/blob";
-	import { getFiles, slideAnimation } from "../../lib/util/misc";
-	import { resizeImage } from "../../lib/util/image";
+	import { slideAnimation } from "../../lib/util/misc";
 	import { getSystem, newSystem, updateSystem } from "../../lib/db/tables/system";
 
 	import accountCircle from "@material-symbols/svg-600/outlined/account_circle.svg";
@@ -12,7 +11,7 @@
 	import { SQLFile, System } from "../../lib/db/entities";
 	import { PartialBy } from "../../lib/types";
 	import { appConfig } from "../../lib/config";
-	import { newFile, updateFile } from "../../lib/db/tables/files";
+	import { uploadImage } from "../../lib/db/tables/files";
 
 	const router = useIonRouter();
 
@@ -21,19 +20,7 @@
 	const systemAvatarUri = ref();
 
 	async function modifyPicture(){
-		const files = await getFiles();
-		if(files.length){
-			let _file: File;
-			if(files[0].type === "image/gif"){
-				_file = files[0];
-				return;
-			}
-			_file = await resizeImage(files[0]);
-			if(system.value.image)
-				await updateFile(system.value.image.id, undefined, _file.stream());
-			else 
-				system.value.image = await newFile(_file.name, _file.stream());
-		}
+		system.value.image = await uploadImage();
 
 		await updateAvatarUri();
 	}

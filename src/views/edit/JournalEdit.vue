@@ -31,9 +31,8 @@
 
 	import { JournalPost, Member, SQLFile, Tag, UUID } from "../../lib/db/entities";
 	import { newJournalPost, updateJournalPost, getJournalPost } from "../../lib/db/tables/journalPosts";
-	import { getFiles, formatDate } from "../../lib/util/misc";
-	import { resizeImage } from "../../lib/util/image";
-	import { h, onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
+	import { formatDate } from "../../lib/util/misc";
+	import { onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
 	import Markdown from "../../components/Markdown.vue";
 	import MemberAvatar from "../../components/member/MemberAvatar.vue";
 	import TagChip from "../../components/tag/TagChip.vue";
@@ -43,9 +42,9 @@
 	import { useRoute } from "vue-router";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import { getObjectURL } from "../../lib/util/blob";
-	import { deleteFile, newFile, updateFile } from "../../lib/db/tables/files";
 	import { deleteJournalPostTag, getJournalPostTagsForPost, newJournalPostTag } from "../../lib/db/tables/journalPostTags";
 	import { addModal, removeModal } from "../../lib/modals";
+	import { uploadImage } from "../../lib/db/tables/files";
 
 	const router = useIonRouter();
 	const route = useRoute();
@@ -115,27 +114,13 @@
 	}
 
 	async function modifyCover(){
-		const files = await getFiles();
-		if(files.length){
-			let _file: File;
-			if(files[0].type === "image/gif")
-				_file = files[0];
-			else
-				_file = await resizeImage(files[0]);
-			if(post.value.cover)
-				await updateFile(post.value.cover.id, undefined, _file.stream());
-			else 
-				post.value.cover = await newFile(_file.name, _file.stream());
-		}
-
+		post.value.cover = await uploadImage(1024);
 		await updateCoverUri();
 	}
 
-	async function deleteCover(){
-		if(post.value.cover){
-			await deleteFile(post.value.cover.id);
-			post.value.cover = undefined;
-		}
+	function deleteCover(){
+		if(post.value.cover)
+			delete post.value.cover;
 	}
 
 	async function updateCoverUri(){

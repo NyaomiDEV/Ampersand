@@ -29,7 +29,7 @@
 
 		try{
 			await dbPromise;
-		} catch(e) {
+		} catch(_e) {
 			await toast(i18next.t("importExport:status.errorExport"));
 		}
 
@@ -62,7 +62,7 @@
 	/*async function importSp() {
 		loading.value = true;
 		try{
-			const files = await getFiles(undefined, false);
+			const files = await showFileModal(undefined, false);
 			if (!files.length) throw new Error("no files specified");
 
 			const spExport = JSON.parse(await files[0].text());
@@ -79,7 +79,7 @@
 	async function importPk() {
 		loading.value = true;
 		try{
-			const files = await getFiles(undefined, false);
+			const files = await showFileModal(undefined, false);
 			if (!files.length) throw new Error("no files specified");
 
 			const pkExport = JSON.parse(await files[0].text());
@@ -96,7 +96,7 @@
 	async function importTu() {
 		loading.value = true;
 		try{
-			const files = await getFiles(undefined, false);
+			const files = await showFileModal(undefined, false);
 			if (!files.length) throw new Error("no files specified");
 
 			const tuExport = JSON.parse(await files[0].text());
