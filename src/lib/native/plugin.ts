@@ -1,5 +1,5 @@
 import { invoke, InvokeArgs, InvokeOptions, addPluginListener } from "@tauri-apps/api/core";
-import { replace, walk } from "../json";
+import { replace, walk } from "../util/json";
 import { platform } from "@tauri-apps/plugin-os";
 
 export function invokePlugin<T>(cmd: string, args?: InvokeArgs, opts?: InvokeOptions){
