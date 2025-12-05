@@ -5,6 +5,7 @@ import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUIDable, Member, UUID } from "../entities";
 import { maxUid, nilUid } from "../../util/consts";
 import { filterMember } from "../../search";
+import { PartialBy } from "../../types";
 
 export function getMembers(){
 	return db.members.iterate();
@@ -80,6 +81,17 @@ export async function updateMember(id: UUID, newContent: Partial<Member>) {
 	}catch(_error){
 		return false;
 	}
+}
+
+export async function saveMember(member: PartialBy<Member, keyof UUIDable | "dateCreated">){
+	if (member.id){
+		await updateMember(member.id, { ...member });
+		return member as Member;
+	}
+	return await newMember({
+		...member,
+		dateCreated: new Date()
+	});
 }
 
 export const defaultMember = (): Member => ({
