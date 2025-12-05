@@ -2,16 +2,17 @@ export interface UUIDable {
 	id: UUID,
 };
 
-export type UUID = string;
+export type UUID = `${string}-${string}-${string}-${string}-${string}`;
+export type Foreign<T> = UUIDable & Partial<T>;
 
 export interface BoardMessage extends UUIDable {
-	member?: Member,
+	member?: Foreign<Member>,
 	title: string,
 	body: string,
 	date: Date,
 	isPinned: boolean,
 	isArchived: boolean,
-	poll?: Poll
+	poll?: Foreign<Poll>
 }
 
 export interface Poll extends UUIDable {
@@ -19,53 +20,53 @@ export interface Poll extends UUIDable {
 }
 
 export interface PollEntry extends UUIDable {
-	poll: Poll,
+	poll: Foreign<Poll>,
 	choice: string,
 }
 
 export interface Vote extends UUIDable {
-	entry: PollEntry,
-	member: Member,
+	entry: Foreign<PollEntry>,
+	member: Foreign<Member>,
 	reason?: string
 }
 
 export interface FrontingEntry extends UUIDable {
-	member: Member,
+	member: Foreign<Member>,
 	startTime: Date,
 	endTime?: Date,
 	isMainFronter: boolean,
 	isLocked: boolean,
 	customStatus?: string,
-	influencing?: Member,
+	influencing?: Foreign<Member>,
 	comment?: string
 }
 
 export interface PresenceEntry extends UUIDable {
-	frontingEntry: FrontingEntry,
+	frontingEntry: Foreign<FrontingEntry>,
 	date: Date,
 	presence: number,
 }
 
 export interface JournalPost extends UUIDable {
-	member?: Member,
+	member?: Foreign<Member>,
 	date: Date,
 	title: string,
 	subtitle?: string,
 	body: string,
-	cover?: SQLFile,
+	cover?: Foreign<SQLFile>,
 	isPinned: boolean,
 	isPrivate: boolean,
 	contentWarning?: string
 }
 
 export interface Member extends UUIDable {
-	system: System,
+	system: Foreign<System>,
 	name: string,
 	pronouns?: string,
 	description?: string,
 	role?: string,
-	image?: SQLFile,
-	cover?: SQLFile,
+	image?: Foreign<SQLFile>,
+	cover?: Foreign<SQLFile>,
 	color?: string,
 	isPinned: boolean,
 	isArchived: boolean,
@@ -80,8 +81,8 @@ export interface CustomField extends UUIDable {
 }
 
 export interface CustomFieldDatum extends UUIDable {
-	member: Member,
-	field: CustomField,
+	member: Foreign<Member>,
+	field: Foreign<CustomField>,
 	value: string
 }
 
@@ -89,7 +90,7 @@ export interface CustomFieldDatum extends UUIDable {
 export interface System extends UUIDable {
 	name: string,
 	description?: string,
-	image?: SQLFile
+	image?: Foreign<SQLFile>
 }
 
 export interface Tag extends UUIDable {
@@ -101,17 +102,17 @@ export interface Tag extends UUIDable {
 }
 
 export interface MemberTag extends UUIDable {
-	member: Member,
-	tag: Tag
+	member: Foreign<Member>,
+	tag: Foreign<Tag>
 }
 
 export interface JournalPostTag extends UUIDable {
-	post: JournalPost,
-	tag: Tag
+	post: Foreign<JournalPost>,
+	tag: Foreign<Tag>
 }
 
 export interface Asset extends UUIDable {
-	file: SQLFile,
+	file: Foreign<SQLFile>,
 	friendlyName: string
 }
 
