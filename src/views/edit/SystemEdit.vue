@@ -3,7 +3,7 @@
 	import { onBeforeMount, ref, toRaw, watch } from "vue";
 	import { getObjectURL } from "../../lib/util/blob";
 	import { promptOkCancel, toast } from "../../lib/util/misc";
-	import { deleteSystem, getSystem, newSystem, updateSystem } from "../../lib/db/tables/system";
+	import { deleteSystem, getSystem, saveSystem } from "../../lib/db/tables/system";
 	import { getMembers } from "../../lib/db/tables/members";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 
@@ -84,19 +84,7 @@
 			return;
 		}
 
-		const uuid = system.value.id;
-		const _system = toRaw(system.value);
-
-		if(!uuid){
-			await newSystem({
-				..._system
-			});
-			router.back();
-
-			return;
-		}
-
-		await updateSystem(uuid, _system);
+		await saveSystem(toRaw(system.value));
 
 		isEditing.value = false;
 	}
