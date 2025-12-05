@@ -1,14 +1,16 @@
 import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
-import { PollEntry, UUID, UUIDable, Vote } from "../entities";
+import { Poll, PollEntry, UUID, UUIDable, Vote } from "../entities";
+import { getPollEntriesForPoll } from "./pollEntries";
 
 export function getVotes(){
 	return db.votes.iterate();
 }
 
-export async function* getVotesForPollEntry(pollEntry: PollEntry){
+export async function* getVotesForPollEntry(pollEntry: PollEntry | UUID){
+	const id = typeof pollEntry === "string" ? pollEntry : pollEntry.id;
 	for await(const entry of getVotes()){
-		if(entry.entry.id === pollEntry.id)
+		if(entry.entry.id === id)
 			yield entry;
 	}
 }
@@ -67,5 +69,12 @@ export async function updateVote(id: UUID, newContent: Partial<Vote>) {
 		return false;
 	}catch(_error){
 		return false;
+	}
+}
+
+export async function resetVotesForPoll(poll: Poll){
+	for await (const entry of getPollEntriesForPoll(poll)){
+		for await (const vote of getVotesForPollEntry(entry))
+			await deleteVote(vote.id);
 	}
 }

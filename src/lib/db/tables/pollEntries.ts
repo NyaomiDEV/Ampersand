@@ -1,14 +1,16 @@
 import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUID, UUIDable, PollEntry, Poll } from "../entities";
+import { deleteVote, getVotesForPollEntry } from "./votes";
 
 export function getPollEntries(){
 	return db.pollEntries.iterate();
 }
 
-export async function* getPollEntriesForPoll(poll: Poll){
+export async function* getPollEntriesForPoll(poll: Poll | UUID){
+	const id = typeof poll === "string" ? poll : poll.id;
 	for await (const entry of getPollEntries()){
-		if(entry.poll.id === poll.id)
+		if(entry.poll.id === id)
 			yield entry;
 	}
 }
@@ -37,6 +39,9 @@ export async function newPollEntry(pollEntry: Omit<PollEntry, keyof UUIDable>) {
 
 export async function deletePollEntry(id: UUID) {
 	try {
+		for await(const vote of getVotesForPollEntry(id))
+			await deleteVote(vote.id);
+		
 		await db.pollEntries.delete(id);
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "pollEntries",
