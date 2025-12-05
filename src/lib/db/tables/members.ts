@@ -44,7 +44,8 @@ export async function getMember(id: UUID){
 	return await db.members.get(id);
 }
 
-export async function deleteMember(id: UUID) {
+export async function deleteMember(member: Member | UUID) {
+	const id = typeof member === "string" ? member : member.id;
 	if (id === nilUid) return false;
 	try {
 		await db.members.delete(id);

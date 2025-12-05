@@ -34,7 +34,8 @@ export async function getJournalPost(id: UUID){
 	return await db.journalPosts.get(id);
 }
 
-export async function deleteJournalPost(id: UUID) {
+export async function deleteJournalPost(journalPost: JournalPost | UUID) {
+	const id = typeof journalPost === "string" ? journalPost : journalPost.id;
 	try {
 		await db.journalPosts.delete(id);
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {

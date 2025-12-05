@@ -42,21 +42,9 @@ export function getTag(uuid: UUID){
 	return db.tags.get(uuid);
 }
 
-export async function removeTag(id: UUID){
-	// TODO: should we do this here?
-	const tag = await db.tags.get(id);
-	if(tag.type === 0){
-		for await(const tag of getMemberTags()){
-			if(tag.tag.id === id)
-				await deleteMemberTag(tag.id);
-		}
-	} else if(tag?.type === 1) {
-		for await (const tag of getJournalPostTags()) {
-			if (tag.tag.id === id)
-				await deleteJournalPostTag(tag.id);
-		}
-	}
-	// END TODO
+export async function removeTag(tag: Tag | UUID){
+	const id = typeof tag === "string" ? tag : tag.id;
+	await removeTagAssociations(await db.tags.get(id));
 	await db.tags.delete(id);
 	DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 		table: "tags",
@@ -64,6 +52,20 @@ export async function removeTag(id: UUID){
 		id,
 		delta: {}
 	}));
+}
+
+export async function removeTagAssociations(tag: Tag){
+	if (tag.type === 0) {
+		for await (const tag of getMemberTags()) {
+			if (tag.tag.id === tag.id)
+				await deleteMemberTag(tag.id);
+		}
+	} else if (tag?.type === 1) {
+		for await (const tag of getJournalPostTags()) {
+			if (tag.tag.id === tag.id)
+				await deleteJournalPostTag(tag.id);
+		}
+	}
 }
 
 export async function updateTag(id: UUID, newContent: Partial<Tag>) {

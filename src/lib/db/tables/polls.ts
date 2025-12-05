@@ -29,7 +29,8 @@ export async function newPoll(poll: Omit<Poll, keyof UUIDable>) {
 	}
 }
 
-export async function deletePoll(id: UUID) {
+export async function deletePoll(poll: Poll | UUID) {
+	const id = typeof poll === "string" ? poll : poll.id;
 	try {
 		for await(const entry of getPollEntriesForPoll(id))
 			await deletePollEntry(entry.id);

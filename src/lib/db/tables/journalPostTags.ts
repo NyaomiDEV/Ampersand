@@ -48,7 +48,8 @@ export async function newJournalPostTag(journalPostTag: Omit<JournalPostTag, key
 	}
 }
 
-export async function deleteJournalPostTag(id: UUID) {
+export async function deleteJournalPostTag(journalPostTag: JournalPostTag | UUID) {
+	const id = typeof journalPostTag === "string" ? journalPostTag : journalPostTag.id;
 	try {
 		await db.journalPostTags.delete(id);
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
