@@ -2,7 +2,7 @@ import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUIDable, JournalPost, UUID } from "../entities";
 import dayjs from "dayjs";
-import { filterJournalPost } from "../../search";
+import { filterJournalPost } from "../search";
 import { PartialBy } from "../../types";
 import { formatDate } from "../../util/misc";
 

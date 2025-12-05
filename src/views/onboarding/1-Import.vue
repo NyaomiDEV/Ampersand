@@ -3,7 +3,7 @@
 	import { ref } from "vue";
 	import Spinner from "../../components/Spinner.vue";
 	import { importDatabaseFromBinary } from "../../lib/db/ioutils";
-	import { showFileModal, slideAnimation, toast } from "../../lib/util/misc";
+	import { slideAnimation, toast } from "../../lib/util/misc";
 	import { useTranslation } from "i18next-vue";
 	import { getTables } from "../../lib/db/tables";
 	import { resetConfig } from "../../lib/config";
@@ -14,9 +14,7 @@
 	const router = useIonRouter();
 
 	async function importFromPreviousInstallation() {
-		const files = await showFileModal(undefined, false);
 		try{
-			if (!files.length) throw new Error("no files specified");
 			loading.value = true;
 			await importDatabaseFromBinary().dbPromise;
 		}catch(_e){
