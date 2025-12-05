@@ -3,6 +3,9 @@ import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUID, UUIDable, BoardMessage } from "../entities";
 import dayjs from "dayjs";
 import { filterBoardMessage } from "../../search";
+import { PartialBy } from "../../types";
+import { formatDate } from "../../util/misc";
+import { resetVotesForPoll } from "./votes";
 
 export function getBoardMessages(){
 	return db.boardMessages.iterate();
@@ -90,4 +93,20 @@ export async function getBoardMessagesDays(query: string) {
 		occurrences.set(current, (occurrences.get(current) || 0) + 1);
 		return occurrences;
 	}, new Map<number, number>());
+}
+
+export async function saveBoardMessage(boardMessage: PartialBy<BoardMessage, keyof UUIDable>): Promise<BoardMessage | undefined> {
+	if (!boardMessage.title.length)
+		boardMessage.title = formatDate(boardMessage.date, "collapsed");
+
+	if (boardMessage.poll && boardMessage.id) {
+		// Message was modified, in which case we need to reset all the votes
+		await resetVotesForPoll(boardMessage.poll);
+	}
+
+	if (boardMessage.id){
+		await updateBoardMessage(boardMessage.id, { ...boardMessage });
+		return boardMessage as BoardMessage;
+	}
+	return await newBoardMessage({ ...boardMessage });
 }
