@@ -39,8 +39,8 @@
 	import { addModal, removeModal } from "../../lib/modals";
 	import MemberSelect from "../../modals/MemberSelect.vue";
 	import { promptOkCancel } from "../../lib/util/misc";
-	import { getMemberTags, getMemberTagsForTag, tagMembers } from "../../lib/db/tables/memberTags";
-	import { getJournalPostTags } from "../../lib/db/tables/journalPostTags";
+	import { getMemberTagsForTag, tagMembers } from "../../lib/db/tables/memberTags";
+	import { getJournalPostTagsForTag } from "../../lib/db/tables/journalPostTags";
 
 	const loading = ref(false);
 
@@ -119,21 +119,12 @@
 	}
 
 	async function updateCount(){
-		let _count = 0;
+		if(!tag.value.id) return;
 
-		if(tag.value.type === 0){
-			for await (const memberTag of getMemberTags()){
-				if(memberTag.tag.id === tag.value.id)
-					_count++;
-			}
-		} else { //journal
-			for await (const journalPostTag of getJournalPostTags()){
-				if(journalPostTag.tag.id === tag.value.id)
-					_count++;
-			}
-		}
-
-		count.value = _count;
+		if(tag.value.type === 0)
+			count.value = (await Array.fromAsync(getMemberTagsForTag(tag.value.id))).length;
+		else //journal
+			count.value = (await Array.fromAsync(getJournalPostTagsForTag(tag.value.id))).length;
 	}
 
 	watch(route, updateRoute);
