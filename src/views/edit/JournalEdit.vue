@@ -26,7 +26,7 @@
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
 
 	import { JournalPost, Member, SQLFile, Tag, UUID } from "../../lib/db/entities";
-	import { newJournalPost, updateJournalPost, deleteJournalPost, getJournalPost } from "../../lib/db/tables/journalPosts";
+	import { deleteJournalPost, getJournalPost, saveJournalPost } from "../../lib/db/tables/journalPosts";
 	import { formatDate, toast, promptOkCancel } from "../../lib/util/misc";
 	import { onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
 	import Markdown from "../../components/Markdown.vue";
@@ -41,7 +41,7 @@
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import { getObjectURL } from "../../lib/util/blob";
 	import { uploadImage } from "../../lib/db/tables/files";
-	import { deleteJournalPostTag, getJournalPostTagsForPost, newJournalPostTag } from "../../lib/db/tables/journalPostTags";
+	import { getJournalPostTagsForPost, journalPostTags } from "../../lib/db/tables/journalPostTags";
 
 	const i18next = useTranslation();
 
@@ -75,37 +75,10 @@
 			return;
 		}
 
-		let id = post.value.id;
-		const _post = toRaw(post.value);
+		const newPost = await saveJournalPost(toRaw(post.value));
+		if(newPost) await journalPostTags(newPost, toRaw(tags.value));
 
-		if(!_post.title.length)
-			_post.title = formatDate(_post.date, "collapsed");
-
-		let isNew = false;
-		if(!id){
-			isNew = true;
-			id = (await newJournalPost({ ..._post }))?.id;
-		} else 
-			await updateJournalPost(id, {	..._post });
-
-		if(id){
-			let _tags = toRaw(tags.value);
-			const allJournalTags = await Array.fromAsync(getJournalPostTagsForPost({ ..._post, id } as JournalPost));
-			for(const journalTag of allJournalTags){
-				const tag = _tags.find(x => x.id === journalTag.tag.id);
-				if(!tag)
-					await deleteJournalPostTag(journalTag.id);
-				else _tags = _tags.filter(x => x !== tag);
-			}
-			for(const remainingTag of _tags){
-				await newJournalPostTag({
-					tag: remainingTag,
-					post: { ..._post, id } as JournalPost
-				});
-			}
-		}
-
-		if(isNew){
+		if(!post.value.id){
 			router.back();
 			return;
 		}
@@ -129,23 +102,23 @@
 	}
 
 	async function removePost() {
-		if(await promptOkCancel(
+		if(!await promptOkCancel(
 			i18next.t("journal:edit.delete.title"),
 			i18next.t("journal:edit.delete.confirm")
-		)){
-			await deleteJournalPost(post.value.id!);
-			router.back();
-		}
+		)) return;
+
+		await deleteJournalPost(post.value.id!);
+		router.back();
 	}
 
 	async function copyIdToClipboard(){
-		if(post.value.id){
-			try{
-				await window.navigator.clipboard.writeText(`@<j:${post.value.id}>`);
-				await toast(i18next.t("journal:edit.postIDcopiedToClipboard"));
-			}catch(_e){
-				return;
-			}
+		if(!post.value.id) return;
+
+		try{
+			await window.navigator.clipboard.writeText(`@<j:${post.value.id}>`);
+			await toast(i18next.t("journal:edit.postIDcopiedToClipboard"));
+		}catch(_e){
+			return;
 		}
 	}
 
