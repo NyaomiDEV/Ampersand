@@ -2,7 +2,7 @@
 
 	import { alertController, IonButton, IonItem, IonLabel } from "@ionic/vue";
 	import MemberAvatar from "./member/MemberAvatar.vue";
-	import { BoardMessage, Member, PollEntry, Vote } from "../lib/db/entities";
+	import { BoardMessage, Member, Poll, PollEntry, Vote } from "../lib/db/entities";
 	import Markdown from "./Markdown.vue";
 	import MemberSelect from "../modals/MemberSelect.vue";
 	import { addModal, removeModal } from "../lib/modals";
@@ -11,7 +11,7 @@
 	import { useTranslation } from "i18next-vue";
 	import { formatDate, promptOkCancel } from "../lib/util/misc";
 	import { getPollEntriesForPoll } from "../lib/db/tables/pollEntries";
-	import { deleteVote, getVotesForPollEntry, newVote } from "../lib/db/tables/votes";
+	import { deleteVote, getVotesForPollEntry, voteForPoll } from "../lib/db/tables/votes";
 
 	const i18next = useTranslation();
 
@@ -110,20 +110,7 @@
 			const reason = await showReasonAlert();
 			if(reason === undefined) return;
 
-			await newVote({
-				member: voter,
-				entry: choice,
-				reason,
-			});
-
-			if(!props.boardMessage.poll!.multipleChoice){
-				const otherEntries = pollVotes.keys().filter(x => choice !== x);
-				for(const _entry of otherEntries){
-					const votes = pollVotes.get(_entry) || [];
-					const vote = votes.find(x => x.member.id === voter.id);
-					if(vote) await deleteVote(vote.id);
-				}
-			}
+			await voteForPoll(props.boardMessage.poll! as Poll, voter, choice, reason);
 		}
 
 		await updatePoll();
