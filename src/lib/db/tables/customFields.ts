@@ -2,6 +2,7 @@ import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUID, UUIDable, CustomField } from "../entities";
 import { filterCustomField } from "../../search";
+import { PartialBy } from "../../types";
 
 export function getCustomFields(){
 	return db.customFields.iterate();
@@ -70,4 +71,12 @@ export async function updateCustomField(id: UUID, newContent: Partial<CustomFiel
 	}catch(_error){
 		return false;
 	}
+}
+
+export async function saveCustomField(customField: PartialBy<CustomField, keyof UUIDable>){
+	if (customField.id){
+		await updateCustomField(customField.id, { ...customField });
+		return customField as CustomField;
+	}
+	return await newCustomField({ ...customField });
 }

@@ -20,7 +20,7 @@
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
 
 	import { CustomField } from "../lib/db/entities";
-	import { newCustomField, updateCustomField, deleteCustomField } from "../lib/db/tables/customFields";
+	import { deleteCustomField, saveCustomField } from "../lib/db/tables/customFields";
 	import { ref, toRaw } from "vue";
 
 	import { PartialBy } from "../lib/types";
@@ -43,24 +43,12 @@
 	const customField = ref({ ...(props.customField || emptyCustomField) });
 
 	async function save(){
-		const id = customField.value?.id;
-		const _customField = toRaw(customField.value);
-
-		if(!id) {
-			await newCustomField({ ..._customField });
-
-			await modalController.dismiss(null, "added");
-
-			return;
-		}
-
-		await updateCustomField(id, { ..._customField });
-
 		try{
-			await modalController.dismiss(null, "modified");
-		}catch(_){ /* empty */ }
-		// catch an error because the type might get changed, causing the parent to be removed from DOM
-		// however it's safe for us to ignore
+			await saveCustomField(toRaw(customField.value));
+			await modalController.dismiss(null);
+		}catch(_){
+			// error handling here
+		}
 	}
 
 	async function removeCustomField(){
@@ -70,7 +58,7 @@
 		)){
 			await deleteCustomField(customField.value.id!);
 			try{
-				await modalController.dismiss(undefined, "deleted");
+				await modalController.dismiss(undefined);
 			}catch(_){ /* empty */ }
 		}
 	}
