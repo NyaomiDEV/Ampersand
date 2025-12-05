@@ -1,7 +1,8 @@
 <script setup lang="ts">
 	import { watch, shallowRef, VNode } from "vue";
 	import { marked } from "../lib/markdown";
-	import { openSQLFileByID } from "../lib/db/tables/files";
+	import { openSQLFile } from "../lib/db/tables/files";
+	import { UUID } from "../lib/db/entities";
 
 	const props = defineProps<{
 		markdown: string
@@ -19,9 +20,9 @@
 			evt.preventDefault();
 			evt.stopPropagation();
 
-			const fileID = url.substring(17);
+			const fileID = url.substring(17) as UUID;
 
-			await openSQLFileByID(fileID);
+			await openSQLFile(fileID);
 		}
 	}
 

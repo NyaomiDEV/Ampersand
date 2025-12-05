@@ -36,7 +36,8 @@ export async function newCustomField(customField: Omit<CustomField, keyof UUIDab
 	}
 }
 
-export async function deleteCustomField(id: UUID) {
+export async function deleteCustomField(customField: CustomField | UUID) {
+	const id = typeof customField === "string" ? customField : customField.id;
 	try {
 		await db.customFields.delete(id);
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {

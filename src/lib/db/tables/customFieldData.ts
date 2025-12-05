@@ -36,7 +36,8 @@ export async function newCustomFieldDatum(customFieldDatum: Omit<CustomFieldDatu
 	}
 }
 
-export async function deleteCustomFieldDatum(id: UUID) {
+export async function deleteCustomFieldDatum(customFieldDatum: CustomFieldDatum | UUID) {
+	const id = typeof customFieldDatum === "string" ? customFieldDatum : customFieldDatum.id;
 	try {
 		await db.customFieldData.delete(id);
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
