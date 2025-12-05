@@ -45,21 +45,23 @@
 	async function save(){
 		try{
 			await saveCustomField(toRaw(customField.value));
-			await modalController.dismiss(null);
+			await modalController.dismiss();
 		}catch(_){
 			// error handling here
 		}
 	}
 
 	async function removeCustomField(){
-		if (await promptOkCancel(
+		if (!await promptOkCancel(
 			i18next.t("customFields:edit.delete.title"),
 			i18next.t("customFields:edit.delete.confirm")
-		)){
+		)) return;
+
+		try{
 			await deleteCustomField(customField.value.id!);
-			try{
-				await modalController.dismiss(undefined);
-			}catch(_){ /* empty */ }
+			await modalController.dismiss();
+		}catch(_){
+			// handle error here
 		}
 	}
 </script>

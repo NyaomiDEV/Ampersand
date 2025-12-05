@@ -34,8 +34,8 @@
 	import FrontHistoryMD from "@material-symbols/svg-600/outlined/show_chart.svg";
 	import systemCircle from "@material-symbols/svg-600/outlined/supervised_user_circle.svg";
 
-	import { CustomField, Member, System, Tag, UUID } from "../../lib/db/entities";
-	import { newMember, deleteMember, updateMember, defaultMember, getMember } from "../../lib/db/tables/members";
+	import { CustomField, Member, Tag, UUID } from "../../lib/db/entities";
+	import { deleteMember, defaultMember, getMember, saveMember } from "../../lib/db/tables/members";
 	import { promptOkCancel, toast } from "../../lib/util/misc";
 	import { getCurrentInstance, onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
 	import Markdown from "../../components/Markdown.vue";
@@ -51,8 +51,8 @@
 	import { getCustomFields } from "../../lib/db/tables/customFields";
 	import CustomFieldsSelect from "../../modals/CustomFieldsSelect.vue";
 	import { appConfig } from "../../lib/config";
-	import { deleteMemberTag, getMemberTagsForMember, newMemberTag } from "../../lib/db/tables/memberTags";
-	import { deleteCustomFieldDatum, getCustomFieldDataForMember, newCustomFieldDatum, updateCustomFieldDatum } from "../../lib/db/tables/customFieldData";
+	import { getMemberTagsForMember, memberTags } from "../../lib/db/tables/memberTags";
+	import { getCustomFieldDataForMember, memberCustomFields } from "../../lib/db/tables/customFieldData";
 	import { deleteFile, uploadImage } from "../../lib/db/tables/files";
 	import { getObjectURL } from "../../lib/util/blob";
 	import { getSystem } from "../../lib/db/tables/system";
@@ -114,23 +114,23 @@
 	}
 
 	async function removeMember() {
-		if(await promptOkCancel(
+		if(!await promptOkCancel(
 			i18next.t("members:edit.delete.title"),
 			i18next.t("members:edit.delete.confirm")
-		)){
-			await deleteMember(member.value.id!);
-			router.back();
-		}
+		)) return;
+
+		await deleteMember(member.value.id!);
+		router.back();
 	}
 
 	async function copyIdToClipboard(){
-		if(member.value.id){
-			try{
-				await window.navigator.clipboard.writeText(`@<m:${member.value.id}>`);
-				await toast(i18next.t("members:edit.memberIDcopiedToClipboard"));
-			}catch(_e){
-				return;
-			}
+		if(!member.value.id) return;
+
+		try{
+			await window.navigator.clipboard.writeText(`@<m:${member.value.id}>`);
+			await toast(i18next.t("members:edit.memberIDcopiedToClipboard"));
+		}catch(_e){
+			return;
 		}
 	}
 
@@ -142,61 +142,14 @@
 
 		member.value.system.id = system.value.id;
 
-		let id = member.value.id;
-		const _member = toRaw(member.value);
-		let isNew = false;
+		const newMember = await saveMember(toRaw(member.value));
 
-		if(!id){
-			isNew = true;
-			id = (await newMember({
-				..._member,
-				dateCreated: new Date()
-			}))?.id;
-		} else
-			await updateMember(id, _member);
-
-		if(id){
-			let _tags = toRaw(tags.value);
-			const allMemberTags = await Array.fromAsync(getMemberTagsForMember({ ..._member, id } as Member));
-			for(const memberTag of allMemberTags){
-				const tag = _tags.find(x => x.id === memberTag.tag.id);
-				if(!tag)
-					await deleteMemberTag(memberTag.id);
-				else _tags = _tags.filter(x => x !== tag);
-			}
-			for(const remainingTag of _tags){
-				await newMemberTag({
-					tag: remainingTag,
-					member: { ..._member, id } as Member
-				});
-			}
-
-			let _customFields = Array.from(toRaw(customFields.value).entries());
-			const customFieldData = await Array.fromAsync(getCustomFieldDataForMember({ ..._member, id } as Member));
-			for(const customFieldDatum of customFieldData){
-				const field = _customFields.find(x => x[0].id === customFieldDatum.field.id);
-				if(!field || !field[1].length)
-					await deleteCustomFieldDatum(customFieldDatum.id);
-				else {
-					await updateCustomFieldDatum(customFieldDatum.id, {
-						value: field[1]
-					});
-					_customFields = _customFields.filter(x => x !== field);
-				}
-			}
-
-			for(const remainingField of _customFields){
-				if(remainingField[1].length){
-					await newCustomFieldDatum({
-						value: remainingField[1],
-						member: { ..._member, id } as Member,
-						field: remainingField[0]
-					});
-				}
-			}
+		if(newMember){
+			await memberTags(newMember, toRaw(tags.value));
+			await memberCustomFields(newMember, toRaw(customFields.value));
 		}
 
-		if(isNew){
+		if(!member.value.id){
 			router.back();
 			return;
 		}

@@ -109,3 +109,18 @@ export async function tagMembers(tag: Tag, members: Member[]){
 		});
 	}
 }
+
+export async function memberTags(member: Member, tags: Tag[]){
+	for await (const memberTag of getMemberTagsForMember(member)) {
+		const tag = tags.find(x => x.id === memberTag.tag.id);
+		if (!tag)
+			await deleteMemberTag(memberTag.id);
+		else tags = tags.filter(x => x !== tag);
+	}
+	for (const remainingTag of tags) {
+		await newMemberTag({
+			tag: remainingTag,
+			member
+		});
+	}
+}
