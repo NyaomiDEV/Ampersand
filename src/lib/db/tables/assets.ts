@@ -40,7 +40,8 @@ export function getAsset(id: UUID){
 	return db.assets.get(id);
 }
 
-export async function deleteAsset(id: UUID) {
+export async function deleteAsset(asset: Asset | UUID) {
+	const id = typeof asset === "string" ? asset : asset.id;
 	try {
 		await db.assets.delete(id);
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {

@@ -37,7 +37,8 @@ export async function newVote(vote: Omit<Vote, keyof UUIDable>) {
 	}
 }
 
-export async function deleteVote(id: UUID) {
+export async function deleteVote(vote: Vote | UUID) {
+	const id = typeof vote === "string" ? vote : vote.id;
 	try {
 		await db.votes.delete(id);
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
