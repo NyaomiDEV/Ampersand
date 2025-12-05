@@ -14,6 +14,14 @@ export async function* getJournalPostTagsForPost(journalPost: JournalPost | UUID
 	}
 }
 
+export async function* getJournalPostTagsForTag(tag: Tag | UUID) {
+	const id = typeof tag === "string" ? tag : tag.id;
+	for await (const entry of getJournalPostTags()) {
+		if (entry.tag.id === id)
+			yield entry;
+	}
+}
+
 export async function journalPostHasTag(journalPost: JournalPost | UUID, tag: Tag | UUID){
 	const postId = typeof journalPost === "string" ? journalPost : journalPost.id;
 	const tagId = typeof tag === "string" ? tag : tag.id;
@@ -81,5 +89,21 @@ export async function updateJournalPostTag(id: UUID, newContent: Partial<Journal
 		return false;
 	}catch(_error){
 		return false;
+	}
+}
+
+export async function tagJournalPosts(tag: Tag, journalPosts: JournalPost[]){
+	const allPostTags = await Array.fromAsync(getJournalPostTagsForTag(tag));
+	for (const postTag of allPostTags) {
+		const post = journalPosts.find(x => x.id === postTag.post.id);
+		if (!post)
+			await deleteJournalPostTag(postTag.id);
+		else journalPosts = journalPosts.filter(x => x.id !== post.id);
+	}
+	for (const remainingPost of journalPosts) {
+		await newJournalPostTag({
+			tag,
+			post: remainingPost
+		});
 	}
 }
