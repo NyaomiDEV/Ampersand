@@ -2,6 +2,7 @@ import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUID, UUIDable, Asset } from "../entities";
 import { filterAsset } from "../../search";
+import { PartialBy } from "../../types";
 
 export function getAssets(){
 	return db.assets.iterate();
@@ -74,4 +75,12 @@ export async function updateAsset(id: UUID, newContent: Partial<Asset>) {
 	}catch(_error){
 		return false;
 	}
+}
+
+export async function saveAsset(asset: PartialBy<Asset, keyof UUIDable>){
+	if (asset.id){
+		await updateAsset(asset.id, { ...asset });
+		return asset as Asset;
+	}
+	return await newAsset({ ...asset });
 }
