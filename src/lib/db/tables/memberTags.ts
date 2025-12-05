@@ -6,16 +6,21 @@ export function getMemberTags(){
 	return db.memberTags.iterate();
 }
 
-export async function* getMemberTagsForMember(member: Member){
+export async function* getMemberTagsForMember(member: Member | UUID){
+	const id = typeof member === "string" ? member : member.id;
+
 	for await (const entry of getMemberTags()){
-		if(entry.member.id === member.id)
+		if(entry.member.id === id)
 			yield entry;
 	}
 }
 
-export async function memberHasTag(member: Member, tag: Tag){
+export async function memberHasTag(member: Member | UUID, tag: Tag | UUID){
+	const memberId = typeof member === "string" ? member : member.id;
+	const tagId = typeof tag === "string" ? tag : tag.id;
+
 	for await (const entry of getMemberTags()){
-		if(entry.member.id === member.id && entry.tag.id === tag.id)
+		if(entry.member.id === memberId && entry.tag.id === tagId)
 			return true;
 	}
 

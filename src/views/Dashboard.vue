@@ -19,12 +19,12 @@
 
 	const listener = (event: Event) => {
 		if((event as DatabaseEvent).data.table === "frontingEntries")
-			void getMainFronter().then(res => mainFronter.value = res);
+			void getMainFronter().then(res => mainFronter.value = res as Member);
 	};
 	
 	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
-		mainFronter.value = await getMainFronter();
+		mainFronter.value = await getMainFronter() as Member | undefined;
 	});
 
 	onUnmounted(() => {

@@ -6,6 +6,7 @@ import { filterFrontingEntry } from "../../search";
 import { appConfig } from "../../config";
 import { broadcastEvent } from "../../native/plugin";
 import { deleteFile } from "../../json";
+import { PartialBy } from "../../types";
 
 export function getFrontingEntries(){
 	return db.frontingEntries.iterate();
@@ -163,6 +164,22 @@ export async function getFrontingEntriesDays(query: string) {
 		occurrences.set(current, (occurrences.get(current) || 0) + 1);
 		return occurrences;
 	}, new Map<number, number>());
+}
+
+export async function saveFrontingEntry(frontingEntry: PartialBy<FrontingEntry, keyof UUIDable>){
+	if (frontingEntry.isMainFronter)
+		delete frontingEntry.influencing;
+
+	if (frontingEntry.id)
+		await updateFrontingEntry(frontingEntry.id, { ...frontingEntry });
+	else{
+		const _frontingEntry = await newFrontingEntry(frontingEntry);
+		if(_frontingEntry) frontingEntry = _frontingEntry;
+	}
+
+	void sendFrontingChangedEvent();
+
+	return frontingEntry as FrontingEntry;
 }
 
 export async function sendFrontingChangedEvent(){

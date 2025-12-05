@@ -19,6 +19,7 @@ import highlightExtension from "./highlightExtension";
 import linebreakExtension from "./linebreakExtension";
 import textColorFgExtension from "./textColorFgExtension";
 import textColorBgExtension from "./textColorBgExtension";
+import { SQLFile } from "../db/entities";
 
 export const marked = new Marked<(VNode | string)[], VNode | string>();
 
@@ -96,7 +97,7 @@ marked.use({
 					const friendlyNameMaybe = token.href.slice(1);
 					for await (const x of getAssets()) {
 						if (x.friendlyName === friendlyNameMaybe) {
-							token.href = await getObjectURL(x.file);
+							token.href = await getObjectURL(x.file as SQLFile);
 							break;
 						}
 					}
