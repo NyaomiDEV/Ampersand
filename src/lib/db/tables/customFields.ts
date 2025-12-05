@@ -1,7 +1,7 @@
 import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUID, UUIDable, CustomField } from "../entities";
-import { filterCustomField } from "../../search";
+import { filterCustomField } from "../search";
 import { PartialBy } from "../../types";
 
 export function getCustomFields(){
