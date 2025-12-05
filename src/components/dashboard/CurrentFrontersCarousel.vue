@@ -2,7 +2,7 @@
 	import { IonCard, IonCardContent, IonLabel, IonListHeader, IonIcon } from "@ionic/vue";
 	import MemberAvatar from "../member/MemberAvatar.vue";
 	import { h, onBeforeMount, onUnmounted, ref, shallowRef } from "vue";
-	import type { FrontingEntry } from "../../lib/db/entities.d.ts";
+	import type { FrontingEntry, Member } from "../../lib/db/entities.d.ts";
 	import { getFronting, newFrontingEntry, sendFrontingChangedEvent } from "../../lib/db/tables/frontingEntries";
 	import { formatWrittenTime } from "../../lib/util/misc";
 	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
@@ -27,7 +27,7 @@
 			if(a.influencing && !b.influencing) return 1;
 			if(!a.influencing && b.influencing) return -1;
 
-			return a.member.name.localeCompare(b.member.name);
+			return (a.member as Member).name.localeCompare((b.member as Member).name);
 		});
 	}
 
@@ -103,7 +103,7 @@
 			@click="showModal(fronting)"
 		>
 			<IonCardContent>
-				<MemberAvatar :member="fronting.member" />
+				<MemberAvatar :member="fronting.member as Member" />
 				<IonLabel>
 					<h2>
 						{{ fronting.member.name }}

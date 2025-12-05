@@ -23,7 +23,7 @@
 	import chartMD from "@material-symbols/svg-600/outlined/bar_chart.svg";
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
 
-	import { BoardMessage, PollEntry } from "../lib/db/entities";
+	import { BoardMessage, Member, PollEntry } from "../lib/db/entities";
 	import { deleteBoardMessage, saveBoardMessage } from "../lib/db/tables/boardMessages";
 	import { onBeforeMount, ref, toRaw, useTemplateRef, watch } from "vue";
 	import { PartialBy } from "../lib/types";
@@ -103,7 +103,7 @@
 
 	async function getPollEntries(){
 		if(boardMessage.value.poll)
-			pollEntries.value = (await Array.fromAsync(getPollEntriesForPoll(boardMessage.value.poll)));
+			pollEntries.value = (await Array.fromAsync(getPollEntriesForPoll(boardMessage.value.poll.id)));
 	}
 
 	async function save(){
@@ -155,7 +155,7 @@
 			<IonList inset>
 				<IonItem button :detail="!boardMessage.member" @click="memberSelectModal?.$el.present()">
 					<template v-if="boardMessage.member">
-						<MemberAvatar slot="start" :member="boardMessage.member" />
+						<MemberAvatar slot="start" :member="boardMessage.member as Member" />
 						<IonLabel>
 							<h2>{{ boardMessage.member.name }}</h2>
 							<p>{{ $t("messageBoard:edit.member") }}</p>
@@ -329,7 +329,7 @@
 				:discard-on-select="true"
 				:hide-checkboxes="true"
 				:always-emit="true"
-				:model-value="boardMessage.member ? [boardMessage.member] : []"
+				:model-value="boardMessage.member ? [boardMessage.member as Member] : []"
 				@update:model-value="(e) => { if(e[0]) boardMessage.member = e[0] }"
 			/>
 

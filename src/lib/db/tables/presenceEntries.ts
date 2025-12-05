@@ -6,9 +6,10 @@ export function getPresenceEntries(){
 	return db.presenceEntries.iterate();
 }
 
-export async function* getPresenceEntriesForFrontEntry(frontingEntry: FrontingEntry){
+export async function* getPresenceEntriesForFrontEntry(frontingEntry: FrontingEntry | UUID){
+	const id = typeof frontingEntry === "string" ? frontingEntry : frontingEntry.id;
 	for await (const entry of getPresenceEntries()){
-		if(entry.frontingEntry.id === frontingEntry.id)
+		if(entry.frontingEntry.id === id)
 			yield entry;
 	}
 }
@@ -67,5 +68,22 @@ export async function updatePresenceEntry(id: UUID, newContent: Partial<Presence
 		return false;
 	}catch(_error){
 		return false;
+	}
+}
+
+export async function savePresenceData(frontingEntry: FrontingEntry | UUID, presenceData: Map<Date, number>){
+	const allPresences = await Array.fromAsync(getPresenceEntriesForFrontEntry(frontingEntry));
+	for (const dbPresence of allPresences) {
+		const tuple = presenceData.entries().find(x => x[0].valueOf() === dbPresence.date.valueOf());
+		if (!tuple)
+			await deletePresenceEntry(dbPresence.id);
+		else presenceData = new Map(presenceData.entries().filter(x => x !== tuple));
+	}
+	for (const remainingPresence of presenceData) {
+		await newPresenceEntry({
+			date: remainingPresence[0],
+			presence: remainingPresence[1],
+			frontingEntry: { id: typeof frontingEntry === "string" ? frontingEntry : frontingEntry.id }
+		});
 	}
 }
