@@ -33,7 +33,8 @@ export async function newBoardMessage(boardMessage: Omit<BoardMessage, keyof UUI
 	}
 }
 
-export async function deleteBoardMessage(id: UUID) {
+export async function deleteBoardMessage(boardMessage: BoardMessage | UUID) {
+	const id = typeof boardMessage === "string" ? boardMessage : boardMessage.id;
 	try {
 		await db.boardMessages.delete(id);
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {

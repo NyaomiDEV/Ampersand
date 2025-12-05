@@ -36,7 +36,8 @@ export async function newPresenceEntry(presenceEntry: Omit<PresenceEntry, keyof 
 	}
 }
 
-export async function deletePresenceEntry(id: UUID) {
+export async function deletePresenceEntry(presenceEntry: PresenceEntry | UUID) {
+	const id = typeof presenceEntry === "string" ? presenceEntry : presenceEntry.id;
 	try {
 		await db.presenceEntries.delete(id);
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {

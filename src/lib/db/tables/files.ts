@@ -16,11 +16,8 @@ export async function fileToJSFile(file: SQLFile){
 	return new File([data], file.friendlyName);
 }
 
-export async function openSQLFile(file: SQLFile) {
-	return openFile(`${filePath}${file.id}`);
-}
-
-export async function openSQLFileByID(id: string) {
+export async function openSQLFile(file: SQLFile | UUID) {
+	const id = typeof file === "string" ? file : file.id;
 	return openFile(`${filePath}${id}`);
 }
 
@@ -57,7 +54,8 @@ export function getFile(id: UUID){
 	return db.files.get(id);
 }
 
-export async function deleteFile(id: UUID) {
+export async function deleteFile(file: SQLFile | UUID) {
+	const id = typeof file === "string" ? file : file.id;
 	try {
 		await remove(`${filePath}${id}`);
 		await db.files.delete(id);
