@@ -34,7 +34,7 @@
 	import FrontHistoryMD from "@material-symbols/svg-600/outlined/show_chart.svg";
 	import systemCircle from "@material-symbols/svg-600/outlined/supervised_user_circle.svg";
 
-	import { CustomField, Member, System, Tag } from "../../lib/db/entities";
+	import { CustomField, Member, System, Tag, UUID } from "../../lib/db/entities";
 	import { newMember, deleteMember, updateMember, defaultMember, getMember } from "../../lib/db/tables/members";
 	import { getFiles, promptOkCancel, toast } from "../../lib/util/misc";
 	import { resizeImage } from "../../lib/util/image";
@@ -239,7 +239,7 @@
 		const allCustomFields = (await Array.fromAsync(getCustomFields())).sort((a, b) => a.priority - b.priority);
 
 		if(route.query.uuid){
-			const _member = await getMember(route.query.uuid as string);
+			const _member = await getMember(route.query.uuid as UUID);
 			if(_member) member.value = _member;
 			else member.value = defaultMember();
 		} else member.value = { ...emptyMember };
@@ -253,14 +253,14 @@
 
 		if(member.value.id){
 			tags.value = (await Array.fromAsync(getMemberTagsForMember(member.value as Member)))
-				.map(x => x.tag)
+				.map(x => x.tag as Tag)
 				.sort((a, b) => a.name.localeCompare(b.name));
 
 			const customFieldData = (await Array.fromAsync(getCustomFieldDataForMember(member.value as Member)));
 			for(const datum of customFieldData)
-				customFields.value.set(datum.field, datum.value);
+				customFields.value.set(datum.field as CustomField, datum.value);
 
-			customFieldsToShowInViewMode.value = customFieldData.filter(x => x.value.length).map(x => x.field);
+			customFieldsToShowInViewMode.value = customFieldData.filter(x => x.value.length).map(x => x.field as CustomField);
 			customFieldsToShowInEditMode.value = allCustomFields.filter(x => x.default || customFieldData.find(y => y.field.id === x.id)?.value.length);
 		}
 
@@ -307,7 +307,7 @@
 		<SpinnerFullscreen v-if="loading" />
 		<IonContent v-else>
 			<div class="cover-container">
-				<MemberCover class="cover" :member />
+				<MemberCover class="cover" :member="member as Member" />
 				<div v-if="isEditing" class="edit-buttons">
 					<IonButton shape="round" @click="modifyCover">
 						<IonIcon slot="icon-only" :icon="pencilMD" />
@@ -323,7 +323,7 @@
 				</div>
 
 				<div class="avatar-container">
-					<MemberAvatar :member />
+					<MemberAvatar :member="member as Member" />
 					<div v-if="isEditing" class="edit-buttons">
 						<IonButton shape="round" @click="modifyPicture">
 							<IonIcon slot="icon-only" :icon="pencilMD" />

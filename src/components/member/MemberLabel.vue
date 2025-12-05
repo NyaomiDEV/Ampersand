@@ -3,7 +3,7 @@
 		IonLabel,
 	} from "@ionic/vue";
 
-	import { Member, MemberTag, System } from "../../lib/db/entities";
+	import { Member, MemberTag, System, Tag } from "../../lib/db/entities";
 	import TagChip from "../tag/TagChip.vue";
 	import { isReactive, onBeforeMount, shallowRef, watch, WatchStopHandle } from "vue";
 	import SystemChip from "../SystemChip.vue";
@@ -20,8 +20,11 @@
 	const tags = shallowRef<MemberTag[]>();
 
 	async function updateTags(){
-		if(props.showTagChips)
-			tags.value = (await Array.fromAsync(getMemberTagsForMember(props.member))).filter(x => x.tag.viewInLists).sort((a, b) => a.tag.name.localeCompare(b.tag.name));
+		if(props.showTagChips){
+			tags.value = (await Array.fromAsync(getMemberTagsForMember(props.member)))
+				.filter(x => x.tag.viewInLists)
+				.sort((a, b) => (a.tag as Tag).name.localeCompare((b.tag as Tag).name));
+		}
 	}
 
 	onBeforeMount(async () => {
@@ -67,7 +70,7 @@
 		>
 			<SystemChip v-if="system.id !== appConfig.defaultSystem || appConfig.showDefaultSystemInMemberList" :system />
 			<div v-if="tags?.length" class="tag-chips">
-				<TagChip v-for="tag in tags" :key="tag.tag.id" :tag="tag.tag" />
+				<TagChip v-for="tag in tags" :key="tag.tag.id" :tag="tag.tag as Tag" />
 			</div>
 		</div>
 	</IonLabel>

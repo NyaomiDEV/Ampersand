@@ -16,7 +16,7 @@
 	import { appConfig } from "../../lib/config";
 	import { useRoute } from "vue-router";
 	import { PartialBy } from "../../lib/types";
-	import { System } from "../../lib/db/entities";
+	import { SQLFile, System, UUID } from "../../lib/db/entities";
 	import { useTranslation } from "i18next-vue";
 	import Markdown from "../../components/Markdown.vue";
 	import { deleteFile, newFile, updateFile } from "../../lib/db/tables/files";
@@ -93,7 +93,7 @@
 
 	async function updateAvatarUri(){
 		if(system.value.image)
-			systemAvatarUri.value = await getObjectURL(system.value.image);
+			systemAvatarUri.value = await getObjectURL(system.value.image as SQLFile);
 	}
 
 	async function removeSystem() {
@@ -123,7 +123,7 @@
 		loading.value = true;
 
 		if(route.query.uuid){
-			const _system = await getSystem(route.query.uuid as string);
+			const _system = await getSystem(route.query.uuid as UUID);
 			if(_system) system.value = _system;
 		} else system.value = { ...emptySystem };
 		
