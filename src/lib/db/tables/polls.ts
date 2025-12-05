@@ -1,6 +1,7 @@
 import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUID, UUIDable, Poll } from "../entities";
+import { deletePollEntry, getPollEntriesForPoll } from "./pollEntries";
 
 export function getPolls(){
 	return db.polls.iterate();
@@ -30,6 +31,9 @@ export async function newPoll(poll: Omit<Poll, keyof UUIDable>) {
 
 export async function deletePoll(id: UUID) {
 	try {
+		for await(const entry of getPollEntriesForPoll(id))
+			await deletePollEntry(entry.id);
+
 		await db.polls.delete(id);
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "polls",
