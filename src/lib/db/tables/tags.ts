@@ -4,6 +4,7 @@ import { UUID, UUIDable, Tag } from "../entities";
 import { filterTag } from "../../search";
 import { deleteMemberTag, getMemberTags } from "./memberTags";
 import { deleteJournalPostTag, getJournalPostTags } from "./journalPostTags";
+import { PartialBy } from "../../types";
 
 export function getTags(){
 	return db.tags.iterate();
@@ -95,4 +96,12 @@ export async function getTagFromNameHashtag(name: string){
 		) return x;
 	}
 	return;
+}
+
+export async function saveTag(tag: PartialBy<Tag, keyof UUIDable>){
+	if (tag.id){
+		await updateTag(tag.id, { ...tag });
+		return tag as Tag;
+	}
+	return await newTag({ ...tag });
 }
