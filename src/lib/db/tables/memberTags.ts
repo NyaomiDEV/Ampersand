@@ -15,6 +15,15 @@ export async function* getMemberTagsForMember(member: Member | UUID){
 	}
 }
 
+export async function* getMemberTagsForTag(tag: Tag | UUID) {
+	const id = typeof tag === "string" ? tag : tag.id;
+
+	for await (const entry of getMemberTags()) {
+		if (entry.tag.id === id)
+			yield entry;
+	}
+}
+
 export async function memberHasTag(member: Member | UUID, tag: Tag | UUID){
 	const memberId = typeof member === "string" ? member : member.id;
 	const tagId = typeof tag === "string" ? tag : tag.id;
@@ -82,5 +91,21 @@ export async function updateMemberTag(id: UUID, newContent: Partial<MemberTag>) 
 		return false;
 	}catch(_error){
 		return false;
+	}
+}
+
+export async function tagMembers(tag: Tag, members: Member[]){
+	const allMemberTags = await Array.fromAsync(getMemberTagsForTag(tag));
+	for (const memberTag of allMemberTags) {
+		const member = members.find(x => x.id === memberTag.member.id);
+		if (!member)
+			await deleteMemberTag(memberTag.id);
+		else members = members.filter(x => x.id !== member.id);
+	}
+	for (const remainingMember of members) {
+		await newMemberTag({
+			tag,
+			member: remainingMember
+		});
 	}
 }
