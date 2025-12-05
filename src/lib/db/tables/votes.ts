@@ -1,6 +1,6 @@
 import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
-import { Poll, PollEntry, UUID, UUIDable, Vote } from "../entities";
+import { Member, Poll, PollEntry, UUID, UUIDable, Vote } from "../entities";
 import { getPollEntriesForPoll } from "./pollEntries";
 
 export function getVotes(){
@@ -80,4 +80,24 @@ export async function resetVotesForPoll(poll: Poll | UUID){
 		for await (const vote of getVotesForPollEntry(entry))
 			await deleteVote(vote.id);
 	}
+}
+
+export async function voteForPoll(poll: Poll, voter: Member, choice: PollEntry, reason?: string){
+	// if the poll is not multiple choice we have to undo the vote to the other choices
+	if (!poll.multipleChoice) {
+		for await (const _entry of getPollEntriesForPoll(poll)) {
+			if(_entry.id === poll.id) continue;
+
+			for await (const vote of getVotesForPollEntry(_entry)){
+				if(vote.member.id === voter.id)
+					await deleteVote(vote);
+			}
+		}
+	}
+
+	return await newVote({
+		member: voter,
+		entry: choice,
+		reason,
+	});
 }
