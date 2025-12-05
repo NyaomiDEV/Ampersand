@@ -27,11 +27,11 @@
 	import { PartialBy } from "../../lib/types";
 	import { useRoute } from "vue-router";
 	import { useTranslation } from "i18next-vue";
-	import { getFiles, promptOkCancel } from "../../lib/util/misc";
+	import { promptOkCancel } from "../../lib/util/misc";
 	import { getObjectURL } from "../../lib/util/blob";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import AssetItem from "../../components/AssetItem.vue";
-	import { newFile, updateFile as updateFileTable } from "../../lib/db/tables/files";
+	import { uploadFile } from "../../lib/db/tables/files";
 
 	const loading = ref(false);
 
@@ -47,15 +47,8 @@
 	const i18next = useTranslation();
 
 	async function updateFile() {
-		const files = await getFiles();
-		if (files[0]){
-			if(asset.value.file)
-				await updateFileTable(asset.value.file.id, files[0].name, files[0].stream());
-			else {
-				const file = await newFile(files[0].name, files[0].stream());
-				if(file) asset.value.file = file;
-			}
-		}
+		const file = await uploadFile();
+		asset.value.file = file;
 	}
 
 	async function generatePreview(){

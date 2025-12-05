@@ -2,8 +2,7 @@
 	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonAvatar, IonButton, IonIcon, IonInput, IonFab, IonFabButton, IonItem, IonLabel, useIonRouter, IonTextarea } from "@ionic/vue";
 	import { onBeforeMount, ref, toRaw, watch } from "vue";
 	import { getObjectURL } from "../../lib/util/blob";
-	import { getFiles, promptOkCancel, toast } from "../../lib/util/misc";
-	import { resizeImage } from "../../lib/util/image";
+	import { promptOkCancel, toast } from "../../lib/util/misc";
 	import { deleteSystem, getSystem, newSystem, updateSystem } from "../../lib/db/tables/system";
 	import { getMembers } from "../../lib/db/tables/members";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
@@ -19,7 +18,7 @@
 	import { SQLFile, System, UUID } from "../../lib/db/entities";
 	import { useTranslation } from "i18next-vue";
 	import Markdown from "../../components/Markdown.vue";
-	import { deleteFile, newFile, updateFile } from "../../lib/db/tables/files";
+	import { uploadImage } from "../../lib/db/tables/files";
 
 	const i18next = useTranslation();
 
@@ -43,52 +42,14 @@
 	const canEdit = ref(true);
 	const isEditing = ref(false);
 
-	async function toggleEditing(){
-		if(!isEditing.value){
-			isEditing.value = true;
-			return;
-		}
-
-		const uuid = system.value.id;
-		const _system = toRaw(system.value);
-
-		if(!uuid){
-			await newSystem({
-				..._system
-			});
-			router.back();
-
-			return;
-		}
-
-		await updateSystem(uuid, _system);
-
-		isEditing.value = false;
-	}
-
 	async function modifyPicture(){
-		const files = await getFiles();
-		if(files.length){
-			let _file: File;
-			if(files[0].type === "image/gif")
-				_file = files[0];
-			else
-				_file = await resizeImage(files[0]);
-
-			if(system.value.image)
-				await updateFile(system.value.image.id, undefined, _file.stream());
-			else 
-				system.value.image = await newFile(_file.name, _file.stream());
-		}
-
+		system.value.image = await uploadImage();
 		await updateAvatarUri();
 	}
 
-	async function deletePicture(){
-		if(system.value.image) {
-			await deleteFile(system.value.image.id);
-			system.value.image = undefined;
-		}
+	function deletePicture(){
+		if(system.value.image)
+			delete system.value.image;
 	}
 
 	async function updateAvatarUri(){
@@ -115,6 +76,29 @@
 				return;
 			}
 		}
+	}
+
+	async function toggleEditing(){
+		if(!isEditing.value){
+			isEditing.value = true;
+			return;
+		}
+
+		const uuid = system.value.id;
+		const _system = toRaw(system.value);
+
+		if(!uuid){
+			await newSystem({
+				..._system
+			});
+			router.back();
+
+			return;
+		}
+
+		await updateSystem(uuid, _system);
+
+		isEditing.value = false;
 	}
 
 	async function updateRoute(){
