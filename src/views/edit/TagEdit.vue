@@ -85,13 +85,13 @@
 	}
 
 	async function deleteTag(){
-		if(await promptOkCancel(
+		if(!await promptOkCancel(
 			i18next.t("tagManagement:edit.delete.title"),
 			i18next.t("tagManagement:edit.delete.confirm")
-		)){
-			await removeTag(tag.value.id!);
-			router.back();
-		}
+		)) return;
+
+		await removeTag(tag.value.id!);
+		router.back();
 	}
 
 	async function updateRoute(){

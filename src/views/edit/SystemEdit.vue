@@ -58,23 +58,22 @@
 	}
 
 	async function removeSystem() {
-		if(await promptOkCancel(
+		if(!await promptOkCancel(
 			i18next.t("systems:edit.delete.title"),
 			i18next.t("systems:edit.delete.confirm")
-		)){
-			await deleteSystem(system.value.id!);
-			router.back();
-		}
+		)) return;
+		await deleteSystem(system.value.id!);
+		router.back();
 	}
 
 	async function copyIdToClipboard(){
-		if(system.value.id){
-			try{
-				await window.navigator.clipboard.writeText(`@<s:${system.value.id}>`);
-				await toast(i18next.t("systems:edit.systemIDcopiedToClipboard"));
-			}catch(_e){
-				return;
-			}
+		if(!system.value.id) return;
+
+		try{
+			await window.navigator.clipboard.writeText(`@<s:${system.value.id}>`);
+			await toast(i18next.t("systems:edit.systemIDcopiedToClipboard"));
+		}catch(_e){
+			return;
 		}
 	}
 

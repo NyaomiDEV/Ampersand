@@ -119,22 +119,24 @@
 			}
 
 			anythingChanged = false;
-			await modalController.dismiss(null);
+			await modalController.dismiss();
 		}catch(_){
 			// error here eventually
 		}
 	}
 
 	async function removeBoardMessage(){
-		if(await promptOkCancel(
+		if(!await promptOkCancel(
 			i18next.t("messageBoard:edit.delete.title"),
 			i18next.t("messageBoard:edit.delete.confirm")
-		)){
+		)) return;
+
+		try{
 			await removePoll();
 			await deleteBoardMessage(boardMessage.value.id!);
-			try{
-				await modalController.dismiss(null, "deleted");
-			}catch(_){ /* empty */ }
+			await modalController.dismiss();
+		}catch(_){
+			// error here eventually
 		}
 	}
 

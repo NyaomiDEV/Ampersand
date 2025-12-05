@@ -30,9 +30,9 @@
 	import clockAddMD from "@material-symbols/svg-600/outlined/more_time.svg";
 
 	import { JournalPost, Member, SQLFile, Tag, UUID } from "../../lib/db/entities";
-	import { newJournalPost, updateJournalPost, getJournalPost } from "../../lib/db/tables/journalPosts";
+	import { getJournalPost, saveJournalPost } from "../../lib/db/tables/journalPosts";
 	import { formatDate } from "../../lib/util/misc";
-	import { onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
+	import { h, onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
 	import Markdown from "../../components/Markdown.vue";
 	import MemberAvatar from "../../components/member/MemberAvatar.vue";
 	import TagChip from "../../components/tag/TagChip.vue";
@@ -42,9 +42,9 @@
 	import { useRoute } from "vue-router";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import { getObjectURL } from "../../lib/util/blob";
-	import { deleteJournalPostTag, getJournalPostTagsForPost, newJournalPostTag } from "../../lib/db/tables/journalPostTags";
-	import { addModal, removeModal } from "../../lib/modals";
 	import { uploadImage } from "../../lib/db/tables/files";
+	import { getJournalPostTagsForPost, journalPostTags } from "../../lib/db/tables/journalPostTags";
+	import { addModal, removeModal } from "../../lib/modals";
 
 	const router = useIonRouter();
 	const route = useRoute();
@@ -75,37 +75,10 @@
 			return;
 		}
 
-		let id = post.value.id;
-		const _post = toRaw(post.value);
+		const newPost = await saveJournalPost(toRaw(post.value));
+		if(newPost) await journalPostTags(newPost, toRaw(tags.value));
 
-		if(!_post.title.length)
-			_post.title = formatDate(_post.date, "collapsed");
-
-		let isNew = false;
-		if(!id){
-			isNew = true;
-			id = (await newJournalPost({ ..._post }))?.id;
-		} else 
-			await updateJournalPost(id, {	..._post });
-
-		if(id){
-			let _tags = toRaw(tags.value);
-			const allJournalTags = await Array.fromAsync(getJournalPostTagsForPost({ ..._post, id } as JournalPost));
-			for(const journalTag of allJournalTags){
-				const tag = _tags.find(x => x.id === journalTag.tag.id);
-				if(!tag)
-					await deleteJournalPostTag(journalTag.id);
-				else _tags = _tags.filter(x => x !== tag);
-			}
-			for(const remainingTag of _tags){
-				await newJournalPostTag({
-					tag: remainingTag,
-					post: { ..._post, id } as JournalPost
-				});
-			}
-		}
-
-		if(isNew){
+		if(!post.value.id){
 			router.back();
 			return;
 		}

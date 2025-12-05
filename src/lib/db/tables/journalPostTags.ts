@@ -107,3 +107,18 @@ export async function tagJournalPosts(tag: Tag, journalPosts: JournalPost[]){
 		});
 	}
 }
+
+export async function journalPostTags(journalPost: JournalPost, tags: Tag[]){
+	for await (const journalTag of getJournalPostTagsForPost(journalPost)) {
+		const tag = tags.find(x => x.id === journalTag.tag.id);
+		if (!tag)
+			await deleteJournalPostTag(journalTag.id);
+		else tags = tags.filter(x => x !== tag);
+	}
+	for (const remainingTag of tags) {
+		await newJournalPostTag({
+			tag: remainingTag,
+			post: journalPost
+		});
+	}
+}

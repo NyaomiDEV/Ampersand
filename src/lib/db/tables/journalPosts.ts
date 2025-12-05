@@ -3,6 +3,8 @@ import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUIDable, JournalPost, UUID } from "../entities";
 import dayjs from "dayjs";
 import { filterJournalPost } from "../../search";
+import { PartialBy } from "../../types";
+import { formatDate } from "../../util/misc";
 
 export function getJournalPosts(){
 	return db.journalPosts.iterate();
@@ -96,4 +98,15 @@ export async function getJournalPostsDays(query: string) {
 
 		return occurrences;
 	}, new Map<number, number>());
+}
+
+export async function saveJournalPost(journalPost: PartialBy<JournalPost, keyof UUIDable>){
+	if (!journalPost.title.length)
+		journalPost.title = formatDate(journalPost.date, "collapsed");
+
+	if (journalPost.id){
+		await updateJournalPost(journalPost.id, { ...journalPost });
+		return journalPost as JournalPost;
+	}
+	return await newJournalPost({ ...journalPost });
 }

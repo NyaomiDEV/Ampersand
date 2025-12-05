@@ -1,6 +1,6 @@
 import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
-import { UUID, UUIDable, CustomFieldDatum, Member } from "../entities";
+import { UUID, UUIDable, CustomFieldDatum, Member, CustomField } from "../entities";
 
 export function getCustomFieldData(){
 	return db.customFieldData.iterate();
@@ -69,5 +69,30 @@ export async function updateCustomFieldDatum(id: UUID, newContent: Partial<Custo
 		return false;
 	}catch(_error){
 		return false;
+	}
+}
+
+export async function memberCustomFields(member: Member, customFields: Map<CustomField, string>){
+	let _customFields = Array.from(customFields.entries());
+	for await (const customFieldDatum of getCustomFieldDataForMember(member)) {
+		const field = _customFields.find(x => x[0].id === customFieldDatum.field.id);
+		if (!field || !field[1].length)
+			await deleteCustomFieldDatum(customFieldDatum.id);
+		else {
+			await updateCustomFieldDatum(customFieldDatum.id, {
+				value: field[1]
+			});
+			_customFields = _customFields.filter(x => x !== field);
+		}
+	}
+
+	for (const remainingField of _customFields) {
+		if (remainingField[1].length) {
+			await newCustomFieldDatum({
+				value: remainingField[1],
+				member,
+				field: remainingField[0]
+			});
+		}
 	}
 }

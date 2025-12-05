@@ -66,7 +66,7 @@
 					break;
 			}
 		}
-		return;
+		return undefined;
 	}
 
 	async function save(){
@@ -77,13 +77,13 @@
 	}
 
 	async function removeAsset(){
-		if(await promptOkCancel(
+		if(!await promptOkCancel(
 			i18next.t("assetManager:edit.delete.title"),
 			i18next.t("assetManager:edit.delete.confirm"),
-		)){
-			await deleteAsset(asset.value.id!);
-			router.back();
-		}
+		)) return;
+
+		await deleteAsset(asset.value.id!);
+		router.back();
 	}
 
 	async function updateRoute(){
