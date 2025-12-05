@@ -63,23 +63,24 @@
 			const resultingEntry = await saveFrontingEntry(toRaw(frontingEntry.value) as PartialBy<FrontingEntry, "id">);
 			await savePresenceData(resultingEntry, toRaw(presence));
 			if(dismissAfter)
-				await modalController.dismiss(null);
-		}catch(_){ /* empty */ }
-		// catch an error because the type might get changed, causing the parent to be removed from DOM
-		// however it's safe for us to ignore
+				await modalController.dismiss();
+		}catch(_){
+			// catch errors here
+		}
 	}
 
 	async function removeFrontingEntry(){
-		if(await promptOkCancel(
+		if(!await promptOkCancel(
 			i18next.t("frontHistory:edit.delete.title"),
 			i18next.t("frontHistory:edit.delete.confirm"),
-		)){
+		)) return;
+
+		try{
 			await deleteFrontingEntry(frontingEntry.value.id!);
 			void sendFrontingChangedEvent();
-
-			try{
-				await modalController.dismiss(undefined, "deleted");
-			}catch(_){ /* empty */ }
+			await modalController.dismiss();
+		}catch(_){
+			// handle error here
 		}
 	}
 
@@ -91,7 +92,6 @@
 		if(!presence) return [undefined, undefined];
 
 		const presenceVal = Array.from(presence.entries());
-
 		return presenceVal.sort((a, b) => a[0].valueOf() - b[0].valueOf()).pop() || [undefined, undefined];
 	}
 
