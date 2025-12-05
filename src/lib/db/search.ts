@@ -1,9 +1,9 @@
 
-import { Member, Tag, Asset, CustomField, FrontingEntry, JournalPost, BoardMessage, SQLFile } from "./db/entities";
-import { parseAssetFilterQuery, parseBoardMessageFilterQuery, parseCustomFieldFilterQuery, parseFrontingHistoryFilterQuery, parseJournalPostFilterQuery, parseMemberFilterQuery } from "./util/filterQuery";
-import { appConfig } from "./config";
-import { getMemberTagsForMember } from "./db/tables/memberTags";
-import { getJournalPostTagsForPost } from "./db/tables/journalPostTags";
+import { Member, Tag, Asset, CustomField, FrontingEntry, JournalPost, BoardMessage, SQLFile } from "./entities";
+import { parseAssetFilterQuery, parseBoardMessageFilterQuery, parseCustomFieldFilterQuery, parseFrontingHistoryFilterQuery, parseJournalPostFilterQuery, parseMemberFilterQuery } from "./filterQuery";
+import { appConfig } from "../config";
+import { getMemberTagsForMember } from "./tables/memberTags";
+import { getJournalPostTagsForPost } from "./tables/journalPostTags";
 
 export async function filterMember(search: string, member: Member){
 	const parsed = await parseMemberFilterQuery(search.length ? search : appConfig.defaultFilterQueries.members || "");
