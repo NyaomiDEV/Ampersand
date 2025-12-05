@@ -1,7 +1,7 @@
 import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUID, UUIDable, Asset } from "../entities";
-import { filterAsset } from "../../search";
+import { filterAsset } from "../search";
 import { PartialBy } from "../../types";
 
 export function getAssets(){

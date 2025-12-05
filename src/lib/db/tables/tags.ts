@@ -1,7 +1,7 @@
 import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUID, UUIDable, Tag } from "../entities";
-import { filterTag } from "../../search";
+import { filterTag } from "../search";
 import { deleteMemberTag, getMemberTags } from "./memberTags";
 import { deleteJournalPostTag, getJournalPostTags } from "./journalPostTags";
 import { PartialBy } from "../../types";

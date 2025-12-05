@@ -20,7 +20,3 @@ export async function getObjectURL(file: SQLFile){
 
 	return url;
 }
-
-export function getFile(url: string): File | undefined {
-	return Array.from(dataURLs.values()).find(_obj => _obj.url === url)?.file;
-}

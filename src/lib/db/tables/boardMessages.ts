@@ -2,7 +2,7 @@ import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUID, UUIDable, BoardMessage } from "../entities";
 import dayjs from "dayjs";
-import { filterBoardMessage } from "../../search";
+import { filterBoardMessage } from "../search";
 import { PartialBy } from "../../types";
 import { formatDate } from "../../util/misc";
 import { resetVotesForPoll } from "./votes";

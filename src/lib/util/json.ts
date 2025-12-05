@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { isPlainObject } from "./util/misc";
+import { isPlainObject } from "./misc";
 
 export function revive(value: any) {
 	if (typeof value === "object" && value !== null && "_meta" in value) {

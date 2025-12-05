@@ -1,5 +1,5 @@
 import { invoke, InvokeArgs, InvokeOptions, addPluginListener } from "@tauri-apps/api/core";
-import { replace, walk } from "../json";
+import { replace, walk } from "../util/json";
 
 export function invokePlugin<T>(cmd: string, args?: InvokeArgs, opts?: InvokeOptions){
 	return invoke<T>(`plugin:ampersand|${cmd}`, args, opts);

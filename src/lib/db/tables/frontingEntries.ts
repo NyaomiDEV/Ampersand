@@ -2,10 +2,10 @@ import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUIDable, Member, FrontingEntry, UUID } from "../entities";
 import dayjs from "dayjs";
-import { filterFrontingEntry } from "../../search";
+import { filterFrontingEntry } from "../search";
 import { appConfig } from "../../config";
 import { broadcastEvent } from "../../native/plugin";
-import { deleteFile } from "../../json";
+import { deleteFile } from "../../util/json";
 import { PartialBy } from "../../types";
 
 export function getFrontingEntries(){

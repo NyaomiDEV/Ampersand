@@ -4,7 +4,7 @@ import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUIDable, Member, UUID } from "../entities";
 import { maxUid, nilUid } from "../../util/consts";
-import { filterMember } from "../../search";
+import { filterMember } from "../search";
 import { PartialBy } from "../../types";
 
 export function getMembers(){

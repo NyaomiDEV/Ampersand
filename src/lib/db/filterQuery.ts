@@ -1,5 +1,5 @@
-import { getTagFromNameHashtag } from "../db/tables/tags";
-import { Tag, UUID } from "../db/entities";
+import { getTagFromNameHashtag } from "./tables/tags";
+import { Tag, UUID } from "./entities";
 
 export type SystemFilterQuery = {
 	query: string,
