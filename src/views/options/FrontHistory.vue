@@ -3,7 +3,7 @@
 	import { h, onBeforeMount, onUnmounted, ref, shallowRef, watch } from "vue";
 	import MemberAvatar from "../../components/member/MemberAvatar.vue";
 	import FrontingEntryLabel from "../../components/frontingEntry/FrontingEntryLabel.vue";
-	import type { FrontingEntry } from "../../lib/db/entities.d.ts";
+	import type { FrontingEntry, Member } from "../../lib/db/entities.d.ts";
 	import { getFrontingEntriesOfDay, getFrontingEntriesDays } from "../../lib/db/tables/frontingEntries";
 	import Spinner from "../../components/Spinner.vue";
 	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
@@ -197,7 +197,7 @@
 						:class="{ 'main-fronter': entry.isMainFronter, 'influencing': !!entry.influencing }"
 						@click="showModal(entry)"
 					>
-						<MemberAvatar slot="start" :member="entry.member" />
+						<MemberAvatar slot="start" :member="entry.member as Member" />
 						<IonIcon v-if="entry.comment?.length" slot="end" :icon="commentMD" />
 						<FrontingEntryLabel :entry />
 					</IonItem>

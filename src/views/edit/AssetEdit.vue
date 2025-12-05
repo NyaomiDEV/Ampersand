@@ -22,7 +22,7 @@
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
 
 	import { newAsset, deleteAsset, updateAsset, getAsset } from "../../lib/db/tables/assets";
-	import { Asset } from "../../lib/db/entities";
+	import { Asset, SQLFile, UUID } from "../../lib/db/entities";
 	import { onBeforeMount, ref, watch } from "vue";
 	import { PartialBy } from "../../lib/types";
 	import { useRoute } from "vue-router";
@@ -60,7 +60,7 @@
 
 	async function generatePreview(){
 		if(asset.value.file){
-			const file = asset.value.file;
+			const file = asset.value.file as SQLFile;
 			switch(file.friendlyName.split(".")[1].toLowerCase()){
 				case "png":
 				case "jpeg":
@@ -107,7 +107,7 @@
 		loading.value = true;
 
 		if(route.query.uuid){
-			const _asset = await getAsset(route.query.uuid as string);
+			const _asset = await getAsset(route.query.uuid as UUID);
 			if(_asset)
 				asset.value = _asset;
 			else asset.value = { ...emptyAsset };

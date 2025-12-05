@@ -6,9 +6,10 @@ export function getCustomFieldData(){
 	return db.customFieldData.iterate();
 }
 
-export async function* getCustomFieldDataForMember(member: Member){
+export async function* getCustomFieldDataForMember(member: Member | UUID){
+	const id = typeof member === "string" ? member : member.id;
 	for await(const datum of getCustomFieldData()){
-		if(datum.member.id === member.id)
+		if(datum.member.id === id)
 			yield datum;
 	}
 }

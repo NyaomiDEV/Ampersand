@@ -32,7 +32,7 @@
 	import archivedMD from "@material-symbols/svg-600/outlined/archive.svg";
 
 	import { getFilteredMembers } from "../lib/db/tables/members.ts";
-	import type { Member, FrontingEntry } from "../lib/db/entities";
+	import type { Member, FrontingEntry, SQLFile } from "../lib/db/entities";
 	import { getCurrentFrontEntryForMember, newFrontingEntry, removeFronter, sendFrontingChangedEvent, setMainFronter, setSoleFronter } from "../lib/db/tables/frontingEntries.ts";
 	import MemberAvatar from "../components/member/MemberAvatar.vue";
 	import MemberLabel from "../components/member/MemberLabel.vue";
@@ -168,7 +168,7 @@
 		}
 
 		if(member.cover)
-			style["--data-cover"] = `url(${await getObjectURL(member.cover)})`;
+			style["--data-cover"] = `url(${await getObjectURL(member.cover as SQLFile)})`;
 
 		return style;
 	}

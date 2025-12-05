@@ -138,7 +138,7 @@
 
 	async function updatePoll(){
 		if(props.boardMessage.poll){
-			const entries = await Array.fromAsync(getPollEntriesForPoll(props.boardMessage.poll));
+			const entries = await Array.fromAsync(getPollEntriesForPoll(props.boardMessage.poll.id));
 			for(const entry of entries){
 				const votes = await Array.fromAsync(getVotesForPollEntry(entry));
 				pollVotes.set(entry, votes);
@@ -154,7 +154,7 @@
 <template>
 	<IonItem button :class="{ card: true, filled: props.boardMessage.isPinned, archived: props.boardMessage.isArchived }">
 		<div class="card-inner">
-			<MemberAvatar v-if="props.boardMessage.member" :member="props.boardMessage.member" />
+			<MemberAvatar v-if="props.boardMessage.member" :member="props.boardMessage.member as Member" />
 			<div class="flexbox">
 				<div class="subheader">
 					<span v-if="props.boardMessage.member">{{ props.boardMessage.member.name }}</span>

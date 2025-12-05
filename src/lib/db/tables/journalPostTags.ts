@@ -6,16 +6,20 @@ export function getJournalPostTags(){
 	return db.journalPostTags.iterate();
 }
 
-export async function* getJournalPostTagsForPost(journalPost: JournalPost){
+export async function* getJournalPostTagsForPost(journalPost: JournalPost | UUID){
+	const id = typeof journalPost === "string" ? journalPost : journalPost.id;
 	for await (const entry of getJournalPostTags()){
-		if(entry.post.id === journalPost.id)
+		if(entry.post.id === id)
 			yield entry;
 	}
 }
 
-export async function journalPostHasTag(journalPost: JournalPost, tag: Tag){
+export async function journalPostHasTag(journalPost: JournalPost | UUID, tag: Tag | UUID){
+	const postId = typeof journalPost === "string" ? journalPost : journalPost.id;
+	const tagId = typeof tag === "string" ? tag : tag.id;
+
 	for await (const entry of getJournalPostTags()){
-		if(entry.post.id === journalPost.id && entry.tag.id === tag.id)
+		if(entry.post.id === postId && entry.tag.id === tagId)
 			return true;
 	}
 

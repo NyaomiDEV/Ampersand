@@ -1,5 +1,5 @@
 
-import { Member, Tag, Asset, CustomField, FrontingEntry, JournalPost, BoardMessage, System } from "./db/entities";
+import { Member, Tag, Asset, CustomField, FrontingEntry, JournalPost, BoardMessage, SQLFile, System } from "./db/entities";
 import { parseAssetFilterQuery, parseBoardMessageFilterQuery, parseCustomFieldFilterQuery, parseFrontingHistoryFilterQuery, parseJournalPostFilterQuery, parseMemberFilterQuery, parseSystemFilterQuery } from "./util/filterQuery";
 import { appConfig } from "./config";
 import { getMemberTagsForMember } from "./db/tables/memberTags";
@@ -75,7 +75,7 @@ export function filterFrontingEntry(search: string, frontingEntry: FrontingEntry
 	const parsed = parseFrontingHistoryFilterQuery(search.length ? search : appConfig.defaultFilterQueries.frontingHistory || "");
 
 	if(parsed.query.length){
-		if (!frontingEntry.member.name.toLowerCase().startsWith(parsed.query.toLowerCase()))
+		if (!(frontingEntry.member as Member).name.toLowerCase().startsWith(parsed.query.toLowerCase()))
 			return false;
 	}
 
@@ -113,7 +113,7 @@ export function filterBoardMessage(search: string, boardMessage: BoardMessage) {
 		if (
 			![
 				boardMessage.title.toLowerCase().split(" "),
-				boardMessage.member?.name.toLowerCase().split(" ")
+				(boardMessage.member as Member | undefined)?.name.toLowerCase().split(" ")
 			].filter(x => !!x).flat().find(x => x.startsWith(parsed.query.toLowerCase()))
 		)
 			return false;
@@ -141,12 +141,12 @@ export function filterAsset(search: string, asset: Asset) {
 	}
 
 	if (parsed.type) {
-		if (asset.file.friendlyName.split(".").pop()?.toLowerCase() !== parsed.type.toLowerCase())
+		if ((asset.file as SQLFile).friendlyName.split(".").pop()?.toLowerCase() !== parsed.type.toLowerCase())
 			return false;
 	}
 
 	if (parsed.filename) {
-		if (asset.file.friendlyName.toLowerCase() !== parsed.filename.toLowerCase())
+		if ((asset.file as SQLFile).friendlyName.toLowerCase() !== parsed.filename.toLowerCase())
 			return false;
 	}
 
@@ -175,7 +175,7 @@ export async function filterJournalPost(search: string, post: JournalPost) {
 		if (
 			![
 				post.title.toLowerCase().split(" "),
-				post.member?.name.toLowerCase().split(" ")
+				(post.member as Member | undefined)?.name.toLowerCase().split(" ")
 			].filter(x => !!x).flat().find(x => x.startsWith(parsed.query.toLowerCase()))
 		)
 			return false;

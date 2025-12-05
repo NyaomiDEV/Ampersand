@@ -204,7 +204,7 @@ export function parseFrontingHistoryFilterQuery(search: string) {
 					result.currentlyFronting = true;
 				break;
 			case "member":
-				result.member = value;
+				result.member = value as UUID;
 				break;
 		}
 		break;
@@ -259,7 +259,7 @@ export function parseBoardMessageFilterQuery(search: string) {
 						result.member = false;
 						break;
 					default:
-						result.member = value;
+						result.member = value as UUID;
 						break;
 				}
 				break;
@@ -345,7 +345,7 @@ export async function parseJournalPostFilterQuery(search: string) {
 						result.member = false;
 						break;
 					default:
-						result.member = value;
+						result.member = value as UUID;
 						break;
 				}
 				break;

@@ -74,7 +74,7 @@
 			<div class="container">
 				<h1> {{ $t('onboarding:memberInfo.header') }}</h1>
 				<div class="avatar-container">
-					<MemberAvatar :member />
+					<MemberAvatar :member="member as Member" />
 					<div class="edit-buttons">
 						<IonButton shape="round" @click="modifyPicture">
 							<IonIcon slot="icon-only" :icon="pencilMD" />

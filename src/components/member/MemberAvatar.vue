@@ -4,15 +4,14 @@
 		IonIcon,
 	} from "@ionic/vue";
 
-	import { Member } from "../../lib/db/entities";
+	import { Member, SQLFile } from "../../lib/db/entities";
 	import { getObjectURL } from "../../lib/util/blob";
-	import { PartialBy } from "../../lib/types";
 
 	import accountCircle from "@material-symbols/svg-600/outlined/account_circle.svg";
 	import { isReactive, ref, watch, WatchStopHandle } from "vue";
 
 	const props = defineProps<{
-		member: PartialBy<Member, "id" | "dateCreated">,
+		member: Member,
 	}>();
 
 	const avatarColor = ref("var(--ion-color-primary)");
@@ -23,7 +22,7 @@
 	}
 
 	async function updateAvatarUri() {
-		if(props.member.image) avatarUri.value = await getObjectURL(props.member.image);
+		if(props.member.image) avatarUri.value = await getObjectURL(props.member?.image as SQLFile);
 	}
 
 	let watchHandle: WatchStopHandle | undefined;

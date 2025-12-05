@@ -72,8 +72,10 @@ export async function updateVote(id: UUID, newContent: Partial<Vote>) {
 	}
 }
 
-export async function resetVotesForPoll(poll: Poll){
-	for await (const entry of getPollEntriesForPoll(poll)){
+export async function resetVotesForPoll(poll: Poll | UUID){
+	const id = typeof poll === "string" ? poll : poll.id;
+
+	for await (const entry of getPollEntriesForPoll(id)){
 		for await (const vote of getVotesForPollEntry(entry))
 			await deleteVote(vote.id);
 	}

@@ -3,7 +3,7 @@
 	import { h, onBeforeMount, onUnmounted, shallowRef } from "vue";
 	import MemberAvatar from "../member/MemberAvatar.vue";
 	import FrontingEntryLabel from "../frontingEntry/FrontingEntryLabel.vue";
-	import type { FrontingEntry } from "../../lib/db/entities.d.ts";
+	import type { FrontingEntry, Member } from "../../lib/db/entities.d.ts";
 	import { getRecentlyFronted } from "../../lib/db/tables/frontingEntries";
 	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
 	import { DatabaseEvents, DatabaseEvent } from "../../lib/db/events";
@@ -53,7 +53,7 @@
 			button
 			@click="showModal(entry)"
 		>
-			<MemberAvatar slot="start" :member="entry.member" />
+			<MemberAvatar slot="start" :member="entry.member as Member" />
 			<FrontingEntryLabel :entry />
 		</IonItem>
 	</IonList>

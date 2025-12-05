@@ -29,7 +29,7 @@
 	import personAddMD from "@material-symbols/svg-600/outlined/person_add.svg";
 	import clockAddMD from "@material-symbols/svg-600/outlined/more_time.svg";
 
-	import { JournalPost, Tag } from "../../lib/db/entities";
+	import { JournalPost, Member, SQLFile, Tag, UUID } from "../../lib/db/entities";
 	import { newJournalPost, updateJournalPost, getJournalPost } from "../../lib/db/tables/journalPosts";
 	import { getFiles, formatDate } from "../../lib/util/misc";
 	import { resizeImage } from "../../lib/util/image";
@@ -140,7 +140,7 @@
 
 	async function updateCoverUri(){
 		if(post.value.cover)
-			coverUri.value = await getObjectURL(post.value.cover);
+			coverUri.value = await getObjectURL(post.value.cover as SQLFile);
 	}
 
 	async function showJournalOptions(){
@@ -161,7 +161,7 @@
 		loading.value = true;
 
 		if(route.query.uuid){
-			const _post = await getJournalPost(route.query.uuid as string);
+			const _post = await getJournalPost(route.query.uuid as UUID);
 			if(_post) post.value = _post;
 			else post.value = { ...emptyPost };
 		} else post.value = { ...emptyPost };
@@ -170,7 +170,7 @@
 		
 		if(post.value.id){
 			tags.value = (await Array.fromAsync(getJournalPostTagsForPost(post.value as JournalPost)))
-				.map(x => x.tag)
+				.map(x => x.tag as Tag)
 				.sort((a, b) => a.name.localeCompare(b.name));
 		}
 
@@ -230,7 +230,7 @@
 			<IonList v-if="!isEditing" inset>
 
 				<IonItem>
-					<MemberAvatar v-if="post.member" slot="start" :member="post.member" />
+					<MemberAvatar v-if="post.member" slot="start" :member="post.member as Member" />
 					<IonLabel>
 						<h2 v-if="post.member">{{ post.member.name }}</h2>
 						<p v-if="post.date">{{ formatDate(post.date, "expanded") }}</p>
@@ -256,7 +256,7 @@
 
 				<IonItem button :detail="!post.member" @click="memberSelectModal?.$el.present()">
 					<template v-if="post.member">
-						<MemberAvatar slot="start" :member="post.member" />
+						<MemberAvatar slot="start" :member="post.member as Member" />
 						<IonLabel>
 							<h2>{{ post.member.name }}</h2>
 							<p>{{ $t("journal:edit.author") }}</p>
@@ -308,7 +308,7 @@
 				:discard-on-select="true"
 				:hide-checkboxes="true"
 				:always-emit="true"
-				:model-value="post.member ? [post.member] : []"
+				:model-value="post.member ? [post.member as Member] : []"
 				@update:model-value="(e) => { if (e[0]) post.member = e[0]; }"
 			/>
 

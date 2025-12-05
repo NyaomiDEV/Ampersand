@@ -101,7 +101,7 @@ export async function saveBoardMessage(boardMessage: PartialBy<BoardMessage, key
 
 	if (boardMessage.poll && boardMessage.id) {
 		// Message was modified, in which case we need to reset all the votes
-		await resetVotesForPoll(boardMessage.poll);
+		await resetVotesForPoll(boardMessage.poll.id);
 	}
 
 	if (boardMessage.id){

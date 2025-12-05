@@ -29,7 +29,7 @@
 	import journalMD from "@material-symbols/svg-600/outlined/book.svg";
 
 	import { getTag, newTag, removeTag, updateTag } from "../../lib/db/tables/tags";
-	import { Member, Tag } from "../../lib/db/entities";
+	import { Member, Tag, UUID } from "../../lib/db/entities";
 	import { getCurrentInstance, h, onBeforeMount, ref, watch } from "vue";
 	import { addMaterialColors, rgbaToArgb, unsetMaterialColors } from "../../lib/theme";
 	import { PartialBy } from "../../lib/types";
@@ -61,7 +61,7 @@
 
 	async function tagMembers() {
 		const allMemberTags = await Array.fromAsync(getMemberTags());
-		let members: Member[] = allMemberTags.filter(x => x.tag.id === tag.value.id).map(x => x.member);
+		let members: Member[] = allMemberTags.filter(x => x.tag.id === tag.value.id).map(x => x.member as Member);
 		const vnode = h(MemberSelect, {
 			customTitle: i18next.t("tagManagement:edit.members.title"),
 			modelValue: members,
@@ -131,7 +131,7 @@
 		loading.value = true;
 
 		if(route.query.uuid){
-			const _tag = await getTag(route.query.uuid as string);
+			const _tag = await getTag(route.query.uuid as UUID);
 			if(_tag){
 				tag.value = _tag;
 

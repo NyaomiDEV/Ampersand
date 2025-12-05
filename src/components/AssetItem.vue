@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { IonThumbnail, IonLabel, IonItem, IonIcon } from "@ionic/vue";
-	import { Asset } from "../lib/db/entities";
+	import { Asset, SQLFile } from "../lib/db/entities";
 	import { getObjectURL } from "../lib/util/blob";
 	import { PartialBy } from "../lib/types";
 
@@ -20,7 +20,7 @@
 
 	function canPreview(){
 		if(props.asset.file){
-			const file = props.asset.file;
+			const file = props.asset.file as SQLFile;
 			switch(file.friendlyName.split(".")[1].toLowerCase()){
 				case "png":
 				case "jpeg":
@@ -37,7 +37,7 @@
 
 	async function open(){
 		if(props.asset.file)
-			await openSQLFile(props.asset.file);
+			await openSQLFile(props.asset.file as SQLFile);
 	}
 
 	onBeforeMount(async () => {

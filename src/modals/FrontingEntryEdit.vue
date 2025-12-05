@@ -20,8 +20,8 @@
 	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
 
-	import { FrontingEntry } from "../lib/db/entities";
-	import { newFrontingEntry, updateFrontingEntry, deleteFrontingEntry, sendFrontingChangedEvent } from "../lib/db/tables/frontingEntries";
+	import { FrontingEntry, Member } from "../lib/db/entities";
+	import { deleteFrontingEntry, sendFrontingChangedEvent, saveFrontingEntry } from "../lib/db/tables/frontingEntries";
 	import { onBeforeMount, ref, shallowReactive, toRaw, useTemplateRef } from "vue";
 
 	import MemberSelect from "./MemberSelect.vue";
@@ -33,7 +33,7 @@
 	import { PartialBy } from "../lib/types";
 	import { formatDate, promptOkCancel, renderStars } from "../lib/util/misc";
 	import { useTranslation } from "i18next-vue";
-	import { deletePresenceEntry, getPresenceEntriesForFrontEntry, newPresenceEntry } from "../lib/db/tables/presenceEntries";
+	import { getPresenceEntriesForFrontEntry, savePresenceData } from "../lib/db/tables/presenceEntries";
 
 	const i18next = useTranslation();
 
@@ -57,40 +57,11 @@
 	const memberTagModal = useTemplateRef("memberTagModal");
 
 	async function save(dismissAfter = true){
-		let id = frontingEntry.value?.id;
-		const _frontingEntry = toRaw(frontingEntry.value);
-
-		if(!_frontingEntry.member) return;
-
-		if(_frontingEntry.isMainFronter)
-			_frontingEntry.influencing = undefined;
-
-		if(!id)
-			id = (await newFrontingEntry({ ..._frontingEntry } as FrontingEntry))?.id;
-		else 
-			await updateFrontingEntry(id, { ..._frontingEntry });
-
-		void sendFrontingChangedEvent();
-
-		if(id){
-			let _presences = Array.from(toRaw(presence).entries());
-			const allPresences = await Array.fromAsync(getPresenceEntriesForFrontEntry({ ..._frontingEntry, id } as FrontingEntry));
-			for(const presence of allPresences){
-				const tuple = _presences.find(x => x[0].valueOf() === presence.date.valueOf());
-				if(!tuple)
-					await deletePresenceEntry(presence.id);
-				else _presences = _presences.filter(x => x !== tuple);
-			}
-			for(const remainingPresence of _presences){
-				await newPresenceEntry({
-					date: remainingPresence[0],
-					presence: remainingPresence[1],
-					frontingEntry: { ..._frontingEntry, id } as FrontingEntry
-				});
-			}
-		}
+		if(!frontingEntry.value.member) return;
 
 		try{
+			const resultingEntry = await saveFrontingEntry(toRaw(frontingEntry.value) as PartialBy<FrontingEntry, "id">);
+			await savePresenceData(resultingEntry, toRaw(presence));
 			if(dismissAfter)
 				await modalController.dismiss(null);
 		}catch(_){ /* empty */ }
@@ -145,7 +116,7 @@
 			<IonList inset>
 				<IonItem button :detail="true" @click="memberSelectModal?.$el.present()">
 					<template v-if="frontingEntry.member">
-						<MemberAvatar slot="start" :member="frontingEntry.member" />
+						<MemberAvatar slot="start" :member="frontingEntry.member as Member" />
 						<IonLabel>
 							<h2>{{ frontingEntry.member.name }}</h2>
 							<p>{{ $t("frontHistory:edit.member") }}</p>
@@ -182,7 +153,7 @@
 					@click="memberInfluencingModal?.$el.present()"
 				>
 					<template v-if="frontingEntry.influencing">
-						<MemberAvatar slot="start" :member="frontingEntry.influencing" />
+						<MemberAvatar slot="start" :member="frontingEntry.influencing as Member" />
 						<IonLabel>
 							<p>{{ $t("frontHistory:edit.influencing.currentlyInfluencing") }}</p>
 							<h2>{{ frontingEntry.influencing.name }}</h2>
@@ -311,7 +282,7 @@
 				:only-one="true"
 				:discard-on-select="true"
 				:hide-checkboxes="true"
-				:model-value="frontingEntry.member ? [frontingEntry.member] : []"
+				:model-value="frontingEntry.member ? [frontingEntry.member as Member] : []"
 				@update:model-value="(e) => { if(e[0]) frontingEntry.member = e[0] }"
 			/>
 
@@ -320,7 +291,7 @@
 				:only-one="true"
 				:discard-on-select="true"
 				:hide-checkboxes="true"
-				:model-value="frontingEntry.influencing ? [frontingEntry.influencing] : []"
+				:model-value="frontingEntry.influencing ? [frontingEntry.influencing as Member] : []"
 				@update:model-value="(e) => { if(e[0]) frontingEntry.influencing = e[0] }"
 			/>
 

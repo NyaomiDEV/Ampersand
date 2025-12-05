@@ -9,7 +9,7 @@
 	import accountCircle from "@material-symbols/svg-600/outlined/account_circle.svg";
 	import pencilMD from "@material-symbols/svg-600/outlined/edit.svg";
 	import ArrowMD from "@material-symbols/svg-600/outlined/arrow_forward.svg";
-	import { System } from "../../lib/db/entities";
+	import { SQLFile, System } from "../../lib/db/entities";
 	import { PartialBy } from "../../lib/types";
 	import { appConfig } from "../../lib/config";
 	import { newFile, updateFile } from "../../lib/db/tables/files";
@@ -40,7 +40,7 @@
 
 	async function updateAvatarUri(){
 		if(system.value.image)
-			systemAvatarUri.value = await getObjectURL(system.value.image);
+			systemAvatarUri.value = await getObjectURL(system.value.image as SQLFile);
 	}
 
 	async function save() {

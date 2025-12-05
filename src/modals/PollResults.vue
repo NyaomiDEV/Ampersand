@@ -12,7 +12,7 @@
 	} from "@ionic/vue";
 
 	import MemberAvatar from "../components/member/MemberAvatar.vue";
-	import type { PollEntry, Vote } from "../lib/db/entities";
+	import type { Member, PollEntry, Vote } from "../lib/db/entities";
 
 	const props = defineProps<{
 		pollVotes: Map<PollEntry, Vote[]>
@@ -34,7 +34,7 @@
 						{{ choice[0].choice }} - {{ $t("messageBoard:polls.choice.desc", { count: choice[1].length }) }}
 					</IonItemDivider>
 					<IonItem v-for="vote in choice[1]" :key="vote.member.id">
-						<MemberAvatar slot="start" :member="vote.member" />
+						<MemberAvatar slot="start" :member="vote.member as Member" />
 						<IonLabel>
 							<h2>{{ vote.member.name }}</h2>
 							<p>{{ vote.reason }}</p>

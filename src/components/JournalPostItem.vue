@@ -3,7 +3,7 @@
 	import { IonItem, IonLabel } from "@ionic/vue";
 	import MemberAvatar from "./member/MemberAvatar.vue";
 	import TagChip from "./tag/TagChip.vue";
-	import { JournalPost, Tag } from "../lib/db/entities";
+	import { JournalPost, Member, SQLFile, Tag } from "../lib/db/entities";
 	import { formatDate } from "../lib/util/misc";
 	import { isReactive, onBeforeMount, ref, shallowRef, watch, WatchStopHandle } from "vue";
 	import { getObjectURL } from "../lib/util/blob";
@@ -17,12 +17,12 @@
 	}>();
 
 	async function updateTags() {
-		tags.value = (await Array.fromAsync(getJournalPostTagsForPost(props.post))).map(x => x.tag).filter(x => x.viewInLists);
+		tags.value = (await Array.fromAsync(getJournalPostTagsForPost(props.post))).map(x => x.tag as Tag).filter(x => x.viewInLists);
 	}
 
 	async function updateCoverUri(){
 		if(props.post.cover)
-			coverUri.value = await getObjectURL(props.post.cover);
+			coverUri.value = await getObjectURL(props.post.cover as SQLFile);
 	}
 
 	onBeforeMount(async () => {
@@ -48,7 +48,7 @@
 
 <template>
 	<IonItem button>
-		<MemberAvatar v-if="props.post.member" slot="start" :member="props.post.member" />
+		<MemberAvatar v-if="props.post.member" slot="start" :member="props.post.member as Member" />
 		<IonLabel>
 			<img v-if="props.post.cover" class="cover" :src="coverUri" />
 			<p v-if="formatDate(props.post.date, 'collapsed') !== props.post.title">
