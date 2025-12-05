@@ -2,6 +2,7 @@ import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUIDable, System, UUID } from "../entities";
 import { nilUid } from "../../util/consts";
+import { PartialBy } from "../../types";
 
 export function getSystems(){
 	return db.systems.iterate();
@@ -67,4 +68,12 @@ export async function updateSystem(id: UUID, system: Partial<System>) {
 	} catch (_error) {
 		return false;
 	}
+}
+
+export async function saveSystem(system: PartialBy<System, keyof UUIDable>) {
+	if (system.id){
+		await updateSystem(system.id, { ...system });
+		return system as System;
+	}
+	return await newSystem({ ...system });
 }
