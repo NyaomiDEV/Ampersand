@@ -49,7 +49,8 @@ export async function newMemberTag(memberTag: Omit<MemberTag, keyof UUIDable>) {
 	}
 }
 
-export async function deleteMemberTag(id: UUID) {
+export async function deleteMemberTag(memberTag: MemberTag | UUID) {
+	const id = typeof memberTag === "string" ? memberTag : memberTag.id;
 	try {
 		await db.memberTags.delete(id);
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {

@@ -34,7 +34,8 @@ export async function newFrontingEntry(frontingEntry: Omit<FrontingEntry, keyof 
 	}
 }
 
-export async function deleteFrontingEntry(id: UUID) {
+export async function deleteFrontingEntry(frontingEntry: FrontingEntry | UUID) {
+	const id = typeof frontingEntry  === "string" ? frontingEntry : frontingEntry.id;
 	try {
 		await db.frontingEntries.delete(id);
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {

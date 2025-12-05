@@ -42,7 +42,8 @@ export async function getSystem(uuid: UUID){
 	return await db.systems.get(uuid);
 }
 
-export async function deleteSystem(id: UUID) {
+export async function deleteSystem(system: System | UUID) {
+	const id = typeof system === "string" ? system : system.id;
 	if (id === nilUid) return false;
 	try {
 		await db.systems.delete(id);
