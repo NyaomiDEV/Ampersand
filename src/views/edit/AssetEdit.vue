@@ -21,9 +21,9 @@
 	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
 
-	import { newAsset, deleteAsset, updateAsset, getAsset } from "../../lib/db/tables/assets";
+	import { deleteAsset, getAsset, saveAsset } from "../../lib/db/tables/assets";
 	import { Asset, SQLFile, UUID } from "../../lib/db/entities";
-	import { onBeforeMount, ref, watch } from "vue";
+	import { onBeforeMount, ref, toRaw, watch } from "vue";
 	import { PartialBy } from "../../lib/types";
 	import { useRoute } from "vue-router";
 	import { useTranslation } from "i18next-vue";
@@ -49,6 +49,7 @@
 	async function updateFile() {
 		const file = await uploadFile();
 		asset.value.file = file;
+		assetThumbnailUri.value = await generatePreview();
 	}
 
 	async function generatePreview(){
@@ -69,18 +70,9 @@
 	}
 
 	async function save(){
-		const uuid = asset.value.id;
-		const _asset = asset.value;
+		if(!asset.value.file) return;
 
-		if(!_asset.file) return;
-
-		if(!uuid){
-			await newAsset(_asset as PartialBy<Asset, "id">);
-			router.back();
-			return;
-		}
-
-		await updateAsset(uuid, _asset);
+		await saveAsset(toRaw(asset.value) as PartialBy<Asset, "id">);
 		router.back();
 	}
 
