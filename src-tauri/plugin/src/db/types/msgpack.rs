@@ -256,7 +256,7 @@ pub fn convert_file(file: File, data_path: &PathBuf) -> Result<sql::File, Error>
 	std::fs::create_dir_all(data_path.join("files"))?;
 	let path = data_path.join("files").join(id.to_string());
 	std::fs::File::create(path)?
-		.write(&data.encode_utf16().map(|c| c as u8).collect::<Vec<u8>>())?;
+		.write_all(&data.encode_utf16().map(|c| c as u8).collect::<Vec<u8>>())?;
 	Ok(sql::File {
 		id,
 		path: PathBuf::from("files")
@@ -510,7 +510,7 @@ pub fn convert_poll_entries(
 				votes.into_iter().map(move |vote| {
 					Ok(sql::Vote {
 						id: Uuid::new_v4(),
-						entry: entry,
+						entry,
 						member: Uuid::from_str(&vote.member)?,
 						reason: vote.reason,
 					})
