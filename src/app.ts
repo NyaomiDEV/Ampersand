@@ -45,13 +45,12 @@ import "./styles/override.css";
 import { updateMaterialColors } from "./lib/theme";
 import "./lib/theme/style.css";
 
-// Other imports from frontend library
-import { clearTempDir } from "./lib/native/cache";
 import { slideAnimation } from "./lib/util/misc";
-import { dismissSplash, getWebkitVersion, runDbMigrations } from "./lib/native/plugin";
+import { dismissSplash, getWebkitVersion } from "./lib/native/plugin";
 import { platform } from "@tauri-apps/plugin-os";
 import { onBackButtonPress } from "@tauri-apps/api/app";
 import { maybeExit } from "./lib/util/backbutton";
+import { invoke } from "@tauri-apps/api/core";
 
 async function setupAmpersand() {
 	const app = createApp(App).use(IonicVue, {
@@ -62,7 +61,7 @@ async function setupAmpersand() {
 
 	window.Ionic.config.set("navAnimation", slideAnimation);
 
-	await runDbMigrations();
+	await invoke<void>("db_run_migrations");
 
 	const systems = await Array.fromAsync(db.systems.iterate());
 	const maybeSystem = systems[0].id || undefined;
@@ -109,8 +108,6 @@ async function setupAmpersand() {
 		// assume normal navigation
 		return true;
 	});
-
-	await clearTempDir();
 
 	const darkMode = window.matchMedia("(prefers-color-scheme: dark)");
 	await updateDarkMode();
