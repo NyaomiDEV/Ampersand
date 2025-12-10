@@ -8,11 +8,7 @@ Default permissions for the Ampersand plugin
 - `allow-get-webkit-version`
 - `allow-broadcast-event`
 - `allow-list-assets`
-- `allow-dismiss-splash`
-- `allow-register-listener`
-- `allow-db-test`
-- `allow-db-run-migrations`
-- `allow-db-migrate-old`
+- `allow-registerListener`
 
 ## Permission Table
 
@@ -52,25 +48,12 @@ Denies the broadcast_event command without any pre-configured scope.
 <tr>
 <td>
 
-`ampersand:allow-db-migrate-old`
+`ampersand:allow-exit-app`
 
 </td>
 <td>
 
-Enables the db_migrate_old command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`ampersand:deny-db-migrate-old`
-
-</td>
-<td>
-
-Denies the db_migrate_old command without any pre-configured scope.
+Enables the exit_app command without any pre-configured scope.
 
 </td>
 </tr>
@@ -78,77 +61,12 @@ Denies the db_migrate_old command without any pre-configured scope.
 <tr>
 <td>
 
-`ampersand:allow-db-run-migrations`
+`ampersand:deny-exit-app`
 
 </td>
 <td>
 
-Enables the db_run_migrations command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`ampersand:deny-db-run-migrations`
-
-</td>
-<td>
-
-Denies the db_run_migrations command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`ampersand:allow-db-test`
-
-</td>
-<td>
-
-Enables the db_test command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`ampersand:deny-db-test`
-
-</td>
-<td>
-
-Denies the db_test command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`ampersand:allow-dismiss-splash`
-
-</td>
-<td>
-
-Enables the dismiss_splash command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`ampersand:deny-dismiss-splash`
-
-</td>
-<td>
-
-Denies the dismiss_splash command without any pre-configured scope.
+Denies the exit_app command without any pre-configured scope.
 
 </td>
 </tr>
@@ -252,7 +170,33 @@ Enables the register_listener command without any pre-configured scope.
 </td>
 <td>
 
-Denies the register_listener command without any pre-configured scope.
+Denies the registerListener command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`ampersand:allow-set-can-go-back`
+
+</td>
+<td>
+
+Enables the set_can_go_back command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`ampersand:deny-set-can-go-back`
+
+</td>
+<td>
+
+Denies the set_can_go_back command without any pre-configured scope.
 
 </td>
 </tr>
