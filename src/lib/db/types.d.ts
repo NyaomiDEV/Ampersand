@@ -44,6 +44,6 @@ export type DatabaseEventData = {
 };
 
 export type TableIter<T> = {
-	result: T,
+	result: T[],
 	end: boolean
 };

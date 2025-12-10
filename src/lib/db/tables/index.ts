@@ -17,8 +17,8 @@ import {
 	UUIDable,
 	SQLFile
 } from "../entities";
-import { invokePlugin } from "../../native/plugin";
 import { TableIter } from "../types";
+import { invoke } from "@tauri-apps/api/core";
 
 export class DecentTable<T extends UUIDable> {
 	name: string;
@@ -28,7 +28,7 @@ export class DecentTable<T extends UUIDable> {
 	}
 
 	async get(id: string) {
-		return invokePlugin<T>("db_get", {
+		return invoke<T>("db_get", {
 			table: this.name,
 			id
 		});
@@ -38,7 +38,7 @@ export class DecentTable<T extends UUIDable> {
 		const oldData = await this.get(id);
 
 		if (oldData) {
-			if (await invokePlugin<number>("db_update", {
+			if (await invoke<number>("db_update", {
 				table: this.name,
 				id,
 				data: newData
@@ -50,41 +50,42 @@ export class DecentTable<T extends UUIDable> {
 	}
 
 	async delete(id: string) {
-		return await invokePlugin<number>("db_delete", {
+		return await invoke<number>("db_delete", {
 			table: this.name,
 			id,
 		}) > 0;
 	}
 
 	async clear() {
-		return invokePlugin<boolean>("db_drop", {
+		return invoke<boolean>("db_drop", {
 			table: this.name
 		});
 	}
 
 	async count() {
-		return invokePlugin<number>("db_count", {
+		return invoke<number>("db_count", {
 			table: this.name
 		});
 	}
 
 	async* iterate() {
-		// yeah how are we going to make a generator?
-		const cursorToken = window.crypto.randomUUID();
-		let end = false;
-		do {
-			const result = await invokePlugin<TableIter<T>>("db_iter", {
-				cursorToken, // the idea here is that we create a sql cursor and use that to iterate row by row
+		let offset = 0;
+		const length = 10;
+		for(;;){
+			const result = await invoke<TableIter<T>>("db_get_many", {
+				offset,
+				length,
 				table: this.name
 			});
-			yield result.result;
-			if(result.end) end = true;
-		}while(!end);
-		// idk how we should discard the cursor midway through though
+			offset += length;
+			for (const r of result.result) yield r;
+			if (result.result.length < length)
+				return;
+		}
 	}
 
 	async write(data: T) {
-		return invokePlugin<number>("db_write", {
+		return invoke<number>("db_write", {
 			table: this.name,
 			// do we need to use the id?
 			data
@@ -92,7 +93,7 @@ export class DecentTable<T extends UUIDable> {
 	}
 
 	async exists(id: string) {
-		return !!await invokePlugin<number>("db_get", {
+		return !!await invoke<number>("db_get", {
 			table: this.name,
 			id
 		});
