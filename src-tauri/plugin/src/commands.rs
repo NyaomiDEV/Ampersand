@@ -8,6 +8,7 @@ use crate::Result;
 // Commands that can be done independent of platform
 // go into src-tauri/src/commands.rs
 
+// -- APP COMMANDS
 #[command]
 pub(crate) fn exit_app<R: Runtime>(app: AppHandle<R>) -> Result<()> {
 	app.ampersand().exit_app()
@@ -21,21 +22,6 @@ pub(crate) fn set_can_go_back<R: Runtime>(app: AppHandle<R>, can_go_back: bool) 
 #[command]
 pub(crate) fn open_file<R: Runtime>(app: AppHandle<R>, path: String) -> Result<()> {
 	app.ampersand().open_file(path)
-}
-
-#[command]
-pub(crate) fn db_test<R: Runtime>(app: AppHandle<R>) -> Result<String> {
-	app.ampersand().db_test()
-}
-
-#[command]
-pub(crate) fn db_run_migrations<R: Runtime>(app: AppHandle<R>) -> Result<()> {
-	app.ampersand().db_run_migrations()
-}
-
-#[command]
-pub(crate) fn db_migrate_old<R: Runtime>(app: AppHandle<R>) -> Result<()> {
-	app.ampersand().db_migrate_old()
 }
 
 #[command]

@@ -5,18 +5,18 @@ use tauri::{
 	Manager, Runtime,
 };
 
-#[cfg(desktop)]
-mod desktop;
-#[cfg(mobile)]
-mod mobile;
-
 mod commands;
 mod error;
 pub use error::{Error, Result};
 mod db;
 
 #[cfg(desktop)]
+mod desktop;
+#[cfg(desktop)]
 use desktop::Ampersand;
+
+#[cfg(mobile)]
+mod mobile;
 #[cfg(mobile)]
 use mobile::Ampersand;
 
@@ -38,9 +38,6 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
 			commands::exit_app,
 			commands::set_can_go_back,
 			commands::open_file,
-			commands::db_test,
-			commands::db_run_migrations,
-			commands::db_migrate_old,
 			commands::get_webkit_version,
 			commands::broadcast_event,
 			commands::list_assets

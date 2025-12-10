@@ -11,9 +11,6 @@ Default permissions for the Ampersand plugin
 - `allow-broadcast-event`
 - `allow-list-assets`
 - `allow-registerListener`
-- `allow-db-test`
-- `allow-db-migrate-old`
-- `allow-db-run-migrations`
 
 ## Permission Table
 
@@ -46,84 +43,6 @@ Enables the broadcast_event command without any pre-configured scope.
 <td>
 
 Denies the broadcast_event command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`ampersand:allow-db-migrate-old`
-
-</td>
-<td>
-
-Enables the db_migrate_old command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`ampersand:deny-db-migrate-old`
-
-</td>
-<td>
-
-Denies the db_migrate_old command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`ampersand:allow-db-run-migrations`
-
-</td>
-<td>
-
-Enables the db_run_migrations command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`ampersand:deny-db-run-migrations`
-
-</td>
-<td>
-
-Denies the db_run_migrations command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`ampersand:allow-db-test`
-
-</td>
-<td>
-
-Enables the db_test command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`ampersand:deny-db-test`
-
-</td>
-<td>
-
-Denies the db_test command without any pre-configured scope.
 
 </td>
 </tr>
@@ -183,32 +102,6 @@ Denies the get_webkit_version command without any pre-configured scope.
 <tr>
 <td>
 
-`ampersand:allow-init-db`
-
-</td>
-<td>
-
-Enables the init_db command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`ampersand:deny-init-db`
-
-</td>
-<td>
-
-Denies the init_db command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
 `ampersand:allow-list-assets`
 
 </td>
@@ -228,32 +121,6 @@ Enables the list_assets command without any pre-configured scope.
 <td>
 
 Denies the list_assets command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`ampersand:allow-migrate-old-db`
-
-</td>
-<td>
-
-Enables the migrate_old_db command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`ampersand:deny-migrate-old-db`
-
-</td>
-<td>
-
-Denies the migrate_old_db command without any pre-configured scope.
 
 </td>
 </tr>
@@ -313,32 +180,6 @@ Denies the registerListener command without any pre-configured scope.
 <tr>
 <td>
 
-`ampersand:allow-run-db-migrations`
-
-</td>
-<td>
-
-Enables the run_db_migrations command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`ampersand:deny-run-db-migrations`
-
-</td>
-<td>
-
-Denies the run_db_migrations command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
 `ampersand:allow-set-can-go-back`
 
 </td>
@@ -358,32 +199,6 @@ Enables the set_can_go_back command without any pre-configured scope.
 <td>
 
 Denies the set_can_go_back command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`ampersand:allow-test-db`
-
-</td>
-<td>
-
-Enables the test_db command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`ampersand:deny-test-db`
-
-</td>
-<td>
-
-Denies the test_db command without any pre-configured scope.
 
 </td>
 </tr>

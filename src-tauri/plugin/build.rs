@@ -6,10 +6,6 @@ const COMMANDS: &[&str] = &[
 	"broadcast_event",
 	"list_assets",
 	"registerListener",
-	// db commands after this comment please
-	"db_test",
-	"db_run_migrations",
-	"db_migrate_old",
 ];
 
 fn main() {

@@ -8,7 +8,4 @@ permissions = [
 	"allow-broadcast-event",
 	"allow-list-assets",
 	"allow-registerListener",
-	"allow-db-test",
-	"allow-db-migrate-old",
-	"allow-db-run-migrations"
 ]
