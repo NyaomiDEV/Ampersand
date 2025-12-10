@@ -6,8 +6,5 @@ permissions = [
 	"allow-broadcast-event",
 	"allow-list-assets",
 	"allow-dismiss-splash",
-	"allow-register-listener",
-	"allow-db-test",
-	"allow-db-run-migrations",
-	"allow-db-migrate-old"
+	"allow-register-listener"
 ]
