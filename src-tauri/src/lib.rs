@@ -1,4 +1,5 @@
 mod commands;
+mod db;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
@@ -12,9 +13,17 @@ pub fn run() {
 		.plugin(tauri_plugin_ampersand::init())
 		.plugin(tauri_plugin_process::init())
 		.invoke_handler(tauri::generate_handler![
-			commands::our_temp_dir,
-			commands::clear_temp_dir,
-			commands::get_webkit_version
+			commands::get_webkit_version,
+			// DB commands
+			db::commands::general::db_test,
+			db::commands::general::db_run_migrations,
+			db::commands::general::db_migrate_old,
+			db::commands::general::db_get,
+			db::commands::general::db_get_many,
+			db::commands::general::db_count,
+			db::commands::general::db_drop,
+			db::commands::general::db_write,
+			db::commands::general::db_update
 		])
 		.setup(|_app: &mut tauri::App| {
 			#[cfg(mobile)]
