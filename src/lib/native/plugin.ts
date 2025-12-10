@@ -22,22 +22,6 @@ export async function openFile(path: string) {
 	}
 }
 
-export async function testDb(): Promise<string> {
-	return invokePlugin<string>("db_test");
-}
-
-export async function runDbMigrations(): Promise<void> {
-	return invokePlugin<void>("db_run_migrations");
-}
-
-export async function migrateOldDb(): Promise<void> {
-	return invokePlugin<void>("db_migrate_old");
-}
-
-export async function listAssets(path: string): Promise<string[]> {
-	return invokePlugin("list_assets", { path });
-}
-
 export async function getWebkitVersion(): Promise<string> {
 	return invoke<string>("get_webkit_version");
 }
