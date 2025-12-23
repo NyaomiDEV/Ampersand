@@ -11,7 +11,7 @@ export async function members(table: ShittyTable<Member>, version: number){
 		if (systemId === nilUid) return false;
 
 		for (const memberIndex of table.index) {
-			if (!memberIndex.system || memberIndex.system === nilUid) {
+			if (!memberIndex.system || memberIndex.system !== systemId) {
 				await table.update(memberIndex.uuid, {
 					system: systemId
 				});
@@ -22,7 +22,7 @@ export async function members(table: ShittyTable<Member>, version: number){
 
 	// HACK: Mark for migration if we find something disturbing
 	if(table.index.find(x =>
-		!x.system || x.system === nilUid || (x.system !== systemId && systemId !== nilUid)
+		systemId !== nilUid && x.system !== systemId
 	))
 		version = 0;
 
