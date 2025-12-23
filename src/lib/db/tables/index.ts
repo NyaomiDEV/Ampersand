@@ -6,7 +6,7 @@ import type { Asset, BoardMessage, CustomField, FrontingEntry, JournalPost, Memb
 import { decode, encode } from "@msgpack/msgpack";
 import type { AmpersandEntityMapping, MigrationsMapping } from "../types";
 import { deleteNull, replace, revive, walk } from "../../json";
-import { members } from "./migrations";
+import { members, systems } from "./migrations";
 
 export type IndexEntry<T> = UUIDable & Partial<T>;
 type SecondaryKey<T> = (Exclude<keyof T, keyof UUIDable>);
@@ -272,7 +272,9 @@ export class ShittyTable<T extends UUIDable> {
 		switch (this.name) {
 			case "members":
 				version = await members(this as unknown as ShittyTable<Member>, version);
-				console.log("new version", version);
+				break;
+			case "system":
+				version = await systems(this as unknown as ShittyTable<System>, version);
 				break;
 		}
 		await this.saveMigrationVersion(version);
@@ -302,12 +304,12 @@ export function getTables(): GetTableTauriExport {
 }
 
 export const db = {
+	systems: await makeTable<System>("system", []),
+	members: await makeTable<Member>("members", ["system"]),
 	boardMessages: await makeTable<BoardMessage>("boardMessages", ["member", "date", "isPinned", "isArchived"]),
 	frontingEntries: await makeTable<FrontingEntry>("frontingEntries", ["member", "startTime", "endTime", "isLocked"]),
 	journalPosts: await makeTable<JournalPost>("journalPosts", ["member", "date", "isPinned"]),
-	members: await makeTable<Member>("members", ["system"]),
 	reminders: await makeTable<Reminder>("reminders", []),
-	systems: await makeTable<System>("system", []),
 	tags: await makeTable<Tag>("tags", []),
 	assets: await makeTable<Asset>("assets", []),
 	customFields: await makeTable<CustomField>("customFields", [])
