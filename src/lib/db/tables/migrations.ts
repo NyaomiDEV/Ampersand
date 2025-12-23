@@ -6,7 +6,7 @@ import { Member } from "../entities";
 export async function members(table: ShittyTable<Member>, version: number){
 	async function fromOneToTwo(){
 		const systemId = appConfig.defaultSystem;
-		if (systemId === nilUid) return;
+		if (systemId === nilUid) return false;
 
 		for (const memberIndex of table.index) {
 			if (!memberIndex.system || memberIndex.system === nilUid) {
@@ -15,14 +15,13 @@ export async function members(table: ShittyTable<Member>, version: number){
 				});
 			}
 		}
+		return true;
 	}
 
 	switch(version){
 		case 0:
-			await fromOneToTwo();
-			break;
 		case 1:
-			await fromOneToTwo();
+			if (!await fromOneToTwo()) return 0;
 			break;
 	}
 
