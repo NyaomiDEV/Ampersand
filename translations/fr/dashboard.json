@@ -1,5 +1,5 @@
 {
-	"header": "Tableau de bord",
+	"header": "Accueil",
 	"header_salute": "Bonjour !",
 	"header_mainfronter": "Bonjour, {{fronterName}} !",
 	"systemDescription": "Description du système",
