@@ -308,6 +308,12 @@
 		height: 192px;
 	}
 
+	ion-avatar ion-icon {
+		width: 100%;
+		height: 100%;
+		color: var(--ion-color-primary);
+	}
+
 	div.system-info {
 		display: block;
 		margin: auto;

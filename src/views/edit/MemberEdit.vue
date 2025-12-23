@@ -108,7 +108,10 @@
 			return;
 		}
 
-		await updateMember(uuid, _member);
+		await updateMember(uuid, {
+			..._member,
+			system: _member.system || appConfig.defaultSystem // workaround for now
+		});
 
 		isEditing.value = false;
 	}
