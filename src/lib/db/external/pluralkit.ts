@@ -5,6 +5,7 @@ import { CustomField, FrontingEntry, Member, System, Tag } from "../entities";
 import { getTables } from "../tables";
 import { fetch } from "@tauri-apps/plugin-http";
 import { nilUid } from "../../util/consts";
+import { appConfig } from "../../config";
 
 function pkCustomField(): CustomField {
 	return {
@@ -155,6 +156,7 @@ export async function importPluralKit(pkExport: any){
 		const tables = getTables();
 		await tables.customFields.bulkAdd([field]);
 		await tables.systems.bulkAdd([systemInfo]);
+		appConfig.defaultSystem = systemInfo.uuid;
 		await tables.tags.bulkAdd(tags);
 		await tables.members.bulkAdd(members);
 		await tables.frontingEntries.bulkAdd(frontingEntries);

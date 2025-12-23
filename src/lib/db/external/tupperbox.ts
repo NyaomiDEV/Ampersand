@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { appConfig } from "../../config";
 import { Member, Tag, System } from "../entities";
 import { getTables } from "../tables";
 import { fetch } from "@tauri-apps/plugin-http";
@@ -80,6 +81,7 @@ export async function importTupperBox(tuExport: any){
 		// ADD TO DATABASE
 		const tables = getTables();
 		await tables.systems.bulkAdd([systemInfo]);
+		appConfig.defaultSystem = systemInfo.uuid;
 		await tables.tags.bulkAdd(tags);
 		await tables.members.bulkAdd(members);
 	}catch(e){

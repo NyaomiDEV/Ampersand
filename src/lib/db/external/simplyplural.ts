@@ -7,6 +7,7 @@ import { t } from "i18next";
 import { fetch } from "@tauri-apps/plugin-http";
 import { resizeImage } from "../../util/image";
 import { maxUid, nilUid } from "../../util/consts";
+import { appConfig } from "../../config";
 
 function normalizeSPColor(color?: string) {
 	if (!color || !color.length) return undefined;
@@ -422,6 +423,7 @@ export async function importSimplyPlural(spExport: any) {
 		// ADD TO DATABASE
 		const tables = getTables();
 		await tables.systems.bulkAdd([systemInfo]);
+		appConfig.defaultSystem = systemInfo.uuid;
 		await tables.tags.bulkAdd(tags);
 		await tables.customFields.bulkAdd(customFields);
 		await tables.members.bulkAdd(members);
