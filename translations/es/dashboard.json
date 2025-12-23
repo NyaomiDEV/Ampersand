@@ -1,1 +1,12 @@
-{}
+{
+	"header_mainfronter": "Hola, {{fronterName}}!",
+	"systemDescription": "Descripción del sistema",
+	"nowFronting": "Al frente ahora",
+	"fronterInfluencing": "Influenciando {{influencedMember}}",
+	"addToFront": "Agregar al frente",
+	"messageBoard": {
+		"header": "Tablero de mensajes",
+		"add": "Agregar al tablero",
+		"view": "Ver más"
+	}
+}

@@ -1,1 +1,37 @@
-{}
+{
+	"header": "Tablero de mensajes",
+	"searchPlaceholder": "Buscar por mensajes...",
+	"polls": {
+		"collapsePoll": "Ocultar encuesta",
+		"voteCast": {
+			"voter": "Selecciona el votante",
+			"reason": "Di la razón",
+			"reasonHint": "Razón",
+			"retractConfirmation": "¿Estás seguro que quieres retractar este voto?"
+		},
+		"resultsHeader": "Resultados de la votación",
+		"resultsButton": "Mostrar resultados de la votación",
+		"choice": {
+			"desc_one": "{{count}} votante",
+			"desc_many": "{{count}} votantes",
+			"desc_other": "{{count}} votantes"
+		},
+		"defaultPollValues": {
+			"abstain": "Abstenerse"
+		}
+	},
+	"edit": {
+		"member": "Editar autor del mensaje",
+		"body": "Cuerpo del mensaje",
+		"isPinned": "Fijar mensaje",
+		"isArchived": "Archivar mensaje",
+		"attachPoll": "Añadir una encuesta a este mensaje",
+		"deleteAttachedPoll": "Eliminar encuesta añadida",
+		"pollAddNewChoice": "Agregar una nueva opción a la encuesta",
+		"pollChoice": "Descripción de la elección",
+		"pollEditWarning": "¡Cambiar cualquiera de los detalles de la encuesta reiniciará los votos!",
+		"delete": {
+			"title": "Eliminar mensaje en el tablero"
+		}
+	}
+}

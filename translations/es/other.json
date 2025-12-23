@@ -1,1 +1,12 @@
-{}
+{
+	"languageName": {
+		"local": "Español"
+	},
+	"genericDeleteDesc": "¡No podrás deshacer esta acción!",
+	"memberMention": "Mencionar un miembro",
+	"timeSizes": {
+		"days": {
+			"short": "D"
+		}
+	}
+}

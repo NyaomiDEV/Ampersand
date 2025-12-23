@@ -1,1 +1,28 @@
-{}
+{
+	"highLegibilityFontType": {
+		"atkinson": "Atkinson hiperlegible",
+		"opendyslexic": "OpenDyslexic",
+		"lexend": "Lexend",
+		"system-font": "Fuente del sistema"
+	},
+	"uiVariant": {
+		"title": "Variante de la interfaz"
+	},
+	"useAccentColor": {
+		"title": "Color de acentuado",
+		"desc": "Usar un color de acento personalizado"
+	},
+	"accentColor": {
+		"title": "Elige el color acentuado"
+	},
+	"reducedMotion": {
+		"title": "Movimiento reducido",
+		"desc": "Desactivar animaciones en la aplicación"
+	},
+	"disableMemberCoversInList": {
+		"desc": "Si es activado, los miembros de la lista principal también se mostrarán de una manera más compacta"
+	},
+	"contrastLevel": {
+		"title": "Nivel de contraste"
+	}
+}

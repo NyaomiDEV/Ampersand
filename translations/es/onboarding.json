@@ -1,1 +1,28 @@
-{}
+{
+	"importScreen": {
+		"header": "¿Te gustaría importar tus datos?",
+		"prevInstall": "Si, instalación previa",
+		"simplyPlural": "Si, Simply Plural",
+		"pluralKit": "Si, PluralKit",
+		"tupperbox": "Si, Tupperbox",
+		"startFromScratch": "No, iniciaré desde cero",
+		"pleaseWait": "Por favor espera mientras importamos tus datos",
+		"error": "Error al importar el respaldo. Por favor selecciona otra opción.",
+		"errorSp": "Error al importar la exportación de Simply Plural. Por favor selecciona otra opción.",
+		"errorPk": "Error al importar la exportación de PluralKit. Por favor selecciona otra opción.",
+		"errorTu": "Error al importar la exportación de Tupperbox. Por favor selecciona otra opción."
+	},
+	"systemInfo": {
+		"header": "¡Dinos sobre tu sistema!",
+		"name": "Nombre colectivo",
+		"description": "Un poco sobre ustedes..."
+	},
+	"memberInfo": {
+		"header": "¡Dinos más sobre ti!",
+		"description": "Un poco sobre ti..."
+	},
+	"endScreen": {
+		"header": "¡Gracias por escoger Ampersand!",
+		"startButton": "¡Vamos a empezar!"
+	}
+}

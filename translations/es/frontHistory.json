@@ -1,1 +1,25 @@
-{}
+{
+	"header": "Historial del frente",
+	"currentlyFronting": "Actualmente al frente",
+	"wasFronting": "Todavía estaba al frente",
+	"frontedThatDay": "Al frente ese día",
+	"influencing": "Influenciando {{influencedMember}}",
+	"edit": {
+		"header": "Editar entrada del frente",
+		"member": "Edita el miembro al frente",
+		"customStatus": "Estatus personalizado",
+		"presence": {
+			"historyTitle": "Historial de presencia",
+			"addTitle": "¿Qué tan presente estás en una escala del 0 al 10?",
+			"addButton": "Agregado al historial"
+		},
+		"influencing": {
+			"currentlyInfluencing": "Actualmente influenciando"
+		},
+		"removeFromFront": "Remover del frente",
+		"delete": {
+			"title": "Eliminar entrada al frente",
+			"confirm": "¿Estás seguro que quieres eliminar ésta entrada del frente?"
+		}
+	}
+}

@@ -1,1 +1,20 @@
-{}
+{
+	"header": "Diario",
+	"searchPlaceholder": "Buscar el diario...",
+	"contentWarning": "Esta publicación tiene contenido sensible adentro",
+	"private": "Esta publicación es privada",
+	"pinnedPosts": "Publicaciones fijadas",
+	"alertSubheader": "¿De verdad quieres leer esta publicación?",
+	"edit": {
+		"header": "Publicación",
+		"author": "Editar autor",
+		"date": "Editar fecha",
+		"body": "Cuerpo de la publicación",
+		"isPrivate": "Publicación privada",
+		"contentWarning": "Advertencia de contenido",
+		"postID": "ID de la publicación: {{postID}}",
+		"delete": {
+			"title": "Eliminar publicación del diario"
+		}
+	}
+}

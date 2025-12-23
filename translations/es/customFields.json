@@ -1,1 +1,17 @@
-{}
+{
+	"header": "Campos personalizados",
+	"select": "Elige campos personalizados",
+	"searchPlaceholder": "Buscar campos personalizados...",
+	"edit": {
+		"header": "Editar campo personalizado",
+		"headerAdd": "Agregar campo personalizado",
+		"name": "Nombre del campo personalizado",
+		"default": {
+			"desc": "Los campos personalizados predeterminados siempre aparecerán en la pantalla de edición de miembro"
+		},
+		"delete": {
+			"title": "Eliminar campo personalizado",
+			"confirm": "¿Estás seguro que quieres eliminar este campo personalizado?"
+		}
+	}
+}

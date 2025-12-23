@@ -1,1 +1,16 @@
-{}
+{
+	"applock": {
+		"desc": "Bloquea la aplicación con una contraseña"
+	},
+	"biometrics": {
+		"desc": "Desbloquear mediante tu huella dactilar o cara"
+	},
+	"editPassword": "Modificar contraseña",
+	"inputPassword": {
+		"titleAdd": "Intruduce tu nueva contraseña",
+		"titleReenter": "Reingresa la contraseña",
+		"titleModifyOld": "Introduce tu contraseña vieja",
+		"titleDisable": "Introduce tu contraseña",
+		"hint": "Contraseña"
+	}
+}

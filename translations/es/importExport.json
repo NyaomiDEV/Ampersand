@@ -1,1 +1,23 @@
-{}
+{
+	"dbExport": {
+		"title": "Exporta tus datos",
+		"desc": "Respalda tus datos actuales a un archivo que puedes guardar en otro lugar"
+	},
+	"dbImportDesc": "¡Advertencia! Esto sobreescribirá toda información existente",
+	"dbImport": "Importa tu información de un archivo respaldado",
+	"pkImport": "Importar tu información de una exportación de PluralKit",
+	"tuImport": "Importar tu información de una exportación de Tupperbox",
+	"spImport": "Importa tu información de una exportación de Simply Plural",
+	"status": {
+		"imported": "El respaldo ha sido importada. Por favor, reinicia la aplicación.",
+		"importedSp": "La exportación de Simply Plural ha sido importada. Por favor, reinicia la aplicación.",
+		"importedPk": "La exportación de PluralKit ha sido importada. Por favor, reinicia la aplicación.",
+		"importedTu": "La exportación de Tupperbox ha sido importada. Por favor reinicia la aplicación.",
+		"exportedApp": "El respaldo ha sido exportado a la locación que escogiste.",
+		"errorExport": "Error al exportar el respaldo.",
+		"error": "Error al importar el respaldo.",
+		"errorSp": "Error al importar la exportación de Simply Plural.",
+		"errorPk": "Error al importar la exportación de PluralKit.",
+		"errorTu": "Error al importar la exportación de Tupperbox."
+	}
+}

@@ -1,1 +1,33 @@
-{}
+{
+	"searchPlaceholder": "Buscar miembros...",
+	"select": "Selecciona un miembro",
+	"deletedMember": "Miembro eliminado",
+	"deletedCustomFront": "Eliminar frente personalizado",
+	"actions": {
+		"addToFront": "Agregar al frente",
+		"setMainFronter": "Definir como el principial del frente",
+		"removeFromFront": "Remover del frente"
+	},
+	"toasts": {
+		"addToFront": "Miembro añadido al frente",
+		"removeFromFront": "Miembro removido del frente"
+	},
+	"edit": {
+		"headerAdd": "Agregar miembro",
+		"headerEdit": "Editar miembro",
+		"role": "Rol",
+		"color": "Color preferido",
+		"customFieldsAdd": "Agregar campos personalizados",
+		"isPinned": "Fijar miembro",
+		"customFront": "Frente personalizado",
+		"showFrontingEntries": "Mostrar las entradas del frente",
+		"showBoardEntries": "Mostrar mensajes del tablero",
+		"showJournalEntries": "Mostrar publicaciones del diario",
+		"memberID": "ID del miembro: {{memberID}}",
+		"dateCreated": "Fecha de creación: {{dateCreated}}",
+		"delete": {
+			"title": "Eliminar miembro",
+			"confirm": "¿Estás seguro de que quieres eliminar este miembro?"
+		}
+	}
+}

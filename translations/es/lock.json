@@ -1,1 +1,8 @@
-{}
+{
+	"title": "La aplicación está bloqueada",
+	"hint": "Por favor ingresa la contraseña de tu aplicación",
+	"biometrics": {
+		"title": "La aplicación está bloqueada",
+		"reason": "Desbloquear la aplicación"
+	}
+}

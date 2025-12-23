@@ -1,1 +1,31 @@
-{}
+{
+	"eventBasedHeader": "Recordatorios en base a eventos",
+	"periodicHeader": "Recordatorios periodicos",
+	"edit": {
+		"header": "Editar recordatorio",
+		"name": "Recordar nombre",
+		"title": "Título de la notificación de recordatorio",
+		"message": "Mensaje de la notificación de recordatorio",
+		"type": {
+			"title": "Tipo de recordatorio",
+			"eventBased": "Basado en un evento"
+		},
+		"eventBased": {
+			"title": "Evento detonante",
+			"addedToFront": "Después de que un miembro haya sido añadido al frente",
+			"removedFromFront": "Después de que un miembro haya sido removido del frente",
+			"delay": {
+				"desc": "Después {{delay}}"
+			}
+		},
+		"periodic": {
+			"title": "Intervalo de tiempo",
+			"timeOfDay": {
+				"desc": "A {{timeOfDay}}"
+			},
+			"dayOfMonth": {
+				"desc_undefined": "Repetir cada día"
+			}
+		}
+	}
+}

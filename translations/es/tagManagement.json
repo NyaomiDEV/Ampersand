@@ -1,1 +1,38 @@
-{}
+{
+	"header": "Manejo de etiquetas",
+	"select": "Selecciona algunas etiquetas",
+	"selector": {
+		"member": "Etiquetas del miembro",
+		"journal": "Etiquetas del diario"
+	},
+	"edit": {
+		"header": {
+			"member": "Editar etiqueta del miembro",
+			"journal": "Editar etiquetas del diario"
+		},
+		"description": "Descripción de la etiqueta",
+		"color": "Color de la etiqueta",
+		"viewInLists": "Mirar en las listas",
+		"type": {
+			"header": "Tipo de etiqueta",
+			"journal": "Diario",
+			"desc": "Nota: ¡solo puedes definir el tipo de etiqueta en su creación!"
+		},
+		"members": {
+			"title": "Escoge a los miembros usando ésta etiqueta",
+			"desc_one": "{{count}} miembro usando ésta etiqueta",
+			"desc_many": "{{count}} miembros usando ésta etiqueta",
+			"desc_other": "{{count}} miembros usando ésta etiqueta"
+		},
+		"showJournal": {
+			"title": "Mostrar publicaciones de diarios con ésta etiqueta",
+			"desc_one": "{{count}} publicación de diario con ésta etiqueta",
+			"desc_many": "{{count}} publicaciones de diarios con ésta etiqueta",
+			"desc_other": "{{count}} publicaciones de diarios con ésta etiqueta"
+		},
+		"delete": {
+			"title": "Eliminar etiqueta",
+			"confirm": "¿Estás seguro que quieres eliminar ésta etiqueta?"
+		}
+	}
+}
