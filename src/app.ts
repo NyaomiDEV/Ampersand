@@ -48,7 +48,6 @@ import "./lib/theme/style.css";
 // Other imports from frontend library
 import { clearTempDir } from "./lib/native/cache";
 import { slideAnimation } from "./lib/util/misc";
-import { nilUid } from "./lib/util/consts";
 import { addMobileListener, getWebkitVersion } from "./lib/native/plugin";
 import { platform } from "@tauri-apps/plugin-os";
 
@@ -61,7 +60,7 @@ async function setupAmpersand(){
 
 	const maybeSystem = db.systems.index[0]?.uuid || undefined;
 
-	if (appConfig.defaultSystem === nilUid) {
+	if (!db.systems.index.map(x => x.uuid).includes(appConfig.defaultSystem)) {
 		if (maybeSystem)
 			appConfig.defaultSystem = maybeSystem;
 	}
