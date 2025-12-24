@@ -64,15 +64,15 @@ class AmpersandPlugin(private val activity: Activity): Plugin(activity) {
 
     @Command
     fun exitApp(invoke: Invoke) {
-        activity.finish()
         invoke.resolve()
+        activity.finish()
     }
 
     @Command
     fun setCanGoBack(invoke: Invoke) {
         val args = invoke.parseArgs(SetCanGoBackArgs::class.java)
-        backCallback.isEnabled = args.canGoBack
         invoke.resolve()
+        backCallback.isEnabled = args.canGoBack
     }
 
     @Command
