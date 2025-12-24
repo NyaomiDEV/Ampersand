@@ -125,7 +125,7 @@
 	}
 
 	function deletePicture(){
-		delete member.value.image;
+		member.value.image = undefined;
 	}
 
 	async function modifyCover(){
@@ -140,7 +140,7 @@
 	}
 
 	function deleteCover(){
-		delete member.value.cover;
+		member.value.cover = undefined;
 	}
 
 	async function removeMember() {

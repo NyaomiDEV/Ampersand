@@ -76,7 +76,7 @@
 	}
 
 	function deletePicture(){
-		delete system.value.image;
+		system.value.image = undefined;
 	}
 
 	async function removeSystem() {

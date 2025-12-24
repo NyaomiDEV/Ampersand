@@ -74,7 +74,12 @@
 						<IonButton shape="round" @click="modifyPicture">
 							<IonIcon slot="icon-only" :icon="pencilMD" />
 						</IonButton>
-						<IonButton shape="round" color="danger" @click="deletePicture">
+						<IonButton
+							v-if="member.image"
+							shape="round"
+							color="danger"
+							@click="deletePicture"
+						>
 							<IonIcon slot="icon-only" :icon="trashMD" />
 						</IonButton>
 					</div>
