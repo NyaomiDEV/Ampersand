@@ -40,8 +40,11 @@ export async function systems(table: ShittyTable<System>, version: number){
 	// enforce only one system for now
 	async function zeroToOne(){
 		// set default system in app config
-		if(appConfig.defaultSystem === nilUid)
-			appConfig.defaultSystem = table.index[0].uuid;
+		if(appConfig.defaultSystem === nilUid){
+			const maybeSystem = table.index[0];
+			if(!maybeSystem) return false;
+			appConfig.defaultSystem = maybeSystem.uuid;
+		}
 
 		for(const systemIndex of table.index){
 			if(systemIndex.uuid !== appConfig.defaultSystem)

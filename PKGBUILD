@@ -1,5 +1,5 @@
 pkgname=ampersand-git
-pkgver=0.1.5
+pkgver=0.1.6
 pkgrel=1
 pkgdesc="Tracking app for plural systems"
 url="https://codeberg.org/NyaomiDEV/Ampersand"

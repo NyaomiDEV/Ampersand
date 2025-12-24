@@ -1,6 +1,6 @@
 [package]
 name = "tauri-plugin-ampersand"
-version = "0.1.5"
+version = "0.1.6"
 authors = ["nao"]
 description = ""
 edition = "2021"
