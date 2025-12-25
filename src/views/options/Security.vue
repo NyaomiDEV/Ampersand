@@ -49,13 +49,19 @@
 
 	async function addPassword() {
 		const password = await enterPasswordAlert(i18next.t("security:inputPassword.titleAdd"));
-		const passwordAgain = await enterPasswordAlert(i18next.t("security:inputPassword.titleReenter"));
-
-		if(password && password === passwordAgain){
-			const result = enableApplock(password);
-			usePassword.value = result;
-		} else 
+		if(!password){
 			usePassword.value = false;
+			return;
+		}
+
+		const passwordAgain = await enterPasswordAlert(i18next.t("security:inputPassword.titleReenter"));
+		if(password !== passwordAgain){
+			usePassword.value = false;
+			return;
+		}
+
+		const result = enableApplock(password);
+		usePassword.value = result;
 	}
 
 	async function modifyPassword() {
