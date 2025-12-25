@@ -3,6 +3,7 @@ import { securityConfig } from "./config";
 import { md5 } from "./util/md5";
 import { t } from "i18next";
 import { ref } from "vue";
+import { platform } from "@tauri-apps/plugin-os";
 
 export const isLocked = ref(false);
 
@@ -95,6 +96,8 @@ export function enableApplock(plaintextPwd: string) {
 }
 
 export async function areBiometricsAvailable(){
+	if(platform() !== "android" || platform() !== "ios") return false;
+
 	const status = await checkStatus();
 	if(status.error || status.errorCode || !status.isAvailable) return false;
 	return true;
