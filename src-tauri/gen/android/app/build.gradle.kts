@@ -50,6 +50,9 @@ android {
                 applicationIdSuffix = ".ci"
                 manifestPlaceholders["appName"] = "@string/app_name_ci"
                 base.archivesName.set("ampersand-ci")
+                isDebuggable = true
+                isJniDebuggable = true
+                isMinifyEnabled = false
             }
             proguardFiles(
                 *fileTree(".") { include("**/*.pro") }
