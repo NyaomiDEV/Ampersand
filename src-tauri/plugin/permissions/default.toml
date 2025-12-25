@@ -7,5 +7,6 @@ permissions = [
 	"allow-get-webkit-version",
 	"allow-broadcast-event",
 	"allow-list-assets",
+	"allow-dismiss-splash",
 	"allow-registerListener"
 ]

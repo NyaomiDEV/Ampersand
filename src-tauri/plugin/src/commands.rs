@@ -37,3 +37,8 @@ pub(crate) fn broadcast_event<R: Runtime>(app: AppHandle<R>, payload: String) ->
 pub(crate) fn list_assets<R: Runtime>(app: AppHandle<R>, path: String) -> Result<Vec<String>> {
     app.ampersand().list_assets(path)
 }
+
+#[command]
+pub(crate) fn dismiss_splash<R: Runtime>(app: AppHandle<R>) -> Result<()> {
+    app.ampersand().dismiss_splash()
+}

@@ -18,6 +18,10 @@ impl<R: Runtime> Ampersand<R> {
     Ok(())
   }
 
+  pub fn dismiss_splash(&self) -> crate::Result<()> {
+    Ok(())
+  }
+
   pub fn set_can_go_back(&self, _can_go_back: bool) -> crate::Result<()> {
     Ok(())
   }

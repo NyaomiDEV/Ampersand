@@ -10,6 +10,7 @@ Default permissions for the Ampersand plugin
 - `allow-get-webkit-version`
 - `allow-broadcast-event`
 - `allow-list-assets`
+- `allow-dismiss-splash`
 - `allow-registerListener`
 
 ## Permission Table
@@ -43,6 +44,32 @@ Enables the broadcast_event command without any pre-configured scope.
 <td>
 
 Denies the broadcast_event command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`ampersand:allow-dismiss-splash`
+
+</td>
+<td>
+
+Enables the dismiss_splash command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`ampersand:deny-dismiss-splash`
+
+</td>
+<td>
+
+Denies the dismiss_splash command without any pre-configured scope.
 
 </td>
 </tr>

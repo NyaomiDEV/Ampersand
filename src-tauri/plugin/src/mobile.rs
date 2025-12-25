@@ -78,6 +78,13 @@ impl<R: Runtime> Ampersand<R> {
       .map_err(Into::into)
   }
 
+  pub fn dismiss_splash(&self) -> crate::Result<()> {
+    self
+      .0
+      .run_mobile_plugin("dismissSplash", ())
+      .map_err(Into::into)
+  }
+
   pub fn set_can_go_back(&self, can_go_back: bool) -> crate::Result<()> {
     self
       .0

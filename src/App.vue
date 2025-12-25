@@ -2,9 +2,10 @@
 	import { IonApp, IonRouterOutlet, useIonRouter } from "@ionic/vue";
 	import { useRouter } from "vue-router";
 
-	import { computed, provide } from "vue";
+	import { computed, onMounted, provide } from "vue";
 	import ModalContainer from "./components/ModalContainer.vue";
 	import { setRouterCanGoBack } from "./lib/util/backbutton";
+	import { dismissSplash } from "./lib/native/plugin";
 
 	provide("isDev", computed(() => import.meta.env.MODE === "development"));
 
@@ -16,6 +17,9 @@
 		await setRouterCanGoBack(ionRouter.canGoBack());
 	});
 
+	onMounted(async () => {
+		await dismissSplash();
+	});
 </script>
 
 <template>

@@ -3,8 +3,10 @@ package moe.ampersand.app.plugin
 import android.app.Activity
 import android.content.res.AssetManager.ACCESS_BUFFER
 import android.content.Intent
+import android.os.Build
 import android.webkit.WebView
 import android.os.ParcelFileDescriptor
+import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
@@ -21,8 +23,6 @@ import app.tauri.plugin.JSArray
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
-import java.io.InputStream
-import java.io.OutputStream
 
 @InvokeArg
 internal class OpenFileArgs {
@@ -60,6 +60,16 @@ class AmpersandPlugin(private val activity: Activity): Plugin(activity) {
 
     override fun load(webView: WebView) {
         (activity as AppCompatActivity).onBackPressedDispatcher.addCallback(activity, backCallback)
+    }
+
+    @Command
+    fun dismissSplash(invoke: Invoke){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S){
+            activity.findViewById<View>(android.R.id.content).viewTreeObserver.removeOnPreDrawListener(
+                AmpersandSingleton.splashKeeper
+            )
+        }
+        invoke.resolve()
     }
 
     @Command

@@ -48,7 +48,7 @@ import "./lib/theme/style.css";
 // Other imports from frontend library
 import { clearTempDir } from "./lib/native/cache";
 import { slideAnimation } from "./lib/util/misc";
-import { addMobileListener, getWebkitVersion } from "./lib/native/plugin";
+import { addMobileListener, dismissSplash, getWebkitVersion } from "./lib/native/plugin";
 import { platform } from "@tauri-apps/plugin-os";
 
 async function setupAmpersand(){
@@ -135,7 +135,9 @@ async function setupAmpersand(){
 if (!window.isSecureContext) {
 	console.error("Cannot continue, this is not a safe environment!");
 	document.body.innerHTML = "<h1 style='text-align: center;'>Ampersand cannot run on non-HTTPS environments! We're sorry for the trouble.<br>If you think this is an issue, report it on Codeberg.</h1>";
-} else if (platform() === "android" && (await getWebkitVersion()).split(".").map(x => parseInt(x, 10))[0] < 131)
+	await dismissSplash();
+} else if (platform() === "android" && (await getWebkitVersion()).split(".").map(x => parseInt(x, 10))[0] < 131) {
 	document.body.innerHTML = "<h1 style='text-align: center;'>Ampersand cannot run on this WebKit version!<br>Please update your phone's OS version and all of your system apps.</h1>";
-else
+	await dismissSplash();
+} else
 	await setupAmpersand();

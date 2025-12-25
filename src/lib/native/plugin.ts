@@ -10,6 +10,10 @@ export function exitApp(): Promise<void> {
 	return invokePlugin("exit_app") as Promise<void>;
 }
 
+export function dismissSplash(): Promise<void> {
+	return invokePlugin("dismiss_splash") as Promise<void>;
+}
+
 export function setCanGoBack(canGoBack: boolean): Promise<void> {
 	return invokePlugin("set_can_go_back", { canGoBack }) as Promise<void>;
 }
