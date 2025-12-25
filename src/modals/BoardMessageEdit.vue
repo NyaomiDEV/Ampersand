@@ -133,7 +133,7 @@
 
 		<IonContent>
 			<IonList inset>
-				<IonItem button @click="memberSelectModal?.$el.present()">
+				<IonItem button :detail="!boardMessage.member" @click="memberSelectModal?.$el.present()">
 					<template v-if="boardMessage.member">
 						<MemberAvatar slot="start" :member="boardMessage.member" />
 						<IonLabel>

@@ -229,7 +229,7 @@
 
 			<IonList v-else inset>
 
-				<IonItem button :detail="true" @click="memberSelectModal?.$el.present()">
+				<IonItem button :detail="!post.member" @click="memberSelectModal?.$el.present()">
 					<template v-if="post.member">
 						<MemberAvatar slot="start" :member="post.member" />
 						<IonLabel>
