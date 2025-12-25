@@ -5,7 +5,7 @@
 	import { getFiles, toast } from "../../lib/util/misc";
 	import dayjs from "dayjs";
 	import { save } from "@tauri-apps/plugin-dialog";
-	import { writeFile } from "@tauri-apps/plugin-fs";
+	import { open } from "@tauri-apps/plugin-fs";
 	import { useTranslation } from "i18next-vue";
 	import { importPluralKit } from "../../lib/db/external/pluralkit";
 	import { importTupperBox } from "../../lib/db/external/tupperbox";
@@ -124,9 +124,16 @@
 			
 			const dataStream = await dbPromise;
 
-
 			if(dataStream){
-				await writeFile(path, dataStream);
+				const fd = await open(path, { write: true, create: true });
+				let done = false;
+				const reader = dataStream.getReader();
+				do{
+					const result = await reader.read();
+					done = result.done;
+					if(result.value) await fd.write(result.value);
+				}while(!done);
+				await fd.close();
 				await toast(i18next.t("importExport:status.exportedApp"));
 			}
 		} else 
