@@ -96,7 +96,7 @@ export function enableApplock(plaintextPwd: string) {
 }
 
 export async function areBiometricsAvailable(){
-	if(platform() !== "android" || platform() !== "ios") return false;
+	if(platform() !== "android" && platform() !== "ios") return false;
 
 	const status = await checkStatus();
 	if(status.error || status.errorCode || !status.isAvailable) return false;
