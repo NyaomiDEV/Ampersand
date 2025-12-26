@@ -61,7 +61,6 @@ android {
             )
         }
         getByName("debug") {
-            applicationIdSuffix = ".debug"
             manifestPlaceholders["usesCleartextTraffic"] = "true"
             manifestPlaceholders["appName"] = "@string/app_name_debug"
             if(
