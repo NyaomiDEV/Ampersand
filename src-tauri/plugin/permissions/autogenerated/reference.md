@@ -6,12 +6,11 @@ Default permissions for the Ampersand plugin
 
 - `allow-exit-app`
 - `allow-open-file`
-- `allow-set-can-go-back`
 - `allow-get-webkit-version`
 - `allow-broadcast-event`
 - `allow-list-assets`
 - `allow-dismiss-splash`
-- `allow-registerListener`
+- `allow-register-listener`
 
 ## Permission Table
 
@@ -181,25 +180,12 @@ Denies the open_file command without any pre-configured scope.
 <tr>
 <td>
 
-`ampersand:allow-registerListener`
+`ampersand:allow-register-listener`
 
 </td>
 <td>
 
-Enables the registerListener command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`ampersand:deny-registerListener`
-
-</td>
-<td>
-
-Denies the registerListener command without any pre-configured scope.
+Enables the register_listener command without any pre-configured scope.
 
 </td>
 </tr>
@@ -207,25 +193,12 @@ Denies the registerListener command without any pre-configured scope.
 <tr>
 <td>
 
-`ampersand:allow-set-can-go-back`
+`ampersand:deny-register-listener`
 
 </td>
 <td>
 
-Enables the set_can_go_back command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`ampersand:deny-set-can-go-back`
-
-</td>
-<td>
-
-Denies the set_can_go_back command without any pre-configured scope.
+Denies the register_listener command without any pre-configured scope.
 
 </td>
 </tr>

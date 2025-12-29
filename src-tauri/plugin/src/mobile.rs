@@ -31,12 +31,6 @@ struct OpenFile {
 }
 
 #[derive(Serialize)]
-#[serde(rename_all = "camelCase")]
-struct SetCanGoBack {
-  can_go_back: bool
-}
-
-#[derive(Serialize)]
 struct BroadcastEvent {
   payload: String
 }
@@ -82,13 +76,6 @@ impl<R: Runtime> Ampersand<R> {
     self
       .0
       .run_mobile_plugin("dismissSplash", ())
-      .map_err(Into::into)
-  }
-
-  pub fn set_can_go_back(&self, can_go_back: bool) -> crate::Result<()> {
-    self
-      .0
-      .run_mobile_plugin("setCanGoBack", SetCanGoBack { can_go_back })
       .map_err(Into::into)
   }
 

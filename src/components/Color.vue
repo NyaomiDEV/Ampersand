@@ -2,6 +2,7 @@
 	import { useTemplateRef } from "vue";
 	import { IonModal } from "@ionic/vue";
 	import { ColorChangeDetail, ColorPicker } from "vue-accessible-color-picker";
+	import { serialize } from "colorjs.io/fn";
 	const colorModel = defineModel<string>();
 
 	const vacp = useTemplateRef("vacp");
@@ -16,7 +17,11 @@
 	}
 	
 	function updateColor(e: ColorChangeDetail) {
-		colorModel.value = props.alpha ? e.colors.hex : e.colors.hex.slice(0, 7);
+		colorModel.value = serialize(e.color.to("srgb"), {
+			alpha: props.alpha,
+			format: "hex",
+			collapse: false
+		});
 	}
 </script>
 
@@ -29,7 +34,7 @@
 		<ColorPicker
 			:alpha-channel="props.alpha ? 'show' : 'hide'"
 			:color="colorModel"
-			:visible-formats="['hex', 'rgb', 'hsl']"
+			:visible-formats="['hex', 'srgb', 'hsl']"
 			default-format="hex"
 			@color-change="updateColor"
 		/>

@@ -52,16 +52,6 @@ internal class ListAssetsArgs {
 
 @TauriPlugin
 class AmpersandPlugin(private val activity: Activity): Plugin(activity) {
-    private val backCallback = object : OnBackPressedCallback(false) {
-        override fun handleOnBackPressed() {
-            trigger("backbutton", JSObject())
-        }
-    }
-
-    override fun load(webView: WebView) {
-        (activity as AppCompatActivity).onBackPressedDispatcher.addCallback(activity, backCallback)
-    }
-
     @Command
     fun dismissSplash(invoke: Invoke){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S){
@@ -76,13 +66,6 @@ class AmpersandPlugin(private val activity: Activity): Plugin(activity) {
     fun exitApp(invoke: Invoke) {
         invoke.resolve()
         activity.finish()
-    }
-
-    @Command
-    fun setCanGoBack(invoke: Invoke) {
-        val args = invoke.parseArgs(SetCanGoBackArgs::class.java)
-        invoke.resolve()
-        backCallback.isEnabled = args.canGoBack
     }
 
     @Command

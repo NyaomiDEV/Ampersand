@@ -1,25 +1,20 @@
-import { setCanGoBack } from "../native/plugin";
+import { exitApp } from "../native/plugin";
 
 let routerCanGoBack = false;
 let modalCanGoBack = false;
+let shouldNotExit = false;
 
-let oldCanGoBack = false;
-
-export async function setRouterCanGoBack(value: boolean){
+export function setRouterCanGoBack(value: boolean){
 	routerCanGoBack = value;
-	await processCanGoBack();
+	shouldNotExit = modalCanGoBack || routerCanGoBack;
 }
 
-export async function setModalCanGoBack(value: boolean) {
+export function setModalCanGoBack(value: boolean) {
 	modalCanGoBack = value;
-	await processCanGoBack();
+	shouldNotExit = modalCanGoBack || routerCanGoBack;
 }
 
-async function processCanGoBack() {
-	const newCanGoBack = routerCanGoBack || modalCanGoBack;
-
-	if (newCanGoBack !== oldCanGoBack) {
-		oldCanGoBack = newCanGoBack;
-		await setCanGoBack(newCanGoBack);
-	}
+export async function maybeExit(){
+	if(!shouldNotExit)
+		await exitApp();
 }

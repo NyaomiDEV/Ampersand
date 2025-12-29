@@ -33,7 +33,6 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
   Builder::new("ampersand")
   .invoke_handler(tauri::generate_handler![
     commands::exit_app,
-    commands::set_can_go_back,
     commands::open_file,
     commands::get_webkit_version,
     commands::broadcast_event,

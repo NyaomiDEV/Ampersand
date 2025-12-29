@@ -100,12 +100,7 @@ export const renderer: Renderer<(VNode | string)[], VNode | string> = {
 	},
 
 	listitem(item: Tokens.ListItem): VNode {
-		return h("li",
-			[
-				item.task ? [this.checkbox({ checked: item.checked || false })] : undefined,
-				h("span", {}, this.parser.parse(item.tokens, !!item.loose))
-			]
-		);
+		return h("li", h("span", {}, this.parser.parse(item.tokens)));
 	},
 
 	checkbox({ checked }: Tokens.Checkbox): VNode {

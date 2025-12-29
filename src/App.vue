@@ -13,8 +13,8 @@
 	const vueRouter = useRouter();
 
 	void setRouterCanGoBack(ionRouter.canGoBack());
-	vueRouter.afterEach(async () => {
-		await setRouterCanGoBack(ionRouter.canGoBack());
+	vueRouter.afterEach(() => {
+		setRouterCanGoBack(ionRouter.canGoBack());
 	});
 
 	onMounted(async () => {

@@ -1,4 +1,4 @@
-const COMMANDS: &[&str] = &["exit_app", "open_file", "set_can_go_back", "get_webkit_version", "broadcast_event", "list_assets", "dismiss_splash", "registerListener"];
+const COMMANDS: &[&str] = &["exit_app", "open_file", "get_webkit_version", "broadcast_event", "list_assets", "dismiss_splash", "register_listener"];
 
 fn main() {
   tauri_plugin::Builder::new(COMMANDS)

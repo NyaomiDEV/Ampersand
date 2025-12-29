@@ -71,6 +71,10 @@ export class Parser {
 					out.push(this.renderer.list(token));
 					break;
 				}
+				case "checkbox": {
+					out.push(this.renderer.checkbox(token));
+					break;
+				}
 				case "html": {
 					out.push(this.renderer.html(token));
 					break;
@@ -141,6 +145,11 @@ export class Parser {
 
 				case "image": {
 					out.push(renderer.image(token));
+					break;
+				}
+
+				case "checkbox": {
+					out.push(renderer.checkbox(token));
 					break;
 				}
 

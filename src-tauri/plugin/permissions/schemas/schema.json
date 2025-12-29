@@ -367,34 +367,22 @@
           "markdownDescription": "Denies the open_file command without any pre-configured scope."
         },
         {
-          "description": "Enables the registerListener command without any pre-configured scope.",
+          "description": "Enables the register_listener command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-registerListener",
-          "markdownDescription": "Enables the registerListener command without any pre-configured scope."
+          "const": "allow-register-listener",
+          "markdownDescription": "Enables the register_listener command without any pre-configured scope."
         },
         {
-          "description": "Denies the registerListener command without any pre-configured scope.",
+          "description": "Denies the register_listener command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-registerListener",
-          "markdownDescription": "Denies the registerListener command without any pre-configured scope."
+          "const": "deny-register-listener",
+          "markdownDescription": "Denies the register_listener command without any pre-configured scope."
         },
         {
-          "description": "Enables the set_can_go_back command without any pre-configured scope.",
-          "type": "string",
-          "const": "allow-set-can-go-back",
-          "markdownDescription": "Enables the set_can_go_back command without any pre-configured scope."
-        },
-        {
-          "description": "Denies the set_can_go_back command without any pre-configured scope.",
-          "type": "string",
-          "const": "deny-set-can-go-back",
-          "markdownDescription": "Denies the set_can_go_back command without any pre-configured scope."
-        },
-        {
-          "description": "Default permissions for the Ampersand plugin\n#### This default permission set includes:\n\n- `allow-exit-app`\n- `allow-open-file`\n- `allow-set-can-go-back`\n- `allow-get-webkit-version`\n- `allow-broadcast-event`\n- `allow-list-assets`\n- `allow-dismiss-splash`\n- `allow-registerListener`",
+          "description": "Default permissions for the Ampersand plugin\n#### This default permission set includes:\n\n- `allow-exit-app`\n- `allow-open-file`\n- `allow-get-webkit-version`\n- `allow-broadcast-event`\n- `allow-list-assets`\n- `allow-dismiss-splash`\n- `allow-register-listener`",
           "type": "string",
           "const": "default",
-          "markdownDescription": "Default permissions for the Ampersand plugin\n#### This default permission set includes:\n\n- `allow-exit-app`\n- `allow-open-file`\n- `allow-set-can-go-back`\n- `allow-get-webkit-version`\n- `allow-broadcast-event`\n- `allow-list-assets`\n- `allow-dismiss-splash`\n- `allow-registerListener`"
+          "markdownDescription": "Default permissions for the Ampersand plugin\n#### This default permission set includes:\n\n- `allow-exit-app`\n- `allow-open-file`\n- `allow-get-webkit-version`\n- `allow-broadcast-event`\n- `allow-list-assets`\n- `allow-dismiss-splash`\n- `allow-register-listener`"
         }
       ]
     }
