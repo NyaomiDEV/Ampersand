@@ -2,7 +2,6 @@
 
 Welcome to Ampersand.
 
-[![Discord](https://img.shields.io/discord/1235649423439298622?style=flat&logo=discord&logoColor=white&color=%235865F2)](https://discord.gg/xCptGJKeKc)
 [![Liberapay patrons](https://img.shields.io/liberapay/patrons/Ampersand)](https://liberapay.com/Ampersand)
 ![Android Build Status](https://img.shields.io/github/actions/workflow/status/NyaomiDEV/Ampersand/build-android.yml?style=flat&label=android%20build)
 

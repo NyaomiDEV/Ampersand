@@ -3,7 +3,6 @@
 	
 	import AmpersandLogo from "../../assets/ampersand_logo.svg";
 	import CodebergLogo from "../../assets/codeberg_logo.svg";
-	import DiscordLogo from "../../assets/discord_logo.svg";
 	import LiberapayLogo from "../../assets/liberapay_logo.svg";
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
@@ -11,21 +10,8 @@
 	import { version } from "../../../package.json";
 	import { openUrl } from "@tauri-apps/plugin-opener";
 
-	function isAppStore() {
-		try{
-			return !!import.meta.env.AMPERSAND_IS_APP_STORE;
-		}catch(_e){
-			return false;
-		}
-	}
-
 	async function openRepo(){
 		const url = "https://codeberg.org/NyaomiDEV/Ampersand";
-		await openUrl(url);
-	}
-
-	async function openDiscord() {
-		const url = "https://discord.com/invite/xCptGJKeKc";
 		await openUrl(url);
 	}
 
@@ -59,20 +45,11 @@
 				<IonIcon class="logo" :icon="AmpersandLogo" />
 
 				<div class="buttons">
-					<IonButton class="tonal" shape="round" @click="openDiscord">
-						<IonIcon slot="icon-only" :icon="DiscordLogo" />
-					</IonButton>
-
 					<IonButton class="tonal" shape="round" @click="openRepo">
 						<IonIcon slot="icon-only" :icon="CodebergLogo" />
 					</IonButton>
 
-					<IonButton
-						v-if="!isAppStore()"
-						class="tonal"
-						shape="round"
-						@click="openLiberapay"
-					>
+					<IonButton class="tonal" shape="round" @click="openLiberapay">
 						<IonIcon slot="icon-only" :icon="LiberapayLogo" />
 					</IonButton>
 				</div>
