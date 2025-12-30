@@ -2,7 +2,6 @@
 	import { useTemplateRef } from "vue";
 	import { IonModal } from "@ionic/vue";
 	import { ColorChangeDetail, ColorPicker } from "vue-accessible-color-picker";
-	import { serialize } from "colorjs.io/fn";
 	const colorModel = defineModel<string>();
 
 	const vacp = useTemplateRef("vacp");
@@ -17,7 +16,7 @@
 	}
 	
 	function updateColor(e: ColorChangeDetail) {
-		colorModel.value = serialize(e.color.to("srgb"), {
+		colorModel.value = e.color.toString({
 			alpha: props.alpha,
 			format: "hex",
 			collapse: false
