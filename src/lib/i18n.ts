@@ -23,7 +23,10 @@ i18next.on("languageChanged", (lng) => {
 
 await i18next.init({
 	lng: appConfig.locale.language || navigator.language,
-	fallbackLng: "en"
+	fallbackLng: "en",
+	interpolation: {
+		escapeValue: false
+	}
 });
 
 for(const [path, translation] of translations.entries()){
