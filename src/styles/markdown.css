@@ -153,27 +153,12 @@
 }
 
 .markdown-content ul {
-    margin-left: 0;
-    padding-left: 0;
-    list-style: none;
-}
-
-.markdown-content ul li span {
-    display: flex;
-    flex-direction: row;
-    gap: 0.5em;
-    flex-wrap: nowrap;
+    padding-inline-start: 1em;
 }
 
 .markdown-content ul li span ion-checkbox {
     width: min-content;
     --size: 1em;
-    height: 1.5em;
-}
-
-.markdown-content ul li span:not(:has(ion-checkbox))::before {
-    content: "•";
-    width: 1em;
-    flex: none;
-    text-align: center;
+    height: 1em;
+    margin-inline-end: 0.5em;
 }
