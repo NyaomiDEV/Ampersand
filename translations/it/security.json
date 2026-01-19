@@ -8,6 +8,10 @@
 		"title": "Usa l'autenticazione biometrica",
 		"desc": "Sblocca tramite la tua impronta digitale o faccia"
 	},
+	"passwordAlert": {
+		"header": "Attenzione",
+		"text": "Sei sicurə di voler procedere? Se perdi la password non potrai più recuperare i tuoi dati. Assicurati di fare un backup prima!"
+	},
 	"editPassword": "Modifica password",
 	"inputPassword": {
 		"titleAdd": "Inserisci una nuova password",

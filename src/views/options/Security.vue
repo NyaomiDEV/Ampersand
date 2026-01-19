@@ -6,6 +6,7 @@
 	import { useTranslation } from "i18next-vue";
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
+	import { promptOkCancel } from "../../lib/util/misc";
 
 	const i18next = useTranslation();
 
@@ -48,6 +49,14 @@
 	}
 
 	async function addPassword() {
+		if(!await promptOkCancel(
+			i18next.t("security:passwordAlert.header"),
+			i18next.t("security:passwordAlert.text")
+		)){
+			usePassword.value = false;
+			return;
+		}
+
 		const password = await enterPasswordAlert(i18next.t("security:inputPassword.titleAdd"));
 		if(!password){
 			usePassword.value = false;

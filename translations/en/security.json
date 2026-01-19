@@ -8,6 +8,10 @@
 		"title": "Use biometrics",
 		"desc": "Unlock via your fingerprint or face"
 	},
+	"passwordAlert": {
+		"header": "Warning",
+		"text": "Are you sure you want to proceed? If you lose your password you won't be able to recover your data. Be sure to make backups first!"
+	},
 	"editPassword": "Modify password",
 	"inputPassword": {
 		"titleAdd": "Enter your new password",
