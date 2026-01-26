@@ -1,0 +1,3 @@
+Ampersand Alpha 0.1.9
+
+Fixed Markdown lists, spoiler tag not obscuring images, and employed measures to reduce app size on some distribution channels.
