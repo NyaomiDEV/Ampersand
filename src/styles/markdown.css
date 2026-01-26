@@ -89,10 +89,21 @@
     user-select: none;
 }
 
+.markdown-content span.spoiler * {
+    opacity: 0;
+    transition-duration: 250ms;
+    transition-timing-function: ease-in-out;
+    transition-property: opacity;
+}
+
 .markdown-content span.spoiler:focus {
     background-color: var(--ion-background-color-step-400);
     color: unset;
     user-select: unset;
+}
+
+.markdown-content span.spoiler:focus * {
+    opacity: unset;
 }
 
 .markdown-content span.timestamp {
