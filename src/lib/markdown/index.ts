@@ -19,6 +19,7 @@ import highlightExtension from "./highlightExtension";
 import linebreakExtension from "./linebreakExtension";
 import textColorFgExtension from "./textColorFgExtension";
 import textColorBgExtension from "./textColorBgExtension";
+import textShadowExtension from "./textShadowExtension";
 
 export const marked = new Marked<(VNode | string)[], VNode | string>();
 
@@ -126,6 +127,7 @@ marked.use(
 	textColorLegacyExtension,
 	textColorFgExtension,
 	textColorBgExtension,
+	textShadowExtension,
 	superscriptExtension,
 	subscriptExtension,
 	underlineExtension,

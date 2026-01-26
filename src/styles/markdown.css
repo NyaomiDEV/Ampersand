@@ -163,6 +163,10 @@
     background: linear-gradient(to right, var(--markdown-text-bg-colors));
 }
 
+.markdown-content span.text-shadow {
+    text-shadow: var(--markdown-text-shadow);
+}
+
 .markdown-content ul {
     padding-inline-start: 1em;
 }
