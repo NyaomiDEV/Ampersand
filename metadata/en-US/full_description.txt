@@ -1,0 +1,7 @@
+Ampersand is a front tracker application that helps you as a plural to track who of your alters is in front at a given time, plus it helps you to communicate across alters.
+
+Ampersand is an offline application, and as such, it will work without Internet connection. Since it operates offline, this app does not collect any user data.
+
+Ampersand's source code is available at: https://codeberg.org/NyaomiDEV/Ampersand
+
+Please report any and all issues over at Codeberg!
