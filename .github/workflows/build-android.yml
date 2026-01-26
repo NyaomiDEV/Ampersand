@@ -101,9 +101,9 @@ jobs:
           files: |
             ./src-tauri/gen/android/app/build/outputs/apk/universal/release/ampersand-ci-universal-release.apk
             ./src-tauri/gen/android/app/build/outputs/apk/universal/release/ampersand-universal-release.apk
-            ./src-tauri/gen/android/app/build/outputs/apk/arm/release/ampersand-ci-universal-release.apk
-            ./src-tauri/gen/android/app/build/outputs/apk/arm/release/ampersand-universal-release.apk
-            ./src-tauri/gen/android/app/build/outputs/apk/arm64/release/ampersand-ci-universal-release.apk
-            ./src-tauri/gen/android/app/build/outputs/apk/arm64/release/ampersand-universal-release.apk
+            ./src-tauri/gen/android/app/build/outputs/apk/arm/release/ampersand-ci-arm-release.apk
+            ./src-tauri/gen/android/app/build/outputs/apk/arm/release/ampersand-arm-release.apk
+            ./src-tauri/gen/android/app/build/outputs/apk/arm64/release/ampersand-ci-arm64-release.apk
+            ./src-tauri/gen/android/app/build/outputs/apk/arm64/release/ampersand-arm64-release.apk
             ./src-tauri/gen/android/app/build/outputs/bundle/universalRelease/ampersand-ci-universal-release.aab
             ./src-tauri/gen/android/app/build/outputs/bundle/universalRelease/ampersand-universal-release.aab
