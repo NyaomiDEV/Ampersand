@@ -1,7 +1,7 @@
 {
 	"edit": {
 		"description": "Systeem-beschrijving",
-		"header": "Systeem naam en foto",
+		"header": "Systeem",
 		"name": "Systeem naam",
 		"memberCount": "Systeem beschrijving",
 		"memberCountText": "{{memberCount}} lid/leden, {{archivedMemberCount}} gearchiveerd",
