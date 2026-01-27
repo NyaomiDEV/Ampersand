@@ -174,6 +174,26 @@ export function isPlainObject(value) {
 	return Object.getPrototypeOf(value) === proto;
 };
 
+export function flattenObject(obj: object) {
+	const newObj = {};
+
+	function insideFlatten(obj: object, prefix: string){
+		for (const key in obj) {
+			if (Object.prototype.hasOwnProperty.call(obj, key)) {
+				const newKey = prefix ? `${prefix}.${key}` : key;
+				if (typeof obj[key] === "object") 
+					insideFlatten(obj[key], newKey);
+				else
+					newObj[newKey] = obj[key];
+			}
+		}
+	}
+
+	insideFlatten(obj, "");
+
+	return newObj;
+}
+
 export function renderStars(stars: number){
 	const emptyStar = "\u2606";
 	const fullStar = "\u2605";

@@ -5,10 +5,12 @@ import i18next from "i18next";
 
 import { appConfig } from "./config";
 import { watch } from "vue";
+import { flattenObject } from "./util/misc";
 
 const context = import.meta.webpackContext("../../translations/", {
 	recursive: true,
-	regExp: /\.json$/
+	regExp: /\.json$/,
+	include: /translations\/(en|it|de|es|fr|nl|ro|tr)\//
 });
 
 const translations: Map<string, unknown> = new Map();
@@ -16,6 +18,23 @@ const translations: Map<string, unknown> = new Map();
 for(const path of context.keys())
 	translations.set(path, context(path));
 
+const enTranslationCount = translations
+	.entries()
+	.filter(x => x[0].startsWith("./en/"))
+	.map(x => x[1] = Object.values(flattenObject(x[1] as object)).length)
+	.reduce((p, c) => p + c, 0);
+
+console.log("a", enTranslationCount);
+
+export function computePercentage(lang: string) {
+	const count = translations
+		.entries()
+		.filter(x => x[0].startsWith(`./${lang}/`))
+		.map(x => x[1] = Object.values(flattenObject(x[1] as object)).length)
+		.reduce((p, c) => p + c, 0);
+
+	return Math.floor(Math.min(100, 100 * (count / enTranslationCount)));
+}
 
 i18next.on("languageChanged", (lng) => {
 	dayjs.locale(lng);

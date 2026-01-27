@@ -1,6 +1,7 @@
 {
 	"languageName": {
-		"local": "Español"
+		"local": "Español",
+		"inEnglish": "Spanish"
 	},
 	"genericDeleteDesc": "¡No podrás deshacer esta acción!",
 	"memberMention": "Mencionar un miembro",

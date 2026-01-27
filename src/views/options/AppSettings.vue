@@ -4,6 +4,7 @@
 	import { platform } from "@tauri-apps/plugin-os";
 
 	import { appConfig } from "../../lib/config";
+	import { computePercentage } from "../../lib/i18n";
 	import MD3SegmentButton from "../../components/MD3SegmentButton.vue";
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
@@ -36,8 +37,6 @@
 		</IonHeader>
 
 		<IonContent>
-			<NotDoneYet v-if="false" />
-
 			<IonListHeader>
 				<IonLabel>{{ $t("appSettings:localeLabel") }}</IonLabel>
 			</IonListHeader>
@@ -48,14 +47,14 @@
 						v-model="appConfig.locale.language"
 						:label="$t('appSettings:locale.language')"
 						interface="popover"
-						:value="$i18next.languages.find(x => Object.keys($i18next.services.resourceStore.data).includes(x)) || $i18next.languages.toReversed()[0]"
+						:value="$i18next.languages.find(x => Object.keys($i18next.services.resourceStore.data).includes(x)) || $i18next.languages[0].split('-')[0]"
 					>
 						<IonSelectOption
 							v-for="lng in Object.keys($i18next.services.resourceStore.data)"
 							:key="lng"
 							:value="lng"
 						>
-							{{ $t("other:languageName.local", { lng }) }} ({{ $t("other:languageName.inEnglish", { lng }) }})
+							{{ $t("other:languageName.local", { lng }) }} ({{ $t("other:languageName.inEnglish", { lng }) }}) ({{ computePercentage(lng) }}%)
 						</IonSelectOption>
 					</IonSelect>
 				</IonItem>
