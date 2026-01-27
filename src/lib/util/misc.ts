@@ -136,6 +136,33 @@ export async function promptOkCancel(header: string, subHeader?: string, message
 	});
 }
 
+export async function promptYesNo(header: string, subHeader?: string, message?: string) {
+	return new Promise((resolve) => {
+		void (async () => {
+			const i18next = (await import("../i18n")).default;
+			const alert = await alertController.create({
+				header,
+				subHeader,
+				message,
+				buttons: [
+					{
+						text: i18next.t("other:alerts.no"),
+						role: "cancel",
+						handler: () => resolve(false)
+					},
+					{
+						text: i18next.t("other:alerts.yes"),
+						role: "confirm",
+						handler: () => resolve(true)
+					}
+				]
+			});
+
+			await alert.present();
+		})();
+	});
+}
+
 export function isPlainObject(value) {
 	if (typeof value !== "object" || value === null) return false;
 

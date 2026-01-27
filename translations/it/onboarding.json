@@ -14,7 +14,11 @@
 		"error": "Errore durante l'importazione del backup. Per favore scegli un'altra opzione.",
 		"errorSp": "Errore durante l'importazione dell'export di Simply Plural. Per favore scegli un'altra opzione.",
 		"errorPk": "Errore durante l'importazione dell'export di PluralKit. Per favore scegli un'altra opzione.",
-		"errorTu": "Errore durante l'importazione dell'export di Tupperbox. Per favore scegli un'altra opzione."
+		"errorTu": "Errore durante l'importazione dell'export di Tupperbox. Per favore scegli un'altra opzione.",
+		"allowRemoteContent": {
+			"header": "Permetti la connessione a Internet?",
+			"desc": "Ampersand è un'app che funziona primariamente offline, quindi essa necessita del tuo consenso per connettersi a Internet. In questo momento essa si vorrebbe connettere a Internet per scaricare gli avatar e i banner dei membri da importare. Quando avrà finito, potrai disattivare questa funzionalità in Opzioni > Sicurezza > Permetti contenuti remoti."
+		}
 	},
 	"systemInfo": {
 		"header": "Parlaci del tuo sistema!",

@@ -12,7 +12,9 @@
 	},
 	"alerts": {
 		"ok": "Ok",
-		"cancel": "Cancel"
+		"cancel": "Cancel",
+		"yes": "Yes",
+		"no": "No"
 	},
 	"back": "Back",
 	"time": "Time",

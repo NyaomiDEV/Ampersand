@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { appConfig } from "../../config";
+import { appConfig, securityConfig } from "../../config";
 import { Member, Tag, System } from "../entities";
 import { getTables } from "../tables";
 import { fetch } from "@tauri-apps/plugin-http";
@@ -42,7 +42,7 @@ async function member(tuExport: any, systemInfo: System, tagMapping: Map<number,
 			tags: tuMember.group_id ? [tagMapping.get(tuMember.group_id)!] : [],
 			uuid: window.crypto.randomUUID()
 		};
-		if (tuMember.avatar_url) {
+		if (tuMember.avatar_url && securityConfig.allowRemoteContent) {
 			try {
 				const request = await fetch(tuMember.avatar_url);
 				member.image = new File([await request.blob()], (tuMember.avatar_url as string).split("/").pop()!);
@@ -51,7 +51,7 @@ async function member(tuExport: any, systemInfo: System, tagMapping: Map<number,
 			}
 		}
 		// This is assumed as we cannot subscribe to TupperBox Premium to figure out the exact format
-		if (tuMember.banner) {
+		if (tuMember.banner && securityConfig.allowRemoteContent) {
 			try {
 				const request = await fetch(tuMember.banner);
 				member.cover = new File([await request.blob()], (tuMember.banner as string).split("/").pop()!);

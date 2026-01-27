@@ -38,7 +38,8 @@ const defaultAccessibilityConfig: AccessibilityConfig = {
 const defaultSecurityConfig: SecurityConfig = {
 	usePassword: false,
 	password: undefined,
-	useBiometrics: false
+	useBiometrics: false,
+	allowRemoteContent: false
 };
 
 const store = await load(`${await appConfigDir() + sep()}appConfig.json`);

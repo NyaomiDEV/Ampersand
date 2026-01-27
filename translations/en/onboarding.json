@@ -14,7 +14,11 @@
 		"error": "Error while importing the backup. Please select another option.",
 		"errorSp": "Error while importing the Simply Plural export. Please select another option.",
 		"errorPk": "Error while importing the PluralKit export. Please select another option.",
-		"errorTu": "Error while importing the Tupperbox export. Please select another option."
+		"errorTu": "Error while importing the Tupperbox export. Please select another option.",
+		"allowRemoteContent": {
+			"header": "Allow Internet connection?",
+			"desc": "Ampersand is an offline-first application, and as such it needs your consent to connect to the Internet. It would connect to the internet to download your member's avatars and banners at this stage. You can turn this feature off in Options > Security > Allow remote content when you're done."
+		}
 	},
 	"systemInfo": {
 		"header": "Tell us about your system!",

@@ -41,5 +41,6 @@ export type AccessibilityConfig = {
 export type SecurityConfig = {
 	usePassword: boolean,
 	password?: string,
-	useBiometrics: boolean
+	useBiometrics: boolean,
+	allowRemoteContent: boolean
 };

@@ -7,7 +7,7 @@ import { t } from "i18next";
 import { fetch } from "@tauri-apps/plugin-http";
 import { resizeImage } from "../../util/image";
 import { maxUid, nilUid } from "../../util/consts";
-import { appConfig } from "../../config";
+import { appConfig, securityConfig } from "../../config";
 
 function normalizeSPColor(color?: string) {
 	if (!color || !color.length) return undefined;
@@ -45,7 +45,7 @@ function mapCustomFieldType(type: number, data: any) {
 }
 
 async function getAvatarFromUuid(systemId: string, avatarUuid: string){
-	if(!avatarUuid || !avatarUuid.length) return undefined;
+	if (!avatarUuid || !avatarUuid.length || !securityConfig.allowRemoteContent) return undefined;
 	try {
 		const url = `https://spaces.apparyllis.com/avatars/${systemId}/${avatarUuid}`;
 		const req = await (await fetch(url)).blob();
@@ -65,7 +65,7 @@ async function system(spExport: any){
 		uuid: window.crypto.randomUUID()
 	};
 
-	if (spSystem.avatarUrl?.length) {
+	if (spSystem.avatarUrl?.length && securityConfig.allowRemoteContent) {
 		try {
 			const image = new File(
 				[await (await fetch(spSystem.avatarUrl)).blob()],
@@ -167,7 +167,7 @@ export async function member(spExport: any, systemInfo: System, systemUid: strin
 			uuid: window.crypto.randomUUID()
 		};
 
-		if (spMember.avatarUrl?.length) {
+		if (spMember.avatarUrl?.length && securityConfig.allowRemoteContent) {
 			try {
 				const image = new File(
 					[await (await fetch(spMember.avatarUrl)).blob()],
@@ -204,7 +204,7 @@ export async function member(spExport: any, systemInfo: System, systemUid: strin
 			uuid: window.crypto.randomUUID()
 		};
 
-		if (spCustomFront.avatarUrl?.length) {
+		if (spCustomFront.avatarUrl?.length && securityConfig.allowRemoteContent) {
 			try {
 				const image = new File(
 					[await (await fetch(spCustomFront.avatarUrl)).blob()],

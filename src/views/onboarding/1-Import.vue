@@ -3,18 +3,28 @@
 	import { ref } from "vue";
 	import Spinner from "../../components/Spinner.vue";
 	import { importDatabaseFromBinary } from "../../lib/db/ioutils";
-	import { getFiles, slideAnimation, toast } from "../../lib/util/misc";
+	import { getFiles, promptYesNo, slideAnimation, toast } from "../../lib/util/misc";
 	import { importPluralKit } from "../../lib/db/external/pluralkit";
 	import { importTupperBox } from "../../lib/db/external/tupperbox";
 	import { importSimplyPlural } from "../../lib/db/external/simplyplural";
 	import { useTranslation } from "i18next-vue";
 	import { getTables } from "../../lib/db/tables";
-	import { resetConfig } from "../../lib/config";
+	import { resetConfig, securityConfig } from "../../lib/config";
 
 	const loading = ref(false);
 
 	const i18next = useTranslation();
 	const router = useIonRouter();
+
+	async function promptRemoteConnection(){
+		if(await promptYesNo(
+			i18next.t("onboarding:importScreen.allowRemoteContent.header"),
+			i18next.t("onboarding:importScreen.allowRemoteContent.desc"),
+		))
+			securityConfig.allowRemoteContent = true;
+		else
+			securityConfig.allowRemoteContent = false;
+	}
 
 	async function importFromPreviousInstallation() {
 		const files = await getFiles(undefined, false);
@@ -34,6 +44,7 @@
 	}
 
 	async function importFromSimplyPlural() {
+		await promptRemoteConnection();
 		const files = await getFiles(undefined, false);
 		try{
 			if (!files.length) throw new Error("no files specified");
@@ -51,6 +62,7 @@
 	}
 
 	async function importFromPluralKit() {
+		await promptRemoteConnection();
 		const files = await getFiles(undefined, false);
 		try{
 			if (!files.length) throw new Error("no files specified");
@@ -68,6 +80,7 @@
 	}
 
 	async function importFromTupperbox() {
+		await promptRemoteConnection();
 		const files = await getFiles(undefined, false);
 		try{
 			if (!files.length) throw new Error("no files specified");

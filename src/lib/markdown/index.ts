@@ -21,6 +21,7 @@ import linebreakExtension from "./linebreakExtension";
 import textColorFgExtension from "./textColorFgExtension";
 import textColorBgExtension from "./textColorBgExtension";
 import textShadowExtension from "./textShadowExtension";
+import { securityConfig } from "../config";
 
 export const marked = new Marked<(VNode | string)[], VNode | string>();
 
@@ -57,7 +58,7 @@ marked.use({
 			try {
 				const href = encodeURI(token.href).replace(/%25/g, "%");
 				return h("img", {
-					src: href,
+					src: (token as any).blocked ? "#" : href,
 					alt: token.text,
 					title: token.title,
 					width: (token as any).width,
@@ -102,6 +103,10 @@ marked.use({
 							break;
 						}
 					}
+				// also, block non-asset images as they are sure linking outwards
+				} else {
+					if(!securityConfig.allowRemoteContent)
+						(token as any).blocked = true;
 				}
 				break;
 			case "link":
@@ -114,7 +119,7 @@ marked.use({
 						}
 					}
 				}
-				break;				
+				break;
 		}
 	},
 });

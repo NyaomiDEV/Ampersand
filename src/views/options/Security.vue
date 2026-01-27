@@ -153,6 +153,15 @@
 					</IonToggle>
 				</IonItem>
 
+				<IonItem>
+					<IonToggle v-model="securityConfig.allowRemoteContent">
+						<IonLabel>
+							<h3>{{ $t("security:allowRemoteContent.title") }}</h3>
+							<p>{{ $t("security:allowRemoteContent.desc") }}</p>
+						</IonLabel>
+					</IonToggle>
+				</IonItem>
+
 			</IonList>
 		</IonContent>
 	</IonPage>

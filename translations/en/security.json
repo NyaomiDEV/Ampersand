@@ -8,6 +8,10 @@
 		"title": "Use biometrics",
 		"desc": "Unlock via your fingerprint or face"
 	},
+	"allowRemoteContent": {
+		"title": "Allow remote content",
+		"desc": "Allow Ampersand to use the Internet to query remote content, such as images in Markdown fields and avatars in third-party imports."
+	},
 	"passwordAlert": {
 		"header": "Warning",
 		"text": "Are you sure you want to proceed? If you lose your password you won't be able to recover your data. Be sure to make backups first!"

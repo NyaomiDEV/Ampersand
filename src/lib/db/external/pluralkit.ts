@@ -5,7 +5,7 @@ import { CustomField, FrontingEntry, Member, System, Tag } from "../entities";
 import { getTables } from "../tables";
 import { fetch } from "@tauri-apps/plugin-http";
 import { nilUid } from "../../util/consts";
-import { appConfig } from "../../config";
+import { appConfig, securityConfig } from "../../config";
 
 function pkCustomField(): CustomField {
 	return {
@@ -22,7 +22,7 @@ async function system(pkExport: any){
 		description: pkExport.description,
 		uuid: window.crypto.randomUUID()
 	};
-	if (pkExport.avatar_url) {
+	if (pkExport.avatar_url && securityConfig.allowRemoteContent) {
 		try {
 			const request = await fetch(pkExport.avatar_url);
 			systemInfo.image = new File([await request.blob()], (pkExport.avatar_url as string).split("/").pop()!);
@@ -76,7 +76,7 @@ async function member(pkExport: any, tagMapping: Map<string, string>, systemInfo
 			customFields: new Map([[pkField.uuid, pkMember.id]]),
 			uuid: window.crypto.randomUUID()
 		};
-		if (pkMember.avatar_url) {
+		if (pkMember.avatar_url && securityConfig.allowRemoteContent) {
 			try {
 				const request = await fetch(pkMember.avatar_url);
 				member.image = new File([await request.blob()], pkMember.avatar_url.split("/").pop());
@@ -84,7 +84,7 @@ async function member(pkExport: any, tagMapping: Map<string, string>, systemInfo
 				// whatever, again
 			}
 		}
-		if (pkMember.banner) {
+		if (pkMember.banner && securityConfig.allowRemoteContent) {
 			try {
 				const request = await fetch(pkMember.banner);
 				member.cover = new File([await request.blob()], pkMember.banner.split("/").pop());

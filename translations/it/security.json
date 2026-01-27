@@ -4,6 +4,10 @@
 		"title": "Blocco applicazione",
 		"desc": "Blocca l'applicazione con una password"
 	},
+	"allowRemoteContent": {
+		"title": "Permetti contenuti remoti",
+		"desc": "Permetti ad Ampersand di usare Internet per scaricare contenuti remoti, come le immagini nei campi Markdown e gli avatar negli import di terze parti."
+	},
 	"biometrics": {
 		"title": "Usa l'autenticazione biometrica",
 		"desc": "Sblocca tramite la tua impronta digitale o faccia"
