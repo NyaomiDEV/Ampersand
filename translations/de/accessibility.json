@@ -1,14 +1,15 @@
 {
 	"header": "Barrierefreiheit",
 	"highLegibilityFont": {
-		"title": "Lesbare Schriftart",
+		"title": "Lesbare Schrift",
 		"desc": "Nutze eine lesbare Schriftart anstelle der Standard-Schriftart des Gerätes"
 	},
 	"highLegibilityFontType": {
 		"title": "Lesbare Schriftart",
 		"atkinson": "Atkinson Hyperlegible",
 		"opendyslexic": "OpenDyslexic",
-		"lexend": "Lexend"
+		"lexend": "Lexend",
+		"system-font": "System Schriftart"
 	},
 	"uiVariant": {
 		"title": "Benutzeroberflächen-Variante",
@@ -36,5 +37,12 @@
 	},
 	"longPressDuration": {
 		"title": "Zeitspanne für langes drücken"
+	},
+	"contrastLevel": {
+		"title": "Kontrastlevel"
+	},
+	"disableMemberCoversInList": {
+		"desc": "Wenn aktiviert werden Mitglieder in der Hauptliste auch in einer kompakter angezeigt",
+		"title": "Mitglieder Cover in Liste deaktivieren"
 	}
 }

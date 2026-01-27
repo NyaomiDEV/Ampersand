@@ -16,7 +16,9 @@
 		"contentWarning": "Inhaltswarnung",
 		"author": "Autor bearbeiten",
 		"tags": "Schlagwörter",
-		"date": "Datum bearbeiten"
+		"date": "Datum bearbeiten",
+		"postID": "Eintrag ID: {{postID}}",
+		"postIDcopiedToClipboard": "Eintrag ID wurde im Zitierformat in die Zwischenablage kopiert!"
 	},
 	"header": "Tagebuch",
 	"searchPlaceholder": "Tagebuch durchsuchen...",
