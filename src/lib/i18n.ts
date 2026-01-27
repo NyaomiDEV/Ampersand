@@ -24,8 +24,6 @@ const enTranslationCount = translations
 	.map(x => x[1] = Object.values(flattenObject(x[1] as object)).length)
 	.reduce((p, c) => p + c, 0);
 
-console.log("a", enTranslationCount);
-
 export function computePercentage(lang: string) {
 	const count = translations
 		.entries()
