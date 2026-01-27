@@ -16,6 +16,7 @@ import superscriptExtension from "./superscriptExtension";
 import subscriptExtension from "./subscriptExtension";
 import underlineExtension from "./underlineExtension";
 import highlightExtension from "./highlightExtension";
+import centerExtension from "./centerExtension";
 import linebreakExtension from "./linebreakExtension";
 import textColorFgExtension from "./textColorFgExtension";
 import textColorBgExtension from "./textColorBgExtension";
@@ -132,5 +133,6 @@ marked.use(
 	subscriptExtension,
 	underlineExtension,
 	highlightExtension,
+	centerExtension,
 	linebreakExtension
 );

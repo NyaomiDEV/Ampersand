@@ -167,6 +167,11 @@
     text-shadow: var(--markdown-text-shadow);
 }
 
+.markdown-content span.center {
+    display: block;
+    text-align: center;
+}
+
 .markdown-content ul {
     padding-inline-start: 1em;
 }
