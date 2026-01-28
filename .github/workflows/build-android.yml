@@ -45,9 +45,7 @@ jobs:
       - name: Set up Android NDK
         run: sdkmanager "ndk;28.0.12674087"
       - name: Set up Rust toolchain
-        uses: dtolnay/rust-toolchain@stable
-        with:
-          targets: aarch64-linux-android,armv7-linux-androideabi,x86_64-linux-android
+        uses: actions-rust-lang/setup-rust-toolchain@v1.15.2
       - name: Install frontend dependencies
         run: yarn install --frozen-lockfile
       - name: Update versioning
