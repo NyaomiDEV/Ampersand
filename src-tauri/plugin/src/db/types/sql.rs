@@ -115,13 +115,13 @@ pub struct Tag {
 	pub id: Uuid,
 	pub name: String,
 	pub description: Option<String>,
-	pub r#type: Uuid,
+	pub r#type: i32,
 	pub color: Option<String>,
 	pub view_in_lists: bool,
 }
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct TagType {
-	pub id: Uuid,
+	pub id: i32,
 	pub label: String,
 }
 

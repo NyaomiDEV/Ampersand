@@ -27,16 +27,16 @@ impl<R: Runtime> Ampersand<R> {
 		Ok(self.0.opener().open_path(path, None::<&str>)?)
   }
 
-	pub fn test_db(&self) -> crate::Result<String> {
-		db::test_db(&self.1)
+	pub fn db_test(&self) -> crate::Result<String> {
+		db::db_test(&self.1)
 	}
 
-	pub fn run_db_migrations(&self) -> crate::Result<()> {
-		db::run_db_migrations(&self.1, &self.0)
+	pub fn db_run_migrations(&self) -> crate::Result<()> {
+		db::db_run_migrations(&self.1, &self.0)
 	}
 
-	pub fn migrate_old_db(&self) -> crate::Result<()> {
-		db::migrate_old_db(&self.1, &self.0)
+	pub fn db_migrate_old(&self) -> crate::Result<()> {
+		db::db_migrate_old(&self.1, &self.0)
 	}
 
   pub fn broadcast_event(&self, _payload: String) -> crate::Result<()> {
