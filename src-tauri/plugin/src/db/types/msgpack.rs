@@ -239,7 +239,7 @@ pub fn convert_datetime(data: ExtStruct) -> Result<UtcDateTime, Error> {
 }
 
 pub fn convert_tag<D: Deref<Target = Connection>>(tag: Tag, conn: &D) -> Result<sql::Tag, Error> {
-	let type_id = conn.query_one("INSERT INTO tag_types (id, label) VALUES (?1, ?2) WHERE NOT EXISTS ( SELECT * FROM tag_types WHERE label = ?2); SELECT id FROM tag_types WHERE label = ?2;", (uuid::Uuid::new_v4(), tag.r#type.to_string()), |v| v.get::<usize, uuid::Uuid>(0))?;
+	let type_id = conn.query_one("INSERT INTO tag_types (label) VALUES (?1) WHERE NOT EXISTS ( SELECT * FROM tag_types WHERE label = ?1); SELECT id FROM tag_types WHERE label = ?1;", [tag.r#type.to_string()], |v| v.get::<usize, i32>(0))?;
 	Ok(sql::Tag {
 		id: Uuid::new_v4(),
 		name: tag.name,
