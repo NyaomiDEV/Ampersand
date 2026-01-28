@@ -1,44 +1,43 @@
 //! Datatypes for passing data between the Rust and TypeScript layers
 
-use std::collections::HashMap;
-
 use serde::{Deserialize, Serialize};
 use time::OffsetDateTime;
 use uuid::Uuid;
 
-use super::sql::File;
-
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct BoardMessage {
+	pub id: Uuid,
 	pub member: Option<Uuid>,
-	pub title: String,
+	pub title: Option<String>,
 	pub body: String,
 	pub date: OffsetDateTime,
-	pub is_pinned: Option<bool>,
+	pub is_pinned: bool,
 	pub is_archived: bool,
-	pub poll: Option<Poll>,
+	pub poll: Option<Uuid>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Poll {
-	pub entries: Vec<PollEntry>,
+	pub id: Uuid,
 	pub multiple_choice: bool,
 }
-
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct PollEntry {
+	pub id: Uuid,
+	pub poll: Uuid,
 	pub choice: String,
-	pub votes: Vec<Vote>,
 }
-
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Vote {
+	pub id: Uuid,
+	pub entry: Uuid,
 	pub member: Uuid,
 	pub reason: Option<String>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct FrontingEntry {
+	pub id: Uuid,
 	pub member: Uuid,
 	pub start_time: OffsetDateTime,
 	pub end_time: Option<OffsetDateTime>,
@@ -46,19 +45,26 @@ pub struct FrontingEntry {
 	pub is_locked: bool,
 	pub custom_status: Option<String>,
 	pub influencing: Option<Uuid>,
-	pub presence: Option<HashMap<OffsetDateTime, u8>>,
 	pub comment: Option<String>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct PresenceEntry {
+	pub id: Uuid,
+	pub fronting_entry: Uuid,
+	pub date: OffsetDateTime,
+	pub presence: u8,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct JournalPost {
+	pub id: Uuid,
 	pub member: Option<Uuid>,
 	pub date: OffsetDateTime,
 	pub title: String,
 	pub subtitle: Option<String>,
 	pub body: String,
-	pub cover: Option<File>,
-	pub tags: Vec<Uuid>,
+	pub cover: Option<Uuid>,
 	pub is_pinned: bool,
 	pub is_private: bool,
 	pub content_warning: Option<String>,
@@ -66,52 +72,83 @@ pub struct JournalPost {
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Member {
+	pub id: Uuid,
+	pub system: Uuid,
 	pub name: String,
 	pub pronouns: Option<String>,
 	pub description: Option<String>,
 	pub role: Option<String>,
-	pub image: Option<File>,
-	pub cover: Option<File>,
+	pub image: Option<Uuid>,
+	pub cover: Option<Uuid>,
 	pub color: Option<String>,
-	pub custom_fields: Option<HashMap<Uuid, String>>,
-	pub is_pinned: Option<bool>,
+	pub is_pinned: bool,
 	pub is_archived: bool,
 	pub is_custom_front: bool,
-	pub tags: Vec<Uuid>,
 	pub date_created: OffsetDateTime,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct CustomField {
+	pub id: Uuid,
+	pub name: String,
+	pub priority: i8,
+	pub is_default: bool,
+}
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct CustomFieldDatum {
+	pub id: Uuid,
+	pub member: Uuid,
+	pub field: Uuid,
+	pub value: String,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct System {
+	pub id: Uuid,
 	pub name: String,
 	pub description: Option<String>,
-	pub image: Option<File>,
+	pub image: Option<Uuid>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Tag {
+	pub id: Uuid,
 	pub name: String,
 	pub description: Option<String>,
-	pub r#type: TagType,
+	pub r#type: Uuid,
 	pub color: Option<String>,
 	pub view_in_lists: bool,
 }
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct TagType {
+	pub id: Uuid,
+	pub label: String,
+}
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
-pub enum TagType {
-	Member,
-	Journal,
+pub struct MemberTag {
+	pub id: Uuid,
+	pub member: Uuid,
+	pub tag: Uuid,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct JournalPostTag {
+	pub id: Uuid,
+	pub post: Uuid,
+	pub tag: Uuid,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Asset {
-	pub file: File,
+	pub id: Uuid,
+	pub file: Uuid,
 	pub friendly_name: String,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct CustomField {
-	pub name: String,
-	pub priority: i8,
-	pub default: Option<bool>,
+pub struct File {
+	pub id: Uuid,
+	pub path: String,
+	pub friendly_name: String,
 }

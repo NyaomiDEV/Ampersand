@@ -11,11 +11,13 @@ use uuid::Uuid;
 
 use crate::{commands, db::types::msgpack};
 
+pub mod request;
 pub mod types;
+pub mod util;
 
 pub const MIGRATIONS_PATH: &str = "migrations";
 
-pub fn test_db(conn: &Mutex<Connection>) -> crate::Result<String> {
+pub fn db_test(conn: &Mutex<Connection>) -> crate::Result<String> {
 	Ok(conn
 		.lock()?
 		.query_one("SELECT sqlite_version();", (), |row| {
@@ -23,7 +25,7 @@ pub fn test_db(conn: &Mutex<Connection>) -> crate::Result<String> {
 		})?)
 }
 
-pub fn run_db_migrations<R: Runtime>(
+pub fn db_run_migrations<R: Runtime>(
 	conn: &Mutex<Connection>,
 	handle: &AppHandle<R>,
 ) -> crate::Result<()> {
@@ -85,7 +87,7 @@ pub fn run_db_migrations<R: Runtime>(
 	Ok(())
 }
 
-pub fn migrate_old_db<R: Runtime>(
+pub fn db_migrate_old<R: Runtime>(
 	conn: &Mutex<Connection>,
 	handle: &AppHandle<R>,
 ) -> crate::Result<()> {
