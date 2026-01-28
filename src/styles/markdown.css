@@ -150,6 +150,10 @@
     background: linear-gradient(to right, var(--markdown-bg-color-start), var(--markdown-bg-color-end));
 }
 
+.markdown-content span.text-color-fg-one {
+    color: var(--markdown-text-colors);
+}
+
 .markdown-content span.text-color-fg {
     background: linear-gradient(to right, var(--markdown-text-colors));
     -webkit-background-clip: text;

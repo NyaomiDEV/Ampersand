@@ -29,7 +29,7 @@ const textColorExtension: MarkedExtension<(VNode | string)[], VNode | string> = 
 					const cssStyle = `--markdown-text-colors: ${colors.join(", ")};`;
 
 					return h("span", {
-						class: "text-color-fg",
+						class: `text-color-fg${colors.length === 1 ? "-one" : ""}`,
 						style: cssStyle
 					}, token.tokens && token.tokens.length ? this.parser.parseInline(token.tokens) : token.text);
 				}
