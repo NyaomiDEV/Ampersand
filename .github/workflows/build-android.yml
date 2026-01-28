@@ -33,7 +33,7 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: 'yarn'
       - name: Set up Java
         uses: actions/setup-java@v4
@@ -46,6 +46,8 @@ jobs:
         run: sdkmanager "ndk;28.0.12674087"
       - name: Set up Rust toolchain
         uses: actions-rust-lang/setup-rust-toolchain@v1.15.2
+        with:
+          rust-src-dir: "src-tauri"
       - name: Install frontend dependencies
         run: yarn install --frozen-lockfile
       - name: Update versioning
