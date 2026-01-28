@@ -14,9 +14,12 @@ val tauriProperties = Properties().apply {
     }
 }
 
-val localPropertiesFile = rootProject.file("local.properties")
-val localProperties = Properties()
-localProperties.load(FileInputStream(localPropertiesFile))
+val localProperties = Properties().apply {
+    val localPropertiesFile = rootProject.file("local.properties")
+    if (localPropertiesFile.exists()) {
+        localPropertiesFile.inputStream().use { load(it) }
+    }
+}
 
 android {
     compileSdk = 36
@@ -31,15 +34,19 @@ android {
     }
     signingConfigs {
         create("release") {
-            keyAlias = localProperties["keyAlias"] as String
-            keyPassword = localProperties["password"] as String
-            storeFile = file(localProperties["storeFile"] as String)
-            storePassword = localProperties["password"] as String
+            if(!localProperties.isEmpty()){
+                keyAlias = localProperties["keyAlias"] as String
+                keyPassword = localProperties["password"] as String
+                storeFile = file(localProperties["storeFile"] as String)
+                storePassword = localProperties["password"] as String
+            } else {
+                println("Keystore properties file not found. No signing configuration will be applied.")
+            }
         }
     }
     buildTypes {
         getByName("release") {
-            signingConfig = signingConfigs.getByName("release")
+            signingConfig = signingConfigs.findByName("release")
             isMinifyEnabled = true
             manifestPlaceholders["appName"] = "@string/app_name"
             base.archivesName.set("ampersand")
@@ -78,6 +85,12 @@ android {
                 jniLibs.keepDebugSymbols.add("*/x86/*.so")
                 jniLibs.keepDebugSymbols.add("*/x86_64/*.so")
             }
+        }
+        dependenciesInfo {
+            // Disables dependency metadata when building APKs (for IzzyOnDroid/F-Droid)
+            includeInApk = false
+            // Disables dependency metadata when building Android App Bundles (for Google Play)
+            includeInBundle = false
         }
     }
     kotlinOptions {
