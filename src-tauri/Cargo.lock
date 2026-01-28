@@ -1036,6 +1036,34 @@ dependencies = [
 ]
 
 [[package]]
+name = "extruct"
+version = "0.2.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a7e37eaa7b51e9ccab34423bb821c46c50220f3b60b6220da2d90ecca833b895"
+dependencies = [
+ "extruct-core",
+ "extruct-macros",
+]
+
+[[package]]
+name = "extruct-core"
+version = "0.2.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4d8ca7ccf6cc8af0936caebde2621d753baf10b698fec1712d1442b84c6ececd"
+
+[[package]]
+name = "extruct-macros"
+version = "0.2.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a5ebdc9a5b303013598ecaab883646e97b58eb1e58bf55bf751784df2a06eb65"
+dependencies = [
+ "extruct-core",
+ "proc-macro2",
+ "quote",
+ "syn 2.0.104",
+]
+
+[[package]]
 name = "fallible-iterator"
 version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3487,6 +3515,25 @@ dependencies = [
 ]
 
 [[package]]
+name = "rusqlite-from-row"
+version = "0.2.4"
+source = "git+https://github.com/mcmah309/rusqlite-from-row?branch=patch-1#8619d88bab04908b77b4275186d28a43c9463a19"
+dependencies = [
+ "rusqlite",
+ "rusqlite-from-row-derive",
+]
+
+[[package]]
+name = "rusqlite-from-row-derive"
+version = "0.2.4"
+source = "git+https://github.com/mcmah309/rusqlite-from-row?branch=patch-1#8619d88bab04908b77b4275186d28a43c9463a19"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.104",
+]
+
+[[package]]
 name = "rustc-demangle"
 version = "0.1.26"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4319,8 +4366,10 @@ dependencies = [
 name = "tauri-plugin-ampersand"
 version = "0.1.2"
 dependencies = [
+ "extruct",
  "rmp-serde",
  "rusqlite",
+ "rusqlite-from-row",
  "serde",
  "serde_bytes",
  "strum_macros",

@@ -89,15 +89,15 @@ impl<R: Runtime> Ampersand<R> {
 	}
 
 	pub fn db_test(&self) -> crate::Result<String> {
-		db::test_db(&self.1)
+		db::db_test(&self.1)
 	}
 
 	pub fn db_run_migrations(&self) -> crate::Result<()> {
-		db::run_db_migrations(&self.1, &self.0.app())
+		db::db_run_migrations(&self.1, &self.0.app())
 	}
 
 	pub fn db_migrate_old(&self) -> crate::Result<()> {
-		db::migrate_old_db(&self.1, &self.0.app())
+		db::db_migrate_old(&self.1, &self.0.app())
 	}
 
 	pub fn get_webkit_version(&self) -> crate::Result<String> {

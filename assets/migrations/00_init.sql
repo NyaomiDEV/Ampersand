@@ -91,13 +91,13 @@ CREATE TABLE IF NOT EXISTS tags (
 	id BLOB CHECK(length(id) = 16) PRIMARY KEY,
 	name TEXT NOT NULL,
 	description TEXT,
-	type BLOB CHECK(length(type) = 16) NOT NULL REFERENCES tag_types,
+	type INTEGER NOT NULL REFERENCES tag_types,
 	color TEXT,
 	view_in_lists BOOLEAN NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS tag_types (
-	id BLOB CHECK(length(id) = 16) PRIMARY KEY,
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
 	label TEXT NOT NULL
 );
 
