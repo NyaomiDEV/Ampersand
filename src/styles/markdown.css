@@ -70,6 +70,7 @@
     font-size: 0.9rem;
 }
 
+/* Highlight */
 .markdown-content mark {
     padding: 2px 4px;
     border-radius: 4px;
@@ -77,6 +78,7 @@
     color: var(--ion-text-color);
 }
 
+/* Spoilers */
 .markdown-content span.spoiler {
     border-radius: 4px;
     padding: 2px 4px;
@@ -106,6 +108,7 @@
     opacity: unset;
 }
 
+/* Timestamp */
 .markdown-content span.timestamp {
     border-radius: 4px;
     padding: 2px 4px;
@@ -169,6 +172,13 @@
 
 .markdown-content span.text-shadow {
     text-shadow: var(--markdown-text-shadow);
+}
+
+.markdown-content span.text-border {
+    border: var(--markdown-text-border);
+    border-radius: 4px;
+    padding: 2px 4px;
+    display: inline-block;
 }
 
 .markdown-content span.center {
