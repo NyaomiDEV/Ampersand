@@ -10,7 +10,7 @@ import { flattenObject } from "./util/misc";
 const context = import.meta.webpackContext("../../translations/", {
 	recursive: true,
 	regExp: /\.json$/,
-	include: /translations\/(en|it|de|es|fr|nl|ro|tr)\//
+	include: /translations[\\/](en|it|de|es|fr|nl|ro|tr)/
 });
 
 const translations: Map<string, unknown> = new Map();
