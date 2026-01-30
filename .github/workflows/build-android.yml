@@ -44,7 +44,7 @@ jobs:
         uses: android-actions/setup-android@v3
         with:
           cmdline-tools-version: 12266719
-          packages: "tools platform-tools ndk;29.0.14206865"
+          packages: "platform-tools ndk;29.0.14206865"
       - name: Set up Rust toolchain
         uses: actions-rust-lang/setup-rust-toolchain@v1.15.2
         with:
