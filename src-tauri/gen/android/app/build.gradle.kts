@@ -1,5 +1,4 @@
 import java.util.Properties
-import java.io.FileInputStream
 
 plugins {
     id("com.android.application")
@@ -24,6 +23,7 @@ val localProperties = Properties().apply {
 android {
     compileSdk = 36
     namespace = "moe.ampersand.app"
+    ndkVersion = "29.0.14206865"
     defaultConfig {
         manifestPlaceholders["usesCleartextTraffic"] = "false"
         applicationId = "moe.ampersand.app"

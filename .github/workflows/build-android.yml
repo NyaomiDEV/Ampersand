@@ -42,8 +42,9 @@ jobs:
           java-version: '17'
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
-      - name: Set up Android NDK
-        run: sdkmanager "ndk;28.0.12674087"
+        with:
+          cmdline-tools-version: 12266719
+          packages: "tools platform-tools ndk;29.0.14206865"
       - name: Set up Rust toolchain
         uses: actions-rust-lang/setup-rust-toolchain@v1.15.2
         with:
@@ -64,7 +65,7 @@ jobs:
           yarn tauri android build --apk true --target aarch64 armv7 --split-per-abi --ci
           yarn tauri android build --aab true --apk true --target aarch64 armv7 --ci
         env:
-          NDK_HOME: ${{ env.ANDROID_HOME }}/ndk/28.0.12674087/
+          NDK_HOME: ${{ env.ANDROID_HOME }}/ndk/29.0.14206865/
       - name: Publish artifact (APK - ARMv7)
         uses: actions/upload-artifact@v4
         with:
