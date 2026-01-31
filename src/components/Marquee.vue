@@ -9,14 +9,12 @@
 <style scoped>
 
 	.marquee-container {
-		display: block;
+		display: flex;
 		overflow: hidden;
 		white-space: nowrap;
-        width: 100%;
 	}
 		
     .marquee {
-        display: block;
 		animation-iteration-count: infinite;
 		animation-timing-function: linear;
 	}
