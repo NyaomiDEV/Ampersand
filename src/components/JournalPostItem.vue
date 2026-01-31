@@ -41,15 +41,11 @@
 	<IonItem button>
 		<MemberAvatar v-if="props.post.member" slot="start" :member="props.post.member" />
 		<IonLabel>
-			<p
-				v-if="formatDate(props.post.date, 'collapsed') !== props.post.title"
-				style="float: right"
-			>
+			<img v-if="props.post.cover" class="cover" :src="getObjectURL(props.post.cover)" />
+			<p v-if="formatDate(props.post.date, 'collapsed') !== props.post.title">
 				{{ formatDate(props.post.date, "collapsed") }}
 			</p>
-			<p v-if="props.post.member">{{ props.post.member.name }}</p>
-
-			<img v-if="props.post.cover" class="cover" :src="getObjectURL(props.post.cover)" />
+			<h3 v-if="props.post.member">{{ props.post.member.name }}</h3>
 			<h1>{{ props.post.title }}</h1>
 			<h2 v-if="props.post.subtitle?.length">{{ props.post.subtitle }}</h2>
 			

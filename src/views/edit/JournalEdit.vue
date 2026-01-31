@@ -6,6 +6,7 @@
 		IonTitle,
 		IonIcon,
 		IonFab,
+		IonButtons,
 		IonButton,
 		IonLabel,
 		IonTextarea,
@@ -24,6 +25,7 @@
 	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
 	import imageMD from "@material-symbols/svg-600/outlined/image.svg";
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
+	import settingsMD from "@material-symbols/svg-600/outlined/settings.svg";
 
 	import { JournalPostComplete, Tag } from "../../lib/db/entities";
 	import { newJournalPost, updateJournalPost, deleteJournalPost, getJournalPost, toJournalPostComplete } from "../../lib/db/tables/journalPosts";
@@ -173,6 +175,12 @@
 					:icon="backMD"
 					default-href="/journal/"
 				/>
+				<!-- TODO modal -->
+				<IonButtons v-if="false" slot="primary">
+					<IonButton>
+						<IonIcon slot="icon-only" :icon="settingsMD" />
+					</IonButton>
+				</IonButtons>
 				<IonTitle>
 					{{ !isEditing ? $t("journal:edit.header") : !post.uuid ? $t("journal:edit.headerAdd") :
 						$t("journal:edit.headerEdit") }}
@@ -400,7 +408,7 @@
 
 <style scoped>
 	div.cover {
-		height: 50vh;
+		height: 25vh;
 		width: calc(100% - 32px - var(--ion-safe-area-left, 0px) - var(--ion-safe-area-right, 0px));
 		border-radius: 16px;
 		margin: 16px calc(16px + var(--ion-safe-area-right, 0px)) 16px calc(16px + var(--ion-safe-area-left, 0px));
