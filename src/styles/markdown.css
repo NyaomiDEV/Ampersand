@@ -102,6 +102,7 @@
     background-color: var(--ion-background-color-step-400);
     color: unset;
     user-select: unset;
+    cursor: unset;
 }
 
 .markdown-content span.spoiler:focus * {
@@ -184,6 +185,21 @@
 .markdown-content span.center {
     display: block;
     text-align: center;
+}
+
+.markdown-content span.blur {
+    filter: blur(4px);
+    cursor: pointer;
+    user-select: none;
+    transition-duration: 250ms;
+    transition-timing-function: ease-in-out;
+    transition-property: filter;
+}
+
+.markdown-content span.blur:focus {
+    filter: blur(0);
+    user-select: unset;
+    cursor: unset;
 }
 
 .markdown-content ul {

@@ -23,6 +23,7 @@ import textColorBgExtension from "./textColorBgExtension";
 import textShadowExtension from "./textShadowExtension";
 import textBorderExtension from "./textBorderExtension";
 import { securityConfig } from "../config";
+import blurExtension from "./blurExtension";
 
 export const marked = new Marked<(VNode | string)[], VNode | string>();
 
@@ -141,5 +142,6 @@ marked.use(
 	underlineExtension,
 	highlightExtension,
 	centerExtension,
+	blurExtension,
 	linebreakExtension
 );
