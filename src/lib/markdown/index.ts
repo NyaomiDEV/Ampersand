@@ -26,6 +26,7 @@ import { securityConfig } from "../config";
 import blurExtension from "./blurExtension";
 import marqueeExtension from "./marqueeExtension";
 import fontSizeExtension from "./fontSizeExtension";
+import calloutExtension from "./calloutExtension";
 
 export const marked = new Marked<(VNode | string)[], VNode | string>();
 
@@ -147,5 +148,6 @@ marked.use(
 	centerExtension,
 	blurExtension,
 	linebreakExtension,
-	marqueeExtension
+	marqueeExtension,
+	calloutExtension
 );

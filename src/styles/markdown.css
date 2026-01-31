@@ -212,3 +212,19 @@
     height: 1em;
     margin-inline-end: 0.5em;
 }
+
+.markdown-content div.callout {
+    display: block;
+    border: 2px solid color-mix(in srgb, var(--markdown-callout-color, var(--ion-color-primary)) 30%, transparent);
+    background: color-mix(in srgb, var(--markdown-callout-color, var(--ion-color-primary)) 15%, transparent);
+    margin: 8px 0;
+    padding: 8px 12px;
+    border-radius: 12px;
+}
+
+.markdown-content span.callout-title {
+    display: block;
+    color: var(--markdown-callout-color, var(--ion-color-primary));
+    margin-bottom: 8px;
+    font-weight: bold;
+}
