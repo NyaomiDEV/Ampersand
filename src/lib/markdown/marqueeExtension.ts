@@ -9,15 +9,17 @@ const marqueeExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 			level: "block",
 			start(src: string) { return src.match(/\[mq=/)?.index; },
 			tokenizer(src: string) {
-				const rule = /^\[mq=(top|bottom|left|right)\](.+?)\[\/mq\]/;
+				const rule = /^\[mq=(?<direction>top|bottom|left|right) (?<duration>\d*\.?\d+)s(?: (?<bouncy>bouncy))?\](?<text>.+?)\[\/mq\]/;
 				const match = rule.exec(src);
 				if (match) {
 					const token = {
 						type: "marquee",
 						raw: match[0],
-						marquee: match[1],
-						text: match[2],
-						tokens: this.lexer.inlineTokens(match[2])
+						direction: match.groups?.direction,
+						duration: match.groups?.duration ? parseFloat(match.groups.duration) : undefined,
+						bouncy: !!match.groups?.bouncy,
+						text: match.groups?.text,
+						tokens: this.lexer.inlineTokens(match.groups!.text)
 					};
 					return token;
 				}
@@ -25,7 +27,9 @@ const marqueeExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 			},
 			renderer(token) {
 				return h(Marquee, {
-					class: token.marquee
+					direction: token.direction,
+					duration: token.duration,
+					bouncy: token.bouncy
 				}, token.tokens && token.tokens.length ? this.parser.parseInline(token.tokens) : token.text);
 			}
 		}
