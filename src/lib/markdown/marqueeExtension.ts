@@ -30,7 +30,8 @@ const marqueeExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 					direction: token.direction,
 					duration: token.duration,
 					bouncy: token.bouncy
-				}, token.tokens && token.tokens.length ? this.parser.parseInline(token.tokens) : token.text);
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+				}, () => token.tokens && token.tokens.length ? this.parser.parseInline(token.tokens) : token.text);
 			}
 		}
 	]

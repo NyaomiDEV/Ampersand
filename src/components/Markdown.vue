@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { defineComponent, h, watch, shallowRef } from "vue";
+	import { watch, shallowRef, VNode } from "vue";
 	import { marked } from "../lib/markdown";
 	import { openUrl } from "@tauri-apps/plugin-opener";
 	import { getFile } from "../lib/util/blob";
@@ -8,6 +8,8 @@
 	const props = defineProps<{
 		markdown: string
 	}>();
+
+	const mdRef = shallowRef<VNode[]>();
 
 	async function redirectClicks(evt: MouseEvent) {
 		const tag = (evt.target as HTMLElement).closest("a");
@@ -32,25 +34,13 @@
 		}
 	}
 
-	const rendererComponent = defineComponent(async () => {
-		const mdRef = shallowRef(await marked.parse(props.markdown));
-		watch(props, async () => {
-			mdRef.value = await marked.parse(props.markdown);
-		});
-		return () => h(
-			"div",
-			{
-				class: "markdown-content",
-				onClick: redirectClicks
-			},
-			mdRef.value
-		);
-	}
-	);
+	watch(props, async () => {
+		mdRef.value = await marked.parse(props.markdown) as VNode[];
+	}, { immediate: true });
 </script>
 
 <template>
-	<Suspense>
-		<component :is="rendererComponent" />
-	</Suspense>
+	<div class="markdown-content" @click="redirectClicks">
+		<component :is="vnode" v-for="vnode in mdRef" :key="vnode.key" />
+	</div>
 </template>
