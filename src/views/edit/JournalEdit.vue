@@ -26,6 +26,8 @@
 	import imageMD from "@material-symbols/svg-600/outlined/image.svg";
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
 	import settingsMD from "@material-symbols/svg-600/outlined/settings.svg";
+	import personAddMD from "@material-symbols/svg-600/outlined/person_add.svg";
+	import clockAddMD from "@material-symbols/svg-600/outlined/more_time.svg";
 
 	import { JournalPostComplete, Tag } from "../../lib/db/entities";
 	import { newJournalPost, updateJournalPost, getJournalPost, toJournalPostComplete } from "../../lib/db/tables/journalPosts";
@@ -290,17 +292,15 @@
 
 		<IonFooter v-if="isEditing">
 			<IonToolbar>
-				<IonButtons slot="end">
-					<IonButton @click="showJournalOptions">
-						<IonIcon slot="icon-only" :icon="settingsMD" />
-					</IonButton>
-				</IonButtons>
-				<IonButtons slot="start">
+				<IonButtons>
 					<IonButton @click="post.body = `${post.body}<t:${Math.floor(Date.now() / 1000)}:f>`">
-						{{ $t("other:addTimestamp") }}
+						<IonIcon slot="icon-only" :icon="clockAddMD" />
 					</IonButton>
 					<IonButton @click="memberTagModal?.$el.present()">
-						{{ $t("other:memberMention") }}
+						<IonIcon slot="icon-only" :icon="personAddMD" />
+					</IonButton>
+					<IonButton @click="showJournalOptions">
+						<IonIcon slot="icon-only" :icon="settingsMD" />
 					</IonButton>
 				</IonButtons>
 			</IonToolbar>
@@ -391,5 +391,10 @@
 	ion-item.edit-body ion-textarea {
 		--padding-top: 0;
 		--padding-bottom: 0;
+	}
+
+	ion-buttons {
+		display: flex;
+		justify-content: space-around;
 	}
 </style>
