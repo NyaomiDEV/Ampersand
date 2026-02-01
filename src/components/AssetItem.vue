@@ -15,7 +15,7 @@
 		showThumbnail?: boolean
 	}>();
 
-	function generatePreview(){
+	function canPreview(){
 		if(props.asset.file.size){
 			const file = props.asset.file;
 			switch(file.type){
@@ -23,12 +23,13 @@
 				case "image/jpeg":
 				case "image/gif":
 				case "image/webp":
-					return getObjectURL(file);
+				case "image/svg+xml":
+					return true;
 				default:
 					break;
 			}
 		}
-		return;
+		return false;
 	}
 
 	async function open(){
@@ -43,9 +44,12 @@
 		@click="props.routeToOpenFile ? open() : undefined"
 	>
 		<template v-if="props.showThumbnail">
-			<IonThumbnail v-if="generatePreview()" slot="start">
-				<img :src="getObjectURL(props.asset.file)" />
-			</IonThumbnail>
+			<template v-if="canPreview()">
+				<IonIcon v-if="props.asset.file.type === 'image/svg+xml'" slot="start" :icon="getObjectURL(props.asset.file)" />		
+				<IonThumbnail v-else slot="start">
+					<img :src="getObjectURL(props.asset.file)" />
+				</IonThumbnail>
+			</template>
 			<IonIcon v-else slot="start" :icon="documentMD" />
 		</template>
 		<IonLabel class="nowrap">
