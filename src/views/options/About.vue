@@ -11,7 +11,7 @@
 	import { openUrl } from "@tauri-apps/plugin-opener";
 
 	async function openRepo(){
-		const url = "https://codeberg.org/NyaomiDEV/Ampersand";
+		const url = "https://codeberg.org/Ampersand/app";
 		await openUrl(url);
 	}
 

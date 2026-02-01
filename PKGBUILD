@@ -2,7 +2,7 @@ pkgname=ampersand-git
 pkgver=0.1.9
 pkgrel=1
 pkgdesc="Tracking app for plural systems"
-url="https://codeberg.org/NyaomiDEV/Ampersand"
+url="https://codeberg.org/Ampersand/app"
 license=("AGPL-v3.0-only")
 
 arch=('x86_64' 'aarch64')

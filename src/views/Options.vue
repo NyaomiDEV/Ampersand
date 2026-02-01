@@ -111,7 +111,7 @@
 					<IonLabel>{{ $t("importExport:header") }}</IonLabel>
 				</IonItem>
 
-				<IonItem button @click="openUrl('https://codeberg.org/NyaomiDEV/Ampersand/wiki')">
+				<IonItem button @click="openUrl('https://codeberg.org/Ampersand/app/wiki')">
 					<IonIcon slot="start" :icon="WikiMD" aria-hidden="true" />
 					<IonLabel>{{ $t("options:wikiLink") }}</IonLabel>
 				</IonItem>
