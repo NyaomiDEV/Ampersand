@@ -1,4 +1,4 @@
-/* Headerbar */
+/* Headerbar and Footerbar */
 .md ion-toolbar {
 	--min-height: 64px;
 	--padding-start: 16px;
@@ -13,6 +13,6 @@
 	color: rgb(var(--md3-on-surface-variant));
 }
 
-.md ion-header {
+.md ion-header, .md ion-footer {
 	box-shadow: var(--md3-elevation-0);
 }
