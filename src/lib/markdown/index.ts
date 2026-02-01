@@ -27,6 +27,7 @@ import blurExtension from "./blurExtension";
 import marqueeExtension from "./marqueeExtension";
 import fontSizeExtension from "./fontSizeExtension";
 import calloutExtension from "./calloutExtension";
+import svgExtension from "./svgExtension";
 
 export const marked = new Marked<(VNode | string)[], VNode | string>();
 
@@ -131,6 +132,7 @@ marked.use({
 
 // Start injecting our extensions
 marked.use(
+	svgExtension,
 	mentionExtension,
 	spoilerExtension,
 	timestampExtension,
@@ -149,5 +151,5 @@ marked.use(
 	blurExtension,
 	linebreakExtension,
 	marqueeExtension,
-	calloutExtension
+	calloutExtension,
 );

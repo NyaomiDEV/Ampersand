@@ -228,3 +228,8 @@
     margin-bottom: 8px;
     font-weight: bold;
 }
+
+.markdown-content ion-icon {
+    height: 1em;
+    vertical-align: middle;
+}
