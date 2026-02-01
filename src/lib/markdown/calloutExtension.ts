@@ -15,7 +15,7 @@ const calloutExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 						type: "callout",
 						raw: match[0],
 						color: match.groups?.color,
-						text: match.groups?.text,
+						text: match.groups?.title ? `${match.groups.title}\n${match.groups?.text}` : match.groups?.text,
 						tokens: this.lexer.inlineTokens(match.groups!.text)
 					};
 					if(match.groups?.title){
