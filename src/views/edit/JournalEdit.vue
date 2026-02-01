@@ -11,13 +11,13 @@
 		IonLabel,
 		IonTextarea,
 		IonList,
-		IonToggle,
 		IonFabButton,
 		IonBackButton,
 		useIonRouter,
 		IonPage,
 		IonInput,
 		IonItem,
+		IonFooter,
 	} from "@ionic/vue";
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
@@ -28,24 +28,21 @@
 	import settingsMD from "@material-symbols/svg-600/outlined/settings.svg";
 
 	import { JournalPostComplete, Tag } from "../../lib/db/entities";
-	import { newJournalPost, updateJournalPost, deleteJournalPost, getJournalPost, toJournalPostComplete } from "../../lib/db/tables/journalPosts";
-	import { getFiles, formatDate, toast, promptOkCancel } from "../../lib/util/misc";
+	import { newJournalPost, updateJournalPost, getJournalPost, toJournalPostComplete } from "../../lib/db/tables/journalPosts";
+	import { getFiles, formatDate } from "../../lib/util/misc";
 	import { resizeImage } from "../../lib/util/image";
-	import { onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
+	import { h, onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
 	import Markdown from "../../components/Markdown.vue";
 	import MemberAvatar from "../../components/member/MemberAvatar.vue";
 	import TagChip from "../../components/tag/TagChip.vue";
 	import MemberSelect from "../../modals/MemberSelect.vue";
-	import TagListSelect from "../../modals/TagListSelect.vue";
-	import DatePopupPicker from "../../components/DatePopupPicker.vue";
+	import JournalOptions from "../../modals/JournalOptions.vue";
 	import { PartialBy } from "../../lib/types";
 	import { useRoute } from "vue-router";
-	import { useTranslation } from "i18next-vue";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import { getObjectURL } from "../../lib/util/blob";
 	import { getTags } from "../../lib/db/tables/tags";
-
-	const i18next = useTranslation();
+	import { addModal, removeModal } from "../../lib/modals";
 
 	const router = useIonRouter();
 	const route = useRoute();
@@ -55,7 +52,6 @@
 	const memberTagModal = useTemplateRef("memberTagModal");
 
 	const tags = shallowRef<Tag[]>([]);
-	const tagSelectionModal = useTemplateRef("tagSelectionModal");
 
 	const emptyPost: PartialBy<JournalPostComplete, "uuid" | "member"> = {
 		title: "",
@@ -112,25 +108,16 @@
 		}
 	}
 
-	async function removePost() {
-		if(await promptOkCancel(
-			i18next.t("journal:edit.delete.title"),
-			i18next.t("journal:edit.delete.confirm")
-		)){
-			await deleteJournalPost(post.value.uuid!);
-			router.back();
-		}
-	}
+	async function showJournalOptions(){
+		const vnode = h(JournalOptions, {
+			post,
+			tags,
+			onDidDismiss: () => removeModal(vnode)
+		});
 
-	async function copyIdToClipboard(){
-		if(post.value.uuid){
-			try{
-				await window.navigator.clipboard.writeText(`@<j:${post.value.uuid}>`);
-				await toast(i18next.t("journal:edit.postIDcopiedToClipboard"));
-			}catch(_e){
-				return;
-			}
-		}
+		const modal = await addModal(vnode);
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-call
+		await (modal.el as any).present();
 	}
 
 	async function updateRoute() {
@@ -175,12 +162,6 @@
 					:icon="backMD"
 					default-href="/journal/"
 				/>
-				<!-- TODO modal -->
-				<IonButtons v-if="false" slot="primary">
-					<IonButton>
-						<IonIcon slot="icon-only" :icon="settingsMD" />
-					</IonButton>
-				</IonButtons>
 				<IonTitle>
 					{{ !isEditing ? $t("journal:edit.header") : !post.uuid ? $t("journal:edit.headerAdd") :
 						$t("journal:edit.headerEdit") }}
@@ -265,19 +246,6 @@
 					</template>
 				</IonItem>
 
-				<IonItem button :detail="true" @click="($refs.datePicker as any)?.$el.present()">
-					<IonLabel>
-						<h2>{{ $t("journal:edit.date") }}</h2>
-						<p>{{ formatDate(post.date, "expanded") }}</p>
-					</IonLabel>
-					<DatePopupPicker
-						ref="datePicker"
-						v-model="post.date"
-						show-default-buttons
-						:title="$t('journal:edit.date')"
-					/>
-				</IonItem>
-
 				<IonItem class="title">
 					<IonInput v-model="post.title" :placeholder="$t('journal:edit.title')" />
 				</IonItem>
@@ -286,85 +254,8 @@
 					<IonInput v-model="post.subtitle" :placeholder="$t('journal:edit.subtitle')" />
 				</IonItem>
 
-				<IonItem button :detail="true" @click="tagSelectionModal?.$el.present()">
-					<IonLabel>
-						{{ $t("journal:edit.tags") }}
-						<div v-if="tags?.length" class="journal-tags">
-							<TagChip
-								v-for="tag in post.tags"
-								:key="tag"
-								:tag="tags.find(x => x.uuid === tag)!"
-							/>
-						</div>
-					</IonLabel>
-				</IonItem>
-
-				<IonItem>
+				<IonItem class="edit-body">
 					<IonTextarea v-model="post.body" auto-grow :placeholder="$t('journal:edit.body')" />
-				</IonItem>
-
-				<IonItem>
-					<IonButton fill="clear" @click="post.body = `${post.body}<t:${Math.floor(Date.now() / 1000)}:f>`">
-						{{ $t("other:addTimestamp") }}
-					</IonButton>
-					<IonButton fill="clear" @click="memberTagModal?.$el.present()">
-						{{ $t("other:memberMention") }}
-					</IonButton>
-				</IonItem>
-
-				<IonItem button :detail="false">
-					<IonToggle v-model="post.isPinned">
-						<IonLabel>
-							{{ $t("journal:edit.isPinned") }}
-						</IonLabel>
-					</IonToggle>
-				</IonItem>
-
-				<IonItem button :detail="false">
-					<IonToggle v-model="post.isPrivate">
-						<IonLabel>
-							{{ $t("journal:edit.isPrivate") }}
-						</IonLabel>
-					</IonToggle>
-				</IonItem>
-
-				<IonItem>
-					<IonTextarea
-						v-model="post.contentWarning"
-						fill="outline"
-						auto-grow
-						:label="$t('journal:edit.contentWarning')"
-						label-placement="floating"
-					/>
-				</IonItem>
-
-				<IonItem
-					v-if="post.uuid"
-					button
-					:detail="false"
-					@click="removePost"
-				>
-					<IonIcon
-						slot="start"
-						:icon="trashMD"
-						aria-hidden="true"
-						color="danger"
-					/>
-					<IonLabel color="danger">
-						<h3>{{ $t("journal:edit.delete.title") }}</h3>
-						<p>{{ $t("other:genericDeleteDesc") }}</p>
-					</IonLabel>
-				</IonItem>
-
-				<IonItem
-					v-if="post.uuid"
-					:detail="false"
-					button
-					@click="copyIdToClipboard"
-				>
-					<IonLabel>
-						<p>{{ $t("journal:edit.postID", { postID: post.uuid }) }}</p>
-					</IonLabel>
 				</IonItem>
 
 			</IonList>
@@ -374,13 +265,6 @@
 					<IonIcon :icon="isEditing ? saveMD : pencilMD" />
 				</IonFabButton>
 			</IonFab>
-
-			<TagListSelect
-				ref="tagSelectionModal"
-				type="journal"
-				:model-value="post.tags.map(uuid => tags.find(x => x.uuid === uuid)!)"
-				@update:model-value="tags => { post.tags = tags.map(x => x.uuid); }"
-			/>
 
 			<MemberSelect
 				ref="memberSelectModal"
@@ -403,6 +287,24 @@
 			/>
 
 		</IonContent>
+
+		<IonFooter v-if="isEditing">
+			<IonToolbar>
+				<IonButtons slot="end">
+					<IonButton @click="showJournalOptions">
+						<IonIcon slot="icon-only" :icon="settingsMD" />
+					</IonButton>
+				</IonButtons>
+				<IonButtons slot="start">
+					<IonButton @click="post.body = `${post.body}<t:${Math.floor(Date.now() / 1000)}:f>`">
+						{{ $t("other:addTimestamp") }}
+					</IonButton>
+					<IonButton @click="memberTagModal?.$el.present()">
+						{{ $t("other:memberMention") }}
+					</IonButton>
+				</IonButtons>
+			</IonToolbar>
+		</IonFooter>
 	</IonPage>
 </template>
 
@@ -484,5 +386,10 @@
 		font-size: 1.625rem;
 		--inner-padding-top: 0;
 		--inner-padding-bottom: 0;
+	}
+
+	ion-item.edit-body ion-textarea {
+		--padding-top: 0;
+		--padding-bottom: 0;
 	}
 </style>
