@@ -15,7 +15,7 @@
 
 <template>
 	<div class="marquee-container">
-		<span class="marquee" :data-direction="direction" :data-bouncy="bouncy">
+		<span class="marquee" :data-direction="direction" :data-bouncy="bouncy || undefined">
 			<slot />
 		</span>
 	</div>
