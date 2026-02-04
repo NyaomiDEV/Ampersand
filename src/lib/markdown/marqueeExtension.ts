@@ -9,7 +9,7 @@ const marqueeExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 			level: "block",
 			start(src: string) { return src.match(/\[mq=/)?.index; },
 			tokenizer(src: string) {
-				const rule = /^\[mq=(?<direction>top|bottom|left|right) (?<duration>\d*\.?\d+)s(?: (?<bouncy>bouncy))?\](?<text>.+?)\[\/mq\]/;
+				const rule = /^\[mq=(?<direction>top|bottom|left|right)(?: (?<duration>\d*\.?\d+)s)(?: (?<bouncy>bouncy))?\](?<text>.+?)\[\/mq\]/;
 				const match = rule.exec(src);
 				if (match) {
 					const token = {
