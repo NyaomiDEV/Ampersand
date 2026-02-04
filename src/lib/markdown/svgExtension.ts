@@ -25,8 +25,9 @@ const svgExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 		},
 		renderer(token) {
 			if(!token.blocked){
+				console.log(token.href);
 				return h(IonIcon, {
-					icon: token.href
+					src: token.href
 				});
 			} else 
 				return undefined;
@@ -38,10 +39,10 @@ const svgExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 			case "svg":
 				// let's put the href to asset code
 				if ((token.href as string).startsWith("@")) {
-					const friendlyNameMaybe = (token.href as string).slice(1);
+					const [assetNameMaybe, ...parts] = (token.href as string).slice(1).split("#");
 					for await (const x of getAssets()) {
-						if (x.friendlyName === friendlyNameMaybe) {
-							token.href = getObjectURL(x.file);
+						if (x.friendlyName === assetNameMaybe) {
+							token.href = getObjectURL(x.file) + (parts.length && `#${parts.join("#")}`);
 							break;
 						}
 					}
