@@ -1,7 +1,6 @@
 [default]
 description = "Default permissions for the Ampersand plugin"
 permissions = [
-	"allow-exit-app",
 	"allow-open-file",
 	"allow-get-webkit-version",
 	"allow-broadcast-event",

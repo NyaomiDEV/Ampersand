@@ -2,18 +2,16 @@
 name = "tauri-plugin-ampersand"
 version = "0.1.9"
 authors = ["nao"]
-description = ""
+description = "Tauri plugin for Ampersand"
 edition = "2021"
-rust-version = "1.77.2"
+rust-version = "1.93.0"
 links = "tauri-plugin-ampersand"
 
 [dependencies]
-tauri = { version = "2.2.5" }
-wry = "0.53.3"
-serde = "1.0"
+tauri = "2.10.2"
+serde = "1"
 thiserror = "2"
-tauri-plugin-opener = "2.2.5"
-
+tauri-plugin-opener = "2.5.3"
 
 [build-dependencies]
-tauri-plugin = { version = "2.0.3", features = ["build"] }
+tauri-plugin = { version = "2.5.3", features = ["build"] }

@@ -65,12 +65,6 @@ struct ListAssetsResponse {
 pub struct Ampersand<R: Runtime>(PluginHandle<R>);
 
 impl<R: Runtime> Ampersand<R> {
-  pub fn exit_app(&self) -> crate::Result<()> {
-    self
-      .0
-      .run_mobile_plugin("exitApp", ())
-      .map_err(Into::into)
-  }
 
   pub fn dismiss_splash(&self) -> crate::Result<()> {
     self

@@ -63,12 +63,6 @@ class AmpersandPlugin(private val activity: Activity): Plugin(activity) {
     }
 
     @Command
-    fun exitApp(invoke: Invoke) {
-        invoke.resolve()
-        activity.finish()
-    }
-
-    @Command
     fun openFile(invoke: Invoke) {
         val args = invoke.parseArgs(OpenFileArgs::class.java)
         try {

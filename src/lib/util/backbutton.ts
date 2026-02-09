@@ -1,4 +1,4 @@
-import { exitApp } from "../native/plugin";
+import { exit } from "@tauri-apps/plugin-process";
 
 let routerCanGoBack = false;
 let modalCanGoBack = false;
@@ -16,5 +16,5 @@ export function setModalCanGoBack(value: boolean) {
 
 export async function maybeExit(){
 	if(!shouldNotExit)
-		await exitApp();
+		await exit(0);
 }

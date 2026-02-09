@@ -6,7 +6,7 @@ authors = ["nao"]
 license = ""
 repository = ""
 edition = "2021"
-rust-version = "1.77.2"
+rust-version = "1.93.0"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -24,14 +24,15 @@ tauri-build = { version = "2.5.3", features = [] }
 serde_json = "1.0"
 serde = { version = "1.0", features = ["derive"] }
 log = "0.4"
-tauri = { version = "2.9.5", features = [] }
-tauri-plugin-store = "2.4.1"
-tauri-plugin-fs = "2.4.4"
+tauri = { version = "2.10.2", features = [] }
+tauri-plugin-store = "2.4.2"
+tauri-plugin-fs = "2.4.5"
 tauri-plugin-m3 = "0.2.2"
 tauri-plugin-os = "2.3.2"
-tauri-plugin-dialog = "2.4.2"
-tauri-plugin-opener = "2.5.2"
-tauri-plugin-http = "2.5.4"
+tauri-plugin-dialog = "2.6.0"
+tauri-plugin-opener = "2.5.3"
+tauri-plugin-http = "2.5.7"
+tauri-plugin-process = "2.3.1"
 tauri-plugin-ampersand = { path = "./plugin" }
 
 [target.'cfg(any(target_os = "android", target_os = "ios"))'.dependencies]

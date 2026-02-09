@@ -13,10 +13,6 @@ pub fn init<R: Runtime, C: DeserializeOwned>(
 pub struct Ampersand<R: Runtime>(AppHandle<R>);
 
 impl<R: Runtime> Ampersand<R> {
-  pub fn exit_app(&self) -> crate::Result<()> {
-    self.0.exit(0);
-    Ok(())
-  }
 
   pub fn dismiss_splash(&self) -> crate::Result<()> {
     Ok(())

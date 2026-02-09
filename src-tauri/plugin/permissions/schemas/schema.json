@@ -319,18 +319,6 @@
           "markdownDescription": "Denies the dismiss_splash command without any pre-configured scope."
         },
         {
-          "description": "Enables the exit_app command without any pre-configured scope.",
-          "type": "string",
-          "const": "allow-exit-app",
-          "markdownDescription": "Enables the exit_app command without any pre-configured scope."
-        },
-        {
-          "description": "Denies the exit_app command without any pre-configured scope.",
-          "type": "string",
-          "const": "deny-exit-app",
-          "markdownDescription": "Denies the exit_app command without any pre-configured scope."
-        },
-        {
           "description": "Enables the get_webkit_version command without any pre-configured scope.",
           "type": "string",
           "const": "allow-get-webkit-version",
@@ -379,10 +367,10 @@
           "markdownDescription": "Denies the register_listener command without any pre-configured scope."
         },
         {
-          "description": "Default permissions for the Ampersand plugin\n#### This default permission set includes:\n\n- `allow-exit-app`\n- `allow-open-file`\n- `allow-get-webkit-version`\n- `allow-broadcast-event`\n- `allow-list-assets`\n- `allow-dismiss-splash`\n- `allow-register-listener`",
+          "description": "Default permissions for the Ampersand plugin\n#### This default permission set includes:\n\n- `allow-open-file`\n- `allow-get-webkit-version`\n- `allow-broadcast-event`\n- `allow-list-assets`\n- `allow-dismiss-splash`\n- `allow-register-listener`",
           "type": "string",
           "const": "default",
-          "markdownDescription": "Default permissions for the Ampersand plugin\n#### This default permission set includes:\n\n- `allow-exit-app`\n- `allow-open-file`\n- `allow-get-webkit-version`\n- `allow-broadcast-event`\n- `allow-list-assets`\n- `allow-dismiss-splash`\n- `allow-register-listener`"
+          "markdownDescription": "Default permissions for the Ampersand plugin\n#### This default permission set includes:\n\n- `allow-open-file`\n- `allow-get-webkit-version`\n- `allow-broadcast-event`\n- `allow-list-assets`\n- `allow-dismiss-splash`\n- `allow-register-listener`"
         }
       ]
     }

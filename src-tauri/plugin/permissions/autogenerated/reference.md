@@ -4,7 +4,6 @@ Default permissions for the Ampersand plugin
 
 #### This default permission set includes the following:
 
-- `allow-exit-app`
 - `allow-open-file`
 - `allow-get-webkit-version`
 - `allow-broadcast-event`
@@ -69,32 +68,6 @@ Enables the dismiss_splash command without any pre-configured scope.
 <td>
 
 Denies the dismiss_splash command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`ampersand:allow-exit-app`
-
-</td>
-<td>
-
-Enables the exit_app command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`ampersand:deny-exit-app`
-
-</td>
-<td>
-
-Denies the exit_app command without any pre-configured scope.
 
 </td>
 </tr>

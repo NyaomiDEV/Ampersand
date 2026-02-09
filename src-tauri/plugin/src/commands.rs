@@ -9,11 +9,6 @@ use crate::AmpersandExt;
 // go into src-tauri/src/commands.rs
 
 #[command]
-pub(crate) fn exit_app<R: Runtime>(app: AppHandle<R>) -> Result<()> {
-    app.ampersand().exit_app()
-}
-
-#[command]
 pub(crate) fn open_file<R: Runtime>(app: AppHandle<R>, path: String) -> Result<()> {
 	app.ampersand().open_file(path)
 }

@@ -6,10 +6,6 @@ function invokePlugin(cmd: string, args?: InvokeArgs, opts?: InvokeOptions): Pro
 	return invoke(`plugin:ampersand|${cmd}`, args, opts);
 }
 
-export function exitApp(): Promise<void> {
-	return invokePlugin("exit_app") as Promise<void>;
-}
-
 export function dismissSplash(): Promise<void> {
 	return invokePlugin("dismiss_splash") as Promise<void>;
 }
