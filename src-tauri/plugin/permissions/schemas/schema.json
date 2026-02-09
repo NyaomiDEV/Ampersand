@@ -391,6 +391,18 @@
           "markdownDescription": "Denies the register_listener command without any pre-configured scope."
         },
         {
+          "description": "Enables the run_db_migrations command without any pre-configured scope.",
+          "type": "string",
+          "const": "allow-run-db-migrations",
+          "markdownDescription": "Enables the run_db_migrations command without any pre-configured scope."
+        },
+        {
+          "description": "Denies the run_db_migrations command without any pre-configured scope.",
+          "type": "string",
+          "const": "deny-run-db-migrations",
+          "markdownDescription": "Denies the run_db_migrations command without any pre-configured scope."
+        },
+        {
           "description": "Enables the test_db command without any pre-configured scope.",
           "type": "string",
           "const": "allow-test-db",

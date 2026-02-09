@@ -101,6 +101,32 @@ Denies the get_webkit_version command without any pre-configured scope.
 <tr>
 <td>
 
+`ampersand:allow-init-db`
+
+</td>
+<td>
+
+Enables the init_db command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`ampersand:deny-init-db`
+
+</td>
+<td>
+
+Denies the init_db command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
 `ampersand:allow-list-assets`
 
 </td>
@@ -120,6 +146,32 @@ Enables the list_assets command without any pre-configured scope.
 <td>
 
 Denies the list_assets command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`ampersand:allow-migrate-old-db`
+
+</td>
+<td>
+
+Enables the migrate_old_db command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`ampersand:deny-migrate-old-db`
+
+</td>
+<td>
+
+Denies the migrate_old_db command without any pre-configured scope.
 
 </td>
 </tr>
@@ -172,6 +224,32 @@ Enables the register_listener command without any pre-configured scope.
 <td>
 
 Denies the register_listener command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`ampersand:allow-run-db-migrations`
+
+</td>
+<td>
+
+Enables the run_db_migrations command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`ampersand:deny-run-db-migrations`
+
+</td>
+<td>
+
+Denies the run_db_migrations command without any pre-configured scope.
 
 </td>
 </tr>
