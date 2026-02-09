@@ -14,7 +14,7 @@
 		useIonRouter,
 	} from "@ionic/vue";
 
-	import { JournalPostComplete, Tag } from "../lib/db/entities";
+	import { JournalPost, Tag } from "../lib/db/entities";
 	import { PartialBy } from "../lib/types";
 	import TagListSelect from "./TagListSelect.vue";
 	import DatePopupPicker from "../components/DatePopupPicker.vue";
@@ -31,30 +31,30 @@
 	const tagSelectionModal = useTemplateRef("tagSelectionModal");
 
 	const props = defineProps<{
-		post: Ref<PartialBy<JournalPostComplete, "uuid" | "member">>
+		post: Ref<PartialBy<JournalPost, "id" | "member">>
 		tags: ShallowRef<Tag[]>
 	}>();
 	const post = props.post;
 	const tags = props.tags;
-
+	
 	async function removePost() {
-		if(await promptOkCancel(
+		if(!await promptOkCancel(
 			i18next.t("journal:edit.delete.title"),
 			i18next.t("journal:edit.delete.confirm")
-		)){
-			await deleteJournalPost(post.value.uuid!);
-			router.back();
-		}
+		)) return;
+
+		await deleteJournalPost(post.value.id!);
+		router.back();
 	}
 
 	async function copyIdToClipboard(){
-		if(post.value.uuid){
-			try{
-				await window.navigator.clipboard.writeText(`@<j:${post.value.uuid}>`);
-				await toast(i18next.t("journal:edit.postIDcopiedToClipboard"));
-			}catch(_e){
-				return;
-			}
+		if(!post.value.id) return;
+
+		try{
+			await window.navigator.clipboard.writeText(`@<j:${post.value.id}>`);
+			await toast(i18next.t("journal:edit.postIDcopiedToClipboard"));
+		}catch(_e){
+			return;
 		}
 	}
 </script>
@@ -87,9 +87,9 @@
 						{{ $t("journal:edit.tags") }}
 						<div v-if="tags?.length" class="journal-tags">
 							<TagChip
-								v-for="tag in post.tags"
-								:key="tag"
-								:tag="tags.find(x => x.uuid === tag)!"
+								v-for="tag in tags"
+								:key="tag.id"
+								:tag
 							/>
 						</div>
 					</IonLabel>
@@ -122,7 +122,7 @@
 				</IonItem>
 
 				<IonItem
-					v-if="post.uuid"
+					v-if="post.id"
 					button
 					:detail="false"
 					@click="removePost"
@@ -140,22 +140,21 @@
 				</IonItem>
 
 				<IonItem
-					v-if="post.uuid"
+					v-if="post.id"
 					:detail="false"
 					button
 					@click="copyIdToClipboard"
 				>
 					<IonLabel>
-						<p>{{ $t("journal:edit.postID", { postID: post.uuid }) }}</p>
+						<p>{{ $t("journal:edit.postID", { postID: post.id }) }}</p>
 					</IonLabel>
 				</IonItem>
 			</IonList>
 
 			<TagListSelect
 				ref="tagSelectionModal"
-				type="journal"
-				:model-value="post.tags.map(uuid => tags.find(x => x.uuid === uuid)!)"
-				@update:model-value="tags => { post.tags = tags.map(x => x.uuid); }"
+				:type="1"
+				:model-value="tags"
 			/>
 
 		</IonContent>
