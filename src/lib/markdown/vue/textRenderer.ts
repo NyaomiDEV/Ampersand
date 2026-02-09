@@ -39,6 +39,6 @@ export const textRenderer: TextRenderer<string> = {
 	},
 
 	checkbox({ raw }) {
-		return raw as string;
+		return raw;
 	}
 };

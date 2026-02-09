@@ -1,7 +1,7 @@
 export async function resizeImage(image: File, maxWidthHeight = 512){
 	const bitmap = await createImageBitmap(image);
-	let width = 0;
-	let height = 0;
+	let width: number;
+	let height: number;
 
 	if(bitmap.width <= maxWidthHeight && bitmap.height <= maxWidthHeight){
 		if (image.type === "image/webp")

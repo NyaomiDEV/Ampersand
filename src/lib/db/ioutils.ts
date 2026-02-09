@@ -43,7 +43,7 @@ async function _exportDatabase(progress: EventTarget){
 
 export function exportDatabaseToBinary(){
 	const progress = new EventTarget();
-	const dbPromise = _exportDatabase(progress).then(res => compressGzip(encode(res) as Uint8Array<ArrayBuffer>));
+	const dbPromise = _exportDatabase(progress).then(res => compressGzip(encode(res)));
 
 	return { progress, dbPromise };
 }

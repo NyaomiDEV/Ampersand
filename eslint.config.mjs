@@ -139,6 +139,7 @@ export default defineConfig([
 		files: ["src/**/*.vue"],
 		rules: {
 			"@stylistic/indent": "off",
+			"no-useless-assignment": "off"
 		}
 	}
 ]);

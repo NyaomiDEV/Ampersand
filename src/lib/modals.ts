@@ -3,8 +3,8 @@ import { setModalCanGoBack } from "./util/backbutton";
 
 const renderArray = reactive<VNode[]>([]);
 
-watch(renderArray, async () => {
-	await setModalCanGoBack(renderArray.length > 0);
+watch(renderArray, () => {
+	setModalCanGoBack(renderArray.length > 0);
 });
 export const modalEvents = new EventTarget();
 
