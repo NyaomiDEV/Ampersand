@@ -18,22 +18,22 @@ pub fn our_temp_dir() -> Result<String> {
 
 #[command]
 pub fn clear_temp_dir() -> Result<()> {
-    let temp_dir = our_temp_dir()?;
-    for entry in fs::read_dir(temp_dir)? {
-        let entry = entry?;
-        let filetype = &entry.file_type()?;
-        if filetype.is_dir() {
-            std::fs::remove_dir_all(entry.path())?;
-        }
-        if filetype.is_file() {
-            std::fs::remove_file(entry.path())?;
-        }
-    }
+	let temp_dir = our_temp_dir()?;
+	for entry in fs::read_dir(temp_dir)? {
+		let entry = entry?;
+		let filetype = &entry.file_type()?;
+		if filetype.is_dir() {
+			std::fs::remove_dir_all(entry.path())?;
+		}
+		if filetype.is_file() {
+			std::fs::remove_file(entry.path())?;
+		}
+	}
 
-    Ok(())
+	Ok(())
 }
 
 #[command]
 pub fn get_webkit_version() -> Result<String> {
-  tauri::webview_version().map_err(|e| tauri_plugin_ampersand::Error::Other(e.to_string()))
+	tauri::webview_version().map_err(|e| tauri_plugin_ampersand::Error::Other(e.to_string()))
 }
