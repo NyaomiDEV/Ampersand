@@ -179,6 +179,7 @@
 
 		loading.value = false;
 	}
+	*/
 </script>
 
 <template>
