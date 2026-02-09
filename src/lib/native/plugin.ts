@@ -6,7 +6,7 @@ export function invokePlugin<T>(cmd: string, args?: InvokeArgs, opts?: InvokeOpt
 }
 
 export function dismissSplash(): Promise<void> {
-	return invokePlugin("dismiss_splash") as Promise<void>;
+	return invokePlugin<void>("dismiss_splash");
 }
 
 export function setCanGoBack(canGoBack: boolean): Promise<void> {

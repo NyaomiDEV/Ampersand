@@ -13,8 +13,8 @@
 	const i18next = useTranslation();
 	const router = useIonRouter();
 
+	// @ts-expect-error will be used after some time
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	// @ts-expect-error
 	async function promptRemoteConnection(){
 		if(await promptYesNo(
 			i18next.t("onboarding:importScreen.allowRemoteContent.header"),
