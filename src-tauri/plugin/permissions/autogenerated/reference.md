@@ -8,7 +8,8 @@ Default permissions for the Ampersand plugin
 - `allow-get-webkit-version`
 - `allow-broadcast-event`
 - `allow-list-assets`
-- `allow-registerListener`
+- `allow-dismiss-splash`
+- `allow-register-listener`
 
 ## Permission Table
 
@@ -48,12 +49,12 @@ Denies the broadcast_event command without any pre-configured scope.
 <tr>
 <td>
 
-`ampersand:allow-exit-app`
+`ampersand:allow-dismiss-splash`
 
 </td>
 <td>
 
-Enables the exit_app command without any pre-configured scope.
+Enables the dismiss_splash command without any pre-configured scope.
 
 </td>
 </tr>
@@ -61,12 +62,12 @@ Enables the exit_app command without any pre-configured scope.
 <tr>
 <td>
 
-`ampersand:deny-exit-app`
+`ampersand:deny-dismiss-splash`
 
 </td>
 <td>
 
-Denies the exit_app command without any pre-configured scope.
+Denies the dismiss_splash command without any pre-configured scope.
 
 </td>
 </tr>
@@ -170,33 +171,7 @@ Enables the register_listener command without any pre-configured scope.
 </td>
 <td>
 
-Denies the registerListener command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`ampersand:allow-set-can-go-back`
-
-</td>
-<td>
-
-Enables the set_can_go_back command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`ampersand:deny-set-can-go-back`
-
-</td>
-<td>
-
-Denies the set_can_go_back command without any pre-configured scope.
+Denies the register_listener command without any pre-configured scope.
 
 </td>
 </tr>
