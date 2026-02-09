@@ -39,9 +39,9 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
 			commands::broadcast_event,
 			commands::list_assets,
 			commands::dismiss_splash,
-			commands::test_db,
-			commands::run_db_migrations,
-			commands::migrate_old_db,
+			commands::db_test,
+			commands::db_run_migrations,
+			commands::db_migrate_old,
 		])
 		.setup(|app, api: tauri::plugin::PluginApi<R, ()>| {
 			std::fs::create_dir_all(app.path().app_data_dir()?)?;
