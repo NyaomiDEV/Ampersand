@@ -3,9 +3,9 @@ name = "ampersand"
 version = "0.1.11"
 description = "Tracking app for plural systems"
 authors = ["nao"]
-license = ""
-repository = ""
-edition = "2021"
+license = "AGPL-3.0-only"
+repository = "https://codeberg.org/Ampersand/app"
+edition = "2024"
 rust-version = "1.93.0"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
