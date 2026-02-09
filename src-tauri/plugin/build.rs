@@ -5,9 +5,9 @@ const COMMANDS: &[&str] = &[
 	"list_assets",
 	"dismiss_splash",
 	"register_listener",
-	"test_db",
-	"run_db_migrations",
-	"migrate_old_db",
+	"db_test",
+	"db_run_migrations",
+	"db_migrate_old"
 ];
 
 fn main() {
