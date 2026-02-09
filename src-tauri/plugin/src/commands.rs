@@ -1,7 +1,7 @@
 use tauri::{command, AppHandle, Runtime};
 
-use crate::Result;
 use crate::AmpersandExt;
+use crate::Result;
 
 // Platform dependent commands and code goes here.
 // We interface with the native (eg. mobile) device stuff here.
@@ -15,7 +15,7 @@ pub(crate) fn open_file<R: Runtime>(app: AppHandle<R>, path: String) -> Result<(
 
 #[command]
 pub(crate) fn test_db<R: Runtime>(app: AppHandle<R>) -> Result<String> {
-    app.ampersand().test_db()
+	app.ampersand().test_db()
 }
 
 #[command]
@@ -35,10 +35,10 @@ pub(crate) fn broadcast_event<R: Runtime>(app: AppHandle<R>, payload: String) ->
 
 #[command]
 pub(crate) fn list_assets<R: Runtime>(app: AppHandle<R>, path: String) -> Result<Vec<String>> {
-    app.ampersand().list_assets(path)
+	app.ampersand().list_assets(path)
 }
 
 #[command]
 pub(crate) fn dismiss_splash<R: Runtime>(app: AppHandle<R>) -> Result<()> {
-    app.ampersand().dismiss_splash()
+	app.ampersand().dismiss_splash()
 }
