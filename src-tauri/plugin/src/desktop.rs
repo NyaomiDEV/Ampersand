@@ -7,25 +7,24 @@ use tauri_plugin_opener::OpenerExt;
 use crate::db;
 
 pub fn init<R: Runtime, C: DeserializeOwned>(
-  app: &AppHandle<R>,
-  connection: Mutex<Connection>,
-  _api: PluginApi<R, C>,
+	app: &AppHandle<R>,
+	connection: Mutex<Connection>,
+	_api: PluginApi<R, C>,
 ) -> crate::Result<Ampersand<R>> {
-  Ok(Ampersand(app.clone(), connection))
+	Ok(Ampersand(app.clone(), connection))
 }
 
 /// Access to the ampersand APIs.
 pub struct Ampersand<R: Runtime>(AppHandle<R>, Mutex<Connection>);
 
 impl<R: Runtime> Ampersand<R> {
+	pub fn dismiss_splash(&self) -> crate::Result<()> {
+		Ok(())
+	}
 
-  pub fn dismiss_splash(&self) -> crate::Result<()> {
-    Ok(())
-  }
-
-  pub fn open_file(&self, path: String) -> crate::Result<()> {
+	pub fn open_file(&self, path: String) -> crate::Result<()> {
 		Ok(self.0.opener().open_path(path, None::<&str>)?)
-  }
+	}
 
 	pub fn db_test(&self) -> crate::Result<String> {
 		db::db_test(&self.1)
@@ -39,9 +38,9 @@ impl<R: Runtime> Ampersand<R> {
 		db::db_migrate_old(&self.1, &self.0)
 	}
 
-  pub fn broadcast_event(&self, _payload: String) -> crate::Result<()> {
-    Ok(()) // af_unix someday?
-  }
+	pub fn broadcast_event(&self, _payload: String) -> crate::Result<()> {
+		Ok(()) // af_unix someday?
+	}
 
 	pub fn list_assets(&self, path: String) -> crate::Result<Vec<String>> {
 		Ok(self
