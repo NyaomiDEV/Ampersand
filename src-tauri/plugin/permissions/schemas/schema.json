@@ -391,6 +391,30 @@
           "markdownDescription": "Denies the register_listener command without any pre-configured scope."
         },
         {
+          "description": "Enables the run_db_migrations command without any pre-configured scope.",
+          "type": "string",
+          "const": "allow-run-db-migrations",
+          "markdownDescription": "Enables the run_db_migrations command without any pre-configured scope."
+        },
+        {
+          "description": "Denies the run_db_migrations command without any pre-configured scope.",
+          "type": "string",
+          "const": "deny-run-db-migrations",
+          "markdownDescription": "Denies the run_db_migrations command without any pre-configured scope."
+        },
+        {
+          "description": "Enables the test_db command without any pre-configured scope.",
+          "type": "string",
+          "const": "allow-test-db",
+          "markdownDescription": "Enables the test_db command without any pre-configured scope."
+        },
+        {
+          "description": "Denies the test_db command without any pre-configured scope.",
+          "type": "string",
+          "const": "deny-test-db",
+          "markdownDescription": "Denies the test_db command without any pre-configured scope."
+        },
+        {
           "description": "Default permissions for the Ampersand plugin\n#### This default permission set includes:\n\n- `allow-open-file`\n- `allow-get-webkit-version`\n- `allow-broadcast-event`\n- `allow-list-assets`\n- `allow-dismiss-splash`\n- `allow-register-listener`",
           "type": "string",
           "const": "default",
