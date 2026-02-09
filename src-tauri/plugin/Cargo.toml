@@ -3,7 +3,9 @@ name = "tauri-plugin-ampersand"
 version = "0.1.11"
 authors = ["nao"]
 description = "Tauri plugin for Ampersand"
-edition = "2021"
+license = "AGPL-3.0-only"
+repository = "https://codeberg.org/Ampersand/app"
+edition = "2024"
 rust-version = "1.93.0"
 links = "tauri-plugin-ampersand"
 
