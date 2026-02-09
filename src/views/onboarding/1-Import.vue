@@ -14,6 +14,7 @@
 	const router = useIonRouter();
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	// @ts-expect-error
 	async function promptRemoteConnection(){
 		if(await promptYesNo(
 			i18next.t("onboarding:importScreen.allowRemoteContent.header"),

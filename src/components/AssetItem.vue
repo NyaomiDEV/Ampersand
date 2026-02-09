@@ -42,7 +42,7 @@
 
 	onBeforeMount(async () => {
 		if(props.asset.file && canPreview())
-			previewUri.value = await getObjectURL(props.asset.file);
+			previewUri.value = await getObjectURL(props.asset.file as SQLFile);
 	});
 </script>
 
@@ -54,7 +54,7 @@
 	>
 		<template v-if="props.showThumbnail">
 			<template v-if="props.asset.file && previewUri">
-				<IonIcon v-if="props.asset.file.friendlyName.endsWith('.svg')" slot="start" :icon="previewUri" />		
+				<IonIcon v-if="props.asset.file.friendlyName?.endsWith('.svg')" slot="start" :icon="previewUri" />		
 				<IonThumbnail v-else slot="start">
 					<img :src="previewUri" />
 				</IonThumbnail>

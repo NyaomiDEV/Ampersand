@@ -4,6 +4,7 @@ import { getAssets } from "../db/tables/assets";
 import { getObjectURL } from "../util/blob";
 import { securityConfig } from "../config";
 import Svg from "../../components/Svg.vue";
+import { SQLFile } from "../db/entities";
 
 const svgExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [{
@@ -50,7 +51,7 @@ const svgExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 					const [assetNameMaybe, ...parts] = (token.href as string).slice(1).split("#");
 					for await (const x of getAssets()) {
 						if (x.friendlyName === assetNameMaybe) {
-							token.href = getObjectURL(x.file) + (parts.length ? `#${parts.join("#")}` : "");
+							token.href = (await getObjectURL(x.file as SQLFile)) + (parts.length ? `#${parts.join("#")}` : "");
 							token.blocked = false; // unblock now
 							break;
 						}
