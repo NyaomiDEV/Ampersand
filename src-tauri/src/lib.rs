@@ -42,7 +42,8 @@ pub fn run() {
 
 			// Database initialization
 			std::fs::create_dir_all(app.path().app_data_dir()?)?;
-			db::init(app);
+			db::init(app)
+				.expect("error in database initialization");
 			Ok(())
 		})
 		.run(tauri::generate_context!())
