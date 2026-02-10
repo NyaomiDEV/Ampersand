@@ -1,8 +1,12 @@
+use std::sync::Mutex;
+
+use rusqlite::Connection;
 use serde::{ser::Serializer, Serialize};
 
 pub type Result<T> = std::result::Result<T, Error>;
 
 #[derive(Debug, thiserror::Error)]
+
 pub enum Error {
 	#[error(transparent)]
 	Io(#[from] std::io::Error),
@@ -10,14 +14,22 @@ pub enum Error {
 	Opener(#[from] tauri_plugin_opener::Error),
 	#[error(transparent)]
 	Tauri(#[from] tauri::Error),
+	#[error(transparent)]
+	Database(#[from] rusqlite::Error),
 	#[error("Mutex Lock Poisoned")]
 	Poison,
 	#[error("{0}")]
 	Other(String),
-	#[cfg(mobile)]
 	#[error(transparent)]
-	PluginInvoke(#[from] tauri::plugin::mobile::PluginInvokeError),
+	Conversion(#[from] crate::db::types::msgpack::Error),
+	#[error(transparent)]
+	RmpSerdeDecode(#[from] rmp_serde::decode::Error),
+	#[error("Database was already initialized!")]
+	DatabaseInitializedError(Mutex<Connection>),
+	#[error(transparent)]
+	OurPluginError(#[from] tauri_plugin_ampersand::Error)
 }
+
 
 impl Serialize for Error {
 	fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
