@@ -13,7 +13,8 @@ pub fn run() {
         .plugin(tauri_plugin_process::init())
         .invoke_handler(tauri::generate_handler![
             commands::our_temp_dir,
-            commands::clear_temp_dir
+            commands::clear_temp_dir,
+            commands::get_webkit_version
         ])
         .setup(|_app: &mut tauri::App| {
             #[cfg(mobile)]

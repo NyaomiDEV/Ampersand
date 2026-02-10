@@ -33,3 +33,8 @@ pub fn clear_temp_dir() -> Result<()> {
 
     Ok(())
 }
+
+#[command]
+pub fn get_webkit_version() -> Result<String> {
+  tauri::webview_version().map_err(|e| tauri_plugin_ampersand::Error::Other(e.to_string()))
+}

@@ -27,7 +27,7 @@ export async function openFile(file: File) {
 }
 
 export async function getWebkitVersion(): Promise<string> {
-	return invokePlugin("get_webkit_version") as Promise<string>;
+	return invoke<string>("get_webkit_version");
 }
 
 export async function broadcastEvent(event: string, payload: object): Promise<void> {

@@ -47,11 +47,6 @@ struct ListAssets {
 }
 
 #[derive(Deserialize)]
-struct WebkitVersion {
-  version: String
-}
-
-#[derive(Deserialize)]
 struct ResourceFileDescriptor {
   fd: Option<i32>,
 }
@@ -77,14 +72,6 @@ impl<R: Runtime> Ampersand<R> {
     self
       .0
       .run_mobile_plugin("openFile", OpenFile { path })
-      .map_err(Into::into)
-  }
-
-  pub fn get_webkit_version(&self) -> crate::Result<String> {
-    self
-      .0
-      .run_mobile_plugin::<WebkitVersion>("getWebkitVersion", ())
-      .map(|x| x.version)
       .map_err(Into::into)
   }
 

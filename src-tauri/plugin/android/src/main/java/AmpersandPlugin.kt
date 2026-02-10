@@ -4,11 +4,8 @@ import android.app.Activity
 import android.content.res.AssetManager.ACCESS_BUFFER
 import android.content.Intent
 import android.os.Build
-import android.webkit.WebView
 import android.os.ParcelFileDescriptor
 import android.view.View
-import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 
 import app.tauri.annotation.Command
@@ -27,11 +24,6 @@ import java.io.IOException
 @InvokeArg
 internal class OpenFileArgs {
   lateinit var path: String
-}
-
-@InvokeArg
-internal class SetCanGoBackArgs {
-    var canGoBack: Boolean = false
 }
 
 @InvokeArg
@@ -77,13 +69,6 @@ class AmpersandPlugin(private val activity: Activity): Plugin(activity) {
         }catch (e: Exception){
             invoke.reject(e.message)
         }
-    }
-
-    @Command
-    fun getWebkitVersion(invoke: Invoke) {
-        val ret = JSObject()
-        ret.put("version", WebView.getCurrentWebViewPackage()?.versionName ?: "")
-        invoke.resolve(ret)
     }
 
     @Command
