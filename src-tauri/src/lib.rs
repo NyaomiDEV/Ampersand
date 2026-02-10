@@ -1,5 +1,9 @@
 mod commands;
 mod db;
+mod error;
+pub use error::{Error, Result};
+
+use tauri::Manager;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
@@ -25,16 +29,20 @@ pub fn run() {
 			db::commands::general::db_write,
 			db::commands::general::db_update
 		])
-		.setup(|_app: &mut tauri::App| {
+		.setup(|app: &mut tauri::App| {
 			#[cfg(mobile)]
-			_app.handle()
+			app.handle()
 				.plugin(tauri_plugin_biometric::init())
 				.expect("error while running Ampersand");
 
 			#[cfg(target_os = "android")]
-			_app.handle()
+			app.handle()
 				.plugin(tauri_plugin_m3::init())
 				.expect("error while running Ampersand");
+
+			// Database initialization
+			std::fs::create_dir_all(app.path().app_data_dir()?)?;
+			db::init(app);
 			Ok(())
 		})
 		.run(tauri::generate_context!())
