@@ -57,6 +57,7 @@ dependencies = [
  "tauri-plugin-os",
  "tauri-plugin-process",
  "tauri-plugin-store",
+ "thiserror 2.0.17",
  "time",
  "uuid",
 ]
