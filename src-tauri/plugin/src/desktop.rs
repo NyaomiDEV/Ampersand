@@ -1,21 +1,16 @@
-use rusqlite::Connection;
 use serde::de::DeserializeOwned;
-use std::sync::Mutex;
 use tauri::{plugin::PluginApi, AppHandle, Manager, Runtime};
 use tauri_plugin_opener::OpenerExt;
 
-use crate::db;
-
 pub fn init<R: Runtime, C: DeserializeOwned>(
 	app: &AppHandle<R>,
-	connection: Mutex<Connection>,
 	_api: PluginApi<R, C>,
 ) -> crate::Result<Ampersand<R>> {
-	Ok(Ampersand(app.clone(), connection))
+	Ok(Ampersand(app.clone()))
 }
 
 /// Access to the ampersand APIs.
-pub struct Ampersand<R: Runtime>(AppHandle<R>, Mutex<Connection>);
+pub struct Ampersand<R: Runtime>(AppHandle<R>);
 
 impl<R: Runtime> Ampersand<R> {
 	pub fn dismiss_splash(&self) -> crate::Result<()> {
@@ -24,18 +19,6 @@ impl<R: Runtime> Ampersand<R> {
 
 	pub fn open_file(&self, path: String) -> crate::Result<()> {
 		Ok(self.0.opener().open_path(path, None::<&str>)?)
-	}
-
-	pub fn db_test(&self) -> crate::Result<String> {
-		db::db_test(&self.1)
-	}
-
-	pub fn db_run_migrations(&self) -> crate::Result<()> {
-		db::db_run_migrations(&self.1, &self.0)
-	}
-
-	pub fn db_migrate_old(&self) -> crate::Result<()> {
-		db::db_migrate_old(&self.1, &self.0)
 	}
 
 	pub fn broadcast_event(&self, _payload: String) -> crate::Result<()> {

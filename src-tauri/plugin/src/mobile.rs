@@ -1,7 +1,5 @@
-use rusqlite::Connection;
 use serde::de::DeserializeOwned;
 use serde::{Deserialize, Serialize};
-use std::sync::Mutex;
 use tauri::{
 	plugin::{PluginApi, PluginHandle},
 	AppHandle, Runtime,
@@ -16,14 +14,13 @@ tauri::ios_plugin_binding!(init_plugin_ampersand);
 // initializes the Kotlin or Swift plugin classes
 pub fn init<R: Runtime, C: DeserializeOwned>(
 	_app: &AppHandle<R>,
-	connection: Mutex<Connection>,
 	api: PluginApi<R, C>,
 ) -> crate::Result<Ampersand<R>> {
 	#[cfg(target_os = "android")]
 	let handle = api.register_android_plugin(PLUGIN_IDENTIFIER, "AmpersandPlugin")?;
 	#[cfg(target_os = "ios")]
 	let handle = api.register_ios_plugin(init_plugin_ampersand)?;
-	Ok(Ampersand(handle, connection))
+	Ok(Ampersand(handle))
 }
 
 /// Structs to pass to the mobile APIs
@@ -60,7 +57,7 @@ struct ListAssetsResponse {
 }
 
 /// Access to the ampersand APIs.
-pub struct Ampersand<R: Runtime>(PluginHandle<R>, Mutex<Connection>);
+pub struct Ampersand<R: Runtime>(PluginHandle<R>);
 
 impl<R: Runtime> Ampersand<R> {
 	pub fn dismiss_splash(&self) -> crate::Result<()> {
@@ -69,18 +66,6 @@ impl<R: Runtime> Ampersand<R> {
 
 	pub fn open_file(&self, path: String) -> crate::Result<()> {
 		Ok(self.0.run_mobile_plugin("openFile", OpenFile { path })?)
-	}
-
-	pub fn db_test(&self) -> crate::Result<String> {
-		db::db_test(&self.1)
-	}
-
-	pub fn db_run_migrations(&self) -> crate::Result<()> {
-		db::db_run_migrations(&self.1, &self.0.app())
-	}
-
-	pub fn db_migrate_old(&self) -> crate::Result<()> {
-		db::db_migrate_old(&self.1, &self.0.app())
 	}
 
 	pub fn broadcast_event(&self, payload: String) -> crate::Result<()> {

@@ -2,23 +2,23 @@ use serde_json::Value;
 use tauri::command;
 use tauri::AppHandle;
 use tauri::Runtime;
-use tauri_plugin_ampersand::Result as PluginResult;
-use tauri_plugin_ampersand::AmpersandExt;
+
+use crate::db;
 
 // Database commands
 #[command]
-pub(crate) fn db_test<R: Runtime>(app: AppHandle<R>) -> PluginResult<String> {
-	app.ampersand().db_test()
+pub(crate) fn db_test() -> crate::Result<String> {
+	db::db_test()
 }
 
 #[command]
-pub(crate) fn db_run_migrations<R: Runtime>(app: AppHandle<R>) -> PluginResult<()> {
-	app.ampersand().db_run_migrations()
+pub(crate) fn db_run_migrations<R: Runtime>(app: AppHandle<R>) -> crate::Result<()> {
+	db::db_run_migrations(&app)
 }
 
 #[command]
-pub(crate) fn db_migrate_old<R: Runtime>(app: AppHandle<R>) -> PluginResult<()> {
-	app.ampersand().db_migrate_old()
+pub(crate) fn db_migrate_old<R: Runtime>(app: AppHandle<R>) -> crate::Result<()> {
+	db::db_migrate_old(&app)
 }
 
 #[command]

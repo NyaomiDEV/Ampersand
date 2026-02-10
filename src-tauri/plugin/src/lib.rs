@@ -1,5 +1,3 @@
-use rusqlite::Connection;
-use std::sync::Mutex;
 use tauri::{
 	plugin::{Builder, TauriPlugin},
 	Manager, Runtime,
@@ -8,7 +6,6 @@ use tauri::{
 mod commands;
 mod error;
 pub use error::{Error, Result};
-mod db;
 
 #[cfg(desktop)]
 mod desktop;
@@ -41,14 +38,10 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
 			commands::dismiss_splash,
 		])
 		.setup(|app, api: tauri::plugin::PluginApi<R, ()>| {
-			std::fs::create_dir_all(app.path().app_data_dir()?)?;
-			let db_path = app.path().app_data_dir()?.join("db.sqlite");
-			let db = Connection::open(db_path)?;
-
 			#[cfg(mobile)]
-			let ampersand = mobile::init(app, Mutex::new(db), api)?;
+			let ampersand = mobile::init(app, api)?;
 			#[cfg(desktop)]
-			let ampersand = desktop::init(app, Mutex::new(db), api)?;
+			let ampersand = desktop::init(app, api)?;
 			app.manage(ampersand);
 			Ok(())
 		})
