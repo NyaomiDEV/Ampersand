@@ -36,9 +36,15 @@ dependencies = [
 name = "ampersand"
 version = "0.1.11"
 dependencies = [
+ "extruct",
  "log",
+ "rmp-serde",
+ "rusqlite",
+ "rusqlite-from-row",
  "serde",
+ "serde_bytes",
  "serde_json",
+ "strum_macros",
  "tauri",
  "tauri-build",
  "tauri-plugin-ampersand",
@@ -51,6 +57,8 @@ dependencies = [
  "tauri-plugin-os",
  "tauri-plugin-process",
  "tauri-plugin-store",
+ "time",
+ "uuid",
 ]
 
 [[package]]
@@ -1954,22 +1962,22 @@ dependencies = [
 
 [[package]]
 name = "jiff"
-version = "0.2.15"
+version = "0.2.19"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "be1f93b8b1eb69c77f24bbb0afdf66f54b632ee39af40ca21c4365a1d7347e49"
+checksum = "d89a5b5e10d5a9ad6e5d1f4bd58225f655d6fe9767575a5e8ac5a6fe64e04495"
 dependencies = [
  "jiff-static",
  "log",
  "portable-atomic",
  "portable-atomic-util",
- "serde",
+ "serde_core",
 ]
 
 [[package]]
 name = "jiff-static"
-version = "0.2.15"
+version = "0.2.19"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "03343451ff899767262ec32146f6d559dd759fdadf42ff0e227c7c48f72594b4"
+checksum = "ff7a39c8862fc1369215ccf0a8f12dd4598c7f6484704359f0351bd617034dbf"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -4291,20 +4299,12 @@ dependencies = [
 name = "tauri-plugin-ampersand"
 version = "0.1.11"
 dependencies = [
- "extruct",
- "rmp-serde",
- "rusqlite",
- "rusqlite-from-row",
  "serde",
- "serde_bytes",
- "strum_macros",
  "tauri",
  "tauri-plugin",
  "tauri-plugin-fs",
  "tauri-plugin-opener",
  "thiserror 2.0.17",
- "time",
- "uuid",
 ]
 
 [[package]]
