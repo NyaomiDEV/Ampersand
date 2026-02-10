@@ -17,14 +17,5 @@ thiserror = "2"
 tauri-plugin-fs = "2.4.5"
 tauri-plugin-opener = "2.5.3"
 
-rusqlite = { version = "0.37.0", features = ["bundled-full"] }
-uuid = { version = "1.18.1", features = ["fast-rng", "v4"] }
-time = { version = "0.3.41", features = ["serde"] }
-rmp-serde = "1.3.0"
-strum_macros = "0.27.2"
-serde_bytes = "0.11.19"
-extruct = "0.2.1"
-rusqlite-from-row = {git = "https://github.com/mcmah309/rusqlite-from-row", branch = "patch-1"}
-
 [build-dependencies]
 tauri-plugin = { version = "2.5.3", features = ["build"] }
