@@ -70,6 +70,7 @@
 					show-cancel-button="focus"
 					show-clear-button="focus"
 					:spellcheck="false"
+					:value="search"
 					@ion-change="e => search = e.detail.value || ''"
 				/>
 			</IonToolbar>
