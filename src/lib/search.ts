@@ -199,7 +199,6 @@ export function filterCustomField(search: string, customField: CustomField) {
 
 export async function filterJournalPost(search: string, post: JournalPostComplete) {
 	const parsed = await parseJournalPostFilterQuery(search.length ? search : appConfig.defaultFilterQueries.journal || "");
-
 	if(parsed.query.length){
 		if (
 			![
@@ -211,13 +210,11 @@ export async function filterJournalPost(search: string, post: JournalPostComplet
 	}
 
 	if (typeof parsed.member !== "undefined") {
-		if (post.member) {
-			if (parsed.member === false)
-				return false;
+		if(parsed.member === false && post.member)
+			return false;
 
-			if (post.member.uuid !== parsed.member)
-				return false;
-		}
+		if (post.member?.uuid !== parsed.member)
+			return false;
 	}
 
 	if (parsed.tags.length) {
@@ -232,13 +229,11 @@ export async function filterJournalPostIndex(search: string, post: IndexEntry<Jo
 	const parsed = await parseJournalPostFilterQuery(search.length ? search : appConfig.defaultFilterQueries.journal || "");
 
 	if (typeof parsed.member !== "undefined") {
-		if (post.member) {
-			if (parsed.member === false)
-				return false;
+		if (parsed.member === false && post.member)
+			return false;
 
-			if (post.member !== parsed.member)
-				return false;
-		}
+		if (post.member !== parsed.member)
+			return false;
 	}
 
 	return true;

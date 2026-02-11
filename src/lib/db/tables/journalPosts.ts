@@ -86,8 +86,10 @@ export async function* getJournalPostsOfDay(date: Date, includePinned: boolean, 
 
 		const completePost = await toJournalPostComplete(post);
 
-		if(await filterJournalPost(query, completePost))
+		if(await filterJournalPost(query, completePost)){
+			console.log("true", completePost);
 			yield completePost;
+		}
 	}
 }
 
