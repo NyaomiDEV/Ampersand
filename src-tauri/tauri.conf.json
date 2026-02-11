@@ -31,6 +31,7 @@
   },
   "bundle": {
     "active": true,
+    "category": "Lifestyle",
     "resources": {
       "../assets/": ""
     },
@@ -52,6 +53,13 @@
     ],
     "android": {
       "versionCode": 1
+    },
+    "iOS": {
+      "bundleVersion": "1"
+    },
+    "macOS": {
+      "entitlements": "./Entitlements.plist",
+      "bundleVersion": "1"
     },
     "linux": {
       "appimage": {

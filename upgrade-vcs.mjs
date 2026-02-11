@@ -51,6 +51,8 @@ async function patchFiles(ciBuild) {
 
 	// Modify parsed manifests
 	tauriConfJson.bundle.android.versionCode = revcount;
+	tauriConfJson.bundle.iOS.bundleVersion = `${revcount}`;
+	tauriConfJson.bundle.macOS.bundleVersion = `${revcount}`;
 
 	// If this is a CI build, automate it
 	if (ciBuild) {
