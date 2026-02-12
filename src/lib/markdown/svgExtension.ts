@@ -1,4 +1,4 @@
-import { h, type VNode } from "vue";
+import { Fragment, h, type VNode } from "vue";
 import { MarkedExtension } from "marked";
 import { getAssets } from "../db/tables/assets";
 import { getObjectURL } from "../util/blob";
@@ -37,7 +37,7 @@ const svgExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 					color: token.color ?? "currentColor",
 				});
 			} else 
-				return undefined;
+				return h(Fragment, []);
 		},
 	}],
 	async: true,
