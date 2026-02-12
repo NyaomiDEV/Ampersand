@@ -28,7 +28,7 @@ const svgExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 			return;
 		},
 		renderer(token) {
-			if(!token.blocked){
+			if (!token.blocked){
 				return h(Svg, {
 					src: token.href,
 					fill: token.fill ?? "transparent",
@@ -46,17 +46,19 @@ const svgExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 			case "svg":
 				// let's put the href to asset code
 				if ((token.href as string).startsWith("@")) {
+					token.blocked = true; // block beforehand since the asset may not exist
 					const [assetNameMaybe, ...parts] = (token.href as string).slice(1).split("#");
 					for await (const x of getAssets()) {
 						if (x.friendlyName === assetNameMaybe) {
 							token.href = getObjectURL(x.file) + (parts.length ? `#${parts.join("#")}` : "");
+							token.blocked = false; // unblock now
 							break;
 						}
 					}
 					// also, block non-asset images as they are sure linking outwards
 				} else {
 					if (!securityConfig.allowRemoteContent)
-						token.blocked = true;
+						token.blocked = true; // block if we don't have internet permission
 				}
 				break;
 		}

@@ -64,7 +64,7 @@ marked.use({
 			try {
 				const href = encodeURI(token.href).replace(/%25/g, "%");
 				return h("img", {
-					src: (token as any).blocked ? "#" : href,
+					src: href,
 					alt: token.text,
 					title: token.title,
 					width: (token as any).width,
@@ -101,29 +101,42 @@ marked.use({
 				}
 
 				// then let's put the href to asset code
+				let blocked = false;
 				if(token.href.startsWith("@")){
+					blocked = true; // block since we might not have this asset
 					const friendlyNameMaybe = token.href.slice(1);
 					for await (const x of getAssets()) {
 						if (x.friendlyName === friendlyNameMaybe) {
 							token.href = getObjectURL(x.file);
+							blocked = false; // we have this asset, unblock
 							break;
 						}
 					}
 				// also, block non-asset images as they are sure linking outwards
 				} else {
 					if(!securityConfig.allowRemoteContent)
-						(token as any).blocked = true;
+						blocked = true; // we don't allow internet connections, block
 				}
+
+				// replace with # if link is blocked
+				if(blocked)
+					token.href = "#";
 				break;
 			case "link":
 				if (token.href.startsWith("@")) {
+					let blocked = true;
 					const friendlyNameMaybe = token.href.slice(1);
 					for await (const x of getAssets()){
 						if (x.friendlyName === friendlyNameMaybe){
 							token.href = getObjectURL(x.file);
+							blocked = false;
 							break;
 						}
 					}
+	
+					// replace with # if link is blocked
+					if(blocked)
+						token.href = "#";
 				}
 				break;
 		}
