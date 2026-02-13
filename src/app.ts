@@ -56,7 +56,8 @@ import { maybeExit } from "./lib/util/backbutton";
 async function setupAmpersand(){
 	const app = createApp(App).use(IonicVue, {
 		hardwareBackButton: true,
-		mode: "md"
+		mode: "md",
+		swipeBackEnabled: platform() === "ios"
 	}).use(router).use(I18NextVue, { i18next: i18n });
 
 	window.Ionic.config.set("navAnimation", slideAnimation);
