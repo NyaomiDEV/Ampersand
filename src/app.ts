@@ -129,7 +129,7 @@ async function setupAmpersand(){
 	await router.isReady().then(async () => {
 		app.mount(document.body);
 
-		if(platform() === "android" || platform() === "ios"){
+		if(platform() === "android"){
 			await onBackButtonPress(() => {
 				document.dispatchEvent(new Event("backbutton"));
 				void maybeExit();
