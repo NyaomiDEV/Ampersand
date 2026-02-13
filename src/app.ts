@@ -114,15 +114,17 @@ async function setupAmpersand(){
 	darkMode.addEventListener("change", () => void updateDarkMode());
 	updateMaterialColors();
 	updateAccessibility();
-	await updateInsets();
+
+	if(platform() === "android"){
+		await updateInsets();
+		window.addEventListener("orientationchange", () => void updateInsets());
+	}
 
 	watch(accessibilityConfig, async () => {
 		await updateDarkMode();
 		updateMaterialColors();
 		updateAccessibility();
 	});
-
-	window.addEventListener("orientationchange",  () => void updateInsets());
 
 	await router.isReady().then(async () => {
 		app.mount(document.body);
