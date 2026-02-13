@@ -1,6 +1,7 @@
 import { argbFromHex, blueFromArgb, DynamicColor, greenFromArgb, Hct, MaterialDynamicColors, redFromArgb, SchemeFidelity } from "@material/material-color-utilities";
 import { accessibilityConfig } from "../config";
 import { M3 } from "tauri-plugin-m3";
+import { platform } from "@tauri-apps/plugin-os";
 
 const dynamicColorsWeWant = [
 	"primaryPaletteKeyColor",
@@ -61,7 +62,7 @@ const dynamicColorsWeWant = [
 
 const defaultColor = "#30628C";
 
-const m3colors = await M3.getColors("system");
+const m3colors = platform() === "android" ? await M3.getColors("system") : false;
 
 function rgbFromArgb(argb: number){
 	return [

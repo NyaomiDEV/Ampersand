@@ -1,5 +1,6 @@
 import { M3 } from "tauri-plugin-m3";
 import { accessibilityConfig } from "./config";
+import { platform } from "@tauri-apps/plugin-os";
 
 export function isDarkMode() {
 	switch (accessibilityConfig.theme) {
@@ -14,10 +15,12 @@ export function isDarkMode() {
 
 export async function updateDarkMode() {
 	document.documentElement.classList.toggle("ion-palette-dark", isDarkMode());
-	await M3.setBarColor(isDarkMode() ? "light" : "dark");
+	if(platform() === "android")
+		await M3.setBarColor(isDarkMode() ? "light" : "dark");
 }
 
 export async function updateInsets() {
+	if (platform() !== "android") return;
 	const insets = await M3.getInsets();
 	if(insets && !("error" in insets)) {
 		document.documentElement.style.setProperty("--device-inset-top", `${Number(insets.adjustedInsetTop)}px`);
