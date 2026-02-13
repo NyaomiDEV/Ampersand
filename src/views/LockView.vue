@@ -8,11 +8,14 @@
 	const router = useIonRouter();
 	const route = useRoute();
 
-	onMounted(async () => {
+	onMounted(() => {
+		setTimeout(tryBiometrics, 100);
+	});
+
+	async function tryBiometrics(){
 		if(securityConfig.useBiometrics && await unlockWithBiometrics()) 
 			router.replace(route.query.wantedPath || "/");
-		
-	});
+	}
 
 	function checkAndTryUnlocking(evt){
 		if(unlockWithPassword(evt.detail.value))

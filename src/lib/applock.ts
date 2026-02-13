@@ -46,9 +46,15 @@ export function lock(){
 }
 
 export async function unlockWithBiometrics(){
-	if(!await areBiometricsAvailable()) return false;
 	try{
 		await authenticate(t("lock:biometrics.reason"), {
+			allowDeviceCredential: false,
+			cancelTitle: t("other:alerts.cancel"),
+
+			// iOS
+			fallbackTitle: t("lock:biometrics.title"),
+
+			// Android
 			confirmationRequired: true,
 			title: t("lock:biometrics.title")
 		});
