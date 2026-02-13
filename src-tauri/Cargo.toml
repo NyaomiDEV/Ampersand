@@ -27,13 +27,15 @@ log = "0.4"
 tauri = { version = "2.10.2", features = [] }
 tauri-plugin-store = "2.4.2"
 tauri-plugin-fs = "2.4.5"
-tauri-plugin-m3 = "0.2.2"
 tauri-plugin-os = "2.3.2"
 tauri-plugin-dialog = "2.6.0"
 tauri-plugin-opener = "2.5.3"
 tauri-plugin-http = "2.5.7"
 tauri-plugin-process = "2.3.1"
 tauri-plugin-ampersand = { path = "./plugin" }
+
+[target.'cfg(target_os = "android")'.dependencies]
+tauri-plugin-m3 = "0.2.2"
 
 [target.'cfg(any(target_os = "android", target_os = "ios"))'.dependencies]
 tauri-plugin-biometric = "2.3.2"

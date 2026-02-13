@@ -22,7 +22,7 @@ pub fn run() {
                 .plugin(tauri_plugin_biometric::init())
                 .expect("error while running Ampersand");
 
-            #[cfg(mobile)]
+            #[cfg(target_os = "android")]
             _app.handle()
                 .plugin(tauri_plugin_m3::init())
                 .expect("error while running Ampersand");
