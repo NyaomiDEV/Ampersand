@@ -1,0 +1,12 @@
+{
+  "identifier": "mobile-android-capability",
+  "platforms": [
+    "android"
+  ],
+  "windows": [
+    "main"
+  ],
+  "permissions": [
+    "m3:default"
+  ]
+}
