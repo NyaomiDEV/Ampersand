@@ -13,6 +13,7 @@
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import { documentDir, sep } from "@tauri-apps/api/path";
+	import { platform } from "@tauri-apps/plugin-os";
 
 	const loading = ref(false);
 	const barProgress = ref(-1);
@@ -103,13 +104,22 @@
 		loading.value = true;
 
 		const date = dayjs().format("YYYY-MM-DD");
-		const path = await save({
-			defaultPath: `${await documentDir()}/ampersand-backup-${date}.ampdb`,
-			filters: [{
-				name: "Ampersand backups (.ampdb)",
-				extensions: ["ampdb"]
-			}]
-		});
+		const fileName = `ampersand-backup-${date}.ampdb`;
+		let path: string | undefined = `${await documentDir()}${sep()}${fileName}`;
+
+		if(platform() !== "ios") {
+			// Use save file dialog outside of iOS
+			const _path = await save({
+				defaultPath: path,
+				filters: [{
+					name: "Ampersand backups (.ampdb)",
+					extensions: ["ampdb"]
+				}]
+			});
+			if(_path) path = _path;
+			else path = undefined; // save file got canceled
+		}
+
 		if(path){
 			const { progress, dbPromise } = exportDatabaseToBinary();
 
@@ -126,7 +136,9 @@
 			const dataStream = await dbPromise;
 
 			if(dataStream){
+				// Android uses content:// for providing scoped file paths; here we just get the FD from the returned URI
 				if(!path.startsWith("content://")){
+					// So in all other cases where the path is a real one, be it relative or not, we ensure we have a directory to write to
 					const dirname = path
 						.split(sep())
 						.filter((_, i, a) => a.length - 1 !== i)
@@ -136,7 +148,7 @@
 						{ recursive: true }
 					);
 				}
-				
+
 				const fd = await open(path, { write: true, create: true });
 				let done = false;
 				const reader = dataStream.getReader();
