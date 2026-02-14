@@ -4,5 +4,7 @@
   <dict>
     <key>NSFaceIDUsageDescription</key>
     <string>Unlock the application using Face and Touch ID</string>
+    <key>UISupportsDocumentBrowser</key>
+    <true/>
   </dict>
 </plist>
