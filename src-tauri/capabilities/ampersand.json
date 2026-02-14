@@ -9,7 +9,13 @@
 		"ampersand:default",
 		"fs:allow-app-read-recursive",
 		"fs:allow-app-write-recursive",
+		"fs:allow-app-meta-recursive",
+		"fs:allow-temp-read-recursive",
 		"fs:allow-temp-write-recursive",
+		"fs:allow-temp-meta-recursive",
+		"fs:allow-document-read-recursive",
+		"fs:allow-document-write-recursive",
+		"fs:allow-document-meta-recursive",
 		{
 			"identifier":"opener:allow-open-path",
 			"allow": [

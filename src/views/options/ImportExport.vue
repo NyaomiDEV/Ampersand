@@ -5,13 +5,14 @@
 	import { getFiles, toast } from "../../lib/util/misc";
 	import dayjs from "dayjs";
 	import { save } from "@tauri-apps/plugin-dialog";
-	import { open } from "@tauri-apps/plugin-fs";
+	import { mkdir, open } from "@tauri-apps/plugin-fs";
 	import { useTranslation } from "i18next-vue";
 	import { importPluralKit } from "../../lib/db/external/pluralkit";
 	import { importTupperBox } from "../../lib/db/external/tupperbox";
 	import { importSimplyPlural } from "../../lib/db/external/simplyplural";
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
+	import { documentDir, sep } from "@tauri-apps/api/path";
 
 	const loading = ref(false);
 	const barProgress = ref(-1);
@@ -103,7 +104,7 @@
 
 		const date = dayjs().format("YYYY-MM-DD");
 		const path = await save({
-			defaultPath: `ampersand-backup-${date}.ampdb`,
+			defaultPath: `${await documentDir()}/ampersand-backup-${date}.ampdb`,
 			filters: [{
 				name: "Ampersand backups (.ampdb)",
 				extensions: ["ampdb"]
@@ -125,6 +126,17 @@
 			const dataStream = await dbPromise;
 
 			if(dataStream){
+				if(!path.startsWith("content://")){
+					const dirname = path
+						.split(sep())
+						.filter((_, i, a) => a.length - 1 !== i)
+						.join(sep());
+					await mkdir(
+						dirname,
+						{ recursive: true }
+					);
+				}
+				
 				const fd = await open(path, { write: true, create: true });
 				let done = false;
 				const reader = dataStream.getReader();
