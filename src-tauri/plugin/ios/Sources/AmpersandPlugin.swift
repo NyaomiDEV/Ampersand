@@ -14,12 +14,13 @@ class AmpersandPlugin: Plugin {
 
   @objc public func openFile(_ invoke: Invoke) throws {
     let args = try invoke.parseArgs(OpenFileArgs.self)
+    let url = URL(filePath: args.path, directoryHint: .checkFileSystem)
 
     DispatchQueue.main.async {
-      let controller = OpenFileController()
+      let controller = OpenFileController(url)
       self.manager.viewController?.addChild(controller)
       self.manager.viewController?.view.addSubview(controller.view)
-      controller.present(URL(fileURLWithPath: args.path))
+      controller.present()
       invoke.resolve()
     }
   }
