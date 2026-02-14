@@ -15,6 +15,7 @@
 		"importedPk": "The PluralKit export has been imported. Please restart the app.",
 		"importedTu": "The Tupperbox export has been imported. Please restart the app.",
 		"exportedApp": "The backup has been exported to the location you chose.",
+		"exportedAppIos": "The backup has been exported to the Ampersand folder on the Files app.",
 		"errorExport": "Error while exporting the backup.",
 		"error": "Error while importing the backup.",
 		"errorSp": "Error while importing the Simply Plural export.",

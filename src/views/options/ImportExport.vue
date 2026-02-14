@@ -158,7 +158,11 @@
 					if(result.value) await fd.write(result.value);
 				}while(!done);
 				await fd.close();
-				await toast(i18next.t("importExport:status.exportedApp"));
+				await toast(
+					platform() === "ios"
+						? i18next.t("importExport:status.exportedAppIos")
+						: i18next.t("importExport:status.exportedApp")
+				);
 			}
 		} else 
 			await toast(i18next.t("importExport:status.errorExport"));
