@@ -17,9 +17,9 @@ class AmpersandPlugin: Plugin {
 
     DispatchQueue.main.async {
       let controller = OpenFileController()
-      controller.setUrl(URL(fileURLWithPath: args.path))
       self.manager.viewController?.addChild(controller)
       self.manager.viewController?.view.addSubview(controller.view)
+      controller.present(URL(fileURLWithPath: args.path))
       invoke.resolve()
     }
   }
@@ -44,37 +44,27 @@ func initPlugin() -> Plugin {
 
 
 class OpenFileController: UIViewController, UIDocumentInteractionControllerDelegate {
-  var url: URL!
   var controller: UIDocumentInteractionController!
-
-  func setUrl(_ url: URL) {
-    self.url = url
-  }
-
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    controller = UIDocumentInteractionController(url: self.url)
-    controller.delegate = self
-    if !controller.presentPreview(animated: true) {
-      controller.presentOpenInMenu(from: self.view.bounds, in: self.view, animated: true)
-    }
-  }
-
-  func documentInteractionControllerDidEndPreview(_ controller: UIDocumentInteractionController) {
-    self.view.removeFromSuperview()
-    self.removeFromParent()
-  }
-
-  func documentInteractionControllerDidDismissOpenInMenu(
-    _ controller: UIDocumentInteractionController
-  ) {
-    self.view.removeFromSuperview()
-    self.removeFromParent()
-  }
 
   func documentInteractionControllerViewControllerForPreview(
     _ controller: UIDocumentInteractionController
   ) -> UIViewController {
     return self
+  }
+
+  func present(_ url: URL) {
+    controller = UIDocumentInteractionController(url: url)
+    controller.delegate = self
+    controller.presentPreview(animated: true)
+  }
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+  }
+
+  func documentInteractionControllerDidEndPreview(_ controller: UIDocumentInteractionController) {
+    controller = nil
+    self.view.removeFromSuperview()
+    self.removeFromParent()
   }
 }
