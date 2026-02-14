@@ -1,6 +1,7 @@
 import { invoke, InvokeArgs, InvokeOptions, addPluginListener } from "@tauri-apps/api/core";
 import { writeToTemp } from "./cache";
 import { replace, walk } from "../json";
+import { platform } from "@tauri-apps/plugin-os";
 
 function invokePlugin(cmd: string, args?: InvokeArgs, opts?: InvokeOptions): Promise<unknown> {
 	return invoke(`plugin:ampersand|${cmd}`, args, opts);
@@ -15,6 +16,7 @@ export function setCanGoBack(canGoBack: boolean): Promise<void> {
 }
 
 export async function openFile(file: File) {
+	if(platform() === "ios") return false; // iOS open is unsupported
 	const path = await writeToTemp(file);
 	if (!path) return false;
 
