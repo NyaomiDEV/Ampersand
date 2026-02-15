@@ -52,7 +52,7 @@
 </script>
 
 <template>
-	<div class="svg-container">
+	<div :class="{ 'svg-container': true, 'with-stroke-width': !!props.strokeWidth }">
 		<component :is="source" />
 	</div>
 </template>
@@ -66,13 +66,16 @@
 		box-sizing: content-box !important;
 	}
 
-	div.svg-container > :global(svg) {
+	div.svg-container > :deep(svg) {
 		display: block;
 		height: 100%;
 		width: 100%;
 		color: v-bind('props.color');
 		fill: v-bind('props.fill');
 		stroke: v-bind('props.stroke');
+	}
+
+	div.svg-container.with-stroke-width > :deep(svg){
 		stroke-width: v-bind('props.strokeWidth');
 	}
 </style>

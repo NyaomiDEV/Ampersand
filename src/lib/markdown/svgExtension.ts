@@ -33,7 +33,7 @@ const svgExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 					src: token.href,
 					fill: token.fill ?? "transparent",
 					stroke: token.stroke ?? "currentColor",
-					strokeWidth: token.strokeWidth ?? "0px",
+					strokeWidth: token.strokeWidth,
 					color: token.color ?? "currentColor",
 				});
 			} else 
