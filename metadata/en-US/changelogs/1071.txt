@@ -1,0 +1,14 @@
+Ampersand Alpha 0.1.11
+
+Hotfix: Some SVG icons weren't being rendered properly. This has been fixed now.
+
+Since it's an almost immediate hotfix, please refer to the old 0.1.10 changelog:
+
+New:
+- New Markdown syntax: Callouts, border around the text, text shadow, centered text, blurred text, marquee, SVG icons.
+
+Fixes and changes:
+- Fixed post preview with covers showing up at the center of the element and breaking up the title, author and timestamp in some cases; now they show up on the right.
+- Refreshed the Journal Edit user interface, moved some elements away from the input area so there's less distraction when writing a post.
+- Upgraded dependencies to their latest versions.
+- Improve build tooling.

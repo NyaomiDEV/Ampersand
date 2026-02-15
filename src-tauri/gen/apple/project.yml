@@ -51,7 +51,7 @@ targets:
           - UIInterfaceOrientationPortraitUpsideDown
           - UIInterfaceOrientationLandscapeLeft
           - UIInterfaceOrientationLandscapeRight
-        CFBundleShortVersionString: 0.1.10
+        CFBundleShortVersionString: 0.1.11
         CFBundleVersion: "1"
     entitlements:
       path: ampersand_iOS/ampersand_iOS.entitlements
