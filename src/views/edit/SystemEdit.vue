@@ -9,7 +9,7 @@
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
-	import accountCircle from "@material-symbols/svg-600/outlined/account_circle.svg";
+	import accountCircle from "@material-symbols/svg-600/outlined/supervised_user_circle.svg";
 	import pencilMD from "@material-symbols/svg-600/outlined/edit.svg";
 	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
