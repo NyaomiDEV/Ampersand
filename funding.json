@@ -1,0 +1,62 @@
+{
+	"version": "v1.1.0",
+	"entity": {
+		"type": "group",
+		"role": "owner",
+		"name": "The Ampersand contributors",
+		"email": "contact@ampersand.moe",
+		"phone": "",
+		"description": "Representing the Ampersand contributors who have a central role in maintaining the project.",
+		"webpageUrl": {
+			"url": "https://ampersand.moe"
+		}
+	},
+	"projects": [
+		{
+			"guid": "ampersand",
+			"name": "Ampersand",
+			"description": "Track who's fronting",
+			"webpageUrl": {
+				"url": "https://ampersand.moe"
+			},
+			"repositoryUrl": {
+				"url": "https://codeberg.org/Ampersand/app",
+				"wellKnown": "https://codeberg.org/Ampersand/app/raw/branch/main/.well-known/funding-manifest-urls"
+			},
+			"licenses": [
+				"spdx:AGPL-3.0-only"
+			],
+			"tags": [
+				"plurality",
+				"tracking",
+				"diary",
+				"journaling"
+			]
+		}
+	],
+	"funding": {
+		"channels": [
+			{
+				"guid": "liberapay",
+				"type": "payment-provider",
+				"address": "https://liberapay.org/Ampersand",
+				"description": "Ampersand at Liberapay.org"
+			}
+		],
+		"plans": [
+			{
+				"guid": "yearly-expenses",
+				"status": "active",
+				"name": "Ampersand's yearly expenses",
+				"description": "This will cover the yearly costs that Ampersand faces (domain name, Apple Developer Program).",
+				"amount": 120,
+				"currency": "EUR",
+				"frequency": "yearly",
+				"channels": [
+					"liberapay"
+				]
+			}
+		],
+		"history": null
+	}
+}
