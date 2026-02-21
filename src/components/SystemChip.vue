@@ -15,7 +15,7 @@
 		clickable?: boolean
 	}>();
 
-	const routerLink = props.clickable ? `/options/systems/edit?disallowEditing=true&uuid=${props.system.uuid}` : undefined;
+	const routerLink = props.clickable ? `/options/systems/edit?uuid=${props.system.uuid}` : undefined;
 </script>
 
 <template>
