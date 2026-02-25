@@ -238,7 +238,7 @@
 						/>
 					</IonButton>
 				</IonItem>
-				<IonItem button :detail="false">
+				<IonItem v-if="!frontingEntry.influencing" button :detail="false">
 					<IonToggle v-model="frontingEntry.isMainFronter">
 						<IonLabel>
 							{{ $t("frontHistory:edit.isMainFronter") }}
