@@ -1,8 +1,21 @@
 
-import { Member, Tag, Asset, CustomField, JournalPostComplete, BoardMessageComplete, FrontingEntryComplete, FrontingEntry, JournalPost, BoardMessage } from "./db/entities";
-import { parseAssetFilterQuery, parseBoardMessageFilterQuery, parseCustomFieldFilterQuery, parseFrontingHistoryFilterQuery, parseJournalPostFilterQuery, parseMemberFilterQuery } from "./util/filterQuery";
+import { Member, Tag, Asset, CustomField, JournalPostComplete, BoardMessageComplete, FrontingEntryComplete, FrontingEntry, JournalPost, BoardMessage, System } from "./db/entities";
+import { parseAssetFilterQuery, parseBoardMessageFilterQuery, parseCustomFieldFilterQuery, parseFrontingHistoryFilterQuery, parseJournalPostFilterQuery, parseMemberFilterQuery, parseSystemFilterQuery } from "./util/filterQuery";
 import { appConfig } from "./config";
 import { IndexEntry } from "./db/tables";
+
+export function filterSystem(search: string, system: System) {
+	const parsed = parseSystemFilterQuery(search.length ? search : appConfig.defaultFilterQueries.systems || "");
+	if (parsed.query.length){
+		if (!system.name.toLowerCase().startsWith(parsed.query.toLowerCase()))
+			return false;
+	}
+
+	if (parsed.isDefault) {
+		if (appConfig.defaultSystem !== system.uuid)
+			return false;
+	}
+}
 
 export async function filterMember(search: string, member: Member){
 	const parsed = await parseMemberFilterQuery(search.length ? search : appConfig.defaultFilterQueries.members || "");

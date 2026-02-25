@@ -13,6 +13,7 @@ export type AppConfig = {
 	hideFrontingTimer: boolean,
 	useIPC: boolean,
 	defaultFilterQueries: {
+		systems?: string,
 		members?: string,
 		tags?: string,
 		frontingHistory?: string,

@@ -1,6 +1,11 @@
 import { getTagFromNameHashtag } from "../db/tables/tags";
 import { UUID } from "../db/entities";
 
+export type SystemFilterQuery = {
+	query: string,
+	isDefault?: boolean
+};
+
 export type MemberFilterQuery = {
 	query: string,
 	tags: string[],
@@ -72,6 +77,36 @@ function splitTokens(search: string){
 		query: queryParts.filter(Boolean).join(" ")
 	};
 }
+
+export function parseSystemFilterQuery(search: string): SystemFilterQuery {
+	const rawParsed = splitTokens(search);
+
+	const result: SystemFilterQuery = {
+		query: rawParsed.query,
+	};
+
+	for(const [variable, value] of rawParsed.variables){
+		switch(variable.toLowerCase()){
+			case "default":
+				if(value.length){
+					switch (value.toLowerCase()) {
+						case "yes":
+						case "true":
+							result.isDefault = true;
+							break;
+						case "no":
+						case "false":
+							result.isDefault = false;
+							break;
+					}
+				} else
+					result.isDefault = true;
+				break;
+		}
+	}
+	return result;
+}
+
 
 export async function parseMemberFilterQuery(search: string): Promise<MemberFilterQuery> {
 	const rawParsed = splitTokens(search);

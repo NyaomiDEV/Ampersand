@@ -2,9 +2,17 @@ import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUIDable, System, UUID } from "../entities";
 import { nilUid } from "../../util/consts";
+import { filterSystem } from "../../search";
 
 export function getSystems(){
 	return db.systems.iterate();
+}
+
+export async function* getFilteredSystems(query: string){
+	for await (const system of getSystems()){
+		if(filterSystem(query, system))
+			yield system;
+	}
 }
 
 export async function newSystem(system: Omit<System, keyof UUIDable>){
