@@ -71,23 +71,22 @@ export function slideAnimation(_: HTMLElement, opts: TransitionOptions, directio
 
 	if(opts.leavingEl){
 		const leavingPage = createAnimation().addElement(getIonPageElement(opts.leavingEl))
-			.fromTo("transform", `translateX(${direction[1]}px)`, `translateX(${direction[2]}px)`)
-			.fromTo("opacity", 1, 0);
+			.keyframes([
+				{ offset: 0, opacity: 1, transform: `translateX(${direction[1]}px)` },
+				{ offset: 0.5, opacity: 0 },
+				{ offset: 1, opacity: 0, transform: `translateX(${direction[2]}px)` }
+			]);
 
 		transition.addAnimation(leavingPage);
 	}
 
 	const enteringPage = createAnimation().addElement(getIonPageElement(opts.enteringEl))
 		.fill("both")
-		.fromTo("transform", `translateX(${direction[0]}px)`, `translateX(${direction[1]}px)`)
-		.fromTo("opacity", 0, 1);
-
-	const enteringToolbarEle = getIonPageElement(opts.enteringEl).querySelector("ion-toolbar");
-	if(enteringToolbarEle){
-		const enteringToolBar = createAnimation();
-		enteringToolBar.addElement(enteringToolbarEle);
-		transition.addAnimation(enteringToolBar);
-	}
+		.keyframes([
+			{ offset: 0, opacity: 0, transform: `translateX(${direction[0]}px)` },
+			{ offset: 0.5, opacity: 0 },
+			{ offset: 1, opacity: 1, transform: `translateX(${direction[1]}px)` }
+		]);
 
 	transition.addAnimation(enteringPage);
 
