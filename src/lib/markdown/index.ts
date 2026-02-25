@@ -11,7 +11,6 @@ import mentionExtension from "./mentionExtension";
 import spoilerExtension from "./spoilerExtension";
 import timestampExtension from "./timestampExtension";
 import colorExtension from "./colorExtension";
-import textColorLegacyExtension from "./textColorLegacyExtension";
 import superscriptExtension from "./superscriptExtension";
 import subscriptExtension from "./subscriptExtension";
 import underlineExtension from "./underlineExtension";
@@ -150,7 +149,6 @@ marked.use(
 	spoilerExtension,
 	timestampExtension,
 	colorExtension,
-	textColorLegacyExtension,
 	textColorFgExtension,
 	textColorBgExtension,
 	textShadowExtension,
