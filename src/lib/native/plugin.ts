@@ -16,7 +16,7 @@ export function setCanGoBack(canGoBack: boolean): Promise<void> {
 }
 
 export async function openFile(file: File) {
-	if(platform() === "ios") return false; // iOS open is unsupported
+	//if(platform() === "ios") return false; // iOS open is unsupported
 	const path = await writeToTemp(file);
 	if (!path) return false;
 

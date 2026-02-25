@@ -1,71 +1,58 @@
-import SwiftRs
 import Tauri
 import UIKit
-import WebKit
 
 class OpenFileArgs: Decodable {
-  let path: String
+    let path: String
 }
 
 class AmpersandPlugin: Plugin {
-  @objc public func dismissSplash(_ invoke: Invoke) {
-    invoke.resolve()
-  }
 
-  @objc public func openFile(_ invoke: Invoke) throws {
-    let args = try invoke.parseArgs(OpenFileArgs.self)
-    let url = URL(filePath: args.path, directoryHint: .checkFileSystem)
-
-    DispatchQueue.main.async {
-      let controller = OpenFileController(url)
-      self.manager.viewController?.addChild(controller)
-      self.manager.viewController?.view.addSubview(controller.view)
-      controller.present()
-      invoke.resolve()
+    @objc public func dismissSplash(_ invoke: Invoke) {
+        invoke.resolve()
     }
-  }
 
-  @objc public func broadcastEvent(_ invoke: Invoke) {
-    invoke.resolve()
-  }
+    @objc public func openFile(_ invoke: Invoke) throws {
+        let args = try invoke.parseArgs(OpenFileArgs.self)
+        let fileURL = URL(fileURLWithPath: args.path)
+        invoke.resolve()
 
-  @objc public func getResourceFileDescriptor(_ invoke: Invoke) {
-    invoke.resolve()
-  }
+        DispatchQueue.main.async {
+            var previewController = UIDocumentInteractionController()
+            previewController.url = fileURL
+            let delegate = PreviewControllerDelegate(owner: self.manager.viewController!)
+            previewController.delegate = delegate
+            previewController.presentPreview(animated: true)
+        }
+    }
 
-  @objc public func listAssets(_ invoke: Invoke) {
-    invoke.resolve()
-  }
+    @objc public func broadcastEvent(_ invoke: Invoke) {
+        invoke.resolve()
+    }
+
+    @objc public func getResourceFileDescriptor(_ invoke: Invoke) {
+        invoke.resolve()
+    }
+
+    @objc public func listAssets(_ invoke: Invoke) {
+        invoke.resolve()
+    }
+}
+
+class PreviewControllerDelegate: NSObject, UIDocumentInteractionControllerDelegate {
+    var owner: UIViewController
+
+    init(owner: UIViewController) {
+        self.owner = owner
+    }
+
+    func documentInteractionControllerViewControllerForPreview(
+        _ controller: UIDocumentInteractionController
+    ) -> UIViewController {
+        return self.owner
+    }
 }
 
 @_cdecl("init_plugin_ampersand")
 func initPlugin() -> Plugin {
-  return AmpersandPlugin()
-}
-
-
-class OpenFileController: UIViewController, UIDocumentInteractionControllerDelegate {
-  var controller: UIDocumentInteractionController!
-
-  func documentInteractionControllerViewControllerForPreview(
-    _ controller: UIDocumentInteractionController
-  ) -> UIViewController {
-    return self
-  }
-
-  func present(_ url: URL) {
-    controller = UIDocumentInteractionController(url: url)
-    controller.delegate = self
-    controller.presentPreview(animated: true)
-  }
-
-  override func viewDidLoad() {
-    super.viewDidLoad()
-  }
-
-  func documentInteractionControllerDidEndPreview(_ controller: UIDocumentInteractionController) {
-    controller = nil
-    self.view.removeFromSuperview()
-    self.removeFromParent()
-  }
+    return AmpersandPlugin()
 }
