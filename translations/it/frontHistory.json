@@ -14,7 +14,8 @@
 			"historyTitle": "Storia della presenza",
 			"lastPresence": "L'ultima volta era {{presence}} / 10",
 			"addTitle": "Quanto sei presente in una scala da 0 a 10?",
-			"addButton": "Aggiungi alla storia"
+			"addButton": "Aggiungi alla storia",
+			"date": "Data"
 		},
 		"influencing": {
 			"select": "Seleziona unə membrə da influenzare",

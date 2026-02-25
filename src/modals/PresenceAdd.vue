@@ -10,15 +10,18 @@
 	} from "@ionic/vue";
 
 	import { ref } from "vue";
+	import { formatDate } from "../lib/util/misc";
+	import DatePopupPicker from "../components/DatePopupPicker.vue";
 
 	const range = ref(0);
+	const date = ref(new Date());
 
 	const emit = defineEmits<{
 		"add": [Date, number],
 	}>();
 
 	async function add(){
-		emit("add", new Date(), range.value);
+		emit("add", date.value, range.value);
 		await modalController.dismiss();
 		range.value = 0;
 	}
@@ -41,6 +44,18 @@
 						:pin-formatter="(v) => `${Math.round(v)}`"
 					/>
 				</IonLabel>
+			</IonItem>
+			<IonItem button :detail="true" @click="($refs.datePicker as any)?.$el.present()">
+				<IonLabel>
+					<h2>{{ $t("frontHistory:edit.presence.date") }}</h2>
+					<p>{{ formatDate(date, "expanded") }}</p>
+				</IonLabel>
+				<DatePopupPicker
+					ref="datePicker"
+					v-model="date"
+					show-default-buttons
+					:title="$t('frontHistory:edit.presence.date')"
+				/>
 			</IonItem>
 			<IonButton expand="block" fill="clear" @click="add">
 				{{ $t("frontHistory:edit.presence.addButton") }}
