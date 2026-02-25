@@ -6,12 +6,23 @@
 	import LiberapayLogo from "../../assets/liberapay_logo.svg";
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
+	import globeMD from "@material-symbols/svg-600/outlined/globe.svg";
 
 	import { version } from "../../../package.json";
 	import { openUrl } from "@tauri-apps/plugin-opener";
 
 	async function openRepo(){
 		const url = "https://codeberg.org/Ampersand/app";
+		await openUrl(url);
+	}
+
+	async function openWebsite(){
+		const url = "https://ampersand.moe/";
+		await openUrl(url);
+	}
+
+	async function openPrivacyPolicy(){
+		const url = "https://codeberg.org/Ampersand/app/wiki/Privacy-Policy";
 		await openUrl(url);
 	}
 
@@ -38,9 +49,11 @@
 		
 		<IonContent>
 			<div class="container">
-				<h1>Ampersand</h1>
-				<p>{{ $t("about:version", { version }) }}</p>
-				<p>{{ $t("about:madein") }}</p>
+				<div class="headings">
+					<h1>Ampersand</h1>
+					<span>{{ $t("about:version", { version }) }}</span>
+					<span>{{ $t("about:madein") }}</span>
+				</div>
 
 				<IonIcon class="logo" :icon="AmpersandLogo" />
 
@@ -49,10 +62,18 @@
 						<IonIcon slot="icon-only" :icon="CodebergLogo" />
 					</IonButton>
 
+					<IonButton class="tonal" shape="round" @click="openWebsite">
+						<IonIcon slot="icon-only" :icon="globeMD" />
+					</IonButton>
+
 					<IonButton class="tonal" shape="round" @click="openLiberapay">
 						<IonIcon slot="icon-only" :icon="LiberapayLogo" />
 					</IonButton>
 				</div>
+
+				<IonButton fill="clear" @click="openPrivacyPolicy">
+					{{ $t("about:privacyPolicy") }}
+				</IonButton>
 			</div>
 		</IonContent>
 	</IonPage>
@@ -66,14 +87,18 @@
 		align-items: center;
 		justify-content: center;
 		flex-direction: column;
+		text-align: center;
+		gap: 1.5em;
 	}
 
-	p {
-		margin: 0;
+	.headings {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
 	}
 
 	.logo {
-		margin: 32px 0;
 		width: 256px;
 		height: 256px;
 		color: var(--ion-color-primary);
