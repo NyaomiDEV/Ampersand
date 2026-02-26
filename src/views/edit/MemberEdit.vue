@@ -358,6 +358,47 @@
 						label-placement="floating"
 					/>
 				</IonItem>
+				<IonItem
+					v-for="customField in customFieldsToShowInEditMode"
+					:key="customField.uuid"
+				>
+					<IonTextarea
+						fill="outline"
+						auto-grow
+						:label="customField.name"
+						label-placement="floating"
+						:model-value="member.customFields?.get(customField.uuid)"
+						@update:model-value="(v) => member.customFields?.set(customField.uuid, v)"
+					/>
+				</IonItem>
+				<IonItem button @click="customFieldsSelectionModal?.$el.present()">
+					<IonIcon slot="start" :icon="addMD" aria-hidden="true" />
+					<IonLabel>
+						{{ $t("members:edit.customFieldsAdd") }}
+					</IonLabel>
+				</IonItem>
+				<IonItem button :detail="true" @click="systemSelectModal?.$el.present()">
+					<IonAvatar slot="start">
+						<img v-if="system.image" aria-hidden="true" :src="getObjectURL(system.image)" />
+						<IonIcon v-else :icon="systemCircle" />
+					</IonAvatar>
+					<IonLabel>
+						<p>{{ $t("members:edit.system") }}</p>
+						<h2>{{ system.name }}</h2>
+					</IonLabel>
+				</IonItem>
+				<IonItem button :detail="true" @click="tagSelectionModal?.$el.present()">
+					<IonLabel>
+						{{ $t("members:edit.tags") }}
+						<div v-if="tags?.length" class="member-tags">
+							<TagChip
+								v-for="tag in member.tags"
+								:key="tag"
+								:tag="tags.find(x => x.uuid === tag)!"
+							/>
+						</div>
+					</IonLabel>
+				</IonItem>
 				<IonItem button :detail="false">
 					<Color v-model="member.color" @update:model-value="updateColors">
 						<IonLabel>
@@ -379,37 +420,6 @@
 						/>
 					</IonButton>
 				</IonItem>
-
-				<IonItem
-					v-for="customField in customFieldsToShowInEditMode"
-					:key="customField.uuid"
-				>
-					<IonTextarea
-						fill="outline"
-						auto-grow
-						:label="customField.name"
-						label-placement="floating"
-						:model-value="member.customFields?.get(customField.uuid)"
-						@update:model-value="(v) => member.customFields?.set(customField.uuid, v)"
-					/>
-				</IonItem>
-
-				<IonItem button @click="customFieldsSelectionModal?.$el.present()">
-					<IonIcon slot="start" :icon="addMD" aria-hidden="true" />
-					<IonLabel>
-						{{ $t("members:edit.customFieldsAdd") }}
-					</IonLabel>
-				</IonItem>
-				<IonItem button :detail="true" @click="systemSelectModal?.$el.present()">
-					<IonAvatar slot="start">
-						<img v-if="system.image" aria-hidden="true" :src="getObjectURL(system.image)" />
-						<IonIcon v-else :icon="systemCircle" />
-					</IonAvatar>
-					<IonLabel>
-						<p>{{ $t("members:edit.system") }}</p>
-						<h2>{{ system.name }}</h2>
-					</IonLabel>
-				</IonItem>
 				<IonItem button :detail="false">
 					<IonToggle v-model="member.isPinned">
 						<IonLabel>
@@ -430,19 +440,6 @@
 							{{ $t("members:edit.archived") }}
 						</IonLabel>
 					</IonToggle>
-				</IonItem>
-
-				<IonItem button :detail="true" @click="tagSelectionModal?.$el.present()">
-					<IonLabel>
-						{{ $t("members:edit.tags") }}
-						<div v-if="tags?.length" class="member-tags">
-							<TagChip
-								v-for="tag in member.tags"
-								:key="tag"
-								:tag="tags.find(x => x.uuid === tag)!"
-							/>
-						</div>
-					</IonLabel>
 				</IonItem>
 				<IonItem
 					v-if="member.uuid"
