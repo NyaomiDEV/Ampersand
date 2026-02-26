@@ -16,6 +16,7 @@
 		IonItem,
 		IonBackButton,
 		useIonRouter,
+		IonAvatar,
 		IonPage,
 	} from "@ionic/vue";
 	import Color from "../../components/Color.vue";
@@ -31,8 +32,9 @@
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 	import FrontHistoryMD from "@material-symbols/svg-600/outlined/show_chart.svg";
+	import systemCircle from "@material-symbols/svg-600/outlined/supervised_user_circle.svg";
 
-	import { CustomField, Member, Tag } from "../../lib/db/entities";
+	import { CustomField, Member, System, Tag } from "../../lib/db/entities";
 	import { newMember, deleteMember, updateMember, defaultMember, getMember } from "../../lib/db/tables/members";
 	import { getTags } from "../../lib/db/tables/tags";
 	import { getFiles, promptOkCancel, toast } from "../../lib/util/misc";
@@ -47,9 +49,13 @@
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import MemberAvatar from "../../components/member/MemberAvatar.vue";
 	import MemberCover from "../../components/member/MemberCover.vue";
+	import SystemSelect from "../../modals/SystemSelect.vue";
 	import { getCustomFields } from "../../lib/db/tables/customFields";
 	import CustomFieldsSelect from "../../modals/CustomFieldsSelect.vue";
 	import { appConfig } from "../../lib/config";
+	import { getSystem } from "../../lib/db/tables/system";
+	import { getObjectURL } from "../../lib/util/blob";
+	import SystemChip from "../../components/SystemChip.vue";
 
 	const i18next = useTranslation();
 
@@ -68,8 +74,10 @@
 	};
 	const member = ref({ ...emptyMember });
 
+	const system = ref<System>({ uuid: member.value.system, name: "" });
 	const tags = shallowRef<Tag[]>([]);
 	const tagSelectionModal = useTemplateRef("tagSelectionModal");
+	const systemSelectModal = useTemplateRef("systemSelectModal");
 
 	const customFields = shallowRef<CustomField[]>([]);
 	const customFieldsToShowInEditMode = shallowRef<CustomField[]>([]);
@@ -85,6 +93,8 @@
 			isEditing.value = true;
 			return;
 		}
+
+		member.value.system = system.value.uuid;
 
 		if(member.value.customFields){
 			member.value.customFields.forEach((v, k) => {
@@ -181,6 +191,8 @@
 		if(!member.value.customFields)
 			member.value.customFields = new Map();
 		
+		const _sys = await getSystem(member.value.system);
+		if(_sys) system.value = _sys;
 
 		customFieldsToShowInEditMode.value = customFields.value.filter(x => x.default || (member.value.customFields?.has(x.uuid) && member.value.customFields?.get(x.uuid)?.length));
 		customFieldsToShowInViewMode.value = customFields.value.filter(x => (member.value.customFields?.has(x.uuid)));
@@ -259,6 +271,10 @@
 						</IonButton>
 					</div>
 				</div>
+			</div>
+
+			<div v-if="!isEditing" class="system-tag">
+				<SystemChip :system />
 			</div>
 
 			<div v-if="!isEditing" class="member-info">
@@ -384,6 +400,16 @@
 						{{ $t("members:edit.customFieldsAdd") }}
 					</IonLabel>
 				</IonItem>
+				<IonItem button :detail="true" @click="systemSelectModal?.$el.present()">
+					<IonAvatar slot="start">
+						<img v-if="system.image" aria-hidden="true" :src="getObjectURL(system.image)" />
+						<IonIcon v-else :icon="systemCircle" />
+					</IonAvatar>
+					<IonLabel>
+						<p>{{ $t("members:edit.system") }}</p>
+						<h2>{{ system.name }}</h2>
+					</IonLabel>
+				</IonItem>
 				<IonItem button :detail="false">
 					<IonToggle v-model="member.isPinned">
 						<IonLabel>
@@ -477,6 +503,14 @@
 				:model-value="member.tags.map(uuid => tags.find(x => x.uuid === uuid)!)"
 				@update:model-value="tags => { member.tags = tags.map(x => x.uuid) }"
 			/>
+
+			<SystemSelect
+				ref="systemSelectModal"
+				v-model="system"
+				:only-one="true"
+				:discard-on-select="true"
+				:hide-checkboxes="false"
+			/>
 		</IonContent>
 	</IonPage>
 </template>
@@ -527,6 +561,13 @@
 		flex-direction: row-reverse;
 	}
 
+	div.avatar-container ion-avatar {
+		width: 192px;
+		height: 192px;
+		outline-width: 8px !important;
+	}
+
+
 	div.edit-buttons ion-button {
 		margin: 0;
 	}
@@ -539,15 +580,22 @@
 		padding: 0 16px;
 	}
 
+	div.system-tag {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		padding: 0 16px;
+	}
+
 	.member-edit div.member-tags {
 		padding: 8px 0 0 0;
 		justify-content: start;
 	}
 
-	ion-avatar {
-		width: 192px;
-		height: 192px;
-		outline-width: 8px !important;
+	.member-edit ion-avatar ion-icon {
+		width: 100%;
+		height: 100%;
+		color: var(--ion-color-primary);
 	}
 
 	div.member-info {

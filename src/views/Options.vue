@@ -17,7 +17,7 @@
 	import CustomFieldsMD from "@material-symbols/svg-600/outlined/format_list_bulleted_add.svg";
 	import WikiMD from "@material-symbols/svg-600/outlined/book_2.svg";
 
-	import { appConfig, securityConfig } from "../lib/config";
+	import { securityConfig } from "../lib/config";
 	import { lock } from "../lib/applock";
 	import { openUrl } from "@tauri-apps/plugin-opener";
 
@@ -48,9 +48,9 @@
 
 			<IonList>
 
-				<IonItem button :router-link="`/options/systems/edit?uuid=${appConfig.defaultSystem}`">
+				<IonItem button router-link="/options/systems">
 					<IonIcon slot="start" :icon="SystemMD" aria-hidden="true" />
-					<IonLabel>{{ $t("systems:edit.header") }}</IonLabel>
+					<IonLabel>{{ $t("systems:header") }}</IonLabel>
 				</IonItem>
 
 				<IonItem button router-link="/options/customFields">

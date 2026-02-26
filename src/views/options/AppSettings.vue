@@ -14,10 +14,10 @@
 	import SystemSelect from "../../modals/SystemSelect.vue";
 	import { System } from "../../lib/db/entities";
 
-	const defaultSystem = shallowRef<System[]>([{
+	const defaultSystem = shallowRef<System>({
 		uuid: appConfig.defaultSystem,
 		name: ""
-	}]);
+	});
 	const systemSelectModal = useTemplateRef("systemSelectModal");
 	const twelveHourClock = ref(appConfig.locale.twelveHourClock.toString());
 	const firstWeekOfDayIsSunday = ref(appConfig.locale.firstWeekOfDayIsSunday.toString());
@@ -31,13 +31,13 @@
 	});
 
 	watch(defaultSystem, () => {
-		if(defaultSystem.value[0] && appConfig.defaultSystem !== defaultSystem.value[0].uuid)
-			appConfig.defaultSystem = defaultSystem.value[0].uuid;
+		if(defaultSystem.value && appConfig.defaultSystem !== defaultSystem.value.uuid)
+			appConfig.defaultSystem = defaultSystem.value.uuid;
 	});
 
 	onMounted(async () => {
 		const _sys = await getSystem(appConfig.defaultSystem);
-		if(_sys) defaultSystem.value = [_sys];
+		if(_sys) defaultSystem.value = _sys;
 	});
 </script>
 
@@ -119,12 +119,12 @@
 
 				<IonItem button :detail="true" @click="systemSelectModal?.$el.present()">
 					<IonAvatar slot="start">
-						<img v-if="defaultSystem[0].image" aria-hidden="true" :src="getObjectURL(defaultSystem[0].image)" />
+						<img v-if="defaultSystem.image" aria-hidden="true" :src="getObjectURL(defaultSystem.image)" />
 						<IonIcon v-else :icon="accountCircle" />
 					</IonAvatar>
 					<IonLabel>
 						<p>{{ $t("appSettings:defaultSystem") }}</p>
-						<h2>{{ defaultSystem[0].name }}</h2>
+						<h2>{{ defaultSystem.name }}</h2>
 					</IonLabel>
 				</IonItem>
 
@@ -247,7 +247,6 @@
 			<SystemSelect
 				ref="systemSelectModal"
 				v-model="defaultSystem"
-				:only-one="true"
 				:discard-on-select="true"
 				:hide-checkboxes="true"
 			/>

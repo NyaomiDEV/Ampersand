@@ -30,6 +30,7 @@
 		"tags": "Edit tags",
 		"description": "Description",
 		"noDescription": "No description",
+		"system": "Edit membership system",
 		"isPinned": "Pin member",
 		"customFront": "Custom front",
 		"archived": "Archived",

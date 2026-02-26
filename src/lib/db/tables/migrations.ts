@@ -11,7 +11,7 @@ export async function members(table: ShittyTable<Member>, version: number){
 		if (systemId === nilUid) return false;
 
 		for (const memberIndex of table.index) {
-			if (!memberIndex.system || memberIndex.system !== systemId) {
+			if (!memberIndex.system) {
 				await table.update(memberIndex.uuid, {
 					system: systemId
 				});
@@ -19,12 +19,6 @@ export async function members(table: ShittyTable<Member>, version: number){
 		}
 		return true;
 	}
-
-	// HACK: Mark for migration if we find something disturbing
-	if(table.index.find(x =>
-		systemId !== nilUid && x.system !== systemId
-	))
-		version = 0;
 
 	switch(version){
 		case 0:
@@ -36,9 +30,10 @@ export async function members(table: ShittyTable<Member>, version: number){
 	return 2;
 }
 
+// eslint-disable-next-line @typescript-eslint/require-await
 export async function systems(table: ShittyTable<System>, version: number){
 	// enforce only one system for now
-	async function zeroToOne(){
+	function zeroToOne(){
 		// set default system in app config
 		if(appConfig.defaultSystem === nilUid){
 			const maybeSystem = table.index[0];
@@ -46,21 +41,12 @@ export async function systems(table: ShittyTable<System>, version: number){
 			appConfig.defaultSystem = maybeSystem.uuid;
 		}
 
-		for(const systemIndex of table.index){
-			if(systemIndex.uuid !== appConfig.defaultSystem)
-				await table.delete(systemIndex.uuid);
-		}
-
 		return true;
 	}
 
-	// HACK: Mark for migration if we find something disturbing
-	if (table.index.length > 1)
-		version = 0;
-
 	switch(version){
 		case 0:
-			if(!await zeroToOne()) return 0;
+			if(!zeroToOne()) return 0;
 			break;
 	}
 

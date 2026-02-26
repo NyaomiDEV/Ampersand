@@ -30,6 +30,7 @@
 		"tags": "Modifica i tag",
 		"description": "Descrizione",
 		"noDescription": "Nessuna descrizione",
+		"system": "Modifica sistema di appartenenza",
 		"isPinned": "Fissa membrə",
 		"customFront": "Front personalizzato",
 		"archived": "Archiviatə",
