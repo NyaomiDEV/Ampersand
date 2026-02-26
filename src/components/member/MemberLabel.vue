@@ -9,6 +9,7 @@
 	import { getTag } from "../../lib/db/tables/tags";
 	import SystemChip from "../SystemChip.vue";
 	import { getSystem } from "../../lib/db/tables/system";
+	import { appConfig } from "../../lib/config";
 
 	const props = defineProps<{
 		member: Member,
@@ -67,7 +68,7 @@
 			@pointerdown="(e) => e.stopPropagation()"
 			@touchstart="(e) => e.stopPropagation()"
 		>
-			<SystemChip :system />
+			<SystemChip v-if="system.uuid !== appConfig.defaultSystem || appConfig.showDefaultSystemInMemberList" :system />
 			<div v-if="tags?.length" class="tag-chips">
 				<TagChip v-for="tag in tags" :key="tag.uuid" :tag="tag" />
 			</div>
@@ -94,6 +95,10 @@
 		overflow-x: scroll;
 		overflow-y: hidden;
 		scrollbar-width: none;
+	}
+
+	div.chips > div.tag-chips:first-child {
+		border-left: none;
 	}
 
 	div.tag-chips > ion-chip {

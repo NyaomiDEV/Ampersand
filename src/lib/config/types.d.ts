@@ -9,6 +9,7 @@ export type AppConfig = {
 	view: ViewName,
 	defaultSystem: UUID,
 	showSystemDescriptionInDashboard: boolean,
+	showDefaultSystemInMemberList: boolean,
 	showMembersBeforeCustomFronts: boolean,
 	hideFrontingTimer: boolean,
 	useIPC: boolean,

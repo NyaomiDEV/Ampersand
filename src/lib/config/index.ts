@@ -12,6 +12,7 @@ const defaultAppConfig: AppConfig = {
 	},
 	defaultSystem: nilUid,
 	showSystemDescriptionInDashboard: false,
+	showDefaultSystemInMemberList: false,
 	showMembersBeforeCustomFronts: true,
 	hideFrontingTimer: false,
 	useIPC: false,

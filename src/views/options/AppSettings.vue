@@ -140,8 +140,16 @@
 							{{ $t("journal:header") }}
 						</IonSelectOption>
 					</IonSelect>
-				</IonItem>				
+				</IonItem>	
 
+				<IonItem button :detail="false">
+					<IonToggle v-model="appConfig.showDefaultSystemInMemberList">
+						<IonLabel class="wrap">
+							{{ $t("appSettings:showDefaultSystemInMemberList") }}
+						</IonLabel>
+					</IonToggle>
+				</IonItem>
+				
 				<IonItem button :detail="false">
 					<IonToggle v-model="appConfig.showMembersBeforeCustomFronts">
 						<IonLabel class="wrap">
