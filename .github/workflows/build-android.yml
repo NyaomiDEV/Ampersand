@@ -49,6 +49,7 @@ jobs:
         uses: actions-rust-lang/setup-rust-toolchain@v1.15.2
         with:
           rust-src-dir: "src-tauri"
+          target: "aarch64-linux-android,armv7-linux-androideabi"
       - name: Install frontend dependencies
         run: yarn install --frozen-lockfile
       - name: Update versioning
