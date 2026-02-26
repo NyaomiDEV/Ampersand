@@ -15,8 +15,8 @@
 		IonIcon
 	} from "@ionic/vue";
 
-	import { onBeforeMount, onUnmounted, ref, shallowRef, toRaw, watch } from "vue";
-	import type { System } from "../lib/db/entities";
+	import { onBeforeMount, onUnmounted, reactive, ref, shallowRef, toRaw, watch } from "vue";
+	import type { SQLFile, System } from "../lib/db/entities";
 	import { getObjectURL } from "../lib/util/blob";
 	import { DatabaseEvents, DatabaseEvent } from "../lib/db/events.ts";
 	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
@@ -39,6 +39,7 @@
 	const selectedSystem = shallowRef<System | undefined>(props.modelValue);
 	const search = ref("");
 	const systems = shallowRef<System[]>();
+	const systemImages = reactive(new Map<string, string>());
 
 	const listener = (event: Event) => {
 		if((event as DatabaseEvent).data.table === "systems")
@@ -65,15 +66,18 @@
 	async function updateSystems(){
 		systems.value = (await Array.fromAsync(getFilteredSystems(search.value)))
 			.sort((a, b) => {
-				if (a.uuid === appConfig.defaultSystem) return -1;
-				if (b.uuid === appConfig.defaultSystem) return 1;
+				if (a.id === appConfig.defaultSystem) return -1;
+				if (b.id === appConfig.defaultSystem) return 1;
 
 				return a.name.localeCompare(b.name);
 			});
+		systemImages.clear();
+		for(const system of systems.value)
+			if(system.image) systemImages.set(system.image.id, await getObjectURL(system.image as SQLFile));
 	}
 
 	function check(system: System){
-		if(selectedSystem.value?.uuid !== system.uuid){
+		if(selectedSystem.value?.id !== system.id){
 			selectedSystem.value = system;
 
 			emit("update:modelValue", toRaw(selectedSystem.value));
@@ -111,15 +115,15 @@
 			<IonList>
 				<IonItem
 					v-for="system in systems"
-					:key="system.uuid"
+					:key="system.id"
 					button
-					:class="{ 'default-system': system.uuid === appConfig.defaultSystem }"
+					:class="{ 'default-system': system.id === appConfig.defaultSystem }"
 				>
 					<IonAvatar slot="start">
-						<img v-if="system?.image" aria-hidden="true" :src="getObjectURL(system.image)" />
+						<img v-if="system.image" aria-hidden="true" :src="systemImages.get(system.image.id)" />
 						<IonIcon v-else :icon="systemCircle" />
 					</IonAvatar>
-					<IonCheckbox :value="system.uuid" :checked="selectedSystem?.uuid === system.uuid" @update:model-value="check(system)">
+					<IonCheckbox :value="system.id" :checked="selectedSystem?.id === system.id" @update:model-value="check(system)">
 						<IonLabel>{{ system.name }}</IonLabel>
 					</IonCheckbox>
 				</IonItem>

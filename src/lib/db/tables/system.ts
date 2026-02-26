@@ -2,7 +2,7 @@ import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUIDable, System, UUID } from "../entities";
 import { nilUid } from "../../util/consts";
-import { filterSystem } from "../../search";
+import { filterSystem } from "../search";
 import { PartialBy } from "../../types";
 
 export function getSystems(){
