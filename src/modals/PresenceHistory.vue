@@ -14,13 +14,17 @@
 		IonButton,
 	} from "@ionic/vue";
 
-	import { formatDate, renderStars } from "../lib/util/misc";
+	import { formatDate } from "../lib/util/misc";
 
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
 
 	import { ref, useTemplateRef } from "vue";
 	import PresenceAdd from "./PresenceAdd.vue";
+	import PresenceRating from "../components/PresenceRating.vue";
+	import { useTranslation } from "i18next-vue";
+
+	const i18next = useTranslation();
 
 	const props = defineProps<{
 		modelValue?: Map<Date, number>
@@ -33,6 +37,29 @@
 	const presence = ref<Map<Date, number>>(props.modelValue || new Map());
 
 	const presenceAddModal = useTemplateRef("presenceAddModal");
+
+	function presencePhrase(rating: number): string {
+		switch (rating) {
+			case 0:
+				return i18next.t("other:presence.absent");
+			case 1:
+			case 2:
+				return i18next.t("other:presence.heavilyDissociating");
+			case 3:
+			case 4:
+				return i18next.t("other:presence.dissociating");
+			case 5:
+			case 6:
+				return i18next.t("other:presence.zonedOut");
+			case 7:
+			case 8:
+				return i18next.t("other:presence.present");
+			case 9:
+			case 10:
+				return i18next.t("other:presence.fullyGrounded");
+		}
+		return "";
+	}
 </script>
 
 <template>
@@ -56,7 +83,8 @@
 				>
 					<IonLabel>
 						<p>{{ formatDate(entry[0], "expanded") }}</p>
-						<h2>{{ entry[1] }} / 10 - {{ renderStars(entry[1]) }}</h2>
+						<h2>{{ presencePhrase(entry[1]) }}</h2>
+						<h2><PresenceRating :rating="entry[1]" /></h2>
 					</IonLabel>
 					<IonButton
 						slot="end"

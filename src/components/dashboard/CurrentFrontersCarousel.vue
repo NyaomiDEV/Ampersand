@@ -10,6 +10,7 @@
 	import { addModal, removeModal } from "../../lib/modals.ts";
 	import { appConfig } from "../../lib/config/index.ts";
 	import MemberSelect from "../../modals/MemberSelect.vue";
+	import PresenceRating from "../PresenceRating.vue";
 
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 	import removeFromFrontMD from "@material-symbols/svg-600/outlined/person_remove.svg";
@@ -95,6 +96,14 @@
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-call
 		await (modal.el as any).present();
 	}
+
+	function getMostRecentPresence(frontingEntry: FrontingEntryComplete){
+		if(!frontingEntry.presence) return [undefined, undefined];
+
+		const presenceVal = Array.from(frontingEntry.presence.entries());
+
+		return presenceVal.sort((a, b) => a[0].valueOf() - b[0].valueOf()).pop() || [undefined, undefined];
+	}
 </script>
 
 <template>
@@ -132,11 +141,15 @@
 					<p v-if="!appConfig.hideFrontingTimer">
 						{{ formatWrittenTime(now, fronting.startTime) }}
 					</p>
+					
 					<p v-if="fronting.influencing">
 						{{ $t("dashboard:fronterInfluencing", { influencedMember: fronting.influencing.name }) }}
 					</p>
 					<p v-if="fronting.customStatus">
 						{{ fronting.customStatus }}
+					</p>
+					<p v-if="fronting.presence">
+						<PresenceRating :rating="getMostRecentPresence(fronting)[1] ?? 0" />
 					</p>
 				</IonLabel>
 			</IonCardContent>
@@ -206,7 +219,7 @@
 	ion-list-header ion-button {
 		margin: 8px 8px;
 	}
-	
+
 	div.carousel {
 		scrollbar-width: none;
 	}

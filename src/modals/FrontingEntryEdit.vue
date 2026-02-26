@@ -31,8 +31,9 @@
 	import ContentEditable from "../components/ContentEditable.vue";
 
 	import { PartialBy } from "../lib/types";
-	import { formatDate, promptOkCancel, renderStars } from "../lib/util/misc";
+	import { formatDate, promptOkCancel } from "../lib/util/misc";
 	import { useTranslation } from "i18next-vue";
+	import PresenceRating from "../components/PresenceRating.vue";
 
 
 	const i18next = useTranslation();
@@ -117,6 +118,29 @@
 
 		return presenceVal.sort((a, b) => a[0].valueOf() - b[0].valueOf()).pop() || [undefined, undefined];
 	}
+
+	function presencePhrase(rating: number): string {
+		switch (rating) {
+			case 0:
+				return i18next.t("other:presence.absent");
+			case 1:
+			case 2:
+				return i18next.t("other:presence.heavilyDissociating");
+			case 3:
+			case 4:
+				return i18next.t("other:presence.dissociating");
+			case 5:
+			case 6:
+				return i18next.t("other:presence.zonedOut");
+			case 7:
+			case 8:
+				return i18next.t("other:presence.present");
+			case 9:
+			case 10:
+				return i18next.t("other:presence.fullyGrounded");
+		}
+		return "";
+	}
 </script>
 
 <template>
@@ -155,9 +179,9 @@
 					<IonLabel>
 						{{ $t("frontHistory:edit.presence.historyTitle") }}
 						<p v-if="frontingEntry.presence?.size">
-							{{ $t("frontHistory:edit.presence.lastPresence", { presence: getMostRecentPresence()[1] }) }}
-							-
-							{{ renderStars(getMostRecentPresence()[1]!) }}
+							{{ presencePhrase(getMostRecentPresence()[1] ?? 0) }}
+							<br />
+							<PresenceRating :rating="getMostRecentPresence()[1] ?? 0" />
 						</p>
 					</IonLabel>
 				</IonItem>

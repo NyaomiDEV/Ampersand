@@ -12,7 +12,7 @@
 		"comment": "Commento",
 		"presence": {
 			"historyTitle": "Storia della presenza",
-			"lastPresence": "L'ultima volta era {{presence}} / 10",
+			"lastPresence": "L'ultima volta era {{presence}} / 5 stelle",
 			"addTitle": "Quanto sei presente in una scala da 0 a 10?",
 			"addButton": "Aggiungi alla storia",
 			"date": "Data"

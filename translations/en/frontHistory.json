@@ -12,7 +12,7 @@
 		"comment": "Comment",
 		"presence": {
 			"historyTitle": "Presence history",
-			"lastPresence": "Last it was {{presence}} / 10",
+			"lastPresence": "Last it was {{presence}} / 5 stars",
 			"addTitle": "How present are you in a scale from 0 to 10?",
 			"addButton": "Add it to the history",
 			"date": "Date"

@@ -16,6 +16,14 @@
 		"yes": "Sì",
 		"no": "No"
 	},
+	"presence": {
+		"absent": "Assente",
+		"heavilyDissociating": "Dissociando pesantemente",
+		"dissociating": "Dissociatə",
+		"zonedOut": "Spaesatə",
+		"present": "Presente",
+		"fullyGrounded": "Ancoratə alla realtà"
+	},
 	"back": "Indietro",
 	"time": "Ora",
 	"timeSizes": {

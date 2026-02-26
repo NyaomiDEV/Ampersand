@@ -16,6 +16,14 @@
 		"yes": "Yes",
 		"no": "No"
 	},
+	"presence": {
+		"absent": "Absent",
+		"heavilyDissociating": "Heavily dissociating",
+		"dissociating": "Dissociating",
+		"zonedOut": "Zoned out",
+		"present": "Present",
+		"fullyGrounded": "Fully grounded"
+	},
 	"back": "Back",
 	"time": "Time",
 	"timeSizes": {
