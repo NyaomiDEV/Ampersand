@@ -3,11 +3,11 @@
 	import { inject } from "vue";
 
 	import LockMD from "@material-symbols/svg-600/outlined/lock.svg";
-	import SparklesMD from "@material-symbols/svg-600/outlined/star.svg";
-	import SystemMD from "@material-symbols/svg-600/outlined/person.svg";
+	import TestingMD from "@material-symbols/svg-600/outlined/taunt.svg";
+	import SystemMD from "@material-symbols/svg-600/outlined/groups.svg";
 	import FrontHistoryMD from "@material-symbols/svg-600/outlined/show_chart.svg";
 	import MessageBoardMD from "@material-symbols/svg-600/outlined/newspaper.svg";
-	import TagMD from "@material-symbols/svg-600/outlined/label.svg";
+	import TagMD from "@material-symbols/svg-600/outlined/sell.svg";
 	import RemindersMD from "@material-symbols/svg-600/outlined/notification_add.svg";
 	import SettingsMD from "@material-symbols/svg-600/outlined/settings.svg";
 	import AccessibilityMD from "@material-symbols/svg-600/outlined/accessibility_new.svg";
@@ -122,7 +122,7 @@
 				</IonItem>
 
 				<IonItem v-if="isDev" button router-link="/options/testingGrounds">
-					<IonIcon slot="start" :icon="SparklesMD" aria-hidden="true" />
+					<IonIcon slot="start" :icon="TestingMD" aria-hidden="true" />
 					Testing grounds
 				</IonItem>
 			</IonList>

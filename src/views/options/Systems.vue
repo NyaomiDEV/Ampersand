@@ -21,7 +21,7 @@
 	import systemCircle from "@material-symbols/svg-600/outlined/supervised_user_circle.svg";
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
-	import pinMD from "@material-symbols/svg-600/outlined/keep.svg";
+	import defaultMD from "@material-symbols/svg-600/outlined/bookmark_star.svg";
 
 	import type { System } from "../../lib/db/entities";
 	import { DatabaseEvents, DatabaseEvent } from "../../lib/db/events.ts";
@@ -112,7 +112,7 @@
 					<IonLabel>
 						{{ system.name }}
 					</IonLabel>
-					<IonIcon v-if="appConfig.defaultSystem === system.uuid" slot="end" :icon="pinMD" />
+					<IonIcon v-if="appConfig.defaultSystem === system.uuid" slot="end" :icon="defaultMD" />
 				</IonItem>
 			</IonList>
 
