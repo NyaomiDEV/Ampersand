@@ -206,4 +206,8 @@
 	ion-list-header ion-button {
 		margin: 8px 8px;
 	}
+	
+	div.carousel {
+		scrollbar-width: none;
+	}
 </style>
