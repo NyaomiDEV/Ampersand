@@ -136,7 +136,7 @@
 		visibility: v-bind("!props.hideCheckboxes ? 'visible' : 'hidden'")
 	}
 
-	ion-icon {
+	ion-avatar > ion-icon {
 		width: 100%;
 		height: 100%;
 		color: var(--ion-color-primary);

@@ -249,7 +249,7 @@
 				v-model="defaultSystem"
 				:only-one="true"
 				:discard-on-select="true"
-				:hide-checkboxes="false"
+				:hide-checkboxes="true"
 			/>
 
 		</IonContent>
@@ -257,7 +257,7 @@
 </template>
 
 <style scoped>
-	ion-icon {
+	ion-avatar > ion-icon {
 		width: 100%;
 		height: 100%;
 		color: var(--ion-color-primary);
