@@ -3,16 +3,19 @@
 		IonLabel,
 	} from "@ionic/vue";
 
-	import { Member, Tag } from "../../lib/db/entities";
+	import { Member, Tag, System } from "../../lib/db/entities";
 	import TagChip from "../tag/TagChip.vue";
 	import { isReactive, onBeforeMount, shallowRef, watch, WatchStopHandle } from "vue";
 	import { getTag } from "../../lib/db/tables/tags";
+	import SystemChip from "../SystemChip.vue";
+	import { getSystem } from "../../lib/db/tables/system";
 
 	const props = defineProps<{
 		member: Member,
 		showTagChips?: boolean
 	}>();
 
+	const system = shallowRef<System>({ name: "", uuid: props.member.system });
 	const tags = shallowRef<Tag[]>();
 
 	async function updateTags(){
@@ -29,6 +32,8 @@
 
 	let watchHandle: WatchStopHandle | undefined;
 	watch(props, async () => {
+		const _sys = await getSystem(props.member.system);
+		if (_sys) system.value = _sys;
 		await updateTags();
 		if(isReactive(props.member))
 			watchHandle = watch(props.member, updateTags);
@@ -58,20 +63,40 @@
 		</h3>
 		<div
 			v-if="props.showTagChips"
-			class="tags"
+			class="chips"
 			@pointerdown="(e) => e.stopPropagation()"
 			@touchstart="(e) => e.stopPropagation()"
 		>
-			<TagChip v-for="tag in tags" :key="tag.uuid" :tag="tag" />
+			<SystemChip :system />
+			<div v-if="tags?.length" class="tag-chips">
+				<TagChip v-for="tag in tags" :key="tag.uuid" :tag="tag" />
+			</div>
 		</div>
 	</IonLabel>
 </template>
 
 <style scoped>
-	div.tags {
+	div.chips {
+		display: flex;
+		white-space: nowrap;
+	}
+
+	div.chips > ion-chip:first {
+		flex: 2 0;
+	}
+
+	div.tag-chips {
+		display: block;
+		flex: 1 1;
+		border-left: 1px solid var(--ion-text-color-step-400);
+		margin: 4px 0;
 		white-space: nowrap;
 		overflow-x: scroll;
 		overflow-y: hidden;
 		scrollbar-width: none;
+	}
+
+	div.tag-chips > ion-chip {
+		margin: 0 4px;
 	}
 </style>
