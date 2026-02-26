@@ -135,4 +135,10 @@
 	ion-checkbox::part(container) {
 		visibility: v-bind("!props.hideCheckboxes ? 'visible' : 'hidden'")
 	}
+
+	ion-icon {
+		width: 100%;
+		height: 100%;
+		color: var(--ion-color-primary);
+	}
 </style>

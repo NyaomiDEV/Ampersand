@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonList, IonPage, IonLabel, IonListHeader, IonTitle, IonToolbar, IonBackButton, IonItem, IonSegment, IonSelect, IonSelectOption, IonInput, IonToggle, IonAvatar } from "@ionic/vue";
+	import { IonContent, IonHeader, IonList, IonPage, IonLabel, IonListHeader, IonTitle, IonToolbar, IonBackButton, IonItem, IonSegment, IonSelect, IonSelectOption, IonInput, IonToggle, IonAvatar, IonIcon } from "@ionic/vue";
 	import { onMounted, ref, shallowRef, useTemplateRef, watch } from "vue";
 	import { platform } from "@tauri-apps/plugin-os";
 
@@ -255,3 +255,11 @@
 		</IonContent>
 	</IonPage>
 </template>
+
+<style scoped>
+	ion-icon {
+		width: 100%;
+		height: 100%;
+		color: var(--ion-color-primary);
+	}
+</style>
