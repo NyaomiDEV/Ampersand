@@ -1,9 +1,9 @@
 <script setup lang="ts">
-	import { IonCard, IonCardContent, IonLabel, IonListHeader, IonIcon } from "@ionic/vue";
+	import { IonCard, IonCardContent, IonLabel, IonListHeader, IonIcon, IonButton } from "@ionic/vue";
 	import MemberAvatar from "../member/MemberAvatar.vue";
 	import { h, onBeforeMount, onUnmounted, ref, shallowRef } from "vue";
 	import type { FrontingEntryComplete } from "../../lib/db/entities.d.ts";
-	import { getFronting, newFrontingEntry, sendFrontingChangedEvent } from "../../lib/db/tables/frontingEntries";
+	import { getFronting, newFrontingEntry, sendFrontingChangedEvent, updateFrontingEntry } from "../../lib/db/tables/frontingEntries";
 	import { formatWrittenTime } from "../../lib/util/misc";
 	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
 	import { DatabaseEvents, DatabaseEvent } from "../../lib/db/events";
@@ -12,10 +12,13 @@
 	import MemberSelect from "../../modals/MemberSelect.vue";
 
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
+	import removeFromFrontMD from "@material-symbols/svg-600/outlined/person_remove.svg";
 
 	const frontingEntries = shallowRef<FrontingEntryComplete[]>([]);
 
 	const now = ref(new Date());
+
+	const quickDelete = ref(false);
 
 	let interval: number;
 
@@ -62,6 +65,15 @@
 		await (modal.el as any).present();
 	}
 
+	async function quickRemoveFronter(clickedFrontingEntry: FrontingEntryComplete){
+		await updateFrontingEntry(clickedFrontingEntry.uuid, {
+			endTime: new Date()
+		});
+
+		if(!frontingEntries.value.length)
+			quickDelete.value = false;
+	}
+
 	async function showModalFronting(){
 		const vnode = h(MemberSelect, {
 			onlyOne: true,
@@ -88,6 +100,15 @@
 <template>
 	<IonListHeader>
 		<IonLabel>{{ $t("dashboard:nowFronting") }}</IonLabel>
+		<IonButton
+			v-if="frontingEntries.length"
+			color="danger"
+			shape="round"
+			:fill="quickDelete ? 'solid' : 'outline'"
+			@click="quickDelete = !quickDelete"
+		>
+			<IonIcon slot="icon-only" :icon="removeFromFrontMD" />
+		</IonButton>
 	</IonListHeader>
 	<div class="carousel">
 		<IonCard
@@ -100,7 +121,7 @@
 				elevated: fronting.isMainFronter,
 				influencing: !!fronting.influencing,
 			}"
-			@click="showModal(fronting)"
+			@click="quickDelete ? quickRemoveFronter(fronting) : showModal(fronting)"
 		>
 			<IonCardContent>
 				<MemberAvatar :member="fronting.member" />
@@ -121,6 +142,7 @@
 			</IonCardContent>
 		</IonCard>
 		<IonCard
+			v-if="!quickDelete"
 			button
 			class="outlined add-fronting"
 			@click="showModalFronting"
@@ -179,5 +201,9 @@
 
 	ion-card.influenced {
 		outline: 2px solid var(--ion-color-primary) !important;
+	}
+
+	ion-list-header ion-button {
+		margin: 8px 8px;
 	}
 </style>
