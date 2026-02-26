@@ -12,15 +12,17 @@
 	import accountCircle from "@material-symbols/svg-600/outlined/supervised_user_circle.svg";
 	import { getSystem } from "../../lib/db/tables/system";
 	import SystemSelect from "../../modals/SystemSelect.vue";
-	import { System } from "../../lib/db/entities";
+	import { SQLFile, System } from "../../lib/db/entities";
 
 	const defaultSystem = shallowRef<System>({
-		uuid: appConfig.defaultSystem,
+		id: appConfig.defaultSystem,
 		name: ""
 	});
 	const systemSelectModal = useTemplateRef("systemSelectModal");
 	const twelveHourClock = ref(appConfig.locale.twelveHourClock.toString());
 	const firstWeekOfDayIsSunday = ref(appConfig.locale.firstWeekOfDayIsSunday.toString());
+
+	const defaultSystemImageUri = ref();
 
 	watch(twelveHourClock, () => {
 		appConfig.locale.twelveHourClock = twelveHourClock.value === "true" ? true : false;
@@ -30,9 +32,11 @@
 		appConfig.locale.firstWeekOfDayIsSunday = firstWeekOfDayIsSunday.value === "true" ? true : false;
 	});
 
-	watch(defaultSystem, () => {
-		if(defaultSystem.value && appConfig.defaultSystem !== defaultSystem.value.uuid)
-			appConfig.defaultSystem = defaultSystem.value.uuid;
+	watch(defaultSystem, async () => {
+		if(defaultSystem.value && appConfig.defaultSystem !== defaultSystem.value.id)
+			appConfig.defaultSystem = defaultSystem.value.id;
+
+		defaultSystemImageUri.value = await getObjectURL(defaultSystem.value.image as SQLFile);
 	});
 
 	onMounted(async () => {
@@ -119,7 +123,7 @@
 
 				<IonItem button :detail="true" @click="systemSelectModal?.$el.present()">
 					<IonAvatar slot="start">
-						<img v-if="defaultSystem.image" aria-hidden="true" :src="getObjectURL(defaultSystem.image)" />
+						<img v-if="defaultSystemImageUri" aria-hidden="true" :src="defaultSystemImageUri" />
 						<IonIcon v-else :icon="accountCircle" />
 					</IonAvatar>
 					<IonLabel>

@@ -34,7 +34,7 @@
 	import FrontHistoryMD from "@material-symbols/svg-600/outlined/show_chart.svg";
 	import systemCircle from "@material-symbols/svg-600/outlined/supervised_user_circle.svg";
 
-	import { CustomField, Member, Tag, UUID } from "../../lib/db/entities";
+	import { CustomField, Member, SQLFile, System, Tag, UUID } from "../../lib/db/entities";
 	import { deleteMember, defaultMember, getMember, saveMember } from "../../lib/db/tables/members";
 	import { promptOkCancel, toast } from "../../lib/util/misc";
 	import { getCurrentInstance, onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
@@ -175,7 +175,7 @@
 		// TODO: Check if system is joined correctly and avoid this call
 		const _sys = await getSystem(member.value.system.id);
 		if(_sys) system.value = _sys;
-		if(system.value.image) systemImageURL.value = await getObjectURL(system.value.image);
+		if(system.value.image) systemImageURL.value = await getObjectURL(system.value.image as SQLFile);
 
 		if(member.value.id){
 			tags.value = (await Array.fromAsync(getMemberTagsForMember(member.value as Member)))
