@@ -15,6 +15,8 @@ export function filterSystem(search: string, system: System) {
 		if (appConfig.defaultSystem !== system.uuid)
 			return false;
 	}
+
+	return true;
 }
 
 export async function filterMember(search: string, member: Member){

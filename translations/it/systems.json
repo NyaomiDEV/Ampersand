@@ -1,4 +1,6 @@
 {
+	"searchPlaceholder": "Cerca tra i sistemi...",
+	"select": "Seleziona un sistema",
 	"edit": {
 		"header": "Sistema",
 		"headerAdd": "Aggiungi sistema",

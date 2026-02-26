@@ -1,4 +1,6 @@
 {
+	"searchPlaceholder": "Search systems...",
+	"select": "Select a system",
 	"edit": {
 		"header": "System",
 		"headerAdd": "Add system",

@@ -1,14 +1,24 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonList, IonPage, IonLabel, IonListHeader, IonTitle, IonToolbar, IonBackButton, IonItem, IonSegment, IonSelect, IonSelectOption, IonInput, IonToggle } from "@ionic/vue";
-	import { ref, watch } from "vue";
+	import { IonContent, IonHeader, IonList, IonPage, IonLabel, IonListHeader, IonTitle, IonToolbar, IonBackButton, IonItem, IonSegment, IonSelect, IonSelectOption, IonInput, IonToggle, IonAvatar } from "@ionic/vue";
+	import { onMounted, ref, shallowRef, useTemplateRef, watch } from "vue";
 	import { platform } from "@tauri-apps/plugin-os";
 
 	import { appConfig } from "../../lib/config";
 	import { computePercentage } from "../../lib/i18n";
+	import { getObjectURL } from "../../lib/util/blob";
 	import MD3SegmentButton from "../../components/MD3SegmentButton.vue";
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
+	import accountCircle from "@material-symbols/svg-600/outlined/supervised_user_circle.svg";
+	import { getSystem } from "../../lib/db/tables/system";
+	import SystemSelect from "../../modals/SystemSelect.vue";
+	import { System } from "../../lib/db/entities";
 
+	const defaultSystem = shallowRef<System[]>([{
+		uuid: appConfig.defaultSystem,
+		name: ""
+	}]);
+	const systemSelectModal = useTemplateRef("systemSelectModal");
 	const twelveHourClock = ref(appConfig.locale.twelveHourClock.toString());
 	const firstWeekOfDayIsSunday = ref(appConfig.locale.firstWeekOfDayIsSunday.toString());
 
@@ -18,6 +28,16 @@
 
 	watch(firstWeekOfDayIsSunday, () => {
 		appConfig.locale.firstWeekOfDayIsSunday = firstWeekOfDayIsSunday.value === "true" ? true : false;
+	});
+
+	watch(defaultSystem, () => {
+		if(defaultSystem.value[0] && appConfig.defaultSystem !== defaultSystem.value[0].uuid)
+			appConfig.defaultSystem = defaultSystem.value[0].uuid;
+	});
+
+	onMounted(async () => {
+		const _sys = await getSystem(appConfig.defaultSystem);
+		if(_sys) defaultSystem.value = [_sys];
 	});
 </script>
 
@@ -96,6 +116,18 @@
 			</IonListHeader>
 
 			<IonList>
+
+				<IonItem button :detail="true" @click="systemSelectModal?.$el.present()">
+					<IonAvatar slot="start">
+						<img v-if="defaultSystem[0].image" aria-hidden="true" :src="getObjectURL(defaultSystem[0].image)" />
+						<IonIcon v-else :icon="accountCircle" />
+					</IonAvatar>
+					<IonLabel>
+						<p>{{ $t("appSettings:defaultSystem") }}</p>
+						<h2>{{ defaultSystem[0].name }}</h2>
+					</IonLabel>
+				</IonItem>
+
 				<IonItem>
 					<IonSelect v-model="appConfig.view" :label="$t('appSettings:view')" interface="popover">
 						<IonSelectOption value="dashboard">
@@ -108,40 +140,40 @@
 							{{ $t("journal:header") }}
 						</IonSelectOption>
 					</IonSelect>
+				</IonItem>				
+
+				<IonItem button :detail="false">
+					<IonToggle v-model="appConfig.showMembersBeforeCustomFronts">
+						<IonLabel class="wrap">
+							{{ $t("appSettings:showMembersBeforeCustomFronts") }}
+						</IonLabel>
+					</IonToggle>
+				</IonItem>
+
+				<IonItem button :detail="false">
+					<IonToggle v-model="appConfig.showSystemDescriptionInDashboard">
+						<IonLabel class="wrap">
+							{{ $t("appSettings:showSystemDescriptionInDashboard") }}
+						</IonLabel>
+					</IonToggle>
+				</IonItem>
+
+				<IonItem button :detail="false">
+					<IonToggle v-model="appConfig.hideFrontingTimer">
+						<IonLabel class="wrap">
+							{{ $t("appSettings:hideFrontingTimer") }}
+						</IonLabel>
+					</IonToggle>
+				</IonItem>
+
+				<IonItem v-if="platform() === 'android'" button :detail="false">
+					<IonToggle v-model="appConfig.useIPC">
+						<IonLabel class="wrap">
+							{{ $t("appSettings:useIPC") }}
+						</IonLabel>
+					</IonToggle>
 				</IonItem>
 			</IonList>
-
-			<IonItem button :detail="false">
-				<IonToggle v-model="appConfig.showMembersBeforeCustomFronts">
-					<IonLabel class="wrap">
-						{{ $t("appSettings:showMembersBeforeCustomFronts") }}
-					</IonLabel>
-				</IonToggle>
-			</IonItem>
-
-			<IonItem button :detail="false">
-				<IonToggle v-model="appConfig.showSystemDescriptionInDashboard">
-					<IonLabel class="wrap">
-						{{ $t("appSettings:showSystemDescriptionInDashboard") }}
-					</IonLabel>
-				</IonToggle>
-			</IonItem>
-
-			<IonItem button :detail="false">
-				<IonToggle v-model="appConfig.hideFrontingTimer">
-					<IonLabel class="wrap">
-						{{ $t("appSettings:hideFrontingTimer") }}
-					</IonLabel>
-				</IonToggle>
-			</IonItem>
-
-			<IonItem v-if="platform() === 'android'" button :detail="false">
-				<IonToggle v-model="appConfig.useIPC">
-					<IonLabel class="wrap">
-						{{ $t("appSettings:useIPC") }}
-					</IonLabel>
-				</IonToggle>
-			</IonItem>
 
 			<IonListHeader>
 				<IonLabel>{{ $t("appSettings:defaultFilterLabel") }}</IonLabel>
@@ -211,6 +243,14 @@
 					/>
 				</IonItem>
 			</IonList>
+
+			<SystemSelect
+				ref="systemSelectModal"
+				v-model="defaultSystem"
+				:only-one="true"
+				:discard-on-select="true"
+				:hide-checkboxes="false"
+			/>
 
 		</IonContent>
 	</IonPage>
