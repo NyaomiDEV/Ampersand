@@ -33,3 +33,7 @@ test/*
 
 # Rust-analyzer stuff
 target/
+
+# iOS stuff I may build
+*.xcarchive
+*.ipa
