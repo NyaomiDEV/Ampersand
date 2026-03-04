@@ -10,6 +10,9 @@
 
 	import { version } from "../../../package.json";
 	import { openUrl } from "@tauri-apps/plugin-opener";
+	import { ref } from "vue";
+
+	const egg = ref(0);
 
 	async function openRepo(){
 		const url = "https://codeberg.org/Ampersand/app";
@@ -29,6 +32,15 @@
 	async function openLiberapay(){
 		const url = "https://liberapay.com/Ampersand/";
 		await openUrl(url);
+	}
+
+	function accumulateEgg(){
+		if(egg.value < 10){
+			++egg.value;
+			if(egg.value === 10)
+				document.getElementsByClassName("logo")[0].classList.add("egg-on");
+		}else
+			return;
 	}
 </script>
 
@@ -55,7 +67,10 @@
 					<span>{{ $t("about:madein") }}</span>
 				</div>
 
-				<IonIcon class="logo" :icon="AmpersandLogo" />
+				<div class="logo" @click="accumulateEgg">
+					<IonIcon :icon="AmpersandLogo" />
+					<img src="../../assets/mia.webp" />
+				</div>
 
 				<div class="buttons">
 					<IonButton class="tonal" shape="round" @click="openRepo">
@@ -99,13 +114,65 @@
 	}
 
 	.logo {
+		position: relative;
 		width: 256px;
 		height: 256px;
 		color: var(--ion-color-primary);
 	}
 
+	.logo > * {
+		animation-timing-function: ease-in-out;
+		animation-duration: 0.5s;
+		animation-fill-mode: forwards;
+		transform: none;
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+
+	.logo > ion-icon {
+		width: 100%;
+		height: 100%;
+	}
+
+	.logo > img {
+		transform: rotateY(0.25turn);
+	}
+
 	.buttons {
 		display: flex;
 		gap: 16px;
+	}
+
+	.logo.egg-on > ion-icon {
+		animation-name: logo;
+	}
+
+	.logo.egg-on > img {
+		animation-name: mia;
+	}
+
+	@keyframes logo {
+		0% {
+			transform: none;
+		}
+		50% {
+			transform: rotateY(0.25turn);
+		}
+		100% {
+			transform: rotateY(0.25turn);
+		}
+	}
+
+	@keyframes mia {
+		0% {
+			transform: rotateY(0.75turn);
+		}
+		50% {
+			transform: rotateY(0.75turn);
+		}
+		100% {
+			transform: rotateY(1turn);
+		}
 	}
 </style>
