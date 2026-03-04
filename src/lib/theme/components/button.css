@@ -118,7 +118,7 @@
 
 .md ion-toolbar ion-back-button.in-toolbar,
 .md ion-toolbar ion-button.in-toolbar {
-	--background: rgb(var(--md3-surface-container-low));
+	--background: rgb(var(--md3-surface-container-high));
 	--background-hover: rgb(var(--md3-surface-container));
 	--background-focused: rgb(var(--md3-surface-container));
 	--background-activated: rgb(var(--md3-surface-container));
@@ -127,4 +127,9 @@
 	--ripple-color: rgb(var(--md3-surface-container-highest));
 
 	--box-shadow: var(--md3-elevation-0);
+}
+
+.ion-palette-dark .md ion-toolbar ion-back-button.in-toolbar,
+.ion-palette-dark .md ion-toolbar ion-button.in-toolbar {
+	--background: rgb(var(--md3-surface-container-low));
 }

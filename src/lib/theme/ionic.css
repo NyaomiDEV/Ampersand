@@ -56,15 +56,15 @@
 	--ion-color-dark-shade: rgb(var(--md3-neutral-palette-tone-10));
 	--ion-color-dark-tint: rgb(var(--md3-neutral-palette-tone-10));
 
-	--ion-background-color: rgb(var(--md3-background));
-	--ion-background-color-rgb: var(--md3-background);
+	--ion-background-color: rgb(var(--md3-surface-container));
+	--ion-background-color-rgb: var(--md3-surface-container);
 
 	--ion-text-color: rgb(var(--md3-on-background));
 	--ion-text-color-rgb: var(--md3-on-background);
 
-	--ion-item-background: rgb(var(--md3-surface-container));
-	--ion-toolbar-background: rgb(var(--md3-background));
-	--ion-tab-bar-background: rgb(var(--md3-background));
+	--ion-item-background: rgb(var(--md3-background));
+	--ion-toolbar-background: rgb(var(--md3-surface-container));
+	--ion-tab-bar-background: rgb(var(--md3-surface-container));
 	--ion-card-background: rgb(var(--md3-surface-container));
 
 	--ion-text-color-step-50: rgb(var(--md3-neutral-palette-tone-5));
@@ -130,6 +130,14 @@
 	--ion-color-dark-contrast-rgb: var(--md3-neutral-palette-tone-10);
 	--ion-color-dark-shade: rgb(var(--md3-neutral-palette-tone-90));
 	--ion-color-dark-tint: rgb(var(--md3-neutral-palette-tone-90));
+
+	--ion-background-color: rgb(var(--md3-background));
+	--ion-background-color-rgb: var(--md3-background);
+
+	--ion-item-background: rgb(var(--md3-surface-container));
+	--ion-toolbar-background: rgb(var(--md3-background));
+	--ion-tab-bar-background: rgb(var(--md3-background));
+	--ion-card-background: rgb(var(--md3-surface-container));
 
 	--ion-text-color-step-50: rgb(var(--md3-neutral-palette-tone-95));
 	--ion-text-color-step-100: rgb(var(--md3-neutral-palette-tone-90));
