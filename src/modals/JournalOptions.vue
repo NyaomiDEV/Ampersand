@@ -68,7 +68,7 @@
 		</IonHeader>
 
 		<IonContent>
-			<IonList inset>
+			<IonList>
 				<IonItem button :detail="true" @click="($refs.datePicker as any)?.$el.present()">
 					<IonLabel>
 						<h2>{{ $t("journal:edit.date") }}</h2>
@@ -114,7 +114,6 @@
 				<IonItem>
 					<IonTextarea
 						v-model="post.contentWarning"
-						fill="outline"
 						auto-grow
 						:label="$t('journal:edit.contentWarning')"
 						label-placement="floating"

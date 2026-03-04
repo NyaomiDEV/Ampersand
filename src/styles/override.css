@@ -119,11 +119,6 @@ ion-label.wrap {
 	text-wrap-mode: wrap !important;
 }
 
-.md ion-input.input-label-placement-floating,
-.md ion-textarea.textarea-label-placement-floating {
-	margin: 16px 0 0 0;
-}
-
 ion-datetime {
 	max-width: 100%;
 	--wheel-fade-background-rgb: var(--md3-surface-container);

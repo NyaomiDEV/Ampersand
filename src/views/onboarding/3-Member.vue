@@ -85,11 +85,10 @@
 					</div>
 				</div>
 
-				<IonList class="member-edit" inset>
+				<IonList class="member-edit">
 					<IonItem>
 						<IonInput
 							v-model="member.name"
-							fill="outline"
 							:label="$t('members:edit.name')"
 							label-placement="floating"
 						/>
@@ -98,7 +97,6 @@
 					<IonItem>
 						<IonInput
 							v-model="member.pronouns"
-							fill="outline"
 							:label="$t('members:edit.pronouns')"
 							label-placement="floating"
 						/>
@@ -107,7 +105,6 @@
 					<IonItem>
 						<IonTextarea
 							v-model="member.description"
-							fill="outline"
 							auto-grow
 							:label="$t('onboarding:memberInfo.description')"
 							label-placement="floating"

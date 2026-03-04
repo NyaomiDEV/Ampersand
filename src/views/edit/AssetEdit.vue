@@ -125,14 +125,12 @@
 
 		<SpinnerFullscreen v-if="loading" />
 		<IonContent v-else>
+			<img
+				v-if="showBigThumbnail()"
+				:src="getObjectURL(asset.file)"
+				class="thumbnail"
+			/>
 			<IonList>
-
-				<img
-					v-if="showBigThumbnail()"
-					:src="getObjectURL(asset.file)"
-					class="thumbnail"
-				/>
-
 				<AssetItem
 					v-if="asset.file.size"
 					:asset
@@ -150,7 +148,6 @@
 				<IonItem>
 					<IonInput
 						v-model="asset.friendlyName"
-						fill="outline"
 						:label="$t('assetManager:edit.friendlyName')"
 						label-placement="floating"
 					/>

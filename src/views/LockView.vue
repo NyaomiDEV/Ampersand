@@ -32,7 +32,6 @@
 					<h1>{{ $t("lock:title") }}</h1>
 				</IonLabel>
 				<IonInput
-					fill="outline"
 					type="password"
 					label-placement="floating"
 					:label="$t('lock:hint')"

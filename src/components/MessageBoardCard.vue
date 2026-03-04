@@ -196,16 +196,6 @@
 <style scoped>
 	ion-item.card {
 		--background: var(--ion-background-color-step-100);
-		margin: 8px calc(16px + var(--ion-safe-area-right, 0px)) 8px calc(16px + var(--ion-safe-area-left, 0px));
-	}
-
-	ion-item.card::part(native) {
-		border-radius: 12px;
-		box-shadow: var(--md3-elevation-1);
-
-		/* remove inner padding */
-		padding-left: var(--padding-start, 0px);
-		--inner-padding-end: calc(-1 * var(--ion-safe-area-right, 0px));
 	}
 
 	ion-item.filled {
@@ -293,7 +283,6 @@
 	.poll ion-item {
 		--inner-padding-bottom: 4px;
 		--inner-padding-top: 4px;
-		--inner-padding-end: 0px;
 		--min-height: none;
 		border: 1px solid var(--ion-text-color-step-700);
 		border-radius: 16px;

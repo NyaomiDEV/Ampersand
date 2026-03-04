@@ -291,12 +291,7 @@
 	}
 
 	ion-list:not(.compact) ion-item {
-		margin: 4px 16px;
 		--background: var(--ion-background-color-step-100);
-	}
-
-	ion-list:not(.compact) ion-item::part(native) {
-		border-radius: 16px;
 	}
 
 	ion-list:not(.compact) ion-item::part(native)::before {

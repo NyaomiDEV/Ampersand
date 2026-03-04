@@ -152,7 +152,7 @@
 		</IonHeader>
 
 		<IonContent>
-			<IonList inset>
+			<IonList>
 				<IonItem button :detail="true" @click="memberSelectModal?.$el.present()">
 					<template v-if="frontingEntry.member">
 						<MemberAvatar slot="start" :member="frontingEntry.member" />
@@ -170,7 +170,6 @@
 				<IonItem>
 					<IonInput
 						v-model="frontingEntry.customStatus"
-						fill="outline"
 						:label="$t('frontHistory:edit.customStatus')"
 						label-placement="floating"
 					/>

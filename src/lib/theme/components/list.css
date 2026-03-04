@@ -2,4 +2,7 @@
 .md ion-list {
 	padding-top: 0;
 	padding-bottom: 0;
+	border-radius: 16px;
+	margin: 10px 16px;
+	background-color: transparent;
 }

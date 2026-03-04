@@ -62,9 +62,9 @@
 	--ion-text-color: rgb(var(--md3-on-background));
 	--ion-text-color-rgb: var(--md3-on-background);
 
-	--ion-item-background: rgb(var(--md3-background));
-	--ion-toolbar-background: rgb(var(--md3-surface-container));
-	--ion-tab-bar-background: rgb(var(--md3-surface-container));
+	--ion-item-background: rgb(var(--md3-surface-container));
+	--ion-toolbar-background: rgb(var(--md3-background));
+	--ion-tab-bar-background: rgb(var(--md3-background));
 	--ion-card-background: rgb(var(--md3-surface-container));
 
 	--ion-text-color-step-50: rgb(var(--md3-neutral-palette-tone-5));

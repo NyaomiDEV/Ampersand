@@ -19,7 +19,7 @@
 <template>
 	<IonAccordionGroup v-if="description && description.length">
 		<IonAccordion value="systemInfo" :toggle-icon="downMD">
-			<IonItem slot="header">
+			<IonItem slot="header" class="surface">
 				<IonLabel>{{ $t("dashboard:systemDescription") }}</IonLabel>
 			</IonItem>
 			<div slot="content" class="content">

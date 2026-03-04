@@ -57,25 +57,26 @@
 					:title="$t('frontHistory:edit.presence.date')"
 				/>
 			</IonItem>
-			<IonButton expand="block" fill="clear" @click="add">
-				{{ $t("frontHistory:edit.presence.addButton") }}
-			</IonButton>
 		</IonList>
+		<IonButton @click="add">
+			{{ $t("frontHistory:edit.presence.addButton") }}
+		</IonButton>
 	</IonModal>
 </template>
 
 <style scoped>
 	.presence-add-modal {
-		--height: fit-content;
 		--border-radius: 16px;
+		--height: fit-content;
 	}
 
 	.presence-add-modal::part(content) {
-		padding: 16px;
+		padding: 8px 0px 16px 0px;
 		box-sizing: border-box;
 	}
 
-	.presence-add-modal ion-item {
-		--inner-padding-end: 0px;
+	ion-button {
+		float: right;
+		margin-inline: 16px;
 	}
 </style>

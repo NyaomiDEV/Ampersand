@@ -60,21 +60,18 @@ export function formatWrittenTime(dateStart: Date, dateEnd: Date){
 }
 
 export function slideAnimation(_: HTMLElement, opts: TransitionOptions, directionOverride?: Ref<string>) {
-	const transition = createAnimation().duration(200).easing("cubic-bezier(0.47,0,0.745,0.715)");
-
-	const directions = {
-		left: [40, 0, -40],
-		right: [-40, 0, 40]
-	};
-
-	const direction = directions[(directionOverride?.value || opts.direction) === "back" ? "right" : "left"];
+	const OFFSET = 40;
+	const backwards = (directionOverride?.value || opts.direction) === "back";
+	const transition = createAnimation()
+		.duration(200)
+		.easing(backwards ? "cubic-bezier(0.47,0,0.745,0.715)" : "cubic-bezier(0.36,0.66,0.04,1)");
 
 	if(opts.leavingEl){
 		const leavingPage = createAnimation().addElement(getIonPageElement(opts.leavingEl))
 			.keyframes([
-				{ offset: 0, opacity: 1, transform: `translateX(${direction[1]}px)` },
+				{ offset: 0, opacity: 1, transform: "translateX(0px)" },
 				{ offset: 0.5, opacity: 0 },
-				{ offset: 1, opacity: 0, transform: `translateX(${direction[2]}px)` }
+				{ offset: 1, opacity: 0, transform: `translateX(${OFFSET * (backwards ? 1 : -1)}px)` }
 			]);
 
 		transition.addAnimation(leavingPage);
@@ -83,9 +80,9 @@ export function slideAnimation(_: HTMLElement, opts: TransitionOptions, directio
 	const enteringPage = createAnimation().addElement(getIonPageElement(opts.enteringEl))
 		.fill("both")
 		.keyframes([
-			{ offset: 0, opacity: 0, transform: `translateX(${direction[0]}px)` },
+			{ offset: 0, opacity: 0, transform: `translateX(${OFFSET * (backwards ? -1 : 1)}px)` },
 			{ offset: 0.5, opacity: 0 },
-			{ offset: 1, opacity: 1, transform: `translateX(${direction[1]}px)` }
+			{ offset: 1, opacity: 1, transform: "translateX(0px)" }
 		]);
 
 	transition.addAnimation(enteringPage);

@@ -2,10 +2,19 @@
 	--min-height: 56px;
 	--inner-padding-top: 8px;
 	--inner-padding-bottom: 8px;
+	--inner-padding-end: 0px;
+	--inner-padding-start: 0px;
 	--inner-border-width: 0 0 0 0;
 
 	--padding-start: 16px;
 	--padding-end: 16px;
+
+	margin-top: 2px;
+}
+
+.md ion-list > ion-item:first-child,
+.md ion-list > ion-item-sliding:first-child > ion-item {
+	margin-top: 0;
 }
 
 .md ion-item [slot="start"] {
@@ -18,4 +27,13 @@
 
 .md ion-item[lines="lines"] {
 	--inner-border-width: unset;
+}
+
+.md ion-item-divider {
+	--background: rgb(var(--md3-surface-container-low));
+	border-bottom: 0px solid transparent;
+}
+
+.md ion-item.surface {
+	--background: rgb(var(--md3-background));
 }

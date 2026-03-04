@@ -132,7 +132,7 @@
 		</IonHeader>
 
 		<IonContent>
-			<IonList inset>
+			<IonList>
 				<IonItem button :detail="!boardMessage.member" @click="memberSelectModal?.$el.present()">
 					<template v-if="boardMessage.member">
 						<MemberAvatar slot="start" :member="boardMessage.member" />
@@ -164,7 +164,6 @@
 				<IonItem>
 					<IonInput
 						v-model="boardMessage.title"
-						fill="outline"
 						:label="$t('messageBoard:edit.title')"
 						label-placement="floating"
 					/>
@@ -173,7 +172,6 @@
 				<IonItem>
 					<IonTextarea
 						v-model="boardMessage.body"
-						fill="outline"
 						auto-grow
 						:label="$t('messageBoard:edit.body')"
 						label-placement="floating"
@@ -246,7 +244,6 @@
 					<IonItem v-for="entry in boardMessage.poll.entries" :key="boardMessage.poll.entries.indexOf(entry)">
 						<IonInput
 							v-model="entry.choice"
-							fill="outline"
 							:label="$t('messageBoard:edit.pollChoice')"
 							label-placement="floating"
 						/>

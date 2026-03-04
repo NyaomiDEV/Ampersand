@@ -273,210 +273,215 @@
 				</div>
 			</div>
 
-			<div v-if="!isEditing" class="system-tag">
-				<SystemChip :system />
-			</div>
-
-			<div v-if="!isEditing" class="member-info">
-				<h1>{{ member.name }}</h1>
-				<p>{{ member.pronouns }}</p>
-				<p>{{ member.role }}</p>
-				<p v-if="member.isCustomFront">{{ $t("members:edit.customFront") }}</p>
-				<p v-if="member.isArchived">{{ $t("members:edit.archived") }}</p>
-			</div>
-
-			<div v-if="!isEditing && tags?.length" class="member-tags">
-				<TagChip
-					v-for="tag in member.tags"
-					:key="tag"
-					:tag="tags.find(x => x.uuid === tag)!"
-				/>
-			</div>
-
-			<div v-if="!isEditing" class="member-description">
-				<IonLabel>{{ $t("members:edit.description") }}</IonLabel>
-				<Markdown :markdown="member.description || $t('members:edit.noDescription')" />
-			</div>
-
-			<template v-for="customField in customFieldsToShowInViewMode" :key="customField.uuid">
-				<div
-					v-if="!isEditing"
-					class="member-custom-field"
-				>
-					<IonLabel>{{ customField.name }}</IonLabel>
-					<Markdown :markdown="member.customFields?.get(customField.uuid)!" />
+			<template v-if="!isEditing">
+				<div class="system-tag">
+					<SystemChip :system />
 				</div>
+
+				<div class="member-info">
+					<h1>{{ member.name }}</h1>
+					<p>{{ member.pronouns }}</p>
+					<p>{{ member.role }}</p>
+					<p v-if="member.isCustomFront">{{ $t("members:edit.customFront") }}</p>
+					<p v-if="member.isArchived">{{ $t("members:edit.archived") }}</p>
+				</div>
+
+				<div v-if="tags?.length" class="member-tags">
+					<TagChip
+						v-for="tag in member.tags"
+						:key="tag"
+						:tag="tags.find(x => x.uuid === tag)!"
+					/>
+				</div>
+
+				<IonList>
+					<IonItem>
+						<IonLabel class="member-description">
+							<p>{{ $t("members:edit.description") }}</p>
+							<h2>
+								<Markdown :markdown="member.description || $t('members:edit.noDescription')" />
+							</h2>
+						</IonLabel>
+					</IonItem>
+					<template v-for="customField in customFieldsToShowInViewMode" :key="customField.uuid">
+						<IonItem class="member-custom-field">
+							<IonLabel>
+								<p>{{ customField.name }}</p>
+								<h2><Markdown :markdown="member.customFields?.get(customField.uuid)!" /></h2>
+							</IonLabel>
+						</IonItem>
+					</template>
+				</IonList>
+
+				<IonList class="member-actions">
+					<IonItem button detail :router-link="`/options/frontHistory?q=@member:${member.uuid}`">
+						<IonIcon slot="start" :icon="FrontHistoryMD" aria-hidden="true" />
+						<IonLabel>{{ $t("members:edit.showFrontingEntries") }}</IonLabel>
+					</IonItem>
+					<IonItem button detail :router-link="`/options/messageBoard?q=@member:${member.uuid}`">
+						<IonIcon slot="start" :icon="newspaperMD" aria-hidden="true" />
+						<IonLabel>{{ $t("members:edit.showBoardEntries") }}</IonLabel>
+					</IonItem>
+					<IonItem button detail :router-link="`/journal?q=@member:${member.uuid}`">
+						<IonIcon slot="start" :icon="journalMD" aria-hidden="true" />
+						<IonLabel>{{ $t("members:edit.showJournalEntries") }}</IonLabel>
+					</IonItem>
+				</IonList>
 			</template>
 
-
-			<IonList v-if="!isEditing" class="member-actions">
-				<IonItem button detail :router-link="`/options/frontHistory?q=@member:${member.uuid}`">
-					<IonIcon slot="start" :icon="FrontHistoryMD" aria-hidden="true" />
-					<IonLabel>{{ $t("members:edit.showFrontingEntries") }}</IonLabel>
-				</IonItem>
-				<IonItem button detail :router-link="`/options/messageBoard?q=@member:${member.uuid}`">
-					<IonIcon slot="start" :icon="newspaperMD" aria-hidden="true" />
-					<IonLabel>{{ $t("members:edit.showBoardEntries") }}</IonLabel>
-				</IonItem>
-				<IonItem button detail :router-link="`/journal?q=@member:${member.uuid}`">
-					<IonIcon slot="start" :icon="journalMD" aria-hidden="true" />
-					<IonLabel>{{ $t("members:edit.showJournalEntries") }}</IonLabel>
-				</IonItem>
-			</IonList>
-
-			<IonList v-if="isEditing" class="member-edit" inset>
-				<IonItem>
-					<IonInput
-						v-model="member.name"
-						fill="outline"
-						:label="$t('members:edit.name')"
-						label-placement="floating"
-					/>
-				</IonItem>
-				<IonItem>
-					<IonInput
-						v-model="member.pronouns"
-						fill="outline"
-						:label="$t('members:edit.pronouns')"
-						label-placement="floating"
-					/>
-				</IonItem>
-				<IonItem>
-					<IonInput
-						v-model="member.role"
-						fill="outline"
-						:label="$t('members:edit.role')"
-						label-placement="floating"
-					/>
-				</IonItem>
-				<IonItem>
-					<IonTextarea
-						v-model="member.description"
-						fill="outline"
-						auto-grow
-						:label="$t('members:edit.description')"
-						label-placement="floating"
-					/>
-				</IonItem>
-				<IonItem
-					v-for="customField in customFieldsToShowInEditMode"
-					:key="customField.uuid"
-				>
-					<IonTextarea
-						fill="outline"
-						auto-grow
-						:label="customField.name"
-						label-placement="floating"
-						:model-value="member.customFields?.get(customField.uuid)"
-						@update:model-value="(v) => member.customFields?.set(customField.uuid, v)"
-					/>
-				</IonItem>
-				<IonItem button @click="customFieldsSelectionModal?.$el.present()">
-					<IonIcon slot="start" :icon="addMD" aria-hidden="true" />
-					<IonLabel>
-						{{ $t("members:edit.customFieldsAdd") }}
-					</IonLabel>
-				</IonItem>
-				<IonItem button :detail="true" @click="systemSelectModal?.$el.present()">
-					<IonAvatar slot="start">
-						<img v-if="system.image" aria-hidden="true" :src="getObjectURL(system.image)" />
-						<IonIcon v-else :icon="systemCircle" />
-					</IonAvatar>
-					<IonLabel>
-						<p>{{ $t("members:edit.system") }}</p>
-						<h2>{{ system.name }}</h2>
-					</IonLabel>
-				</IonItem>
-				<IonItem button :detail="true" @click="tagSelectionModal?.$el.present()">
-					<IonLabel>
-						{{ $t("members:edit.tags") }}
-						<div v-if="tags?.length" class="member-tags">
-							<TagChip
-								v-for="tag in member.tags"
-								:key="tag"
-								:tag="tags.find(x => x.uuid === tag)!"
-							/>
-						</div>
-					</IonLabel>
-				</IonItem>
-				<IonItem button :detail="false">
-					<Color v-model="member.color" @update:model-value="updateColors">
+			<template v-else>
+				<IonList>
+					<IonItem>
+						<IonInput
+							v-model="member.name"
+							:label="$t('members:edit.name')"
+							label-placement="floating"
+						/>
+					</IonItem>
+					<IonItem>
+						<IonInput
+							v-model="member.pronouns"
+							:label="$t('members:edit.pronouns')"
+							label-placement="floating"
+						/>
+					</IonItem>
+					<IonItem>
+						<IonInput
+							v-model="member.role"
+							:label="$t('members:edit.role')"
+							label-placement="floating"
+						/>
+					</IonItem>
+					<IonItem>
+						<IonTextarea
+							v-model="member.description"
+							auto-grow
+							:label="$t('members:edit.description')"
+							label-placement="floating"
+						/>
+					</IonItem>
+					<IonItem
+						v-for="customField in customFieldsToShowInEditMode"
+						:key="customField.uuid"
+					>
+						<IonTextarea
+							auto-grow
+							:label="customField.name"
+							label-placement="floating"
+							:model-value="member.customFields?.get(customField.uuid)"
+							@update:model-value="(v) => member.customFields?.set(customField.uuid, v)"
+						/>
+					</IonItem>
+					<IonItem button @click="customFieldsSelectionModal?.$el.present()">
+						<IonIcon slot="start" :icon="addMD" aria-hidden="true" />
 						<IonLabel>
-							{{ $t("members:edit.color") }}
+							{{ $t("members:edit.customFieldsAdd") }}
 						</IonLabel>
-					</Color>
-					<IonButton
-						v-if="member.color"
-						slot="end"
-						shape="round"
-						fill="outline"
-						size="default"
-						@click="(e) => { e.stopPropagation(); member.color = undefined; updateColors() }"
+					</IonItem>
+				</IonList>
+
+				<IonList class="member-edit">
+					<IonItem button :detail="true" @click="systemSelectModal?.$el.present()">
+						<IonAvatar slot="start">
+							<img v-if="system.image" aria-hidden="true" :src="getObjectURL(system.image)" />
+							<IonIcon v-else :icon="systemCircle" />
+						</IonAvatar>
+						<IonLabel>
+							<p>{{ $t("members:edit.system") }}</p>
+							<h2>{{ system.name }}</h2>
+						</IonLabel>
+					</IonItem>
+					<IonItem button :detail="true" @click="tagSelectionModal?.$el.present()">
+						<IonLabel>
+							{{ $t("members:edit.tags") }}
+							<div v-if="tags?.length" class="member-tags">
+								<TagChip
+									v-for="tag in member.tags"
+									:key="tag"
+									:tag="tags.find(x => x.uuid === tag)!"
+								/>
+							</div>
+						</IonLabel>
+					</IonItem>
+					<IonItem button :detail="false">
+						<Color v-model="member.color" @update:model-value="updateColors">
+							<IonLabel>
+								{{ $t("members:edit.color") }}
+							</IonLabel>
+						</Color>
+						<IonButton
+							v-if="member.color"
+							slot="end"
+							shape="round"
+							fill="outline"
+							size="default"
+							@click="(e) => { e.stopPropagation(); member.color = undefined; updateColors() }"
+						>
+							<IonIcon
+								slot="icon-only"
+								:icon="trashMD"
+								color="danger"
+							/>
+						</IonButton>
+					</IonItem>
+					<IonItem button :detail="false">
+						<IonToggle v-model="member.isPinned">
+							<IonLabel>
+								{{ $t("members:edit.isPinned") }}
+							</IonLabel>
+						</IonToggle>
+					</IonItem>
+					<IonItem button :detail="false">
+						<IonToggle v-model="member.isCustomFront">
+							<IonLabel>
+								{{ $t("members:edit.customFront") }}
+							</IonLabel>
+						</IonToggle>
+					</IonItem>
+					<IonItem button :detail="false">
+						<IonToggle v-model="member.isArchived">
+							<IonLabel>
+								{{ $t("members:edit.archived") }}
+							</IonLabel>
+						</IonToggle>
+					</IonItem>
+					<IonItem
+						v-if="member.uuid"
+						button
+						:detail="false"
+						@click="removeMember"
 					>
 						<IonIcon
-							slot="icon-only"
+							slot="start"
 							:icon="trashMD"
+							aria-hidden="true"
 							color="danger"
 						/>
-					</IonButton>
-				</IonItem>
-				<IonItem button :detail="false">
-					<IonToggle v-model="member.isPinned">
-						<IonLabel>
-							{{ $t("members:edit.isPinned") }}
+						<IonLabel color="danger">
+							<h3>{{ $t("members:edit.delete.title") }}</h3>
+							<p>{{ $t("other:genericDeleteDesc") }}</p>
 						</IonLabel>
-					</IonToggle>
-				</IonItem>
-				<IonItem button :detail="false">
-					<IonToggle v-model="member.isCustomFront">
-						<IonLabel>
-							{{ $t("members:edit.customFront") }}
-						</IonLabel>
-					</IonToggle>
-				</IonItem>
-				<IonItem button :detail="false">
-					<IonToggle v-model="member.isArchived">
-						<IonLabel>
-							{{ $t("members:edit.archived") }}
-						</IonLabel>
-					</IonToggle>
-				</IonItem>
-				<IonItem
-					v-if="member.uuid"
-					button
-					:detail="false"
-					@click="removeMember"
-				>
-					<IonIcon
-						slot="start"
-						:icon="trashMD"
-						aria-hidden="true"
-						color="danger"
-					/>
-					<IonLabel color="danger">
-						<h3>{{ $t("members:edit.delete.title") }}</h3>
-						<p>{{ $t("other:genericDeleteDesc") }}</p>
-					</IonLabel>
-				</IonItem>
+					</IonItem>
 
-				<IonItem
-					v-if="member.uuid"
-					:detail="false"
-					button
-					@click="copyIdToClipboard"
-				>
-					<IonLabel>
-						<p>{{ $t("members:edit.memberID", { memberID: member.uuid }) }}</p>
-					</IonLabel>
-				</IonItem>
-				<IonItem v-if="member.dateCreated" :detail="false">
-					<IonLabel>
-						<p>
-							{{ $t("members:edit.dateCreated", { dateCreated: formatDate(member.dateCreated, "expanded") }) }}
-						</p>
-					</IonLabel>
-				</IonItem>
-			</IonList>
+					<IonItem
+						v-if="member.uuid"
+						:detail="false"
+						button
+						@click="copyIdToClipboard"
+					>
+						<IonLabel>
+							<p>{{ $t("members:edit.memberID", { memberID: member.uuid }) }}</p>
+						</IonLabel>
+					</IonItem>
+					<IonItem v-if="member.dateCreated" :detail="false">
+						<IonLabel>
+							<p>
+								{{ $t("members:edit.dateCreated", { dateCreated: formatDate(member.dateCreated, "expanded") }) }}
+							</p>
+						</IonLabel>
+					</IonItem>
+				</IonList>
+			</template>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
 				<IonFabButton v-if="canEdit" :disabled="isEditing && !member.name.length" @click="toggleEditing">
@@ -534,6 +539,7 @@
 
 	img.cover {
 		mask-image: linear-gradient(black, transparent);
+		border-radius: 16px 16px 0 0;
 		width: 100%;
 		height: 100%;
 		display: block;
@@ -589,7 +595,7 @@
 		justify-content: start;
 	}
 
-	.member-edit ion-avatar ion-icon {
+	ion-list ion-avatar ion-icon {
 		width: 100%;
 		height: 100%;
 		color: var(--ion-color-primary);

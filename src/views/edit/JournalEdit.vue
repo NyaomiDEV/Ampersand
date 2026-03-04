@@ -193,9 +193,9 @@
 				</IonButton>
 			</div>
 
-			<IonList v-if="!isEditing" inset>
+			<IonList v-if="!isEditing">
 
-				<IonItem>
+				<IonItem class="surface">
 					<MemberAvatar v-if="post.member" slot="start" :member="post.member" />
 					<IonLabel>
 						<h2 v-if="post.member">{{ post.member.name }}</h2>
@@ -218,7 +218,7 @@
 
 			</IonList>
 
-			<IonList v-else inset>
+			<IonList v-else>
 
 				<IonItem button :detail="!post.member" @click="memberSelectModal?.$el.present()">
 					<template v-if="post.member">

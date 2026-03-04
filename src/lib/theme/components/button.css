@@ -118,15 +118,13 @@
 
 .md ion-toolbar ion-back-button.in-toolbar,
 .md ion-toolbar ion-button.in-toolbar {
-	--background: transparent;
-	--background-hover: transparent;
-	--background-focused: transparent;
-	--background-activated: transparent;
+	--background: rgb(var(--md3-surface-container-low));
+	--background-hover: rgb(var(--md3-surface-container));
+	--background-focused: rgb(var(--md3-surface-container));
+	--background-activated: rgb(var(--md3-surface-container));
 
 	--color: rgb(var(--md3-on-surface));
-	--color-hover: rgb(var(--md3-primary));
-	--color-focused: rgb(var(--md3-primary));
-	--color-activated: rgb(var(--md3-primary));
+	--ripple-color: rgb(var(--md3-surface-container-highest));
 
 	--box-shadow: var(--md3-elevation-0);
 }

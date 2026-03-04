@@ -85,11 +85,10 @@
 		</IonHeader>
 
 		<IonContent>
-			<IonList inset>
+			<IonList>
 				<IonItem>
 					<IonInput
 						v-model="customField.name"
-						fill="outline"
 						:label="$t('customFields:edit.name')"
 						label-placement="floating"
 					/>

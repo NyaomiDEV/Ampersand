@@ -13,7 +13,7 @@
 
 .md ion-range::part(knob) {
 	height: 64px;
-	outline: 12px solid var(--ion-background-color);
+	outline: 12px solid var(--ion-item-background);
 	transform: none;
 	top: -29px;
 }

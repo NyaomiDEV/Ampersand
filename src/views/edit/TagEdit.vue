@@ -182,11 +182,10 @@
 
 		<SpinnerFullscreen v-if="loading" />
 		<IonContent v-else>
-			<IonList inset>
+			<IonList>
 				<IonItem>
 					<IonInput
 						v-model="tag.name"
-						fill="outline"
 						:label="$t('tagManagement:edit.name')"
 						label-placement="floating"
 					/>
@@ -195,7 +194,6 @@
 				<IonItem>
 					<IonTextarea
 						v-model="tag.description"
-						fill="outline"
 						auto-grow
 						:label="$t('tagManagement:edit.description')"
 						label-placement="floating"

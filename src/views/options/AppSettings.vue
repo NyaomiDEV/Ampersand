@@ -191,7 +191,6 @@
 				<IonItem>
 					<IonInput
 						v-model="appConfig.defaultFilterQueries.members"
-						fill="outline"
 						label-placement="floating"
 						:label="$t('members:header')"
 					/>
@@ -200,7 +199,6 @@
 				<IonItem>
 					<IonInput
 						v-model="appConfig.defaultFilterQueries.journal"
-						fill="outline"
 						label-placement="floating"
 						:label="$t('journal:header')"
 					/>
@@ -209,7 +207,6 @@
 				<IonItem>
 					<IonInput
 						v-model="appConfig.defaultFilterQueries.tags"
-						fill="outline"
 						label-placement="floating"
 						:label="$t('tagManagement:header')"
 					/>
@@ -218,7 +215,6 @@
 				<IonItem>
 					<IonInput
 						v-model="appConfig.defaultFilterQueries.frontingHistory"
-						fill="outline"
 						label-placement="floating"
 						:label="$t('frontHistory:header')"
 					/>
@@ -227,7 +223,6 @@
 				<IonItem>
 					<IonInput
 						v-model="appConfig.defaultFilterQueries.messageBoard"
-						fill="outline"
 						label-placement="floating"
 						:label="$t('messageBoard:header')"
 					/>
@@ -236,7 +231,6 @@
 				<IonItem>
 					<IonInput
 						v-model="appConfig.defaultFilterQueries.assetManager"
-						fill="outline"
 						label-placement="floating"
 						:label="$t('assetManager:header')"
 					/>
@@ -245,7 +239,6 @@
 				<IonItem>
 					<IonInput
 						v-model="appConfig.defaultFilterQueries.customFields"
-						fill="outline"
 						label-placement="floating"
 						:label="$t('customFields:header')"
 					/>

@@ -61,11 +61,10 @@
 					</IonButton>
 				</div>
 
-				<IonList v-if="system" inset>
+				<IonList v-if="system">
 					<IonItem>
 						<IonInput
 							v-model="system.name"
-							fill="outline"
 							label-placement="floating"
 							:label="$t('onboarding:systemInfo.name')"
 						/>
@@ -74,7 +73,6 @@
 					<IonItem>
 						<IonTextarea
 							v-model="system.description"
-							fill="outline"
 							auto-grow
 							:label="$t('onboarding:systemInfo.description')"
 							label-placement="floating"

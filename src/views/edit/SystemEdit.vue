@@ -192,12 +192,16 @@
 				<h1>{{ system.name }}</h1>
 			</div>
 
-			<div v-if="!isEditing" class="system-description">
-				<IonLabel>{{ $t("systems:edit.description") }}</IonLabel>
-				<Markdown :markdown="system.description || $t('systems:edit.noDescription')" />
-			</div>
-
 			<IonList v-if="!isEditing" class="system-actions">
+				<IonItem v-if="!isEditing" class="system-description">
+					<IonLabel>
+						<p>{{ $t("systems:edit.description") }}</p>
+						<h2>
+							<Markdown :markdown="system.description || $t('systems:edit.noDescription')" />
+						</h2>
+					</IonLabel>
+				</IonItem>
+
 				<IonItem>
 					<IonLabel>
 						<h2>{{ $t("systems:edit.memberCount") }}</h2>
@@ -219,11 +223,10 @@
 				</IonItem>
 			</IonList>
 
-			<IonList v-if="isEditing" class="system-edit" inset>
+			<IonList v-if="isEditing" class="system-edit">
 				<IonItem>
 					<IonInput
 						v-model="system.name"
-						fill="outline"
 						label-placement="floating"
 						:label="$t('systems:edit.name')"
 					/>
@@ -232,7 +235,6 @@
 				<IonItem>
 					<IonTextarea
 						v-model="system.description"
-						fill="outline"
 						auto-grow
 						:label="$t('systems:edit.description')"
 						label-placement="floating"
@@ -325,7 +327,7 @@
 	}
 
 	div.system-description {
-		padding: 16px calc(16px + var(--ion-safe-area-right, 0px)) 0px calc(16px + var(--ion-safe-area-left, 0px));
+		padding: 16px calc(32px + var(--ion-safe-area-right, 0px)) 0px calc(32px + var(--ion-safe-area-left, 0px));
 	}
 
 	div.system-description ion-label {
