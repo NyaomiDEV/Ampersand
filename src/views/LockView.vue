@@ -5,7 +5,7 @@
 	import { securityConfig } from "../lib/config";
 	import { useRoute } from "vue-router";
 
-	import LockMD from "@material-symbols/svg-600/outlined/lock.svg";
+	import LockMD from "@material-symbols/svg-600/outlined/lock-fill.svg";
 	
 	const router = useIonRouter();
 	const route = useRoute();
