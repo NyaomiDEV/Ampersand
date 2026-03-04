@@ -194,10 +194,6 @@
 </template>
 
 <style scoped>
-	ion-item.card {
-		--background: var(--ion-background-color-step-100);
-	}
-
 	ion-item.filled {
 		--background: var(--ion-background-color-step-200);
 	}
