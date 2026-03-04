@@ -275,7 +275,7 @@
 
 			<template v-if="!isEditing">
 				<div class="system-tag">
-					<SystemChip :system />
+					<SystemChip :system :clickable="true" />
 				</div>
 
 				<div class="member-info">
