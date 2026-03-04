@@ -56,18 +56,6 @@ export async function deleteFrontingEntry(uuid: UUID) {
 
 export async function updateFrontingEntry(uuid: UUID, newContent: Partial<FrontingEntry>) {
 	try{
-		if(newContent.isMainFronter){
-			const toUpdate = (await Promise.all(
-				db.frontingEntries.index.filter(x => !x.endTime)
-					.map(x => db.frontingEntries.get(x.uuid))
-			))
-				.filter(x => x?.member !== uuid)
-				.map(x => x!.uuid);
-
-			for (const _uuid of toUpdate)
-				await updateFrontingEntry(_uuid, { isMainFronter: false });
-		}
-
 		const updated = await db.frontingEntries.update(uuid, newContent);
 		if(updated) {
 			DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
@@ -78,6 +66,21 @@ export async function updateFrontingEntry(uuid: UUID, newContent: Partial<Fronti
 				oldData: updated.oldData,
 				newData: updated.newData
 			}));
+
+			if(newContent.isMainFronter){
+				const toUpdate = (await Promise.all(
+					db.frontingEntries.index.filter(x => 
+						x.endTime && updated.newData.startTime.valueOf() < x.endTime.valueOf() ||
+						updated.newData.startTime.valueOf() < x.startTime!.valueOf() && (updated.newData.endTime || new Date()).valueOf() > x.startTime!.valueOf()
+					)
+						.map(x => db.frontingEntries.get(x.uuid))
+				))
+					.filter(x => x?.uuid !== uuid)
+					.map(x => x!.uuid);
+
+				for (const _uuid of toUpdate)
+					await updateFrontingEntry(_uuid, { isMainFronter: false });
+			}
 			return true;
 		}
 		return false;
