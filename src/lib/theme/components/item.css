@@ -35,5 +35,5 @@
 }
 
 .md ion-item.surface {
-	--background: rgb(var(--md3-background));
+	--background: transparent;
 }

@@ -127,7 +127,6 @@
 			:class="{
 				influenced: frontingEntries.findIndex(x => x.influencing?.uuid === fronting.member.uuid) > 0,
 				outlined: !fronting.isMainFronter,
-				elevated: fronting.isMainFronter,
 				influencing: !!fronting.influencing,
 			}"
 			@click="quickDelete ? quickRemoveFronter(fronting) : showModal(fronting)"
