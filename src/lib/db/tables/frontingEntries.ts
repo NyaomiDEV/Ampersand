@@ -52,7 +52,7 @@ export async function deleteFrontingEntry(frontingEntry: FrontingEntry | UUID) {
 
 export async function updateFrontingEntry(id: UUID, newContent: Partial<FrontingEntry>) {
 	try{
-		const updated = await db.frontingEntries.update(uuid, newContent);
+		const updated = await db.frontingEntries.update(id, newContent);
 		if(updated) {
 			DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 				table: "frontingEntries",
@@ -68,7 +68,7 @@ export async function updateFrontingEntry(id: UUID, newContent: Partial<Fronting
 					.filter(x => 
 						x.member.id !== id && (
 							x.endTime && updated.newData.startTime.valueOf() < x.endTime.valueOf() ||
-							updated.newData.startTime.valueOf() < x.startTime!.valueOf() && (updated.newData.endTime || new Date()).valueOf() > x.startTime!.valueOf()
+							updated.newData.startTime.valueOf() < x.startTime.valueOf() && (updated.newData.endTime || new Date()).valueOf() > x.startTime.valueOf()
 						)
 					);
 

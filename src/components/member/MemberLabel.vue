@@ -16,7 +16,7 @@
 		showTagChips?: boolean
 	}>();
 
-	const system = shallowRef<System>({ name: "", id: props.member.system });
+	const system = shallowRef<System>({ name: "", ...props.member.system });
 	const tags = shallowRef<MemberTag[]>();
 
 	async function updateTags(){
@@ -33,7 +33,7 @@
 
 	let watchHandle: WatchStopHandle | undefined;
 	watch(props, async () => {
-		const _sys = await getSystem(props.member.system);
+		const _sys = await getSystem(props.member.system.id);
 		if (_sys) system.value = _sys;
 		await updateTags();
 		if(isReactive(props.member))

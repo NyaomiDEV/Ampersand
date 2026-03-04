@@ -38,9 +38,9 @@ export async function newSystem(system: Omit<System, keyof UUIDable>){
 	}
 }
 
-export async function getSystem(uuid: UUID){
-	if(uuid === nilUid) return undefined;
-	return await db.systems.get(uuid);
+export async function getSystem(id: UUID){
+	if(id === nilUid) return undefined;
+	return await db.systems.get(id);
 }
 
 export async function deleteSystem(system: System | UUID) {

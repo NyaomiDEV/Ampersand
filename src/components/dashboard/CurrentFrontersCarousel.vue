@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { IonCard, IonCardContent, IonLabel, IonListHeader, IonIcon, IonButton } from "@ionic/vue";
 	import MemberAvatar from "../member/MemberAvatar.vue";
-	import { h, onBeforeMount, onUnmounted, ref, shallowRef } from "vue";
+	import { h, onBeforeMount, onUnmounted, ref, shallowReactive, shallowRef } from "vue";
 	import type { FrontingEntry, Member } from "../../lib/db/entities.d.ts";
 	import { getFronting, newFrontingEntry, sendFrontingChangedEvent, updateFrontingEntry } from "../../lib/db/tables/frontingEntries";
 	import { formatWrittenTime } from "../../lib/util/misc";
@@ -14,8 +14,10 @@
 
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 	import removeFromFrontMD from "@material-symbols/svg-600/outlined/person_remove.svg";
+	import { getPresenceEntriesForFrontEntry } from "../../lib/db/tables/presenceEntries.ts";
 
 	const frontingEntries = shallowRef<FrontingEntry[]>([]);
+	const presences = shallowReactive(new Map<FrontingEntry, [Date | undefined, number | undefined]>());
 
 	const now = ref(new Date());
 
@@ -66,8 +68,8 @@
 		await (modal.el as any).present();
 	}
 
-	async function quickRemoveFronter(clickedFrontingEntry: FrontingEntryComplete){
-		await updateFrontingEntry(clickedFrontingEntry.uuid, {
+	async function quickRemoveFronter(clickedFrontingEntry: FrontingEntry){
+		await updateFrontingEntry(clickedFrontingEntry.id, {
 			endTime: new Date()
 		});
 
@@ -97,13 +99,20 @@
 		await (modal.el as any).present();
 	}
 
-	function getMostRecentPresence(frontingEntry: FrontingEntryComplete){
-		if(!frontingEntry.presence) return [undefined, undefined];
+	async function getMostRecentPresence(entry: FrontingEntry){
+		const presence = new Map<Date, number>();
+		const presences = await Array.fromAsync(getPresenceEntriesForFrontEntry(entry));
+		for(const _presence of presences)
+			presence.set(_presence.date, _presence.presence);
 
-		const presenceVal = Array.from(frontingEntry.presence.entries());
-
+		const presenceVal = Array.from(presence.entries());
 		return presenceVal.sort((a, b) => a[0].valueOf() - b[0].valueOf()).pop() || [undefined, undefined];
 	}
+
+	onBeforeMount(async () => {
+		for(const entry of frontingEntries.value)
+			presences.set(entry, await getMostRecentPresence(entry));
+	});
 </script>
 
 <template>
@@ -148,8 +157,8 @@
 					<p v-if="fronting.customStatus">
 						{{ fronting.customStatus }}
 					</p>
-					<p v-if="fronting.presence">
-						<PresenceRating :rating="getMostRecentPresence(fronting)[1] ?? 0" />
+					<p v-if="presences.has(fronting)">
+						<PresenceRating :rating="presences.get(fronting)?.[1] ?? 0" />
 					</p>
 				</IonLabel>
 			</IonCardContent>
