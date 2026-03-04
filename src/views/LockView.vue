@@ -1,9 +1,11 @@
 <script setup lang="ts">
 	import { onMounted } from "vue";
-	import { IonPage, IonContent, IonLabel, IonInput, useIonRouter } from "@ionic/vue";
+	import { IonPage, IonContent, IonLabel, IonInput, useIonRouter, IonList, IonItem, IonIcon } from "@ionic/vue";
 	import { unlockWithPassword, unlockWithBiometrics } from "../lib/applock";
 	import { securityConfig } from "../lib/config";
 	import { useRoute } from "vue-router";
+
+	import LockMD from "@material-symbols/svg-600/outlined/lock.svg";
 	
 	const router = useIonRouter();
 	const route = useRoute();
@@ -28,15 +30,21 @@
 		<IonContent>
 
 			<div>
+				<IonIcon :icon="LockMD" />
 				<IonLabel>
 					<h1>{{ $t("lock:title") }}</h1>
 				</IonLabel>
-				<IonInput
-					type="password"
-					label-placement="floating"
-					:label="$t('lock:hint')"
-					@ion-change="checkAndTryUnlocking"
-				/>
+				<IonList>
+					<IonItem>
+						<IonInput
+							type="password"
+							label-placement="floating"
+							:label="$t('lock:hint')"
+							@ion-change="checkAndTryUnlocking"
+						/>
+					</IonItem>
+				</IonList>
+
 			</div>
 
 		</IonContent>
@@ -54,5 +62,15 @@
 		align-items: center;
 		text-align: center;
 		padding: 24px;
+	}
+
+	ion-icon {
+		width: 48px;
+		height: 48px;
+		color: var(--ion-color-primary);
+	}
+
+	ion-list {
+		width: 50vw;
 	}
 </style>
