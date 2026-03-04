@@ -12,6 +12,7 @@
 		IonModal,
 		IonTextarea,
 		useIonRouter,
+		modalController
 	} from "@ionic/vue";
 
 	import { JournalPostComplete, Tag } from "../lib/db/entities";
@@ -24,6 +25,7 @@
 	import { deleteJournalPost } from "../lib/db/tables/journalPosts";
 
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
+
 
 	const i18next = useTranslation();
 	const router = useIonRouter();
@@ -43,6 +45,7 @@
 			i18next.t("journal:edit.delete.confirm")
 		)){
 			await deleteJournalPost(post.value.uuid!);
+			await modalController.dismiss();
 			router.back();
 		}
 	}
