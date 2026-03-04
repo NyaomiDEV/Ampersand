@@ -159,6 +159,6 @@ ion-reorder > ion-icon {
 }
 
 ion-item.default {
-	--background: var(--ion-background-color-step-150);
+	--background: var(--ion-background-color-step-200);
 }
 </style>
