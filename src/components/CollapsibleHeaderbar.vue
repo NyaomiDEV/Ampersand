@@ -7,7 +7,7 @@
 	const scrollDeltaNormalized = ref(0);
 	const scrollDelta = ref(0);
 	const contentOffset = ref(0);
-	let maxScroll;
+	let maxScroll: number;
 
 	onMounted(async () => {
 		if(!headerbar.value) return;
@@ -21,7 +21,7 @@
 				(shadow?.querySelector<HTMLElement>("[part=content]")?.offsetLeft ?? 0) - 
 				parseFloat(shadow?.querySelector<HTMLElement>("[part=container]")?.computedStyleMap().get("padding-left")?.toString().replace("px", "") || "0")
 			);
-			maxScroll = firstToolbarEl?.clientHeight;
+			maxScroll = firstToolbarEl?.clientHeight || 0;
 
 			console.log(firstToolbarEl, contentOffset.value);
 		}, 1);
@@ -48,7 +48,7 @@
 		transform: translateY(max(calc(v-bind('scrollDelta') * -1px), -64px));
 	}
 
-	ion-header :deep(ion-toolbar) {
+	ion-header.with-opacity :deep(ion-toolbar) {
 		--opacity-delta: calc(-50% + calc(var(--scroll-delta) * 2));
 		--background: color-mix(in srgb,
 			rgb(var(--md3-surface-container)) var(--opacity-delta),
