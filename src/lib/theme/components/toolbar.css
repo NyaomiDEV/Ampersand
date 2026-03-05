@@ -61,12 +61,11 @@
 	color: rgb(var(--md3-on-surface-variant));
 }
 
-.md ion-toolbar > [slot=start]+ion-title {
+.md ion-toolbar:has([slot=start])::part(content) {
 	padding-inline-start: 16px;
 }
 
-.md ion-toolbar > ion-title:has(+ [slot=secondary]),
-.md ion-toolbar > ion-title:has(+ [slot=end]) {
+.md ion-toolbar:has([slot=primary], [slot=secondary], [slot=end])::part(content) {
 	padding-inline-end: 16px;
 }
 
