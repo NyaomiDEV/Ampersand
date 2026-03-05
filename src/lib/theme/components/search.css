@@ -11,4 +11,10 @@
   	.searchbar-input {
   		border: 1px solid rgb(var(--md3-outline-variant));
   	}
+
+	.searchbar-cancel-button {
+		font-size: 24px;
+		inset-inline-start: 14px;
+		color: rgb(var(--md3-on-surface));
+	}
   }
