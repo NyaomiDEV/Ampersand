@@ -4,8 +4,8 @@
 	--md3-corner-extra-small: 4px;
 	--md3-corner-extra-small-top: 4px 4px 0 0;
 	--md3-corner-small: 8px;
-	--md3-corner-large: 16px;
 	--md3-corner-medium: 12px;
+	--md3-corner-large: 16px;
 	--md3-corner-large-end: 0 16px 16px 0;
 	--md3-corner-large-top: 16px 16px 0 0;
 	--md3-corner-extra-large: 28px;
@@ -21,4 +21,69 @@
 	--md3-elevation-3: 0px 1px 3px 0px rgba(var(--md3-shadow), 0.3), 0px 4px 8px 3px rgba(var(--md3-shadow), 0.15);
 	--md3-elevation-4: 0px 2px 3px 0px rgba(var(--md3-shadow), 0.3), 0px 6px 10px 4px rgba(var(--md3-shadow), 0.15);
 	--md3-elevation-5: 0px 4px 4px 0px rgba(var(--md3-shadow), 0.3), 0px 8px 12px 6px rgba(var(--md3-shadow), 0.15);
+}
+
+/* Motion path */
+.md * {
+	--md3-motion-path: linear;
+}
+
+/* Durations */
+.md * {
+	--md3-motion-duration-short-1: 50ms;
+	--md3-motion-duration-short-2: 100ms;
+	--md3-motion-duration-short-3: 150ms;
+	--md3-motion-duration-short-4: 200ms;
+	--md3-motion-duration-medium-1: 250ms;
+	--md3-motion-duration-medium-2: 300ms;
+	--md3-motion-duration-medium-3: 350ms;
+	--md3-motion-duration-medium-4: 400ms;
+	--md3-motion-duration-long-1: 450ms;
+	--md3-motion-duration-long-2: 500ms;
+	--md3-motion-duration-long-3: 550ms;
+	--md3-motion-duration-long-4: 600ms;
+	--md3-motion-duration-extra-long-1: 700ms;
+	--md3-motion-duration-extra-long-2: 800ms;
+	--md3-motion-duration-extra-long-3: 900ms;
+	--md3-motion-duration-extra-long-4: 1000ms;
+}
+
+/* Expressive durations */
+.md * {
+	--md3-expressive-fast-spatial-duration: 350ms;
+	--md3-expressive-default-spatial-duration: 500ms;
+	--md3-expressive-slow-spatial-duration: 650ms;
+	--md3-expressive-fast-effects-duration: 150ms;
+	--md3-expressive-default-effects-duration: 200ms;
+	--md3-expressive-slow-effects-duration: 300ms;
+
+	--md3-standard-fast-spatial-duration: 350ms;
+	--md3-standard-default-spatial-duration: 500ms;
+	--md3-standard-slow-spatial-duration: 750ms;
+	--md3-standard-fast-effects-duration: 150ms;
+	--md3-standard-default-effects-duration: 200ms;
+	--md3-standard-slow-effects-duration: 300ms;
+
+	--md3-expressive-fast-spring-duration: 350ms;
+	--md3-expressive-default-spring-duration: 500ms;
+	--md3-expressive-slow-spring-duration: 750ms;
+}
+
+/* Expressive spring functions */
+.md * {
+	--md3-expressive-fast-spatial: cubic-bezier(0.42, 1.67, 0.21, 0.90);
+    --md3-expressive-default-spatial: cubic-bezier(0.38, 1.21, 0.22, 1.00);
+    --md3-expressive-slow-spatial: cubic-bezier(0.39, 1.29, 0.35, 0.98);
+    --md3-expressive-fast-effects: cubic-bezier(0.31, 0.94, 0.34, 1.00);
+    --md3-expressive-default-effects: cubic-bezier(0.34, 0.80, 0.34, 1.00);
+    --md3-expressive-slow-effects: cubic-bezier(0.34, 0.88, 0.34, 1.00);
+    --md3-standard-fast-spatial: cubic-bezier(0.27, 1.06, 0.18, 1.00);
+    --md3-standard-default-spatial: cubic-bezier(0.27, 1.06, 0.18, 1.00);
+    --md3-standard-slow-spatial: cubic-bezier(0.27, 1.06, 0.18, 1.00);
+    --md3-standard-fast-effects: cubic-bezier(0.31, 0.94, 0.34, 1.00);
+    --md3-standard-default-effects: cubic-bezier(0.34, 0.80, 0.34, 1.00);
+    --md3-standard-slow-effects: cubic-bezier(0.34, 0.88, 0.34, 1.00);
+    --md3-expressive-fast-spring: linear(0.00, 0.0612, 0.244, 0.486, 0.732, 0.945, 1.10, 1.20, 1.23, 1.22, 1.18, 1.13, 1.07, 1.02, 0.980, 0.956, 0.946, 0.947, 0.955, 0.968, 0.982, 0.994, 1.00, 1.01, 1.01, 1.01, 1.01, 1.01, 1.00, 1.00, 0.999, 0.998, 0.997, 0.997, 0.997, 0.998, 0.999, 1.00, 1.00);
+    --md3-expressive-default-spring: linear(0.00, 0.0612, 0.244, 0.486, 0.732, 0.945, 1.10, 1.20, 1.23, 1.22, 1.18, 1.13, 1.07, 1.02, 0.980, 0.956, 0.946, 0.947, 0.955, 0.968, 0.982, 0.994, 1.00, 1.01, 1.01, 1.01, 1.01, 1.01, 1.00, 1.00, 0.999, 0.998, 0.997, 0.997, 0.997, 0.998, 0.999, 1.00, 1.00);
+    --md3-expressive-slow-spring: linear(0.00, 0.126, 0.320, 0.519, 0.690, 0.822, 0.915, 0.974, 1.01, 1.02, 1.03, 1.03, 1.02, 1.02, 1.01, 1.01, 1.00, 1.00, 1.00, 1.00);
 }

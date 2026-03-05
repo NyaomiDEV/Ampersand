@@ -4,7 +4,7 @@
 	--color: rgb(var(--md3-on-primary-container));
 
 	--box-shadow: var(--md3-elevation-3);
-	--border-radius: 16px;
+	--border-radius: var(--md3-corner-large);
 
 	--padding-start: 16px;
 	--padding-end: 16px;
@@ -22,13 +22,13 @@
 }
 
 .md ion-fab-button[size=small] {
-	--border-radius: 12px;
+	--border-radius: var(--md3-corner-medium);
 	width: 40px;
 	height: 40px;
 }
 
 .md ion-fab-button[size=large] {
-	--border-radius: 28px;
+	--border-radius: var(--md3-corner-extra-large);
 	width: 96px;
 	height: 96px;
 }
