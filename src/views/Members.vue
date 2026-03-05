@@ -14,7 +14,6 @@
 		IonItemSliding,
 		IonItemOptions,
 		IonItemOption,
-		useIonRouter,
 		IonBackButton,
 	} from "@ionic/vue";
 	import { onBeforeMount, onUnmounted, reactive, ref, shallowRef, useTemplateRef, watch } from "vue";
@@ -61,7 +60,6 @@
 	const frontingEntries = reactive(new Map<Member, FrontingEntry | undefined>());
 
 	const list = useTemplateRef("list");
-	const router = useIonRouter();
 
 	const listeners = [
 		(event: Event) => {
@@ -169,30 +167,6 @@
 		return style;
 	}
 
-	const longPressHandlers = new Map<Member, number>();
-	function startPress(member: Member){
-		longPressHandlers.set(
-			member,
-			setTimeout(async () => {
-				const entry = await getCurrentFrontEntryForMember(member);
-				if(entry)
-					await removeFrontingEntry(member);
-				else
-					await addFrontingEntry(member);
-
-				longPressHandlers.delete(member);
-			}, accessibilityConfig.longPressDuration)
-		);
-	}
-
-	function endPress(member: Member, dragged: boolean){
-		const timeoutHandler = longPressHandlers.get(member);
-		if(!timeoutHandler) return;
-		clearTimeout(timeoutHandler);
-		longPressHandlers.delete(member);
-		if(!dragged) router.push(`/members/edit?uuid=${member.uuid}`);
-	}
-
 	function numberOfFronters() {
 		return Array.from(frontingEntries.values()).filter(x => !!x).length;
 	}
@@ -224,15 +198,12 @@
 		<IonContent v-else>
 			<IonList ref="list" :class="{ compact: accessibilityConfig.disableMemberCoversInList }">
 
-				<IonItemSliding v-for="member in members" :key="member.uuid" @ion-drag="endPress(member, true)">
+				<IonItemSliding v-for="member in members" :key="member.uuid">
 					<IonItem
 						button
 						:class="{ archived: member.isArchived }"
 						:style="getStyle(member)"
-						@pointerdown="startPress(member)"
-						@pointerup="endPress(member, false)"
-						@pointercancel="endPress(member, true)"
-						@pointerleave="endPress(member, true)"
+						:router-link="`/members/edit?uuid=${member.uuid}`"
 					>
 						<MemberAvatar slot="start" :member />
 						<MemberLabel :member show-tag-chips />

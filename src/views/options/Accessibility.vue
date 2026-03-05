@@ -141,6 +141,9 @@
 					</IonLabel>
 				</IonItem>
 
+				<!--
+				We're not using this anymore since we deprecated member long pressing,
+				however we do keep this here should we reintroduce long presses in some other areas
 				<IonItem>
 					<IonLabel class="more-padding">
 						<h3 class="centered-text">{{ $t("accessibility:longPressDuration.title") }}</h3>
@@ -156,6 +159,7 @@
 						/>
 					</IonLabel>
 				</IonItem>
+				-->
 			</IonList>
 		</IonContent>
 	</IonPage>
