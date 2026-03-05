@@ -63,8 +63,8 @@
 	}
 }
 
-.md ion-item:first-child,
-.md ion-item-sliding:first-child>ion-item {
+.md :not(ion-item-sliding) > ion-item:first-child,
+.md ion-item-sliding:first-child > ion-item {
 	margin-top: 0;
 }
 
