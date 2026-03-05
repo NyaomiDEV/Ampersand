@@ -33,6 +33,26 @@
 		padding-bottom: 14px;
 	}
 
+	.alert-input {
+		background-color: rgb(var(--md3-surface-container-highest));
+		padding-inline-start: 16px !important;
+		padding-inline-end: 16px !important;
+		padding-top: 8px !important;
+		padding-bottom: 8px !important;
+		min-height: 56px;
+		color: rgb(var(--md3-on-surface));
+		border-radius: var(--md3-corner-extra-small-top);
+
+		&:hover {
+			border-bottom-color: rgb(var(--md3-on-surface));
+		}
+
+		&:focus {
+			border-bottom-color: rgb(var(--md3-primary));
+			border-bottom-width: 3px;
+		}
+	}
+
 	.alert-button {
 		text-transform: none;
 		color: rgb(var(--md3-on-surface));

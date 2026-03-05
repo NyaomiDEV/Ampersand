@@ -1,0 +1,37 @@
+.md ion-input, .md ion-textarea {
+	--color: rgb(var(--md3-on-surface-variant));
+}
+
+.md ion-input.input-fill-solid,
+.md ion-textarea.textarea-fill-solid {
+	--background: rgb(var(--md3-surface-container-highest));
+	border-radius: var(--md3-corner-extra-small-top);
+	--border-width: 1px;
+
+	&:hover {
+		--background: rgb(var(--md3-surface-container-highest));
+		--border-color: rgb(var(--md3-on-surface));
+	}
+
+	&.has-focus {
+		--background: rgb(var(--md3-surface-container-highest));
+		--border-color: rgb(var(--md3-primary));
+		--border-width: 3px;
+	}
+}
+
+.md ion-input.input-fill-outline,
+.md ion-textarea.textarea-fill-outline {
+	--border-color: rgb(var(--md3-on-surface-variant));
+	--border-radius: var(--md3-corner-extra-small);
+	--border-width: 1px;
+
+	&:hover {
+		--border-color: rgb(var(--md3-on-surface));
+	}
+
+	&.has-focus {
+		--border-color: rgb(var(--md3-primary));
+		--border-width: 3px;
+	}
+}
