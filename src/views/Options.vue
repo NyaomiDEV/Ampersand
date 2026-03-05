@@ -1,6 +1,7 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonFab, IonFabButton, IonList, IonItem, IonListHeader, IonLabel, IonPage, IonTitle, IonToolbar, IonIcon, useIonRouter } from "@ionic/vue";
+	import { IonContent, IonFab, IonFabButton, IonList, IonItem, IonListHeader, IonLabel, IonPage, IonTitle, IonToolbar, IonIcon, useIonRouter } from "@ionic/vue";
 	import { inject } from "vue";
+	import CollapsibleHeaderbar from "../components/CollapsibleHeaderbar.vue";
 
 	import LockMD from "@material-symbols/svg-600/outlined/lock.svg";
 	import TestingMD from "@material-symbols/svg-600/outlined/taunt.svg";
@@ -32,15 +33,15 @@
 
 <template>
 	<IonPage>
-		<IonHeader>
-			<IonToolbar>
-				<IonTitle>
-					{{ $t("options:header") }}
-				</IonTitle>
-			</IonToolbar>
-		</IonHeader>
+		<IonContent :scroll-events="true">
 
-		<IonContent>
+			<CollapsibleHeaderbar>
+				<IonToolbar>
+					<IonTitle>
+						{{ $t("options:header") }}
+					</IonTitle>
+				</IonToolbar>
+			</CollapsibleHeaderbar>
 
 			<IonListHeader>
 				<IonLabel>{{ $t("options:managementLabel") }}</IonLabel>

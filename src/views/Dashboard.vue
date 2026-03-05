@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, useIonRouter, IonFab, IonIcon, IonFabButton, IonPage, IonTitle, IonToolbar } from "@ionic/vue";
+	import { IonContent, useIonRouter, IonFab, IonIcon, IonFabButton, IonPage, IonTitle, IonToolbar } from "@ionic/vue";
 	import { onBeforeMount, onUnmounted, shallowRef } from "vue";
 	import { getMainFronter } from "../lib/db/tables/frontingEntries.ts";
 	import type { Member } from "../lib/db/entities";
@@ -13,6 +13,7 @@
 	import { DatabaseEvents, DatabaseEvent } from "../lib/db/events.ts";
 	import { appConfig, securityConfig } from "../lib/config/index.ts";
 	import { lock } from "../lib/applock.ts";
+	import CollapsibleHeaderbar from "../components/CollapsibleHeaderbar.vue";
 
 	const mainFronter = shallowRef<Member>();
 	const router = useIonRouter();
@@ -38,19 +39,18 @@
 </script>
 
 <template>
-	<IonPage>
-		<IonHeader>
-			<IonToolbar>
-				<IonTitle>
-					{{ 
-						mainFronter
-							? $t("dashboard:header_mainfronter", { fronterName: mainFronter.name })
-							: $t("dashboard:header_salute") }}
-				</IonTitle>
-			</IonToolbar>
-		</IonHeader>
-		
-		<IonContent :fullscreen="true">
+	<IonPage>		
+		<IonContent :scroll-events="true">
+			<CollapsibleHeaderbar>
+				<IonToolbar>
+					<IonTitle>
+						{{ 
+							mainFronter
+								? $t("dashboard:header_mainfronter", { fronterName: mainFronter.name })
+								: $t("dashboard:header_salute") }}
+					</IonTitle>
+				</IonToolbar>
+			</CollapsibleHeaderbar>
 			<SystemDescriptionAccordion v-if="appConfig.showSystemDescriptionInDashboard" />
 			<CurrentFrontersCarousel />
 			<MessageBoardCarousel />

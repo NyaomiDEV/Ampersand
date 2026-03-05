@@ -1,7 +1,8 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonSearchbar, IonFab, IonFabButton, IonIcon, IonLabel, IonDatetime, IonItemDivider, useIonRouter, IonBackButton } from "@ionic/vue";
+	import { IonContent, IonList, IonPage, IonTitle, IonToolbar, IonSearchbar, IonFab, IonFabButton, IonIcon, IonLabel, IonDatetime, IonItemDivider, useIonRouter, IonBackButton } from "@ionic/vue";
 	import { onBeforeMount, onUnmounted, ref, shallowRef, watch } from "vue";
 	import { useRoute } from "vue-router";
+	import CollapsibleHeaderbar from "../components/CollapsibleHeaderbar.vue";
 	import Spinner from "../components/Spinner.vue";
 	import JournalPostItem from "../components/JournalPostItem.vue";
 
@@ -137,27 +138,26 @@
 
 <template>
 	<IonPage>
-		<IonHeader>
-			<IonToolbar>
-				<IonBackButton slot="start" :icon="backMD" />
-				<IonTitle>
-					{{ $t("journal:header") }}
-				</IonTitle>
-			</IonToolbar>
-			<IonToolbar>
-				<IonSearchbar
-					:animated="true"
-					:placeholder="$t('journal:searchPlaceholder')"
-					show-cancel-button="focus"
-					show-clear-button="focus"
-					:spellcheck="false"
-					:value="search"
-					@ion-change="e => search = e.detail.value || ''"
-				/>
-			</IonToolbar>
-		</IonHeader>
-
-		<IonContent>
+		<IonContent :scroll-events="true">
+			<CollapsibleHeaderbar>
+				<IonToolbar>
+					<IonBackButton slot="start" :icon="backMD" />
+					<IonTitle>
+						{{ $t("journal:header") }}
+					</IonTitle>
+				</IonToolbar>
+				<IonToolbar>
+					<IonSearchbar
+						:animated="true"
+						:placeholder="$t('journal:searchPlaceholder')"
+						show-cancel-button="focus"
+						show-clear-button="focus"
+						:spellcheck="false"
+						:value="search"
+						@ion-change="e => search = e.detail.value || ''"
+					/>
+				</IonToolbar>
+			</CollapsibleHeaderbar>
 			<IonDatetime
 				v-model="date"
 				presentation="date" 

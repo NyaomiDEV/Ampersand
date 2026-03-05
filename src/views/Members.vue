@@ -1,7 +1,6 @@
 <script setup lang="ts">
 	import {
 		IonContent,
-		IonHeader,
 		IonList,
 		IonPage,
 		IonSearchbar,
@@ -18,6 +17,7 @@
 	} from "@ionic/vue";
 	import { onBeforeMount, onUnmounted, reactive, ref, shallowRef, useTemplateRef, watch } from "vue";
 	import { accessibilityConfig, appConfig } from "../lib/config/index.ts";
+	import CollapsibleHeaderbar from "../components/CollapsibleHeaderbar.vue";
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
@@ -173,29 +173,29 @@
 </script>
 
 <template>
-	<IonPage>
-		<IonHeader>
-			<IonToolbar>
-				<IonBackButton slot="start" :icon="backMD" />
-				<IonTitle>
-					{{ $t("members:header") }}
-				</IonTitle>
-			</IonToolbar>
-			<IonToolbar>
-				<IonSearchbar
-					:animated="true"
-					:placeholder="$t('members:searchPlaceholder')"
-					show-cancel-button="focus"
-					show-clear-button="focus"
-					:spellcheck="false"
-					:value="search"
-					@ion-change="e => search = e.detail.value || ''"
-				/>
-			</IonToolbar>
-		</IonHeader>
-		
+	<IonPage>		
 		<SpinnerFullscreen v-if="!members" />
-		<IonContent v-else>
+		<IonContent v-else :scroll-events="true">
+			<CollapsibleHeaderbar>
+				<IonToolbar>
+					<IonBackButton slot="start" :icon="backMD" />
+					<IonTitle>
+						{{ $t("members:header") }}
+					</IonTitle>
+				</IonToolbar>
+				<IonToolbar>
+					<IonSearchbar
+						:animated="true"
+						:placeholder="$t('members:searchPlaceholder')"
+						show-cancel-button="focus"
+						show-clear-button="focus"
+						:spellcheck="false"
+						:value="search"
+						@ion-change="e => search = e.detail.value || ''"
+					/>
+				</IonToolbar>
+			</CollapsibleHeaderbar>
+
 			<IonList ref="list" :class="{ compact: accessibilityConfig.disableMemberCoversInList }">
 
 				<IonItemSliding v-for="member in members" :key="member.uuid">
