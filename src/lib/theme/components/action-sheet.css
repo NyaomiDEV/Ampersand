@@ -1,7 +1,7 @@
 /* Adapted from danielkleebinder/md3-for-ionic */
 .md ion-action-sheet {
-	--background: var(--md3-surface-container-low) !important;
-	--color: var(--md3-on-surface) !important;
+	--background: rgb(var(--md3-surface-container-low));
+	--color: rgb(var(--md3-on-surface));
 	--max-width: 640px !important;
 
 	.action-sheet-container {
