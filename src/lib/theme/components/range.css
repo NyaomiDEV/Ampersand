@@ -21,7 +21,7 @@
 		width: 4px;
 		height: var(--knob-size);
 		background: var(--bar-background-active);
-		outline: 12px solid rgb(var(--md3-surface-container));
+		outline: 8px solid rgb(var(--md3-surface-container));
 		transform: translateX(calc(var(--knob-size) / 2 - 2px));
 	}
 
