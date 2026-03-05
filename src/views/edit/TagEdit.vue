@@ -249,7 +249,12 @@
 					</IonLabel>
 				</IonItem>
 
-				<IonItem v-if="tag.uuid && tag.type === 'member'" button @click="tagMembers">
+				<IonItem  
+					v-if="tag.uuid && tag.type === 'member'" 
+					:detail="true"
+					button
+					@click="tagMembers"
+				>
 					<IonIcon slot="start" :icon="personMD" aria-hidden="true" />
 					<IonLabel>
 						<h3>{{ $t("tagManagement:edit.members.title") }}</h3>
@@ -257,14 +262,21 @@
 					</IonLabel>
 				</IonItem>
 
-				<IonItem v-if="tag.uuid && tag.type === 'journal'" button :router-link="`/s/journal/?q=${encodeURIComponent(`#${tag.name.toLowerCase().replace(/\s+/g, '')}`)}`">
+				<IonItem 
+					v-if="tag.uuid && tag.type === 'journal'"
+					:detail="true" 
+					button 
+					:router-link="`/s/journal/?q=${encodeURIComponent(`#${tag.name.toLowerCase().replace(/\s+/g, '')}`)}`"
+				>
 					<IonIcon slot="start" :icon="journalMD" aria-hidden="true" />
 					<IonLabel>
 						<h3>{{ $t("tagManagement:edit.showJournal.title") }}</h3>
 						<p>{{ $t("tagManagement:edit.showJournal.desc", { count }) }}</p>
 					</IonLabel>
 				</IonItem>
+			</IonList>
 
+			<IonList>
 				<IonItem
 					v-if="tag.uuid"
 					button

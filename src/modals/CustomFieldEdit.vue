@@ -101,6 +101,8 @@
 						</IonLabel>
 					</IonToggle>
 				</IonItem>
+			</IonList>
+			<IonList>
 				<IonItem
 					v-if="customField.uuid"
 					button

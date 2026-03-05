@@ -20,41 +20,8 @@
 		</IonHeader>
 
 		<IonContent>
+
 			<IonList>
-				<IonItem button :detail="false">
-					<IonToggle v-model="accessibilityConfig.highLegibility">
-						<IonLabel>
-							<h3>{{ $t("accessibility:highLegibilityFont.title") }}</h3>
-							<p>{{ $t("accessibility:highLegibilityFont.desc") }}</p>
-						</IonLabel>
-					</IonToggle>
-				</IonItem>
-
-				<IonItem v-if="accessibilityConfig.highLegibility">
-					<IonSelect
-						v-model="accessibilityConfig.highLegibilityType"
-						:label="$t('accessibility:highLegibilityFontType.title')"
-						:cancel-text="$t('other:alerts.cancel')"
-						interface="action-sheet"
-					>
-						<IonSelectOption value="atkinson" class="hl-atkinson">
-							{{ $t("accessibility:highLegibilityFontType.atkinson") }}
-						</IonSelectOption>
-
-						<IonSelectOption value="opendyslexic" class="hl-opendyslexic">
-							{{ $t("accessibility:highLegibilityFontType.opendyslexic") }}
-						</IonSelectOption>
-
-						<IonSelectOption value="lexend" class="hl-lexend">
-							{{ $t("accessibility:highLegibilityFontType.lexend") }}
-						</IonSelectOption>
-
-						<IonSelectOption value="system-font" class="hl-system-font">
-							{{ $t("accessibility:highLegibilityFontType.system-font") }}
-						</IonSelectOption>
-					</IonSelect>
-				</IonItem>
-
 				<IonItem>
 					<IonLabel>
 						<h3 class="centered-text">{{ $t("accessibility:uiVariant.title") }}</h3>
@@ -93,24 +60,6 @@
 				</IonItem>
 
 				<IonItem>
-					<IonToggle v-model="accessibilityConfig.reducedMotion">
-						<IonLabel>
-							<h3>{{ $t("accessibility:reducedMotion.title") }}</h3>
-							<p>{{ $t("accessibility:reducedMotion.desc") }}</p>
-						</IonLabel>
-					</IonToggle>
-				</IonItem>
-
-				<IonItem>
-					<IonToggle v-model="accessibilityConfig.disableMemberCoversInList">
-						<IonLabel>
-							<h3>{{ $t("accessibility:disableMemberCoversInList.title") }}</h3>
-							<p>{{ $t("accessibility:disableMemberCoversInList.desc") }}</p>
-						</IonLabel>
-					</IonToggle>
-				</IonItem>
-
-				<IonItem>
 					<IonLabel class="more-padding">
 						<h3 class="centered-text">{{ $t("accessibility:contrastLevel.title") }}</h3>
 						<IonRange
@@ -124,6 +73,42 @@
 							:pin-formatter="(v) => `${Math.floor(v * 100)}%`"
 						/>
 					</IonLabel>
+				</IonItem>
+			</IonList>
+			
+			<IonList>
+				<IonItem button :detail="false">
+					<IonToggle v-model="accessibilityConfig.highLegibility">
+						<IonLabel>
+							<h3>{{ $t("accessibility:highLegibilityFont.title") }}</h3>
+							<p>{{ $t("accessibility:highLegibilityFont.desc") }}</p>
+						</IonLabel>
+					</IonToggle>
+				</IonItem>
+
+				<IonItem v-if="accessibilityConfig.highLegibility">
+					<IonSelect
+						v-model="accessibilityConfig.highLegibilityType"
+						:label="$t('accessibility:highLegibilityFontType.title')"
+						:cancel-text="$t('other:alerts.cancel')"
+						interface="action-sheet"
+					>
+						<IonSelectOption value="atkinson" class="hl-atkinson">
+							{{ $t("accessibility:highLegibilityFontType.atkinson") }}
+						</IonSelectOption>
+
+						<IonSelectOption value="opendyslexic" class="hl-opendyslexic">
+							{{ $t("accessibility:highLegibilityFontType.opendyslexic") }}
+						</IonSelectOption>
+
+						<IonSelectOption value="lexend" class="hl-lexend">
+							{{ $t("accessibility:highLegibilityFontType.lexend") }}
+						</IonSelectOption>
+
+						<IonSelectOption value="system-font" class="hl-system-font">
+							{{ $t("accessibility:highLegibilityFontType.system-font") }}
+						</IonSelectOption>
+					</IonSelect>
 				</IonItem>
 
 				<IonItem>
@@ -140,6 +125,26 @@
 							:pin-formatter="(v) => `${v}`"
 						/>
 					</IonLabel>
+				</IonItem>
+			</IonList>
+
+			<IonList>
+				<IonItem>
+					<IonToggle v-model="accessibilityConfig.reducedMotion">
+						<IonLabel>
+							<h3>{{ $t("accessibility:reducedMotion.title") }}</h3>
+							<p>{{ $t("accessibility:reducedMotion.desc") }}</p>
+						</IonLabel>
+					</IonToggle>
+				</IonItem>
+
+				<IonItem>
+					<IonToggle v-model="accessibilityConfig.disableMemberCoversInList">
+						<IonLabel>
+							<h3>{{ $t("accessibility:disableMemberCoversInList.title") }}</h3>
+							<p>{{ $t("accessibility:disableMemberCoversInList.desc") }}</p>
+						</IonLabel>
+					</IonToggle>
 				</IonItem>
 
 				<!--

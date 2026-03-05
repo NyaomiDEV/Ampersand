@@ -7,7 +7,6 @@
 		IonIcon,
 		IonList,
 		IonInput,
-		IonButton,
 		IonFab,
 		IonFabButton,
 		IonLabel,
@@ -137,13 +136,8 @@
 					route-to-open-file
 					:show-filename-and-type="true"
 					:show-thumbnail="!showBigThumbnail()"
+					:detail="true"
 				/>
-
-				<IonItem>
-					<IonButton @click="updateFile">
-						{{ !asset.file.size ? $t("assetManager:add.attachment") : $t("assetManager:edit.attachment") }}
-					</IonButton>
-				</IonItem>
 
 				<IonItem>
 					<IonInput
@@ -153,6 +147,14 @@
 					/>
 				</IonItem>
 
+				<IonItem :detail="true" button @click="updateFile">
+					<IonLabel>
+						{{ !asset.file.size ? $t("assetManager:add.attachment") : $t("assetManager:edit.attachment") }}
+					</IonLabel>
+				</IonItem>
+			</IonList>
+			
+			<IonList>
 				<IonItem
 					v-if="asset.uuid"
 					button
@@ -182,9 +184,6 @@
 </template>
 
 <style scoped>
-	ion-button {
-		width: 100%;
-	}
 
 	ion-thumbnail {
 		--border-radius: 16px;

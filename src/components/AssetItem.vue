@@ -12,7 +12,8 @@
 		routeToEditPage?: boolean,
 		routeToOpenFile?: boolean,
 		showFilenameAndType?: boolean,
-		showThumbnail?: boolean
+		showThumbnail?: boolean,
+		detail?: boolean
 	}>();
 
 	function canPreview(){
@@ -41,6 +42,7 @@
 	<IonItem
 		button
 		:router-link="props.routeToEditPage ? `/options/assetManager/edit/?uuid=${props.asset.uuid}` : undefined"
+		:detail="$props.detail"
 		@click="props.routeToOpenFile ? open() : undefined"
 	>
 		<template v-if="props.showThumbnail">
