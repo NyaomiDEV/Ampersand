@@ -26,6 +26,11 @@ export async function filterMember(search: string, member: Member){
 			return false;
 	}
 
+	if (parsed.system) {
+		if (member.system !== parsed.system)
+			return false;
+	}
+
 	if (parsed.pronouns) {
 		if (!member.pronouns || member.pronouns.toLowerCase() !== parsed.pronouns.toLowerCase())
 			return false;

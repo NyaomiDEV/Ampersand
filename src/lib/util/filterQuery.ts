@@ -9,6 +9,7 @@ export type SystemFilterQuery = {
 export type MemberFilterQuery = {
 	query: string,
 	tags: string[],
+	system?: string,
 	isPinned?: boolean,
 	isArchived?: boolean,
 	isCustomFront?: boolean,
@@ -123,6 +124,9 @@ export async function parseMemberFilterQuery(search: string): Promise<MemberFilt
 
 	for(const [variable, value] of rawParsed.variables){
 		switch(variable.toLowerCase()){
+			case "system":
+				result.system = value;
+				break;
 			case "archived":
 				if(value.length){
 					switch (value.toLowerCase()) {

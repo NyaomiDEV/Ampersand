@@ -13,6 +13,7 @@
 		"memberCountText": "{{totalMemberCount}} member(s), {{memberCount}} active, {{archivedMemberCount}} archived",
 		"customFrontCountText": "{{totalCustomFrontCount}} custom front(s), {{customFrontCount}} active, {{archivedCustomFrontCount}} archived",
 		"tapToShow": "Tap to show",
+		"showMembers": "Show members inside this system",
 		"delete": {
 			"title": "Delete system",
 			"confirm": "Are you sure you want to delete this system?"

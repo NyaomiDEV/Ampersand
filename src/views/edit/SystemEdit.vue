@@ -13,6 +13,7 @@
 	import pencilMD from "@material-symbols/svg-600/outlined/edit.svg";
 	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
+	import PeopleMD from "@material-symbols/svg-600/outlined/group.svg";
 	import { appConfig } from "../../lib/config";
 	import { useRoute } from "vue-router";
 	import { PartialBy } from "../../lib/types";
@@ -178,6 +179,7 @@
 					<IonIcon v-else :icon="accountCircle" />
 				</IonAvatar>
 
+				
 				<div v-if="isEditing" class="edit-buttons">
 					<IonButton shape="round" @click="modifyPicture">
 						<IonIcon slot="icon-only" :icon="pencilMD" />
@@ -188,88 +190,101 @@
 				</div>
 			</div>
 
-			<div v-if="!isEditing" class="system-info">
-				<h1>{{ system.name }}</h1>
-			</div>
+			<template v-if="!isEditing">
+				<div class="system-info">
+					<h1>{{ system.name }}</h1>
+				</div>
 
-			<IonList v-if="!isEditing" class="system-actions">
-				<IonItem v-if="!isEditing" class="system-description">
-					<IonLabel>
-						<p>{{ $t("systems:edit.description") }}</p>
-						<h2>
-							<Markdown :markdown="system.description || $t('systems:edit.noDescription')" />
-						</h2>
-					</IonLabel>
-				</IonItem>
+				<IonList>
+					<IonItem class="system-description">
+						<IonLabel>
+							<p>{{ $t("systems:edit.description") }}</p>
+							<h2>
+								<Markdown :markdown="system.description || $t('systems:edit.noDescription')" />
+							</h2>
+						</IonLabel>
+					</IonItem>
+				</IonList>
 
-				<IonItem>
-					<IonLabel>
-						<h2>{{ $t("systems:edit.memberCount") }}</h2>
-						<p v-if="membersShowed">
-							{{ $t("systems:edit.memberCountText", {
-								totalMemberCount: memberCount + archivedMemberCount,
-								memberCount,
-								archivedMemberCount
-							}) }}
-							<br />
-							{{ $t("systems:edit.customFrontCountText", {
-								totalCustomFrontCount: customFrontCount + archivedCustomFrontCount,
-								customFrontCount,
-								archivedCustomFrontCount
-							}) }}
-						</p>
-					</IonLabel>
-					<IonButton v-if="!membersShowed" slot="end" @click="membersShowed = true">{{ $t("systems:edit.tapToShow") }}</IonButton>
-				</IonItem>
-			</IonList>
+				<IonList class="system-actions">
+					<IonItem>
+						<IonLabel>
+							<h2>{{ $t("systems:edit.memberCount") }}</h2>
+							<p v-if="membersShowed">
+								{{ $t("systems:edit.memberCountText", {
+									totalMemberCount: memberCount + archivedMemberCount,
+									memberCount,
+									archivedMemberCount
+								}) }}
+								<br />
+								{{ $t("systems:edit.customFrontCountText", {
+									totalCustomFrontCount: customFrontCount + archivedCustomFrontCount,
+									customFrontCount,
+									archivedCustomFrontCount
+								}) }}
+							</p>
+						</IonLabel>
+						<IonButton v-if="!membersShowed" slot="end" @click="membersShowed = true">{{ $t("systems:edit.tapToShow") }}</IonButton>
+					</IonItem>
+				
+					<IonItem button detail :router-link="`/s/members/?q=@system:${system.uuid}`">
+						<IonIcon slot="start" :icon="PeopleMD" aria-hidden="true" />
+						<IonLabel>{{ $t("systems:edit.showMembers") }}</IonLabel>
+					</IonItem>
+				</IonList>
+			</template>
 
-			<IonList v-if="isEditing" class="system-edit">
-				<IonItem>
-					<IonInput
-						v-model="system.name"
-						label-placement="floating"
-						:label="$t('systems:edit.name')"
-					/>
-				</IonItem>
+			<template v-else>
+				<IonList class="system-edit">
+					<IonItem>
+						<IonInput
+							v-model="system.name"
+							label-placement="floating"
+							:label="$t('systems:edit.name')"
+						/>
+					</IonItem>
 
-				<IonItem>
-					<IonTextarea
-						v-model="system.description"
-						auto-grow
-						:label="$t('systems:edit.description')"
-						label-placement="floating"
-					/>
-				</IonItem>
+					<IonItem>
+						<IonTextarea
+							v-model="system.description"
+							auto-grow
+							:label="$t('systems:edit.description')"
+							label-placement="floating"
+						/>
+					</IonItem>
+				</IonList>
+				
+				<IonList>
+					<IonItem
+						v-if="system.uuid && appConfig.defaultSystem !== system.uuid"
+						button
+						:detail="false"
+						@click="removeSystem"
+					>
+						<IonIcon
+							slot="start"
+							:icon="trashMD"
+							aria-hidden="true"
+							color="danger"
+						/>
+						<IonLabel color="danger">
+							<h3>{{ $t("systems:edit.delete.title") }}</h3>
+							<p>{{ $t("other:genericDeleteDesc") }}</p>
+						</IonLabel>
+					</IonItem>
 
-				<IonItem
-					v-if="system.uuid && appConfig.defaultSystem !== system.uuid"
-					button
-					:detail="false"
-					@click="removeSystem"
-				>
-					<IonIcon
-						slot="start"
-						:icon="trashMD"
-						aria-hidden="true"
-						color="danger"
-					/>
-					<IonLabel color="danger">
-						<h3>{{ $t("systems:edit.delete.title") }}</h3>
-						<p>{{ $t("other:genericDeleteDesc") }}</p>
-					</IonLabel>
-				</IonItem>
-
-				<IonItem
-					v-if="system.uuid"
-					:detail="false"
-					button
-					@click="copyIdToClipboard"
-				>
-					<IonLabel>
-						<p>{{ $t("systems:edit.systemID", { systemID: system.uuid }) }}</p>
-					</IonLabel>
-				</IonItem>
-			</IonList>
+					<IonItem
+						v-if="system.uuid"
+						:detail="false"
+						button
+						@click="copyIdToClipboard"
+					>
+						<IonLabel>
+							<p>{{ $t("systems:edit.systemID", { systemID: system.uuid }) }}</p>
+						</IonLabel>
+					</IonItem>
+				</IonList>
+			</template>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
 				<IonFabButton v-if="canEdit" :disabled="isEditing && !system.name.length" @click="toggleEditing">

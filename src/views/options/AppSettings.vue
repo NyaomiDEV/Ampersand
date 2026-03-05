@@ -190,6 +190,13 @@
 			<IonList>
 				<IonItem>
 					<IonInput
+						v-model="appConfig.defaultFilterQueries.systems"
+						label-placement="floating"
+						:label="$t('systems:header')"
+					/>
+				</IonItem>
+				<IonItem>
+					<IonInput
 						v-model="appConfig.defaultFilterQueries.members"
 						label-placement="floating"
 						:label="$t('members:header')"
