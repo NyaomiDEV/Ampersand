@@ -65,7 +65,8 @@
 					<IonSelect
 						v-model="appConfig.locale.language"
 						:label="$t('appSettings:locale.language')"
-						interface="popover"
+						:cancel-text="$t('other:alerts.cancel')"
+						interface="action-sheet"
 						:value="$i18next.languages.find(x => Object.keys($i18next.services.resourceStore.data).includes(x)) || $i18next.languages[0].split('-')[0]"
 					>
 						<IonSelectOption
@@ -128,7 +129,12 @@
 				</IonItem>
 
 				<IonItem>
-					<IonSelect v-model="appConfig.view" :label="$t('appSettings:view')" interface="popover">
+					<IonSelect
+						v-model="appConfig.view"
+						:label="$t('appSettings:view')"
+						:cancel-text="$t('other:alerts.cancel')"
+						interface="action-sheet"
+					>
 						<IonSelectOption value="dashboard">
 							{{ $t("dashboard:header") }}
 						</IonSelectOption>
