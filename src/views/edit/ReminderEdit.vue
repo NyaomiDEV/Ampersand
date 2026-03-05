@@ -153,7 +153,30 @@
 		<SpinnerFullscreen v-if="loading" />
 		<IonContent v-else>
 
-			<IonList>
+<IonList>
+				<IonItem>
+					<IonLabel>
+						<h3 class="centered-text">{{ $t("reminders:edit.type.title") }}</h3>
+						<IonSegment
+							v-model="reminder.type"
+							class="segment-alt"
+							value="reminder-type"
+							@update:model-value="switchType"
+						>
+
+							<IonSegmentButton value="event">
+								<IonLabel>{{ $t("reminders:edit.type.eventBased") }}</IonLabel>
+							</IonSegmentButton>
+
+							<IonSegmentButton value="periodic">
+								<IonLabel>{{ $t("reminders:edit.type.periodic") }}</IonLabel>
+							</IonSegmentButton>
+						</IonSegment>
+					</IonLabel>
+				</IonItem>
+			</IonList>
+
+			<IonList class="surface">
 
 				<IonItem>
 					<IonInput
@@ -181,28 +204,6 @@
 						:label="$t('reminders:edit.message')"
 					/>
 				</IonItem>
-
-				<IonItem>
-					<IonLabel>
-						<h3 class="centered-text">{{ $t("reminders:edit.type.title") }}</h3>
-						<IonSegment
-							v-model="reminder.type"
-							class="segment-alt"
-							value="reminder-type"
-							@update:model-value="switchType"
-						>
-
-							<IonSegmentButton value="event">
-								<IonLabel>{{ $t("reminders:edit.type.eventBased") }}</IonLabel>
-							</IonSegmentButton>
-
-							<IonSegmentButton value="periodic">
-								<IonLabel>{{ $t("reminders:edit.type.periodic") }}</IonLabel>
-							</IonSegmentButton>
-						</IonSegment>
-					</IonLabel>
-				</IonItem>
-
 			</IonList>
 
 			<template v-if="reminder.type === 'event'">
@@ -225,6 +226,8 @@
 							</IonRadio>
 						</IonItem>
 					</IonRadioGroup>
+				</IonList>
+				<IonList class="surface">
 
 					<IonItem>
 						<IonInput

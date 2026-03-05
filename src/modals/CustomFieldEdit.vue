@@ -85,7 +85,7 @@
 		</IonHeader>
 
 		<IonContent>
-			<IonList>
+			<IonList class="surface">
 				<IonItem>
 					<IonInput
 						v-model="customField.name"
@@ -94,6 +94,8 @@
 						label-placement="floating"
 					/>
 				</IonItem>
+			</IonList>
+			<IonList>
 				<IonItem button :detail="false">
 					<IonToggle v-model="customField.default">
 						<IonLabel>
@@ -102,8 +104,6 @@
 						</IonLabel>
 					</IonToggle>
 				</IonItem>
-			</IonList>
-			<IonList>
 				<IonItem
 					v-if="customField.uuid"
 					button

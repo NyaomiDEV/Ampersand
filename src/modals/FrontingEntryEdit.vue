@@ -167,6 +167,8 @@
 						</IonLabel>
 					</template>
 				</IonItem>
+			</IonList>
+			<IonList class="surface">
 				<IonItem>
 					<IonInput
 						v-model="frontingEntry.customStatus"
@@ -175,6 +177,8 @@
 						label-placement="floating"
 					/>
 				</IonItem>
+			</IonList>
+			<IonList>
 				<IonItem button :detail="true" @click="presenceHistoryModal?.$el.present()">
 					<IonLabel>
 						{{ $t("frontHistory:edit.presence.historyTitle") }}
@@ -276,7 +280,9 @@
 						</IonLabel>
 					</IonToggle>
 				</IonItem>
+		</IonList>
 
+		<IonList class="surface">
 				<IonItem>
 					<ContentEditable v-model="frontingEntry.comment" :label="$t('frontHistory:edit.comment')" />
 				</IonItem>
@@ -289,7 +295,9 @@
 						{{ $t("other:memberMention") }}
 					</IonButton>
 				</IonItem>
+		</IonList>
 
+		<IonList>
 				<IonItem
 					v-if="frontingEntry.uuid"
 					button

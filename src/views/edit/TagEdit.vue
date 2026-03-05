@@ -182,7 +182,7 @@
 
 		<SpinnerFullscreen v-if="loading" />
 		<IonContent v-else>
-			<IonList>
+			<IonList class="surface">
 				<IonItem>
 					<IonInput
 						v-model="tag.name"
@@ -201,7 +201,9 @@
 						label-placement="floating"
 					/>
 				</IonItem>
+			</IonList>
 
+			<IonList>
 				<IonItem button :detail="false">
 					<Color v-model="tag.color" @update:model-value="updateColors">
 						<IonLabel>

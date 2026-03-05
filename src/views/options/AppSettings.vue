@@ -192,7 +192,7 @@
 				<IonLabel>{{ $t("appSettings:defaultFilterLabel") }}</IonLabel>
 			</IonListHeader>
 
-			<IonList>
+			<IonList class="surface">
 				<IonItem>
 					<IonInput
 						v-model="appConfig.defaultFilterQueries.systems"

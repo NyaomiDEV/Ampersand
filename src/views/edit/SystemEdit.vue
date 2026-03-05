@@ -245,7 +245,7 @@
 			</template>
 
 			<template v-else>
-				<IonList class="system-edit">
+				<IonList class="surface system-edit">
 					<IonItem>
 						<IonInput
 							v-model="system.name"

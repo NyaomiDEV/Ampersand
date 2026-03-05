@@ -160,7 +160,9 @@
 						</IonLabel>
 					</template>
 				</IonItem>
+			</IonList>
 
+			<IonList class="surface">
 				<IonItem>
 					<IonInput
 						v-model="boardMessage.title"
@@ -188,7 +190,9 @@
 						{{ $t("other:memberMention") }}
 					</IonButton>
 				</IonItem>
-
+			</IonList>
+			
+			<IonList>
 				<IonItem button :detail="false">
 					<IonToggle v-model="boardMessage.isPinned">
 						<IonLabel>
@@ -205,7 +209,7 @@
 					</IonToggle>
 				</IonItem>
 
-				<IonItem v-if="!boardMessage.poll" button @click="() => { boardMessage.poll = { multipleChoice: false, entries: [] } }">
+				<IonItem v-if="!boardMessage.poll" button @click="() => { boardMessage.poll = { multipleChoice: false, entries: [{ votes: [], choice: '' }] } }">
 					<IonIcon
 						slot="start"
 						:icon="chartMD"
@@ -215,8 +219,10 @@
 						{{ $t("messageBoard:edit.attachPoll") }}
 					</IonLabel>
 				</IonItem>
+			</IonList>
 
-				<template v-if="boardMessage.poll">
+			<template v-if="boardMessage.poll">
+				<IonList>
 					<IonItem>
 						<IonLabel>
 							<p>{{ $t("messageBoard:edit.pollEditWarning") }}</p>
@@ -275,7 +281,9 @@
 							{{ $t("messageBoard:edit.pollAddNewChoice") }}
 						</IonLabel>
 					</IonItem>
-				</template>
+				</IonList>
+			</template>
+			<IonList>
 
 				<IonItem
 					v-if="boardMessage.uuid"

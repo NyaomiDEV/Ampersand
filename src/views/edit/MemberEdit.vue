@@ -330,7 +330,7 @@
 			</template>
 
 			<template v-else>
-				<IonList>
+				<IonList class="surface">
 					<IonItem>
 						<IonInput
 							v-model="member.name"

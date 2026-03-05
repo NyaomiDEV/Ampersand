@@ -138,7 +138,8 @@
 					:show-thumbnail="!showBigThumbnail()"
 					:detail="true"
 				/>
-
+			</IonList>
+			<IonList class="surface">
 				<IonItem>
 					<IonInput
 						v-model="asset.friendlyName"
@@ -147,15 +148,13 @@
 						label-placement="floating"
 					/>
 				</IonItem>
-
+			</IonList>
+			<IonList>
 				<IonItem :detail="true" button @click="updateFile">
 					<IonLabel>
 						{{ !asset.file.size ? $t("assetManager:add.attachment") : $t("assetManager:edit.attachment") }}
 					</IonLabel>
 				</IonItem>
-			</IonList>
-			
-			<IonList>
 				<IonItem
 					v-if="asset.uuid"
 					button

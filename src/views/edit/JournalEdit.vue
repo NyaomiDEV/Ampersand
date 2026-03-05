@@ -254,6 +254,9 @@
 					</template>
 				</IonItem>
 
+			</IonList>
+			<IonList class="surface">
+
 				<IonItem class="title">
 					<IonInput v-model="post.title" :placeholder="$t('journal:edit.title')" />
 				</IonItem>

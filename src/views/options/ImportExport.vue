@@ -195,6 +195,9 @@
 					</IonLabel>
 				</IonItem>
 
+			</IonList>
+			<IonList>
+
 				<IonItem button :detail="true" @click="importDb">
 					<IonLabel>
 						<h3>{{ $t("importExport:dbImport") }}</h3>

@@ -61,7 +61,7 @@
 					</IonButton>
 				</div>
 
-				<IonList v-if="system">
+				<IonList v-if="system" class="surface">
 					<IonItem>
 						<IonInput
 							v-model="system.name"

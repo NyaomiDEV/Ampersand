@@ -86,7 +86,7 @@
 					</div>
 				</div>
 
-				<IonList class="member-edit">
+				<IonList class="member-edit surface">
 					<IonItem>
 						<IonInput
 							v-model="member.name"
