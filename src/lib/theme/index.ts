@@ -60,6 +60,13 @@ const dynamicColorsWeWant = [
 	"onTertiaryFixedVariant",
 ];
 
+const customColorsWeWant = [
+	"primary",
+	"onPrimary",
+	"primaryContainer",
+	"onPrimaryContainer"
+];
+
 const defaultColor = "#30628C";
 
 const m3colors = platform() === "android" ? await M3.getColors("system") : false;
@@ -113,6 +120,12 @@ export function addMaterialColors(hex: string, target?: HTMLElement){
 	const tonalSpotLight = new SchemeFidelity(Hct.fromInt(argbFromHex(hex)), false, accessibilityConfig.contrastLevel);
 	const tonalSpotDark = new SchemeFidelity(Hct.fromInt(argbFromHex(hex)), true, accessibilityConfig.contrastLevel);
 
+	const successTSLight = new SchemeFidelity(Hct.fromInt(argbFromHex("#00ff00")), false, accessibilityConfig.contrastLevel);
+	const successTSDark = new SchemeFidelity(Hct.fromInt(argbFromHex("#00ff00")), false, accessibilityConfig.contrastLevel);
+
+	const warningTSLight = new SchemeFidelity(Hct.fromInt(argbFromHex("#ffff00")), false, accessibilityConfig.contrastLevel);
+	const warningTSDark = new SchemeFidelity(Hct.fromInt(argbFromHex("#ffff00")), false, accessibilityConfig.contrastLevel);
+
 	const styleSheet: Map<string, string> = new Map();
 
 	for (const key of dynamicColorsWeWant) {
@@ -124,6 +137,40 @@ export function addMaterialColors(hex: string, target?: HTMLElement){
 		styleSheet.set(
 			`--md3-dark-${key.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase()}`,
 			rgbFromArgb((MaterialDynamicColors[key] as DynamicColor).getArgb(tonalSpotDark))
+		);
+	}
+
+	for (const key of customColorsWeWant) {
+		styleSheet.set(
+			`--md3-light-${key
+				.replace(/([a-z])([A-Z])/g, "$1-$2")
+				.toLowerCase()
+				.replace("primary", "success")}`,
+			rgbFromArgb((MaterialDynamicColors[key] as DynamicColor).getArgb(successTSLight))
+		);
+
+		styleSheet.set(
+			`--md3-dark-${key
+				.replace(/([a-z])([A-Z])/g, "$1-$2")
+				.toLowerCase()
+				.replace("primary", "success")}`,
+			rgbFromArgb((MaterialDynamicColors[key] as DynamicColor).getArgb(successTSDark))
+		);
+
+		styleSheet.set(
+			`--md3-light-${key
+				.replace(/([a-z])([A-Z])/g, "$1-$2")
+				.toLowerCase()
+				.replace("primary", "warning")}`,
+			rgbFromArgb((MaterialDynamicColors[key] as DynamicColor).getArgb(warningTSLight))
+		);
+
+		styleSheet.set(
+			`--md3-dark-${key
+				.replace(/([a-z])([A-Z])/g, "$1-$2")
+				.toLowerCase()
+				.replace("primary", "warning")}`,
+			rgbFromArgb((MaterialDynamicColors[key] as DynamicColor).getArgb(warningTSDark))
 		);
 	}
 

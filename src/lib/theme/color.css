@@ -53,6 +53,16 @@
 	--md3-tertiary-fixed-dim: var(--md3-light-tertiary-fixed-dim);
 	--md3-on-tertiary-fixed: var(--md3-light-on-tertiary-fixed);
 	--md3-on-tertiary-fixed-variant: var(--md3-light-on-tertiary-fixed-variant);
+
+	--md3-success: var(--md3-light-success);
+	--md3-on-success: var(--md3-light-on-success);
+	--md3-success-container: var(--md3-light-success-container);
+	--md3-on-success-container: var(--md3-light-on-success-container);
+
+	--md3-warning: var(--md3-light-warning);
+	--md3-on-warning: var(--md3-light-on-warning);
+	--md3-warning-container: var(--md3-light-warning-container);
+	--md3-on-warning-container: var(--md3-light-on-warning-container);
 }
 
 
@@ -111,4 +121,14 @@
 	--md3-tertiary-fixed-dim: var(--md3-dark-tertiary-fixed-dim);
 	--md3-on-tertiary-fixed: var(--md3-dark-on-tertiary-fixed);
 	--md3-on-tertiary-fixed-variant: var(--md3-dark-on-tertiary-fixed-variant);
+
+	--md3-success: var(--md3-dark-success);
+	--md3-on-success: var(--md3-dark-on-success);
+	--md3-success-container: var(--md3-dark-success-container);
+	--md3-on-success-container: var(--md3-dark-on-success-container);
+	
+	--md3-warning: var(--md3-dark-warning);
+	--md3-on-warning: var(--md3-dark-on-warning);
+	--md3-warning-container: var(--md3-dark-warning-container);
+	--md3-on-warning-container: var(--md3-dark-on-warning-container);
 }
