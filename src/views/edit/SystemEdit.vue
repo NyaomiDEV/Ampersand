@@ -203,10 +203,8 @@
 				<IonList>
 					<IonItem class="system-description">
 						<IonLabel>
-							<p>{{ $t("systems:edit.description") }}</p>
-							<h2>
-								<Markdown :markdown="system.description || $t('systems:edit.noDescription')" />
-							</h2>
+							<h3>{{ $t("systems:edit.description") }}</h3>
+							<Markdown :markdown="system.description || $t('systems:edit.noDescription')" />
 						</IonLabel>
 					</IonItem>
 				</IonList>
