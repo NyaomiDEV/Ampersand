@@ -1,0 +1,12 @@
+
+.md ion-action-sheet {
+	--background: var(--md3-surface-container-low) !important;
+	--color: var(--md3-on-surface) !important;
+	--max-width: 640px !important;
+}
+
+.md ion-action-sheet .action-sheet-container {
+	overflow: hidden;
+	border-radius: var(--md3-corner-large-top);
+	box-shadow: var(--md3-elevation-1);
+}

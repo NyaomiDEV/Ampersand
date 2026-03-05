@@ -34,7 +34,8 @@
 					<IonSelect
 						v-model="accessibilityConfig.highLegibilityType"
 						:label="$t('accessibility:highLegibilityFontType.title')"
-						interface="popover"
+						:cancel-text="$t('other:alerts.cancel')"
+						interface="action-sheet"
 					>
 						<IonSelectOption value="atkinson" class="hl-atkinson">
 							{{ $t("accessibility:highLegibilityFontType.atkinson") }}
@@ -166,15 +167,15 @@
 </template>
 
 <style>
-	ion-popover ion-item.hl-atkinson {
+	.action-sheet-button.hl-atkinson {
 		font-family: 'Atkinson Hyperlegible', var(--ion-font-family);
 	}
 	
-	ion-popover	ion-item.hl-opendyslexic {
+	.action-sheet-button.hl-opendyslexic {
 		font-family: 'OpenDyslexic', var(--ion-font-family);
 	}
 	
-	ion-popover	ion-item.hl-lexend {
+	.action-sheet-button.hl-lexend {
 		font-family: 'Lexend', var(--ion-font-family);
 	}
 </style>
