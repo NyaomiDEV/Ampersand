@@ -110,6 +110,10 @@ ion-popover {
 	margin: 10px 16px;
 }
 
+.md ion-list.surface {
+	margin: 10px 0px;
+}
+
 .md ion-list.surface ion-item,
 .md ion-item.surface {
 	--background: transparent;
