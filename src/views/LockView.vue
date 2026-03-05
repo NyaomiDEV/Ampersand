@@ -71,6 +71,6 @@
 	}
 
 	ion-list {
-		width: 50vw;
+		width: 75vw;
 	}
 </style>
