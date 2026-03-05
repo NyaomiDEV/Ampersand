@@ -9,4 +9,8 @@
 		border-radius: var(--md3-corner-large-top);
 		box-shadow: var(--md3-elevation-1);
 	}
+
+	button {
+		border-radius: var(--md3-corner-small);
+	}
 }
