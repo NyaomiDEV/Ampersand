@@ -12,8 +12,8 @@
 	margin-top: 2px;
 }
 
-.md ion-list > ion-item:first-child,
-.md ion-list > ion-item-sliding:first-child > ion-item {
+.md ion-item:first-child,
+.md ion-item-sliding:first-child > ion-item {
 	margin-top: 0;
 }
 

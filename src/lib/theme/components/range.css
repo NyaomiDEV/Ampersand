@@ -7,8 +7,19 @@
 	--knob-border-radius: 64px;
 }
 
+.md ion-range::part(pin) {
+	border-radius: 8px;
+	background-color: rgb(var(--md3-surface-container-high));
+	color: rgb(var(--md3-on-surface-container));
+	box-shadow: var(--md3-elevation-1);
+}
+
 .md ion-range.range-pressed::part(pin) {
 	transform: translate3d(0px, -80px, 0px) scale(1);
+}
+
+.md ion-range::part(pin)::before {
+	display: none;
 }
 
 .md ion-range::part(knob) {
