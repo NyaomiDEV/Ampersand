@@ -5,6 +5,11 @@
 	color: rgb(var(--md3-on-surface));
 }
 
+.md ion-list-header {
+	padding-left: 24px;
+	--color: rgb(var(--md3-primary));
+}
+
 .md ion-item {
 	--background: rgb(var(--md3-surface-container));
 	--background-hover: rgb(var(--md3-on-surface));
