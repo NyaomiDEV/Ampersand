@@ -117,6 +117,7 @@
 				<IonItem>
 					<IonTextarea
 						v-model="post.contentWarning"
+						fill="solid"
 						auto-grow
 						:label="$t('journal:edit.contentWarning')"
 						label-placement="floating"

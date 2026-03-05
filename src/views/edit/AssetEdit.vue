@@ -142,6 +142,7 @@
 				<IonItem>
 					<IonInput
 						v-model="asset.friendlyName"
+						fill="solid"
 						:label="$t('assetManager:edit.friendlyName')"
 						label-placement="floating"
 					/>

@@ -334,6 +334,7 @@
 					<IonItem>
 						<IonInput
 							v-model="member.name"
+							fill="solid"
 							:label="$t('members:edit.name')"
 							label-placement="floating"
 						/>
@@ -341,6 +342,7 @@
 					<IonItem>
 						<IonInput
 							v-model="member.pronouns"
+							fill="solid"
 							:label="$t('members:edit.pronouns')"
 							label-placement="floating"
 						/>
@@ -348,6 +350,7 @@
 					<IonItem>
 						<IonInput
 							v-model="member.role"
+							fill="solid"
 							:label="$t('members:edit.role')"
 							label-placement="floating"
 						/>
@@ -355,6 +358,7 @@
 					<IonItem>
 						<IonTextarea
 							v-model="member.description"
+							fill="solid"
 							auto-grow
 							:label="$t('members:edit.description')"
 							label-placement="floating"
@@ -365,6 +369,7 @@
 						:key="customField.uuid"
 					>
 						<IonTextarea
+							fill="solid"
 							auto-grow
 							:label="customField.name"
 							label-placement="floating"

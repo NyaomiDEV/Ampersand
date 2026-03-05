@@ -38,6 +38,7 @@
 					<IonItem>
 						<IonInput
 							type="password"
+							fill="solid"
 							label-placement="floating"
 							:label="$t('lock:hint')"
 							@ion-change="checkAndTryUnlocking"

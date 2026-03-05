@@ -41,6 +41,7 @@
 
 		<IonTextarea
 			v-show="focused || !model.length"
+			fill="solid"
 			ref="textarea"
 			v-model="model"
 			auto-grow

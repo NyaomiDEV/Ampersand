@@ -158,6 +158,7 @@
 				<IonItem>
 					<IonInput
 						v-model="reminder.name"
+						fill="solid"
 						label-placement="floating"
 						:label="$t('reminders:edit.name')"
 					/>
@@ -166,6 +167,7 @@
 				<IonItem>
 					<IonInput
 						v-model="reminder.title"
+						fill="solid"
 						label-placement="floating"
 						:label="$t('reminders:edit.title')"
 					/>
@@ -174,6 +176,7 @@
 				<IonItem>
 					<IonInput
 						v-model="reminder.message"
+						fill="solid"
 						label-placement="floating"
 						:label="$t('reminders:edit.message')"
 					/>
@@ -226,6 +229,7 @@
 					<IonItem>
 						<IonInput
 							v-model="(reminder as EventReminder).triggeringEvent.filterQuery"
+							fill="solid"
 							label-placement="floating"
 							:label="$t('reminders:edit.eventBased.memberFilterQuery')"
 						/>

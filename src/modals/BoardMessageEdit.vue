@@ -164,6 +164,7 @@
 				<IonItem>
 					<IonInput
 						v-model="boardMessage.title"
+						fill="solid"
 						:label="$t('messageBoard:edit.title')"
 						label-placement="floating"
 					/>
@@ -172,6 +173,7 @@
 				<IonItem>
 					<IonTextarea
 						v-model="boardMessage.body"
+						fill="solid"
 						auto-grow
 						:label="$t('messageBoard:edit.body')"
 						label-placement="floating"
@@ -244,6 +246,7 @@
 					<IonItem v-for="entry in boardMessage.poll.entries" :key="boardMessage.poll.entries.indexOf(entry)">
 						<IonInput
 							v-model="entry.choice"
+							fill="solid"
 							:label="$t('messageBoard:edit.pollChoice')"
 							label-placement="floating"
 						/>

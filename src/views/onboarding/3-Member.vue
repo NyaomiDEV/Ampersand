@@ -90,6 +90,7 @@
 					<IonItem>
 						<IonInput
 							v-model="member.name"
+							fill="solid"
 							:label="$t('members:edit.name')"
 							label-placement="floating"
 						/>
@@ -98,6 +99,7 @@
 					<IonItem>
 						<IonInput
 							v-model="member.pronouns"
+							fill="solid"
 							:label="$t('members:edit.pronouns')"
 							label-placement="floating"
 						/>
@@ -106,6 +108,7 @@
 					<IonItem>
 						<IonTextarea
 							v-model="member.description"
+							fill="solid"
 							auto-grow
 							:label="$t('onboarding:memberInfo.description')"
 							label-placement="floating"

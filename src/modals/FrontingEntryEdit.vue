@@ -170,6 +170,7 @@
 				<IonItem>
 					<IonInput
 						v-model="frontingEntry.customStatus"
+						fill="solid"
 						:label="$t('frontHistory:edit.customStatus')"
 						label-placement="floating"
 					/>

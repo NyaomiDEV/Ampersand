@@ -186,6 +186,7 @@
 				<IonItem>
 					<IonInput
 						v-model="tag.name"
+						fill="solid"
 						:label="$t('tagManagement:edit.name')"
 						label-placement="floating"
 					/>
@@ -194,6 +195,7 @@
 				<IonItem>
 					<IonTextarea
 						v-model="tag.description"
+						fill="solid"
 						auto-grow
 						:label="$t('tagManagement:edit.description')"
 						label-placement="floating"

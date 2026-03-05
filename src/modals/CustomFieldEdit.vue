@@ -89,6 +89,7 @@
 				<IonItem>
 					<IonInput
 						v-model="customField.name"
+						fill="solid"
 						:label="$t('customFields:edit.name')"
 						label-placement="floating"
 					/>

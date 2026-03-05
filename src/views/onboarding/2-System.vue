@@ -65,6 +65,7 @@
 					<IonItem>
 						<IonInput
 							v-model="system.name"
+							fill="solid"
 							label-placement="floating"
 							:label="$t('onboarding:systemInfo.name')"
 						/>
@@ -73,6 +74,7 @@
 					<IonItem>
 						<IonTextarea
 							v-model="system.description"
+							fill="solid"
 							auto-grow
 							:label="$t('onboarding:systemInfo.description')"
 							label-placement="floating"
