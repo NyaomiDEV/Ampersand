@@ -50,7 +50,7 @@
 			</IonToolbar>
 		</IonHeader>
 		
-		<IonContent>
+		<IonContent :fullscreen="true">
 			<SystemDescriptionAccordion v-if="appConfig.showSystemDescriptionInDashboard" />
 			<CurrentFrontersCarousel />
 			<MessageBoardCarousel />

@@ -1,0 +1,57 @@
+/* Adapted from danielkleebinder/md3-for-ionic */
+.md ion-card,
+.md ion-card.elevated {
+	--background: rgb(var(--md3-surface-container-low));
+	--color: rgb(var(--md3-on-surface));
+	box-shadow: var(--md3-elevation-1);
+	border-radius: 12px;
+}
+
+.md ion-card.filled {
+	--background: rgb(var(--md3-surface-container-highest));
+	box-shadow: var(--md3-elevation-0);
+}
+
+.md ion-card.outlined {
+	--background: rgb(var(--md3-surface));
+	box-shadow: var(--md3-elevation-0);
+	outline: 1px solid rgb(var(--md3-outline));
+}
+
+.md ion-card ion-card-title,
+.md ion-card ion-card-subtitle {
+	--color: rgb(var(--md3-on-surface));
+}
+
+.md ion-card > img {
+	border-bottom-right-radius: 12px;
+	border-bottom-left-radius: 12px;
+}
+
+.md ion-card ion-card-title {
+	font-family: var(--md3-headline-small-font-family-name);
+	font-style: var(--md3-headline-small-font-family-style);
+	font-weight: var(--md3-headline-small-font-weight);
+	font-size: var(--md3-headline-small-font-size);
+	line-height: var(--md3-headline-small-line-height);
+	letter-spacing: var(--md3-headline-small-letter-spacing);
+}
+
+.md ion-card ion-card-subtitle {
+	margin-top: 0;
+	font-family: var(--md3-label-large-font-family-name);
+	font-style: var(--md3-label-large-font-family-style);
+	font-weight: var(--md3-label-large-font-weight);
+	font-size: var(--md3-label-large-font-size);
+	line-height: var(--md3-label-large-line-height);
+	letter-spacing: var(--md3-label-large-letter-spacing);
+}
+
+.md ion-card-content {
+	font-family: var(--md3-body-medium-font-family-name);
+	font-style: var(--md3-body-medium-font-family-style);
+	font-weight: var(--md3-body-medium-font-weight);
+	font-size: var(--md3-body-medium-font-size);
+	line-height: var(--md3-body-medium-line-height);
+	letter-spacing: var(--md3-body-medium-letter-spacing);
+}

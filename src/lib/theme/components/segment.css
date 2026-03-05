@@ -1,36 +1,57 @@
-/* Segment Buttons */
-.md ion-segment ion-segment-button::part(native) {
-	text-transform: none;
-	letter-spacing: normal;
-	font-size: unset;
+/* Adapted from danielkleebinder/md3-for-ionic */
+.md ion-toolbar ion-segment ion-segment-button {
+	margin-top: 8px;
+	margin-bottom: 8px;
 }
 
-.md ion-segment ion-segment-button::part(indicator-background) {
-	width: 50%;
-	margin: auto;
-	height: 3px;
-	border-radius: 3px 3px 0 0;
-}
+.md ion-segment ion-segment-button {
+	font: var(--md3-title-small);
+	letter-spacing: var(--md3-title-small-letter-spacing);
+	text-transform: unset;
 
-.md ion-segment.segment-alt ion-segment-button::part(native) {
-	border: 1px solid var(--color);
-}
+	--ripple-color: transparent !important;
+	--color: rgb(var(--md3-on-surface-variant));
+	--color-checked: var(--ion-color-contrast, rgb(var(--md3-on-secondary)));
+	--transition: color var(--md3-expressive-default-spring-duration) var(--md3-expressive-slow-spring);
+	--indicator-transition: transform var(--md3-expressive-default-spring-duration) var(--md3-expressive-slow-spring);
+	--indicator-color: var(--ion-color-base, rgb(var(--md3-secondary)));
+	--border-radius: var(--md3-corner-extra-large);
 
-.md ion-segment.segment-alt ion-segment-button:first-child::part(native) {
-	border-right: 0;
-	border-radius: 48px 0 0 48px;
-}
+	--padding-start: 24px;
+	--padding-end: 24px;
 
-.md ion-segment.segment-alt ion-segment-button:last-child::part(native) {
-	border-left: 0;
-	border-radius: 0 48px 48px 0;
-}
+	color: var(--color);
 
-.md ion-segment.segment-alt ion-segment-button.segment-button-checked::part(native) {
-	background-color: rgba(var(--ion-color-primary-rgb), 0.2);
-	color: var(--ion-text-color);
-}
+	ion-icon {
+		width: 20px;
+		height: 20px;
+	}
 
-.md ion-segment.segment-alt ion-segment-button::part(indicator-background) {
-	height: 0px;
+	ion-label,
+	ion-icon {
+		color: var(--color);
+		transition-property: color;
+		transition-duration: var(--md3-expressive-default-spring-duration);
+		transition-timing-function: var(--md3-expressive-slow-spring);
+	}
+
+	&.segment-button-checked {
+		color: var(--color-checked);
+
+		ion-label,
+		ion-icon {
+			color: var(--color-checked);
+		}
+	}
+
+	&::part(indicator) {
+		overflow: hidden;
+		border-radius: var(--md3-corner-extra-large);
+		inset: 0;
+	}
+
+	&::part(indicator-background) {
+		width: 100%;
+		height: 100%;
+	}
 }

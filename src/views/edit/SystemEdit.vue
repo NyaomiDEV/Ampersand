@@ -181,10 +181,15 @@
 
 				
 				<div v-if="isEditing" class="edit-buttons">
-					<IonButton shape="round" @click="modifyPicture">
+					<IonButton shape="round" size="small" @click="modifyPicture">
 						<IonIcon slot="icon-only" :icon="pencilMD" />
 					</IonButton>
-					<IonButton shape="round" color="danger" @click="deletePicture">
+					<IonButton
+						shape="round"
+						size="small"
+						color="danger"
+						@click="deletePicture"
+					>
 						<IonIcon slot="icon-only" :icon="trashMD" />
 					</IonButton>
 				</div>
@@ -192,7 +197,7 @@
 
 			<template v-if="!isEditing">
 				<div class="system-info">
-					<h1>{{ system.name }}</h1>
+					<h2>{{ system.name }}</h2>
 				</div>
 
 				<IonList>
@@ -224,7 +229,14 @@
 								}) }}
 							</p>
 						</IonLabel>
-						<IonButton v-if="!membersShowed" slot="end" @click="membersShowed = true">{{ $t("systems:edit.tapToShow") }}</IonButton>
+						<IonButton
+							v-if="!membersShowed"
+							slot="end"
+							size="small"
+							@click="membersShowed = true"
+						>
+							{{ $t("systems:edit.tapToShow") }}
+						</IonButton>
 					</IonItem>
 				
 					<IonItem button detail :router-link="`/s/members/?q=@system:${system.uuid}`">

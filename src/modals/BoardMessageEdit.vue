@@ -144,7 +144,7 @@
 							slot="end"
 							shape="round"
 							fill="outline"
-							size="default"
+							size="small"
 							@click="(e) => { e.stopPropagation(); boardMessage.member = undefined; }"
 						>
 							<IonIcon
@@ -251,7 +251,7 @@
 							slot="end"
 							shape="round"
 							fill="outline"
-							size="default"
+							size="small"
 							@click="() => boardMessage.poll!.entries.splice(boardMessage.poll!.entries.indexOf(entry), 1)"
 						>
 							<IonIcon

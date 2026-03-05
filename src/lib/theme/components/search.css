@@ -1,0 +1,14 @@
+/* Adapted from danielkleebinder/md3-for-ionic */
+.md ion-searchbar {
+  	--background: rgb(var(--md3-surface-container-high));
+  	--border-radius: var(--md3-corner-full);
+  	--box-shadow: none;
+  	--cancel-button-color: rgb(var(--md3-on-surface-variant));
+  	--clear-button-color: rgb(var(--md3-on-surface));
+  	--color: rgb(var(--md3-on-surface));
+  	--icon-color: rgb(var(--md3-on-surface));
+
+  	.searchbar-input {
+  		border: 1px solid rgb(var(--md3-outline-variant));
+  	}
+  }

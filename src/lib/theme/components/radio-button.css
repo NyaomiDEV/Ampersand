@@ -1,0 +1,5 @@
+/* Adapted from danielkleebinder/md3-for-ionic */
+.md ion-radio {
+	--color: var(--md3-outline);
+	--color-checked: var(--md3-primary);
+}

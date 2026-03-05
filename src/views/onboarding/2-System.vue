@@ -56,7 +56,7 @@
 						<IonIcon v-else :icon="accountCircle" />
 					</IonAvatar>
 
-					<IonButton shape="round" @click="modifyPicture">
+					<IonButton shape="round" size="small" @click="modifyPicture">
 						<IonIcon slot="icon-only" :icon="pencilMD" />
 					</IonButton>
 				</div>

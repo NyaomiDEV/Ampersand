@@ -1,0 +1,49 @@
+/* Adapted from danielkleebinder/md3-for-ionic */
+/* With some adjustments made by us */
+.md ion-toggle {
+  	--handle-width: 16px;
+  	--handle-height: 16px;
+  	--handle-max-height: 28px;
+  	--handle-transition:
+  		transform var(--md3-expressive-default-effects-duration) var(--md3-expressive-default-effects),
+  		background-color var(--md3-expressive-default-effects-duration) var(--md3-expressive-default-effects);
+  	--handle-background: rgb(var(--md3-outline));
+  	--handle-background-checked: var(--ion-color-contrast);
+  	--handle-border-radius: var(--md3-corner-full);
+  	--handle-box-shadow: none;
+  	--handle-spacing: 6px;
+
+  	--track-background: rgb(var(--md3-surface-container-highest));
+  	--track-background-checked: var(--ion-color-base);
+
+  	--border-radius: var(--md3-corner-full);
+  }
+
+  ion-toggle.toggle-checked {
+  	--handle-width: 24px;
+  	--handle-height: 24px;
+  	--handle-spacing: 2px;
+  }
+
+  ion-toggle::part(track) {
+  	box-sizing: border-box;
+  	min-height: 32px;
+  	min-width: 52px;
+  	border: 2px solid rgb(var(--md3-outline));
+  	background: rgb(var(--md3-surface-container-highest));
+  }
+
+  ion-toggle.toggle-checked::part(track) {
+  	border-color: var(--ion-color-base, rgb(var(--md3-primary)));
+  	background: var(--ion-color-base, rgb(var(--md3-primary)));
+  }
+
+  ion-toggle::part(handle) {
+  	background: rgb(var(--md3-outline));
+	color: rgb(var(--md3-surface-container-highest));
+  }
+
+  ion-toggle.toggle-checked::part(handle) {
+  	background: var(--ion-color-contrast, rgb(var(--md3-on-primary)));
+	color: var(--ion-color-base, rgb(var(--md3-primary)));
+  }

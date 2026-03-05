@@ -245,11 +245,6 @@
 		opacity: 0.5;
 	}
 
-	ion-item ion-avatar {
-		width: 56px;
-		height: 56px;
-	}
-
 	ion-item-option {
 		border-radius: 28px;
 		width: 56px;

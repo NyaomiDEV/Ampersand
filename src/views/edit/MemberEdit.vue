@@ -242,13 +242,14 @@
 			<div class="cover-container">
 				<MemberCover class="cover" :member />
 				<div v-if="isEditing" class="edit-buttons">
-					<IonButton shape="round" @click="modifyCover">
+					<IonButton shape="round" size="small" @click="modifyCover">
 						<IonIcon slot="icon-only" :icon="pencilMD" />
 					</IonButton>
 					<IonButton
 						v-if="member.cover"
 						shape="round"
 						color="danger"
+						size="small"
 						@click="deleteCover"
 					>
 						<IonIcon slot="icon-only" :icon="trashMD" />
@@ -258,13 +259,14 @@
 				<div class="avatar-container">
 					<MemberAvatar :member />
 					<div v-if="isEditing" class="edit-buttons">
-						<IonButton shape="round" @click="modifyPicture">
+						<IonButton shape="round" size="small" @click="modifyPicture">
 							<IonIcon slot="icon-only" :icon="pencilMD" />
 						</IonButton>
 						<IonButton
 							v-if="member.image"
 							shape="round"
 							color="danger"
+							size="small"
 							@click="deletePicture"
 						>
 							<IonIcon slot="icon-only" :icon="trashMD" />
@@ -279,7 +281,7 @@
 				</div>
 
 				<div class="member-info">
-					<h1>{{ member.name }}</h1>
+					<h2>{{ member.name }}</h2>
 					<p>{{ member.pronouns }}</p>
 					<p>{{ member.role }}</p>
 					<p v-if="member.isCustomFront">{{ $t("members:edit.customFront") }}</p>
@@ -297,17 +299,15 @@
 				<IonList>
 					<IonItem>
 						<IonLabel class="member-description">
-							<p>{{ $t("members:edit.description") }}</p>
-							<h2>
-								<Markdown :markdown="member.description || $t('members:edit.noDescription')" />
-							</h2>
+							<h3>{{ $t("members:edit.description") }}</h3>
+							<Markdown :markdown="member.description || $t('members:edit.noDescription')" />
 						</IonLabel>
 					</IonItem>
 					<template v-for="customField in customFieldsToShowInViewMode" :key="customField.uuid">
 						<IonItem class="member-custom-field">
 							<IonLabel>
-								<p>{{ customField.name }}</p>
-								<h2><Markdown :markdown="member.customFields?.get(customField.uuid)!" /></h2>
+								<h3>{{ customField.name }}</h3>
+								<Markdown :markdown="member.customFields?.get(customField.uuid)!" />
 							</IonLabel>
 						</IonItem>
 					</template>
@@ -414,7 +414,7 @@
 							slot="end"
 							shape="round"
 							fill="outline"
-							size="default"
+							size="small"
 							@click="(e) => { e.stopPropagation(); member.color = undefined; updateColors() }"
 						>
 							<IonIcon
@@ -564,12 +564,11 @@
 		flex-direction: row-reverse;
 	}
 
-	div.avatar-container ion-avatar {
+	div.avatar-container .member-avatar {
 		width: 192px;
 		height: 192px;
 		outline-width: 8px !important;
 	}
-
 
 	div.edit-buttons ion-button {
 		margin: 0;

@@ -17,9 +17,9 @@
 		IonSegment,
 		IonTextarea,
 		useIonRouter,
-		IonToggle
+		IonToggle,
+		IonSegmentButton
 	} from "@ionic/vue";
-	import MD3SegmentButton from "../../components/MD3SegmentButton.vue";
 	import Color from "../../components/Color.vue";
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
@@ -211,7 +211,7 @@
 						slot="end"
 						shape="round"
 						fill="outline"
-						size="default"
+						size="small"
 						@click="(e) => { e.stopPropagation(); tag.color = undefined; updateColors() }"
 					>
 						<IonIcon
@@ -234,16 +234,16 @@
 					<IonLabel>
 						<h3 class="centered-text">{{ $t("tagManagement:edit.type.header") }}</h3>
 						<IonSegment v-model="tag.type" class="segment-alt">
-							<MD3SegmentButton value="member">
+							<IonSegmentButton value="member">
 								<IonLabel>
 									{{ $t("tagManagement:edit.type.member") }}
 								</IonLabel>
-							</MD3SegmentButton>
-							<MD3SegmentButton value="journal">
+							</IonSegmentButton>
+							<IonSegmentButton value="journal">
 								<IonLabel>
 									{{ $t("tagManagement:edit.type.journal") }}
 								</IonLabel>
-							</MD3SegmentButton>
+							</IonSegmentButton>
 						</IonSegment>
 						<p class="centered-text">{{ $t("tagManagement:edit.type.desc") }}</p>
 					</IonLabel>

@@ -18,13 +18,13 @@
 		IonPage,
 		IonBackButton,
 		useIonRouter,
+		IonSegmentButton,
 	} from "@ionic/vue";
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
 
-	import MD3SegmentButton from "../../components/MD3SegmentButton.vue";
 	import PopupPicker from "../../components/PopupPicker.vue";
 
 	import { onBeforeMount, ref, toRaw, useTemplateRef, watch } from "vue";
@@ -189,13 +189,13 @@
 							@update:model-value="switchType"
 						>
 
-							<MD3SegmentButton value="event">
+							<IonSegmentButton value="event">
 								<IonLabel>{{ $t("reminders:edit.type.eventBased") }}</IonLabel>
-							</MD3SegmentButton>
+							</IonSegmentButton>
 
-							<MD3SegmentButton value="periodic">
+							<IonSegmentButton value="periodic">
 								<IonLabel>{{ $t("reminders:edit.type.periodic") }}</IonLabel>
-							</MD3SegmentButton>
+							</IonSegmentButton>
 						</IonSegment>
 					</IonLabel>
 				</IonItem>

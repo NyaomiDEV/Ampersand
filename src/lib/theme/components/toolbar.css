@@ -1,0 +1,107 @@
+/* Adapted from danielkleebinder/md3-for-ionic */
+/* With own additions */
+.md ion-toolbar {
+	--background: rgb(var(--md3-surface));
+	--color: rgb(var(--md3-on-surface));
+
+	--min-height: 64px;
+	--padding-start: 16px;
+	--padding-end: 16px;
+}
+
+.md ion-toolbar,
+.md ion-toolbar ion-title {
+	font: var(--md3-title-large);
+	letter-spacing: var(--md3-title-large-letter-spacing);
+	padding-inline-start: 0;
+	padding-inline-end: 0;
+
+	h1 {
+		font: var(--md3-display-medium);
+		letter-spacing: var(--md3-display-medium-letter-spacing);
+		margin: unset;
+	}
+
+	h2 {
+		font: var(--md3-title-large);
+		letter-spacing: var(--md3-title-large-letter-spacing);
+		margin: unset;
+	}
+
+	h3 {
+		font: var(--md3-body-large);
+		letter-spacing: var(--md3-body-large-letter-spacing);
+		margin: unset;
+	}
+
+	p {
+		color: rgb(var(--md3-on-surface-variant));
+		font: var(--md3-body-medium);
+		letter-spacing: var(--md3-body-medium-letter-spacing);
+		margin: unset;
+	}
+
+	small {
+		color: rgb(var(--md3-on-surface-variant));
+		font: var(--md3-body-small);
+		letter-spacing: var(--md3-body-small-letter-spacing);
+		margin: unset;
+	}
+}
+
+.md ion-toolbar ion-title:has(:is(h1, h2, h3, p, small)) {
+	line-height: 0;
+}
+
+.md ion-toolbar *[slot=start] {
+	color: rgb(var(--md3-on-surface));
+}
+
+.md ion-toolbar *[slot=end] {
+	color: rgb(var(--md3-on-surface-variant));
+}
+
+.md ion-toolbar > [slot=start]+ion-title {
+	padding-inline-start: 16px;
+}
+
+.md ion-toolbar > ion-title:has(+ [slot=secondary]),
+.md ion-toolbar > ion-title:has(+ [slot=end]) {
+	padding-inline-end: 16px;
+}
+
+.md ion-toolbar ion-back-button.in-toolbar,
+.md ion-toolbar ion-button.in-toolbar {
+	--background: rgb(var(--md3-surface-container-high));
+	--background-hover: rgb(var(--md3-surface-container));
+	--background-focused: rgb(var(--md3-surface-container));
+	--background-activated: rgb(var(--md3-surface-container));
+
+	--color: rgb(var(--md3-on-surface));
+	--ripple-color: rgb(var(--md3-surface-container-highest));
+
+	--box-shadow: var(--md3-elevation-0);
+}
+
+.ion-palette-dark .md ion-toolbar ion-back-button.in-toolbar,
+.ion-palette-dark .md ion-toolbar ion-button.in-toolbar {
+	--background: rgb(var(--md3-surface-container-low));
+}
+
+.md ion-header,
+.md ion-footer {
+	box-shadow: none;
+
+	&::before,
+	&::after {
+		display: none;
+	}
+}
+
+.md ion-header.scrolled {
+	box-shadow: var(--md3-elevation-2);
+}
+
+.md ion-header.scrolled ion-toolbar {
+	--background: rgb(var(--md3-surface-container));
+}

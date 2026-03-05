@@ -1,0 +1,15 @@
+/* Adapted from danielkleebinder/md3-for-ionic */
+.md ion-toast {
+	--background: rgb(var(--md3-inverse-surface));
+	--color: rgb(var(--md3-inverse-on-surface));
+	--button-color: rgb(var(--md3-inverse-on-surface));
+	--border-radius: var(--md3-corner-extra-small);
+	--box-shadow: var(--md3-elevation-3);
+
+	font: var(--md3-body-large);
+	letter-spacing: var(--md3-body-medium-letter-spacing);
+
+	&::part(button) {
+		text-transform: unset;
+	}
+}

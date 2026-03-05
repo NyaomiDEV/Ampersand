@@ -1,20 +1,35 @@
-@import url(color.css);
+@import url(ionic.css);
 
+@import url(color.css);
+@import url(typescales.css);
+@import url(utils.css);
+
+@import url(components/accordion.css);
 @import url(components/action-sheet.css);
 @import url(components/alert.css);
 @import url(components/button.css);
-@import url(components/cards.css);
+@import url(components/card.css);
+@import url(components/checkbox.css);
+@import url(components/chip.css);
+@import url(components/content.css);
+@import url(components/datetime.css);
 @import url(components/fab.css);
-@import url(components/headerbar.css);
-@import url(components/item.css);
+@import url(components/headings.css);
+@import url(components/label.css);
 @import url(components/list.css);
+@import url(components/menu.css);
 @import url(components/modal.css);
+@import url(components/navigation-bar.css);
+@import url(components/popover.css);
+@import url(components/progress.css);
+@import url(components/radio-button.css);
 @import url(components/range.css);
-@import url(components/searchbar.css);
+@import url(components/search.css);
 @import url(components/segment.css);
 @import url(components/select.css);
-@import url(components/tabs.css);
-@import url(components/toggle.css);
+@import url(components/skeleton.css);
+@import url(components/switch.css);
+@import url(components/thumbnail.css);
+@import url(components/toast.css);
+@import url(components/toolbar.css);
 
-@import url(ionic.css);
-@import url(utils.css);

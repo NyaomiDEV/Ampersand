@@ -1,0 +1,6 @@
+/* Adapted from danielkleebinder/md3-for-ionic */
+.md ion-skeleton-text {
+  	--background: rgb(var(--md3-surface-container-highest));
+  	background: var(--background);
+  	border-radius: var(--md3-corner-medium);
+}

@@ -1,0 +1,30 @@
+/* Adapted from danielkleebinder/md3-for-ionic */
+.md ion-chip {
+	min-height: 32px;
+	padding-left: 16px;
+	padding-right: 16px;
+	box-shadow: none;
+
+	border-width: 1px;
+	border-radius: var(--md3-corner-small);
+	border-color: var(--ion-color-tint, rgb(var(--md3-outline)));
+	border-style: solid;
+
+	--background: var(--ion-color-base, rgb(var(--md3-surface-container-low)));
+	background: var(--background);
+
+	--color: var(--ion-color-contrast, rgb(var(--md3-on-surface)));
+	color: var(--color);
+
+	ion-icon {
+		width: 18px;
+		height: 18px;
+		--color: var(--ion-color-contrast, rgb(var(--md3-primary)));
+	}
+
+	&.chip-outline {
+		border: 1px solid rgb(var(--md3-outline));
+		--color: rgb(var(--md3-on-surface));
+		--background: transparent;
+	}
+}

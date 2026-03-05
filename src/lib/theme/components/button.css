@@ -1,4 +1,206 @@
-/* Buttons */
+/* Adapted from danielkleebinder/md3-for-ionic */
+.md button {
+	color: inherit;
+	text-transform: none;
+	border-radius: var(--md3-corner-full);
+}
+
+.md ion-button,
+.md ion-button[fill=solid] {
+	--background: var(--ion-color-base, rgb(var(--md3-primary)));
+	--background-hover: var(--ion-color-base, rgb(var(--md3-primary)));
+	--background-focused: var(--ion-color-base, rgb(var(--md3-primary)));
+	--background-activated: var(--ion-color-base, rgb(var(--md3-primary)));
+
+	--color: var(--ion-color-contrast, rgb(var(--md3-on-primary)));
+	--color-hover: var(--ion-color-contrast, rgb(var(--md3-on-primary)));
+	--color-focused: var(--ion-color-contrast, rgb(var(--md3-on-primary)));
+	--color-activated: var(--ion-color-contrast, rgb(var(--md3-on-primary)));
+
+	--box-shadow: none;
+	--border-width: 1px;
+	--border-radius: 28px;
+	--ripple-color: var(--md3-surface-container-highest);
+	--transition: border-radius var(--md3-expressive-default-spring-duration) var(--md3-expressive-default-spring);
+	--padding-start: 24px;
+	--padding-end: 24px;
+
+	font: var(--md3-label-large);
+	letter-spacing: var(--md3-label-large-letter-spacing);
+
+	height: 56px;
+	text-transform: none;
+
+	&.button-full,
+	&.md-square,
+	&[shape=square] {
+		--border-radius: var(--md3-corner-large);
+
+		&::part(native) {
+			border-radius: var(--border-radius);
+		}
+	}
+
+	&.ion-activated {
+		--border-radius: var(--md3-corner-medium);
+	}
+
+	ion-icon {
+		color: inherit;
+		width: 24px;
+		height: 24px;
+
+		&[slot=start] {
+			margin-right: 8px;
+		}
+
+		&[slot=end] {
+			margin-left: 8px;
+		}
+	}
+}
+
+.md ion-button.button-small {
+	height: 40px;
+	font: var(--md3-label-small);
+	letter-spacing: var(--md3-label-small-letter-spacing);
+
+	--border-width: 1px;
+	--border-radius: 20px;
+
+	--padding-start: 16px;
+	--padding-end: 16px;
+
+	&.button-full,
+	&.md-square,
+	&[shape=square] {
+		--border-radius: var(--md3-corner-medium);
+	}
+
+	&.ion-activated {
+		--border-radius: var(--md3-corner-small);
+	}
+
+	ion-icon {
+		width: 20px;
+		height: 20px;
+	}
+}
+
+.md ion-button.button-large {
+	height: 96px;
+	font: var(--md3-title-large);
+	letter-spacing: var(--md3-title-large-letter-spacing);
+
+	--border-width: 2px;
+	--border-radius: 48px;
+
+	--padding-start: 48px;
+	--padding-end: 48px;
+
+	&.button-full,
+	&.md-square,
+	&[shape=square] {
+		--border-radius: var(--md3-corner-extra-large);
+	}
+
+	&.ion-activated {
+		--border-radius: var(--md3-corner-large);
+	}
+
+	ion-icon {
+		width: 32px;
+		height: 32px;
+
+		&[slot=start] {
+			margin-right: 12px;
+		}
+
+		&[slot=end] {
+			margin-left: 12px;
+		}
+	}
+}
+
+.md ion-button.button-clear ion-icon {
+	color: rgb(var(--md3-primary));
+}
+
+.md ion-button.tonal {
+	--background: rgb(var(--md3-secondary-container));
+	--background-hover: rgb(var(--md3-secondary-container));
+	--background-focused: rgb(var(--md3-secondary-container));
+	--background-activated: rgb(var(--md3-secondary-container));
+
+	--color: rgb(var(--md3-on-secondary-container));
+	--color-hover: rgb(var(--md3-on-secondary-container));
+	--color-focused: rgb(var(--md3-on-secondary-container));
+	--color-activated: rgb(var(--md3-on-secondary-container));
+
+	--box-shadow: var(--md3-elevation-0);
+}
+
+.md ion-button.tonal ion-icon {
+	color: rgb(var(--md3-on-secondary-container));
+}
+
+.md ion-button.elevated {
+	--background: rgb(var(--md3-surface-container-low));
+	--background-hover: rgb(var(--md3-surface-container));
+	--background-focused: rgb(var(--md3-surface-container));
+	--background-activated: rgb(var(--md3-surface-container));
+
+	--color: rgb(var(--md3-primary));
+	--color-hover: rgb(var(--md3-primary));
+	--color-focused: rgb(var(--md3-primary));
+	--color-activated: rgb(var(--md3-primary));
+
+	--box-shadow: var(--md3-elevation-1);
+}
+
+.md ion-button.elevated:hover {
+	--box-shadow: var(--md3-elevation-2);
+}
+
+.md ion-button ion-icon,
+.md ion-button.elevated ion-icon {
+	font-size: 18px;
+	color: rgb(var(--md3-primary));
+}
+
+.md ion-button[fill=outline] {
+	--background: rgb(var(--md3-surface));
+	--background-hover: rgb(var(--md3-surface));
+	--background-focused: rgb(var(--md3-surface));
+	--background-activated: rgb(var(--md3-surface));
+
+	--color: rgb(var(--md3-primary));
+	--color-hover: rgb(var(--md3-primary));
+	--color-focused: rgb(var(--md3-primary));
+	--color-activated: rgb(var(--md3-primary));
+
+	--box-shadow: var(--md3-elevation-0);
+
+	--border-color: rgb(var(--md3-outline));
+	--border-style: solid;
+	--border-width: 1px;
+}
+
+.md ion-button.button-clear,
+.md ion-button[fill=clear] {
+	--background: transparent;
+	--background-hover: transparent;
+	--background-focused: transparent;
+
+	--color: rgb(var(--md3-primary));
+	--color-hover: rgb(var(--md3-primary));
+	--color-focused: rgb(var(--md3-primary));
+	--color-activated: rgb(var(--md3-primary));
+
+	--box-shadow: var(--md3-elevation-0);
+}
+
+/* Buttons (OLD)
 .md ion-button,
 .md ion-button[fill=solid] {
 	--background: rgb(var(--md3-primary));
@@ -133,3 +335,4 @@
 .ion-palette-dark .md ion-toolbar ion-button.in-toolbar {
 	--background: rgb(var(--md3-surface-container-low));
 }
+	*/

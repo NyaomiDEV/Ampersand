@@ -61,8 +61,8 @@
 	</IonList>
 
 	<div>
-		<IonButton @click="showModal()">{{ $t("dashboard:messageBoard.add") }}</IonButton>
-		<IonButton fill="clear" router-link="/options/messageBoard">{{ $t("dashboard:messageBoard.view") }}</IonButton>
+		<IonButton size="small" @click="showModal()">{{ $t("dashboard:messageBoard.add") }}</IonButton>
+		<IonButton size="small" fill="clear" router-link="/options/messageBoard">{{ $t("dashboard:messageBoard.view") }}</IonButton>
 	</div>
 </template>
 

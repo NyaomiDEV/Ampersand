@@ -1,0 +1,9 @@
+/* Adapted from danielkleebinder/md3-for-ionic */
+.md ion-accordion-group {
+	border-radius: var(--md3-corner-medium);
+	border: 1px solid rgb(var(--md3-outline-variant));
+	background: rgb(var(--md3-surface));
+	color: rgb(var(--md3-on-surface));
+	overflow: hidden;
+	margin: 16px;
+}

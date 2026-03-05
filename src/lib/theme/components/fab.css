@@ -1,69 +1,59 @@
-/* FAB */
+/* Adapted from danielkleebinder/md3-for-ionic */
 .md ion-fab-button {
-	--background: rgb(var(--md3-primary-container));
-	--color: rgb(var(--md3-on-primary-container));
+	--background: var(--ion-color-base, rgb(var(--md3-primary-container)));
+	--color: var(--ion-color-contrast, rgb(var(--md3-on-primary-container)));
 
 	--box-shadow: var(--md3-elevation-3);
 	--border-radius: var(--md3-corner-large);
+
+	--transition:
+		border-radius var(--md3-expressive-default-spring-duration) var(--md3-expressive-default-spring);
 
 	--padding-start: 16px;
 	--padding-end: 16px;
 	--padding-top: 16px;
 	--padding-bottom: 16px;
 
-	margin: 16px;
-
 	width: 56px;
 	height: 56px;
-}
 
-.md ion-fab-button ion-icon {
-	font-size: 24px;
-}
+	ion-icon {
+		width: 24px;
+		height: 24px;
+	}
 
-.md ion-fab-button[size=small] {
-	--border-radius: var(--md3-corner-medium);
-	width: 40px;
-	height: 40px;
-}
+	&[size=small] {
+		--padding-start: 10px;
+		--padding-end: 10px;
+		--padding-top: 10px;
+		--padding-bottom: 10px;
+		--border-radius: var(--md3-corner-medium);
 
-.md ion-fab-button[size=large] {
-	--border-radius: var(--md3-corner-extra-large);
-	width: 96px;
-	height: 96px;
-}
+		width: 40px;
+		height: 40px;
 
-.md ion-fab-button[size=large] ion-icon {
-	font-size: 36px;
-}
+		ion-icon {
+			width: 20px;
+			height: 20px;
+		}
+	}
 
-.md ion-fab-button:hover {
-	--box-shadow: var(--md3-elevation-4);
-}
+	&[size=large] {
+		--border-radius: var(--md3-corner-extra-large);
+		width: 96px;
+		height: 96px;
 
-.md ion-fab-button.lowered {
-	--box-shadow: var(--md3-elevation-1);
-}
+		ion-icon {
+			width: 36px;
+			height: 36px;
+		}
+	}
 
-.md ion-fab-button.lowered:hover {
-	--box-shadow: var(--md3-elevation-2);
-}
+	&.fab-button-close-active {
+		--border-radius: 50px;
+	}
 
-.md ion-fab-button.surface {
-	--background: rgb(var(--md3-surface-container-high));
-	--color: rgb(var(--md3-primary));
-}
-
-.md ion-fab-button.lowered.surface {
-	--background: rgb(var(--md3-surface-container-low));
-}
-
-.md ion-fab-button[color=secondary] {
-	--background: rgb(var(--md3-secondary-container));
-	--color: rgb(var(--md3-on-secondary-container));
-}
-
-.md ion-fab-button[color=tertiary] {
-	--background: rgb(var(--md3-tertiary-container));
-	--color: rgb(var(--md3-on-tertiary-container));
+	&.fab-button-in-list {
+		--border-radius: var(--md3-corner-full);
+	}
 }

@@ -86,7 +86,7 @@
 					</IonButton>
 				</div>
 
-				<IonButton fill="clear" @click="openPrivacyPolicy">
+				<IonButton fill="outline" @click="openPrivacyPolicy">
 					{{ $t("about:privacyPolicy") }}
 				</IonButton>
 			</div>

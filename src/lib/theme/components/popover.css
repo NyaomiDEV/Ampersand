@@ -1,0 +1,16 @@
+/* Adapted from danielkleebinder/md3-for-ionic */
+/* With additions from us */
+.md ion-popover {
+	--background: rgb(var(--md3-surface-container));
+	--color: rgb(var(--md3-on-surface));
+	--box-shadow: var(--md3-elevation-2);
+}
+
+.md ion-popover ion-item {
+	--background: rgb(var(--md3-surface-container));
+	--color: rgb(var(--md3-on-surface));
+}
+
+.md ion-popover::part(content) {
+	border-radius: var(--md3-corner-large);
+}

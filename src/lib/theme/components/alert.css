@@ -1,41 +1,95 @@
-.md ion-alert .alert-wrapper {
-	border-radius: 28px;
-	padding: 24px;
-	box-shadow: var(--md3-elevation-3)
-}
+/* Adapted from danielkleebinder/md3-for-ionic */
+/* However we added some styles so that it better reflects m3 expressive */
+.md ion-alert {
+	--background: rgb(var(--md3-surface-container-high));
 
-.md ion-alert .alert-head {
-	padding-top: 0;
-	padding-left: 0;
-	padding-right: 0;
-	padding-bottom: 16px;
-}
+	.alert-wrapper {
+		box-shadow: var(--md3-elevation-3);
+		border-radius: var(--md3-corner-extra-large);
+	}
 
-.md ion-alert .alert-sub-title {
-	margin-top: 16px;
-}
+	.alert-head {
+		padding: 24px 24px 16px;
+	}
 
-.md ion-alert .alert-message {
-	padding-top: 0;
-	padding-left: 0;
-	padding-right: 0;
-	padding-bottom: 0;
-}
+	.alert-title {
+		font: var(--md3-headline-small);
+		letter-spacing: var(--md3-headline-small-letter-spacing);
+	}
 
-.md ion-alert .alert-input-group {
-	padding-top: 0;
-	padding-left: 0;
-	padding-right: 0;
-	padding-bottom: 0;
-}
+	.alert-message {
+		padding: 0 24px 24px;
+		font: var(--md3-body-medium);
+		letter-spacing: var(--md3-body-medium-letter-spacing);
+		color: rgb(var(--md3-on-surface-variant));
+	}
 
-.md ion-alert .alert-button-group {
-	padding-top: 24px;
-	padding-left: 0;
-	padding-right: 0;
-	padding-bottom: 0;
-}
+	.alert-radio-label,
+	.alert-checkbox-label {
+		color: rgb(var(--md-sys-on-surface)) !important;
+	}
 
-.md ion-alert .alert-button {
-	text-transform: none;
+	.alert-button-group {
+		padding-bottom: 14px;
+	}
+
+	.alert-button {
+		text-transform: none;
+		color: rgb(var(--md3-on-surface));
+		padding-inline-start: 24px;
+		padding-inline-end: 24px;
+		border-radius: var(--md3-corner-full);
+
+		&.alert-button-role-confirm,
+		&.alert-button-role-primary {
+			background-color: rgb(var(--md3-primary));
+			color: rgb(var(--md3-on-primary));
+		}
+
+		&.alert-button-role-secondary {
+			background-color: rgb(var(--md3-secondary));
+			color: rgb(var(--md3-on-secondary));
+		}
+
+		&.alert-button-role-tertiary {
+			background-color: rgb(var(--md3-tertiary));
+			color: rgb(var(--md3-on-tertiary));
+		}
+
+		&.alert-button-role-destructive {
+			background-color: rgb(var(--md3-error));
+			color: rgb(var(--md3-on-error));
+		}
+
+		&.alert-button-role-outline {
+			border-color: rgb(var(--md3-outline));
+			border-style: solid;
+			border-width: 1px;
+		}
+	}
+
+	.alert-radio-label,
+	.alert-checkbox-label {
+		color: rgb(var(--md3-on-surface)) !important;
+	}
+
+	.alert-radio-group,
+	.alert-checkbox-group {
+		border: none;
+	}
+
+	.alert-button-group {
+		padding-bottom: 14px;
+	}
+
+	ion-loading {
+		--background: rgb(var(--md3-surface-container-high));
+		--spinner-color: rgb(var(--md3-primary));
+
+		.loading-wrapper {
+			color: rgb(var(--md3-on-surface));
+			box-shadow: var(--md3-elevation-3);
+			border-radius: var(--md3-corner-large);
+		}
+	}
 }

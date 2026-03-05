@@ -1,0 +1,27 @@
+/* Adapted from danielkleebinder/md3-for-ionic */
+.md h1 {
+	font-family: var(--md3-display-large-font-family-name);
+	font-style: var(--md3-display-large-font-family-style);
+	font-weight: var(--md3-display-large-font-weight);
+	font-size: var(--md3-display-large-font-size);
+	line-height: var(--md3-display-large-line-height);
+	letter-spacing: var(--md3-display-large-letter-spacing);
+}
+
+.md h2 {
+	font-family: var(--md3-display-medium-font-family-name);
+	font-style: var(--md3-display-medium-font-family-style);
+	font-weight: var(--md3-display-medium-font-weight);
+	font-size: var(--md3-display-medium-font-size);
+	line-height: var(--md3-display-medium-line-height);
+	letter-spacing: var(--md3-display-medium-letter-spacing);
+}
+
+.md h3 {
+	font-family: var(--md3-display-small-font-family-name);
+	font-style: var(--md3-display-small-font-family-style);
+	font-weight: var(--md3-display-small-font-weight);
+	font-size: var(--md3-display-small-font-size);
+	line-height: var(--md3-display-small-line-height);
+	letter-spacing: var(--md3-display-small-letter-spacing);
+}

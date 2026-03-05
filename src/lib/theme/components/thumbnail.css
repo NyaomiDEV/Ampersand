@@ -1,0 +1,5 @@
+/* Adapted from danielkleebinder/md3-for-ionic */
+.md3 ion-thumbnail {
+  	overflow: hidden;
+  	border-radius: var(--md3-corner-medium);
+}

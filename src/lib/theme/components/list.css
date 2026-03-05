@@ -1,8 +1,110 @@
-/* List */
+/* Adapted from danielkleebinder/md3-for-ionic */
+/* Adjusted for M3 Expressive */
 .md ion-list {
+	background: rgb(var(--md3-surface));
+	color: rgb(var(--md3-on-surface));
+}
+
+.md ion-item {
+	--background: rgb(var(--md3-surface-container));
+	--background-hover: rgb(var(--md3-on-surface));
+	--background-hover-opacity: 0.08;
+	--background-focused: rgb(var(--md3-on-surface));
+	--background-focused-opacity: 0.1;
+	--ripple-color: rgb(var(--md3-on-surface));
+
+	--color: rgb(var(--md3-on-surface));
+	--inner-border-width: 0 0 0 0;
+	--border-color: transparent;
+
+	--border-radius: 4px;
+	--min-height: 56px;
+
+	--inner-padding-top: 8px;
+	--inner-padding-bottom: 8px;
+
+	margin-top: 2px;
+
+	font: var(--md3-body-large);
+	letter-spacing: var(--md3-body-large-letter-spacing);
+
+	ion-icon[slot='start'] {
+		color: rgb(var(--md3-on-surface-variant));
+		margin-inline-end: 16px;
+	}
+
+	ion-icon[slot='end'] {
+		color: rgb(var(--md3-on-surface-variant));
+		font-size: 24px;
+		margin-inline-start: 16px;
+	}
+
+	ion-label {
+		h1 {
+			font: var(--md3-title-large);
+			letter-spacing: var(--md3-title-large-letter-spacing);
+		}
+
+		h2 {
+			font: var(--md3-title-medium);
+			letter-spacing: var(--md3-title-medium-letter-spacing);
+		}
+
+		h3 {
+			font: var(--md3-body-large);
+			letter-spacing: var(--md3-body-large-letter-spacing);
+		}
+
+		p {
+			color: rgb(var(--md3-on-surface-variant));
+			font: var(--md3-body-medium);
+			letter-spacing: var(--md3-body-medium-letter-spacing);
+		}
+	}
+}
+
+.md ion-item:first-child,
+.md ion-item-sliding:first-child>ion-item {
+	margin-top: 0;
+}
+
+ion-item-divider {
+	--background: rgb(var(--md3-background));
+	--color: rgb(var(--md3-on-background));
+
+	color: rgb(var(--md3-on-background));
+	padding-top: 8px;
+	padding-bottom: 8px;
+	font-size: inherit;
+	border: none;
+
+	ion-icon {
+		font-size: 24px;
+		color: inherit;
+	}
+}
+
+ion-card,
+ion-popover {
+	ion-list {
+		background: inherit;
+		color: inherit;
+	}
+
+	ion-item {
+		--background: inherit;
+		--color: inherit;
+	}
+}
+
+/* Our ion-list additions */
+.md ion-list {
+	border-radius: var(--md3-corner-large);
 	padding-top: 0;
 	padding-bottom: 0;
-	border-radius: 16px;
 	margin: 10px 16px;
-	background-color: transparent;
+}
+
+.md ion-item.surface {
+	--background: transparent;
 }

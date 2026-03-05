@@ -1,0 +1,14 @@
+/* Adapted from danielkleebinder/md3-for-ionic */
+/* With our own additions */
+.md ion-datetime {
+	--background: rgb(var(--md3-surface));
+	--background-rgb: var(--md3-surface);
+	--wheel-fade-background-rgb: var(--md3-surface);
+	--wheel-highlight-background: rgb(var(--md3-surface-variant));
+	--wheel-highlight-border-radius: var(--md3-corner-large);
+	border-radius: var(--md3-corner-extra-large);
+}
+
+.md ion-datetime-button::part(native) {
+	background: rgb(var(--md3-surface-container-high));
+}

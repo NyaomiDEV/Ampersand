@@ -1,71 +1,85 @@
 /* Light */
 .md * {
+	--ion-border-color: rgb(var(--md3-outline));
+	--ion-box-shadow-color: rgb(var(--md3-shadow));
+
+	--ion-background-color: rgb(var(--md3-background));
+	--ion-background-color-rgb: var(--md3-background);
+	--ion-text-color: rgb(var(--md3-on-background));
+	--ion-text-color-rgb: var(--md3-on-background);
+
+	--ion-item-background: rgb(var(--md3-surface));
+	--ion-item-color: rgb(var(--md3-on-surface));
+	--ion-item-border-color: rgb(var(--md3-outline-variant));
+
+	--ion-toolbar-background: rgb(var(--md3-surface-container));
+	--ion-toolbar-color: rgb(var(--md3-primary));
+
+	--ion-tab-bar-background: rgb(var(--md3-surface-container));
+	--ion-tab-bar-color: rgb(var(--md3-on-surface));
+
 	--ion-color-primary: rgb(var(--md3-primary));
 	--ion-color-primary-rgb: var(--md3-primary);
 	--ion-color-primary-contrast: rgb(var(--md3-on-primary));
 	--ion-color-primary-contrast-rgb: var(--md3-on-primary);
-	--ion-color-primary-shade: rgb(var(--md3-primary-fixed-dim));
-	--ion-color-primary-tint: rgb(var(--md3-primary-fixed));
+	--ion-color-primary-shade: color-mix(in srgb, rgb(var(--md3-primary)), rgb(var(--md3-inverse-surface)) 20%);
+	--ion-color-primary-tint: color-mix(in srgb, rgb(var(--md3-primary)), rgb(var(--md3-surface)) 20%);
 
 	--ion-color-secondary: rgb(var(--md3-secondary));
 	--ion-color-secondary-rgb: var(--md3-secondary);
 	--ion-color-secondary-contrast: rgb(var(--md3-on-secondary));
 	--ion-color-secondary-contrast-rgb: var(--md3-on-secondary);
-	--ion-color-secondary-shade: rgb(var(--md3-secondary-fixed-dim));
-	--ion-color-secondary-tint: rgb(var(--md3-secondary-fixed));
+	--ion-color-secondary-shade: color-mix(in srgb, rgb(var(--md3-secondary)), rgb(var(--md3-inverse-surface)) 20%);
+	--ion-color-secondary-tint: color-mix(in srgb, rgb(var(--md3-secondary)), rgb(var(--md3-surface)) 20%);
 
 	--ion-color-tertiary: rgb(var(--md3-tertiary));
 	--ion-color-tertiary-rgb: var(--md3-tertiary);
 	--ion-color-tertiary-contrast: rgb(var(--md3-on-tertiary));
 	--ion-color-tertiary-contrast-rgb: var(--md3-on-tertiary);
-	--ion-color-tertiary-shade: rgb(var(--md3-tertiary-fixed-dim));
-	--ion-color-tertiary-tint: rgb(var(--md3-tertiary-fixed));
+	--ion-color-tertiary-shade: color-mix(in srgb, rgb(var(--md3-tertiary)), rgb(var(--md3-inverse-surface)) 20%);
+	--ion-color-tertiary-tint: color-mix(in srgb, rgb(var(--md3-tertiary)), rgb(var(--md3-surface)) 20%);
 
-	--ion-color-success: rgb(var(--md3-tertiary));
-	--ion-color-success-rgb: var(--md3-tertiary);
-	--ion-color-success-contrast: rgb(var(--md3-on-tertiary));
-	--ion-color-success-contrast-rgb: var(--md3-on-tertiary);
-	--ion-color-success-shade: rgb(var(--md3-tertiary-fixed-dim));
-	--ion-color-success-tint: rgb(var(--md3-tertiary-fixed));
+	--ion-color-success: rgb(var(--md3-success));
+	--ion-color-success-rgb: var(--md3-success);
+	--ion-color-success-contrast: rgb(var(--md3-on-success));
+	--ion-color-success-contrast-rgb: var(--md3-on-success);
+	--ion-color-success-shade: color-mix(in srgb, rgb(var(--md3-success)), rgb(var(--md3-inverse-surface)) 20%);
+	--ion-color-success-tint: color-mix(in srgb, rgb(var(--md3-success)), rgb(var(--md3-surface)) 20%);
 
-	--ion-color-warning: rgb(var(--md3-secondary));
-	--ion-color-warning-rgb: var(--md3-secondary);
-	--ion-color-warning-contrast: rgb(var(--md3-on-secondary));
-	--ion-color-warning-contrast-rgb: var(--md3-on-secondary);
-	--ion-color-warning-shade: rgb(var(--md3-secondary-fixed-dim));
-	--ion-color-warning-tint: rgb(var(--md3-secondary-fixed));
+	--ion-color-warning: rgb(var(--md3-warning));
+	--ion-color-warning-rgb: var(--md3-warning);
+	--ion-color-warning-contrast: rgb(var(--md3-on-warning));
+	--ion-color-warning-contrast-rgb: var(--md3-on-warning);
+	--ion-color-warning-shade: color-mix(in srgb, rgb(var(--md3-warning)), rgb(var(--md3-inverse-surface)) 20%);
+	--ion-color-warning-tint: color-mix(in srgb, rgb(var(--md3-warning)), rgb(var(--md3-surface)) 20%);
 
 	--ion-color-danger: rgb(var(--md3-error));
 	--ion-color-danger-rgb: var(--md3-error);
 	--ion-color-danger-contrast: rgb(var(--md3-on-error));
 	--ion-color-danger-contrast-rgb: var(--md3-on-error);
-	--ion-color-danger-shade: rgb(var(--md3-error-container));
-	--ion-color-danger-tint: rgb(var(--md3-error-container));
+	--ion-color-danger-shade: color-mix(in srgb, rgb(var(--md3-error)), rgb(var(--md3-inverse-surface)) 20%);
+	--ion-color-danger-tint: color-mix(in srgb, rgb(var(--md3-error)), rgb(var(--md3-surface)) 20%);
 
-	--ion-color-light: rgb(var(--md3-neutral-palette-tone-90));
-	--ion-color-light-rgb: var(--md3-neutral-palette-tone-90);
-	--ion-color-light-contrast: rgb(var(--md3-neutral-palette-tone-10));
-	--ion-color-light-contrast-rgb: var(--md3-neutral-palette-tone-10);
-	--ion-color-light-shade: rgb(var(--md3-neutral-palette-tone-90));
-	--ion-color-light-tint: rgb(var(--md3-neutral-palette-tone-90));
+	--ion-color-light: rgb(var(--md3-surface-container-lowest));
+	--ion-color-light-rgb: var(--md3-surface-container-lowest);
+	--ion-color-light-contrast: rgb(var(--md3-on-surface));
+	--ion-color-light-contrast-rgb: var(--md3-on-surface);
+	--ion-color-light-shade: color-mix(in srgb, rgb(var(--md3-surface-container-lowest)), rgb(var(--md3-inverse-surface)) 20%);
+	--ion-color-light-tint: color-mix(in srgb, rgb(var(--md3-surface-container-lowest)), rgb(var(--md3-surface)) 20%);
 
-	--ion-color-dark: rgb(var(--md3-neutral-palette-tone-10));
-	--ion-color-dark-rgb: var(--md3-neutral-palette-tone-10);
-	--ion-color-dark-contrast: rgb(var(--md3-neutral-palette-tone-90));
-	--ion-color-dark-contrast-rgb: var(--md3-neutral-palette-tone-90);
-	--ion-color-dark-shade: rgb(var(--md3-neutral-palette-tone-10));
-	--ion-color-dark-tint: rgb(var(--md3-neutral-palette-tone-10));
+	--ion-color-medium: rgb(var(--md3-surface-container));
+	--ion-color-medium-rgb: var(--md3-surface-container);
+	--ion-color-medium-contrast: rgb(var(--md3-on-surface));
+	--ion-color-medium-contrast-rgb: var(--md3-on-surface);
+	--ion-color-medium-shade: color-mix(in srgb, rgb(var(--md3-surface-container)), rgb(var(--md3-inverse-surface)) 20%);
+	--ion-color-medium-tint: color-mix(in srgb, rgb(var(--md3-surface-container)), rgb(var(--md3-surface)) 20%);
 
-	--ion-background-color: rgb(var(--md3-surface-container));
-	--ion-background-color-rgb: var(--md3-surface-container);
-
-	--ion-text-color: rgb(var(--md3-on-background));
-	--ion-text-color-rgb: var(--md3-on-background);
-
-	--ion-item-background: rgb(var(--md3-background));
-	--ion-toolbar-background: rgb(var(--md3-surface-container));
-	--ion-tab-bar-background: rgb(var(--md3-surface-container));
-	--ion-card-background: rgb(var(--md3-surface-container));
+	--ion-color-dark: rgb(var(--md3-surface-container-highest));
+	--ion-color-dark-rgb: var(--md3-surface-container-highest);
+	--ion-color-dark-contrast: rgb(var(--md3-on-surface));
+	--ion-color-dark-contrast-rgb: var(--md3-on-surface);
+	--ion-color-dark-shade: color-mix(in srgb, rgb(var(--md3-surface-container-highest)), rgb(var(--md3-inverse-surface)) 20%);
+	--ion-color-dark-tint: color-mix(in srgb, rgb(var(--md3-surface-container-highest)), rgb(var(--md3-surface)) 20%);
 
 	--ion-text-color-step-50: rgb(var(--md3-neutral-palette-tone-5));
 	--ion-text-color-step-100: rgb(var(--md3-neutral-palette-tone-10));
@@ -110,35 +124,6 @@
 
 /* Dark */
 .ion-palette-dark.md * {
-	--ion-color-light: rgb(var(--md3-neutral-palette-tone-10));
-	--ion-color-light-rgb: var(--md3-neutral-palette-tone-10);
-	--ion-color-light-contrast: rgb(var(--md3-neutral-palette-tone-90));
-	--ion-color-light-contrast-rgb: var(--md3-neutral-palette-tone-90);
-	--ion-color-light-shade: rgb(var(--md3-neutral-palette-tone-10));
-	--ion-color-light-tint: rgb(var(--md3-neutral-palette-tone-10));
-
-	--ion-color-medium: rgb(var(--md3-neutral-palette-tone-70));
-	--ion-color-medium-rgb: rgb(var(--md3-neutral-palette-tone-70));
-	--ion-color-medium-contrast: rgb(var(--md3-neutral-palette-tone-30));
-	--ion-color-medium-contrast-rgb: var(--md3-neutral-palette-tone-30);
-	--ion-color-medium-shade: rgb(var(--md3-neutral-palette-tone-70));
-	--ion-color-medium-tint: rgb(var(--md3-neutral-palette-tone-70));
-
-	--ion-color-dark: rgb(var(--md3-neutral-palette-tone-90));
-	--ion-color-dark-rgb: var(--md3-neutral-palette-tone-90);
-	--ion-color-dark-contrast: rgb(var(--md3-neutral-palette-tone-10));
-	--ion-color-dark-contrast-rgb: var(--md3-neutral-palette-tone-10);
-	--ion-color-dark-shade: rgb(var(--md3-neutral-palette-tone-90));
-	--ion-color-dark-tint: rgb(var(--md3-neutral-palette-tone-90));
-
-	--ion-background-color: rgb(var(--md3-background));
-	--ion-background-color-rgb: var(--md3-background);
-
-	--ion-item-background: rgb(var(--md3-surface-container));
-	--ion-toolbar-background: rgb(var(--md3-background));
-	--ion-tab-bar-background: rgb(var(--md3-background));
-	--ion-card-background: rgb(var(--md3-surface-container));
-
 	--ion-text-color-step-50: rgb(var(--md3-neutral-palette-tone-95));
 	--ion-text-color-step-100: rgb(var(--md3-neutral-palette-tone-90));
 	--ion-text-color-step-150: rgb(var(--md3-neutral-palette-tone-85));

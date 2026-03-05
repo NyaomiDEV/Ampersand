@@ -31,7 +31,7 @@
 					buttons: [
 						{
 							text: i18next.t("other:alerts.cancel"),
-							role: "cancel",
+							role: "outline",
 							handler: () => resolve(undefined)
 						},
 						{
@@ -139,61 +139,66 @@
 
 <template>
 	<IonItem button :class="{ card: true, filled: props.boardMessage.isPinned, archived: props.boardMessage.isArchived }">
-		<div class="card-inner">
-			<MemberAvatar v-if="props.boardMessage.member" :member="props.boardMessage.member" />
-			<div class="flexbox">
-				<div class="subheader">
-					<span v-if="props.boardMessage.member">{{ props.boardMessage.member.name }}</span>
-					<p v-if="formatDate(props.boardMessage.date, 'collapsed') !== props.boardMessage.title">
-						{{ formatDate(props.boardMessage.date, "collapsed") }}
-					</p>
-				</div>
-				<div class="contents">
-					<h1>{{ props.boardMessage.title }}</h1>
-					<Markdown :markdown="props.boardMessage.body" />
-					<IonButton
-						v-if="props.boardMessage.poll && isPollHidden"
-						fill="clear"
-						@click="(e) => {e.stopPropagation(); isPollHidden = false}"
-					>
-						{{ $t("messageBoard:polls.boardMessageContainsPoll") }}
-					</IonButton>
-				</div>
-				<div v-if="props.boardMessage.poll && !isPollHidden" class="poll" @click="(e) => e.stopPropagation()">
-					<IonItem
-						v-for="choice in props.boardMessage.poll.entries"
-						:key="choice.choice"
-						button
-						:detail="false"
-						@click="voteFor(choice)"
-					>
-						<IonLabel>
-							<h3>{{ choice.choice }}</h3>
-							<p>
-								{{ $t("messageBoard:polls.choice.desc", { count: choice.votes.length }) }} - {{
-									Math.floor(calcPercentageVoted(choice) * 100) }}%
-							</p>
-							<div
-								class="percentage"
-								:style="{ '--vote-percentage': `${Math.max(0.005, calcPercentageVoted(choice)) * 100}%` }"
-							/>
-						</IonLabel>
-					</IonItem>
-					<IonButton @click="showPollResults">{{ $t("messageBoard:polls.resultsButton") }}</IonButton>
-					<IonButton
-						v-if="props.boardMessage.poll && props.hidePoll && !isPollHidden"
-						fill="clear"
-						@click="(e) => {e.stopPropagation(); isPollHidden = true}"
-					>
-						{{ $t("messageBoard:polls.collapsePoll") }}
-					</IonButton>
-				</div>
+		<MemberAvatar v-if="props.boardMessage.member" slot="start" :member="props.boardMessage.member" />
+		<div class="flexbox">
+			<div class="subheader">
+				<span v-if="props.boardMessage.member">{{ props.boardMessage.member.name }}</span>
+				<p v-if="formatDate(props.boardMessage.date, 'collapsed') !== props.boardMessage.title">
+					{{ formatDate(props.boardMessage.date, "collapsed") }}
+				</p>
+			</div>
+			<div class="contents">
+				<h1>{{ props.boardMessage.title }}</h1>
+				<Markdown :markdown="props.boardMessage.body" />
+				<IonButton
+					v-if="props.boardMessage.poll && isPollHidden"
+					size="small"
+					fill="clear"
+					@click="(e) => {e.stopPropagation(); isPollHidden = false}"
+				>
+					{{ $t("messageBoard:polls.boardMessageContainsPoll") }}
+				</IonButton>
+			</div>
+			<div v-if="props.boardMessage.poll && !isPollHidden" class="poll" @click="(e) => e.stopPropagation()">
+				<IonItem
+					v-for="choice in props.boardMessage.poll.entries"
+					:key="choice.choice"
+					button
+					:detail="false"
+					@click="voteFor(choice)"
+				>
+					<IonLabel>
+						<h3>{{ choice.choice }}</h3>
+						<p>
+							{{ $t("messageBoard:polls.choice.desc", { count: choice.votes.length }) }} - {{
+								Math.floor(calcPercentageVoted(choice) * 100) }}%
+						</p>
+						<div
+							class="percentage"
+							:style="{ '--vote-percentage': `${Math.max(0.005, calcPercentageVoted(choice)) * 100}%` }"
+						/>
+					</IonLabel>
+				</IonItem>
+				<IonButton size="small" @click="showPollResults">{{ $t("messageBoard:polls.resultsButton") }}</IonButton>
+				<IonButton
+					v-if="props.boardMessage.poll && props.hidePoll && !isPollHidden"
+					size="small"
+					fill="clear"
+					@click="(e) => {e.stopPropagation(); isPollHidden = true}"
+				>
+					{{ $t("messageBoard:polls.collapsePoll") }}
+				</IonButton>
 			</div>
 		</div>
 	</IonItem>
 </template>
 
 <style scoped>
+	ion-item {
+		--inner-padding-top: 12px;
+		--inner-padding-bottom: 12px;
+	}
+
 	ion-item.filled {
 		--background: var(--ion-background-color-step-200);
 	}
@@ -210,21 +215,9 @@
 		--background: transparent;
 	}
 
-	.card-inner {
-		display: flex;
-		flex-direction: row;
-		align-items: top;
-		gap: 16px;
-		padding: 16px;
-		width: 100%;
-	}
-
-	.card-inner > ion-avatar {
-		width: 40px;
-		height: 40px;
+	.member-avatar {
 		align-self: flex-start;
-		flex-shrink: 0;
-		flex-grow: 0;
+		margin-top: 12px;
 	}
 
 	.flexbox {
@@ -267,6 +260,7 @@
 	.contents > h1 {
 		font-size: 1.30em;
 		margin-bottom: 0;
+		line-height: 1.5em;
 	}
 
 	.poll {

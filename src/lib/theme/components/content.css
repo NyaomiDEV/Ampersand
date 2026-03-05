@@ -1,0 +1,10 @@
+/* Adapted from danielkleebinder/md3-for-ionic */
+.md body {
+	background: rgb(var(--md3-surface));
+	color: rgb(var(--md3-on-surface));
+}
+
+.md ion-content {
+	--background: rgb(var(--md3-surface));
+	--color: rgb(var(--md3-on-surface));
+}

@@ -1,0 +1,5 @@
+/* Adapted from danielkleebinder/md3-for-ionic */
+.md ion-menu::part(container) {
+	border-top-right-radius: var(--md3-corner-large);
+	border-bottom-right-radius: var(--md3-corner-large);
+}

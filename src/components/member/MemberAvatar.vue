@@ -8,7 +8,7 @@
 	import { getObjectURL } from "../../lib/util/blob";
 	import { PartialBy } from "../../lib/types";
 
-	import accountCircle from "@material-symbols/svg-600/outlined/account_circle.svg";
+	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
 	import { isReactive, ref, watch, WatchStopHandle } from "vue";
 
 	const props = defineProps<{
@@ -35,13 +35,18 @@
 </script>
 
 <template>
-	<IonAvatar class="with-outline">
-		<img v-if="props.member.image" aria-hidden="true" :src="getObjectURL(props.member.image)" />
-		<IonIcon v-else :icon="accountCircle" />
+	<IonAvatar v-if="props.member.image" class="member-avatar with-outline">
+		<img aria-hidden="true" :src="getObjectURL(props.member.image)" />
 	</IonAvatar>
+	<IonIcon v-else class="member-avatar" :icon="accountCircle" />
 </template>
 
 <style scoped>
+	.member-avatar {
+		width: 56px;
+		height: 56px;
+	}
+
 	ion-avatar.with-outline {
 		outline-width: 2px;
 		outline-style: solid;
@@ -49,8 +54,6 @@
 	}
 
 	ion-icon {
-		width: 100%;
-		height: 100%;
 		color: v-bind('avatarColor');
 	}
 </style>

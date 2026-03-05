@@ -116,7 +116,7 @@ export async function promptOkCancel(header: string, subHeader?: string, message
 				buttons: [
 					{
 						text: i18next.t("other:alerts.cancel"),
-						role: "cancel",
+						role: "outline",
 						handler: () => resolve(false)
 					},
 					{
@@ -143,7 +143,7 @@ export async function promptYesNo(header: string, subHeader?: string, message?: 
 				buttons: [
 					{
 						text: i18next.t("other:alerts.no"),
-						role: "cancel",
+						role: "outline",
 						handler: () => resolve(false)
 					},
 					{

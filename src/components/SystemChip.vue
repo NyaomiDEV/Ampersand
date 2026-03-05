@@ -20,10 +20,10 @@
 
 <template>
 	<IonChip :router-link @click="(e) => e.stopPropagation()">
-		<IonAvatar>
-			<img v-if="props.system.image" aria-hidden="true" :src="getObjectURL(props.system.image)" />
-			<IonIcon v-else :icon="accountCircle" />
+		<IonAvatar v-if="props.system.image">
+			<img aria-hidden="true" :src="getObjectURL(props.system.image)" />
 		</IonAvatar>
+		<IonIcon v-else :icon="accountCircle" />
 		<IonLabel class="nowrap">
 			{{ props.system.name }}
 		</IonLabel>
@@ -31,9 +31,7 @@
 </template>
 
 <style scoped>
-	ion-icon {
-		width: 100%;
-		height: 100%;
-		color: var(--ion-color-primary);
+	ion-chip ion-icon {
+		color: var(--ion-color-primary)
 	}
 </style>

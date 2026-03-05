@@ -179,7 +179,12 @@
 				<div v-else class="no-img">
 					<IonIcon :icon="imageMD" />
 				</div>
-				<IonButton v-if="isEditing" shape="round" @click="modifyCover">
+				<IonButton
+					v-if="isEditing"
+					shape="round"
+					size="small"
+					@click="modifyCover"
+				>
 					<IonIcon slot="icon-only" :icon="pencilMD" />
 				</IonButton>
 				<IonButton
@@ -187,6 +192,7 @@
 					class="delete"
 					shape="round"
 					color="danger"
+					size="small"
 					@click="post.cover = undefined"
 				>
 					<IonIcon slot="icon-only" :icon="trashMD" />
@@ -231,7 +237,7 @@
 							slot="end"
 							shape="round"
 							fill="outline"
-							size="default"
+							size="small"
 							@click="(e) => { e.stopPropagation(); post.member = undefined; }"
 						>
 							<IonIcon
@@ -369,11 +375,13 @@
 	div.post-body > h1 {
 		font-size: 1.95rem;
 		margin-top: 0;
+		line-height: 2rem;
 	}
 
 	div.post-body > h2 {
 		font-size: 1.5rem;
 		margin: 0;
+		line-height: 1.75rem;
 	}
 
 	ion-item.title {

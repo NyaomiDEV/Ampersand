@@ -1,9 +1,7 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonItem, IonRange, IonLabel, IonToggle, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonSegment, IonSelect, IonSelectOption } from "@ionic/vue";
+	import { IonContent, IonHeader, IonItem, IonRange, IonLabel, IonToggle, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonSegment, IonSelect, IonSelectOption, IonSegmentButton } from "@ionic/vue";
 	import { accessibilityConfig } from "../../lib/config";
 	import Color from "../../components/Color.vue";
-
-	import MD3SegmentButton from "../../components/MD3SegmentButton.vue";
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 </script>
@@ -27,17 +25,17 @@
 						<h3 class="centered-text">{{ $t("accessibility:uiVariant.title") }}</h3>
 						<IonSegment v-model="accessibilityConfig.theme" class="segment-alt" value="ui-variant">
 
-							<MD3SegmentButton value="auto">
+							<IonSegmentButton value="auto">
 								<IonLabel>{{ $t("accessibility:uiVariant.auto") }}</IonLabel>
-							</MD3SegmentButton>
+							</IonSegmentButton>
 
-							<MD3SegmentButton value="light">
+							<IonSegmentButton value="light">
 								<IonLabel>{{ $t("accessibility:uiVariant.light") }}</IonLabel>
-							</MD3SegmentButton>
+							</IonSegmentButton>
 
-							<MD3SegmentButton value="dark">
+							<IonSegmentButton value="dark">
 								<IonLabel>{{ $t("accessibility:uiVariant.dark") }}</IonLabel>
-							</MD3SegmentButton>
+							</IonSegmentButton>
 						</IonSegment>
 					</IonLabel>
 				</IonItem>

@@ -90,7 +90,7 @@
 						slot="end"
 						shape="round"
 						fill="outline"
-						size="default"
+						size="small"
 						@click="(e) => { e.stopPropagation(); presence.delete(entry[0]) }"
 					>
 						<IonIcon

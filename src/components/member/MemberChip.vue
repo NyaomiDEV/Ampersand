@@ -24,3 +24,10 @@
 		</IonLabel>
 	</IonChip>
 </template>
+
+<style scoped>
+	.member-avatar {
+		width: 24px;
+		height: 24px;
+	}
+</style>

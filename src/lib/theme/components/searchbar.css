@@ -1,6 +1,0 @@
-/* Search bar - this one is done "at eye" please review */
-.md ion-searchbar {
-	--border-radius: 32px;
-	--box-shadow: none;
-	--background: var(--ion-item-background);
-}

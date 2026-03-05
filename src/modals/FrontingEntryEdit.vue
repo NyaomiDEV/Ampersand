@@ -207,7 +207,7 @@
 						slot="end"
 						shape="round"
 						fill="outline"
-						size="default"
+						size="small"
 						@click="(e) => { e.stopPropagation(); frontingEntry.influencing = undefined }"
 					>
 						<IonIcon
@@ -251,7 +251,7 @@
 						slot="end"
 						shape="round"
 						fill="outline"
-						size="default"
+						size="small"
 						@click="(e) => { e.stopPropagation(); frontingEntry.endTime = undefined }"
 					>
 						<IonIcon

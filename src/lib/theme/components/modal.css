@@ -1,10 +1,25 @@
 /* Headerbar in modal */
 .md ion-modal.modal-sheet ion-header ion-toolbar:first-of-type {
-	--padding-top: 16px;
-	--min-height: 80px;
+	--ion-safe-area-top: 12px;
 }
 
-/* Modal */
 .md ion-modal::part(handle) {
-	top: 16px;
+	top: 8px;
+}
+
+ion-modal::part(content) {
+	border-radius: var(--md3-corner-extra-large);
+}
+
+/* Adapted from danielkleebinder/md3-for-ionic */
+ion-modal.modal-sheet::part(content) {
+	border-radius: var(--md3-corner-extra-large-top);
+}
+
+.ion-modal-height-auto {
+	--height: auto;
+}
+
+.ion-modal-shadow {
+	--box-shadow: var(--md3-elevation-3);
 }

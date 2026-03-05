@@ -1,0 +1,10 @@
+/* Adapted from danielkleebinder/md3-for-ionic */
+.md ion-checkbox {
+	--border-radius: 2px;
+	--border-width: 2px;
+	--border-color: rgb(var(--md3-on-surface-variant));
+	--border-color-checked: var(--ion-color-base, rgb(var(--md3-primary)));
+	--checkbox-background: rgb(var(--md3-surface));
+	--checkbox-background-checked: var(--ion-color-base, rgb(var(--md3-primary)));
+	--checkmark-color: var(--ion-color-contrast, rgb(var(--md3-on-primary)));
+}

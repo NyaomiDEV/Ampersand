@@ -208,8 +208,10 @@
 	}
 
 	ion-datetime {
-		margin: auto;
-		--background: var(--ion-toolbar-background);
+		margin: 16px;
+		--background: rgb(var(--md3-surface-container));
+		--background-rgb: var(--md3-surface-container);
+		--wheel-fade-background-rgb: var(--md3-surface-container);
 	}
 
 	.ios ion-item-divider {

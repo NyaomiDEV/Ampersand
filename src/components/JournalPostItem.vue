@@ -65,7 +65,7 @@
 		padding: 16px;
 	}
 
-	ion-item ion-avatar {
+	ion-item .member-avatar {
 		width: 56px;
 		height: 56px;
 	}

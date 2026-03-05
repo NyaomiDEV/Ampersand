@@ -1,0 +1,40 @@
+/* Adapted from danielkleebinder/md3-for-ionic */
+@keyframes md3-spinner-rotate {
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+.md ion-progress-bar {
+	--progress-background: var(--ion-color-base, rgb(var(--md3-primary)));
+	--background: var(--ion-color-contrast, rgb(var(--md3-secondary-container)));
+
+	border-radius: var(--md3-corner-full);
+	min-height: 4px;
+}
+
+.md ion-spinner {
+	--color: var(--ion-color-base, rgb(var(--md3-on-surface)));
+}
+
+.md ion-spinner.spinner-circular {
+	animation-name: md3-spinner-rotate;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+}
+
+.md ion-refresher .refresher-refreshing-icon,
+.md ion-refresher .refresher-pulling-icon {
+	background: rgb(var(--md3-secondary));
+	border-color: rgb(var(--md3-secondary));
+	color: rgb(var(--md3-on-secondary));
+	box-shadow: var(--md3-elevation-2);
+}
+
+.md ion-refresher.refresher-native .arrow-container ion-icon {
+	color: rgb(var(--md3-on-secondary));
+}
+
+.md ion-refresher ion-spinner {
+	color: rgb(var(--md3-on-secondary));
+}

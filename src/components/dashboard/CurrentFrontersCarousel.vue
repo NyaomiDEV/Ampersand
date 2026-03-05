@@ -112,6 +112,7 @@
 		<IonButton
 			v-if="frontingEntries.length"
 			color="danger"
+			size="small"
 			shape="round"
 			:fill="quickDelete ? 'solid' : 'outline'"
 			@click="quickDelete = !quickDelete"
@@ -202,6 +203,10 @@
 		text-align: center;
 	}
 
+	ion-card ion-card-content h2 {
+		line-height: 1.5em;
+	}
+
 	ion-card.add-fronting {
 		opacity: .5;
 		outline-width: 0px;
@@ -216,7 +221,7 @@
 	}
 
 	ion-list-header ion-button {
-		margin: 8px 8px;
+		margin: 4px 8px;
 	}
 
 	div.carousel {

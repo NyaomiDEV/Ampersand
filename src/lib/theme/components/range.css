@@ -1,59 +1,77 @@
-/* Ranges / Sliders */
+/* Adapted from danielkleebinder/md3-for-ionic */
 .md ion-range {
-	--bar-height: 24px;
-	--bar-border-radius: 24px;
-	--knob-background: var(--ion-color-primary);
-	--knob-size: 6px;
-	--knob-border-radius: 64px;
-}
+	--bar-background: rgb(var(--md3-secondary-container));
+	--bar-background-active: var(--ion-color-base, rgb(var(--md3-primary)));
+	--bar-border-radius: var(--md3-corner-full);
+	--bar-height: 16px;
 
-.md ion-range::part(pin) {
-	border-radius: 8px;
-	background-color: rgb(var(--md3-surface-container-high));
-	color: rgb(var(--md3-on-surface-container));
-	box-shadow: var(--md3-elevation-1);
-}
+	--height: 80px;
 
-.md ion-range.range-pressed::part(pin) {
-	transform: translate3d(0px, -80px, 0px) scale(1);
-}
+	--knob-background: transparent;
+	--knob-border-radius: var(--md3-corner-full);
+	--knob-box-shadow: none;
+	--knob-size: 44px;
 
-.md ion-range::part(pin)::before {
-	display: none;
-}
+	--pin-background: rgb(var(--md3-inverse-surface));
+	--pin-color: rgb(var(--md3-inverse-on-surface));
 
-.md ion-range::part(knob) {
-	height: 64px;
-	outline: 12px solid var(--ion-item-background);
-	transform: none;
-	top: -29px;
-}
+	&::part(knob) {
+		--ion-color-base: transparent;
+		--ion-color-contrast: transparent;
+		width: 4px;
+		height: var(--knob-size);
+		background: var(--bar-background-active);
+		outline: 12px solid rgb(var(--md3-surface-container));
+		transform: translateX(calc(var(--knob-size) / 2 - 2px));
+	}
 
-.md ion-range.range-pressed::part(knob) {
-	transform: scale(0.75, 1);
-}
+	&::part(tick),
+	&::part(tick-active) {
+		--bar-height: 4px;
+		border-radius: var(--md3-corner-full);
+	}
 
-.md ion-range::part(knob)::before {
-	display: none;
-}
+	&::part(bar-active) {
+		border-top-right-radius: calc(var(--knob-border-radius) / 2);
+		border-bottom-right-radius: calc(var(--knob-border-radius) / 2);
+		margin-right: 6px;
+	}
 
-.md ion-range::part(bar)::after {
-	content: "\A";
-	position: absolute;
-	right: 0;
-	margin: calc(var(--bar-height) / 4);
-	border-radius: 100%;
-	height: 50%;
-	aspect-ratio: 1;
-	display: block;
-	background-color: var(--ion-color-primary);
-}
+	&[dual-knobs]::part(bar-active) {
+		border-radius: 4px;
+		margin-left: 6px;
+	}
 
-.md ion-range::part(tick) {
-	border-radius: 100%;
-	transform: scale(0.5);
-}
+	&::part(pin) {
+		--ion-color-base: transparent;
+		--ion-color-contrast: transparent;
+		background: var(--pin-background);
+		color: var(--pin-color);
+		border-radius: var(--md3-corner-full);
+		padding: 16px;
+		min-width: 36px;
+	}
 
-.md ion-range::part(tick-active) {
-	display: none;
+	&::part(pin)::before {
+		display: none;
+	}
+
+	&.range-pressed::part(knob) {
+		transform: translateX(calc(var(--knob-size) / 2 - 2px)) scale(0.75, 1);
+	}
+
+	/* Dot at the end */
+	&::part(bar)::after {
+		content: "\A";
+		display: block;
+		position: absolute;
+		right: 0;
+		aspect-ratio: 1;
+
+		height: calc(var(--bar-height) / 2);
+		margin: calc(var(--bar-height) / 4);
+		border-radius: var(--md3-corner-full);
+
+		background-color: var(--bar-background-active);
+	}
 }

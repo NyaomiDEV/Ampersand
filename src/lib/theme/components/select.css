@@ -1,3 +1,11 @@
-.md ion-popover::part(content) {
-	border-radius: 16px;
+/* Adapted from danielkleebinder/md3-for-ionic */
+.md ion-select {
+	--highlight-color-valid: rgb(var(--md3-success));
+	--highlight-color-invalid: rgb(var(--md3-error));
+	--highlight-color-focused: rgb(var(--md3-primary));
+
+	.select-wrapper-inner {
+		justify-content: space-between;
+		width: 100%;
+	}
 }

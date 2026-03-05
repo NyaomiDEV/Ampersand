@@ -71,12 +71,13 @@
 				<div class="avatar-container">
 					<MemberAvatar :member />
 					<div class="edit-buttons">
-						<IonButton shape="round" @click="modifyPicture">
+						<IonButton shape="round" size="small" @click="modifyPicture">
 							<IonIcon slot="icon-only" :icon="pencilMD" />
 						</IonButton>
 						<IonButton
 							v-if="member.image"
 							shape="round"
+							size="small"
 							color="danger"
 							@click="deletePicture"
 						>
@@ -151,7 +152,7 @@
 		margin-bottom: 16px;
 	}
 
-	ion-avatar {
+	.member-avatar {
 		width: 192px;
 		height: 192px;
 		outline-width: 8px !important;

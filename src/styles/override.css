@@ -24,22 +24,25 @@ ion-toast {
 }
 
 html, html.md {
+	--ampersand-font-name: 'Inter';
 	--ion-default-font: 'Inter', 'Roboto', sans-serif;
+	--ion-font-family: var(--ampersand-font-name), var(--ion-default-font);
 }
 
 html.high-legibility.hl-atkinson {
-	--ion-font-family: 'Atkinson Hyperlegible', var(--ion-default-font);
+	--ampersand-font-name: 'Atkinson Hyperlegible'
 }
 
 html.high-legibility.hl-opendyslexic {
-	--ion-font-family: 'OpenDyslexic', var(--ion-default-font);
+	--ampersand-font-name: 'OpenDyslexic';
 }
 
 html.high-legibility.hl-lexend {
-	--ion-font-family: 'Lexend', var(--ion-default-font);
+	--ampersand-font-name: 'Lexend';
 }
 
 html.high-legibility.hl-system-font {
+	--ampersand-font-name: system-ui;
 	--ion-font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
@@ -121,7 +124,6 @@ ion-label.wrap {
 
 ion-datetime {
 	max-width: 100%;
-	--wheel-fade-background-rgb: var(--md3-surface-container);
 }
 
 input[type="search"]::-webkit-search-decoration,

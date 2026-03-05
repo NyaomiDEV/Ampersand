@@ -1,136 +1,136 @@
 .md * {
 	/* Display - Large */
-	--md3-display-large-font-family-name: Roboto;
+	--md3-display-large-font-family-name: var(--ampersand-font-name);
 	--md3-display-large-font-family-style: Regular;
 	--md3-display-large-font-weight: 400;
 	--md3-display-large-font-size: 3.5625rem;
 	--md3-display-large-line-height: 4rem;
 	--md3-display-large-letter-spacing: -0.015625rem;
-	--md3-display-large: normal 400 3.5625rem/4rem Roboto;
+	--md3-display-large: normal 400 3.5625rem/4rem var(--ampersand-font-name);
 
 	/* Display - Medium */
-	--md3-display-medium-font-family-name: Roboto;
+	--md3-display-medium-font-family-name: var(--ampersand-font-name);
 	--md3-display-medium-font-family-style: Regular;
 	--md3-display-medium-font-weight: 400;
 	--md3-display-medium-font-size: 2.8125rem;
 	--md3-display-medium-line-height: 3.25rem;
 	--md3-display-medium-letter-spacing: 0;
-	--md3-display-medium: normal 400 2.8125rem/3.25rem Roboto;
+	--md3-display-medium: normal 400 2.8125rem/3.25rem var(--ampersand-font-name);
 
 	/* Display - Small */
-	--md3-display-small-font-family-name: Roboto;
+	--md3-display-small-font-family-name: var(--ampersand-font-name);
 	--md3-display-small-font-family-style: Regular;
 	--md3-display-small-font-weight: 400;
 	--md3-display-small-font-size: 2.25rem;
 	--md3-display-small-line-height: 2.75rem;
 	--md3-display-small-letter-spacing: 0;
-	--md3-display-small: normal 400 2.25rem/2.75rem Roboto;
+	--md3-display-small: normal 400 2.25rem/2.75rem var(--ampersand-font-name);
 
 	/* Headline - Large */
-	--md3-headline-large-font-family-name: Roboto;
+	--md3-headline-large-font-family-name: var(--ampersand-font-name);
 	--md3-headline-large-font-family-style: Regular;
 	--md3-headline-large-font-weight: 400;
 	--md3-headline-large-font-size: 2rem;
 	--md3-headline-large-line-height: 2.5rem;
 	--md3-headline-large-letter-spacing: 0;
-	--md3-headline-large: normal 400 2rem/2.5rem Roboto;
+	--md3-headline-large: normal 400 2rem/2.5rem var(--ampersand-font-name);
 
 	/* Headline - Medium */
-	--md3-headline-medium-font-family-name: Roboto;
+	--md3-headline-medium-font-family-name: var(--ampersand-font-name);
 	--md3-headline-medium-font-family-style: Regular;
 	--md3-headline-medium-font-weight: 400;
 	--md3-headline-medium-font-size: 1.75rem;
 	--md3-headline-medium-line-height: 2.25rem;
 	--md3-headline-medium-letter-spacing: 0;
-	--md3-headline-medium: normal 400 1.75rem/2.25rem Roboto;
+	--md3-headline-medium: normal 400 1.75rem/2.25rem var(--ampersand-font-name);
 
 	/* Headline - Small */
-	--md3-headline-small-font-family-name: Roboto;
+	--md3-headline-small-font-family-name: var(--ampersand-font-name);
 	--md3-headline-small-font-family-style: Regular;
 	--md3-headline-small-font-weight: 400;
 	--md3-headline-small-font-size: 1.5rem;
 	--md3-headline-small-line-height: 2rem;
 	--md3-headline-small-letter-spacing: 0;
-	--md3-headline-small: normal 400 1.5rem/2rem Roboto;
+	--md3-headline-small: normal 400 1.5rem/2rem var(--ampersand-font-name);
 
 	/* Body - Large */
-	--md3-body-large-font-family-name: Roboto;
+	--md3-body-large-font-family-name: var(--ampersand-font-name);
 	--md3-body-large-font-family-style: Regular;
 	--md3-body-large-font-weight: 400;
 	--md3-body-large-font-size: 1rem;
 	--md3-body-large-line-height: 1.5rem;
 	--md3-body-large-letter-spacing: 0.03125rem;
-	--md3-body-large: normal 400 1rem/1.5rem Roboto;
+	--md3-body-large: normal 400 1rem/1.5rem var(--ampersand-font-name);
 
 	/* Body - Medium */
-	--md3-body-medium-font-family-name: Roboto;
+	--md3-body-medium-font-family-name: var(--ampersand-font-name);
 	--md3-body-medium-font-family-style: Regular;
 	--md3-body-medium-font-weight: 400;
 	--md3-body-medium-font-size: 0.875rem;
 	--md3-body-medium-line-height: 1.25rem;
 	--md3-body-medium-letter-spacing: 0.015625rem;
-	--md3-body-medium: normal 400 0.875rem/1.25rem Roboto;
+	--md3-body-medium: normal 400 0.875rem/1.25rem var(--ampersand-font-name);
 
 	/* Body - Small */
-	--md3-body-small-font-family-name: Roboto;
+	--md3-body-small-font-family-name: var(--ampersand-font-name);
 	--md3-body-small-font-family-style: Regular;
 	--md3-body-small-font-weight: 400;
 	--md3-body-small-font-size: 0.75rem;
 	--md3-body-small-line-height: 1rem;
 	--md3-body-small-letter-spacing: 0.025rem;
-	--md3-body-small: normal 400 0.75rem/1rem Roboto;
+	--md3-body-small: normal 400 0.75rem/1rem var(--ampersand-font-name);
 
 	/* Label - Large */
-	--md3-label-large-font-family-name: Roboto;
+	--md3-label-large-font-family-name: var(--ampersand-font-name);
 	--md3-label-large-font-family-style: Medium;
 	--md3-label-large-font-weight: 500;
 	--md3-label-large-font-size: 0.875rem;
 	--md3-label-large-line-height: 1.25rem;
 	--md3-label-large-letter-spacing: 0.00625rem;
-	--md3-label-large: normal 500 0.875rem/1.25rem Roboto;
+	--md3-label-large: normal 500 0.875rem/1.25rem var(--ampersand-font-name);
 
 	/* Label - Medium */
-	--md3-label-medium-font-family-name: Roboto;
+	--md3-label-medium-font-family-name: var(--ampersand-font-name);
 	--md3-label-medium-font-family-style: Medium;
 	--md3-label-medium-font-weight: 500;
 	--md3-label-medium-font-size: 0.75rem;
 	--md3-label-medium-line-height: 1rem;
 	--md3-label-medium-letter-spacing: 0.03125rem;
-	--md3-label-medium: normal 500 0.75rem/1rem Roboto;
+	--md3-label-medium: normal 500 0.75rem/1rem var(--ampersand-font-name);
 
 	/* Label - Small */
-	--md3-label-small-font-family-name: Roboto;
+	--md3-label-small-font-family-name: var(--ampersand-font-name);
 	--md3-label-small-font-family-style: Medium;
 	--md3-label-small-font-weight: 500;
 	--md3-label-small-font-size: 0.6875rem;
 	--md3-label-small-line-height: 1rem;
 	--md3-label-small-letter-spacing: 0.03125rem;
-	--md3-label-small: normal 500 0.6875rem/1rem Roboto;
+	--md3-label-small: normal 500 0.6875rem/1rem var(--ampersand-font-name);
 
 	/* Title - Large */
-	--md3-title-large-font-family-name: Roboto;
+	--md3-title-large-font-family-name: var(--ampersand-font-name);
 	--md3-title-large-font-family-style: Regular;
 	--md3-title-large-font-weight: 400;
 	--md3-title-large-font-size: 1.375rem;
 	--md3-title-large-line-height: 1.75rem;
 	--md3-title-large-letter-spacing: 0;
-	--md3-title-large: normal 400 1.375rem/1.75rem Roboto;
+	--md3-title-large: normal 400 1.375rem/1.75rem var(--ampersand-font-name);
 
 	/* Title - Medium */
-	--md3-title-medium-font-family-name: Roboto;
+	--md3-title-medium-font-family-name: var(--ampersand-font-name);
 	--md3-title-medium-font-family-style: Medium;
 	--md3-title-medium-font-weight: 500;
 	--md3-title-medium-font-size: 1rem;
 	--md3-title-medium-line-height: 1.5rem;
 	--md3-title-medium-letter-spacing: 0.009375rem;
-	--md3-title-medium: normal 500 1rem/1.5rem Roboto;
+	--md3-title-medium: normal 500 1rem/1.5rem var(--ampersand-font-name);
 
 	/* Title - Small */
-	--md3-title-small-font-family-name: Roboto;
+	--md3-title-small-font-family-name: var(--ampersand-font-name);
 	--md3-title-small-font-family-style: Medium;
 	--md3-title-small-font-weight: 500;
 	--md3-title-small-font-size: 0.875rem;
 	--md3-title-small-line-height: 1.25rem;
 	--md3-title-small-letter-spacing: 0.00625rem;
-	--md3-title-small: normal 500 0.875rem/1.25rem Roboto;
+	--md3-title-small: normal 500 0.875rem/1.25rem var(--ampersand-font-name);
 }

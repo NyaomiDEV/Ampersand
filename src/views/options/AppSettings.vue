@@ -1,12 +1,11 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonList, IonPage, IonLabel, IonListHeader, IonTitle, IonToolbar, IonBackButton, IonItem, IonSegment, IonSelect, IonSelectOption, IonInput, IonToggle, IonAvatar, IonIcon } from "@ionic/vue";
+	import { IonContent, IonHeader, IonList, IonPage, IonLabel, IonListHeader, IonTitle, IonToolbar, IonBackButton, IonItem, IonSegment, IonSelect, IonSelectOption, IonInput, IonToggle, IonAvatar, IonIcon, IonSegmentButton } from "@ionic/vue";
 	import { onMounted, ref, shallowRef, useTemplateRef, watch } from "vue";
 	import { platform } from "@tauri-apps/plugin-os";
 
 	import { appConfig } from "../../lib/config";
 	import { computePercentage } from "../../lib/i18n";
 	import { getObjectURL } from "../../lib/util/blob";
-	import MD3SegmentButton from "../../components/MD3SegmentButton.vue";
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import accountCircle from "@material-symbols/svg-600/outlined/supervised_user_circle.svg";
@@ -83,13 +82,13 @@
 					<IonLabel>
 						<h3 class="centered-text">{{ $t("appSettings:locale.clock.title") }}</h3>
 						<IonSegment v-model="twelveHourClock" class="segment-alt">
-							<MD3SegmentButton value="true">
+							<IonSegmentButton value="true">
 								<IonLabel>{{ $t("appSettings:locale.clock.12h") }}</IonLabel>
-							</MD3SegmentButton>
+							</IonSegmentButton>
 
-							<MD3SegmentButton value="false">
+							<IonSegmentButton value="false">
 								<IonLabel>{{ $t("appSettings:locale.clock.24h") }}</IonLabel>
-							</MD3SegmentButton>
+							</IonSegmentButton>
 						</IonSegment>
 					</IonLabel>
 				</IonItem>
@@ -98,13 +97,13 @@
 					<IonLabel>
 						<h3 class="centered-text">{{ $t("appSettings:locale.firstDayOfWeek") }}</h3>
 						<IonSegment v-model="firstWeekOfDayIsSunday" class="segment-alt">
-							<MD3SegmentButton value="true">
+							<IonSegmentButton value="true">
 								<IonLabel>{{ $t("other:timeSizes.weekdays.sunday") }}</IonLabel>
-							</MD3SegmentButton>
+							</IonSegmentButton>
 
-							<MD3SegmentButton value="false">
+							<IonSegmentButton value="false">
 								<IonLabel>{{ $t("other:timeSizes.weekdays.monday") }}</IonLabel>
-							</MD3SegmentButton>
+							</IonSegmentButton>
 						</IonSegment>
 					</IonLabel>
 				</IonItem>
