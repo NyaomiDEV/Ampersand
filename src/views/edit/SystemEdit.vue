@@ -197,7 +197,7 @@
 
 			<template v-if="!isEditing">
 				<div class="system-info">
-					<h2>{{ system.name }}</h2>
+					<h3>{{ system.name }}</h3>
 				</div>
 
 				<IonList>

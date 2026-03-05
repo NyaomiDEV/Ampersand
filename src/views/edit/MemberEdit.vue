@@ -281,7 +281,7 @@
 				</div>
 
 				<div class="member-info">
-					<h2>{{ member.name }}</h2>
+					<h3>{{ member.name }}</h3>
 					<p>{{ member.pronouns }}</p>
 					<p>{{ member.role }}</p>
 					<p v-if="member.isCustomFront">{{ $t("members:edit.customFront") }}</p>
