@@ -41,9 +41,9 @@
 
 		<IonTextarea
 			v-show="focused || !model.length"
-			fill="solid"
 			ref="textarea"
 			v-model="model"
+			fill="solid"
 			auto-grow
 			:label="props.label"
 			label-placement="floating"
