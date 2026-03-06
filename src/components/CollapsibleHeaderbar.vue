@@ -4,12 +4,10 @@
 
 	const headerbar = useTemplateRef("headerbar");
 
-	const scrollDeltaNormalized = ref(0);
-	const scrollDelta = ref(0);
+	const scrollDelta = ref<string>("0");
 	const contentOffset = ref(0);
-	let maxScroll: number;
 
-	onMounted(async () => {
+	onMounted(() => {
 		if(!headerbar.value) return;
 		const headerEl = headerbar.value.$el as HTMLElement;
 		const scrollerEl = headerEl.parentElement as HTMLElement;
@@ -21,15 +19,11 @@
 				(shadow?.querySelector<HTMLElement>("[part=content]")?.offsetLeft ?? 0) - 
 				parseFloat(shadow?.querySelector<HTMLElement>("[part=container]")?.computedStyleMap().get("padding-left")?.toString().replace("px", "") || "0")
 			);
-			maxScroll = firstToolbarEl?.clientHeight || 0;
-
-			console.log(firstToolbarEl, contentOffset.value);
 		}, 1);
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		scrollerEl.addEventListener("ionScroll", (ev: any) => {
-			scrollDelta.value = Math.min(ev.detail.scrollTop, maxScroll);
-			scrollDeltaNormalized.value = scrollDelta.value / maxScroll;
+			scrollDelta.value = `${ev.detail.scrollTop}`;
 		});
 	});
 </script>
@@ -42,44 +36,50 @@
 
 <style scoped>
 	ion-header {
-		--scroll-delta: calc(v-bind('scrollDeltaNormalized') * 100%);
+		--toolbar-size: 64px;
+		--transition-size: calc(var(--toolbar-size) - 64px);
+		--scroll-delta-normalized: clamp(0, calc(v-bind('scrollDelta') / (var(--transition-size) / 1px)), 1);
+		--scroll-delta-remapped: calc(-1 + calc(var(--scroll-delta-normalized) * 2));
+
 		position: sticky;
 		top: 0;
-		transform: translateY(max(calc(v-bind('scrollDelta') * -1px), -64px));
-	}
+		transform: translateY(calc(-1 * var(--scroll-delta-normalized) * var(--transition-size)));
 
-	ion-header.with-opacity :deep(ion-toolbar) {
-		--opacity-delta: calc(-50% + calc(var(--scroll-delta) * 2));
-		--background: color-mix(in srgb,
-			rgb(var(--md3-surface-container)) var(--opacity-delta),
-			transparent	calc(100% - var(--opacity-delta)));
-	}
+		&.size-medium {
+			--toolbar-size: 112px;
 
-	ion-header :deep(ion-toolbar:first-child) {
-		--min-height: calc(64px + 64px);
-
-		&::part(content) {
-			margin-top: 64px;
-			transform: translateX(
-				calc(
-					v-bind('contentOffset') * clamp(0,
-						calc(1 - v-bind('scrollDeltaNormalized') * 2)
-					, 1)
-				* -1px)
-			);
+			&.with-subtitle {
+				--toolbar-size: 136px;
+			}
 		}
 
-		ion-title {
-			font-size: max(1em, calc(1.5em * calc(1 - v-bind('scrollDeltaNormalized'))));
-			line-height: max(28px, calc(36px * calc(1 - v-bind('scrollDeltaNormalized'))));
+		&.size-large {
+			--toolbar-size: 120px;
+
+			&.with-subtitle {
+				--toolbar-size: 152px;
+			}
 		}
 
-		[slot="secondary"],
-		[slot="primary"],
-		[slot="start"],
-		[slot="end"] {
-			margin-bottom: clamp(0px, calc(64px * calc(1 - v-bind('scrollDeltaNormalized') * 2)), 64px);
-			margin-top: clamp(0px, calc(64px * calc(v-bind('scrollDeltaNormalized') * 2)), 64px);
+		:deep(ion-toolbar:first-child) {
+			--min-height: var(--toolbar-size);
+
+			&::part(content) {
+				margin-top: var(--transition-size);
+				transform: translateX(calc(-1px * v-bind('contentOffset') * (1 - var(--scroll-delta-normalized))));
+			}
+
+			ion-title {
+				font-size: max(1em, calc(1.5em * calc(1 - var(--scroll-delta-normalized))));
+				line-height: max(28px, calc(36px * calc(1 - var(--scroll-delta-normalized))));
+			}
+
+			[slot="secondary"],
+			[slot="primary"],
+			[slot="start"],
+			[slot="end"] {
+				transform: translateY(calc(var(--transition-size) / 2 * var(--scroll-delta-remapped)));
+			}
 		}
 	}
 </style>
