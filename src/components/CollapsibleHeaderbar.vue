@@ -39,8 +39,7 @@
 		--toolbar-size: 64px;
 		--transition-size: calc(var(--toolbar-size) - 64px);
 		--scroll-delta-normalized: clamp(0, calc(v-bind('scrollDelta') / (var(--transition-size) / 1px)), 1);
-		--scroll-delta-expressive: clamp(0, calc(v-bind('scrollDelta') / (var(--toolbar-size) / 1px)), 1);
-		--scroll-delta-remapped: calc(-1 + calc(var(--scroll-delta-normalized) * 2));
+		--scroll-delta-remapped: calc(-1 + (var(--scroll-delta-normalized) * 2));
 
 		position: sticky;
 		top: 0;
@@ -71,8 +70,14 @@
 			}
 
 			ion-title {
-				font-size: max(1.375rem, calc(2rem * calc(1 - var(--scroll-delta-expressive))));
-				line-height: max(1.75rem, calc(2.5rem * calc(1 - var(--scroll-delta-expressive))));
+				font-size: calc(
+					1.375rem * var(--scroll-delta-normalized) +
+					2rem * (1 - var(--scroll-delta-normalized))
+				);
+				line-height: calc(
+					1.75rem * var(--scroll-delta-normalized) +
+					2.5rem * (1 - var(--scroll-delta-normalized))
+				);
 			}
 
 			[slot="secondary"],
