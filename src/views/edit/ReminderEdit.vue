@@ -153,7 +153,7 @@
 		<SpinnerFullscreen v-if="loading" />
 		<IonContent v-else>
 
-<IonList>
+			<IonList>
 				<IonItem>
 					<IonLabel>
 						<h3 class="centered-text">{{ $t("reminders:edit.type.title") }}</h3>

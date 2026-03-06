@@ -224,52 +224,54 @@
 
 			</IonList>
 
-			<IonList v-else>
+			<template v-else>
+				<IonList>
 
-				<IonItem button :detail="!post.member" @click="memberSelectModal?.$el.present()">
-					<template v-if="post.member">
-						<MemberAvatar slot="start" :member="post.member" />
-						<IonLabel>
-							<h2>{{ post.member.name }}</h2>
-							<p>{{ $t("journal:edit.author") }}</p>
-						</IonLabel>
-						<IonButton
-							slot="end"
-							shape="round"
-							fill="outline"
-							size="small"
-							@click="(e) => { e.stopPropagation(); post.member = undefined; }"
-						>
-							<IonIcon
-								slot="icon-only"
-								:icon="trashMD"
-								color="danger"
-							/>
-						</IonButton>
-					</template>
-					<template v-else>
-						<IonLabel>
-							<h2>{{ $t("journal:edit.author") }}</h2>
-						</IonLabel>
-					</template>
-				</IonItem>
+					<IonItem button :detail="!post.member" @click="memberSelectModal?.$el.present()">
+						<template v-if="post.member">
+							<MemberAvatar slot="start" :member="post.member" />
+							<IonLabel>
+								<h2>{{ post.member.name }}</h2>
+								<p>{{ $t("journal:edit.author") }}</p>
+							</IonLabel>
+							<IonButton
+								slot="end"
+								shape="round"
+								fill="outline"
+								size="small"
+								@click="(e) => { e.stopPropagation(); post.member = undefined; }"
+							>
+								<IonIcon
+									slot="icon-only"
+									:icon="trashMD"
+									color="danger"
+								/>
+							</IonButton>
+						</template>
+						<template v-else>
+							<IonLabel>
+								<h2>{{ $t("journal:edit.author") }}</h2>
+							</IonLabel>
+						</template>
+					</IonItem>
 
-			</IonList>
-			<IonList class="surface">
+				</IonList>
+				<IonList class="surface">
 
-				<IonItem class="title">
-					<IonInput v-model="post.title" :placeholder="$t('journal:edit.title')" />
-				</IonItem>
+					<IonItem class="title">
+						<IonInput v-model="post.title" :placeholder="$t('journal:edit.title')" />
+					</IonItem>
 
-				<IonItem class="subtitle">
-					<IonInput v-model="post.subtitle" :placeholder="$t('journal:edit.subtitle')" />
-				</IonItem>
+					<IonItem class="subtitle">
+						<IonInput v-model="post.subtitle" :placeholder="$t('journal:edit.subtitle')" />
+					</IonItem>
 
-				<IonItem class="edit-body">
-					<IonTextarea v-model="post.body" auto-grow :placeholder="$t('journal:edit.body')" />
-				</IonItem>
+					<IonItem class="edit-body">
+						<IonTextarea v-model="post.body" auto-grow :placeholder="$t('journal:edit.body')" />
+					</IonItem>
 
-			</IonList>
+				</IonList>
+			</template>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
 				<IonFabButton v-if="canEdit" @click="toggleEditing">
