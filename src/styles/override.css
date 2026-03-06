@@ -92,7 +92,6 @@ ion-modal.modal-sheet ion-header ion-toolbar:first-of-type {
 }
 
 ion-modal.modal-sheet {
-	--border-radius: 16px;
 	--ion-safe-area-top: inherit;
 	--ion-safe-area-left: inherit;
 	--ion-safe-area-right: inherit;
@@ -116,10 +115,6 @@ ion-label.nowrap > *:not(div) {
 	text-wrap: nowrap !important;
 	text-overflow: ellipsis !important;
 	overflow: hidden !important;
-}
-
-ion-label.wrap {
-	text-wrap-mode: wrap !important;
 }
 
 ion-datetime {

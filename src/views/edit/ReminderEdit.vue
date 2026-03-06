@@ -395,10 +395,3 @@
 	</IonPage>
 </template>
 
-<style scoped>
-
-	ion-radio::part(label) {
-		text-wrap-mode: wrap;
-	}
-
-</style>

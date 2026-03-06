@@ -1,6 +1,7 @@
 /* Adapted from danielkleebinder/md3-for-ionic */
 .md ion-label {
 	color: inherit;
+	text-wrap: pretty;
 
 	&.ion-color {
 		color: var(--ion-color-base, rgb(var(--md3-primary)));

@@ -149,7 +149,7 @@
 
 				<IonItem button :detail="false">
 					<IonToggle v-model="appConfig.showDefaultSystemInMemberList">
-						<IonLabel class="wrap">
+						<IonLabel>
 							{{ $t("appSettings:showDefaultSystemInMemberList") }}
 						</IonLabel>
 					</IonToggle>
@@ -157,7 +157,7 @@
 				
 				<IonItem button :detail="false">
 					<IonToggle v-model="appConfig.showMembersBeforeCustomFronts">
-						<IonLabel class="wrap">
+						<IonLabel>
 							{{ $t("appSettings:showMembersBeforeCustomFronts") }}
 						</IonLabel>
 					</IonToggle>
@@ -165,7 +165,7 @@
 
 				<IonItem button :detail="false">
 					<IonToggle v-model="appConfig.showSystemDescriptionInDashboard">
-						<IonLabel class="wrap">
+						<IonLabel>
 							{{ $t("appSettings:showSystemDescriptionInDashboard") }}
 						</IonLabel>
 					</IonToggle>
@@ -173,7 +173,7 @@
 
 				<IonItem button :detail="false">
 					<IonToggle v-model="appConfig.hideFrontingTimer">
-						<IonLabel class="wrap">
+						<IonLabel>
 							{{ $t("appSettings:hideFrontingTimer") }}
 						</IonLabel>
 					</IonToggle>
@@ -181,7 +181,7 @@
 
 				<IonItem v-if="platform() === 'android'" button :detail="false">
 					<IonToggle v-model="appConfig.useIPC">
-						<IonLabel class="wrap">
+						<IonLabel>
 							{{ $t("appSettings:useIPC") }}
 						</IonLabel>
 					</IonToggle>
