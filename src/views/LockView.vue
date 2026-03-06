@@ -34,7 +34,7 @@
 				<IonLabel>
 					<h1>{{ $t("lock:title") }}</h1>
 				</IonLabel>
-				<IonList>
+				<IonList class="surface">
 					<IonItem>
 						<IonInput
 							type="password"
@@ -72,6 +72,6 @@
 	}
 
 	ion-list {
-		width: 75vw;
+		width: 90vw;
 	}
 </style>
