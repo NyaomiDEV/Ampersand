@@ -280,9 +280,9 @@
 						</IonLabel>
 					</IonToggle>
 				</IonItem>
-		</IonList>
+			</IonList>
 
-		<IonList class="surface">
+			<IonList class="surface">
 				<IonItem>
 					<ContentEditable v-model="frontingEntry.comment" :label="$t('frontHistory:edit.comment')" />
 				</IonItem>
@@ -295,9 +295,9 @@
 						{{ $t("other:memberMention") }}
 					</IonButton>
 				</IonItem>
-		</IonList>
+			</IonList>
 
-		<IonList>
+			<IonList>
 				<IonItem
 					v-if="frontingEntry.uuid"
 					button
