@@ -70,8 +70,8 @@
 			}
 
 			ion-title {
-				font-size: max(1em, calc(1.5em * calc(1 - var(--scroll-delta-normalized))));
-				line-height: max(28px, calc(36px * calc(1 - var(--scroll-delta-normalized))));
+				font-size: max(1.375rem, calc(2rem * calc(1 - var(--scroll-delta-normalized))));
+				line-height: max(1.75rem, calc(2.5rem * calc(1 - var(--scroll-delta-normalized))));
 			}
 
 			[slot="secondary"],
