@@ -14,7 +14,7 @@
 	},
 	"passwordAlert": {
 		"header": "Warning",
-		"text": "Are you sure you want to proceed? If you lose your password you won't be able to recover your data. Be sure to make backups first!"
+		"text": "Are you sure you want to proceed? Before proceeding, please note down your password somewhere outside Ampersand as you won't be able to recover your data or reset your password if you lose it. Be sure to export your data before setting one!"
 	},
 	"editPassword": "Modify password",
 	"inputPassword": {
