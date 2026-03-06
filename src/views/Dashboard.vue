@@ -41,7 +41,7 @@
 <template>
 	<IonPage>		
 		<IonContent :scroll-events="true">
-			<CollapsibleHeaderbar>
+			<CollapsibleHeaderbar class="size-large">
 				<IonToolbar>
 					<IonTitle>
 						{{ 

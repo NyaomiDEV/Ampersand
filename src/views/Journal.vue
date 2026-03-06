@@ -139,7 +139,7 @@
 <template>
 	<IonPage>
 		<IonContent :scroll-events="true">
-			<CollapsibleHeaderbar>
+			<CollapsibleHeaderbar class="size-large">
 				<IonToolbar>
 					<IonBackButton slot="start" :icon="backMD" />
 					<IonTitle>
