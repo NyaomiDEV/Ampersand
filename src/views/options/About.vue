@@ -62,7 +62,7 @@
 		<IonContent>
 			<div class="container">
 				<div class="headings">
-					<h1>Ampersand</h1>
+					<h3>Ampersand</h3>
 					<span>{{ $t("about:version", { version }) }}</span>
 					<span>{{ $t("about:madein") }}</span>
 				</div>
