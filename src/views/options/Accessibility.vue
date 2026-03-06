@@ -21,23 +21,22 @@
 
 			<IonList>
 				<IonItem>
-					<IonLabel>
-						<h3 class="centered-text">{{ $t("accessibility:uiVariant.title") }}</h3>
-						<IonSegment v-model="accessibilityConfig.theme" class="segment-alt" value="ui-variant">
-
+					<div class="ui-variant">
+						<IonLabel>
+							{{ $t("accessibility:uiVariant.title") }}
+						</IonLabel>
+						<IonSegment v-model="accessibilityConfig.theme" value="ui-variant">
 							<IonSegmentButton value="auto">
 								<IonLabel>{{ $t("accessibility:uiVariant.auto") }}</IonLabel>
 							</IonSegmentButton>
-
 							<IonSegmentButton value="light">
 								<IonLabel>{{ $t("accessibility:uiVariant.light") }}</IonLabel>
 							</IonSegmentButton>
-
 							<IonSegmentButton value="dark">
 								<IonLabel>{{ $t("accessibility:uiVariant.dark") }}</IonLabel>
 							</IonSegmentButton>
 						</IonSegment>
-					</IonLabel>
+					</div>
 				</IonItem>
 
 				<IonItem>
@@ -58,19 +57,19 @@
 				</IonItem>
 
 				<IonItem>
-					<IonLabel class="more-padding">
-						<h3 class="centered-text">{{ $t("accessibility:contrastLevel.title") }}</h3>
-						<IonRange
-							v-model="accessibilityConfig.contrastLevel"
-							:min="0"
-							:max="1"
-							:step="0.05"
-							:snaps="true"
-							:ticks="false"
-							:pin="true"
-							:pin-formatter="(v) => `${Math.floor(v * 100)}%`"
-						/>
+					<IonLabel position="floating">
+						{{ $t("accessibility:contrastLevel.title") }}
 					</IonLabel>
+					<IonRange
+						v-model="accessibilityConfig.contrastLevel"
+						:min="0"
+						:max="1"
+						:step="0.05"
+						:snaps="true"
+						:ticks="false"
+						:pin="true"
+						:pin-formatter="(v) => `${Math.floor(v * 100)}%`"
+					/>
 				</IonItem>
 			</IonList>
 			
@@ -110,19 +109,19 @@
 				</IonItem>
 
 				<IonItem>
-					<IonLabel class="more-padding">
-						<h3 class="centered-text">{{ $t("accessibility:fontScale.title") }}</h3>
-						<IonRange
-							v-model="accessibilityConfig.fontScale"
-							:min="0.5"
-							:max="1.5"
-							:step="0.1"
-							:snaps="true"
-							:ticks="false"
-							:pin="true"
-							:pin-formatter="(v) => `${v}`"
-						/>
+					<IonLabel position="floating">
+						{{ $t("accessibility:fontScale.title") }}
 					</IonLabel>
+					<IonRange
+						v-model="accessibilityConfig.fontScale"
+						:min="0.5"
+						:max="1.5"
+						:step="0.1"
+						:snaps="true"
+						:ticks="false"
+						:pin="true"
+						:pin-formatter="(v) => `${v}`"
+					/>
 				</IonItem>
 			</IonList>
 
@@ -149,19 +148,19 @@
 				We're not using this anymore since we deprecated member long pressing,
 				however we do keep this here should we reintroduce long presses in some other areas
 				<IonItem>
-					<IonLabel class="more-padding">
-						<h3 class="centered-text">{{ $t("accessibility:longPressDuration.title") }}</h3>
-						<IonRange
-							v-model="accessibilityConfig.longPressDuration"
-							:min="500"
-							:max="1000"
-							:step="50"
-							:snaps="true"
-							:ticks="false"
-							:pin="true"
-							:pin-formatter="(v) => `${v / 1000}`"
-						/>
+					<IonLabel position="floating">
+						{{ $t("accessibility:longPressDuration.title") }}
 					</IonLabel>
+					<IonRange
+						v-model="accessibilityConfig.longPressDuration"
+						:min="500"
+						:max="1000"
+						:step="50"
+						:snaps="true"
+						:ticks="false"
+						:pin="true"
+						:pin-formatter="(v) => `${v / 1000}`"
+					/>
 				</IonItem>
 				-->
 			</IonList>
@@ -184,7 +183,9 @@
 </style>
 
 <style scoped>
-	ion-select::part(label) {
-		max-width: unset;
+	.ui-variant {
+		gap: 1em;
+		display: flex;
+		flex-direction: column;
 	}
 </style>
