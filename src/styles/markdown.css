@@ -1,77 +1,77 @@
-.markdown-content {
+.md div.markdown-content {
     margin: 8px 0;
     overflow-wrap: anywhere;
 }
 
 /* Horizontal Rules */
-.markdown-content hr {
+.md div.markdown-content hr {
     border-top-width: 1px;
     color: var(--ion-text-color-step-400);
 }
 
 /* Blockquotes */
-.markdown-content blockquote {
+.md div.markdown-content blockquote {
     border-left: 1px solid var(--ion-text-color-step-400);
     padding-left: 8px;
     margin: 12px;
 }
 
 /* Tables */
-.markdown-content table {
+.md div.markdown-content table {
     border: 1px solid var(--ion-text-color-step-400);
     margin-bottom: 8px;
 }
 
-.markdown-content table tr {
+.md div.markdown-content table tr {
     border-bottom: 1px solid var(--ion-text-color-step-400);
 }
 
-.markdown-content table th {
+.md div.markdown-content table th {
     border-left: 1px solid var(--ion-text-color-step-400);
     border-right: 1px solid var(--ion-text-color-step-400);
 }
 
-.markdown-content table td {
+.md div.markdown-content table td {
     border-left: 1px solid var(--ion-text-color-step-400);
     border-right: 1px solid var(--ion-text-color-step-400);
 }
 
-.markdown-content table :is(td, th) {
+.md div.markdown-content table :is(td, th) {
     padding: 8px;
 }
 
 /* Headings */
-.markdown-content :is(h1, h2, h3, h4, h5, h6, p) {
+.md div.markdown-content :is(h1, h2, h3, h4, h5, h6, p) {
     margin-top: 0;
     margin-bottom: 0.25rem;
 }
 
-.markdown-content h1 {
+.md div.markdown-content h1 {
     font-size: 1.95rem;
 }
 
-.markdown-content h2 {
+.md div.markdown-content h2 {
     font-size: 1.625rem;
 }
 
-.markdown-content h3 {
+.md div.markdown-content h3 {
     font-size: 1.3rem;
 }
 
-.markdown-content h4 {
+.md div.markdown-content h4 {
     font-size: 1.125rem;
 }
 
-.markdown-content h5 {
+.md div.markdown-content h5 {
     font-size: 1.0125rem;
 }
 
-.markdown-content h6 {
+.md div.markdown-content h6 {
     font-size: 0.9rem;
 }
 
 /* Highlight */
-.markdown-content mark {
+.md div.markdown-content mark {
     padding: 2px 4px;
     border-radius: 4px;
     background-color: rgba(var(--ion-color-primary-rgb), 0.40);
@@ -79,7 +79,7 @@
 }
 
 /* Spoilers */
-.markdown-content span.spoiler {
+.md div.markdown-content span.spoiler {
     border-radius: 4px;
     padding: 2px 4px;
     background-color: var(--ion-background-color-step-200);
@@ -91,32 +91,32 @@
     user-select: none;
 }
 
-.markdown-content span.spoiler * {
+.md div.markdown-content span.spoiler * {
     opacity: 0;
     transition-duration: 250ms;
     transition-timing-function: ease-in-out;
     transition-property: opacity;
 }
 
-.markdown-content span.spoiler:focus {
+.md div.markdown-content span.spoiler:focus {
     background-color: var(--ion-background-color-step-400);
     color: unset;
     user-select: unset;
     cursor: unset;
 }
 
-.markdown-content span.spoiler:focus * {
+.md div.markdown-content span.spoiler:focus * {
     opacity: unset;
 }
 
 /* Timestamp */
-.markdown-content span.timestamp {
+.md div.markdown-content span.timestamp {
     border-radius: 4px;
     padding: 2px 4px;
     background-color: var(--ion-background-color-step-150);
 }
 
-.markdown-content span.timestamp::before {
+.md div.markdown-content span.timestamp::before {
     content: "\A";
     mask-image: url(/node_modules/@material-symbols/svg-600/outlined/nest_clock_farsight_analog.svg);
     background-color: var(--ion-text-color);
@@ -130,7 +130,7 @@
     padding-right: 4px;
 }
 
-.markdown-content span.color::before {
+.md div.markdown-content span.color::before {
     content: "\A";
     display: inline-block;
     aspect-ratio: 1;
@@ -141,53 +141,53 @@
     vertical-align: baseline;
 }
 
-.markdown-content span.text-color-legacy {
+.md div.markdown-content span.text-color-legacy {
     background: linear-gradient(to right, var(--markdown-text-color-start), var(--markdown-text-color-end));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
 }
 
-.markdown-content span.text-color-bg-legacy {
+.md div.markdown-content span.text-color-bg-legacy {
     border-radius: 4px;
     padding: 2px 4px;
     background: linear-gradient(to right, var(--markdown-bg-color-start), var(--markdown-bg-color-end));
 }
 
-.markdown-content span.text-color-fg-one {
+.md div.markdown-content span.text-color-fg-one {
     color: var(--markdown-text-colors);
 }
 
-.markdown-content span.text-color-fg {
+.md div.markdown-content span.text-color-fg {
     background: linear-gradient(to right, var(--markdown-text-colors));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
 }
 
-.markdown-content span.text-color-bg {
+.md div.markdown-content span.text-color-bg {
     border-radius: 4px;
     padding: 2px 4px;
     background: linear-gradient(to right, var(--markdown-text-bg-colors));
 }
 
-.markdown-content span.text-shadow {
+.md div.markdown-content span.text-shadow {
     text-shadow: var(--markdown-text-shadow);
 }
 
-.markdown-content span.text-border {
+.md div.markdown-content span.text-border {
     border: var(--markdown-text-border);
     border-radius: 4px;
     padding: 2px 4px;
     display: inline-block;
 }
 
-.markdown-content span.center {
+.md div.markdown-content span.center {
     display: block;
     text-align: center;
 }
 
-.markdown-content span.blur {
+.md div.markdown-content span.blur {
     filter: blur(4px);
     cursor: pointer;
     user-select: none;
@@ -196,24 +196,24 @@
     transition-property: filter;
 }
 
-.markdown-content span.blur:focus {
+.md div.markdown-content span.blur:focus {
     filter: blur(0);
     user-select: unset;
     cursor: unset;
 }
 
-.markdown-content ul {
+.md div.markdown-content ul {
     padding-inline-start: 1em;
 }
 
-.markdown-content ul li span ion-checkbox {
+.md div.markdown-content ul li span ion-checkbox {
     width: min-content;
     --size: 1em;
     height: 1em;
     margin-inline-end: 0.5em;
 }
 
-.markdown-content div.callout {
+.md div.markdown-content div.callout {
     display: block;
     border: 2px solid color-mix(in srgb, var(--markdown-callout-color, var(--ion-color-primary)) 30%, transparent);
     background: color-mix(in srgb, var(--markdown-callout-color, var(--ion-color-primary)) 15%, transparent);
@@ -222,13 +222,13 @@
     border-radius: 12px;
 }
 
-.markdown-content span.callout-title {
+.md div.markdown-content span.callout-title {
     display: block;
     color: var(--markdown-callout-color, var(--ion-color-primary));
     margin-bottom: 8px;
     font-weight: bold;
 }
 
-.markdown-content ion-icon {
+.md div.markdown-content ion-icon {
     height: 1em;
 }
