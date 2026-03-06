@@ -17,6 +17,11 @@
 		letter-spacing: var(--md3-headline-small-letter-spacing);
 	}
 
+	.alert-sub-title {
+		font: var(--md3-body-large);
+		letter-spacing: var(--md3-body-large-letter-spacing);
+	}
+
 	.alert-message {
 		padding: 0 24px 24px;
 		font: var(--md3-body-medium);
