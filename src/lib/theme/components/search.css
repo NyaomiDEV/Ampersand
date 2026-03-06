@@ -13,8 +13,8 @@
   	}
 
 	.searchbar-cancel-button {
-		font-size: 24px;
-		inset-inline-start: 14px;
+		font-size: 1.5rem;
+		inset-inline-start: 1rem;
 		color: rgb(var(--md3-on-surface));
 	}
   }
