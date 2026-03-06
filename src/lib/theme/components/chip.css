@@ -17,8 +17,8 @@
 	color: var(--color);
 
 	ion-icon {
-		width: 18px;
-		height: 18px;
+		width: 1.125rem;
+		height: 1.125rem;
 		--color: var(--ion-color-contrast, rgb(var(--md3-primary)));
 	}
 
