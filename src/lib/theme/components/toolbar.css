@@ -9,12 +9,10 @@
 	--padding-end: 16px;
 }
 
-.md ion-toolbar,
 .md ion-toolbar ion-title {
 	font: var(--md3-title-large);
 	letter-spacing: var(--md3-title-large-letter-spacing);
-	padding-inline-start: 0;
-	padding-inline-end: 0;
+	padding-inline: 0;
 
 	h1 {
 		font: var(--md3-display-medium);
@@ -47,10 +45,14 @@
 		letter-spacing: var(--md3-body-small-letter-spacing);
 		margin: unset;
 	}
+
+	&:has(:is(h1, h2, h3, p, small)) {
+		line-height: 0;
+	}
 }
 
-.md ion-toolbar ion-title:has(:is(h1, h2, h3, p, small)) {
-	line-height: 0;
+.md ion-toolbar:has([slot=primary], [slot=end], [slot=secondary]) ion-title {
+	margin-inline-end: 16px;
 }
 
 .md ion-toolbar *[slot=start] {
@@ -61,12 +63,14 @@
 	color: rgb(var(--md3-on-surface-variant));
 }
 
-.md ion-toolbar:has([slot=start])::part(content) {
-	padding-inline-start: 16px;
+.md ion-toolbar :is([slot]) {
+	margin-inline-end: 16px;
 }
 
-.md ion-toolbar:has([slot=primary], [slot=secondary], [slot=end])::part(content) {
-	padding-inline-end: 16px;
+.md ion-toolbar :not([slot=primary], [slot=end]) ~ [slot=secondary],
+.md ion-toolbar :not([slot=end]) ~ [slot=primary],
+.md ion-toolbar [slot=end] {
+	margin-inline-end: 0px;
 }
 
 .md ion-toolbar ion-back-button.in-toolbar,
@@ -97,10 +101,3 @@
 	}
 }
 
-.md ion-header.scrolled {
-	box-shadow: var(--md3-elevation-2);
-}
-
-.md ion-header.scrolled ion-toolbar {
-	--background: rgb(var(--md3-surface-container));
-}
