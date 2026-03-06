@@ -1,5 +1,5 @@
 /* Adapted from danielkleebinder/md3-for-ionic */
-.md h1 {
+.md :not(.markdown-content) > h1 {
 	font-family: var(--md3-display-large-font-family-name);
 	font-style: var(--md3-display-large-font-family-style);
 	font-weight: var(--md3-display-large-font-weight);
@@ -8,7 +8,7 @@
 	letter-spacing: var(--md3-display-large-letter-spacing);
 }
 
-.md h2 {
+.md :not(.markdown-content) > h2 {
 	font-family: var(--md3-display-medium-font-family-name);
 	font-style: var(--md3-display-medium-font-family-style);
 	font-weight: var(--md3-display-medium-font-weight);
@@ -17,7 +17,7 @@
 	letter-spacing: var(--md3-display-medium-letter-spacing);
 }
 
-.md h3 {
+.md :not(.markdown-content) > h3 {
 	font-family: var(--md3-display-small-font-family-name);
 	font-style: var(--md3-display-small-font-family-style);
 	font-weight: var(--md3-display-small-font-weight);
