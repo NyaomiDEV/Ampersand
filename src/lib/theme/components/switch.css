@@ -5,7 +5,7 @@
   	--handle-height: 16px;
   	--handle-max-height: 28px;
   	--handle-transition:
-  		transform var(--md3-expressive-default-effects-duration) var(--md3-expressive-default-effects),
+  		transform var(--md3-expressive-default-spring-duration) var(--md3-expressive-default-spring),
   		background-color var(--md3-expressive-default-effects-duration) var(--md3-expressive-default-effects);
   	--handle-background: rgb(var(--md3-outline));
   	--handle-background-checked: var(--ion-color-contrast);
