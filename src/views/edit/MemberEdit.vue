@@ -293,6 +293,7 @@
 						v-for="tag in member.tags"
 						:key="tag"
 						:tag="tags.find(x => x.uuid === tag)!"
+						:clickable="true"
 					/>
 				</div>
 
