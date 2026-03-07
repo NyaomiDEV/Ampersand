@@ -32,6 +32,7 @@
     "i18next": "^25.8.4",
     "i18next-vue": "^5.4.0",
     "marked": "^17.0.1",
+    "mermaid": "^11.12.3",
     "tauri-plugin-m3": "0.3.1",
     "typeson": "^9.0.4",
     "typeson-registry": "^12.0.0",

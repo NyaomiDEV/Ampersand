@@ -27,6 +27,7 @@ import marqueeExtension from "./marqueeExtension";
 import fontSizeExtension from "./fontSizeExtension";
 import calloutExtension from "./calloutExtension";
 import svgExtension from "./svgExtension";
+import mermaidExtension from "./mermaidExtension";
 
 export const marked = new Marked<(VNode | string)[], VNode | string>();
 
@@ -163,4 +164,5 @@ marked.use(
 	linebreakExtension,
 	marqueeExtension,
 	calloutExtension,
+	mermaidExtension
 );
