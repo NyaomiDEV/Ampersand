@@ -141,7 +141,12 @@
 		<IonContent :scroll-events="true">
 			<CollapsibleHeaderbar class="size-large">
 				<IonToolbar>
-					<IonBackButton slot="start" :icon="backMD" />
+					<IonBackButton
+						v-if="route.name === 'StandaloneJournal'"
+						slot="start"
+						:icon="backMD"
+						default-href="/"
+					/>
 					<IonTitle>
 						{{ $t("journal:header") }}
 					</IonTitle>

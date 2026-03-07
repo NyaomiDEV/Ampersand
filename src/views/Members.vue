@@ -178,7 +178,12 @@
 		<IonContent v-else :scroll-events="true">
 			<CollapsibleHeaderbar class="size-large">
 				<IonToolbar>
-					<IonBackButton slot="start" :icon="backMD" />
+					<IonBackButton
+						v-if="route.name === 'StandaloneMembers'"
+						slot="start"
+						:icon="backMD"
+						default-href="/"
+					/>
 					<IonTitle>
 						{{ $t("members:header") }}
 					</IonTitle>
