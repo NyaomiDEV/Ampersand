@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonList, IonItem, IonLabel, IonPage, IonTitle, IonToolbar, IonBackButton, IonProgressBar } from "@ionic/vue";
+	import { IonContent, IonHeader, IonList, IonItem, IonIcon, IonLabel, IonPage, IonTitle, IonToolbar, IonBackButton, IonProgressBar } from "@ionic/vue";
 	import { ref } from "vue";
 	import { importDatabaseFromBinary, exportDatabaseToBinary } from "../../lib/db/ioutils";
 	import { getFiles, toast } from "../../lib/util/misc";
@@ -12,6 +12,9 @@
 	import { importSimplyPlural } from "../../lib/db/external/simplyplural";
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
+	import importMD from "@material-symbols/svg-600/outlined/download.svg";
+	import exportMD from "@material-symbols/svg-600/outlined/upload.svg";
+
 	import { documentDir, sep } from "@tauri-apps/api/path";
 	import { platform } from "@tauri-apps/plugin-os";
 
@@ -189,6 +192,7 @@
 			<IonList>
 
 				<IonItem button :detail="true" @click="exportDb">
+					<IonIcon slot="start" :icon="exportMD" />
 					<IonLabel>
 						<h3>{{ $t("importExport:dbExport.title") }}</h3>
 						<p>{{ $t("importExport:dbExport.desc") }}</p>
@@ -199,6 +203,7 @@
 			<IonList>
 
 				<IonItem button :detail="true" @click="importDb">
+					<IonIcon slot="start" :icon="importMD" />
 					<IonLabel>
 						<h3>{{ $t("importExport:dbImport") }}</h3>
 						<p>{{ $t("importExport:dbImportDesc") }}</p>
@@ -206,6 +211,7 @@
 				</IonItem>
 
 				<IonItem button :detail="true" @click="importSp">
+					<IonIcon slot="start" :icon="importMD" />
 					<IonLabel>
 						<h3>{{ $t("importExport:spImport") }}</h3>
 						<p>{{ $t("importExport:dbImportDesc") }}</p>
@@ -213,6 +219,7 @@
 				</IonItem>
 
 				<IonItem button :detail="true" @click="importPk">
+					<IonIcon slot="start" :icon="importMD" />
 					<IonLabel>
 						<h3>{{ $t("importExport:pkImport") }}</h3>
 						<p>{{ $t("importExport:dbImportDesc") }}</p>
@@ -220,6 +227,7 @@
 				</IonItem>
 
 				<IonItem button :detail="true" @click="importTu">
+					<IonIcon slot="start" :icon="importMD" />
 					<IonLabel>
 						<h3>{{ $t("importExport:tuImport") }}</h3>
 						<p>{{ $t("importExport:dbImportDesc") }}</p>

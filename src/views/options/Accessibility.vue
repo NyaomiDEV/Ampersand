@@ -1,9 +1,20 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonItem, IonRange, IonLabel, IonToggle, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonSegment, IonSelect, IonSelectOption, IonSegmentButton } from "@ionic/vue";
+	import { IonContent, IonHeader, IonItem, IonRange, IonLabel, IonToggle, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonSegment, IonSelect, IonSelectOption, IonSegmentButton, IonIcon } from "@ionic/vue";
 	import { accessibilityConfig } from "../../lib/config";
 	import Color from "../../components/Color.vue";
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
+	import lowContrastMD from "@material-symbols/svg-600/outlined/brightness_1.svg";
+	import highContrastMD from "@material-symbols/svg-600/outlined/contrast.svg";
+	import fontMD from "@material-symbols/svg-600/outlined/format_size.svg";
+	import smallTextMD from "@material-symbols/svg-600/outlined/text_decrease.svg";
+	import bigTextMD from "@material-symbols/svg-600/outlined/text_increase.svg";
+	import colorMD from "@material-symbols/svg-600/outlined/palette.svg";
+	import hideCoverMD from "@material-symbols/svg-600/outlined/hide_image.svg";
+	import motionMD from "@material-symbols/svg-600/outlined/masked_transitions.svg";
+	import lightMD from "@material-symbols/svg-600/outlined/light_mode.svg";
+	import darkMD from "@material-symbols/svg-600/outlined/dark_mode.svg";
+	import autoMD from "@material-symbols/svg-600/outlined/routine.svg";
 </script>
 
 <template>
@@ -26,20 +37,24 @@
 							{{ $t("accessibility:uiVariant.title") }}
 						</IonLabel>
 						<IonSegment v-model="accessibilityConfig.theme" value="ui-variant">
-							<IonSegmentButton value="auto">
+							<IonSegmentButton value="auto" layout="icon-start">
 								<IonLabel>{{ $t("accessibility:uiVariant.auto") }}</IonLabel>
+								<IonIcon :icon="autoMD" />
 							</IonSegmentButton>
-							<IonSegmentButton value="light">
+							<IonSegmentButton value="light" layout="icon-start">
 								<IonLabel>{{ $t("accessibility:uiVariant.light") }}</IonLabel>
+								<IonIcon :icon="lightMD" />
 							</IonSegmentButton>
-							<IonSegmentButton value="dark">
+							<IonSegmentButton value="dark" layout="icon-start">
 								<IonLabel>{{ $t("accessibility:uiVariant.dark") }}</IonLabel>
+								<IonIcon :icon="darkMD" />
 							</IonSegmentButton>
 						</IonSegment>
 					</div>
 				</IonItem>
 
 				<IonItem>
+					<IonIcon slot="start" :icon="colorMD" />
 					<IonToggle v-model="accessibilityConfig.useAccentColor">
 						<IonLabel>
 							<h3>{{ $t("accessibility:useAccentColor.title") }}</h3>
@@ -48,7 +63,7 @@
 					</IonToggle>
 				</IonItem>
 
-				<IonItem button :detail="false" :disabled="!accessibilityConfig.useAccentColor">
+				<IonItem v-if="accessibilityConfig.useAccentColor" button :detail="false">
 					<Color v-model="accessibilityConfig.accentColor">
 						<IonLabel>
 							<h3>{{ $t("accessibility:accentColor.title") }}</h3>
@@ -69,12 +84,16 @@
 						:ticks="false"
 						:pin="true"
 						:pin-formatter="(v) => `${Math.floor(v * 100)}%`"
-					/>
+					>
+						<IonIcon slot="start" :icon="lowContrastMD" />
+						<IonIcon slot="end" :icon="highContrastMD" />
+					</IonRange>
 				</IonItem>
 			</IonList>
 			
 			<IonList>
 				<IonItem button :detail="false">
+					<IonIcon slot="start" :icon="fontMD" />
 					<IonToggle v-model="accessibilityConfig.highLegibility">
 						<IonLabel>
 							<h3>{{ $t("accessibility:highLegibilityFont.title") }}</h3>
@@ -86,6 +105,7 @@
 				<IonItem v-if="accessibilityConfig.highLegibility">
 					<IonSelect
 						v-model="accessibilityConfig.highLegibilityType"
+						label-placement="floating"
 						:label="$t('accessibility:highLegibilityFontType.title')"
 						:cancel-text="$t('other:alerts.cancel')"
 						interface="action-sheet"
@@ -121,12 +141,16 @@
 						:ticks="false"
 						:pin="true"
 						:pin-formatter="(v) => `${v}`"
-					/>
+					>
+						<IonIcon slot="start" :icon="smallTextMD" />
+						<IonIcon slot="end" :icon="bigTextMD" />
+					</IonRange>
 				</IonItem>
 			</IonList>
 
 			<IonList>
 				<IonItem>
+					<IonIcon slot="start" :icon="motionMD" />
 					<IonToggle v-model="accessibilityConfig.reducedMotion">
 						<IonLabel>
 							<h3>{{ $t("accessibility:reducedMotion.title") }}</h3>
@@ -136,6 +160,7 @@
 				</IonItem>
 
 				<IonItem>
+					<IonIcon slot="start" :icon="hideCoverMD" />
 					<IonToggle v-model="accessibilityConfig.disableMemberCoversInList">
 						<IonLabel>
 							<h3>{{ $t("accessibility:disableMemberCoversInList.title") }}</h3>

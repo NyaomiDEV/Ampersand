@@ -6,12 +6,19 @@
 	import { appConfig } from "../../lib/config";
 	import { computePercentage } from "../../lib/i18n";
 	import { getObjectURL } from "../../lib/util/blob";
-
-	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
-	import accountCircle from "@material-symbols/svg-600/outlined/supervised_user_circle.svg";
 	import { getSystem } from "../../lib/db/tables/system";
 	import SystemSelect from "../../modals/SystemSelect.vue";
 	import { System } from "../../lib/db/entities";
+
+	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
+	import languageMD from "@material-symbols/svg-600/outlined/language.svg";
+	import timerMD from "@material-symbols/svg-600/outlined/timer_off.svg";
+	import dashboardMD from "@material-symbols/svg-600/outlined/space_dashboard.svg";
+	import membersBeforeMD from "@material-symbols/svg-600/outlined/person_text.svg";
+	import defaultSystemMD from "@material-symbols/svg-600/outlined/bookmark_star.svg";
+	import defaultTabMD from "@material-symbols/svg-600/outlined/collections_bookmark.svg";
+	import ipcMD from "@material-symbols/svg-600/outlined/api.svg";
+	import accountCircle from "@material-symbols/svg-600/outlined/supervised_user_circle.svg";
 
 	const defaultSystem = shallowRef<System>({
 		uuid: appConfig.defaultSystem,
@@ -62,8 +69,10 @@
 
 			<IonList>
 				<IonItem>
-					<IonSelect
+					<IonIcon slot="start" :icon="languageMD" />
+					<IonSelect  
 						v-model="appConfig.locale.language"
+						label-placement="floating"
 						:label="$t('appSettings:locale.language')"
 						:cancel-text="$t('other:alerts.cancel')"
 						interface="action-sheet"
@@ -80,8 +89,10 @@
 				</IonItem>
 
 				<IonItem>
-					<IonLabel>
-						<h3 class="centered-text">{{ $t("appSettings:locale.clock.title") }}</h3>
+					<div class="clock-style">
+						<IonLabel>
+							{{ $t("appSettings:locale.clock.title") }}
+						</IonLabel>
 						<IonSegment v-model="twelveHourClock" class="segment-alt">
 							<IonSegmentButton value="true">
 								<IonLabel>{{ $t("appSettings:locale.clock.12h") }}</IonLabel>
@@ -91,12 +102,14 @@
 								<IonLabel>{{ $t("appSettings:locale.clock.24h") }}</IonLabel>
 							</IonSegmentButton>
 						</IonSegment>
-					</IonLabel>
+					</div>
 				</IonItem>
 
 				<IonItem>
-					<IonLabel>
-						<h3 class="centered-text">{{ $t("appSettings:locale.firstDayOfWeek") }}</h3>
+					<div class="first-day">
+						<IonLabel>
+							{{ $t("appSettings:locale.firstDayOfWeek") }}
+						</IonLabel>
 						<IonSegment v-model="firstWeekOfDayIsSunday" class="segment-alt">
 							<IonSegmentButton value="true">
 								<IonLabel>{{ $t("other:timeSizes.weekdays.sunday") }}</IonLabel>
@@ -106,7 +119,7 @@
 								<IonLabel>{{ $t("other:timeSizes.weekdays.monday") }}</IonLabel>
 							</IonSegmentButton>
 						</IonSegment>
-					</IonLabel>
+					</div>
 				</IonItem>
 
 			</IonList>
@@ -129,8 +142,10 @@
 				</IonItem>
 
 				<IonItem>
+					<IonIcon slot="start" :icon="defaultTabMD" />
 					<IonSelect
 						v-model="appConfig.view"
+						label-placement="floating"
 						:label="$t('appSettings:view')"
 						:cancel-text="$t('other:alerts.cancel')"
 						interface="action-sheet"
@@ -148,6 +163,7 @@
 				</IonItem>	
 
 				<IonItem button :detail="false">
+					<IonIcon slot="start" :icon="defaultSystemMD" />
 					<IonToggle v-model="appConfig.showDefaultSystemInMemberList">
 						<IonLabel>
 							{{ $t("appSettings:showDefaultSystemInMemberList") }}
@@ -156,6 +172,7 @@
 				</IonItem>
 				
 				<IonItem button :detail="false">
+					<IonIcon slot="start" :icon="membersBeforeMD" />
 					<IonToggle v-model="appConfig.showMembersBeforeCustomFronts">
 						<IonLabel>
 							{{ $t("appSettings:showMembersBeforeCustomFronts") }}
@@ -164,6 +181,7 @@
 				</IonItem>
 
 				<IonItem button :detail="false">
+					<IonIcon slot="start" :icon="dashboardMD" />
 					<IonToggle v-model="appConfig.showSystemDescriptionInDashboard">
 						<IonLabel>
 							{{ $t("appSettings:showSystemDescriptionInDashboard") }}
@@ -172,6 +190,7 @@
 				</IonItem>
 
 				<IonItem button :detail="false">
+					<IonIcon slot="start" :icon="timerMD" />
 					<IonToggle v-model="appConfig.hideFrontingTimer">
 						<IonLabel>
 							{{ $t("appSettings:hideFrontingTimer") }}
@@ -180,6 +199,7 @@
 				</IonItem>
 
 				<IonItem v-if="platform() === 'android'" button :detail="false">
+					<IonIcon slot="start" :icon="ipcMD" />
 					<IonToggle v-model="appConfig.useIPC">
 						<IonLabel>
 							{{ $t("appSettings:useIPC") }}
@@ -282,4 +302,11 @@
 		height: 100%;
 		color: var(--ion-color-primary);
 	}
+
+	.clock-style, .first-day {
+		gap: 1em;
+		display: flex;
+		flex-direction: column;
+	}
+
 </style>

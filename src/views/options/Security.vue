@@ -1,11 +1,15 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonLabel, IonItem, IonList, IonPage, IonTitle, IonToolbar, IonToggle, IonBackButton, alertController } from "@ionic/vue";
+	import { IonContent, IonHeader, IonLabel, IonItem, IonList, IonPage, IonTitle, IonToolbar, IonToggle, IonBackButton, IonIcon, alertController } from "@ionic/vue";
 	import { ref, onMounted } from "vue";
 	import { disableApplock, enableApplock, areBiometricsAvailable } from "../../lib/applock";
 	import { securityConfig } from "../../lib/config";
 	import { useTranslation } from "i18next-vue";
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
+	import lockMD from "@material-symbols/svg-600/outlined/lock.svg";
+	import passwordMD from "@material-symbols/svg-600/outlined/password_2.svg";
+	import biometricsMD from "@material-symbols/svg-600/outlined/fingerprint.svg";
+	import remoteMD from "@material-symbols/svg-600/outlined/network_manage.svg";
 	import { promptOkCancel } from "../../lib/util/misc";
 
 	const i18next = useTranslation();
@@ -125,6 +129,7 @@
 		<IonContent>
 			<IonList>
 				<IonItem>
+					<IonIcon slot="start" :icon="lockMD" />
 					<IonToggle v-model="usePassword" @ion-change="toggle">
 						<IonLabel>
 							<h3>{{ $t("security:applock.title") }}</h3>
@@ -134,17 +139,19 @@
 				</IonItem>
 
 				<IonItem
+					v-if="securityConfig.password"
 					button
 					:detail="true"
-					:disabled="!securityConfig.password"
 					@click="modifyPassword"
 				>
+					<IonIcon slot="start" :icon="passwordMD" />
 					<IonLabel>
 						<h3>{{ $t("security:editPassword") }}</h3>
 					</IonLabel>
 				</IonItem>
 
-				<IonItem v-if="biometricsAvailable" :disabled="!securityConfig.password">
+				<IonItem v-if="biometricsAvailable && securityConfig.password">
+					<IonIcon slot="start" :icon="biometricsMD" />
 					<IonToggle v-model="securityConfig.useBiometrics">
 						<IonLabel>
 							<h3>{{ $t("security:biometrics.title") }}</h3>
@@ -154,6 +161,7 @@
 				</IonItem>
 
 				<IonItem>
+					<IonIcon slot="start" :icon="remoteMD" />
 					<IonToggle v-model="securityConfig.allowRemoteContent">
 						<IonLabel>
 							<h3>{{ $t("security:allowRemoteContent.title") }}</h3>
