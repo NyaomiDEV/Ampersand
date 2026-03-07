@@ -272,6 +272,6 @@
 		z-index: -1;
 		left: -16px;
 		opacity: .25;
-		mask-image: radial-gradient(circle at 0% 100%, black, transparent 100%);
+		mask-image: radial-gradient(circle at 10% 100%, black, transparent 100%);
 	}
 </style>
