@@ -81,6 +81,7 @@
 	async function removeAsset(){
 		if(await promptOkCancel(
 			i18next.t("assetManager:edit.delete.title"),
+			undefined,
 			i18next.t("assetManager:edit.delete.confirm"),
 		)){
 			await deleteAsset(asset.value.uuid!);

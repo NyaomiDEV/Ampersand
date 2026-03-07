@@ -83,6 +83,7 @@
 	async function removeSystem() {
 		if(await promptOkCancel(
 			i18next.t("systems:edit.delete.title"),
+			undefined,
 			i18next.t("systems:edit.delete.confirm")
 		)){
 			await deleteSystem(system.value.uuid!);

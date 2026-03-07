@@ -66,6 +66,7 @@
 	async function removeCustomField(){
 		if (await promptOkCancel(
 			i18next.t("customFields:edit.delete.title"),
+			undefined,
 			i18next.t("customFields:edit.delete.confirm")
 		)){
 			await deleteCustomField(customField.value.uuid!);

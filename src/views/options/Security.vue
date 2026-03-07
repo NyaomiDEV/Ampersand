@@ -55,6 +55,7 @@
 	async function addPassword() {
 		if(!await promptOkCancel(
 			i18next.t("security:passwordAlert.header"),
+			undefined,
 			i18next.t("security:passwordAlert.text")
 		)){
 			usePassword.value = false;

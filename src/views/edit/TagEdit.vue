@@ -114,6 +114,7 @@
 	async function deleteTag(){
 		if(await promptOkCancel(
 			i18next.t("tagManagement:edit.delete.title"),
+			undefined,
 			i18next.t("tagManagement:edit.delete.confirm")
 		)){
 			await removeTag(tag.value.uuid!);

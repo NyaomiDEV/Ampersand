@@ -118,6 +118,7 @@
 		if(post.isPrivate){
 			if(!await promptOkCancel(
 				i18next.t("journal:private"),
+				undefined,
 				i18next.t("journal:alertSubheader")
 			))
 				return;

@@ -19,6 +19,7 @@
 	async function promptRemoteConnection(){
 		if(await promptYesNo(
 			i18next.t("onboarding:importScreen.allowRemoteContent.header"),
+			undefined,
 			i18next.t("onboarding:importScreen.allowRemoteContent.desc"),
 		))
 			securityConfig.allowRemoteContent = true;

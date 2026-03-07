@@ -113,6 +113,7 @@
 	async function removeBoardMessage(){
 		if(await promptOkCancel(
 			i18next.t("messageBoard:edit.delete.title"),
+			undefined,
 			i18next.t("messageBoard:edit.delete.confirm")
 		)){
 			await deleteBoardMessage(boardMessage.value.uuid!);

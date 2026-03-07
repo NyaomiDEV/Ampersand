@@ -64,6 +64,7 @@
 	async function deleteReminder(){
 		if(await promptOkCancel(
 			i18next.t("reminders:edit.delete.title"),
+			undefined,
 			i18next.t("reminders:edit.delete.confirm")
 		)){
 			await removeReminder(reminder.value.uuid!);

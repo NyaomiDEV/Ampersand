@@ -96,6 +96,7 @@
 	async function removeFrontingEntry(){
 		if(await promptOkCancel(
 			i18next.t("frontHistory:edit.delete.title"),
+			undefined,
 			i18next.t("frontHistory:edit.delete.confirm"),
 		)){
 			await deleteFrontingEntry(frontingEntry.value.uuid!);

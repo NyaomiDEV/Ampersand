@@ -42,6 +42,7 @@
 	async function removePost() {
 		if(await promptOkCancel(
 			i18next.t("journal:edit.delete.title"),
+			undefined,
 			i18next.t("journal:edit.delete.confirm")
 		)){
 			await deleteJournalPost(post.value.uuid!);

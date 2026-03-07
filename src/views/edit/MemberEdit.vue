@@ -156,6 +156,7 @@
 	async function removeMember() {
 		if(await promptOkCancel(
 			i18next.t("members:edit.delete.title"),
+			undefined,
 			i18next.t("members:edit.delete.confirm")
 		)){
 			await deleteMember(member.value.uuid!);
