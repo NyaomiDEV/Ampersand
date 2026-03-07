@@ -15,7 +15,6 @@
 		IonPage,
 		IonBackButton,
 		IonSegment,
-		IonTextarea,
 		useIonRouter,
 		IonToggle,
 		IonSegmentButton
@@ -41,6 +40,7 @@
 	import { addModal, removeModal } from "../../lib/modals";
 	import MemberSelect from "../../modals/MemberSelect.vue";
 	import { promptOkCancel } from "../../lib/util/misc";
+	import ContentEditable from "../../components/ContentEditable.vue";
 
 	const loading = ref(false);
 
@@ -193,13 +193,7 @@
 				</IonItem>
 
 				<IonItem>
-					<IonTextarea
-						v-model="tag.description"
-						fill="solid"
-						auto-grow
-						:label="$t('tagManagement:edit.description')"
-						label-placement="floating"
-					/>
+					<ContentEditable v-model="tag.description" :label="$t('tagManagement:edit.description')" />
 				</IonItem>
 			</IonList>
 
