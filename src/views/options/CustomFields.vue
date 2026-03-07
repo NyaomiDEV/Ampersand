@@ -19,7 +19,7 @@
 
 	const search = ref(route.query.q as string || "");
 	watch(route, () => {
-		if(route.query.q)
+		if(route.name === "CustomFields" && route.query.q)
 			search.value = route.query.q as string;
 	});
 

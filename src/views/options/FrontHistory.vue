@@ -38,7 +38,7 @@
 	};
 
 	watch(route, () => {
-		if(route.query.q)
+		if(route.name === "FrontHistory" && route.query.q)
 			search.value = route.query.q as string;
 	});
 
