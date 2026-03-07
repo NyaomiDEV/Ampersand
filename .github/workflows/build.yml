@@ -42,6 +42,12 @@ jobs:
     secrets: inherit
     permissions:
       contents: write
+  build-ios:
+    uses: ./.github/workflows/build-ios.yml
+    needs: prepare-build
+    secrets: inherit
+    permissions:
+      contents: write
   build-pc:
     uses: ./.github/workflows/build-pc.yml
     needs: prepare-build
@@ -49,7 +55,7 @@ jobs:
     permissions:
       contents: write
   release:
-    needs: [prepare-build, build-android, build-pc]
+    needs: [prepare-build, build-android, build-ios, build-pc]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

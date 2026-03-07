@@ -1,0 +1,61 @@
+# Simple workflow for building Ampersand as an iOS application
+name: Build for iOS
+
+on:
+  workflow_call:
+
+# Sets the GITHUB_TOKEN permissions to allow deployment
+permissions:
+  contents: write
+
+concurrency:
+  group: ${{ github.ref_name == 'main' && 'build-ios-dev' || 'build-ios-release' }}
+  cancel-in-progress: true
+
+jobs:
+  # Single deploy job since we're just deploying
+  deploy-ios:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'yarn'
+      - name: Set up Rust toolchain
+        uses: actions-rust-lang/setup-rust-toolchain@v1.15.2
+        with:
+          rust-src-dir: "src-tauri"
+          target: "aarch64-apple-ios"
+      - name: Install frontend dependencies
+        run: yarn install --frozen-lockfile
+      - name: Update versioning
+        run: yarn run upgrade-vcs
+      - name: Build app
+        run: |
+          # Use the logic from make_unsigned_ipa.sh
+          CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" yarn tauri ios build --ci
+      - name: Generate AltStore JSON
+        run: node make_altstore_json.mjs
+        env:
+          IPA_PATH: src-tauri/gen/apple/build/arm64/Ampersand.ipa
+          GITHUB_REF_NAME: ${{ github.ref_name }}
+      - name: Publish artifact (IPA and AltStore JSON)
+        uses: actions/upload-artifact@v4
+        with:
+          name: iOS App (IPA and AltStore JSON)
+          path: |
+            src-tauri/gen/apple/build/arm64/Ampersand.ipa
+            altstore.json
+      - name: Publish to release
+        uses: softprops/action-gh-release@v2.4.1
+        with:
+          tag_name: ${{ github.ref_name != 'main' && github.ref_name || 'dev' }}
+          draft: true
+          files: |
+            src-tauri/gen/apple/build/arm64/Ampersand.ipa
+            altstore.json
