@@ -3,6 +3,9 @@
 .md ion-list {
 	background: rgb(var(--md3-surface));
 	color: rgb(var(--md3-on-surface));
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
 }
 
 .md ion-list-header {
@@ -27,8 +30,6 @@
 
 	--inner-padding-top: 8px;
 	--inner-padding-bottom: 8px;
-
-	margin-top: 2px;
 
 	font: var(--md3-body-large);
 	letter-spacing: var(--md3-body-large-letter-spacing);
@@ -66,11 +67,6 @@
 			letter-spacing: var(--md3-body-medium-letter-spacing);
 		}
 	}
-}
-
-.md :not(ion-item-sliding) > ion-item:first-child,
-.md ion-item-sliding:first-child > ion-item {
-	margin-top: 0;
 }
 
 ion-item-divider {

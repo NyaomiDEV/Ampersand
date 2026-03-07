@@ -10,13 +10,25 @@
 		IonItem,
 		IonLabel
 	} from "@ionic/vue";
-	import { ref } from "vue";
-
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
+	import { newMember } from "../../lib/db/tables/members";
+	import { appConfig } from "../../lib/config";
 
-	import ContentEditable from "../../components/ContentEditable.vue";
-
-	const model = ref("ciao");
+	async function generateThousands() {
+		for(let i = 0; i < 100000; i++){
+			console.log("GENERANDO", i);
+			await newMember({
+				system: appConfig.defaultSystem,
+				name: `Member ${i}`,
+				isPinned: false,
+				isArchived: false,
+				isCustomFront: false,
+				tags: [],
+				dateCreated: new Date()
+			});
+		}
+		console.log("FATTO");
+	}
 </script>
 
 <template>
@@ -36,9 +48,8 @@
 
 		<IonContent>
 			<IonList>
-				<ContentEditable v-model="model" label="test" />
-				<IonItem>
-					<IonLabel>Test</IonLabel>
+				<IonItem @click="generateThousands()">
+					<IonLabel>GENERA 100000 MEMBRI YOOOOOOOO</IonLabel>
 				</IonItem>
 			</IonList>
 		</IonContent>

@@ -2,6 +2,10 @@
 	import { IonHeader } from "@ionic/vue";
 	import { onMounted, ref, useTemplateRef } from "vue";
 
+	const props = defineProps<{
+		scroller?: HTMLElement
+	}>();
+
 	const headerbar = useTemplateRef("headerbar");
 
 	const scrollDelta = ref<string>("0");
@@ -10,7 +14,7 @@
 	onMounted(() => {
 		if(!headerbar.value) return;
 		const headerEl = headerbar.value.$el as HTMLElement;
-		const scrollerEl = headerEl.parentElement as HTMLElement;
+		const scrollerEl = props.scroller ?? headerEl.parentElement as HTMLElement;
 
 		setTimeout(() => {
 			const firstToolbarEl = headerEl.getElementsByTagName("ion-toolbar").item(0);
@@ -21,10 +25,16 @@
 			);
 		}, 1);
 
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		scrollerEl.addEventListener("ionScroll", (ev: any) => {
-			scrollDelta.value = `${ev.detail.scrollTop}`;
-		});
+		if(scrollerEl.tagName.toLowerCase().startsWith("ion")){
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			scrollerEl.addEventListener("ionScroll", (ev: any) => {
+				scrollDelta.value = `${ev.detail.scrollTop}`;
+			});
+		} else {
+			scrollerEl.addEventListener("scroll", () => {
+				scrollDelta.value = `${scrollerEl.scrollTop}`;
+			});
+		}
 	});
 </script>
 
