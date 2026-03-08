@@ -7,13 +7,14 @@ license=("AGPL-v3.0-only")
 
 arch=('x86_64' 'aarch64')
 depends=('cairo' 'desktop-file-utils' 'gdk-pixbuf2' 'glib2' 'gtk3' 'hicolor-icon-theme' 'libsoup' 'pango' 'webkit2gtk-4.1')
-makedepends=('git' 'openssl' 'libappindicator-gtk3' 'librsvg' 'cargo' 'nodejs' 'jq')
+makedepends=('git' 'openssl' 'libappindicator-gtk3' 'librsvg' 'cargo' 'nodejs' 'jq' 'yarn')
 source=("${pkgname}::git+${url}.git")
 sha256sums=('SKIP')
 options=(!lto)
 
 pkgver() {
   cd "${srcdir}/${pkgname}"
+  yarn install
   node upgrade-vcs.mjs >/dev/null 2>/dev/null
   jq -j .version package.json
 }
