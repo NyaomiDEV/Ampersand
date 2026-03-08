@@ -64,6 +64,7 @@
 
 			await toast(i18next.t("importExport:status.importedSp"));
 		}catch(_e){
+			console.error(_e);
 			await toast(i18next.t("importExport:status.errorSp"));
 		}
 		loading.value = false;

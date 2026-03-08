@@ -293,48 +293,48 @@ function boardMessage(spExport: any, memberMapping: Map<string, string>){
 					? spPoll.options.map(x => ({
 							choice: x.name,
 							votes: spPoll.votes
-								.filter(y => y.vote === x.name)
+								?.filter(y => y.vote === x.name)
 								.map(y => ({
 									member: memberMapping.get(y.id) || nilUid,
 									reason: y.comment?.length ? y.comment : undefined
-								}))
+								})) ?? []
 						}))
 					: [
 							{
 								choice: t("messageBoard:polls.defaultPollValues.yes"),
 								votes: spPoll.votes
-									.filter(x => x.vote === "yes")
+									?.filter(x => x.vote === "yes")
 									.map(x => ({
 										member: memberMapping.get(x.id) || nilUid,
 										reason: x.comment?.length ? x.comment : undefined
-									}))
+									})) || []
 							},
 							{
 								choice: t("messageBoard:polls.defaultPollValues.no"),
 								votes: spPoll.votes
-									.filter(x => x.vote === "no")
+									?.filter(x => x.vote === "no")
 									.map(x => ({
 										member: memberMapping.get(x.id) || nilUid,
 										reason: x.comment?.length ? x.comment : undefined
-									}))
+									})) || []
 							},
 							spPoll.allowVeto ? {
 								choice: t("messageBoard:polls.defaultPollValues.veto"),
 								votes: spPoll.votes
-									.filter(x => x.vote === "veto")
+									?.filter(x => x.vote === "veto")
 									.map(x => ({
 										member: memberMapping.get(x.id) || nilUid,
 										reason: x.comment?.length ? x.comment : undefined
-									}))
+									})) || []
 							} : undefined,
 							spPoll.allowAbstain ? {
 								choice: t("messageBoard:polls.defaultPollValues.abstain"),
 								votes: spPoll.votes
-									.filter(x => x.vote === "abstain")
+									?.filter(x => x.vote === "abstain")
 									.map(x => ({
 										member: memberMapping.get(x.id) || nilUid,
 										reason: x.comment?.length ? x.comment : undefined
-									}))
+									})) || []
 							} : undefined,
 						].filter(Boolean)
 			},
@@ -431,6 +431,7 @@ export async function importSimplyPlural(spExport: any) {
 		await tables.boardMessages.bulkAdd(boardMessages);
 		await tables.journalPosts.bulkAdd(posts);
 	}catch(_e){
+		console.error(_e);
 		return false;
 	}
 
