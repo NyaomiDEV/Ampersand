@@ -14,7 +14,7 @@ options=(!lto)
 
 pkgver() {
   cd "${srcdir}/${pkgname}"
-  yarn install
+  yarn install > /dev/null 2>/dev/null
   node upgrade-vcs.mjs >/dev/null 2>/dev/null
   jq -j .version package.json
 }
