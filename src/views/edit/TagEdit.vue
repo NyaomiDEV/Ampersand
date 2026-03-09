@@ -194,7 +194,7 @@
 				</IonItem>
 
 				<IonItem>
-					<ContentEditable v-model="tag.description" :label="$t('tagManagement:edit.description')" />
+					<ContentEditable v-model="tag.description" fill="solid" :label="$t('tagManagement:edit.description')" />
 				</IonItem>
 			</IonList>
 

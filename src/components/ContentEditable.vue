@@ -5,6 +5,7 @@
 	
 	const props = defineProps<{
 		label?: string
+		fill?: "solid" | "outline";
 	}>();
 	const model = defineModel<string>({ default: "" });
 	const focused = ref(false);
@@ -25,16 +26,17 @@
 <template>
 	<div class="content-editable-wrapper">
 		<template v-if="!focused && model.length">
-			<IonLabel
-				v-if="props.label"
-				class="content-editable"
-				position="stacked"
-				@click="clickHandler"
-			>
-				{{ props.label }}
-			</IonLabel>
 
-			<div class="preview" @click="clickHandler">
+
+			<div :class="{ preview: true, solid: props.fill === 'solid', outline: props.fill === 'outline' }" @click="clickHandler">
+				<IonLabel
+					v-if="props.label"
+					class="content-editable"
+					position="stacked"
+					@click="clickHandler"
+				>
+					{{ props.label }}
+				</IonLabel>
 				<Markdown :markdown="model" />
 			</div>
 		</template>
@@ -43,7 +45,7 @@
 			v-show="focused || !model.length"
 			ref="textarea"
 			v-model="model"
-			fill="solid"
+			:fill="props.fill"
 			auto-grow
 			:label="props.label"
 			label-placement="floating"
@@ -63,4 +65,13 @@
 		width: 100%;
 		min-height: 2.5em;
 	}
+
+	div.preview.solid {
+		border-radius: var(--md3-corner-extra-small-top);
+    	border-bottom: 1px solid rgb(var(--md3-on-surface));
+		background: rgb(var(--md3-surface-container-highest));
+		padding: 0 16px 14px 16px;
+
+	}
+
 </style>

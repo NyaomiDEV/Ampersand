@@ -285,7 +285,7 @@
 
 			<IonList class="surface">
 				<IonItem>
-					<ContentEditable v-model="frontingEntry.comment" :label="$t('frontHistory:edit.comment')" />
+					<ContentEditable v-model="frontingEntry.comment" fill="solid" :label="$t('frontHistory:edit.comment')" />
 				</IonItem>
 
 				<IonItem>
