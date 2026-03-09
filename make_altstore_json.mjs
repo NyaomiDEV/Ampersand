@@ -17,7 +17,7 @@ async function generateAltStoreJson() {
 	const size = ipaStat.size;
 	const date = new Date().toISOString();
 
-	const downloadUrl = `https://github.com/${repoName}/releases/download/${tagName}/ampersand-${version}.ipa`;
+	const downloadUrl = `https://github.com/${repoName}/releases/download/${tagName}/Ampersand-${version}.ipa`;
 	const iconUrl = `https://raw.githubusercontent.com/${repoName}/main/branding/icon/1024.png`;
 
 	let altStoreSource;
