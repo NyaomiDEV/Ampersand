@@ -35,21 +35,19 @@ jobs:
         run: yarn install --frozen-lockfile
       - name: Update versioning
         run: yarn run upgrade-vcs
-      - name: Build app
-        run: |
-          # Use the logic from make_unsigned_ipa.sh
-          CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" yarn tauri ios build --ci
+      - name: Build unsigned IPA
+        run: bash ./make_unsigned_ipa.sh
       - name: Generate AltStore JSON
         run: node make_altstore_json.mjs
         env:
-          IPA_PATH: src-tauri/gen/apple/build/arm64/Ampersand.ipa
+          IPA_PATH: Ampersand.ipa
           GITHUB_REF_NAME: ${{ github.ref_name }}
       - name: Publish artifact (IPA and AltStore JSON)
         uses: actions/upload-artifact@v4
         with:
           name: iOS App (IPA and AltStore JSON)
           path: |
-            src-tauri/gen/apple/build/arm64/Ampersand.ipa
+            Ampersand.ipa
             altstore.json
       - name: Publish to release
         uses: softprops/action-gh-release@v2.4.1
@@ -57,5 +55,5 @@ jobs:
           tag_name: ${{ github.ref_name != 'main' && github.ref_name || 'dev' }}
           draft: true
           files: |
-            src-tauri/gen/apple/build/arm64/Ampersand.ipa
+            Ampersand.ipa
             altstore.json
