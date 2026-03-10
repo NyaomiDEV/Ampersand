@@ -14,6 +14,7 @@
 		"customFrontCountText": "{{totalCustomFrontCount}} front personalizzato/i, {{customFrontCount}} attivo/i, {{archivedCustomFrontCount}} archiviato/i",
 		"tapToShow": "Clicca per mostrare",
 		"showMembers": "Mostra ɜ membrɜ all'interno di questo sistema",
+		"parent": "Sistema genitore",
 		"delete": {
 			"title": "Elimina sistema",
 			"confirm": "Vuoi davvero eliminare questo sistema?"

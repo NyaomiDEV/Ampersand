@@ -146,7 +146,8 @@ export type Reminder = EventReminder | PeriodicReminder;
 export interface System extends UUIDable {
 	name: string,
 	description?: string,
-	image?: File
+	image?: File,
+	parent?: UUID
 }
 
 export interface Tag extends UUIDable {

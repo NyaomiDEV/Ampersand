@@ -1,12 +1,13 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonAvatar, IonButton, IonIcon, IonInput, IonFab, IonFabButton, IonItem, IonLabel, useIonRouter, IonTextarea } from "@ionic/vue";
-	import { onBeforeMount, ref, toRaw, watch } from "vue";
+	import { onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
 	import { getObjectURL } from "../../lib/util/blob";
 	import { getFiles, promptOkCancel, toast } from "../../lib/util/misc";
 	import { resizeImage } from "../../lib/util/image";
 	import { deleteSystem, getSystem, newSystem, updateSystem } from "../../lib/db/tables/system";
 	import { getMembers } from "../../lib/db/tables/members";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
+	import SystemSelect from "../../modals/SystemSelect.vue";
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import accountCircle from "@material-symbols/svg-600/outlined/supervised_user_circle.svg";
@@ -33,6 +34,10 @@
 	};
 	const system = ref({ ...emptySystem });
 
+	const parentSystem = shallowRef<System>();
+
+	const systemSelectModal = useTemplateRef("systemSelectModal");
+
 	const membersShowed = ref(false);
 	const memberCount = ref(0);
 	const archivedMemberCount = ref(0);
@@ -50,6 +55,8 @@
 
 		const uuid = system.value.uuid;
 		const _system = toRaw(system.value);
+
+		if(parentSystem.value) _system.parent = parentSystem.value.uuid;
 
 		if(!uuid){
 			await newSystem({
@@ -139,6 +146,9 @@
 		customFrontCount.value = _customFrontCount;
 		archivedCustomFrontCount.value = _archivedCustomFrontCount;
 
+		if(system.value.parent)
+			parentSystem.value = await getSystem(system.value.parent);
+
 		if(route.query.disallowEditing)
 			canEdit.value = false;
 		else
@@ -211,6 +221,16 @@
 				</IonList>
 
 				<IonList class="system-actions">
+					<IonItem v-if="parentSystem">
+						<IonAvatar slot="start">
+							<img v-if="parentSystem.image" aria-hidden="true" :src="getObjectURL(parentSystem.image)" />
+							<IonIcon v-else :icon="accountCircle" />
+						</IonAvatar>
+						<IonLabel>
+							<p>{{ $t("systems:edit.parent") }}</p>
+							<h2>{{ parentSystem.name }}</h2>
+						</IonLabel>
+					</IonItem>
 					<IonItem>
 						<IonLabel>
 							<h2>{{ $t("systems:edit.memberCount") }}</h2>
@@ -268,6 +288,22 @@
 				</IonList>
 				
 				<IonList>
+					<IonItem button :detail="true" @click="systemSelectModal?.$el.present()">
+						<IonAvatar slot="start">
+							<img v-if="parentSystem?.image" aria-hidden="true" :src="getObjectURL(parentSystem.image)" />
+							<IonIcon v-else :icon="accountCircle" />
+						</IonAvatar>
+						<IonLabel>
+							<template v-if="parentSystem">
+								<p>{{ $t("systems:edit.parent") }}</p>
+								<h2>{{ parentSystem.name }}</h2>
+							</template>
+							<h2 v-else>
+								{{ $t("systems:edit.parent") }}
+							</h2>
+						</IonLabel>
+					</IonItem>
+
 					<IonItem
 						v-if="system.uuid && appConfig.defaultSystem !== system.uuid"
 						button
@@ -298,6 +334,14 @@
 					</IonItem>
 				</IonList>
 			</template>
+
+			<SystemSelect
+				ref="systemSelectModal"
+				v-model="parentSystem"
+				:discard-on-select="true"
+				:hide-checkboxes="true"
+				:child-system="system"
+			/>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
 				<IonFabButton v-if="canEdit" :disabled="isEditing && !system.name.length" @click="toggleEditing">
@@ -333,7 +377,7 @@
 		margin: 0;
 	}
 
-	ion-avatar {
+	div.avatar-container > ion-avatar {
 		width: 192px;
 		height: 192px;
 	}

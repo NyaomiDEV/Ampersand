@@ -21,15 +21,17 @@
 	import { DatabaseEvents, DatabaseEvent } from "../lib/db/events.ts";
 	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
 	import systemCircle from "@material-symbols/svg-600/outlined/supervised_user_circle.svg";
-	import { getFilteredSystems } from "../lib/db/tables/system.ts";
+	import { getFilteredSystems, getSystem } from "../lib/db/tables/system.ts";
 	import { appConfig } from "../lib/config/index.ts";
+	import { PartialBy } from "../lib/types";
 
 	const props = defineProps<{
 		customTitle?: string,
 		alwaysEmit?: boolean,
 		discardOnSelect?: boolean,
 		modelValue?: System,
-		hideCheckboxes?: boolean
+		hideCheckboxes?: boolean,
+		childSystem?: PartialBy<System, "uuid">
 	}>();
 
 	const emit = defineEmits<{
@@ -39,6 +41,8 @@
 	const selectedSystem = shallowRef<System | undefined>(props.modelValue);
 	const search = ref("");
 	const systems = shallowRef<System[]>();
+
+	const disallowedSystems = shallowRef<System[]>([]);
 
 	const listener = (event: Event) => {
 		if((event as DatabaseEvent).data.table === "systems")
@@ -85,6 +89,29 @@
 		if(props.discardOnSelect)
 			void modalController.dismiss();
 	}
+
+	async function updateParents(){
+		const parents: System[] = [];
+
+		let _system = props.childSystem;
+		// for our purpose (disallowing systems to pick themselves or their parents) a system is also its own parent
+		if(_system?.uuid) parents.push(_system as System);
+
+		while(_system){
+			if(_system.parent){
+				const parent = await getSystem(_system.parent);
+				if(parent) parents.push(parent);
+				_system = parent;
+			} else 
+				_system = undefined;
+		}
+
+		disallowedSystems.value = parents;
+	}
+
+	watch(props, async () => {
+		await updateParents();
+	}, { immediate: true });
 </script>
 
 <template>
@@ -114,6 +141,7 @@
 					:key="system.uuid"
 					button
 					:class="{ 'default-system': system.uuid === appConfig.defaultSystem }"
+					:disabled="!!disallowedSystems.find(x => x.uuid === system.uuid)"
 				>
 					<IonAvatar slot="start">
 						<img v-if="system?.image" aria-hidden="true" :src="getObjectURL(system.image)" />
