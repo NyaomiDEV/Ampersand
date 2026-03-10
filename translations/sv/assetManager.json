@@ -1,0 +1,17 @@
+{
+	"header": "Resurshanterare",
+	"searchPlaceholder": "Sök resurser...",
+	"add": {
+		"header": "Lägg till resurs",
+		"attachment": "Lägg till bilaga"
+	},
+	"edit": {
+		"header": "Redigera resurs",
+		"friendlyName": "Redigera namn",
+		"attachment": "Ersätta bilaga",
+		"delete": {
+			"title": "Radera resurs",
+			"confirm": "Vill du verkligen radera denna resurs?"
+		}
+	}
+}

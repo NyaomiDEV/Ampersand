@@ -1,0 +1,10 @@
+{
+	"header": "Tillgänglighet",
+	"highLegibilityFont": {
+		"title": "Lättläst typsnitt"
+	},
+	"uiVariant": {
+		"dark": "Mörkt",
+		"light": "Ljus"
+	}
+}

@@ -1,1 +1,36 @@
-{}
+{
+	"highLegibilityFont": {
+		"title": "Легко читаемый шрифт",
+		"desc": "Использовать легко читаемый шрифт вместо стандартного шрифта устройства"
+	},
+	"uiVariant": {
+		"light": "Светлая",
+		"dark": "Тёмная",
+		"title": "Вариант интерфейса",
+		"auto": "Авто"
+	},
+	"highLegibilityFontType": {
+		"system-font": "Системный Шрифт",
+		"title": "Семейство легко читаемого шрифта",
+		"atkinson": "Atkinson Hyperlegible",
+		"opendyslexic": "OpenDyslexic",
+		"lexend": "Lexend"
+	},
+	"useAccentColor": {
+		"title": "Акцентный цвет",
+		"desc": "Пользовательский акцентный цвет"
+	},
+	"accentColor": {
+		"title": "Выберите цвет акцента"
+	},
+	"contrastLevel": {
+		"title": "Уровень контраста"
+	},
+	"fontScale": {
+		"title": "Размер шрифта"
+	},
+	"longPressDuration": {
+		"title": "Длительность длинного нажатия"
+	},
+	"header": "Доступность"
+}

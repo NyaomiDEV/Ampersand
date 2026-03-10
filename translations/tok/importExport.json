@@ -1,0 +1,25 @@
+{
+	"header": "pana sona anu kama pi jo sona",
+	"dbExport": {
+		"title": "kama pi jo sona",
+		"desc": "sona sina pi tenpo ni li kama ijo ilo lon ilo sina"
+	},
+	"dbImportDesc": "o lukin! ni li weka e sona sina lon ilo ni la sona sin li kama",
+	"dbImport": "o pana e sona tawa ilo ni tan ijo ilo",
+	"pkImport": "o pana e sona tawa ilo ni tan ijo pi ilo PluralKit",
+	"tuImport": "o pana e sona tawa ilo ni tan ijo pi ilo Tupperbox",
+	"spImport": "o pana e sona tawa ilo ni tan ijo pi ilo Simply Plural",
+	"status": {
+		"imported": "sona pi ijo ilo li kama lon ilo ni. o pini e ilo ni, kin la o open sin e ilo ni.",
+		"importedSp": "sona pi ijo pi ilo Simply Plural li kama lon ilo ni. o pini e ilo ni, kin la o open sin e ilo ni.",
+		"importedPk": "sona pi ijo pi ilo PluralKit li kama lon ilo ni. o pini e ilo ni, kin la o open sin e ilo ni.",
+		"importedTu": "sona pi ijo pi ilo Tupperbox li kama lon ilo ni. o pini e ilo ni, kin la o open sin e ilo ni.",
+		"exportedApp": "ijo ilo pi sona sina li lon poki pi wile sina.",
+		"exportedAppIos": "ijo ilo pi sona sina li lon poki pi ilo Ampersand. poki ni li lon ilo Files.",
+		"errorExport": "ijo ilo pi sona sina li alasa kama tawa ilo sina, taso pakala li kama.",
+		"error": "ijo ilo pi sona sina li alasa kama tawa ilo ni, taso pakala li kama.",
+		"errorSp": "ijo ilo pi sona sina li tan ilo Simply Plural. ijo ni li alasa kama tawa ilo sina, taso pakala li kama.",
+		"errorPk": "ijo ilo pi sona sina li tan ilo PluralKit. ijo ni li alasa kama tawa ilo sina, taso pakala li kama.",
+		"errorTu": "ijo ilo pi sona sina li tan ilo Tupperbox. ijo ni li alasa kama tawa ilo sina, taso pakala li kama."
+	}
+}

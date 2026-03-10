@@ -1,0 +1,48 @@
+{
+	"header": "Członkowie",
+	"searchPlaceholder": "Wyszukaj członków…",
+	"select": "Wybierz członka",
+	"deletedMember": "Usunięto członka",
+	"deletedCustomFront": "Usunięto niestandardowy front",
+	"actions": {
+		"addToFront": "Dodaj na front",
+		"setMainFronter": "Ustaw jako główną osobę frontującą",
+		"unsetMainFronter": "Zdejmij z pozycji głównej osoby frontującej",
+		"setSoleFronter": "Ustaw jako jedyną osobę frontującą",
+		"removeFromFront": "Usuń z frontu"
+	},
+	"edit": {
+		"noDescription": "Brak opisu",
+		"header": "Członek",
+		"headerAdd": "Dodaj członka systemu",
+		"headerEdit": "Edytuj członka",
+		"name": "Imię",
+		"pronouns": "Zaimki",
+		"role": "Rola",
+		"color": "Preferowany kolor",
+		"customFieldsAdd": "Dodaj pola niestandardowe",
+		"tags": "Edytuj tagi",
+		"description": "Opis",
+		"system": "Edytuj system członkostwa",
+		"isPinned": "Przypnij członka systemu",
+		"customFront": "Niestandardowy front",
+		"archived": "Zarchiwizowany",
+		"showFrontingEntries": "Pokaż wpisy frontowania",
+		"showBoardEntries": "Pokaż wiadomości na tablicy",
+		"showJournalEntries": "Pokaż wpisy w dzienniku",
+		"memberID": "ID członka: {{memberID}}",
+		"dateCreated": "Data utworzenia: {{dateCreated}}",
+		"memberIDcopiedToClipboard": "ID członka w formacie wzmianki zostało skopiowane do schowka!",
+		"delete": {
+			"title": "Usuń członka",
+			"confirm": "Czy na pewno chcesz usunąć tego członka?"
+		}
+	},
+	"toasts": {
+		"addToFront": "Członek został dodany na front",
+		"setMainFronter": "Członek ustawiony jako główna osoba frontująca",
+		"unsetMainFronter": "Członek zdjęty z pozycji głównej osoby frontującej",
+		"setSoleFronter": "Członek ustawiony jako jedyna osoba frontująca",
+		"removeFromFront": "Członek został usunięty z frontu"
+	}
+}

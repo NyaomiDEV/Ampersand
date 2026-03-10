@@ -1,0 +1,28 @@
+{
+	"header": "awen",
+	"applock": {
+		"desc": "sina open e ilo ni kepeken nimi ken",
+		"title": "awen ilo"
+	},
+	"biometrics": {
+		"title": "kepeken sijelo",
+		"desc": "sina open e ilo ni kepeken sinpin lawa sina anu luka sina"
+	},
+	"allowRemoteContent": {
+		"title": "ilo li ken toki tawa kulupu pi ilo sona",
+		"desc": "ilo li ken toki tawa kulupu pi ilo sona tawa ni; ilo li ken kama jo e ijo tan kulupu pi ilo sona tawa. ijo ni li ken sitelen tawa poki sona. ijo ni li ken sitelen tan ilo ante, kin."
+	},
+	"passwordAlert": {
+		"header": "o lukin",
+		"text": "sina wile ala wile awen ni? sina wile ni la, o toki e nimi ken tawa lipu ante. sina ni ala la, sina ken ala kama jo sin e sona sina. ni la sina ken ala ante e nimi ken, kin. sina awen wile ni la, o kama jo e sona sina lon ilo sina! sina pini ni la, sina ken awen ni."
+	},
+	"editPassword": "ante pi nimi ken",
+	"inputPassword": {
+		"titleAdd": "o pana e nimi ken sin",
+		"titleReenter": "o pana sin e nimi ken",
+		"titleModifyNew": "o pana e nimi ken sin",
+		"titleDisable": "o pana e nimi ken",
+		"hint": "nimi ken",
+		"titleModifyOld": "o pana e nimi ken pi tenpo pini"
+	}
+}

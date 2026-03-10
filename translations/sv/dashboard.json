@@ -1,0 +1,15 @@
+{
+	"header": "Översikt",
+	"header_salute": "Hej!",
+	"header_mainfronter": "Hej, {{fronterName}}!",
+	"systemDescription": "Systembeskrivning",
+	"nowFronting": "Frontar nu",
+	"fronterInfluencing": "Påverkar {{influencedMember}}",
+	"addToFront": "Lägg till i front",
+	"recentFrontingHistory": "Bytte nyss ut",
+	"messageBoard": {
+		"header": "Anslagstavla",
+		"add": "Lägg till anslagstavla",
+		"view": "Visa fler"
+	}
+}

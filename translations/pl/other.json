@@ -1,0 +1,64 @@
+{
+	"languageName": {
+		"local": "Polski",
+		"inEnglish": "Polish"
+	},
+	"genericDeleteDesc": "Tej czynności nie będzie można już cofnąć!",
+	"addTimestamp": "Dodaj znacznik czasu",
+	"memberMention": "Wspomnij członka systemu",
+	"storagePersistence": {
+		"header": "Ostrzeżenie",
+		"content": "Ampersand nie może trwale przechowywać danych na twoim urządzeniu. Jeśli korzystacie z przeglądarki Firefox, dajcie Ampersandowi na to zgodę. Jeśli korzystacie z przeglądarki opartej na Chromium (takiej jak Chrome, Edge, Opera, Vivaldi itp.), zainstalujcie Ampersand jako aplikację internetową / dodajcie ją do pulpitu/ekranu głównego. Jeśli ten komunikat nadal nie znika, rozważcie częste tworzenie kopii zapasowych danych w sekcji Import/Eksport."
+	},
+	"alerts": {
+		"ok": "OK",
+		"cancel": "Anuluj",
+		"yes": "Tak",
+		"no": "Nie"
+	},
+	"presence": {
+		"absent": "Nieobecny",
+		"heavilyDissociating": "Silnie dysocjuje",
+		"dissociating": "Dysocjuje",
+		"zonedOut": "Odpływa",
+		"present": "Obecny",
+		"fullyGrounded": "Całkowicie uziemiony"
+	},
+	"back": "Powrót",
+	"time": "Czas",
+	"timeSizes": {
+		"years": {
+			"long": "lata",
+			"short": "R"
+		},
+		"months": {
+			"long": "miesiące",
+			"short": "M"
+		},
+		"days": {
+			"long": "dni",
+			"short": "D"
+		},
+		"weekdays": {
+			"monday": "Poniedziałek",
+			"tuesday": "Wtorek",
+			"wednesday": "Środa",
+			"thursday": "Czwartek",
+			"friday": "Piątek",
+			"saturday": "Sobota",
+			"sunday": "Niedziela"
+		},
+		"hours": {
+			"long": "godziny",
+			"short": "g"
+		},
+		"minutes": {
+			"long": "minuty",
+			"short": "m"
+		},
+		"seconds": {
+			"long": "sekundy",
+			"short": "s"
+		}
+	}
+}

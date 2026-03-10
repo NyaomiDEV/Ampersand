@@ -1,0 +1,17 @@
+{
+	"header": "lawa pi ijo namako",
+	"searchPlaceholder": "o alasa e ijo namako",
+	"add": {
+		"header": "pana pi ijo namako sin",
+		"attachment": "o pana e ijo sona"
+	},
+	"edit": {
+		"header": "ante pi ijo namako",
+		"friendlyName": "ante nimi",
+		"attachment": "pana pi ijo namako sin",
+		"delete": {
+			"title": "weka pi ijo ni",
+			"confirm": "sina wile ala wile weka e ijo namako ni?"
+		}
+	}
+}

@@ -1,0 +1,18 @@
+{
+	"header": "Pola niestandardowe",
+	"select": "Wybierz pola niestandardowe",
+	"searchPlaceholder": "Przeszukaj pola niestandardowe…",
+	"edit": {
+		"header": "Edytuj pole niestandardowe",
+		"headerAdd": "Dodaj pole niestandardowe",
+		"name": "Nazwa pola niestandardowego",
+		"default": {
+			"title": "Zaznacz jako domyślne",
+			"desc": "Domyślne pola niestandardowe będą zawsze widoczne na ekranie edycji członka systemu"
+		},
+		"delete": {
+			"title": "Usuń pole niestandardowe",
+			"confirm": "Czy na pewno chcesz usunąć to pole niestandardowe?"
+		}
+	}
+}

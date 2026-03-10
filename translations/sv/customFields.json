@@ -1,0 +1,18 @@
+{
+	"header": "Anpassade fält",
+	"select": "Välj anpassade fält",
+	"searchPlaceholder": "Sök anpassade fält...",
+	"edit": {
+		"header": "Redigera anpassat fält",
+		"headerAdd": "Lägg till anpassat fält",
+		"name": "Anpassat fältnamn",
+		"default": {
+			"title": "Växla standard",
+			"desc": "Anpassade standardfält visas alltid när du redigerar en medlem"
+		},
+		"delete": {
+			"title": "Radera anpassat fält",
+			"confirm": "Vill du verkligen radera detta anpassade fält?"
+		}
+	}
+}

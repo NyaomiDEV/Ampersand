@@ -1,1 +1,47 @@
-{}
+{
+	"header": "Участники",
+	"searchPlaceholder": "Искать в участниках...",
+	"select": "Выберите участника",
+	"deletedMember": "Удаленный участник",
+	"deletedCustomFront": "Удаленный кастомный фронт",
+	"actions": {
+		"addToFront": "Добавить в фронт",
+		"setMainFronter": "Сделать основным фронтером",
+		"unsetMainFronter": "Снять с позиции основного фронтера",
+		"setSoleFronter": "Сделать фронтом",
+		"removeFromFront": "Убрать из фронта"
+	},
+	"toasts": {
+		"addToFront": "Участник добавлен в фронт",
+		"setMainFronter": "Участник сделан основным фронтером",
+		"unsetMainFronter": "Участник снят с позиции основного фронтера",
+		"setSoleFronter": "Участник сделан одним фронтером",
+		"removeFromFront": "Участник убран из фронта"
+	},
+	"edit": {
+		"header": "Участник",
+		"headerAdd": "Добавить участника",
+		"headerEdit": "Редактировать участника",
+		"name": "Имя",
+		"pronouns": "Местоимения",
+		"role": "Роль",
+		"color": "Выбранный цвет",
+		"customFieldsAdd": "Добавить пользовательские поля",
+		"tags": "Редактировать теги",
+		"description": "Описание",
+		"noDescription": "Нет описания",
+		"isPinned": "Закрепить участника",
+		"customFront": "Кастомный фронт",
+		"archived": "Архивирован",
+		"showFrontingEntries": "Показать записи фронта",
+		"showBoardEntries": "Показать сообщении на доске",
+		"showJournalEntries": "Показать записи в журнале",
+		"memberID": "Идентификатор участника: {{memberID}}",
+		"dateCreated": "Дата создания: {{dateCreated}}",
+		"memberIDcopiedToClipboard": "Идентификатор участника в формате упоминания скопирован в буфер обмена!",
+		"delete": {
+			"title": "Удалить участника",
+			"confirm": "Вы уверены, что хотите удалить этого участника?"
+		}
+	}
+}

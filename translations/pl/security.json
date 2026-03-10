@@ -1,0 +1,28 @@
+{
+	"header": "Zabezpieczenia",
+	"applock": {
+		"title": "Blokada aplikacji",
+		"desc": "Zablokuj aplikację hasłem"
+	},
+	"biometrics": {
+		"title": "Użyj biometrii",
+		"desc": "Odblokuj za pomocą odcisku palca albo twarzy"
+	},
+	"allowRemoteContent": {
+		"title": "Zezwalaj na zawartość zdalną",
+		"desc": "Zezwól Ampersadowi na korzystanie z Internetu w celu wyszukiwania zdalnych treści, np. obrazków w polach Markdown i awatarów w importach ze stron trzecich."
+	},
+	"passwordAlert": {
+		"header": "Ostrzeżenie",
+		"text": "Czy na pewno chcesz kontynuować? Zanim przejdziesz dalej, zapisz swoje hasło gdzieś poza Ampersand, ponieważ jeśli je zgubisz, niemożliwe będzie odzyskanie danych albo zresetowanie hasła. Pamiętaj, żeby wyeksportować swoje dane przed ustawieniem hasła!"
+	},
+	"editPassword": "Zmień hasło",
+	"inputPassword": {
+		"titleAdd": "Wprowadź swoje nowe hasło",
+		"titleReenter": "Wprowadź hasło jeszcze raz",
+		"titleModifyOld": "Wprowadź swoje stare hasło",
+		"titleModifyNew": "Wprowadź swoje nowe hasło",
+		"titleDisable": "Wprowadź swoje hasło",
+		"hint": "Hasło"
+	}
+}

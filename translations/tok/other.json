@@ -1,0 +1,64 @@
+{
+	"languageName": {
+		"local": "toki pona",
+		"inEnglish": "Toki Pona"
+	},
+	"genericDeleteDesc": "sina weka e ni la sina ken ala jo sin e ni!",
+	"addTimestamp": "nimi sin pi sona tenpo",
+	"memberMention": "nimi sin pi ijo kulupu",
+	"storagePersistence": {
+		"header": "o lukin",
+		"content": "ilo Ampersand li ken ala jo e sona lon tenpo ale kepeken ilo sina. sina kepeken ilo Firefox la, o pana e ken pi jo sona tawa ilo Ampersand. ilo Chrome en ilo Edge en ilo Opera en ilo Vivaldi en ilo ante li ilo pi ilo Chromium la sina kepeken ilo pi ilo Chromium la o kama jo e ilo Ampersand lon ilo sina. toki ni li weka ala la tenpo mute la o kama jo e ijo ilo pi sona sina lon ilo sina kepeken nena \"pana sona anu kama pi jo sona\"."
+	},
+	"alerts": {
+		"ok": "pona",
+		"cancel": "awen ala",
+		"yes": "lon",
+		"no": "ala"
+	},
+	"presence": {
+		"absent": "lon ala",
+		"heavilyDissociating": "lon lili",
+		"dissociating": "lon pi wawa ala",
+		"zonedOut": "lon pi wawa lili",
+		"present": "lon",
+		"fullyGrounded": "lon wawa"
+	},
+	"back": "tawa sin",
+	"time": "tenpo",
+	"timeSizes": {
+		"years": {
+			"long": "tenpo sike",
+			"short": "tenpo sike"
+		},
+		"months": {
+			"long": "tenpo mun",
+			"short": "tenpo mun"
+		},
+		"days": {
+			"long": "tenpo suno",
+			"short": "tenpo suno"
+		},
+		"weekdays": {
+			"monday": "tenpo suno pali nanpa wan",
+			"tuesday": "tenpo suno pali nanpa tu",
+			"wednesday": "tenpo suno pali nanpa tu wan",
+			"thursday": "tenpo suno pali nanpa tu tu",
+			"friday": "tenpo suno pali nanpa luka",
+			"saturday": "tenpo suno pali ala nanpa wan",
+			"sunday": "tenpo suno pali ala nanpa tu"
+		},
+		"hours": {
+			"long": "tenpo pi palisa lili",
+			"short": "tenpo pi palisa lili"
+		},
+		"minutes": {
+			"long": "tenpo pi palisa suli",
+			"short": "tenpo pi palisa suli"
+		},
+		"seconds": {
+			"long": "tenpo lili",
+			"short": "tenpo lili"
+		}
+	}
+}

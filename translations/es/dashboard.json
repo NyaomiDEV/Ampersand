@@ -8,5 +8,7 @@
 		"header": "Tablero de mensajes",
 		"add": "Agregar al tablero",
 		"view": "Ver más"
-	}
+	},
+	"header": "Panel de control",
+	"header_salute": "¡Hola!"
 }

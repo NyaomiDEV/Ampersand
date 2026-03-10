@@ -6,7 +6,7 @@
 		"comment": "Yorum",
 		"startTime": "Başlangıç zamanı",
 		"endTime": "Bitiş zamanı",
-		"removeFromFront":"Önden kaldır",
+		"removeFromFront": "Önden kaldır",
 		"isMainFronter": "Ana öncü",
 		"delete": {
 			"title": "Öncü kayıdı sil",

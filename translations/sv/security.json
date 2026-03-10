@@ -1,0 +1,9 @@
+{
+	"header": "Säkerhet",
+	"applock": {
+		"title": "Applås"
+	},
+	"allowRemoteContent": {
+		"title": "Tillåt externt innehåll"
+	}
+}

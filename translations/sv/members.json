@@ -1,0 +1,11 @@
+{
+	"header": "Medlemmar",
+	"searchPlaceholder": "Sök medlemmar...",
+	"select": "Välj medlem",
+	"edit": {
+		"noDescription": "Ingen beskrivning",
+		"customFront": "Anpassat front",
+		"memberIDcopiedToClipboard": "Medlem-ID kopierat som omnämnande!"
+	},
+	"deletedCustomFront": "Raderat anpassat front"
+}

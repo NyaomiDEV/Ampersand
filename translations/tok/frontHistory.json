@@ -1,0 +1,34 @@
+{
+	"header": "tenpo lon",
+	"searchPlaceholder": "o alasa e tenpo lon",
+	"currentlyFronting": "lon",
+	"wasFronting": "tenpo pini la ona li awen lon",
+	"frontedThatDay": "tenpo suno ni la ona li lon",
+	"influencing": "ona li lawa e {{influencedMember}}",
+	"edit": {
+		"header": "ante pi tenpo lon",
+		"member": "ante pi ijo lon",
+		"customStatus": "sona pi lon sina",
+		"comment": "toki",
+		"presence": {
+			"historyTitle": "sona pi mute lon",
+			"lastPresence": "sona pi tenpo poka pini la mute lon li mute {{presence}} / 5",
+			"addTitle": "mute 0 li lon ala, kin la mute 10 li lon mute; ni la, sina jo e mute lon seme?",
+			"addButton": "o pana e ni tawa sona pi mute lon",
+			"date": "tenpo"
+		},
+		"influencing": {
+			"select": "ona li lawa e seme",
+			"currentlyInfluencing": "ona li lawa e ijo kulupu ni"
+		},
+		"startTime": "tenpo open",
+		"endTime": "tenpo pini",
+		"removeFromFront": "lon ala",
+		"isMainFronter": "mute lon nanpa wan",
+		"isLocked": "awen lon",
+		"delete": {
+			"title": "weka pi tenpo lon",
+			"confirm": "sina wile ala wile weka e tenpo lon?"
+		}
+	}
+}

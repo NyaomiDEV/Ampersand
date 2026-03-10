@@ -1,0 +1,42 @@
+{
+	"header": "poki toki",
+	"searchPlaceholder": "o alasa e toki",
+	"polls": {
+		"boardMessageContainsPoll": "toki ni li jo e wile pi pilin kulupu",
+		"collapsePoll": "len pi wile pilin",
+		"voteCast": {
+			"voter": "ijo kulupu seme li pilin ni",
+			"reason": "o toki e tan pilin",
+			"reasonHint": "tan pilin",
+			"retractConfirmation": "sina wile ala wile weka e pana pi pilin sina?"
+		},
+		"resultsHeader": "sona kulupu",
+		"resultsButton": "sona kulupu",
+		"choice": {
+			"desc_one": "ijo kulupu {{count}} li pilin ni"
+		},
+		"defaultPollValues": {
+			"yes": "wile",
+			"no": "ala",
+			"veto": "ken ala",
+			"abstain": "pilin ala"
+		}
+	},
+	"edit": {
+		"header": "ante toki",
+		"title": "nimi suli",
+		"body": "sijelo toki",
+		"isPinned": "toki sewi",
+		"isArchived": "toki len",
+		"attachPoll": "toki ni li wile e pilin kulupu",
+		"deleteAttachedPoll": "weka pi wile pilin",
+		"pollIsMultipleChoice": "ijo kulupu li ken pana e pilin mute",
+		"pollAddNewChoice": "pana pi pilin sin",
+		"pollChoice": "sona pilin",
+		"pollEditWarning": "sina ante e ilo pi wile pilin la pilin pana li weka!",
+		"delete": {
+			"title": "weka toki",
+			"confirm": "sina wile ala wile weka e toki ni?"
+		}
+	}
+}

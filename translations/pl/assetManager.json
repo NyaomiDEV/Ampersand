@@ -1,0 +1,17 @@
+{
+	"searchPlaceholder": "Wyszukaj zasoby…",
+	"add": {
+		"header": "Dodaj zasób",
+		"attachment": "Dodaj załącznik"
+	},
+	"header": "Menedżer zasobów",
+	"edit": {
+		"header": "Edytuj zasób",
+		"friendlyName": "Edytuj nazwę",
+		"attachment": "Zastąp załącznik",
+		"delete": {
+			"title": "Usuń zasób",
+			"confirm": "Czy na pewno chcesz usunąć ten zasób?"
+		}
+	}
+}

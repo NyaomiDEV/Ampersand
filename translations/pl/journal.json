@@ -1,0 +1,29 @@
+{
+	"header": "Dziennik",
+	"searchPlaceholder": "Przeszukaj dziennik…",
+	"contentWarning": "Ten wpis zawiera treści wrażliwe",
+	"private": "Ten wpis jest prywatny",
+	"pinnedPosts": "Przypięte wpisy",
+	"alertSubheader": "Czy na pewno chcesz przeczytać ten wpis?",
+	"edit": {
+		"header": "Wpis",
+		"headerAdd": "Dodaj nowy wpis",
+		"headerEdit": "Edytuj wpis",
+		"headerOptions": "Opcje wpisu",
+		"author": "Edytuj autora",
+		"date": "Edytuj datę",
+		"title": "Tytuł",
+		"subtitle": "Podtytuł",
+		"body": "Treść wpisu",
+		"tags": "Tagi",
+		"isPinned": "Przypięty wpis",
+		"isPrivate": "Prywatny wpis",
+		"contentWarning": "Ostrzeżenie dotyczące treści",
+		"postID": "ID wpisu: {{postID}}",
+		"postIDcopiedToClipboard": "ID wpisu w formacie wzmianki zostało skopiowane do schowka!",
+		"delete": {
+			"title": "Usuń wpis w dzienniku",
+			"confirm": "Czy na pewno chcesz usunąć ten wpis?"
+		}
+	}
+}

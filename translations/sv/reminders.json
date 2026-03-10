@@ -1,0 +1,7 @@
+{
+	"remindersAreNotFinished": {
+		"header": "Påminnelser är inte klara!",
+		"content": "Just nu är allt detta bara en förhandsvisning av gränssnittet! Du kanske kan spara dina påminnelser längre fram, men tänk på att det inte är kopplade till något notissystem än! Om du kör Android bör du redan kunna konfigurera lite grejer som kommer att fungera när vi är klara med det underliggande systemet, men tänk på att det här inte kommer att fungera i webbversionen, så bli inte peppad på att använda påminnelser på datorn. Och förresten, om du är utvecklare, hjälp oss gärna!"
+	},
+	"header": "Påminnelser"
+}

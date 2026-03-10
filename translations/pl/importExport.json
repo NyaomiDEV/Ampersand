@@ -1,0 +1,25 @@
+{
+	"header": "Import / Eksport",
+	"dbExport": {
+		"title": "Eksportuj swoje dane",
+		"desc": "Utwórz kopię zapasową bieżących danych w pliku, który można przechowywać gdzie indziej"
+	},
+	"dbImportDesc": "Uwaga! Spowoduje to nadpisanie wszystkich istniejących danych",
+	"dbImport": "Importuj dane z kopii zapasowej",
+	"pkImport": "Importuj dane z eksportu PluralKit",
+	"tuImport": "Importuj dane z eksportu Tupperbox",
+	"spImport": "Importuj dane z eksportu Simply Plural",
+	"status": {
+		"imported": "Kopia zapasowa została zaimportowana. Proszę ponownie uruchomić aplikację.",
+		"importedSp": "Eksport z Simply Plural został zaimportowany. Proszę ponownie uruchomić aplikację.",
+		"importedPk": "Eksport z PluralKit został zaimportowany. Proszę ponownie uruchomić aplikację.",
+		"importedTu": "Eksport z Tupperbox został zaimportowany. Proszę ponownie uruchomić aplikację.",
+		"exportedApp": "Kopia zapasowa została wyeksportowana do wybranej lokalizacji.",
+		"exportedAppIos": "Kopia zapasowa została wyeksportowana do folderu Ampersand w aplikacji Pliki.",
+		"errorExport": "Błąd podczas eksportowania kopii zapasowej.",
+		"error": "Błąd podczas importowania kopii zapasowej.",
+		"errorSp": "Błąd podczas importowania eksportu z Simply Plural.",
+		"errorPk": "Błąd podczas importowania eksportu z PluralKit.",
+		"errorTu": "Błąd podczas importowania eksportu z Tupperbox."
+	}
+}

@@ -1,0 +1,34 @@
+{
+	"header": "Fronthistorik",
+	"searchPlaceholder": "Sök i fronthistoriken...",
+	"currentlyFronting": "Frontar för närvarande",
+	"wasFronting": "Fortfarande i front",
+	"frontedThatDay": "Frontade den dagen",
+	"influencing": "Påverkar {{influencedMember}}",
+	"edit": {
+		"header": "Redigera frontlogg",
+		"member": "Redigera frontare",
+		"customStatus": "Anpassat status",
+		"comment": "Kommentar",
+		"presence": {
+			"historyTitle": "Närvarohistorik",
+			"lastPresence": "Förra gången var det {{presence}} / 5 stjärnor",
+			"addTitle": "Hur närvarande är du på en skala från 0 till 10?",
+			"addButton": "Lägg till i historiken",
+			"date": "Datum"
+		},
+		"influencing": {
+			"select": "Välj en medlem att påverka",
+			"currentlyInfluencing": "Påverkar för närvarande"
+		},
+		"startTime": "Starttid",
+		"endTime": "Sluttid",
+		"removeFromFront": "Ta bort från front",
+		"isMainFronter": "Huvudfrontare",
+		"isLocked": "Låsa frontare",
+		"delete": {
+			"title": "Radera frontlogg",
+			"confirm": "Vill du verkligen radera denna frontlogg?"
+		}
+	}
+}

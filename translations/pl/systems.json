@@ -1,0 +1,24 @@
+{
+	"header": "Systemy",
+	"searchPlaceholder": "Przeszukaj systemy…",
+	"select": "Wybierz system",
+	"edit": {
+		"header": "System",
+		"headerAdd": "Dodaj system",
+		"headerEdit": "Edytuj system",
+		"name": "Nazwa systemu",
+		"description": "Opis systemu",
+		"noDescription": "Brak opisu",
+		"memberCount": "Liczba członków",
+		"memberCountText": "{{totalMemberCount}} członków, z czego {{memberCount}} aktywnych i {{archivedMemberCount}} zarchiwizowanych",
+		"customFrontCountText": "{{totalCustomFrontCount}} frontów niestandardowych, z czego {{customFrontCount}} aktywnych i {{archivedCustomFrontCount}} zarchiwizowanych",
+		"tapToShow": "Naciśnij, aby pokazać",
+		"showMembers": "Pokaż członków w tym systemie",
+		"delete": {
+			"title": "Usuń system",
+			"confirm": "Czy na pewno chcesz usunąć ten system?"
+		},
+		"systemID": "ID systemu: {{systemID}}",
+		"systemIDcopiedToClipboard": "ID systemu w formacie wzmianki zostało skopiowane do schowka!"
+	}
+}

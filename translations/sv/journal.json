@@ -1,0 +1,29 @@
+{
+	"header": "Dagbok",
+	"searchPlaceholder": "Sök i dagboken...",
+	"contentWarning": "Detta inlägg innehåller känsligt innehåll",
+	"private": "Detta inlägg är privat",
+	"pinnedPosts": "Fästa inlägg",
+	"alertSubheader": "Vill du verkligen läsa detta inlägg?",
+	"edit": {
+		"header": "Inlägg",
+		"headerAdd": "Lägg till ett nytt inlägg",
+		"headerEdit": "Redigera inlägg",
+		"headerOptions": "Inläggsalternativ",
+		"author": "Redigera författare",
+		"date": "Redigera datum",
+		"title": "Rubrik",
+		"subtitle": "Underrubrik",
+		"body": "Innehåll",
+		"tags": "Taggar",
+		"isPinned": "Fästat inlägg",
+		"isPrivate": "Privat inlägg",
+		"contentWarning": "Innehållsvarning",
+		"postID": "Inlägg-ID: {{postID}}",
+		"postIDcopiedToClipboard": "Inlägg-ID kopierat som omnämnande!",
+		"delete": {
+			"title": "Radera dagbokinlägg",
+			"confirm": "Vill du verkligen radera detta inlägg?"
+		}
+	}
+}

@@ -1,0 +1,28 @@
+{
+	"header": "lipu sina",
+	"searchPlaceholder": "o alasa lon lipu sina",
+	"contentWarning": "lipu ni li jo e toki lon ijo ike anu ijo monsuta",
+	"private": "lipu ni li len",
+	"pinnedPosts": "lipu sewi",
+	"alertSubheader": "sina wile ala wile lukin e lipu ni?",
+	"edit": {
+		"header": "lipu",
+		"headerAdd": "pali pi lipu sin",
+		"headerEdit": "ante pi lipu ni",
+		"date": "ante tenpo",
+		"title": "nimi suli",
+		"subtitle": "nimi sewi lili",
+		"body": "sijelo lipu",
+		"tags": "nimi sona",
+		"isPinned": "lipu sewi",
+		"isPrivate": "lipu len",
+		"contentWarning": "sona pi ike kama",
+		"delete": {
+			"title": "weka pi lipu ni",
+			"confirm": "sina wile ala wile weka e lipu ni?"
+		},
+		"headerOptions": "ken ante pi lipu ni",
+		"postID": "nimi ilo pi lipu ni: {{postID}}",
+		"postIDcopiedToClipboard": "sina kama jo e nimi ilo pi lipu ni!"
+	}
+}

@@ -1,0 +1,24 @@
+{
+	"header": "System",
+	"searchPlaceholder": "Sök system...",
+	"select": "Välj system",
+	"edit": {
+		"header": "System",
+		"headerAdd": "Lägg till system",
+		"headerEdit": "Redigera system",
+		"name": "Systemnamn",
+		"description": "Systembeskrivning",
+		"noDescription": "Ingen beskrivning",
+		"memberCount": "Medlemsantal",
+		"memberCountText": "{{totalMemberCount}} medlem(mar), {{memberCount}} aktiv(a), {{archivedMemberCount}} arkiverad",
+		"tapToShow": "Tryck på för att visa",
+		"showMembers": "Visa systemmedlemmar",
+		"delete": {
+			"title": "Radera system",
+			"confirm": "Vill du verkligen radera detta system?"
+		},
+		"systemID": "System-ID: {{systemID}}",
+		"systemIDcopiedToClipboard": "System-id kopierat som omnämnande!",
+		"customFrontCountText": "{{totalCustomFrontCount}} anpassade front(er), {{customFrontCount}} aktiv(a), {{archivedCustomFrontCount}} arkiverad"
+	}
+}

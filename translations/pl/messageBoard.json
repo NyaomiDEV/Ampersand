@@ -1,0 +1,45 @@
+{
+	"header": "Tablica ogłoszeń",
+	"searchPlaceholder": "Wyszukaj wiadomości…",
+	"polls": {
+		"boardMessageContainsPoll": "Zawiera ankietę",
+		"collapsePoll": "Ukryj ankietę",
+		"voteCast": {
+			"voter": "Wybierz osobę głosującą",
+			"reason": "Podaj powód",
+			"reasonHint": "Powód",
+			"retractConfirmation": "Czy na pewno chcesz wycofać ten głos?"
+		},
+		"resultsHeader": "Wyniki głosowania",
+		"resultsButton": "Pokaż wyniki głosowania",
+		"choice": {
+			"desc_one": "{{count}} osoba głosująca",
+			"desc_few": "{{count}} osoby głosujące",
+			"desc_many": "{{count}} osób głosujących"
+		},
+		"defaultPollValues": {
+			"yes": "Tak",
+			"no": "Nie",
+			"veto": "Weto",
+			"abstain": "Wstrzymaj się"
+		}
+	},
+	"edit": {
+		"title": "Tytuł",
+		"header": "Edytuj wiadomość",
+		"member": "Edytuj autora wiadomości",
+		"body": "Treść wiadomości",
+		"isPinned": "Przypnij wiadomość",
+		"isArchived": "Zarchiwizuj wiadomość",
+		"attachPoll": "Dołącz ankietę do tej wiadomości",
+		"deleteAttachedPoll": "Usuń załączoną ankietę",
+		"pollIsMultipleChoice": "Zezwól na wybór wielu opcji",
+		"pollAddNewChoice": "Dodaj nową opcję do ankiety",
+		"pollChoice": "Opis opcji",
+		"pollEditWarning": "Zmiana jakichkolwiek szczegółów ankiety spowoduje zresetowanie głosów!",
+		"delete": {
+			"title": "Usuń wiadomość na tablicy",
+			"confirm": "Czy na pewno chcesz usunąć tę wiadomość?"
+		}
+	}
+}

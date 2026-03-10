@@ -1,0 +1,18 @@
+{
+	"header": "poki sona",
+	"select": "poki sona pi wile sina",
+	"searchPlaceholder": "o alasa e poki sona",
+	"edit": {
+		"header": "ante pi poki sona",
+		"headerAdd": "pali pi poki sona sin",
+		"name": "nimi pi poki sona",
+		"delete": {
+			"title": "weka pi poki sona",
+			"confirm": "sina wile ala wile weka e poki sona ni?"
+		},
+		"default": {
+			"title": "poki sona pi ijo ale",
+			"desc": "tenpo ale la poki sina ni li lon lipu pi ijo kulupu ale lon lipu pi ijo sona ale"
+		}
+	}
+}

@@ -1,0 +1,41 @@
+{
+	"header": "Zarządzanie tagami",
+	"searchPlaceholder": "Wyszukaj tagi…",
+	"select": "Wybierz tagi",
+	"selector": {
+		"member": "Tagi członków",
+		"journal": "Tagi dziennika"
+	},
+	"edit": {
+		"header": {
+			"member": "Edytuj tag członków",
+			"journal": "Edytuj tag dziennika"
+		},
+		"name": "Nazwa tagu",
+		"description": "Opis tagu",
+		"color": "Kolor tagu",
+		"viewInLists": "Wyświetl w listach",
+		"type": {
+			"header": "Rodzaj tagu",
+			"member": "Członek",
+			"journal": "Dziennik",
+			"desc": "Uwaga: rodzaj tagu można zdefiniować dopiero po jego utworzeniu!"
+		},
+		"members": {
+			"title": "Wybierz członków systemu korzystających z tego tagu",
+			"desc_one": "{{count}} członek systemu korzysta z tego tagu",
+			"desc_few": "{{count}} członków systemu korzysta z tego tagu",
+			"desc_many": "{{count}} członków systemu korzysta z tego tagu"
+		},
+		"showJournal": {
+			"title": "Pokaż wpisy w dzienniku oznaczone tym tagiem",
+			"desc_one": "{{count}} wpis w dzienniku jest oznaczony tym tagiem",
+			"desc_few": "{{count}} wpisy w dzienniku są oznaczone tym tagiem",
+			"desc_many": "{{count}} wpisów w dzienniku jest oznaczonych tym tagiem"
+		},
+		"delete": {
+			"title": "Usuń tag",
+			"confirm": "Czy na pewno chcesz usunąć ten tag?"
+		}
+	}
+}

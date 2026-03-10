@@ -1,0 +1,47 @@
+{
+	"header": "pana sin sona",
+	"eventBasedHeader": "pana sin sona ni li kama tan tenpo ilo",
+	"periodicHeader": "pana sin sona ni li kama lon tenpo",
+	"edit": {
+		"header": "ante pi pana sin sona",
+		"name": "nimi pi pana sin sona",
+		"title": "nimi toki pi pana sin sona",
+		"message": "toki pi pana sin sona",
+		"type": {
+			"title": "pana sin sona li kama tan seme",
+			"eventBased": "pana li kama tan tenpo ilo",
+			"periodic": "pana li kama lon tenpo"
+		},
+		"eventBased": {
+			"title": "tenpo pi kama pana",
+			"addedToFront": "ijo kulupu li pini kama tawa lon",
+			"removedFromFront": "ijo kulupu li pini weka tan lon",
+			"memberFilterQuery": "alasa pi ijo kulupu",
+			"timing": "tenpo",
+			"delay": {
+				"title": "awen",
+				"desc": "mute tenpo {{delay}} li pini la pana li kama"
+			}
+		},
+		"periodic": {
+			"title": "mute tenpo",
+			"timeOfDay": {
+				"title": "kipisi pi tenpo suno",
+				"desc": "pana li kama lon tenpo {{timeOfDay}}"
+			},
+			"dayOfMonth": {
+				"title": "tenpo suno pi tenpo mun",
+				"desc_undefined": "pana li kama lon tenpo suno ale",
+				"desc_ordinal_one": "pana li kama lon tenpo suno {{count}} pi tenpo mun"
+			}
+		},
+		"delete": {
+			"title": "weka pi pana sin sona",
+			"confirm": "sina wile ala wile weka e pana sin sona?"
+		}
+	},
+	"remindersAreNotFinished": {
+		"header": "pali li pini ala lon pana sin sona!",
+		"content": "tenpo ni la, ni ale li pana ala! ken la sina ken kepeken ni lon tenpo kama, taso, tenpo ni la ilo pana li lon ala. sina kepeken ilo Android la sina ken pali e pana sin sona; ilo pana li pini la, ni li pana e pana sin sona tawa sina. o sona e ni; sina kepeken ilo Web la, ilo pana li pana ala. kin la, sina pali e ilo sama ilo ni la, o lawa e mi!"
+	}
+}

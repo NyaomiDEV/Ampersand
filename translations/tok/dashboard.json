@@ -1,0 +1,15 @@
+{
+	"header": "lipu suli",
+	"header_salute": "toki a!",
+	"header_mainfronter": "toki a, {{fronterName}} o!",
+	"systemDescription": "sona pi kulupu ni",
+	"nowFronting": "tenpo ni la ijo ni li lon",
+	"fronterInfluencing": "ona li lawa e {{influencedMember}}",
+	"addToFront": "pana pi ijo lon sin",
+	"recentFrontingHistory": "tenpo poka pini la ijo ni li lon",
+	"messageBoard": {
+		"header": "lipu toki",
+		"add": "pana toki",
+		"view": "lukin pi toki ale"
+	}
+}

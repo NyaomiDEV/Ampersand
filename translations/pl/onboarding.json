@@ -1,0 +1,37 @@
+{
+	"welcomeScreen": {
+		"header": "Witamy w Ampersand!",
+		"start": "Rozpocznij swoją podróż!"
+	},
+	"importScreen": {
+		"header": "Czy chcesz zaimportować swoje dane?",
+		"prevInstall": "Tak, z wcześniejszej instalacji",
+		"simplyPlural": "Tak, z Simply Plural",
+		"pluralKit": "Tak, z PluralKit",
+		"tupperbox": "Tak, z Tupperbox",
+		"startFromScratch": "Nie, zacznę od zera",
+		"pleaseWait": "Proszę czekać, aż zaimportujemy twoje dane",
+		"error": "W trakcie importowania kopii zapasowej wystąpił błąd. Proszę wybrać inną opcję.",
+		"errorSp": "W trakcie importowania eksportu z Simply Plural wystąpił błąd. Proszę wybrać inną opcję.",
+		"errorPk": "W trakcie importowania eksportu z PluralKit wystąpił błąd. Proszę wybrać inną opcję.",
+		"errorTu": "W trakcie importowania eksportu z Tupperbox wystąpił błąd. Proszę wybrać inną opcję.",
+		"allowRemoteContent": {
+			"header": "Pozwolić na połączenie z Internetem?",
+			"desc": "Ampersand to aplikacja działająca głównie w trybie offline i dlatego potrzebuje twojej zgody, aby mieć dostęp do Internetu. Na tym etapie połączyłaby się z Internetem, aby pobrać awatary i banery członków waszego systemu. Później tę funkcję da się wyłączyć wchodząc w Opcje > Bezpieczeństwo > Zezwalaj na zawartość zdalną."
+		}
+	},
+	"systemInfo": {
+		"header": "Opowiedz nam o swoim systemie!",
+		"name": "Zbiorowe imię",
+		"description": "Trochę o was wszystkich…"
+	},
+	"memberInfo": {
+		"header": "Opowiedz nam więcej na wasz temat!",
+		"description": "Trochę o tobie…",
+		"invitation": "Kontynuuj edycję swojej karty profilowej po zakończeniu wprowadzenia!"
+	},
+	"endScreen": {
+		"header": "Dziękujemy za wybranie Ampersand!",
+		"startButton": "Zaczynajmy!"
+	}
+}

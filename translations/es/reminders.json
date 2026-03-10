@@ -21,11 +21,18 @@
 		"periodic": {
 			"title": "Intervalo de tiempo",
 			"timeOfDay": {
-				"desc": "A {{timeOfDay}}"
+				"desc": "A {{timeOfDay}}",
+				"title": "Hora del día"
 			},
 			"dayOfMonth": {
-				"desc_undefined": "Repetir cada día"
+				"desc_undefined": "Repetir cada día",
+				"title": "Día del mes"
 			}
+		},
+		"delete": {
+			"title": "Eliminar recordatorio",
+			"confirm": "¿Está seguro de que quiere eliminar el recordatorio?"
 		}
-	}
+	},
+	"header": "Recordatorios"
 }

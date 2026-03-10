@@ -1,0 +1,34 @@
+{
+	"header": "Historia frontowania",
+	"searchPlaceholder": "Przeszukaj historię frontowania…",
+	"currentlyFronting": "Aktualnie na froncie",
+	"wasFronting": "Wciąż frontował*",
+	"frontedThatDay": "Frontował* w tym dniu",
+	"influencing": "Wpływa na: {{influencedMember}}",
+	"edit": {
+		"header": "Edytuj wpis frontowania",
+		"member": "Edytuj członka na froncie",
+		"customStatus": "Status niestandardowy",
+		"comment": "Komentarz",
+		"presence": {
+			"historyTitle": "Historia obecności",
+			"lastPresence": "Ostatnio było to {{presence}} / 5 gwiazdek",
+			"addTitle": "Jak obecn* się czujesz na skali od 0 do 10?",
+			"addButton": "Dodaj to do historii",
+			"date": "Data"
+		},
+		"influencing": {
+			"select": "Wybierz członka systemu, na którego masz wpływ",
+			"currentlyInfluencing": "Aktualnie wpływa na"
+		},
+		"startTime": "Czas rozpoczęcia",
+		"endTime": "Czas zakończenia",
+		"removeFromFront": "Zdejmij z frontu",
+		"isMainFronter": "Główna osoba frontująca",
+		"isLocked": "Zablokuj osobę frontującą",
+		"delete": {
+			"title": "Usuń wpis frontowania",
+			"confirm": "Czy na pewno chcesz usunąć ten wpis frontowania?"
+		}
+	}
+}

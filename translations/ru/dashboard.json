@@ -1,1 +1,12 @@
-{}
+{
+	"header": "Панель управления",
+	"header_salute": "Привет!",
+	"header_mainfronter": "Привет, {{fronterName}}!",
+	"systemDescription": "Описание Системы",
+	"fronterInfluencing": "Влияет на {{influencedMember}}",
+	"addToFront": "Добавить в фронт",
+	"messageBoard": {
+		"header": "Доска объявлений",
+		"add": "Добавить на доску"
+	}
+}

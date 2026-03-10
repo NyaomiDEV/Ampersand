@@ -1,0 +1,37 @@
+{
+	"welcomeScreen": {
+		"header": "Välkommen till Ampersand!",
+		"start": "Börja din resa!"
+	},
+	"importScreen": {
+		"header": "Vill du importera din data?",
+		"prevInstall": "Ja, tidigare installation",
+		"simplyPlural": "Ja, Simply Plural",
+		"pluralKit": "Ja, PluralKit",
+		"tupperbox": "Ja, Tupperbox",
+		"startFromScratch": "Nej, jag ska börja från noll",
+		"pleaseWait": "Vänligen vänta medan vi importerar din data",
+		"error": "Något gick fel vid import av säkerhetskopian. Vänligen välj en annan alternativ.",
+		"errorSp": "Något gick fel vid import av Simply Plural-exporten. Vänligen välj en annan alternativ.",
+		"errorPk": "Något gick fel vid import av PluralKit-exporten. Vänligen välj en annan alternativ.",
+		"errorTu": "Något gick fel vid import av Tupperbox-exporten. Vänligen välj en annan alternativ.",
+		"allowRemoteContent": {
+			"header": "Tillåt Internetåtkomst?",
+			"desc": "Ampersand är en 'offline-first'-app och behöver därför ditt samtycke för att ansluta till internet. I det här skedet ansluter appen till internet för att ladda ner dina medlemmars avatarer och bakgrundsbilder. Du kan stänga av den här funktionen under Inställningar > Säkerhet > Tillåt externt innehåll när du är klar."
+		}
+	},
+	"systemInfo": {
+		"header": "Berätta om ditt system!",
+		"name": "Kollektivnamn",
+		"description": "Lite om er alla..."
+	},
+	"memberInfo": {
+		"header": "Berätta lite om er själva!",
+		"description": "Lite om dig själv...",
+		"invitation": "Du kan fortfarande redigera ditt profilkort efter att du är klar med onborardingen!"
+	},
+	"endScreen": {
+		"header": "Tack för att du valde Ampersand!",
+		"startButton": "Vi kör!"
+	}
+}

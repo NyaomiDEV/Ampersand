@@ -1,0 +1,47 @@
+{
+	"header": "ken kepeken",
+	"highLegibilityFont": {
+		"title": "nasin sitelen pi lukin pona",
+		"desc": "ilo ni li kepeken e nasin sitelen pi lukin pona kepeken ala e nasin sitelen pi ilo wile"
+	},
+	"highLegibilityFontType": {
+		"atkinson": "nasin sitelen Atkinson Hyperlegible",
+		"opendyslexic": "nasin sitelen OpenDyslexic",
+		"lexend": "nasin sitelen Lexend",
+		"system-font": "nasin sitelen pi ilo sina"
+	},
+	"uiVariant": {
+		"title": "kule ilo",
+		"auto": "kule lon",
+		"light": "walo",
+		"dark": "pimeja"
+	},
+	"useMaterialTheming": {
+		"title": "lukin pi ilo Material Design",
+		"desc": "o ante e ilo ni kepeken lipu lawa pi ilo Material Design (taso, ni li ken pakala e lukin sina)"
+	},
+	"useAccentColor": {
+		"title": "kule namako ilo",
+		"desc": "ilo li kepeken kule namako pi wile sina"
+	},
+	"accentColor": {
+		"title": "kule namako pi wile sina"
+	},
+	"reducedMotion": {
+		"title": "tawa ala",
+		"desc": "ijo pi ilo ni li tawa ala"
+	},
+	"disableMemberCoversInList": {
+		"title": "ijo kulupu li jo ala selo lon lipu pi ijo kulupu",
+		"desc": "ni li lon la, ijo kulupu li lukin lili lon lipu pi ijo kulupu"
+	},
+	"contrastLevel": {
+		"title": "mute pi ante kule"
+	},
+	"fontScale": {
+		"title": "mute suli pi nasin sitelen"
+	},
+	"longPressDuration": {
+		"title": "mute tenpo pi luka awen"
+	}
+}

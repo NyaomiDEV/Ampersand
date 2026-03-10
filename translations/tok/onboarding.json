@@ -1,0 +1,37 @@
+{
+	"welcomeScreen": {
+		"header": "o kama pona tawa ilo Ampersand!",
+		"start": "open pi nasin sina!"
+	},
+	"importScreen": {
+		"header": "sina wile ala wile pana e sona sina tan ijo ilo?",
+		"prevInstall": "mi wile, mi pana e sona mi tan ilo ni pi tenpo pini",
+		"simplyPlural": "mi wile, mi pana e sona mi tan ilo Simply Plural",
+		"pluralKit": "mi wile, mi pana e sona mi tan ilo PluralKit",
+		"tupperbox": "mi wile, mi pana e sona mi tan ilo Tupperbox",
+		"startFromScratch": "ala, mi pali e sona",
+		"pleaseWait": "o awen, ilo li kama jo e sona sina",
+		"error": "ijo ilo pi sona sina li alasa kama tawa ilo ni, taso pakala li kama. o ante e nasin pi wile sina.",
+		"errorSp": "ijo ilo pi sona sina li tan ilo Simply Plural. ijo ni li alasa kama tawa ilo sina, taso pakala li kama. o ante e nasin pi wile sina.",
+		"errorPk": "ijo ilo pi sona sina li tan ilo PluralKit. ijo ni li alasa kama tawa ilo sina, taso pakala li kama. o ante e nasin pi wile sina.",
+		"errorTu": "ijo ilo pi sona sina li tan ilo Tupperbox. ijo ni li alasa kama tawa ilo sina, taso pakala li kama. o ante e nasin pi wile sina.",
+		"allowRemoteContent": {
+			"header": "ilo li ken ala ken toki tawa kulupu pi ilo sona?",
+			"desc": "tenpo mute la ilo Ampersand li toki ala tawa kulupu pi ilo sona. ni la, ilo ni li wile e ken sina tawa toki. tenpo ni la ilo ni li wile toki tawa kulupu pi ilo sona tan ni; ona li wile kama jo e sitelen pi ijo kulupu. sina luka e nena \"ken ante\" la sina luka e nena \"awen\" la sina luka e nena \"ilo li ken toki tawa kulupu pi ilo sona\" la sina ken toki e ni tawa ilo ni; o toki ala tawa kulupu pi ilo sona."
+		}
+	},
+	"systemInfo": {
+		"header": "o toki lon kulupu sina!",
+		"name": "nimi kulupu",
+		"description": "o toki lili lon sina ale"
+	},
+	"memberInfo": {
+		"header": "o toki lon sina!",
+		"description": "o toki lili lon sina",
+		"invitation": "sina pini kama la sina ken awen ante e lipu sina!"
+	},
+	"endScreen": {
+		"header": "sina wile kepeken ilo Ampersand la sina pona!",
+		"startButton": "o open!"
+	}
+}

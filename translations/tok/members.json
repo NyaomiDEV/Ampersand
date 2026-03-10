@@ -1,0 +1,48 @@
+{
+	"header": "ijo kulupu",
+	"searchPlaceholder": "o alasa e ijo kulupu",
+	"select": "ijo kulupu pi wile sina",
+	"deletedMember": "ijo kulupu weka",
+	"deletedCustomFront": "ijo sona weka",
+	"actions": {
+		"addToFront": "pana pi ijo lon sin",
+		"setMainFronter": "ona li lawa lon",
+		"unsetMainFronter": "ona li lawa ala lon",
+		"setSoleFronter": "ona li lon",
+		"removeFromFront": "ona li lon ala"
+	},
+	"toasts": {
+		"addToFront": "ona li kama lon",
+		"setMainFronter": "ona li kama lawa lon",
+		"unsetMainFronter": "ona li pini lawa lon",
+		"setSoleFronter": "ona taso li lon",
+		"removeFromFront": "ona li pini lon"
+	},
+	"edit": {
+		"header": "ijo kulupu",
+		"headerAdd": "ijo kulupu sin",
+		"headerEdit": "ante pi ijo kulupu",
+		"name": "nimi",
+		"pronouns": "nimi lili",
+		"role": "pali",
+		"color": "kule wile",
+		"customFieldsAdd": "poki sona sin",
+		"tags": "ante pi nimi sona",
+		"description": "sona",
+		"noDescription": "sona ala",
+		"system": "ante pi nasin kulupu",
+		"isPinned": "ijo kulupu sewi",
+		"customFront": "ijo sona",
+		"archived": "len",
+		"showFrontingEntries": "tenpo lon",
+		"showBoardEntries": "toki pi poki toki",
+		"showJournalEntries": "toki lipu",
+		"memberID": "nimi ilo pi ijo kulupu ni: {{memberID}}",
+		"dateCreated": "tenpo pi pali lipu: {{dateCreated}}",
+		"memberIDcopiedToClipboard": "sina kama jo e nimi ilo pi ijo kulupu ni!",
+		"delete": {
+			"title": "weka pi ijo kulupu",
+			"confirm": "sina wile ala wile weka e ijo kulupu ni?"
+		}
+	}
+}

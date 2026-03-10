@@ -1,0 +1,10 @@
+{
+	"header": "Anslagstavla",
+	"searchPlaceholder": "Sök meddelanden...",
+	"polls": {
+		"boardMessageContainsPoll": "Innehåller omröstning"
+	},
+	"edit": {
+		"title": "Rubrik"
+	}
+}

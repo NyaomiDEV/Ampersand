@@ -1,0 +1,64 @@
+{
+	"languageName": {
+		"local": "Svenska",
+		"inEnglish": "Swedish"
+	},
+	"genericDeleteDesc": "Den här åtgärden kan inte ångras!",
+	"time": "Tid",
+	"timeSizes": {
+		"years": {
+			"long": "år",
+			"short": "Å"
+		},
+		"months": {
+			"long": "månader",
+			"short": "M"
+		},
+		"days": {
+			"long": "dagar",
+			"short": "D"
+		},
+		"weekdays": {
+			"monday": "Måndag",
+			"tuesday": "Tisdag",
+			"wednesday": "Onsdag",
+			"thursday": "Torsdag",
+			"friday": "Fredag",
+			"saturday": "Lördag",
+			"sunday": "Söndag"
+		},
+		"hours": {
+			"long": "timmar",
+			"short": "t"
+		},
+		"minutes": {
+			"long": "minuter",
+			"short": "m"
+		},
+		"seconds": {
+			"long": "sekunder",
+			"short": "s"
+		}
+	},
+	"back": "Backåt",
+	"alerts": {
+		"yes": "Ja",
+		"no": "Nej",
+		"ok": "Okej",
+		"cancel": "Avbryt"
+	},
+	"presence": {
+		"absent": "Frånvarande",
+		"heavilyDissociating": "Kraftigt dissocierad",
+		"dissociating": "Dissocierad",
+		"present": "Närvarande",
+		"zonedOut": "Zonat ut",
+		"fullyGrounded": "Helt grundad"
+	},
+	"storagePersistence": {
+		"header": "Varning",
+		"content": "Ampersand kan inte lagra data permanent på din enhet. Om du använder Firefox, ge gärna Ampersand tillstånd att göra det. Om du använder en Chromium-baserad webbläsare (såsom Chrome, Edge, Opera, Vivaldi osv.), installera Ampersand som en webbapp / lägg till den på din Hemskärm/Skrivbord. Om det här meddelandet inte försvinner, bör du säkerhetskopiera din data ofta under avsnittet Importera/Exportera."
+	},
+	"addTimestamp": "Lägg till tidsstämpel",
+	"memberMention": "Omnämna en medlem"
+}

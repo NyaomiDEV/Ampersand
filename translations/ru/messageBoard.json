@@ -1,1 +1,45 @@
-{}
+{
+	"header": "Доска сообщений",
+	"searchPlaceholder": "Искать в сообщениях...",
+	"polls": {
+		"boardMessageContainsPoll": "Включает опрос",
+		"collapsePoll": "Скрыть опрос",
+		"voteCast": {
+			"voter": "Выберите голосующего",
+			"reason": "Объясните причину",
+			"reasonHint": "Причина",
+			"retractConfirmation": "Вы уверены, что хотите убрать этот голос?"
+		},
+		"resultsHeader": "Результаты голосования",
+		"resultsButton": "Показать результаты",
+		"defaultPollValues": {
+			"veto": "Вето",
+			"yes": "Да",
+			"no": "Нет",
+			"abstain": "Воздержаться"
+		},
+		"choice": {
+			"desc_one": "{{count}} голос",
+			"desc_few": "{{count}} голоса",
+			"desc_many": "{{count}} голосов"
+		}
+	},
+	"edit": {
+		"member": "Изменить автора сообщения",
+		"isPinned": "Закрепить сообщение",
+		"isArchived": "Архивировать сообщение",
+		"attachPoll": "Прикрепить опрос к сообщению",
+		"deleteAttachedPoll": "Удалить приклепленный опрос",
+		"pollAddNewChoice": "Добавить новый вариант в опрос",
+		"pollChoice": "Описание варианта",
+		"pollEditWarning": "Изменение деталей опроса сбросит голоса!",
+		"delete": {
+			"title": "Удалить сообщение на доске",
+			"confirm": "Вы уверены, что хотите удалить это сообщение?"
+		},
+		"title": "Заголовок",
+		"header": "Редактировать сообщение",
+		"body": "Текст сообщения",
+		"pollIsMultipleChoice": "Разрешить выбор нескольких вариантов"
+	}
+}

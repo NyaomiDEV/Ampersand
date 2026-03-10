@@ -1,0 +1,23 @@
+{
+	"header": "kulupu",
+	"searchPlaceholder": "o alasa e kulupu",
+	"edit": {
+		"header": "kulupu",
+		"headerAdd": "kulupu sin",
+		"headerEdit": "ante kulupu",
+		"name": "nimi kulupu",
+		"description": "sona kulupu",
+		"noDescription": "sona ala",
+		"memberCount": "mute pi ijo kulupu",
+		"memberCountText": "ijo kulupu {{totalMemberCount}} li lon, ijo kulupu len ala {{memberCount}} li lon, ijo kulupu len {{archivedMemberCount}} li lon",
+		"customFrontCountText": "ijo sona {{totalCustomFrontCount}} li lon, ijo sona len ala {{customFrontCount}} li lon, ijo sona len {{archivedCustomFrontCount}} li lon",
+		"tapToShow": "sina wile lukin la o luka",
+		"delete": {
+			"title": "weka pi kulupu ni",
+			"confirm": "sina wile ala wile weka e kulupu ni?"
+		},
+		"systemID": "nimi ilo pi kulupu ni: {{systemID}}",
+		"systemIDcopiedToClipboard": "sina kama jo e nimi ilo pi kulupu ni!"
+	},
+	"select": "kulupu pi wile sina"
+}

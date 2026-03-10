@@ -1,0 +1,56 @@
+{
+	"header": "Ustawienia ułatwień dostępu",
+	"highLegibilityFont": {
+		"title": "Czcionka o wysokiej czytelności",
+		"desc": "Użyj czcionki o wysokiej czytelności zamiast standardowej czcionki urządzenia"
+	},
+	"highLegibilityFontType": {
+		"title": "Rodzina czcionek o wysokiej czytelności",
+		"atkinson": "Atkinson Hyperlegible",
+		"opendyslexic": "OpenDyslexic",
+		"lexend": "Lexend",
+		"system-font": "Czcionka systemowa"
+	},
+	"uiVariant": {
+		"title": "Wariant interfejsu użytkownika",
+		"auto": "Automatyczny",
+		"light": "Jasny",
+		"dark": "Ciemny"
+	},
+	"useMaterialTheming": {
+		"title": "Motywy Material Design",
+		"desc": "Dostosuj motyw swojej aplikacji według wytycznych Material (może powodować zmęczenie oczu)"
+	},
+	"useAccentColor": {
+		"title": "Kolor akcentu",
+		"desc": "Wybierz niestandardowy kolor akcentu"
+	},
+	"accentColor": {
+		"title": "Wybierz kolor akcentu"
+	},
+	"reducedMotion": {
+		"title": "Zredukowany ruch",
+		"desc": "Wyłącz animacje w aplikacji"
+	},
+	"disableMemberCoversInList": {
+		"title": "Wyłącz tła członków systemu na liście",
+		"desc": "Jeśli ta opcja jest włączona, członkowie na liście głównej będą również wyświetlani w bardziej kompaktowy sposób"
+	},
+	"contrastLevel": {
+		"title": "Poziom kontrastu"
+	},
+	"fontScale": {
+		"title": "Rozmiar czcionki"
+	},
+	"longPressDuration": {
+		"title": "Czas trwania długiego naciśnięcia"
+	},
+	"themeIsAmoled": {
+		"title": "Tryb AMOLED",
+		"desc": "Użyj całkowicie czarnego tła w trybie ciemnym. Pomoże to zmniejszyć zużycie wyświetlacza."
+	},
+	"themeIsVibrant": {
+		"title": "Motyw żywych kolorów",
+		"desc": "Wprowadź więcej barw do interfejsu użytkownika."
+	}
+}
