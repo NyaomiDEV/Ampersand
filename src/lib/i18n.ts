@@ -10,7 +10,7 @@ import { flattenObject } from "./util/misc";
 const context = import.meta.webpackContext("../../translations/", {
 	recursive: true,
 	regExp: /\.json$/,
-	include: /translations[\\/](en|it|de|es|fr|nl|ro|tr)/
+	include: /translations[\\/](de|en|es|fr|it|nl|pl|ro|ru|tok|tr)/
 });
 
 const translations: Map<string, unknown> = new Map();
@@ -49,7 +49,11 @@ await i18next.init({
 for(const [path, translation] of translations.entries()){
 	const [, lang, ns] = /\/(.*)\/(.*)\.json$/.exec(path)!;
 
-	await import(`dayjs/locale/${lang}`);
+	try {
+		await import(`dayjs/locale/${lang}`);
+	}catch(_e){
+		console.error("DayJS doesn't have this locale:", lang);
+	}
 	i18next.addResourceBundle(lang, ns, translation);
 }
 
