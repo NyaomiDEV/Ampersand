@@ -53,6 +53,11 @@ for(const [path, translation] of translations.entries()){
 		await import(`dayjs/locale/${lang}`);
 	}catch(_e){
 		console.error("DayJS doesn't have this locale:", lang);
+		try {
+			await import(`../../translations/${lang}/dayjs`);
+		}catch(_e){
+			console.error("... and we don't have a replacement for that", lang);
+		}
 	}
 	i18next.addResourceBundle(lang, ns, translation);
 }
