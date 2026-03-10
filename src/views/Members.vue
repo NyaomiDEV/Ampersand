@@ -15,7 +15,7 @@
 		IonItemOption,
 		IonBackButton,
 	} from "@ionic/vue";
-	import { onBeforeMount, onUnmounted, reactive, ref, shallowRef, useTemplateRef, watch } from "vue";
+	import { onBeforeMount, onUnmounted, ref, shallowRef, useTemplateRef, watch } from "vue";
 	import { accessibilityConfig, appConfig } from "../lib/config/index.ts";
 	import CollapsibleHeaderbar from "../components/CollapsibleHeaderbar.vue";
 
@@ -31,8 +31,8 @@
 	import archivedMD from "@material-symbols/svg-600/outlined/archive.svg";
 
 	import { getFilteredMembers } from "../lib/db/tables/members.ts";
-	import type { Member, FrontingEntry } from "../lib/db/entities";
-	import { getCurrentFrontEntryForMember, newFrontingEntry, removeFronter, sendFrontingChangedEvent, setMainFronter, setSoleFronter } from "../lib/db/tables/frontingEntries.ts";
+	import type { Member, FrontingEntryComplete } from "../lib/db/entities";
+	import { getFronting, newFrontingEntry, removeFronter, sendFrontingChangedEvent, setMainFronter, setSoleFronter } from "../lib/db/tables/frontingEntries.ts";
 	import MemberAvatar from "../components/member/MemberAvatar.vue";
 	import MemberLabel from "../components/member/MemberLabel.vue";
 	import { DatabaseEvents, DatabaseEvent } from "../lib/db/events.ts";
@@ -57,7 +57,7 @@
 		await updateMembers();
 	});
 
-	const frontingEntries = reactive(new Map<Member, FrontingEntry | undefined>());
+	const frontingEntries = shallowRef<FrontingEntryComplete[]>([]);
 
 	const list = useTemplateRef("list");
 
@@ -67,13 +67,8 @@
 				void updateMembers();
 		},
 		(event: Event) => {
-			if((event as DatabaseEvent).data.table === "frontingEntries"){
-				frontingEntries.clear();
-				if(members.value){
-					for(const member of members.value)
-						void (async () => frontingEntries.set(member, await getCurrentFrontEntryForMember(member)))();
-				}
-			}
+			if((event as DatabaseEvent).data.table === "frontingEntries")
+				void updateFronters();
 		}
 	];
 
@@ -81,11 +76,7 @@
 		DatabaseEvents.addEventListener("updated", listeners[0]);
 		DatabaseEvents.addEventListener("updated", listeners[1]);
 		await updateMembers();
-		frontingEntries.clear();
-		if(members.value){
-			for (const member of members.value)
-				frontingEntries.set(member, await getCurrentFrontEntryForMember(member));
-		}
+		await updateFronters();
 	});
 
 	onUnmounted(() => {
@@ -106,6 +97,10 @@
 
 				return a.name.localeCompare(b.name);
 			});
+	}
+
+	async function updateFronters() {
+		frontingEntries.value = await getFronting();
 	}
 
 	async function addFrontingEntry(member: Member) {
@@ -153,7 +148,7 @@
 	function getStyle(member: Member){
 		const style: Record<string, string> = {};
 
-		const entry = frontingEntries.get(member);
+		const entry = frontingEntries.value.find(x => x.member.uuid === member.uuid);
 		if(entry){
 			if(entry.isMainFronter)
 				style["--background"] = "var(--ion-background-color-step-200)";
@@ -167,8 +162,8 @@
 		return style;
 	}
 
-	function numberOfFronters() {
-		return Array.from(frontingEntries.values()).filter(x => !!x).length;
+	function feGet(member: Member){
+		return frontingEntries.value.find(x => x.member.uuid === member.uuid);
 	}
 </script>
 
@@ -214,22 +209,22 @@
 						<MemberLabel :member show-tag-chips />
 						<IonIcon v-if="member.isPinned" slot="end" :icon="pinMD" />
 						<IonIcon v-if="member.isArchived" slot="end" :icon="archivedMD" />
-						<IonIcon v-if="frontingEntries.get(member)?.isMainFronter" slot="end" :icon="mainFronterMD" />
+						<IonIcon v-if="feGet(member)?.isMainFronter" slot="end" :icon="mainFronterMD" />
 					</IonItem>
 					<IonItemOptions>
-						<IonItemOption v-if="!frontingEntries.get(member) && numberOfFronters() !== 0" @click="addFrontingEntry(member)">
+						<IonItemOption v-if="!feGet(member) && frontingEntries.length !== 0" @click="addFrontingEntry(member)">
 							<IonIcon slot="icon-only" :icon="addToFrontMD" />
 						</IonItemOption>
-						<IonItemOption v-if="frontingEntries.get(member)" color="danger" @click="removeFrontingEntry(member)">
+						<IonItemOption v-if="feGet(member)" color="danger" @click="removeFrontingEntry(member)">
 							<IonIcon slot="icon-only" :icon="removeFromFrontMD" />
 						</IonItemOption>
-						<IonItemOption v-if="frontingEntries.get(member) && !frontingEntries.get(member)?.isMainFronter" color="secondary" @click="setMainFrontingEntry(member, true)">
+						<IonItemOption v-if="feGet(member) && !feGet(member)?.isMainFronter" color="secondary" @click="setMainFrontingEntry(member, true)">
 							<IonIcon slot="icon-only" :icon="setMainFronterMD" />
 						</IonItemOption>
-						<IonItemOption v-if="frontingEntries.get(member)?.isMainFronter" color="secondary" @click="setMainFrontingEntry(member, false)">
+						<IonItemOption v-if="feGet(member)?.isMainFronter" color="secondary" @click="setMainFrontingEntry(member, false)">
 							<IonIcon slot="icon-only" :icon="unsetMainFronterMD" />
 						</IonItemOption>
-						<IonItemOption v-if="!(numberOfFronters() === 1 && frontingEntries.get(member))" color="tertiary" @click="setSoleFrontingEntry(member)">
+						<IonItemOption v-if="!(frontingEntries.length === 1 && feGet(member))" color="tertiary" @click="setSoleFrontingEntry(member)">
 							<IonIcon slot="icon-only" :icon="setAsFrontMD" />
 						</IonItemOption>
 					</IonItemOptions>
