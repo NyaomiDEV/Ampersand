@@ -229,11 +229,3 @@
 		font-family: 'Lexend', var(--ion-font-family);
 	}
 </style>
-
-<style scoped>
-	.ui-variant {
-		gap: 1em;
-		display: flex;
-		flex-direction: column;
-	}
-</style>
