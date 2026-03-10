@@ -1,13 +1,13 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonItem, IonRange, IonLabel, IonToggle, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonSegment, IonSelect, IonSelectOption, IonSegmentButton, IonIcon } from "@ionic/vue";
+	import { IonContent, IonHeader, IonItem, IonRange, IonLabel, IonToggle, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonSelect, IonSelectOption, IonIcon } from "@ionic/vue";
 	import { accessibilityConfig } from "../../lib/config";
 	import Color from "../../components/Color.vue";
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import lowContrastMD from "@material-symbols/svg-600/outlined/brightness_1.svg";
 	import highContrastMD from "@material-symbols/svg-600/outlined/contrast.svg";
-	import amoledMD from "@material-symbols/svg-600/outlined/contrast_circle.svg";
-	import vibrantMD from "@material-symbols/svg-600/outlined/settings_brightness.svg";
+	import amoledMD from "@material-symbols/svg-600/outlined/night_sight_max.svg";
+	import vibrantMD from "@material-symbols/svg-600/outlined/brightness_7.svg";
 	import fontMD from "@material-symbols/svg-600/outlined/format_size.svg";
 	import smallTextMD from "@material-symbols/svg-600/outlined/text_decrease.svg";
 	import bigTextMD from "@material-symbols/svg-600/outlined/text_increase.svg";
@@ -34,28 +34,29 @@
 
 			<IonList>
 				<IonItem>
-					<div class="ui-variant">
-						<IonLabel>
-							{{ $t("accessibility:uiVariant.title") }}
-						</IonLabel>
-						<IonSegment v-model="accessibilityConfig.theme" value="ui-variant">
-							<IonSegmentButton value="auto" layout="icon-start">
-								<IonLabel>{{ $t("accessibility:uiVariant.auto") }}</IonLabel>
-								<IonIcon :icon="autoMD" />
-							</IonSegmentButton>
-							<IonSegmentButton value="light" layout="icon-start">
-								<IonLabel>{{ $t("accessibility:uiVariant.light") }}</IonLabel>
-								<IonIcon :icon="lightMD" />
-							</IonSegmentButton>
-							<IonSegmentButton value="dark" layout="icon-start">
-								<IonLabel>{{ $t("accessibility:uiVariant.dark") }}</IonLabel>
-								<IonIcon :icon="darkMD" />
-							</IonSegmentButton>
-						</IonSegment>
-					</div>
+					<IonIcon v-if="accessibilityConfig.theme === 'auto'" slot="start" :icon="autoMD" />
+					<IonIcon v-if="accessibilityConfig.theme === 'light'" slot="start" :icon="lightMD" />
+					<IonIcon v-if="accessibilityConfig.theme === 'dark'" slot="start" :icon="darkMD" />
+					<IonSelect
+						v-model="accessibilityConfig.theme"
+						label-placement="floating"
+						:label="$t('accessibility:uiVariant.title')"
+						:cancel-text="$t('other:alerts.cancel')"
+						interface="action-sheet"
+					>
+						<IonSelectOption value="auto">
+							{{ $t("accessibility:uiVariant.auto") }}
+						</IonSelectOption>
+						<IonSelectOption value="light">
+							{{ $t("accessibility:uiVariant.light") }}
+						</IonSelectOption>
+						<IonSelectOption value="dark">
+							{{ $t("accessibility:uiVariant.dark") }}
+						</IonSelectOption>
+					</IonSelect>
 				</IonItem>
 
-				<IonItem>
+				<IonItem v-if="accessibilityConfig.theme === 'dark' || accessibilityConfig.theme === 'auto'">
 					<IonIcon slot="start" :icon="amoledMD" />
 					<IonToggle v-model="accessibilityConfig.themeIsAmoled">
 						<IonLabel>
