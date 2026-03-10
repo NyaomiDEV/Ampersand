@@ -47,6 +47,9 @@
 		min-height: 56px;
 		color: rgb(var(--md3-on-surface));
 		border-radius: var(--md3-corner-extra-small-top);
+		border-bottom-color: rgb(var(--md3-on-surface-variant));
+		border-bottom-width: 1px;
+		border-bottom-style: solid;
 
 		&:hover {
 			border-bottom-color: rgb(var(--md3-on-surface));

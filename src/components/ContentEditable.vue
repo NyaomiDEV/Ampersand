@@ -26,8 +26,6 @@
 <template>
 	<div class="content-editable-wrapper">
 		<template v-if="!focused && model.length">
-
-
 			<div :class="{ preview: true, solid: props.fill === 'solid', outline: props.fill === 'outline' }" @click="clickHandler">
 				<IonLabel
 					v-if="props.label"
@@ -48,7 +46,7 @@
 			:fill="props.fill"
 			auto-grow
 			:label="props.label"
-			label-placement="floating"
+			label-placement="stacked"
 			@ion-blur="focused = false"
 			@ion-focus="focused = true"
 		/>
@@ -64,14 +62,32 @@
 	div.preview {
 		width: 100%;
 		min-height: 2.5em;
-	}
+		line-height: normal;
+		color: rgb(var(--md3-on-surface-variant));
+		display: flex;
+		flex-direction: column;
+		padding: 0 16px;
 
-	div.preview.solid {
-		border-radius: var(--md3-corner-extra-small-top);
-    	border-bottom: 1px solid rgb(var(--md3-on-surface));
-		background: rgb(var(--md3-surface-container-highest));
-		padding: 0 16px 14px 16px;
+		.markdown-content {
+			margin: 8px 0 0 0;
+			padding: 0 0 8px 0;
+		}
 
+		&.solid {
+			background: rgb(var(--md3-surface-container-highest));
+			border-radius: var(--md3-corner-extra-small-top);
+			border-bottom: 1px solid rgb(var(--md3-on-surface-variant));
+
+			&:hover {
+				background: rgb(var(--md3-surface-container-highest));
+				border-bottom-color: rgb(var(--md3-on-surface));
+			}
+
+			&:focus {
+				border-bottom-width: 3px;
+				border-bottom-color: rgb(var(--md3-primary));
+			}
+		}
 	}
 
 </style>

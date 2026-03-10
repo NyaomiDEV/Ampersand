@@ -4,6 +4,7 @@
 
 .md ion-input.input-fill-solid,
 .md ion-textarea.textarea-fill-solid {
+	--border-color: rgb(var(--md3-on-surface-variant));
 	--background: rgb(var(--md3-surface-container-highest));
 	border-radius: var(--md3-corner-extra-small-top);
 	--border-width: 1px;
