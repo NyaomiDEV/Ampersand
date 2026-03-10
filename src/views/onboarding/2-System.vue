@@ -6,7 +6,7 @@
 	import { resizeImage } from "../../lib/util/image";
 	import { getSystem, newSystem, updateSystem } from "../../lib/db/tables/system";
 
-	import accountCircle from "@material-symbols/svg-600/outlined/account_circle.svg";
+	import accountCircle from "@material-symbols/svg-600/outlined/supervised_user_circle.svg";
 	import pencilMD from "@material-symbols/svg-600/outlined/edit.svg";
 	import ArrowMD from "@material-symbols/svg-600/outlined/arrow_forward.svg";
 	import { System } from "../../lib/db/entities";
