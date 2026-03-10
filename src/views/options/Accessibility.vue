@@ -6,6 +6,8 @@
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import lowContrastMD from "@material-symbols/svg-600/outlined/brightness_1.svg";
 	import highContrastMD from "@material-symbols/svg-600/outlined/contrast.svg";
+	import amoledMD from "@material-symbols/svg-600/outlined/contrast_circle.svg";
+	import vibrantMD from "@material-symbols/svg-600/outlined/settings_brightness.svg";
 	import fontMD from "@material-symbols/svg-600/outlined/format_size.svg";
 	import smallTextMD from "@material-symbols/svg-600/outlined/text_decrease.svg";
 	import bigTextMD from "@material-symbols/svg-600/outlined/text_increase.svg";
@@ -51,6 +53,26 @@
 							</IonSegmentButton>
 						</IonSegment>
 					</div>
+				</IonItem>
+
+				<IonItem>
+					<IonIcon slot="start" :icon="amoledMD" />
+					<IonToggle v-model="accessibilityConfig.themeIsAmoled">
+						<IonLabel>
+							<h3>{{ $t("accessibility:themeIsAmoled.title") }}</h3>
+							<p>{{ $t("accessibility:themeIsAmoled.desc") }}</p>
+						</IonLabel>
+					</IonToggle>
+				</IonItem>
+
+				<IonItem>
+					<IonIcon slot="start" :icon="vibrantMD" />
+					<IonToggle v-model="accessibilityConfig.themeIsVibrant">
+						<IonLabel>
+							<h3>{{ $t("accessibility:themeIsVibrant.title") }}</h3>
+							<p>{{ $t("accessibility:themeIsVibrant.desc") }}</p>
+						</IonLabel>
+					</IonToggle>
 				</IonItem>
 
 				<IonItem>

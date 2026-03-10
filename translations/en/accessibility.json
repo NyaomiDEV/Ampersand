@@ -21,6 +21,14 @@
 		"title": "Material Design theming",
 		"desc": "Theme your experience according to Material guidelines (could cause eye strain)"
 	},
+	"themeIsAmoled": {
+		"title": "AMOLED mode",
+		"desc": "Use a total black background when in dark mode. Can reduce display wear."
+	},
+	"themeIsVibrant": {
+		"title": "Vibrant theme",
+		"desc": "Bring more color to the UI."
+	},
 	"useAccentColor": {
 		"title": "Accent color",
 		"desc": "Use a custom accent color"

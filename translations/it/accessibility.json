@@ -21,6 +21,14 @@
 		"title": "Tema Material Design",
 		"desc": "Usa un tema che segue le linee guida Material (potrebbe causare fatica agli occhi)"
 	},
+	"themeIsAmoled": {
+		"title": "Modalità AMOLED",
+		"desc": "Usa uno sfondo totalmente nero in modalità scura. Può ridurre l'usura di alcuni display."
+	},
+	"themeIsVibrant": {
+		"title": "Tema vivace",
+		"desc": "Porta più colore nell'interfaccia utente."
+	},
 	"useAccentColor": {
 		"title": "Colore primario",
 		"desc": "Usa un colore primario personalizzato"
