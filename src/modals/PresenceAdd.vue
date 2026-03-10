@@ -31,19 +31,19 @@
 	<IonModal class="presence-add-modal">
 		<IonList>
 			<IonItem>
-				<IonLabel class="more-padding">
-					<h3 class="centered-text">{{ $t("frontHistory:edit.presence.addTitle") }}</h3>
-					<IonRange
-						v-model="range"
-						:min="0"
-						:max="10"
-						:step="1"
-						:snaps="true"
-						:ticks="false"
-						:pin="true"
-						:pin-formatter="(v) => `${Math.round(v)}`"
-					/>
+				<IonLabel position="floating">
+					{{ $t("frontHistory:edit.presence.addTitle") }}
 				</IonLabel>
+				<IonRange
+					v-model="range"
+					:min="0"
+					:max="10"
+					:step="1"
+					:snaps="true"
+					:ticks="false"
+					:pin="true"
+					:pin-formatter="(v) => `${Math.round(v)}`"
+				/>
 			</IonItem>
 			<IonItem button :detail="true" @click="($refs.datePicker as any)?.$el.present()">
 				<IonLabel>
