@@ -10,7 +10,7 @@ const mermaidExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 				return false;
 
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			return h("div", { class: "mermaid-render", innerHTML: (token as any).renderResult.svg });
+			return h("div", { class: "mermaid-render", innerHTML: (token as any).renderResult });
 		}
 	},
 	async: true,
@@ -28,7 +28,7 @@ const mermaidExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 					const hashHex = hash.map((b) => b.toString(16).padStart(2, "0")).join("");
 					const result = await mermaid.render(`mermaid-render-${hashHex}`, token.text);
 					// eslint-disable-next-line @typescript-eslint/no-explicit-any
-					(token as any).renderResult = result;
+					(token as any).renderResult = result.svg;
 				}
 				break;
 		}
