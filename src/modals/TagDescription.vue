@@ -1,6 +1,5 @@
 <script setup lang="ts">
 	import {
-		IonList,
 		IonItem,
 		IonModal,
 		IonLabel,
@@ -25,13 +24,11 @@
 				<IonTitle>{{ props.tag.name }}</IonTitle>
 			</IonToolbar>
 		</IonHeader>
-		<IonList>
-			<IonItem>
-				<IonLabel>
-					<Markdown v-if="props.tag.description" :markdown="props.tag.description" />
-				</IonLabel>
-			</IonItem>
-		</IonList>
+		<IonItem>
+			<IonLabel>
+				<Markdown :markdown="props.tag.description || $t('members:edit.noDescription')" />
+			</IonLabel>
+		</IonItem>
 	</IonModal>
 </template>
 
@@ -59,7 +56,14 @@
 	}
 
 	.tag-description-modal::part(content) {
-		padding: 8px 0px 16px 0px;
 		box-sizing: border-box;
+	}
+	
+	ion-title {
+		text-align: center;
+	}
+
+	ion-item {
+		border-radius: 16px 16px 0 0;
 	}
 </style>
