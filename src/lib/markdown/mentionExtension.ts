@@ -2,10 +2,12 @@ import { h, type VNode } from "vue";
 import MemberChip from "../../components/member/MemberChip.vue";
 import JournalChip from "../../components/JournalChip.vue";
 import SystemChip from "../../components/SystemChip.vue";
+import TagChip from "../../components/tag/TagChip.vue";
 import { MarkedExtension } from "marked";
 import { getMember } from "../db/tables/members";
 import { getJournalPost } from "../db/tables/journalPosts";
 import { getSystem } from "../db/tables/system";
+import { getTag } from "../../lib/db/tables/tags";
 
 const mentionExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [{
@@ -13,7 +15,7 @@ const mentionExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 		level: "inline",
 		start(src: string) { return src.match(/@</)?.index; },
 		tokenizer(src: string) {
-			const rule = /^@<([mjs]):(.+?)>/;
+			const rule = /^@<([mjst]):(.+?)>/;
 			const match = rule.exec(src);
 			if (match) {
 				let mentionedType: string = "";
@@ -28,6 +30,10 @@ const mentionExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 
 					case "s":
 						mentionedType = "system";
+						break;
+
+					case "t":
+						mentionedType = "tag";
 						break;
 				}
 				const token = {
@@ -57,6 +63,11 @@ const mentionExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 					system: token.system,
 					clickable: true
 				});
+			} else if (token.tag) {
+				return h(TagChip, {
+					tag: token.tag,
+					clickable: true
+				});
 			} else 
 				return h("span", token.raw);
 		}
@@ -76,6 +87,10 @@ const mentionExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 
 					case "system":
 						token.system = await getSystem(token.uuid);
+						break;
+					
+					case "tag":
+						token.tag = await getTag(token.uuid);
 						break;
 				}
 				break;

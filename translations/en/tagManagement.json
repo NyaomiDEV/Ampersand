@@ -34,6 +34,8 @@
 		"delete": {
 			"title": "Delete tag",
 			"confirm": "Are you sure you want to delete this tag?"
-		}
+		},
+		"tagID": "Tag ID: {{tagID}}",
+		"tagIDCopiedToClipboard": "Tag ID in mention format copied to clipboard!"
 	}
 }

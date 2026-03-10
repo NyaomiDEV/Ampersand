@@ -39,7 +39,7 @@
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import { addModal, removeModal } from "../../lib/modals";
 	import MemberSelect from "../../modals/MemberSelect.vue";
-	import { promptOkCancel } from "../../lib/util/misc";
+	import { promptOkCancel, toast } from "../../lib/util/misc";
 	import ContentEditable from "../../components/ContentEditable.vue";
 
 	const loading = ref(false);
@@ -162,6 +162,17 @@
 		} else 
 			if(self?.vnode.el) unsetMaterialColors(self?.vnode.el as HTMLElement);
 		
+	}
+
+	async function copyIdToClipboard(){
+		if(tag.value.uuid){
+			try{
+				await window.navigator.clipboard.writeText(`@<t:${tag.value.uuid}>`);
+				await toast(i18next.t("tagManagement:edit.tagIDCopiedToClipboard"));
+			}catch(_e){
+				return;
+			}
+		}
 	}
 
 	watch(route, updateRoute);
@@ -291,6 +302,17 @@
 					<IonLabel color="danger">
 						<h3>{{ $t("tagManagement:edit.delete.title") }}</h3>
 						<p>{{ $t("other:genericDeleteDesc") }}</p>
+					</IonLabel>
+				</IonItem>
+
+				<IonItem
+					v-if="tag.uuid"
+					:detail="false"
+					button
+					@click="copyIdToClipboard"
+				>
+					<IonLabel>
+						<p>{{ $t("tagManagement:edit.tagID", { tagID: tag.uuid }) }}</p>
 					</IonLabel>
 				</IonItem>
 			</IonList>
