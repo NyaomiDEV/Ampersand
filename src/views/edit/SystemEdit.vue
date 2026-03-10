@@ -15,6 +15,7 @@
 	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
 	import PeopleMD from "@material-symbols/svg-600/outlined/group.svg";
+
 	import { appConfig } from "../../lib/config";
 	import { useRoute } from "vue-router";
 	import { PartialBy } from "../../lib/types";
@@ -55,8 +56,6 @@
 
 		const uuid = system.value.uuid;
 		const _system = toRaw(system.value);
-
-		if(parentSystem.value) _system.parent = parentSystem.value.uuid;
 
 		if(!uuid){
 			await newSystem({
@@ -159,6 +158,11 @@
 
 		loading.value = false;
 	}
+
+	watch(parentSystem, () => {
+		if(parentSystem.value) system.value.parent = parentSystem.value.uuid;
+		else system.value.parent = undefined;
+	});
 
 	watch(route, updateRoute);
 	onBeforeMount(updateRoute);
@@ -302,6 +306,20 @@
 								{{ $t("systems:edit.parent") }}
 							</h2>
 						</IonLabel>
+						<IonButton
+							v-if="parentSystem"
+							slot="end"
+							shape="round"
+							fill="outline"
+							size="small"
+							@click="(e) => { e.stopPropagation(); parentSystem = undefined; }"
+						>
+							<IonIcon
+								slot="icon-only"
+								:icon="trashMD"
+								color="danger"
+							/>
+						</IonButton>
 					</IonItem>
 
 					<IonItem
