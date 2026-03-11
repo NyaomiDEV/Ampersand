@@ -114,7 +114,9 @@
 						</IonLabel>
 					</IonToggle>
 				</IonItem>
+			</IonList>
 
+			<IonList class="surface">
 				<IonItem>
 					<IonTextarea
 						v-model="post.contentWarning"
@@ -124,7 +126,9 @@
 						label-placement="floating"
 					/>
 				</IonItem>
+			</IonList>
 
+			<IonList>
 				<IonItem
 					v-if="post.uuid"
 					button
