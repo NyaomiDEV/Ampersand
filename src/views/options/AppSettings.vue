@@ -22,7 +22,9 @@
 
 	const defaultSystem = shallowRef<System>({
 		uuid: appConfig.defaultSystem,
-		name: ""
+		name: "",
+		isArchived: false,
+		isPinned: false
 	});
 	const systemSelectModal = useTemplateRef("systemSelectModal");
 	const twelveHourClock = ref(appConfig.locale.twelveHourClock.toString());

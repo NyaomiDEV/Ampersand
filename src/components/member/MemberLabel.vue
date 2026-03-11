@@ -16,7 +16,7 @@
 		showTagChips?: boolean
 	}>();
 
-	const system = shallowRef<System>({ name: "", uuid: props.member.system });
+	const system = shallowRef<System>({ name: "", uuid: props.member.system, isPinned: false, isArchived: false });
 	const tags = shallowRef<Tag[]>();
 
 	async function updateTags(){

@@ -16,6 +16,16 @@ export function filterSystem(search: string, system: System) {
 			return false;
 	}
 
+	if (parsed.isPinned !== undefined) {
+		if (system.isPinned !== parsed.isPinned)
+			return false;
+	}
+
+	if (parsed.isArchived !== undefined) {
+		if (system.isArchived !== parsed.isArchived)
+			return false;
+	}
+
 	return true;
 }
 

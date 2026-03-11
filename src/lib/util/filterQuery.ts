@@ -3,7 +3,9 @@ import { UUID } from "../db/entities";
 
 export type SystemFilterQuery = {
 	query: string,
-	isDefault?: boolean
+	isDefault?: boolean,
+	isPinned?: boolean,
+	isArchived?: boolean,
 };
 
 export type MemberFilterQuery = {
@@ -102,6 +104,36 @@ export function parseSystemFilterQuery(search: string): SystemFilterQuery {
 					}
 				} else
 					result.isDefault = true;
+				break;
+			case "pinned":
+				if (value.length) {
+					switch (value.toLowerCase()) {
+						case "yes":
+						case "true":
+							result.isPinned = true;
+							break;
+						case "no":
+						case "false":
+							result.isPinned = false;
+							break;
+					}
+				} else
+					result.isPinned = true;
+				break;
+			case "archived":
+				if(value.length){
+					switch (value.toLowerCase()) {
+						case "yes":
+						case "true":
+							result.isArchived = true;
+							break;
+						case "no":
+						case "false":
+							result.isArchived = false;
+							break;
+					}
+				} else
+					result.isArchived = true;
 				break;
 		}
 	}

@@ -147,7 +147,9 @@ export interface System extends UUIDable {
 	name: string,
 	description?: string,
 	image?: File,
-	parent?: UUID
+	parent?: UUID,
+	isPinned: boolean,
+	isArchived: boolean
 }
 
 export interface Tag extends UUIDable {

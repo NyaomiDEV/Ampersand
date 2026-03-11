@@ -19,7 +19,8 @@ const defaultAppConfig: AppConfig = {
 	view: "dashboard",
 	defaultFilterQueries: {
 		members: "@archived:no",
-		messageBoard: "@archived:no"
+		messageBoard: "@archived:no",
+		systems: "@archived:no"
 	}
 };
 

@@ -62,7 +62,9 @@ async function system(spExport: any){
 	const systemInfo: System = {
 		name: spSystem.username,
 		description: spSystem.desc,
-		uuid: window.crypto.randomUUID()
+		uuid: window.crypto.randomUUID(),
+		isPinned: false,
+		isArchived: false
 	};
 
 	if (spSystem.avatarUrl?.length && securityConfig.allowRemoteContent) {

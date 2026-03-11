@@ -20,7 +20,9 @@ async function system(pkExport: any){
 	const systemInfo: System = {
 		name: pkExport.name,
 		description: pkExport.description,
-		uuid: window.crypto.randomUUID()
+		uuid: window.crypto.randomUUID(),
+		isPinned: false,
+		isArchived: false
 	};
 	if (pkExport.avatar_url && securityConfig.allowRemoteContent) {
 		try {

@@ -30,7 +30,6 @@ export async function members(table: ShittyTable<Member>, version: number){
 	return 2;
 }
 
-// eslint-disable-next-line @typescript-eslint/require-await
 export async function systems(table: ShittyTable<System>, version: number){
 	// enforce only one system for now
 	function zeroToOne(){
@@ -44,11 +43,28 @@ export async function systems(table: ShittyTable<System>, version: number){
 		return true;
 	}
 
+	async function oneToTwo() {
+		for await (const system of table.iterate()) {
+			if (!system.isPinned || !system.isArchived) {
+				if(!await table.update(system.uuid, {
+					isArchived: system.isArchived || false,
+					isPinned: system.isPinned || false
+				})) return false;
+			}
+		}
+
+		return true;
+	}
+
 	switch(version){
+		// @ts-expect-error fallthrough
 		case 0:
 			if(!zeroToOne()) return 0;
+		// eslint-disable-next-line no-fallthrough
+		case 1:
+			if(!await oneToTwo()) return 1;
 			break;
 	}
 
-	return 1;
+	return 2;
 }

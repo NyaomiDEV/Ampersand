@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonAvatar, IonButton, IonIcon, IonInput, IonFab, IonFabButton, IonItem, IonLabel, useIonRouter, IonTextarea } from "@ionic/vue";
+	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonAvatar, IonButton, IonIcon, IonInput, IonFab, IonFabButton, IonItem, IonLabel, useIonRouter, IonTextarea, IonToggle } from "@ionic/vue";
 	import { onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
 	import { getObjectURL } from "../../lib/util/blob";
 	import { getFiles, promptOkCancel, toast } from "../../lib/util/misc";
@@ -31,7 +31,9 @@
 	const loading = ref(false);
 
 	const emptySystem: PartialBy<System, "uuid"> = {
-		name: ""
+		name: "",
+		isPinned: false,
+		isArchived: false
 	};
 	const system = ref({ ...emptySystem });
 
@@ -321,7 +323,20 @@
 							/>
 						</IonButton>
 					</IonItem>
-
+					<IonItem button :detail="false">
+						<IonToggle v-model="system.isPinned">
+							<IonLabel>
+								{{ $t("systems:edit.isPinned") }}
+							</IonLabel>
+						</IonToggle>
+					</IonItem>
+					<IonItem button :detail="false">
+						<IonToggle v-model="system.isArchived">
+							<IonLabel>
+								{{ $t("systems:edit.archived") }}
+							</IonLabel>
+						</IonToggle>
+					</IonItem>
 					<IonItem
 						v-if="system.uuid && appConfig.defaultSystem !== system.uuid"
 						button

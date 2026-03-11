@@ -68,6 +68,9 @@
 				if (a.uuid === appConfig.defaultSystem) return -1;
 				if (b.uuid === appConfig.defaultSystem) return 1;
 
+				if (a.isPinned && !b.isPinned) return -1;
+				if (!a.isPinned && b.isPinned) return 1;
+
 				return a.name.localeCompare(b.name);
 			});
 	}
