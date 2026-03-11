@@ -57,3 +57,14 @@
 		--border-radius: var(--md3-corner-full);
 	}
 }
+
+.md ion-fab {
+
+	&.fab-vertical-bottom {
+		bottom: 16px;
+	}
+
+	&.fab-horizontal-end {
+		right: calc(16px + var(--ion-safe-area-right, 0px));
+	} 
+}
