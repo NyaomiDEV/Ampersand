@@ -24,7 +24,7 @@ const textBorderExtension: MarkedExtension<(VNode | string)[], VNode | string> =
 			},
 			renderer(token) {
 				if(token.border.length){
-					const borders = (token.border as string).split(",").map(x => x.trim());
+					const borders = (token.border as string).split(":").map(x => x.trim());
 					const cssStyle: Record<string, string> = {};
 					switch(borders.length){
 						case 1:
