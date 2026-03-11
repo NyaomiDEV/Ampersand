@@ -13,25 +13,36 @@ const context = import.meta.webpackContext("../../translations/", {
 	include: /translations[\\/](de|en|es|fr|it|nl|pl|ro|ru|tok|tr)/
 });
 
-const translations: Map<string, unknown> = new Map();
+const translations: Map<{ lang: string, ns: string }, unknown> = new Map();
 
-for(const path of context.keys())
-	translations.set(path, context(path));
+for(const path of context.keys()){
+	const [, lang, ns] = /\/(.*)\/(.*)\.json$/.exec(path)!;
+	translations.set({ lang, ns }, context(path));
+}
 
 const enTranslationCount = translations
 	.entries()
-	.filter(x => x[0].startsWith("./en/"))
+	.filter(x => x[0].lang === "en")
 	.map(x => x[1] = Object.values(flattenObject(x[1] as object)).length)
 	.reduce((p, c) => p + c, 0);
 
 export function computePercentage(lang: string) {
 	const count = translations
 		.entries()
-		.filter(x => x[0].startsWith(`./${lang}/`))
+		.filter(x => x[0].lang === lang)
 		.map(x => x[1] = Object.values(flattenObject(x[1] as object)).length)
 		.reduce((p, c) => p + c, 0);
 
 	return Math.floor(Math.min(100, 100 * (count / enTranslationCount)));
+}
+
+export function getSupportedLanguageFromNavigator(){
+	for(const potentialLanguage of navigator.languages){
+		const found = translations.keys().find(x => x.lang === potentialLanguage || x.lang === potentialLanguage.split("-")[0].toLowerCase());
+		if(found)
+			return found.lang;
+	}
+	return undefined;
 }
 
 i18next.on("languageChanged", (lng) => {
@@ -39,16 +50,19 @@ i18next.on("languageChanged", (lng) => {
 });
 
 await i18next.init({
-	lng: appConfig.locale.language || navigator.language,
+	lng: appConfig.locale.language || getSupportedLanguageFromNavigator() || "en",
 	fallbackLng: "en",
 	interpolation: {
 		escapeValue: false
 	}
 });
 
-for(const [path, translation] of translations.entries()){
-	const [, lang, ns] = /\/(.*)\/(.*)\.json$/.exec(path)!;
+// Import our resource bundles
+for(const [{ lang, ns }, translation] of translations.entries())
+	i18next.addResourceBundle(lang, ns, translation);
 
+// At the end, import DayJS languages
+for(const lang of new Set(translations.keys().map(x => x.lang))){
 	try {
 		await import(`dayjs/locale/${lang}`);
 	}catch(_e){
@@ -59,7 +73,6 @@ for(const [path, translation] of translations.entries()){
 			console.error("... and we don't have a replacement for that", lang);
 		}
 	}
-	i18next.addResourceBundle(lang, ns, translation);
 }
 
 dayjs.extend(LocalizedFormat);
