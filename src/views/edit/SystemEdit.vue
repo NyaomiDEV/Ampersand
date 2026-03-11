@@ -215,6 +215,7 @@
 			<template v-if="!isEditing">
 				<div class="system-info">
 					<h3>{{ system.name }}</h3>
+					<p v-if="system.isArchived">{{ $t("systems:edit.archived") }}</p>
 				</div>
 
 				<IonList>
