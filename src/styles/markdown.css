@@ -226,8 +226,3 @@
 .md div.markdown-content ion-icon {
     height: 1em;
 }
-
-/* Mermaid */
-.md div.markdown-content .mermaid-render {
-    touch-action: manipulation;
-}
