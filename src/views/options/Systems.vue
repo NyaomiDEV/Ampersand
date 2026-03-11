@@ -22,6 +22,8 @@
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 	import defaultMD from "@material-symbols/svg-600/outlined/bookmark_star.svg";
+	import pinMD from "@material-symbols/svg-600/outlined/keep.svg";
+	import archivedMD from "@material-symbols/svg-600/outlined/archive.svg";
 
 	import type { System } from "../../lib/db/entities";
 	import { DatabaseEvents, DatabaseEvent } from "../../lib/db/events.ts";
@@ -105,7 +107,7 @@
 					v-for="system in systems"
 					:key="system.uuid"
 					button
-					:class="{ 'default-system': system.uuid === appConfig.defaultSystem }"
+					:class="{ 'default-system': system.uuid === appConfig.defaultSystem, archived: system.isArchived }"
 					:router-link="`/options/systems/edit?uuid=${system.uuid}`"
 				>
 					<IonAvatar slot="start">
@@ -116,6 +118,8 @@
 						{{ system.name }}
 					</IonLabel>
 					<IonIcon v-if="appConfig.defaultSystem === system.uuid" slot="end" :icon="defaultMD" />
+					<IonIcon v-if="system.isPinned" slot="end" :icon="pinMD" />
+					<IonIcon v-if="system.isArchived" slot="end" :icon="archivedMD" />
 				</IonItem>
 			</IonList>
 
