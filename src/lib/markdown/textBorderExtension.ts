@@ -24,8 +24,36 @@ const textBorderExtension: MarkedExtension<(VNode | string)[], VNode | string> =
 			},
 			renderer(token) {
 				if(token.border.length){
-					const cssStyle = `--markdown-text-border: ${token.border};`;
-
+					const borders = (token.border as string).split(",").map(x => x.trim());
+					const cssStyle: Record<string, string> = {};
+					switch(borders.length){
+						case 1:
+						default:
+							cssStyle["--markdown-text-border-left"] = borders[0];
+							cssStyle["--markdown-text-border-top"] = borders[0];
+							cssStyle["--markdown-text-border-right"] = borders[0];
+							cssStyle["--markdown-text-border-bottom"] = borders[0];
+							break;
+						case 2:
+							cssStyle["--markdown-text-border-left"] = borders[1];
+							cssStyle["--markdown-text-border-top"] = borders[0];
+							cssStyle["--markdown-text-border-right"] = borders[1];
+							cssStyle["--markdown-text-border-bottom"] = borders[0];
+							break;
+						case 3:
+							cssStyle["--markdown-text-border-left"] = borders[1];
+							cssStyle["--markdown-text-border-top"] = borders[0];
+							cssStyle["--markdown-text-border-right"] = borders[1];
+							cssStyle["--markdown-text-border-bottom"] = borders[2];
+							break;
+						case 4:
+							cssStyle["--markdown-text-border-left"] = borders[3];
+							cssStyle["--markdown-text-border-top"] = borders[0];
+							cssStyle["--markdown-text-border-right"] = borders[1];
+							cssStyle["--markdown-text-border-bottom"] = borders[2];
+							break;
+					}
+					
 					return h("span", {
 						class: "text-border",
 						style: cssStyle

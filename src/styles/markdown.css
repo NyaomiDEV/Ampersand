@@ -141,19 +141,6 @@
     vertical-align: baseline;
 }
 
-.md div.markdown-content span.text-color-legacy {
-    background: linear-gradient(to right, var(--markdown-text-color-start), var(--markdown-text-color-end));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-}
-
-.md div.markdown-content span.text-color-bg-legacy {
-    border-radius: 4px;
-    padding: 2px 4px;
-    background: linear-gradient(to right, var(--markdown-bg-color-start), var(--markdown-bg-color-end));
-}
-
 .md div.markdown-content span.text-color-fg-one {
     color: var(--markdown-text-colors);
 }
@@ -176,10 +163,17 @@
 }
 
 .md div.markdown-content span.text-border {
-    border: var(--markdown-text-border);
+    border-left: var(--markdown-text-border-left);
+    border-right: var(--markdown-text-border-right);
+    border-top: var(--markdown-text-border-top);
+    border-bottom: var(--markdown-text-border-bottom);
     border-radius: 4px;
     padding: 2px 4px;
     display: inline-block;
+}
+
+.md div.markdown-content span.text-decoration {
+    text-decoration: var(--markdown-text-decoration);
 }
 
 .md div.markdown-content span.center {
