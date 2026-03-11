@@ -4,7 +4,7 @@
 
 <template>
 	<div class="spinner-fullscreen">
-		<Spinner size="72px" />
+		<Spinner size="96px" />
 	</div>
 </template>
 
