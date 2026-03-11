@@ -12,12 +12,11 @@ const textColorBgExtension: MarkedExtension<(VNode | string)[], VNode | string> 
 				const match = rule.exec(src);
 				if (match) {
 					let degrees = "90deg";
-					let colors: string[];
-					if (match[1].includes(" ")) {
-						degrees = match[1].split(" ")[0];
-						colors = match[1].split(" ")[1].split(":");
-					} else
-						colors = match[1].split(":");
+					const colors = match[1].split(":");
+
+					if (colors[0].match(/(?: ?(?:top|left|right|bottom)){1,2}|(?:-?\d*.?\d+(?:deg|grad|rad|turn))/) !== null) 
+						degrees = colors.shift()!;
+						
 					const token = {
 						type: "textColorBg",
 						raw: match[0],
