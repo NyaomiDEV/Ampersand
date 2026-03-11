@@ -148,7 +148,7 @@
 					<p v-if="fronting.customStatus">
 						{{ fronting.customStatus }}
 					</p>
-					<p v-if="fronting.presence">
+					<p v-if="fronting.presence?.size">
 						<PresenceRating :rating="getMostRecentPresence(fronting)[1] ?? 0" />
 					</p>
 				</IonLabel>
