@@ -11,10 +11,18 @@ const textColorExtension: MarkedExtension<(VNode | string)[], VNode | string> = 
 				const rule = /^\[fg=(.+?)\](.+?)\[\/fg\]/;
 				const match = rule.exec(src);
 				if (match) {
+					let degrees = "90deg";
+					let colors: string[];
+					if (match[1].includes(" ")) {
+						degrees = match[1].split(" ")[0];
+						colors = match[1].split(" ")[1].split(":");
+					} else
+						colors = match[1].split(":");		
 					const token = {
 						type: "textColorFg",
 						raw: match[0],
-						colors: match[1].split(":"),
+						degrees,
+						colors,
 						text: match[2],
 						tokens: this.lexer.inlineTokens(match[2])
 					};
@@ -26,7 +34,10 @@ const textColorExtension: MarkedExtension<(VNode | string)[], VNode | string> = 
 				const colors = (token.colors as string[]);
 
 				if(colors.length){
-					const cssStyle = `--markdown-text-colors: ${colors.join(", ")};`;
+					const cssStyle: Record<string, string> = {
+						"--markdown-text-fg-colors": colors.join(", "),
+						"--markdown-text-fg-degrees": ["top", "bottom", "left", "right"].includes(token.degrees) ? `to ${token.degrees}` : token.degrees
+					};
 
 					return h("span", {
 						class: `text-color-fg${colors.length === 1 ? "-one" : ""}`,

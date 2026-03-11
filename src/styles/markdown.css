@@ -142,11 +142,11 @@
 }
 
 .md div.markdown-content span.text-color-fg-one {
-    color: var(--markdown-text-colors);
+    color: var(--markdown-text-fg-colors);
 }
 
 .md div.markdown-content span.text-color-fg {
-    background: linear-gradient(to right, var(--markdown-text-colors));
+    background: linear-gradient(var(--markdown-text-fg-degrees), var(--markdown-text-fg-colors));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -155,7 +155,7 @@
 .md div.markdown-content span.text-color-bg {
     border-radius: 4px;
     padding: 2px 4px;
-    background: linear-gradient(to right, var(--markdown-text-bg-colors));
+    background: linear-gradient(var(--markdown-text-bg-degrees), var(--markdown-text-bg-colors));
 }
 
 .md div.markdown-content span.text-shadow {
