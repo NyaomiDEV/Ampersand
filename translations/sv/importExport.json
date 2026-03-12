@@ -1,6 +1,15 @@
 {
 	"header": "Importera / Exportera",
 	"dbExport": {
-		"title": "Exportera din data"
+		"title": "Exportera din data",
+		"desc": "Säkerhetskopiera din nuvarande data till en fil som du kan spara på en annan plats"
+	},
+	"dbImport": "Importera din data från en säkerhetskopia",
+	"status": {
+		"imported": "Säkerhetskopian har importerats. Vänligen starta om appen.",
+		"exportedApp": "Säkerhetskopian har exporterats till den valda platsen.",
+		"exportedAppIos": "Säkerhetskopian har exporterats till mappen Ampersand i din filhanterare.",
+		"errorExport": "Något gick fel när säkerhetskopian exporterades.",
+		"error": "Något gick fel när säkerhetskopian importerades."
 	}
 }
