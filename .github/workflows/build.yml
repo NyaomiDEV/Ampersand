@@ -22,12 +22,25 @@ concurrency:
 jobs:
   prepare-build:
     runs-on: ubuntu-latest
+    outputs:
+      upload_url: ${{ steps.release.outputs.upload_url }}
     steps:
     - name: Checkout
       if: ${{ github.ref_name == 'main' }}
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
+    - name: Set up Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
+        cache: 'yarn'
+    - name: Install frontend dependencies
+      run: yarn install --frozen-lockfile
+    - name: Get Ampersand version from upgrade-vcs script
+      run: yarn run upgrade-vcs
+      env:
+        NO_PATCH: 1
     - name: Remove old prerelease draft and create new dev tag
       if: ${{ github.ref_name == 'main' }}
       run: |
@@ -36,6 +49,15 @@ jobs:
         gh release delete dev -y || true
       env:
         GH_TOKEN: ${{ github.token }}
+    - name: Publish release
+      id: release
+      uses: softprops/action-gh-release@v2.5.0
+      with:
+        name: ${{ github.ref_name != 'main' && format('Release ({0})', env.AMPERSAND_VERSION) || format('CI build ({0})', env.AMPERSAND_VERSION) }}
+        tag_name: ${{ github.ref_name != 'main' && github.ref_name || 'dev' }}
+        prerelease: ${{ github.ref_name == 'main' && true || false }}
+        draft: true
+        generate_release_notes: true
   build-android:
     uses: ./.github/workflows/build-android.yml
     needs: prepare-build
@@ -62,23 +84,9 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Set up Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'yarn'
-      - name: Install frontend dependencies
-        run: yarn install --frozen-lockfile
-      - name: Get Ampersand version from upgrade-vcs script
-        run: yarn run upgrade-vcs
-        env:
-          NO_PATCH: 1
       - name: Publish release
-        uses: softprops/action-gh-release@v2.4.1
+        uses: softprops/action-gh-release@v2.5.0
         with:
-          name: ${{ github.ref_name != 'main' && format('Release ({0})', env.AMPERSAND_VERSION) || format('CI build ({0})', env.AMPERSAND_VERSION) }}
           tag_name: ${{ github.ref_name != 'main' && github.ref_name || 'dev' }}
           prerelease: ${{ github.ref_name == 'main' && true || false }}
           draft: false
-          generate_release_notes: true
-          append_body: false

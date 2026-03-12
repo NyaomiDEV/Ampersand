@@ -41,7 +41,7 @@ jobs:
           rust-src-dir: "src-tauri"
           target: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
       - name: Install dependencies (Ubuntu only)
-        if: matrix.platform == 'ubuntu-latest' # This must match the platform value defined above.
+        if: matrix.platform == 'ubuntu-latest'
         run: |
           sudo apt-get update
           sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
@@ -51,24 +51,56 @@ jobs:
         run: yarn run upgrade-vcs
       - name: Build Ampersand
         run: yarn tauri build --ci ${{ matrix.args }}
-      - name: Publish artifact
+      - name: Publish artifacts (Linux)
+        if: matrix.platform == 'ubuntu-latest'
         uses: actions/upload-artifact@v4
         with:
-          name: PC build for ${{ matrix.platform }}
+          name: PC build for Linux
           path: |
             ./src-tauri/target/release/bundle/deb/Ampersand_*.deb
             ./src-tauri/target/release/bundle/rpm/Ampersand-*.rpm
             ./src-tauri/target/release/bundle/appimage/Ampersand_*.AppImage
-            ./src-tauri/target/universal-apple-darwin/release/bundle/dmg/Ampersand_*.dmg
-            ./src-tauri/target/release/bundle/msi/Ampersand_*.msi
-      - name: Publish to release
-        uses: softprops/action-gh-release@v2.4.1
+      - name: Publish artifacts (macOS)
+        if: matrix.platform == 'macos-latest'
+        uses: actions/upload-artifact@v4
         with:
-          tag_name: ${{ github.ref_name != 'main' && github.ref_name || 'dev' }}
-          draft: true
-          files: |
-            ./src-tauri/target/release/bundle/deb/Ampersand_*.deb
-            ./src-tauri/target/release/bundle/rpm/Ampersand-*.rpm
-            ./src-tauri/target/release/bundle/appimage/Ampersand_*.AppImage
+          name: PC build for macOS
+          path: |
             ./src-tauri/target/universal-apple-darwin/release/bundle/dmg/Ampersand_*.dmg
+      - name: Publish artifacts (Windows)
+        if: matrix.platform == 'windows-latest'
+        uses: actions/upload-artifact@v4
+        with:
+          name: PC build for Windows
+          path: |
             ./src-tauri/target/release/bundle/msi/Ampersand_*.msi
+      - name: Publish to release (Linux DEB)
+        if: matrix.platform == 'ubuntu-latest'
+        uses: shogo82148/actions-upload-release-asset@v1
+        with:
+          upload_url: ${{ needs.prepare-build.outputs.upload_url }}
+          asset_path: ./src-tauri/target/release/bundle/deb/Ampersand_*.deb
+      - name: Publish to release (Linux RPM)
+        if: matrix.platform == 'ubuntu-latest'
+        uses: shogo82148/actions-upload-release-asset@v1
+        with:
+          upload_url: ${{ needs.prepare-build.outputs.upload_url }}
+          asset_path: ./src-tauri/target/release/bundle/rpm/Ampersand-*.rpm
+      - name: Publish to release (Linux AppImage)
+        if: matrix.platform == 'ubuntu-latest'
+        uses: shogo82148/actions-upload-release-asset@v1
+        with:
+          upload_url: ${{ needs.prepare-build.outputs.upload_url }}
+          asset_path: ./src-tauri/target/release/bundle/appimage/Ampersand_*.AppImage
+      - name: Publish to release (macOS DMG)
+        if: matrix.platform == 'macos-latest'
+        uses: shogo82148/actions-upload-release-asset@v1
+        with:
+          upload_url: ${{ needs.prepare-build.outputs.upload_url }}
+          asset_path: ./src-tauri/target/universal-apple-darwin/release/bundle/dmg/Ampersand_*.dmg
+      - name: Publish to release (Windows MSI)
+        if: matrix.platform == 'windows-latest'
+        uses: shogo82148/actions-upload-release-asset@v1
+        with:
+          upload_url: ${{ needs.prepare-build.outputs.upload_url }}
+          asset_path: ./src-tauri/target/release/bundle/msi/Ampersand_*.msi

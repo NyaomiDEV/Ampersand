@@ -95,17 +95,13 @@ jobs:
           path: |
             ./src-tauri/gen/android/app/build/outputs/bundle/universalRelease/ampersand-ci-universal-release.aab
             ./src-tauri/gen/android/app/build/outputs/bundle/universalRelease/ampersand-universal-release.aab
-      - name: Publish to release
-        uses: softprops/action-gh-release@v2.4.1
+      - name: Publish to release (APK)
+        uses: shogo82148/actions-upload-release-asset@v1
         with:
-          tag_name: ${{ github.ref_name != 'main' && github.ref_name || 'dev' }}
-          draft: true
-          files: |
-            ./src-tauri/gen/android/app/build/outputs/apk/universal/release/ampersand-ci-universal-release.apk
-            ./src-tauri/gen/android/app/build/outputs/apk/universal/release/ampersand-universal-release.apk
-            ./src-tauri/gen/android/app/build/outputs/apk/arm/release/ampersand-ci-arm-release.apk
-            ./src-tauri/gen/android/app/build/outputs/apk/arm/release/ampersand-arm-release.apk
-            ./src-tauri/gen/android/app/build/outputs/apk/arm64/release/ampersand-ci-arm64-release.apk
-            ./src-tauri/gen/android/app/build/outputs/apk/arm64/release/ampersand-arm64-release.apk
-            ./src-tauri/gen/android/app/build/outputs/bundle/universalRelease/ampersand-ci-universal-release.aab
-            ./src-tauri/gen/android/app/build/outputs/bundle/universalRelease/ampersand-universal-release.aab
+          upload_url: ${{ needs.prepare-build.outputs.upload_url }}
+          asset_path: ./src-tauri/gen/android/app/build/outputs/apk/*/release/ampersand-*-release.apk
+      - name: Publish to release (AAB)
+        uses: shogo82148/actions-upload-release-asset@v1
+        with:
+          upload_url: ${{ needs.prepare-build.outputs.upload_url }}
+          asset_path: ./src-tauri/gen/android/app/build/outputs/bundle/universalRelease/ampersand-*-release.aab
