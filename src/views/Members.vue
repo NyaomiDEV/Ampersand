@@ -1,7 +1,6 @@
 <script setup lang="ts">
 	import {
 		IonContent,
-		IonList,
 		IonPage,
 		IonSearchbar,
 		IonTitle,
@@ -15,7 +14,7 @@
 		IonItemOption,
 		IonBackButton,
 	} from "@ionic/vue";
-	import { onBeforeMount, onUnmounted, ref, shallowRef, useTemplateRef, watch } from "vue";
+	import { onBeforeMount, onUnmounted, ref, shallowRef, useTemplateRef, watch } from "vue"; 
 	import { accessibilityConfig, appConfig } from "../lib/config/index.ts";
 	import CollapsibleHeaderbar from "../components/CollapsibleHeaderbar.vue";
 
@@ -41,6 +40,7 @@
 	import { getObjectURL } from "../lib/util/blob.ts";
 	import { toast } from "../lib/util/misc.ts";
 	import { useTranslation } from "i18next-vue";
+	import VirtualList from "../components/VirtualList.vue";
 
 	const route = useRoute();
 	const i18next = useTranslation();
@@ -52,14 +52,11 @@
 	});
 
 	const members = shallowRef<Member[]>();
-
 	watch(search, async () => {
 		await updateMembers();
 	});
-
 	const frontingEntries = shallowRef<FrontingEntryComplete[]>([]);
-
-	const list = useTemplateRef("list");
+	const list = useTemplateRef<HTMLElement>("list");
 
 	const listeners = [
 		(event: Event) => {
@@ -69,14 +66,15 @@
 		(event: Event) => {
 			if((event as DatabaseEvent).data.table === "frontingEntries")
 				void updateFronters();
+			
 		}
 	];
-
 	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listeners[0]);
 		DatabaseEvents.addEventListener("updated", listeners[1]);
 		await updateMembers();
 		await updateFronters();
+
 	});
 
 	onUnmounted(() => {
@@ -113,8 +111,7 @@
 		void sendFrontingChangedEvent();
 		await toast(i18next.t("members:toasts.addToFront"));
 
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
-		list.value?.$el.closeSlidingItems();
+		await closeSlidingItems();
 	}
 
 	async function removeFrontingEntry(member: Member) {
@@ -122,8 +119,7 @@
 		void sendFrontingChangedEvent();
 		await toast(i18next.t("members:toasts.removeFromFront"));
 
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
-		list.value?.$el.closeSlidingItems();
+		await closeSlidingItems();
 	}
 
 	async function setMainFrontingEntry(member: Member, value: boolean){
@@ -132,8 +128,7 @@
 		if(value) await toast(i18next.t("members:toasts.setMainFronter"));
 		else await toast(i18next.t("members:toasts.unsetMainFronter"));
 
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
-		list.value?.$el.closeSlidingItems();
+		await closeSlidingItems();
 	}
 
 	async function setSoleFrontingEntry(member: Member){
@@ -141,14 +136,18 @@
 		void sendFrontingChangedEvent();
 		await toast(i18next.t("members:toasts.setSoleFronter"));
 		
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
-		list.value?.$el.closeSlidingItems();
+		await closeSlidingItems();
 	}
 
+	async function closeSlidingItems() {
+		const item = list.value?.querySelector("ion-item-sliding") as { closeOpened: () => Promise<void> } | null;
+		await item?.closeOpened();
+	}
+	
 	function getStyle(member: Member){
 		const style: Record<string, string> = {};
 
-		const entry = frontingEntries.value.find(x => x.member.uuid === member.uuid);
+		const entry = feGet(member);
 		if(entry){
 			if(entry.isMainFronter)
 				style["--background"] = "var(--ion-background-color-step-200)";
@@ -196,41 +195,43 @@
 				</IonToolbar>
 			</CollapsibleHeaderbar>
 
-			<IonList ref="list" :class="{ compact: accessibilityConfig.disableMemberCoversInList }">
-
-				<IonItemSliding v-for="member in members" :key="member.uuid">
-					<IonItem
-						button
-						:class="{ archived: member.isArchived }"
-						:style="getStyle(member)"
-						:router-link="`/members/edit?uuid=${member.uuid}`"
-					>
-						<MemberAvatar slot="start" :member />
-						<MemberLabel :member show-tag-chips />
-						<IonIcon v-if="member.isPinned" slot="end" :icon="pinMD" />
-						<IonIcon v-if="member.isArchived" slot="end" :icon="archivedMD" />
-						<IonIcon v-if="feGet(member)?.isMainFronter" slot="end" :icon="mainFronterMD" />
-					</IonItem>
-					<IonItemOptions>
-						<IonItemOption v-if="!feGet(member) && frontingEntries.length !== 0" @click="addFrontingEntry(member)">
-							<IonIcon slot="icon-only" :icon="addToFrontMD" />
-						</IonItemOption>
-						<IonItemOption v-if="feGet(member)" color="danger" @click="removeFrontingEntry(member)">
-							<IonIcon slot="icon-only" :icon="removeFromFrontMD" />
-						</IonItemOption>
-						<IonItemOption v-if="feGet(member) && !feGet(member)?.isMainFronter" color="secondary" @click="setMainFrontingEntry(member, true)">
-							<IonIcon slot="icon-only" :icon="setMainFronterMD" />
-						</IonItemOption>
-						<IonItemOption v-if="feGet(member)?.isMainFronter" color="secondary" @click="setMainFrontingEntry(member, false)">
-							<IonIcon slot="icon-only" :icon="unsetMainFronterMD" />
-						</IonItemOption>
-						<IonItemOption v-if="!(frontingEntries.length === 1 && feGet(member))" color="tertiary" @click="setSoleFrontingEntry(member)">
-							<IonIcon slot="icon-only" :icon="setAsFrontMD" />
-						</IonItemOption>
-					</IonItemOptions>
-				</IonItemSliding>
-			</IonList>
-
+			<div ref="list" class="list" :class="{ compact: accessibilityConfig.disableMemberCoversInList }">
+				<VirtualList :entries="members">
+					<template #default="{ entry: member }">
+						<IonItemSliding>
+							<IonItem
+								button
+								:class="{ archived: member.isArchived }"
+								:style="getStyle(member)"
+								:router-link="`/members/edit?uuid=${member.uuid}`"
+							>
+								<MemberAvatar slot="start" :member="member" />
+								<MemberLabel :member="member" show-tag-chips />
+								<IonIcon v-if="member.isPinned" slot="end" :icon="pinMD" />
+								<IonIcon v-if="member.isArchived" slot="end" :icon="archivedMD" />
+								<IonIcon v-if="feGet(member)?.isMainFronter" slot="end" :icon="mainFronterMD" />
+							</IonItem>
+							<IonItemOptions>
+								<IonItemOption v-if="!feGet(member) && frontingEntries.length !== 0" @click="addFrontingEntry(member)">
+									<IonIcon slot="icon-only" :icon="addToFrontMD" />
+								</IonItemOption>
+								<IonItemOption v-if="feGet(member)" color="danger" @click="removeFrontingEntry(member)">
+									<IonIcon slot="icon-only" :icon="removeFromFrontMD" />
+								</IonItemOption>
+								<IonItemOption v-if="feGet(member) && !feGet(member)?.isMainFronter" color="secondary" @click="setMainFrontingEntry(member, true)">
+									<IonIcon slot="icon-only" :icon="setMainFronterMD" />
+								</IonItemOption>
+								<IonItemOption v-if="feGet(member)?.isMainFronter" color="secondary" @click="setMainFrontingEntry(member, false)">
+									<IonIcon slot="icon-only" :icon="unsetMainFronterMD" />
+								</IonItemOption>
+								<IonItemOption v-if="!(frontingEntries.length === 1 && feGet(member))" color="tertiary" @click="setSoleFrontingEntry(member)">
+									<IonIcon slot="icon-only" :icon="setAsFrontMD" />
+								</IonItemOption>
+							</IonItemOptions>
+						</IonItemSliding>
+					</template>
+				</VirtualList>
+			</div>
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
 				<IonFabButton router-link="/members/edit/">
 					<IonIcon :icon="addMD" />
@@ -256,11 +257,29 @@
 		margin-right: 16px;
 	}
 
-	ion-list:not(.compact) ion-item {
+	.list {
+		padding: 16px;
+	}
+
+	.list .v-row:first-child ion-item {
+		border-top-left-radius: 16px;
+		border-top-right-radius: 16px;
+	}
+
+	.list .v-row:last-child ion-item {
+		border-bottom-left-radius: 16px;
+		border-bottom-right-radius: 16px;
+	}
+
+	ion-item {
+		margin: 1px 0;
+	}
+
+	.list:not(.compact) ion-item {
 		--background: var(--ion-background-color-step-100);
 	}
 
-	ion-list:not(.compact) ion-item::part(native)::before {
+	.list:not(.compact) ion-item::part(native)::before {
 		content: '\A';
 		background-image: var(--data-cover);
 		background-position: center;

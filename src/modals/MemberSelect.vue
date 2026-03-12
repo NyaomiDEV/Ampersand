@@ -4,7 +4,6 @@
 		IonHeader,
 		IonToolbar,
 		IonTitle,
-		IonList,
 		IonItem,
 		IonModal,
 		IonSearchbar,
@@ -20,6 +19,7 @@
 	import { DatabaseEvents, DatabaseEvent } from "../lib/db/events";
 	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
 	import { appConfig } from "../lib/config/index.ts";
+	import VirtualList from "../components/VirtualList.vue";
 
 	const props = defineProps<{
 		customTitle?: string,
@@ -46,7 +46,7 @@
 	watch(search, async () => {
 		await updateMembers();
 	});
-
+	
 	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
 		await updateMembers();
@@ -124,14 +124,18 @@
 
 		<SpinnerFullscreen v-if="!members" />
 		<IonContent v-else>
-			<IonList>
-				<IonItem v-for="member in members" :key="member.uuid" button>
-					<MemberAvatar slot="start" :member />
-					<IonCheckbox :value="member.uuid" :checked="!!selectedMembers.find(x => x.uuid === member.uuid)" @update:model-value="value => check(member, value)">
-						<MemberLabel :member />
-					</IonCheckbox>
-				</IonItem>
-			</IonList>
+			<div class="list">
+				<VirtualList :entries="members">
+					<template #default="{ entry: member }">
+						<IonItem key="member.uuid" button>
+							<MemberAvatar slot="start" :member />
+							<IonCheckbox :value="member.uuid" :checked="!!selectedMembers.find(x => x.uuid === member.uuid)" @update:model-value="value => check(member, value)">
+								<MemberLabel :member />
+							</IonCheckbox>
+						</IonItem>
+					</template>
+				</VirtualList>
+			</div>
 		</IonContent>
 	</IonModal>
 </template>
@@ -139,5 +143,24 @@
 <style scoped>
 	ion-checkbox::part(container) {
 		visibility: v-bind("!props.hideCheckboxes ? 'visible' : 'hidden'")
+	}
+
+	.list {
+		border-radius: 16px;
+		padding: 16px;
+	}
+
+	.list .v-row:first-child ion-item {
+		border-top-left-radius: 16px;
+		border-top-right-radius: 16px;
+	}
+
+	.list .v-row:last-child ion-item {
+		border-bottom-left-radius: 16px;
+		border-bottom-right-radius: 16px;
+	}
+
+	ion-item {
+		padding: 1px 0;
 	}
 </style>
