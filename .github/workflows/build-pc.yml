@@ -3,6 +3,10 @@ name: Build for PC
 
 on:
   workflow_call:
+    inputs:
+      upload_url:
+        type: string
+        required: true
 
 # Sets the GITHUB_TOKEN permissions to allow deployment
 permissions:
@@ -33,7 +37,7 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
           cache: 'yarn'
       - name: Set up Rust toolchain
         uses: actions-rust-lang/setup-rust-toolchain@v1.15.2
@@ -78,29 +82,29 @@ jobs:
         if: matrix.platform == 'ubuntu-latest'
         uses: shogo82148/actions-upload-release-asset@v1
         with:
-          upload_url: ${{ needs.prepare-build.outputs.upload_url }}
+          upload_url: ${{ inputs.upload_url }}
           asset_path: ./src-tauri/target/release/bundle/deb/Ampersand_*.deb
       - name: Publish to release (Linux RPM)
         if: matrix.platform == 'ubuntu-latest'
         uses: shogo82148/actions-upload-release-asset@v1
         with:
-          upload_url: ${{ needs.prepare-build.outputs.upload_url }}
+          upload_url: ${{ inputs.upload_url }}
           asset_path: ./src-tauri/target/release/bundle/rpm/Ampersand-*.rpm
       - name: Publish to release (Linux AppImage)
         if: matrix.platform == 'ubuntu-latest'
         uses: shogo82148/actions-upload-release-asset@v1
         with:
-          upload_url: ${{ needs.prepare-build.outputs.upload_url }}
+          upload_url: ${{ inputs.upload_url }}
           asset_path: ./src-tauri/target/release/bundle/appimage/Ampersand_*.AppImage
       - name: Publish to release (macOS DMG)
         if: matrix.platform == 'macos-latest'
         uses: shogo82148/actions-upload-release-asset@v1
         with:
-          upload_url: ${{ needs.prepare-build.outputs.upload_url }}
+          upload_url: ${{ inputs.upload_url }}
           asset_path: ./src-tauri/target/universal-apple-darwin/release/bundle/dmg/Ampersand_*.dmg
       - name: Publish to release (Windows MSI)
         if: matrix.platform == 'windows-latest'
         uses: shogo82148/actions-upload-release-asset@v1
         with:
-          upload_url: ${{ needs.prepare-build.outputs.upload_url }}
+          upload_url: ${{ inputs.upload_url }}
           asset_path: ./src-tauri/target/release/bundle/msi/Ampersand_*.msi

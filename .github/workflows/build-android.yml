@@ -3,6 +3,10 @@ name: Build for Android
 
 on:
   workflow_call:
+    inputs:
+      upload_url:
+        type: string
+        required: true
     secrets:
       ANDROID_KEY_ALIAS:
         required: true
@@ -33,7 +37,7 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
           cache: 'yarn'
       - name: Set up Java
         uses: actions/setup-java@v4
@@ -98,10 +102,10 @@ jobs:
       - name: Publish to release (APK)
         uses: shogo82148/actions-upload-release-asset@v1
         with:
-          upload_url: ${{ needs.prepare-build.outputs.upload_url }}
+          upload_url: ${{ inputs.upload_url }}
           asset_path: ./src-tauri/gen/android/app/build/outputs/apk/*/release/ampersand-*-release.apk
       - name: Publish to release (AAB)
         uses: shogo82148/actions-upload-release-asset@v1
         with:
-          upload_url: ${{ needs.prepare-build.outputs.upload_url }}
+          upload_url: ${{ inputs.upload_url }}
           asset_path: ./src-tauri/gen/android/app/build/outputs/bundle/universalRelease/ampersand-*-release.aab

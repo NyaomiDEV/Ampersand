@@ -33,7 +33,7 @@ jobs:
     - name: Set up Node
       uses: actions/setup-node@v4
       with:
-        node-version: 20
+        node-version: 24
         cache: 'yarn'
     - name: Install frontend dependencies
       run: yarn install --frozen-lockfile
@@ -62,18 +62,24 @@ jobs:
     uses: ./.github/workflows/build-android.yml
     needs: prepare-build
     secrets: inherit
+    with:
+      upload_url: ${{ needs.prepare-build.outputs.upload_url }}
     permissions:
       contents: write
   build-ios:
     uses: ./.github/workflows/build-ios.yml
     needs: prepare-build
     secrets: inherit
+    with:
+      upload_url: ${{ needs.prepare-build.outputs.upload_url }}
     permissions:
       contents: write
   build-pc:
     uses: ./.github/workflows/build-pc.yml
     needs: prepare-build
     secrets: inherit
+    with:
+      upload_url: ${{ needs.prepare-build.outputs.upload_url }}
     permissions:
       contents: write
   release:
