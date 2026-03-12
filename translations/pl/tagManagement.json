@@ -36,6 +36,8 @@
 		"delete": {
 			"title": "Usuń tag",
 			"confirm": "Czy na pewno chcesz usunąć ten tag?"
-		}
+		},
+		"tagID": "ID tagu: {{tagID}}",
+		"tagIDCopiedToClipboard": "ID tagu w formacie wzmianki zostało skopiowane do schowka!"
 	}
 }

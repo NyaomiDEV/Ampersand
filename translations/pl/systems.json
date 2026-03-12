@@ -19,6 +19,9 @@
 			"confirm": "Czy na pewno chcesz usunąć ten system?"
 		},
 		"systemID": "ID systemu: {{systemID}}",
-		"systemIDcopiedToClipboard": "ID systemu w formacie wzmianki zostało skopiowane do schowka!"
+		"systemIDcopiedToClipboard": "ID systemu w formacie wzmianki zostało skopiowane do schowka!",
+		"parent": "System-rodzic",
+		"isPinned": "Przypnij system",
+		"archived": "Zarchiwizowano"
 	}
 }
