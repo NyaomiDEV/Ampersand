@@ -44,5 +44,8 @@
 	"disableMemberCoversInList": {
 		"desc": "Wenn aktiviert werden Mitglieder in der Hauptliste auch in einer kompakter angezeigt",
 		"title": "Mitglieder Cover in Liste deaktivieren"
+	},
+	"themeIsAmoled": {
+		"title": "AMOLED-Modus"
 	}
 }
