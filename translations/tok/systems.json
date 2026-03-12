@@ -17,7 +17,9 @@
 			"confirm": "sina wile ala wile weka e kulupu ni?"
 		},
 		"systemID": "nimi ilo pi kulupu ni: {{systemID}}",
-		"systemIDcopiedToClipboard": "sina kama jo e nimi ilo pi kulupu ni!"
+		"systemIDcopiedToClipboard": "sina kama jo e nimi ilo pi kulupu ni!",
+		"showMembers": "ijo kulupu pi kulupu ni",
+		"parent": "kulupu sewi"
 	},
 	"select": "kulupu pi wile sina"
 }

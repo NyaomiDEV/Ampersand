@@ -23,6 +23,7 @@
 		},
 		"headerOptions": "ken ante pi lipu ni",
 		"postID": "nimi ilo pi lipu ni: {{postID}}",
-		"postIDcopiedToClipboard": "sina kama jo e nimi ilo pi lipu ni!"
+		"postIDcopiedToClipboard": "sina kama jo e nimi ilo pi lipu ni!",
+		"author": "seme li pali e lipu ni?"
 	}
 }

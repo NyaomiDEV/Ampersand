@@ -13,7 +13,8 @@
 		"resultsHeader": "sona kulupu",
 		"resultsButton": "sona kulupu",
 		"choice": {
-			"desc_one": "ijo kulupu {{count}} li pilin ni"
+			"desc_one": "ijo kulupu {{count}} li pilin ni",
+			"desc_other": ""
 		},
 		"defaultPollValues": {
 			"yes": "wile",
@@ -37,6 +38,7 @@
 		"delete": {
 			"title": "weka toki",
 			"confirm": "sina wile ala wile weka e toki ni?"
-		}
+		},
+		"member": "ante pi ijo toki"
 	}
 }
