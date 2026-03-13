@@ -83,11 +83,11 @@ console.log("New version is", isCiBuild ? version : packageVersion);
 
 // If in CI, export as env
 if (process.env.GITHUB_ENV) {
-	await appendFile(process.env.GITHUB_ENV, `AMPERSAND_VERSION=${isCiBuild ? version : packageVersion}`, "utf-8");
+	await appendFile(process.env.GITHUB_ENV, `AMPERSAND_VERSION=${isCiBuild ? version : packageVersion}\n`, "utf-8");
 	console.log("Appended $AMPERSAND_VERSION to GitHub Actions environment.");
 
 	if (isCiBuild) {
-		await appendFile(process.env.GITHUB_ENV, "AMPERSAND_IS_CI_BUILD=1", "utf-8");
+		await appendFile(process.env.GITHUB_ENV, "AMPERSAND_IS_CI_BUILD=1\n", "utf-8");
 		console.log("Appended $AMPERSAND_IS_CI_BUILD=1 to GitHub Actions environment.");
 	}
 }
