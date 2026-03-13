@@ -2,5 +2,6 @@
 	"header": "Informazione",
 	"version": "Versione {{version}}",
 	"madein": "Fatto con amore in Italia",
-	"privacyPolicy": "Politiche per la privacy"
+	"privacyPolicy": "Politiche per la privacy",
+	"updateAvailable": "Aggiornamento disponibile: {{newVersion}}"
 }

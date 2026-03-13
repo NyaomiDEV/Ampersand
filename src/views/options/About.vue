@@ -10,9 +10,13 @@
 
 	import { version } from "../../../package.json";
 	import { openUrl } from "@tauri-apps/plugin-opener";
-	import { ref } from "vue";
+	import { onMounted, ref } from "vue";
+
+	import { checkUpdates, checkIsUpdateNewer } from "../../lib/update";
+	import { UpdateCheckResponse } from "../../lib/types";
 
 	const egg = ref(0);
+	const newVersion = ref<UpdateCheckResponse>();
 
 	async function openRepo(){
 		const url = "https://codeberg.org/Ampersand/app";
@@ -34,6 +38,11 @@
 		await openUrl(url);
 	}
 
+	async function openUpdate(){
+		if(newVersion.value)
+			await openUrl(newVersion.value.url);
+	}
+
 	function accumulateEgg(){
 		if(egg.value < 10){
 			++egg.value;
@@ -42,6 +51,12 @@
 		}else
 			return;
 	}
+
+	onMounted(async () => {
+		const response = await checkUpdates();
+		if(response && checkIsUpdateNewer(response))
+			newVersion.value = response;
+	});
 </script>
 
 <template>
@@ -66,6 +81,10 @@
 					<span>{{ $t("about:version", { version }) }}</span>
 					<span>{{ $t("about:madein") }}</span>
 				</div>
+
+				<IonButton v-if="newVersion" @click="openUpdate">
+					{{ $t("about:updateAvailable", { newVersion: newVersion.version }) }}
+				</IonButton>
 
 				<div class="logo" @click="accumulateEgg">
 					<IonIcon :icon="AmpersandLogo" />
