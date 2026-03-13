@@ -19,6 +19,9 @@
 		},
 		"systemID": "System-ID: {{systemID}}",
 		"systemIDcopiedToClipboard": "System-id kopierat som omnämnande!",
-		"customFrontCountText": "{{totalCustomFrontCount}} anpassade front(er), {{customFrontCount}} aktiv(a), {{archivedCustomFrontCount}} arkiverad"
+		"customFrontCountText": "{{totalCustomFrontCount}} anpassade front(er), {{customFrontCount}} aktiv(a), {{archivedCustomFrontCount}} arkiverad",
+		"parent": "Överordnat system",
+		"isPinned": "Fäst system",
+		"archived": "Arkiverad"
 	}
 }

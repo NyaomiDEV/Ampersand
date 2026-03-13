@@ -5,7 +5,8 @@
 	"edit": {
 		"noDescription": "Ingen beskrivning",
 		"customFront": "Anpassat front",
-		"memberIDcopiedToClipboard": "Medlem-ID kopierat som omnämnande!"
+		"memberIDcopiedToClipboard": "Medlem-ID kopierat som omnämnande!",
+		"archived": "Arkiverad"
 	},
 	"deletedCustomFront": "Raderat anpassat front"
 }
