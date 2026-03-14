@@ -241,7 +241,7 @@ function frontingEntry(spExport: any, memberMapping: Map<string, string>){
 		const frontingEntry: FrontingEntry = {
 			member: memberMapping.get(spFrontHistory.member) || (spFrontHistory.custom ? maxUid : nilUid),
 			startTime: new Date(spFrontHistory.startTime),
-			endTime: spFrontHistory.endTime ? new Date(spFrontHistory.endTime) : undefined,
+			endTime: spFrontHistory.endTime ? new Date(spFrontHistory.endTime) : (spFrontHistory.live ? undefined : new Date()),
 			customStatus: spFrontHistory.customStatus?.length ? spFrontHistory.customStatus : undefined,
 			isMainFronter: false,
 			isLocked: false,
