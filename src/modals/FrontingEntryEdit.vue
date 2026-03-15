@@ -153,7 +153,7 @@
 		</IonHeader>
 
 		<IonContent>
-			<IonList class="grid-2-alt">
+			<IonList class="grid-2">
 				<IonItem button :detail="true" @click="memberSelectModal?.$el.present()">
 					<template v-if="frontingEntry.member">
 						<MemberAvatar slot="start" :member="frontingEntry.member" />
@@ -184,7 +184,7 @@
 				<IonItem button :detail="true" @click="($refs.startTimePicker as any)?.$el.present()">
 					<IonLabel>
 						<p>{{ $t("frontHistory:edit.startTime") }}</p>
-						<h2>{{ formatDate(frontingEntry.startTime, "expanded") }}</h2>
+						<h2>{{ formatDate(frontingEntry.startTime, "collapsed") }}</h2>
 					</IonLabel>
 					<DatePopupPicker
 						ref="startTimePicker"
@@ -202,7 +202,7 @@
 				<IonItem v-else button @click="($refs.endTimePicker as any)?.$el.present()">
 					<IonLabel>
 						<p>{{ $t("frontHistory:edit.endTime") }}</p>
-						<h2>{{ formatDate(frontingEntry.endTime, "expanded") }}</h2>
+						<h2>{{ formatDate(frontingEntry.endTime, "collapsed") }}</h2>
 					</IonLabel>
 					<DatePopupPicker
 						ref="endTimePicker"
@@ -370,21 +370,21 @@
 </template>
 
 <style scoped>
+	.member-avatar {
+		width: 48px;
+		height: 48px;
+	}
+
 	.grid-2 {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
-	}
-
-	.grid-2-alt {
-		display: grid;
-		grid-template-columns: 1.5fr 1fr;
 	}
 
 	.take-row {
 		grid-column: 1 / span 2;
 	}
 
-	:is(.grid-2, .grid-2-alt) ion-item::part(native) {
+	.grid-2 ion-item::part(native) {
 		height: 100%;
 	}
 </style>
