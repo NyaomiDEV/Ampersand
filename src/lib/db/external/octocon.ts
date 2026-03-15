@@ -192,7 +192,7 @@ function polls(ocExport: OctoconExport, memberMapping: Map<number, string>){
 									votes: poll.data.responses.filter(x => x.vote === "veto" && memberMapping.get(x.alter_id)).map(x => ({ reason: x.comment, member: memberMapping.get(x.alter_id)! }))
 								} : undefined,
 							].filter(x => x !== undefined)
-						: poll.data.choice?.map(x => ({ choice: x.name, votes: poll.data.responses.filter(y => y.choice_id === x.id).map(y => ({ reason: y.comment, member: memberMapping.get(y.alter_id)! })) })) || []
+						: poll.data.choice?.map(x => ({ choice: x.name, votes: poll.data.responses.filter(y => y.choice_id === x.id && memberMapping.get(y.alter_id)).map(y => ({ reason: y.comment, member: memberMapping.get(y.alter_id)! })) })) || []
 			}
 		});
 	}
