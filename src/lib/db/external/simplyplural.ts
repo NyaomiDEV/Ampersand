@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { System, Member, FrontingEntry, Tag, BoardMessage, CustomField, JournalPost } from "../entities";
 import { getTables } from "../tables";
 import { t } from "i18next";
@@ -8,6 +5,7 @@ import { fetch } from "@tauri-apps/plugin-http";
 import { resizeImage } from "../../util/image";
 import { maxUid, nilUid } from "../../util/consts";
 import { appConfig, securityConfig } from "../../config";
+import type { SimplyPluralExport, CustomField as SPCustomField } from "./simplyplural_types";
 
 function normalizeSPColor(color?: string) {
 	if (!color || !color.length) return undefined;
@@ -21,7 +19,7 @@ function normalizeSPColor(color?: string) {
 	return `#${color}`;
 }
 
-function mapCustomFieldType(type: number, data: any) {
+function mapCustomFieldType(type: SPCustomField["type"], data: string) {
 	switch(type){
 		case 0: // text
 			return String(data);
@@ -55,7 +53,7 @@ async function getAvatarFromUuid(systemId: string, avatarUuid: string){
 	}
 }
 
-async function system(spExport: any){
+async function system(spExport: SimplyPluralExport){
 	const spSystem = spExport.users[0];
 	if (!spSystem) return;
 
@@ -71,7 +69,7 @@ async function system(spExport: any){
 		try {
 			const image = new File(
 				[await (await fetch(spSystem.avatarUrl)).blob()],
-				spSystem.avatarUrl.split("/").pop()
+				spSystem.avatarUrl.split("/").pop()!
 			);
 			systemInfo.image = await resizeImage(image);
 		} catch (_e) {
@@ -88,7 +86,7 @@ async function system(spExport: any){
 	};
 }
 
-function tag(spExport: any){
+function tag(spExport: SimplyPluralExport){
 	const tagMapping = new Map<string, string>();
 	const tags: Tag[] = [];
 
@@ -112,8 +110,8 @@ function tag(spExport: any){
 	};
 }
 
-function customField(spExport: any){
-	const customFieldMapping = new Map<string, [string, number]>();
+function customField(spExport: SimplyPluralExport){
+	const customFieldMapping = new Map<string, [string, SPCustomField["type"]]>();
 	const customFields: CustomField[] = [];
 
 	for (const spCustomField of spExport.customFields) {
@@ -134,7 +132,7 @@ function customField(spExport: any){
 	};
 }
 
-export async function member(spExport: any, systemInfo: System, systemUid: string, tagMapping: Map<string, string>, customFieldMapping: Map<string, [string, number]>){
+export async function member(spExport: SimplyPluralExport, systemInfo: System, systemUid: string, tagMapping: Map<string, string>, customFieldMapping: Map<string, [string, SPCustomField["type"]]>){
 	const memberMapping = new Map<string, string>();
 	const members: Member[] = [];
 
@@ -153,12 +151,12 @@ export async function member(spExport: any, systemInfo: System, systemUid: strin
 			dateCreated: spMember.created ? new Date(spMember.created) : new Date(),
 			tags: [
 				...spExport.groups
-					.filter(x => (x.members as string | undefined)?.includes(spMember._id))
-					.map(x => tagMapping.get(x._id))
+					.filter(x => x.members?.includes(spMember._id))
+					.map(x => tagMapping.get(x._id)!)
 			],
 			customFields: new Map(
 				Object.entries(spMember.info || {})
-					.filter(([_, v]) => (v as string).length)
+					.filter(([_, v]) => v.length)
 					.map(([_id, value]) => {
 						const mapped = customFieldMapping.get(_id);
 						if (!mapped) return undefined;
@@ -173,7 +171,7 @@ export async function member(spExport: any, systemInfo: System, systemUid: strin
 			try {
 				const image = new File(
 					[await (await fetch(spMember.avatarUrl)).blob()],
-					spMember.avatarUrl.split("/").pop()
+					spMember.avatarUrl.split("/").pop()!
 				);
 				member.image = await resizeImage(image);
 			} catch (_e) {
@@ -202,7 +200,7 @@ export async function member(spExport: any, systemInfo: System, systemUid: strin
 			isArchived: false,
 			isCustomFront: true,
 			tags: [],
-			dateCreated: spCustomFront.created ? new Date(spCustomFront.created) : new Date(),
+			dateCreated: spCustomFront.lastUpdate ? new Date(spCustomFront.lastUpdate) : new Date(), // does created exist in this?
 			uuid: window.crypto.randomUUID()
 		};
 
@@ -210,7 +208,7 @@ export async function member(spExport: any, systemInfo: System, systemUid: strin
 			try {
 				const image = new File(
 					[await (await fetch(spCustomFront.avatarUrl)).blob()],
-					spCustomFront.avatarUrl.split("/").pop()
+					spCustomFront.avatarUrl.split("/").pop()!
 				);
 				member.image = await resizeImage(image);
 			} catch (_e) {
@@ -232,11 +230,11 @@ export async function member(spExport: any, systemInfo: System, systemUid: strin
 	};
 }
 
-function frontingEntry(spExport: any, memberMapping: Map<string, string>){
+function frontingEntry(spExport: SimplyPluralExport, memberMapping: Map<string, string>){
 	const frontingEntries: FrontingEntry[] = [];
 
 	for (const spFrontHistory of spExport.frontHistory) {
-		if (!spFrontHistory.startTime) continue; // front entries without startTime are null for us
+		if (!spFrontHistory.startTime || !spFrontHistory.member) continue; // front entries without startTime nor member are null for us
 		console.debug("[SP] Creating fronting entry for:", spFrontHistory);
 		const frontingEntry: FrontingEntry = {
 			member: memberMapping.get(spFrontHistory.member) || (spFrontHistory.custom ? maxUid : nilUid),
@@ -260,7 +258,7 @@ function frontingEntry(spExport: any, memberMapping: Map<string, string>){
 	return frontingEntries;
 }
 
-function boardMessage(spExport: any, memberMapping: Map<string, string>){
+function boardMessage(spExport: SimplyPluralExport, memberMapping: Map<string, string>){
 	const boardMessages: BoardMessage[] = [];
 
 	// BOARD MESSAGES
@@ -287,7 +285,7 @@ function boardMessage(spExport: any, memberMapping: Map<string, string>){
 		const boardMessage: BoardMessage = {
 			member: nilUid,
 			title: spPoll.name,
-			body: spPoll.desc?.length ? spPoll.desc : undefined,
+			body: spPoll.desc?.length ? spPoll.desc : "",
 			date: spPoll.lastOperationTime ? new Date(spPoll.lastOperationTime) : new Date(),
 			poll: {
 				multipleChoice: false,
@@ -338,7 +336,7 @@ function boardMessage(spExport: any, memberMapping: Map<string, string>){
 										reason: x.comment?.length ? x.comment : undefined
 									})) || []
 							} : undefined,
-						].filter(Boolean)
+						].filter(x => x !== undefined)
 			},
 			isArchived: false,
 			isPinned: false,
@@ -353,7 +351,7 @@ function boardMessage(spExport: any, memberMapping: Map<string, string>){
 	return boardMessages;
 }
 
-function journalPost(spExport: any, memberMapping: Map<string, string>){
+function journalPost(spExport: SimplyPluralExport, memberMapping: Map<string, string>){
 	const posts: JournalPost[] = [];
 
 	for(const spNote of spExport.notes){
@@ -364,7 +362,7 @@ function journalPost(spExport: any, memberMapping: Map<string, string>){
 			tags: [],
 			isPrivate: false,
 			isPinned: false,
-			date: new Date(spNote.date || spNote.lastOperationTime),
+			date: new Date(spNote.date || spNote.lastOperationTime || Date.now()),
 			uuid: window.crypto.randomUUID()
 		};
 		posts.push(post);
@@ -401,7 +399,7 @@ function remap(
 	
 }
 
-export async function importSimplyPlural(spExport: any) {
+export async function importSimplyPlural(spExport: SimplyPluralExport) {
 	const _system = await system(spExport);
 	if(!_system) return false;
 	const { systemInfo, systemUid } = _system;
