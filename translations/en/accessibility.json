@@ -42,8 +42,7 @@
 		"desc": "Disable in-app animations"
 	},
 	"disableMemberCoversInList": {
-		"title": "Disable member covers in list",
-		"desc": "If enabled, members in the main list will also display in a more compact way"
+		"title": "Disable covers in member list"
 	},
 	"contrastLevel": {
 		"title": "Contrast level"

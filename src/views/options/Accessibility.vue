@@ -189,10 +189,7 @@
 				<IonItem>
 					<IonIcon slot="start" :icon="hideCoverMD" />
 					<IonToggle v-model="accessibilityConfig.disableMemberCoversInList">
-						<IonLabel>
-							<h3>{{ $t("accessibility:disableMemberCoversInList.title") }}</h3>
-							<p>{{ $t("accessibility:disableMemberCoversInList.desc") }}</p>
-						</IonLabel>
+						<IonLabel> {{ $t("accessibility:disableMemberCoversInList.title") }} </IonLabel>
 					</IonToggle>
 				</IonItem>
 

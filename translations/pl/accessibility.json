@@ -33,8 +33,7 @@
 		"desc": "Wyłącz animacje w aplikacji"
 	},
 	"disableMemberCoversInList": {
-		"title": "Wyłącz tła członków systemu na liście",
-		"desc": "Jeśli ta opcja jest włączona, członkowie na liście głównej będą również wyświetlani w bardziej kompaktowy sposób"
+		"title": "Wyłącz tła członków systemu na liście"
 	},
 	"contrastLevel": {
 		"title": "Poziom kontrastu"

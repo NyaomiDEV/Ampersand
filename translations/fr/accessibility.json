@@ -21,7 +21,6 @@
 		"desc": "Personnaliser la couleur d’accent"
 	},
 	"disableMemberCoversInList": {
-		"desc": "Si cette option est activée, les membres de la liste principale apparaîtront aussi de façon plus compacte",
 		"title": "Cacher les bannières des membres dans la liste"
 	},
 	"reducedMotion": {
