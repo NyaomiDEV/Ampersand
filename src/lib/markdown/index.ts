@@ -29,6 +29,8 @@ import calloutExtension from "./calloutExtension";
 import svgExtension from "./svgExtension";
 import mermaidExtension from "./mermaidExtension";
 import textDecorationExtension from "./textDecoration";
+import startExtension from "./startExtension";
+import endExtension from "./endExtension";
 
 export const marked = new Marked<(VNode | string)[], VNode | string>();
 
@@ -162,6 +164,8 @@ marked.use(
 	underlineExtension,
 	highlightExtension,
 	centerExtension,
+	startExtension,
+	endExtension,
 	blurExtension,
 	linebreakExtension,
 	marqueeExtension,

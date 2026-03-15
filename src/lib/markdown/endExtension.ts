@@ -1,18 +1,18 @@
 import { h, type VNode } from "vue";
 import { MarkedExtension } from "marked";
 
-const centerExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
+const endExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [
 		{
-			name: "center",
-			level: "block",
+			name: "end",
+			level: "inline",
 			start(src: string) { return src.match(/>>/)?.index; },
 			tokenizer(src: string) {
-				const rule = /^\|>(.+?)<\|/;
+				const rule = /^\|>(.+?)\|>/;
 				const match = rule.exec(src);
 				if (match) {
 					const token = {
-						type: "center",
+						type: "end",
 						raw: match[0],
 						text: match[1],
 						tokens: this.lexer.inlineTokens(match[1])
@@ -22,10 +22,10 @@ const centerExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 				return;
 			},
 			renderer(token) {
-				return h("p", { class: "center" }, token.tokens && token.tokens.length ? this.parser.parseInline(token.tokens) : token.text);
+				return h("span", { class: "end" }, token.tokens && token.tokens.length ? this.parser.parseInline(token.tokens) : token.text);
 			}
 		}
 	]
 };
 
-export default centerExtension;
+export default endExtension;

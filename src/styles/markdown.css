@@ -3,6 +3,10 @@
     overflow-wrap: anywhere;
 }
 
+.md div.markdown-content span {
+    color: inherit;
+}
+
 /* Horizontal Rules */
 .md div.markdown-content hr {
     border-top-width: 1px;
@@ -177,9 +181,19 @@
     text-decoration: var(--markdown-text-decoration);
 }
 
-.md div.markdown-content span.center {
+.md div.markdown-content p.center {
     display: block;
     text-align: center;
+}
+
+.md div.markdown-content span.start {
+    float: inline-start;
+    text-align: start;
+}
+
+.md div.markdown-content span.end {
+    float: inline-end;
+    text-align: end;
 }
 
 .md div.markdown-content span.blur {
