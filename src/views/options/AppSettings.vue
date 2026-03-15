@@ -16,7 +16,9 @@
 	import dashboardMD from "@material-symbols/svg-600/outlined/space_dashboard.svg";
 	import membersBeforeMD from "@material-symbols/svg-600/outlined/person_text.svg";
 	import defaultSystemMD from "@material-symbols/svg-600/outlined/bookmark_star.svg";
-	import defaultTabMD from "@material-symbols/svg-600/outlined/collections_bookmark.svg";
+	import peopleMD from "@material-symbols/svg-600/outlined/group.svg";
+	import journalMD from "@material-symbols/svg-600/outlined/book.svg";
+	import homeMD from "@material-symbols/svg-600/outlined/home.svg";
 	import ipcMD from "@material-symbols/svg-600/outlined/api.svg";
 	import accountCircle from "@material-symbols/svg-600/outlined/supervised_user_circle.svg";
 
@@ -144,7 +146,9 @@
 				</IonItem>
 
 				<IonItem>
-					<IonIcon slot="start" :icon="defaultTabMD" />
+					<IonIcon v-if="appConfig.view === 'dashboard'" slot="start" :icon="homeMD" />
+					<IonIcon v-if="appConfig.view === 'members'" slot="start" :icon="peopleMD" />
+					<IonIcon v-if="appConfig.view === 'journal'" slot="start" :icon="journalMD" />
 					<IonSelect
 						v-model="appConfig.view"
 						label-placement="floating"

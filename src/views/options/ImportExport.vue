@@ -15,6 +15,10 @@
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import importMD from "@material-symbols/svg-600/outlined/download.svg";
 	import exportMD from "@material-symbols/svg-600/outlined/upload.svg";
+	import octoMD from "@material-symbols/svg-600/outlined/neurology.svg";
+	import spMD from "@material-symbols/svg-600/outlined/spa.svg";
+	import tupMD from "@material-symbols/svg-600/outlined/package_2.svg";
+	import pkMD from "@material-symbols/svg-600/outlined/pet_supplies.svg";
 
 	import { documentDir, sep } from "@tauri-apps/api/path";
 	import { platform } from "@tauri-apps/plugin-os";
@@ -230,7 +234,7 @@
 				</IonItem>
 
 				<IonItem button :detail="true" @click="importSp">
-					<IonIcon slot="start" :icon="importMD" />
+					<IonIcon slot="start" :icon="spMD" />
 					<IonLabel>
 						<h3>{{ $t("importExport:spImport") }}</h3>
 						<p>{{ $t("importExport:dbImportDesc") }}</p>
@@ -238,7 +242,7 @@
 				</IonItem>
 
 				<IonItem button :detail="true" @click="importOc">
-					<IonIcon slot="start" :icon="importMD" />
+					<IonIcon slot="start" :icon="octoMD" />
 					<IonLabel>
 						<h3>{{ $t("importExport:ocImport") }}</h3>
 						<p>{{ $t("importExport:dbImportDesc") }}</p>
@@ -246,7 +250,7 @@
 				</IonItem>
 
 				<IonItem button :detail="true" @click="importPk">
-					<IonIcon slot="start" :icon="importMD" />
+					<IonIcon slot="start" :icon="pkMD" />
 					<IonLabel>
 						<h3>{{ $t("importExport:pkImport") }}</h3>
 						<p>{{ $t("importExport:dbImportDesc") }}</p>
@@ -254,7 +258,7 @@
 				</IonItem>
 
 				<IonItem button :detail="true" @click="importTu">
-					<IonIcon slot="start" :icon="importMD" />
+					<IonIcon slot="start" :icon="tupMD" />
 					<IonLabel>
 						<h3>{{ $t("importExport:tuImport") }}</h3>
 						<p>{{ $t("importExport:dbImportDesc") }}</p>

@@ -24,7 +24,7 @@
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
-	import personMD from "@material-symbols/svg-600/outlined/person.svg";
+	import peopleMD from "@material-symbols/svg-600/outlined/group.svg";
 	import journalMD from "@material-symbols/svg-600/outlined/book.svg";
 
 	import { getTag, newTag, removeTag, updateTag } from "../../lib/db/tables/tags";
@@ -265,7 +265,7 @@
 					button
 					@click="tagMembers"
 				>
-					<IonIcon slot="start" :icon="personMD" aria-hidden="true" />
+					<IonIcon slot="start" :icon="peopleMD" aria-hidden="true" />
 					<IonLabel>
 						<h3>{{ $t("tagManagement:edit.members.title") }}</h3>
 						<p>{{ $t("tagManagement:edit.members.desc", { count }) }}</p>
