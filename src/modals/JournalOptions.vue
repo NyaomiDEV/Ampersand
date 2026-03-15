@@ -19,6 +19,7 @@
 	import { PartialBy } from "../lib/types";
 	import TagListSelect from "./TagListSelect.vue";
 	import DatePopupPicker from "../components/DatePopupPicker.vue";
+	import TagChip from "../components/tag/TagChip.vue";
 	import { useTranslation } from "i18next-vue";
 	import { Ref, ShallowRef, useTemplateRef } from "vue";
 	import { promptOkCancel, toast, formatDate } from "../lib/util/misc";
