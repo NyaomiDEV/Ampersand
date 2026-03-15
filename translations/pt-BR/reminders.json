@@ -1,0 +1,12 @@
+{
+	"remindersAreNotFinished": {
+		"header": "Lembretes não estão terminados!",
+		"content": "Nesse momento, tudo isso é apenas uma prévia de Interface de Usuário! Você poderá salvar seus lembretes a algum ponto, mas mantenha em mente que isso não está conectado a um sistema de notificação! Se você está no Android, você deveria já poder configurar algumas coisas que vão funcionar quando nós terminarmos o sistema base, mas por favor mantenha em mente que isso não funcionará na versão Web, então não fique muito animado sobre usar lembretes no seu computador. E também se você é um desenvolvedor por favor nos dê ajuda!"
+	},
+	"header": "Lembretes",
+	"eventBasedHeader": "Lembretes de eventos",
+	"periodicHeader": "Lembretes periódicos",
+	"edit": {
+		"header": "Editar lembrete"
+	}
+}

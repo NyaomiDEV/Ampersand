@@ -1,0 +1,11 @@
+{
+	"header": "Membros",
+	"searchPlaceholder": "Procure por membros...",
+	"select": "Selecione um membro",
+	"deletedMember": "Membro deletado",
+	"deletedCustomFront": "Front customizado deletado",
+	"actions": {
+		"addToFront": "Adicionar ao front",
+		"setMainFronter": "Escolha como front principal"
+	}
+}

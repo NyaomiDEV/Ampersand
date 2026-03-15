@@ -1,0 +1,13 @@
+{
+	"welcomeScreen": {
+		"header": "Bem-vindo ao Ampersand!",
+		"start": "Comece sua jornada!"
+	},
+	"importScreen": {
+		"header": "Você gostaria de importar os seus dados?",
+		"prevInstall": "Sim, instalação antiga",
+		"simplyPlural": "Sim, Simply Plural",
+		"pluralKit": "Sim, PluralKit",
+		"tupperbox": "Sim, Tupperbox"
+	}
+}

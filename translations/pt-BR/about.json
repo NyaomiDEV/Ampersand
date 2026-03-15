@@ -1,0 +1,7 @@
+{
+	"header": "Sobre",
+	"version": "Versão {{version}}",
+	"madein": "Feito com amor na Itália",
+	"privacyPolicy": "Política de Privacidade",
+	"updateAvailable": "Atualização disponível: {{newVersion}}"
+}

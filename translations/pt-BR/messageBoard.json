@@ -1,0 +1,13 @@
+{
+	"header": "Painel de Mensagens",
+	"searchPlaceholder": "Procure por mensagens...",
+	"polls": {
+		"boardMessageContainsPoll": "Contém enquete",
+		"collapsePoll": "Esconda a enquete",
+		"voteCast": {
+			"voter": "Selecione o votante",
+			"reason": "Diga a razão",
+			"reasonHint": "Razão"
+		}
+	}
+}

@@ -1,0 +1,12 @@
+{
+	"header": "Gerenciamento de Recursos",
+	"searchPlaceholder": "Procurar recursos...",
+	"add": {
+		"header": "Adicionar recurso",
+		"attachment": "Adicionar anexo"
+	},
+	"edit": {
+		"header": "Editar recurso",
+		"friendlyName": "Editar nome"
+	}
+}

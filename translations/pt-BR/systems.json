@@ -1,0 +1,10 @@
+{
+	"header": "Sistemas",
+	"searchPlaceholder": "Procurar por sistemas...",
+	"select": "Selecione um sistema",
+	"edit": {
+		"header": "Sistema",
+		"headerAdd": "Adicione sistema",
+		"headerEdit": "Editar sistema"
+	}
+}

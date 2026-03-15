@@ -1,0 +1,14 @@
+{
+	"header": "Gerenciamento de Etiquetas",
+	"searchPlaceholder": "Procurar por etiquetas...",
+	"select": "Selecione algumas etiquetas",
+	"selector": {
+		"member": "Etiquetas de Membros",
+		"journal": "Etiquetas de diário"
+	},
+	"edit": {
+		"header": {
+			"member": "Editar etiqueta de membro"
+		}
+	}
+}

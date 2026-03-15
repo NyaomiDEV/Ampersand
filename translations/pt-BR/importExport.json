@@ -1,0 +1,11 @@
+{
+	"header": "Importar / Exportar",
+	"dbExport": {
+		"title": "Exportar seus dados",
+		"desc": "Salve seus dados atuais para um arquivo que você possa guardar em algum outro lugar"
+	},
+	"dbImportDesc": "Aviso! Isso irá sobrescrever qualquer dado existente",
+	"dbImport": "Importar seus dados de arquivo de backup",
+	"pkImport": "Importar seus dados de exportação do Pluralkit",
+	"tuImport": "Importar seus dados de exportação do Tupperbox"
+}

@@ -1,0 +1,9 @@
+{
+	"header": "Painel",
+	"header_salute": "Olá!",
+	"header_mainfronter": "Oi, {{fronterName}}!",
+	"systemDescription": "Descrição de sistema",
+	"nowFronting": "Frontando agora",
+	"fronterInfluencing": "Influenciando {{influencedMember}}",
+	"addToFront": "Adicionar ao front"
+}

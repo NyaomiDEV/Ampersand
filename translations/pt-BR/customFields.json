@@ -1,0 +1,10 @@
+{
+	"header": "Campos customizados",
+	"select": "Selecionar campos customizados",
+	"searchPlaceholder": "Procurar campos customizados...",
+	"edit": {
+		"header": "Editar campo customizado",
+		"headerAdd": "Adicionar campo customizado",
+		"name": "Nome de campo customizado"
+	}
+}

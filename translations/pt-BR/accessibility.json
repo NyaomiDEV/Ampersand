@@ -1,0 +1,12 @@
+{
+	"header": "Acessibilidade",
+	"highLegibilityFont": {
+		"title": "Fonte de alta legibilidade",
+		"desc": "Usar uma fonte de alta legibilidade da fonte padrão do dispositivo"
+	},
+	"highLegibilityFontType": {
+		"title": "Família de fonte de alta legibilidade",
+		"atkinson": "Atkinson Hyperlegible",
+		"opendyslexic": "OpenDyslexic"
+	}
+}

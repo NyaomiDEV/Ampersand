@@ -1,0 +1,14 @@
+{
+	"header": "Segurança",
+	"applock": {
+		"title": "Tranca de Aplicativo",
+		"desc": "Bloquear o aplicativo com uma senha"
+	},
+	"biometrics": {
+		"title": "Usar biometrias",
+		"desc": "Desbloqueie usando sua digital ou face"
+	},
+	"allowRemoteContent": {
+		"title": "Permitir conteúdo remoto"
+	}
+}

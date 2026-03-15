@@ -1,0 +1,11 @@
+{
+	"header": "Histórico de Front",
+	"searchPlaceholder": "Procurar o histórico de front...",
+	"currentlyFronting": "Frontando atualmente",
+	"wasFronting": "Estava frontando ainda",
+	"frontedThatDay": "Frontou naquele dia",
+	"influencing": "Influenciando {{influencedMember}}",
+	"edit": {
+		"header": "Editar entrada de front"
+	}
+}
