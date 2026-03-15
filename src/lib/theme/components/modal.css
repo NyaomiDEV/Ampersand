@@ -4,7 +4,12 @@
 }
 
 .md ion-modal::part(handle) {
-	top: 8px;
+	top: 16px;
+
+	&::before {
+		height: 4px;
+		width: 32px;
+	}
 }
 
 ion-modal::part(content) {

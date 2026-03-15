@@ -44,6 +44,7 @@
 .md div.markdown-content :is(h1, h2, h3, h4, h5, h6, p) {
     margin-top: 0;
     margin-bottom: 0.25rem;
+    line-height: normal;
 }
 
 .md div.markdown-content h1 {
