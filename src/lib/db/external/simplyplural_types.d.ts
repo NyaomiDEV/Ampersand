@@ -122,7 +122,7 @@ interface Poll extends withSystemID, MongoDocument {
 		color: string
 	}[],
 	supportDescMarkdown: boolean,
-	votes: {
+	votes?: {
 		id: string, // relates to Member._id
 		vote: string,
 		comment: string
