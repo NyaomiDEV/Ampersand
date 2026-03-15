@@ -215,6 +215,7 @@
 							v-for="tag in post.tags"
 							:key="tag"
 							:tag="tags.find(x => x.uuid === tag)!"
+							:clickable="true"
 						/>
 					</div>
 					<Markdown :markdown="post.body" />
