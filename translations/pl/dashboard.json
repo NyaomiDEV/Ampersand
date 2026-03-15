@@ -1,12 +1,12 @@
 {
-	"header": "Panel kontrolny",
+	"header": "Pulpit",
 	"header_salute": "Cześć!",
 	"header_mainfronter": "Hej, {{fronterName}}!",
 	"systemDescription": "Opis systemu",
 	"nowFronting": "Teraz na froncie",
 	"fronterInfluencing": "Wpływa na: {{influencedMember}}",
 	"addToFront": "Dodaj na front",
-	"recentFrontingHistory": "Niedawno opuścił* front",
+	"recentFrontingHistory": "Niedawno opuścili front",
 	"messageBoard": {
 		"header": "Tablica ogłoszeń",
 		"add": "Dodaj na tablicę",

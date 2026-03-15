@@ -20,6 +20,8 @@
 		"error": "Błąd podczas importowania kopii zapasowej.",
 		"errorSp": "Błąd podczas importowania eksportu z Simply Plural.",
 		"errorPk": "Błąd podczas importowania eksportu z PluralKit.",
-		"errorTu": "Błąd podczas importowania eksportu z Tupperbox."
-	}
+		"errorTu": "Błąd podczas importowania eksportu z Tupperbox.",
+		"importedOc": "Eksport z Octocon został zaimportowany. Proszę ponownie uruchomić aplikację."
+	},
+	"ocImport": "Importuj dane z eksportu Octocon"
 }

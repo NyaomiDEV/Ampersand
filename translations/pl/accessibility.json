@@ -9,7 +9,8 @@
 		"atkinson": "Atkinson Hyperlegible",
 		"opendyslexic": "OpenDyslexic",
 		"lexend": "Lexend",
-		"system-font": "Czcionka systemowa"
+		"system-font": "Czcionka systemowa",
+		"comicneue": "Comic Neue"
 	},
 	"uiVariant": {
 		"title": "Wariant interfejsu użytkownika",
@@ -33,7 +34,7 @@
 		"desc": "Wyłącz animacje w aplikacji"
 	},
 	"disableMemberCoversInList": {
-		"title": "Wyłącz tła członków systemu na liście"
+		"title": "Wyłącz tła na liście członków systemu"
 	},
 	"contrastLevel": {
 		"title": "Poziom kontrastu"

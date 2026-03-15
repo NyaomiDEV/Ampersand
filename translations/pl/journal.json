@@ -22,7 +22,7 @@
 		"postID": "ID wpisu: {{postID}}",
 		"postIDcopiedToClipboard": "ID wpisu w formacie wzmianki zostało skopiowane do schowka!",
 		"delete": {
-			"title": "Usuń wpis w dzienniku",
+			"title": "Usuń wpis",
 			"confirm": "Czy na pewno chcesz usunąć ten wpis?"
 		}
 	}

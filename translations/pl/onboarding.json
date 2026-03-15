@@ -18,7 +18,9 @@
 		"allowRemoteContent": {
 			"header": "Pozwolić na połączenie z Internetem?",
 			"desc": "Ampersand to aplikacja działająca głównie w trybie offline i dlatego potrzebuje twojej zgody, aby mieć dostęp do Internetu. Na tym etapie połączyłaby się z Internetem, aby pobrać awatary i banery członków waszego systemu. Później tę funkcję da się wyłączyć wchodząc w Opcje > Bezpieczeństwo > Zezwalaj na zawartość zdalną."
-		}
+		},
+		"octocon": "Tak, z Octocon",
+		"errorOc": "W trakcie importowania eksportu z Octocon wystąpił błąd. Proszę wybrać inną opcję."
 	},
 	"systemInfo": {
 		"header": "Opowiedz nam o swoim systemie!",
