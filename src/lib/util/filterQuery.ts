@@ -10,7 +10,7 @@ export type SystemFilterQuery = {
 
 export type MemberFilterQuery = {
 	query: string,
-	tags: string[],
+	tags: Map<string, boolean>,
 	system?: string,
 	isPinned?: boolean,
 	isArchived?: boolean,
@@ -45,28 +45,47 @@ export type CustomFieldFilterQuery = {
 
 export type JournalPostFilterQuery = {
 	query: string,
-	tags: string[],
+	tags: Map<string, boolean>,
 	member?: UUID | boolean;
 };
+
+
+function reduceToValue(value: string, emptyMeansTrue?: boolean, trueMeansValueItself?: false): boolean;
+function reduceToValue(value: string, emptyMeansTrue?: boolean, trueMeansValueItself?: true): boolean | string;
+function reduceToValue(value: string, emptyMeansTrue = true, trueMeansValueItself = false) {
+	switch(value.toLowerCase()) {
+		case "yes":
+		case "true":
+			return trueMeansValueItself ? value : true;
+		case "no":
+		case "false":
+			return false;
+		default:
+			return emptyMeansTrue ? (trueMeansValueItself ? value : true) : false;
+	}
+}
 
 function splitTokens(search: string){
 	const rawTokens = Array.from(search.matchAll(/(?=\S)[^'"\s]*(?:['"][^\\'"]*(?:\\[\s\S][^\\'"]*)*['"][^'"\s]*)*/g)).map(x => x[0]);
 
-	const tags: string[] = [];
+	const tags = new Map<string, boolean>();
 	const queryParts: string[] = [];
 	const variables = new Map<string, string>();
 
 	for(const token of rawTokens){
+		const tokenParts = token.slice(1).split(":");
 		switch(token.charAt(0)){
 			case "@":
-				const tokenParts = token.slice(1).split(":");
 				if(tokenParts[1])
 					variables.set(tokenParts[0], tokenParts[1].replace(/['"]/g, ""));
 				else 
 					variables.set(tokenParts[0], "");
 				break;
 			case "#":
-				tags.push(token.slice(1));
+				if(tokenParts[1])
+					tags.set(tokenParts[0], reduceToValue(tokenParts[1].replace(/['"]/g, "")));
+				else 
+					tags.set(tokenParts[0], true);
 				break;
 			default:
 				queryParts.push(token);
@@ -91,49 +110,13 @@ export function parseSystemFilterQuery(search: string): SystemFilterQuery {
 	for(const [variable, value] of rawParsed.variables){
 		switch(variable.toLowerCase()){
 			case "default":
-				if(value.length){
-					switch (value.toLowerCase()) {
-						case "yes":
-						case "true":
-							result.isDefault = true;
-							break;
-						case "no":
-						case "false":
-							result.isDefault = false;
-							break;
-					}
-				} else
-					result.isDefault = true;
+				result.isDefault = reduceToValue(value);
 				break;
 			case "pinned":
-				if (value.length) {
-					switch (value.toLowerCase()) {
-						case "yes":
-						case "true":
-							result.isPinned = true;
-							break;
-						case "no":
-						case "false":
-							result.isPinned = false;
-							break;
-					}
-				} else
-					result.isPinned = true;
+				result.isPinned = reduceToValue(value);
 				break;
 			case "archived":
-				if(value.length){
-					switch (value.toLowerCase()) {
-						case "yes":
-						case "true":
-							result.isArchived = true;
-							break;
-						case "no":
-						case "false":
-							result.isArchived = false;
-							break;
-					}
-				} else
-					result.isArchived = true;
+				result.isArchived = reduceToValue(value);
 				break;
 		}
 	}
@@ -146,12 +129,12 @@ export async function parseMemberFilterQuery(search: string): Promise<MemberFilt
 
 	const result: MemberFilterQuery = {
 		query: rawParsed.query,
-		tags: []
+		tags: new Map()
 	};
 
-	for(const _tag of rawParsed.tags){
+	for(const [_tag, shouldInclude] of rawParsed.tags.entries()){
 		const tag = await getTagFromNameHashtag(_tag);
-		if (tag) result.tags.push(tag.uuid);
+		if (tag) result.tags.set(tag.uuid, shouldInclude);
 	}
 
 	for(const [variable, value] of rawParsed.variables){
@@ -160,49 +143,13 @@ export async function parseMemberFilterQuery(search: string): Promise<MemberFilt
 				result.system = value;
 				break;
 			case "archived":
-				if(value.length){
-					switch (value.toLowerCase()) {
-						case "yes":
-						case "true":
-							result.isArchived = true;
-							break;
-						case "no":
-						case "false":
-							result.isArchived = false;
-							break;
-					}
-				} else
-					result.isArchived = true;
+				result.isArchived = reduceToValue(value);
 				break;
 			case "customfront":
-				if (value.length){
-					switch (value.toLowerCase()) {
-						case "yes":
-						case "true":
-							result.isCustomFront = true;
-							break;
-						case "no":
-						case "false":
-							result.isCustomFront = false;
-							break;
-					}
-				} else
-					result.isCustomFront = true;
+				result.isCustomFront = reduceToValue(value);
 				break;
 			case "pinned":
-				if (value.length) {
-					switch (value.toLowerCase()) {
-						case "yes":
-						case "true":
-							result.isPinned = true;
-							break;
-						case "no":
-						case "false":
-							result.isPinned = false;
-							break;
-					}
-				} else
-					result.isPinned = true;
+				result.isPinned = reduceToValue(value);
 				break;
 			case "pronouns":
 				result.pronouns = value;
@@ -225,19 +172,7 @@ export function parseFrontingHistoryFilterQuery(search: string) {
 	for (const [variable, value] of rawParsed.variables) {
 		switch (variable.toLowerCase()) {
 			case "current":
-				if (value) {
-					switch (value.toLowerCase()) {
-						case "yes":
-						case "true":
-							result.currentlyFronting = true;
-							break;
-						case "no":
-						case "false":
-							result.currentlyFronting = false;
-							break;
-					}
-				} else
-					result.currentlyFronting = true;
+				result.currentlyFronting = reduceToValue(value);
 				break;
 			case "member":
 				result.member = value;
@@ -259,45 +194,13 @@ export function parseBoardMessageFilterQuery(search: string) {
 	for (const [variable, value] of rawParsed.variables) {
 		switch (variable.toLowerCase()) {
 			case "pinned":
-				if (value) {
-					switch (value.toLowerCase()) {
-						case "yes":
-						case "true":
-							result.isPinned = true;
-							break;
-						case "no":
-						case "false":
-							result.isPinned = false;
-							break;
-					}
-				} else
-					result.isPinned = true;
+				result.isPinned = reduceToValue(value);
 				break;
 			case "archived":
-				if (value) {
-					switch (value.toLowerCase()) {
-						case "yes":
-						case "true":
-							result.isArchived = true;
-							break;
-						case "no":
-						case "false":
-							result.isArchived = false;
-							break;
-					}
-				} else
-					result.isArchived = true;
+				result.isArchived = reduceToValue(value);
 				break;
 			case "member":
-				switch (value.toLowerCase()) {
-					case "no":
-					case "false":
-						result.member = false;
-						break;
-					default:
-						result.member = value;
-						break;
-				}
+				result.member = reduceToValue(value, true, true);
 				break;
 		}
 		break;
@@ -338,19 +241,7 @@ export function parseCustomFieldFilterQuery(search: string) {
 	for (const [variable, value] of rawParsed.variables) {
 		switch (variable.toLowerCase()) {
 			case "default":
-				if (value) {
-					switch (value.toLowerCase()) {
-						case "yes":
-						case "true":
-							result.default = true;
-							break;
-						case "no":
-						case "false":
-							result.default = false;
-							break;
-					}
-				} else
-					result.default = true;
+				result.default = reduceToValue(value);
 				break;
 		}
 		break;
@@ -364,26 +255,18 @@ export async function parseJournalPostFilterQuery(search: string) {
 
 	const result: JournalPostFilterQuery = {
 		query: rawParsed.query,
-		tags: []
+		tags: new Map()
 	};
 
-	for (const _tag of rawParsed.tags) {
+	for(const [_tag, shouldInclude] of rawParsed.tags.entries()){
 		const tag = await getTagFromNameHashtag(_tag);
-		if (tag) result.tags.push(tag.uuid);
+		if (tag) result.tags.set(tag.uuid, shouldInclude);
 	}
 
 	for (const [variable, value] of rawParsed.variables) {
 		switch (variable.toLowerCase()) {
 			case "member":
-				switch (value.toLowerCase()) {
-					case "no":
-					case "false":
-						result.member = false;
-						break;
-					default:
-						result.member = value;
-						break;
-				}
+				result.member = reduceToValue(value, true, true);
 				break;
 		}
 		break;

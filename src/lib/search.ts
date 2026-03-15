@@ -66,8 +66,8 @@ export async function filterMember(search: string, member: Member){
 			return false;
 	}
 
-	if (parsed.tags.length) {
-		if (!parsed.tags.every(uuid => member.tags.includes(uuid)))
+	if (parsed.tags.size) {
+		if (!parsed.tags.entries().every(([uuid, include]) => include && member.tags.includes(uuid)))
 			return false;
 	}
 
@@ -247,8 +247,8 @@ export async function filterJournalPost(search: string, post: JournalPostComplet
 			return false;
 	}
 
-	if (parsed.tags.length) {
-		if (!parsed.tags.every(uuid => post.tags.includes(uuid)))
+	if (parsed.tags.size) {
+		if (!parsed.tags.entries().every(([uuid, include]) => include && post.tags.includes(uuid)))
 			return false;
 	}
 
