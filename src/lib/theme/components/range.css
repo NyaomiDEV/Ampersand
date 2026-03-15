@@ -25,6 +25,10 @@
 		transform: translateX(calc(var(--knob-size) / 2 - 2px));
 	}
 
+	&:dir(rtl)::part(knob) {
+		transform: translateX(calc(var(--knob-size) / -2 - 2px));
+	}
+
 	&::part(tick),
 	&::part(tick-active) {
 		--bar-height: 4px;
@@ -32,14 +36,14 @@
 	}
 
 	&::part(bar-active) {
-		border-top-right-radius: calc(var(--knob-border-radius) / 2);
-		border-bottom-right-radius: calc(var(--knob-border-radius) / 2);
-		margin-right: 6px;
+		border-start-end-radius: calc(var(--knob-border-radius) / 2);
+		border-end-end-radius: calc(var(--knob-border-radius) / 2);
+		margin-inline-end: 6px;
 	}
 
 	&[dual-knobs]::part(bar-active) {
 		border-radius: 4px;
-		margin-left: 6px;
+		margin-inline-start: 6px;
 	}
 
 	&::part(pin) {
@@ -60,6 +64,10 @@
 		transform: translateX(calc(var(--knob-size) / 2 - 2px)) scale(0.75, 1);
 	}
 
+	&:dir(rtl).range-pressed::part(knob) {
+		transform: translateX(calc(var(--knob-size) / -2 - 2px)) scale(0.75, 1);
+	}
+
 	/* Dot at the end */
 	&::part(bar)::after {
 		content: "\A";
@@ -73,5 +81,10 @@
 		border-radius: var(--md3-corner-full);
 
 		background-color: var(--bar-background-active);
+	}
+
+	&:dir(rtl)::part(bar)::after {
+		left: 0;
+		right: unset;
 	}
 }
