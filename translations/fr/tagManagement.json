@@ -35,7 +35,9 @@
 			"desc_one": "{{count}} post du journal a ce tag",
 			"desc_many": "{{count}} posts du journal ont ce tag",
 			"desc_other": "{{count}} posts du journal ont ce tag"
-		}
+		},
+		"tagID": "ID du tag : {{tagID}}",
+		"tagIDCopiedToClipboard": "ID du tag copié dans le presse-papier !"
 	},
 	"header": "Gestion des tags"
 }

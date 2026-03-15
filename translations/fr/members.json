@@ -32,7 +32,8 @@
 		"removeFromFront": "Membre retiré du front",
 		"addToFront": "Membre ajouté au front",
 		"setMainFronter": "Membre défini comme fronter principal",
-		"setSoleFronter": "Définir ce membre comme fronter unique"
+		"setSoleFronter": "Définir ce membre comme fronter unique",
+		"unsetMainFronter": "Membre retiré du front principal"
 	},
 	"deletedMember": "Membre supprimé",
 	"deletedCustomFront": "Front personnalisé supprimé",
@@ -40,6 +41,7 @@
 		"addToFront": "Ajouter au front",
 		"removeFromFront": "Retirer du front",
 		"setSoleFronter": "Définir comme fronter",
-		"setMainFronter": "Définir comme fronter principal"
+		"setMainFronter": "Définir comme fronter principal",
+		"unsetMainFronter": "Retirer du front principal"
 	}
 }

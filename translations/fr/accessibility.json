@@ -1,7 +1,7 @@
 {
 	"header": "Accessibilité",
 	"highLegibilityFont": {
-		"title": "Police facile à lire",
+		"title": "Police à haute lisibilité",
 		"desc": "Utilise une police à lisibilité élevée plutôt que la police standard de votre appareil"
 	},
 	"uiVariant": {
@@ -28,7 +28,7 @@
 		"desc": "Désactive les animations de l’application"
 	},
 	"longPressDuration": {
-		"title": "Durée de l’appui long"
+		"title": "Durée de l’appui prolongé"
 	},
 	"accentColor": {
 		"title": "Choix de la couleur d’accent"
@@ -38,6 +38,15 @@
 		"lexend": "Lexend",
 		"atkinson": "Atkinson Hyperlegible",
 		"system-font": "Police du système",
-		"title": "Police"
+		"title": "Police",
+		"comicneue": "Comic Neue"
+	},
+	"themeIsAmoled": {
+		"title": "Mode AMOLED",
+		"desc": "Affiche un fond complètement noir en mode sombre. Peut réduire l’usure de l’écran."
+	},
+	"themeIsVibrant": {
+		"desc": "Rend l’interface utilisateur plus colorée.",
+		"title": "Thème vif"
 	}
 }

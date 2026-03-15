@@ -18,7 +18,8 @@
 			"delay": {
 				"title": "Délai",
 				"desc": "Après {{delay}}"
-			}
+			},
+			"timing": "Minutage"
 		},
 		"periodic": {
 			"dayOfMonth": {

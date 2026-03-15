@@ -18,6 +18,10 @@
 		"error": "Erreur survenue lors de l’importation du fichier.",
 		"errorSp": "Erreur survenue lors de l’importation des données de Simply Plural.",
 		"errorPk": "Erreur survenue lors de l’importation des données de PluralKit.",
-		"errorTu": "Erreur survenue lors de l’importation des données de Tupperbox."
-	}
+		"errorTu": "Erreur survenue lors de l’importation des données de Tupperbox.",
+		"exportedApp": "Vos données ont été exportées vers l’emplacement choisi.",
+		"importedOc": "L’export Octocon a été importé. Veuillez redémarrer l’application.",
+		"exportedAppIos": "La sauvegarde a été exportée vers le fichier Ampersand de votre application Fichiers."
+	},
+	"ocImport": "Importer des données depuis un export Octocon"
 }

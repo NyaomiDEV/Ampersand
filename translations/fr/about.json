@@ -1,5 +1,7 @@
 {
 	"header": "À propos",
 	"madein": "Fait avec amour en Italie",
-	"version": "Version {{version}}"
+	"version": "Version {{version}}",
+	"privacyPolicy": "Politique de confidentialité",
+	"updateAvailable": "Mise à jour disponible : {{newVersion}}"
 }

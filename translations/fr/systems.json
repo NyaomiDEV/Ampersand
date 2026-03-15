@@ -15,6 +15,13 @@
 		"systemIDcopiedToClipboard": "ID du système copié dans le presse-papiers !",
 		"memberCountText": "{{totalMemberCount}} membre(s), {{memberCount}} actif(s), {{archivedMemberCount}} archivé(s)",
 		"customFrontCountText": "{{totalCustomFrontCount}} fronts personnalisés, {{customFrontCount}} actif(s), {{archivedCustomFrontCount}} archivé(s)",
-		"tapToShow": "Appuyer pour afficher"
-	}
+		"tapToShow": "Appuyer pour afficher",
+		"isPinned": "Épingler le système",
+		"showMembers": "Afficher les membres de ce système",
+		"parent": "Système parent",
+		"archived": "Archivé"
+	},
+	"header": "Systèmes",
+	"searchPlaceholder": "Recherchez des systèmes…",
+	"select": "Sélectionner un système"
 }

@@ -1,6 +1,7 @@
 {
 	"welcomeScreen": {
-		"header": "Bienvenue sur Ampersand !"
+		"header": "Bienvenue sur Ampersand !",
+		"start": "Commencez !"
 	},
 	"importScreen": {
 		"header": "Souhaitez-vous importer des données ?",
@@ -13,7 +14,13 @@
 		"error": "Erreur survenue lors de l’importation du fichier. Veuillez choisir une autre option.",
 		"errorSp": "Erreur survenue lors de l’importation des données de Simply Plural. Veuillez choisir une autre option.",
 		"errorPk": "Erreur survenue lors de l’importation des données de PluralKit. Veuillez choisir une autre option.",
-		"errorTu": "Erreur survenue lors de l’importation des données de Tupperbox. Veuillez choisir une autre option."
+		"errorTu": "Erreur survenue lors de l’importation des données de Tupperbox. Veuillez choisir une autre option.",
+		"errorOc": "Erreur survenue lors de l’importation des données d’Octocon. Veuillez choisir une autre option.",
+		"octocon": "Oui, depuis Octocon",
+		"allowRemoteContent": {
+			"header": "Autoriser l’application à se connecter à Internet ?",
+			"desc": "Ampersand est principalement une application hors-ligne. Elle nécessite donc votre autorisation pour se connecter à Internet et télécharger les avatars et bannières de vos membres. Vous pouvez désactiver ce paramètre plus tard dans Options > Sécurité > Autoriser la récupération de contenu en ligne."
+		}
 	},
 	"systemInfo": {
 		"header": "Dites-en plus sur votre système !",

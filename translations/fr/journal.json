@@ -20,7 +20,8 @@
 		"delete": {
 			"title": "Supprimer ce post du journal",
 			"confirm": "Êtes vous certain·e de vouloir supprimer ce post ?"
-		}
+		},
+		"headerOptions": "Options du post"
 	},
 	"private": "Ce post est privé",
 	"pinnedPosts": "Posts épinglés",

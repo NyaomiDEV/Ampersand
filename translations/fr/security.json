@@ -16,5 +16,13 @@
 		"titleModifyNew": "Entrez votre nouveau mot de passe",
 		"titleDisable": "Entrez votre mot de passe",
 		"hint": "Mot de passe"
+	},
+	"allowRemoteContent": {
+		"title": "Autoriser la récupération de contenu en ligne",
+		"desc": "Autorise Ampersand à se connecter à Internet pour récupérer du contenu en ligne, comme des images dans les champs en Markdown ou des avatars issus de sources tierces."
+	},
+	"passwordAlert": {
+		"header": "Attention",
+		"text": "Êtes-vous certain·e de vouloir utiliser un mot de passe ? Avant de procéder, veuillez conserver votre mot de passe en dehors d’Ampersand : vous ne pourrez pas récupérer vos données ou le réinitialiser si vous le perdez. Assurez-vous d’exporter vos données avant de choisir un mot de passe !"
 	}
 }
