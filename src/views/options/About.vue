@@ -16,6 +16,7 @@
 
 	const egg = ref(0);
 	const newVersion = ref<UpdateCheckResponse>();
+	const isCiVersion = import.meta.env.AMPERSAND_IS_CI_BUILD === "1";
 
 	async function openRepo(){
 		const url = "https://codeberg.org/Ampersand/app";
@@ -76,7 +77,7 @@
 			<div class="container">
 				<div class="headings">
 					<h3>Ampersand</h3>
-					<span>{{ $t("about:version", { version }) }}</span>
+					<span>{{ $t("about:version", { version }) }}{{ isCiVersion ? ` - ${$t("about:ciVersion")}` : "" }}</span>
 					<span>{{ $t("about:madein") }}</span>
 				</div>
 
