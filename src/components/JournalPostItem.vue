@@ -75,7 +75,7 @@
 		object-fit: cover;
 		height: 64px;
 		border-radius: 16px;
-		float: right;
+		float: inline-end;
 	}
 
 	div.tags {

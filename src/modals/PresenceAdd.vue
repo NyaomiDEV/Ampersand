@@ -75,7 +75,6 @@
 	}
 
 	ion-button {
-		float: right;
 		margin-inline: 16px;
 	}
 </style>
