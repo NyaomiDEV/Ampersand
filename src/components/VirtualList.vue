@@ -1,6 +1,6 @@
 <script setup lang="ts" generic="T extends UUIDable">
 	import { useVirtualizer, Virtualizer } from "@tanstack/vue-virtual";
-	import { computed, nextTick, ref } from "vue";
+	import { ComponentPublicInstance, computed, nextTick, ref } from "vue";
 	import { UUIDable } from "../lib/db/entities";
 
 	const { entries } = defineProps<{
@@ -33,10 +33,10 @@
 	const virtualRows = computed(() => rowVirtualizer.value.getVirtualItems());
 	const totalSize = computed(() => rowVirtualizer.value.getTotalSize());
 
-	const measureElement = async (el: Element | null | undefined) => {
-		await nextTick(() => {
+	const measureElement = (el?: Element | ComponentPublicInstance | null) => {
+		void nextTick(() => {
 			if (!el) return;
-			rowVirtualizer.value.measureElement(el);
+			rowVirtualizer.value.measureElement(el as Element);
 		});
 	};
 </script>
