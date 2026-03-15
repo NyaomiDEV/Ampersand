@@ -41,6 +41,10 @@ html.high-legibility.hl-lexend {
 	--ampersand-font-name: 'Lexend';
 }
 
+html.high-legibility.hl-comicneue {
+	--ampersand-font-name: 'Comic Neue';
+}
+
 html.high-legibility.hl-system-font {
 	--ampersand-font-name: system-ui;
 	--ion-font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;

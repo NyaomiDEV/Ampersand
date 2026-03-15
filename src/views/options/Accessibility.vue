@@ -145,6 +145,10 @@
 							{{ $t("accessibility:highLegibilityFontType.lexend") }}
 						</IonSelectOption>
 
+						<IonSelectOption value="comicneue" class="hl-comicneue">
+							{{ $t("accessibility:highLegibilityFontType.comicneue") }}
+						</IonSelectOption>
+
 						<IonSelectOption value="system-font" class="hl-system-font">
 							{{ $t("accessibility:highLegibilityFontType.system-font") }}
 						</IonSelectOption>
@@ -217,15 +221,19 @@
 </template>
 
 <style>
-	.action-sheet-button.hl-atkinson {
+	button.action-sheet-button.hl-atkinson {
 		font-family: 'Atkinson Hyperlegible', var(--ion-font-family);
 	}
 	
-	.action-sheet-button.hl-opendyslexic {
+	button.action-sheet-button.hl-opendyslexic {
 		font-family: 'OpenDyslexic', var(--ion-font-family);
 	}
 	
-	.action-sheet-button.hl-lexend {
+	button.action-sheet-button.hl-lexend {
 		font-family: 'Lexend', var(--ion-font-family);
+	}
+
+	button.action-sheet-button.hl-comicneue {
+		font-family: 'Comic Neue', var(--ion-font-family);
 	}
 </style>
