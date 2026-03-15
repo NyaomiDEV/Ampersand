@@ -5,7 +5,7 @@
 
 import { appConfig, securityConfig } from "../../config";
 import { nilUid } from "../../util/consts";
-import { CustomField, FrontingEntry, Member, System, Tag } from "../entities";
+import { BoardMessage, CustomField, FrontingEntry, Member, System, Tag } from "../entities";
 import { fetch } from "@tauri-apps/plugin-http";
 import { getTables } from "../tables";
 
@@ -13,7 +13,8 @@ type OctoconExport = {
 	user: OctoconUser,
 	alters: OctoconAlter[],
 	fronts: OctoconFront[],
-	tags: OctoconTag[]
+	tags: OctoconTag[],
+	polls: OctoconPoll[]
 };
 
 type OctoconUser = {
@@ -65,6 +66,35 @@ type OctoconTag = {
 	security_level: "private" | "trusted_only" | "friends_only" | "public",
 	parent_tag_id?: string,
 	alters: number[]
+};
+
+type OctoconPoll = {
+	id: string,
+	title: string,
+	description: string,
+	type: "vote" | "choice",
+	data: OctoconPollData,
+	time_end?: string, // UTC ISO-8601, without final Z it seems? Elixir what
+	inserted_at: string, // UTC ISO-8601, without final Z it seems? Elixir what
+	updated_at: string // UTC ISO-8601, without final Z it seems? Elixir what
+};
+
+type OctoconPollData = {
+	allow_veto?: boolean, // only when poll type is vote
+	choice?: OctoconPollChoice[], // only when poll type is choice
+	responses: OctoconPollResponse[]
+};
+
+type OctoconPollChoice = {
+	id: string,
+	name: string
+};
+
+type OctoconPollResponse = {
+	alter_id: number, // related to OctoconAlter.id,
+	comment?: string,
+	vote?: "yes" | "no" | "abstain" | "veto", // only when poll type is vote
+	choice_id?: string // related to OctoconPollChoice.id and only when poll type is choice
 };
 
 async function getImage(url?: string){
@@ -216,12 +246,53 @@ function frontingEntries(ocExport: OctoconExport, memberMapping: Map<number, str
 	return frontingEntries;
 }
 
+function polls(ocExport: OctoconExport, memberMapping: Map<number, string>){
+	const boardMessages: BoardMessage[] = [];
+	for(const poll of ocExport.polls){
+		boardMessages.push({
+			uuid: window.crypto.randomUUID(),
+			title: poll.title,
+			body: poll.description,
+			date: new Date(poll.inserted_at),
+			isPinned: false,
+			isArchived: false,
+			poll: {
+				multipleChoice: false,
+				entries:
+					poll.type === "vote"
+						? [
+								{
+									choice: "yes",
+									votes: poll.data.responses.filter(x => x.vote === "yes").map(x => ({ reason: x.comment, member: memberMapping.get(x.alter_id)! }))
+								},
+								{
+									choice: "no",
+									votes: poll.data.responses.filter(x => x.vote === "no").map(x => ({ reason: x.comment, member: memberMapping.get(x.alter_id)! }))
+								},
+								{
+									choice: "abstain",
+									votes: poll.data.responses.filter(x => x.vote === "abstain").map(x => ({ reason: x.comment, member: memberMapping.get(x.alter_id)! }))
+								},
+								poll.data.allow_veto ? {
+									choice: "veto",
+									votes: poll.data.responses.filter(x => x.vote === "veto").map(x => ({ reason: x.comment, member: memberMapping.get(x.alter_id)! }))
+								} : undefined,
+							].filter(x => x !== undefined)
+						: poll.data.choice?.map(x => ({ choice: x.name, votes: poll.data.responses.filter(y => y.choice_id === x.id).map(y => ({ reason: y.comment, member: memberMapping.get(y.alter_id)! })) })) || []
+			}
+		});
+	}
+
+	return boardMessages;
+}
+
 export async function importOctocon(ocExport: OctoconExport){
 	const _system = await system(ocExport);
 	const { customFields: _customFields, customFieldMapping } = customFields(ocExport);
 	const { members: _members, memberMapping } = await members(ocExport, _system, customFieldMapping);
 	const _tags = tags(ocExport, _members, memberMapping);
 	const _frontingEntries = frontingEntries(ocExport, memberMapping);
+	const _boardMessages = polls(ocExport, memberMapping);
 
 	try {
 		// WIPE AMPERSAND
@@ -235,6 +306,7 @@ export async function importOctocon(ocExport: OctoconExport){
 		await tables.tags.bulkAdd(_tags);
 		await tables.members.bulkAdd(_members);
 		await tables.frontingEntries.bulkAdd(_frontingEntries);
+		await tables.boardMessages.bulkAdd(_boardMessages);
 	} catch (e) {
 		console.error(e);
 		return false;
