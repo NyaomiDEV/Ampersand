@@ -21,7 +21,6 @@
 		IonSegmentButton,
 	} from "@ionic/vue";
 
-	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
 
@@ -144,7 +143,6 @@
 			<IonToolbar>
 				<IonBackButton
 					slot="start"
-					:icon="backMD"
 					default-href="/options/reminders/"
 				/>
 				<IonTitle>{{ $t("reminders:edit.header") }}</IonTitle>

@@ -19,7 +19,6 @@
 	import { appConfig } from "../../lib/config/index.ts";
 
 	import systemCircle from "@material-symbols/svg-600/outlined/supervised_user_circle.svg";
-	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 	import defaultMD from "@material-symbols/svg-600/outlined/bookmark_star.svg";
 	import pinMD from "@material-symbols/svg-600/outlined/keep.svg";
@@ -82,7 +81,7 @@
 	<IonPage>
 		<IonHeader>
 			<IonToolbar>
-				<IonBackButton slot="start" :icon="backMD" default-href="/options/" />
+				<IonBackButton slot="start" default-href="/options/" />
 				<IonTitle>
 					{{ $t("systems:header") }}
 				</IonTitle>

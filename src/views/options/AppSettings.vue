@@ -10,7 +10,6 @@
 	import SystemSelect from "../../modals/SystemSelect.vue";
 	import { System } from "../../lib/db/entities";
 
-	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import languageMD from "@material-symbols/svg-600/outlined/language.svg";
 	import timerMD from "@material-symbols/svg-600/outlined/timer_off.svg";
 	import dashboardMD from "@material-symbols/svg-600/outlined/space_dashboard.svg";
@@ -57,7 +56,6 @@
 			<IonToolbar>
 				<IonBackButton
 					slot="start"
-					:icon="backMD"
 					default-href="/options/"
 				/>
 				<IonTitle>

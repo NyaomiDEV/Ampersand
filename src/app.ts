@@ -53,12 +53,16 @@ import { platform } from "@tauri-apps/plugin-os";
 import { onBackButtonPress } from "@tauri-apps/api/app";
 import { maybeExit } from "./lib/util/backbutton";
 
+// Back button icon
+import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
+
 async function setupAmpersand(){
 	const app = createApp(App).use(IonicVue, {
 		hardwareBackButton: true,
 		mode: "md",
 		swipeBackEnabled: platform() === "ios",
-		toggleOnOffLabels: true
+		toggleOnOffLabels: true,
+		backButtonIcon: backMD
 	}).use(router).use(I18NextVue, { i18next: i18n });
 
 	window.Ionic.config.set("navAnimation", slideAnimation);

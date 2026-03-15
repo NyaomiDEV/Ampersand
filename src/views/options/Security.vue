@@ -5,7 +5,6 @@
 	import { securityConfig } from "../../lib/config";
 	import { useTranslation } from "i18next-vue";
 
-	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import lockMD from "@material-symbols/svg-600/outlined/lock.svg";
 	import passwordMD from "@material-symbols/svg-600/outlined/password_2.svg";
 	import biometricsMD from "@material-symbols/svg-600/outlined/fingerprint.svg";
@@ -118,7 +117,6 @@
 			<IonToolbar>
 				<IonBackButton
 					slot="start"
-					:icon="backMD"
 					default-href="/options/"
 				/>
 				<IonTitle>

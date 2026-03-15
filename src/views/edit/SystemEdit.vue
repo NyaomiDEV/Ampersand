@@ -9,7 +9,6 @@
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import SystemSelect from "../../modals/SystemSelect.vue";
 
-	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import accountCircle from "@material-symbols/svg-600/outlined/supervised_user_circle.svg";
 	import pencilMD from "@material-symbols/svg-600/outlined/edit.svg";
 	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
@@ -176,7 +175,6 @@
 			<IonToolbar>
 				<IonBackButton
 					slot="start"
-					:icon="backMD"
 					default-href="/options/"
 				/>
 				<IonTitle>

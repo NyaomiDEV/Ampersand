@@ -3,7 +3,6 @@
 	import { accessibilityConfig } from "../../lib/config";
 	import Color from "../../components/Color.vue";
 
-	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import lowContrastMD from "@material-symbols/svg-600/outlined/brightness_1.svg";
 	import highContrastMD from "@material-symbols/svg-600/outlined/contrast.svg";
 	import amoledMD from "@material-symbols/svg-600/outlined/night_sight_max.svg";
@@ -23,7 +22,7 @@
 	<IonPage>
 		<IonHeader>
 			<IonToolbar>
-				<IonBackButton slot="start" :icon="backMD" default-href="/options/" />
+				<IonBackButton slot="start" default-href="/options/" />
 				<IonTitle>
 					{{ $t("accessibility:header") }}
 				</IonTitle>

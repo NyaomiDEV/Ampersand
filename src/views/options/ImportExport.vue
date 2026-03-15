@@ -12,7 +12,6 @@
 	import { importSimplyPlural } from "../../lib/db/external/simplyplural";
 	import { importOctocon } from "../../lib/db/external/octocon";
 
-	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import importMD from "@material-symbols/svg-600/outlined/download.svg";
 	import exportMD from "@material-symbols/svg-600/outlined/upload.svg";
 	import octoMD from "@material-symbols/svg-600/outlined/neurology.svg";
@@ -203,7 +202,6 @@
 			<IonToolbar>
 				<IonBackButton
 					slot="start"
-					:icon="backMD"
 					default-href="/options/"
 				/>
 				<IonTitle>{{ $t("importExport:header") }}</IonTitle>

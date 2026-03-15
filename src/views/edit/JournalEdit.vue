@@ -20,7 +20,6 @@
 		IonFooter,
 	} from "@ionic/vue";
 
-	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import pencilMD from "@material-symbols/svg-600/outlined/edit.svg";
 	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
 	import imageMD from "@material-symbols/svg-600/outlined/image.svg";
@@ -161,7 +160,6 @@
 			<IonToolbar>
 				<IonBackButton
 					slot="start"
-					:icon="backMD"
 					default-href="/journal/"
 				/>
 				<IonTitle>

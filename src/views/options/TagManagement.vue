@@ -3,7 +3,6 @@
 	import { onMounted, onUnmounted, ref, shallowRef, watch } from "vue";
 	import { useRoute } from "vue-router";
 
-	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 
 	import { getFilteredTags } from "../../lib/db/tables/tags";
@@ -50,7 +49,6 @@
 			<IonToolbar>
 				<IonBackButton
 					slot="start"
-					:icon="backMD"
 					default-href="/options/"
 				/>
 				<IonTitle>

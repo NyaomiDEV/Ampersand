@@ -9,7 +9,6 @@
 	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
 	import dayjs from "dayjs";
 
-	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 	import commentMD from "@material-symbols/svg-600/outlined/comment.svg";
 
@@ -153,7 +152,6 @@
 			<IonToolbar>
 				<IonBackButton
 					slot="start"
-					:icon="backMD"
 					default-href="/options/"
 				/>
 				<IonTitle>

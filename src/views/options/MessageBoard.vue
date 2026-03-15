@@ -6,7 +6,6 @@
 	import BoardMessageEdit from "../../modals/BoardMessageEdit.vue";
 	import Spinner from "../../components/Spinner.vue";
 
-	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 
 	import dayjs from "dayjs";
@@ -121,7 +120,6 @@
 			<IonToolbar>
 				<IonBackButton
 					slot="start"
-					:icon="backMD"
 					default-href="/options/"
 				/>
 				<IonTitle>

@@ -10,7 +10,6 @@
 		IonItem,
 		IonLabel
 	} from "@ionic/vue";
-	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import { newMember } from "../../lib/db/tables/members";
 	import { appConfig } from "../../lib/config";
 
@@ -37,7 +36,6 @@
 			<IonToolbar>
 				<IonBackButton
 					slot="start"
-					:icon="backMD"
 					default-href="/options/"
 				/>
 				<IonTitle>

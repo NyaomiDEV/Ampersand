@@ -5,7 +5,6 @@
 	import CodebergLogo from "../../assets/codeberg_logo.svg";
 	import LiberapayLogo from "../../assets/liberapay_logo.svg";
 
-	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import globeMD from "@material-symbols/svg-600/outlined/globe.svg";
 
 	import { version } from "../../../package.json";
@@ -65,7 +64,6 @@
 			<IonToolbar>
 				<IonBackButton
 					slot="start"
-					:icon="backMD"
 					default-href="/options/"
 				/>
 				<IonTitle>

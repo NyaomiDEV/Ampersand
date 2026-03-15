@@ -21,7 +21,6 @@
 	} from "@ionic/vue";
 	import Color from "../../components/Color.vue";
 
-	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
 	import peopleMD from "@material-symbols/svg-600/outlined/group.svg";
@@ -185,7 +184,6 @@
 			<IonToolbar>
 				<IonBackButton
 					slot="start"
-					:icon="backMD"
 					default-href="/options/tagManagement/"
 				/>
 				<IonTitle>{{ tag.type === "member" ? $t("tagManagement:edit.header.member") : $t("tagManagement:edit.header.journal") }}</IonTitle>

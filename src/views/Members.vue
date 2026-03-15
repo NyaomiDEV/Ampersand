@@ -18,7 +18,6 @@
 	import { accessibilityConfig, appConfig } from "../lib/config/index.ts";
 	import CollapsibleHeaderbar from "../components/CollapsibleHeaderbar.vue";
 
-	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 	import pinMD from "@material-symbols/svg-600/outlined/keep.svg";
 	import addToFrontMD from "@material-symbols/svg-600/outlined/person_add.svg";
@@ -175,7 +174,6 @@
 					<IonBackButton
 						v-if="route.name === 'StandaloneMembers'"
 						slot="start"
-						:icon="backMD"
 						default-href="/"
 					/>
 					<IonTitle>

@@ -6,7 +6,6 @@
 	import Spinner from "../components/Spinner.vue";
 	import JournalPostItem from "../components/JournalPostItem.vue";
 
-	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 
 	import { JournalPostComplete } from "../lib/db/entities";
@@ -145,7 +144,6 @@
 					<IonBackButton
 						v-if="route.name === 'StandaloneJournal'"
 						slot="start"
-						:icon="backMD"
 						default-href="/"
 					/>
 					<IonTitle>

@@ -9,7 +9,6 @@
 	import CustomFieldEdit from "../../modals/CustomFieldEdit.vue";
 	import { addModal, removeModal } from "../../lib/modals";
 
-	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 	import reorderMD from "@material-symbols/svg-600/outlined/swap_vert.svg";
 	import doneMD from "@material-symbols/svg-600/outlined/done_all.svg";
@@ -97,7 +96,6 @@
 			<IonToolbar>
 				<IonBackButton
 					slot="start"
-					:icon="backMD"
 					default-href="/options/"
 				/>
 				<IonTitle>
