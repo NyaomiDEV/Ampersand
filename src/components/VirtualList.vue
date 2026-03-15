@@ -1,20 +1,20 @@
-<script setup lang="ts" generic="T">
-	import { useVirtualizer } from "@tanstack/vue-virtual";
+<script setup lang="ts" generic="T extends UUIDable">
+	import { useVirtualizer, Virtualizer } from "@tanstack/vue-virtual";
 	import { computed, nextTick, ref } from "vue";
+	import { UUIDable } from "../lib/db/entities";
 
 	const { entries } = defineProps<{
 		entries: T[]
 	}>();
 
-	const scroller = ref();
+	const scroller = ref<Element>();
 
 	const virtualizerOptions = computed(() => ({
 		count: entries?.length ?? 0,
-		getScrollElement: () => scroller.value,
+		getScrollElement: () => scroller.value || null,
 		estimateSize: () => 130,
-		// @ts-expect-error: use uuid here
-		getItemKey: (index) => entries[index]?.uuid ?? index,
-		measureElement: (element, _entry, instance) => {
+		getItemKey: (index: number) => entries[index]?.uuid ?? index,
+		measureElement: (element: Element, _entry: ResizeObserverEntry | undefined, instance: Virtualizer<Element, Element>): number => {
 			const direction = instance.scrollDirection;
 			if (direction === "forward" || direction === null) {
 				// Allow remeasuring when scrolling down or direction is null
@@ -33,8 +33,8 @@
 	const virtualRows = computed(() => rowVirtualizer.value.getVirtualItems());
 	const totalSize = computed(() => rowVirtualizer.value.getTotalSize());
 
-	const measureElement = (el) => {
-		nextTick(() => {
+	const measureElement = async (el: Element | null | undefined) => {
+		await nextTick(() => {
 			if (!el) return;
 			rowVirtualizer.value.measureElement(el);
 		});
