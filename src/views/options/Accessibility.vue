@@ -143,8 +143,8 @@
 							{{ $t("accessibility:highLegibilityFontType.lexend") }}
 						</IonSelectOption>
 
-						<IonSelectOption value="comicneue" class="hl-comicneue">
-							{{ $t("accessibility:highLegibilityFontType.comicneue") }}
+						<IonSelectOption value="comicrelief" class="hl-comicrelief">
+							{{ $t("accessibility:highLegibilityFontType.comicrelief") }}
 						</IonSelectOption>
 
 						<IonSelectOption value="system-font" class="hl-system-font">
@@ -226,7 +226,7 @@
 		font-family: 'Lexend', var(--ion-font-family);
 	}
 
-	button.action-sheet-button.hl-comicneue {
-		font-family: 'Comic Neue', var(--ion-font-family);
+	button.action-sheet-button.hl-comicrelief {
+		font-family: 'Comic Relief', var(--ion-font-family);
 	}
 </style>

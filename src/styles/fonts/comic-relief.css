@@ -1,0 +1,13 @@
+@font-face {
+	font-family: "Comic Relief";
+	font-weight: normal;
+	font-style: normal;
+	src: url(../../assets/fonts/comic-relief/ComicRelief-Regular.ttf);
+}
+
+@font-face {
+	font-family: "Comic Relief";
+	font-weight: bold;
+	font-style: normal;
+	src: url(../../assets/fonts/comic-relief/ComicRelief-Bold.ttf);
+}
