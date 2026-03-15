@@ -27,5 +27,6 @@
 			"title": "Erinnerung löschen",
 			"confirm": "Bist du dir sicher, dass du diese Erinnerung löschen möchtest?"
 		}
-	}
+	},
+	"eventBasedHeader": "Ereignisbasierte Erinnerungen"
 }

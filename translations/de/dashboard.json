@@ -1,5 +1,6 @@
 {
 	"header_salute": "Hallo!",
 	"systemDescription": "Systembeschreibung",
-	"header": "Startseite"
+	"header": "Startseite",
+	"header_mainfronter": "Hallo, {{fronterName}}!"
 }

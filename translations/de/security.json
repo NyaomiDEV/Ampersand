@@ -10,5 +10,8 @@
 		"hint": "Passwort",
 		"titleModifyOld": "Altes Passwort eingeben"
 	},
-	"editPassword": "Passwort ändern"
+	"editPassword": "Passwort ändern",
+	"biometrics": {
+		"title": "Biometrie nutzen"
+	}
 }
