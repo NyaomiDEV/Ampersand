@@ -31,11 +31,10 @@
 	<IonModal class="presence-add-modal">
 		<IonList>
 			<IonItem>
-				<IonLabel position="floating">
-					{{ $t("frontHistory:edit.presence.addTitle") }}
-				</IonLabel>
 				<IonRange
 					v-model="range"
+					:label="$t('frontHistory:edit.presence.addTitle')"
+					label-placement="stacked"
 					:min="0"
 					:max="10"
 					:step="1"

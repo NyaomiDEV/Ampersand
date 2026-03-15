@@ -121,6 +121,10 @@ ion-datetime {
 	max-width: 100%;
 }
 
+ion-range.range-label-placement-stacked::part(label) {
+	transform: none;
+}
+
 input[type="search"]::-webkit-search-decoration,
 input[type="search"]::-webkit-search-cancel-button,
 input[type="search"]::-webkit-search-results-button,

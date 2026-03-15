@@ -95,11 +95,10 @@
 				</IonItem>
 
 				<IonItem>
-					<IonLabel position="floating">
-						{{ $t("accessibility:contrastLevel.title") }}
-					</IonLabel>
 					<IonRange
 						v-model="accessibilityConfig.contrastLevel"
+						:label="$t('accessibility:contrastLevel.title')"
+						label-placement="stacked"
 						:min="0"
 						:max="1"
 						:step="0.05"
@@ -156,11 +155,10 @@
 				</IonItem>
 
 				<IonItem>
-					<IonLabel position="floating">
-						{{ $t("accessibility:fontScale.title") }}
-					</IonLabel>
 					<IonRange
 						v-model="accessibilityConfig.fontScale"
+						:label="$t('accessibility:fontScale.title')"
+						label-placement="stacked"
 						:min="0.5"
 						:max="1.5"
 						:step="0.1"
@@ -197,11 +195,10 @@
 				We're not using this anymore since we deprecated member long pressing,
 				however we do keep this here should we reintroduce long presses in some other areas
 				<IonItem>
-					<IonLabel position="floating">
-						{{ $t("accessibility:longPressDuration.title") }}
-					</IonLabel>
 					<IonRange
 						v-model="accessibilityConfig.longPressDuration"
+						:label="$t('accessibility:longPressDuration.title')"
+						label-placement="stacked"
 						:min="500"
 						:max="1000"
 						:step="50"
