@@ -18,7 +18,9 @@
 		"allowRemoteContent": {
 			"header": "ilo li ken ala ken toki tawa kulupu pi ilo sona?",
 			"desc": "tenpo mute la ilo Ampersand li toki ala tawa kulupu pi ilo sona. ni la, ilo ni li wile e ken sina tawa toki. tenpo ni la ilo ni li wile toki tawa kulupu pi ilo sona tan ni; ona li wile kama jo e sitelen pi ijo kulupu. sina luka e nena \"ken ante\" la sina luka e nena \"awen\" la sina luka e nena \"ilo li ken toki tawa kulupu pi ilo sona\" la sina ken toki e ni tawa ilo ni; o toki ala tawa kulupu pi ilo sona."
-		}
+		},
+		"octocon": "mi wile, mi pana e sona mi tan ilo Octocon",
+		"errorOc": "ijo ilo pi sona sina li tan ilo Octocon. ijo ni li alasa kama tawa ilo sina, taso pakala li kama. o ante e nasin pi wile sina."
 	},
 	"systemInfo": {
 		"header": "o toki lon kulupu sina!",

@@ -2,5 +2,6 @@
 	"header": "sona pi ilo ni",
 	"version": "ilo pi ante {{version}}",
 	"madein": "ni li pali tawa pona lon ma Italija",
-	"privacyPolicy": "lipu pi kepeken sona"
+	"privacyPolicy": "lipu pi kepeken sona",
+	"updateAvailable": "sina ken kepeken ilo pi ante sin {{newVersion}}"
 }
