@@ -33,23 +33,6 @@
 </template>
 
 <style scoped>
-	.presence-add-modal {
-		--border-radius: 16px;
-		--height: fit-content;
-	}
-
-	.presence-add-modal::part(content) {
-		padding: 8px 0px 16px 0px;
-		box-sizing: border-box;
-	}
-
-	ion-button {
-		float: right;
-		margin-inline: 16px;
-	}
-</style>
-
-<style scoped>
 	.tag-description-modal {
 		--border-radius: 16px;
 		--height: fit-content;
