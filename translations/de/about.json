@@ -1,5 +1,7 @@
 {
 	"header": "Über Ampersand",
 	"version": "Version {{version}}",
-	"madein": "Mit Liebe gemacht aus Italien"
+	"madein": "Mit Liebe gemacht aus Italien",
+	"updateAvailable": "Aktualisierung verfügbar: {{newVersion}}",
+	"privacyPolicy": "Datenschutzerklärung"
 }
