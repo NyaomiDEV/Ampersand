@@ -78,23 +78,15 @@
 
 <style scoped>
 	div.chips {
-		display: flex;
 		white-space: nowrap;
-	}
-
-	div.chips > ion-chip:first {
-		flex: 2 0;
+		overflow-x: scroll;
+		scrollbar-width: none;
 	}
 
 	div.tag-chips {
-		display: block;
-		flex: 1 1;
+		display: inline-block;
 		border-left: 1px solid var(--ion-text-color-step-400);
 		margin: 4px 0;
-		white-space: nowrap;
-		overflow-x: scroll;
-		overflow-y: hidden;
-		scrollbar-width: none;
 	}
 
 	div.chips > div.tag-chips:first-child {
