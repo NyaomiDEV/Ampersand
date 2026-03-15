@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { IonContent, IonPage, IonButton, useIonRouter } from "@ionic/vue";
+	import { IonContent, IonPage, IonButton, useIonRouter, IonIcon } from "@ionic/vue";
 	import { ref } from "vue";
 	import Spinner from "../../components/Spinner.vue";
 	import { importDatabaseFromBinary } from "../../lib/db/ioutils";
@@ -11,6 +11,12 @@
 	import { useTranslation } from "i18next-vue";
 	import { getTables } from "../../lib/db/tables";
 	import { resetConfig, securityConfig } from "../../lib/config";
+
+	import importMD from "@material-symbols/svg-600/outlined/download.svg";
+	import octoMD from "@material-symbols/svg-600/outlined/neurology.svg";
+	import spMD from "@material-symbols/svg-600/outlined/spa.svg";
+	import tupMD from "@material-symbols/svg-600/outlined/package_2.svg";
+	import pkMD from "@material-symbols/svg-600/outlined/pet_supplies.svg";
 
 	const loading = ref(false);
 
@@ -126,22 +132,27 @@
 					<h1>{{ $t("onboarding:importScreen.header") }}</h1>
 
 					<IonButton @click="importFromPreviousInstallation">
+						<IonIcon slot="start" :icon="importMD" />
 						{{ $t("onboarding:importScreen.prevInstall") }}
 					</IonButton>
 
 					<IonButton class="tonal" @click="importFromSimplyPlural">
+						<IonIcon slot="start" :icon="spMD" />
 						{{ $t("onboarding:importScreen.simplyPlural") }}
 					</IonButton>
 
 					<IonButton class="tonal" @click="importFromOctocon">
+						<IonIcon slot="start" :icon="octoMD" />
 						{{ $t("onboarding:importScreen.octocon") }}
 					</IonButton>
 
 					<IonButton class="tonal" @click="importFromPluralKit">
+						<IonIcon slot="start" :icon="pkMD" />
 						{{ $t("onboarding:importScreen.pluralKit") }}
 					</IonButton>
 
 					<IonButton class="tonal" @click="importFromTupperbox">
+						<IonIcon slot="start" :icon="tupMD" />
 						{{ $t("onboarding:importScreen.tupperbox") }}
 					</IonButton>
 		
