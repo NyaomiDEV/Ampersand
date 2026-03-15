@@ -7,11 +7,13 @@
 	"dbImportDesc": "Warning! It will override any existing data",
 	"dbImport": "Import your data from a backup file",
 	"pkImport": "Import your data from a PluralKit export",
+	"ocImport": "Import your data from an Octocon export",
 	"tuImport": "Import your data from a Tupperbox export",
 	"spImport": "Import your data from a Simply Plural export",
 	"status": {
 		"imported": "The backup has been imported. Please restart the app.",
 		"importedSp": "The Simply Plural export has been imported. Please restart the app.",
+		"importedOc": "The Octocon export has been imported. Please restart the app.",
 		"importedPk": "The PluralKit export has been imported. Please restart the app.",
 		"importedTu": "The Tupperbox export has been imported. Please restart the app.",
 		"exportedApp": "The backup has been exported to the location you chose.",

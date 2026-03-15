@@ -7,6 +7,7 @@
 	import { importPluralKit } from "../../lib/db/external/pluralkit";
 	import { importTupperBox } from "../../lib/db/external/tupperbox";
 	import { importSimplyPlural } from "../../lib/db/external/simplyplural";
+	import { importOctocon } from "../../lib/db/external/octocon";
 	import { useTranslation } from "i18next-vue";
 	import { getTables } from "../../lib/db/tables";
 	import { resetConfig, securityConfig } from "../../lib/config";
@@ -56,6 +57,24 @@
 		}catch(_e){
 			await Promise.all(Object.values(getTables()).map(x => x.clear()));
 			await toast(i18next.t("onboarding:importScreen.errorSp"));
+			loading.value = false;
+			return;
+		}
+		router.replace("/onboarding/end/", slideAnimation);
+	}
+
+	async function importFromOctocon() {
+		await promptRemoteConnection();
+		const files = await getFiles(undefined, false);
+		try{
+			if (!files.length) throw new Error("no files specified");
+			loading.value = true;
+			const ocExport = JSON.parse(await files[0].text());
+			const result = await importOctocon(ocExport);
+			if(!result) throw new Error("errored out");
+		}catch(_e){
+			await Promise.all(Object.values(getTables()).map(x => x.clear()));
+			await toast(i18next.t("onboarding:importScreen.errorOc"));
 			loading.value = false;
 			return;
 		}
@@ -112,6 +131,10 @@
 
 					<IonButton class="tonal" @click="importFromSimplyPlural">
 						{{ $t("onboarding:importScreen.simplyPlural") }}
+					</IonButton>
+
+					<IonButton class="tonal" @click="importFromOctocon">
+						{{ $t("onboarding:importScreen.octocon") }}
 					</IonButton>
 
 					<IonButton class="tonal" @click="importFromPluralKit">

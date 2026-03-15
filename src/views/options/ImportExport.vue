@@ -10,6 +10,7 @@
 	import { importPluralKit } from "../../lib/db/external/pluralkit";
 	import { importTupperBox } from "../../lib/db/external/tupperbox";
 	import { importSimplyPlural } from "../../lib/db/external/simplyplural";
+	import { importOctocon } from "../../lib/db/external/octocon";
 
 	import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 	import importMD from "@material-symbols/svg-600/outlined/download.svg";
@@ -66,6 +67,23 @@
 		}catch(_e){
 			console.error(_e);
 			await toast(i18next.t("importExport:status.errorSp"));
+		}
+		loading.value = false;
+	}
+
+	async function importOc() {
+		loading.value = true;
+		try{
+			const files = await getFiles(undefined, false);
+			if (!files.length) throw new Error("no files specified");
+
+			const ocExport = JSON.parse(await files[0].text());
+			const result = await importOctocon(ocExport);
+			if(!result) throw new Error("errored out");
+
+			await toast(i18next.t("importExport:status.importedOc"));
+		}catch(_e){
+			await toast(i18next.t("importExport:status.errorOc"));
 		}
 		loading.value = false;
 	}
@@ -215,6 +233,14 @@
 					<IonIcon slot="start" :icon="importMD" />
 					<IonLabel>
 						<h3>{{ $t("importExport:spImport") }}</h3>
+						<p>{{ $t("importExport:dbImportDesc") }}</p>
+					</IonLabel>
+				</IonItem>
+
+				<IonItem button :detail="true" @click="importOc">
+					<IonIcon slot="start" :icon="importMD" />
+					<IonLabel>
+						<h3>{{ $t("importExport:ocImport") }}</h3>
 						<p>{{ $t("importExport:dbImportDesc") }}</p>
 					</IonLabel>
 				</IonItem>
