@@ -177,19 +177,19 @@ function polls(ocExport: OctoconExport, memberMapping: Map<number, string>){
 						? [
 								{
 									choice: "yes",
-									votes: poll.data.responses.filter(x => x.vote === "yes").map(x => ({ reason: x.comment, member: memberMapping.get(x.alter_id)! }))
+									votes: poll.data.responses.filter(x => x.vote === "yes" && memberMapping.get(x.alter_id)).map(x => ({ reason: x.comment, member: memberMapping.get(x.alter_id)! }))
 								},
 								{
 									choice: "no",
-									votes: poll.data.responses.filter(x => x.vote === "no").map(x => ({ reason: x.comment, member: memberMapping.get(x.alter_id)! }))
+									votes: poll.data.responses.filter(x => x.vote === "no" && memberMapping.get(x.alter_id)).map(x => ({ reason: x.comment, member: memberMapping.get(x.alter_id)! }))
 								},
 								{
 									choice: "abstain",
-									votes: poll.data.responses.filter(x => x.vote === "abstain").map(x => ({ reason: x.comment, member: memberMapping.get(x.alter_id)! }))
+									votes: poll.data.responses.filter(x => x.vote === "abstain" && memberMapping.get(x.alter_id)).map(x => ({ reason: x.comment, member: memberMapping.get(x.alter_id)! }))
 								},
 								poll.data.allow_veto ? {
 									choice: "veto",
-									votes: poll.data.responses.filter(x => x.vote === "veto").map(x => ({ reason: x.comment, member: memberMapping.get(x.alter_id)! }))
+									votes: poll.data.responses.filter(x => x.vote === "veto" && memberMapping.get(x.alter_id)).map(x => ({ reason: x.comment, member: memberMapping.get(x.alter_id)! }))
 								} : undefined,
 							].filter(x => x !== undefined)
 						: poll.data.choice?.map(x => ({ choice: x.name, votes: poll.data.responses.filter(y => y.choice_id === x.id).map(y => ({ reason: y.comment, member: memberMapping.get(y.alter_id)! })) })) || []
