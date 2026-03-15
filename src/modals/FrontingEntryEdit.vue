@@ -153,7 +153,7 @@
 		</IonHeader>
 
 		<IonContent>
-			<IonList>
+			<IonList class="grid-2-alt">
 				<IonItem button :detail="true" @click="memberSelectModal?.$el.present()">
 					<template v-if="frontingEntry.member">
 						<MemberAvatar slot="start" :member="frontingEntry.member" />
@@ -168,18 +168,6 @@
 						</IonLabel>
 					</template>
 				</IonItem>
-			</IonList>
-			<IonList class="surface">
-				<IonItem>
-					<IonInput
-						v-model="frontingEntry.customStatus"
-						fill="solid"
-						:label="$t('frontHistory:edit.customStatus')"
-						label-placement="floating"
-					/>
-				</IonItem>
-			</IonList>
-			<IonList>
 				<IonItem button :detail="true" @click="presenceHistoryModal?.$el.present()">
 					<IonLabel>
 						{{ $t("frontHistory:edit.presence.historyTitle") }}
@@ -190,10 +178,71 @@
 						</p>
 					</IonLabel>
 				</IonItem>
+			</IonList>
+
+			<IonList class="grid-2">
+				<IonItem button :detail="true" @click="($refs.startTimePicker as any)?.$el.present()">
+					<IonLabel>
+						<p>{{ $t("frontHistory:edit.startTime") }}</p>
+						<h2>{{ formatDate(frontingEntry.startTime, "expanded") }}</h2>
+					</IonLabel>
+					<DatePopupPicker
+						ref="startTimePicker"
+						v-model="frontingEntry.startTime"
+						show-default-buttons
+						:title="$t('frontHistory:edit.startTime')"
+						:max="frontingEntry.endTime || new Date()"
+					/>
+				</IonItem>
+				<IonItem v-if="!frontingEntry.endTime" button @click="removeFromFront">
+					<IonLabel>
+						{{ $t("frontHistory:edit.removeFromFront") }}
+					</IonLabel>
+				</IonItem>
+				<IonItem v-else button @click="($refs.endTimePicker as any)?.$el.present()">
+					<IonLabel>
+						<p>{{ $t("frontHistory:edit.endTime") }}</p>
+						<h2>{{ formatDate(frontingEntry.endTime, "expanded") }}</h2>
+					</IonLabel>
+					<DatePopupPicker
+						ref="endTimePicker"
+						v-model="frontingEntry.endTime"
+						show-default-buttons
+						:title="$t('frontHistory:edit.endTime')"
+						:min="frontingEntry.startTime"
+					/>
+					<IonButton
+						slot="end"
+						shape="round"
+						fill="outline"
+						size="small"
+						@click="(e) => { e.stopPropagation(); frontingEntry.endTime = undefined }"
+					>
+						<IonIcon
+							slot="icon-only"
+							:icon="trashMD"
+							color="danger"
+						/>
+					</IonButton>
+				</IonItem>
+
+				<IonItem
+					v-if="!frontingEntry.influencing"
+					button
+					:detail="false"
+					:class="{ 'take-row': frontingEntry.isMainFronter }"
+				>
+					<IonToggle v-model="frontingEntry.isMainFronter">
+						<IonLabel>
+							{{ $t("frontHistory:edit.isMainFronter") }}
+						</IonLabel>
+					</IonToggle>
+				</IonItem>
 				<IonItem 
 					v-if="!frontingEntry.isMainFronter" 
-					button 
+					button
 					:detail="!frontingEntry.influencing"
+					:class="{ 'take-row': frontingEntry.influencing }"
 					@click="memberInfluencingModal?.$el.present()"
 				>
 					<template v-if="frontingEntry.influencing">
@@ -223,67 +272,18 @@
 						/>
 					</IonButton>
 				</IonItem>
-				<IonItem button :detail="true" @click="($refs.startTimePicker as any)?.$el.present()">
-					<IonLabel>
-						<h2>{{ $t("frontHistory:edit.startTime") }}</h2>
-						<p>{{ formatDate(frontingEntry.startTime, "expanded") }}</p>
-					</IonLabel>
-					<DatePopupPicker
-						ref="startTimePicker"
-						v-model="frontingEntry.startTime"
-						show-default-buttons
-						:title="$t('frontHistory:edit.startTime')"
-						:max="frontingEntry.endTime || new Date()"
-					/>
-				</IonItem>
-				<IonItem v-if="!frontingEntry.endTime" button @click="removeFromFront">
-					<IonLabel>
-						{{ $t("frontHistory:edit.removeFromFront") }}
-					</IonLabel>
-				</IonItem>
-				<IonItem v-else button @click="($refs.endTimePicker as any)?.$el.present()">
-					<IonLabel>
-						<h2>{{ $t("frontHistory:edit.endTime") }}</h2>
-						<p>{{ formatDate(frontingEntry.endTime, "expanded") }}</p>
-					</IonLabel>
-					<DatePopupPicker
-						ref="endTimePicker"
-						v-model="frontingEntry.endTime"
-						show-default-buttons
-						:title="$t('frontHistory:edit.endTime')"
-						:min="frontingEntry.startTime"
-					/>
-					<IonButton
-						slot="end"
-						shape="round"
-						fill="outline"
-						size="small"
-						@click="(e) => { e.stopPropagation(); frontingEntry.endTime = undefined }"
-					>
-						<IonIcon
-							slot="icon-only"
-							:icon="trashMD"
-							color="danger"
-						/>
-					</IonButton>
-				</IonItem>
-				<IonItem v-if="!frontingEntry.influencing" button :detail="false">
-					<IonToggle v-model="frontingEntry.isMainFronter">
-						<IonLabel>
-							{{ $t("frontHistory:edit.isMainFronter") }}
-						</IonLabel>
-					</IonToggle>
-				</IonItem>
-				<IonItem button :detail="false">
-					<IonToggle v-model="frontingEntry.isLocked">
-						<IonLabel>
-							{{ $t("frontHistory:edit.isLocked") }}
-						</IonLabel>
-					</IonToggle>
-				</IonItem>
 			</IonList>
 
 			<IonList class="surface">
+				<IonItem>
+					<IonInput
+						v-model="frontingEntry.customStatus"
+						fill="solid"
+						:label="$t('frontHistory:edit.customStatus')"
+						label-placement="floating"
+					/>
+				</IonItem>
+
 				<IonItem>
 					<ContentEditable v-model="frontingEntry.comment" fill="solid" :label="$t('frontHistory:edit.comment')" />
 				</IonItem>
@@ -299,6 +299,13 @@
 			</IonList>
 
 			<IonList>
+				<IonItem button :detail="false">
+					<IonToggle v-model="frontingEntry.isLocked">
+						<IonLabel>
+							{{ $t("frontHistory:edit.isLocked") }}
+						</IonLabel>
+					</IonToggle>
+				</IonItem>
 				<IonItem
 					v-if="frontingEntry.uuid"
 					button
@@ -361,3 +368,23 @@
 		</IonContent>
 	</IonModal>
 </template>
+
+<style scoped>
+	.grid-2 {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+	}
+
+	.grid-2-alt {
+		display: grid;
+		grid-template-columns: 1.5fr 1fr;
+	}
+
+	.take-row {
+		grid-column: 1 / span 2;
+	}
+
+	:is(.grid-2, .grid-2-alt) ion-item::part(native) {
+		height: 100%;
+	}
+</style>
