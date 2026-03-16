@@ -1,0 +1,16 @@
+@font-face {
+	font-family: 'Shantell Sans';
+	font-style: normal;
+	font-weight: 100 900;
+	src: url(../../assets/fonts/shantell-sans/ShantellSans.ttf);
+}
+
+@font-face {
+	font-family: 'Shantell Sans';
+	font-style: italic;
+	font-weight: 100 900;
+	src: url(../../assets/fonts/shantell-sans/ShantellSans-Italic.ttf);
+}
+
+
+/* BNCE = bounce, INFM = informality, SPAC = spacing */
