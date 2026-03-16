@@ -115,7 +115,7 @@ async function members(ocExport: OctoconExport, system: System, customFieldMappi
 			);
 		}
 
-		if(alter.discord_proxies.length) {
+		if(alter.discord_proxies?.length) {
 			_fields.push(
 				[customFieldMapping.get("AMPERSAND_proxytags")!, alter.discord_proxies.join("\n")]
 			);
@@ -201,14 +201,14 @@ function polls(ocExport: OctoconExport, memberMapping: Map<number, string>){
 }
 
 export async function importOctocon(ocExport: OctoconExport){
-	const _system = await system(ocExport);
-	const { customFields: _customFields, customFieldMapping } = customFields(ocExport);
-	const { members: _members, memberMapping } = await members(ocExport, _system, customFieldMapping);
-	const _tags = tags(ocExport, _members, memberMapping);
-	const _frontingEntries = frontingEntries(ocExport, memberMapping);
-	const _boardMessages = polls(ocExport, memberMapping);
-
 	try {
+		const _system = await system(ocExport);
+		const { customFields: _customFields, customFieldMapping } = customFields(ocExport);
+		const { members: _members, memberMapping } = await members(ocExport, _system, customFieldMapping);
+		const _tags = tags(ocExport, _members, memberMapping);
+		const _frontingEntries = frontingEntries(ocExport, memberMapping);
+		const _boardMessages = polls(ocExport, memberMapping);
+
 		// WIPE AMPERSAND
 		await Promise.all(Object.values(getTables()).map(x => x.clear()));
 

@@ -30,7 +30,7 @@ type OctoconAlter = {
 	color?: string, // HEX RGB (without alpha)
 	avatar_url?: string,
 	proxy_name?: string,
-	discord_proxies: string[], // "prefix-text-suffix"
+	discord_proxies?: string[], // "prefix-text-suffix"
 	fields: OctoconAlterField[]
 };
 

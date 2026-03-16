@@ -20,6 +20,7 @@
 		"exportedAppIos": "Il backup è stato esportato nella cartella Ampersand dell'app Documenti.",
 		"errorExport": "Errore durante l'esportazione del backup.",
 		"error": "Errore durante l'importazione del backup.",
+		"errorOc": "Errore durante l'importazione dell'export di Octocon.",
 		"errorSp": "Errore durante l'importazione dell'export di Simply Plural.",
 		"errorPk": "Errore durante l'importazione dell'export di PluralKit.",
 		"errorTu": "Errore durante l'importazione dell'export di Tupperbox."
