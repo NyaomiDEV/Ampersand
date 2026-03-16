@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import {
 		IonChip,
-		IonLabel
+		IonLabel,
 	} from "@ionic/vue";
 
 	import { System } from "../lib/db/entities";
@@ -33,7 +33,8 @@
 
 <style scoped>
 	.avatar {
-		width: 1.125rem;
-		height: 1.125rem;
+		width: 24px;
+		height: 24px;
+		margin-right: 8px;
 	}
 </style>

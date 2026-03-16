@@ -1,6 +1,7 @@
 <script setup lang="ts">
 	import {
 		IonChip,
+		IonIcon
 	} from "@ionic/vue";
 
 	import { Tag } from "../../lib/db/entities";
@@ -10,6 +11,8 @@
 	import TagDescription from "../../modals/TagDescription.vue";
 	import { h } from "vue";
 	import { addModal, removeModal } from "../../lib/modals";
+
+	import tagMD from "@material-symbols/svg-600/outlined/sell.svg";
 
 	const props = defineProps<{
 		tag: Tag
@@ -31,7 +34,8 @@
 </script>
 
 <template>
-	<IonChip @click="$props.clickable && showModal()">
+	<IonChip @click="e => { if(props.clickable) { e.stopPropagation(); void showModal() } }">
+		<IonIcon v-if="!props.tag.color" :icon="tagMD" />
 		<TagColor :tag="props.tag" />
 		<TagLabel :tag="props.tag" />
 	</IonChip>

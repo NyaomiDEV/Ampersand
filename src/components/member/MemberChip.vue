@@ -2,6 +2,7 @@
 	import {
 		IonChip,
 		IonLabel,
+
 	} from "@ionic/vue";
 
 	import { Member } from "../../lib/db/entities";
@@ -36,5 +37,6 @@
 	.avatar {
 		width: 24px;
 		height: 24px;
+		margin-right: 8px;
 	}
 </style>
