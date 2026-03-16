@@ -27,7 +27,7 @@ const fontFamilyExtension: MarkedExtension<(VNode | string)[], VNode | string> =
 					const cssStyle: Record<string, string> = {};
 					switch((token.fontFamily as string).toLowerCase()){
 						case "cursive":
-							cssStyle["--markdown-font-family"] = "Dancing Script";
+							cssStyle["--markdown-font-family"] = "Rochester";
 							break;
 						case "pixel":
 							cssStyle["--markdown-font-family"] = "Bitcount Single";
@@ -39,7 +39,7 @@ const fontFamilyExtension: MarkedExtension<(VNode | string)[], VNode | string> =
 							cssStyle["--markdown-font-family"] = "Shantell Sans";
 							break;
 						case "serif":
-							cssStyle["--markdown-font-family"] = "Cormorant";
+							cssStyle["--markdown-font-family"] = "Eb Garamond";
 							break;
 						case "monospace":
 							cssStyle["--markdown-font-family"] = "Source Code Pro";
@@ -47,8 +47,35 @@ const fontFamilyExtension: MarkedExtension<(VNode | string)[], VNode | string> =
 						case "playful":
 							cssStyle["--markdown-font-family"] = "Lobster Two";
 							break;
-						case "medieval":
-							cssStyle["--markdown-font-family"] = "Cormorant Unicase";
+						case "holy":
+							cssStyle["--markdown-font-family"] = "Cinzel";
+							break;
+						case "bubbly":
+							cssStyle["--markdown-font-family"] = "Gluten";
+							break;
+						case "marker":
+							cssStyle["--markdown-font-family"] = "Permanent Marker";
+							break;
+						case "gothic":
+							cssStyle["--markdown-font-family"] = "Unifraktur Maguntia";
+							break;
+						case "stencil":
+							cssStyle["--markdown-font-family"] = "Stick No Bills";
+							break;
+						case "mystery":
+							cssStyle["--markdown-font-family"] = "Mountains of Christmas";
+							break;
+						case "italian":
+							cssStyle["--markdown-font-family"] = "Playwrite IT Traditional";
+							break;
+						case "metal":
+							cssStyle["--markdown-font-family"] = "Metal Mania";
+							break;
+						case "cutesy":
+							cssStyle["--markdown-font-family"] = "Twinkle Stars";
+							break;
+						case "thin":
+							cssStyle["--markdown-font-family"] = "Comic Neue";
 							break;
 						case "comic":
 							cssStyle["--markdown-font-family"] = "Comic Relief";
@@ -65,6 +92,7 @@ const fontFamilyExtension: MarkedExtension<(VNode | string)[], VNode | string> =
 						case "inter":
 							cssStyle["--markdown-font-family"] = "Inter";
 							break;
+
 
 					}
 					return h("span", {
