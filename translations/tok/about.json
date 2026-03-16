@@ -3,5 +3,6 @@
 	"version": "ilo pi ante {{version}}",
 	"madein": "ni li pali tawa pona lon ma Italija",
 	"privacyPolicy": "lipu pi kepeken sona",
-	"updateAvailable": "sina ken kepeken ilo pi ante sin {{newVersion}}"
+	"updateAvailable": "sina ken kepeken ilo pi ante sin {{newVersion}}",
+	"ciVersion": "ilo pi ante sin"
 }

@@ -21,7 +21,8 @@
 		"errorSp": "ijo ilo pi sona sina li tan ilo Simply Plural. ijo ni li alasa kama tawa ilo sina, taso pakala li kama.",
 		"errorPk": "ijo ilo pi sona sina li tan ilo PluralKit. ijo ni li alasa kama tawa ilo sina, taso pakala li kama.",
 		"errorTu": "ijo ilo pi sona sina li tan ilo Tupperbox. ijo ni li alasa kama tawa ilo sina, taso pakala li kama.",
-		"importedOc": "sona pi ijo pi ilo Octocon li kama lon ilo ni. o pini e ilo ni, kin la o open sin e ilo ni."
+		"importedOc": "sona pi ijo pi ilo Octocon li kama lon ilo ni. o pini e ilo ni, kin la o open sin e ilo ni.",
+		"errorOc": "ijo ilo pi sona sina li tan ilo Octocon. ijo ni li alasa kama tawa ilo sina, taso pakala li kama."
 	},
 	"ocImport": "o pana e sona tawa ilo ni tan ijo pi ilo Octocon"
 }
