@@ -19,6 +19,7 @@
 
 	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
+	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
 
 	import { FrontingEntryComplete } from "../lib/db/entities";
 	import { newFrontingEntry, updateFrontingEntry, deleteFrontingEntry, sendFrontingChangedEvent } from "../lib/db/tables/frontingEntries";
@@ -26,7 +27,7 @@
 
 	import MemberSelect from "./MemberSelect.vue";
 	import PresenceHistory from "./PresenceHistory.vue";
-	import MemberAvatar from "../components/member/MemberAvatar.vue";
+	import Avatar from "../components/Avatar.vue";
 	import DatePopupPicker from "../components/DatePopupPicker.vue";
 	import ContentEditable from "../components/ContentEditable.vue";
 
@@ -156,7 +157,13 @@
 			<IonList class="grid-2">
 				<IonItem button :detail="true" @click="memberSelectModal?.$el.present()">
 					<template v-if="frontingEntry.member">
-						<MemberAvatar slot="start" :member="frontingEntry.member" />
+						<Avatar
+							slot="start"
+							:image="frontingEntry.member.image"
+							:clip-shape="frontingEntry.member.imageClip"
+							:color="frontingEntry.member.color"
+							:icon="accountCircle"
+						/>
 						<IonLabel>
 							<h2>{{ frontingEntry.member.name }}</h2>
 							<p>{{ $t("frontHistory:edit.member") }}</p>
@@ -370,7 +377,7 @@
 </template>
 
 <style scoped>
-	.member-avatar {
+	.avatar {
 		width: 48px;
 		height: 48px;
 	}

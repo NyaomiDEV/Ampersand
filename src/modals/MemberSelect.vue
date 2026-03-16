@@ -12,7 +12,7 @@
 	} from "@ionic/vue";
 
 	import { onBeforeMount, onUnmounted, reactive, ref, shallowRef, toRaw, watch } from "vue";
-	import MemberAvatar from "../components/member/MemberAvatar.vue";
+	import Avatar from "../components/Avatar.vue";
 	import MemberLabel from "../components/member/MemberLabel.vue";
 	import type { Member } from "../lib/db/entities.d.ts";
 	import { getFilteredMembers } from "../lib/db/tables/members";
@@ -20,6 +20,8 @@
 	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
 	import { appConfig } from "../lib/config/index.ts";
 	import VirtualList from "../components/VirtualList.vue";
+
+	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
 
 	const props = defineProps<{
 		customTitle?: string,
@@ -128,7 +130,13 @@
 				<VirtualList :entries="members">
 					<template #default="{ entry: member }">
 						<IonItem key="member.uuid" button>
-							<MemberAvatar slot="start" :member />
+							<Avatar
+								slot="start"
+								:image="member.image"
+								:clip-shape="member.imageClip"
+								:color="member.color"
+								:icon="accountCircle"
+							/>
 							<IonCheckbox :value="member.uuid" :checked="!!selectedMembers.find(x => x.uuid === member.uuid)" @update:model-value="value => check(member, value)">
 								<MemberLabel :member />
 							</IonCheckbox>

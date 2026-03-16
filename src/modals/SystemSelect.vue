@@ -10,14 +10,12 @@
 		IonSearchbar,
 		IonCheckbox,
 		modalController,
-		IonLabel,
-		IonAvatar,
-		IonIcon
+		IonLabel
 	} from "@ionic/vue";
 
 	import { onBeforeMount, onUnmounted, ref, shallowRef, toRaw, watch } from "vue";
 	import type { System } from "../lib/db/entities";
-	import { getObjectURL } from "../lib/util/blob";
+	import Avatar from "../components/Avatar.vue";
 	import { DatabaseEvents, DatabaseEvent } from "../lib/db/events.ts";
 	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
 	import systemCircle from "@material-symbols/svg-600/outlined/supervised_user_circle.svg";
@@ -143,10 +141,13 @@
 					:class="{ 'default-system': system.uuid === appConfig.defaultSystem }"
 					:disabled="!!disallowedSystems.find(x => x.uuid === system.uuid)"
 				>
-					<IonAvatar slot="start">
-						<img v-if="system?.image" aria-hidden="true" :src="getObjectURL(system.image)" />
-						<IonIcon v-else :icon="systemCircle" />
-					</IonAvatar>
+					<Avatar
+						slot="start"
+						:image="system.image"
+						:clip-shape="system.imageClip"
+						:color="system.color"
+						:icon="systemCircle"
+					/>
 					<IonCheckbox :value="system.uuid" :checked="selectedSystem?.uuid === system.uuid" @update:model-value="check(system)">
 						<IonLabel>{{ system.name }}</IonLabel>
 					</IonCheckbox>
@@ -159,12 +160,6 @@
 <style scoped>
 	ion-checkbox::part(container) {
 		visibility: v-bind("!props.hideCheckboxes ? 'visible' : 'hidden'")
-	}
-
-	ion-avatar > ion-icon {
-		width: 100%;
-		height: 100%;
-		color: var(--ion-color-primary);
 	}
 
 	ion-item.default-system {

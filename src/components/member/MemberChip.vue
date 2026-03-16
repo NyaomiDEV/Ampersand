@@ -6,7 +6,9 @@
 
 	import { Member } from "../../lib/db/entities";
 
-	import MemberAvatar from "./MemberAvatar.vue";
+	import Avatar from "../Avatar.vue";
+
+	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
 
 	const props = defineProps<{
 		member: Member,
@@ -18,7 +20,12 @@
 
 <template>
 	<IonChip :router-link @click="(e) => e.stopPropagation()">
-		<MemberAvatar :member="props.member" />
+		<Avatar
+			:image="props.member.image"
+			:clip-shape="props.member.imageClip"
+			:color="props.member.color"
+			:icon="accountCircle"
+		/>
 		<IonLabel class="nowrap">
 			{{ props.member.name }}
 		</IonLabel>
@@ -26,7 +33,7 @@
 </template>
 
 <style scoped>
-	.member-avatar {
+	.avatar {
 		width: 24px;
 		height: 24px;
 	}

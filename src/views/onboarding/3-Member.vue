@@ -16,6 +16,7 @@
 	import pencilMD from "@material-symbols/svg-600/outlined/edit.svg";
 	import arrowMD from "@material-symbols/svg-600/outlined/arrow_forward.svg";
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
+	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
 
 	import { Member } from "../../lib/db/entities";
 	import { newMember } from "../../lib/db/tables/members";
@@ -23,7 +24,7 @@
 	import { resizeImage } from "../../lib/util/image";
 	import { ref, toRaw } from "vue";
 	import { PartialBy } from "../../lib/types";
-	import MemberAvatar from "../../components/member/MemberAvatar.vue";
+	import Avatar from "../../components/Avatar.vue";
 	import { appConfig } from "../../lib/config";
 
 	const router = useIonRouter();
@@ -69,7 +70,12 @@
 			<div class="container">
 				<h1> {{ $t('onboarding:memberInfo.header') }}</h1>
 				<div class="avatar-container">
-					<MemberAvatar :member />
+					<Avatar
+						:image="member.image"
+						:clip-shape="member.imageClip"
+						:color="member.color"
+						:icon="accountCircle"
+					/>
 					<div class="edit-buttons">
 						<IonButton shape="round" size="small" @click="modifyPicture">
 							<IonIcon slot="icon-only" :icon="pencilMD" />
@@ -155,7 +161,7 @@
 		margin-bottom: 16px;
 	}
 
-	.member-avatar {
+	.avatar {
 		width: 192px;
 		height: 192px;
 		outline-width: 8px !important;

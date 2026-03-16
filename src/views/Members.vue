@@ -27,11 +27,12 @@
 	import mainFronterMD from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
 	import setAsFrontMD from "@material-symbols/svg-600/outlined/person_pin_circle.svg";
 	import archivedMD from "@material-symbols/svg-600/outlined/archive.svg";
+	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
 
 	import { getFilteredMembers } from "../lib/db/tables/members.ts";
 	import type { Member, FrontingEntryComplete } from "../lib/db/entities";
 	import { getFronting, newFrontingEntry, removeFronter, sendFrontingChangedEvent, setMainFronter, setSoleFronter } from "../lib/db/tables/frontingEntries.ts";
-	import MemberAvatar from "../components/member/MemberAvatar.vue";
+	import Avatar from "../components/Avatar.vue";
 	import MemberLabel from "../components/member/MemberLabel.vue";
 	import { DatabaseEvents, DatabaseEvent } from "../lib/db/events.ts";
 	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
@@ -203,7 +204,13 @@
 								:style="getStyle(member)"
 								:router-link="`/members/edit?uuid=${member.uuid}`"
 							>
-								<MemberAvatar slot="start" :member="member" />
+								<Avatar
+									slot="start"
+									:image="member.image"
+									:clip-shape="member.imageClip"
+									:color="member.color"
+									:icon="accountCircle"
+								/>
 								<MemberLabel :member="member" show-tag-chips />
 								<IonIcon v-if="member.isPinned" slot="end" :icon="pinMD" />
 								<IonIcon v-if="member.isArchived" slot="end" :icon="archivedMD" />

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 	import { alertController, IonButton, IonItem, IonLabel } from "@ionic/vue";
-	import MemberAvatar from "./member/MemberAvatar.vue";
+	import Avatar from "./Avatar.vue";
 	import { BoardMessageComplete, Member, PollEntry } from "../lib/db/entities";
 	import Markdown from "./Markdown.vue";
 	import MemberSelect from "../modals/MemberSelect.vue";
@@ -11,6 +11,8 @@
 	import PollResults from "../modals/PollResults.vue";
 	import { useTranslation } from "i18next-vue";
 	import { formatDate, promptOkCancel } from "../lib/util/misc";
+
+	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
 
 	const i18next = useTranslation();
 
@@ -139,7 +141,14 @@
 
 <template>
 	<IonItem button :class="{ card: true, filled: props.boardMessage.isPinned, archived: props.boardMessage.isArchived }">
-		<MemberAvatar v-if="props.boardMessage.member" slot="start" :member="props.boardMessage.member" />
+		<Avatar
+			v-if="props.boardMessage.member"
+			slot="start"
+			:image="props.boardMessage.member.image"
+			:clip-shape="props.boardMessage.member.imageClip"
+			:color="props.boardMessage.member.color"
+			:icon="accountCircle"
+		/>
 		<div class="flexbox">
 			<div class="subheader">
 				<span v-if="props.boardMessage.member">{{ props.boardMessage.member.name }}</span>
@@ -215,7 +224,7 @@
 		--background: transparent;
 	}
 
-	.member-avatar {
+	.avatar {
 		align-self: flex-start;
 		margin-top: 12px;
 	}

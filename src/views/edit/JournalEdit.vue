@@ -27,6 +27,7 @@
 	import settingsMD from "@material-symbols/svg-600/outlined/settings.svg";
 	import personAddMD from "@material-symbols/svg-600/outlined/person_add.svg";
 	import clockAddMD from "@material-symbols/svg-600/outlined/more_time.svg";
+	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
 
 	import { JournalPostComplete, Tag } from "../../lib/db/entities";
 	import { newJournalPost, updateJournalPost, getJournalPost, toJournalPostComplete } from "../../lib/db/tables/journalPosts";
@@ -34,7 +35,7 @@
 	import { resizeImage } from "../../lib/util/image";
 	import { h, onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
 	import Markdown from "../../components/Markdown.vue";
-	import MemberAvatar from "../../components/member/MemberAvatar.vue";
+	import Avatar from "../../components/Avatar.vue";
 	import TagChip from "../../components/tag/TagChip.vue";
 	import MemberSelect from "../../modals/MemberSelect.vue";
 	import JournalOptions from "../../modals/JournalOptions.vue";
@@ -200,7 +201,14 @@
 			<IonList v-if="!isEditing">
 
 				<IonItem class="surface">
-					<MemberAvatar v-if="post.member" slot="start" :member="post.member" />
+					<Avatar
+						v-if="post.member"
+						slot="start"
+						:image="post.member.image"
+						:clip-shape="post.member.imageClip"
+						:color="post.member.color"
+						:icon="accountCircle"
+					/>
 					<IonLabel>
 						<h2 v-if="post.member">{{ post.member.name }}</h2>
 						<p v-if="post.date">{{ formatDate(post.date, "expanded") }}</p>
@@ -228,7 +236,13 @@
 
 					<IonItem button :detail="!post.member" @click="memberSelectModal?.$el.present()">
 						<template v-if="post.member">
-							<MemberAvatar slot="start" :member="post.member" />
+							<Avatar
+								slot="start"
+								:image="post.member.image"
+								:clip-shape="post.member.imageClip"
+								:color="post.member.color"
+								:icon="accountCircle"
+							/>
 							<IonLabel>
 								<h2>{{ post.member.name }}</h2>
 								<p>{{ $t("journal:edit.author") }}</p>

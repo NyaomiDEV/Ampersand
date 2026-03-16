@@ -13,10 +13,10 @@
 		IonItem,
 		IonLabel,
 		IonBackButton,
-		IonAvatar,
 	} from "@ionic/vue";
 	import { onBeforeMount, onUnmounted, ref, shallowRef, watch } from "vue";
 	import { appConfig } from "../../lib/config/index.ts";
+	import Avatar from "../../components/Avatar.vue";
 
 	import systemCircle from "@material-symbols/svg-600/outlined/supervised_user_circle.svg";
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
@@ -29,7 +29,6 @@
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import { useRoute } from "vue-router";
 	import { getFilteredSystems } from "../../lib/db/tables/system.ts";
-	import { getObjectURL } from "../../lib/util/blob.ts";
 
 	const route = useRoute();
 
@@ -109,10 +108,13 @@
 					:class="{ 'default-system': system.uuid === appConfig.defaultSystem, archived: system.isArchived }"
 					:router-link="`/options/systems/edit?uuid=${system.uuid}`"
 				>
-					<IonAvatar slot="start">
-						<img v-if="system.image" aria-hidden="true" :src="getObjectURL(system.image)" />
-						<IonIcon v-else :icon="systemCircle" />
-					</IonAvatar>
+					<Avatar
+						slot="start"
+						:image="system.image"
+						:clip-shape="system.imageClip"
+						:color="system.color"
+						:icon="systemCircle"
+					/>
 					<IonLabel>
 						{{ system.name }}
 					</IonLabel>

@@ -1,13 +1,13 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonList, IonPage, IonLabel, IonListHeader, IonTitle, IonToolbar, IonBackButton, IonItem, IonSegment, IonSelect, IonSelectOption, IonInput, IonToggle, IonAvatar, IonIcon, IonSegmentButton } from "@ionic/vue";
+	import { IonContent, IonHeader, IonList, IonPage, IonLabel, IonListHeader, IonTitle, IonToolbar, IonBackButton, IonItem, IonSegment, IonSelect, IonSelectOption, IonInput, IonToggle, IonIcon, IonSegmentButton } from "@ionic/vue";
 	import { onMounted, ref, shallowRef, useTemplateRef, watch } from "vue";
 	import { platform } from "@tauri-apps/plugin-os";
 
 	import { appConfig } from "../../lib/config";
 	import { computePercentage } from "../../lib/i18n";
-	import { getObjectURL } from "../../lib/util/blob";
 	import { getSystem } from "../../lib/db/tables/system";
 	import SystemSelect from "../../modals/SystemSelect.vue";
+	import Avatar from "../../components/Avatar.vue";
 	import { System } from "../../lib/db/entities";
 
 	import languageMD from "@material-symbols/svg-600/outlined/language.svg";
@@ -133,10 +133,13 @@
 			<IonList>
 
 				<IonItem button :detail="true" @click="systemSelectModal?.$el.present()">
-					<IonAvatar slot="start">
-						<img v-if="defaultSystem.image" aria-hidden="true" :src="getObjectURL(defaultSystem.image)" />
-						<IonIcon v-else :icon="accountCircle" />
-					</IonAvatar>
+					<Avatar
+						slot="start"
+						:image="defaultSystem.image"
+						:clip-shape="defaultSystem.imageClip"
+						:color="defaultSystem.color"
+						:icon="accountCircle"
+					/>
 					<IonLabel>
 						<p>{{ $t("appSettings:defaultSystem") }}</p>
 						<h2>{{ defaultSystem.name }}</h2>
@@ -301,16 +304,9 @@
 </template>
 
 <style scoped>
-	ion-avatar > ion-icon {
-		width: 100%;
-		height: 100%;
-		color: var(--ion-color-primary);
-	}
-
 	.clock-style, .first-day {
 		gap: 1em;
 		display: flex;
 		flex-direction: column;
 	}
-
 </style>

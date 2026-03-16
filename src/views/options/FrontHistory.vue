@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonLabel, IonToolbar, IonBackButton, IonItem, IonItemDivider, IonDatetime, IonIcon, IonSearchbar, IonFabButton, IonFab } from "@ionic/vue";
 	import { h, onBeforeMount, onUnmounted, ref, shallowRef, watch } from "vue";
-	import MemberAvatar from "../../components/member/MemberAvatar.vue";
+	import Avatar from "../../components/Avatar.vue";
 	import FrontingEntryLabel from "../../components/frontingEntry/FrontingEntryLabel.vue";
 	import type { FrontingEntryComplete } from "../../lib/db/entities.d.ts";
 	import { getFrontingEntriesOfDay, getFrontingEntriesDays } from "../../lib/db/tables/frontingEntries";
@@ -11,6 +11,7 @@
 
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 	import commentMD from "@material-symbols/svg-600/outlined/comment.svg";
+	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
 
 	import { appConfig } from "../../lib/config";
 	import { DatabaseEvents, DatabaseEvent } from "../../lib/db/events";
@@ -195,7 +196,13 @@
 						:class="{ 'main-fronter': entry.isMainFronter, 'influencing': !!entry.influencing }"
 						@click="showModal(entry)"
 					>
-						<MemberAvatar slot="start" :member="entry.member" />
+						<Avatar
+							slot="start"
+							:image="entry.member.image"
+							:clip-shape="entry.member.imageClip"
+							:color="entry.member.color"
+							:icon="accountCircle"
+						/>
 						<IonIcon v-if="entry.comment?.length" slot="end" :icon="commentMD" />
 						<FrontingEntryLabel :entry />
 					</IonItem>

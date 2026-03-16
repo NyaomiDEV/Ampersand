@@ -9,6 +9,8 @@
 		"name": "Nome del sistema",
 		"description": "Descrizione del sistema",
 		"noDescription": "Nessuna descrizione",
+		"color": "Colore",
+		"imageClip": "Forma dell'avatar",
 		"memberCount": "Numero di membrɜ",
 		"memberCountText": "{{totalMemberCount}} membrə/ɜ, {{memberCount}} attivə/ɜ, {{archivedMemberCount}} archiviatə/ɜ",
 		"customFrontCountText": "{{totalCustomFrontCount}} front personalizzato/i, {{customFrontCount}} attivo/i, {{archivedCustomFrontCount}} archiviato/i",

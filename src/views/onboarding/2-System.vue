@@ -1,7 +1,7 @@
 <script setup lang="ts">
-	import { IonContent, IonList, IonPage, IonAvatar, IonButton, IonIcon, IonInput, IonFab, IonFabButton, IonItem, IonTextarea, useIonRouter } from "@ionic/vue";
+	import { IonContent, IonList, IonPage, IonButton, IonIcon, IonInput, IonFab, IonFabButton, IonItem, IonTextarea, useIonRouter } from "@ionic/vue";
 	import { onBeforeMount, ref, toRaw } from "vue";
-	import { getObjectURL } from "../../lib/util/blob";
+	import Avatar from "../../components/Avatar.vue";
 	import { getFiles, slideAnimation } from "../../lib/util/misc";
 	import { resizeImage } from "../../lib/util/image";
 	import { getSystem, newSystem, updateSystem } from "../../lib/db/tables/system";
@@ -51,10 +51,12 @@
 			<div class="container">
 				<h1> {{ $t('onboarding:systemInfo.header') }}</h1>
 				<div class="avatar-container">
-					<IonAvatar>
-						<img v-if="system?.image" aria-hidden="true" :src="getObjectURL(system.image)" />
-						<IonIcon v-else :icon="accountCircle" />
-					</IonAvatar>
+					<Avatar
+						:image="system.image"
+						:clip-shape="system.imageClip"
+						:color="system.color"
+						:icon="accountCircle"
+					/>
 
 					<IonButton shape="round" size="small" @click="modifyPicture">
 						<IonIcon slot="icon-only" :icon="pencilMD" />
@@ -119,7 +121,7 @@
 		margin-bottom: 24px;
 	}
 
-	ion-avatar {
+	.avatar {
 		width: 192px;
 		height: 192px;
 	}
@@ -128,12 +130,6 @@
 		position: absolute;
 		bottom: 8px;
 		right: 8px;
-	}
-
-	div.avatar-container ion-avatar ion-icon {
-		width: 100%;
-		height: 100%;
-		color: var(--ion-color-primary);
 	}
 </style>
 

@@ -132,6 +132,7 @@ export default defineConfig([
 			}],
 			"vue/object-shorthand": ["error", "always"],
 			"vue/prefer-template": "error",
+			"vue/require-default-prop": "off",
 			"vue/template-curly-spacing": ["error", "never"],
 		}
 	},

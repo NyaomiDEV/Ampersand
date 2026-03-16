@@ -22,12 +22,13 @@
 	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
 	import chartMD from "@material-symbols/svg-600/outlined/bar_chart.svg";
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
+	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
 
 	import { BoardMessageComplete } from "../lib/db/entities";
 	import { updateBoardMessage, deleteBoardMessage, newBoardMessage } from "../lib/db/tables/boardMessages";
 	import { ref, toRaw, useTemplateRef } from "vue";
 	import { PartialBy } from "../lib/types";
-	import MemberAvatar from "../components/member/MemberAvatar.vue";
+	import Avatar from "../components/Avatar.vue";
 	import MemberSelect from "./MemberSelect.vue";
 	import { useTranslation } from "i18next-vue";
 	import { formatDate, promptOkCancel } from "../lib/util/misc";
@@ -136,7 +137,13 @@
 			<IonList>
 				<IonItem button :detail="!boardMessage.member" @click="memberSelectModal?.$el.present()">
 					<template v-if="boardMessage.member">
-						<MemberAvatar slot="start" :member="boardMessage.member" />
+						<Avatar
+							slot="start"
+							:image="boardMessage.member.image"
+							:clip-shape="boardMessage.member.imageClip"
+							:color="boardMessage.member.color"
+							:icon="accountCircle"
+						/>
 						<IonLabel>
 							<h2>{{ boardMessage.member.name }}</h2>
 							<p>{{ $t("messageBoard:edit.member") }}</p>

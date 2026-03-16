@@ -1,13 +1,15 @@
 <script setup lang="ts">
 
 	import { IonItem, IonLabel } from "@ionic/vue";
-	import MemberAvatar from "./member/MemberAvatar.vue";
+	import Avatar from "./Avatar.vue";
 	import TagChip from "./tag/TagChip.vue";
 	import { JournalPostComplete, Tag } from "../lib/db/entities";
 	import { formatDate } from "../lib/util/misc";
 	import { isReactive, onBeforeMount, shallowRef, watch, WatchStopHandle } from "vue";
 	import { getTag } from "../lib/db/tables/tags";
 	import { getObjectURL } from "../lib/util/blob";
+
+	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
 
 	const tags = shallowRef<Tag[]>();
 
@@ -39,7 +41,14 @@
 
 <template>
 	<IonItem button>
-		<MemberAvatar v-if="props.post.member" slot="start" :member="props.post.member" />
+		<Avatar
+			v-if="props.post.member"
+			slot="start"
+			:image="props.post.member.image"
+			:clip-shape="props.post.member.imageClip"
+			:color="props.post.member.color"
+			:icon="accountCircle"
+		/>
 		<IonLabel>
 			<img v-if="props.post.cover" class="cover" :src="getObjectURL(props.post.cover)" />
 			<p v-if="formatDate(props.post.date, 'collapsed') !== props.post.title">
@@ -65,7 +74,7 @@
 		padding: 16px;
 	}
 
-	ion-item .member-avatar {
+	ion-item .avatar {
 		width: 56px;
 		height: 56px;
 	}

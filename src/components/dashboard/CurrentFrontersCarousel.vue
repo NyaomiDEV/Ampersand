@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { IonCard, IonCardContent, IonLabel, IonListHeader, IonIcon, IonButton } from "@ionic/vue";
-	import MemberAvatar from "../member/MemberAvatar.vue";
+	import Avatar from "../Avatar.vue";
 	import { h, onBeforeMount, onUnmounted, ref, shallowRef } from "vue";
 	import type { FrontingEntryComplete } from "../../lib/db/entities.d.ts";
 	import { getFronting, newFrontingEntry, sendFrontingChangedEvent, updateFrontingEntry } from "../../lib/db/tables/frontingEntries";
@@ -14,6 +14,7 @@
 
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 	import removeFromFrontMD from "@material-symbols/svg-600/outlined/person_remove.svg";
+	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
 
 	const frontingEntries = shallowRef<FrontingEntryComplete[]>([]);
 
@@ -133,7 +134,12 @@
 			@click="quickDelete ? quickRemoveFronter(fronting) : showModal(fronting)"
 		>
 			<IonCardContent>
-				<MemberAvatar :member="fronting.member" />
+				<Avatar
+					:image="fronting.member.image"
+					:clip-shape="fronting.member.imageClip"
+					:color="fronting.member.color"
+					:icon="accountCircle"
+				/>
 				<IonLabel>
 					<h2>
 						{{ fronting.member.name }}

@@ -1,13 +1,12 @@
 <script setup lang="ts">
 	import {
-		IonAvatar,
 		IonChip,
-		IonLabel,
-		IonIcon
+		IonLabel
 	} from "@ionic/vue";
 
 	import { System } from "../lib/db/entities";
-	import { getObjectURL } from "../lib/util/blob";
+
+	import Avatar from "./Avatar.vue";
 	import accountCircle from "@material-symbols/svg-600/outlined/supervised_user_circle.svg";
 
 	const props = defineProps<{
@@ -20,10 +19,12 @@
 
 <template>
 	<IonChip :router-link @click="(e) => e.stopPropagation()">
-		<IonAvatar v-if="props.system.image">
-			<img aria-hidden="true" :src="getObjectURL(props.system.image)" />
-		</IonAvatar>
-		<IonIcon v-else :icon="accountCircle" />
+		<Avatar
+			:image="system.image"
+			:clip-shape="system.imageClip"
+			:color="system.color"
+			:icon="accountCircle"
+		/>
 		<IonLabel class="nowrap">
 			{{ props.system.name }}
 		</IonLabel>
@@ -31,7 +32,8 @@
 </template>
 
 <style scoped>
-	ion-chip ion-icon {
-		color: var(--ion-color-primary)
+	.avatar {
+		width: 1.125rem;
+		height: 1.125rem;
 	}
 </style>

@@ -189,3 +189,5 @@ export function flattenObject(obj: object) {
 
 	return newObj;
 }
+
+export const imageClips = import.meta.webpackContext("../../assets/shapes/", { recursive: false, include: /\.svg$/ }).keys().map(x => x.replace(/^\.\/(.*)\.svg$/, "$1"));

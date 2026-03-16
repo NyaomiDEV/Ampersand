@@ -26,6 +26,7 @@
 		"pronouns": "Pronouns",
 		"role": "Role",
 		"color": "Preferred color",
+		"imageClip": "Avatar shape",
 		"customFieldsAdd": "Add custom fields",
 		"tags": "Edit tags",
 		"description": "Description",

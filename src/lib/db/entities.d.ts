@@ -4,6 +4,42 @@ export interface UUIDable {
 
 export type UUID = string;
 
+export type ImageClip =
+	"arch" |
+	"arrow" |
+	"boom" |
+	"bun" |
+	"burst" |
+	"clamshell" |
+	"diamond" |
+	"fan" |
+	"flower" |
+	"gem" |
+	"ghost-ish" |
+	"heart" |
+	"leaf-clover4" |
+	"leaf-clover8" |
+	"oval" |
+	"pentagon" |
+	"pill" |
+	"pixel-circle" |
+	"pixel-triangle" |
+	"puffy-diamond" |
+	"puffy" |
+	"semicircle" |
+	"sided-cookie12" |
+	"sided-cookie4" |
+	"sided-cookie6" |
+	"sided-cookie7" |
+	"sided-cookie9" |
+	"slanted" |
+	"soft-boom" |
+	"soft-burst" |
+	"square" |
+	"sunny" |
+	"triangle" |
+	"very-sunny";
+
 export interface BoardMessage extends UUIDable {
 	member?: UUID,
 	title: string,
@@ -74,6 +110,7 @@ export interface Member extends UUIDable {
 	description?: string,
 	role?: string,
 	image?: File,
+	imageClip?: ImageClip,
 	cover?: File,
 	color?: string,
 	customFields?: Map<UUID, string>,
@@ -146,8 +183,11 @@ export type Reminder = EventReminder | PeriodicReminder;
 export interface System extends UUIDable {
 	name: string,
 	description?: string,
+	cover?: File,
 	image?: File,
+	imageClip?: ImageClip,
 	parent?: UUID,
+	color?: string,
 	isPinned: boolean,
 	isArchived: boolean
 }

@@ -16,8 +16,9 @@
 		IonItem,
 		IonBackButton,
 		useIonRouter,
-		IonAvatar,
 		IonPage,
+		IonSelect,
+		IonSelectOption
 	} from "@ionic/vue";
 	import Color from "../../components/Color.vue";
 	import TagChip from "../../components/tag/TagChip.vue";
@@ -32,8 +33,9 @@
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 	import FrontHistoryMD from "@material-symbols/svg-600/outlined/show_chart.svg";
 	import systemCircle from "@material-symbols/svg-600/outlined/supervised_user_circle.svg";
+	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
 
-	import { CustomField, Member, System, Tag } from "../../lib/db/entities";
+	import { CustomField, ImageClip, Member, System, Tag } from "../../lib/db/entities";
 	import { newMember, deleteMember, updateMember, defaultMember, getMember } from "../../lib/db/tables/members";
 	import { getTags } from "../../lib/db/tables/tags";
 	import { getFiles, promptOkCancel, toast } from "../../lib/util/misc";
@@ -44,16 +46,15 @@
 	import { PartialBy } from "../../lib/types";
 	import { useRoute } from "vue-router";
 	import { useTranslation } from "i18next-vue";
-	import { formatDate } from "../../lib/util/misc";
+	import { formatDate, imageClips } from "../../lib/util/misc";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
-	import MemberAvatar from "../../components/member/MemberAvatar.vue";
-	import MemberCover from "../../components/member/MemberCover.vue";
+	import Avatar from "../../components/Avatar.vue";
+	import Cover from "../../components/Cover.vue";
 	import SystemSelect from "../../modals/SystemSelect.vue";
 	import { getCustomFields } from "../../lib/db/tables/customFields";
 	import CustomFieldsSelect from "../../modals/CustomFieldsSelect.vue";
 	import { appConfig } from "../../lib/config";
 	import { getSystem } from "../../lib/db/tables/system";
-	import { getObjectURL } from "../../lib/util/blob";
 	import SystemChip from "../../components/SystemChip.vue";
 
 	const i18next = useTranslation();
@@ -239,7 +240,7 @@
 		<SpinnerFullscreen v-if="loading" />
 		<IonContent v-else>
 			<div class="cover-container">
-				<MemberCover class="cover" :member />
+				<Cover class="cover" :cover="member.cover" />
 				<div v-if="isEditing" class="edit-buttons">
 					<IonButton shape="round" size="small" @click="modifyCover">
 						<IonIcon slot="icon-only" :icon="pencilMD" />
@@ -256,7 +257,12 @@
 				</div>
 
 				<div class="avatar-container">
-					<MemberAvatar :member />
+					<Avatar
+						:image="member.image"
+						:clip-shape="member.imageClip"
+						:color="member.color"
+						:icon="accountCircle"
+					/>
 					<div v-if="isEditing" class="edit-buttons">
 						<IonButton shape="round" size="small" @click="modifyPicture">
 							<IonIcon slot="icon-only" :icon="pencilMD" />
@@ -387,10 +393,13 @@
 
 				<IonList class="member-edit">
 					<IonItem button :detail="true" @click="systemSelectModal?.$el.present()">
-						<IonAvatar slot="start">
-							<img v-if="system.image" aria-hidden="true" :src="getObjectURL(system.image)" />
-							<IonIcon v-else :icon="systemCircle" />
-						</IonAvatar>
+						<Avatar
+							slot="start"
+							:image="system.image"
+							:clip-shape="system.imageClip"
+							:color="system.color"
+							:icon="systemCircle"
+						/>
 						<IonLabel>
 							<p>{{ $t("members:edit.system") }}</p>
 							<h2>{{ system.name }}</h2>
@@ -428,6 +437,23 @@
 								color="danger"
 							/>
 						</IonButton>
+					</IonItem>
+					<IonItem>
+						<IonSelect
+							:model-value="member.imageClip || ''"
+							label-placement="floating"
+							:label="$t('members:edit.imageClip')"
+							:cancel-text="$t('other:alerts.cancel')"
+							interface="action-sheet"
+							@update:model-value="(v: ImageClip) => { member.imageClip = v.length ? v : undefined; }"
+						>
+							<IonSelectOption v-for="clip in imageClips" :key="clip" :value="clip">
+								{{ $t(`other:shapes.${clip}`) }}
+							</IonSelectOption>
+							<IonSelectOption :value="''">
+								{{ $t(`other:shapes.noShape`) }}
+							</IonSelectOption>
+						</IonSelect>
 					</IonItem>
 					<IonItem button :detail="false">
 						<IonToggle v-model="member.isPinned">
@@ -569,7 +595,7 @@
 		flex-direction: row-reverse;
 	}
 
-	div.avatar-container .member-avatar {
+	div.avatar-container .avatar {
 		width: 192px;
 		height: 192px;
 		outline-width: 8px !important;
@@ -597,12 +623,6 @@
 	.member-edit div.member-tags {
 		padding: 8px 0 0 0;
 		justify-content: start;
-	}
-
-	ion-list ion-avatar ion-icon {
-		width: 100%;
-		height: 100%;
-		color: var(--ion-color-primary);
 	}
 
 	div.member-info {
