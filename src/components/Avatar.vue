@@ -56,6 +56,7 @@
 		outline-width: 2px;
 		outline-style: solid;
 		outline-color: v-bind('avatarColor');
+		background-color: v-bind('avatarColor');
 	}
 
 	ion-avatar.with-shape {
@@ -63,6 +64,7 @@
 
 		&.with-outline {
 			outline-style: none;
+			background-color: unset;
 		}
 
 		&.with-outline::before {
