@@ -6,6 +6,7 @@ import { getAssets } from "../db/tables/assets";
 import { getObjectURL } from "../util/blob";
 import vueExtension from "./vue/vue";
 import { IonCheckbox } from "@ionic/vue";
+import { fetch } from "@tauri-apps/plugin-http";
 
 import mentionExtension from "./mentionExtension";
 import spoilerExtension from "./spoilerExtension";
@@ -66,13 +67,24 @@ marked.use({
 		image(token) {
 			// checking for lone surrogates the shitty way
 			try {
+				const external = token.href.startsWith("EXTERNAL:");
+				if(external) token.href = token.href.slice(9);
+
 				const href = encodeURI(token.href).replace(/%25/g, "%");
 				return h("img", {
 					src: href,
 					alt: token.text,
 					title: token.title,
 					width: (token as any).width,
-					height: (token as any).height
+					height: (token as any).height,
+					onLoad: () => {
+						if(external)
+							URL.revokeObjectURL(token.href);
+					},
+					onError: () => {
+						if (external)
+							URL.revokeObjectURL(token.href);
+					}
 				});
 			} catch (_e) {
 				return h(Text, token.text);
@@ -120,6 +132,10 @@ marked.use({
 				} else {
 					if(!securityConfig.allowRemoteContent)
 						blocked = true; // we don't allow internet connections, block
+					else {
+						const blob = await (await fetch(token.href)).blob();
+						token.href = `EXTERNAL:${URL.createObjectURL(blob)}`;
+					}
 				}
 
 				// replace with # if link is blocked
