@@ -3,5 +3,6 @@
 	"version": "Wersja {{version}}",
 	"madein": "Wykonane z miłością we Włoszech",
 	"privacyPolicy": "Polityka prywatności",
-	"updateAvailable": "Dostępna aktualizacja: {{newVersion}}"
+	"updateAvailable": "Dostępna aktualizacja: {{newVersion}}",
+	"ciVersion": "Wersja CI"
 }

@@ -36,7 +36,8 @@
 		"delete": {
 			"title": "Usuń członka",
 			"confirm": "Czy na pewno chcesz usunąć tego członka?"
-		}
+		},
+		"imageClip": "Kształt awatara"
 	},
 	"toasts": {
 		"addToFront": "Członek został dodany na front",

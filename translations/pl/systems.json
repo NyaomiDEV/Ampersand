@@ -22,6 +22,8 @@
 		"systemIDcopiedToClipboard": "ID systemu w formacie wzmianki zostało skopiowane do schowka!",
 		"parent": "System-rodzic",
 		"isPinned": "Przypnij system",
-		"archived": "Zarchiwizowano"
+		"archived": "Zarchiwizowano",
+		"color": "Kolor",
+		"imageClip": "Kształt awatara"
 	}
 }
