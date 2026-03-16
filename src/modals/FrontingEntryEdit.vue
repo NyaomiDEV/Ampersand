@@ -155,7 +155,7 @@
 
 		<IonContent>
 			<IonList class="grid-2">
-				<IonItem button :detail="true" @click="memberSelectModal?.$el.present()">
+				<IonItem button @click="memberSelectModal?.$el.present()">
 					<template v-if="frontingEntry.member">
 						<Avatar
 							slot="start"
@@ -175,7 +175,7 @@
 						</IonLabel>
 					</template>
 				</IonItem>
-				<IonItem button :detail="true" @click="presenceHistoryModal?.$el.present()">
+				<IonItem button @click="presenceHistoryModal?.$el.present()">
 					<IonLabel>
 						{{ $t("frontHistory:edit.presence.historyTitle") }}
 						<p v-if="frontingEntry.presence?.size">
@@ -188,7 +188,7 @@
 			</IonList>
 
 			<IonList class="grid-2">
-				<IonItem button :detail="true" @click="($refs.startTimePicker as any)?.$el.present()">
+				<IonItem button @click="($refs.startTimePicker as any)?.$el.present()">
 					<IonLabel>
 						<p>{{ $t("frontHistory:edit.startTime") }}</p>
 						<h2>{{ formatDate(frontingEntry.startTime, "collapsed") }}</h2>
@@ -236,7 +236,6 @@
 				<IonItem
 					v-if="!frontingEntry.influencing"
 					button
-					:detail="false"
 					:class="{ 'take-row': frontingEntry.isMainFronter }"
 				>
 					<IonToggle v-model="frontingEntry.isMainFronter">
@@ -248,12 +247,17 @@
 				<IonItem 
 					v-if="!frontingEntry.isMainFronter" 
 					button
-					:detail="!frontingEntry.influencing"
 					:class="{ 'take-row': frontingEntry.influencing }"
 					@click="memberInfluencingModal?.$el.present()"
 				>
 					<template v-if="frontingEntry.influencing">
-						<MemberAvatar slot="start" :member="frontingEntry.influencing" />
+						<Avatar
+							slot="start"
+							:image="frontingEntry.influencing.image"
+							:color="frontingEntry.influencing.color"
+							:clip-shape="frontingEntry.influencing.imageClip"
+							:icon="accountCircle"
+						/>
 						<IonLabel>
 							<p>{{ $t("frontHistory:edit.influencing.currentlyInfluencing") }}</p>
 							<h2>{{ frontingEntry.influencing.name }}</h2>
@@ -345,7 +349,7 @@
 				:discard-on-select="true"
 				:hide-checkboxes="true"
 				:model-value="frontingEntry.member ? [frontingEntry.member] : []"
-				@update:model-value="(e) => { if(e[0]) frontingEntry.member = e[0] }"
+				@update:model-value="(e) => { if(e[0]) frontingEntry.member = e[0]; if(frontingEntry.influencing?.uuid === e[0].uuid) frontingEntry.influencing = undefined }"
 			/>
 
 			<MemberSelect
@@ -354,6 +358,7 @@
 				:discard-on-select="true"
 				:hide-checkboxes="true"
 				:model-value="frontingEntry.influencing ? [frontingEntry.influencing] : []"
+				:members-to-exclude="frontingEntry.member ? [frontingEntry.member] : []"
 				@update:model-value="(e) => { if(e[0]) frontingEntry.influencing = e[0] }"
 			/>
 

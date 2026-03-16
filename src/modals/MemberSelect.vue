@@ -29,7 +29,8 @@
 		alwaysEmit?: boolean,
 		discardOnSelect?: boolean,
 		modelValue?: Member[],
-		hideCheckboxes?: boolean
+		hideCheckboxes?: boolean,
+		membersToExclude?: Member[]
 	}>();
 
 	const emit = defineEmits<{
@@ -129,7 +130,7 @@
 			<div class="list">
 				<VirtualList :entries="members">
 					<template #default="{ entry: member }">
-						<IonItem key="member.uuid" button>
+						<IonItem :key="member.uuid" button :disabled="!!props.membersToExclude?.find(x => x.uuid === member.uuid)">
 							<Avatar
 								slot="start"
 								:image="member.image"
