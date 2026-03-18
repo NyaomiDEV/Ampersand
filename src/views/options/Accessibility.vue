@@ -98,7 +98,7 @@
 						v-model="accessibilityConfig.contrastLevel"
 						:label="$t('accessibility:contrastLevel.title')"
 						label-placement="stacked"
-						:min="0"
+						:min="-1"
 						:max="1"
 						:step="0.05"
 						:snaps="true"
