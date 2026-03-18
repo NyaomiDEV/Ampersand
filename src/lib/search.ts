@@ -7,7 +7,7 @@ import { IndexEntry } from "./db/tables";
 export function filterSystem(search: string, system: System) {
 	const parsed = parseSystemFilterQuery(search.length ? search : appConfig.defaultFilterQueries.systems || "");
 	if (parsed.query.length){
-		if (!system.name.toLowerCase().startsWith(parsed.query.toLowerCase()))
+		if (!system.name.toLowerCase().includes(parsed.query.toLowerCase()))
 			return false;
 	}
 
@@ -32,7 +32,7 @@ export function filterSystem(search: string, system: System) {
 export async function filterMember(search: string, member: Member){
 	const parsed = await parseMemberFilterQuery(search.length ? search : appConfig.defaultFilterQueries.members || "");
 	if (parsed.query.length){
-		if (!member.name.toLowerCase().startsWith(parsed.query.toLowerCase()))
+		if (!member.name.toLowerCase().includes(parsed.query.toLowerCase()))
 			return false;
 	}
 
@@ -80,14 +80,14 @@ export function filterTag(search: string, tag: Tag) {
 	if(!query.length)
 		return true;
 	else
-		return tag.name.toLowerCase().startsWith(query.toLowerCase());
+		return tag.name.toLowerCase().includes(query.toLowerCase());
 }
 
 export function filterFrontingEntry(search: string, frontingEntry: FrontingEntryComplete){
 	const parsed = parseFrontingHistoryFilterQuery(search.length ? search : appConfig.defaultFilterQueries.frontingHistory || "");
 
 	if(parsed.query.length){
-		if (!frontingEntry.member.name.toLowerCase().startsWith(parsed.query.toLowerCase()))
+		if (!frontingEntry.member.name.toLowerCase().includes(parsed.query.toLowerCase()))
 			return false;
 	}
 
@@ -142,7 +142,7 @@ export function filterBoardMessage(search: string, boardMessage: BoardMessageCom
 			![
 				boardMessage.title.toLowerCase().split(" "),
 				boardMessage.member?.name.toLowerCase().split(" ")
-			].filter(x => !!x).flat().find(x => x.startsWith(parsed.query.toLowerCase()))
+			].filter(x => !!x).flat().find(x => x.includes(parsed.query.toLowerCase()))
 		)
 			return false;
 	}
@@ -194,7 +194,7 @@ export function filterAsset(search: string, asset: Asset) {
 	const parsed = parseAssetFilterQuery(search.length ? search : appConfig.defaultFilterQueries.assetManager || "");
 
 	if(parsed.query.length){
-		if (!asset.friendlyName.toLowerCase().startsWith(parsed.query.toLowerCase()))
+		if (!asset.friendlyName.toLowerCase().includes(parsed.query.toLowerCase()))
 			return false;
 	}
 
@@ -215,7 +215,7 @@ export function filterCustomField(search: string, customField: CustomField) {
 	const parsed = parseCustomFieldFilterQuery(search.length ? search : appConfig.defaultFilterQueries.customFields || "");
 
 	if(parsed.query.length) {
-		if (!customField.name.toLowerCase().startsWith(parsed.query.toLowerCase()))
+		if (!customField.name.toLowerCase().includes(parsed.query.toLowerCase()))
 			return false;
 	}
 
@@ -234,7 +234,7 @@ export async function filterJournalPost(search: string, post: JournalPostComplet
 			![
 				post.title.toLowerCase().split(" "),
 				post.member?.name.toLowerCase().split(" ")
-			].filter(x => !!x).flat().find(x => x.startsWith(parsed.query.toLowerCase()))
+			].filter(x => !!x).flat().find(x => x.includes(parsed.query.toLowerCase()))
 		)
 			return false;
 	}
