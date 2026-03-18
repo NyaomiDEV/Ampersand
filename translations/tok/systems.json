@@ -21,7 +21,9 @@
 		"showMembers": "ijo kulupu pi kulupu ni",
 		"parent": "kulupu sewi",
 		"isPinned": "kulupu sewi",
-		"archived": "len"
+		"archived": "len",
+		"color": "kule",
+		"imageClip": "sijelo sitelen"
 	},
 	"select": "kulupu pi wile sina"
 }

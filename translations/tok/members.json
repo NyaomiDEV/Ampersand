@@ -43,6 +43,7 @@
 		"delete": {
 			"title": "weka pi ijo kulupu",
 			"confirm": "sina wile ala wile weka e ijo kulupu ni?"
-		}
+		},
+		"imageClip": "sijelo sitelen"
 	}
 }
