@@ -62,9 +62,15 @@
 	async function updateMembers(){
 		members.value = (await Array.fromAsync(getFilteredMembers(search.value)))
 			.sort((a, b) => {
-				if (appConfig.showMembersBeforeCustomFronts) {
-					if (!a.isCustomFront && b.isCustomFront) return -1;
-					if (a.isCustomFront && !b.isCustomFront) return 1;
+				switch(appConfig.showMembersApartFromCustomFronts){
+					case "before":
+						if (!a.isCustomFront && b.isCustomFront) return 1;
+						if (a.isCustomFront && !b.isCustomFront) return -1;
+						break;
+					case "after":
+						if (!a.isCustomFront && b.isCustomFront) return -1;
+						if (a.isCustomFront && !b.isCustomFront) return 1;
+						break;
 				}
 
 				if (a.isPinned && !b.isPinned) return -1;

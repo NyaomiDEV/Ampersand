@@ -167,7 +167,7 @@
 							{{ $t("journal:header") }}
 						</IonSelectOption>
 					</IonSelect>
-				</IonItem>	
+				</IonItem>
 
 				<IonItem button :detail="false">
 					<IonIcon slot="start" :icon="defaultSystemMD" />
@@ -177,14 +177,26 @@
 						</IonLabel>
 					</IonToggle>
 				</IonItem>
-				
-				<IonItem button :detail="false">
+
+				<IonItem>
 					<IonIcon slot="start" :icon="membersBeforeMD" />
-					<IonToggle v-model="appConfig.showMembersBeforeCustomFronts">
-						<IonLabel>
-							{{ $t("appSettings:showMembersBeforeCustomFronts") }}
-						</IonLabel>
-					</IonToggle>
+					<IonSelect
+						v-model="appConfig.showMembersApartFromCustomFronts"
+						label-placement="floating"
+						:label="$t('appSettings:showMembersApartFromCustomFronts.title')"
+						:cancel-text="$t('other:alerts.cancel')"
+						interface="action-sheet"
+					>
+						<IonSelectOption value="off">
+							{{ $t("appSettings:showMembersApartFromCustomFronts.off") }}
+						</IonSelectOption>
+						<IonSelectOption value="before">
+							{{ $t("appSettings:showMembersApartFromCustomFronts.before") }}
+						</IonSelectOption>
+						<IonSelectOption value="after">
+							{{ $t("appSettings:showMembersApartFromCustomFronts.after") }}
+						</IonSelectOption>
+					</IonSelect>
 				</IonItem>
 
 				<IonItem button :detail="false">

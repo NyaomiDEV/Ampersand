@@ -10,7 +10,7 @@ export type AppConfig = {
 	defaultSystem: UUID,
 	showSystemDescriptionInDashboard: boolean,
 	showDefaultSystemInMemberList: boolean,
-	showMembersBeforeCustomFronts: boolean,
+	showMembersApartFromCustomFronts: "off" | "before" | "after",
 	hideFrontingTimer: boolean,
 	useIPC: boolean,
 	defaultFilterQueries: {

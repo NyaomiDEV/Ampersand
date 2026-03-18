@@ -13,7 +13,7 @@ const defaultAppConfig: AppConfig = {
 	defaultSystem: nilUid,
 	showSystemDescriptionInDashboard: false,
 	showDefaultSystemInMemberList: false,
-	showMembersBeforeCustomFronts: true,
+	showMembersApartFromCustomFronts: "after",
 	hideFrontingTimer: false,
 	useIPC: false,
 	view: "dashboard",
@@ -91,6 +91,13 @@ watch(accessibilityConfig, async () => {
 watch(securityConfig, async () => {
 	await set("securityConfig", { ...securityConfig });
 });
+
+// config migration here
+if ((appConfig as Record<string, unknown>).showMembersBeforeCustomFronts){
+	appConfig.showMembersApartFromCustomFronts = "before";
+	(appConfig as Record<string, unknown>).showMembersBeforeCustomFronts = undefined;
+}
+// end config migration here
 
 export {
 	appConfig,
