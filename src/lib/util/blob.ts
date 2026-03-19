@@ -19,7 +19,6 @@ export function useBlob(){
 	}
 
 	function clear(){
-		console.log([...dataURLs]);
 		dataURLs.entries().forEach(x => URL.revokeObjectURL(x[0]));
 		dataURLs.clear();
 	}
