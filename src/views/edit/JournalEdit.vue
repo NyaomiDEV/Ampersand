@@ -101,13 +101,8 @@
 
 	async function modifyCover(){
 		const files = await getFiles();
-		if(files.length){
-			if(files[0].type === "image/gif"){
-				post.value.cover = files[0];
-				return;
-			}
+		if(files.length)
 			post.value.cover = await resizeImage(files[0]);
-		}
 	}
 
 	async function showJournalOptions(){

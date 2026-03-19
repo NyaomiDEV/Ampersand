@@ -79,13 +79,8 @@
 
 	async function modifyPicture(){
 		const files = await getFiles();
-		if(files.length){
-			if(files[0].type === "image/gif"){
-				system.value.image = files[0];
-				return;
-			}
-			system.value.image = await resizeImage(files[0]);	
-		}
+		if(files.length)
+			system.value.image = await resizeImage(files[0]);
 	}
 
 	function deletePicture(){
@@ -94,13 +89,8 @@
 
 	async function modifyCover(){
 		const files = await getFiles();
-		if(files.length){
-			if(files[0].type === "image/gif"){
-				system.value.cover = files[0];
-				return;
-			}
+		if(files.length)
 			system.value.cover = await resizeImage(files[0], 1024);
-		}
 	}
 
 	function deleteCover(){

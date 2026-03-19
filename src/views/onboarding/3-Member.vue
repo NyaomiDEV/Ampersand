@@ -41,13 +41,8 @@
 
 	async function modifyPicture(){
 		const files = await getFiles();
-		if(files.length){
-			if(files[0].type === "image/gif"){
-				member.value.image = files[0];
-				return;
-			}
+		if(files.length)
 			member.value.image = await resizeImage(files[0]);
-		}
 	}
 
 	function deletePicture(){
