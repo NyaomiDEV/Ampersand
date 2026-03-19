@@ -7,7 +7,9 @@
 	import { formatDate } from "../lib/util/misc";
 	import { isReactive, onBeforeMount, shallowRef, watch, WatchStopHandle } from "vue";
 	import { getTag } from "../lib/db/tables/tags";
-	import { getObjectURL } from "../lib/util/blob";
+	import { useBlob } from "../lib/util/blob";
+
+	const { getObjectURL } = useBlob();
 
 	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
 

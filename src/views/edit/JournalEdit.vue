@@ -42,10 +42,11 @@
 	import { PartialBy } from "../../lib/types";
 	import { useRoute } from "vue-router";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
-	import { getObjectURL } from "../../lib/util/blob";
+	import { useBlob } from "../../lib/util/blob";
 	import { getTags } from "../../lib/db/tables/tags";
 	import { addModal, removeModal } from "../../lib/modals";
 
+	const { getObjectURL } = useBlob();
 	const router = useIonRouter();
 	const route = useRoute();
 

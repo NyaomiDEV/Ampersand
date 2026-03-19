@@ -5,9 +5,11 @@
 	} from "@ionic/vue";
 
 	import { ImageClip } from "../lib/db/entities";
-	import { getObjectURL } from "../lib/util/blob";
+	import { useBlob } from "../lib/util/blob";
 
 	import { ref, watch } from "vue";
+
+	const { getObjectURL } = useBlob();
 
 	const props = withDefaults(defineProps<{
 		image?: File,

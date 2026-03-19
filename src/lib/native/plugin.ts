@@ -14,8 +14,12 @@ export function setCanGoBack(canGoBack: boolean): Promise<void> {
 	return invokePlugin("set_can_go_back", { canGoBack }) as Promise<void>;
 }
 
-export async function openFile(file: File) {
-	//if(platform() === "ios") return false; // iOS open is unsupported
+export async function openFile(file: File | string) {
+	if(typeof file === "string"){
+		const blob = await (await window.fetch(file)).blob();
+		file = new File([blob], `ampersand-tempfile${blob.type.split("/")[1].replace("x-", "")}`);
+	}
+
 	const path = await writeToTemp(file);
 	if (!path) return false;
 

@@ -3,7 +3,7 @@
 import { Fragment, h, type VNode } from "vue";
 import { Marked } from "marked";
 import { getAssets } from "../db/tables/assets";
-import { getObjectURL } from "../util/blob";
+import { useBlob } from "../util/blob";
 import vueExtension from "./vue/vue";
 import { IonCheckbox } from "@ionic/vue";
 import { fetch } from "@tauri-apps/plugin-http";
@@ -34,159 +34,165 @@ import startExtension from "./startExtension";
 import endExtension from "./endExtension";
 import fontFamilyExtension from "./fontFamilyExtension";
 
-export const marked = new Marked<(VNode | string)[], VNode | string>();
+export function useMarked(blob: ReturnType<typeof useBlob>){
+	const marked = new Marked<(VNode | string)[], VNode | string>();
 
-// Our configuration
-marked.use({
-	async: true,
-	gfm: true,
-	breaks: true
-});
+	const { getObjectURL } = blob;
 
-// Use Vue3
-marked.use(vueExtension);
+	// Our configuration
+	marked.use({
+		async: true,
+		gfm: true,
+		breaks: true,
+	});
 
-// Override default tokenizers/renderers
-marked.use({
-	tokenizer: {
-		del(src: string){
-			const regex = /^(~~)(?=[^\s~])((?:\\[\s\S]|[^\\])*?(?:\\[\s\S]|[^\s~\\]))\1(?=[^~]|$)/;
-			const cap = regex.exec(src);
-			if (cap) {
-				return {
-					type: "del",
-					raw: cap[0],
-					text: cap[2],
-					tokens: this.lexer.inlineTokens(cap[2]),
-				};
-			}
-			return;
-		}
-	},
-	renderer: {
-		image(token) {
-			// checking for lone surrogates the shitty way
-			try {
-				const external = token.href.startsWith("EXTERNAL:");
-				if(external) token.href = token.href.slice(9);
+	// Use Vue3
+	marked.use(vueExtension);
 
-				const href = encodeURI(token.href).replace(/%25/g, "%");
-				return h("img", {
-					src: href,
-					alt: token.text,
-					title: token.title,
-					width: (token as any).width,
-					height: (token as any).height,
-					onLoad: () => {
-						if(external)
-							URL.revokeObjectURL(token.href);
-					},
-					onError: () => {
-						if (external)
-							URL.revokeObjectURL(token.href);
-					}
-				});
-			} catch (_e) {
-				return h(Text, token.text);
+	// Override default tokenizers/renderers
+	marked.use({
+		tokenizer: {
+			del(src: string) {
+				const regex = /^(~~)(?=[^\s~])((?:\\[\s\S]|[^\\])*?(?:\\[\s\S]|[^\s~\\]))\1(?=[^~]|$)/;
+				const cap = regex.exec(src);
+				if (cap) {
+					return {
+						type: "del",
+						raw: cap[0],
+						text: cap[2],
+						tokens: this.lexer.inlineTokens(cap[2]),
+					};
+				}
+				return;
 			}
 		},
-		link(token) {
-			const inlineParsed = this.parser.parseInline(token.tokens);
-			// checking for lone surrogates the shitty way
-			try{
-				const href = encodeURI(token.href).replace(/%25/g, "%");
-				return h("a", { href, title: token.title }, inlineParsed);
-			}catch(_e){
-				return h(Fragment, inlineParsed);
+		renderer: {
+			image(token) {
+				// checking for lone surrogates the shitty way
+				try {
+					const external = token.href.startsWith("EXTERNAL:");
+					if (external) token.href = token.href.slice(9);
+
+					const href = encodeURI(token.href).replace(/%25/g, "%");
+					return h("img", {
+						src: href,
+						alt: token.text,
+						title: token.title,
+						width: (token as any).width,
+						height: (token as any).height,
+						onLoad: () => {
+							if (external)
+								URL.revokeObjectURL(token.href);
+						},
+						onError: () => {
+							if (external)
+								URL.revokeObjectURL(token.href);
+						}
+					});
+				} catch (_e) {
+					return h(Text, token.text);
+				}
+			},
+			link(token) {
+				const inlineParsed = this.parser.parseInline(token.tokens);
+				// checking for lone surrogates the shitty way
+				try {
+					const href = encodeURI(token.href).replace(/%25/g, "%");
+					return h("a", { href, title: token.title }, inlineParsed);
+				} catch (_e) {
+					return h(Fragment, inlineParsed);
+				}
+			},
+			checkbox({ checked }) {
+				return h(IonCheckbox, { checked, disabled: true });
 			}
 		},
-		checkbox({ checked }) {
-			return h(IonCheckbox, { checked, disabled: true });
-		}
-	},
-	async walkTokens(token) {
-		switch(token.type){
-			case "image":
-				// first off let's match the size tokens
-				const matches = /#(-?\d+?x-?\d+?)$/.exec(token.href);
-				if(matches){
-					const [w,h] = matches[1].split("x").map(x => Number(x));
-					if(w >= 0) (token as any).width = w;
-					if(h >= 0) (token as any).height = h;
-					token.href = token.href.replace(/#(-?\d+?x-?\d+?)$/, "");
-				}
+		async walkTokens(token) {
+			switch (token.type) {
+				case "image":
+					// first off let's match the size tokens
+					const matches = /#(-?\d+?x-?\d+?)$/.exec(token.href);
+					if (matches) {
+						const [w, h] = matches[1].split("x").map(x => Number(x));
+						if (w >= 0) (token as any).width = w;
+						if (h >= 0) (token as any).height = h;
+						token.href = token.href.replace(/#(-?\d+?x-?\d+?)$/, "");
+					}
 
-				// then let's put the href to asset code
-				let blocked = false;
-				if(token.href.startsWith("@")){
-					blocked = true; // block since we might not have this asset
-					const friendlyNameMaybe = token.href.slice(1);
-					for await (const x of getAssets()) {
-						if (x.friendlyName === friendlyNameMaybe) {
-							token.href = getObjectURL(x.file);
-							blocked = false; // we have this asset, unblock
-							break;
+					// then let's put the href to asset code
+					let blocked = false;
+					if (token.href.startsWith("@")) {
+						blocked = true; // block since we might not have this asset
+						const friendlyNameMaybe = token.href.slice(1);
+						for await (const x of getAssets()) {
+							if (x.friendlyName === friendlyNameMaybe) {
+								token.href = getObjectURL(x.file);
+								blocked = false; // we have this asset, unblock
+								break;
+							}
+						}
+						// also, block non-asset images as they are sure linking outwards
+					} else {
+						if (!securityConfig.allowRemoteContent)
+							blocked = true; // we don't allow internet connections, block
+						else {
+							const blob = await (await fetch(token.href)).blob();
+							token.href = `EXTERNAL:${URL.createObjectURL(blob)}`;
 						}
 					}
-				// also, block non-asset images as they are sure linking outwards
-				} else {
-					if(!securityConfig.allowRemoteContent)
-						blocked = true; // we don't allow internet connections, block
-					else {
-						const blob = await (await fetch(token.href)).blob();
-						token.href = `EXTERNAL:${URL.createObjectURL(blob)}`;
-					}
-				}
 
-				// replace with # if link is blocked
-				if(blocked)
-					token.href = "#";
-				break;
-			case "link":
-				if (token.href.startsWith("@")) {
-					let blocked = true;
-					const friendlyNameMaybe = token.href.slice(1);
-					for await (const x of getAssets()){
-						if (x.friendlyName === friendlyNameMaybe){
-							token.href = getObjectURL(x.file);
-							blocked = false;
-							break;
-						}
-					}
-	
 					// replace with # if link is blocked
-					if(blocked)
+					if (blocked)
 						token.href = "#";
-				}
-				break;
-		}
-	},
-});
+					break;
+				case "link":
+					if (token.href.startsWith("@")) {
+						let blocked = true;
+						const friendlyNameMaybe = token.href.slice(1);
+						for await (const x of getAssets()) {
+							if (x.friendlyName === friendlyNameMaybe) {
+								token.href = getObjectURL(x.file);
+								blocked = false;
+								break;
+							}
+						}
 
-// Start injecting our extensions
-marked.use(
-	svgExtension,
-	mentionExtension,
-	spoilerExtension,
-	timestampExtension,
-	colorExtension,
-	textColorFgExtension,
-	textColorBgExtension,
-	textShadowExtension,
-	textBorderExtension,
-	textDecorationExtension,
-	fontSizeExtension,
-	superscriptExtension,
-	subscriptExtension,
-	underlineExtension,
-	highlightExtension,
-	centerExtension,
-	startExtension,
-	endExtension,
-	blurExtension,
-	linebreakExtension,
-	marqueeExtension,
-	calloutExtension,
-	fontFamilyExtension,
-	mermaidExtension
-);
+						// replace with # if link is blocked
+						if (blocked)
+							token.href = "#";
+					}
+					break;
+			}
+		},
+	});
+
+	// Start injecting our extensions
+	marked.use(
+		svgExtension(blob),
+		mentionExtension,
+		spoilerExtension,
+		timestampExtension,
+		colorExtension,
+		textColorFgExtension,
+		textColorBgExtension,
+		textShadowExtension,
+		textBorderExtension,
+		textDecorationExtension,
+		fontSizeExtension,
+		superscriptExtension,
+		subscriptExtension,
+		underlineExtension,
+		highlightExtension,
+		centerExtension,
+		startExtension,
+		endExtension,
+		blurExtension,
+		linebreakExtension,
+		marqueeExtension,
+		calloutExtension,
+		fontFamilyExtension,
+		mermaidExtension
+	);
+
+	return marked;
+}

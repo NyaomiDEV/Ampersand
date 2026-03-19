@@ -37,11 +37,12 @@
 	import { DatabaseEvents, DatabaseEvent } from "../lib/db/events.ts";
 	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
 	import { useRoute } from "vue-router";
-	import { getObjectURL } from "../lib/util/blob.ts";
+	import { useBlob } from "../lib/util/blob.ts";
 	import { toast } from "../lib/util/misc.ts";
 	import { useTranslation } from "i18next-vue";
 	import VirtualList from "../components/VirtualList.vue";
 
+	const { getObjectURL } = useBlob();
 	const route = useRoute();
 	const i18next = useTranslation();
 

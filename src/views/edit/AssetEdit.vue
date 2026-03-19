@@ -26,9 +26,11 @@
 	import { useRoute } from "vue-router";
 	import { useTranslation } from "i18next-vue";
 	import { getFiles, promptOkCancel } from "../../lib/util/misc";
-	import { getObjectURL } from "../../lib/util/blob";
+	import { useBlob } from "../../lib/util/blob";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import AssetItem from "../../components/AssetItem.vue";
+
+	const { getObjectURL } = useBlob();
 
 	const loading = ref(false);
 

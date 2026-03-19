@@ -1,5 +1,7 @@
 <script setup lang="ts">
-	import { getObjectURL } from "../lib/util/blob";
+	import { useBlob } from "../lib/util/blob";
+
+	const { getObjectURL } = useBlob();
 
 	const props = defineProps<{
 		cover?: File,

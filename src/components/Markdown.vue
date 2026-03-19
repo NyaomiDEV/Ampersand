@@ -1,9 +1,11 @@
 <script setup lang="ts">
 	import { watch, shallowRef, VNode } from "vue";
-	import { marked } from "../lib/markdown";
+	import { useMarked } from "../lib/markdown";
 	import { openUrl } from "@tauri-apps/plugin-opener";
-	import { getFile } from "../lib/util/blob";
 	import { openFile } from "../lib/native/plugin";
+	import { useBlob } from "../lib/util/blob";
+
+	const marked = useMarked(useBlob());
 
 	const props = defineProps<{
 		markdown: string
@@ -25,10 +27,7 @@
 				return;
 			}
 
-			const file = getFile(url);
-			if(!file) return;
-
-			await openFile(file);
+			await openFile(url);
 		}catch(_e){
 			// whatever?
 		}

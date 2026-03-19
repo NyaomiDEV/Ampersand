@@ -1,11 +1,13 @@
 <script setup lang="ts">
 	import { IonThumbnail, IonLabel, IonItem, IonIcon } from "@ionic/vue";
 	import { Asset } from "../lib/db/entities";
-	import { getObjectURL } from "../lib/util/blob";
+	import { useBlob } from "../lib/util/blob";
 	import { PartialBy } from "../lib/types";
 
 	import documentMD from "@material-symbols/svg-600/outlined/draft.svg";
 	import { openFile } from "../lib/native/plugin";
+
+	const { getObjectURL } = useBlob();
 
 	const props = defineProps<{
 		asset: PartialBy<Asset, "uuid">,

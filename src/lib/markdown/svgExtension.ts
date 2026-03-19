@@ -1,11 +1,11 @@
 import { Fragment, h, type VNode } from "vue";
 import { MarkedExtension } from "marked";
 import { getAssets } from "../db/tables/assets";
-import { getObjectURL } from "../util/blob";
+import { useBlob } from "../util/blob";
 import { securityConfig } from "../config";
 import Svg from "../../components/Svg.vue";
 
-const svgExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
+const svgExtension = (blob: ReturnType<typeof useBlob>): MarkedExtension<(VNode | string)[], VNode | string> => ({
 	extensions: [{
 		name: "svg",
 		level: "inline",
@@ -50,7 +50,7 @@ const svgExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 					const [assetNameMaybe, ...parts] = (token.href as string).slice(1).split("#");
 					for await (const x of getAssets()) {
 						if (x.friendlyName === assetNameMaybe) {
-							token.href = getObjectURL(x.file) + (parts.length ? `#${parts.join("#")}` : "");
+							token.href = blob.getObjectURL(x.file) + (parts.length ? `#${parts.join("#")}` : "");
 							token.blocked = false; // unblock now
 							break;
 						}
@@ -63,6 +63,6 @@ const svgExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 				break;
 		}
 	}
-};
+});
 
 export default svgExtension;
