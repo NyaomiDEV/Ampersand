@@ -3,7 +3,7 @@
 	import { getCurrentInstance, onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
 	import { getFiles, promptOkCancel, toast, imageClips } from "../../lib/util/misc";
 	import { resizeImage } from "../../lib/util/image";
-	import { deleteSystem, getSystem, newSystem, updateSystem } from "../../lib/db/tables/system";
+	import { deleteSystem, getSystem, newSystem, updateSystem, countSystemMembers } from "../../lib/db/tables/system";
 	import { getMembers } from "../../lib/db/tables/members";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import SystemSelect from "../../modals/SystemSelect.vue";
@@ -430,7 +430,7 @@
 						</IonToggle>
 					</IonItem>
 					<IonItem
-						v-if="system.uuid && appConfig.defaultSystem !== system.uuid"
+						v-if="system.uuid && appConfig.defaultSystem !== system.uuid && !countSystemMembers(system.uuid)"
 						button
 						:detail="false"
 						@click="removeSystem"

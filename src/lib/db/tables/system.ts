@@ -72,3 +72,7 @@ export async function updateSystem(uuid: UUID, system: Partial<System>) {
 		return false;
 	}
 }
+
+export function countSystemMembers(uuid: UUID){
+	return db.members.index.filter(x => x.system === uuid).length;
+}
