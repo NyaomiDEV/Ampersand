@@ -71,7 +71,8 @@ export async function updateFrontingEntry(uuid: UUID, newContent: Partial<Fronti
 				const toUpdate = (await Promise.all(
 					db.frontingEntries.index.filter(x => 
 						x.endTime && updated.newData.startTime.valueOf() < x.endTime.valueOf() ||
-						updated.newData.startTime.valueOf() < x.startTime!.valueOf() && (updated.newData.endTime || new Date()).valueOf() > x.startTime!.valueOf()
+						updated.newData.startTime.valueOf() < x.startTime!.valueOf() && (updated.newData.endTime || new Date()).valueOf() > x.startTime!.valueOf() ||
+						!updated.newData.endTime && !x.endTime
 					)
 						.map(x => db.frontingEntries.get(x.uuid))
 				))
