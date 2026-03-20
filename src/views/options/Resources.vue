@@ -83,7 +83,7 @@
 	</IonPage>
 </template>
 
-<style>
+<style scoped>
 	ion-list-header {
 		text-align: center;
 		font-size: 1.25em;
