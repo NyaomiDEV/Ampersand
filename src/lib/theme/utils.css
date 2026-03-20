@@ -15,12 +15,12 @@
 
 /* Elevation */
 .md * {
-	--md3-elevation-0: 0px 0px 0px 0px rgba(var(--md3-shadow), 0.3), 0px 0px 0px 0px rgba(var(--md3-shadow), 0.15);
-	--md3-elevation-1: 0px 1px 2px 0px rgba(var(--md3-shadow), 0.3), 0px 1px 3px 1px rgba(var(--md3-shadow), 0.15);
-	--md3-elevation-2: 0px 1px 2px 0px rgba(var(--md3-shadow), 0.3), 0px 2px 6px 2px rgba(var(--md3-shadow), 0.15);
-	--md3-elevation-3: 0px 1px 3px 0px rgba(var(--md3-shadow), 0.3), 0px 4px 8px 3px rgba(var(--md3-shadow), 0.15);
-	--md3-elevation-4: 0px 2px 3px 0px rgba(var(--md3-shadow), 0.3), 0px 6px 10px 4px rgba(var(--md3-shadow), 0.15);
-	--md3-elevation-5: 0px 4px 4px 0px rgba(var(--md3-shadow), 0.3), 0px 8px 12px 6px rgba(var(--md3-shadow), 0.15);
+	--md3-elevation-0: 0px 0px 0px 0px color-mix(in srgb, rgba(var(--md3-shadow)), transparent 80%), 0px 0px 0px 0px color-mix(in srgb, rgba(var(--md3-shadow)), transparent 86%), 0px 0px 0px 0px color-mix(in srgb, rgba(var(--md3-shadow)), transparent 88%);
+    --md3-elevation-1: 0px 3px 1px -2px color-mix(in srgb, rgba(var(--md3-shadow)), transparent 80%), 0px 2px 2px 0px color-mix(in srgb, rgba(var(--md3-shadow)), transparent 86%), 0px 1px 5px 0px color-mix(in srgb, rgba(var(--md3-shadow)), transparent 88%);
+    --md3-elevation-2: 0px 2px 4px -1px color-mix(in srgb, rgba(var(--md3-shadow)), transparent 80%), 0px 4px 5px 0px color-mix(in srgb, rgba(var(--md3-shadow)), transparent 86%), 0px 1px 10px 0px color-mix(in srgb, rgba(var(--md3-shadow)), transparent 88%);
+    --md3-elevation-3: 0px 5px 5px -3px color-mix(in srgb, rgba(var(--md3-shadow)), transparent 80%), 0px 8px 10px 1px color-mix(in srgb, rgba(var(--md3-shadow)), transparent 86%), 0px 3px 14px 2px color-mix(in srgb, rgba(var(--md3-shadow)), transparent 88%);
+    --md3-elevation-4: 0px 5px 5px -3px color-mix(in srgb, rgba(var(--md3-shadow)), transparent 80%), 0px 8px 10px 1px color-mix(in srgb, rgba(var(--md3-shadow)), transparent 86%), 0px 3px 14px 2px color-mix(in srgb, rgba(var(--md3-shadow)), transparent 88%);
+    --md3-elevation-5: 0px 8px 10px -6px color-mix(in srgb, rgba(var(--md3-shadow)), transparent 80%), 0px 16px 24px 2px color-mix(in srgb, rgba(var(--md3-shadow)), transparent 86%), 0px 6px 30px 5px color-mix(in srgb, rgba(var(--md3-shadow)), transparent 88%);
 }
 
 /* Motion path */
