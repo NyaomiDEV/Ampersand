@@ -165,7 +165,7 @@
 		padding: 16px;
 	}
 
-	.list::v-deep .v-container {
+	.list:deep(.v-container) {
 		padding-bottom: 16px;
 	}
 
