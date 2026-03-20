@@ -2,10 +2,6 @@
 	import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonIcon, IonBackButton } from "@ionic/vue";
 	
 	import AmpersandLogo from "../../assets/ampersand_logo.svg";
-	import CodebergLogo from "../../assets/codeberg_logo.svg";
-	import LiberapayLogo from "../../assets/liberapay_logo.svg";
-
-	import globeMD from "@material-symbols/svg-600/outlined/globe.svg";
 
 	import { version } from "../../../package.json";
 	import { openUrl } from "@tauri-apps/plugin-opener";
@@ -13,28 +9,16 @@
 
 	import { checkUpdates, checkIsUpdateNewer } from "../../lib/update";
 	import { UpdateCheckResponse } from "../../lib/types";
+	import Markdown from "../../components/Markdown.vue";
+
+	import credits from "../../assets/credits.md";
 
 	const egg = ref(0);
 	const newVersion = ref<UpdateCheckResponse>();
 	const isCiVersion = import.meta.env.AMPERSAND_IS_CI_BUILD === "1";
 
-	async function openRepo(){
-		const url = "https://codeberg.org/Ampersand/app";
-		await openUrl(url);
-	}
-
-	async function openWebsite(){
-		const url = "https://ampersand.moe/";
-		await openUrl(url);
-	}
-
 	async function openPrivacyPolicy(){
 		const url = "https://codeberg.org/Ampersand/app/wiki/Privacy-Policy";
-		await openUrl(url);
-	}
-
-	async function openLiberapay(){
-		const url = "https://liberapay.com/Ampersand/";
 		await openUrl(url);
 	}
 
@@ -90,23 +74,14 @@
 					<img src="../../assets/mia.webp" />
 				</div>
 
-				<div class="buttons">
-					<IonButton class="tonal" shape="round" @click="openRepo">
-						<IonIcon slot="icon-only" :icon="CodebergLogo" />
-					</IonButton>
-
-					<IonButton class="tonal" shape="round" @click="openWebsite">
-						<IonIcon slot="icon-only" :icon="globeMD" />
-					</IonButton>
-
-					<IonButton class="tonal" shape="round" @click="openLiberapay">
-						<IonIcon slot="icon-only" :icon="LiberapayLogo" />
-					</IonButton>
-				</div>
-
 				<IonButton fill="outline" @click="openPrivacyPolicy">
 					{{ $t("about:privacyPolicy") }}
 				</IonButton>
+			</div>
+
+			<div class="credits">
+				<h3>{{ $t("about:credits") }}</h3>
+				<Markdown :markdown="credits" />
 			</div>
 		</IonContent>
 	</IonPage>
@@ -116,7 +91,7 @@
 	.container {
 		display: flex;
 		width: 100%;
-		height: 100%;
+		min-height: calc(100% - 48px - 2.25em);
 		align-items: center;
 		justify-content: center;
 		flex-direction: column;
@@ -157,17 +132,29 @@
 		transform: rotateY(0.25turn);
 	}
 
-	.buttons {
-		display: flex;
-		gap: 16px;
-	}
-
 	.logo.egg-on > ion-icon {
 		animation-name: logo;
 	}
 
 	.logo.egg-on > img {
 		animation-name: mia;
+	}
+
+	.credits {
+		margin: 16px;
+		border-radius: 16px;
+		padding: 16px;
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		background-color: rgb(var(--md3-surface-container));
+		color: rgb(var(--md3-on-surface-container));
+
+		h3 {
+			text-align: center;
+			margin: 0;
+			line-height: normal;
+		}
 	}
 
 	@keyframes logo {

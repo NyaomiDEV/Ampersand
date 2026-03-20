@@ -1,0 +1,5 @@
+- [Pixel Perfect](https://codeberg.org/PixelPerfect) for her help on getting iOS builds and SideStore rolling;
+- [Fulmine](https://codeberg.org/fulmine) and the [Weather Collective](https://codeberg.org/weathercollective) for the virtual scroller implementation;
+- Fulmine again, for random bug fixes we otherwise wouldn't notice;
+- [MsHaze](https://codeberg.org/mshaze) for bug fixes, nitpicks, and continued help;
+- [Our devoted translators](https://translate.codeberg.org/user/?q=%20contributes:ampersand).

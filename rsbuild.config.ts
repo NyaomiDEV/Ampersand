@@ -56,5 +56,15 @@ export default defineConfig({
 		},
 		minify: true,
 		polyfill: "usage"
-	}
+	},
+	tools: {
+		rspack(config, { addRules }) {
+			addRules([
+				{
+					test: /\.md$/,
+					type: 'asset/source',
+				},
+			]);
+		},
+	},
 });

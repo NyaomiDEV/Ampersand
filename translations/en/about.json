@@ -4,5 +4,6 @@
 	"ciVersion": "CI version", 
 	"madein": "Made with love in Italy",
 	"privacyPolicy": "Privacy Policy",
-	"updateAvailable": "Update available: {{newVersion}}"
+	"updateAvailable": "Update available: {{newVersion}}",
+	"credits": "Credits"
 }
