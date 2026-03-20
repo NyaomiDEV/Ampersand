@@ -12,7 +12,7 @@
 	const virtualizerOptions = computed(() => ({
 		count: entries?.length ?? 0,
 		getScrollElement: () => scroller.value || null,
-		estimateSize: () => 90,
+		estimateSize: () => 80,
 		getItemKey: (index: number) => entries[index]?.uuid ?? index,
 		measureElement: (element: Element, _entry: ResizeObserverEntry | undefined, instance: Virtualizer<Element, Element>): number => {
 			const direction = instance.scrollDirection;
