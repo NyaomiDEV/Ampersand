@@ -31,6 +31,7 @@ const svgExtension = (blob: ReturnType<typeof useBlob>): MarkedExtension<(VNode 
 			if (!token.blocked){
 				return h(Svg, {
 					src: token.href,
+					class: "markdown-svg",
 					fill: token.fill ?? "transparent",
 					stroke: token.stroke ?? "currentColor",
 					strokeWidth: token.strokeWidth,
