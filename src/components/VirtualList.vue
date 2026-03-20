@@ -1,6 +1,6 @@
 <script setup lang="ts" generic="T extends UUIDable">
 	import { useVirtualizer, Virtualizer } from "@tanstack/vue-virtual";
-	import { ComponentPublicInstance, computed, nextTick, ref } from "vue";
+	import { computed, ref } from "vue";
 	import { UUIDable } from "../lib/db/entities";
 
 	const { entries } = defineProps<{
@@ -12,7 +12,7 @@
 	const virtualizerOptions = computed(() => ({
 		count: entries?.length ?? 0,
 		getScrollElement: () => scroller.value || null,
-		estimateSize: () => 130,
+		estimateSize: () => 200,
 		getItemKey: (index: number) => entries[index]?.uuid ?? index,
 		measureElement: (element: Element, _entry: ResizeObserverEntry | undefined, instance: Virtualizer<Element, Element>): number => {
 			const direction = instance.scrollDirection;
@@ -32,13 +32,6 @@
 	const rowVirtualizer = useVirtualizer(virtualizerOptions);
 	const virtualRows = computed(() => rowVirtualizer.value.getVirtualItems());
 	const totalSize = computed(() => rowVirtualizer.value.getTotalSize());
-
-	const measureElement = (el?: Element | ComponentPublicInstance | null) => {
-		void nextTick(() => {
-			if (!el) return;
-			rowVirtualizer.value.measureElement(el as Element);
-		});
-	};
 </script>
 
 <template>
@@ -62,7 +55,6 @@
 				<div
 					v-for="vrow in virtualRows"
 					:key="vrow.key.toString()"
-					:ref="measureElement"
 					class="v-row"
 					:data-index="vrow.index"
 				>
