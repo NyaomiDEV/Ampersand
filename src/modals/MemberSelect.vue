@@ -165,6 +165,10 @@
 		padding: 16px;
 	}
 
+	.list::v-deep .v-container {
+		padding-bottom: 16px;
+	}
+
 	.list .v-row:first-child ion-item {
 		border-top-left-radius: 16px;
 		border-top-right-radius: 16px;

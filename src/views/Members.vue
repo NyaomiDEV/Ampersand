@@ -283,6 +283,10 @@
 		border-bottom-right-radius: 16px;
 	}
 
+	.list::v-deep .v-container {
+		padding-bottom: 16px;
+	}
+
 	ion-item {
 		margin: 1px 0;
 	}

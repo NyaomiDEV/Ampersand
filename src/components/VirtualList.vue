@@ -44,6 +44,7 @@
 			}"
 		>
 			<div
+				class="v-container"
 				:style="{
 					position: 'absolute',
 					top: 0,
