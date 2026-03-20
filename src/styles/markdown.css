@@ -1,247 +1,259 @@
 .md div.markdown-content {
     margin: 8px 0;
     overflow-wrap: anywhere;
-}
 
-.md div.markdown-content span {
-    color: inherit;
-}
+    span {
+        color: inherit;
+    }
 
-/* Horizontal Rules */
-.md div.markdown-content hr {
-    border-top-width: 1px;
-    color: var(--ion-text-color-step-400);
-}
+    /* Horizontal Rules */
+    hr {
+        border-top-width: 1px;
+        color: var(--ion-text-color-step-400);
+    }
 
-/* Blockquotes */
-.md div.markdown-content blockquote {
-    border-left: 1px solid var(--ion-text-color-step-400);
-    padding-left: 8px;
-    margin: 12px;
-}
+    /* Blockquotes */
+    blockquote {
+        border-left: 1px solid var(--ion-text-color-step-400);
+        padding-left: 8px;
+        margin: 12px;
+    }
 
-/* Tables */
-.md div.markdown-content table {
-    border: 1px solid var(--ion-text-color-step-400);
-    margin-bottom: 8px;
-}
+    /* Tables */
+    table {
+        border: 1px solid var(--ion-text-color-step-400);
+        margin-bottom: 8px;
+    }
 
-.md div.markdown-content table tr {
-    border-bottom: 1px solid var(--ion-text-color-step-400);
-}
+    table tr {
+        border-bottom: 1px solid var(--ion-text-color-step-400);
+    }
 
-.md div.markdown-content table th {
-    border-left: 1px solid var(--ion-text-color-step-400);
-    border-right: 1px solid var(--ion-text-color-step-400);
-}
+    table th {
+        border-left: 1px solid var(--ion-text-color-step-400);
+        border-right: 1px solid var(--ion-text-color-step-400);
+    }
 
-.md div.markdown-content table td {
-    border-left: 1px solid var(--ion-text-color-step-400);
-    border-right: 1px solid var(--ion-text-color-step-400);
-}
+    table td {
+        border-left: 1px solid var(--ion-text-color-step-400);
+        border-right: 1px solid var(--ion-text-color-step-400);
+    }
 
-.md div.markdown-content table :is(td, th) {
-    padding: 8px;
-}
+    table :is(td, th) {
+        padding: 8px;
+    }
 
-/* Headings */
-.md div.markdown-content :is(h1, h2, h3, h4, h5, h6, p) {
-    margin-top: 0;
-    margin-bottom: 0.25rem;
-    line-height: normal;
-}
+    /* Headings */
+    :is(h1, h2, h3, h4, h5, h6, p) {
+        margin-top: 0;
+        margin-bottom: 0.25rem;
+        line-height: normal;
+    }
 
-.md div.markdown-content h1 {
-    font-size: 1.95rem;
-}
+    h1 {
+        font-size: 1.95rem;
+    }
 
-.md div.markdown-content h2 {
-    font-size: 1.625rem;
-}
+    h2 {
+        font-size: 1.625rem;
+    }
 
-.md div.markdown-content h3 {
-    font-size: 1.3rem;
-}
+    h3 {
+        font-size: 1.3rem;
+    }
 
-.md div.markdown-content h4 {
-    font-size: 1.125rem;
-}
+    h4 {
+        font-size: 1.125rem;
+    }
 
-.md div.markdown-content h5 {
-    font-size: 1.0125rem;
-}
+    h5 {
+        font-size: 1.0125rem;
+    }
 
-.md div.markdown-content h6 {
-    font-size: 0.9rem;
-}
+    h6 {
+        font-size: 0.9rem;
+    }
 
-/* Highlight */
-.md div.markdown-content mark {
-    padding: 2px 4px;
-    border-radius: 4px;
-    background-color: rgba(var(--ion-color-primary-rgb), 0.40);
-    color: var(--ion-text-color);
-}
+    /* Highlight */
+    mark {
+        padding: 2px 4px;
+        border-radius: 4px;
+        background-color: rgba(var(--ion-color-primary-rgb), 0.40);
+        color: var(--ion-text-color);
+    }
 
-/* Spoilers */
-.md div.markdown-content span.spoiler {
-    border-radius: 4px;
-    padding: 2px 4px;
-    background-color: var(--ion-background-color-step-200);
-    transition-duration: 250ms;
-    transition-timing-function: ease-in-out;
-    transition-property: color, background-color;
-    color: transparent;
-    cursor: pointer;
-    user-select: none;
-}
+    /* Spoilers */
+    span.spoiler {
+        border-radius: 4px;
+        padding: 2px 4px;
+        background-color: var(--ion-background-color-step-200);
+        transition-duration: 250ms;
+        transition-timing-function: ease-in-out;
+        transition-property: color, background-color;
+        color: transparent;
+        cursor: pointer;
+        user-select: none;
+    }
 
-.md div.markdown-content span.spoiler * {
-    opacity: 0;
-    transition-duration: 250ms;
-    transition-timing-function: ease-in-out;
-    transition-property: opacity;
-}
+    span.spoiler * {
+        opacity: 0;
+        transition-duration: 250ms;
+        transition-timing-function: ease-in-out;
+        transition-property: opacity;
+    }
 
-.md div.markdown-content span.spoiler:focus {
-    background-color: var(--ion-background-color-step-400);
-    color: unset;
-    user-select: unset;
-    cursor: unset;
-}
+    span.spoiler:focus {
+        background-color: var(--ion-background-color-step-400);
+        color: unset;
+        user-select: unset;
+        cursor: unset;
+    }
 
-.md div.markdown-content span.spoiler:focus * {
-    opacity: unset;
-}
+    span.spoiler:focus * {
+        opacity: unset;
+    }
 
-/* Timestamp */
-.md div.markdown-content span.timestamp {
-    border-radius: 4px;
-    padding: 2px 4px;
-    background-color: var(--ion-background-color-step-150);
-}
+    /* Timestamp */
+    span.timestamp {
+        border-radius: 4px;
+        padding: 2px 4px;
+        background-color: var(--ion-background-color-step-150);
+    }
 
-.md div.markdown-content span.timestamp::before {
-    content: "\A";
-    mask-image: url(/node_modules/@material-symbols/svg-600/outlined/nest_clock_farsight_analog.svg);
-    background-color: var(--ion-text-color);
-    mask-size: contain;
-    mask-repeat: no-repeat;
-    display: inline-block;
-    width: 1.3em;
-    height: 1.3em;
-    aspect-ratio: 1;
-    vertical-align: text-bottom;
-    padding-right: 4px;
-}
+    span.timestamp::before {
+        content: "\A";
+        mask-image: url(/node_modules/@material-symbols/svg-600/outlined/nest_clock_farsight_analog.svg);
+        background-color: var(--ion-text-color);
+        mask-size: contain;
+        mask-repeat: no-repeat;
+        display: inline-block;
+        width: 1.3em;
+        height: 1.3em;
+        aspect-ratio: 1;
+        vertical-align: text-bottom;
+        padding-right: 4px;
+    }
 
-.md div.markdown-content span.color::before {
-    content: "\A";
-    display: inline-block;
-    aspect-ratio: 1;
-    width: .8em;
-    margin-inline-end: 0.25em;
-    border-radius: 100%;
-    background-color: var(--color);
-    vertical-align: baseline;
-}
+    span.color::before {
+        content: "\A";
+        display: inline-block;
+        aspect-ratio: 1;
+        width: .8em;
+        margin-inline-end: 0.25em;
+        border-radius: 100%;
+        background-color: var(--color);
+        vertical-align: baseline;
+    }
 
-.md div.markdown-content span.text-color-fg-one {
-    color: var(--markdown-text-fg-colors);
-}
+    span.text-color-fg-one {
+        color: var(--markdown-text-fg-colors);
+    }
 
-.md div.markdown-content span.text-color-fg {
-    background: linear-gradient(var(--markdown-text-fg-degrees), var(--markdown-text-fg-colors));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-}
+    span.text-color-fg {
+        background: linear-gradient(var(--markdown-text-fg-degrees), var(--markdown-text-fg-colors));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
 
-.md div.markdown-content span.text-color-bg {
-    border-radius: 4px;
-    padding: 2px 4px;
-    background: linear-gradient(var(--markdown-text-bg-degrees), var(--markdown-text-bg-colors));
-}
+    span.text-color-bg {
+        border-radius: 4px;
+        padding: 2px 4px;
+        background: linear-gradient(var(--markdown-text-bg-degrees), var(--markdown-text-bg-colors));
+    }
 
-.md div.markdown-content span.text-shadow {
-    text-shadow: var(--markdown-text-shadow);
-}
+    span.text-shadow {
+        text-shadow: var(--markdown-text-shadow);
+    }
 
-.md div.markdown-content span.text-border {
-    border-left: var(--markdown-text-border-left);
-    border-right: var(--markdown-text-border-right);
-    border-top: var(--markdown-text-border-top);
-    border-bottom: var(--markdown-text-border-bottom);
-    border-radius: 4px;
-    padding: 2px 4px;
-    display: inline-block;
-}
+    span.text-border {
+        border-left: var(--markdown-text-border-left);
+        border-right: var(--markdown-text-border-right);
+        border-top: var(--markdown-text-border-top);
+        border-bottom: var(--markdown-text-border-bottom);
+        border-radius: 4px;
+        padding: 2px 4px;
+        display: inline-block;
+    }
 
-.md div.markdown-content span.text-decoration {
-    text-decoration: var(--markdown-text-decoration);
-}
+    span.text-decoration {
+        text-decoration: var(--markdown-text-decoration);
+    }
 
-.md div.markdown-content p.center {
-    display: block;
-    text-align: center;
-}
+    p.center {
+        display: block;
+        text-align: center;
+    }
 
-.md div.markdown-content span.start {
-    float: inline-start;
-    text-align: start;
-}
+    span.start {
+        float: inline-start;
+        text-align: start;
+    }
 
-.md div.markdown-content span.end {
-    float: inline-end;
-    text-align: end;
-}
+    span.end {
+        float: inline-end;
+        text-align: end;
+    }
 
-.md div.markdown-content span.blur {
-    filter: blur(4px);
-    cursor: pointer;
-    user-select: none;
-    transition-duration: 250ms;
-    transition-timing-function: ease-in-out;
-    transition-property: filter;
-}
+    span.blur {
+        filter: blur(4px);
+        cursor: pointer;
+        user-select: none;
+        transition-duration: 250ms;
+        transition-timing-function: ease-in-out;
+        transition-property: filter;
+    }
 
-.md div.markdown-content span.blur:focus {
-    filter: blur(0);
-    user-select: unset;
-    cursor: unset;
-}
+    span.blur:focus {
+        filter: blur(0);
+        user-select: unset;
+        cursor: unset;
+    }
 
-.md div.markdown-content ul {
-    padding-inline-start: 1em;
-}
+    ul {
+        padding-inline-start: 1em;
+    }
 
-.md div.markdown-content ul li span ion-checkbox {
-    width: min-content;
-    --size: 1em;
-    height: 1em;
-    margin-inline-end: 0.5em;
-}
+    ul li span ion-checkbox {
+        width: min-content;
+        --size: 1em;
+        height: 1em;
+        margin-inline-end: 0.5em;
+    }
 
-.md div.markdown-content div.callout {
-    display: block;
-    border: 2px solid color-mix(in srgb, var(--markdown-callout-color, var(--ion-color-primary)) 30%, transparent);
-    background: color-mix(in srgb, var(--markdown-callout-color, var(--ion-color-primary)) 15%, transparent);
-    margin: 8px 0;
-    padding: 8px 12px;
-    border-radius: 12px;
-}
+    div.callout {
+        display: block;
+        border: 2px solid color-mix(in srgb, var(--markdown-callout-color, var(--ion-color-primary)) 30%, transparent);
+        background: color-mix(in srgb, var(--markdown-callout-color, var(--ion-color-primary)) 15%, transparent);
+        margin: 8px 0;
+        padding: 8px 12px;
+        border-radius: 12px;
+    }
 
-.md div.markdown-content span.callout-title {
-    display: block;
-    color: var(--markdown-callout-color, var(--ion-color-primary));
-    margin-bottom: 8px;
-    font-weight: bold;
-}
+    span.callout-title {
+        display: block;
+        color: var(--markdown-callout-color, var(--ion-color-primary));
+        margin-bottom: 8px;
+        font-weight: bold;
+    }
 
-.md div.markdown-content span.font-family {
-    font-family: var(--markdown-font-family);
-}
+    span.font-family {
+        font-family: var(--markdown-font-family);
+    }
 
-.md div.markdown-content ion-icon {
-    height: 1em;
+    ion-icon {
+        height: 1cap;
+    }
+
+    .markdown-svg {
+        height: 1cap;
+        width: 1cap;
+    }
+
+    .markdown-emoji {
+        width: auto;
+        height: 1cap;
+        display: inline-block;
+        vertical-align: baseline
+    }
 }
