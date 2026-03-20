@@ -1,0 +1,16 @@
+{
+	"header": "Risorse",
+	"ampersand": "Su Ampersand",
+	"website": {
+		"title": "Sito web",
+		"desc": "Scarica l'ultima versione dell'app e segui le nostre novità."
+	},
+	"wiki": {
+		"title": "Wiki",
+		"desc": "Ottieni aiuto nell'usare l'applicazione."
+	},
+	"repository": {
+		"title": "Repository del codice",
+		"desc": "Contribuisci alla nostra applicazione e segnala problemi."
+	}
+}

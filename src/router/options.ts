@@ -62,6 +62,11 @@ const options: RouteRecordRaw[] = [
 		component: () => import("../views/options/ImportExport.vue"),
 	},
 	{
+		path: "/options/resources",
+		name: "Resources",
+		component: () => import("../views/options/Resources.vue"),
+	},
+	{
 		path: "/options/about",
 		name: "About",
 		component: () => import("../views/options/About.vue"),
