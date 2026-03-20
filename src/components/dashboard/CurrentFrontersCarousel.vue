@@ -206,6 +206,27 @@
 	ion-card {
 		width: 160px;
 		flex: none;
+		position: relative;
+
+		* {
+			z-index: 1;
+		}
+	}
+
+	ion-card::before {
+		content: '\A';
+		background-image: var(--data-cover);
+		background-position: center;
+		background-size: cover;
+		width: 100%;
+		height: 100%;
+		display: block;
+		position: absolute;
+		z-index: 0;
+		top: 0;
+		left: 0;
+		opacity: .6;
+		mask-image: radial-gradient(circle at 50% 25%, black, transparent 100%);
 	}
 
 	ion-card ion-avatar, ion-card ion-icon {
@@ -219,9 +240,8 @@
 	}
 
 	ion-card ion-card-content {
-		position: relative;
 		text-align: center;
-		z-index: 0;
+		background-color: transparent;
 	}
 
 	ion-card ion-card-content h2 {
@@ -239,22 +259,6 @@
 
 	ion-card.influenced {
 		outline: 2px solid var(--ion-color-primary) !important;
-	}
-
-	ion-card-content::before {
-		content: '\A';
-		background-image: var(--data-cover);
-		background-position: center;
-		background-size: cover;
-		width: 100%;
-		height: 100%;
-		display: block;
-		position: absolute;
-		z-index: -1;
-		top: 0;
-		left: 0;
-		opacity: .5;
-		mask-image: radial-gradient(circle at 50% 25%, black, transparent 100%);
 	}
 
 	ion-list-header ion-button {
