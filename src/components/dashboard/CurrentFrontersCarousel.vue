@@ -225,8 +225,7 @@
 		z-index: 0;
 		top: 0;
 		left: 0;
-		opacity: .6;
-		mask-image: radial-gradient(circle at 50% 25%, black, transparent 100%);
+		opacity: .25;
 	}
 
 	ion-card ion-avatar, ion-card ion-icon {
