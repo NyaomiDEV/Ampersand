@@ -33,6 +33,7 @@ import textDecorationExtension from "./textDecoration";
 import startExtension from "./startExtension";
 import endExtension from "./endExtension";
 import fontFamilyExtension from "./fontFamilyExtension";
+import emojiExtension from "./emojiExtension";
 
 export function useMarked(blob: ReturnType<typeof useBlob>){
 	const marked = new Marked<(VNode | string)[], VNode | string>();
@@ -191,7 +192,8 @@ export function useMarked(blob: ReturnType<typeof useBlob>){
 		marqueeExtension,
 		calloutExtension,
 		fontFamilyExtension,
-		mermaidExtension
+		mermaidExtension,
+		emojiExtension
 	);
 
 	return marked;
