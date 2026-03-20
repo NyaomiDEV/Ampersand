@@ -1,7 +1,6 @@
 /* Adapted from danielkleebinder/md3-for-ionic */
-.md ion-card,
-.md ion-card.elevated {
-	--background: rgb(var(--md3-surface-container-low));
+.md ion-card {
+	--background: rgb(var(--md3-surface-container-high));
 	--color: rgb(var(--md3-on-surface));
 	box-shadow: var(--md3-elevation-1);
 	border-radius: 12px;
