@@ -15,6 +15,9 @@
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 	import removeFromFrontMD from "@material-symbols/svg-600/outlined/person_remove.svg";
 	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
+	import { useBlob } from "../../lib/util/blob.ts";
+
+	const { getObjectURL } = useBlob();
 
 	const frontingEntries = shallowRef<FrontingEntryComplete[]>([]);
 
@@ -105,6 +108,15 @@
 
 		return presenceVal.sort((a, b) => a[0].valueOf() - b[0].valueOf()).pop() || [undefined, undefined];
 	}
+
+	function getStyle(frontingEntry: FrontingEntryComplete){
+		const style: Record<string, string> = {};
+
+		if(frontingEntry.member.cover)
+			style["--data-cover"] = `url(${getObjectURL(frontingEntry.member.cover)})`;
+
+		return style;
+	}
 </script>
 
 <template>
@@ -131,6 +143,7 @@
 				outlined: !fronting.isMainFronter,
 				influencing: !!fronting.influencing,
 			}"
+			:style="getStyle(fronting)"
 			@click="quickDelete ? quickRemoveFronter(fronting) : showModal(fronting)"
 		>
 			<IonCardContent>
@@ -206,7 +219,9 @@
 	}
 
 	ion-card ion-card-content {
+		position: relative;
 		text-align: center;
+		z-index: 0;
 	}
 
 	ion-card ion-card-content h2 {
@@ -224,6 +239,22 @@
 
 	ion-card.influenced {
 		outline: 2px solid var(--ion-color-primary) !important;
+	}
+
+	ion-card-content::before {
+		content: '\A';
+		background-image: var(--data-cover);
+		background-position: center;
+		background-size: cover;
+		width: 100%;
+		height: 100%;
+		display: block;
+		position: absolute;
+		z-index: -1;
+		top: 0;
+		left: 0;
+		opacity: .5;
+		mask-image: radial-gradient(circle at 50% 25%, black, transparent 100%);
 	}
 
 	ion-list-header ion-button {
