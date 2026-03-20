@@ -3,7 +3,11 @@
 	"ampersand": "Su Ampersand",
 	"website": {
 		"title": "Sito web",
-		"desc": "Scarica l'ultima versione dell'app e segui le nostre novità."
+		"desc": "Scarica l'ultima versione dell'app e segui gli aggiornamenti."
+	},
+	"blog": {
+		"title": "Blog",
+		"desc": "Aggiornati sulle ultime novità e segui i nostri sproloqui sullo sviluppo."
 	},
 	"wiki": {
 		"title": "Wiki",

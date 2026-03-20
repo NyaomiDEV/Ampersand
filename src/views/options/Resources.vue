@@ -5,6 +5,7 @@
 	import forwardMD from "@material-symbols/svg-600/outlined/arrow_forward.svg";
 
 	import globeMD from "@material-symbols/svg-600/outlined/globe.svg";
+	import newsMD from "@material-symbols/svg-600/outlined/news.svg";
 	import wikiMD from "@material-symbols/svg-600/outlined/book_2.svg";
 	import CodebergLogo from "../../assets/codeberg_logo.svg";
 </script>
@@ -39,6 +40,18 @@
 					</IonCardHeader>
 					<IonCardContent>
 						{{ $t("resources:website.desc") }}
+					</IonCardContent>
+				</IonCard>
+				<IonCard button @click="openUrl('https://ampersand.moe/blog')">
+					<IonCardHeader>
+						<IonCardTitle>
+							<IonIcon :icon="newsMD" />
+							{{ $t("resources:blog.title") }}
+						</IonCardTitle>
+						<IonIcon :icon="forwardMD" flip-rtl />
+					</IonCardHeader>
+					<IonCardContent>
+						{{ $t("resources:blog.desc") }}
 					</IonCardContent>
 				</IonCard>
 				<IonCard button @click="openUrl('https://codeberg.org/Ampersand/app/wiki')">

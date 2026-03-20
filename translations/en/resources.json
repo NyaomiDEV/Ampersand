@@ -5,6 +5,10 @@
 		"title": "Website",
 		"desc": "Download the latest app version, and follow our updates."
 	},
+	"blog": {
+		"title": "Blog",
+		"desc": "Get the latest news and follow our development rambles."
+	},
 	"wiki": {
 		"title": "Wiki",
 		"desc": "Get help on using the application."
