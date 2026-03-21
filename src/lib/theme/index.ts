@@ -1,70 +1,13 @@
-import { argbFromHex, blueFromArgb, DynamicColor, greenFromArgb, Hct, MaterialDynamicColors, redFromArgb, SchemeFidelity, SchemeTonalSpot } from "@material/material-color-utilities";
+import { argbFromHex, blueFromArgb, greenFromArgb, Hct, MaterialDynamicColors, redFromArgb, SchemeFidelity, SchemeTonalSpot } from "@material/material-color-utilities";
 import { accessibilityConfig } from "../config";
 import { M3 } from "tauri-plugin-m3";
 import { platform } from "@tauri-apps/plugin-os";
 
-const dynamicColorsWeWant = [
-	"primaryPaletteKeyColor",
-	"secondaryPaletteKeyColor",
-	"tertiaryPaletteKeyColor",
-	"neutralPaletteKeyColor",
-	"neutralVariantPaletteKeyColor",
-	"background",
-	"onBackground",
-	"surface",
-	"surfaceDim",
-	"surfaceBright",
-	"surfaceContainerLowest",
-	"surfaceContainerLow",
-	"surfaceContainer",
-	"surfaceContainerHigh",
-	"surfaceContainerHighest",
-	"onSurface",
-	"surfaceVariant",
-	"onSurfaceVariant",
-	"inverseSurface",
-	"inverseOnSurface",
-	"outline",
-	"outlineVariant",
-	"shadow",
-	"scrim",
-	"surfaceTint",
-	"primary",
-	"onPrimary",
-	"primaryContainer",
-	"onPrimaryContainer",
-	"inversePrimary",
-	"secondary",
-	"onSecondary",
-	"secondaryContainer",
-	"onSecondaryContainer",
-	"tertiary",
-	"onTertiary",
-	"tertiaryContainer",
-	"onTertiaryContainer",
-	"error",
-	"onError",
-	"errorContainer",
-	"onErrorContainer",
-	"primaryFixed",
-	"primaryFixedDim",
-	"onPrimaryFixed",
-	"onPrimaryFixedVariant",
-	"secondaryFixed",
-	"secondaryFixedDim",
-	"onSecondaryFixed",
-	"onSecondaryFixedVariant",
-	"tertiaryFixed",
-	"tertiaryFixedDim",
-	"onTertiaryFixed",
-	"onTertiaryFixedVariant",
-];
-
 const customColorsWeWant = [
 	"primary",
-	"onPrimary",
-	"primaryContainer",
-	"onPrimaryContainer"
+	"on_primary",
+	"primary_container",
+	"on_primary_container"
 ];
 
 const defaultColor = "#30628C";
@@ -115,102 +58,89 @@ export function unsetMaterialColors(target?: HTMLElement){
 		.forEach(x => document.documentElement.style.removeProperty(x));
 }
 
-export function addMaterialColors(hex: string, target?: HTMLElement){
+export function getMaterialColors(hex: string, isDarkMode: boolean){
 	const schemeVariant = accessibilityConfig.themeIsVibrant ? SchemeFidelity : SchemeTonalSpot;
-
-	// Generate new theme
-	const schemeLight = new schemeVariant(Hct.fromInt(argbFromHex(hex)), false, accessibilityConfig.contrastLevel);
-	const schemeDark = new schemeVariant(Hct.fromInt(argbFromHex(hex)), true, accessibilityConfig.contrastLevel);
-
-	const schemeSuccessLight = new schemeVariant(Hct.fromInt(argbFromHex("#00ff00")), false, accessibilityConfig.contrastLevel);
-	const schemeSuccessDark = new schemeVariant(Hct.fromInt(argbFromHex("#00ff00")), false, accessibilityConfig.contrastLevel);
-
-	const schemeWarningLight = new schemeVariant(Hct.fromInt(argbFromHex("#ffff00")), false, accessibilityConfig.contrastLevel);
-	const schemeWarningDark = new schemeVariant(Hct.fromInt(argbFromHex("#ffff00")), false, accessibilityConfig.contrastLevel);
+	const scheme = new schemeVariant(
+		Hct.fromInt(argbFromHex(hex)),
+		isDarkMode,
+		accessibilityConfig.contrastLevel,
+		"2025",
+		"phone"
+	);
 
 	const styleSheet: Map<string, string> = new Map();
+	const colors = new MaterialDynamicColors();
 
-	for (const key of dynamicColorsWeWant) {
-		styleSheet.set(
-			`--md3-light-${key.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase()}`,
-			rgbFromArgb((MaterialDynamicColors[key] as DynamicColor).getArgb(schemeLight))
-		);
+	for (const dynamicColor of colors.allColors)
+		styleSheet.set(dynamicColor.name, rgbFromArgb(dynamicColor.getArgb(scheme)));
 
-		styleSheet.set(
-			`--md3-dark-${key.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase()}`,
-			rgbFromArgb((MaterialDynamicColors[key] as DynamicColor).getArgb(schemeDark))
-		);
+	// Add colors that they forgot
+	styleSheet.set("shadow", rgbFromArgb(colors.shadow().getArgb(scheme)));
+	styleSheet.set("scrim", rgbFromArgb(colors.scrim().getArgb(scheme)));
+	styleSheet.set("surface_tint", rgbFromArgb(colors.surfaceTint().getArgb(scheme)));
+
+
+	if (accessibilityConfig.themeIsAmoled) {
+		styleSheet.set("background", "0, 0, 0");
+		styleSheet.set("surface", "0, 0, 0");
+		styleSheet.set("on_background", "255, 255, 255");
+		styleSheet.set("on_surface", "255, 255, 255");
 	}
 
-	for (const key of customColorsWeWant) {
-		styleSheet.set(
-			`--md3-light-${key
-				.replace(/([a-z])([A-Z])/g, "$1-$2")
-				.toLowerCase()
-				.replace("primary", "success")}`,
-			rgbFromArgb((MaterialDynamicColors[key] as DynamicColor).getArgb(schemeSuccessLight))
-		);
+	return styleSheet;
+}
 
-		styleSheet.set(
-			`--md3-dark-${key
-				.replace(/([a-z])([A-Z])/g, "$1-$2")
-				.toLowerCase()
-				.replace("primary", "success")}`,
-			rgbFromArgb((MaterialDynamicColors[key] as DynamicColor).getArgb(schemeSuccessDark))
-		);
+export function getPaletteTones(hex: string, isDarkMode: boolean){
+	const paletteTones: Map<number, string> = new Map();
+	const schemeVariant = accessibilityConfig.themeIsVibrant ? SchemeFidelity : SchemeTonalSpot;
+	const scheme = new schemeVariant(
+		Hct.fromInt(argbFromHex(hex)),
+		isDarkMode,
+		accessibilityConfig.contrastLevel,
+		"2025",
+		"phone"
+	);
+	for (let i = 5; i <= 100; i += 5) 
+		paletteTones.set(i, rgbFromArgb(scheme.neutralPalette.tone(i)));
 
-		styleSheet.set(
-			`--md3-light-${key
-				.replace(/([a-z])([A-Z])/g, "$1-$2")
-				.toLowerCase()
-				.replace("primary", "warning")}`,
-			rgbFromArgb((MaterialDynamicColors[key] as DynamicColor).getArgb(schemeWarningLight))
-		);
+	return paletteTones;
+}
 
-		styleSheet.set(
-			`--md3-dark-${key
-				.replace(/([a-z])([A-Z])/g, "$1-$2")
-				.toLowerCase()
-				.replace("primary", "warning")}`,
-			rgbFromArgb((MaterialDynamicColors[key] as DynamicColor).getArgb(schemeWarningDark))
-		);
+export function addMaterialColors(hex: string, target?: HTMLElement){
+	const styleSheet: Map<string, string> = new Map();
+	for(const uiMode of ["light", "dark"]){
+		const palette = getMaterialColors(hex, uiMode === "dark");
+		const paletteSuccess = getMaterialColors("#00ff00", uiMode === "dark");
+		const paletteWarning = getMaterialColors("#ffff00", uiMode === "dark");
 
-		if(accessibilityConfig.themeIsAmoled){
-			styleSheet.set("--md3-dark-background", "0, 0, 0");
-			styleSheet.set("--md3-dark-surface", "0, 0, 0");
-			styleSheet.set("--md3-dark-on-background", "255, 255, 255");
-			styleSheet.set("--md3-dark-on-surface", "255, 255, 255");
+		for (const [key, value] of palette.entries()){
+			styleSheet.set(
+				`--md3-${uiMode}-${key.replaceAll("_", "-")}`,
+				value
+			);
+		}
+
+		for (const key of customColorsWeWant) {
+			styleSheet.set(
+				`--md3-${uiMode}-${key
+					.replaceAll("_", "-")
+					.replace("primary", "success")}`,
+				paletteSuccess.get(key)!
+			);
+			styleSheet.set(
+				`--md3-${uiMode}-${key
+					.replaceAll("_", "-")
+					.replace("primary", "warning")}`,
+				paletteWarning.get(key)!
+			);
 		}
 	}
+	const tones = getPaletteTones(hex, false);
 
-	const tones: number[] = [];
-	for(let i = 0; i <= 100; i++) tones.push(i);
-	tones.push(99, 98, 96, 94, 92, 91, 17, 12, 11, 6, 4);
-
-	for (const i of tones.sort()){
-		styleSheet.set(
-			`--md3-primary-palette-tone-${i}`,
-			rgbFromArgb(schemeLight.primaryPalette.tone(i))
-		);
-		styleSheet.set(
-			`--md3-secondary-palette-tone-${i}`,
-			rgbFromArgb(schemeLight.secondaryPalette.tone(i))
-		);
-		styleSheet.set(
-			`--md3-tertiary-palette-tone-${i}`,
-			rgbFromArgb(schemeLight.tertiaryPalette.tone(i))
-		);
+	for (const [i, value] of tones.entries()) {
 		styleSheet.set(
 			`--md3-neutral-palette-tone-${i}`,
-			rgbFromArgb(schemeLight.neutralPalette.tone(i))
-		);
-		styleSheet.set(
-			`--md3-neutral-variant-palette-tone-${i}`,
-			rgbFromArgb(schemeLight.neutralVariantPalette.tone(i))
-		);
-		styleSheet.set(
-			`--md3-error-palette-tone-${i}`,
-			rgbFromArgb(schemeLight.errorPalette.tone(i))
+			value
 		);
 	}
 
