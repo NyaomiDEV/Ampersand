@@ -199,11 +199,7 @@
 		padding-right: calc(8px + var(--ion-safe-area-right, 0px));
 		scrollbar-width: none;
 		gap: 8px;
-		padding: 1px 0px;
-	}
-
-	html:is(.plt-tablet, .plt-desktop) div {
-		padding-left: 8px;
+		padding: 1px 16px;
 	}
 
 	ion-card {

@@ -61,7 +61,7 @@
 			letter-spacing: var(--md3-body-large-letter-spacing);
 		}
 
-		> * {
+		> :not(h1, h2, h3) {
 			color: rgb(var(--md3-on-surface-variant));
 			font: var(--md3-body-medium);
 			letter-spacing: var(--md3-body-medium-letter-spacing);
