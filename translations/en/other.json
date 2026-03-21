@@ -13,6 +13,7 @@
 	"alerts": {
 		"ok": "Ok",
 		"cancel": "Cancel",
+		"clear": "Clear",
 		"yes": "Yes",
 		"no": "No"
 	},

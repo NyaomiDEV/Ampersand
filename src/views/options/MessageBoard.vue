@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonFab, IonFabButton, IonIcon, IonSearchbar, IonLabel, IonItemDivider, IonDatetime } from "@ionic/vue";
+	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonFab, IonFabButton, IonIcon, IonSearchbar, IonLabel, IonItemDivider } from "@ionic/vue";
 	import { h, onBeforeMount, onUnmounted, ref, shallowRef, watch } from "vue";
 	import type { BoardMessageComplete } from "../../lib/db/entities.d.ts";
 	import { getBoardMessagesDays, getBoardMessagesOfDay } from "../../lib/db/tables/boardMessages";
@@ -10,22 +10,20 @@
 
 	import dayjs from "dayjs";
 
-	import { appConfig } from "../../lib/config";
 	import MessageBoardCard from "../../components/MessageBoardCard.vue";
 	import { DatabaseEvents, DatabaseEvent } from "../../lib/db/events";
 	import { useRoute } from "vue-router";
 	import { addModal, removeModal } from "../../lib/modals.ts";
+	import DatetimeUtc from "../../components/DatetimeUtc.vue";
 
 	const route = useRoute();
-
-	const firstWeekOfDayIsSunday = appConfig.locale.firstWeekOfDayIsSunday;
 
 	const search = ref(route.query.q as string || "");
 
 	const boardMessages = shallowRef<BoardMessageComplete[]>();
 	const boardMessagesDays = shallowRef<{ date: string, backgroundColor: string }[]>();
 
-	const date = ref(dayjs().toISOString());
+	const date = ref(new Date());
 
 	const listener = (event: Event) => {
 		if(["members", "boardMessages"].includes((event as DatabaseEvent).data.table))
@@ -62,7 +60,7 @@
 
 	async function resetEntries(){
 		boardMessages.value = undefined;
-		await getEntries(dayjs(date.value).toDate());
+		await getEntries(date.value);
 	}
 
 	function getGrouped(entries: BoardMessageComplete[]){
@@ -140,13 +138,10 @@
 		</IonHeader>
 
 		<IonContent>
-			<IonDatetime
+			<DatetimeUtc
 				v-model="date"
 				presentation="date"
-				:first-day-of-week="firstWeekOfDayIsSunday ? 0 : 1"
-				:locale="appConfig.locale.language || 'en'"
 				:highlighted-dates="boardMessagesDays"
-				:datetime="dayjs().format('YYYY-MM-DDTHH:mm:ss')"
 			/>
 			<div v-if="boardMessages === undefined" class="spinner-container">
 				<Spinner size="72px" />

@@ -40,13 +40,15 @@
 	const i18next = useTranslation();
 
 	const props = defineProps<{
-		frontingEntry?: PartialBy<FrontingEntryComplete, "uuid" | "member">
+		frontingEntry?: PartialBy<FrontingEntryComplete, "uuid" | "member">,
+		overrideStartTime?: Date,
+		overrideEndTime?: Date
 	}>();
 
 	const emptyFrontingEntry: PartialBy<FrontingEntryComplete, "uuid" | "member"> = {
 		isMainFronter: false,
-		startTime: new Date(),
-		endTime: new Date(),
+		startTime: props.overrideStartTime || new Date(),
+		endTime: props.overrideEndTime || new Date(),
 		isLocked: false
 	};
 	const frontingEntry = ref({ ...(props.frontingEntry || emptyFrontingEntry) });

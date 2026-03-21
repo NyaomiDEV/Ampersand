@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { IonContent, IonList, IonPage, IonTitle, IonToolbar, IonSearchbar, IonFab, IonFabButton, IonIcon, IonLabel, IonDatetime, IonItemDivider, useIonRouter, IonBackButton } from "@ionic/vue";
+	import { IonContent, IonList, IonPage, IonTitle, IonToolbar, IonSearchbar, IonFab, IonFabButton, IonIcon, IonLabel, IonItemDivider, useIonRouter, IonBackButton } from "@ionic/vue";
 	import { onBeforeMount, onUnmounted, ref, shallowRef, watch } from "vue";
 	import { useRoute } from "vue-router";
 	import CollapsibleHeaderbar from "../components/CollapsibleHeaderbar.vue";
@@ -12,22 +12,20 @@
 	import dayjs from "dayjs";
 	import { DatabaseEvent, DatabaseEvents } from "../lib/db/events";
 	import { getJournalPostsDays, getJournalPostsOfDay } from "../lib/db/tables/journalPosts";
-	import { appConfig } from "../lib/config";
 	import { useTranslation } from "i18next-vue";
 	import { promptOkCancel } from "../lib/util/misc";
+	import DatetimeUtc from "../components/DatetimeUtc.vue";
 
 	const route = useRoute();
 	const router = useIonRouter();
 
 	const i18next = useTranslation();
 
-	const firstWeekOfDayIsSunday = appConfig.locale.firstWeekOfDayIsSunday;
-
 	const posts = shallowRef<JournalPostComplete[]>();
 
 	const postsDays = shallowRef<{ date: string, backgroundColor: string; }[]>();
 
-	const date = ref(dayjs().toISOString());
+	const date = ref(new Date());
 
 	const search = ref(route.query.q as string || "");
 
@@ -65,7 +63,7 @@
 
 	async function resetEntries() {
 		posts.value = undefined;
-		await getEntries(dayjs(date.value).toDate());
+		await getEntries(date.value);
 	}
 
 	function getGrouped(entries: JournalPostComplete[]) {
@@ -162,13 +160,10 @@
 					/>
 				</IonToolbar>
 			</CollapsibleHeaderbar>
-			<IonDatetime
+			<DatetimeUtc
 				v-model="date"
-				presentation="date" 
-				:first-day-of-week="firstWeekOfDayIsSunday ? 0 : 1"
-				:locale="appConfig.locale.language || 'en'"
+				presentation="date"
 				:highlighted-dates="postsDays"
-				:datetime="dayjs().format('YYYY-MM-DDTHH:mm:ss')"
 			/>
 			<div v-if="posts === undefined" class="spinner-container">
 				<Spinner size="72px" />
@@ -194,7 +189,7 @@
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton router-link="/journal/edit/">
+				<IonFabButton :router-link="`/journal/edit/?date=${dayjs(date).toISOString()}`">
 					<IonIcon :icon="addMD" />
 				</IonFabButton>
 			</IonFab>

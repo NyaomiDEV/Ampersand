@@ -136,6 +136,12 @@
 			else post.value = { ...emptyPost };
 		} else post.value = { ...emptyPost };
 
+		if(route.query.date){
+			const maybeDate = new Date(route.query.date as string);
+			if(maybeDate && !route.query.uuid)
+				post.value.date = maybeDate;
+		}
+
 		if(route.query.disallowEditing)
 			canEdit.value = false;
 		else 

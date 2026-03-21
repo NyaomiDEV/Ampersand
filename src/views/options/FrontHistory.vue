@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonLabel, IonToolbar, IonBackButton, IonItem, IonItemDivider, IonDatetime, IonIcon, IonSearchbar, IonFabButton, IonFab } from "@ionic/vue";
+	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonLabel, IonToolbar, IonBackButton, IonItem, IonItemDivider, IonIcon, IonSearchbar, IonFabButton, IonFab } from "@ionic/vue";
 	import { h, onBeforeMount, onUnmounted, ref, shallowRef, watch } from "vue";
 	import Avatar from "../../components/Avatar.vue";
 	import FrontingEntryLabel from "../../components/frontingEntry/FrontingEntryLabel.vue";
@@ -13,16 +13,14 @@
 	import commentMD from "@material-symbols/svg-600/outlined/comment.svg";
 	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
 
-	import { appConfig } from "../../lib/config";
 	import { DatabaseEvents, DatabaseEvent } from "../../lib/db/events";
 	import { addModal, removeModal } from "../../lib/modals.ts";
 	import { useRoute } from "vue-router";
 	import { useTranslation } from "i18next-vue";
+	import DatetimeUtc from "../../components/DatetimeUtc.vue";
 
 	const route = useRoute();
 	const i18next = useTranslation();
-
-	const firstWeekOfDayIsSunday = appConfig.locale.firstWeekOfDayIsSunday;
 
 	const search = ref(route.query.q as string || "");
 
@@ -30,7 +28,7 @@
 
 	const frontingEntriesDays = shallowRef<{ date: string, backgroundColor: string }[]>();
 
-	const date = ref(dayjs().toISOString());
+	const date = ref(new Date());
 
 	const listener = (event: Event) => {
 		if(["frontingEntries", "members"].includes((event as DatabaseEvent).data.table))
@@ -61,7 +59,7 @@
 	});
 
 	async function getEntries(){
-		frontingEntries.value = await Array.fromAsync(getFrontingEntriesOfDay(dayjs(date.value).toDate(), search.value));
+		frontingEntries.value = await Array.fromAsync(getFrontingEntriesOfDay(date.value, search.value));
 	}
 
 	async function resetEntries(){
@@ -138,6 +136,8 @@
 	async function showModal(clickedFrontingEntry?: FrontingEntryComplete){
 		const vnode = h(FrontingEntryEdit, {
 			frontingEntry: clickedFrontingEntry,
+			overrideStartTime: date.value,
+			overrideEndTime: date.value,
 			onDidDismiss: () => removeModal(vnode)
 		});
 
@@ -173,13 +173,10 @@
 		</IonHeader>
 
 		<IonContent>
-			<IonDatetime
+			<DatetimeUtc
 				v-model="date"
 				presentation="date"
-				:first-day-of-week="firstWeekOfDayIsSunday ? 0 : 1"
-				:locale="appConfig.locale.language || 'en'"
 				:highlighted-dates="frontingEntriesDays"
-				:datetime="dayjs().format('YYYY-MM-DDTHH:mm:ss')"
 			/>
 			<div v-if="frontingEntries === undefined" class="spinner-container">
 				<Spinner size="72px" />

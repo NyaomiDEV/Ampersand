@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import LocalizedFormat from "dayjs/plugin/localizedFormat";
 import Duration from "dayjs/plugin/duration";
+import UTC from "dayjs/plugin/utc";
 import i18next from "i18next";
 
 import { appConfig } from "./config";
@@ -77,6 +78,7 @@ for(const lang of new Set(translations.keys().map(x => x.lang))){
 
 dayjs.extend(LocalizedFormat);
 dayjs.extend(Duration);
+dayjs.extend(UTC);
 dayjs.locale(i18next.language);
 
 watch(appConfig, async () => {
