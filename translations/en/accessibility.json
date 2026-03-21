@@ -41,8 +41,8 @@
 		"title": "Reduced motion",
 		"desc": "Disable in-app animations"
 	},
-	"disableMemberCoversInList": {
-		"title": "Disable covers in member list"
+	"disableCovers": {
+		"title": "Disable covers"
 	},
 	"contrastLevel": {
 		"title": "Contrast level"

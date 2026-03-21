@@ -34,7 +34,7 @@
 		"title": "Zredukowany ruch",
 		"desc": "Wyłącz animacje w aplikacji"
 	},
-	"disableMemberCoversInList": {
+	"disableCovers": {
 		"title": "Wyłącz tła na liście członków systemu"
 	},
 	"contrastLevel": {

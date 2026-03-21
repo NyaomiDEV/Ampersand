@@ -8,7 +8,7 @@
 	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
 	import { DatabaseEvents, DatabaseEvent } from "../../lib/db/events";
 	import { addModal, removeModal } from "../../lib/modals.ts";
-	import { appConfig } from "../../lib/config/index.ts";
+	import { appConfig, accessibilityConfig } from "../../lib/config/index.ts";
 	import MemberSelect from "../../modals/MemberSelect.vue";
 	import PresenceRating from "../PresenceRating.vue";
 
@@ -142,6 +142,7 @@
 				influenced: frontingEntries.findIndex(x => x.influencing?.uuid === fronting.member.uuid) > 0,
 				outlined: !fronting.isMainFronter,
 				influencing: !!fronting.influencing,
+				compact: accessibilityConfig.disableCovers
 			}"
 			:style="getStyle(fronting)"
 			@click="quickDelete ? quickRemoveFronter(fronting) : showModal(fronting)"
@@ -212,7 +213,7 @@
 		}
 	}
 
-	ion-card::before {
+	ion-card:not(.compact)::before {
 		content: '\A';
 		background-image: var(--data-cover);
 		background-position: center;
@@ -249,6 +250,7 @@
 	ion-card.add-fronting {
 		opacity: .5;
 		background-color: transparent;
+		box-shadow: none;
 	}
 
 	ion-card.influencing {

@@ -34,7 +34,7 @@
 		"title": "tawa ala",
 		"desc": "ijo pi ilo ni li tawa ala"
 	},
-	"disableMemberCoversInList": {
+	"disableCovers": {
 		"title": "ijo kulupu li jo ala selo lon lipu pi ijo kulupu"
 	},
 	"contrastLevel": {

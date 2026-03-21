@@ -45,7 +45,7 @@
 		"title": "Уменьшенное движение",
 		"desc": "Выключить анимации приложения"
 	},
-	"disableMemberCoversInList": {
+	"disableCovers": {
 		"title": "Скрыть обложки участников в списке"
 	}
 }

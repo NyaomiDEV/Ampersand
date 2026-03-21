@@ -201,7 +201,7 @@
 				</IonToolbar>
 			</CollapsibleHeaderbar>
 
-			<div ref="list" class="list" :class="{ compact: accessibilityConfig.disableMemberCoversInList }">
+			<div ref="list" class="list" :class="{ compact: accessibilityConfig.disableCovers }">
 				<VirtualList :entries="members">
 					<template #default="{ entry: member }">
 						<IonItemSliding>

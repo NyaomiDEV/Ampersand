@@ -19,7 +19,7 @@
 		"title": "Movimiento reducido",
 		"desc": "Desactivar animaciones en la aplicación"
 	},
-	"disableMemberCoversInList": {
+	"disableCovers": {
 		"desc": "Si es activado, los miembros de la lista principal también se mostrarán de una manera más compacta"
 	},
 	"contrastLevel": {

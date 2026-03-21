@@ -36,7 +36,7 @@ export type AccessibilityConfig = {
 	useAccentColor: boolean,
 	accentColor?: string,
 	reducedMotion: boolean,
-	disableMemberCoversInList: boolean,
+	disableCovers: boolean,
 	contrastLevel: number,
 	fontScale: number,
 	longPressDuration: number

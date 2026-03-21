@@ -41,8 +41,8 @@
 		"title": "Movimenti ridotti",
 		"desc": "Disabilita le animazioni in app"
 	},
-	"disableMemberCoversInList": {
-		"title": "Disabilita le copertine nell'elenco membri"
+	"disableCovers": {
+		"title": "Disabilita le copertine nelle liste"
 	},
 	"contrastLevel": {
 		"title": "Livello di contrasto"

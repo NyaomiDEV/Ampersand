@@ -33,7 +33,7 @@ const defaultAccessibilityConfig: AccessibilityConfig = {
 	useAccentColor: false,
 	accentColor: "#30628C",
 	reducedMotion: false,
-	disableMemberCoversInList: false,
+	disableCovers: false,
 	contrastLevel: 0,
 	fontScale: 1,
 	longPressDuration: 750
@@ -96,6 +96,10 @@ watch(securityConfig, async () => {
 if ((appConfig as Record<string, unknown>).showMembersBeforeCustomFronts){
 	appConfig.showMembersApartFromCustomFronts = "before";
 	(appConfig as Record<string, unknown>).showMembersBeforeCustomFronts = undefined;
+}
+if ((accessibilityConfig as Record<string, unknown>).disableMemberCoversInList) {
+	accessibilityConfig.disableCovers = (accessibilityConfig as Record<string, unknown>).disableMemberCoversInList as boolean;
+	(accessibilityConfig as Record<string, unknown>).disableMemberCoversInList = undefined;
 }
 // end config migration here
 

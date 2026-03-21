@@ -42,7 +42,7 @@
 	"contrastLevel": {
 		"title": "Kontrastlevel"
 	},
-	"disableMemberCoversInList": {
+	"disableCovers": {
 		"desc": "Wenn aktiviert werden Mitglieder in der Hauptliste auch in einer kompakter angezeigt",
 		"title": "Mitglieder Cover in Liste deaktivieren"
 	},
