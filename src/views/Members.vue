@@ -94,7 +94,8 @@
 				if (a.isPinned && !b.isPinned) point -= 1;
 				if (!a.isPinned && b.isPinned) point += 1;
 
-				point += a.name.localeCompare(b.name);
+				const compare = a.name.localeCompare(b.name);
+				point += compare > 0 ? 1 : (compare < 0 ? -1 : 0);
 
 				return point;
 			});
