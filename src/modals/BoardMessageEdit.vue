@@ -30,19 +30,21 @@
 	import { PartialBy } from "../lib/types";
 	import Avatar from "../components/Avatar.vue";
 	import MemberSelect from "./MemberSelect.vue";
+	import DatePopupPicker from "../components/DatePopupPicker.vue";
 	import { useTranslation } from "i18next-vue";
 	import { formatDate, promptOkCancel } from "../lib/util/misc";
 
 	const i18next = useTranslation();
 
 	const props = defineProps<{
-		boardMessage?: PartialBy<BoardMessageComplete, "uuid" | "member">
+		boardMessage?: PartialBy<BoardMessageComplete, "uuid" | "member">,
+		dateOverride?: Date
 	}>();
 
 	const emptyBoardMessage: PartialBy<BoardMessageComplete, "uuid" | "member"> = {
 		title: "",
 		body: "",
-		date: new Date(),
+		date: props.dateOverride || new Date(),
 		isPinned: false,
 		isArchived: false
 	};
@@ -167,6 +169,18 @@
 							<h2>{{ $t("messageBoard:edit.member") }}</h2>
 						</IonLabel>
 					</template>
+				</IonItem>
+				<IonItem button :detail="true" @click="($refs.datePicker as any)?.$el.present()">
+					<IonLabel>
+						<h2>{{ $t("messageBoard:edit.date") }}</h2>
+						<p>{{ formatDate(boardMessage.date, "expanded") }}</p>
+					</IonLabel>
+					<DatePopupPicker
+						ref="datePicker"
+						v-model="boardMessage.date"
+						show-default-buttons
+						:title="$t('messageBoard:edit.date')"
+					/>
 				</IonItem>
 			</IonList>
 

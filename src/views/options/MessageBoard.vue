@@ -103,6 +103,7 @@
 	async function showModal(clickedBoardMessage?: BoardMessageComplete){
 		const vnode = h(BoardMessageEdit, {
 			boardMessage: clickedBoardMessage,
+			dateOverride: date.value,
 			onDidDismiss: () => removeModal(vnode)
 		});
 

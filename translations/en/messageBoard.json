@@ -26,6 +26,7 @@
 	"edit": {
 		"header": "Edit message",
 		"member": "Edit message author",
+		"date": "Edit date",
 		"title": "Title",
 		"body": "Message body",
 		"isPinned": "Pin message",

@@ -27,6 +27,7 @@
 	"edit": {
 		"header": "Modifica messaggio",
 		"member": "Modifica autorə del messaggio",
+		"date": "Modifica data",
 		"title": "Titolo",
 		"body": "Corpo del messaggio",
 		"isPinned": "Fissa messaggio",
