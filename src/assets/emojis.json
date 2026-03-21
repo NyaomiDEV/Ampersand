@@ -1,6 +1,30 @@
 [
 	{
 		"names": [
+			"mia_blep"
+		],
+		"value": "mia_blep.webp"
+	},
+	{
+		"names": [
+			"mia_loaf"
+		],
+		"value": "mia_loaf.webp"
+	},
+	{
+		"names": [
+			"mia_judge"
+		],
+		"value": "mia_judge.webp"
+	},
+	{
+		"names": [
+			"mia_whuh"
+		],
+		"value": "mia_whuh.webp"
+	},
+	{
+		"names": [
 			"octo",
 			"octocon"
 		],
