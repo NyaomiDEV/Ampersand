@@ -58,21 +58,25 @@
 	async function updateMembers(){
 		members.value = (await Array.fromAsync(getFilteredMembers(search.value)))
 			.sort((a, b) => {
+				let point = 0;
+
 				switch(appConfig.showMembersApartFromCustomFronts){
 					case "before":
-						if (!a.isCustomFront && b.isCustomFront) return 1;
-						if (a.isCustomFront && !b.isCustomFront) return -1;
+						if (!a.isCustomFront && b.isCustomFront) point += 1;
+						if (a.isCustomFront && !b.isCustomFront) point -= 1;
 						break;
 					case "after":
-						if (!a.isCustomFront && b.isCustomFront) return -1;
-						if (a.isCustomFront && !b.isCustomFront) return 1;
+						if (!a.isCustomFront && b.isCustomFront) point -= 1;
+						if (a.isCustomFront && !b.isCustomFront) point += 1;
 						break;
 				}
 
-				if (a.isPinned && !b.isPinned) return -1;
-				if (!a.isPinned && b.isPinned) return 1;
+				if (a.isPinned && !b.isPinned) point -= 1;
+				if (!a.isPinned && b.isPinned) point += 1;
 
-				return a.name.localeCompare(b.name);
+				point += a.name.localeCompare(b.name);
+
+				return point;
 			});
 	}
 

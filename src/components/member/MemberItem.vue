@@ -17,11 +17,12 @@
 		showChips?: boolean,
 		showRole?: boolean,
 		showPronouns?: boolean,
+		showIcons?: boolean,
 		hasToggle?: "checkbox",
 		toggleValue?: string,
 		toggleChecked?: boolean,
 		showCover?: boolean
-	}>(), { showChips: false, showCover: true, showPronouns: true, showRole: true });
+	}>(), { showChips: false, showIcons: false, showCover: true, showPronouns: true, showRole: true });
 
 	const emit = defineEmits<{
 		"toggleUpdate": [boolean],
@@ -92,9 +93,11 @@
 			</template>
 			<slot />
 		</MemberLabel>
-		<IonIcon v-if="member.isPinned" slot="end" :icon="pinMD" />
-		<IonIcon v-if="member.isArchived" slot="end" :icon="archivedMD" />
-		<IonIcon v-if="associatedFrontingEntry?.isMainFronter" slot="end" :icon="mainFronterMD" />
+		<template v-if="props.showIcons">
+			<IonIcon v-if="member.isPinned" slot="end" :icon="pinMD" />
+			<IonIcon v-if="member.isArchived" slot="end" :icon="archivedMD" />
+			<IonIcon v-if="associatedFrontingEntry?.isMainFronter" slot="end" :icon="mainFronterMD" />
+		</template>
 		<slot name="button" />
 	</IonItem>
 </template>
