@@ -200,7 +200,7 @@
 				</IonItem>
 			</IonList>
 			
-			<IonList>
+			<IonList class="grid-2">
 				<IonItem button :detail="false">
 					<IonToggle v-model="boardMessage.isPinned">
 						<IonLabel>
@@ -217,7 +217,12 @@
 					</IonToggle>
 				</IonItem>
 
-				<IonItem v-if="!boardMessage.poll" button @click="() => { boardMessage.poll = { multipleChoice: false, entries: [{ votes: [], choice: '' }] } }">
+				<IonItem
+					v-if="!boardMessage.poll"
+					button
+					class="take-row"
+					@click="() => { boardMessage.poll = { multipleChoice: false, entries: [{ votes: [], choice: '' }] } }"
+				>
 					<IonIcon
 						slot="start"
 						:icon="chartMD"
@@ -237,18 +242,6 @@
 						</IonLabel>
 					</IonItem>
 
-					<IonItem button :detail="false" @click="() => { boardMessage.poll = undefined }">
-						<IonIcon
-							slot="start"
-							:icon="trashMD"
-							aria-hidden="true"
-							color="danger"
-						/>
-						<IonLabel color="danger">
-							<h3>{{ $t("messageBoard:edit.deleteAttachedPoll") }}</h3>
-							<p>{{ $t("other:genericDeleteDesc") }}</p>
-						</IonLabel>
-					</IonItem>
 					<IonItem button :detail="false">
 						<IonToggle v-model="boardMessage.poll.multipleChoice">
 							<IonLabel>
@@ -287,6 +280,18 @@
 						/>
 						<IonLabel>
 							{{ $t("messageBoard:edit.pollAddNewChoice") }}
+						</IonLabel>
+					</IonItem>
+					<IonItem button :detail="false" @click="() => { boardMessage.poll = undefined }">
+						<IonIcon
+							slot="start"
+							:icon="trashMD"
+							aria-hidden="true"
+							color="danger"
+						/>
+						<IonLabel color="danger">
+							<h3>{{ $t("messageBoard:edit.deleteAttachedPoll") }}</h3>
+							<p>{{ $t("other:genericDeleteDesc") }}</p>
 						</IonLabel>
 					</IonItem>
 				</IonList>
@@ -342,3 +347,18 @@
 		</IonContent>
 	</IonModal>
 </template>
+
+<style scoped>
+	.grid-2 {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+	}
+
+	.take-row {
+		grid-column: 1 / span 2;
+	}
+
+	.grid-2 ion-item::part(native) {
+		height: 100%;
+	}
+</style>
