@@ -15,7 +15,7 @@
 		IonBackButton,
 	} from "@ionic/vue";
 	import { onBeforeMount, onUnmounted, ref, shallowRef, watch } from "vue";
-	import { appConfig } from "../../lib/config/index.ts";
+	import { appConfig, accessibilityConfig } from "../../lib/config/index.ts";
 	import Avatar from "../../components/Avatar.vue";
 
 	import systemCircle from "@material-symbols/svg-600/outlined/supervised_user_circle.svg";
@@ -29,7 +29,9 @@
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import { useRoute } from "vue-router";
 	import { getFilteredSystems } from "../../lib/db/tables/system.ts";
+	import { useBlob } from "../../lib/util/blob.ts";
 
+	const { getObjectURL } = useBlob();
 	const route = useRoute();
 
 	const search = ref(route.query.q as string || "");
@@ -74,6 +76,15 @@
 				return a.name.localeCompare(b.name);
 			});
 	}
+
+	function getStyle(system: System){
+		const style: Record<string, string> = {};
+
+		if(system.cover)
+			style["--data-cover"] = `url(${getObjectURL(system.cover)})`;
+
+		return style;
+	}
 </script>
 
 <template>
@@ -100,12 +111,13 @@
 		
 		<SpinnerFullscreen v-if="!systems" />
 		<IonContent v-else>
-			<IonList>
+			<IonList :class="{ compact: accessibilityConfig.disableCovers }">
 				<IonItem
 					v-for="system in systems"
 					:key="system.uuid"
 					button
 					:class="{ 'default-system': system.uuid === appConfig.defaultSystem, archived: system.isArchived }"
+					:style="getStyle(system)"
 					:router-link="`/options/systems/edit?uuid=${system.uuid}`"
 				>
 					<Avatar
@@ -151,5 +163,20 @@
 
 	ion-item.default-system {
 		--background: var(--ion-background-color-step-150);
+	}
+
+	ion-list:not(.compact) ion-item::part(native)::before {
+		content: '\A';
+		background-image: var(--data-cover);
+		background-position: center;
+		background-size: cover;
+		width: calc(100% + 16px);
+		height: 100%;
+		display: block;
+		position: absolute;
+		z-index: -1;
+		left: -16px;
+		opacity: .25;
+		mask-image: radial-gradient(circle at 10% 100%, black, transparent 100%);
 	}
 </style>

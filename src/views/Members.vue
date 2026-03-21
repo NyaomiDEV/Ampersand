@@ -291,10 +291,6 @@
 		margin: 1px 0;
 	}
 
-	.list:not(.compact) ion-item {
-		--background: var(--ion-background-color-step-100);
-	}
-
 	.list:not(.compact) ion-item::part(native)::before {
 		content: '\A';
 		background-image: var(--data-cover);
