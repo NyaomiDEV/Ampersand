@@ -22,17 +22,16 @@
 	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
 	import chartMD from "@material-symbols/svg-600/outlined/bar_chart.svg";
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
-	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
 
 	import { BoardMessageComplete } from "../lib/db/entities";
 	import { updateBoardMessage, deleteBoardMessage, newBoardMessage } from "../lib/db/tables/boardMessages";
 	import { ref, toRaw, useTemplateRef } from "vue";
 	import { PartialBy } from "../lib/types";
-	import Avatar from "../components/Avatar.vue";
 	import MemberSelect from "./MemberSelect.vue";
 	import DatePopupPicker from "../components/DatePopupPicker.vue";
 	import { useTranslation } from "i18next-vue";
 	import { formatDate, promptOkCancel } from "../lib/util/misc";
+	import MemberItem from "../components/member/MemberItem.vue";
 
 	const i18next = useTranslation();
 
@@ -137,19 +136,17 @@
 
 		<IonContent>
 			<IonList>
-				<IonItem button :detail="!boardMessage.member" @click="memberSelectModal?.$el.present()">
-					<template v-if="boardMessage.member">
-						<Avatar
-							slot="start"
-							:image="boardMessage.member.image"
-							:clip-shape="boardMessage.member.imageClip"
-							:color="boardMessage.member.color"
-							:icon="accountCircle"
-						/>
-						<IonLabel>
-							<h2>{{ boardMessage.member.name }}</h2>
-							<p>{{ $t("messageBoard:edit.member") }}</p>
-						</IonLabel>
+				<MemberItem
+					v-if="boardMessage.member"
+					:member="boardMessage.member"
+					:show-cover="false"
+					:show-chips="false"
+					:show-pronouns="false"
+					:show-role="false"
+					@click="memberSelectModal?.$el.present()"
+				>
+					<p>{{ $t("messageBoard:edit.member") }}</p>
+					<template #button>
 						<IonButton
 							slot="end"
 							shape="round"
@@ -164,11 +161,16 @@
 							/>
 						</IonButton>
 					</template>
-					<template v-else>
-						<IonLabel>
-							<h2>{{ $t("messageBoard:edit.member") }}</h2>
-						</IonLabel>
-					</template>
+				</MemberItem>
+				<IonItem
+					v-else
+					button
+					detail
+					@click="memberSelectModal?.$el.present()"
+				>
+					<IonLabel>
+						<h2>{{ $t("messageBoard:edit.member") }}</h2>
+					</IonLabel>
 				</IonItem>
 				<IonItem button :detail="true" @click="($refs.datePicker as any)?.$el.present()">
 					<IonLabel>
