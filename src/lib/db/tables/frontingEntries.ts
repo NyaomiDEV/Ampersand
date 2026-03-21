@@ -54,19 +54,12 @@ export async function deleteFrontingEntry(uuid: UUID) {
 	}
 }
 
+// HACK: Think of a better way
+let shouldDebounce = false;
 export async function updateFrontingEntry(uuid: UUID, newContent: Partial<FrontingEntry>) {
 	try{
 		const updated = await db.frontingEntries.update(uuid, newContent);
 		if(updated) {
-			DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
-				table: "frontingEntries",
-				event: "modified",
-				uuid,
-				delta: newContent,
-				oldData: updated.oldData,
-				newData: updated.newData
-			}));
-
 			if(newContent.isMainFronter){
 				const toUpdate = (await Promise.all(
 					db.frontingEntries.index.filter(x => 
@@ -79,8 +72,23 @@ export async function updateFrontingEntry(uuid: UUID, newContent: Partial<Fronti
 					.filter(x => x?.uuid !== uuid)
 					.map(x => x!.uuid);
 
+				shouldDebounce = true;
+
 				for (const _uuid of toUpdate)
 					await updateFrontingEntry(_uuid, { isMainFronter: false });
+
+				shouldDebounce = false;
+			}
+
+			if (!shouldDebounce) {
+				DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
+					table: "frontingEntries",
+					event: "modified",
+					uuid,
+					delta: newContent,
+					oldData: updated.oldData,
+					newData: updated.newData
+				}));
 			}
 			return true;
 		}
