@@ -107,4 +107,9 @@
 		width: 20px;
 		height: 20px;
 	}
+
+	ion-list {
+		gap: 8px;
+		border-radius: none;
+	}
 </style>

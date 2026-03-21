@@ -176,7 +176,7 @@
 		<IonCard
 			v-if="!quickDelete"
 			button
-			class="outlined add-fronting"
+			class="add-fronting"
 			@click="showModalFronting"
 		>
 			<IonCardContent>
@@ -197,6 +197,9 @@
 		overflow-x: auto;
 		padding-left: calc(8px + var(--ion-safe-area-left, 0px));
 		padding-right: calc(8px + var(--ion-safe-area-right, 0px));
+		scrollbar-width: none;
+		gap: 8px;
+		padding: 1px 0px;
 	}
 
 	html:is(.plt-tablet, .plt-desktop) div {
@@ -249,7 +252,7 @@
 
 	ion-card.add-fronting {
 		opacity: .5;
-		outline-width: 0px;
+		background-color: transparent;
 	}
 
 	ion-card.influencing {
@@ -262,9 +265,5 @@
 
 	ion-list-header ion-button {
 		margin: 4px 8px;
-	}
-
-	div.carousel {
-		scrollbar-width: none;
 	}
 </style>
