@@ -164,7 +164,7 @@
 				>
 					<p>{{ $t("frontHistory:edit.member") }}</p>
 				</MemberItem>
-				<IonItem v-else>
+				<IonItem v-else button @click="memberSelectModal?.$el.present()">
 					<IonLabel>
 						<h2>{{ $t("frontHistory:edit.member") }}</h2>
 					</IonLabel>
