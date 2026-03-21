@@ -6,7 +6,6 @@ import { nilUid } from "../util/consts";
 
 const defaultAppConfig: AppConfig = {
 	locale: {
-		language: navigator.language,
 		firstWeekOfDayIsSunday: false,
 		twelveHourClock: false,
 	},

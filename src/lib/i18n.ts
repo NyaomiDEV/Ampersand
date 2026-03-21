@@ -50,8 +50,11 @@ i18next.on("languageChanged", (lng) => {
 	dayjs.locale(lng);
 });
 
+if(!appConfig.locale.language)
+	appConfig.locale.language = getSupportedLanguageFromNavigator() || "en";
+
 await i18next.init({
-	lng: appConfig.locale.language || getSupportedLanguageFromNavigator() || "en",
+	lng: appConfig.locale.language,
 	fallbackLng: "en",
 	interpolation: {
 		escapeValue: false
