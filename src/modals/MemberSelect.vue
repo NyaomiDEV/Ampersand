@@ -4,16 +4,12 @@
 		IonHeader,
 		IonToolbar,
 		IonTitle,
-		IonItem,
 		IonModal,
 		IonSearchbar,
-		IonCheckbox,
 		modalController,
 	} from "@ionic/vue";
 
 	import { onBeforeMount, onUnmounted, reactive, ref, shallowRef, toRaw, watch } from "vue";
-	import Avatar from "../components/Avatar.vue";
-	import MemberLabel from "../components/member/MemberLabel.vue";
 	import type { Member } from "../lib/db/entities.d.ts";
 	import { getFilteredMembers } from "../lib/db/tables/members";
 	import { DatabaseEvents, DatabaseEvent } from "../lib/db/events";
@@ -21,7 +17,7 @@
 	import { appConfig } from "../lib/config/index.ts";
 	import VirtualList from "../components/VirtualList.vue";
 
-	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
+	import MemberItem from "../components/member/MemberItem.vue";
 
 	const props = defineProps<{
 		customTitle?: string,
@@ -136,18 +132,15 @@
 			<div class="list">
 				<VirtualList :entries="members">
 					<template #default="{ entry: member }">
-						<IonItem :key="member.uuid" button :disabled="!!props.membersToExclude?.find(x => x.uuid === member.uuid)">
-							<Avatar
-								slot="start"
-								:image="member.image"
-								:clip-shape="member.imageClip"
-								:color="member.color"
-								:icon="accountCircle"
-							/>
-							<IonCheckbox :value="member.uuid" :checked="!!selectedMembers.find(x => x.uuid === member.uuid)" @update:model-value="value => check(member, value)">
-								<MemberLabel :member />
-							</IonCheckbox>
-						</IonItem>
+						<MemberItem
+							:key="member.uuid"
+							:member
+							:disabled="!!props.membersToExclude?.find(x => x.uuid === member.uuid)"
+							has-toggle="checkbox"
+							:toggle-value="member.uuid"
+							:toggle-checked="!!selectedMembers.find(x => x.uuid === member.uuid)"
+							@toggle-update="value => check(member, value)"
+						/>
 					</template>
 				</VirtualList>
 			</div>
@@ -156,7 +149,7 @@
 </template>
 
 <style scoped>
-	ion-checkbox::part(container) {
+	:deep(ion-checkbox::part(container)) {
 		visibility: v-bind("!props.hideCheckboxes ? 'visible' : 'hidden'")
 	}
 

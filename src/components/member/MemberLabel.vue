@@ -11,16 +11,21 @@
 	import { getSystem } from "../../lib/db/tables/system";
 	import { appConfig } from "../../lib/config";
 
-	const props = defineProps<{
+	const props = withDefaults(defineProps<{
 		member: Member,
-		showTagChips?: boolean
-	}>();
+		showChips?: boolean,
+		showRole?: boolean,
+		showPronouns?: boolean
+	}>(), {
+		showPronouns: true,
+		showRole: true
+	});
 
 	const system = shallowRef<System>({ name: "", uuid: props.member.system, isPinned: false, isArchived: false });
 	const tags = shallowRef<Tag[]>();
 
 	async function updateTags(){
-		if(props.showTagChips){
+		if(props.showChips){
 			tags.value = (await Promise.all(props.member.tags.map(async x => await getTag(x))))
 				.filter(x => x!.viewInLists)
 				.sort((a, b) => a!.name.localeCompare(b!.name)) as Tag[];
@@ -48,7 +53,8 @@
 
 <template>
 	<IonLabel class="nowrap">
-		<p>
+		<slot name="before" />
+		<p v-if="props.showRole">
 			{{
 				[
 					props.member.isCustomFront ? $t("members:edit.customFront") : null,
@@ -59,11 +65,12 @@
 		<h2>
 			{{ props.member.name }}
 		</h2>
-		<h3>
+		<h3 v-if="props.showPronouns">
 			{{ props.member.pronouns }}
 		</h3>
+		<slot />
 		<div
-			v-if="props.showTagChips"
+			v-if="props.showChips"
 			class="chips"
 			@pointerdown="(e) => e.stopPropagation()"
 			@touchstart="(e) => e.stopPropagation()"

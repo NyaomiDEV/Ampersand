@@ -8,7 +8,6 @@
 		IonFab,
 		IonFabButton,
 		IonIcon,
-		IonItem,
 		IonItemSliding,
 		IonItemOptions,
 		IonItemOption,
@@ -19,30 +18,23 @@
 	import CollapsibleHeaderbar from "../components/CollapsibleHeaderbar.vue";
 
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
-	import pinMD from "@material-symbols/svg-600/outlined/keep.svg";
 	import addToFrontMD from "@material-symbols/svg-600/outlined/person_add.svg";
 	import removeFromFrontMD from "@material-symbols/svg-600/outlined/person_remove.svg";
 	import setMainFronterMD from "@material-symbols/svg-600/outlined/arrow_circle_up.svg";
 	import unsetMainFronterMD from "@material-symbols/svg-600/outlined/arrow_circle_down.svg";
-	import mainFronterMD from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
 	import setAsFrontMD from "@material-symbols/svg-600/outlined/person_pin_circle.svg";
-	import archivedMD from "@material-symbols/svg-600/outlined/archive.svg";
-	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
 
 	import { getFilteredMembers } from "../lib/db/tables/members.ts";
 	import type { Member, FrontingEntryComplete } from "../lib/db/entities";
 	import { getFronting, newFrontingEntry, removeFronter, sendFrontingChangedEvent, setMainFronter, setSoleFronter } from "../lib/db/tables/frontingEntries.ts";
-	import Avatar from "../components/Avatar.vue";
-	import MemberLabel from "../components/member/MemberLabel.vue";
+	import MemberItem from "../components/member/MemberItem.vue";
 	import { DatabaseEvents, DatabaseEvent } from "../lib/db/events.ts";
 	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
 	import { useRoute } from "vue-router";
-	import { useBlob } from "../lib/util/blob.ts";
 	import { toast } from "../lib/util/misc.ts";
 	import { useTranslation } from "i18next-vue";
 	import VirtualList from "../components/VirtualList.vue";
 
-	const { getObjectURL } = useBlob();
 	const route = useRoute();
 	const i18next = useTranslation();
 
@@ -150,23 +142,6 @@
 		const item = list.value?.querySelector("ion-item-sliding") as { closeOpened: () => Promise<void> } | null;
 		await item?.closeOpened();
 	}
-	
-	function getStyle(member: Member){
-		const style: Record<string, string> = {};
-
-		const entry = feGet(member);
-		if(entry){
-			if(entry.isMainFronter)
-				style["--background"] = "var(--ion-background-color-step-200)";
-			else
-				style["--background"] = "var(--ion-background-color-step-150)";
-		}
-
-		if(member.cover)
-			style["--data-cover"] = `url(${getObjectURL(member.cover)})`;
-
-		return style;
-	}
 
 	function feGet(member: Member){
 		return frontingEntries.value.find(x => x.member.uuid === member.uuid);
@@ -205,24 +180,12 @@
 				<VirtualList :entries="members">
 					<template #default="{ entry: member }">
 						<IonItemSliding>
-							<IonItem
-								button
-								:class="{ archived: member.isArchived }"
-								:style="getStyle(member)"
+							<MemberItem
+								:member
+								:associated-fronting-entry="feGet(member)"
+								show-chips
 								:router-link="`/members/edit?uuid=${member.uuid}`"
-							>
-								<Avatar
-									slot="start"
-									:image="member.image"
-									:clip-shape="member.imageClip"
-									:color="member.color"
-									:icon="accountCircle"
-								/>
-								<MemberLabel :member="member" show-tag-chips />
-								<IonIcon v-if="member.isPinned" slot="end" :icon="pinMD" />
-								<IonIcon v-if="member.isArchived" slot="end" :icon="archivedMD" />
-								<IonIcon v-if="feGet(member)?.isMainFronter" slot="end" :icon="mainFronterMD" />
-							</IonItem>
+							/>
 							<IonItemOptions>
 								<IonItemOption v-if="!feGet(member) && frontingEntries.length !== 0" @click="addFrontingEntry(member)">
 									<IonIcon slot="icon-only" :icon="addToFrontMD" />
@@ -254,10 +217,6 @@
 </template>
 
 <style scoped>
-	ion-item.archived > * {
-		opacity: 0.5;
-	}
-
 	ion-item-option {
 		border-radius: 28px;
 		width: 56px;
@@ -289,20 +248,5 @@
 
 	ion-item {
 		margin: 1px 0;
-	}
-
-	.list:not(.compact) ion-item::part(native)::before {
-		content: '\A';
-		background-image: var(--data-cover);
-		background-position: center;
-		background-size: cover;
-		width: calc(100% + 16px);
-		height: 100%;
-		display: block;
-		position: absolute;
-		z-index: -1;
-		left: -16px;
-		opacity: .25;
-		mask-image: radial-gradient(circle at 10% 100%, black, transparent 100%);
 	}
 </style>

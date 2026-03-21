@@ -19,7 +19,6 @@
 
 	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
-	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
 
 	import { FrontingEntryComplete } from "../lib/db/entities";
 	import { newFrontingEntry, updateFrontingEntry, deleteFrontingEntry, sendFrontingChangedEvent } from "../lib/db/tables/frontingEntries";
@@ -27,7 +26,6 @@
 
 	import MemberSelect from "./MemberSelect.vue";
 	import PresenceHistory from "./PresenceHistory.vue";
-	import Avatar from "../components/Avatar.vue";
 	import DatePopupPicker from "../components/DatePopupPicker.vue";
 	import ContentEditable from "../components/ContentEditable.vue";
 
@@ -35,6 +33,7 @@
 	import { formatDate, promptOkCancel } from "../lib/util/misc";
 	import { useTranslation } from "i18next-vue";
 	import PresenceRating from "../components/PresenceRating.vue";
+	import MemberItem from "../components/member/MemberItem.vue";
 
 
 	const i18next = useTranslation();
@@ -157,25 +156,18 @@
 
 		<IonContent>
 			<IonList class="grid-2">
-				<IonItem button @click="memberSelectModal?.$el.present()">
-					<template v-if="frontingEntry.member">
-						<Avatar
-							slot="start"
-							:image="frontingEntry.member.image"
-							:clip-shape="frontingEntry.member.imageClip"
-							:color="frontingEntry.member.color"
-							:icon="accountCircle"
-						/>
-						<IonLabel>
-							<h2>{{ frontingEntry.member.name }}</h2>
-							<p>{{ $t("frontHistory:edit.member") }}</p>
-						</IonLabel>
-					</template>
-					<template v-else>
-						<IonLabel>
-							<h2>{{ $t("frontHistory:edit.member") }}</h2>
-						</IonLabel>
-					</template>
+				<MemberItem
+					v-if="frontingEntry.member"
+					:member="frontingEntry.member"
+					:show-cover="false"
+					@click="memberSelectModal?.$el.present()"
+				>
+					<p>{{ $t("frontHistory:edit.member") }}</p>
+				</MemberItem>
+				<IonItem v-else>
+					<IonLabel>
+						<h2>{{ $t("frontHistory:edit.member") }}</h2>
+					</IonLabel>
 				</IonItem>
 				<IonItem button @click="presenceHistoryModal?.$el.present()">
 					<IonLabel>
@@ -256,45 +248,47 @@
 						</IonLabel>
 					</IonToggle>
 				</IonItem>
-				<IonItem 
-					v-if="!frontingEntry.isMainFronter" 
-					button
-					:class="{ 'take-row': frontingEntry.influencing }"
-					@click="memberInfluencingModal?.$el.present()"
-				>
-					<template v-if="frontingEntry.influencing">
-						<Avatar
-							slot="start"
-							:image="frontingEntry.influencing.image"
-							:color="frontingEntry.influencing.color"
-							:clip-shape="frontingEntry.influencing.imageClip"
-							:icon="accountCircle"
-						/>
-						<IonLabel>
+
+				<template v-if="!frontingEntry.isMainFronter">
+					<MemberItem
+						v-if="frontingEntry.influencing"
+						:member="frontingEntry.influencing"
+						:show-cover="false"
+						:class="{ 'take-row': frontingEntry.influencing }"
+						@click="memberInfluencingModal?.$el.present()"
+					>
+						<template #before>
 							<p>{{ $t("frontHistory:edit.influencing.currentlyInfluencing") }}</p>
-							<h2>{{ frontingEntry.influencing.name }}</h2>
-						</IonLabel>
-					</template>
-					<template v-else>
+						</template>
+						<template #button>
+							<IonButton
+								v-if="frontingEntry.influencing"
+								slot="end"
+								shape="round"
+								fill="outline"
+								size="small"
+								@click="(e) => { e.stopPropagation(); frontingEntry.influencing = undefined }"
+							>
+								<IonIcon
+									slot="icon-only"
+									:icon="trashMD"
+									color="danger"
+								/>
+							</IonButton>
+						</template>
+					</MemberItem>
+					<IonItem
+						v-else
+						button
+						:class="{ 'take-row': frontingEntry.influencing }"
+						@click="memberInfluencingModal?.$el.present()"
+					>
 						<IonLabel>
 							{{ $t("frontHistory:edit.influencing.select") }}
 						</IonLabel>
-					</template>
-					<IonButton
-						v-if="frontingEntry.influencing"
-						slot="end"
-						shape="round"
-						fill="outline"
-						size="small"
-						@click="(e) => { e.stopPropagation(); frontingEntry.influencing = undefined }"
-					>
-						<IonIcon
-							slot="icon-only"
-							:icon="trashMD"
-							color="danger"
-						/>
-					</IonButton>
-				</IonItem>
+					</IonItem>
+				</template>
+				
 			</IonList>
 
 			<IonList class="surface">
@@ -369,6 +363,7 @@
 				:only-one="true"
 				:discard-on-select="true"
 				:hide-checkboxes="true"
+				:always-emit="true"
 				:model-value="frontingEntry.influencing ? [frontingEntry.influencing] : []"
 				:members-to-exclude="frontingEntry.member ? [frontingEntry.member] : []"
 				@update:model-value="(e) => { if(e[0]) frontingEntry.influencing = e[0] }"
