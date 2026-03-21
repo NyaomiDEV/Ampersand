@@ -46,22 +46,22 @@
 	}
 
 	ion-label {
-		h1 {
+		> h1 {
 			font: var(--md3-title-large);
 			letter-spacing: var(--md3-title-large-letter-spacing);
 		}
 
-		h2 {
+		> h2 {
 			font: var(--md3-title-medium);
 			letter-spacing: var(--md3-title-medium-letter-spacing);
 		}
 
-		h3 {
+		> h3 {
 			font: var(--md3-body-large);
 			letter-spacing: var(--md3-body-large-letter-spacing);
 		}
 
-		p {
+		> * {
 			color: rgb(var(--md3-on-surface-variant));
 			font: var(--md3-body-medium);
 			letter-spacing: var(--md3-body-medium-letter-spacing);

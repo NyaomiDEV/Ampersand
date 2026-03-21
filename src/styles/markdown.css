@@ -43,8 +43,7 @@
         padding: 8px;
     }
 
-    /* Headings */
-    :is(h1, h2, h3, h4, h5, h6, p) {
+    :is(h1, h2, h3, h4, h5, h6, p, ul, ol, li) {
         margin-top: 0;
         margin-bottom: 0.25rem;
         line-height: normal;
@@ -211,7 +210,7 @@
     }
 
     ul {
-        padding-inline-start: 1em;
+        padding-inline-start: 1.25em;
     }
 
     ul li span ion-checkbox {
