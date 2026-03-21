@@ -21,7 +21,7 @@
 		toggleValue?: string,
 		toggleChecked?: boolean,
 		showCover?: boolean
-	}>(), { showChips: false, showCover: true });
+	}>(), { showChips: false, showCover: true, showPronouns: true, showRole: true });
 
 	const emit = defineEmits<{
 		"toggleUpdate": [boolean],
