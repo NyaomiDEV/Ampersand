@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { IonModal } from "@ionic/vue";
+	import { IonButton, IonModal } from "@ionic/vue";
 	import { ref, watch } from "vue";
 	import DatetimeUtc from "./DatetimeUtc.vue";
 
@@ -32,6 +32,7 @@
 
 	const model = defineModel<Date>();
 	const innerModel = ref(model.value);
+	const datetime = ref();
 	watch(innerModel, () => model.value = innerModel.value);
 </script>
 
@@ -44,9 +45,30 @@
 			:min="props.min"
 			:max="props.max"
 			:highlighted-dates="props.highlightedDates"
+			@ref="datetime = $event"
 		>
 			<span v-if="props.title" slot="title">{{ props.title }}</span>
 			<span slot="time-label">{{ $t("other:time") }}</span>
+			<div slot="buttons">
+				<IonButton
+					fill="outline"
+					shape="round"
+					size="small"
+					class="with-large-text"
+					@click="datetime?.$el.cancel(true)"
+				>
+					{{ $t("other:alerts.cancel") }}
+				</IonButton>
+				<IonButton
+					fill="solid"
+					shape="round"
+					size="small"
+					class="with-large-text"
+					@click="datetime?.$el.confirm(true)"
+				>
+					{{ $t("other:alerts.ok") }}
+				</IonButton>
+			</div>
 		</DatetimeUtc>
 	</IonModal>
 </template>

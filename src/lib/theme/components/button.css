@@ -71,6 +71,11 @@
 	--padding-start: 16px;
 	--padding-end: 16px;
 
+	&.with-large-text {
+		font: var(--md3-label-large);
+		letter-spacing: var(--md3-label-large-letter-spacing);
+	}
+
 	&.button-full,
 	&.md-square,
 	&[shape=square] {

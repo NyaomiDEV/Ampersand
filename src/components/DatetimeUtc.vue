@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { IonDatetime } from "@ionic/vue";
 	import { appConfig } from "../lib/config";
-	import { ref, watch } from "vue";
+	import { ComponentPublicInstance, ref, watch } from "vue";
 	import dayjs from "dayjs";
 
 	// copied from ionic because they dont export it (??)
@@ -33,6 +33,10 @@
 		max?: Date
 	}>();
 
+	const emit = defineEmits<{
+		"ref": [Element | ComponentPublicInstance | null]
+	}>();
+
 	const model = defineModel<Date>();
 	const innerModel = ref<string | undefined>(dayjs(model.value).local().format());
 	watch(innerModel, () => model.value = dayjs(innerModel.value).utc().toDate());
@@ -40,6 +44,7 @@
 
 <template>
 	<IonDatetime
+		:ref="(ref) => emit('ref', ref)"
 		:presentation="props.presentation"
 		:show-default-buttons="props.showDefaultButtons"
 		:first-day-of-week="appConfig.locale.firstWeekOfDayIsSunday ? 0 : 1"

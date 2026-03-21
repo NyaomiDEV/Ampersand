@@ -7,6 +7,23 @@
 	--wheel-highlight-background: rgb(var(--md3-surface-variant));
 	--wheel-highlight-border-radius: var(--md3-corner-large);
 	border-radius: var(--md3-corner-extra-large);
+
+	&::part(datetime-header) {
+		background-color: transparent;
+		color: rgb(var(--md3-on-surface));
+	}
+
+	&::part(datetime-title) {
+		text-transform: none;
+	}
+
+	&::part(datetime-selected-date) {
+		margin-top: 0.5em;
+	}
+
+	ion-button {
+		text-transform: none;
+	}
 }
 
 .md ion-datetime-button::part(native) {
