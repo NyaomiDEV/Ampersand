@@ -4,8 +4,12 @@
 	--highlight-color-invalid: rgb(var(--md3-error));
 	--highlight-color-focused: rgb(var(--md3-primary));
 
-	.select-wrapper-inner {
+	&::part(inner) {
 		justify-content: space-between;
 		width: 100%;
+	}
+
+	&::part(label) {
+		color: rgb(var(--md3-on-surface-variant));
 	}
 }
