@@ -1,0 +1,31 @@
+{
+	"header": "提醒",
+	"eventBasedHeader": "事件提醒",
+	"edit": {
+		"title": "提醒通知标题",
+		"message": "提醒通知内容",
+		"type": {
+			"periodic": "期间"
+		},
+		"eventBased": {
+			"delay": {
+				"title": "延迟"
+			}
+		},
+		"periodic": {
+			"timeOfDay": {
+				"title": "时间"
+			},
+			"dayOfMonth": {
+				"desc_undefined": "每日重复"
+			}
+		},
+		"delete": {
+			"title": "删除提醒",
+			"confirm": "您确认要删除这个提示吗？"
+		}
+	},
+	"remindersAreNotFinished": {
+		"header": "提示功能尚未完善！"
+	}
+}

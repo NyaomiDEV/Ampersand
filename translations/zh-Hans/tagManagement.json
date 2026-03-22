@@ -1,0 +1,17 @@
+{
+	"header": "标签管理",
+	"searchPlaceholder": "搜索标签...",
+	"edit": {
+		"name": "标签名称",
+		"description": "标签描述",
+		"color": "标签颜色",
+		"type": {
+			"member": "成员",
+			"journal": "日志"
+		},
+		"delete": {
+			"title": "删除标签",
+			"confirm": "您确定要删除这个标签吗？"
+		}
+	}
+}

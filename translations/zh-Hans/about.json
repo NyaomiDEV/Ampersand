@@ -1,0 +1,8 @@
+{
+	"header": "关于",
+	"version": "版本 {{version}}",
+	"ciVersion": "CI 版本",
+	"privacyPolicy": "私隐政策",
+	"updateAvailable": "可更新版本：{{newVersion}}",
+	"madein": "在意大利用愛制作"
+}

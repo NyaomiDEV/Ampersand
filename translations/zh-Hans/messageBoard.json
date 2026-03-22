@@ -1,0 +1,43 @@
+{
+	"header": "佈告板",
+	"searchPlaceholder": "搜索信息...",
+	"polls": {
+		"boardMessageContainsPoll": "內附投票",
+		"collapsePoll": "隱藏投票",
+		"voteCast": {
+			"voter": "选择投票者",
+			"reason": "解释原因",
+			"reasonHint": "原因",
+			"retractConfirmation": "您确定要移除这一票嗎？"
+		},
+		"resultsHeader": "投票结果",
+		"resultsButton": "显示投票结果",
+		"choice": {
+			"desc_other": "{{count}} 个投票者"
+		},
+		"defaultPollValues": {
+			"yes": "是",
+			"no": "否",
+			"veto": "否决",
+			"abstain": "弃权"
+		}
+	},
+	"edit": {
+		"header": "编辑信息",
+		"member": "编辑信息作者",
+		"title": "标题",
+		"body": "信息内容",
+		"isPinned": "置顶信息",
+		"isArchived": "归档信息",
+		"attachPoll": "在此信息附加投票",
+		"deleteAttachedPoll": "删除附加投票",
+		"pollIsMultipleChoice": "允许选择多种选项",
+		"pollAddNewChoice": "为此投票新增选项",
+		"pollChoice": "选项描述",
+		"pollEditWarning": "变更任何投票细节将会重置投票结果！",
+		"delete": {
+			"title": "删除佈告版信息",
+			"confirm": "您确定要删除此信息吗？"
+		}
+	}
+}

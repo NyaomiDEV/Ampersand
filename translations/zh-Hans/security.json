@@ -1,0 +1,17 @@
+{
+	"header": "安全",
+	"applock": {
+		"title": "应用锁"
+	},
+	"passwordAlert": {
+		"header": "警告"
+	},
+	"inputPassword": {
+		"titleAdd": "输入您的新密码",
+		"titleReenter": "重新输入密码",
+		"titleModifyOld": "输入您的旧密码",
+		"titleModifyNew": "输入您的新密码",
+		"titleDisable": "输入密码",
+		"hint": "密码"
+	}
+}
