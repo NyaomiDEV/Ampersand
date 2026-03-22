@@ -54,7 +54,7 @@
 	import CustomFieldsSelect from "../../modals/CustomFieldsSelect.vue";
 	import { appConfig } from "../../lib/config";
 	import { getSystem } from "../../lib/db/tables/system";
-	import SystemChip from "../../components/SystemChip.vue";
+	import SystemChip from "../../components/system/SystemChip.vue";
 	import SystemItem from "../../components/system/SystemItem.vue";
 
 	const i18next = useTranslation();

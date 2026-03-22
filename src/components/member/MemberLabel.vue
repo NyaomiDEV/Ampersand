@@ -7,7 +7,7 @@
 	import TagChip from "../tag/TagChip.vue";
 	import { isReactive, onBeforeMount, shallowRef, watch, WatchStopHandle } from "vue";
 	import { getTag } from "../../lib/db/tables/tags";
-	import SystemChip from "../SystemChip.vue";
+	import SystemChip from "../system/SystemChip.vue";
 	import { getSystem } from "../../lib/db/tables/system";
 	import { appConfig } from "../../lib/config";
 

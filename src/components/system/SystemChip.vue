@@ -4,9 +4,9 @@
 		IonLabel,
 	} from "@ionic/vue";
 
-	import { System } from "../lib/db/entities";
+	import { System } from "../../lib/db/entities";
 
-	import Avatar from "./Avatar.vue";
+	import Avatar from "../Avatar.vue";
 	import accountCircle from "@material-symbols/svg-600/outlined/supervised_user_circle.svg";
 
 	const props = defineProps<{

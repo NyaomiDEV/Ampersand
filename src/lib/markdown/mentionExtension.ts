@@ -1,7 +1,7 @@
 import { h, type VNode } from "vue";
 import MemberChip from "../../components/member/MemberChip.vue";
 import JournalChip from "../../components/JournalChip.vue";
-import SystemChip from "../../components/SystemChip.vue";
+import SystemChip from "../../components/system/SystemChip.vue";
 import TagChip from "../../components/tag/TagChip.vue";
 import { MarkedExtension } from "marked";
 import { getMember } from "../db/tables/members";
