@@ -136,3 +136,14 @@ input[type="search"]::-webkit-search-results-decoration {
 	scrollbar-width: thin;
 	scrollbar-color: var(--ion-color-primary) transparent;
 }
+
+ion-item-option {
+	border-radius: 28px;
+	width: 56px;
+	height: 56px;
+	margin: auto 8px;
+}
+
+ion-item-option:last-child {
+	margin-right: 16px;
+}

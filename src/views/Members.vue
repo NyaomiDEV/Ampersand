@@ -204,17 +204,6 @@
 </template>
 
 <style scoped>
-	ion-item-option {
-		border-radius: 28px;
-		width: 56px;
-		height: 56px;
-		margin: auto 8px;
-	}
-
-	ion-item-option:last-child {
-		margin-right: 16px;
-	}
-
 	.list {
 		padding: 16px;
 	}
