@@ -72,8 +72,4 @@
 		justify-content: center;
 		gap: 16px;
 	}
-
-	.ios ion-list {
-		background-color: transparent;
-	}
 </style>

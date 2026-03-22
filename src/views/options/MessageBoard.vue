@@ -186,12 +186,4 @@
 		--background-rgb: var(--md3-surface-container);
 		--wheel-fade-background-rgb: var(--md3-surface-container);
 	}
-
-	.ios ion-item-divider {
-		background-color: transparent;
-	}
-
-	.ios ion-list {
-		background-color: transparent;
-	}
 </style>
