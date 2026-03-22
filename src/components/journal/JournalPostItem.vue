@@ -8,6 +8,7 @@
 	import { isReactive, onBeforeMount, shallowRef, watch, WatchStopHandle } from "vue";
 	import { getTag } from "../../lib/db/tables/tags";
 	import { useBlob } from "../../lib/util/blob";
+	import { accessibilityConfig } from "../../lib/config";
 
 	const { getObjectURL } = useBlob();
 
@@ -15,12 +16,24 @@
 
 	const tags = shallowRef<Tag[]>();
 
-	const props = defineProps<{
-		post: JournalPostComplete
-	}>();
+	const props = withDefaults(defineProps<{
+		post: JournalPostComplete,
+		showBorderColor?: boolean
+	}>(), {
+		showBorderColor: true
+	});
 
 	async function updateTags() {
 		tags.value = (await Promise.all(props.post.tags.map(async x => await getTag(x)))).filter(x => x?.viewInLists) as Tag[];
+	}
+
+	function getStyle(){
+		const style: Record<string, string> = {};
+
+		if(props.post.member?.color)
+			style["--data-color"] = props.post.member.color;
+
+		return style;
 	}
 
 	onBeforeMount(async () => {
@@ -42,7 +55,13 @@
 </script>
 
 <template>
-	<IonItem button>
+	<IonItem
+		button
+		:style="getStyle()"
+		:class="{
+			'with-border-color': props.showBorderColor && accessibilityConfig.colorIndicatorPosition === 'list-item'
+		}"
+	>
 		<Avatar
 			v-if="props.post.member"
 			slot="start"
@@ -68,17 +87,8 @@
 </template>
 
 <style scoped>
-	ion-card .card-inner {
-		display: flex;
-		flex-direction: row;
-		align-items: top;
-		gap: 16px;
-		padding: 16px;
-	}
-
-	ion-item .avatar {
-		width: 56px;
-		height: 56px;
+	ion-item.with-border-color::part(native) {
+		border-inline-start: 4px solid var(--data-color, transparent);
 	}
 
 	img.cover {

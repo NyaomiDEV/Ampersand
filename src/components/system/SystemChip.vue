@@ -5,20 +5,40 @@
 	} from "@ionic/vue";
 
 	import { System } from "../../lib/db/entities";
+	import { accessibilityConfig } from "../../lib/config";
 
 	import Avatar from "../Avatar.vue";
 	import accountCircle from "@material-symbols/svg-600/outlined/supervised_user_circle.svg";
 
-	const props = defineProps<{
+	const props = withDefaults(defineProps<{
 		system: System,
-		clickable?: boolean
-	}>();
+		clickable?: boolean,
+		showBorderColor?: boolean
+	}>(), {
+		showBorderColor: true
+	});
 
 	const routerLink = props.clickable ? `/options/systems/edit?uuid=${props.system.uuid}` : undefined;
+
+	function getStyle(){
+		const style: Record<string, string> = {};
+
+		if(props.system.color)
+			style["--data-color"] = props.system.color;
+
+		return style;
+	}
 </script>
 
 <template>
-	<IonChip :router-link @click="(e) => e.stopPropagation()">
+	<IonChip
+		:class="{
+			'with-border-color': props.showBorderColor && accessibilityConfig.colorIndicatorPosition === 'list-item'
+		}"
+		:style="getStyle()"
+		:router-link
+		@click="(e) => e.stopPropagation()"
+	>
 		<Avatar
 			:image="system.image"
 			:clip-shape="system.imageClip"
@@ -35,6 +55,22 @@
 	.avatar {
 		width: 24px;
 		height: 24px;
-		margin-right: 8px;
+		margin-inline-end: 8px;
+	}
+
+	ion-chip {
+		position: relative;
+		z-index: 0;
+
+		&.with-border-color::before {
+			content: "\A";
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			z-index: -1;
+			top: 0;
+			left: 0;
+			border-inline-start: 2px solid var(--data-color, transparent);
+		}
 	}
 </style>

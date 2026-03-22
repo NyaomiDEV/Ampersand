@@ -23,8 +23,17 @@
 		toggleChecked?: boolean,
 		showCover?: boolean,
 		showArchived?: boolean,
-		button?: boolean
-	}>(), { showChips: false, showIcons: false, showCover: true, showPronouns: true, showRole: true, showArchived: false });
+		button?: boolean,
+		showBorderColor?: boolean
+	}>(), {
+		showChips: false,
+		showIcons: false,
+		showCover: true,
+		showPronouns: true,
+		showRole: true,
+		showArchived: false,
+		showBorderColor: true
+	});
 
 	const emit = defineEmits<{
 		"toggleUpdate": [boolean],
@@ -45,6 +54,9 @@
 		if(props.member.cover)
 			style["--data-cover"] = `url(${getObjectURL(props.member.cover)})`;
 
+		if(props.member.color)
+			style["--data-color"] = props.member.color;
+
 		return style;
 	}
 </script>
@@ -54,7 +66,8 @@
 		:button="props.button"
 		:class="{
 			archived: props.showArchived && props.member.isArchived,
-			'with-cover': props.showCover && !accessibilityConfig.disableCovers
+			'with-cover': props.showCover && !accessibilityConfig.disableCovers,
+			'with-border-color': props.showBorderColor && accessibilityConfig.colorIndicatorPosition === 'list-item'
 		}"
 		:style="getStyle()"
 	>
@@ -114,13 +127,17 @@
 		background-image: var(--data-cover);
 		background-position: center;
 		background-size: cover;
-		width: calc(100% + 16px);
+		width: 100%;
 		height: 100%;
 		display: block;
 		position: absolute;
 		z-index: -1;
-		left: -16px;
+		left: 0;
 		opacity: .25;
 		mask-image: radial-gradient(circle at 10% 100%, black, transparent 100%);
+	}
+
+	ion-item.with-border-color::part(native) {
+		border-inline-start: 4px solid var(--data-color, transparent);
 	}
 </style>

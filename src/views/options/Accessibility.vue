@@ -11,6 +11,7 @@
 	import smallTextMD from "@material-symbols/svg-600/outlined/text_decrease.svg";
 	import bigTextMD from "@material-symbols/svg-600/outlined/text_increase.svg";
 	import colorMD from "@material-symbols/svg-600/outlined/palette.svg";
+	import colorsMD from "@material-symbols/svg-600/outlined/colors.svg";
 	import hideCoverMD from "@material-symbols/svg-600/outlined/hide_image.svg";
 	import motionMD from "@material-symbols/svg-600/outlined/masked_transitions.svg";
 	import lightMD from "@material-symbols/svg-600/outlined/light_mode.svg";
@@ -181,6 +182,24 @@
 							<p>{{ $t("accessibility:reducedMotion.desc") }}</p>
 						</IonLabel>
 					</IonToggle>
+				</IonItem>
+
+				<IonItem>
+					<IonIcon slot="start" :icon="colorsMD" />
+					<IonSelect
+						v-model="accessibilityConfig.colorIndicatorPosition"
+						label-placement="floating"
+						:label="$t('accessibility:colorIndicatorPosition.title')"
+						:cancel-text="$t('other:alerts.cancel')"
+						interface="action-sheet"
+					>
+						<IonSelectOption value="avatar">
+							{{ $t("accessibility:colorIndicatorPosition.avatar") }}
+						</IonSelectOption>
+						<IonSelectOption value="list-item">
+							{{ $t("accessibility:colorIndicatorPosition.listItem") }}
+						</IonSelectOption>
+					</IonSelect>
 				</IonItem>
 
 				<IonItem>

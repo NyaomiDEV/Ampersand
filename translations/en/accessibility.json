@@ -30,6 +30,11 @@
 		"title": "Vibrant theme",
 		"desc": "Bring more color to the UI."
 	},
+	"colorIndicatorPosition": {
+		"title": "Color indicator position",
+		"avatar": "Avatar outline",
+		"listItem": "List item border"
+	},
 	"useAccentColor": {
 		"title": "Accent color",
 		"desc": "Use a custom accent color"

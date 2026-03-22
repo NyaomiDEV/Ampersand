@@ -13,13 +13,17 @@
 	import { formatDate, promptOkCancel } from "../lib/util/misc";
 
 	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
+	import { accessibilityConfig } from "../lib/config";
 
 	const i18next = useTranslation();
 
-	const props = defineProps<{
+	const props = withDefaults(defineProps<{
 		boardMessage: BoardMessageComplete,
-		hidePoll?: boolean
-	}>();
+		hidePoll?: boolean,
+		showBorderColor?: boolean
+	}>(), {
+		showBorderColor: true
+	});
 
 	const isPollHidden = ref(props.hidePoll);
 
@@ -137,10 +141,26 @@
 		return choice.votes.length / allVotes;
 	}
 
+	function getStyle(){
+		const style: Record<string, string> = {};
+
+		if(props.boardMessage.member?.color)
+			style["--data-color"] = props.boardMessage.member.color;
+
+		return style;
+	}
 </script>
 
 <template>
-	<IonItem button :class="{ card: true, filled: props.boardMessage.isPinned, archived: props.boardMessage.isArchived }">
+	<IonItem
+		button
+		:style="getStyle()"
+		:class="{
+			filled: props.boardMessage.isPinned,
+			archived: props.boardMessage.isArchived,
+			'with-border-color': props.showBorderColor && accessibilityConfig.colorIndicatorPosition === 'list-item'
+		}"
+	>
 		<Avatar
 			v-if="props.boardMessage.member"
 			slot="start"
@@ -206,99 +226,99 @@
 	ion-item {
 		--inner-padding-top: 12px;
 		--inner-padding-bottom: 12px;
-	}
 
-	ion-item.filled {
-		--background: var(--ion-background-color-step-200);
-	}
+		&.filled {
+			--background: var(--ion-background-color-step-200);
+		}
 
-	ion-item.archived {
-		opacity: 0.5;
-	}
+		&.archived {
+			opacity: 0.5;
+		}
 
-	ion-item ion-item {
-		--background: transparent;
-	}
+		&.with-border-color::part(native){
+			border-inline-start: 4px solid var(--data-color, transparent);
+		}
 
-	ion-item ion-list {
-		--background: transparent;
-	}
+		ion-item, ion-list {
+			background: transparent;
+		}
 
-	.avatar {
-		align-self: flex-start;
-		margin-top: 12px;
-	}
+		.avatar {
+			align-self: flex-start;
+			margin-top: 12px;
+		}
 
-	.flexbox {
-		display: flex;
-		flex-direction: column;
-		gap: .25em;
-		width: 100%;
-	}
+		.flexbox {
+			display: flex;
+			flex-direction: column;
+			gap: .25em;
+			width: 100%;
 
-	.subheader {
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-		align-items: center;
-	}
+			.subheader {
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+				align-items: center;
 
-	.subheader * {
-		margin: 0;
-	}
+				* {
+					margin: 0;
+				}
 
-	.subheader span {
-		font-size: 1.1em;
-		color: var(--ion-text-color-step-400);
-	}
+				span {
+					font-size: 1.1em;
+					color: var(--ion-text-color-step-400);
+				}
 
-	.subheader p {
-		text-align: right;
-	}
+				p {
+					text-align: right;
+				}
+			}
 
-	.contents {
-		display: flex;
-		flex-direction: column;
-		gap: .25em;
-	}
+			.contents {
+				display: flex;
+				flex-direction: column;
+				gap: .25em;
 
-	.contents > * {
-		margin: 0;
-	}
+				> * {
+					margin: 0;
+				}
 
-	.contents > h1 {
-		font-size: 1.30em;
-		margin-bottom: 0;
-		line-height: 1.5em;
-	}
+				> h1 {
+					font-size: 1.30em;
+					margin-bottom: 0;
+					line-height: 1.5em;
+				}
+			}
 
-	.poll {
-		display: flex;
-		flex-direction: column;
-		gap: .5rem;
-		overflow: hidden;
-	}
+			.poll {
+				display: flex;
+				flex-direction: column;
+				gap: .5rem;
+				overflow: hidden;
 
-	.poll ion-item {
-		--inner-padding-bottom: 4px;
-		--inner-padding-top: 4px;
-		--min-height: none;
-		border: 1px solid var(--ion-text-color-step-700);
-		border-radius: 16px;
-	}
+				ion-item {
+					--inner-padding-bottom: 4px;
+					--inner-padding-top: 4px;
+					--min-height: none;
+					border: 1px solid var(--ion-text-color-step-700);
+					border-radius: 16px;
 
-	.percentage {
-		display: block;
-		box-sizing: border-box;
-		margin: 8px 0px 0px 0px;
-		width: var(--vote-percentage);
-		transition: width .25s ease-in-out;
-		height: 4px;
-		background-color: var(--ion-color-primary);
-		border-radius: 4px;
-	}
+					ion-label {
+						margin: 8px 0px;
+					}
+				}
+			}
 
-	.poll ion-item ion-label {
-		margin: 8px 0px;
+			.percentage {
+				display: block;
+				box-sizing: border-box;
+				margin: 8px 0px 0px 0px;
+				width: var(--vote-percentage);
+				transition: width .25s ease-in-out;
+				height: 4px;
+				background-color: var(--ion-color-primary);
+				border-radius: 4px;
+			}
+		}
 	}
 </style>

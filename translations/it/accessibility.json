@@ -30,6 +30,11 @@
 		"title": "Tema vivace",
 		"desc": "Porta più colore nell'interfaccia utente."
 	},
+	"colorIndicatorPosition": {
+		"title": "Posizione dell'indicatore del colore",
+		"avatar": "Contorno dell'avatar",
+		"listItem": "Bordo dell'elemento sulla lista"
+	},
 	"useAccentColor": {
 		"title": "Colore primario",
 		"desc": "Usa un colore primario personalizzato"

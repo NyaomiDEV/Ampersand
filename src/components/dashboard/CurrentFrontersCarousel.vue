@@ -103,7 +103,7 @@
 			v-for="entry in frontingEntries"
 			:key="entry.uuid"
 			:entry
-			:influenced="frontingEntries.findIndex(x => x.influencing?.uuid === entry.member.uuid) > 0"
+			:influenced-by="frontingEntries.filter(x => x.influencing?.uuid === entry.member.uuid).map(x => x.member)"
 			@click="quickDelete ? quickRemoveFronter(entry) : showModal(entry)"
 		/>
 		<IonCard
@@ -132,7 +132,7 @@
 		padding-right: calc(8px + var(--ion-safe-area-right, 0px));
 		scrollbar-width: none;
 		gap: 8px;
-		padding: 1px 16px;
+		padding: 4px 16px;
 	}
 
 	ion-list-header ion-button {

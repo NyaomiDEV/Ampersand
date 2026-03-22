@@ -1,19 +1,25 @@
 <script setup lang="ts">
 	import { IonCard, IonCardContent, IonLabel } from "@ionic/vue";
+	import Color from "colorjs.io";
 	import Avatar from "../Avatar.vue";
 	import PresenceRating from "../PresenceRating.vue";
 	import { appConfig, accessibilityConfig } from "../../lib/config";
-	import { FrontingEntryComplete } from "../../lib/db/entities";
+	import { FrontingEntryComplete, Member } from "../../lib/db/entities";
 	import { useBlob } from "../../lib/util/blob";
 	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
 	import FrontingEntryInterval from "./FrontingEntryInterval.vue";
 
 	const { getObjectURL } = useBlob();
 
-	const props = defineProps<{
+	const props = withDefaults(defineProps<{
 		entry: FrontingEntryComplete,
-		influenced?: boolean
-	}>();
+		influencedBy?: Member[],
+		showBorderColor?: boolean,
+		showCover?: boolean
+	}>(), {
+		showCover: true,
+		showBorderColor: true
+	});
 
 	function getMostRecentPresence(){
 		if(!props.entry.presence) return [undefined, undefined];
@@ -29,6 +35,19 @@
 		if(props.entry.member.cover)
 			style["--data-cover"] = `url(${getObjectURL(props.entry.member.cover)})`;
 
+		if(props.entry.member.color)
+			style["--data-color"] = props.entry.member.color;
+
+		if(props.influencedBy?.length){
+			const _colors = props.influencedBy.map(x => x.color);
+			let color = new Color(_colors.pop()!);
+
+			while(_colors.length)
+				color = color.range(_colors.pop()!)(.5);
+
+			style["--data-influencing-color"] = color.toString({ format: "hex" });
+		}
+
 		return style;
 	}
 </script>
@@ -37,10 +56,11 @@
 	<IonCard
 		button
 		:class="{
-			influenced: props.influenced,
+			influenced: props.influencedBy?.length,
 			outlined: !props.entry.isMainFronter,
 			influencing: !!props.entry.influencing,
-			compact: accessibilityConfig.disableCovers
+			compact: !props.showCover || accessibilityConfig.disableCovers,
+			'with-border-color': props.showBorderColor && accessibilityConfig.colorIndicatorPosition === 'list-item'
 		}"
 		:style="getStyle()"
 	>
@@ -80,21 +100,29 @@
 	ion-card {
 		width: 160px;
 		flex: none;
-		position: relative;
 
-		* {
-			z-index: 1;
+		&::part(native){
+			height: 100%;
+			position: relative;
+
+			* {
+				z-index: 1;
+			}
 		}
 
 		&.influencing {
 			opacity: .5;
 		}
 
-		&.influenced {
-			outline: 2px solid var(--ion-color-primary) !important;
+		&.with-border-color::part(native) {
+			border-top: 4px solid var(--data-color);
 		}
 
-		&:not(.compact)::before {
+		&.influenced::part(native) {
+			background-color: color-mix(in srgb, transparent 85%, var(--data-influencing-color) 15%);
+		}
+
+		&:not(.compact)::part(native)::before {
 			content: '\A';
 			background-image: var(--data-cover);
 			background-position: center;
@@ -105,7 +133,6 @@
 			position: absolute;
 			z-index: 0;
 			top: 0;
-			left: 0;
 			opacity: .25;
 		}
 

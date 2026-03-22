@@ -27,6 +27,7 @@ const defaultAccessibilityConfig: AccessibilityConfig = {
 	highLegibility: false,
 	highLegibilityType: "atkinson",
 	theme: "auto",
+	colorIndicatorPosition: "avatar",
 	themeIsAmoled: false,
 	themeIsVibrant: true,
 	useAccentColor: false,

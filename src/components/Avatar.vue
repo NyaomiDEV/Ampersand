@@ -4,6 +4,7 @@
 		IonIcon,
 	} from "@ionic/vue";
 
+	import { accessibilityConfig } from "../lib/config";
 	import { ImageClip } from "../lib/db/entities";
 	import { useBlob } from "../lib/util/blob";
 
@@ -30,24 +31,30 @@
 		v-if="props.image"
 		:class="[
 			'avatar',
-			{ 'with-outline': !!props.withOutline },
+			{ 'with-outline': props.withOutline && accessibilityConfig.colorIndicatorPosition === 'avatar' },
 			{ 'with-shape': !!props.clipShape },
 			{ [`shape-${props.clipShape}`]: !!props.clipShape }
 		]"
 	>
 		<img aria-hidden="true" :src="getObjectURL(props.image)" />
 	</IonAvatar>
-	<IonIcon v-else class="avatar" :icon="props.icon" />
+	<IonIcon
+		v-else
+		:class="['avatar', {
+			'with-color': props.withOutline && accessibilityConfig.colorIndicatorPosition === 'avatar'
+		}]"
+		:icon="props.icon"
+	/>
 </template>
 
 <style scoped>
-	ion-icon {
-		color: v-bind('avatarColor');
-	}
-
 	.avatar {
 		width: 56px;
 		height: 56px;
+	}
+
+	.with-color {
+		color: v-bind('avatarColor') !important;
 	}
 
 	ion-avatar {

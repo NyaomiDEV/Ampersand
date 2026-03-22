@@ -208,6 +208,7 @@
 					:show-cover="false"
 					:show-pronouns="false"
 					:show-role="false"
+					:show-border-color="false"
 				>
 					<p v-if="post.date">{{ formatDate(post.date, "expanded") }}</p>
 				</MemberItem>

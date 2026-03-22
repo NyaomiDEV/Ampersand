@@ -19,8 +19,14 @@
 		toggleChecked?: boolean,
 		showCover?: boolean,
 		showEffects?: boolean,
-		button?: boolean
-	}>(), { showIcons: false, showCover: true, showEffects: false });
+		button?: boolean,
+		showBorderColor?: boolean
+	}>(), {
+		showIcons: false,
+		showCover: true,
+		showEffects: false,
+		showBorderColor: true
+	});
 
 	const emit = defineEmits<{
 		"toggleUpdate": [boolean],
@@ -34,6 +40,9 @@
 		if(props.system.cover)
 			style["--data-cover"] = `url(${getObjectURL(props.system.cover)})`;
 
+		if(props.system.color)
+			style["--data-color"] = props.system.color;
+
 		return style;
 	}
 </script>
@@ -44,6 +53,7 @@
 		:class="{
 			archived: props.showEffects && props.system.isArchived,
 			'with-cover': props.showCover && !accessibilityConfig.disableCovers,
+			'with-border-color': props.showBorderColor && accessibilityConfig.colorIndicatorPosition === 'list-item',
 			'default-system': props.showEffects && system.uuid === appConfig.defaultSystem
 		}"
 		:style="getStyle()"
@@ -97,13 +107,17 @@
 		background-image: var(--data-cover);
 		background-position: center;
 		background-size: cover;
-		width: calc(100% + 16px);
+		width: 100%;
 		height: 100%;
 		display: block;
 		position: absolute;
 		z-index: -1;
-		left: -16px;
+		left: 0;
 		opacity: .25;
 		mask-image: radial-gradient(circle at 10% 100%, black, transparent 100%);
+	}
+
+	ion-item.with-border-color::part(native) {
+		border-inline-start: 4px solid var(--data-color, transparent);
 	}
 </style>
