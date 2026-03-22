@@ -24,6 +24,7 @@
 	import Color from "../../components/Color.vue";
 	import { addMaterialColors, rgbaToArgb, unsetMaterialColors } from "../../lib/theme";
 	import Cover from "../../components/Cover.vue";
+	import SystemItem from "../../components/system/SystemItem.vue";
 
 	const i18next = useTranslation();
 
@@ -265,19 +266,17 @@
 				</IonList>
 
 				<IonList class="system-actions">
-					<IonItem v-if="parentSystem">
-						<Avatar
-							slot="start"
-							:image="parentSystem?.image"
-							:clip-shape="parentSystem?.imageClip"
-							:color="parentSystem?.color"
-							:icon="accountCircle"
-						/>
-						<IonLabel>
+					<SystemItem
+						v-if="parentSystem"
+						:show-cover="false"
+						:show-effects="false"
+						:show-icons="false"
+						:system="parentSystem"
+					>
+						<template #before>
 							<p>{{ $t("systems:edit.parent") }}</p>
-							<h2>{{ parentSystem.name }}</h2>
-						</IonLabel>
-					</IonItem>
+						</template>
+					</SystemItem>
 					<IonItem>
 						<IonLabel>
 							<h2>{{ $t("systems:edit.memberCount") }}</h2>
@@ -335,38 +334,45 @@
 				</IonList>
 				
 				<IonList>
-					<IonItem button :detail="true" @click="systemSelectModal?.$el.present()">
-						<Avatar
-							slot="start"
-							:image="parentSystem?.image"
-							:clip-shape="parentSystem?.imageClip"
-							:color="parentSystem?.color"
-							:icon="accountCircle"
-						/>
+					<SystemItem
+						v-if="parentSystem"
+						button
+						:show-cover="false"
+						:show-effects="false"
+						:show-icons="false"
+						:system="parentSystem"
+						@click="systemSelectModal?.$el.present()"
+					>
+						<template #before>
+							<p>{{ $t("systems:edit.parent") }}</p>
+						</template>
+						<template #end>
+							<IonButton
+								slot="end"
+								shape="round"
+								fill="outline"
+								size="small"
+								@click="(e: { stopPropagation: () => void; }) => { e.stopPropagation(); parentSystem = undefined; }"
+							>
+								<IonIcon
+									slot="icon-only"
+									:icon="trashMD"
+									color="danger"
+								/>
+							</IonButton>
+						</template>
+					</SystemItem>
+					<IonItem
+						v-else
+						button
+						detail
+						@click="systemSelectModal?.$el.present()"
+					>
 						<IonLabel>
-							<template v-if="parentSystem">
-								<p>{{ $t("systems:edit.parent") }}</p>
-								<h2>{{ parentSystem.name }}</h2>
-							</template>
-							<h2 v-else>
-								{{ $t("systems:edit.parent") }}
-							</h2>
+							<h2>{{ $t("systems:edit.parent") }}</h2>
 						</IonLabel>
-						<IonButton
-							v-if="parentSystem"
-							slot="end"
-							shape="round"
-							fill="outline"
-							size="small"
-							@click="(e: { stopPropagation: () => void; }) => { e.stopPropagation(); parentSystem = undefined; }"
-						>
-							<IonIcon
-								slot="icon-only"
-								:icon="trashMD"
-								color="danger"
-							/>
-						</IonButton>
 					</IonItem>
+
 					<IonItem button :detail="false">
 						<Color v-model="system.color" @update:model-value="updateColors">
 							<IonLabel>
@@ -454,6 +460,7 @@
 				ref="systemSelectModal"
 				v-model="parentSystem"
 				:discard-on-select="true"
+				always-emit
 				:hide-checkboxes="true"
 				:child-system="system"
 			/>

@@ -10,28 +10,20 @@
 		IonFab,
 		IonFabButton,
 		IonIcon,
-		IonItem,
-		IonLabel,
 		IonBackButton,
 	} from "@ionic/vue";
 	import { onBeforeMount, onUnmounted, ref, shallowRef, watch } from "vue";
-	import { appConfig, accessibilityConfig } from "../../lib/config/index.ts";
-	import Avatar from "../../components/Avatar.vue";
+	import { appConfig } from "../../lib/config/index.ts";
 
-	import systemCircle from "@material-symbols/svg-600/outlined/supervised_user_circle.svg";
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
-	import defaultMD from "@material-symbols/svg-600/outlined/bookmark_star.svg";
-	import pinMD from "@material-symbols/svg-600/outlined/keep.svg";
-	import archivedMD from "@material-symbols/svg-600/outlined/archive.svg";
 
 	import type { System } from "../../lib/db/entities";
 	import { DatabaseEvents, DatabaseEvent } from "../../lib/db/events.ts";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import { useRoute } from "vue-router";
 	import { getFilteredSystems } from "../../lib/db/tables/system.ts";
-	import { useBlob } from "../../lib/util/blob.ts";
+	import SystemItem from "../../components/system/SystemItem.vue";
 
-	const { getObjectURL } = useBlob();
 	const route = useRoute();
 
 	const search = ref(route.query.q as string || "");
@@ -76,15 +68,6 @@
 				return a.name.localeCompare(b.name);
 			});
 	}
-
-	function getStyle(system: System){
-		const style: Record<string, string> = {};
-
-		if(system.cover)
-			style["--data-cover"] = `url(${getObjectURL(system.cover)})`;
-
-		return style;
-	}
 </script>
 
 <template>
@@ -111,29 +94,16 @@
 		
 		<SpinnerFullscreen v-if="!systems" />
 		<IonContent v-else>
-			<IonList :class="{ compact: accessibilityConfig.disableCovers }">
-				<IonItem
+			<IonList>
+				<SystemItem
 					v-for="system in systems"
 					:key="system.uuid"
+					:system
+					show-icons
+					show-effects
 					button
-					:class="{ 'default-system': system.uuid === appConfig.defaultSystem, archived: system.isArchived }"
-					:style="getStyle(system)"
 					:router-link="`/options/systems/edit?uuid=${system.uuid}`"
-				>
-					<Avatar
-						slot="start"
-						:image="system.image"
-						:clip-shape="system.imageClip"
-						:color="system.color"
-						:icon="systemCircle"
-					/>
-					<IonLabel>
-						{{ system.name }}
-					</IonLabel>
-					<IonIcon v-if="appConfig.defaultSystem === system.uuid" slot="end" :icon="defaultMD" />
-					<IonIcon v-if="system.isPinned" slot="end" :icon="pinMD" />
-					<IonIcon v-if="system.isArchived" slot="end" :icon="archivedMD" />
-				</IonItem>
+				/>
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
@@ -144,39 +114,3 @@
 		</IonContent>
 	</IonPage>
 </template>
-
-<style scoped>
-	ion-item.archived > * {
-		opacity: 0.5;
-	}
-
-	ion-item ion-avatar {
-		width: 56px;
-		height: 56px;
-	}
-
-	ion-avatar > ion-icon {
-		width: 100%;
-		height: 100%;
-		color: var(--ion-color-primary);
-	}
-
-	ion-item.default-system {
-		--background: var(--ion-background-color-step-150);
-	}
-
-	ion-list:not(.compact) ion-item::part(native)::before {
-		content: '\A';
-		background-image: var(--data-cover);
-		background-position: center;
-		background-size: cover;
-		width: calc(100% + 16px);
-		height: 100%;
-		display: block;
-		position: absolute;
-		z-index: -1;
-		left: -16px;
-		opacity: .25;
-		mask-image: radial-gradient(circle at 10% 100%, black, transparent 100%);
-	}
-</style>

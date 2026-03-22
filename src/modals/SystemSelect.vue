@@ -5,23 +5,19 @@
 		IonToolbar,
 		IonTitle,
 		IonList,
-		IonItem,
 		IonModal,
 		IonSearchbar,
-		IonCheckbox,
 		modalController,
-		IonLabel
 	} from "@ionic/vue";
 
 	import { onBeforeMount, onUnmounted, ref, shallowRef, toRaw, watch } from "vue";
 	import type { System } from "../lib/db/entities";
-	import Avatar from "../components/Avatar.vue";
 	import { DatabaseEvents, DatabaseEvent } from "../lib/db/events.ts";
 	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
-	import systemCircle from "@material-symbols/svg-600/outlined/supervised_user_circle.svg";
 	import { getFilteredSystems, getSystem } from "../lib/db/tables/system.ts";
 	import { appConfig } from "../lib/config/index.ts";
 	import { PartialBy } from "../lib/types";
+	import SystemItem from "../components/system/SystemItem.vue";
 
 	const props = defineProps<{
 		customTitle?: string,
@@ -134,35 +130,26 @@
 		<SpinnerFullscreen v-if="!systems" />
 		<IonContent v-else>
 			<IonList>
-				<IonItem
+				<SystemItem
 					v-for="system in systems"
 					:key="system.uuid"
+					:system
 					button
-					:class="{ 'default-system': system.uuid === appConfig.defaultSystem }"
+					:show-icons="false"
+					show-effects
+					has-toggle="checkbox"
+					:toggle-value="system.uuid"
+					:toggle-checked="selectedSystem?.uuid === system.uuid"
 					:disabled="!!disallowedSystems.find(x => x.uuid === system.uuid)"
-				>
-					<Avatar
-						slot="start"
-						:image="system.image"
-						:clip-shape="system.imageClip"
-						:color="system.color"
-						:icon="systemCircle"
-					/>
-					<IonCheckbox :value="system.uuid" :checked="selectedSystem?.uuid === system.uuid" @update:model-value="check(system)">
-						<IonLabel>{{ system.name }}</IonLabel>
-					</IonCheckbox>
-				</IonItem>
+					@toggle-update="check(system)"
+				/>
 			</IonList>
 		</IonContent>
 	</IonModal>
 </template>
 
 <style scoped>
-	ion-checkbox::part(container) {
+	:deep(ion-checkbox::part(container)) {
 		visibility: v-bind("!props.hideCheckboxes ? 'visible' : 'hidden'")
-	}
-
-	ion-item.default-system {
-		--background: var(--ion-background-color-step-150);
 	}
 </style>

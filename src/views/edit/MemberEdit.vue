@@ -32,7 +32,6 @@
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 	import FrontHistoryMD from "@material-symbols/svg-600/outlined/show_chart.svg";
-	import systemCircle from "@material-symbols/svg-600/outlined/supervised_user_circle.svg";
 	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
 
 	import { CustomField, ImageClip, Member, System, Tag } from "../../lib/db/entities";
@@ -56,6 +55,7 @@
 	import { appConfig } from "../../lib/config";
 	import { getSystem } from "../../lib/db/tables/system";
 	import SystemChip from "../../components/SystemChip.vue";
+	import SystemItem from "../../components/system/SystemItem.vue";
 
 	const i18next = useTranslation();
 
@@ -382,19 +382,19 @@
 				</IonList>
 
 				<IonList class="member-edit">
-					<IonItem button :detail="true" @click="systemSelectModal?.$el.present()">
-						<Avatar
-							slot="start"
-							:image="system.image"
-							:clip-shape="system.imageClip"
-							:color="system.color"
-							:icon="systemCircle"
-						/>
-						<IonLabel>
+					<SystemItem
+						button
+						detail
+						:show-cover="false"
+						:show-effects="false"
+						:show-icons="false"
+						:system
+						@click="systemSelectModal?.$el.present()"
+					>
+						<template #before>
 							<p>{{ $t("members:edit.system") }}</p>
-							<h2>{{ system.name }}</h2>
-						</IonLabel>
-					</IonItem>
+						</template>
+					</SystemItem>
 					<IonItem button :detail="true" @click="tagSelectionModal?.$el.present()">
 						<IonLabel>
 							{{ $t("members:edit.tags") }}

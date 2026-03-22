@@ -7,7 +7,6 @@
 	import { computePercentage } from "../../lib/i18n";
 	import { getSystem } from "../../lib/db/tables/system";
 	import SystemSelect from "../../modals/SystemSelect.vue";
-	import Avatar from "../../components/Avatar.vue";
 	import { System } from "../../lib/db/entities";
 
 	import languageMD from "@material-symbols/svg-600/outlined/language.svg";
@@ -19,7 +18,7 @@
 	import journalMD from "@material-symbols/svg-600/outlined/book.svg";
 	import homeMD from "@material-symbols/svg-600/outlined/home.svg";
 	import ipcMD from "@material-symbols/svg-600/outlined/api.svg";
-	import accountCircle from "@material-symbols/svg-600/outlined/supervised_user_circle.svg";
+	import SystemItem from "../../components/system/SystemItem.vue";
 
 	const defaultSystem = shallowRef<System>({
 		uuid: appConfig.defaultSystem,
@@ -131,18 +130,28 @@
 			</IonListHeader>
 
 			<IonList>
-
-				<IonItem button :detail="true" @click="systemSelectModal?.$el.present()">
-					<Avatar
-						slot="start"
-						:image="defaultSystem.image"
-						:clip-shape="defaultSystem.imageClip"
-						:color="defaultSystem.color"
-						:icon="accountCircle"
-					/>
+				<SystemItem
+					v-if="defaultSystem"
+					button
+					detail
+					:show-cover="false"
+					:show-effects="false"
+					:show-icons="false"
+					:system="defaultSystem"
+					@click="systemSelectModal?.$el.present()"
+				>
+					<template #before>
+						<p>{{ $t("appSettings:defaultSystem") }}</p>
+					</template>
+				</SystemItem>
+				<IonItem
+					v-else
+					button
+					detail
+					@click="systemSelectModal?.$el.present()"
+				>
 					<IonLabel>
 						<p>{{ $t("appSettings:defaultSystem") }}</p>
-						<h2>{{ defaultSystem.name }}</h2>
 					</IonLabel>
 				</IonItem>
 
