@@ -194,21 +194,21 @@ export function flattenObject(obj: object) {
 export function sortMembers(a: Member, b: Member) {
 	switch (appConfig.showMembersApartFromCustomFronts) {
 		case "off":
-			if (a.isPinned === b.isPinned)
+			if ((a.isPinned || false) === (b.isPinned || false))
 				return a.name.localeCompare(b.name);
 			else
 				return a.isPinned && !b.isPinned ? -1 : 1;
 		case "before":
-			if (a.isPinned === b.isPinned) {
-				if (a.isCustomFront === b.isCustomFront)
+			if ((a.isPinned || false) === (b.isPinned || false)) {
+				if ((a.isCustomFront || false) === (b.isCustomFront || false))
 					return a.name.localeCompare(b.name);
 				else
 					return a.isCustomFront && !b.isCustomFront ? -1 : 1;
 			} else
 				return a.isPinned && !b.isPinned ? -1 : 1;
 		case "after":
-			if (a.isPinned === b.isPinned) {
-				if (a.isCustomFront === b.isCustomFront)
+			if ((a.isPinned || false) === (b.isPinned || false)) {
+				if ((a.isCustomFront || false) === (b.isCustomFront || false))
 					return a.name.localeCompare(b.name);
 				else
 					return a.isCustomFront && !b.isCustomFront ? 1 : -1;
