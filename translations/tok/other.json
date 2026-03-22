@@ -14,7 +14,8 @@
 		"ok": "pona",
 		"cancel": "awen ala",
 		"yes": "lon",
-		"no": "ala"
+		"no": "ala",
+		"clear": "weka"
 	},
 	"presence": {
 		"absent": "lon ala",

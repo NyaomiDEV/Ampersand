@@ -1,0 +1,20 @@
+{
+	"header": "sona pi ilo ni",
+	"ampersand": "ilo Ampersand",
+	"website": {
+		"title": "lipu pi ilo ni",
+		"desc": "sina ken kama jo e ilo Ampersand pi ante sin, kin la sina ken lukin e ante sin."
+	},
+	"blog": {
+		"title": "lipu toki pi ilo ni",
+		"desc": "sina ken lukin e toki sin pi ilo ni."
+	},
+	"wiki": {
+		"title": "lipu sona pi ilo ni",
+		"desc": "sina ken kama sona e sona pi kepeken ilo."
+	},
+	"repository": {
+		"title": "poki pi toki ilo",
+		"desc": "sina ken pona e ilo ni."
+	}
+}
