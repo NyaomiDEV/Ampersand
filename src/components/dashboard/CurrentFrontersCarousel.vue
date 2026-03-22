@@ -1,31 +1,19 @@
 <script setup lang="ts">
 	import { IonCard, IonCardContent, IonLabel, IonListHeader, IonIcon, IonButton } from "@ionic/vue";
-	import Avatar from "../Avatar.vue";
-	import { h, onBeforeMount, onUnmounted, ref, shallowRef } from "vue";
+	import { h, onMounted, onUnmounted, ref, shallowRef } from "vue";
 	import type { FrontingEntryComplete } from "../../lib/db/entities.d.ts";
 	import { getFronting, newFrontingEntry, sendFrontingChangedEvent, updateFrontingEntry } from "../../lib/db/tables/frontingEntries";
-	import { formatWrittenTime } from "../../lib/util/misc";
 	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
 	import { DatabaseEvents, DatabaseEvent } from "../../lib/db/events";
 	import { addModal, removeModal } from "../../lib/modals.ts";
-	import { appConfig, accessibilityConfig } from "../../lib/config/index.ts";
 	import MemberSelect from "../../modals/MemberSelect.vue";
-	import PresenceRating from "../PresenceRating.vue";
 
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 	import removeFromFrontMD from "@material-symbols/svg-600/outlined/person_remove.svg";
-	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
-	import { useBlob } from "../../lib/util/blob.ts";
-
-	const { getObjectURL } = useBlob();
+	import FrontingEntryCard from "../frontingEntry/FrontingEntryCard.vue";
 
 	const frontingEntries = shallowRef<FrontingEntryComplete[]>([]);
-
-	const now = ref(new Date());
-
 	const quickDelete = ref(false);
-
-	let interval: number;
 
 	async function updateFrontingEntries() {
 		frontingEntries.value = (await getFronting()).sort((a, b) => {
@@ -44,18 +32,12 @@
 			void updateFrontingEntries();
 	};
 
-	onBeforeMount(async () => {
-		if(!appConfig.hideFrontingTimer)
-			interval = setInterval(() => now.value = new Date(), 1000);
-
+	onMounted(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
 		await updateFrontingEntries();
 	});
 
 	onUnmounted(() => {
-		if(!appConfig.hideFrontingTimer)
-			clearInterval(interval);
-
 		DatabaseEvents.removeEventListener("updated", listener);
 	});
 
@@ -79,7 +61,7 @@
 			quickDelete.value = false;
 	}
 
-	async function showModalFronting(){
+	async function showModalAddToFront(){
 		const vnode = h(MemberSelect, {
 			onlyOne: true,
 			hideCheckboxes: true,
@@ -100,23 +82,6 @@
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-call
 		await (modal.el as any).present();
 	}
-
-	function getMostRecentPresence(frontingEntry: FrontingEntryComplete){
-		if(!frontingEntry.presence) return [undefined, undefined];
-
-		const presenceVal = Array.from(frontingEntry.presence.entries());
-
-		return presenceVal.sort((a, b) => a[0].valueOf() - b[0].valueOf()).pop() || [undefined, undefined];
-	}
-
-	function getStyle(frontingEntry: FrontingEntryComplete){
-		const style: Record<string, string> = {};
-
-		if(frontingEntry.member.cover)
-			style["--data-cover"] = `url(${getObjectURL(frontingEntry.member.cover)})`;
-
-		return style;
-	}
 </script>
 
 <template>
@@ -134,51 +99,18 @@
 		</IonButton>
 	</IonListHeader>
 	<div class="carousel">
-		<IonCard
+		<FrontingEntryCard
 			v-for="fronting in frontingEntries"
 			:key="fronting.uuid"
-			button
-			:class="{
-				influenced: frontingEntries.findIndex(x => x.influencing?.uuid === fronting.member.uuid) > 0,
-				outlined: !fronting.isMainFronter,
-				influencing: !!fronting.influencing,
-				compact: accessibilityConfig.disableCovers
-			}"
-			:style="getStyle(fronting)"
+			:fronting
+			:influenced="frontingEntries.findIndex(x => x.influencing?.uuid === fronting.member.uuid) > 0"
 			@click="quickDelete ? quickRemoveFronter(fronting) : showModal(fronting)"
-		>
-			<IonCardContent>
-				<Avatar
-					:image="fronting.member.image"
-					:clip-shape="fronting.member.imageClip"
-					:color="fronting.member.color"
-					:icon="accountCircle"
-				/>
-				<IonLabel>
-					<h2>
-						{{ fronting.member.name }}
-					</h2>
-					<p v-if="!appConfig.hideFrontingTimer">
-						{{ formatWrittenTime(now, fronting.startTime) }}
-					</p>
-					
-					<p v-if="fronting.influencing">
-						{{ $t("dashboard:fronterInfluencing", { influencedMember: fronting.influencing.name }) }}
-					</p>
-					<p v-if="fronting.customStatus">
-						{{ fronting.customStatus }}
-					</p>
-					<p v-if="fronting.presence?.size">
-						<PresenceRating :rating="getMostRecentPresence(fronting)[1] ?? 0" />
-					</p>
-				</IonLabel>
-			</IonCardContent>
-		</IonCard>
+		/>
 		<IonCard
 			v-if="!quickDelete"
 			button
 			class="add-fronting"
-			@click="showModalFronting"
+			@click="showModalAddToFront"
 		>
 			<IonCardContent>
 				<IonIcon :icon="addMD" />
@@ -203,65 +135,30 @@
 		padding: 1px 16px;
 	}
 
-	ion-card {
-		width: 160px;
-		flex: none;
-		position: relative;
-
-		* {
-			z-index: 1;
-		}
-	}
-
-	ion-card:not(.compact)::before {
-		content: '\A';
-		background-image: var(--data-cover);
-		background-position: center;
-		background-size: cover;
-		width: 100%;
-		height: 100%;
-		display: block;
-		position: absolute;
-		z-index: 0;
-		top: 0;
-		left: 0;
-		opacity: .25;
-	}
-
-	ion-card ion-avatar, ion-card ion-icon {
-		display: block;
-		margin: 16px auto;
-	}
-
-	ion-card ion-icon {
-		width: 48px;
-		height: 48px;
-	}
-
-	ion-card ion-card-content {
-		text-align: center;
-		background-color: transparent;
-	}
-
-	ion-card ion-card-content h2 {
-		line-height: 1.5em;
+	ion-list-header ion-button {
+		margin: 4px 8px;
 	}
 
 	ion-card.add-fronting {
 		opacity: .5;
 		background-color: transparent;
 		box-shadow: none;
-	}
+		width: 160px;
 
-	ion-card.influencing {
-		opacity: .5;
-	}
+		ion-card-content {
+			text-align: center;
+			background-color: transparent;
 
-	ion-card.influenced {
-		outline: 2px solid var(--ion-color-primary) !important;
-	}
+			ion-icon {
+				display: block;
+				margin: 16px auto;
+				width: 48px;
+				height: 48px;
+			}
 
-	ion-list-header ion-button {
-		margin: 4px 8px;
+			h2 {
+				line-height: 1.5em;
+			}
+		}
 	}
 </style>
