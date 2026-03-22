@@ -11,6 +11,10 @@
 	&::part(datetime-header) {
 		background-color: transparent;
 		color: rgb(var(--md3-on-surface));
+		border-bottom: 1px solid rgb(var(--md3-outline));
+		padding: 12px;
+		padding-top: 16px;
+		padding-inline-start: 24px;
 	}
 
 	&::part(datetime-title) {
@@ -18,12 +22,19 @@
 	}
 
 	&::part(datetime-selected-date) {
-		margin-top: 0.5em;
+		margin-top: 36px;
 	}
 
 	ion-button {
 		text-transform: none;
 	}
+}
+
+.md ion-modal ion-datetime:only-child {
+	--background: rgb(var(--md3-surface-container-high));
+	--background-rgb: var(--md3-surface-container-high);
+	--wheel-fade-background-rgb: var(--md3-surface-container-high);
+	max-width: 360px;
 }
 
 .md ion-datetime-button::part(native) {
