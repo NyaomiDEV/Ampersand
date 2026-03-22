@@ -4,7 +4,7 @@
 	import { useRoute } from "vue-router";
 	import CollapsibleHeaderbar from "../components/CollapsibleHeaderbar.vue";
 	import Spinner from "../components/Spinner.vue";
-	import JournalPostItem from "../components/JournalPostItem.vue";
+	import JournalPostItem from "../components/journal/JournalPostItem.vue";
 
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 

@@ -5,7 +5,7 @@
 		IonIcon
 	} from "@ionic/vue";
 
-	import { JournalPost } from "../lib/db/entities";
+	import { JournalPost } from "../../lib/db/entities";
 
 	import journalMD from "@material-symbols/svg-600/outlined/book.svg";
 

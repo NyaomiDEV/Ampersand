@@ -1,13 +1,13 @@
 <script setup lang="ts">
 
 	import { IonItem, IonLabel } from "@ionic/vue";
-	import Avatar from "./Avatar.vue";
-	import TagChip from "./tag/TagChip.vue";
-	import { JournalPostComplete, Tag } from "../lib/db/entities";
-	import { formatDate } from "../lib/util/misc";
+	import Avatar from "../Avatar.vue";
+	import TagChip from "../tag/TagChip.vue";
+	import { JournalPostComplete, Tag } from "../../lib/db/entities";
+	import { formatDate } from "../../lib/util/misc";
 	import { isReactive, onBeforeMount, shallowRef, watch, WatchStopHandle } from "vue";
-	import { getTag } from "../lib/db/tables/tags";
-	import { useBlob } from "../lib/util/blob";
+	import { getTag } from "../../lib/db/tables/tags";
+	import { useBlob } from "../../lib/util/blob";
 
 	const { getObjectURL } = useBlob();
 
