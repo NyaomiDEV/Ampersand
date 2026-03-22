@@ -3,6 +3,7 @@ import LocalizedFormat from "dayjs/plugin/localizedFormat";
 import Duration from "dayjs/plugin/duration";
 import UTC from "dayjs/plugin/utc";
 import i18next from "i18next";
+import { getWeekInfo } from "./util/week-info";
 
 import { appConfig } from "./config";
 import { watch } from "vue";
@@ -44,6 +45,18 @@ export function getSupportedLanguageFromNavigator(){
 			return found.lang;
 	}
 	return undefined;
+}
+
+export function getLocaleInfo(){
+	const locale = new Intl.Locale(navigator.language, { numeric: true });
+	const hour12 = ["h11", "h12"].includes(locale.hourCycle!);
+	return {
+		firstDayOfWeek: getWeekInfo(locale).firstDay || 1,
+		hourCycle: locale.hourCycle,
+		hour12,
+		lts: hour12 ? "hh:mm:ss A" : "HH:mm:ss",
+		lt: hour12 ? "hh:mm A" : "HH:mm"
+	};
 }
 
 i18next.on("languageChanged", (lng) => {

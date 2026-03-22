@@ -1,5 +1,6 @@
 <script setup lang="ts">
 	import { IonDatetime } from "@ionic/vue";
+	import { getLocaleInfo } from "../lib/i18n";
 	import { appConfig } from "../lib/config";
 	import { ComponentPublicInstance, ref, watch } from "vue";
 	import dayjs from "dayjs";
@@ -37,6 +38,8 @@
 		"ref": [Element | ComponentPublicInstance | null]
 	}>();
 
+	const localeInfo = getLocaleInfo();
+
 	const model = defineModel<Date>();
 	const innerModel = ref<string | undefined>(dayjs(model.value).local().format());
 	watch(innerModel, () => model.value = dayjs(innerModel.value).utc().toDate());
@@ -47,8 +50,8 @@
 		:ref="(ref) => emit('ref', ref)"
 		:presentation="props.presentation"
 		:show-default-buttons="props.showDefaultButtons"
-		:first-day-of-week="appConfig.locale.firstWeekOfDayIsSunday ? 0 : 1"
-		:hour-cycle="appConfig.locale.twelveHourClock ? 'h12' : 'h23'"
+		:first-day-of-week="localeInfo.firstDayOfWeek"
+		:hour-cycle="localeInfo.hourCycle"
 		:locale="appConfig.locale.language || 'en'"
 		:highlighted-dates="props.highlightedDates"
 		:cancel-text="$t('other:alerts.cancel')"

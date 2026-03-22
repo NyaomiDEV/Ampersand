@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import { Ref } from "vue";
 import { appConfig } from "../config";
 import { Member } from "../db/entities";
+import { getLocaleInfo } from "../i18n";
 
 export function getFiles(contentType?: string, multiple?: boolean): Promise<File[]> {
 	return new Promise(resolve => {
@@ -50,8 +51,8 @@ export function decompressGzip(data: BufferSource) {
 
 export function formatDate(date: Date, withDate?: "collapsed" | "expanded"){
 	if(withDate)
-		return dayjs(date).format(`${withDate === "expanded" ? "LL" : "ll"}, ${appConfig.locale.twelveHourClock ? "hh:mm A" : "HH:mm"}`);
-	return dayjs(date).format(`${appConfig.locale.twelveHourClock ? "hh:mm A" : "HH:mm"}`);
+		return dayjs(date).format(`${withDate === "expanded" ? "LL" : "ll"}, ${getLocaleInfo().lt}`);
+	return dayjs(date).format(getLocaleInfo().lt);
 }
 
 export function formatWrittenTime(dateStart: Date, dateEnd: Date){

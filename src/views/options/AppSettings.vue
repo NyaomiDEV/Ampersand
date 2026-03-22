@@ -1,6 +1,6 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonList, IonPage, IonLabel, IonListHeader, IonTitle, IonToolbar, IonBackButton, IonItem, IonSegment, IonSelect, IonSelectOption, IonInput, IonToggle, IonIcon, IonSegmentButton } from "@ionic/vue";
-	import { onMounted, ref, shallowRef, useTemplateRef, watch } from "vue";
+	import { IonContent, IonHeader, IonList, IonPage, IonLabel, IonListHeader, IonTitle, IonToolbar, IonBackButton, IonItem, IonSelect, IonSelectOption, IonInput, IonToggle, IonIcon } from "@ionic/vue";
+	import { onMounted, shallowRef, useTemplateRef, watch } from "vue";
 	import { platform } from "@tauri-apps/plugin-os";
 
 	import { appConfig } from "../../lib/config";
@@ -27,16 +27,6 @@
 		isPinned: false
 	});
 	const systemSelectModal = useTemplateRef("systemSelectModal");
-	const twelveHourClock = ref(appConfig.locale.twelveHourClock.toString());
-	const firstWeekOfDayIsSunday = ref(appConfig.locale.firstWeekOfDayIsSunday.toString());
-
-	watch(twelveHourClock, () => {
-		appConfig.locale.twelveHourClock = twelveHourClock.value === "true" ? true : false;
-	});
-
-	watch(firstWeekOfDayIsSunday, () => {
-		appConfig.locale.firstWeekOfDayIsSunday = firstWeekOfDayIsSunday.value === "true" ? true : false;
-	});
 
 	watch(defaultSystem, () => {
 		if(defaultSystem.value && appConfig.defaultSystem !== defaultSystem.value.uuid)
@@ -88,41 +78,6 @@
 						</IonSelectOption>
 					</IonSelect>
 				</IonItem>
-
-				<IonItem>
-					<div class="clock-style">
-						<IonLabel>
-							{{ $t("appSettings:locale.clock.title") }}
-						</IonLabel>
-						<IonSegment v-model="twelveHourClock" class="segment-alt">
-							<IonSegmentButton value="true">
-								<IonLabel>{{ $t("appSettings:locale.clock.12h") }}</IonLabel>
-							</IonSegmentButton>
-
-							<IonSegmentButton value="false">
-								<IonLabel>{{ $t("appSettings:locale.clock.24h") }}</IonLabel>
-							</IonSegmentButton>
-						</IonSegment>
-					</div>
-				</IonItem>
-
-				<IonItem>
-					<div class="first-day">
-						<IonLabel>
-							{{ $t("appSettings:locale.firstDayOfWeek") }}
-						</IonLabel>
-						<IonSegment v-model="firstWeekOfDayIsSunday" class="segment-alt">
-							<IonSegmentButton value="true">
-								<IonLabel>{{ $t("other:timeSizes.weekdays.sunday") }}</IonLabel>
-							</IonSegmentButton>
-
-							<IonSegmentButton value="false">
-								<IonLabel>{{ $t("other:timeSizes.weekdays.monday") }}</IonLabel>
-							</IonSegmentButton>
-						</IonSegment>
-					</div>
-				</IonItem>
-
 			</IonList>
 
 			<IonListHeader>

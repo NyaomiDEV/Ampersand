@@ -1,7 +1,7 @@
 import { h, type VNode } from "vue";
 import { MarkedExtension } from "marked";
 import dayjs from "dayjs";
-import { appConfig } from "../config";
+import { getLocaleInfo } from "../i18n";
 
 const timestampExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [
@@ -26,8 +26,8 @@ const timestampExtension: MarkedExtension<(VNode | string)[], VNode | string> = 
 			},
 			renderer(token) {
 				const formats = {
-					F: `LL, ${appConfig.locale.twelveHourClock ? "hh:mm A" : "HH:mm"}`,
-					f: `ll, ${appConfig.locale.twelveHourClock ? "hh:mm A" : "HH:mm"}`,
+					F: `LL, ${getLocaleInfo().lt}`,
+					f: `ll, ${getLocaleInfo().lt}`,
 
 					D: "LL",
 					d: "L",
@@ -44,8 +44,8 @@ const timestampExtension: MarkedExtension<(VNode | string)[], VNode | string> = 
 					G: "D MMMM",
 					g: "D MMM",
 
-					T: appConfig.locale.twelveHourClock ? "hh:mm:ss A" : "HH:mm:ss",
-					t: appConfig.locale.twelveHourClock ? "hh:mm A" : "HH:mm",
+					T: getLocaleInfo().lts,
+					t: getLocaleInfo().lt,
 				};
 
 				return h("span", {

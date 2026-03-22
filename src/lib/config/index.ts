@@ -5,10 +5,7 @@ import { appConfigDir, sep } from "@tauri-apps/api/path";
 import { nilUid } from "../util/consts";
 
 const defaultAppConfig: AppConfig = {
-	locale: {
-		firstWeekOfDayIsSunday: false,
-		twelveHourClock: false,
-	},
+	locale: {},
 	defaultSystem: nilUid,
 	showSystemDescriptionInDashboard: false,
 	showDefaultSystemInMemberList: false,
@@ -101,6 +98,11 @@ if ((accessibilityConfig as Record<string, unknown>).disableMemberCoversInList) 
 	accessibilityConfig.disableCovers = (accessibilityConfig as Record<string, unknown>).disableMemberCoversInList as boolean;
 	(accessibilityConfig as Record<string, unknown>).disableMemberCoversInList = undefined;
 }
+if (((appConfig as Record<string, unknown>).locale as Record<string, unknown>).firstWeekOfDayIsSunday)
+	((appConfig as Record<string, unknown>).locale as Record<string, unknown>).firstWeekOfDayIsSunday = undefined;
+
+if (((appConfig as Record<string, unknown>).locale as Record<string, unknown>).twelveHourClock)
+	((appConfig as Record<string, unknown>).locale as Record<string, unknown>).twelveHourClock = undefined;
 // end config migration here
 
 export {

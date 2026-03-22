@@ -2,9 +2,7 @@ import { UUID } from "../db/entities";
 
 export type AppConfig = {
 	locale: {
-		language?: string,
-		firstWeekOfDayIsSunday: boolean,
-		twelveHourClock: boolean
+		language?: string
 	},
 	view: ViewName,
 	defaultSystem: UUID,
