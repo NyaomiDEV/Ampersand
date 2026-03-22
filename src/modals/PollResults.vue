@@ -5,20 +5,17 @@
 		IonToolbar,
 		IonTitle,
 		IonList,
-		IonItem,
 		IonModal,
 		IonItemDivider,
-		IonLabel,
 	} from "@ionic/vue";
 
 	import { onBeforeMount, onUnmounted, shallowRef } from "vue";
-	import Avatar from "../components/Avatar.vue";
 	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
 	import type { Member, Poll } from "../lib/db/entities";
 	import { defaultMember, getMembers } from "../lib/db/tables/members.ts";
 	import { DatabaseEvents, DatabaseEvent } from "../lib/db/events.ts";
 
-	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
+	import MemberItem from "../components/member/MemberItem.vue";
 
 	const props = defineProps<{
 		poll: Poll
@@ -56,19 +53,17 @@
 					<IonItemDivider sticky>
 						{{ choice.choice }} - {{ $t("messageBoard:polls.choice.desc", { count: choice.votes.length }) }}
 					</IonItemDivider>
-					<IonItem v-for="vote in choice.votes" :key="vote.member">
-						<Avatar
-							slot="start"
-							:image="(members.find(x => vote.member === x.uuid) || defaultMember()).image"
-							:clip-shape="(members.find(x => vote.member === x.uuid) || defaultMember()).imageClip"
-							:color="(members.find(x => vote.member === x.uuid) || defaultMember()).color"
-							:icon="accountCircle"
-						/>
-						<IonLabel>
-							<h2>{{ (members.find(x => vote.member === x.uuid) || defaultMember()).name }}</h2>
-							<p>{{ vote.reason }}</p>
-						</IonLabel>
-					</IonItem>
+					<MemberItem
+						v-for="vote in choice.votes"
+						:key="vote.member"
+						button
+						:member="members.find(x => vote.member === x.uuid) || defaultMember()"
+						:show-cover="false"
+						:show-role="false"
+						:show-pronouns="false"
+					>
+						<p>{{ vote.reason }}</p>
+					</MemberItem>
 				</template>
 			</IonList>
 		</IonContent>

@@ -27,7 +27,6 @@
 	import settingsMD from "@material-symbols/svg-600/outlined/settings.svg";
 	import personAddMD from "@material-symbols/svg-600/outlined/person_add.svg";
 	import clockAddMD from "@material-symbols/svg-600/outlined/more_time.svg";
-	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
 
 	import { JournalPostComplete, Tag } from "../../lib/db/entities";
 	import { newJournalPost, updateJournalPost, getJournalPost, toJournalPostComplete } from "../../lib/db/tables/journalPosts";
@@ -35,7 +34,6 @@
 	import { resizeImage } from "../../lib/util/image";
 	import { h, onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
 	import Markdown from "../../components/Markdown.vue";
-	import Avatar from "../../components/Avatar.vue";
 	import TagChip from "../../components/tag/TagChip.vue";
 	import MemberSelect from "../../modals/MemberSelect.vue";
 	import JournalOptions from "../../modals/JournalOptions.vue";
@@ -45,6 +43,7 @@
 	import { useBlob } from "../../lib/util/blob";
 	import { getTags } from "../../lib/db/tables/tags";
 	import { addModal, removeModal } from "../../lib/modals";
+	import MemberItem from "../../components/member/MemberItem.vue";
 
 	const { getObjectURL } = useBlob();
 	const router = useIonRouter();
@@ -202,17 +201,18 @@
 
 			<IonList v-if="!isEditing">
 
-				<IonItem class="surface">
-					<Avatar
-						v-if="post.member"
-						slot="start"
-						:image="post.member.image"
-						:clip-shape="post.member.imageClip"
-						:color="post.member.color"
-						:icon="accountCircle"
-					/>
+				<MemberItem
+					v-if="post.member"
+					:member="post.member"
+					class="surface"
+					:show-cover="false"
+					:show-pronouns="false"
+					:show-role="false"
+				>
+					<p v-if="post.date">{{ formatDate(post.date, "expanded") }}</p>
+				</MemberItem>
+				<IonItem v-else class="surface">
 					<IonLabel>
-						<h2 v-if="post.member">{{ post.member.name }}</h2>
 						<p v-if="post.date">{{ formatDate(post.date, "expanded") }}</p>
 					</IonLabel>
 				</IonItem>
@@ -236,19 +236,17 @@
 			<template v-else>
 				<IonList>
 
-					<IonItem button :detail="!post.member" @click="memberSelectModal?.$el.present()">
-						<template v-if="post.member">
-							<Avatar
-								slot="start"
-								:image="post.member.image"
-								:clip-shape="post.member.imageClip"
-								:color="post.member.color"
-								:icon="accountCircle"
-							/>
-							<IonLabel>
-								<h2>{{ post.member.name }}</h2>
-								<p>{{ $t("journal:edit.author") }}</p>
-							</IonLabel>
+					<MemberItem
+						v-if="post.member"
+						:member="post.member"
+						buttton
+						:show-role="false"
+						:show-cover="false"
+						:show-pronouns="false"
+						@click="memberSelectModal?.$el.present()"
+					>
+						<p>{{ $t("journal:edit.author") }}</p>
+						<template #button>
 							<IonButton
 								slot="end"
 								shape="round"
@@ -263,11 +261,16 @@
 								/>
 							</IonButton>
 						</template>
-						<template v-else>
-							<IonLabel>
-								<h2>{{ $t("journal:edit.author") }}</h2>
-							</IonLabel>
-						</template>
+					</MemberItem>
+					<IonItem
+						v-else
+						button
+						detail
+						@click="memberSelectModal?.$el.present()"
+					>
+						<IonLabel>
+							<h2>{{ $t("journal:edit.author") }}</h2>
+						</IonLabel>
 					</IonItem>
 
 				</IonList>

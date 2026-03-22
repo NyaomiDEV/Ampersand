@@ -21,8 +21,10 @@
 		hasToggle?: "checkbox",
 		toggleValue?: string,
 		toggleChecked?: boolean,
-		showCover?: boolean
-	}>(), { showChips: false, showIcons: false, showCover: true, showPronouns: true, showRole: true });
+		showCover?: boolean,
+		showArchived?: boolean,
+		button?: boolean
+	}>(), { showChips: false, showIcons: false, showCover: true, showPronouns: true, showRole: true, showArchived: false });
 
 	const emit = defineEmits<{
 		"toggleUpdate": [boolean],
@@ -49,9 +51,9 @@
 
 <template>
 	<IonItem
-		button
+		:button="props.button"
 		:class="{
-			archived: props.member.isArchived,
+			archived: props.showArchived && props.member.isArchived,
 			'with-cover': props.showCover && !accessibilityConfig.disableCovers
 		}"
 		:style="getStyle()"

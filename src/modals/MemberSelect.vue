@@ -118,7 +118,9 @@
 					<template #default="{ entry: member }">
 						<MemberItem
 							:key="member.uuid"
+							button
 							:member
+							show-archived
 							:disabled="!!props.membersToExclude?.find(x => x.uuid === member.uuid)"
 							has-toggle="checkbox"
 							:toggle-value="member.uuid"

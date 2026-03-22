@@ -158,6 +158,7 @@
 			<IonList class="grid-2">
 				<MemberItem
 					v-if="frontingEntry.member"
+					button
 					:member="frontingEntry.member"
 					:show-cover="false"
 					:show-pronouns="false"
@@ -254,6 +255,7 @@
 				<template v-if="!frontingEntry.isMainFronter">
 					<MemberItem
 						v-if="frontingEntry.influencing"
+						button
 						:member="frontingEntry.influencing"
 						:show-cover="false"
 						:show-pronouns="false"
@@ -393,7 +395,7 @@
 </template>
 
 <style scoped>
-	.avatar {
+	:deep(.avatar) {
 		width: 48px;
 		height: 48px;
 	}

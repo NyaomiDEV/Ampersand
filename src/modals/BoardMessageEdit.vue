@@ -138,6 +138,7 @@
 			<IonList>
 				<MemberItem
 					v-if="boardMessage.member"
+					button
 					:member="boardMessage.member"
 					:show-cover="false"
 					:show-chips="false"

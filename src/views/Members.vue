@@ -165,10 +165,12 @@
 					<template #default="{ entry: member }">
 						<IonItemSliding>
 							<MemberItem
+								button
 								:member
 								:associated-fronting-entry="feGet(member)"
 								show-chips
 								show-icons
+								show-archived
 								:router-link="`/members/edit?uuid=${member.uuid}`"
 							/>
 							<IonItemOptions>
