@@ -14,7 +14,7 @@
 		IonBackButton,
 	} from "@ionic/vue";
 	import { onBeforeMount, onUnmounted, ref, shallowRef, useTemplateRef, watch } from "vue"; 
-	import { accessibilityConfig, appConfig } from "../lib/config/index.ts";
+	import { accessibilityConfig } from "../lib/config/index.ts";
 	import CollapsibleHeaderbar from "../components/CollapsibleHeaderbar.vue";
 
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
@@ -31,7 +31,7 @@
 	import { DatabaseEvents, DatabaseEvent } from "../lib/db/events.ts";
 	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
 	import { useRoute } from "vue-router";
-	import { toast } from "../lib/util/misc.ts";
+	import { sortMembers, toast } from "../lib/util/misc.ts";
 	import { useTranslation } from "i18next-vue";
 	import VirtualList from "../components/VirtualList.vue";
 
@@ -77,28 +77,7 @@
 
 	async function updateMembers(){
 		members.value = (await Array.fromAsync(getFilteredMembers(search.value)))
-			.sort((a, b) => {
-				let point = 0;
-
-				switch(appConfig.showMembersApartFromCustomFronts){
-					case "before":
-						if (!a.isCustomFront && b.isCustomFront) point += 1;
-						if (a.isCustomFront && !b.isCustomFront) point -= 1;
-						break;
-					case "after":
-						if (!a.isCustomFront && b.isCustomFront) point -= 1;
-						if (a.isCustomFront && !b.isCustomFront) point += 1;
-						break;
-				}
-
-				if (a.isPinned && !b.isPinned) point -= 1;
-				if (!a.isPinned && b.isPinned) point += 1;
-
-				const compare = a.name.localeCompare(b.name);
-				point += compare > 0 ? 1 : (compare < 0 ? -1 : 0);
-
-				return point;
-			});
+			.sort(sortMembers);
 	}
 
 	async function updateFronters() {

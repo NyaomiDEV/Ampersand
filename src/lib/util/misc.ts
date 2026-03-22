@@ -2,6 +2,7 @@ import { alertController, createAnimation, getIonPageElement, toastController, T
 import dayjs from "dayjs";
 import { Ref } from "vue";
 import { appConfig } from "../config";
+import { Member } from "../db/entities";
 
 export function getFiles(contentType?: string, multiple?: boolean): Promise<File[]> {
 	return new Promise(resolve => {
@@ -188,6 +189,32 @@ export function flattenObject(obj: object) {
 	insideFlatten(obj, "");
 
 	return newObj;
+}
+
+export function sortMembers(a: Member, b: Member) {
+	switch (appConfig.showMembersApartFromCustomFronts) {
+		case "off":
+			if (a.isPinned === b.isPinned)
+				return a.name.localeCompare(b.name);
+			else
+				return a.isPinned && !b.isPinned ? -1 : 1;
+		case "before":
+			if (a.isPinned === b.isPinned) {
+				if (a.isCustomFront === b.isCustomFront)
+					return a.name.localeCompare(b.name);
+				else
+					return a.isCustomFront && !b.isCustomFront ? -1 : 1;
+			} else
+				return a.isPinned && !b.isPinned ? -1 : 1;
+		case "after":
+			if (a.isPinned === b.isPinned) {
+				if (a.isCustomFront === b.isCustomFront)
+					return a.name.localeCompare(b.name);
+				else
+					return a.isCustomFront && !b.isCustomFront ? 1 : -1;
+			} else
+				return a.isPinned && !b.isPinned ? -1 : 1;
+	}
 }
 
 export const imageClips = import.meta.webpackContext("../../assets/shapes/", { recursive: false, include: /\.svg$/ }).keys().map(x => x.replace(/^\.\/(.*)\.svg$/, "$1"));

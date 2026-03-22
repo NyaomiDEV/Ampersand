@@ -14,8 +14,8 @@
 	import { getFilteredMembers } from "../lib/db/tables/members";
 	import { DatabaseEvents, DatabaseEvent } from "../lib/db/events";
 	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
-	import { appConfig } from "../lib/config/index.ts";
 	import VirtualList from "../components/VirtualList.vue";
+	import { sortMembers } from "../lib/util/misc.ts";
 
 	import MemberItem from "../components/member/MemberItem.vue";
 
@@ -57,28 +57,7 @@
 
 	async function updateMembers(){
 		members.value = (await Array.fromAsync(getFilteredMembers(search.value)))
-			.sort((a, b) => {
-				let point = 0;
-
-				switch(appConfig.showMembersApartFromCustomFronts){
-					case "before":
-						if (!a.isCustomFront && b.isCustomFront) point += 1;
-						if (a.isCustomFront && !b.isCustomFront) point -= 1;
-						break;
-					case "after":
-						if (!a.isCustomFront && b.isCustomFront) point -= 1;
-						if (a.isCustomFront && !b.isCustomFront) point += 1;
-						break;
-				}
-
-				if (a.isPinned && !b.isPinned) point -= 1;
-				if (!a.isPinned && b.isPinned) point += 1;
-
-				const compare = a.name.localeCompare(b.name);
-				point += compare > 0 ? 1 : (compare < 0 ? -1 : 0);
-
-				return point;
-			});
+			.sort(sortMembers);
 	}
 
 	function check(member: Member, checked: boolean){
