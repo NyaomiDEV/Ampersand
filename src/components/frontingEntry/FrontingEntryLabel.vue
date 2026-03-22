@@ -1,22 +1,11 @@
 <script setup lang="ts">
-	import {
-		IonLabel,
-	} from "@ionic/vue";
-
 	import { FrontingEntryComplete } from "../../lib/db/entities";
 	import dayjs from "dayjs";
-	import { onMounted, onUnmounted, ref, watch } from "vue";
-	import { formatDate, formatWrittenTime } from "../../lib/util/misc";
-	import { appConfig } from "../../lib/config";
+	import { formatDate } from "../../lib/util/misc";
 
 	const props = defineProps<{
 		entry: FrontingEntryComplete,
 	}>();
-
-	const interval = ref("");
-	updateInterval();
-
-	let intervalRef: number;
 
 	function format(startTime: Date, endTime?: Date){
 		if(!endTime) return formatDate(startTime, "expanded");
@@ -29,44 +18,18 @@
 		
 		return `${formatDate(startTime, "expanded")} - ${formatDate(endTime, "expanded")}`;
 	}
-
-	function updateInterval(){
-		interval.value = props.entry.endTime
-			? formatWrittenTime(props.entry.endTime, props.entry.startTime)
-			: formatWrittenTime(new Date(), props.entry.startTime);
-	}
-
-	watch(props, updateInterval);
-
-	onMounted(() => {
-		if(!props.entry.endTime && !appConfig.hideFrontingTimer)
-			intervalRef = setInterval(updateInterval, 1000);
-	});
-
-	onUnmounted(() => {
-		if(!props.entry.endTime && !appConfig.hideFrontingTimer)
-			clearInterval(intervalRef);
-	});
 </script>
 
 <template>
-	<IonLabel>
-		<h3 v-if="!appConfig.hideFrontingTimer" style="float: right">
-			{{ interval }}
-		</h3>
-		<h2>
-			{{ props.entry.member.name }}
-		</h2>
-		<p v-if="props.entry.influencing" class="influencing" style="color: inherit;">
-			{{ $t("frontHistory:influencing", { influencedMember: props.entry.influencing.name }) }}
-		</p>
-		<p v-if="props.entry.customStatus" class="custom-status" style="color: inherit;">
-			{{ props.entry.customStatus }}
-		</p>
-		<p>
-			{{ format(props.entry.startTime, props.entry.endTime) }}
-		</p>
-	</IonLabel>
+	<p v-if="props.entry.influencing" class="influencing" style="color: inherit;">
+		{{ $t("frontHistory:influencing", { influencedMember: props.entry.influencing.name }) }}
+	</p>
+	<p v-if="props.entry.customStatus" class="custom-status" style="color: inherit;">
+		{{ props.entry.customStatus }}
+	</p>
+	<p>
+		{{ format(props.entry.startTime, props.entry.endTime) }}
+	</p>
 </template>
 
 <style scoped>

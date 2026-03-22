@@ -147,7 +147,7 @@
 					@click="memberSelectModal?.$el.present()"
 				>
 					<p>{{ $t("messageBoard:edit.member") }}</p>
-					<template #button>
+					<template #end>
 						<IonButton
 							slot="end"
 							shape="round"

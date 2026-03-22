@@ -1,8 +1,6 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonLabel, IonToolbar, IonBackButton, IonItem, IonItemDivider, IonIcon, IonSearchbar, IonFabButton, IonFab } from "@ionic/vue";
+	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonLabel, IonToolbar, IonBackButton, IonItemDivider, IonIcon, IonSearchbar, IonFabButton, IonFab } from "@ionic/vue";
 	import { h, onBeforeMount, onUnmounted, ref, shallowRef, watch } from "vue";
-	import Avatar from "../../components/Avatar.vue";
-	import FrontingEntryLabel from "../../components/frontingEntry/FrontingEntryLabel.vue";
 	import type { FrontingEntryComplete } from "../../lib/db/entities.d.ts";
 	import { getFrontingEntriesOfDay, getFrontingEntriesDays } from "../../lib/db/tables/frontingEntries";
 	import Spinner from "../../components/Spinner.vue";
@@ -10,14 +8,12 @@
 	import dayjs from "dayjs";
 
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
-	import commentMD from "@material-symbols/svg-600/outlined/comment.svg";
-	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
-
 	import { DatabaseEvents, DatabaseEvent } from "../../lib/db/events";
 	import { addModal, removeModal } from "../../lib/modals.ts";
 	import { useRoute } from "vue-router";
 	import { useTranslation } from "i18next-vue";
 	import DatetimeUtc from "../../components/DatetimeUtc.vue";
+	import FrontingEntryItem from "../../components/frontingEntry/FrontingEntryItem.vue";
 
 	const route = useRoute();
 	const i18next = useTranslation();
@@ -186,23 +182,13 @@
 					<IonItemDivider sticky>
 						<IonLabel>{{ getLabel(tuple[0]) }}</IonLabel>
 					</IonItemDivider>
-					<IonItem
+					<FrontingEntryItem
 						v-for="entry in tuple[1]"
 						:key="entry.uuid"
+						:entry="entry"
 						button
-						:class="{ 'main-fronter': entry.isMainFronter, 'influencing': !!entry.influencing }"
 						@click="showModal(entry)"
-					>
-						<Avatar
-							slot="start"
-							:image="entry.member.image"
-							:clip-shape="entry.member.imageClip"
-							:color="entry.member.color"
-							:icon="accountCircle"
-						/>
-						<IonIcon v-if="entry.comment?.length" slot="end" :icon="commentMD" />
-						<FrontingEntryLabel :entry />
-					</IonItem>
+					/>
 				</template>
 			</IonList>
 
@@ -229,13 +215,5 @@
 		--background: rgb(var(--md3-surface-container));
 		--background-rgb: var(--md3-surface-container);
 		--wheel-fade-background-rgb: var(--md3-surface-container);
-	}
-
-	ion-item.main-fronter {
-		--background: var(--ion-background-color-step-200);
-	}
-
-	ion-item.influencing {
-		opacity: .5;
 	}
 </style>

@@ -266,7 +266,7 @@
 						<template #before>
 							<p>{{ $t("frontHistory:edit.influencing.currentlyInfluencing") }}</p>
 						</template>
-						<template #button>
+						<template #end>
 							<IonButton
 								v-if="frontingEntry.influencing"
 								slot="end"

@@ -100,7 +100,7 @@
 			<IonIcon v-if="member.isArchived" slot="end" :icon="archivedMD" />
 			<IonIcon v-if="associatedFrontingEntry?.isMainFronter" slot="end" :icon="mainFronterMD" />
 		</template>
-		<slot name="button" />
+		<slot name="end" />
 	</IonItem>
 </template>
 

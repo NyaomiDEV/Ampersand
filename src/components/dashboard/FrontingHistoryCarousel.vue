@@ -1,15 +1,13 @@
 <script setup lang="ts">
-	import { IonList, IonItem, IonListHeader, IonLabel } from "@ionic/vue";
+	import { IonList, IonListHeader, IonLabel } from "@ionic/vue";
 	import { h, onBeforeMount, onUnmounted, shallowRef } from "vue";
-	import Avatar from "../Avatar.vue";
-	import FrontingEntryLabel from "../frontingEntry/FrontingEntryLabel.vue";
 	import type { FrontingEntryComplete } from "../../lib/db/entities.d.ts";
 	import { getRecentlyFronted } from "../../lib/db/tables/frontingEntries";
 	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
 	import { DatabaseEvents, DatabaseEvent } from "../../lib/db/events";
 	import { addModal, removeModal } from "../../lib/modals.ts";
 
-	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
+	import FrontingEntryItem from "../frontingEntry/FrontingEntryItem.vue";
 
 	const frontingEntries = shallowRef<FrontingEntryComplete[]>();
 
@@ -49,20 +47,12 @@
 	</IonListHeader>
 
 	<IonList v-if="frontingEntries">
-		<IonItem
+		<FrontingEntryItem
 			v-for="entry in frontingEntries"
 			:key="entry.uuid"
 			button
+			:entry
 			@click="showModal(entry)"
-		>
-			<Avatar
-				slot="start"
-				:image="entry.member.image"
-				:clip-shape="entry.member.imageClip"
-				:color="entry.member.color"
-				:icon="accountCircle"
-			/>
-			<FrontingEntryLabel :entry />
-		</IonItem>
+		/>
 	</IonList>
 </template>

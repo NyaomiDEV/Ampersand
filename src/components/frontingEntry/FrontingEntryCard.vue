@@ -3,44 +3,31 @@
 	import Avatar from "../Avatar.vue";
 	import PresenceRating from "../PresenceRating.vue";
 	import { appConfig, accessibilityConfig } from "../../lib/config";
-	import { formatWrittenTime } from "../../lib/util/misc";
 	import { FrontingEntryComplete } from "../../lib/db/entities";
 	import { useBlob } from "../../lib/util/blob";
 	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
-	import { onMounted, onUnmounted, ref } from "vue";
+	import FrontingEntryInterval from "./FrontingEntryInterval.vue";
 
 	const { getObjectURL } = useBlob();
 
 	const props = defineProps<{
-		fronting: FrontingEntryComplete,
+		entry: FrontingEntryComplete,
 		influenced?: boolean
 	}>();
 
-	const now = ref(new Date());
-	let interval: number;
+	function getMostRecentPresence(){
+		if(!props.entry.presence) return [undefined, undefined];
 
-	onMounted(() => {
-		if(!appConfig.hideFrontingTimer)
-			interval = setInterval(() => now.value = new Date(), 1000);
-	});
-
-	onUnmounted(() => {
-		clearInterval(interval);
-	});
-
-	function getMostRecentPresence(frontingEntry: FrontingEntryComplete){
-		if(!frontingEntry.presence) return [undefined, undefined];
-
-		const presenceVal = Array.from(frontingEntry.presence.entries());
+		const presenceVal = Array.from(props.entry.presence.entries());
 
 		return presenceVal.sort((a, b) => a[0].valueOf() - b[0].valueOf()).pop() || [undefined, undefined];
 	}
 
-	function getStyle(frontingEntry: FrontingEntryComplete){
+	function getStyle(){
 		const style: Record<string, string> = {};
 
-		if(frontingEntry.member.cover)
-			style["--data-cover"] = `url(${getObjectURL(frontingEntry.member.cover)})`;
+		if(props.entry.member.cover)
+			style["--data-cover"] = `url(${getObjectURL(props.entry.member.cover)})`;
 
 		return style;
 	}
@@ -51,35 +38,37 @@
 		button
 		:class="{
 			influenced: props.influenced,
-			outlined: !fronting.isMainFronter,
-			influencing: !!fronting.influencing,
+			outlined: !props.entry.isMainFronter,
+			influencing: !!props.entry.influencing,
 			compact: accessibilityConfig.disableCovers
 		}"
-		:style="getStyle(fronting)"
+		:style="getStyle()"
 	>
 		<IonCardContent>
 			<Avatar
-				:image="fronting.member.image"
-				:clip-shape="fronting.member.imageClip"
-				:color="fronting.member.color"
+				:image="props.entry.member.image"
+				:clip-shape="props.entry.member.imageClip"
+				:color="props.entry.member.color"
 				:icon="accountCircle"
 			/>
 			<IonLabel>
 				<h2>
-					{{ fronting.member.name }}
+					{{ props.entry.member.name }}
 				</h2>
-				<p v-if="!appConfig.hideFrontingTimer">
-					{{ formatWrittenTime(now, fronting.startTime) }}
+				<p v-if="!appConfig.hideFrontingTimer" :entry="props.entry">
+					<FrontingEntryInterval v-slot="{ interval }" :entry="props.entry">
+						{{ interval }}
+					</FrontingEntryInterval>
 				</p>
 					
-				<p v-if="fronting.influencing">
-					{{ $t("dashboard:fronterInfluencing", { influencedMember: fronting.influencing.name }) }}
+				<p v-if="props.entry.influencing">
+					{{ $t("dashboard:fronterInfluencing", { influencedMember: props.entry.influencing.name }) }}
 				</p>
-				<p v-if="fronting.customStatus">
-					{{ fronting.customStatus }}
+				<p v-if="props.entry.customStatus">
+					{{ props.entry.customStatus }}
 				</p>
-				<p v-if="fronting.presence?.size">
-					<PresenceRating :rating="getMostRecentPresence(fronting)[1] ?? 0" />
+				<p v-if="props.entry.presence?.size">
+					<PresenceRating :rating="getMostRecentPresence()[1] ?? 0" />
 				</p>
 			</IonLabel>
 		</IonCardContent>

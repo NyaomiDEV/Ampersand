@@ -100,11 +100,11 @@
 	</IonListHeader>
 	<div class="carousel">
 		<FrontingEntryCard
-			v-for="fronting in frontingEntries"
-			:key="fronting.uuid"
-			:fronting
-			:influenced="frontingEntries.findIndex(x => x.influencing?.uuid === fronting.member.uuid) > 0"
-			@click="quickDelete ? quickRemoveFronter(fronting) : showModal(fronting)"
+			v-for="entry in frontingEntries"
+			:key="entry.uuid"
+			:entry
+			:influenced="frontingEntries.findIndex(x => x.influencing?.uuid === entry.member.uuid) > 0"
+			@click="quickDelete ? quickRemoveFronter(entry) : showModal(entry)"
 		/>
 		<IonCard
 			v-if="!quickDelete"

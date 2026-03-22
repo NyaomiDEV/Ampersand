@@ -246,7 +246,7 @@
 						@click="memberSelectModal?.$el.present()"
 					>
 						<p>{{ $t("journal:edit.author") }}</p>
-						<template #button>
+						<template #end>
 							<IonButton
 								slot="end"
 								shape="round"
