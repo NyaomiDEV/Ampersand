@@ -160,6 +160,8 @@
 					v-if="frontingEntry.member"
 					:member="frontingEntry.member"
 					:show-cover="false"
+					:show-pronouns="false"
+					:show-role="false"
 					@click="memberSelectModal?.$el.present()"
 				>
 					<p>{{ $t("frontHistory:edit.member") }}</p>
@@ -254,6 +256,8 @@
 						v-if="frontingEntry.influencing"
 						:member="frontingEntry.influencing"
 						:show-cover="false"
+						:show-pronouns="false"
+						:show-role="false"
 						:class="{ 'take-row': frontingEntry.influencing }"
 						@click="memberInfluencingModal?.$el.present()"
 					>
