@@ -143,6 +143,7 @@
 		opacity: .5;
 		background-color: transparent;
 		box-shadow: none;
+		flex: none;
 		width: 160px;
 
 		ion-card-content {
