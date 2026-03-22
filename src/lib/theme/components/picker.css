@@ -1,0 +1,6 @@
+.md ion-picker {
+	--fade-background-rgb: var(--md3-surface-container-high);
+	--highlight-background: rgb(var(--md3-surface-variant));
+	--highlight-background-radius: var(--md3-corner-large);
+	background: rgb(var(--md3-surface-container-high));
+}
