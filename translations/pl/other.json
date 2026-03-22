@@ -14,7 +14,8 @@
 		"ok": "OK",
 		"cancel": "Anuluj",
 		"yes": "Tak",
-		"no": "Nie"
+		"no": "Nie",
+		"clear": "Wyczyść"
 	},
 	"presence": {
 		"absent": "Nieobecny",

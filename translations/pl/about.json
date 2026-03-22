@@ -4,5 +4,6 @@
 	"madein": "Wykonane z miłością we Włoszech",
 	"privacyPolicy": "Polityka prywatności",
 	"updateAvailable": "Dostępna aktualizacja: {{newVersion}}",
-	"ciVersion": "Wersja CI"
+	"ciVersion": "Wersja CI",
+	"credits": "Twórcy"
 }
