@@ -13,7 +13,9 @@ export async function getDocumentFile(extensions?: string[], asFile?: false): Pr
 export async function getDocumentFile(extensions?: string[], asFile?: boolean) {
 	const path = await open({
 		multiple: false,
-		filters: extensions ? [{ name: "File", extensions }]: []
+		filters: extensions ? [{ name: "File", extensions }]: [],
+		fileAccessMode: "scoped",
+		pickerMode: "document"
 	});
 	if(!path) return;
 	const array = await readFile(path);
