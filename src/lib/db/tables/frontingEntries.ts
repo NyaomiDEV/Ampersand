@@ -169,6 +169,23 @@ export async function getFronting() {
 	return frontingEntries;
 }
 
+export async function getFrontingBetween(start: Date, end?: Date){
+	if(!end) end = new Date();
+	return (await Promise.all(db.frontingEntries.index.filter(x => {
+
+		const _start = x.startTime!;
+		const _end = x.endTime || new Date(end);
+		return start.valueOf() <= _end.valueOf() && end.valueOf() >= _start.valueOf();
+
+	}).map(async (x) => {
+
+		const entry = await db.frontingEntries.get(x.uuid);
+		if (entry) return await toFrontingEntryComplete(entry);
+		return undefined;
+		
+	}))).filter(x => x !== undefined);
+}
+
 export async function getRecentlyFronted() {
 	return Promise.all((await Promise.all(
 		db.frontingEntries.index

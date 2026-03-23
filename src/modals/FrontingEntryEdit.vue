@@ -21,8 +21,8 @@
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
 
 	import { FrontingEntryComplete } from "../lib/db/entities";
-	import { newFrontingEntry, updateFrontingEntry, deleteFrontingEntry, sendFrontingChangedEvent } from "../lib/db/tables/frontingEntries";
-	import { ref, toRaw, useTemplateRef } from "vue";
+	import { newFrontingEntry, updateFrontingEntry, deleteFrontingEntry, sendFrontingChangedEvent, getFrontingBetween } from "../lib/db/tables/frontingEntries";
+	import { ref, toRaw, useTemplateRef, watch } from "vue";
 
 	import MemberSelect from "./MemberSelect.vue";
 	import PresenceHistory from "./PresenceHistory.vue";
@@ -51,6 +51,7 @@
 		isLocked: false
 	};
 	const frontingEntry = ref({ ...(props.frontingEntry || emptyFrontingEntry) });
+	const allFrontingInTimeSpan = ref<FrontingEntryComplete[]>([]);
 
 	const presenceHistoryModal = useTemplateRef("presenceHistoryModal");
 	const memberSelectModal = useTemplateRef("memberSelectModal");
@@ -144,6 +145,11 @@
 		}
 		return "";
 	}
+
+	watch(frontingEntry.value, async () => {
+		allFrontingInTimeSpan.value = (await getFrontingBetween(frontingEntry.value.startTime, frontingEntry.value.endTime))
+			.filter(x => x.uuid !== frontingEntry.value.uuid);
+	}, { immediate: true });
 </script>
 
 <template>
@@ -349,7 +355,7 @@
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton :disabled="!frontingEntry.member" @click="save">
+				<IonFabButton :disabled="!frontingEntry.member || !!allFrontingInTimeSpan.find(x => x.member.uuid === frontingEntry.member?.uuid)" @click="save">
 					<IonIcon :icon="saveMD" />
 				</IonFabButton>
 			</IonFab>
@@ -361,6 +367,7 @@
 				:discard-on-select="true"
 				:hide-checkboxes="true"
 				:model-value="frontingEntry.member ? [frontingEntry.member] : []"
+				:members-to-exclude="allFrontingInTimeSpan?.map(x => x.member)"
 				@update:model-value="(e) => { if(e[0]) frontingEntry.member = e[0]; if(frontingEntry.influencing?.uuid === e[0].uuid) frontingEntry.influencing = undefined }"
 			/>
 
@@ -371,6 +378,7 @@
 				:hide-checkboxes="true"
 				:always-emit="true"
 				:model-value="frontingEntry.influencing ? [frontingEntry.influencing] : []"
+				:members-to-include="allFrontingInTimeSpan?.map(x => x.member)"
 				:members-to-exclude="frontingEntry.member ? [frontingEntry.member] : []"
 				@update:model-value="(e) => { if(e[0]) frontingEntry.influencing = e[0] }"
 			/>
