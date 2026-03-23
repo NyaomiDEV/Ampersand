@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonButton, IonIcon, IonInput, IonFab, IonFabButton, IonItem, IonLabel, useIonRouter, IonTextarea, IonToggle, IonSelect, IonSelectOption } from "@ionic/vue";
+	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonButton, IonIcon, IonInput, IonFab, IonFabButton, IonItem, IonLabel, useIonRouter, IonTextarea, IonToggle, IonSelect, IonSelectOption, IonProgressBar } from "@ionic/vue";
 	import { getCurrentInstance, onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
 	import { promptOkCancel, toast, imageClips } from "../../lib/util/misc";
 	import { getResizedImage } from "../../lib/util/image";
@@ -34,6 +34,7 @@
 	const self = getCurrentInstance();
 
 	const loading = ref(false);
+	const loadingBar = ref(false);
 
 	const emptySystem: PartialBy<System, "uuid"> = {
 		name: "",
@@ -79,7 +80,9 @@
 	}
 
 	async function modifyPicture(){
+		loadingBar.value = true;
 		system.value.image = await getResizedImage();
+		loadingBar.value = false;
 	}
 
 	function deletePicture(){
@@ -87,7 +90,9 @@
 	}
 
 	async function modifyCover(){
+		loadingBar.value = true;
 		system.value.cover = await getResizedImage(1024);
+		loadingBar.value = false;
 	}
 
 	function deleteCover(){
@@ -200,6 +205,7 @@
 						: !system.uuid ? $t("systems:edit.headerAdd") : $t("systems:edit.headerEdit")
 					}}
 				</IonTitle>
+				<IonProgressBar v-if="loadingBar" type="indeterminate" />
 			</IonToolbar>
 		</IonHeader>
 		

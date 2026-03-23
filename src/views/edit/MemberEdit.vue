@@ -18,7 +18,8 @@
 		useIonRouter,
 		IonPage,
 		IonSelect,
-		IonSelectOption
+		IonSelectOption,
+		IonProgressBar
 	} from "@ionic/vue";
 	import Color from "../../components/Color.vue";
 	import TagChip from "../../components/tag/TagChip.vue";
@@ -63,6 +64,7 @@
 	const route = useRoute();
 
 	const loading = ref(false);
+	const loadingBar = ref(false);
 
 	const emptyMember: PartialBy<Member, "uuid" | "dateCreated"> = {
 		name: "",
@@ -124,7 +126,9 @@
 	}
 
 	async function modifyPicture(){
+		loadingBar.value = true;
 		member.value.image = await getResizedImage();
+		loadingBar.value = false;
 	}
 
 	function deletePicture(){
@@ -132,7 +136,9 @@
 	}
 
 	async function modifyCover(){
+		loadingBar.value = true;
 		member.value.cover = await getResizedImage(1024);
+		loadingBar.value = false;
 	}
 
 	function deleteCover(){
@@ -220,6 +226,7 @@
 					default-href="/members/"
 				/>
 				<IonTitle>{{ !isEditing ? $t("members:edit.header") : !member.uuid ? $t("members:edit.headerAdd") : $t("members:edit.headerEdit") }}</IonTitle>
+				<IonProgressBar v-if="loadingBar" type="indeterminate" />
 			</IonToolbar>
 		</IonHeader>
 

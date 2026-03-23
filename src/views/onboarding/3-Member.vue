@@ -26,6 +26,9 @@
 	import { PartialBy } from "../../lib/types";
 	import Avatar from "../../components/Avatar.vue";
 	import { appConfig } from "../../lib/config";
+	import Spinner from "../../components/Spinner.vue";
+
+	const loadingBar = ref(false);
 
 	const router = useIonRouter();
 
@@ -40,7 +43,9 @@
 	const member = ref({ ...emptyMember });
 
 	async function modifyPicture(){
+		loadingBar.value = true;
 		member.value.image = await getResizedImage();
+		loadingBar.value = false;
 	}
 
 	function deletePicture(){
@@ -61,8 +66,9 @@
 	<IonPage>
 		<IonContent>
 			<div class="container">
-				<h1> {{ $t('onboarding:memberInfo.header') }}</h1>
-				<div class="avatar-container">
+				<h1>{{ $t('onboarding:memberInfo.header') }}</h1>
+				<Spinner v-if="loadingBar" size="192px" />
+				<div v-else class="avatar-container">
 					<Avatar
 						:image="member.image"
 						:clip-shape="member.imageClip"

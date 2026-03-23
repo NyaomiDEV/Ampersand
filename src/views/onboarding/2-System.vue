@@ -12,6 +12,9 @@
 	import { System } from "../../lib/db/entities";
 	import { PartialBy } from "../../lib/types";
 	import { appConfig } from "../../lib/config";
+	import Spinner from "../../components/Spinner.vue";
+
+	const loadingBar = ref(false);
 
 	const router = useIonRouter();
 
@@ -19,7 +22,9 @@
 	const system = ref<PartialBy<System, "uuid">>({ ...emptySystem });
 
 	async function modifyPicture(){
+		loadingBar.value = true;
 		system.value.image = await getResizedImage();
+		loadingBar.value = false;
 	}
 
 	async function save() {
@@ -42,8 +47,9 @@
 	<IonPage>
 		<IonContent>
 			<div class="container">
-				<h1> {{ $t('onboarding:systemInfo.header') }}</h1>
-				<div class="avatar-container">
+				<h1>{{ $t('onboarding:systemInfo.header') }}</h1>
+				<Spinner v-if="loadingBar" size="192px" />
+				<div v-else class="avatar-container">
 					<Avatar
 						:image="system.image"
 						:clip-shape="system.imageClip"

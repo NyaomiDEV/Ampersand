@@ -18,6 +18,7 @@
 		IonInput,
 		IonItem,
 		IonFooter,
+		IonProgressBar,
 	} from "@ionic/vue";
 
 	import pencilMD from "@material-symbols/svg-600/outlined/edit.svg";
@@ -50,6 +51,8 @@
 	const route = useRoute();
 
 	const loading = ref(false);
+	const loadingBar = ref(false);
+
 	const memberSelectModal = useTemplateRef("memberSelectModal");
 	const memberTagModal = useTemplateRef("memberTagModal");
 
@@ -100,7 +103,9 @@
 	}
 
 	async function modifyCover(){
+		loadingBar.value = true;
 		post.value.cover = await getResizedImage(1024);
+		loadingBar.value = false;
 	}
 
 	async function showJournalOptions(){
@@ -166,6 +171,7 @@
 					{{ !isEditing ? $t("journal:edit.header") : !post.uuid ? $t("journal:edit.headerAdd") :
 						$t("journal:edit.headerEdit") }}
 				</IonTitle>
+				<IonProgressBar v-if="loadingBar" type="indeterminate" />
 			</IonToolbar>
 		</IonHeader>
 

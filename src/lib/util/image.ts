@@ -45,5 +45,5 @@ export async function getResizedImage(maxWidthHeight = 512){
 	const arrayBuffer = await getImageFile();
 	if(!arrayBuffer) return;
 
-	return resizeImage(new Blob([arrayBuffer]), maxWidthHeight);
+	return await resizeImage(new Blob([arrayBuffer]), maxWidthHeight);
 }
