@@ -26,7 +26,8 @@
 		discardOnSelect?: boolean,
 		modelValue?: Member[],
 		hideCheckboxes?: boolean,
-		membersToExclude?: Member[]
+		membersToExclude?: Member[],
+		membersToInclude?: Member[]
 	}>();
 
 	const emit = defineEmits<{
@@ -121,7 +122,7 @@
 							button
 							:member
 							show-archived
-							:disabled="!!props.membersToExclude?.find(x => x.uuid === member.uuid)"
+							:disabled="(props.membersToInclude && !props.membersToInclude.find(x => x.uuid === member.uuid)) || !!props.membersToExclude?.find(x => x.uuid === member.uuid)"
 							has-toggle="checkbox"
 							:toggle-value="member.uuid"
 							:toggle-checked="!!selectedMembers.find(x => x.uuid === member.uuid)"
