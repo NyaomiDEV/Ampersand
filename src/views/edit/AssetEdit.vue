@@ -25,7 +25,7 @@
 	import { PartialBy } from "../../lib/types";
 	import { useRoute } from "vue-router";
 	import { useTranslation } from "i18next-vue";
-	import { getFiles, promptOkCancel } from "../../lib/util/misc";
+	import { getDocumentFile, promptOkCancel } from "../../lib/util/misc";
 	import { useBlob } from "../../lib/util/blob";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import AssetItem from "../../components/AssetItem.vue";
@@ -45,9 +45,8 @@
 	const i18next = useTranslation();
 
 	async function updateFile() {
-		const files = await getFiles();
-		if (files.length > 0) 
-			asset.value.file = files[0];
+		const file = await getDocumentFile(undefined, true);
+		if(file) asset.value.file = file;
 	}
 
 	function showBigThumbnail(){

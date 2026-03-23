@@ -3,7 +3,7 @@
 	import { ref } from "vue";
 	import Spinner from "../../components/Spinner.vue";
 	import { importDatabaseFromBinary } from "../../lib/db/ioutils";
-	import { getFiles, promptYesNo, slideAnimation, toast } from "../../lib/util/misc";
+	import { getDocumentFile, promptYesNo, slideAnimation, toast } from "../../lib/util/misc";
 	import { importPluralKit } from "../../lib/db/external/pluralkit";
 	import { importTupperBox } from "../../lib/db/external/tupperbox";
 	import { importSimplyPlural } from "../../lib/db/external/simplyplural";
@@ -35,11 +35,12 @@
 	}
 
 	async function importFromPreviousInstallation() {
-		const files = await getFiles(undefined, false);
 		try{
-			if (!files.length) throw new Error("no files specified");
+			const file = await getDocumentFile(["ampdb"], false);
+			if (!file) throw new Error("no files specified");
+
 			loading.value = true;
-			const result = await importDatabaseFromBinary(new Uint8Array(await files[0].arrayBuffer())).dbPromise;
+			const result = await importDatabaseFromBinary(file).dbPromise;
 			if(!result) throw new Error("errored out");
 		}catch(_e){
 			resetConfig();
@@ -53,11 +54,11 @@
 
 	async function importFromSimplyPlural() {
 		await promptRemoteConnection();
-		const files = await getFiles(undefined, false);
 		try{
-			if (!files.length) throw new Error("no files specified");
+			const file = await getDocumentFile(["json"], false);
+			if (!file) throw new Error("no files specified");
 			loading.value = true;
-			const spExport = JSON.parse(await files[0].text());
+			const spExport = JSON.parse(new TextDecoder("utf-8").decode(file));
 			const result = await importSimplyPlural(spExport);
 			if (!result) throw new Error("errored out");
 		}catch(_e){
@@ -71,11 +72,11 @@
 
 	async function importFromOctocon() {
 		await promptRemoteConnection();
-		const files = await getFiles(undefined, false);
 		try{
-			if (!files.length) throw new Error("no files specified");
+			const file = await getDocumentFile(["json"], false);
+			if (!file) throw new Error("no files specified");
 			loading.value = true;
-			const ocExport = JSON.parse(await files[0].text());
+			const ocExport = JSON.parse(new TextDecoder("utf-8").decode(file));
 			const result = await importOctocon(ocExport);
 			if(!result) throw new Error("errored out");
 		}catch(_e){
@@ -89,11 +90,11 @@
 
 	async function importFromPluralKit() {
 		await promptRemoteConnection();
-		const files = await getFiles(undefined, false);
 		try{
-			if (!files.length) throw new Error("no files specified");
+			const file = await getDocumentFile(["json"], false);
+			if (!file) throw new Error("no files specified");
 			loading.value = true;
-			const pkExport = JSON.parse(await files[0].text());
+			const pkExport = JSON.parse(new TextDecoder("utf-8").decode(file));
 			const result = await importPluralKit(pkExport);
 			if(!result) throw new Error("errored out");
 		}catch(_e){
@@ -107,11 +108,11 @@
 
 	async function importFromTupperbox() {
 		await promptRemoteConnection();
-		const files = await getFiles(undefined, false);
 		try{
-			if (!files.length) throw new Error("no files specified");
+			const file = await getDocumentFile(["json"], false);
+			if (!file) throw new Error("no files specified");
 			loading.value = true;
-			const tuExport = JSON.parse(await files[0].text());
+			const tuExport = JSON.parse(new TextDecoder("utf-8").decode(file));
 			const result = await importTupperBox(tuExport);
 			if(!result) throw new Error("errored out");
 		}catch(_e){

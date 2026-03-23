@@ -4,37 +4,33 @@ import { Ref } from "vue";
 import { appConfig } from "../config";
 import { Member } from "../db/entities";
 import { getLocaleInfo } from "../i18n";
+import { open } from "@tauri-apps/plugin-dialog";
+import { readFile } from "@tauri-apps/plugin-fs";
+import { sep } from "@tauri-apps/api/path";
 
-export function getFiles(contentType?: string, multiple?: boolean): Promise<File[]> {
-	return new Promise(resolve => {
-		const i = document.createElement("input");
-		document.body.appendChild(i);
-		i.type = "file";
-		i.style = "visibility: hidden";
-		if(multiple)
-			i.multiple = multiple;
-		if(contentType)
-			i.accept = contentType;
-
-		i.onchange = () => {
-			document.body.removeChild(i);
-			if (!i.files) return resolve([]);
-
-			const arr: File[] = [];
-
-			for(const file of i.files)
-				arr.push(file);
-
-			resolve(arr);
-		};
-
-		i.oncancel = () => {
-			document.body.removeChild(i);
-			resolve([]);
-		};
-
-		i.click();
+export async function getDocumentFile(extensions?: string[], asFile?: true): Promise<File | undefined>;
+export async function getDocumentFile(extensions?: string[], asFile?: false): Promise<Uint8Array<ArrayBuffer> | undefined>;
+export async function getDocumentFile(extensions?: string[], asFile?: boolean) {
+	const path = await open({
+		multiple: false,
+		filters: extensions ? [{ name: "File", extensions }]: []
 	});
+	if(!path) return;
+	const array = await readFile(path);
+	if(!asFile)
+		return array;
+
+	return new File([array], path.split(sep()).pop() || `file_${Date.now()}`);
+}
+
+export async function getImageFile() {
+	const path = await open({
+		multiple: false,
+		pickerMode: "image"
+	});
+	if (!path) return;
+	const array = await readFile(path);
+	return array;
 }
 
 export function compressGzip(data: BufferSource) {

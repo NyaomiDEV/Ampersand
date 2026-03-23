@@ -2,7 +2,7 @@
 	import { IonContent, IonHeader, IonList, IonItem, IonIcon, IonLabel, IonPage, IonTitle, IonToolbar, IonBackButton, IonProgressBar } from "@ionic/vue";
 	import { ref } from "vue";
 	import { importDatabaseFromBinary, exportDatabaseToBinary } from "../../lib/db/ioutils";
-	import { getFiles, toast } from "../../lib/util/misc";
+	import { getDocumentFile, toast } from "../../lib/util/misc";
 	import dayjs from "dayjs";
 	import { save } from "@tauri-apps/plugin-dialog";
 	import { mkdir, open } from "@tauri-apps/plugin-fs";
@@ -30,10 +30,10 @@
 	async function importDb(){
 		loading.value = true;
 		try{
-			const files = await getFiles(undefined, false);
-			if (!files.length) throw new Error("no files specified");
+			const file = await getDocumentFile(["ampdb"], false);
+			if (!file) throw new Error("no files specified");
 
-			const { progress, dbPromise } = importDatabaseFromBinary(new Uint8Array(await files[0].arrayBuffer()));
+			const { progress, dbPromise } = importDatabaseFromBinary(file);
 
 			progress.addEventListener("start", () => {
 				barProgress.value = 0;
@@ -59,10 +59,10 @@
 	async function importSp() {
 		loading.value = true;
 		try{
-			const files = await getFiles(undefined, false);
-			if (!files.length) throw new Error("no files specified");
+			const file = await getDocumentFile(["json"], false);
+			if (!file) throw new Error("no files specified");
 
-			const spExport = JSON.parse(await files[0].text());
+			const spExport = JSON.parse(new TextDecoder("utf-8").decode(file));
 			const result = await importSimplyPlural(spExport);
 			if(!result) throw new Error("errored out");
 
@@ -77,10 +77,10 @@
 	async function importOc() {
 		loading.value = true;
 		try{
-			const files = await getFiles(undefined, false);
-			if (!files.length) throw new Error("no files specified");
+			const file = await getDocumentFile(["json"], false);
+			if (!file) throw new Error("no files specified");
 
-			const ocExport = JSON.parse(await files[0].text());
+			const ocExport = JSON.parse(new TextDecoder("utf-8").decode(file));
 			const result = await importOctocon(ocExport);
 			if(!result) throw new Error("errored out");
 
@@ -94,10 +94,10 @@
 	async function importPk() {
 		loading.value = true;
 		try{
-			const files = await getFiles(undefined, false);
-			if (!files.length) throw new Error("no files specified");
+			const file = await getDocumentFile(["json"], false);
+			if (!file) throw new Error("no files specified");
 
-			const pkExport = JSON.parse(await files[0].text());
+			const pkExport = JSON.parse(new TextDecoder("utf-8").decode(file));
 			const result = await importPluralKit(pkExport);
 			if(!result) throw new Error("errored out");
 
@@ -111,10 +111,10 @@
 	async function importTu() {
 		loading.value = true;
 		try{
-			const files = await getFiles(undefined, false);
-			if (!files.length) throw new Error("no files specified");
+			const file = await getDocumentFile(["json"], false);
+			if (!file) throw new Error("no files specified");
 
-			const tuExport = JSON.parse(await files[0].text());
+			const tuExport = JSON.parse(new TextDecoder("utf-8").decode(file));
 			const result = await importTupperBox(tuExport);
 			if(!result) throw new Error("errored out");
 

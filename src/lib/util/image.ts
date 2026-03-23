@@ -1,11 +1,13 @@
-export async function resizeImage(image: File, maxWidthHeight = 512){
+import { getImageFile } from "./misc";
+
+export async function resizeImage(image: Blob, maxWidthHeight = 512): Promise<File> {
 	const bitmap = await createImageBitmap(image);
 	let width: number;
 	let height: number;
 
 	if(bitmap.width <= maxWidthHeight && bitmap.height <= maxWidthHeight){
 		if (image.type === "image/webp")
-			return image; // we don't really need to do anything here
+			return new File([image], `img_${Date.now()}.webp`); // we don't really need to do anything here
 
 		// or else we just go through everything just to convert to WEBP
 		width = bitmap.width;
@@ -21,7 +23,10 @@ export async function resizeImage(image: File, maxWidthHeight = 512){
 	const canvas = new OffscreenCanvas(width, height);
 	const ctx = canvas.getContext("2d");
 
-	if(!ctx) return image; // as a fallback
+	if (!ctx){
+		const ext = image.type === "image/webp" ? "webp" : "png";
+		return new File([image], `img_${Date.now()}.${ext}`); // as a fallback
+	}
 
 	ctx.imageSmoothingEnabled = true;
 	ctx.imageSmoothingQuality = "high";
@@ -32,10 +37,13 @@ export async function resizeImage(image: File, maxWidthHeight = 512){
 		quality: 1
 	});
 
-	const ext = blob.type === "image/webp" ? ".webp" : ".png";
+	const ext = blob.type === "image/webp" ? "webp" : "png";
+	return new File([blob], `img_${Date.now()}.${ext}`);
+}
 
-	return new File([blob], image.name.replace(/\.[^.]*?$/, ext), {
-		lastModified: image.lastModified,
-		type: blob.type
-	});
+export async function getResizedImage(maxWidthHeight = 512){
+	const arrayBuffer = await getImageFile();
+	if(!arrayBuffer) return;
+
+	return resizeImage(new Blob([arrayBuffer]), maxWidthHeight);
 }

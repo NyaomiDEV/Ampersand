@@ -1,8 +1,8 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonButton, IonIcon, IonInput, IonFab, IonFabButton, IonItem, IonLabel, useIonRouter, IonTextarea, IonToggle, IonSelect, IonSelectOption } from "@ionic/vue";
 	import { getCurrentInstance, onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
-	import { getFiles, promptOkCancel, toast, imageClips } from "../../lib/util/misc";
-	import { resizeImage } from "../../lib/util/image";
+	import { promptOkCancel, toast, imageClips } from "../../lib/util/misc";
+	import { getResizedImage } from "../../lib/util/image";
 	import { deleteSystem, getSystem, newSystem, updateSystem, countSystemMembers } from "../../lib/db/tables/system";
 	import { getMembers } from "../../lib/db/tables/members";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
@@ -79,9 +79,7 @@
 	}
 
 	async function modifyPicture(){
-		const files = await getFiles();
-		if(files.length)
-			system.value.image = await resizeImage(files[0]);
+		system.value.image = await getResizedImage();
 	}
 
 	function deletePicture(){
@@ -89,9 +87,7 @@
 	}
 
 	async function modifyCover(){
-		const files = await getFiles();
-		if(files.length)
-			system.value.cover = await resizeImage(files[0], 1024);
+		system.value.cover = await getResizedImage(1024);
 	}
 
 	function deleteCover(){

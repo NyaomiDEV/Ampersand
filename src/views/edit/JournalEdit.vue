@@ -30,8 +30,8 @@
 
 	import { JournalPostComplete, Tag } from "../../lib/db/entities";
 	import { newJournalPost, updateJournalPost, getJournalPost, toJournalPostComplete } from "../../lib/db/tables/journalPosts";
-	import { getFiles, formatDate } from "../../lib/util/misc";
-	import { resizeImage } from "../../lib/util/image";
+	import { formatDate } from "../../lib/util/misc";
+	import { getResizedImage } from "../../lib/util/image";
 	import { h, onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
 	import Markdown from "../../components/Markdown.vue";
 	import TagChip from "../../components/tag/TagChip.vue";
@@ -100,9 +100,7 @@
 	}
 
 	async function modifyCover(){
-		const files = await getFiles();
-		if(files.length)
-			post.value.cover = await resizeImage(files[0]);
+		post.value.cover = await getResizedImage(1024);
 	}
 
 	async function showJournalOptions(){

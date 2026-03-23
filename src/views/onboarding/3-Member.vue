@@ -20,8 +20,8 @@
 
 	import { Member } from "../../lib/db/entities";
 	import { newMember } from "../../lib/db/tables/members";
-	import { getFiles, slideAnimation } from "../../lib/util/misc";
-	import { resizeImage } from "../../lib/util/image";
+	import { slideAnimation } from "../../lib/util/misc";
+	import { getResizedImage } from "../../lib/util/image";
 	import { ref, toRaw } from "vue";
 	import { PartialBy } from "../../lib/types";
 	import Avatar from "../../components/Avatar.vue";
@@ -40,9 +40,7 @@
 	const member = ref({ ...emptyMember });
 
 	async function modifyPicture(){
-		const files = await getFiles();
-		if(files.length)
-			member.value.image = await resizeImage(files[0]);
+		member.value.image = await getResizedImage();
 	}
 
 	function deletePicture(){

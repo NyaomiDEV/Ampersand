@@ -2,8 +2,8 @@
 	import { IonContent, IonList, IonPage, IonButton, IonIcon, IonInput, IonFab, IonFabButton, IonItem, IonTextarea, useIonRouter } from "@ionic/vue";
 	import { onBeforeMount, ref, toRaw } from "vue";
 	import Avatar from "../../components/Avatar.vue";
-	import { getFiles, slideAnimation } from "../../lib/util/misc";
-	import { resizeImage } from "../../lib/util/image";
+	import { slideAnimation } from "../../lib/util/misc";
+	import { getResizedImage } from "../../lib/util/image";
 	import { getSystem, newSystem, updateSystem } from "../../lib/db/tables/system";
 
 	import accountCircle from "@material-symbols/svg-600/outlined/supervised_user_circle.svg";
@@ -19,9 +19,7 @@
 	const system = ref<PartialBy<System, "uuid">>({ ...emptySystem });
 
 	async function modifyPicture(){
-		const files = await getFiles();
-		if(files.length)
-			system.value.image = await resizeImage(files[0]);
+		system.value.image = await getResizedImage();
 	}
 
 	async function save() {

@@ -37,8 +37,8 @@
 	import { CustomField, ImageClip, Member, System, Tag } from "../../lib/db/entities";
 	import { newMember, deleteMember, updateMember, defaultMember, getMember } from "../../lib/db/tables/members";
 	import { getTags } from "../../lib/db/tables/tags";
-	import { getFiles, promptOkCancel, toast } from "../../lib/util/misc";
-	import { resizeImage } from "../../lib/util/image";
+	import { promptOkCancel, toast } from "../../lib/util/misc";
+	import { getResizedImage } from "../../lib/util/image";
 	import { getCurrentInstance, onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
 	import Markdown from "../../components/Markdown.vue";
 	import { addMaterialColors, rgbaToArgb, unsetMaterialColors } from "../../lib/theme";
@@ -124,9 +124,7 @@
 	}
 
 	async function modifyPicture(){
-		const files = await getFiles();
-		if(files.length)
-			member.value.image = await resizeImage(files[0]);
+		member.value.image = await getResizedImage();
 	}
 
 	function deletePicture(){
@@ -134,9 +132,7 @@
 	}
 
 	async function modifyCover(){
-		const files = await getFiles();
-		if(files.length)
-			member.value.cover = await resizeImage(files[0], 1024);
+		member.value.cover = await getResizedImage(1024);
 	}
 
 	function deleteCover(){
