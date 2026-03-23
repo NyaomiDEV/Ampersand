@@ -44,7 +44,8 @@
 
 	async function modifyPicture(){
 		loadingBar.value = true;
-		member.value.image = await getResizedImage();
+		const image = await getResizedImage();
+		if(image) member.value.image = image;
 		loadingBar.value = false;
 	}
 

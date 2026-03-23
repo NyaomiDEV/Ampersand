@@ -81,7 +81,8 @@
 
 	async function modifyPicture(){
 		loadingBar.value = true;
-		system.value.image = await getResizedImage();
+		const image = await getResizedImage();
+		if(image) system.value.image = image;
 		loadingBar.value = false;
 	}
 
@@ -91,7 +92,8 @@
 
 	async function modifyCover(){
 		loadingBar.value = true;
-		system.value.cover = await getResizedImage(1024);
+		const image = await getResizedImage(1024);
+		if(image) system.value.cover = image;
 		loadingBar.value = false;
 	}
 

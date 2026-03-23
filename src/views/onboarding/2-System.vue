@@ -23,7 +23,8 @@
 
 	async function modifyPicture(){
 		loadingBar.value = true;
-		system.value.image = await getResizedImage();
+		const image = await getResizedImage();
+		if(image) system.value.image = image;
 		loadingBar.value = false;
 	}
 

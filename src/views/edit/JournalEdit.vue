@@ -104,7 +104,8 @@
 
 	async function modifyCover(){
 		loadingBar.value = true;
-		post.value.cover = await getResizedImage(1024);
+		const image = await getResizedImage(1024);
+		if(image) post.value.cover = image;
 		loadingBar.value = false;
 	}
 
