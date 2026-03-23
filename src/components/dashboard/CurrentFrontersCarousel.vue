@@ -67,6 +67,7 @@
 			hideCheckboxes: true,
 			discardOnSelect: true,
 			modelValue: [],
+			membersToExclude: frontingEntries.value.map(x => x.member),
 			"onUpdate:modelValue": async (members) => {
 				await newFrontingEntry({
 					member: members[0].uuid,
