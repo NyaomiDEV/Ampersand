@@ -48,14 +48,13 @@ export function getSupportedLanguageFromNavigator(){
 }
 
 export function getLocaleInfo(){
-	const locale = new Intl.Locale(navigator.language, { numeric: true });
-	const hour12 = ["h11", "h12"].includes(locale.hourCycle!);
+	const dateTimeOpts = new Intl.DateTimeFormat(undefined, { hour: "numeric" }).resolvedOptions();
 	return {
-		firstDayOfWeek: getWeekInfo(locale).firstDay || 1,
-		hourCycle: locale.hourCycle,
-		hour12,
-		lts: hour12 ? "hh:mm:ss A" : "HH:mm:ss",
-		lt: hour12 ? "hh:mm A" : "HH:mm"
+		firstDayOfWeek: getWeekInfo(new Intl.Locale(dateTimeOpts.locale)).firstDay || 1,
+		hourCycle: dateTimeOpts.hourCycle,
+		hour12: dateTimeOpts.hour12,
+		lts: dateTimeOpts.hour12 ? "hh:mm:ss A" : "HH:mm:ss",
+		lt: dateTimeOpts.hour12 ? "hh:mm A" : "HH:mm"
 	};
 }
 
