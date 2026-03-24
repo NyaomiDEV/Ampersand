@@ -61,7 +61,8 @@
 		"pentagon": "Pentagon",
 		"semicircle": "Halbkreis",
 		"square": "Quadrat",
-		"sunny": "Sonnig"
+		"sunny": "Sonnig",
+		"gem": "Edelstein"
 	},
 	"presence": {
 		"absent": "Abwesend"
