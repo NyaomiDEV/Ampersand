@@ -191,7 +191,12 @@
 			</IonList>
 
 			<IonList class="grid-2">
-				<IonItem button class="take-row" @click="($refs.startTimePicker as any)?.$el.present()">
+				<IonItem
+					button
+					detail
+					class="take-row"
+					@click="($refs.startTimePicker as any)?.$el.present()"
+				>
 					<IonLabel>
 						<p>{{ $t("frontHistory:edit.startTime") }}</p>
 						<h2>{{ formatDate(frontingEntry.startTime, "collapsed") }}</h2>
@@ -207,6 +212,7 @@
 				<IonItem
 					v-if="!frontingEntry.endTime"
 					button
+					detail
 					class="take-row"
 					@click="removeFromFront"
 				>
