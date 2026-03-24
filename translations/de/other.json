@@ -49,5 +49,12 @@
 			"short": "Sek"
 		}
 	},
-	"addTimestamp": "Zeitstempel hinzufügen"
+	"addTimestamp": "Zeitstempel hinzufügen",
+	"shapes": {
+		"triangle": "Dreieck",
+		"flower": "Blume",
+		"heart": "Herz",
+		"pill": "Tablette",
+		"noShape": "Keine Form"
+	}
 }
