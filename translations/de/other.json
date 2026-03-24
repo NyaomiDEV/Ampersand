@@ -55,6 +55,15 @@
 		"flower": "Blume",
 		"heart": "Herz",
 		"pill": "Tablette",
-		"noShape": "Keine Form"
+		"noShape": "Keine Form",
+		"very-sunny": "Sehr sonnig",
+		"oval": "Oval",
+		"pentagon": "Pentagon",
+		"semicircle": "Halbkreis",
+		"square": "Quadrat",
+		"sunny": "Sonnig"
+	},
+	"presence": {
+		"absent": "Abwesend"
 	}
 }

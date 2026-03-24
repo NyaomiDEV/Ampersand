@@ -32,7 +32,8 @@
 		"delete": {
 			"title": "Nachricht auf dem Anschlagbrett löschen",
 			"confirm": "Bist du dir sicher, dass du die Nachricht löschen möchtest?"
-		}
+		},
+		"date": "Datum bearbeiten"
 	},
 	"header": "Anschlagbrett"
 }
