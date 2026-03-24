@@ -35,7 +35,7 @@
 		"desc": "Wyłącz animacje w aplikacji"
 	},
 	"disableCovers": {
-		"title": "Wyłącz tła na liście członków systemu"
+		"title": "Wyłącz tła"
 	},
 	"contrastLevel": {
 		"title": "Poziom kontrastu"
@@ -53,5 +53,10 @@
 	"themeIsVibrant": {
 		"title": "Motyw żywych kolorów",
 		"desc": "Wprowadź więcej barw do interfejsu użytkownika."
+	},
+	"colorIndicatorPosition": {
+		"title": "Pozycja wskaźnika koloru",
+		"avatar": "Zarys awatara",
+		"listItem": "Obramowanie elementu listy"
 	}
 }
