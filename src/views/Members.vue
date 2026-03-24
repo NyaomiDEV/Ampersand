@@ -35,6 +35,8 @@
 	import { useTranslation } from "i18next-vue";
 	import VirtualList from "../components/VirtualList.vue";
 
+	const isStandalone = ref(false);
+
 	const route = useRoute();
 	const i18next = useTranslation();
 
@@ -42,7 +44,10 @@
 	watch(route, () => {
 		if(route.name?.toString().endsWith("Members") && route.query.q)
 			search.value = route.query.q as string;
-	});
+
+		if(route.path.startsWith("/s/")) isStandalone.value = true;
+		else isStandalone.value = false;
+	}, { immediate: true });
 
 	const members = shallowRef<Member[]>();
 	watch(search, async () => {
@@ -194,7 +199,12 @@
 					</template>
 				</VirtualList>
 			</div>
-			<IonFab slot="fixed" vertical="bottom" horizontal="end">
+			<IonFab
+				v-if="!isStandalone"
+				slot="fixed"
+				vertical="bottom"
+				horizontal="end"
+			>
 				<IonFabButton router-link="/members/edit/">
 					<IonIcon :icon="addMD" />
 				</IonFabButton>

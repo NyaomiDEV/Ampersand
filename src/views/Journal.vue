@@ -16,6 +16,8 @@
 	import { promptOkCancel } from "../lib/util/misc";
 	import DatetimeUtc from "../components/DatetimeUtc.vue";
 
+	const isStandalone = ref(false);
+
 	const route = useRoute();
 	const router = useIonRouter();
 
@@ -37,7 +39,10 @@
 	watch(route, () => {
 		if(route.name?.toString().endsWith("Journal") && route.query.q)
 			search.value = route.query.q as string;
-	});
+
+		if(route.path.startsWith("/s/")) isStandalone.value = true;
+		else isStandalone.value = false;
+	}, { immediate: true });
 
 	watch(search, async () => {
 		await populateHighlightedDays();
@@ -188,7 +193,12 @@
 				</template>
 			</IonList>
 
-			<IonFab slot="fixed" vertical="bottom" horizontal="end">
+			<IonFab
+				v-if="!isStandalone"
+				slot="fixed"
+				vertical="bottom"
+				horizontal="end"
+			>
 				<IonFabButton :router-link="`/journal/edit/?date=${dayjs(date).toISOString()}`">
 					<IonIcon :icon="addMD" />
 				</IonFabButton>
