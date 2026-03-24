@@ -7,10 +7,12 @@
 		"title": "Yüksek okunurluklu font ailesi",
 		"opendyslexic": "OpenDyslexic",
 		"lexend": "Lexend",
-		"atkinson": "Atkinson Hyperlegible"
+		"atkinson": "Atkinson Hyperlegible",
+		"comicrelief": "Comic Relief",
+		"system-font": "Sistem yazı tipi"
 	},
 	"uiVariant": {
-		"title": "Kullanıcı arabirimi varyantı",
+		"title": "Arayüz varyantı",
 		"auto": "Otomatik",
 		"light": "Aydınlık",
 		"dark": "Koyu"
@@ -24,7 +26,7 @@
 		"desc": "Uygulama için animasyonları etkisizleştir"
 	},
 	"fontScale": {
-		"title": "Kullanıcı arabirimi boyutu"
+		"title": "Punto"
 	},
 	"longPressDuration": {
 		"title": "Uzun basma süresi"
@@ -36,5 +38,24 @@
 	"accentColor": {
 		"title": "Vurgu rengini seç"
 	},
-	"header": "Erişilebilirlik"
+	"header": "Erişilebilirlik",
+	"themeIsAmoled": {
+		"title": "AMOLED modu",
+		"desc": "Karanlık modda iken tamamen siyah bir arka plan kullan. Görüntüleme aşınmasını azaltabilir."
+	},
+	"themeIsVibrant": {
+		"title": "Canlı tema",
+		"desc": "Arayüze daha fazla renk ver."
+	},
+	"colorIndicatorPosition": {
+		"title": "Renk belirteçi konumu",
+		"avatar": "Avatar dış çizgisi",
+		"listItem": "Liste öğesi çerçevesi"
+	},
+	"contrastLevel": {
+		"title": "Kontrast seviyesi"
+	},
+	"disableCovers": {
+		"title": "Kapakları gizle"
+	}
 }

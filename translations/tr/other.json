@@ -10,7 +10,10 @@
 	},
 	"alerts": {
 		"ok": "Tamam",
-		"cancel": "İptal"
+		"cancel": "İptal",
+		"clear": "Temizle",
+		"yes": "Evet",
+		"no": "Hayır"
 	},
 	"back": "Geri",
 	"time": "Zaman",
@@ -25,7 +28,7 @@
 		},
 		"days": {
 			"long": "gün",
-			"short": "D"
+			"short": "G"
 		},
 		"hours": {
 			"long": "saat",
@@ -48,5 +51,32 @@
 			"saturday": "Cumartesi",
 			"sunday": "Pazar"
 		}
+	},
+	"memberMention": "Bir üyeden bahset",
+	"presence": {
+		"absent": "Yok",
+		"heavilyDissociating": "Çok dissosiye/kopuk",
+		"dissociating": "Dissosiye",
+		"zonedOut": "Dalmış",
+		"present": "Mevcut",
+		"fullyGrounded": "Tamamıyla sakinleşmiş"
+	},
+	"shapes": {
+		"arch": "Kemer",
+		"arrow": "Ok",
+		"boom": "Boom",
+		"diamond": "Elmas",
+		"clamshell": "İstiridye",
+		"flower": "Çiçek",
+		"gem": "Mücevher",
+		"ghost-ish": "Hayaletimsi",
+		"heart": "Kalp",
+		"leaf-clover4": "4 Yapraklı Yonca",
+		"leaf-clover8": "8 Yapraklı Yonca",
+		"oval": "Elips",
+		"pentagon": "Beşgen",
+		"pill": "Hap",
+		"pixel-circle": "Piksel Daire",
+		"pixel-triangle": "Piksel Üçgen"
 	}
 }

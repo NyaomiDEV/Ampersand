@@ -13,7 +13,22 @@
 			"confirm": "Bu öncü kayıdı silmek istediğinizden emin misiniz?"
 		},
 		"member": "Öncü üyeyi düzenle",
-		"customStatus": "Özelleştirilmiş statü"
+		"customStatus": "Özelleştirilmiş statü",
+		"presence": {
+			"addButton": "Geçmişe ekle",
+			"date": "Tarih",
+			"historyTitle": "Mevcudiyet geçmişi",
+			"lastPresence": "En sonki mevcudiyeti {{presence}} /5 yıldız",
+			"addTitle": "0 ila 10 arası bir ölçekte ne kadar mevcutsun?"
+		},
+		"influencing": {
+			"select": "Etkilenecek üyeyi seçin",
+			"currentlyInfluencing": "Şu anda etkiliyor"
+		},
+		"isLocked": "Öncüyü kilitle"
 	},
-	"header": "Ön geçmişi"
+	"header": "Ön geçmişi",
+	"wasFronting": "Hala öndeydi",
+	"frontedThatDay": "O gün öndeydi",
+	"influencing": "{{influencedMember}}'ı etkiliyor"
 }

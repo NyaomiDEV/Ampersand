@@ -19,6 +19,10 @@
 		"error": "Yedekleme içeri aktarılırken hata oluştu.",
 		"errorSp": "Simply Plural dışarı aktarımı içeri aktarılırken hata oluştu.",
 		"errorPk": "PluralKit dışarı aktarımı içeri aktarılırken hata oluştu.",
-		"errorTu": "Tupperbox dışarı aktarımı içeri aktarılırken hata oluştu."
-	}
+		"errorTu": "Tupperbox dışarı aktarımı içeri aktarılırken hata oluştu.",
+		"importedOc": "Octocon dışa aktarımı içe aktarıldı. Lütfen uygulamayı yeniden başlatın.",
+		"exportedAppIos": "Yedek, Dosyalar uygulamasında Ampersand klasörüne dışa aktarıldı.",
+		"errorOc": "Octocon dışa aktarımını içe aktarırken hata oluştu."
+	},
+	"ocImport": "Bir Octocon dışa aktarımından verilerinizi içe aktarın"
 }

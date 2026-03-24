@@ -37,6 +37,8 @@
 		"delete": {
 			"title": "Panodaki mesajı sil",
 			"confirm": "Bu mesajı silmek istediğinize emin misiniz?"
-		}
+		},
+		"date": "Tarihi düzenle",
+		"isArchived": "Mesajı arşivle"
 	}
 }

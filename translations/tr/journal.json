@@ -20,7 +20,10 @@
 		},
 		"contentWarning": "İçerik uyarısı",
 		"isPinned": "Sabitlenmiş gönderi",
-		"date": "Tarihi düzenle"
+		"date": "Tarihi düzenle",
+		"headerOptions": "Gönderi seçenekleri",
+		"postID": "Gönderi ID: {{postID}}",
+		"postIDcopiedToClipboard": "Etiketleme formatında gönderi ID'si panoya kopyalandı!"
 	},
 	"pinnedPosts": "Sabitlenmiş gönderiler"
 }

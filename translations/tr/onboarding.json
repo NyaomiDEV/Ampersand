@@ -14,7 +14,13 @@
 		"error": "Verinizi içeri aktarırken hata oluştu. Lütfen başka bir seçenek seçin.",
 		"errorSp": "Simply Plural dışarı aktarımınızı içeri aktarırken hata oluştu. Lütfen başka bir seçenek seçin.",
 		"errorPk": "PluralKit dışarı aktarımınızı içeri aktarırken hata oluştu. Lütfen başka bir seçenek seçin.",
-		"errorTu": "Tupperbox dışarı aktarımınızı içeri aktarırken hata oluştu. Lütfen başka bir seçenek seçin."
+		"errorTu": "Tupperbox dışarı aktarımınızı içeri aktarırken hata oluştu. Lütfen başka bir seçenek seçin.",
+		"octocon": "Evet, Octocon",
+		"errorOc": "Octocon dışa aktarımını içeri aktarırken sorun oluştu. Lütfen başka bir seçeneği seçin.",
+		"allowRemoteContent": {
+			"header": "İnternet bağlantısına izin veriyor musunuz?",
+			"desc": "Ampersand çevirim dışı-öncelikli (offline-first) bir uygulamadır ve bu yüzden genel ağa bağlanmak için rızanıza ihtiyacı vardır. Bu aşamada üyelerinizin avatarlarını ve filamalarını (banner) indirmek için genel ağa bağlanır. Bu özelliği işiniz bittiğinds Seçenekler > Güvenlik > Uzaktan içeriğe izin ver yoluyla kapatabilirsiniz."
+		}
 	},
 	"systemInfo": {
 		"header": "Bize sisteminizden bahsedin!",

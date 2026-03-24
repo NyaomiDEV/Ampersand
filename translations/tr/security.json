@@ -14,6 +14,14 @@
 		"titleModifyOld": "Eski parolanızı girin",
 		"titleModifyNew": "Yeni parolanızı girin",
 		"titleDisable": "Parolanızı girin",
-		"hint": "Parola"
+		"hint": "Parola",
+		"titleReenter": "Şifreyi tekrar gir"
+	},
+	"allowRemoteContent": {
+		"desc": "Ampersand'in Markdown'la çalışan alanlardaki resimler ve avatarlar ve benzeri üçüncü şahıs içeri aktarımları için uzaktan içerik sorgulaması gibi uzaktan içerik araması için Genel Ağ'ı kullanmasına izin ver."
+	},
+	"passwordAlert": {
+		"header": "Uyarı",
+		"text": "Devam etmek istediğinizden emin misiniz? Devam etmeden önce, lütfen şifrenizi Ampersand dışında bir yere kaydedin, çünkü kaybederseniz verilerinizi kurtaramaz veya şifrenizi sıfırlayamazsınız. Ayarlamadan önce verilerinizi dışa aktardığınızdan emin olun!"
 	}
 }

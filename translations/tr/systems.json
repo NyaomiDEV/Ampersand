@@ -5,6 +5,25 @@
 		"memberCount": "Üye sayısı",
 		"memberCountText": "{{memberCount}} üye, {{archivedMemberCount}} arşivlendi",
 		"tapToShow": "Göstermek için dokunun",
-		"header": "Sistem adı ve resmi"
-	}
+		"header": "Sistem adı ve resmi",
+		"color": "Renk",
+		"headerAdd": "Sistem ekle",
+		"headerEdit": "Sistemi düzenle",
+		"noDescription": "Açıklama yok",
+		"imageClip": "Avatar şekli",
+		"customFrontCountText": "{{totalCustomFrontCount}} özel ön, {{customFrontCount}} aktif, {{archivedCustomFrontCount}} arşivlenmiş",
+		"showMembers": "Bu sistemin içindeki üyeleri göster",
+		"parent": "Üst sistem",
+		"isPinned": "Sistemi sabitle",
+		"archived": "Arşivlenmiş",
+		"delete": {
+			"title": "Sistemi sil",
+			"confirm": "Bu sistemi silmek istediğinizden emin misiniz?"
+		},
+		"systemID": "Sistem ID: {{systemID}}",
+		"systemIDcopiedToClipboard": "Etiketleme formatında Sistem ID'si panoya kopyalandı!"
+	},
+	"header": "Sistemler",
+	"select": "Sistem seç",
+	"searchPlaceholder": "Sistemleri ara..."
 }

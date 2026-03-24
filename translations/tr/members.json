@@ -34,7 +34,15 @@
 			"confirm": "Bu üyeyi silmek istediğinize emin misiniz?"
 		},
 		"pronouns": "Zamirler",
-		"role": "Rol"
+		"role": "Rol",
+		"imageClip": "Avatar şekli"
 	},
-	"deletedCustomFront": "Özelleştirilmiş ön silindi"
+	"deletedCustomFront": "Özelleştirilmiş ön silindi",
+	"toasts": {
+		"addToFront": "Üye öne eklendi",
+		"setMainFronter": "Üye ana öncü olarak ayarlandı",
+		"unsetMainFronter": "Üyenin ana öncü ayarı kaldırıldı",
+		"setSoleFronter": "Üye tek öncü olarak ayarlandı",
+		"removeFromFront": "Üye önden çıkarıldı"
+	}
 }

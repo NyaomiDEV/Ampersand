@@ -1,5 +1,9 @@
 {
 	"header": "Hakkında",
 	"version": "Sürüm {{version}}",
-	"madein": "İtalya'da sevgiyle yapıldı"
+	"madein": "İtalya'da sevgiyle yapıldı",
+	"privacyPolicy": "Gizlilik İlkesi",
+	"updateAvailable": "Güncelleme Mevcut: {{newVersion}}",
+	"credits": "Katkıda Bulunanlar",
+	"ciVersion": "SE versiyonu"
 }

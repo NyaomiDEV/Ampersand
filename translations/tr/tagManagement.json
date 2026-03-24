@@ -34,6 +34,8 @@
 		"delete": {
 			"confirm": "Bu etiketi silmek istediğinize emin misiniz?",
 			"title": "Etiketi sil"
-		}
+		},
+		"tagID": "Etiket ID: {{tagID}}",
+		"tagIDCopiedToClipboard": "Etiketleme formatındaki Etiket ID'si panoya kopyalandı!"
 	}
 }
