@@ -216,4 +216,14 @@ export function sortMembers(a: Member, b: Member) {
 	}
 }
 
+export function getParentScroller(el: Element | null){
+	if (el === null) return null;
+	if (el.tagName === "ion-content"){
+		const _el = el.shadowRoot?.querySelector("div[part=scroll]");
+		if (_el && _el.scrollHeight > _el.clientHeight) return _el;
+	}
+	if (el.scrollHeight > el.clientHeight) return el;
+	else return getParentScroller(el.parentElement);
+}
+
 export const imageClips = import.meta.webpackContext("../../assets/shapes/", { recursive: false, include: /\.svg$/ }).keys().map(x => x.replace(/^\.\/(.*)\.svg$/, "$1"));
