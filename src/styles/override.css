@@ -74,12 +74,16 @@ ion-item::part(native) {
 	border-bottom: 0px;
 }
 
-ion-content {
-	--padding-bottom: var(--ion-safe-area-bottom, 0px);
+ion-content:not(ion-tabs *) {
+	--padding-bottom: calc(var(--ion-safe-area-bottom, 0px) + 8px);
 }
 
-ion-content:has(> ion-fab.fab-vertical-bottom[slot="fixed"] > ion-fab-button) {
-	--padding-bottom: calc(var(--ion-safe-area-bottom, 0px) + 80px);
+ion-content:has(> ion-fab.fab-vertical-bottom[slot="fixed"]) {
+	--padding-bottom: 88px;
+}
+
+ion-content:not(ion-tabs *):has(> ion-fab.fab-vertical-bottom[slot="fixed"]) {
+	--padding-bottom: calc(var(--ion-safe-area-bottom, 0px) + 88px);
 }
 
 ion-content > ion-datetime {
