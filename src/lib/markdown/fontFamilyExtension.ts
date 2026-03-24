@@ -30,6 +30,9 @@ const fontFamilyExtension: MarkedExtension<(VNode | string)[], VNode | string> =
 							cssStyle["--markdown-font-family"] = "Rochester";
 							break;
 						case "pixel":
+							cssStyle["--markdown-font-family"] = "Departure Mono";
+							break;
+						case "dots":
 							cssStyle["--markdown-font-family"] = "Bitcount Single";
 							break;
 						case "digital":
