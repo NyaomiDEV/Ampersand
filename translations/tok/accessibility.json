@@ -53,5 +53,10 @@
 	"themeIsVibrant": {
 		"title": "nasin pi kule mute",
 		"desc": "nasin ni la ilo li kule mute."
+	},
+	"colorIndicatorPosition": {
+		"title": "lon pi kule sona",
+		"avatar": "selo pi sitelen ijo",
+		"listItem": "selo ijo"
 	}
 }
