@@ -1,6 +1,6 @@
 <script setup lang="ts" generic="T extends UUIDable">
 	import { useVirtualizer } from "@tanstack/vue-virtual";
-	import { ComponentPublicInstance, computed, ref, shallowRef } from "vue";
+	import { ComponentPublicInstance, computed, shallowRef } from "vue";
 	import { UUIDable } from "../lib/db/entities";
 
 	const props = withDefaults(defineProps<{
