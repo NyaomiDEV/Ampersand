@@ -32,10 +32,20 @@ const textColorBgExtension: MarkedExtension<(VNode | string)[], VNode | string> 
 			renderer(token) {
 				const colors = (token.colors as string[]);
 
+				const directionsY = ["top", "bottom"];
+				const directionsX = ["left", "right"];
+
+				const directions = [
+					...directionsX,
+					...directionsY,
+					...directionsY.map(y => directionsX.map(x => `${x} ${y}`)).flat(1),
+					...directionsX.map(x => directionsY.map(y => `${y} ${x}`)).flat(1)
+				];
+
 				if(colors.length){
 					const cssStyle: Record<string, string> = {
 						"--markdown-text-bg-colors": colors.join(", "),
-						"--markdown-text-bg-degrees": ["top", "bottom", "left", "right"].includes(token.degrees) ? `to ${token.degrees}` : token.degrees
+						"--markdown-text-bg-degrees": directions.includes(token.degrees) ? `to ${token.degrees}` : token.degrees
 					};
 
 					return h("span", {
