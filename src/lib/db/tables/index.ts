@@ -167,6 +167,12 @@ export class ShittyTable<T extends UUIDable> {
 				chunk.length = 0;
 			}
 		}
+
+		//flush remnants
+		for (const entry of chunk) {
+			const data = await entry;
+			if (data) yield data;
+		}
 	}
 
 	async write(uuid: string, data: T) {
