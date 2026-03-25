@@ -6,7 +6,7 @@ import { Member } from "../db/entities";
 import { getLocaleInfo } from "../i18n";
 import { open } from "@tauri-apps/plugin-dialog";
 import { readFile } from "@tauri-apps/plugin-fs";
-import { sep } from "@tauri-apps/api/path";
+import { basename, sep } from "@tauri-apps/api/path";
 import { findMimeType } from "../mime";
 
 export async function getDocumentFile(extensions?: string[], asFile?: true): Promise<File | undefined>;
@@ -23,7 +23,12 @@ export async function getDocumentFile(extensions?: string[], asFile?: boolean) {
 	if(!asFile)
 		return array;
 
-	const filename = path.split(sep()).pop() || `file_${Date.now()}`;
+	let filename = path.split(sep()).pop() || `file_${Date.now()}`;
+
+	// use Tauri Path API to get basename from Android content:// URIs
+	if (path.startsWith("content://"))
+		filename = await basename(path);
+	
 	const ext = filename.split(".").pop()!;
 
 	return new File([array], filename, { type: findMimeType(ext !== filename ? ext : "") });
