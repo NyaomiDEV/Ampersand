@@ -36,7 +36,7 @@
 	}
 
 	function measure(e: Element | ComponentPublicInstance | null) {
-		if (e) rowVirtualizer.value.measureElement(e);
+		if (e) rowVirtualizer.value.measureElement(e as HTMLElement);
 	}
 </script>
 
