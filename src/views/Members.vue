@@ -23,6 +23,7 @@
 	import setMainFronterMD from "@material-symbols/svg-600/outlined/arrow_circle_up.svg";
 	import unsetMainFronterMD from "@material-symbols/svg-600/outlined/arrow_circle_down.svg";
 	import setAsFrontMD from "@material-symbols/svg-600/outlined/person_pin_circle.svg";
+	import copyMD from "@material-symbols/svg-600/outlined/content_copy.svg";
 
 	import { getFilteredMembers } from "../lib/db/tables/members.ts";
 	import type { Member, FrontingEntryComplete } from "../lib/db/entities";
@@ -54,7 +55,7 @@
 		await updateMembers();
 	});
 	const frontingEntries = shallowRef<FrontingEntryComplete[]>([]);
-	const list = useTemplateRef<HTMLElement>("list");
+	const list = useTemplateRef("list");
 
 	const listeners = [
 		(event: Event) => {
@@ -99,7 +100,7 @@
 		void sendFrontingChangedEvent();
 		await toast(i18next.t("members:toasts.addToFront"));
 
-		await closeSlidingItems();
+		closeSlidingItems();
 	}
 
 	async function removeFrontingEntry(member: Member) {
@@ -107,7 +108,7 @@
 		void sendFrontingChangedEvent();
 		await toast(i18next.t("members:toasts.removeFromFront"));
 
-		await closeSlidingItems();
+		closeSlidingItems();
 	}
 
 	async function setMainFrontingEntry(member: Member, value: boolean){
@@ -116,7 +117,7 @@
 		if(value) await toast(i18next.t("members:toasts.setMainFronter"));
 		else await toast(i18next.t("members:toasts.unsetMainFronter"));
 
-		await closeSlidingItems();
+		closeSlidingItems();
 	}
 
 	async function setSoleFrontingEntry(member: Member){
@@ -124,12 +125,24 @@
 		void sendFrontingChangedEvent();
 		await toast(i18next.t("members:toasts.setSoleFronter"));
 		
-		await closeSlidingItems();
+		closeSlidingItems();
 	}
 
-	async function closeSlidingItems() {
-		const item = list.value?.querySelector("ion-item-sliding") as { closeOpened: () => Promise<void> } | null;
-		await item?.closeOpened();
+	function closeSlidingItems() {
+		const el: globalThis.HTMLIonListElement = list.value?.$el;
+		if(!el) return;
+		const items = el.querySelectorAll<globalThis.HTMLIonItemSlidingElement>("ion-item-sliding");
+		items?.forEach(i => void i.closeOpened());
+	}
+
+	async function copyID(member: Member){
+		try{
+			await window.navigator.clipboard.writeText(`@<m:${member.uuid}>`);
+			await toast(i18next.t("members:edit.memberIDcopiedToClipboard"));
+			closeSlidingItems();
+		}catch(_e){
+			return;
+		}
 	}
 
 	function feGet(member: Member){
@@ -165,7 +178,7 @@
 				</IonToolbar>
 			</CollapsibleHeaderbar>
 
-			<IonList>
+			<IonList ref="list">
 				<VirtualList :entries="members" :min-size="86" :gap="2">
 					<template #default="{ entry: member }">
 						<IonItemSliding>
@@ -193,6 +206,9 @@
 								</IonItemOption>
 								<IonItemOption v-if="!(frontingEntries.length === 1 && feGet(member))" color="tertiary" @click="setSoleFrontingEntry(member)">
 									<IonIcon slot="icon-only" :icon="setAsFrontMD" />
+								</IonItemOption>
+								<IonItemOption color="tertiary" @click="copyID(member)">
+									<IonIcon slot="icon-only" :icon="copyMD" />
 								</IonItemOption>
 							</IonItemOptions>
 						</IonItemSliding>

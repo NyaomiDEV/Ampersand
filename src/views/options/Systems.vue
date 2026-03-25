@@ -11,11 +11,15 @@
 		IonFabButton,
 		IonIcon,
 		IonBackButton,
+		IonItemSliding,
+		IonItemOptions,
+		IonItemOption,
 	} from "@ionic/vue";
-	import { onBeforeMount, onUnmounted, ref, shallowRef, watch } from "vue";
+	import { onBeforeMount, onUnmounted, ref, shallowRef, useTemplateRef, watch } from "vue";
 	import { appConfig } from "../../lib/config/index.ts";
 
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
+	import copyMD from "@material-symbols/svg-600/outlined/content_copy.svg";
 
 	import type { System } from "../../lib/db/entities";
 	import { DatabaseEvents, DatabaseEvent } from "../../lib/db/events.ts";
@@ -23,8 +27,13 @@
 	import { useRoute } from "vue-router";
 	import { getFilteredSystems } from "../../lib/db/tables/system.ts";
 	import SystemItem from "../../components/system/SystemItem.vue";
+	import { toast } from "../../lib/util/misc.ts";
+	import { useTranslation } from "i18next-vue";
 
 	const route = useRoute();
+	const i18next = useTranslation();
+
+	const list = useTemplateRef("list");
 
 	const search = ref(route.query.q as string || "");
 	watch(route, () => {
@@ -68,6 +77,23 @@
 				return a.name.localeCompare(b.name);
 			});
 	}
+
+	function closeSlidingItems() {
+		const el: globalThis.HTMLIonListElement = list.value?.$el;
+		if(!el) return;
+		const items = el.querySelectorAll<globalThis.HTMLIonItemSlidingElement>("ion-item-sliding");
+		items?.forEach(i => void i.closeOpened());
+	}
+
+	async function copyID(system: System){
+		try{
+			await window.navigator.clipboard.writeText(`@<s:${system.uuid}>`);
+			await toast(i18next.t("systems:edit.systemIDcopiedToClipboard"));
+			closeSlidingItems();
+		}catch(_e){
+			return;
+		}
+	}
 </script>
 
 <template>
@@ -94,16 +120,25 @@
 		
 		<SpinnerFullscreen v-if="!systems" />
 		<IonContent v-else>
-			<IonList>
-				<SystemItem
+			<IonList ref="list">
+				<IonItemSliding
 					v-for="system in systems"
 					:key="system.uuid"
-					:system
-					show-icons
-					show-effects
-					button
-					:router-link="`/options/systems/edit?uuid=${system.uuid}`"
-				/>
+				>
+					<SystemItem
+
+						:system
+						show-icons
+						show-effects
+						button
+						:router-link="`/options/systems/edit?uuid=${system.uuid}`"
+					/>
+					<IonItemOptions>
+						<IonItemOption color="tertiary" @click="copyID(system)">
+							<IonIcon slot="icon-only" :icon="copyMD" />
+						</IonItemOption>
+					</IonItemOptions>
+				</IonItemSliding>
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">

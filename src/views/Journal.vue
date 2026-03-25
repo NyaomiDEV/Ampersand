@@ -1,19 +1,20 @@
 <script setup lang="ts">
-	import { IonContent, IonList, IonPage, IonTitle, IonToolbar, IonSearchbar, IonFab, IonFabButton, IonIcon, IonLabel, IonItemDivider, useIonRouter, IonBackButton } from "@ionic/vue";
-	import { onBeforeMount, onUnmounted, ref, shallowRef, watch } from "vue";
+	import { IonContent, IonList, IonPage, IonTitle, IonToolbar, IonSearchbar, IonFab, IonFabButton, IonIcon, IonLabel, IonItemDivider, useIonRouter, IonBackButton, IonItemSliding, IonItemOptions, IonItemOption } from "@ionic/vue";
+	import { onBeforeMount, onUnmounted, ref, shallowRef, useTemplateRef, watch } from "vue";
 	import { useRoute } from "vue-router";
 	import CollapsibleHeaderbar from "../components/CollapsibleHeaderbar.vue";
 	import Spinner from "../components/Spinner.vue";
 	import JournalPostItem from "../components/journal/JournalPostItem.vue";
 
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
+	import copyMD from "@material-symbols/svg-600/outlined/content_copy.svg";
 
 	import { JournalPostComplete } from "../lib/db/entities";
 	import dayjs from "dayjs";
 	import { DatabaseEvent, DatabaseEvents } from "../lib/db/events";
 	import { getJournalPostsDays, getJournalPostsOfDay } from "../lib/db/tables/journalPosts";
 	import { useTranslation } from "i18next-vue";
-	import { promptOkCancel } from "../lib/util/misc";
+	import { promptOkCancel, toast } from "../lib/util/misc";
 	import DatetimeUtc from "../components/DatetimeUtc.vue";
 
 	const isStandalone = ref(false);
@@ -30,6 +31,8 @@
 	const date = ref(new Date());
 
 	const search = ref(route.query.q as string || "");
+
+	const list = useTemplateRef("list");
 
 	const listener = (event: Event) => {
 		if (["members", "journalPosts"].includes((event as DatabaseEvent).data.table))
@@ -137,6 +140,23 @@
 
 		router.push(`/journal/edit/?uuid=${post.uuid}`);
 	}
+
+	function closeSlidingItems() {
+		const el: globalThis.HTMLIonListElement = list.value?.$el;
+		if(!el) return;
+		const items = el.querySelectorAll<globalThis.HTMLIonItemSlidingElement>("ion-item-sliding");
+		items?.forEach(i => void i.closeOpened());
+	}
+
+	async function copyID(post: JournalPostComplete){
+		try{
+			await window.navigator.clipboard.writeText(`@<j:${post.uuid}>`);
+			await toast(i18next.t("journal:edit.postIDcopiedToClipboard"));
+			closeSlidingItems();
+		}catch(_e){
+			return;
+		}
+	}
 </script>
 
 <template>
@@ -173,7 +193,7 @@
 			<div v-if="posts === undefined" class="spinner-container">
 				<Spinner size="72px" />
 			</div>
-			<IonList v-else>
+			<IonList v-else ref="list">
 				<template v-for="tuple in getGrouped(posts)" :key="tuple[0]">
 					<IonItemDivider sticky>
 						<IonLabel>
@@ -184,12 +204,20 @@
 							}}
 						</IonLabel>
 					</IonItemDivider>
-					<JournalPostItem
+					<IonItemSliding
 						v-for="post in tuple[1]"
 						:key="post.uuid"
-						:post
-						@click="openPost(post)"
-					/>
+					>
+						<JournalPostItem
+							:post
+							@click="openPost(post)"
+						/>
+						<IonItemOptions>
+							<IonItemOption color="tertiary" @click="copyID(post)">
+								<IonIcon slot="icon-only" :icon="copyMD" />
+							</IonItemOption>
+						</IonItemOptions>
+					</IonItemSliding>
 				</template>
 			</IonList>
 
