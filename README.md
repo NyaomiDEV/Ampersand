@@ -38,24 +38,7 @@ Currently Ampersand performs poorly for systems with a large number of members, 
 Other than this, Ampersand is still to be considered alpha software, meaning it still has a long ways to go.
 
 ## What is Ampersand compatible with?
-
-The Android app is compatible with:
-Android >= 8, provided Android System WebView is installed and used (check developer settings if unsure) and at least version >= 131
-
-The PC version is compatible with:
-- Linux computers (the majority of them, provided they're updated + you could compile Ampersand on one, it's easy!)
-- Windows computers:
-  - Running Windows 11
-  - Snapdragon X laptops are not supported (check if yours is one [here](https://www.qualcomm.com/snapdragon/laptops-and-tablets/laptop-device-finder))
-- Macs:
-  - All Mac Studios
-  - Mac Mini 2020 or later
-  - Mac Pro 2023 or later
-  - iMac 24" 2021 or later
-  - MacBook Pro 14 inches, 2021 or later
-  - MacBook Pro 16 inches, 2021 or later
-  - MacBook Pro 13 inches, (M1) late 2020 or later
-  - MacBook Air, (M1) late 2020 or later
+Please read the relevant [wiki page](https://codeberg.org/Ampersand/app/wiki/Requirements).
 
 ## Where can I get Ampersand?
 
