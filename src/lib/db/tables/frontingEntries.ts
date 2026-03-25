@@ -61,7 +61,9 @@ export async function updateFrontingEntry(uuid: UUID, newContent: Partial<Fronti
 		const updated = await db.frontingEntries.update(uuid, newContent);
 		if(updated) {
 			if(newContent.isMainFronter){
-				const toUpdate = (await getFrontingBetween(updated.newData.startTime, updated.newData.endTime)).map(x => x.uuid);
+				const toUpdate = (await getFrontingBetween(updated.newData.startTime, updated.newData.endTime))
+					.filter(x => x.uuid !== uuid)
+					.map(x => x.uuid);
 				shouldDebounce = true;
 
 				for (const _uuid of toUpdate)
