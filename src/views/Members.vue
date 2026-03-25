@@ -12,9 +12,9 @@
 		IonItemOptions,
 		IonItemOption,
 		IonBackButton,
+		IonList,
 	} from "@ionic/vue";
 	import { onBeforeMount, onUnmounted, ref, shallowRef, useTemplateRef, watch } from "vue"; 
-	import { accessibilityConfig } from "../lib/config/index.ts";
 	import CollapsibleHeaderbar from "../components/CollapsibleHeaderbar.vue";
 
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
@@ -165,8 +165,8 @@
 				</IonToolbar>
 			</CollapsibleHeaderbar>
 
-			<div ref="list" class="list" :class="{ compact: accessibilityConfig.disableCovers }">
-				<VirtualList :entries="members">
+			<IonList>
+				<VirtualList :entries="members" :min-size="86" :gap="2">
 					<template #default="{ entry: member }">
 						<IonItemSliding>
 							<MemberItem
@@ -198,7 +198,7 @@
 						</IonItemSliding>
 					</template>
 				</VirtualList>
-			</div>
+			</IonList>
 			<IonFab
 				v-if="!isStandalone"
 				slot="fixed"
@@ -212,27 +212,3 @@
 		</IonContent>
 	</IonPage>
 </template>
-
-<style scoped>
-	.list {
-		padding: 16px;
-	}
-
-	.list .v-row:first-child ion-item {
-		border-top-left-radius: 16px;
-		border-top-right-radius: 16px;
-	}
-
-	.list .v-row:last-child ion-item {
-		border-bottom-left-radius: 16px;
-		border-bottom-right-radius: 16px;
-	}
-
-	.list:deep(.v-container) {
-		padding-bottom: 16px;
-	}
-
-	ion-item {
-		margin: 1px 0;
-	}
-</style>

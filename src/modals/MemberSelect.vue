@@ -7,6 +7,7 @@
 		IonModal,
 		IonSearchbar,
 		modalController,
+		IonList,
 	} from "@ionic/vue";
 
 	import { onBeforeMount, onUnmounted, reactive, ref, shallowRef, toRaw, watch } from "vue";
@@ -114,7 +115,7 @@
 
 		<SpinnerFullscreen v-if="!members" />
 		<IonContent v-else>
-			<div class="list">
+			<IonList>
 				<VirtualList :entries="members">
 					<template #default="{ entry: member }">
 						<MemberItem
@@ -130,7 +131,7 @@
 						/>
 					</template>
 				</VirtualList>
-			</div>
+			</IonList>
 		</IonContent>
 	</IonModal>
 </template>
@@ -138,28 +139,5 @@
 <style scoped>
 	:deep(ion-checkbox::part(container)) {
 		visibility: v-bind("!props.hideCheckboxes ? 'visible' : 'hidden'")
-	}
-
-	.list {
-		border-radius: 16px;
-		padding: 16px;
-	}
-
-	.list:deep(.v-container) {
-		padding-bottom: 16px;
-	}
-
-	.list .v-row:first-child ion-item {
-		border-top-left-radius: 16px;
-		border-top-right-radius: 16px;
-	}
-
-	.list .v-row:last-child ion-item {
-		border-bottom-left-radius: 16px;
-		border-bottom-right-radius: 16px;
-	}
-
-	ion-item {
-		padding: 1px 0;
 	}
 </style>
