@@ -50,11 +50,8 @@
 	}
 
 	function showBigThumbnail(){
-		switch(asset.value.file.type){
-			case "image/png":
-			case "image/jpeg":
-			case "image/gif":
-			case "image/webp":
+		switch(asset.value.file.type.split("/")[0]){
+			case "image":
 				return true;
 			default:
 				break;

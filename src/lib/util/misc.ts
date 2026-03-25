@@ -7,6 +7,7 @@ import { getLocaleInfo } from "../i18n";
 import { open } from "@tauri-apps/plugin-dialog";
 import { readFile } from "@tauri-apps/plugin-fs";
 import { sep } from "@tauri-apps/api/path";
+import { findMimeType } from "../mime";
 
 export async function getDocumentFile(extensions?: string[], asFile?: true): Promise<File | undefined>;
 export async function getDocumentFile(extensions?: string[], asFile?: false): Promise<Uint8Array<ArrayBuffer> | undefined>;
@@ -22,7 +23,10 @@ export async function getDocumentFile(extensions?: string[], asFile?: boolean) {
 	if(!asFile)
 		return array;
 
-	return new File([array], path.split(sep()).pop() || `file_${Date.now()}`);
+	const filename = path.split(sep()).pop() || `file_${Date.now()}`;
+	const ext = filename.split(".").pop()!;
+
+	return new File([array], filename, { type: findMimeType(ext !== filename ? ext : "") });
 }
 
 export async function getImageFile() {
