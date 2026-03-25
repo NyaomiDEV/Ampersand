@@ -1,6 +1,6 @@
 <script setup lang="ts" generic="T extends UUIDable">
 	import { useVirtualizer } from "@tanstack/vue-virtual";
-	import { ComponentPublicInstance, computed, shallowRef } from "vue";
+	import { ComponentPublicInstance, computed, onMounted, onUpdated, ref, shallowRef, watch } from "vue";
 	import { UUIDable } from "../lib/db/entities";
 
 	const props = withDefaults(defineProps<{
@@ -13,9 +13,9 @@
 	});
 
 	const scroller = shallowRef<Element | null>(null);
-
-	const rowVirtualizer = useVirtualizer({
-		count: props.entries?.length ?? 0,
+	const virtualItemEls = shallowRef<(HTMLElement | null)[]>([]);
+	const config = ref({
+		count: props.entries.length,
 		gap: props.gap,
 		getScrollElement: () => scroller.value,
 		estimateSize: () => props.minSize,
@@ -27,6 +27,12 @@
 		},
 		overscan: 5,
 	});
+
+	watch(props, () => {
+		config.value.count = props.entries.length;
+	});
+
+	const rowVirtualizer = useVirtualizer(config);
 	const virtualRows = computed(() => rowVirtualizer.value.getVirtualItems());
 	const cssGap = computed(() => `${props.gap}px`);
 	const totalSize = computed(() => `${rowVirtualizer.value.getTotalSize()}px`);
@@ -35,9 +41,18 @@
 		scroller.value = await (e as Element)?.closest("ion-content")?.getScrollElement() || null;
 	}
 
-	function measure(e: Element | ComponentPublicInstance | null) {
-		if (e) rowVirtualizer.value.measureElement(e as HTMLElement);
+	// just in case you wonder why we went back and forth with our implementations
+	// it is... that apparently measuring one item at a time makes lists behave weirdly
+	// in some browsers... so it is what it is
+	function measure() {
+		rowVirtualizer.value.measureElement(null);
+		virtualItemEls.value.forEach((el) => {
+			if (el) rowVirtualizer.value.measureElement(el);
+		});
 	}
+
+	onMounted(measure);
+	onUpdated(measure);
 </script>
 
 <template>
@@ -52,7 +67,7 @@
 			<div
 				v-for="vrow in virtualRows"
 				:key="vrow.key.toString()"
-				:ref="measure"
+				ref="virtualItemEls"
 				class="v-row"
 				:data-index="vrow.index"
 			>
