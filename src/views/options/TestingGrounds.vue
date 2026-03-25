@@ -71,6 +71,12 @@
 				<IonItem button detail @click="genMembers()">
 					<IonLabel>Make 100 members</IonLabel>
 				</IonItem>
+				<IonItem button detail @click="genSystems()">
+					<IonLabel>Make 100 systems</IonLabel>
+				</IonItem>
+				<IonItem button detail @click="genTags()">
+					<IonLabel>Make 100 tags</IonLabel>
+				</IonItem>
 			</IonList>
 		</IonContent>
 	</IonPage>
