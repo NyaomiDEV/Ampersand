@@ -1,6 +1,6 @@
 <script setup lang="ts" generic="T extends UUIDable">
 	import { useVirtualizer } from "@tanstack/vue-virtual";
-	import { ComponentPublicInstance, computed, onMounted, onUpdated, ref, shallowRef } from "vue";
+	import { ComponentPublicInstance, computed, ref, shallowRef } from "vue";
 	import { UUIDable } from "../lib/db/entities";
 
 	const props = withDefaults(defineProps<{
@@ -12,9 +12,7 @@
 		gap: 2
 	});
 
-	const scroller = ref<Element | null>(null);
-
-	const virtualItemEls = shallowRef([]);
+	const scroller = shallowRef<Element | null>(null);
 
 	const rowVirtualizer = useVirtualizer({
 		count: props.entries?.length ?? 0,
@@ -37,15 +35,9 @@
 		scroller.value = await (e as Element)?.closest("ion-content")?.getScrollElement() || null;
 	}
 
-	function measureAll() {
-		rowVirtualizer.value.measureElement(null);
-		virtualItemEls.value.forEach((el) => {
-			if (el) rowVirtualizer.value.measureElement(el);
-		});
+	function measure(e: Element | ComponentPublicInstance | null) {
+		if (e) rowVirtualizer.value.measureElement(e);
 	}
-
-	onMounted(measureAll);
-	onUpdated(measureAll);
 </script>
 
 <template>
@@ -60,7 +52,7 @@
 			<div
 				v-for="vrow in virtualRows"
 				:key="vrow.key.toString()"
-				ref="virtualItemEls"
+				:ref="measure"
 				class="v-row"
 				:data-index="vrow.index"
 			>
