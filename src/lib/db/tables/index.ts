@@ -151,10 +151,23 @@ export class ShittyTable<T extends UUIDable> {
 		return this.index.length;
 	}
 
-	async* iterate() {
+	async* iterate(maxIter = 10) {
+		const chunk: T[] = [];
+		let counter = 0;
 		for (const x of this.index.map(x => x.uuid)) {
 			const data = await this.get(x);
-			if (data) yield data;
+			
+			if(data){
+				chunk.push(data);
+				counter++;
+			}
+
+			if(counter >= maxIter){
+				counter = 0;
+				for(const entry of chunk)
+					yield entry;
+				chunk.length = 0;
+			}
 		}
 	}
 
