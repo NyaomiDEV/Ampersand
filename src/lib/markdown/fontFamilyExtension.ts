@@ -79,7 +79,7 @@ const fontFamilyExtension: MarkedExtension<(VNode | string)[], VNode | string> =
 							cssStyle["--markdown-font-family"] = "Stick No Bills";
 							break;
 						case "mystery":
-							cssStyle["--markdown-font-family"] = "Mountains of Christmas";
+							cssStyle["--markdown-font-family"] = "Mystery Quest";
 							break;
 						case "italian":
 							cssStyle["--markdown-font-family"] = "Playwrite IT Traditional";
@@ -92,6 +92,21 @@ const fontFamilyExtension: MarkedExtension<(VNode | string)[], VNode | string> =
 							break;
 						case "thin":
 							cssStyle["--markdown-font-family"] = "Comic Neue";
+							break;
+						case "deco":
+							cssStyle["--markdown-font-family"] = "Ribeye Marrow";
+							break;
+						case "western":
+							cssStyle["--markdown-font-family"] = "Rye";
+							break;
+						case "glitch":
+							cssStyle["--markdown-font-family"] = "Rubik Glitch";
+							break;
+						case "indie":
+							cssStyle["--markdown-font-family"] = "Amatic SC";
+							break;
+						case "stripes":
+							cssStyle["--markdown-font-family"] = "Zen Tokyo Zoo";
 							break;
 						case "comic":
 							cssStyle["--markdown-font-family"] = "Comic Relief";
