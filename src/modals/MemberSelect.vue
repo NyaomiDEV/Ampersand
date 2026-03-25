@@ -116,7 +116,7 @@
 		<SpinnerFullscreen v-if="!members" />
 		<IonContent v-else>
 			<IonList>
-				<VirtualList :entries="members">
+				<VirtualList :entries="members" :min-size="86" :gap="2">
 					<template #default="{ entry: member }">
 						<MemberItem
 							:key="member.uuid"
