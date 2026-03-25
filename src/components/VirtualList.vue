@@ -25,9 +25,7 @@
 		measureElement: (element: HTMLElement): number => {
 			const styles = window.getComputedStyle(element);
 			const margin = parseFloat(styles.marginTop) + parseFloat(styles.marginBottom);
-			const measurement = element.offsetHeight + margin;
-			console.log(measurement);
-			return measurement;
+			return element.offsetHeight + margin;
 		},
 		overscan: 5,
 	});
