@@ -16,7 +16,7 @@ const fontFamilyExtension: MarkedExtension<(VNode | string)[], VNode | string> =
 					const [family, ..._para] = match[1].split(":");
 
 					const parameters = _para.map(x => {
-						const parts = x.split(" ");
+						const parts = x.trim().split(" ");
 						if(disallowedFontParameters.includes(parts[0].toString()))
 							return undefined;
 
