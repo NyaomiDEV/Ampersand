@@ -209,11 +209,13 @@
 				<MemberItem
 					v-if="post.member"
 					:member="post.member"
+					button
 					class="surface"
 					:show-cover="false"
 					:show-pronouns="false"
 					:show-role="false"
 					:show-border-color="false"
+					:router-link="`/members/edit?uuid=${post.member.uuid}`"
 				>
 					<p v-if="post.date">{{ formatDate(post.date, "expanded") }}</p>
 				</MemberItem>
