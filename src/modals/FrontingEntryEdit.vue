@@ -21,7 +21,7 @@
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
 
 	import { FrontingEntryComplete } from "../lib/db/entities";
-	import { newFrontingEntry, updateFrontingEntry, deleteFrontingEntry, sendFrontingChangedEvent, getFrontingBetween } from "../lib/db/tables/frontingEntries";
+	import { newFrontingEntry, updateFrontingEntry, deleteFrontingEntry, sendFrontingChangedEvent, getFrontingBetweenComplete } from "../lib/db/tables/frontingEntries";
 	import { ref, toRaw, useTemplateRef, watch } from "vue";
 
 	import MemberSelect from "./MemberSelect.vue";
@@ -147,7 +147,7 @@
 	}
 
 	watch(frontingEntry.value, async () => {
-		allFrontingInTimeSpan.value = (await getFrontingBetween(frontingEntry.value.startTime, frontingEntry.value.endTime))
+		allFrontingInTimeSpan.value = (await getFrontingBetweenComplete(frontingEntry.value.startTime, frontingEntry.value.endTime))
 			.filter(x => x.uuid !== frontingEntry.value.uuid);
 	}, { immediate: true });
 </script>

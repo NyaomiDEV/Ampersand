@@ -61,17 +61,7 @@ export async function updateFrontingEntry(uuid: UUID, newContent: Partial<Fronti
 		const updated = await db.frontingEntries.update(uuid, newContent);
 		if(updated) {
 			if(newContent.isMainFronter){
-				const toUpdate = (await Promise.all(
-					db.frontingEntries.index.filter(x => 
-						x.endTime && updated.newData.startTime.valueOf() < x.endTime.valueOf() ||
-						updated.newData.startTime.valueOf() < x.startTime!.valueOf() && (updated.newData.endTime || new Date()).valueOf() > x.startTime!.valueOf() ||
-						!updated.newData.endTime && !x.endTime
-					)
-						.map(x => db.frontingEntries.get(x.uuid))
-				))
-					.filter(x => x?.uuid !== uuid)
-					.map(x => x!.uuid);
-
+				const toUpdate = (await getFrontingBetween(updated.newData.startTime, updated.newData.endTime)).map(x => x.uuid);
 				shouldDebounce = true;
 
 				for (const _uuid of toUpdate)
@@ -180,10 +170,16 @@ export async function getFrontingBetween(start: Date, end?: Date){
 	}).map(async (x) => {
 
 		const entry = await db.frontingEntries.get(x.uuid);
-		if (entry) return await toFrontingEntryComplete(entry);
-		return undefined;
+		if (!entry) return undefined;
+		return entry;
 		
 	}))).filter(x => x !== undefined);
+}
+
+export async function getFrontingBetweenComplete(start: Date, end?: Date) {
+	return await Promise.all(
+		(await getFrontingBetween(start, end)).map(x => toFrontingEntryComplete(x))
+	);
 }
 
 export async function getRecentlyFronted() {
