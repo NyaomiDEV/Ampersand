@@ -151,28 +151,29 @@ export class ShittyTable<T extends UUIDable> {
 		return this.index.length;
 	}
 
-	async* iterate(maxIter = 20) {
-		const chunk: Promise<T |undefined>[] = [];
-		let counter = 0;
-		for (const x of this.index.map(x => x.uuid)) {
-			const data = this.get(x);
-			chunk.push(data);
-			counter++;
-			if(counter >= maxIter){
-				counter = 0;
-				for(const entry of chunk){
-					const data = await entry;
-					if(data) yield data;
-				}
-				chunk.length = 0;
-			}
-		}
+	async* iterate(maxIter: number = 20) {
+		const uuids = this.index.map(x => x.uuid);
 
-		//flush remnants
-		for (const entry of chunk) {
-			const data = await entry;
-			if (data) yield data;
-		}
+		const f = (offset: number, maxIter: number) => {
+			const chunk: Promise<T | undefined>[] = [];
+			for(let i = offset; i < offset + maxIter; i++){
+				if(uuids[i]){
+					const data = this.get(uuids[i]);
+					chunk.push(data);
+				}
+			}
+			return chunk;
+		};
+
+		let offset = 0;
+		while(offset < uuids.length) {
+			const promises = f(offset, maxIter);
+			offset += maxIter;
+			for (const promise of promises) {
+				const data = await promise;
+				if (data) yield data;
+			}
+		};
 	}
 
 	async write(uuid: string, data: T) {
