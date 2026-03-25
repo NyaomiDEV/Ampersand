@@ -1,6 +1,8 @@
 import { h, type VNode } from "vue";
 import { MarkedExtension } from "marked";
 
+const disallowedFontParameters = ["wght", "wdth", "slnt", "ital", "opsz"];
+
 const fontFamilyExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [
 		{
@@ -11,10 +13,21 @@ const fontFamilyExtension: MarkedExtension<(VNode | string)[], VNode | string> =
 				const rule = /^\[ff=(.+?)\](.+?)\[\/ff\]/;
 				const match = rule.exec(src);
 				if (match) {
+					const [family, ..._para] = match[1].split(":");
+
+					const parameters = _para.map(x => {
+						const parts = x.split(" ");
+						if(disallowedFontParameters.includes(parts[0].toString()))
+							return undefined;
+
+						return [parts[0].toUpperCase(), parseFloat(parts[1])];
+					}).filter(x => !!x);
+
 					const token = {
 						type: "fontFamily",
 						raw: match[0],
-						fontFamily: match[1],
+						fontFamily: family,
+						fontVarSettings: parameters,
 						text: match[2],
 						tokens: this.lexer.inlineTokens(match[2])
 					};
@@ -95,9 +108,9 @@ const fontFamilyExtension: MarkedExtension<(VNode | string)[], VNode | string> =
 						case "inter":
 							cssStyle["--markdown-font-family"] = "Inter";
 							break;
-
-
 					}
+
+					cssStyle["--markdown-font-variation-settings"] = (token.fontVarSettings as [string, number]).map(x => `"${x[0]}" ${x[1]}`).join(", ");
 					return h("span", {
 						class: "font-family",
 						style: cssStyle

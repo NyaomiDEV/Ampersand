@@ -238,6 +238,7 @@
 
     span.font-family {
         font-family: var(--markdown-font-family);
+        font-variation-settings: var(--markdown-font-variation-settings);
     }
 
     ion-icon {
