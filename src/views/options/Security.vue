@@ -2,13 +2,15 @@
 	import { IonContent, IonHeader, IonLabel, IonItem, IonList, IonPage, IonTitle, IonToolbar, IonToggle, IonBackButton, IonIcon, alertController } from "@ionic/vue";
 	import { ref, onMounted } from "vue";
 	import { disableApplock, enableApplock, areBiometricsAvailable } from "../../lib/applock";
-	import { securityConfig } from "../../lib/config";
+	import { securityConfig, appConfig } from "../../lib/config";
 	import { useTranslation } from "i18next-vue";
+	import { platform } from "@tauri-apps/plugin-os";
 
 	import lockMD from "@material-symbols/svg-600/outlined/lock.svg";
 	import passwordMD from "@material-symbols/svg-600/outlined/password_2.svg";
 	import biometricsMD from "@material-symbols/svg-600/outlined/fingerprint.svg";
 	import remoteMD from "@material-symbols/svg-600/outlined/network_manage.svg";
+	import ipcMD from "@material-symbols/svg-600/outlined/api.svg";
 	import { promptOkCancel } from "../../lib/util/misc";
 
 	const i18next = useTranslation();
@@ -165,6 +167,15 @@
 						<IonLabel>
 							<h3>{{ $t("security:allowRemoteContent.title") }}</h3>
 							<p>{{ $t("security:allowRemoteContent.desc") }}</p>
+						</IonLabel>
+					</IonToggle>
+				</IonItem>
+
+				<IonItem v-if="platform() === 'android'" button :detail="false">
+					<IonIcon slot="start" :icon="ipcMD" />
+					<IonToggle v-model="appConfig.useIPC">
+						<IonLabel>
+							{{ $t("appSettings:useIPC") }}
 						</IonLabel>
 					</IonToggle>
 				</IonItem>

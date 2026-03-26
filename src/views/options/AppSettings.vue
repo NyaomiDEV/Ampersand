@@ -1,7 +1,6 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonList, IonPage, IonLabel, IonListHeader, IonTitle, IonToolbar, IonBackButton, IonItem, IonSelect, IonSelectOption, IonInput, IonToggle, IonIcon } from "@ionic/vue";
 	import { onMounted, shallowRef, useTemplateRef, watch } from "vue";
-	import { platform } from "@tauri-apps/plugin-os";
 
 	import { appConfig } from "../../lib/config";
 	import { computePercentage } from "../../lib/i18n";
@@ -17,7 +16,6 @@
 	import peopleMD from "@material-symbols/svg-600/outlined/group.svg";
 	import journalMD from "@material-symbols/svg-600/outlined/book.svg";
 	import homeMD from "@material-symbols/svg-600/outlined/home.svg";
-	import ipcMD from "@material-symbols/svg-600/outlined/api.svg";
 	import SystemItem from "../../components/system/SystemItem.vue";
 
 	const defaultSystem = shallowRef<System>({
@@ -181,14 +179,7 @@
 					</IonToggle>
 				</IonItem>
 
-				<IonItem v-if="platform() === 'android'" button :detail="false">
-					<IonIcon slot="start" :icon="ipcMD" />
-					<IonToggle v-model="appConfig.useIPC">
-						<IonLabel>
-							{{ $t("appSettings:useIPC") }}
-						</IonLabel>
-					</IonToggle>
-				</IonItem>
+
 			</IonList>
 
 			<IonListHeader>
