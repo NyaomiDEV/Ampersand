@@ -80,7 +80,7 @@ export function getMaterialColors(hex: string, isDarkMode: boolean){
 	styleSheet.set("surface_tint", rgbFromArgb(colors.surfaceTint().getArgb(scheme)));
 
 
-	if (accessibilityConfig.themeIsAmoled) {
+	if (isDarkMode && accessibilityConfig.themeIsAmoled) {
 		styleSheet.set("background", "0, 0, 0");
 		styleSheet.set("surface", "0, 0, 0");
 		styleSheet.set("on_background", "255, 255, 255");
