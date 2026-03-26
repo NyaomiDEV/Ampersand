@@ -24,7 +24,8 @@ const spoilerExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 			renderer(token) {
 				return h("span", {
 					tabindex: -1,
-					class: "spoiler"
+					class: "spoiler",
+					onClick: (e) => e.stopImmediatePropagation()
 				}, token.tokens && token.tokens.length ? this.parser.parseInline(token.tokens) : token.text);
 			}
 		}
