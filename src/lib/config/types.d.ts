@@ -10,7 +10,6 @@ export type AppConfig = {
 	showDefaultSystemInMemberList: boolean,
 	showMembersApartFromCustomFronts: "off" | "before" | "after",
 	hideFrontingTimer: boolean,
-	useIPC: boolean,
 	isDeveloperMode: boolean,
 	defaultFilterQueries: {
 		systems?: string,
@@ -46,5 +45,6 @@ export type SecurityConfig = {
 	usePassword: boolean,
 	password?: string,
 	useBiometrics: boolean,
+	useIPC: boolean,
 	allowRemoteContent: boolean
 };

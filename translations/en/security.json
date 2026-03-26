@@ -24,5 +24,7 @@
 		"titleModifyNew": "Enter your new password",
 		"titleDisable": "Enter your password",
 		"hint": "Password"
-	}
+	},
+	
+	"useIPC": "Send events to other applications"
 }

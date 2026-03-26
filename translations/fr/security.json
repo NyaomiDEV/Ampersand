@@ -24,5 +24,7 @@
 	"passwordAlert": {
 		"header": "Attention",
 		"text": "Êtes-vous certain·e de vouloir utiliser un mot de passe ? Avant de procéder, veuillez conserver votre mot de passe en dehors d’Ampersand : vous ne pourrez pas récupérer vos données ou le réinitialiser si vous le perdez. Assurez-vous d’exporter vos données avant de choisir un mot de passe !"
-	}
+	},
+
+	"useIPC": "Envoyer les événements vers d’autres applications"
 }

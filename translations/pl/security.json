@@ -24,5 +24,7 @@
 		"titleModifyNew": "Wprowadź swoje nowe hasło",
 		"titleDisable": "Wprowadź swoje hasło",
 		"hint": "Hasło"
-	}
+	},
+
+	"useIPC": "Wysyłaj wydarzenia do innych aplikacji"
 }

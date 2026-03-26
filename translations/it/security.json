@@ -24,5 +24,7 @@
 		"titleModifyNew": "Inserisci la tua nuova password",
 		"titleDisable": "Inserisci la tua password",
 		"hint": "Password"
-	}
+	},
+
+	"useIPC": "Invia eventi ad applicazioni terze"
 }

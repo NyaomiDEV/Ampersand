@@ -11,7 +11,6 @@ const defaultAppConfig: AppConfig = {
 	showDefaultSystemInMemberList: false,
 	showMembersApartFromCustomFronts: "after",
 	hideFrontingTimer: false,
-	useIPC: false,
 	view: "dashboard",
 	isDeveloperMode: false,
 	defaultFilterQueries: {
@@ -41,6 +40,7 @@ const defaultSecurityConfig: SecurityConfig = {
 	usePassword: false,
 	password: undefined,
 	useBiometrics: false,
+	useIPC: false,
 	allowRemoteContent: false
 };
 
@@ -104,6 +104,11 @@ if (((appConfig as Record<string, unknown>).locale as Record<string, unknown>).f
 
 if (((appConfig as Record<string, unknown>).locale as Record<string, unknown>).twelveHourClock)
 	((appConfig as Record<string, unknown>).locale as Record<string, unknown>).twelveHourClock = undefined;
+
+if ((appConfig as Record<string, unknown>).useIPC) {
+	securityConfig.useIPC = true;
+	(appConfig as Record<string, unknown>).useIPC = undefined;
+}
 // end config migration here
 
 export {

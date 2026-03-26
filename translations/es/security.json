@@ -12,5 +12,7 @@
 		"titleModifyOld": "Introduce tu contraseña vieja",
 		"titleDisable": "Introduce tu contraseña",
 		"hint": "Contraseña"
-	}
+	},
+
+	"useIPC": "Enviar eventos a otras aplicaciones"
 }

@@ -2,7 +2,7 @@
 	import { IonContent, IonHeader, IonLabel, IonItem, IonList, IonPage, IonTitle, IonToolbar, IonToggle, IonBackButton, IonIcon, alertController } from "@ionic/vue";
 	import { ref, onMounted } from "vue";
 	import { disableApplock, enableApplock, areBiometricsAvailable } from "../../lib/applock";
-	import { securityConfig, appConfig } from "../../lib/config";
+	import { securityConfig } from "../../lib/config";
 	import { useTranslation } from "i18next-vue";
 	import { platform } from "@tauri-apps/plugin-os";
 
@@ -173,9 +173,9 @@
 
 				<IonItem v-if="platform() === 'android'" button :detail="false">
 					<IonIcon slot="start" :icon="ipcMD" />
-					<IonToggle v-model="appConfig.useIPC">
+					<IonToggle v-model="securityConfig.useIPC">
 						<IonLabel>
-							{{ $t("appSettings:useIPC") }}
+							{{ $t("security:useIPC") }}
 						</IonLabel>
 					</IonToggle>
 				</IonItem>

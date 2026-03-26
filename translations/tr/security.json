@@ -23,5 +23,7 @@
 	"passwordAlert": {
 		"header": "Uyarı",
 		"text": "Devam etmek istediğinizden emin misiniz? Devam etmeden önce, lütfen şifrenizi Ampersand dışında bir yere kaydedin, çünkü kaybederseniz verilerinizi kurtaramaz veya şifrenizi sıfırlayamazsınız. Ayarlamadan önce verilerinizi dışa aktardığınızdan emin olun!"
-	}
+	},
+
+	"useIPC": "Diğer uygulamalara etkinlikler gönder"
 }
