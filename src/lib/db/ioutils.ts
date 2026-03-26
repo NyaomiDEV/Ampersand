@@ -78,8 +78,8 @@ async function _exportDatabase(progress: EventTarget){
 export function exportDatabaseToBinary(path: string){
 	const progress = new EventTarget();
 	const status = _exportDatabase(progress)
-		.then(res => encode(res, { ignoreUndefined: true }))
-		.then(async data => {
+		.then(async res => {
+			const data = encode(res, { ignoreUndefined: true });
 
 			// Android uses content:// for providing scoped file paths; here we just get the FD from the returned URI
 			if (!path.startsWith("content://")) {
@@ -193,7 +193,7 @@ export function importDatabaseFromBinary() {
 			progress
 		);
 	})
-		.catch(_e => console.error(_e));
+		.catch(_e => false);
 
 	return { progress, status };
 }
