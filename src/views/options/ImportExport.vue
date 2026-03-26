@@ -5,7 +5,6 @@
 	import { getDocumentFile, toast } from "../../lib/util/misc";
 	import dayjs from "dayjs";
 	import { save } from "@tauri-apps/plugin-dialog";
-	import { mkdir, writeFile } from "@tauri-apps/plugin-fs";
 	import { useTranslation } from "i18next-vue";
 	import { importPluralKit } from "../../lib/db/external/pluralkit";
 	import { importTupperBox } from "../../lib/db/external/tupperbox";
@@ -30,10 +29,7 @@
 	async function importDb(){
 		loading.value = true;
 		try{
-			const file = await getDocumentFile(["ampdb"], false);
-			if (!file) throw new Error("no files specified");
-
-			const { progress, dbPromise } = importDatabaseFromBinary(file);
+			const { progress, status } = importDatabaseFromBinary();
 
 			progress.addEventListener("start", () => {
 				barProgress.value = 0;
@@ -45,9 +41,7 @@
 				barProgress.value = -1;
 			});
 
-			const result = await dbPromise;
-
-			if(!result) throw new Error("errored out");
+			if(!await status) throw new Error("errored out");
 
 			await toast(i18next.t("importExport:status.imported"));
 		}catch(_e){
@@ -146,7 +140,7 @@
 		}
 
 		if(path){
-			const { progress, dbPromise } = exportDatabaseToBinary();
+			const { progress, status } = exportDatabaseToBinary(path);
 
 			progress.addEventListener("start", () => {
 				barProgress.value = 0;
@@ -158,22 +152,7 @@
 				barProgress.value = -1;
 			});
 			
-			const dataStream = await dbPromise;
-
-			if(dataStream){
-				// Android uses content:// for providing scoped file paths; here we just get the FD from the returned URI
-				if(!path.startsWith("content://")){
-					// So in all other cases where the path is a real one, be it relative or not, we ensure we have a directory to write to
-					const dirname = path
-						.split(sep())
-						.filter((_, i, a) => a.length - 1 !== i)
-						.join(sep());
-					await mkdir(
-						dirname,
-						{ recursive: true }
-					);
-				}
-				await writeFile(path, dataStream);
+			if(await status){
 				await toast(
 					platform() === "ios"
 						? i18next.t("importExport:status.exportedAppIos")

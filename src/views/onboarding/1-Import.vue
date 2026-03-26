@@ -36,11 +36,8 @@
 
 	async function importFromPreviousInstallation() {
 		try{
-			const file = await getDocumentFile(["ampdb"], false);
-			if (!file) throw new Error("no files specified");
-
 			loading.value = true;
-			const result = await importDatabaseFromBinary(file).dbPromise;
+			const result = await importDatabaseFromBinary().status;
 			if(!result) throw new Error("errored out");
 		}catch(_e){
 			resetConfig();
