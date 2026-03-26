@@ -75,7 +75,7 @@ export function exportDatabaseToBinary() {
 
 			const magic = AMPERSAND_BACKUP_MAGICS.get(2)!;
 
-			const fd = await openFile(path, { write: true });
+			const fd = await openFile(path, { create: true, write: true });
 			await fd.write(new Uint8Array(magic));
 			await fd.write(data);
 			await fd.close();
