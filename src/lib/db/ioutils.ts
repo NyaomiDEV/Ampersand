@@ -7,7 +7,7 @@ import { accessibilityConfig, appConfig, securityConfig } from "../config";
 import { UUIDable } from "./entities";
 import { deleteNull, replace, revive, walk } from "../json";
 import { dirname } from "@tauri-apps/api/path";
-import { mkdir, readFile, writeFile } from "@tauri-apps/plugin-fs";
+import { mkdir, readFile, open as openFile } from "@tauri-apps/plugin-fs";
 import { open } from "@tauri-apps/plugin-dialog";
 
 const AMPERSAND_BACKUP_MAGICS = new Map<number, number[]>([
@@ -88,13 +88,13 @@ export function exportDatabaseToBinary(path: string){
 				await mkdir(_dirname,{ recursive: true });
 			}
 
+
 			const magic = AMPERSAND_BACKUP_MAGICS.get(2)!;
 
-			const buffer = new Uint8Array(data.length + magic.length);
-			buffer.set(magic, 0);
-			buffer.set(data, magic.length);
-
-			await writeFile(path, buffer);
+			const fd = await openFile(path, { write: true });
+			await fd.write(new Uint8Array(magic));
+			await fd.write(data);
+			await fd.close();
 			return true;
 		})
 		.catch(_e => false);
