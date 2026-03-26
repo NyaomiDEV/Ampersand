@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 import { filterFrontingEntry, filterFrontingEntryIndex } from "../../search";
 import { securityConfig } from "../../config";
 import { broadcastEvent } from "../../native/plugin";
-import { deleteFile } from "../../json";
+import { deleteFile } from "../../serialization";
 
 export function getFrontingEntries(){
 	return db.frontingEntries.iterate();

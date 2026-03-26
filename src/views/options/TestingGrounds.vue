@@ -11,7 +11,8 @@
 		IonIcon,
 		IonLabel,
 		IonListHeader,
-		IonNote
+		IonNote,
+		IonItemDivider
 	} from "@ionic/vue";
 	import { newMember } from "../../lib/db/tables/members";
 	import { appConfig } from "../../lib/config";
@@ -28,10 +29,23 @@
 	import importMD from "@material-symbols/svg-600/outlined/download.svg";
 	import exportMD from "@material-symbols/svg-600/outlined/upload.svg";
 	import { onMounted, ref } from "vue";
+	import { exportDatabaseToJSON, importDatabaseFromJSON } from "../../lib/db/ioutils/json";
+	import { getTables } from "../../lib/db/tables";
+	import { exportArchive, importArchive } from "../../lib/db/ioutils/archive";
 	
 	const i18next = useTranslation();
 
 	const escapeHatchPath = ref("");
+
+	async function refreshAllData(){
+		for(const table of Object.values(getTables())){
+			if(!await table.refresh()){
+				await toast(`Error at table ${table.name}`);
+				return;
+			}
+		}
+		await toast("Tables refreshed");
+	}
 
 	async function genMembers() {
 		for(let i = 0; i < 100; i++){
@@ -85,6 +99,42 @@
 		}
 	}
 
+	async function commitExportJSON(doYouHateYourDevice: boolean){
+		try{
+			await exportDatabaseToJSON(doYouHateYourDevice).status;
+			await toast("JSON Exported");
+		}catch(_e){
+			await toast(i18next.t("importExport:status.error"));
+		}
+	}
+
+	async function commitImportJSON(){
+		try{
+			await importDatabaseFromJSON().status;
+			await toast("JSON Imported");
+		}catch(_e){
+			await toast(i18next.t("importExport:status.error"));
+		}
+	}
+
+	async function commitExportArchive(){
+		try{
+			await exportArchive().status;
+			await toast("Archive Exported");
+		}catch(_e){
+			await toast(i18next.t("importExport:status.error"));
+		}
+	}
+
+	async function commitImportArchive(){
+		try{
+			await importArchive().status;
+			await toast("Archive Imported");
+		}catch(_e){
+			await toast(i18next.t("importExport:status.error"));
+		}
+	}
+
 	onMounted(async () => {
 		escapeHatchPath.value = `${await documentDir() + sep()}`;
 	});
@@ -130,8 +180,51 @@
 					<IonLabel>Make 100 tags</IonLabel>
 				</IonItem>
 			</IonList>
+
+			<IonListHeader>Data consistency</IonListHeader>
+			<IonList>
+				<IonItem button detail @click="refreshAllData">
+					<IonIcon slot="start" :icon="tagMD" />
+					<IonLabel>Refresh the database</IonLabel>
+				</IonItem>
+			</IonList>
+
 			<IonListHeader>Import / Export but we're desperate</IonListHeader>
 			<IonList>
+				<IonItemDivider>Experimental JSON support</IonItemDivider>
+				<IonItem button :detail="true" @click="commitExportJSON(false)">
+					<IonIcon slot="start" :icon="exportMD" />
+					<IonLabel>
+						<h3>Export JSON</h3>
+					</IonLabel>
+				</IonItem>
+				<IonItem button :detail="true" @click="commitExportJSON(true)">
+					<IonIcon slot="start" :icon="exportMD" />
+					<IonLabel>
+						<h3>Export JSON with images as Data URI</h3>
+						<p>WARNING: Your device may crash!</p>
+					</IonLabel>
+				</IonItem>
+				<IonItem button :detail="true" @click="commitImportJSON">
+					<IonIcon slot="start" :icon="importMD" />
+					<IonLabel>
+						<h3>Import JSON</h3>
+					</IonLabel>
+				</IonItem>
+				<IonItemDivider>Experimental Archive format</IonItemDivider>
+				<IonItem button :detail="true" @click="commitExportArchive">
+					<IonIcon slot="start" :icon="exportMD" />
+					<IonLabel>
+						<h3>Export Archive</h3>
+					</IonLabel>
+				</IonItem>
+				<IonItem button :detail="true" @click="commitImportArchive">
+					<IonIcon slot="start" :icon="importMD" />
+					<IonLabel>
+						<h3>Import Archive</h3>
+					</IonLabel>
+				</IonItem>
+				<IonItemDivider>When everything else is failing</IonItemDivider>
 				<IonItem button :detail="true" @click="commitEscapeHatch">
 					<IonIcon slot="start" :icon="exportMD" />
 					<IonLabel>

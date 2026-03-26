@@ -11,18 +11,31 @@ export function revive(value: any) {
 			case "set":
 				return new Set(value.value);
 			case "file": {
-				const array = new Uint8Array(value.value.length);
-				for (let i = 0; i < value.value.length; i++)
-					array[i] = (value.value as string).charCodeAt(i);
+				if(typeof value.value === "string"){
+					// old way
+					const array = new Uint8Array(value.value.length);
+					for (let i = 0; i < value.value.length; i++)
+						array[i] = (value.value as string).charCodeAt(i);
 
-				return new File(
-					[array],
-					value._meta.name,
-					{
-						lastModified: value._meta.lastModified,
-						type: value._meta.mimeType
-					}
-				);
+					return new File(
+						[array],
+						value._meta.name,
+						{
+							lastModified: value._meta.lastModified,
+							type: value._meta.mimeType
+						}
+					);
+				} else {
+					// new way
+					return new File(
+						[value.value],
+						value._meta.name,
+						{
+							lastModified: value._meta.lastModified,
+							type: value._meta.mimeType
+						}
+					);
+				}
 			}
 			case "escaped-meta":
 				return { ...value, _meta: value._meta.value };
@@ -46,16 +59,19 @@ export function replace(value: any) {
 		};
 	} else if (value instanceof File) {
 		const req = new XMLHttpRequest();
-		req.overrideMimeType("text/plain; charset=x-user-defined");
-		req.open("GET", URL.createObjectURL(value), false);
+		req.responseType = "arraybuffer";
+		const url = URL.createObjectURL(value);
+		req.open("GET", url, false);
 		req.send();
+		URL.revokeObjectURL(url);
 		if (req.status !== 200 && req.status !== 0) 
 			throw new Error(`Bad File access: ${req.status}`);
 			
 		return {
 			_meta: { type: "file", name: value.name, lastModified: value.lastModified, mimeType: value.type },
-			value: req.responseText
+			value: new Uint8Array(req.response)
 		};
+
 	} else if ("_meta" in value) {
 		// escape "_meta" properties
 		return {

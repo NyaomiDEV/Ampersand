@@ -1,4 +1,5 @@
 import { onUnmounted } from "vue";
+import { getExtension } from "../mime";
 
 export function useBlob(){
 	const dataURLs = new Map<string, File>();
@@ -37,4 +38,9 @@ export function toDataURI(file: File): Promise<string>{
 		reader.addEventListener("error", () => reject(new Error(reader.error?.message)));
 		reader.readAsDataURL(file);
 	});
+}
+
+export async function fromDataURI(uri: string): Promise<File> {
+	const blob = await (await window.fetch(uri)).blob();
+	return new File([blob], `file_${Date.now()}.${getExtension(blob.type)}`, { type: blob.type });
 }

@@ -1,7 +1,7 @@
 import { broadcastEvent } from "../native/plugin";
 import { DatabaseEventData } from "./types";
 import { securityConfig } from "../config";
-import { deleteFile } from "../json";
+import { deleteFile } from "../serialization";
 
 export const DatabaseEvents = new EventTarget();
 

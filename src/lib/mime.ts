@@ -95,3 +95,20 @@ export function findMimeType(extension: string){
 
 	return "application/octet-stream";
 }
+
+export function getExtension(mimeType: string) {
+	for (const mime of new Set([
+		...Object.keys(kPrimaryMappings),
+		...Object.keys(kSecondaryMappings)
+	])) {
+		const extensions = [
+			...(kPrimaryMappings[mime] || "").split(","),
+			...(kSecondaryMappings[mime] || "").split(",")
+		];
+
+		if(mime === mimeType && extensions[0])
+			return extensions[0];
+	}
+
+	return undefined;
+}

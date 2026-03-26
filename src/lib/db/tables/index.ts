@@ -1,11 +1,9 @@
 import { appDataDir, sep } from "@tauri-apps/api/path";
 import * as fs from "@tauri-apps/plugin-fs";
-import { Typeson } from "typeson";
-import { file, map, undef } from "typeson-registry";
 import type { Asset, BoardMessage, CustomField, FrontingEntry, JournalPost, Member, Reminder, System, Tag, UUIDable } from "../entities";
 import { decode, encode } from "@msgpack/msgpack";
 import type { AmpersandEntityMapping, MigrationsMapping } from "../types";
-import { deleteNull, replace, revive, walk } from "../../json";
+import { deleteNull, replace, revive, walk } from "../../serialization";
 import { members, systems } from "./migrations";
 
 export type IndexEntry<T> = UUIDable & Partial<T>;
@@ -29,17 +27,11 @@ export class ShittyTable<T extends UUIDable> {
 		try {
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			const obj: any = decode(await fs.readFile(_path));
-			if (typeof obj !== "undefined" && obj !== null){
-				if(obj.$types)
-					return await typeson.revive(obj) as IndexEntry<T>[];
-				else 
-					return walk(obj, revive) as IndexEntry<T>[];
-			}
-			
+			if (typeof obj !== "undefined" && obj !== null)
+				return walk(obj, revive) as IndexEntry<T>[];
 		} catch (e) {
 			console.error(e);
 		}
-
 		return undefined;
 	}
 
@@ -120,15 +112,8 @@ export class ShittyTable<T extends UUIDable> {
 		try {
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			const obj: any = decode(await fs.readFile(_path));
-			if (typeof obj !== "undefined" && obj !== null){
-				if(obj.$types){
-					// subtle migration
-					const data = await typeson.revive(obj) as T;
-					await this.write(uuid, data);
-					return data;
-				} else
-					return walk(obj, revive) as T;
-			}
+			if (typeof obj !== "undefined" && obj !== null)
+				return walk(obj, revive) as T;
 		} catch (e) {
 			console.error(e);
 		}
@@ -174,6 +159,12 @@ export class ShittyTable<T extends UUIDable> {
 				if (data) yield data;
 			}
 		};
+	}
+
+	async refresh(){
+		for(const data of this.index)
+			if(!await this.update(data.uuid, {})) return false;
+		return true;
 	}
 
 	async write(uuid: string, data: T) {
@@ -298,12 +289,6 @@ export class ShittyTable<T extends UUIDable> {
 		await this.saveMigrationVersion(version);
 	}
 }
-
-const typeson = new Typeson().register([
-	file,
-	undef,
-	map
-]);
 
 async function makeTable<T extends UUIDable>(tableName: string, secondaryKeys: SecondaryKey<T>[]) {
 	const _path = `${await appDataDir() + sep()}database${sep() + tableName}`;

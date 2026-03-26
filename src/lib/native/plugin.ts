@@ -1,6 +1,6 @@
 import { invoke, InvokeArgs, InvokeOptions, addPluginListener } from "@tauri-apps/api/core";
 import { writeToTemp } from "./cache";
-import { replace, walk } from "../json";
+import { replace, walk } from "../serialization";
 
 function invokePlugin(cmd: string, args?: InvokeArgs, opts?: InvokeOptions): Promise<unknown> {
 	return invoke(`plugin:ampersand|${cmd}`, args, opts);

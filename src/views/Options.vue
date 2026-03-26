@@ -18,11 +18,11 @@
 	import CustomFieldsMD from "@material-symbols/svg-600/outlined/format_list_bulleted_add.svg";
 	import ResourcesMD from "@material-symbols/svg-600/outlined/menu_book.svg";
 
-	import { appConfig, securityConfig } from "../lib/config";
+	import { securityConfig } from "../lib/config";
 	import { lock } from "../lib/applock";
 
 	const router = useIonRouter();
-	const isDev = inject<boolean>("isDev") || appConfig.isDeveloperMode;
+	const isDev = inject<boolean>("isDev");
 	
 	function lockImmediately(){
 		if(lock())

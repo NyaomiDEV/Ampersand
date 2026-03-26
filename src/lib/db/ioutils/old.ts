@@ -1,25 +1,16 @@
 import { decode, encode } from "@msgpack/msgpack";
 import { accessibilityConfig, appConfig, securityConfig } from "../../config";
 import { getTables, ShittyTable } from "../tables";
-import { deleteNull, replace, revive, walk } from "../../json";
+import { deleteNull, replace, revive, walk } from "../../serialization";
 import { dirname, documentDir, sep } from "@tauri-apps/api/path";
 import { mkdir, open as openFile, readFile } from "@tauri-apps/plugin-fs";
 import { open, save } from "@tauri-apps/plugin-dialog";
-import { AMPERSAND_BACKUP_MAGICS, matchMagic, stripMagic } from "./magic";
-import { Typeson } from "typeson";
-import { file, map, undef } from "typeson-registry";
+import { AMPERSAND_BACKUP_MAGICS, matchMagicOld, stripMagicOld } from "./magic";
 import { UUIDable } from "../entities";
 import { decompressGzip } from "../../util/misc";
 import dayjs from "dayjs";
 import { platform } from "@tauri-apps/plugin-os";
 
-const typeson = new Typeson({
-	sync: false
-}).register([
-	file,
-	undef,
-	map
-]);
 export function exportDatabaseToBinary() {
 
 	async function _export(){
@@ -103,7 +94,7 @@ export function importDatabaseFromBinary() {
 			if (!path) return false;
 
 			let array = await readFile(path);
-			const magicVersion = matchMagic(array);
+			const magicVersion = matchMagicOld(array);
 			if (!magicVersion) return false;
 
 			switch (magicVersion) {
@@ -132,7 +123,7 @@ export function importDatabaseFromBinary() {
 				}
 				case 2: {
 					// in all other cases we need to strip our magic
-					const stripped = stripMagic(array, magicVersion);
+					const stripped = stripMagicOld(array, magicVersion);
 					if (!stripped) return false;
 					array = stripped;
 					break;
@@ -145,12 +136,7 @@ export function importDatabaseFromBinary() {
 			const tablesAndConfig = decode(array) as Record<string, unknown>;
 
 			progress.dispatchEvent(new Event("start"));
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			let revived: any;
-			if (tablesAndConfig.$types) // typeson
-				revived = await typeson.revive(tablesAndConfig);
-			else
-				revived = walk(tablesAndConfig, revive);
+			const revived = walk(tablesAndConfig, revive);
 
 			const progressTotal = Object.getOwnPropertyNames(revived.database).length + 3;
 			let progressCurrent = 0;
