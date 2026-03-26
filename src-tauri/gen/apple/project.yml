@@ -2,7 +2,7 @@ name: ampersand
 options:
   bundleIdPrefix: moe.ampersand.app
   deploymentTarget:
-    iOS: 14.0
+    iOS: 16.2
 fileGroups: [../../src]
 configs:
   debug: debug
