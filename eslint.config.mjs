@@ -26,7 +26,7 @@ export default defineConfig([
 		},
 		rules: {
 			"no-unused-vars": "off",
-			"no-case-declarations": "off",
+			"no-case-declarations": "error",
 			"no-control-regex": "off",
 			"arrow-body-style": ["error", "as-needed"],
 			"class-methods-use-this": 1,

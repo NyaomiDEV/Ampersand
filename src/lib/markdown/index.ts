@@ -110,7 +110,7 @@ export function useMarked(blob: ReturnType<typeof useBlob>){
 		},
 		async walkTokens(token) {
 			switch (token.type) {
-				case "image":
+				case "image": {
 					// first off let's match the size tokens
 					const matches = /#(-?\d+?x-?\d+?)$/.exec(token.href);
 					if (matches) {
@@ -146,6 +146,7 @@ export function useMarked(blob: ReturnType<typeof useBlob>){
 					if (blocked)
 						token.href = "#";
 					break;
+				}
 				case "link":
 					if (token.href.startsWith("@")) {
 						let blocked = true;

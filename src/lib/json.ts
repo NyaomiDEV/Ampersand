@@ -10,7 +10,7 @@ export function revive(value: any) {
 				return new Map(value.value);
 			case "set":
 				return new Set(value.value);
-			case "file":
+			case "file": {
 				const array = new Uint8Array(value.value.length);
 				for (let i = 0; i < value.value.length; i++)
 					array[i] = (value.value as string).charCodeAt(i);
@@ -23,6 +23,7 @@ export function revive(value: any) {
 						type: value._meta.mimeType
 					}
 				);
+			}
 			case "escaped-meta":
 				return { ...value, _meta: value._meta.value };
 		}
