@@ -67,6 +67,9 @@
 		if(_frontingEntry.isMainFronter)
 			_frontingEntry.influencing = undefined;
 
+		if(_frontingEntry.endTime)
+			_frontingEntry.isLocked = false;
+
 		if(!uuid) {
 			await newFrontingEntry({
 				..._frontingEntry,
@@ -334,7 +337,7 @@
 			</IonList>
 
 			<IonList>
-				<IonItem button :detail="false">
+				<IonItem v-if="!frontingEntry.endTime" button :detail="false">
 					<IonToggle v-model="frontingEntry.isLocked">
 						<IonLabel>
 							{{ $t("frontHistory:edit.isLocked") }}
