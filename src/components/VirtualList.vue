@@ -12,7 +12,7 @@
 		gap: 2
 	});
 
-	const scroller = shallowRef<Element | null>(null);
+	const scroller = shallowRef<HTMLElement | null>(null);
 	const virtualItemEls = shallowRef<(HTMLElement | null)[]>([]);
 	const config = ref({
 		count: props.entries.length,
