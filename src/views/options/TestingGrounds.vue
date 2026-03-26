@@ -17,7 +17,7 @@
 	import { appConfig } from "../../lib/config";
 	import { newTag } from "../../lib/db/tables/tags";
 	import { newSystem } from "../../lib/db/tables/system";
-	import { escapeHatch, reverseEscapeHatch } from "../../lib/db/ioutils";
+	import { escapeHatch, reverseEscapeHatch } from "../../lib/db/ioutils/dump";
 	import { toast } from "../../lib/util/misc";
 	import { useTranslation } from "i18next-vue";
 	import { sep, documentDir } from "@tauri-apps/api/path";

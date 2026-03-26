@@ -2,7 +2,7 @@
 	import { IonContent, IonPage, IonButton, useIonRouter, IonIcon } from "@ionic/vue";
 	import { ref } from "vue";
 	import Spinner from "../../components/Spinner.vue";
-	import { importDatabaseFromBinary } from "../../lib/db/ioutils";
+	import { importDatabaseFromBinary } from "../../lib/db/ioutils/old";
 	import { getDocumentFile, promptYesNo, slideAnimation, toast } from "../../lib/util/misc";
 	import { importPluralKit } from "../../lib/db/external/pluralkit";
 	import { importTupperBox } from "../../lib/db/external/tupperbox";

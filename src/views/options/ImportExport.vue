@@ -1,10 +1,8 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonList, IonItem, IonIcon, IonLabel, IonPage, IonTitle, IonToolbar, IonBackButton, IonProgressBar } from "@ionic/vue";
 	import { ref } from "vue";
-	import { importDatabaseFromBinary, exportDatabaseToBinary } from "../../lib/db/ioutils";
+	import { importDatabaseFromBinary, exportDatabaseToBinary } from "../../lib/db/ioutils/old";
 	import { getDocumentFile, toast } from "../../lib/util/misc";
-	import dayjs from "dayjs";
-	import { save } from "@tauri-apps/plugin-dialog";
 	import { useTranslation } from "i18next-vue";
 	import { importPluralKit } from "../../lib/db/external/pluralkit";
 	import { importTupperBox } from "../../lib/db/external/tupperbox";
@@ -17,8 +15,6 @@
 	import spMD from "@material-symbols/svg-600/outlined/spa.svg";
 	import tupMD from "@material-symbols/svg-600/outlined/package_2.svg";
 	import pkMD from "@material-symbols/svg-600/outlined/pet_supplies.svg";
-
-	import { documentDir, sep } from "@tauri-apps/api/path";
 	import { platform } from "@tauri-apps/plugin-os";
 
 	const loading = ref(false);
@@ -122,43 +118,25 @@
 	async function exportDb(){
 		loading.value = true;
 
-		const date = dayjs().format("YYYY-MM-DD");
-		const fileName = `ampersand-backup-${date}.ampdb`;
-		let path: string | undefined = `${await documentDir()}${sep()}${fileName}`;
+		const { progress, status } = exportDatabaseToBinary();
 
-		if(platform() !== "ios") {
-			// Use save file dialog outside of iOS
-			const _path = await save({
-				defaultPath: path,
-				filters: [{
-					name: "Ampersand backups (.ampdb)",
-					extensions: ["ampdb"]
-				}]
-			});
-			if(_path) path = _path;
-			else path = undefined; // save file got canceled
-		}
-
-		if(path){
-			const { progress, status } = exportDatabaseToBinary(path);
-
-			progress.addEventListener("start", () => {
-				barProgress.value = 0;
-			});
-			progress.addEventListener("progress", (evt) => {
-				barProgress.value = (evt as CustomEvent).detail.progress;
-			});
-			progress.addEventListener("finish", () => {
-				barProgress.value = -1;
-			});
+		progress.addEventListener("start", () => {
+			barProgress.value = 0;
+		});
+		progress.addEventListener("progress", (evt) => {
+			barProgress.value = (evt as CustomEvent).detail.progress;
+		});
+		progress.addEventListener("finish", () => {
+			barProgress.value = -1;
+		});
 			
-			if(await status){
-				await toast(
-					platform() === "ios"
-						? i18next.t("importExport:status.exportedAppIos")
-						: i18next.t("importExport:status.exportedApp")
-				);
-			}
+		if(await status){
+			await toast(
+				platform() === "ios"
+					? i18next.t("importExport:status.exportedAppIos")
+					: i18next.t("importExport:status.exportedApp")
+			);
+
 		} else 
 			await toast(i18next.t("importExport:status.errorExport"));
 
