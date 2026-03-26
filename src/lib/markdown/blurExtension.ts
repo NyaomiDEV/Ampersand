@@ -22,7 +22,7 @@ const blurExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 				return;
 			},
 			renderer(token) {
-				return h("span", { class: "blur", tabindex: -1, }, token.tokens && token.tokens.length ? this.parser.parseInline(token.tokens) : token.text);
+				return h("span", { class: "blur", tabindex: -1, onClick: (e) => e.stopImmediatePropagation() }, token.tokens && token.tokens.length ? this.parser.parseInline(token.tokens) : token.text);
 			}
 		}
 	]
