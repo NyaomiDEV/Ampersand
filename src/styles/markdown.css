@@ -78,20 +78,28 @@
         padding: 2px 4px;
         border-radius: 4px;
         background-color: rgba(var(--ion-color-primary-rgb), 0.40);
-        color: var(--ion-text-color);
+        color: inherit;
     }
 
     /* Spoilers */
     span.spoiler {
         border-radius: 4px;
         padding: 2px 4px;
-        background-color: var(--ion-background-color-step-200);
+        background-color: rgb(var(--md3-surface-container));
         transition-duration: 250ms;
         transition-timing-function: ease-in-out;
         transition-property: color, background-color;
         color: transparent;
         cursor: pointer;
         user-select: none;
+
+        &:is(ion-item *) {
+            background-color: var(--ion-background-color-step-200);
+        }
+
+        &:is(.content-editable-wrapper .preview *) {
+            background-color: var(--ion-background-color-step-100);
+        }
     }
 
     span.spoiler * {
@@ -102,10 +110,18 @@
     }
 
     span.spoiler:focus {
-        background-color: var(--ion-background-color-step-400);
+        background-color: rgb(var(--md3-surface-container-high));
         color: unset;
         user-select: unset;
         cursor: unset;
+
+        &:is(ion-item *) {
+            background-color: var(--ion-background-color-step-300);
+        }
+    
+        &:is(.content-editable-wrapper .preview *) {
+            background-color: var(--ion-background-color-step-300);
+        }
     }
 
     span.spoiler:focus * {
@@ -116,13 +132,17 @@
     span.timestamp {
         border-radius: 4px;
         padding: 2px 4px;
-        background-color: var(--ion-background-color-step-150);
+        background-color: rgb(var(--md3-surface-container-high));
+
+        &:is(ion-item *) {
+            background-color: var(--ion-background-color-step-50);
+        }
     }
 
     span.timestamp::before {
         content: "\A";
         mask-image: url(/node_modules/@material-symbols/svg-600/outlined/nest_clock_farsight_analog.svg);
-        background-color: var(--ion-text-color);
+        background-color: rgb(var(--md3-on-surface-variant));
         mask-size: contain;
         mask-repeat: no-repeat;
         display: inline-block;
