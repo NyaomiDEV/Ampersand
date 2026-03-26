@@ -4,7 +4,7 @@ import { UUIDable, Member, FrontingEntry, FrontingEntryComplete, UUID } from "..
 import { defaultMember, getMember } from "./members";
 import dayjs from "dayjs";
 import { filterFrontingEntry, filterFrontingEntryIndex } from "../../search";
-import { appConfig } from "../../config";
+import { securityConfig } from "../../config";
 import { broadcastEvent } from "../../native/plugin";
 import { deleteFile } from "../../json";
 
@@ -223,6 +223,6 @@ export function getFrontingEntriesDays(query: string) {
 export async function sendFrontingChangedEvent(){
 	const fronting = await getFronting();
 
-	if(appConfig.useIPC)
+	if(securityConfig.useIPC)
 		await broadcastEvent("fronting_changed", deleteFile(fronting));
 }

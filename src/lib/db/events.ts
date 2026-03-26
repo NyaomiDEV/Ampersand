@@ -1,6 +1,6 @@
 import { broadcastEvent } from "../native/plugin";
 import { DatabaseEventData } from "./types";
-import { appConfig } from "../config";
+import { securityConfig } from "../config";
 import { deleteFile } from "../json";
 
 export const DatabaseEvents = new EventTarget();
@@ -14,7 +14,7 @@ export class DatabaseEvent extends Event {
 }
 
 DatabaseEvents.addEventListener("updated", (event) => {
-	if(!appConfig.useIPC) return;
+	if(!securityConfig.useIPC) return;
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	let eventName: string, payload: any;
