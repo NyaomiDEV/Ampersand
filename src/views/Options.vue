@@ -18,11 +18,11 @@
 	import CustomFieldsMD from "@material-symbols/svg-600/outlined/format_list_bulleted_add.svg";
 	import ResourcesMD from "@material-symbols/svg-600/outlined/menu_book.svg";
 
-	import { securityConfig } from "../lib/config";
+	import { appConfig, securityConfig } from "../lib/config";
 	import { lock } from "../lib/applock";
 
 	const router = useIonRouter();
-	const isDev = inject<boolean>("isDev");
+	const isDev = inject<boolean>("isDev") || appConfig.isDeveloperMode;
 	
 	function lockImmediately(){
 		if(lock())
@@ -120,11 +120,17 @@
 					<IonLabel>{{ $t("about:header") }}</IonLabel>
 				</IonItem>
 
-				<IonItem v-if="isDev" button router-link="/options/testingGrounds">
-					<IonIcon slot="start" :icon="TestingMD" aria-hidden="true" />
-					Testing grounds
-				</IonItem>
 			</IonList>
+
+			<template v-if="isDev">
+				<IonListHeader>{{ $t("other:developerMode") }}</IonListHeader>
+				<IonList>
+					<IonItem button router-link="/options/testingGrounds">
+						<IonIcon slot="start" :icon="TestingMD" aria-hidden="true" />
+						Testing grounds
+					</IonItem>
+				</IonList>
+			</template>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
 				<IonFabButton v-if="securityConfig.password && securityConfig.usePassword" @click="lockImmediately">

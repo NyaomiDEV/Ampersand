@@ -11,6 +11,7 @@ export type AppConfig = {
 	showMembersApartFromCustomFronts: "off" | "before" | "after",
 	hideFrontingTimer: boolean,
 	useIPC: boolean,
+	isDeveloperMode: boolean,
 	defaultFilterQueries: {
 		systems?: string,
 		members?: string,

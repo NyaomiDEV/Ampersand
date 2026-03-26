@@ -13,6 +13,7 @@ const defaultAppConfig: AppConfig = {
 	hideFrontingTimer: false,
 	useIPC: false,
 	view: "dashboard",
+	isDeveloperMode: false,
 	defaultFilterQueries: {
 		members: "@archived:no",
 		messageBoard: "@archived:no",

@@ -98,5 +98,6 @@
 		"triangle": "Triangle",
 		"very-sunny": "Very Sunny",
 		"noShape": "No shape"
-	}
+	},
+	"developerMode": "Developer mode"
 }

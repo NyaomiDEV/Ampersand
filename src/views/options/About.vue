@@ -1,11 +1,12 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonIcon, IonBackButton } from "@ionic/vue";
+	import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonIcon, IonBackButton, IonList, IonItem, IonToggle, IonLabel } from "@ionic/vue";
+	import { appConfig } from "../../lib/config";
 	
 	import AmpersandLogo from "../../assets/ampersand_logo.svg";
 
 	import { version } from "../../../package.json";
 	import { openUrl } from "@tauri-apps/plugin-opener";
-	import { onMounted, ref } from "vue";
+	import { computed, onMounted, ref } from "vue";
 
 	import { checkUpdates, checkIsUpdateNewer } from "../../lib/update";
 	import { UpdateCheckResponse } from "../../lib/types";
@@ -14,6 +15,7 @@
 	import credits from "../../assets/credits.md";
 
 	const egg = ref(0);
+	const showDeveloperToggle = computed(() => egg.value >= 10);
 	const newVersion = ref<UpdateCheckResponse>();
 	const isCiVersion = import.meta.env.AMPERSAND_IS_CI_BUILD === "1";
 
@@ -79,6 +81,14 @@
 				</IonButton>
 			</div>
 
+			<IonList v-if="showDeveloperToggle">
+				<IonItem button>
+					<IonToggle v-model="appConfig.isDeveloperMode">
+						<IonLabel>{{ $t("other:developerMode") }}</IonLabel>
+					</IonToggle>
+				</IonItem>
+			</IonList>
+
 			<div class="credits">
 				<h3>{{ $t("about:credits") }}</h3>
 				<Markdown :markdown="credits" />
@@ -121,6 +131,7 @@
 		position: absolute;
 		top: 0;
 		left: 0;
+		pointer-events: none;
 	}
 
 	.logo > ion-icon {
