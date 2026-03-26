@@ -114,3 +114,10 @@ ion-popover {
 .md ion-item.surface {
 	--background: transparent;
 }
+
+/* ion-note */
+.md ion-note {
+	margin: 10px 24px;
+	display: block;
+	--color: rgb(var(--md3-on-surface));
+}
