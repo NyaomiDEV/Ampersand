@@ -6,9 +6,10 @@ import { decompressGzip } from "../util/misc";
 import { accessibilityConfig, appConfig, securityConfig } from "../config";
 import { UUIDable } from "./entities";
 import { deleteNull, replace, revive, walk } from "../json";
-import { dirname } from "@tauri-apps/api/path";
-import { mkdir, readFile, open as openFile } from "@tauri-apps/plugin-fs";
+import { appConfigDir, appDataDir, dirname, documentDir, sep } from "@tauri-apps/api/path";
+import { mkdir, readFile, open as openFile, readDir, copyFile, remove, exists } from "@tauri-apps/plugin-fs";
 import { open } from "@tauri-apps/plugin-dialog";
+import { exit } from "@tauri-apps/plugin-process";
 
 const AMPERSAND_BACKUP_MAGICS = new Map<number, number[]>([
 	[1, [0x1F, 0x8B]], // GZip magic, because we used to use GZip
@@ -196,4 +197,54 @@ export function importDatabaseFromBinary() {
 		.catch(_e => false);
 
 	return { progress, status };
+}
+
+async function recursiveCopyDir(src: string, dst: string) {
+	await mkdir(dst, { recursive: true });
+
+	for (const entry of await readDir(src)) {
+		const newSrcPath = src + sep() + entry.name;
+		const newDstPath = dst + sep() + entry.name;
+		if (entry.isDirectory)
+			await recursiveCopyDir(newSrcPath, newDstPath);
+		else
+			await copyFile(newSrcPath, newDstPath);
+	}
+}
+
+export async function escapeHatch(){
+	const ourDir = `${await documentDir() + sep()}ampersand_escape_hatch_${Date.now()}`;
+	console.log(ourDir);
+	await mkdir(ourDir, { recursive: true });
+
+	// copy app config
+	await mkdir(`${ourDir + sep()}config`);
+	await copyFile(`${await appConfigDir()}${sep()}appConfig.json`, `${ourDir + sep()}config${sep()}appConfig.json`);
+
+	// copy database
+	await mkdir(`${ourDir + sep()}database`);
+	const appDatabase = `${await appDataDir() + sep()}database`;
+	await recursiveCopyDir(appDatabase, `${ourDir + sep()}database`);
+}
+
+export async function reverseEscapeHatch() {
+	const ourDir = `${await documentDir() + sep()}ampersand_illegitimate_intake`;
+	if(
+		!await exists(ourDir) ||
+		!await exists(`${ourDir + sep()}database`) ||
+		!await exists(`${ourDir + sep()}config${sep()}appConfig.json`)
+	) throw new Error("NOPE");
+
+	// copy app config
+	await copyFile(`${ourDir + sep()}config${sep()}appConfig.json`, `${await appConfigDir()}${sep()}appConfig.json`);
+
+	// copy database
+	const appDatabase = `${await appDataDir() + sep()}database`;
+	await remove(appDatabase, { recursive: true });
+	await mkdir(appDatabase, { recursive: true });
+	await recursiveCopyDir(`${ourDir + sep()}database`, appDatabase);
+
+	setTimeout(
+		() => exit(0), 1000
+	);
 }
