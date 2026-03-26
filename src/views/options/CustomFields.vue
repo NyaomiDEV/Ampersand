@@ -156,6 +156,12 @@ ion-reorder > ion-icon {
 	color: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.54);
 }
 
+ion-reorder-group {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
 ion-item.default {
 	--background: var(--ion-background-color-step-200);
 }
