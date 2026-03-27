@@ -132,7 +132,6 @@
 	async function commitImportArchive(){
 		try{
 			const result = await importArchive().status;
-			console.log(result);
 			if(!result) throw new Error();
 			await toast("Archive Imported");
 		}catch(_e){

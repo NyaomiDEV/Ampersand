@@ -158,7 +158,6 @@ export function importArchive() {
 			progress.dispatchEvent(new Event("finish"));
 			return true;
 		} catch (_e) {
-			console.log(_e);
 			return false;
 		}
 	}

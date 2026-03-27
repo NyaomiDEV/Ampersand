@@ -17,7 +17,6 @@ async function recursiveCopyDir(src: string, dst: string) {
 
 export async function escapeHatch() {
 	const ourDir = `${await documentDir() + sep()}ampersand_escape_hatch_${Date.now()}`;
-	console.log(ourDir);
 	await mkdir(ourDir, { recursive: true });
 
 	// copy app config
