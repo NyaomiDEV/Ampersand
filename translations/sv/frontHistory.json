@@ -14,7 +14,7 @@
 			"historyTitle": "Närvarohistorik",
 			"lastPresence": "Förra gången var det {{presence}} / 5 stjärnor",
 			"addTitle": "Hur närvarande är du på en skala från 0 till 10?",
-			"addButton": "Lägg till i historiken",
+			"confirmButton": "Lägg till i historiken",
 			"date": "Datum"
 		},
 		"influencing": {

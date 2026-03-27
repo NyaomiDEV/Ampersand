@@ -11,7 +11,7 @@
 		"presence": {
 			"historyTitle": "Historial de presencia",
 			"addTitle": "¿Qué tan presente estás en una escala del 0 al 10?",
-			"addButton": "Agregado al historial"
+			"confirmButton": "Agregado al historial"
 		},
 		"influencing": {
 			"currentlyInfluencing": "Actualmente influenciando"

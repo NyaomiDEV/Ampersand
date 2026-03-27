@@ -14,7 +14,7 @@
 			"historyTitle": "sona pi mute lon",
 			"lastPresence": "sona pi tenpo poka pini la mute lon li mute {{presence}} / 5",
 			"addTitle": "mute 0 li lon ala, kin la mute 10 li lon mute; ni la, sina jo e mute lon seme?",
-			"addButton": "o pana e ni tawa sona pi mute lon",
+			"confirmButton": "o pana e ni tawa sona pi mute lon",
 			"date": "tenpo"
 		},
 		"influencing": {

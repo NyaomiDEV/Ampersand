@@ -15,7 +15,7 @@
 		"member": "Öncü üyeyi düzenle",
 		"customStatus": "Özelleştirilmiş statü",
 		"presence": {
-			"addButton": "Geçmişe ekle",
+			"confirmButton": "Geçmişe ekle",
 			"date": "Tarih",
 			"historyTitle": "Mevcudiyet geçmişi",
 			"lastPresence": "En sonki mevcudiyeti {{presence}} /5 yıldız",

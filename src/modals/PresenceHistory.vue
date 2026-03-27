@@ -69,11 +69,13 @@
 				modelValue.date = e.date;
 				modelValue.range = e.range;
 			},
-			onDidDismiss: () => {
-				if(date)
-					presence.value.delete(date);
+			onDidDismiss: (e: CustomEvent<{ data: string }>) => {
+				if(e.detail.data === "confirmed"){
+					if(date)
+						presence.value.delete(date);
 
-				presence.value.set(modelValue.date, modelValue.range);
+					presence.value.set(modelValue.date, modelValue.range);
+				}
 				removeModal(vnode);
 			}
 		});

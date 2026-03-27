@@ -9,7 +9,7 @@
 			"historyTitle": "История присутствия",
 			"lastPresence": "Последним было {{presence}} / 5 звезд",
 			"addTitle": "Настолько вы присутствуете на шкале от 0 до 10?",
-			"addButton": "Добавить в историю",
+			"confirmButton": "Добавить в историю",
 			"date": "Дата"
 		},
 		"influencing": {

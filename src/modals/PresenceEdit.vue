@@ -22,8 +22,8 @@
 		}
 	});
 
-	async function add(){
-		await modalController.dismiss("added");
+	async function confirm(){
+		await modalController.dismiss("confirmed");
 	}
 </script>
 
@@ -57,8 +57,8 @@
 				/>
 			</IonItem>
 		</IonList>
-		<IonButton @click="add">
-			{{ $t("frontHistory:edit.presence.addButton") }}
+		<IonButton @click="confirm">
+			{{ $t("frontHistory:edit.presence.confirmButton") }}
 		</IonButton>
 	</IonModal>
 </template>
