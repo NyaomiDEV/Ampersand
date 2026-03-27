@@ -3,7 +3,7 @@ import * as fs from "@tauri-apps/plugin-fs";
 import type { Asset, BoardMessage, CustomField, FrontingEntry, JournalPost, Member, Reminder, System, Tag, UUIDable } from "../entities";
 import { decode, encode } from "@msgpack/msgpack";
 import type { AmpersandEntityMapping, MigrationsMapping } from "../types";
-import { deleteNull, replace, revive, walk } from "../../serialization";
+import { deleteNull, replace, revive, walk, walkAsync } from "../../serialization";
 import { members, systems } from "./migrations";
 
 export type IndexEntry<T> = UUIDable & Partial<T>;
@@ -34,7 +34,7 @@ export class ShittyTable<T extends UUIDable> {
 
 	async saveIndexToDisk() {
 		const _path = `${this.path + sep()}.index`;
-		await fs.writeFile(_path, encode(walk(this.index, replace)));
+		await fs.writeFile(_path, encode(await walkAsync(this.index, replace)));
 	}
 
 	async updateIndexWithData(data: T, saveAfterwards: boolean = true){
@@ -149,7 +149,7 @@ export class ShittyTable<T extends UUIDable> {
 
 	async write(uuid: string, data: T) {
 		const _path = this.path + sep() + uuid;
-		await fs.writeFile(_path, encode(deleteNull(walk(data, replace))));
+		await fs.writeFile(_path, encode(deleteNull(await walkAsync(data, replace))));
 		await this.updateIndexWithData(data);
 	}
 
@@ -170,7 +170,7 @@ export class ShittyTable<T extends UUIDable> {
 			// copy of add routine but just because we suck
 			if(!this.exists(content.uuid)) {
 				const _path = this.path + sep() + content.uuid;
-				await fs.writeFile(_path, encode(deleteNull(walk(content, replace))));
+				await fs.writeFile(_path, encode(deleteNull(await walkAsync(content, replace))));
 				await this.updateIndexWithData(content, false);
 			}
 		}

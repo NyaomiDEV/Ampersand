@@ -1,6 +1,6 @@
 import { invoke, InvokeArgs, InvokeOptions, addPluginListener } from "@tauri-apps/api/core";
 import { writeToTemp } from "./cache";
-import { replace, walk } from "../serialization";
+import { replace, walkAsync } from "../serialization";
 
 function invokePlugin(cmd: string, args?: InvokeArgs, opts?: InvokeOptions): Promise<unknown> {
 	return invoke(`plugin:ampersand|${cmd}`, args, opts);
@@ -39,7 +39,7 @@ export async function broadcastEvent(event: string, payload: object): Promise<vo
 	return invokePlugin("broadcast_event", {
 		payload: JSON.stringify({
 			event,
-			data: walk(payload, replace)
+			data: await walkAsync(payload, replace)
 		}) 
 	}) as Promise<void>;
 }

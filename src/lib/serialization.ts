@@ -42,7 +42,7 @@ export function revive(value: any) {
 	return value;
 }
 
-export function replace(value: any) {
+export async function replace(value: any) {
 	if (typeof value !== "object" || value === null) return value;
 
 	if (value instanceof Map) {
@@ -55,21 +55,11 @@ export function replace(value: any) {
 			_meta: { type: "set" },
 			value: Array.from(value.values()),
 		};
-	} else if (value instanceof File) {
-		const req = new XMLHttpRequest();
-		req.responseType = "arraybuffer";
-		const url = URL.createObjectURL(value);
-		req.open("GET", url, false);
-		req.send();
-		URL.revokeObjectURL(url);
-		if (req.status !== 200 && req.status !== 0) 
-			throw new Error(`Bad File access: ${req.status}`);
-			
+	} else if (value instanceof File) {			
 		return {
 			_meta: { type: "file", name: value.name, mimeType: value.type },
-			value: new Uint8Array(req.response)
+			value: await value.bytes()
 		};
-
 	} else if ("_meta" in value) {
 		// escape "_meta" properties
 		return {
@@ -84,7 +74,7 @@ export function replace(value: any) {
 	return value;
 }
 
-export function walk(obj: object, replacer: (obj: any) => any) {
+export function walk(obj: object, replacer: (obj: object) => object): object {
 	const newVal = replacer(obj);
 	if (typeof newVal !== "object" || newVal === null || newVal instanceof File) return newVal;
 
@@ -101,6 +91,28 @@ export function walk(obj: object, replacer: (obj: any) => any) {
 	else {
 		for (const k in newVal)
 			newVal[k] = walk(newVal[k], replacer);
+	}
+
+	return newVal;
+}
+
+export async function walkAsync(obj: object, replacer: (obj: object) => Promise<object>): Promise<object> {
+	const newVal = await replacer(obj);
+	if (typeof newVal !== "object" || newVal === null || newVal instanceof File) return newVal;
+
+	if (Array.isArray(newVal)) {
+		for (let i = 0; i < newVal.length; i++)
+			newVal[i] = await walkAsync(newVal[i], replacer);
+	} else if (newVal instanceof Map) {
+		const _newMap = new Map();
+		for (const k of newVal.keys())
+			_newMap.set(await walkAsync(k, replacer), await walkAsync(newVal.get(k), replacer));
+		return _newMap;
+	} else if (newVal instanceof Set)
+		return await Promise.all([...newVal].map(x => walkAsync(x, replacer)));
+	else {
+		for (const k in newVal)
+			newVal[k] = await walkAsync(newVal[k], replacer);
 	}
 
 	return newVal;

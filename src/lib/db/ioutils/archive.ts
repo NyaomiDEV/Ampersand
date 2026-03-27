@@ -16,7 +16,6 @@ function encode(data: any){
 }
 
 function reviver(data: any){
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 	return walk(data, revive);
 }
 
@@ -143,7 +142,8 @@ export function importArchive() {
 					const multiStreamDecoder = decodeMultiStream(stream) as AsyncGenerator<{ table: string, data: any }>;
 
 					for await(const rawData of multiStreamDecoder){
-						const data = reviver(rawData);
+						const data: any = await reviver(rawData);
+						console.log(data);
 						switch (data.table) {
 							case "__config": {
 								Object.assign(appConfig, data.data.appConfig);
@@ -152,9 +152,14 @@ export function importArchive() {
 								break;
 							}
 							default: {
-								const table: ShittyTable<UUIDable> = getTables()[data.table];
-								const result = await table.add(data.data.uuid, data.data);
-								if(!result) throw new Error();
+								try {
+									const table: ShittyTable<UUIDable> = getTables()[data.table];
+									const result = await table.add(data.data.uuid, data.data);
+									if (!result) throw new Error("item already exists", data.data.uuid);
+								} catch(e) {
+									console.error(e);
+									return false;
+								}
 							}
 						}
 					}

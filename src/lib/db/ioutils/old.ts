@@ -139,7 +139,8 @@ export function importDatabaseFromBinary() {
 			const tablesAndConfig = decode(array) as Record<string, unknown>;
 
 			progress.dispatchEvent(new Event("start"));
-			const revived = walk(tablesAndConfig, revive);
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			const revived: any = await walk(tablesAndConfig, revive);
 
 			const progressTotal = Object.getOwnPropertyNames(revived.database).length + 3;
 			let progressCurrent = 0;
