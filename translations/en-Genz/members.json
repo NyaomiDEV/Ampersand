@@ -1,0 +1,49 @@
+{
+	"header": "Besties",
+	"searchPlaceholder": "Looking for someone?...",
+	"select": "Pick a bestie",
+	"deletedMember": "Ghosted member",
+	"deletedCustomFront": "Deleted custom front",
+	"actions": {
+		"addToFront": "Add to the mix",
+		"setMainFronter": "Main character energy",
+		"unsetMainFronter": "Not the main character anymore",
+		"setSoleFronter": "Solo mission",
+		"removeFromFront": "Kick from the mix"
+	},
+	"toasts": {
+		"addToFront": "Member is officially here",
+		"setMainFronter": "They're the main character now",
+		"unsetMainFronter": "No longer the main character",
+		"setSoleFronter": "They're flying solo",
+		"removeFromFront": "Member left the chat"
+	},
+	"edit": {
+		"header": "Bestie",
+		"headerAdd": "Add a new bestie",
+		"headerEdit": "Fix the vibes",
+		"name": "Name",
+		"pronouns": "Pronouns",
+		"role": "The Role",
+		"color": "Aesthetic color",
+		"imageClip": "Avatar shape",
+		"customFieldsAdd": "Add extra lore",
+		"tags": "Edit tags",
+		"description": "The tea",
+		"noDescription": "No tea yet",
+		"system": "Edit the squad",
+		"isPinned": "Pin to top",
+		"customFront": "Custom front",
+		"archived": "In the vault",
+		"showFrontingEntries": "Show who's active",
+		"showBoardEntries": "Show the board",
+		"showJournalEntries": "Show the diary",
+		"memberID": "Bestie ID: {{memberID}}",
+		"dateCreated": "Spawned on: {{dateCreated}}",
+		"memberIDcopiedToClipboard": "Bestie ID copied! No cap.",
+		"delete": {
+			"title": "Yeet bestie",
+			"confirm": "You sure you wanna yeet this bestie for good?"
+		}
+	}
+}

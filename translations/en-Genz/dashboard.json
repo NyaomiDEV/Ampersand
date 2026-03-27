@@ -1,0 +1,15 @@
+{
+	"header": "Main Hub",
+	"header_salute": "Yo!",
+	"header_mainfronter": "Sup, {{fronterName}}!",
+	"systemDescription": "The lore",
+	"nowFronting": "Currently vibing",
+	"fronterInfluencing": "Influencing {{influencedMember}}",
+	"addToFront": "Pull up to the front",
+	"recentFrontingHistory": "Just dipped",
+	"messageBoard": {
+		"header": "The tea",
+		"add": "Drop a message",
+		"view": "See more"
+	}
+}

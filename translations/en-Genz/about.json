@@ -1,0 +1,9 @@
+{
+	"header": "The Lore",
+	"version": "Vibe {{version}}",
+	"ciVersion": "CI vibe check",
+	"madein": "Cooked with love in Italy",
+	"privacyPolicy": "Privacy Policy (no cap)",
+	"updateAvailable": "New drop: {{newVersion}}",
+	"credits": "The Main Characters"
+}

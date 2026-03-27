@@ -1,0 +1,36 @@
+{
+	"header": "Migration",
+	"importHeader": "Bring it in",
+	"thirdPartyHeader": "The Collabs",
+	"exportHeader": "Yeet it out",
+	"dbExport": {
+		"title": "Save your receipts",
+		"desc": "Backup your current data to a file so you don't lose the lore"
+	},
+	"dbImportDesc": "Lowkey warning! This is gonna override everything, no cap",
+	"dbImport": "Bring in your data",
+	"dbImportOld": {
+		"title": "Import data from a prehistoric version of Ampersand",
+		"desc": "For backup files from when Ampersand was in its flop era (< 0.2.0)",
+		"note": "Old Ampersand used a file format (ampdb) that's basically ancient history now. If you're still holding onto those old backups, import them ASAP and re-export, because this option is getting deleted soon. Don't say we didn't warn you."
+	},
+	"pkImport": "Import your PluralKit data (it's giving crossover)",
+	"ocImport": "Import your Octocon data (main character energy)",
+	"tuImport": "Import your Tupperbox data (real ones know)",
+	"spImport": "Import your Simply Plural data (we love to see it)",
+	"status": {
+		"imported": "The backup is officially here. Restart the app to see the vision.",
+		"importedSp": "Simply Plural data imported. Restart the app, bestie.",
+		"importedOc": "Octocon data imported. Restart the app for the vibes.",
+		"importedPk": "PluralKit data imported. Restart the app to lock it in.",
+		"importedTu": "Tupperbox data imported. Restart the app and stay winning.",
+		"exportedApp": "The backup has been yeeted to your chosen spot.",
+		"exportedAppIos": "The backup is chilling in the Ampersand folder in your Files app.",
+		"errorExport": "Exporting the backup failed. Major L.",
+		"error": "Importing the backup failed. We're crying.",
+		"errorOc": "Octocon import failed. That's not it.",
+		"errorSp": "Simply Plural import failed. Absolute chaos.",
+		"errorPk": "PluralKit import failed. The math isn't mathing.",
+		"errorTu": "Tupperbox import failed. It's a flop."
+	}
+}

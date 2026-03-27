@@ -1,0 +1,18 @@
+{
+	"header": "Lore fields",
+	"select": "Pick your lore fields",
+	"searchPlaceholder": "Look for some lore...",
+	"edit": {
+		"header": "Fixing the lore",
+		"headerAdd": "New lore drop",
+		"name": "Lore field name",
+		"default": {
+			"title": "Main character energy",
+			"desc": "These lore fields are always gonna be there, no cap"
+		},
+		"delete": {
+			"title": "Yeet this field",
+			"confirm": "You fr about deleting this? It's giving mistake"
+		}
+	}
+}

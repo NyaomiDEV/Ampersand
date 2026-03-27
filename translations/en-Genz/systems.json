@@ -1,0 +1,29 @@
+{
+	"header": "Squads",
+	"searchPlaceholder": "Look for your squad...",
+	"select": "Pick a squad",
+	"edit": {
+		"header": "Squad",
+		"headerAdd": "New squad unlocked",
+		"headerEdit": "Fix the squad",
+		"name": "Squad name",
+		"description": "The tea",
+		"noDescription": "No tea found",
+		"color": "Vibe color",
+		"imageClip": "PFP shape",
+		"memberCount": "Bestie count",
+		"memberCountText": "{{totalMemberCount}} besties, {{memberCount}} locked in, {{archivedMemberCount}} ghosted",
+		"customFrontCountText": "{{totalCustomFrontCount}} custom fronts, {{customFrontCount}} maining, {{archivedCustomFrontCount}} in the vault",
+		"tapToShow": "Tap for the reveal",
+		"showMembers": "See the whole squad",
+		"parent": "Main squad",
+		"isPinned": "Pin to top",
+		"archived": "Ghosted",
+		"delete": {
+			"title": "Yeet the squad",
+			"confirm": "You fr about yeeting this squad?"
+		},
+		"systemID": "Squad ID: {{systemID}}",
+		"systemIDcopiedToClipboard": "Squad ID copied, no cap!"
+	}
+}

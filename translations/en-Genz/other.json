@@ -1,0 +1,103 @@
+{
+	"languageName": {
+		"local": "Gen Z English",
+		"inEnglish": "Gen Z English"
+	},
+	"genericDeleteDesc": "No cap, you can't undo this once it's gone!",
+	"addTimestamp": "Add the timestamp",
+	"memberMention": "Tag the bestie",
+	"storagePersistence": {
+		"header": "Hol' up",
+		"content": "Ampersand can't save your tea persistently on this device. If you're on Firefox, let Ampersand cook. If you're on Chrome, Edge, or whatever, just install Ampersand as a web app or add it to your home screen. If this keeps popping up, make sure to back up your data in the Import/Export section so you don't lose the plot."
+	},
+	"alerts": {
+		"ok": "Bet",
+		"cancel": "Abort",
+		"clear": "Yeet",
+		"yes": "Yessir",
+		"no": "Nah"
+	},
+	"presence": {
+		"absent": "AFK",
+		"heavilyDissociating": "Brain is literally mush",
+		"dissociating": "Head empty, no thoughts",
+		"zonedOut": "Staring into the abyss",
+		"present": "Locked in",
+		"fullyGrounded": "Main character energy"
+	},
+	"back": "Go back",
+	"time": "Time",
+	"timeSizes": {
+		"years": {
+			"long": "years",
+			"short": "Y"
+		},
+		"months": {
+			"long": "months",
+			"short": "M"
+		},
+		"days": {
+			"long": "days",
+			"short": "D"
+		},
+		"weekdays": {
+			"monday": "Monday",
+			"tuesday": "Tuesday",
+			"wednesday": "Wednesday",
+			"thursday": "Thursday",
+			"friday": "Friday",
+			"saturday": "Saturday",
+			"sunday": "Sunday"
+		},
+		"hours": {
+			"long": "hours",
+			"short": "h"
+		},
+		"minutes": {
+			"long": "minutes",
+			"short": "m"
+		},
+		"seconds": {
+			"long": "seconds",
+			"short": "s"
+		}
+	},
+	"shapes": {
+		"arch": "Arch",
+		"arrow": "Arrow",
+		"boom": "Boom",
+		"bun": "Bun",
+		"burst": "Burst",
+		"clamshell": "Clamshell",
+		"diamond": "Diamond",
+		"fan": "Fan",
+		"flower": "Flower",
+		"gem": "Gem",
+		"ghost-ish": "Ghost-ish",
+		"heart": "Heart",
+		"leaf-clover4": "4-Leaf Clover",
+		"leaf-clover8": "8-Leaf Clover",
+		"oval": "Oval",
+		"pentagon": "Pentagon",
+		"pill": "Pill",
+		"pixel-circle": "Pixel Circle",
+		"pixel-triangle": "Pixel Triangle",
+		"puffy-diamond": "Puffy Diamond",
+		"puffy": "Puffy",
+		"semicircle": "Semicircle",
+		"sided-cookie12": "12-sided Cookie",
+		"sided-cookie4": "4-sided Cookie",
+		"sided-cookie6": "6-sided Cookie",
+		"sided-cookie7": "7-sided Cookie",
+		"sided-cookie9": "9-sided Cookie",
+		"slanted": "Slanted",
+		"soft-boom": "Soft Boom",
+		"soft-burst": "Soft Burst",
+		"square": "Square",
+		"sunny": "Sunny",
+		"triangle": "Triangle",
+		"very-sunny": "Extra Sunny",
+		"noShape": "No shape fr"
+	},
+	"developerMode": "God mode"
+}

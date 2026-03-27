@@ -1,0 +1,45 @@
+{
+	"header": "The Tea Board",
+	"searchPlaceholder": "Find the receipts...",
+	"polls": {
+		"boardMessageContainsPoll": "Lowkey a poll here",
+		"collapsePoll": "Hide the poll",
+		"voteCast": {
+			"voter": "Pick the main character",
+			"reason": "Drop the lore",
+			"reasonHint": "The why",
+			"retractConfirmation": "You really gonna take back that vote? No cap?"
+		},
+		"resultsHeader": "The results are in",
+		"resultsButton": "Show the stats",
+		"choice": {
+			"desc_one": "{{count}} bestie",
+			"desc_other": "{{count}} besties"
+		},
+		"defaultPollValues": {
+			"yes": "Yass",
+			"no": "Nah",
+			"veto": "Veto",
+			"abstain": "Abstain"
+		}
+	},
+	"edit": {
+		"header": "Fix the vibe",
+		"member": "Who actually wrote this?",
+		"date": "When it dropped",
+		"title": "The headline",
+		"body": "The actual tea",
+		"isPinned": "Pin this to the top",
+		"isArchived": "Put this in the vault",
+		"attachPoll": "Add a poll to the mix",
+		"deleteAttachedPoll": "Yeet the poll",
+		"pollIsMultipleChoice": "Let 'em pick everything",
+		"pollAddNewChoice": "Add another option",
+		"pollChoice": "What's the move?",
+		"pollEditWarning": "If you change the poll, the votes are cooked!",
+		"delete": {
+			"title": "Delete the post",
+			"confirm": "You sure you want to yeet this message?"
+		}
+	}
+}

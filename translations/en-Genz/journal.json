@@ -1,0 +1,29 @@
+{
+	"header": "Journal",
+	"searchPlaceholder": "Find the receipts...",
+	"contentWarning": "This post is lowkey unhinged",
+	"private": "Gatekept post",
+	"pinnedPosts": "Main character energy posts",
+	"alertSubheader": "You sure you ready for this?",
+	"edit": {
+		"header": "Post",
+		"headerAdd": "Drop a new post",
+		"headerEdit": "Fix the post",
+		"headerOptions": "Post vibes",
+		"author": "Change the OP",
+		"date": "Change the timestamp",
+		"title": "Title",
+		"subtitle": "Subtitle",
+		"body": "The actual tea",
+		"tags": "Tags",
+		"isPinned": "Pinned post",
+		"isPrivate": "Gatekept post",
+		"contentWarning": "Trigger warning",
+		"postID": "Post ID: {{postID}}",
+		"postIDcopiedToClipboard": "Post ID copied, go off!",
+		"delete": {
+			"title": "Yeet this post",
+			"confirm": "You fr wanna delete this?"
+		}
+	}
+}

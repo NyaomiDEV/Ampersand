@@ -1,0 +1,8 @@
+{
+	"title": "App's locked",
+	"hint": "Drop the passcode, bestie",
+	"biometrics": {
+		"title": "App's on lockdown",
+		"reason": "Unlock this real quick"
+	}
+}

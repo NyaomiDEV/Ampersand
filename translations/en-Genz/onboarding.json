@@ -1,0 +1,39 @@
+{
+	"welcomeScreen": {
+		"header": "Welcome to Ampersand!",
+		"start": "Let's get it!"
+	},
+	"importScreen": {
+		"header": "Wanna import your data? No cap?",
+		"prevInstall": "Yeah, from the old setup",
+		"simplyPlural": "Yeah, Simply Plural",
+		"octocon": "Yeah, Octocon",
+		"pluralKit": "Yeah, PluralKit",
+		"tupperbox": "Yeah, Tupperbox",
+		"startFromScratch": "Nah, I'm starting fresh",
+		"pleaseWait": "Hold up while we grab your data",
+		"error": "The backup import is giving L energy. Try something else.",
+		"errorSp": "Simply Plural import failed. That's a major L. Try another way.",
+		"errorOc": "Octocon import is cooked. Pick another option.",
+		"errorPk": "PluralKit import is mid. Try something else.",
+		"errorTu": "Tupperbox import is not it. Try another option.",
+		"allowRemoteContent": {
+			"header": "Let us hit the WiFi?",
+			"desc": "Ampersand is lowkey offline-first, so we need your permission to go online. We'll just be grabbing your avatars and banners for now. You can totally turn this off in Options > Security > Allow remote content later if it's not your vibe."
+		}
+	},
+	"systemInfo": {
+		"header": "Drop the lore on your system!",
+		"name": "Collective name",
+		"description": "A little bit about the squad..."
+	},
+	"memberInfo": {
+		"header": "Main character energy! Tell us more.",
+		"description": "A little bit about you...",
+		"invitation": "Keep tweaking your profile card once the onboarding is finished!"
+	},
+	"endScreen": {
+		"header": "Thanks for picking Ampersand! Real one.",
+		"startButton": "Let's goooo!"
+	}
+}

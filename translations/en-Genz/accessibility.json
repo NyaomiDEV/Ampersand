@@ -1,0 +1,61 @@
+{
+	"header": "Accessibility",
+	"highLegibilityFont": {
+		"title": "Font for the real ones",
+		"desc": "Swap the basic font for one that's actually readable"
+	},
+	"highLegibilityFontType": {
+		"title": "Readable font family",
+		"atkinson": "Atkinson Hyperlegible",
+		"opendyslexic": "OpenDyslexic",
+		"lexend": "Lexend",
+		"comicrelief": "Comic Relief",
+		"system-font": "Basic System Font"
+	},
+	"uiVariant": {
+		"title": "UI Aesthetic",
+		"auto": "Vibe with the system",
+		"light": "Flashbang mode",
+		"dark": "Dark mode (Main character energy)"
+	},
+	"useMaterialTheming": {
+		"title": "Material Design vibes",
+		"desc": "Theme the whole app based on Material rules (might be a bit much for the eyes)"
+	},
+	"themeIsAmoled": {
+		"title": "Pure Black / AMOLED",
+		"desc": "Go full pitch black in dark mode. Saves your screen and looks fire."
+	},
+	"themeIsVibrant": {
+		"title": "Vibrant Aesthetic",
+		"desc": "Add more color to the UI, no cap."
+	},
+	"colorIndicatorPosition": {
+		"title": "Color indicator spot",
+		"avatar": "Avatar outline",
+		"listItem": "List item border"
+	},
+	"useAccentColor": {
+		"title": "Accent color",
+		"desc": "Pick your own accent color"
+	},
+	"accentColor": {
+		"title": "Choose the accent color"
+	},
+	"reducedMotion": {
+		"title": "No shaky vibes",
+		"desc": "Turn off the animations"
+	},
+	"disableCovers": {
+		"title": "No covers"
+	},
+	"contrastLevel": {
+		"title": "Contrast level"
+	},
+	"fontScale": {
+		"title": "Font size"
+	},
+	"longPressDuration": {
+		"title": "Long press timing"
+	}
+}

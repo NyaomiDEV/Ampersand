@@ -1,0 +1,20 @@
+{
+	"header": "The Plug",
+	"ampersand": "On Ampersand",
+	"website": {
+		"title": "Main Site",
+		"desc": "Cop the latest version and stay woke on our updates."
+	},
+	"blog": {
+		"title": "The Tea",
+		"desc": "Get the latest news and peep our dev rambles."
+	},
+	"wiki": {
+		"title": "The Bible",
+		"desc": "Get the lowdown on how to use the app."
+	},
+	"repository": {
+		"title": "The Sauce",
+		"desc": "Help us cook and report any Ls you find."
+	}
+}

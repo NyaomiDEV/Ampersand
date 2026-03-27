@@ -1,0 +1,17 @@
+{
+	"header": "Asset manager",
+	"searchPlaceholder": "Looking for the vibes...",
+	"add": {
+		"header": "Manifest new asset",
+		"attachment": "Drop the file"
+	},
+	"edit": {
+		"header": "Glow up the asset",
+		"friendlyName": "New name who dis",
+		"attachment": "Swap the fit",
+		"delete": {
+			"title": "Yeet the asset",
+			"confirm": "No cap, you tryna delete this for real?"
+		}
+	}
+}

@@ -1,0 +1,29 @@
+{
+	"header": "Security",
+	"applock": {
+		"title": "Gatekeep this app",
+		"desc": "Lock the app so no one can peep your business"
+	},
+	"biometrics": {
+		"title": "Use face or prints",
+		"desc": "Unlock with your face or fingerprint"
+	},
+	"allowRemoteContent": {
+		"title": "Allow remote content",
+		"desc": "Let Ampersand use the internet to grab remote stuff, like images in Markdown and avatars from other imports."
+	},
+	"passwordAlert": {
+		"header": "Hol' up",
+		"text": "You fr right now? Before you do this, write your password down somewhere else because if you lose it, your data is cooked and there's no recovery. No cap, export your data before you set one!"
+	},
+	"editPassword": "Switch up the password",
+	"inputPassword": {
+		"titleAdd": "Drop your new password",
+		"titleReenter": "Run that password back",
+		"titleModifyOld": "What's the old password?",
+		"titleModifyNew": "Drop the new password",
+		"titleDisable": "Password check",
+		"hint": "Password"
+	},
+	"useIPC": "Send the vibes to other apps"
+}

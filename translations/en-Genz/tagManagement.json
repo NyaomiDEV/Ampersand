@@ -1,0 +1,41 @@
+{
+	"header": "Tag management",
+	"searchPlaceholder": "Look for tags...",
+	"select": "Pick some tags bestie",
+	"selector": {
+		"member": "Member tags",
+		"journal": "Journal tags"
+	},
+	"edit": {
+		"header": {
+			"member": "Edit member tag",
+			"journal": "Edit journal tag"
+		},
+		"name": "Tag name",
+		"description": "Tag lore",
+		"color": "Tag aesthetic",
+		"viewInLists": "Show up in lists",
+		"type": {
+			"header": "Tag vibe",
+			"member": "Member",
+			"journal": "Journal",
+			"desc": "Lowkey you can only set the vibe when you first make it!"
+		},
+		"members": {
+			"title": "Pick the squad using this tag",
+			"desc_one": "{{count}} member is using this tag",
+			"desc_other": "{{count}} members are using this tag"
+		},
+		"showJournal": {
+			"title": "Show the posts with this tag",
+			"desc_one": "{{count}} post has this tag",
+			"desc_other": "{{count}} posts have this tag"
+		},
+		"delete": {
+			"title": "Yeet tag",
+			"confirm": "You fr want to yeet this tag?"
+		},
+		"tagID": "Tag ID: {{tagID}}",
+		"tagIDCopiedToClipboard": "Tag ID copied to clipboard, no cap!"
+	}
+}
