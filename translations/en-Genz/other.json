@@ -3,7 +3,7 @@
 		"local": "Gen Z English",
 		"inEnglish": "Gen Z English"
 	},
-	"genericDeleteDesc": "No cap, you can't undo this once it's gone!",
+	"genericDeleteDesc": "You can't undo this once it's gone!",
 	"addTimestamp": "Add the timestamp",
 	"memberMention": "Tag the bestie",
 	"storagePersistence": {

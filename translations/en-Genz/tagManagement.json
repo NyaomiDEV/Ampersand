@@ -36,6 +36,6 @@
 			"confirm": "You fr want to yeet this tag?"
 		},
 		"tagID": "Tag ID: {{tagID}}",
-		"tagIDCopiedToClipboard": "Tag ID copied to clipboard, no cap!"
+		"tagIDCopiedToClipboard": "Tag ID copied!"
 	}
 }

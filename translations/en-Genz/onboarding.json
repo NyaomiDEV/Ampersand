@@ -4,7 +4,7 @@
 		"start": "Let's get it!"
 	},
 	"importScreen": {
-		"header": "Wanna import your data? No cap?",
+		"header": "Wanna import your data?",
 		"prevInstall": "Yeah, from the old setup",
 		"simplyPlural": "Yeah, Simply Plural",
 		"octocon": "Yeah, Octocon",
@@ -23,7 +23,7 @@
 		}
 	},
 	"systemInfo": {
-		"header": "Drop the lore on your system!",
+		"header": "Drop the lore on your squad!",
 		"name": "Collective name",
 		"description": "A little bit about the squad..."
 	},

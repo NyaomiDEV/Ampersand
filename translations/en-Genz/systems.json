@@ -24,6 +24,6 @@
 			"confirm": "You fr about yeeting this squad?"
 		},
 		"systemID": "Squad ID: {{systemID}}",
-		"systemIDcopiedToClipboard": "Squad ID copied, no cap!"
+		"systemIDcopiedToClipboard": "Squad ID copied!"
 	}
 }
