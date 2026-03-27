@@ -12,7 +12,8 @@
 		IonLabel,
 		IonListHeader,
 		IonNote,
-		IonItemDivider
+		IonItemDivider,
+		IonProgressBar
 	} from "@ionic/vue";
 	import { newMember } from "../../lib/db/tables/members";
 	import { appConfig } from "../../lib/config";
@@ -41,19 +42,32 @@
 
 	async function refreshAllData(){
 		loading.value = true;
+		barProgress.value = 0;
+		let progress = 0;
+
+		const totalTables = Object.values(getTables()).length;
+		let success = true;
 		for(const table of Object.values(getTables())){
 			try{
 				await table.refresh();
-				await toast("Tables refreshed");
+				progress++;
+				barProgress.value = progress / totalTables;
 			}catch(e){
 				await toast(`Error: ${(e as Error)}`);
+				success = false;
 			}
 		}
+
+		if(success)
+			await toast("Tables refreshed");
+
+		barProgress.value = -1;
 		loading.value = false;
 	}
 
 	async function genMembers() {
 		loading.value = true;
+		barProgress.value = 0;
 		for(let i = 0; i < 100; i++){
 			await newMember({
 				system: appConfig.defaultSystem,
@@ -64,32 +78,40 @@
 				tags: [],
 				dateCreated: new Date()
 			});
+			barProgress.value = i / 100;
 		}
 		loading.value = false;
+		barProgress.value = -1;
 	}
 
 	async function genTags() {
 		loading.value = true;
+		barProgress.value = 0;
 		for(let i = 0; i < 100; i++){
 			await newTag({
 				name: `Tag ${i}`,
 				type: "member",
 				viewInLists: false
 			});
+			barProgress.value = i / 100;
 		}
 		loading.value = false;
+		barProgress.value = -1;
 	}
 
 	async function genSystems() {
 		loading.value = true;
+		barProgress.value = 0;
 		for(let i = 0; i < 100; i++){
 			await newSystem({
 				name: `System ${i}`,
 				isPinned: false,
 				isArchived: false
 			});
+			barProgress.value = i / 100;
 		}
 		loading.value = false;
+		barProgress.value = -1;
 	}
 
 	async function commitEscapeHatch(){
@@ -176,6 +198,7 @@
 				<IonTitle>
 					Testing Grounds
 				</IonTitle>
+				<IonProgressBar v-if="loading" :type="barProgress < 0 ? 'indeterminate' : 'determinate'" :value="barProgress > 0 ? barProgress : 0" />
 			</IonToolbar>
 		</IonHeader>
 
