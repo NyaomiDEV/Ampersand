@@ -31,25 +31,29 @@
 	import { onMounted, ref } from "vue";
 	import { exportDatabaseToJSON, importDatabaseFromJSON } from "../../lib/db/ioutils/json";
 	import { getTables } from "../../lib/db/tables";
-	import { exportArchive, importArchive } from "../../lib/db/ioutils/archive";
 	
 	const i18next = useTranslation();
+
+	const loading = ref(false);
+	const barProgress = ref(-1);
 
 	const escapeHatchPath = ref("");
 
 	async function refreshAllData(){
+		loading.value = true;
 		for(const table of Object.values(getTables())){
 			try{
 				await table.refresh();
+				await toast("Tables refreshed");
 			}catch(e){
 				await toast(`Error: ${(e as Error)}`);
-				return;
 			}
 		}
-		await toast("Tables refreshed");
+		loading.value = false;
 	}
 
 	async function genMembers() {
+		loading.value = true;
 		for(let i = 0; i < 100; i++){
 			await newMember({
 				system: appConfig.defaultSystem,
@@ -61,9 +65,11 @@
 				dateCreated: new Date()
 			});
 		}
+		loading.value = false;
 	}
 
 	async function genTags() {
+		loading.value = true;
 		for(let i = 0; i < 100; i++){
 			await newTag({
 				name: `Tag ${i}`,
@@ -71,9 +77,11 @@
 				viewInLists: false
 			});
 		}
+		loading.value = false;
 	}
 
 	async function genSystems() {
+		loading.value = true;
 		for(let i = 0; i < 100; i++){
 			await newSystem({
 				name: `System ${i}`,
@@ -81,64 +89,75 @@
 				isArchived: false
 			});
 		}
+		loading.value = false;
 	}
 
 	async function commitEscapeHatch(){
+		loading.value = true;
 		try{
 			await escapeHatch();
 			await toast("ESCAPE HATCH ACTIVATED");
 		}catch(_e){
-			await toast(i18next.t("importExport:status.error"));
+			await toast(i18next.t("importExport:status.errorExport"));
 		}
+		loading.value = false;
 	}
 
 	async function commitReverseEscapeHatch(){
+		loading.value = true;
 		try{
 			await reverseEscapeHatch();
 			await toast("REVERSE ESCAPE HATCH ACTIVATED");
 		}catch(_e){
 			await toast(i18next.t("importExport:status.error"));
 		}
+		loading.value = false;
 	}
 
 	async function commitExportJSON(doYouHateYourDevice: boolean){
+		loading.value = true;
 		try{
-			const result = await exportDatabaseToJSON(doYouHateYourDevice).status;
-			if(!result) throw new Error();
+			const { progress, status } = exportDatabaseToJSON(doYouHateYourDevice);
+
+			progress.addEventListener("start", () => {
+				barProgress.value = 0;
+			});
+			progress.addEventListener("progress", (evt) => {
+				barProgress.value = (evt as CustomEvent).detail.progress;
+			});
+			progress.addEventListener("finish", () => {
+				barProgress.value = -1;
+			});
+
+			if(!await status) throw new Error();
 			await toast("JSON Exported");
 		}catch(_e){
-			await toast(i18next.t("importExport:status.error"));
+			await toast(i18next.t("importExport:status.errorExport"));
 		}
+		loading.value = false;
 	}
 
 	async function commitImportJSON(){
+		loading.value = true;
 		try{
-			const result = await importDatabaseFromJSON().status;
-			if(!result) throw new Error();
+			const { progress, status } = importDatabaseFromJSON();
+
+			progress.addEventListener("start", () => {
+				barProgress.value = 0;
+			});
+			progress.addEventListener("progress", (evt) => {
+				barProgress.value = (evt as CustomEvent).detail.progress;
+			});
+			progress.addEventListener("finish", () => {
+				barProgress.value = -1;
+			});
+
+			if(!await status) throw new Error();
 			await toast("JSON Imported");
 		}catch(_e){
 			await toast(i18next.t("importExport:status.error"));
 		}
-	}
-
-	async function commitExportArchive(){
-		try{
-			const result = await exportArchive().status;
-			if(!result) throw new Error();
-			await toast("Archive Exported");
-		}catch(_e){
-			await toast(i18next.t("importExport:status.error"));
-		}
-	}
-
-	async function commitImportArchive(){
-		try{
-			const result = await importArchive().status;
-			if(!result) throw new Error();
-			await toast("Archive Imported");
-		}catch(_e){
-			await toast(i18next.t("importExport:status.error"));
-		}
+		loading.value = false;
 	}
 
 	onMounted(async () => {
@@ -215,19 +234,6 @@
 					<IonIcon slot="start" :icon="importMD" />
 					<IonLabel>
 						<h3>Import JSON</h3>
-					</IonLabel>
-				</IonItem>
-				<IonItemDivider>Experimental Archive format</IonItemDivider>
-				<IonItem button :detail="true" @click="commitExportArchive">
-					<IonIcon slot="start" :icon="exportMD" />
-					<IonLabel>
-						<h3>Export Archive</h3>
-					</IonLabel>
-				</IonItem>
-				<IonItem button :detail="true" @click="commitImportArchive">
-					<IonIcon slot="start" :icon="importMD" />
-					<IonLabel>
-						<h3>Import Archive</h3>
 					</IonLabel>
 				</IonItem>
 				<IonItemDivider>When everything else is failing</IonItemDivider>

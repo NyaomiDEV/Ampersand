@@ -1,7 +1,7 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonList, IonItem, IonIcon, IonLabel, IonPage, IonTitle, IonToolbar, IonBackButton, IonProgressBar } from "@ionic/vue";
+	import { IonContent, IonHeader, IonList, IonItem, IonIcon, IonLabel, IonPage, IonTitle, IonToolbar, IonBackButton, IonProgressBar, IonListHeader, IonNote } from "@ionic/vue";
 	import { ref } from "vue";
-	import { importDatabaseFromBinary, exportDatabaseToBinary } from "../../lib/db/ioutils/old";
+	import { importDatabaseFromBinary } from "../../lib/db/ioutils/old";
 	import { getDocumentFile, toast } from "../../lib/util/misc";
 	import { useTranslation } from "i18next-vue";
 	import { importPluralKit } from "../../lib/db/external/pluralkit";
@@ -16,13 +16,69 @@
 	import tupMD from "@material-symbols/svg-600/outlined/package_2.svg";
 	import pkMD from "@material-symbols/svg-600/outlined/pet_supplies.svg";
 	import { platform } from "@tauri-apps/plugin-os";
+	import { exportArchive, importArchive } from "../../lib/db/ioutils/archive";
 
 	const loading = ref(false);
 	const barProgress = ref(-1);
 
 	const i18next = useTranslation();
 
+	async function exportDb(){
+		loading.value = true;
+
+		const { progress, status } = exportArchive();
+
+		progress.addEventListener("start", () => {
+			barProgress.value = 0;
+		});
+		progress.addEventListener("progress", (evt) => {
+			barProgress.value = (evt as CustomEvent).detail.progress;
+		});
+		progress.addEventListener("finish", () => {
+			barProgress.value = -1;
+		});
+			
+		if(await status){
+			await toast(
+				platform() === "ios"
+					? i18next.t("importExport:status.exportedAppIos")
+					: i18next.t("importExport:status.exportedApp")
+			);
+
+		} else 
+			await toast(i18next.t("importExport:status.errorExport"));
+
+		loading.value = false;
+	}
+
 	async function importDb(){
+		loading.value = true;
+		try{
+			const { progress, status } = importArchive();
+
+			progress.addEventListener("start", () => {
+				barProgress.value = 0;
+			});
+			progress.addEventListener("progress", (evt) => {
+				barProgress.value = (evt as CustomEvent).detail.progress;
+			});
+			progress.addEventListener("finish", () => {
+				barProgress.value = -1;
+			});
+
+			if(!await status) throw new Error("errored out");
+
+			await toast(i18next.t("importExport:status.imported"));
+		}catch(_e){
+			await toast(i18next.t("importExport:status.error"));
+		}
+		loading.value = false;
+	}
+
+	// --- DEPRECATION ZONE
+
+
+	async function importDbOld(){
 		loading.value = true;
 		try{
 			const { progress, status } = importDatabaseFromBinary();
@@ -45,6 +101,8 @@
 		}
 		loading.value = false;
 	}
+
+	// --- THIRD PARTY
 
 	async function importSp() {
 		loading.value = true;
@@ -114,34 +172,6 @@
 		}
 		loading.value = false;
 	}
-
-	async function exportDb(){
-		loading.value = true;
-
-		const { progress, status } = exportDatabaseToBinary();
-
-		progress.addEventListener("start", () => {
-			barProgress.value = 0;
-		});
-		progress.addEventListener("progress", (evt) => {
-			barProgress.value = (evt as CustomEvent).detail.progress;
-		});
-		progress.addEventListener("finish", () => {
-			barProgress.value = -1;
-		});
-			
-		if(await status){
-			await toast(
-				platform() === "ios"
-					? i18next.t("importExport:status.exportedAppIos")
-					: i18next.t("importExport:status.exportedApp")
-			);
-
-		} else 
-			await toast(i18next.t("importExport:status.errorExport"));
-
-		loading.value = false;
-	}
 </script>
 
 <template>
@@ -158,6 +188,8 @@
 		</IonHeader>
 
 		<IonContent>
+
+			<IonListHeader>{{ $t("importExport:exportHeader") }}</IonListHeader>
 			<IonList>
 
 				<IonItem button :detail="true" @click="exportDb">
@@ -169,6 +201,8 @@
 				</IonItem>
 
 			</IonList>
+
+			<IonListHeader>{{ $t("importExport:importHeader") }}</IonListHeader>
 			<IonList>
 
 				<IonItem button :detail="true" @click="importDb">
@@ -178,6 +212,20 @@
 						<p>{{ $t("importExport:dbImportDesc") }}</p>
 					</IonLabel>
 				</IonItem>
+
+				<IonItem button :detail="true" @click="importDbOld">
+					<IonIcon slot="start" :icon="importMD" />
+					<IonLabel>
+						<h3>{{ $t("importExport:dbImportOld.title") }}</h3>
+						<p>{{ $t("importExport:dbImportOld.desc") }}</p>
+					</IonLabel>
+				</IonItem>
+
+			</IonList>
+			<IonNote>{{ $t("importExport:dbImportOld.note") }}</IonNote>
+
+			<IonListHeader>{{ $t("importExport:thirdPartyHeader") }}</IonListHeader>
+			<IonList>
 
 				<IonItem button :detail="true" @click="importSp">
 					<IonIcon slot="start" :icon="spMD" />

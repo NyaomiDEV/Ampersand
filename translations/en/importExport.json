@@ -1,11 +1,19 @@
 {
 	"header": "Import / Export",
+	"importHeader": "Import",
+	"thirdPartyHeader": "Third party integrations",
+	"exportHeader": "Export",
 	"dbExport": {
 		"title": "Export your data",
 		"desc": "Backup your current data to a file you can store somewhere else"
 	},
 	"dbImportDesc": "Warning! It will override any existing data",
-	"dbImport": "Import your data from a backup file",
+	"dbImport": "Import your data",
+	"dbImportOld": {
+		"title": "Import your data from an old version of Ampersand",
+		"desc": "For backup files made with Ampersand < 0.2.0",
+		"note": "Old versions of Ampersand used a file format (ampdb) that is now outdated. If you're keeping old backups, make sure to import them now and re-export them, as this option will be removed in a few versions' time."
+	},
 	"pkImport": "Import your data from a PluralKit export",
 	"ocImport": "Import your data from an Octocon export",
 	"tuImport": "Import your data from a Tupperbox export",
