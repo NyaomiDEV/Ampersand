@@ -10,7 +10,7 @@ import { AMPERSAND_ARCHIVE_MAGICS, matchMagicNew } from "./magic";
 import dayjs from "dayjs";
 import { platform } from "@tauri-apps/plugin-os";
 import { UUIDable } from "../entities";
-
+import { ArchiveStreamConfig, ArchiveStreamDatabase } from "./archive_types";
 async function encode(data: any){
 	return msgpackEncode(deleteNull(await walkAsync(data, replace)));
 }
@@ -19,15 +19,17 @@ function reviver(data: any){
 	return walk(data, revive);
 }
 
-function intoStream(fd: FileHandle){
+function intoStream(fd: FileHandle, onRead?: (bytes: number) => void){
 	return new ReadableStream({
 		async start(controller) {
 			async function read() {
 				const buf = new Uint8Array(512000);
 				const bytesRead = await fd.read(buf);
 
-				if (bytesRead !== null && bytesRead > 0)
+				if (bytesRead !== null && bytesRead > 0){
 					controller.enqueue(buf.slice(0, bytesRead));
+					onRead?.(bytesRead);
+				}
 				else if (bytesRead === null){
 					await fd.close();
 					return controller.close();
@@ -120,12 +122,21 @@ export function importArchive() {
 			if (!path) return false;
 
 			const fd = await openFile(path, { read: true });
-			const magicBytesMaybe = new Uint8Array(10);
-			await fd.read(magicBytesMaybe);
-			const magicVersion = matchMagicNew(magicBytesMaybe);
-			if (!magicVersion) return false;
+
+			const size = (await fd.stat()).size;
+			let bytes = 0;
+			const _progress = (read) => { bytes += read; emitProgress(bytes, size); };
 
 			progress.dispatchEvent(new Event("start"));
+
+			const magicBytesMaybe = new Uint8Array(10);
+			const bytesRead = await fd.read(magicBytesMaybe);
+			if (bytesRead === null || bytesRead === 0) return false;
+
+			_progress(bytesRead);
+
+			const magicVersion = matchMagicNew(magicBytesMaybe);
+			if (!magicVersion) return false;
 
 			switch (magicVersion) {
 				case 1: {
@@ -138,23 +149,26 @@ export function importArchive() {
 						}
 					}
 
-					const stream = intoStream(fd);
+					const stream = intoStream(fd, _progress);
+
 					const multiStreamDecoder = decodeMultiStream(stream) as AsyncGenerator<{ table: string, data: any }>;
 
 					for await(const rawData of multiStreamDecoder){
 						const data: any = reviver(rawData);
 						switch (data.table) {
 							case "__config": {
-								Object.assign(appConfig, data.data.appConfig);
-								Object.assign(accessibilityConfig, data.data.accessibilityConfig);
-								Object.assign(securityConfig, data.data.securityConfig);
+								const _data = data as ArchiveStreamConfig;
+								Object.assign(appConfig, _data.data.appConfig);
+								Object.assign(accessibilityConfig, _data.data.accessibilityConfig);
+								Object.assign(securityConfig, _data.data.securityConfig);
 								break;
 							}
 							default: {
 								try {
-									const table: ShittyTable<UUIDable> = getTables()[data.table];
-									const result = await table.add(data.data.uuid, data.data);
-									if (!result) throw new Error("item already exists", data.data.uuid);
+									const _data = data as ArchiveStreamDatabase;
+									const table: ShittyTable<UUIDable> = getTables()[_data.table];
+									const result = await table.add(_data.data.uuid, _data.data);
+									if (!result) throw new Error(`item already exists: ${_data.data.uuid}`);
 								} catch(e) {
 									console.error(e);
 									return false;
@@ -172,6 +186,10 @@ export function importArchive() {
 			return false;
 		}
 	}
+
+	const emitProgress = (cur: number, tot: number) => {
+		progress.dispatchEvent(new CustomEvent("progress", { detail: { progress: cur / tot } }));
+	};
 
 	const progress = new EventTarget();
 	const status = _import();

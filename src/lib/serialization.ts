@@ -3,6 +3,32 @@
 
 import { isPlainObject } from "./util/misc";
 
+export type SerializedMap<K, V> = {
+	_meta: { type: "map"; };
+	value: [K, V][];
+};
+
+export type SerializedSet<V> = {
+	_meta: { type: "set"; },
+	value: V[];
+};
+
+export type SerializedFile = {
+	_meta: {
+		type: "file",
+		name: string,
+		mimeType: string;
+	},
+	value: Uint8Array;
+};
+
+export type Serialized<T> =
+	T extends Map<infer K, infer V> ? SerializedMap<K, V> :
+	T extends Set<infer V> ? SerializedSet<V> :
+	T extends File ? SerializedFile :
+	T extends object ? { [K in keyof T]: Serialized<T[K]> }
+	: T;
+
 export function revive(value: any) {
 	if (typeof value === "object" && value !== null && "_meta" in value) {
 		switch (value._meta.type) {

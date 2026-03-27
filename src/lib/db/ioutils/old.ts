@@ -10,6 +10,7 @@ import { UUIDable } from "../entities";
 import { decompressGzip } from "../../util/misc";
 import dayjs from "dayjs";
 import { platform } from "@tauri-apps/plugin-os";
+import { DatabaseExport, SerializedDatabaseExport } from "./old_types";
 
 export function exportDatabaseToBinary() {
 
@@ -136,11 +137,10 @@ export function importDatabaseFromBinary() {
 					break;
 			}
 
-			const tablesAndConfig = decode(array) as Record<string, unknown>;
+			const tablesAndConfig = decode(array) as SerializedDatabaseExport;
 
 			progress.dispatchEvent(new Event("start"));
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			const revived: any = walk(tablesAndConfig, revive);
+			const revived = walk(tablesAndConfig, revive) as DatabaseExport;
 
 			const progressTotal = Object.getOwnPropertyNames(revived.database).length + 3;
 			let progressCurrent = 0;

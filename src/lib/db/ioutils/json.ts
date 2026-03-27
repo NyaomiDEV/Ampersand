@@ -5,9 +5,10 @@ import { mkdir, readTextFile, writeTextFile } from "@tauri-apps/plugin-fs";
 import dayjs from "dayjs";
 import { platform } from "@tauri-apps/plugin-os";
 import { open, save } from "@tauri-apps/plugin-dialog";
-import { Asset, BoardMessage, FrontingEntry, JournalPost, Member, System, UUIDable } from "../entities";
-import { AssetJSON, BoardMessageJSON, FrontingEntryJSON, JournalPostJSON, MemberJSON, SystemJSON } from "./json_types";
+import { Asset, BoardMessage, CustomField, FrontingEntry, JournalPost, Member, System, Tag, UUIDable } from "../entities";
+import { AssetJSON, BoardMessageJSON, DatabaseJSON, FrontingEntryJSON, JournalPostJSON, MemberJSON, SystemJSON } from "./json_types";
 import { fromDataURI, toDataURI } from "../../util/blob";
+import { appConfig, accessibilityConfig, securityConfig } from "../../config";
 
 export function exportDatabaseToJSON(withFiles: boolean) {
 	async function _export() {
@@ -32,24 +33,37 @@ export function exportDatabaseToJSON(withFiles: boolean) {
 			if (!path) return false;
 
 			progress.dispatchEvent(new Event("start"));
-			const database: Record<string, Array<unknown>> = {};
+			const json: DatabaseJSON = {
+				config: { appConfig, accessibilityConfig, securityConfig },
+				database: {
+					boardMessages: [],
+					frontingEntries: [],
+					journalPosts: [],
+					members: [],
+					systems: [],
+					tags: [],
+					assets: [],
+					customFields: []
+				}
+			};
 			const tables = getTables();
 
 			let progressTotal = 0;
 			for (const [name, table] of Object.entries(tables)){
+				if (name === "reminders") continue; // we are not supporting those yet
 				if (name === "assets" && !withFiles) continue;
 				progressTotal += table.count();
 			}
 
 			let progressCurrent = 0;
 			for (const [name, table] of Object.entries(tables)) {
+				if(name === "reminders") continue; // we are not supporting those yet
 				if(name === "assets" && !withFiles) continue;
-				database[name] = [];
 				for await (const data of table.iterate()) {
 					switch(name){
 						case "boardMessages": {
 							const _data = data as BoardMessage;
-							database[name].push({
+							json.database[name].push({
 								..._data,
 								date: _data.date.toISOString()
 							} as BoardMessageJSON);
@@ -57,7 +71,7 @@ export function exportDatabaseToJSON(withFiles: boolean) {
 						}
 						case "frontingEntries": {
 							const _data = data as FrontingEntry;
-							database[name].push({
+							json.database[name].push({
 								..._data,
 								startTime: _data.startTime.toISOString(),
 								endTime: _data.endTime?.toISOString() || undefined,
@@ -71,7 +85,7 @@ export function exportDatabaseToJSON(withFiles: boolean) {
 						}
 						case "journalPosts": {
 							const _data = data as JournalPost;
-							database[name].push({
+							json.database[name].push({
 								..._data,
 								date: _data.date.toISOString(),
 								cover: withFiles && _data.cover ? await toDataURI(_data.cover) : undefined,
@@ -80,7 +94,7 @@ export function exportDatabaseToJSON(withFiles: boolean) {
 						}
 						case "members": {
 							const _data = data as Member;
-							database[name].push({
+							json.database[name].push({
 								..._data,
 								image: withFiles && _data.image ? await toDataURI(_data.image) : undefined,
 								cover: withFiles && _data.cover ? await toDataURI(_data.cover) : undefined,
@@ -91,7 +105,7 @@ export function exportDatabaseToJSON(withFiles: boolean) {
 						}
 						case "systems": {
 							const _data = data as System;
-							database[name].push({
+							json.database[name].push({
 								..._data,
 								image: withFiles && _data.image ? await toDataURI(_data.image) : undefined,
 								cover: withFiles &&_data.cover ? await toDataURI(_data.cover) : undefined,
@@ -100,14 +114,17 @@ export function exportDatabaseToJSON(withFiles: boolean) {
 						}
 						case "assets": {
 							const _data = data as Asset;
-							database[name].push({
+							json.database[name].push({
 								..._data,
 								file: _data.file ? await toDataURI(_data.file) : undefined,
 							} as AssetJSON);
 							break;
 						}
-						default:
-							database[name].push(data);
+						case "customFields":
+							json.database[name].push((data as CustomField));
+							break;
+						case "tags":
+							json.database[name].push((data as Tag));
 							break;
 					}
 					progressCurrent++;
@@ -115,7 +132,7 @@ export function exportDatabaseToJSON(withFiles: boolean) {
 				}
 			}
 
-			const data = JSON.stringify(deleteNull(database));
+			const data = JSON.stringify(deleteNull(json));
 
 			// Android uses content:// for providing scoped file paths; here we just get the FD from the returned URI
 			if (!path.startsWith("content://")) {
@@ -148,25 +165,31 @@ export function importDatabaseFromJSON() {
 			});
 			if (!path) return false;
 
-			const json = await readTextFile(path);
-			const tables = JSON.parse(json) as Record<string, unknown[]>;
+			const jsonText = await readTextFile(path);
+			const json = JSON.parse(jsonText) as DatabaseJSON;
 
 			progress.dispatchEvent(new Event("start"));
 
+			Object.assign(appConfig, json.config.appConfig);
+			Object.assign(accessibilityConfig, json.config.accessibilityConfig);
+			Object.assign(securityConfig, json.config.securityConfig);
+
 			let progressTotal = 0;
-			for (const [_name, table] of Object.entries(tables)) 
+			for (const [_name, table] of Object.entries(json.database)) 
 				progressTotal += table.length;
 
 			let progressCurrent = 0;
-			for (const [name, entries] of Object.entries(tables)) {
+			for (const [name, entries] of Object.entries(json.database)) {
 				const table: ShittyTable<UUIDable> = getTables()[name];
 				const tableData: UUIDable[] = [];
+
 				try {
 					await table.clear();
 				} catch (e) {
 					console.error(e);
 					return false;
 				}
+
 				for (const data of entries) {
 					switch (name) {
 						case "boardMessages": {
