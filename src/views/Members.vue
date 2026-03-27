@@ -192,6 +192,9 @@
 								:router-link="`/members/edit?uuid=${member.uuid}`"
 							/>
 							<IonItemOptions>
+								<IonItemOption color="tertiary" @click="copyID(member)">
+									<IonIcon slot="icon-only" :icon="copyMD" />
+								</IonItemOption>
 								<IonItemOption v-if="!feGet(member) && frontingEntries.length !== 0" @click="addFrontingEntry(member)">
 									<IonIcon slot="icon-only" :icon="addToFrontMD" />
 								</IonItemOption>
@@ -206,9 +209,6 @@
 								</IonItemOption>
 								<IonItemOption v-if="!(frontingEntries.length === 1 && feGet(member))" color="tertiary" @click="setSoleFrontingEntry(member)">
 									<IonIcon slot="icon-only" :icon="setAsFrontMD" />
-								</IonItemOption>
-								<IonItemOption color="tertiary" @click="copyID(member)">
-									<IonIcon slot="icon-only" :icon="copyMD" />
 								</IonItemOption>
 							</IonItemOptions>
 						</IonItemSliding>
