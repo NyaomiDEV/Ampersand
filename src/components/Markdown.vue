@@ -34,7 +34,9 @@
 	}
 
 	watch(props, async () => {
-		mdRef.value = await marked.parse(props.markdown) as VNode[];
+		mdRef.value = await marked.parse(
+			props.markdown.replace(/^[\u200B-\u200F\uFEFF]/,"")
+		) as VNode[];
 	}, { immediate: true });
 </script>
 
