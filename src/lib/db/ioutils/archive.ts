@@ -130,7 +130,14 @@ export function importArchive() {
 
 			switch (magicVersion) {
 				case 1: {
-					for (const table of Object.values(getTables())) if (!await table.clear()) return false;
+					for (const table of Object.values(getTables())){
+						try{
+							await table.clear();
+						}catch(e){
+							console.error(e);
+							return false;
+						}
+					}
 
 					const stream = intoStream(fd);
 					const multiStreamDecoder = decodeMultiStream(stream) as AsyncGenerator<{ table: string, data: any }>;

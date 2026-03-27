@@ -161,7 +161,12 @@ export function importDatabaseFromJSON() {
 			for (const [name, entries] of Object.entries(tables)) {
 				const table: ShittyTable<UUIDable> = getTables()[name];
 				const tableData: UUIDable[] = [];
-				if (await table.clear() === false) return false;
+				try {
+					await table.clear();
+				} catch (e) {
+					console.error(e);
+					return false;
+				}
 				for (const data of entries) {
 					switch (name) {
 						case "boardMessages": {

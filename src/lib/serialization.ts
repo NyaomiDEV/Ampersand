@@ -21,7 +21,6 @@ export function revive(value: any) {
 						[array],
 						value._meta.name,
 						{
-							lastModified: value._meta.lastModified,
 							type: value._meta.mimeType
 						}
 					);
@@ -31,7 +30,6 @@ export function revive(value: any) {
 						[value.value],
 						value._meta.name,
 						{
-							lastModified: value._meta.lastModified,
 							type: value._meta.mimeType
 						}
 					);
@@ -68,7 +66,7 @@ export function replace(value: any) {
 			throw new Error(`Bad File access: ${req.status}`);
 			
 		return {
-			_meta: { type: "file", name: value.name, lastModified: value.lastModified, mimeType: value.type },
+			_meta: { type: "file", name: value.name, mimeType: value.type },
 			value: new Uint8Array(req.response)
 		};
 

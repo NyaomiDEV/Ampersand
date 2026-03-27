@@ -24,26 +24,17 @@ export class ShittyTable<T extends UUIDable> {
 
 	async getIndexFromDisk(){
 		const _path = `${this.path + sep()}.index`;
-		try {
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			const obj: any = decode(await fs.readFile(_path));
-			if (typeof obj !== "undefined" && obj !== null)
-				return walk(obj, revive) as IndexEntry<T>[];
-		} catch (e) {
-			console.error(e);
-		}
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		const obj: any = decode(await fs.readFile(_path));
+		if (typeof obj !== "undefined" && obj !== null)
+			return walk(obj, revive) as IndexEntry<T>[];
+
 		return undefined;
 	}
 
 	async saveIndexToDisk() {
 		const _path = `${this.path + sep()}.index`;
-		try {
-			await fs.writeFile(_path, encode(walk(this.index, replace)));
-			return true;
-		} catch (e) {
-			console.error(e);
-		}
-		return false;
+		await fs.writeFile(_path, encode(walk(this.index, replace)));
 	}
 
 	async updateIndexWithData(data: T, saveAfterwards: boolean = true){
@@ -109,27 +100,17 @@ export class ShittyTable<T extends UUIDable> {
 
 	async get(uuid: string) {
 		const _path = this.path + sep() + uuid;
-		try {
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			const obj: any = decode(await fs.readFile(_path));
-			if (typeof obj !== "undefined" && obj !== null)
-				return walk(obj, revive) as T;
-		} catch (e) {
-			console.error(e);
-		}
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		const obj: any = decode(await fs.readFile(_path));
+		if (typeof obj !== "undefined" && obj !== null)
+			return walk(obj, revive) as T;
 
 		return undefined;
 	}
 
 	async walkDir() {
-		try {
-			const dir = (await fs.readDir(this.path)).filter(x => x.name !== ".index" && x.name !== ".migrations");
-			return dir;
-		} catch (e) {
-			console.error(e);
-		}
-
-		return undefined;
+		const dir = (await fs.readDir(this.path)).filter(x => x.name !== ".index" && x.name !== ".migrations");
+		return dir;
 	}
 
 	count() {
@@ -163,20 +144,13 @@ export class ShittyTable<T extends UUIDable> {
 
 	async refresh(){
 		for(const data of this.index)
-			if(!await this.update(data.uuid, {})) return false;
-		return true;
+			await this.update(data.uuid, {});
 	}
 
 	async write(uuid: string, data: T) {
 		const _path = this.path + sep() + uuid;
-		try{
-			await fs.writeFile(_path, encode(deleteNull(walk(data, replace))));
-			await this.updateIndexWithData(data);
-			return true;
-		}catch(e){
-			console.error(e);
-		}
-		return false;
+		await fs.writeFile(_path, encode(deleteNull(walk(data, replace))));
+		await this.updateIndexWithData(data);
 	}
 
 	exists(uuid: string) {
@@ -192,24 +166,16 @@ export class ShittyTable<T extends UUIDable> {
 	}
 
 	async bulkAdd(contents: T[]) {
-		let res = true;
 		for (const content of contents) {
 			// copy of add routine but just because we suck
 			if(!this.exists(content.uuid)) {
 				const _path = this.path + sep() + content.uuid;
-				try {
-					await fs.writeFile(_path, encode(deleteNull(walk(content, replace))));
-					await this.updateIndexWithData(content, false);
-				} catch (e) {
-					console.error(e);
-					res = false;
-					break;
-				}
+				await fs.writeFile(_path, encode(deleteNull(walk(content, replace))));
+				await this.updateIndexWithData(content, false);
 			}
 		}
 
 		await this.saveIndexToDisk();
-		return res;
 	}
 
 	async update(uuid: string, newData: Partial<T>) {
@@ -217,8 +183,8 @@ export class ShittyTable<T extends UUIDable> {
 
 		if (oldData) {
 			const data = { ...oldData, ...newData } as T;
-			if(await this.write(uuid, data))
-				return { oldData, newData: data };
+			await this.write(uuid, data);
+			return { oldData, newData: data };
 		}
 
 		return false;
@@ -226,32 +192,20 @@ export class ShittyTable<T extends UUIDable> {
 
 	async delete(uuid: string) {
 		const _path = this.path + sep() + uuid;
-		try{
-			await fs.remove(_path);
-			await this.removeIndex(uuid);
-			return true;
-		}catch(e){
-			console.error(e);
-		}
-		return false;
+		await fs.remove(_path);
+		await this.removeIndex(uuid);
 	}
 
 	async clear() {
-		try {
-			const _dir = await this.walkDir();
-			if(!_dir) return false;
+		const _dir = await this.walkDir();
+		if(!_dir) throw new Error("no directory to clear");
 
-			for (const file of _dir){
-				await fs.remove(this.path + sep() + file.name);
-				this.index = this.index.filter(x => x.uuid !== file.name);
-			}
-			return true;
-		} catch(e) {
-			console.error(e);
+		for (const file of _dir){
+			await fs.remove(this.path + sep() + file.name);
+			this.index = this.index.filter(x => x.uuid !== file.name);
 		}
 
 		await this.saveIndexToDisk();
-		return false;
 	}
 
 	async getMigrationVersion(){
@@ -261,19 +215,13 @@ export class ShittyTable<T extends UUIDable> {
 			return migrations.version;
 		} catch (e) {
 			console.error(e);
+			return 0;
 		}
-		return 0;
 	}
 
 	async saveMigrationVersion(version: number){
 		const _path = `${this.path + sep()}.migrations`;
-		try {
-			await fs.writeFile(_path, encode({ version }));
-			return true;
-		} catch (e) {
-			console.error(e);
-		}
-		return false;
+		await fs.writeFile(_path, encode({ version }));
 	}
 
 	async migrate(){

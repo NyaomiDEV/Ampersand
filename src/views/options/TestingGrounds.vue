@@ -39,8 +39,10 @@
 
 	async function refreshAllData(){
 		for(const table of Object.values(getTables())){
-			if(!await table.refresh()){
-				await toast(`Error at table ${table.name}`);
+			try{
+				await table.refresh();
+			}catch(e){
+				await toast(`Error: ${(e as Error)}`);
 				return;
 			}
 		}

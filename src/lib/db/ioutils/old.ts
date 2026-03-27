@@ -156,8 +156,13 @@ export function importDatabaseFromBinary() {
 			for (const key of Object.getOwnPropertyNames(revived.database)) {
 				const table: ShittyTable<UUIDable> = getTables()[key];
 				if (table) {
-					if (await table.clear() === false) return false;
-					if (await table.bulkAdd(revived.database[key]) === false) return false;
+					try {
+						await table.clear();
+						await table.bulkAdd(revived.database[key]);
+					} catch (e) {
+						console.error(e);
+						return false;
+					}
 				}
 				progressCurrent++;
 				progress.dispatchEvent(new CustomEvent("progress", { detail: { progress: progressCurrent / progressTotal } }));
