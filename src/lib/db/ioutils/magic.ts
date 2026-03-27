@@ -45,16 +45,12 @@ export function stripMagicOld(bin: Uint8Array, version: number){
 	const magic = AMPERSAND_BACKUP_MAGICS.get(version);
 	if(!magic) return undefined;
 
-	const newArray = new Uint8Array(bin.length - magic.length);
-	newArray.set(bin.slice(magic.length), 0);
-	return newArray;
+	return bin.slice(magic.length);
 }
 
 export function stripMagicNew(bin: Uint8Array, version: number) {
 	const magic = AMPERSAND_ARCHIVE_MAGICS.get(version);
 	if (!magic) return undefined;
 
-	const newArray = new Uint8Array(bin.length - magic.length);
-	newArray.set(bin.slice(magic.length), 0);
-	return newArray;
+	return bin.slice(magic.length);
 }

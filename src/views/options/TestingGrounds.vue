@@ -101,7 +101,8 @@
 
 	async function commitExportJSON(doYouHateYourDevice: boolean){
 		try{
-			await exportDatabaseToJSON(doYouHateYourDevice).status;
+			const result = await exportDatabaseToJSON(doYouHateYourDevice).status;
+			if(!result) throw new Error();
 			await toast("JSON Exported");
 		}catch(_e){
 			await toast(i18next.t("importExport:status.error"));
@@ -110,7 +111,8 @@
 
 	async function commitImportJSON(){
 		try{
-			await importDatabaseFromJSON().status;
+			const result = await importDatabaseFromJSON().status;
+			if(!result) throw new Error();
 			await toast("JSON Imported");
 		}catch(_e){
 			await toast(i18next.t("importExport:status.error"));
@@ -119,7 +121,8 @@
 
 	async function commitExportArchive(){
 		try{
-			await exportArchive().status;
+			const result = await exportArchive().status;
+			if(!result) throw new Error();
 			await toast("Archive Exported");
 		}catch(_e){
 			await toast(i18next.t("importExport:status.error"));
@@ -128,7 +131,9 @@
 
 	async function commitImportArchive(){
 		try{
-			await importArchive().status;
+			const result = await importArchive().status;
+			console.log(result);
+			if(!result) throw new Error();
 			await toast("Archive Imported");
 		}catch(_e){
 			await toast(i18next.t("importExport:status.error"));

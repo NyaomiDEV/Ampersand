@@ -2,9 +2,9 @@
 import { decodeMultiStream, encode as msgpackEncode } from "@msgpack/msgpack";
 import { accessibilityConfig, appConfig, securityConfig } from "../../config";
 import { getTables, ShittyTable } from "../tables";
-import { deleteNull, replace, walk } from "../../serialization";
+import { deleteNull, replace, walk, revive } from "../../serialization";
 import { dirname, documentDir, sep } from "@tauri-apps/api/path";
-import { mkdir, open as openFile } from "@tauri-apps/plugin-fs";
+import { FileHandle, mkdir, open as openFile } from "@tauri-apps/plugin-fs";
 import { open, save } from "@tauri-apps/plugin-dialog";
 import { AMPERSAND_ARCHIVE_MAGICS, matchMagicNew } from "./magic";
 import dayjs from "dayjs";
@@ -15,9 +15,30 @@ function encode(data: any){
 	return msgpackEncode(deleteNull(walk(data, replace)));
 }
 
-function revive(data: any){
+function reviver(data: any){
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 	return walk(data, revive);
+}
+
+function intoStream(fd: FileHandle){
+	return new ReadableStream({
+		async start(controller) {
+			async function read() {
+				const buf = new Uint8Array(512000);
+				const bytesRead = await fd.read(buf);
+
+				if (bytesRead !== null && bytesRead > 0)
+					controller.enqueue(buf.slice(0, bytesRead));
+				else if (bytesRead === null){
+					await fd.close();
+					return controller.close();
+				}
+
+				return read();
+			}
+			return read();
+		}
+	});
 }
 
 export function exportArchive() {
@@ -109,34 +130,14 @@ export function importArchive() {
 
 			switch (magicVersion) {
 				case 1: {
-					//for (const table of Object.values(getTables())) if (!await table.clear()) return false;
+					for (const table of Object.values(getTables())) if (!await table.clear()) return false;
 
-					const stream = new ReadableStream({
-						type: "bytes",
-						async start(controller) {
-							async function read(){
-								console.log("reading");
-								const buf = new Uint8Array(1024);
-								const bytesRead = await fd.read(buf);
-
-								if(bytesRead !== null && bytesRead > 0)
-									controller.enqueue(buf.slice(0, bytesRead));
-								else if(bytesRead === null)
-									return;
-
-								return read();
-							}
-							return read();
-						}
-					});
-
+					const stream = intoStream(fd);
 					const multiStreamDecoder = decodeMultiStream(stream) as AsyncGenerator<{ table: string, data: any }>;
 
-					for await (const rawData of multiStreamDecoder){
-						console.log(rawData);
-						const data = revive(rawData);
-						console.log(data);
-						switch(data.table){
+					for await(const rawData of multiStreamDecoder){
+						const data = reviver(rawData);
+						switch (data.table) {
 							case "__config": {
 								Object.assign(appConfig, data.data.appConfig);
 								Object.assign(accessibilityConfig, data.data.accessibilityConfig);
@@ -145,7 +146,8 @@ export function importArchive() {
 							}
 							default: {
 								const table: ShittyTable<UUIDable> = getTables()[data.table];
-								await table.add(data.data.uuid, data.data);
+								const result = await table.add(data.data.uuid, data.data);
+								if(!result) throw new Error();
 							}
 						}
 					}
@@ -156,6 +158,7 @@ export function importArchive() {
 			progress.dispatchEvent(new Event("finish"));
 			return true;
 		} catch (_e) {
+			console.log(_e);
 			return false;
 		}
 	}

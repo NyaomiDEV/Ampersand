@@ -68,7 +68,10 @@ export function exportDatabaseToBinary() {
 
 			const fd = await openFile(path, { create: true, write: true });
 			await fd.write(new Uint8Array(magic));
-			await fd.write(data);
+
+			for (let i = 0; i < data.length; i += 512000)
+				await fd.write(data.slice(i, i + 512000));
+			
 			await fd.close();
 			progress.dispatchEvent(new Event("finish"));
 			return true;
