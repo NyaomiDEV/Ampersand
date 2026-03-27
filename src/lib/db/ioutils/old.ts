@@ -1,7 +1,7 @@
 import { decode, encode } from "@msgpack/msgpack";
 import { accessibilityConfig, appConfig, securityConfig } from "../../config";
 import { getTables, ShittyTable } from "../tables";
-import { deleteNull, replace, revive, walk } from "../../serialization";
+import { deleteNull, replace, revive, walk, walkAsync } from "../../serialization";
 import { dirname, documentDir, sep } from "@tauri-apps/api/path";
 import { mkdir, open as openFile, readFile } from "@tauri-apps/plugin-fs";
 import { open, save } from "@tauri-apps/plugin-dialog";
@@ -53,7 +53,7 @@ export function exportDatabaseToBinary() {
 			}
 
 			const data = encode(
-				deleteNull(walk({ config, database }, replace))
+				deleteNull(await walkAsync({ config, database }, replace))
 			);
 
 			// Android uses content:// for providing scoped file paths; here we just get the FD from the returned URI
@@ -67,10 +67,12 @@ export function exportDatabaseToBinary() {
 			const magic = AMPERSAND_BACKUP_MAGICS.get(2)!;
 
 			const fd = await openFile(path, { create: true, write: true });
-			await fd.write(new Uint8Array(magic));
+			console.log(await fd.write(new Uint8Array(magic)));
 
-			for (let i = 0; i < data.length; i += 512000)
-				await fd.write(data.slice(i, i + 512000));
+			for (let i = 0; i < data.length; i += 512000){
+				const res = await fd.write(data.slice(i, i + 512000));
+				console.log(res);
+			}
 			
 			await fd.close();
 			progress.dispatchEvent(new Event("finish"));
@@ -140,7 +142,7 @@ export function importDatabaseFromBinary() {
 
 			progress.dispatchEvent(new Event("start"));
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			const revived: any = await walk(tablesAndConfig, revive);
+			const revived: any = walk(tablesAndConfig, revive);
 
 			const progressTotal = Object.getOwnPropertyNames(revived.database).length + 3;
 			let progressCurrent = 0;

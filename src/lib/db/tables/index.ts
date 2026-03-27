@@ -24,11 +24,14 @@ export class ShittyTable<T extends UUIDable> {
 
 	async getIndexFromDisk(){
 		const _path = `${this.path + sep()}.index`;
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		const obj: any = decode(await fs.readFile(_path));
-		if (typeof obj !== "undefined" && obj !== null)
-			return walk(obj, revive) as IndexEntry<T>[];
-
+		try{
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			const obj: any = decode(await fs.readFile(_path));
+			if (typeof obj !== "undefined" && obj !== null)
+				return walk(obj, revive) as IndexEntry<T>[];
+		}catch(_e){
+			// nothing
+		}
 		return undefined;
 	}
 
