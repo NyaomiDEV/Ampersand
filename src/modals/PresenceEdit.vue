@@ -9,30 +9,30 @@
 		IonButton,
 	} from "@ionic/vue";
 
-	import { ref } from "vue";
 	import { formatDate } from "../lib/util/misc";
 	import DatePopupPicker from "../components/DatePopupPicker.vue";
 
-	const range = ref(0);
-	const date = ref(new Date());
-
-	const emit = defineEmits<{
-		"add": [Date, number],
-	}>();
+	const model = defineModel<{
+		range: number,
+		date: Date
+	}>({
+		default: {
+			range: 0,
+			date: new Date()
+		}
+	});
 
 	async function add(){
-		emit("add", date.value, range.value);
-		await modalController.dismiss();
-		range.value = 0;
+		await modalController.dismiss("added");
 	}
 </script>
 
 <template>
-	<IonModal class="presence-add-modal">
+	<IonModal class="presence-edit-modal">
 		<IonList>
 			<IonItem>
 				<IonRange
-					v-model="range"
+					v-model="model.range"
 					:label="$t('frontHistory:edit.presence.addTitle')"
 					label-placement="stacked"
 					:min="0"
@@ -47,11 +47,11 @@
 			<IonItem button :detail="true" @click="($refs.datePicker as any)?.$el.present()">
 				<IonLabel>
 					<h2>{{ $t("frontHistory:edit.presence.date") }}</h2>
-					<p>{{ formatDate(date, "expanded") }}</p>
+					<p>{{ formatDate(model.date, "expanded") }}</p>
 				</IonLabel>
 				<DatePopupPicker
 					ref="datePicker"
-					v-model="date"
+					v-model="model.date"
 					show-default-buttons
 					:title="$t('frontHistory:edit.presence.date')"
 				/>
@@ -64,12 +64,12 @@
 </template>
 
 <style scoped>
-	.presence-add-modal {
+	.presence-edit-modal {
 		--border-radius: 16px;
 		--height: fit-content;
 	}
 
-	.presence-add-modal::part(content) {
+	.presence-edit-modal::part(content) {
 		padding: 8px 0px 16px 0px;
 		box-sizing: border-box;
 	}

@@ -19,10 +19,11 @@
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
 
-	import { ref, useTemplateRef } from "vue";
-	import PresenceAdd from "./PresenceAdd.vue";
+	import { h, ref } from "vue";
+	import PresenceEdit from "./PresenceEdit.vue";
 	import PresenceRating from "../components/PresenceRating.vue";
 	import { useTranslation } from "i18next-vue";
+	import { addModal, removeModal } from "../lib/modals";
 
 	const i18next = useTranslation();
 
@@ -35,8 +36,6 @@
 	}>();
 
 	const presence = ref<Map<Date, number>>(props.modelValue || new Map());
-
-	const presenceAddModal = useTemplateRef("presenceAddModal");
 
 	function presencePhrase(rating: number): string {
 		switch (rating) {
@@ -60,6 +59,29 @@
 		}
 		return "";
 	}
+
+	async function presentEdit(date?: Date, range?: number){
+		const modelValue = { date: date || new Date(), range: range || 0 };
+
+		const vnode = h(PresenceEdit, {
+			modelValue,
+			"onUpdate:modelValue": (e) => {
+				modelValue.date = e.date;
+				modelValue.range = e.range;
+			},
+			onDidDismiss: () => {
+				if(date)
+					presence.value.delete(date);
+
+				presence.value.set(modelValue.date, modelValue.range);
+				removeModal(vnode);
+			}
+		});
+
+		const modal = await addModal(vnode);
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-call
+		await (modal.el as any).present();
+	}
 </script>
 
 <template>
@@ -80,6 +102,8 @@
 				<IonItem
 					v-for="entry in Array.from(presence.entries()).sort((a, b) => b[0].valueOf() - a[0].valueOf())"
 					:key="entry[0].valueOf()"
+					button
+					@click="presentEdit(entry[0], entry[1])"
 				>
 					<IonLabel>
 						<p>{{ formatDate(entry[0], "expanded") }}</p>
@@ -104,12 +128,10 @@
 		</IonContent>
 
 		<IonFab slot="fixed" vertical="bottom" horizontal="end">
-			<IonFabButton @click="presenceAddModal?.$el.present()">
+			<IonFabButton @click="presentEdit()">
 				<IonIcon :icon="addMD" />
 			</IonFabButton>
 		</IonFab>
-
-		<PresenceAdd ref="presenceAddModal" @add="(date, p) => presence.set(date, p)" />
 	</IonModal>
 </template>
 
