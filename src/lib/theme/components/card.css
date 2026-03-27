@@ -2,19 +2,21 @@
 .md ion-card {
 	--background: rgb(var(--md3-surface-container-high));
 	--color: rgb(var(--md3-on-surface));
-	box-shadow: var(--md3-elevation-1);
+	box-shadow: var(--md3-elevation-0);
 	border-radius: 12px;
 	margin: 0px 0px;
 }
 
+.md ion-card.elevated {
+	box-shadow: var(--md3-elevation-1);
+}
+
 .md ion-card.filled {
 	--background: rgb(var(--md3-surface-container-highest));
-	box-shadow: var(--md3-elevation-0);
 }
 
 .md ion-card.outlined {
 	--background: rgb(var(--md3-surface));
-	box-shadow: var(--md3-elevation-0);
 	outline: 1px solid rgb(var(--md3-outline));
 }
 
