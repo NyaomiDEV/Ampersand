@@ -67,12 +67,10 @@ export function exportDatabaseToBinary() {
 			const magic = AMPERSAND_BACKUP_MAGICS.get(2)!;
 
 			const fd = await openFile(path, { create: true, write: true });
-			console.log(await fd.write(new Uint8Array(magic)));
+			await fd.write(new Uint8Array(magic));
 
-			for (let i = 0; i < data.length; i += 512000){
-				const res = await fd.write(data.slice(i, i + 512000));
-				console.log(res);
-			}
+			for (let i = 0; i < data.length; i += 512000)
+				await fd.write(data.slice(i, i + 512000));
 			
 			await fd.close();
 			progress.dispatchEvent(new Event("finish"));

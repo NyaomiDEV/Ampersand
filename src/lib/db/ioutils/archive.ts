@@ -2,7 +2,7 @@
 import { decodeMultiStream, encode as msgpackEncode } from "@msgpack/msgpack";
 import { accessibilityConfig, appConfig, securityConfig } from "../../config";
 import { getTables, ShittyTable } from "../tables";
-import { deleteNull, replace, walk, revive } from "../../serialization";
+import { deleteNull, replace, walk, revive, walkAsync } from "../../serialization";
 import { dirname, documentDir, sep } from "@tauri-apps/api/path";
 import { FileHandle, mkdir, open as openFile } from "@tauri-apps/plugin-fs";
 import { open, save } from "@tauri-apps/plugin-dialog";
@@ -11,8 +11,8 @@ import dayjs from "dayjs";
 import { platform } from "@tauri-apps/plugin-os";
 import { UUIDable } from "../entities";
 
-function encode(data: any){
-	return msgpackEncode(deleteNull(walk(data, replace)));
+async function encode(data: any){
+	return msgpackEncode(deleteNull(await walkAsync(data, replace)));
 }
 
 function reviver(data: any){
@@ -83,13 +83,13 @@ export function exportArchive() {
 
 			// Write the configuration
 			await fd.write(
-				encode({ table: "__config", data: { appConfig, accessibilityConfig, securityConfig } })
+				await encode({ table: "__config", data: { appConfig, accessibilityConfig, securityConfig } })
 			);
 
 			let progressCurrent = 0;
 			for (const [name, table] of Object.entries(getTables())) {
 				for await (const data of table.iterate()) {
-					await fd.write(encode({ table: name, data }));
+					await fd.write(await encode({ table: name, data }));
 					progressCurrent++;
 					progress.dispatchEvent(new CustomEvent("progress", { detail: { progress: progressCurrent / progressTotal } }));
 				}
@@ -142,8 +142,7 @@ export function importArchive() {
 					const multiStreamDecoder = decodeMultiStream(stream) as AsyncGenerator<{ table: string, data: any }>;
 
 					for await(const rawData of multiStreamDecoder){
-						const data: any = await reviver(rawData);
-						console.log(data);
+						const data: any = reviver(rawData);
 						switch (data.table) {
 							case "__config": {
 								Object.assign(appConfig, data.data.appConfig);
