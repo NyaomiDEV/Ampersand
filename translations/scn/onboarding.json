@@ -1,5 +1,39 @@
 {
 	"welcomeScreen": {
-		"header": "Benvinutu ni Ampersand!"
+		"header": "Benvinutu supra Ampersand!",
+		"start": "Accumincia u to viaggiu!"
+	},
+	"importScreen": {
+		"header": "Voi mpurtari i to dati?",
+		"prevInstall": "Sì, nstallazzioni pricidenti",
+		"simplyPlural": "Sì, Simply Plural",
+		"octocon": "Sì, Octocon",
+		"pluralKit": "Sì, PluralKit",
+		"tupperbox": "Sì, Tupperbox",
+		"startFromScratch": "No, accuminciu di zeru",
+		"pleaseWait": "Attendi mentri mpurtemu i to dati",
+		"error": "Erruri mentri mpurtau u backup. Pi favuri scegghia n'autra opzioni.",
+		"errorSp": "Erruri mentri mpurtau l'esport di Simply Plural. Pi favuri scegghia n'autra opzioni.",
+		"errorOc": "Erruri mentri mpurtau l'esport di Octocon. Pi favuri scegghia n'autra opzioni.",
+		"errorPk": "Erruri mentri mpurtau l'esport di PluralKit. Pi favuri scegghia n'autra opzioni.",
+		"errorTu": "Erruri mentri mpurtau l'esport di Tupperbox. Pi favuri scegghia n'autra opzioni.",
+		"allowRemoteContent": {
+			"header": "Permetti a cunnessioni a Internet?",
+			"desc": "Ampersand è n'app ca funziona primariamenti offline, quindi idda abbisogna du to consensu pi cunnettiu a Internet. In stu mumentu idda si vulissi cunnetti a Internet pi scaricari l'avatar e i banner di membra da mpurtari. Quannu finisci, poi disattivari sta funziunalità in Opzioni > Sicurezza > Permetti cuntinuti rimoti."
+		}
+	},
+	"systemInfo": {
+		"header": "Parline d'u to sistema!",
+		"name": "Nnomu cullettivu",
+		"description": "Quarchi cosa supra di vui..."
+	},
+	"memberInfo": {
+		"header": "Parline chiù di tia!",
+		"description": "Quarchi cosa supra di tia...",
+		"invitation": "Cuntinuau a canciari u to prufilu dopu ca finisci cu l'introduzzioni!"
+	},
+	"endScreen": {
+		"header": "Grazzi pi aviri sceltu Ampersand!",
+		"startButton": "Accumincemu!"
 	}
 }

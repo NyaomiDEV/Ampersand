@@ -1,1 +1,39 @@
-{}
+{
+	"welcomeScreen": {
+		"header": "Benvenutə ncopp'a Ampersand!",
+		"start": "Accummincia 'o viaggio tujo!"
+	},
+	"importScreen": {
+		"header": "Vuò mpurtà 'e date tujo?",
+		"prevInstall": "Sì, nstallazzione 'e primma",
+		"simplyPlural": "Sì, Simply Plural",
+		"octocon": "Sì, Octocon",
+		"pluralKit": "Sì, PluralKit",
+		"tupperbox": "Sì, Tupperbox",
+		"startFromScratch": "No, accummincio 'a zero",
+		"pleaseWait": "Aspiette mentre mpurto 'e date tujo",
+		"error": "Errore mentre mpurto 'o backup. Pe' piacere sciglie n'ata opzione.",
+		"errorSp": "Errore mentre mpurto l'export 'e Simply Plural. Pe' piacere sciglie n'ata opzione.",
+		"errorOc": "Errore mentre mpurto l'export 'e Octocon. Pe' piacere sciglie n'ata opzione.",
+		"errorPk": "Errore mentre mpurto l'export 'e PluralKit. Pe' piacere sciglie n'ata opzione.",
+		"errorTu": "Errore mentre mpurto l'export 'e Tupperbox. Pe' piacere sciglie n'ata opzione.",
+		"allowRemoteContent": {
+			"header": "Permetti 'a cunnessione a Internet?",
+			"desc": "Ampersand è n'app ca fatica primariament' offline, quinn' essa abbisogna d' 'o cunsenso tujo pe' se cunnettere a Internet. In chistu mumento se vulesse cunnettere pe' scaricà l'avatar e 'e banner d' 'e membre 'a mpurtà. Quanno fernisce, putarraje disattivà 'sta funzione dint'a Opzioni > Sicurezza > Permetti cuntenute remote."
+		}
+	},
+	"systemInfo": {
+		"header": "Dicce coccosa d' 'o sistema tujo!",
+		"name": "Nomme cullettivo",
+		"description": "Coccosa ncopp'a vuje..."
+	},
+	"memberInfo": {
+		"header": "Dicce coccosa 'e cchiù ncopp'a te!",
+		"description": "Coccosa ncopp'a te...",
+		"invitation": "Cuntinua a cagnà 'o prufilo tujo doppo ca fernisce cu' l'introduzzione!"
+	},
+	"endScreen": {
+		"header": "Grazie ca sciglieste Ampersand!",
+		"startButton": "Accumminciammo!"
+	}
+}
