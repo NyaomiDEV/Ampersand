@@ -1,14 +1,14 @@
 {
 	"header": "Asset manager",
-	"searchPlaceholder": "Looking for the vibes...",
+	"searchPlaceholder": "Look for your stuff...",
 	"add": {
-		"header": "Manifest new asset",
+		"header": "Add new asset",
 		"attachment": "Drop the file"
 	},
 	"edit": {
-		"header": "Glow up the asset",
+		"header": "Fix the asset",
 		"friendlyName": "New name who dis",
-		"attachment": "Swap the fit",
+		"attachment": "Swap the file",
 		"delete": {
 			"title": "Yeet the asset",
 			"confirm": "No cap, you tryna delete this for real?"

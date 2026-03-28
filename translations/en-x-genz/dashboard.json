@@ -5,10 +5,10 @@
 	"systemDescription": "The lore",
 	"nowFronting": "Currently vibing",
 	"fronterInfluencing": "Influencing {{influencedMember}}",
-	"addToFront": "Pull up to the front",
+	"addToFront": "Add to the mix",
 	"recentFrontingHistory": "Just dipped",
 	"messageBoard": {
-		"header": "The tea",
+		"header": "Today's dose of news",
 		"add": "Drop a message",
 		"view": "See more"
 	}

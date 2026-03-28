@@ -19,21 +19,21 @@
 		"errorTu": "Tupperbox import is not it. Try another option.",
 		"allowRemoteContent": {
 			"header": "Let us hit the WiFi?",
-			"desc": "Ampersand is lowkey offline-first, so we need your permission to go online. We'll just be grabbing your avatars and banners for now. You can totally turn this off in Options > Security > Allow remote content later if it's not your vibe."
+			"desc": "Ampersand is lowkey offline-first, so we need your permission to go online. We'll just be grabbing your avatars and banners for now. You can turn this off in Options > Security > Allow remote content later if it's not your vibe."
 		}
 	},
 	"systemInfo": {
 		"header": "Drop the lore on your squad!",
-		"name": "Collective name",
-		"description": "A little bit about the squad..."
+		"name": "Squad name",
+		"description": "A little squad lore..."
 	},
 	"memberInfo": {
-		"header": "Main character energy! Tell us more.",
-		"description": "A little bit about you...",
+		"header": "Drop YOUR lore now!",
+		"description": "A little lore about you...",
 		"invitation": "Keep tweaking your profile card once the onboarding is finished!"
 	},
 	"endScreen": {
-		"header": "Thanks for picking Ampersand! Real one.",
+		"header": "Thanks for picking Ampersand!",
 		"startButton": "Let's goooo!"
 	}
 }

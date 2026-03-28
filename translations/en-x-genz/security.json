@@ -14,12 +14,12 @@
 	},
 	"passwordAlert": {
 		"header": "Hol' up",
-		"text": "You fr right now? Before you do this, write your password down somewhere else because if you lose it, your data is cooked and there's no recovery. No cap, export your data before you set one!"
+		"text": "You fr right now? Before you do this, write your password down somewhere else because if you lose it, your data is cooked and there's no recovery. If you didn't, export your data before you set one!"
 	},
 	"editPassword": "Switch up the password",
 	"inputPassword": {
 		"titleAdd": "Drop your new password",
-		"titleReenter": "Run that password back",
+		"titleReenter": "Retype that password",
 		"titleModifyOld": "What's the old password?",
 		"titleModifyNew": "Drop the new password",
 		"titleDisable": "Password check",

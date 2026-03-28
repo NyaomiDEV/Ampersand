@@ -6,10 +6,6 @@
 	"genericDeleteDesc": "You can't undo this once it's gone!",
 	"addTimestamp": "Add the timestamp",
 	"memberMention": "Tag the bestie",
-	"storagePersistence": {
-		"header": "Hol' up",
-		"content": "Ampersand can't save your tea persistently on this device. If you're on Firefox, let Ampersand cook. If you're on Chrome, Edge, or whatever, just install Ampersand as a web app or add it to your home screen. If this keeps popping up, make sure to back up your data in the Import/Export section so you don't lose the plot."
-	},
 	"alerts": {
 		"ok": "Bet",
 		"cancel": "Abort",

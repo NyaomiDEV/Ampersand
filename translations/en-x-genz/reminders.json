@@ -1,7 +1,7 @@
 {
 	"remindersAreNotFinished": {
 		"header": "Reminders are still cooking!",
-		"content": "Fr fr, all of this is just a UI preview rn! You might be able to save your reminders soon but lowkey this isn't even wired to any notification system yet! If you're on Android you can already tweak some stuff that'll work once the system is actually live, but don't get your hopes up for the Web version. Also if you're a dev, please help us out, we're struggling!"
+		"content": "Fr all of this is just a UI preview rn! You might be able to save your reminders soon but lowkey this isn't even wired to any notification system yet! If you're on Android you can already tweak some stuff that'll work once the system is actually live, but don't get your hopes up for the Web version. Also if you're a dev, please help us out, we're struggling!"
 	},
 	"header": "Reminders",
 	"eventBasedHeader": "Event based reminders",
@@ -18,9 +18,9 @@
 		},
 		"eventBased": {
 			"title": "Triggering event",
-			"addedToFront": "After a member is added to front",
-			"removedFromFront": "After a member is removed from front",
-			"memberFilterQuery": "Member filter query",
+			"addedToFront": "After a bestie is added to the mix",
+			"removedFromFront": "After a bestie is removed from the mix",
+			"memberFilterQuery": "Bestie filter query",
 			"timing": "Timing",
 			"delay": {
 				"title": "Delay",
@@ -44,7 +44,7 @@
 		},
 		"delete": {
 			"title": "Yeet reminder",
-			"confirm": "You sure you wanna yeet this reminder?"
+			"confirm": "You sure you wanna yeet this?"
 		}
 	}
 }

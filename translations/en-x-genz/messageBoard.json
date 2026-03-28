@@ -1,6 +1,6 @@
 {
-	"header": "The Tea Board",
-	"searchPlaceholder": "Find the receipts...",
+	"header": "The feed",
+	"searchPlaceholder": "Find the post...",
 	"polls": {
 		"boardMessageContainsPoll": "Lowkey a poll here",
 		"collapsePoll": "Hide the poll",
@@ -24,21 +24,21 @@
 		}
 	},
 	"edit": {
-		"header": "Fix the vibe",
+		"header": "Fix the post",
 		"member": "Who actually wrote this?",
 		"date": "When it dropped",
 		"title": "The headline",
 		"body": "The actual tea",
 		"isPinned": "Pin this to the top",
 		"isArchived": "Put this in the vault",
-		"attachPoll": "Add a poll to the mix",
+		"attachPoll": "Add a poll to the message",
 		"deleteAttachedPoll": "Yeet the poll",
 		"pollIsMultipleChoice": "Let 'em pick everything",
 		"pollAddNewChoice": "Add another option",
 		"pollChoice": "What's the move?",
 		"pollEditWarning": "If you change the poll, the votes are cooked!",
 		"delete": {
-			"title": "Delete the post",
+			"title": "Delete the message",
 			"confirm": "You sure you want to yeet this message?"
 		}
 	}

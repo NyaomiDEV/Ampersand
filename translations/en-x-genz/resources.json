@@ -1,12 +1,12 @@
 {
-	"header": "The Plug",
+	"header": "The plug",
 	"ampersand": "On Ampersand",
 	"website": {
-		"title": "Main Site",
+		"title": "The site",
 		"desc": "Cop the latest version and stay woke on our updates."
 	},
 	"blog": {
-		"title": "The Tea",
+		"title": "The tea",
 		"desc": "Get the latest news and peep our dev rambles."
 	},
 	"wiki": {
@@ -14,7 +14,7 @@
 		"desc": "Get the lowdown on how to use the app."
 	},
 	"repository": {
-		"title": "The Sauce",
+		"title": "The sauce",
 		"desc": "Help us cook and report any Ls you find."
 	}
 }

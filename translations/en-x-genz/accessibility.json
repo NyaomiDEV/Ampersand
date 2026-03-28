@@ -13,21 +13,17 @@
 		"system-font": "Basic System Font"
 	},
 	"uiVariant": {
-		"title": "UI Aesthetic",
+		"title": "UI mode",
 		"auto": "Vibe with the system",
 		"light": "Flashbang mode",
-		"dark": "Dark mode (Main character energy)"
-	},
-	"useMaterialTheming": {
-		"title": "Material Design vibes",
-		"desc": "Theme the whole app based on Material rules (might be a bit much for the eyes)"
+		"dark": "Dark mode"
 	},
 	"themeIsAmoled": {
 		"title": "Pure Black / AMOLED",
 		"desc": "Go full pitch black in dark mode. Saves your screen and looks fire."
 	},
 	"themeIsVibrant": {
-		"title": "Vibrant Aesthetic",
+		"title": "Vibrant aesthetic",
 		"desc": "Add more color to the UI."
 	},
 	"colorIndicatorPosition": {
@@ -36,14 +32,14 @@
 		"listItem": "List item border"
 	},
 	"useAccentColor": {
-		"title": "Accent color",
-		"desc": "Pick your own accent color"
+		"title": "Use an aesthetic color",
+		"desc": "Pick your own color, make sure it's giving."
 	},
 	"accentColor": {
-		"title": "Choose the accent color"
+		"title": "Pick a good one"
 	},
 	"reducedMotion": {
-		"title": "No shaky vibes",
+		"title": "No shaky",
 		"desc": "Turn off the animations"
 	},
 	"disableCovers": {

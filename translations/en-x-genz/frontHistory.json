@@ -1,13 +1,13 @@
 {
-	"header": "Fronting lore",
-	"searchPlaceholder": "Peep the fronting history...",
+	"header": "Vibing lore",
+	"searchPlaceholder": "Peep the vibing history...",
 	"currentlyFronting": "Main character energy rn",
 	"wasFronting": "Was still locked in",
-	"frontedThatDay": "Fronted that day fr",
-	"influencing": "Vibing with {{influencedMember}}",
+	"frontedThatDay": "Vibed that day fr",
+	"influencing": "Influencing {{influencedMember}}",
 	"edit": {
-		"header": "Fix the fronting entry",
-		"member": "Change the fronter",
+		"header": "Fix the vibing entry",
+		"member": "Change the viber",
 		"customStatus": "Current vibe",
 		"comment": "The tea",
 		"presence": {
@@ -19,15 +19,15 @@
 		},
 		"influencing": {
 			"select": "Pick a bestie to influence",
-			"currentlyInfluencing": "Vibing together rn"
+			"currentlyInfluencing": "Vibing together with"
 		},
 		"startTime": "Start time",
 		"endTime": "End time",
-		"removeFromFront": "Yeet from front",
-		"isMainFronter": "The CEO of fronting",
-		"isLocked": "Locked in",
+		"removeFromFront": "Stop 'em vibe",
+		"isMainFronter": "The CEO of vibing",
+		"isLocked": "Lock the viber in place",
 		"delete": {
-			"title": "Delete the entry",
+			"title": "Delete the vibing entry",
 			"confirm": "You sure you wanna delete this? No cap?"
 		}
 	}
