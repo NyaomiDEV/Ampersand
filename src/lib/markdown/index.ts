@@ -2,11 +2,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Fragment, h, type VNode } from "vue";
 import { Marked } from "marked";
-import { getAssets } from "../db/tables/assets";
 import { useBlob } from "../util/blob";
 import vueExtension from "./vue/vue";
 import { IonCheckbox } from "@ionic/vue";
-import { fetch } from "@tauri-apps/plugin-http";
 
 import mentionExtension from "./mentionExtension";
 import spoilerExtension from "./spoilerExtension";
@@ -22,7 +20,6 @@ import textColorFgExtension from "./textColorFgExtension";
 import textColorBgExtension from "./textColorBgExtension";
 import textShadowExtension from "./textShadowExtension";
 import textBorderExtension from "./textBorderExtension";
-import { securityConfig } from "../config";
 import blurExtension from "./blurExtension";
 import marqueeExtension from "./marqueeExtension";
 import fontSizeExtension from "./fontSizeExtension";
@@ -34,11 +31,11 @@ import startExtension from "./startExtension";
 import endExtension from "./endExtension";
 import fontFamilyExtension from "./fontFamilyExtension";
 import emojiExtension from "./emojiExtension";
+import MarkdownImage from "../../components/MarkdownImage.vue";
+import MarkdownLink from "../../components/MarkdownLink.vue";
 
 export function useMarked(blob: ReturnType<typeof useBlob>){
 	const marked = new Marked<(VNode | string)[], VNode | string>();
-
-	const { getObjectURL } = blob;
 
 	// Our configuration
 	marked.use({
@@ -71,24 +68,13 @@ export function useMarked(blob: ReturnType<typeof useBlob>){
 			image(token) {
 				// checking for lone surrogates the shitty way
 				try {
-					const external = token.href.startsWith("EXTERNAL:");
-					if (external) token.href = token.href.slice(9);
-
 					const href = encodeURI(token.href).replace(/%25/g, "%");
-					return h("img", {
+					return h(MarkdownImage, {
 						src: href,
 						alt: token.text,
-						title: token.title,
+						title: token.title || undefined,
 						width: (token as any).width,
 						height: (token as any).height,
-						onLoad: () => {
-							if (external)
-								URL.revokeObjectURL(token.href);
-						},
-						onError: () => {
-							if (external)
-								URL.revokeObjectURL(token.href);
-						}
 					});
 				} catch (_e) {
 					return h(Text, token.text);
@@ -99,7 +85,7 @@ export function useMarked(blob: ReturnType<typeof useBlob>){
 				// checking for lone surrogates the shitty way
 				try {
 					const href = encodeURI(token.href).replace(/%25/g, "%");
-					return h("a", { href, title: token.title }, inlineParsed);
+					return h(MarkdownLink, { href, title: token.title || undefined }, inlineParsed);
 				} catch (_e) {
 					return h(Fragment, inlineParsed);
 				}
@@ -108,10 +94,10 @@ export function useMarked(blob: ReturnType<typeof useBlob>){
 				return h(IonCheckbox, { checked, disabled: true });
 			}
 		},
-		async walkTokens(token) {
+		walkTokens(token) {
 			switch (token.type) {
 				case "image": {
-					// first off let's match the size tokens
+					// let's match the size tokens
 					const matches = /#(-?\d+?x-?\d+?)$/.exec(token.href);
 					if (matches) {
 						const [w, h] = matches[1].split("x").map(x => Number(x));
@@ -119,51 +105,8 @@ export function useMarked(blob: ReturnType<typeof useBlob>){
 						if (h >= 0) (token as any).height = h;
 						token.href = token.href.replace(/#(-?\d+?x-?\d+?)$/, "");
 					}
-
-					// then let's put the href to asset code
-					let blocked = false;
-					if (token.href.startsWith("@")) {
-						blocked = true; // block since we might not have this asset
-						const friendlyNameMaybe = token.href.slice(1);
-						for await (const x of getAssets()) {
-							if (x.friendlyName === friendlyNameMaybe) {
-								token.href = getObjectURL(x.file);
-								blocked = false; // we have this asset, unblock
-								break;
-							}
-						}
-						// also, block non-asset images as they are sure linking outwards
-					} else {
-						if (!securityConfig.allowRemoteContent)
-							blocked = true; // we don't allow internet connections, block
-						else {
-							const blob = await (await fetch(token.href)).blob();
-							token.href = `EXTERNAL:${URL.createObjectURL(blob)}`;
-						}
-					}
-
-					// replace with # if link is blocked
-					if (blocked)
-						token.href = "#";
 					break;
 				}
-				case "link":
-					if (token.href.startsWith("@")) {
-						let blocked = true;
-						const friendlyNameMaybe = token.href.slice(1);
-						for await (const x of getAssets()) {
-							if (x.friendlyName === friendlyNameMaybe) {
-								token.href = getObjectURL(x.file);
-								blocked = false;
-								break;
-							}
-						}
-
-						// replace with # if link is blocked
-						if (blocked)
-							token.href = "#";
-					}
-					break;
 			}
 		},
 	});
