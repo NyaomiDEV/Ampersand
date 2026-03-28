@@ -1,7 +1,8 @@
 
-import { Member, Tag, Asset, CustomField, JournalPostComplete, BoardMessageComplete, FrontingEntryComplete, System } from "./db/entities";
+import { Member, Tag, Asset, CustomField, JournalPost, BoardMessage, FrontingEntry, System } from "./db/entities";
 import { parseAssetFilterQuery, parseBoardMessageFilterQuery, parseCustomFieldFilterQuery, parseFrontingHistoryFilterQuery, parseJournalPostFilterQuery, parseMemberFilterQuery, parseSystemFilterQuery } from "./util/filterQuery";
 import { appConfig } from "./config";
+import { getMemberIndex } from "./db/tables/members";
 
 export function filterSystem(search: string, system: System) {
 	const parsed = parseSystemFilterQuery(search.length ? search : appConfig.defaultFilterQueries.systems || "");
@@ -82,16 +83,17 @@ export function filterTag(search: string, tag: Tag) {
 		return tag.name.toLowerCase().includes(query.toLowerCase());
 }
 
-export function filterFrontingEntry(search: string, frontingEntry: FrontingEntryComplete){
+export function filterFrontingEntry(search: string, frontingEntry: FrontingEntry){
 	const parsed = parseFrontingHistoryFilterQuery(search.length ? search : appConfig.defaultFilterQueries.frontingHistory || "");
 
 	if(parsed.query.length){
-		if (!frontingEntry.member.name.toLowerCase().includes(parsed.query.toLowerCase()))
+		const memberIndex = getMemberIndex().find(x => x.uuid === frontingEntry.member);
+		if (!memberIndex?.name?.toLowerCase().includes(parsed.query.toLowerCase()))
 			return false;
 	}
 
 	if (parsed.member) {
-		if (frontingEntry.member.uuid !== parsed.member)
+		if (frontingEntry.member !== parsed.member)
 			return false;
 	}
 
@@ -103,7 +105,7 @@ export function filterFrontingEntry(search: string, frontingEntry: FrontingEntry
 	return true;
 }
 
-export function filterBoardMessage(search: string, boardMessage: BoardMessageComplete) {
+export function filterBoardMessage(search: string, boardMessage: BoardMessage) {
 	const parsed = parseBoardMessageFilterQuery(search.length ? search : appConfig.defaultFilterQueries.messageBoard || "");
 
 	if (parsed.isPinned !== undefined) {
@@ -121,10 +123,11 @@ export function filterBoardMessage(search: string, boardMessage: BoardMessageCom
 	}
 
 	if(parsed.query.length){
+		const memberIndex = getMemberIndex().find(x => x.uuid === boardMessage.member);
 		if (
 			![
 				boardMessage.title.toLowerCase().split(" "),
-				boardMessage.member?.name.toLowerCase().split(" ")
+				memberIndex?.name?.toLowerCase().split(" ")
 			].filter(x => !!x).flat().find(x => x.includes(parsed.query.toLowerCase()))
 		)
 			return false;
@@ -135,7 +138,7 @@ export function filterBoardMessage(search: string, boardMessage: BoardMessageCom
 			if(parsed.member === false)
 				return false;
 
-			if (boardMessage.member.uuid !== parsed.member)
+			if (boardMessage.member !== parsed.member)
 				return false;
 		}
 	}
@@ -180,13 +183,14 @@ export function filterCustomField(search: string, customField: CustomField) {
 	return true;
 }
 
-export async function filterJournalPost(search: string, post: JournalPostComplete) {
+export async function filterJournalPost(search: string, post: JournalPost) {
 	const parsed = await parseJournalPostFilterQuery(search.length ? search : appConfig.defaultFilterQueries.journal || "");
-	if(parsed.query.length){
+	if (parsed.query.length) {
+		const memberIndex = getMemberIndex().find(x => x.uuid === post.member);
 		if (
 			![
 				post.title.toLowerCase().split(" "),
-				post.member?.name.toLowerCase().split(" ")
+				memberIndex?.name?.toLowerCase().split(" ")
 			].filter(x => !!x).flat().find(x => x.includes(parsed.query.toLowerCase()))
 		)
 			return false;
@@ -196,7 +200,7 @@ export async function filterJournalPost(search: string, post: JournalPostComplet
 		if(parsed.member === false && post.member)
 			return false;
 
-		if (post.member?.uuid !== parsed.member)
+		if (post.member !== parsed.member)
 			return false;
 	}
 

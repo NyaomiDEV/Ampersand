@@ -84,18 +84,14 @@ export async function* getJournalPostsOfDay(date: Date, includePinned: boolean, 
 		const post = await db.journalPosts.get(entry.uuid);
 		if(!post) continue;
 
-		const completePost = await toJournalPostComplete(post);
-
-		if(await filterJournalPost(query, completePost))
-			yield completePost;
+		if (await filterJournalPost(query, post))
+			yield await toJournalPostComplete(post);
 	}
 }
 
 export async function getJournalPostsDays(query: string) {
 	const _map = await Promise.all(
-		(await Promise.all(
-			await Array.fromAsync(getJournalPosts()).then(array => array.map(x => toJournalPostComplete(x)))
-		))
+		(await Array.fromAsync(getJournalPosts()))
 			.map(async x => {
 				if (await filterJournalPost(query, x))
 					return dayjs(x.date).startOf("day").valueOf();

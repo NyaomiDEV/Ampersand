@@ -10,6 +10,10 @@ export function getMembers(){
 	return db.members.iterate();
 }
 
+export function getMemberIndex(){
+	return db.members.index;
+}
+
 export async function* getFilteredMembers(query: string){
 	for await (const member of getMembers()){
 		if(await filterMember(query, member))

@@ -205,16 +205,13 @@ export async function* getFrontingEntriesOfDay(date: Date, query: string) {
 		const frontingEntry = await db.frontingEntries.get(entry.uuid);
 		if (!frontingEntry) continue;
 
-		const complete = await toFrontingEntryComplete(frontingEntry);
-		if (filterFrontingEntry(query, complete))
-			yield complete;
+		if (filterFrontingEntry(query, frontingEntry))
+			yield await toFrontingEntryComplete(frontingEntry);
 	}
 }
 
 export async function getFrontingEntriesDays(query: string) {
-	const _map = (await Promise.all(
-		await Array.fromAsync(getFrontingEntries()).then(array => array.map(x => toFrontingEntryComplete(x)))
-	))
+	const _map = (await Array.fromAsync(getFrontingEntries()))
 		.filter(x => !!x.endTime && filterFrontingEntry(query, x))
 		.map(x => dayjs(x.startTime).startOf("day").valueOf());
 

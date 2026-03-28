@@ -88,16 +88,13 @@ export async function* getBoardMessagesOfDay(date: Date, query: string) {
 		const boardMessage = await db.boardMessages.get(entry.uuid);
 		if(!boardMessage) continue;
 
-		const complete = await toBoardMessageComplete(boardMessage);
-		if(filterBoardMessage(query, complete))
-			yield complete;
+		if (filterBoardMessage(query, boardMessage))
+			yield await toBoardMessageComplete(boardMessage);
 	}
 }
 
 export async function getBoardMessagesDays(query: string) {
-	const _map = (await Promise.all(
-		await Array.fromAsync(getBoardMessages()).then(array => array.map(x => toBoardMessageComplete(x)))
-	))
+	const _map = (await Array.fromAsync(getBoardMessages()))
 		.filter(x => filterBoardMessage(query, x)).map(x => dayjs(x.date).startOf("day").valueOf());
 
 	return _map.reduce((occurrences, current) => {
