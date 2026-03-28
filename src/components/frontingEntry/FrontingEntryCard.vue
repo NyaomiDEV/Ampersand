@@ -139,8 +139,6 @@
 		.avatar {
 			display: block;
 			margin: 16px auto;
-			width: 48px;
-			height: 48px;
 		}
 
 		ion-card-content {

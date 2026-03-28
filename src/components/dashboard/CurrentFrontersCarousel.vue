@@ -147,6 +147,10 @@
 		flex: none;
 		width: 160px;
 
+		&::part(native){
+			height: 100%;
+		}
+
 		ion-card-content {
 			text-align: center;
 			background-color: transparent;
