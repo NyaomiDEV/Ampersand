@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Fragment, h, type VNode } from "vue";
 import { Marked } from "marked";
-import { useBlob } from "../util/blob";
 import vueExtension from "./vue/vue";
 import { IonCheckbox } from "@ionic/vue";
 
@@ -34,7 +33,7 @@ import emojiExtension from "./emojiExtension";
 import MarkdownImage from "../../components/MarkdownImage.vue";
 import MarkdownLink from "../../components/MarkdownLink.vue";
 
-export function useMarked(blob: ReturnType<typeof useBlob>){
+export function useMarked(){
 	const marked = new Marked<(VNode | string)[], VNode | string>();
 
 	// Our configuration
@@ -113,7 +112,7 @@ export function useMarked(blob: ReturnType<typeof useBlob>){
 
 	// Start injecting our extensions
 	marked.use(
-		svgExtension(blob),
+		svgExtension,
 		mentionExtension,
 		spoilerExtension,
 		timestampExtension,

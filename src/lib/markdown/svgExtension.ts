@@ -1,11 +1,8 @@
 import { Fragment, h, type VNode } from "vue";
 import { MarkedExtension } from "marked";
-import { getAssets } from "../db/tables/assets";
-import { useBlob } from "../util/blob";
-import { securityConfig } from "../config";
-import Svg from "../../components/Svg.vue";
+import MarkdownSvg from "../../components/MarkdownSvg.vue";
 
-const svgExtension = (blob: ReturnType<typeof useBlob>): MarkedExtension<(VNode | string)[], VNode | string> => ({
+const svgExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [{
 		name: "svg",
 		level: "inline",
@@ -29,9 +26,8 @@ const svgExtension = (blob: ReturnType<typeof useBlob>): MarkedExtension<(VNode 
 		},
 		renderer(token) {
 			if (!token.blocked){
-				return h(Svg, {
+				return h(MarkdownSvg, {
 					src: token.href,
-					class: "markdown-svg",
 					fill: token.fill ?? "transparent",
 					stroke: token.stroke ?? "currentColor",
 					strokeWidth: token.strokeWidth,
@@ -40,30 +36,7 @@ const svgExtension = (blob: ReturnType<typeof useBlob>): MarkedExtension<(VNode 
 			} else 
 				return h(Fragment, []);
 		},
-	}],
-	async: true,
-	async walkTokens(token) {
-		switch(token.type){
-			case "svg":
-				// let's put the href to asset code
-				if ((token.href as string).startsWith("@")) {
-					token.blocked = true; // block beforehand since the asset may not exist
-					const [assetNameMaybe, ...parts] = (token.href as string).slice(1).split("#");
-					for await (const x of getAssets()) {
-						if (x.friendlyName === assetNameMaybe) {
-							token.href = blob.getObjectURL(x.file) + (parts.length ? `#${parts.join("#")}` : "");
-							token.blocked = false; // unblock now
-							break;
-						}
-					}
-					// also, block non-asset images as they are sure linking outwards
-				} else {
-					if (!securityConfig.allowRemoteContent)
-						token.blocked = true; // block if we don't have internet permission
-				}
-				break;
-		}
-	}
-});
+	}]
+};
 
 export default svgExtension;

@@ -1,9 +1,8 @@
 <script setup lang="ts">
 	import { watch, shallowRef, VNode } from "vue";
 	import { useMarked } from "../lib/markdown";
-	import { useBlob } from "../lib/util/blob";
 
-	const marked = useMarked(useBlob());
+	const marked = useMarked();
 
 	const props = defineProps<{
 		markdown: string

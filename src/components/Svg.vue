@@ -1,8 +1,8 @@
 <script setup lang="ts">
-	import { h, VNode, Text, shallowRef, Fragment, Comment, onMounted } from "vue";
+	import { h, VNode, Text, shallowRef, Fragment, Comment, watch } from "vue";
 
 	const props = defineProps<{
-		src: string,
+		src?: string,
 		color?: string,
 		stroke?: string,
 		fill?: string,
@@ -39,16 +39,18 @@
 			.map(node => htmlElementToVNode(node));
 	};
 
-	onMounted(async () => {
+	watch(props, async () => {
 		const div = document.createElement("div");
-		div.innerHTML = await (await fetch(props.src)).text();
-		if(props.src.includes("#")){
-			const symbol = div.querySelector(`symbol[id="${props.src.slice(props.src.indexOf("#") + 1)}"]`);
-			if(symbol)
-				source.value = h("svg", { ...getAttrs(div.querySelector("svg")!), ...getAttrs(symbol) }, htmlToNodes(symbol.childNodes));
+		if(props.src){
+			div.innerHTML = await (await fetch(props.src)).text();
+			if(props.src?.includes("#")){
+				const symbol = div.querySelector(`symbol[id="${props.src.slice(props.src.indexOf("#") + 1)}"]`);
+				if(symbol)
+					source.value = h("svg", { ...getAttrs(div.querySelector("svg")!), ...getAttrs(symbol) }, htmlToNodes(symbol.childNodes));
+			}
 		} else
 			source.value = h(Fragment, htmlToNodes(div.childNodes));
-	});
+	}, { immediate: true });
 </script>
 
 <template>
