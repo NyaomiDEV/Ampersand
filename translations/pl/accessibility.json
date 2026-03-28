@@ -19,10 +19,6 @@
 		"light": "Jasny",
 		"dark": "Ciemny"
 	},
-	"useMaterialTheming": {
-		"title": "Motywy Material Design",
-		"desc": "Dostosuj motyw swojej aplikacji według wytycznych Material (może powodować zmęczenie oczu)"
-	},
 	"useAccentColor": {
 		"title": "Kolor akcentu",
 		"desc": "Wybierz niestandardowy kolor akcentu"

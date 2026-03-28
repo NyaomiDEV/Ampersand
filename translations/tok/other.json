@@ -6,10 +6,6 @@
 	"genericDeleteDesc": "sina weka e ni la sina ken ala jo sin e ni!",
 	"addTimestamp": "nimi sin pi sona tenpo",
 	"memberMention": "nimi sin pi ijo kulupu",
-	"storagePersistence": {
-		"header": "o lukin",
-		"content": "ilo Ampersand li ken ala jo e sona lon tenpo ale kepeken ilo sina. sina kepeken ilo Firefox la, o pana e ken pi jo sona tawa ilo Ampersand. ilo Chrome en ilo Edge en ilo Opera en ilo Vivaldi en ilo ante li ilo pi ilo Chromium la sina kepeken ilo pi ilo Chromium la o kama jo e ilo Ampersand lon ilo sina. toki ni li weka ala la tenpo mute la o kama jo e ijo ilo pi sona sina lon ilo sina kepeken nena \"pana sona anu kama pi jo sona\"."
-	},
 	"alerts": {
 		"ok": "pona",
 		"cancel": "awen ala",

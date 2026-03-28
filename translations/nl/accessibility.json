@@ -16,10 +16,6 @@
 		"light": "Licht",
 		"dark": "Donker"
 	},
-	"useMaterialTheming": {
-		"title": "Material Design thema",
-		"desc": "Kleur jouw ervaring op basis van de Material standaard (zou oogvermoeidheid kunnen veroorzaken)"
-	},
 	"useAccentColor": {
 		"title": "Accentkleur",
 		"desc": "Gebruik een aangepaste accentkleur"

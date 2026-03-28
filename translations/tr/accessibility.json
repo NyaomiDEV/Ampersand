@@ -17,10 +17,6 @@
 		"light": "Aydınlık",
 		"dark": "Koyu"
 	},
-	"useMaterialTheming": {
-		"title": "Materyal Tasarımı temalaştırması",
-		"desc": "Deneyiminizi Materyal yönergelerine göre temalaştırın (göz zorlanmasına yol açabilir)"
-	},
 	"reducedMotion": {
 		"title": "Azaltılmış hareket",
 		"desc": "Uygulama için animasyonları etkisizleştir"

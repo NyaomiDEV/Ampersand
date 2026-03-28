@@ -18,10 +18,6 @@
 		"light": "Light",
 		"dark": "Dark"
 	},
-	"useMaterialTheming": {
-		"title": "Material Design theming",
-		"desc": "Theme your experience according to Material guidelines (could cause eye strain)"
-	},
 	"themeIsAmoled": {
 		"title": "AMOLED mode",
 		"desc": "Use a total black background when in dark mode. Can reduce display wear."

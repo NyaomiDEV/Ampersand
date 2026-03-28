@@ -18,10 +18,6 @@
 		"light": "Chiara",
 		"dark": "Scura"
 	},
-	"useMaterialTheming": {
-		"title": "Tema Material Design",
-		"desc": "Usa un tema che segue le linee guida Material (potrebbe causare fatica agli occhi)"
-	},
 	"themeIsAmoled": {
 		"title": "Modalità AMOLED",
 		"desc": "Usa uno sfondo totalmente nero in modalità scura. Può ridurre l'usura di alcuni display."

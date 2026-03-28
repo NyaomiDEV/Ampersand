@@ -19,10 +19,6 @@
 		"light": "walo",
 		"dark": "pimeja"
 	},
-	"useMaterialTheming": {
-		"title": "lukin pi ilo Material Design",
-		"desc": "o ante e ilo ni kepeken lipu lawa pi ilo Material Design (taso, ni li ken pakala e lukin sina)"
-	},
 	"useAccentColor": {
 		"title": "kule namako ilo",
 		"desc": "ilo li kepeken kule namako pi wile sina"

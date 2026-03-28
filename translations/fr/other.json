@@ -48,10 +48,6 @@
 	"back": "Retour",
 	"memberMention": "Mentionner un membre",
 	"addTimestamp": "Ajouter un horodatage",
-	"storagePersistence": {
-		"content": "Ampersand ne peut pas stocker de données sur votre appareil. Si vous utilisez Firefox, veuillez donner à Ampersand la permission nécessaire. Si vous utilisez un navigateur basé sur Chromium (Chrome, Edge, Opera, Vivaldi, etc…), veuillez installer Ampersand en tant que web app, ou l’ajouter à votre bureau/écran d’accueil. Si ce message continue d’apparaître, pensez à souvent sauvegarder vos données dans la section Importer/Exporter.",
-		"header": "Attention"
-	},
 	"time": "Temps",
 	"presence": {
 		"absent": "Absent·e",

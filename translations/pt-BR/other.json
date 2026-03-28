@@ -5,8 +5,5 @@
 	},
 	"genericDeleteDesc": "Você não poderá desfazer essa ação!",
 	"addTimestamp": "Adicionar carimbo de data/hora",
-	"memberMention": "Mencione um membro",
-	"storagePersistence": {
-		"header": "Aviso"
-	}
+	"memberMention": "Mencione um membro"
 }
