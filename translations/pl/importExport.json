@@ -5,7 +5,7 @@
 		"desc": "Utwórz kopię zapasową bieżących danych w pliku, który można przechowywać gdzie indziej"
 	},
 	"dbImportDesc": "Uwaga! Spowoduje to nadpisanie wszystkich istniejących danych",
-	"dbImport": "Importuj dane z kopii zapasowej",
+	"dbImport": "Importuj swoje dane",
 	"pkImport": "Importuj dane z eksportu PluralKit",
 	"tuImport": "Importuj dane z eksportu Tupperbox",
 	"spImport": "Importuj dane z eksportu Simply Plural",
@@ -24,5 +24,13 @@
 		"importedOc": "Eksport z Octocon został zaimportowany. Proszę ponownie uruchomić aplikację.",
 		"errorOc": "Błąd podczas importowania eksportu z Octocon."
 	},
-	"ocImport": "Importuj dane z eksportu Octocon"
+	"ocImport": "Importuj dane z eksportu Octocon",
+	"dbImportOld": {
+		"note": "Stare wersje Ampersandu wykorzystywały format plików (ampdb), który jest teraz przestarzały. Jeśli przechowujesz stare kopie zapasowe, zaimportuj je teraz i wyeksportuj je jeszcze raz – ta opcja zostanie usunięta za kilka wersji.",
+		"title": "Importuj dane ze starszej wersji Ampersandu",
+		"desc": "W przypadku plików kopii zapasowej utworzonych za pomocą Ampersand < 0.2.0"
+	},
+	"importHeader": "Importuj",
+	"thirdPartyHeader": "Integracje z narzędziami stron trzecich",
+	"exportHeader": "Eksportuj"
 }

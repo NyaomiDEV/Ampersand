@@ -94,5 +94,6 @@
 		"triangle": "Trójkąt",
 		"very-sunny": "Bardzo słoneczny",
 		"noShape": "Brak kształtu"
-	}
+	},
+	"developerMode": "Tryb programisty"
 }

@@ -25,6 +25,5 @@
 		"titleDisable": "Wprowadź swoje hasło",
 		"hint": "Hasło"
 	},
-
 	"useIPC": "Wysyłaj wydarzenia do innych aplikacji"
 }
