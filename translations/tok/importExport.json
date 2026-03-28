@@ -5,7 +5,7 @@
 		"desc": "sona sina pi tenpo ni li kama ijo ilo lon ilo sina"
 	},
 	"dbImportDesc": "o lukin! ni li weka e sona sina lon ilo ni la sona sin li kama",
-	"dbImport": "o pana e sona tawa ilo ni tan ijo ilo",
+	"dbImport": "o pana e sona tawa ilo ni",
 	"pkImport": "o pana e sona tawa ilo ni tan ijo pi ilo PluralKit",
 	"tuImport": "o pana e sona tawa ilo ni tan ijo pi ilo Tupperbox",
 	"spImport": "o pana e sona tawa ilo ni tan ijo pi ilo Simply Plural",
@@ -24,5 +24,13 @@
 		"importedOc": "sona pi ijo pi ilo Octocon li kama lon ilo ni. o pini e ilo ni, kin la o open sin e ilo ni.",
 		"errorOc": "ijo ilo pi sona sina li tan ilo Octocon. ijo ni li alasa kama tawa ilo sina, taso pakala li kama."
 	},
-	"ocImport": "o pana e sona tawa ilo ni tan ijo pi ilo Octocon"
+	"ocImport": "o pana e sona tawa ilo ni tan ijo pi ilo Octocon",
+	"dbImportOld": {
+		"note": "ilo Ampersand pi ante sin ala li pana e nasin pi ijo ilo. nasin ni li nasin Ampdb li pona ala. sina kepeken e ijo ilo ni la o pana e ijo ilo tawa ilo Ampersand, kin la o kama jo sin e ijo ilo pi sona sina. tenpo kama la sina ken ala pana e ijo ilo ni tawa ilo Ampersand.",
+		"title": "o pana e sona tawa ilo ni tan ilo ni pi sin ala",
+		"desc": "ijo ilo pi ante < 0.2.0"
+	},
+	"importHeader": "kama sona",
+	"thirdPartyHeader": "toki pi ilo ante",
+	"exportHeader": "pana sona"
 }

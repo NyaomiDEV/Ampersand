@@ -23,13 +23,11 @@
 		},
 		"members": {
 			"title": "sina pana e nimi sona ni tawa ijo kulupu",
-			"desc_one": "ijo kulupu {{count}} li kepeken nimi sona ni",
-			"desc_other": ""
+			"desc_one": "ijo kulupu {{count}} li kepeken nimi sona ni"
 		},
 		"showJournal": {
 			"title": "sina lukin e lipu pi nimi sona ni",
-			"desc_one": "lipu {{count}} li jo nimi sona ni",
-			"desc_other": ""
+			"desc_one": "lipu {{count}} li jo nimi sona ni"
 		},
 		"delete": {
 			"title": "weka pi nimi sona",
