@@ -1,1 +1,50 @@
-{}
+{
+	"header": "Mmembrie",
+	"searchPlaceholder": "Cerca mmiezo ê mmembrie...",
+	"select": "Scegli nu mmembro",
+	"deletedMember": "Mmembro cancellato",
+	"deletedCustomFront": "Front personalizzato cancellato",
+	"actions": {
+		"addToFront": "Aggiungi ô front",
+		"setMainFronter": "Metti comm'a fronter prencepale",
+		"unsetMainFronter": "Leva comm'a fronter prencepale",
+		"setSoleFronter": "Metti comm'a sulo front",
+		"removeFromFront": "Leva d'ô front"
+	},
+	"toasts": {
+		"addToFront": "Mmembro aggiunto ô front",
+		"setMainFronter": "Mmembro messo comm'a fronter prencepale",
+		"unsetMainFronter": "Mmembro levato d'ô front prencepale",
+		"setSoleFronter": "Mmembro messo comm'a sulo front",
+		"removeFromFront": "Mmembro levato d'ô front"
+	},
+	"edit": {
+		"header": "Mmembro",
+		"headerAdd": "Aggiungi mmembro",
+		"headerEdit": "Cagna mmembro",
+		"name": "Nomme",
+		"pronouns": "Pronomi",
+		"role": "Ruolo",
+		"color": "Culore preferito",
+		"imageClip": "Forma de l'immaggine",
+		"customFieldsAdd": "Aggiungi campi personalizzati",
+		"tags": "Cagna 'e tag",
+		"description": "Descrizzione",
+		"noDescription": "Nisciuna descrizzione",
+		"system": "Cagna sistema 'e appartenenza",
+		"isPinned": "Fissa mmembro",
+		"customFront": "Front personalizzato",
+		"archived": "Archiviato",
+		"showFrontingEntries": "Famme vedé 'e voci 'e front",
+		"showBoardEntries": "Famme vedé 'e messaggi ncopp'â bacheca",
+		"showJournalEntries": "Famme vedé 'e paggine ncopp'ô diario",
+		"memberID": "ID d'ô mmembro: {{memberID}}",
+		"dateCreated": "Data 'e creazione: {{dateCreated}}",
+		"memberIDcopiedToClipboard": "ID d'ô membro cupiato ncopp'â ll'appunti!",
+		"delete": {
+			"title": "Scancella membro",
+			"confirm": "Vuò overo scancellà stu mmembro?"
+		}
+	}
+}
+
