@@ -1,23 +1,59 @@
 name: Bug Report
 description: File a bug report.
-labels: ["bug", "triage"]
+labels: ["bug"]
 
 body:
+  - type: dropdown
+    id: version-type
+    attributes:
+      label: Version type
+      description: What version type of Ampersand are you running?
+      options:
+        - Stable
+        - CI build
+    validations:
+      required: true
+
   - type: input
     id: version
     attributes:
       label: Version
-      description: What version of Ampersand are you running? (This refers to the version number in the About section, eg. 0.1.0+10)
+      description: Specify the version here
     validations:
       required: true
 
   - type: dropdown
-    id: flavor
+    id: distribution-channel
     attributes:
-      label: Which flavor of Ampersand are you seeing the problem on?
+      label: Where and how did you get Ampersand from?
       multiple: false
       options:
-        - Android APK
+        - Android (Google Play Store)
+        - Android (downloaded elsewhere)
+        - iOS (SideStore)
+        - iOS (other means of sideloading)
+        - Windows (downloaded through our website)
+        - macOS (downloaded through our website)
+        - Linux (downloaded through our website)
+        - Linux / Fedora (downloaded through our GitHub)
+        - Linux / Ubuntu or Debian (downloaded through our GitHub)
+        - Linux / Arch (built through our PKGBUILD)
+        - Linux / Other (built yourself)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: starting-database
+    attributes:
+      label: Did you import your data?
+      multiple: false
+      options:
+        - No
+        - Yes, from a previous Ampersand installation
+        - Yes, from Octocon
+        - Yes, from Simply Plural
+        - Yes, from PluralKit
+        - Yes, from TupperBox
     validations:
       required: true
 
@@ -30,28 +66,18 @@ body:
 
         If you're on a desktop/laptop, specify:
           - OS name and version
-          - Browser name and version
           - CPU model, amount of RAM available (available means what's reported as available from your system information section)
           - GPU model (optional, do include in case of graphical glitches)
+          - Bonus steps for Windows:
+            - Exact version of Edge WebView2, find that in your computer's app list.
+          - Bonus steps for Linux:
+            - Exact version of webkit2gtk-4.1 for your distribution.
         
         Else, if you're on a mobile device, specify:
           - if an iPhone, the exact model and iOS version;
           - if an Android, the exact model and Android version, plus the following:
             - If using a custom ROM, please tell us which flavor it is (eg. LineageOS, GrapheneOS);
-            - If using the APK, do tell us your WebView name and version (Settings -> Apps -> Show all apps -> Android WebView / Android System WebView / {Your vendor's name here, eg. Huawei} WebView);
-    validations:
-      required: true
-
-  - type: dropdown
-    id: starting-database
-    attributes:
-      label: Did you import from other services?
-      multiple: false
-      options:
-        - No
-        - Yes, Simply Plural
-        - Yes, PluralKit
-        - Yes, TupperBox
+            - Do tell us your WebView name and version (Settings -> Apps -> Show all apps -> Android WebView / Android System WebView / {Your vendor's name here, eg. Huawei} WebView);
     validations:
       required: true
 
@@ -72,5 +98,5 @@ body:
     id: log
     attributes:
       label: Relevant log output
-      description: Please copy and paste any relevant log output.
+      description: If you're tech inclined and you know how to get a log, put it here.
       render: shell
