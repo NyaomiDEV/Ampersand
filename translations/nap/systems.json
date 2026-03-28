@@ -1,1 +1,30 @@
-{}
+{
+	"header": "Sisteme",
+	"searchPlaceholder": "Cerca mmiezo ê sisteme...",
+	"select": "Scegli nu sistema",
+	"edit": {
+		"header": "Sistema",
+		"headerAdd": "Aggiunge nu sistema",
+		"headerEdit": "Cagna 'o sistema",
+		"name": "Nomme d''o sistema",
+		"description": "Descrizzione d''o sistema",
+		"noDescription": "Nisciuna descrizzione",
+		"color": "Culore",
+		"imageClip": "Forma de l'immaggine",
+		"memberCount": "Quante ne so'",
+		"memberCountText": "{{totalMemberCount}} soci, {{memberCount}} attivi, {{archivedMemberCount}} archiviati",
+		"customFrontCountText": "{{totalCustomFrontCount}} front perzunalezzate, {{customFrontCount}} attive, {{archivedCustomFrontCount}} archiviate",
+		"tapToShow": "Schiaccia pe' vedé",
+		"showMembers": "Fa' vedé 'e soci 'e stu sistema",
+		"parent": "Sistema pate",
+		"isPinned": "Appiccica 'o sistema",
+		"archived": "Archiviato",
+		"delete": {
+			"title": "Scancella 'o sistema",
+			"confirm": "Vuò scancellà overamente stu sistema?"
+		},
+		"systemID": "ID sistema: {{systemID}}",
+		"systemIDcopiedToClipboard": "ID d''o sistema cupiato ncopp'â ll'appunti!!"
+	}
+}
+

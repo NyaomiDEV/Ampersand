@@ -1,1 +1,103 @@
-{}
+{
+	"languageName": {
+		"local": "Nnapulitano",
+		"inEnglish": "Neapolitan"
+	},
+	"genericDeleteDesc": "Nun pùo' turnà arreto!",
+	"addTimestamp": "Mitte data e ora",
+	"memberMention": "Menziona nu socio",
+	"storagePersistence": {
+		"header": "Attenziò",
+		"content": "Ampersand nun pô sarvà 'e date pe' sempe ncopp'ô dispositivo tujo. Si staje ausanno Firefox, pe' piacere rà 'o permesso a Ampersand pe' 'o fà. Si staje ncopp'a nu browser basato ncopp'a Chromium (comm'a Chrome, Edge, Opera GX, Vivaldi, ecc...), pe' piacere nstalla Ampersand comm'a na web app / miettelo ncopp'â schermata 'e casa. Si stu messaggio nun se ne va, vide 'e fà spisso 'o backup d''e date d''a sezzione Mpurtà/Spurtà."
+	},
+	"alerts": {
+		"ok": "Ok",
+		"cancel": "Annulla",
+		"clear": "Scancella",
+		"yes": "Sì",
+		"no": "No"
+	},
+	"presence": {
+		"absent": "Assente",
+		"heavilyDissociating": "Sta rincintunito assaje",
+		"dissociating": "Rincintunito",
+		"zonedOut": "Sta cu 'a capa 'e l'aria",
+		"present": "Presente",
+		"fullyGrounded": "Cu 'e piere pe' terra"
+	},
+	"back": "Arreto",
+	"time": "Ora",
+	"timeSizes": {
+		"years": {
+			"long": "anne",
+			"short": "Y"
+		},
+		"months": {
+			"long": "mise",
+			"short": "M"
+		},
+		"days": {
+			"long": "juorne",
+			"short": "D"
+		},
+		"weekdays": {
+			"monday": "Lunedì",
+			"tuesday": "Martedì",
+			"wednesday": "Miercurì",
+			"thursday": "Giovedì",
+			"friday": "Viernarì",
+			"saturday": "Sàbbato",
+			"sunday": "Dumènneca"
+		},
+		"hours": {
+			"long": "ore",
+			"short": "h"
+		},
+		"minutes": {
+			"long": "menute",
+			"short": "m"
+		},
+		"seconds": {
+			"long": "seconne",
+			"short": "s"
+		}
+	},
+	"shapes": {
+		"arch": "Arco",
+		"arrow": "Freccia",
+		"boom": "Bomba",
+		"bun": "Panuozzo",
+		"burst": "Botta",
+		"clamshell": "Cunchiglia",
+		"diamond": "Diamante",
+		"fan": "Ventaglio",
+		"flower": "Fiore",
+		"gem": "Gemma",
+		"ghost-ish": "Comm'a n'ombra",
+		"heart": "Core",
+		"leaf-clover4": "Quadrifoglio",
+		"leaf-clover8": "Quadrifoglio a otto foglie",
+		"oval": "Ovale",
+		"pentagon": "Pentagono",
+		"pill": "Pastiglia",
+		"pixel-circle": "Circhio pixel",
+		"pixel-triangle": "Triangolo pixel",
+		"puffy-diamond": "Diamante murbido",
+		"puffy": "Murbido",
+		"semicircle": "Semicirchio",
+		"sided-cookie12": "Viscuotto a 12 late",
+		"sided-cookie4": "Viscuotto a 4 late",
+		"sided-cookie6": "Viscuotto a 6 late",
+		"sided-cookie7": "Viscuotto a 7 late",
+		"sided-cookie9": "Viscuotto a 9 late",
+		"slanted": "Sturtellato",
+		"soft-boom": "Bomba doce",
+		"soft-burst": "Botta doce",
+		"square": "Quatrato",
+		"sunny": "Soleggiato",
+		"triangle": "Triangolo",
+		"very-sunny": "Soleggiato assaje",
+		"noShape": "Nisciuna forma"
+	},
+	"developerMode": "Modalità sviluppatore"
+}

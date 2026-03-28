@@ -1,1 +1,30 @@
-{}
+{
+	"header": "Sicurezza",
+	"applock": {
+		"title": "Blocco de l'applicazione",
+		"desc": "Blocca l'applicazione cu 'na password"
+	},
+	"allowRemoteContent": {
+		"title": "Permetti cuntenute remote",
+		"desc": "Permetti a Ampersand 'e ausà Internet pe scaricà cuntenute remote, comm' 'e ffigure dint' 'e campe Markdown e ll'avatar dint' 'e mport d' 'e tierze parte."
+	},
+	"biometrics": {
+		"title": "Ausa l'autenticazione biometrica",
+		"desc": "Sblocca cu ll'impronta diggitale o 'a faccia"
+	},
+	"passwordAlert": {
+		"header": "Attenziò",
+		"text": "Sî sicurə 'e vulé prucedere? Primma 'e prucedere, pe piacere segnate 'a password cocche pparte fore 'e Ampersand pecché nun putarraje recuperà 'e date tuoje o resettà 'a password si t' 'a pierde. Assicurate 'e fà nu backup primma 'e n'impostà una!"
+	},
+	"editPassword": "Cagna password",
+	"inputPassword": {
+		"titleAdd": "Mitte 'na password nova",
+		"titleReenter": "Mitte n'ata vota 'a password",
+		"titleModifyOld": "Mitte 'a password vecchia",
+		"titleModifyNew": "Mitte 'a password nova",
+		"titleDisable": "Mitte 'a password toja",
+		"hint": "Password"
+	},
+
+	"useIPC": "Manna ll'evente a ll'applicaziune 'e tierze parte"
+}

@@ -1,1 +1,10 @@
-{}
+{
+	"header": "Nfurmazziune",
+	"version": "Versione {{version}}",
+	"ciVersion": "Versione CI", 
+	"madein": "Fatto cu 'o core 'n Italia",
+	"privacyPolicy": "Regole d' 'a privacy",
+	"updateAvailable": "È asciuto n'aggiurnamento: {{newVersion}}",
+	"credits": "Ringraziamiente"
+}
+

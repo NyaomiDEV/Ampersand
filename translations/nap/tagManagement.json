@@ -1,1 +1,43 @@
-{}
+{
+	"header": "Gestione d' 'e tag",
+	"searchPlaceholder": "Cerca mmiez' 'e tag...",
+	"select": "Scerne quacche tag",
+	"selector": {
+		"member": "Tag d' 'e mmiembre",
+		"journal": "Tag d' 'o diario"
+	},
+	"edit": {
+		"header": {
+			"member": "Cagna 'e tag d' 'e mmiembre",
+			"journal": "Cagna 'e tag d' 'o diario"
+		},
+		"name": "Nomme d' 'o tag",
+		"description": "Descrizzione d' 'o tag",
+		"color": "Culore d' 'o tag",
+		"viewInLists": "Famme vedé dint' 'e liste",
+		"type": {
+			"header": "Tipo 'e tag",
+			"member": "Membro",
+			"journal": "Diario",
+			"desc": "Nota: 'o tipo 'e tag 'o puo' decidere sulo quanno 'o criaje!"
+		},
+		"members": {
+			"title": "Scerne 'e mmiembre ca usano stu tag",
+			"desc_one": "{{count}} mmembro ausa stu tag",
+			"desc_many": "{{count}} mmiembre ausano stu tag",
+			"desc_other": "{{count}} mmiembre ausano stu tag"
+		},
+		"showJournal": {
+			"title": "Famme vedé 'e paggene d' 'o diario ca usano stu tag",
+			"desc_one": "{{count}} paggena d' 'o diario ausa stu tag",
+			"desc_many": "{{count}} paggene d' 'o diario ausano stu tag",
+			"desc_other": "{{count}} paggene d' 'o diario ausano stu tag"
+		},
+		"delete": {
+			"title": "Scancella 'o tag",
+			"confirm": "Vuò scancellà overamente stu tag?"
+		},
+		"tagID": "ID d' 'o tag: {{tagID}}",
+		"tagIDCopiedToClipboard": "ID d' 'o tag cupiato comm'a menzione ncopp'â ll'appunti!"
+	}
+}

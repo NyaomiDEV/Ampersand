@@ -1,1 +1,34 @@
-{}
+{
+	"header": "Cronologgia d' 'o front",
+	"searchPlaceholder": "Cerca mmiez'â cronologgia d' 'o front...",
+	"currentlyFronting": "Mo sta ô front",
+	"wasFronting": "Steva ancora ô front",
+	"frontedThatDay": "Ha frontato chillu juorno",
+	"influencing": "Influenza a {{influencedMember}}",
+	"edit": {
+		"header": "Cagna 'a voce 'e front",
+		"member": "Cagna 'o membru ô front",
+		"customStatus": "Stato perzunale",
+		"comment": "Cummento",
+		"presence": {
+			"historyTitle": "Storia d' 'a prusenza",
+			"lastPresence": "L'urdema vota steva {{presence}} / 5 stelle",
+			"addTitle": "Quanto sî prusente 'a 0 a 10?",
+			"confirmButton": "Cunferma",
+			"date": "Data"
+		},
+		"influencing": {
+			"select": "Scegli nu mmembro d'influenzà",
+			"currentlyInfluencing": "Sta influenzanno"
+		},
+		"startTime": "Data d'inizio",
+		"endTime": "Data 'e fine",
+		"removeFromFront": "Leva d' 'o front",
+		"isMainFronter": "Fronter prencepale",
+		"isLocked": "Blocca 'o fronter",
+		"delete": {
+			"title": "Scancella 'a voce 'e front",
+			"confirm": "Vuò scancellà overo 'sta voce 'e front?"
+		}
+	}
+}

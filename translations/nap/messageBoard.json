@@ -1,1 +1,46 @@
-{}
+{
+	"header": "Bacheca d' 'e messagge",
+	"searchPlaceholder": "Cerca mmiezo a 'e messagge...",
+	"polls": {
+		"boardMessageContainsPoll": "Tene nu sondaggio",
+		"collapsePoll": "Annuiccia 'o sondaggio",
+		"voteCast": {
+			"voter": "Scerne chi vòta",
+			"reason": "Racci 'o mutivo",
+			"reasonHint": "Mutivo",
+			"retractConfirmation": "Vuò overo cancellà 'o vuto?"
+		},
+		"resultsHeader": "Risultate d' 'e vute",
+		"resultsButton": "Famme vedé 'e risurtate d' 'o sondaggio",
+		"choice": {
+			"desc_one": "{{count}} chi vòta",
+			"desc_many": "{{count}} chi vòtano",
+			"desc_other": "{{count}} chi vòtano"
+		},
+		"defaultPollValues": {
+			"yes": "Sì",
+			"no": "No",
+			"veto": "Veto",
+			"abstain": "Astennuto"
+		}
+	},
+	"edit": {
+		"header": "Cagna 'o messaggio",
+		"member": "Cagna l'autore d' 'o messaggio",
+		"date": "Cagna 'a data",
+		"title": "Titolo",
+		"body": "Cuorpo d' 'o messaggio",
+		"isPinned": "Appiccica 'o messaggio",
+		"isArchived": "Archivia 'o messaggio",
+		"attachPoll": "Mitte nu sondaggio int'ô messaggio",
+		"deleteAttachedPoll": "Leva 'o sondaggio ca nce sta",
+		"pollIsMultipleChoice": "Permetti cchiù 'e na scelta",
+		"pollAddNewChoice": "Aggiunge na scelta nova int'ô sondaggio",
+		"pollChoice": "Descrizione d' 'a scelta",
+		"pollEditWarning": "I vute se cancellano si cagne quacche cosa int'ô sondaggio!",
+		"delete": {
+			"title": "Leva 'o messaggio d' 'a bacheca",
+			"confirm": "Vuò overo cancellà stu messaggio?"
+		}
+	}
+}

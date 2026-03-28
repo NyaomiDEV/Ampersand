@@ -1,1 +1,36 @@
-{}
+{
+	"header": "Mpurta / Esporta",
+	"importHeader": "Mpurta",
+	"thirdPartyHeader": "Integrazziune cu 'e tierze parte",
+	"exportHeader": "Esporta",
+	"dbExport": {
+		"title": "Esporta 'e date tuoje",
+		"desc": "Faje 'o backup d''e date tuoje accussì 'e può tènere 'a n'ata parte"
+	},
+	"dbImportDesc": "Attenziò! Chisto va a sovrascrivere ogne dato ca già ce sta",
+	"dbImport": "Mpurta 'e date tuoje 'a nu file 'e backup",
+	"dbImportOld": {
+		"title": "Mpurta 'e date tuoje 'a na vecchia verziòne 'e Ampersand",
+		"desc": "Pe' 'e file 'e backup criate cu Ampersand < 0.2.0",
+		"note": " 'E vecchie verziune 'e Ampersand ausàvano nu formato 'e file (ampdb) ca mo è obsoleto. Si tiene ancora 'e vecchie backup, vide 'e mmurtà mo e d'esportà n'ata vota pecché st'opziòne venarrà levata ampressa."
+	},
+	"spImport": "Mpurta 'e date tuoje 'a n'esportazziòne 'e Simply Plural",
+	"ocImport": "Mpurta 'e date tuoje 'a n'esportazziòne 'e Octocon.",
+	"pkImport": "Mpurta 'e date tuoje 'a n'esportazziòne 'e PluralKit",
+	"tuImport": "Mpurta 'e date tuoje 'a n'esportazziòne 'e Tupperbox",
+	"status": {
+		"imported": "'O backup è stato mpurtato. Pe' piacere, fa' partì n'ata vota l'app.",
+		"importedSp": "L'esportazziòne 'e Simply Plural è stata mpurtata. Pe' piacere, fa' partì n'ata vota l'app.",
+		"importedOc": "L'esportazziòne 'e Octocon è stata mpurtata. Pe' piacere, fa' partì n'ata vota l'app.",
+		"importedPk": "L'esportazziòne 'e PluralKit è stata mpurtata. Pe' piacere, fa' partì n'ata vota l'app.",
+		"importedTu": "L'esportazziòne 'e Tupperbox è stata mpurtata. Pe' piacere, fa' partì n'ata vota l'app.",
+		"exportedApp": "'O backup è stato esportato addò asseglie tu.",
+		"exportedAppIos": "'O backup è stato esportato dint'â cartella Ampersand de l'app Documenti.",
+		"errorExport": "Errore mentr'esportavo 'o backup.",
+		"error": "Errore mentr'impurtavo 'o backup.",
+		"errorOc": "Errore mentr'impurtavo l'esportazziòne 'e Octocon.",
+		"errorSp": "Errore mentr'impurtavo l'esportazziòne 'e Simply Plural.",
+		"errorPk": "Errore mentr'impurtavo l'esportazziòne 'e PluralKit.",
+		"errorTu": "Errore mentr'impurtavo l'esportazziòne 'e Tupperbox."
+	}
+}

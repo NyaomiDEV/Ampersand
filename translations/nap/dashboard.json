@@ -1,1 +1,15 @@
-{}
+{
+	"header": "Dashboard",
+	"header_salute": "Uè!",
+	"header_mainfronter": "Uè, {{fronterName}}!",
+	"systemDescription": "Descrizzione d''o sistema",
+	"nowFronting": "Mo a front",
+	"fronterInfluencing": "Sta nfluenzanno a {{influencedMember}}",
+	"addToFront": "Aggiunge ô front",
+	"recentFrontingHistory": "Ascitə 'a poco 'o front",
+	"messageBoard": {
+		"header": "Bacheca d''e messagge",
+		"add": "Aggiunge nu messaggio",
+		"view": "Vire tutto quanto"
+	}
+}

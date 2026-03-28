@@ -1,1 +1,30 @@
-{}
+{
+	"header": "Diario",
+	"searchPlaceholder": "Cerca 'int'ô diario...",
+	"contentWarning": "Stu post tène cuntenute sensitive",
+	"private": "Stu post è privato",
+	"pinnedPosts": "Post appiccicate",
+	"alertSubheader": "Vuò leggere overo stu post?",
+	"edit": {
+		"header": "Post",
+		"headerAdd": "Aggiunge nu post nuovo",
+		"headerEdit": "Cagna 'o post",
+		"headerOptions": "Opziune d' 'o post",
+		"author": "Cagna l'autore",
+		"date": "Cagna 'a data",
+		"title": "Titolo",
+		"subtitle": "Sottotitolo",
+		"body": "Cuorpo d' 'o post",
+		"tags": "Tag",
+		"isPinned": "Post appiccicato",
+		"isPrivate": "Post privato",
+		"contentWarning": "Avviso ncopp'ô cuntenuto sensitivo",
+		"postID": "ID d' 'o post: {{postID}}",
+		"postIDcopiedToClipboard": "ID d' 'o post cupiato 'int'ê note!",
+		"delete": {
+			"title": "Scancella 'o post d' 'o diario",
+			"confirm": "Vuò scancellà overo stu post?"
+		}
+	}
+}
+

@@ -1,1 +1,18 @@
-{}
+{
+	"header": "Gestore d' 'e pruprietà",
+	"searchPlaceholder": "Cerca mmiezo a 'e pruprietà...",
+	"add": {
+		"header": "Aggiunge na pruprietà",
+		"attachment": "Aggiunge n'allegato"
+	},
+	"edit": {
+		"header": "Cagna 'a pruprietà",
+		"friendlyName": "Cagna 'o nomme",
+		"attachment": "Cagna l'allegato",
+		"delete": {
+			"title": "Scancella 'a pruprietà",
+			"confirm": "Vuò scancellà overo 'sta pruprietà?"
+		}
+	}
+}
+

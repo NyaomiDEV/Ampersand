@@ -1,1 +1,57 @@
-{}
+{
+	"header": "Accessibilità",
+	"highLegibilityFont": {
+		"title": "Font ad ata liggibilità",
+		"desc": "Usa nu font ad ata liggibilità mmice 'o font d''o dispositivo"
+	},
+	"highLegibilityFontType": {
+		"title": "Famiglia d''e font ad ata liggibilità",
+		"atkinson": "Atkinson Hyperlegible",
+		"opendyslexic": "OpenDyslexic",
+		"lexend": "Lexend",
+		"comicRelief": "Comic Relief",
+		"system-font": "Font 'e sistema"
+	},
+	"uiVariant": {
+		"title": "Variante 'e l'interfaccia",
+		"auto": "Auto",
+		"light": "Chiara",
+		"dark": "Scura"
+	},
+	"themeIsAmoled": {
+		"title": "Modalità AMOLED",
+		"desc": "Usa nu sfunno tutto niro 'int'â modalità scura. Po' ridure l'usura 'e quacche display."
+	},
+	"themeIsVibrant": {
+		"title": "Tema vivace",
+		"desc": "Mitte cchiù culore 'int'â l'interfaccia utente."
+	},
+	"colorIndicatorPosition": {
+		"title": "Posizione 'e l'indicatore d''o culore",
+		"avatar": "Cuntuorno de l'immaggine",
+		"listItem": "Bordo 'e l'elemento ncopp'â lista"
+	},
+	"useAccentColor": {
+		"title": "Culore primario",
+		"desc": "Usa nu culore primario personalizzato"
+	},
+	"accentColor": {
+		"title": "Scegli 'o culore primario"
+	},
+	"reducedMotion": {
+		"title": "Muvimiente ridotte",
+		"desc": "Leva 'e animazione 'int'â l'app"
+	},
+	"disableCovers": {
+		"title": "Leva 'e cupertine 'int'ê liste"
+	},
+	"contrastLevel": {
+		"title": "Livello 'e cuntrasto"
+	},
+	"fontScale": {
+		"title": "Dimensione d''o testo"
+	},
+	"longPressDuration": {
+		"title": "Durata d''a premuta"
+	}
+}
