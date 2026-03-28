@@ -35,8 +35,8 @@
 			search.value = route.query.q as string;
 	});
 
-	watch(search, () => {
-		populateHighlightedDays();
+	watch(search, async () => {
+		await populateHighlightedDays();
 	});
 
 	watch([date, search], async () => {
@@ -46,7 +46,7 @@
 	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
 		await resetEntries();
-		populateHighlightedDays();
+		await populateHighlightedDays();
 	});
 
 	onUnmounted(() => {
@@ -79,8 +79,8 @@
 		return [...map.entries()].sort((a, b) => dayjs(b[0]).valueOf() - dayjs(a[0]).valueOf());
 	}
 
-	function populateHighlightedDays() {
-		const days = getBoardMessagesDays(search.value);
+	async function populateHighlightedDays() {
+		const days = await getBoardMessagesDays(search.value);
 
 		boardMessagesDays.value = Array.from(days.entries()).map(([date, occurrences]) => {
 			let step = "200";

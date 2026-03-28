@@ -36,8 +36,8 @@
 			search.value = route.query.q as string;
 	});
 
-	watch(search, () => {
-		populateHighlightedDays();
+	watch(search, async () => {
+		await populateHighlightedDays();
 	});
 
 	watch([date, search], async () => {
@@ -47,7 +47,7 @@
 	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
 		await resetEntries();
-		populateHighlightedDays();
+		await populateHighlightedDays();
 	});
 
 	onUnmounted(() => {
@@ -108,8 +108,8 @@
 		return "";
 	}
 
-	function populateHighlightedDays() {
-		const days = getFrontingEntriesDays(search.value);
+	async function populateHighlightedDays() {
+		const days = await getFrontingEntriesDays(search.value);
 
 		frontingEntriesDays.value = Array.from(days.entries()).map(([date, occurrences]) => {
 			let step = "200";

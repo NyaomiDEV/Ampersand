@@ -3,7 +3,7 @@ import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUIDable, JournalPost, UUID } from "../entities";
 import { getMember, defaultMember } from "./members";
 import dayjs from "dayjs";
-import { filterJournalPost, filterJournalPostIndex } from "../../search";
+import { filterJournalPost } from "../../search";
 
 export function getJournalPosts(){
 	return db.journalPosts.iterate();
@@ -92,12 +92,17 @@ export async function* getJournalPostsOfDay(date: Date, includePinned: boolean, 
 }
 
 export async function getJournalPostsDays(query: string) {
-	const _map = await Promise.all(db.journalPosts.index.map(async x => {
-		if (await filterJournalPostIndex(query, x))
-			return dayjs(x.date).startOf("day").valueOf();
+	const _map = await Promise.all(
+		(await Promise.all(
+			await Array.fromAsync(getJournalPosts()).then(array => array.map(x => toJournalPostComplete(x)))
+		))
+			.map(async x => {
+				if (await filterJournalPost(query, x))
+					return dayjs(x.date).startOf("day").valueOf();
 
-		return undefined;
-	}));
+				return undefined;
+			})
+	);
 	
 	return _map.reduce((occurrences, current) => {
 		if(current)

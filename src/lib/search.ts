@@ -1,8 +1,7 @@
 
-import { Member, Tag, Asset, CustomField, JournalPostComplete, BoardMessageComplete, FrontingEntryComplete, FrontingEntry, JournalPost, BoardMessage, System } from "./db/entities";
+import { Member, Tag, Asset, CustomField, JournalPostComplete, BoardMessageComplete, FrontingEntryComplete, System } from "./db/entities";
 import { parseAssetFilterQuery, parseBoardMessageFilterQuery, parseCustomFieldFilterQuery, parseFrontingHistoryFilterQuery, parseJournalPostFilterQuery, parseMemberFilterQuery, parseSystemFilterQuery } from "./util/filterQuery";
 import { appConfig } from "./config";
-import { IndexEntry } from "./db/tables";
 
 export function filterSystem(search: string, system: System) {
 	const parsed = parseSystemFilterQuery(search.length ? search : appConfig.defaultFilterQueries.systems || "");
@@ -104,22 +103,6 @@ export function filterFrontingEntry(search: string, frontingEntry: FrontingEntry
 	return true;
 }
 
-export function filterFrontingEntryIndex(search: string, frontingEntry: IndexEntry<FrontingEntry>) {
-	const parsed = parseFrontingHistoryFilterQuery(search.length ? search : appConfig.defaultFilterQueries.frontingHistory || "");
-
-	if (parsed.member) {
-		if (frontingEntry.member !== parsed.member)
-			return false;
-	}
-
-	if (parsed.currentlyFronting) {
-		if (frontingEntry.endTime)
-			return false;
-	}
-
-	return true;
-}
-
 export function filterBoardMessage(search: string, boardMessage: BoardMessageComplete) {
 	const parsed = parseBoardMessageFilterQuery(search.length ? search : appConfig.defaultFilterQueries.messageBoard || "");
 
@@ -153,36 +136,6 @@ export function filterBoardMessage(search: string, boardMessage: BoardMessageCom
 				return false;
 
 			if (boardMessage.member.uuid !== parsed.member)
-				return false;
-		}
-	}
-
-	return true;
-}
-
-export function filterBoardMessageIndex(search: string, boardMessage: IndexEntry<BoardMessage>) {
-	const parsed = parseBoardMessageFilterQuery(search.length ? search : appConfig.defaultFilterQueries.messageBoard || "");
-
-	if (parsed.isPinned !== undefined) {
-		if (parsed.isPinned && !boardMessage.isPinned)
-			return false;
-		else if (!parsed.isPinned && boardMessage.isPinned)
-			return false;
-	}
-
-	if (parsed.isArchived !== undefined) {
-		if (parsed.isArchived && !boardMessage.isArchived)
-			return false;
-		else if (!parsed.isArchived && boardMessage.isArchived)
-			return false;
-	}
-
-	if (typeof parsed.member !== "undefined") {
-		if (boardMessage.member) {
-			if (parsed.member === false)
-				return false;
-
-			if (boardMessage.member !== parsed.member)
 				return false;
 		}
 	}
@@ -249,20 +202,6 @@ export async function filterJournalPost(search: string, post: JournalPostComplet
 
 	if (parsed.tags.size) {
 		if (!parsed.tags.entries().every(([uuid, include]) => include === post.tags.includes(uuid)))
-			return false;
-	}
-
-	return true;
-}
-
-export async function filterJournalPostIndex(search: string, post: IndexEntry<JournalPost>) {
-	const parsed = await parseJournalPostFilterQuery(search.length ? search : appConfig.defaultFilterQueries.journal || "");
-
-	if (typeof parsed.member !== "undefined") {
-		if (parsed.member === false && post.member)
-			return false;
-
-		if (post.member !== parsed.member)
 			return false;
 	}
 

@@ -3,7 +3,7 @@ import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUID, UUIDable, BoardMessage, BoardMessageComplete } from "../entities";
 import { defaultMember, getMember } from "../tables/members";
 import dayjs from "dayjs";
-import { filterBoardMessage, filterBoardMessageIndex } from "../../search";
+import { filterBoardMessage } from "../../search";
 
 export function getBoardMessages(){
 	return db.boardMessages.iterate();
@@ -94,8 +94,11 @@ export async function* getBoardMessagesOfDay(date: Date, query: string) {
 	}
 }
 
-export function getBoardMessagesDays(query: string) {
-	const _map = db.boardMessages.index.filter(x => filterBoardMessageIndex(query, x)).map(x => dayjs(x.date).startOf("day").valueOf());
+export async function getBoardMessagesDays(query: string) {
+	const _map = (await Promise.all(
+		await Array.fromAsync(getBoardMessages()).then(array => array.map(x => toBoardMessageComplete(x)))
+	))
+		.filter(x => filterBoardMessage(query, x)).map(x => dayjs(x.date).startOf("day").valueOf());
 
 	return _map.reduce((occurrences, current) => {
 		occurrences.set(current, (occurrences.get(current) || 0) + 1);

@@ -3,7 +3,7 @@ import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUIDable, Member, FrontingEntry, FrontingEntryComplete, UUID } from "../entities";
 import { defaultMember, getMember } from "./members";
 import dayjs from "dayjs";
-import { filterFrontingEntry, filterFrontingEntryIndex } from "../../search";
+import { filterFrontingEntry } from "../../search";
 import { securityConfig } from "../../config";
 import { broadcastEvent } from "../../native/plugin";
 import { deleteFile } from "../../serialization";
@@ -211,8 +211,12 @@ export async function* getFrontingEntriesOfDay(date: Date, query: string) {
 	}
 }
 
-export function getFrontingEntriesDays(query: string) {
-	const _map = db.frontingEntries.index.filter(x => !!x.endTime && filterFrontingEntryIndex(query, x)).map(x => dayjs(x.startTime).startOf("day").valueOf());
+export async function getFrontingEntriesDays(query: string) {
+	const _map = (await Promise.all(
+		await Array.fromAsync(getFrontingEntries()).then(array => array.map(x => toFrontingEntryComplete(x)))
+	))
+		.filter(x => !!x.endTime && filterFrontingEntry(query, x))
+		.map(x => dayjs(x.startTime).startOf("day").valueOf());
 
 	return _map.reduce((occurrences, current) => {
 		occurrences.set(current, (occurrences.get(current) || 0) + 1);
