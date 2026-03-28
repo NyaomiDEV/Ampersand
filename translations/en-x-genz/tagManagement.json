@@ -1,35 +1,35 @@
 {
 	"header": "Tag management",
 	"searchPlaceholder": "Look for tags...",
-	"select": "Pick some tags bestie",
+	"select": "Pick some tags",
 	"selector": {
-		"member": "Member tags",
-		"journal": "Journal tags"
+		"member": "Bestie tags",
+		"journal": "Lore book tags"
 	},
 	"edit": {
 		"header": {
-			"member": "Edit member tag",
-			"journal": "Edit journal tag"
+			"member": "Edit bestie tag",
+			"journal": "Edit lore book tag"
 		},
 		"name": "Tag name",
 		"description": "Tag lore",
-		"color": "Tag aesthetic",
-		"viewInLists": "Show up in lists",
+		"color": "Aesthetic color",
+		"viewInLists": "Show in lists",
 		"type": {
 			"header": "Tag vibe",
-			"member": "Member",
-			"journal": "Journal",
+			"member": "Bestie",
+			"journal": "Lore book",
 			"desc": "Lowkey you can only set the vibe when you first make it!"
 		},
 		"members": {
-			"title": "Pick the squad using this tag",
-			"desc_one": "{{count}} member is using this tag",
-			"desc_other": "{{count}} members are using this tag"
+			"title": "Pick the besties using this tag",
+			"desc_one": "{{count}} bestie is using this tag",
+			"desc_other": "{{count}} besties are using this tag"
 		},
 		"showJournal": {
-			"title": "Show the posts with this tag",
-			"desc_one": "{{count}} post has this tag",
-			"desc_other": "{{count}} posts have this tag"
+			"title": "Show the pieces of lore with this tag",
+			"desc_one": "{{count}} piece of lore has this tag",
+			"desc_other": "{{count}} pieces of lore have this tag"
 		},
 		"delete": {
 			"title": "Yeet tag",
