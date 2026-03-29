@@ -2,9 +2,9 @@
 	import {
 		IonContent,
 		IonHeader,
+		IonList,
 		IonToolbar,
 		IonTitle,
-		IonList,
 		IonItem,
 		IonModal,
 		IonSearchbar,
@@ -17,6 +17,7 @@
 	import TagColor from "../components/tag/TagColor.vue";
 	import TagLabel from "../components/tag/TagLabel.vue";
 	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
+	import VirtualList from "../components/VirtualList.vue";
 
 	const props = defineProps<{
 		customTitle?: string,
@@ -77,25 +78,17 @@
 		<SpinnerFullscreen v-if="!tags" />
 		<IonContent v-else>
 			<IonList>
-				<IonItem v-for="tag in tags" :key="tag.uuid" button>
-					<TagColor slot="start" :tag />
-					<IonCheckbox :value="tag.uuid" :checked="!!selectedTags.find(x => x.uuid === tag.uuid)" @update:model-value="value => check(tag, value)">
-						<TagLabel :tag />
-					</IonCheckbox>
-				</IonItem>
+				<VirtualList :entries="tags" :min-size="56" :gap="2" >
+					<template #default="{ entry: tag }">
+						<IonItem button>
+							<TagColor slot="start" :tag />
+							<IonCheckbox :value="tag.uuid" :checked="!!selectedTags.find(x => x.uuid === tag.uuid)" @update:model-value="value => check(tag, value)">
+								<TagLabel :tag />
+							</IonCheckbox>
+						</IonItem>
+					</template>
+				</VirtualList>
 			</IonList>
 		</IonContent>
 	</IonModal>
 </template>
-
-<style scoped>
-	div {
-		position: relative;
-		top: 15%;
-		left: 15%;
-		width: 75%;
-		height: 75%;
-		border-radius: 100%;
-		aspect-ratio: 1;
-	}
-</style>

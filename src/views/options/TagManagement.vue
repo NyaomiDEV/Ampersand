@@ -16,6 +16,7 @@
 	import TagLabel from "../../components/tag/TagLabel.vue";
 	import { promptOkCancel, toast } from "../../lib/util/misc.ts";
 	import { useTranslation } from "i18next-vue";
+	import VirtualList from "../../components/VirtualList.vue";
 
 	const route = useRoute();
 	const i18next = useTranslation();
@@ -115,26 +116,27 @@
 		<SpinnerFullscreen v-if="!tags" />
 		<IonContent v-else>
 			<IonList ref="list">
-				<IonItemSliding
-					v-for="tag in tags"
-					:key="tag.uuid"
-				>
-					<IonItem
-						button
-						:router-link="`/options/tagManagement/edit?uuid=${tag.uuid}`"
-					>
-						<TagColor slot="start" :tag />
-						<TagLabel :tag />
-					</IonItem>
-					<IonItemOptions>
-						<IonItemOption color="danger" @click="deleteTag(tag)">
-							<IonIcon slot="icon-only" :icon="trashMD" />
-						</IonItemOption>
-						<IonItemOption color="tertiary" @click="copyID(tag)">
-							<IonIcon slot="icon-only" :icon="copyMD" />
-						</IonItemOption>
-					</IonItemOptions>
-				</IonItemSliding>
+				<VirtualList :entries="tags" :min-size="56" :gap="2">
+					<template #default="{ entry: tag }">
+						<IonItemSliding>
+							<IonItem
+								button
+								:router-link="`/options/tagManagement/edit?uuid=${tag.uuid}`"
+							>
+								<TagColor slot="start" :tag />
+								<TagLabel :tag />
+							</IonItem>
+							<IonItemOptions>
+								<IonItemOption color="danger" @click="deleteTag(tag)">
+									<IonIcon slot="icon-only" :icon="trashMD" />
+								</IonItemOption>
+								<IonItemOption color="tertiary" @click="copyID(tag)">
+									<IonIcon slot="icon-only" :icon="copyMD" />
+								</IonItemOption>
+							</IonItemOptions>
+						</IonItemSliding>
+					</template>
+				</VirtualList>
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">

@@ -18,6 +18,7 @@
 	import { appConfig } from "../lib/config/index.ts";
 	import { PartialBy } from "../lib/types";
 	import SystemItem from "../components/system/SystemItem.vue";
+	import VirtualList from "../components/VirtualList.vue";
 
 	const props = defineProps<{
 		customTitle?: string,
@@ -130,19 +131,21 @@
 		<SpinnerFullscreen v-if="!systems" />
 		<IonContent v-else>
 			<IonList>
-				<SystemItem
-					v-for="system in systems"
-					:key="system.uuid"
-					:system
-					button
-					:show-icons="false"
-					show-effects
-					has-toggle="checkbox"
-					:toggle-value="system.uuid"
-					:toggle-checked="selectedSystem?.uuid === system.uuid"
-					:disabled="!!disallowedSystems.find(x => x.uuid === system.uuid)"
-					@toggle-update="check(system)"
-				/>
+				<VirtualList :entries="systems" :min-size="72" :gap="2">
+					<template #default="{ entry: system }">
+						<SystemItem
+							:system
+							button
+							:show-icons="false"
+							show-effects
+							has-toggle="checkbox"
+							:toggle-value="system.uuid"
+							:toggle-checked="selectedSystem?.uuid === system.uuid"
+							:disabled="!!disallowedSystems.find(x => x.uuid === system.uuid)"
+							@toggle-update="check(system)"
+						/>
+					</template>
+				</VirtualList>
 			</IonList>
 		</IonContent>
 	</IonModal>

@@ -29,6 +29,7 @@
 	import SystemItem from "../../components/system/SystemItem.vue";
 	import { toast } from "../../lib/util/misc.ts";
 	import { useTranslation } from "i18next-vue";
+	import VirtualList from "../../components/VirtualList.vue";
 
 	const route = useRoute();
 	const i18next = useTranslation();
@@ -121,24 +122,25 @@
 		<SpinnerFullscreen v-if="!systems" />
 		<IonContent v-else>
 			<IonList ref="list">
-				<IonItemSliding
-					v-for="system in systems"
-					:key="system.uuid"
-				>
-					<SystemItem
+				<VirtualList :entries="systems" :min-size="72" :gap="2">
+					<template #default="{ entry: system }">
+						<IonItemSliding>
+							<SystemItem
 
-						:system
-						show-icons
-						show-effects
-						button
-						:router-link="`/options/systems/edit?uuid=${system.uuid}`"
-					/>
-					<IonItemOptions>
-						<IonItemOption color="tertiary" @click="copyID(system)">
-							<IonIcon slot="icon-only" :icon="copyMD" />
-						</IonItemOption>
-					</IonItemOptions>
-				</IonItemSliding>
+								:system
+								show-icons
+								show-effects
+								button
+								:router-link="`/options/systems/edit?uuid=${system.uuid}`"
+							/>
+							<IonItemOptions>
+								<IonItemOption color="tertiary" @click="copyID(system)">
+									<IonIcon slot="icon-only" :icon="copyMD" />
+								</IonItemOption>
+							</IonItemOptions>
+						</IonItemSliding>
+					</template>
+				</VirtualList>
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
