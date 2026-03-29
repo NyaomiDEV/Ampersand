@@ -60,7 +60,7 @@
 	"shapes": {
 		"arch": "Kemer",
 		"arrow": "Ok",
-		"boom": "Boom",
+		"boom": "Gümleme",
 		"diamond": "Elmas",
 		"clamshell": "İstiridye",
 		"flower": "Çiçek",
@@ -74,7 +74,26 @@
 		"pill": "Hap",
 		"pixel-circle": "Piksel Daire",
 		"pixel-triangle": "Piksel Üçgen",
-		"bun": "Poğaça"
+		"bun": "Poğaça",
+		"burst": "Patlama",
+		"puffy-diamond": "Şişkin elmas",
+		"puffy": "Şişkin",
+		"semicircle": "Yarım daire",
+		"sided-cookie12": "12 taraflı kurabiye",
+		"sided-cookie4": "4 taraflı kurabiye",
+		"sided-cookie6": "6 taraflı kurabiye",
+		"sided-cookie7": "7 taraflı kurabiye",
+		"sided-cookie9": "9 taraflı kurabiye",
+		"slanted": "Eğik",
+		"soft-boom": "Yumuşak Gümleme",
+		"soft-burst": "Yumuşak Patlama",
+		"square": "Kare",
+		"sunny": "Güneşli",
+		"triangle": "Üçgen",
+		"very-sunny": "Çok Güneşli",
+		"noShape": "Şekil yok",
+		"fan": "Yelpaze"
 	},
-	"addTimestamp": "Zaman etiketi ekle"
+	"addTimestamp": "Zaman etiketi ekle",
+	"developerMode": "Geliştirici modu"
 }
