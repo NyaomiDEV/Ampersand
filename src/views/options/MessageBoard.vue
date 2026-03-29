@@ -85,8 +85,8 @@
 		let startDay = dayjs().startOf("month").startOf("day").toDate();
 		let endDay = dayjs().endOf("month").startOf("day").toDate();
 		if(parts){
-			startDay = dayjs().month(parts.month - 1).startOf("month").startOf("day").toDate();
-			endDay = dayjs().month(parts.month - 1).endOf("month").startOf("day").toDate();
+			startDay = dayjs().year(parts.year).month(parts.month - 1).startOf("month").startOf("day").toDate();
+			endDay = dayjs().year(parts.year).month(parts.month - 1).endOf("month").startOf("day").toDate();
 		}
 
 		const days = await getBoardMessagesDays(search.value, startDay, endDay);
