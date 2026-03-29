@@ -4,7 +4,7 @@ import type { Asset, BoardMessage, CustomField, FrontingEntry, JournalPost, Memb
 import { decode, encode } from "@msgpack/msgpack";
 import type { AmpersandEntityMapping, MigrationsMapping } from "../types";
 import { deleteNull, replace, revive, walk, walkAsync } from "../../serialization";
-import { members, systems } from "./migrations";
+import { assets, journalPosts, members, systems } from "./migrations";
 
 export type IndexEntry<T> = UUIDable & Partial<T>;
 type SecondaryKey<T> = (Exclude<keyof T, keyof UUIDable>);
@@ -101,14 +101,14 @@ export class ShittyTable<T extends UUIDable> {
 		await this.saveIndexToDisk();
 	}
 
-	async get(uuid: string) {
+	async getRaw(uuid: string){
 		const _path = this.path + sep() + uuid;
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		const obj: any = decode(await fs.readFile(_path));
-		if (typeof obj !== "undefined" && obj !== null)
-			return walk(obj, revive) as T;
+		return await fs.readFile(_path);
+	}
 
-		return undefined;
+	async get(uuid: string) {
+		const obj = decode(await this.getRaw(uuid));
+		return walk(obj as object, revive) as T;
 	}
 
 	async walkDir() {
@@ -235,6 +235,12 @@ export class ShittyTable<T extends UUIDable> {
 				break;
 			case "system":
 				version = await systems(this as unknown as ShittyTable<System>, version);
+				break;
+			case "journalPosts":
+				version = await journalPosts(this as unknown as ShittyTable<JournalPost>, version);
+				break;
+			case "assets":
+				version = await assets(this as unknown as ShittyTable<Asset>, version);
 				break;
 		}
 		await this.saveMigrationVersion(version);
