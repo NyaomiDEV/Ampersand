@@ -1,0 +1,263 @@
+@keyframes md-ani-jelly {
+  0% {
+    transform:scaleX(1)
+  }
+  30% {
+    transform:scale3d(1.25,.75,1)
+  }
+  40% {
+    transform:scale3d(.75,1.25,1)
+  }
+  50% {
+    transform:scale3d(1.15,.85,1)
+  }
+  65% {
+    transform:scale3d(.95,1.05,1)
+  }
+  75% {
+    transform:scale3d(1.05,.95,1)
+  }
+  to {
+    transform:scaleX(1)
+  }
+}
+
+@keyframes md-ani-tada {
+  0% {
+    transform:scaleX(1)
+  }
+  10%,
+  20% {
+    transform:scale3d(.9,.9,.9) rotate(-3deg)
+  }
+  30%,
+  50%,
+  70%,
+  90% {
+    transform:scale3d(1.1,1.1,1.1) rotate(3deg)
+  }
+  40%,
+  60%,
+  80% {
+    transform:scale3d(1.1,1.1,1.1) rotate(-3deg)
+  }
+  to {
+    transform:scaleX(1)
+  }
+}
+
+@keyframes md-ani-blink {
+  0% {
+    opacity:1;
+    transform:scale(1)
+  }
+  30% {
+    opacity:1;
+    transform:scale(1)
+  }
+  90% {
+    opacity:0;
+    transform:scale(.5)
+  }
+}
+
+@keyframes md-ani-bounce {
+  0% {
+    transform:scaleX(.9) scaleY(.9)
+  }
+  19% {
+    transform:scaleX(1.1) scaleY(1.1)
+  }
+  48% {
+    transform:scaleX(.95) scaleY(.95)
+  }
+  to {
+    transform:scaleX(1) scaleY(1)
+  }
+}
+
+@keyframes md-ani-spin {
+  0% {
+    transform:rotate(0)
+  }
+  to {
+    transform:rotate(1turn)
+  }
+}
+
+@keyframes md-ani-spinX {
+  0% {
+    transform:perspective(128px) rotateX(0)
+  }
+  to {
+    transform:perspective(128px) rotateX(1turn)
+  }
+}
+
+@keyframes md-ani-spinY {
+  0% {
+    transform:perspective(128px) rotateY(0)
+  }
+  to {
+    transform:perspective(128px) rotateY(1turn)
+  }
+}
+
+@keyframes md-ani-jump {
+  0% {
+    transform:translateY(0)
+  }
+  25% {
+    transform:translateY(-16px)
+  }
+  50% {
+    transform:translateY(0)
+  }
+  75% {
+    transform:translateY(-8px)
+  }
+  to {
+    transform:translateY(0)
+  }
+}
+
+@keyframes md-ani-twitch {
+  0% {
+    transform:translate(7px,-2px)
+  }
+  5% {
+    transform:translate(-3px,1px)
+  }
+  10% {
+    transform:translate(-7px,-1px)
+  }
+  15% {
+    transform:translateY(-1px)
+  }
+  20% {
+    transform:translate(-8px,6px)
+  }
+  25% {
+    transform:translate(-4px,-3px)
+  }
+  30% {
+    transform:translate(-4px,-6px)
+  }
+  35% {
+    transform:translate(-8px,-8px)
+  }
+  40% {
+    transform:translate(4px,6px)
+  }
+  45% {
+    transform:translate(-3px,1px)
+  }
+  50% {
+    transform:translate(2px,-10px)
+  }
+  55% {
+    transform:translate(-7px)
+  }
+  60% {
+    transform:translate(-2px,4px)
+  }
+  65% {
+    transform:translate(3px,-8px)
+  }
+  70% {
+    transform:translate(6px,7px)
+  }
+  75% {
+    transform:translate(-7px,-2px)
+  }
+  80% {
+    transform:translate(-7px,-8px)
+  }
+  85% {
+    transform:translate(9px,3px)
+  }
+  90% {
+    transform:translate(-3px,-2px)
+  }
+  95% {
+    transform:translate(-10px,2px)
+  }
+  to {
+    transform:translate(-2px,-6px)
+  }
+}
+
+@keyframes md-ani-shake {
+  0% {
+    transform:translate(-3px,-1px) rotate(-8deg)
+  }
+  5% {
+    transform:translateY(-1px) rotate(-10deg)
+  }
+  10% {
+    transform:translate(1px,-3px) rotate(0)
+  }
+  15% {
+    transform:translate(1px,1px) rotate(11deg)
+  }
+  20% {
+    transform:translate(-2px,1px) rotate(1deg)
+  }
+  25% {
+    transform:translate(-1px,-2px) rotate(-2deg)
+  }
+  30% {
+    transform:translate(-1px,2px) rotate(-3deg)
+  }
+  35% {
+    transform:translate(2px,1px) rotate(6deg)
+  }
+  40% {
+    transform:translate(-2px,-3px) rotate(-9deg)
+  }
+  45% {
+    transform:translateY(-1px) rotate(-12deg)
+  }
+  50% {
+    transform:translate(1px,2px) rotate(10deg)
+  }
+  55% {
+    transform:translateY(-3px) rotate(8deg)
+  }
+  60% {
+    transform:translate(1px,-1px) rotate(8deg)
+  }
+  65% {
+    transform:translateY(-1px) rotate(-7deg)
+  }
+  70% {
+    transform:translate(-1px,-3px) rotate(6deg)
+  }
+  75% {
+    transform:translateY(-2px) rotate(4deg)
+  }
+  80% {
+    transform:translate(-2px,-1px) rotate(3deg)
+  }
+  85% {
+    transform:translate(1px,-3px) rotate(-10deg)
+  }
+  90% {
+    transform:translate(1px) rotate(3deg)
+  }
+  95% {
+    transform:translate(-2px) rotate(-3deg)
+  }
+  to {
+    transform:translate(2px,1px) rotate(2deg)
+  }
+}
+
+@keyframes md-ani-rainbow {
+  0% {
+    filter:hue-rotate(0deg) contrast(150%) saturate(150%)
+  }
+  to {
+    filter:hue-rotate(1turn) contrast(150%) saturate(150%)
+  }
+}
