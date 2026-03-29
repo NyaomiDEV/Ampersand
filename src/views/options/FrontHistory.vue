@@ -12,13 +12,14 @@
 	import { addModal, removeModal } from "../../lib/modals.ts";
 	import { useRoute } from "vue-router";
 	import { useTranslation } from "i18next-vue";
-	import DatetimeUtc from "../../components/DatetimeUtc.vue";
+	import DatetimeUtc, { DatetimeParts } from "../../components/DatetimeUtc.vue";
 	import FrontingEntryItem from "../../components/frontingEntry/FrontingEntryItem.vue";
 
 	const route = useRoute();
 	const i18next = useTranslation();
 
 	const search = ref(route.query.q as string || "");
+	const parts = ref<DatetimeParts>();
 
 	const frontingEntries = shallowRef<FrontingEntryComplete[]>();
 
@@ -28,7 +29,7 @@
 
 	const listener = (event: Event) => {
 		if(["frontingEntries", "members"].includes((event as DatabaseEvent).data.table))
-			void resetEntries().then(() => populateHighlightedDays());
+			void resetEntries().then(() => populateHighlightedDays(parts.value));
 	};
 
 	watch(route, () => {
@@ -36,8 +37,8 @@
 			search.value = route.query.q as string;
 	});
 
-	watch(search, async () => {
-		await populateHighlightedDays();
+	watch([search, parts], async () => {
+		await populateHighlightedDays(parts.value);
 	});
 
 	watch([date, search], async () => {
@@ -47,7 +48,7 @@
 	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
 		await resetEntries();
-		await populateHighlightedDays();
+		await populateHighlightedDays(parts.value);
 	});
 
 	onUnmounted(() => {
@@ -108,8 +109,15 @@
 		return "";
 	}
 
-	async function populateHighlightedDays() {
-		const days = await getFrontingEntriesDays(search.value);
+	async function populateHighlightedDays(parts?: DatetimeParts) {
+		let startDay = dayjs().startOf("month").startOf("day").toDate();
+		let endDay = dayjs().endOf("month").startOf("day").toDate();
+		if(parts){
+			startDay = dayjs().month(parts.month - 1).startOf("month").startOf("day").toDate();
+			endDay = dayjs().month(parts.month - 1).endOf("month").startOf("day").toDate();
+		}
+
+		const days = await getFrontingEntriesDays(search.value, startDay, endDay);
 
 		frontingEntriesDays.value = Array.from(days.entries()).map(([date, occurrences]) => {
 			let step = "200";
@@ -173,6 +181,7 @@
 				v-model="date"
 				presentation="date"
 				:highlighted-dates="frontingEntriesDays"
+				@parts="parts = $event"
 			/>
 			<div v-if="frontingEntries === undefined" class="spinner-container">
 				<Spinner size="72px" />

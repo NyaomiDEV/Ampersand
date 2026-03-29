@@ -12,6 +12,10 @@ export function getFrontingEntries(){
 	return db.frontingEntries.iterate();
 }
 
+export function getFrontingEntry(uuid: UUID){
+	return db.frontingEntries.get(uuid);
+}
+
 export async function toFrontingEntryComplete(frontingEntry: FrontingEntry): Promise<FrontingEntryComplete> {
 	return {
 		...frontingEntry,
@@ -210,13 +214,24 @@ export async function* getFrontingEntriesOfDay(date: Date, query: string) {
 	}
 }
 
-export async function getFrontingEntriesDays(query: string) {
-	const _map = (await Array.fromAsync(getFrontingEntries()))
-		.filter(x => !!x.endTime && filterFrontingEntry(query, x))
-		.map(x => dayjs(x.startTime).startOf("day").valueOf());
+export async function getFrontingEntriesDays(query: string, start: Date, end: Date) {
+	const _map = Promise.all(db.frontingEntries.index.map(async x => {
+		if(x.startTime!.valueOf() > end.valueOf() || x.startTime!.valueOf() < start.valueOf())
+			return undefined;
+		
+		const entry = await getFrontingEntry(x.uuid);
+		if(!entry)
+			return undefined;
+		
+		if (filterFrontingEntry(query, entry))
+			return dayjs(x.startTime).startOf("day").valueOf();
+		
+		return undefined;
+	}));
 
-	return _map.reduce((occurrences, current) => {
-		occurrences.set(current, (occurrences.get(current) || 0) + 1);
+	return (await _map).reduce((occurrences, current) => {
+		if(current)
+			occurrences.set(current, (occurrences.get(current) || 0) + 1);
 		return occurrences;
 	}, new Map<number, number>());
 }

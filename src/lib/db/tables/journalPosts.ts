@@ -89,18 +89,22 @@ export async function* getJournalPostsOfDay(date: Date, includePinned: boolean, 
 	}
 }
 
-export async function getJournalPostsDays(query: string) {
-	const _map = await Promise.all(
-		(await Array.fromAsync(getJournalPosts()))
-			.map(async x => {
-				if (await filterJournalPost(query, x))
-					return dayjs(x.date).startOf("day").valueOf();
+export async function getJournalPostsDays(query: string, start: Date, end: Date) {
+	const _map = Promise.all(db.journalPosts.index.map(async x => {
+		if(x.date!.valueOf() > end.valueOf() || x.date!.valueOf() < start.valueOf())
+			return undefined;
 
-				return undefined;
-			})
-	);
+		const post = await getJournalPost(x.uuid);
+		if(!post)
+			return undefined;
+
+		if(await filterJournalPost(query, post))
+			return dayjs(x.date).startOf("day").valueOf();
+
+		return undefined;
+	}));
 	
-	return _map.reduce((occurrences, current) => {
+	return (await _map).reduce((occurrences, current) => {
 		if(current)
 			occurrences.set(current, (occurrences.get(current) || 0) + 1);
 

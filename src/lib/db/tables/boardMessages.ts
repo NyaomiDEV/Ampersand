@@ -9,6 +9,10 @@ export function getBoardMessages(){
 	return db.boardMessages.iterate();
 }
 
+export function getBoardMessage(uuid: UUID){
+	return db.boardMessages.get(uuid);
+}
+
 export async function toBoardMessageComplete(boardMessage: BoardMessage): Promise<BoardMessageComplete> {
 	return {
 		...boardMessage,
@@ -93,12 +97,24 @@ export async function* getBoardMessagesOfDay(date: Date, query: string) {
 	}
 }
 
-export async function getBoardMessagesDays(query: string) {
-	const _map = (await Array.fromAsync(getBoardMessages()))
-		.filter(x => filterBoardMessage(query, x)).map(x => dayjs(x.date).startOf("day").valueOf());
+export async function getBoardMessagesDays(query: string, start: Date, end: Date) {
+	const _map = Promise.all(db.boardMessages.index.map(async x => {
+		if(x.date!.valueOf() > end.valueOf() || x.date!.valueOf() < start.valueOf())
+			return undefined;
 
-	return _map.reduce((occurrences, current) => {
-		occurrences.set(current, (occurrences.get(current) || 0) + 1);
+		const post = await getBoardMessage(x.uuid);
+		if(!post)
+			return undefined;
+
+		if (filterBoardMessage(query, post))
+			return dayjs(x.date).startOf("day").valueOf();
+
+		return undefined;
+	}));
+
+	return (await _map).reduce((occurrences, current) => {
+		if(current)
+			occurrences.set(current, (occurrences.get(current) || 0) + 1);
 		return occurrences;
 	}, new Map<number, number>());
 }

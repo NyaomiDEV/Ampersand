@@ -15,7 +15,7 @@
 	import { getJournalPostsDays, getJournalPostsOfDay } from "../lib/db/tables/journalPosts";
 	import { useTranslation } from "i18next-vue";
 	import { promptOkCancel, toast } from "../lib/util/misc";
-	import DatetimeUtc from "../components/DatetimeUtc.vue";
+	import DatetimeUtc, { DatetimeParts } from "../components/DatetimeUtc.vue";
 
 	const isStandalone = ref(false);
 
@@ -32,11 +32,13 @@
 
 	const search = ref(route.query.q as string || "");
 
+	const parts = ref<DatetimeParts>();
+
 	const list = useTemplateRef("list");
 
 	const listener = (event: Event) => {
 		if (["members", "journalPosts"].includes((event as DatabaseEvent).data.table))
-			void resetEntries().then(() => populateHighlightedDays());
+			void resetEntries().then(() => populateHighlightedDays(parts.value));
 	};
 
 	watch(route, () => {
@@ -47,8 +49,8 @@
 		else isStandalone.value = false;
 	}, { immediate: true });
 
-	watch(search, async () => {
-		await populateHighlightedDays();
+	watch([search, parts], async () => {
+		await populateHighlightedDays(parts.value);
 	});
 
 	watch([date, search], async () => {
@@ -58,7 +60,7 @@
 	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
 		await resetEntries();
-		await populateHighlightedDays();
+		await populateHighlightedDays(parts.value);
 	});
 
 	onUnmounted(() => {
@@ -98,8 +100,15 @@
 		return [...map.entries()].sort((a, b) => a[0] === "pinnedPosts" ? -1 : dayjs(b[0]).valueOf() - dayjs(a[0]).valueOf());
 	}
 
-	async function populateHighlightedDays() {
-		const days = await getJournalPostsDays(search.value);
+	async function populateHighlightedDays(parts?: DatetimeParts) {
+		let startDay = dayjs().startOf("month").startOf("day").toDate();
+		let endDay = dayjs().endOf("month").startOf("day").toDate();
+		if(parts){
+			startDay = dayjs().month(parts.month - 1).startOf("month").startOf("day").toDate();
+			endDay = dayjs().month(parts.month - 1).endOf("month").startOf("day").toDate();
+		}
+
+		const days = await getJournalPostsDays(search.value, startDay, endDay);
 
 		postsDays.value = Array.from(days.entries()).map(([date, occurrences]) => {
 			let step = "200";
@@ -189,6 +198,7 @@
 				v-model="date"
 				presentation="date"
 				:highlighted-dates="postsDays"
+				@parts="parts = $event"
 			/>
 			<div v-if="posts === undefined" class="spinner-container">
 				<Spinner size="72px" />

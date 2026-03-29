@@ -2,7 +2,7 @@
 	import { IonDatetime } from "@ionic/vue";
 	import { getLocaleInfo } from "../lib/i18n";
 	import { appConfig } from "../lib/config";
-	import { ComponentPublicInstance, ref, watch } from "vue";
+	import { ComponentPublicInstance, ref, useTemplateRef, watch } from "vue";
 	import dayjs from "dayjs";
 
 	// copied from ionic because they dont export it (??)
@@ -23,6 +23,15 @@
 		border: string;
 	});
 
+	export type DatetimeParts = {
+		ampm: "am" | "pm"
+		day: number
+		hour: number
+		minute: number
+		month: number
+		year: number
+	};
+
 	const props = defineProps<{
 		presentation?: DatetimePresentation,
 		showDefaultButtons?: boolean,
@@ -36,18 +45,38 @@
 
 	const emit = defineEmits<{
 		"ref": [Element | ComponentPublicInstance | null]
+		"parts": [DatetimeParts]
 	}>();
+
+	// we're patching ion-datetime's internal `this.setWorkingParts()` function with this helper
+	const patchFunction = (originalFunction: (parts: DatetimeParts) => void) => (
+		function setWorkingParts(parts: DatetimeParts){
+			originalFunction(parts);
+			emit("parts", parts);
+		}
+	);
 
 	const localeInfo = getLocaleInfo();
 
+	const datetime = useTemplateRef("datetime");
 	const model = defineModel<Date>();
 	const innerModel = ref<string | undefined>(dayjs(model.value).local().format());
 	watch(innerModel, () => model.value = dayjs(innerModel.value).utc().toDate());
+
+	watch(datetime, () => {
+		if(datetime.value){
+			emit("ref", datetime.value);
+
+			// patching happens here
+			const el = datetime.value.$el;
+			el.setWorkingParts = patchFunction(el.setWorkingParts);
+		}
+	});
 </script>
 
 <template>
 	<IonDatetime
-		:ref="(ref) => emit('ref', ref)"
+		ref="datetime"
 		:presentation="props.presentation"
 		:show-default-buttons="props.showDefaultButtons"
 		:first-day-of-week="localeInfo.firstDayOfWeek"
