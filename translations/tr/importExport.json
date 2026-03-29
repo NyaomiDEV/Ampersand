@@ -5,7 +5,7 @@
 		"desc": "Verinizi başka bir yerde saklayabileceğiniz bir dosyaya yedekleyin"
 	},
 	"dbImportDesc": "Uyarı! Var olan verinin üzerine yazılacak",
-	"dbImport": "Verinizi bir yedekleme dosyasından içeri aktarın",
+	"dbImport": "Verinizi içeri aktarın",
 	"pkImport": "Verinizi bir PluralKit dışarı aktarımından içeri aktarın",
 	"tuImport": "Verinizi bir Tupperbox dışarı aktarımından içeri aktarın",
 	"spImport": "Verinizi bir Simply Plural dışarı aktarımından içeri aktarın",
@@ -24,5 +24,13 @@
 		"exportedAppIos": "Yedek, Dosyalar uygulamasında Ampersand klasörüne dışa aktarıldı.",
 		"errorOc": "Octocon dışa aktarımını içe aktarırken hata oluştu."
 	},
-	"ocImport": "Bir Octocon dışa aktarımından verilerinizi içe aktarın"
+	"ocImport": "Bir Octocon dışa aktarımından verilerinizi içe aktarın",
+	"importHeader": "İçe aktar",
+	"thirdPartyHeader": "Üçüncü parti entegrasyonları",
+	"exportHeader": "Dışa aktar",
+	"dbImportOld": {
+		"title": "Ampersand'in eski bir versiyonundan verilerinizi içe aktarın",
+		"desc": "Ampersand 0.2.0'dan önceki versiyonlarla oluşturulmuş yedek dosyaları için",
+		"note": "Ampersand'in eski versiyonları şu an güncel olmayan bir dosya formatı (ampdb) kullanıyorlardı. Eğer eski yedekleriniz varsa, şu an içe aktarıp tekrar dışa aktardığınızdan (dosya formatını yenilemek için) emin olun, çünkü bu seçenek birkaç versiyon sonra kaldırılacaktır."
+	}
 }

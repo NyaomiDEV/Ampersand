@@ -35,7 +35,8 @@
 		},
 		"pronouns": "Zamirler",
 		"role": "Rol",
-		"imageClip": "Avatar şekli"
+		"imageClip": "Avatar şekli",
+		"system": "Sistemi düzenle"
 	},
 	"deletedCustomFront": "Özelleştirilmiş ön silindi",
 	"toasts": {

@@ -20,7 +20,8 @@
 			"no": "Hayır",
 			"veto": "Veto et",
 			"abstain": "Çekinser kal"
-		}
+		},
+		"collapsePoll": "Anketi gizle"
 	},
 	"edit": {
 		"header": "Mesajı düzenle",
