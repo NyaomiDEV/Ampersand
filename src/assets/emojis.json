@@ -1,6 +1,66 @@
 [
 	{
 		"names": [
+			"angery"
+		],
+		"value": "angery.webp"
+	},
+	{
+		"names": [
+			"collar"
+		],
+		"value": "collar.webp"
+	},
+	{
+		"names": [
+			"collar_hypno"
+		],
+		"value": "collar_hypno.gif"
+	},
+	{
+		"names": [
+			"oh_really"
+		],
+		"value": "oh_really.webp"
+	},
+	{
+		"names": [
+			"clorox_for_eyes"
+		],
+		"value": "clorox_for_eyes.webp"
+	},
+	{
+		"names": [
+			"nyaboom"
+		],
+		"value": "nyaboom.webp"
+	},
+	{
+		"names": [
+			"thumbs_up"
+		],
+		"value": "thumbs_up.webp"
+	},
+	{
+		"names": [
+			"works_on_my_machine"
+		],
+		"value": "works_on_my_machine.webp"
+	},
+	{
+		"names": [
+			"you_was_at_the_club"
+		],
+		"value": "you_was_at_the_club.webp"
+	},
+	{
+		"names": [
+			"you_was_at_the_club_flushed"
+		],
+		"value": "you_was_at_the_club_flushed.webp"
+	},
+	{
+		"names": [
 			"mia_blep"
 		],
 		"value": "mia_blep.webp"
@@ -22,6 +82,12 @@
 			"mia_whuh"
 		],
 		"value": "mia_whuh.webp"
+	},
+	{
+		"names": [
+			"holly_mlem"
+		],
+		"value": "holly_mlem.webp"
 	},
 	{
 		"names": [
