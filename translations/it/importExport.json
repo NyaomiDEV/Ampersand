@@ -8,7 +8,7 @@
 		"desc": "Fai il backup dei tuoi dati così da poterli tenere da qualche altra parte"
 	},
 	"dbImportDesc": "Attenzione! Questo sovrascriverà ogni dato esistente",
-	"dbImport": "Importa i tuoi dati da un file di backup",
+	"dbImport": "Importa i tuoi dati",
 	"dbImportOld": {
 		"title": "Importa i tuoi dati da una vecchia versione di Ampersand",
 		"desc": "Per i file di backup creati con Ampersand < 0.2.0",
