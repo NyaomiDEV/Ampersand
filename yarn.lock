@@ -413,7 +413,7 @@
   resolved "https://registry.yarnpkg.com/@rollup/rollup-win32-x64-msvc/-/rollup-win32-x64-msvc-4.44.0.tgz#a36e79b6ccece1533f777a1bca1f89c13f0c5f62"
   integrity sha512-Q2Mgwt+D8hd5FIPUuPDsvPR7Bguza6yTkJxspDGkZj7tBRn2y4KSWYuIXpftFSjBra76TbKerCV7rgFPQrn+wQ==
 
-"@rsbuild/core@^1.7.3":
+"@rsbuild/core@^1.7.4":
   version "1.7.4"
   resolved "https://registry.yarnpkg.com/@rsbuild/core/-/core-1.7.4.tgz#37c0ac0474c9da8ff6aa1014e3acb6616344b02a"
   integrity sha512-1hn9j62Kkckh2CGUMQcr/H/PtHgN5iqB3kChaMCVGqxrC4jbJBQxRtuHuWVJDKeEO0uWPMABAR748qJISIyh5w==
