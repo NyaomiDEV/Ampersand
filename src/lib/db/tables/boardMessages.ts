@@ -75,11 +75,11 @@ export async function updateBoardMessage(uuid: UUID, newContent: Partial<BoardMe
 }
 
 export async function getRecentBoardMessages() {
-	return Promise.all((await Promise.all(
+	return Promise.all(
 		db.boardMessages.index
 			.filter(x => !x.isArchived && (x.isPinned || dayjs().startOf("day").valueOf() - dayjs(x.date).startOf("day").valueOf() <= 3 * 24 * 60 * 60 * 1000))
-			.map(x => db.boardMessages.get(x.uuid))
-	)).filter(x => !!x).map(x => toBoardMessageComplete(x)));
+			.map(async x => toBoardMessageComplete(await db.boardMessages.get(x.uuid)))
+	);
 }
 
 export async function* getBoardMessagesOfDay(date: Date, query: string) {
@@ -90,8 +90,6 @@ export async function* getBoardMessagesOfDay(date: Date, query: string) {
 			continue;
 
 		const boardMessage = await db.boardMessages.get(entry.uuid);
-		if(!boardMessage) continue;
-
 		if (filterBoardMessage(query, boardMessage))
 			yield await toBoardMessageComplete(boardMessage);
 	}
@@ -102,11 +100,9 @@ export async function getBoardMessagesDays(query: string, start: Date, end: Date
 		if(x.date!.valueOf() > end.valueOf() || x.date!.valueOf() < start.valueOf())
 			return undefined;
 
-		const post = await getBoardMessage(x.uuid);
-		if(!post)
-			return undefined;
+		const message = await getBoardMessage(x.uuid);
 
-		if (filterBoardMessage(query, post))
+		if (filterBoardMessage(query, message))
 			return dayjs(x.date).startOf("day").valueOf();
 
 		return undefined;

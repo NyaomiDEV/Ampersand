@@ -8,6 +8,11 @@ export function getSystems(){
 	return db.systems.iterate();
 }
 
+export async function getSystem(uuid: UUID) {
+	if (uuid === nilUid) return undefined;
+	return await db.systems.get(uuid);
+}
+
 export async function* getFilteredSystems(query: string){
 	for await (const system of getSystems()){
 		if(filterSystem(query, system))
@@ -32,11 +37,6 @@ export async function newSystem(system: Omit<System, keyof UUIDable>){
 	}catch(_error){
 		return false;
 	}
-}
-
-export async function getSystem(uuid: UUID){
-	if(uuid === nilUid) return undefined;
-	return await db.systems.get(uuid);
 }
 
 export async function deleteSystem(uuid: UUID) {

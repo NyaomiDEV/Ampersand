@@ -267,7 +267,7 @@ export const db = {
 	systems: await makeTable<System>("system", ["parent"]),
 	members: await makeTable<Member>("members", ["name", "system"]),
 	boardMessages: await makeTable<BoardMessage>("boardMessages", ["member", "date", "isPinned", "isArchived"]),
-	frontingEntries: await makeTable<FrontingEntry>("frontingEntries", ["member", "startTime", "endTime", "isLocked"]),
+	frontingEntries: await makeTable<FrontingEntry>("frontingEntries", ["member", "startTime", "endTime", "isLocked", "isMainFronter"]),
 	journalPosts: await makeTable<JournalPost>("journalPosts", ["member", "date", "isPinned"]),
 	reminders: await makeTable<Reminder>("reminders", []),
 	tags: await makeTable<Tag>("tags", []),

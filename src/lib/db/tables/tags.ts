@@ -2,6 +2,8 @@ import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUID, UUIDable, Tag } from "../entities";
 import { filterTag } from "../../search";
+import { getMembers } from "./members";
+import { getJournalPosts } from "./journalPosts";
 
 export function getTags(){
 	return db.tags.iterate();
@@ -39,8 +41,8 @@ export function getTag(uuid: UUID){
 
 export async function removeTag(uuid: UUID){
 	const tag = await db.tags.get(uuid);
-	if(tag?.type === "member"){
-		const members = db.members.iterate();
+	if(tag.type === "member"){
+		const members = getMembers();
 		for await (const member of members){
 			const delta = { tags: member.tags?.filter(tag => tag !== uuid) };
 			await db.members.update(member.uuid, delta);
@@ -51,8 +53,8 @@ export async function removeTag(uuid: UUID){
 				delta
 			}));
 		}
-	} else if(tag?.type === "journal") {
-		const journalPosts = db.journalPosts.iterate();
+	} else if(tag.type === "journal") {
+		const journalPosts = getJournalPosts();
 		for await (const journalPost of journalPosts) {
 			const delta = { tags: journalPost.tags?.filter(tag => tag !== uuid) };
 			await db.journalPosts.update(journalPost.uuid, delta);
