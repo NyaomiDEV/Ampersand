@@ -8,6 +8,8 @@
 	import { useBlob } from "../../lib/util/blob";
 	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
 	import FrontingEntryInterval from "./FrontingEntryInterval.vue";
+	import { getMaterialColors } from "../../lib/theme";
+	import { hexFromArgb } from "@material/material-color-utilities";
 
 	const { getObjectURL } = useBlob();
 
@@ -39,11 +41,13 @@
 			style["--data-color"] = props.entry.member.color;
 
 		if(props.influencedBy?.length){
+			const primaryColor = hexFromArgb(getMaterialColors().get("primary")!);
+
 			const _colors = props.influencedBy.map(x => x.color);
-			let color = new Color(_colors.pop()!);
+			let color = new Color(_colors.pop() || primaryColor);
 
 			while(_colors.length)
-				color = color.range(_colors.pop()!)(.5);
+				color = color.range(_colors.pop() || primaryColor)(.5);
 
 			style["--data-influencing-color"] = color.toString({ format: "hex" });
 		}

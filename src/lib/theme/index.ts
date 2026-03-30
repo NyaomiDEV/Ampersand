@@ -78,23 +78,23 @@ export function getMaterialColors(hex?: string, isDarkMode?: boolean){
 		"phone"
 	);
 
-	const styleSheet: Map<string, string> = new Map();
+	const styleSheet: Map<string, number> = new Map();
 	const colors = new MaterialDynamicColors();
 
 	for (const dynamicColor of colors.allColors)
-		styleSheet.set(dynamicColor.name, rgbFromArgb(dynamicColor.getArgb(scheme)));
+		styleSheet.set(dynamicColor.name, dynamicColor.getArgb(scheme));
 
 	// Add colors that they forgot
-	styleSheet.set("shadow", rgbFromArgb(colors.shadow().getArgb(scheme)));
-	styleSheet.set("scrim", rgbFromArgb(colors.scrim().getArgb(scheme)));
-	styleSheet.set("surface_tint", rgbFromArgb(colors.surfaceTint().getArgb(scheme)));
+	styleSheet.set("shadow", colors.shadow().getArgb(scheme));
+	styleSheet.set("scrim", colors.scrim().getArgb(scheme));
+	styleSheet.set("surface_tint", colors.surfaceTint().getArgb(scheme));
 
 
 	if (isDarkMode && accessibilityConfig.themeIsAmoled) {
-		styleSheet.set("background", "0, 0, 0");
-		styleSheet.set("surface", "0, 0, 0");
-		styleSheet.set("on_background", "255, 255, 255");
-		styleSheet.set("on_surface", "255, 255, 255");
+		styleSheet.set("background", argbFromHex("#000"));
+		styleSheet.set("surface", argbFromHex("#000"));
+		styleSheet.set("on_background", argbFromHex("#fff"));
+		styleSheet.set("on_surface", argbFromHex("#fff"));
 	}
 
 	return styleSheet;
@@ -104,7 +104,7 @@ export function getPaletteTones(hex?: string, isDarkMode?: boolean){
 	if (!hex) hex = calculateHex();
 	if (!isDarkMode) isDarkMode = calculateDarkMode();
 
-	const paletteTones: Map<number, string> = new Map();
+	const paletteTones: Map<number, number> = new Map();
 	const schemeVariant = accessibilityConfig.themeIsVibrant ? SchemeFidelity : SchemeTonalSpot;
 	const scheme = new schemeVariant(
 		Hct.fromInt(argbFromHex(hex)),
@@ -114,7 +114,7 @@ export function getPaletteTones(hex?: string, isDarkMode?: boolean){
 		"phone"
 	);
 	for (let i = 5; i <= 100; i += 5) 
-		paletteTones.set(i, rgbFromArgb(scheme.neutralPalette.tone(i)));
+		paletteTones.set(i, scheme.neutralPalette.tone(i));
 
 	return paletteTones;
 }
@@ -129,7 +129,7 @@ export function addMaterialColors(hex?: string, target?: HTMLElement){
 		for (const [key, value] of palette.entries()){
 			styleSheet.set(
 				`--md3-${uiMode}-${key.replaceAll("_", "-")}`,
-				value
+				rgbFromArgb(value)
 			);
 		}
 
@@ -138,13 +138,13 @@ export function addMaterialColors(hex?: string, target?: HTMLElement){
 				`--md3-${uiMode}-${key
 					.replaceAll("_", "-")
 					.replace("primary", "success")}`,
-				paletteSuccess.get(key)!
+				rgbFromArgb(paletteSuccess.get(key)!)
 			);
 			styleSheet.set(
 				`--md3-${uiMode}-${key
 					.replaceAll("_", "-")
 					.replace("primary", "warning")}`,
-				paletteWarning.get(key)!
+				rgbFromArgb(paletteWarning.get(key)!)
 			);
 		}
 	}
@@ -153,7 +153,7 @@ export function addMaterialColors(hex?: string, target?: HTMLElement){
 	for (const [i, value] of tones.entries()) {
 		styleSheet.set(
 			`--md3-neutral-palette-tone-${i}`,
-			value
+			rgbFromArgb(value)
 		);
 	}
 
