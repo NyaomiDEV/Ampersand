@@ -2,7 +2,7 @@
 	import { IonContent, IonPage, IonButton, useIonRouter, IonIcon } from "@ionic/vue";
 	import { ref } from "vue";
 	import Spinner from "../../components/Spinner.vue";
-	import { importDatabaseFromBinary } from "../../lib/db/ioutils/old";
+	import { importArchive } from "../../lib/db/ioutils/archive";
 	import { getDocumentFile, promptYesNo, slideAnimation, toast } from "../../lib/util/misc";
 	import { importPluralKit } from "../../lib/db/external/pluralkit";
 	import { importTupperBox } from "../../lib/db/external/tupperbox";
@@ -37,7 +37,7 @@
 	async function importFromPreviousInstallation() {
 		try{
 			loading.value = true;
-			const result = await importDatabaseFromBinary().status;
+			const result = await importArchive().status;
 			if(!result) throw new Error("errored out");
 		}catch(_e){
 			resetConfig();
