@@ -4,7 +4,6 @@
 	import { promptOkCancel, toast, imageClips } from "../../lib/util/misc";
 	import { getResizedImage } from "../../lib/util/image";
 	import { deleteSystem, getSystem, newSystem, updateSystem, countSystemMembers } from "../../lib/db/tables/system";
-	import { getMembers } from "../../lib/db/tables/members";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import SystemSelect from "../../modals/SystemSelect.vue";
 	import Avatar from "../../components/Avatar.vue";
@@ -133,32 +132,14 @@
 			if(_system) system.value = _system;
 		} else system.value = { ...emptySystem };
 
-		let _memberCount = 0;
-		let _archivedMemberCount = 0;
-		let _customFrontCount = 0;
-		let _archivedCustomFrontCount = 0;
+		if(system.value.uuid){
+			const _count = countSystemMembers(system.value.uuid);
 
-		for await(const member of getMembers()){
-			if(member.system !== system.value.uuid)
-				continue;
-
-			if(!member.isCustomFront){
-				if(member.isArchived)
-					_archivedMemberCount++;
-				else
-					_memberCount++;
-			} else {
-				if(member.isArchived)
-					_archivedCustomFrontCount++;
-				else
-					_customFrontCount++;
-			}
+			memberCount.value = _count.normal;
+			archivedMemberCount.value = _count.archived;
+			customFrontCount.value = _count.customFronts;
+			archivedCustomFrontCount.value = _count.archivedCustomFronts;
 		}
-
-		memberCount.value = _memberCount;
-		archivedMemberCount.value = _archivedMemberCount;
-		customFrontCount.value = _customFrontCount;
-		archivedCustomFrontCount.value = _archivedCustomFrontCount;
 
 		if(system.value.parent)
 			parentSystem.value = await getSystem(system.value.parent);
@@ -430,7 +411,7 @@
 						</IonToggle>
 					</IonItem>
 					<IonItem
-						v-if="system.uuid && appConfig.defaultSystem !== system.uuid && !countSystemMembers(system.uuid)"
+						v-if="system.uuid && appConfig.defaultSystem !== system.uuid && !memberCount && !archivedMemberCount && !customFrontCount && !archivedCustomFrontCount"
 						button
 						:detail="false"
 						@click="removeSystem"

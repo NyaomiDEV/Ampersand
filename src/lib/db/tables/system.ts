@@ -74,5 +74,22 @@ export async function updateSystem(uuid: UUID, system: Partial<System>) {
 }
 
 export function countSystemMembers(uuid: UUID){
-	return db.members.index.filter(x => x.system === uuid).length;
+	const object = {
+		normal: 0,
+		archived: 0,
+		customFronts: 0,
+		archivedCustomFronts: 0
+	};
+
+	for(const x of db.members.index.filter(x => x.system === uuid)){
+		if (x.isCustomFront){
+			if(x.isArchived) object.archivedCustomFronts++;
+			else object.customFronts++;
+		} else {
+			if (x.isArchived) object.archived++;
+			else object.normal++;
+		}
+	}
+
+	return object;
 }
