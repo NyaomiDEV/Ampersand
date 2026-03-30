@@ -286,24 +286,30 @@
         animation-iteration-count: infinite;
         animation-duration: var(--markdown-animation-duration, 1s);
 
-        &[data-animation-type=jelly]{
-            animation-name: md-ani-jelly;
+        &[data-animation-type=rubberband]{
+            animation-name: md-ani-rubberband;
         }
 
         &[data-animation-type=tada]{
             animation-name: md-ani-tada;
         }
 
-        &[data-animation-type=blink]{
-            animation-name: md-ani-blink;
+        &[data-animation-type=pulse]{
+            animation-name: md-ani-pulse;
         }
 
         &[data-animation-type=bounce]{
             animation-name: md-ani-bounce;
+            transform-origin: center bottom;
         }
 
-        &[data-animation-type=spin]{
-            animation-name: md-ani-spin;
+        &[data-animation-type=expand]{
+            animation-name: md-ani-enter;
+        }
+
+        &[data-animation-type=shrink]{
+            animation-name: md-ani-enter;
+            animation-direction: reverse;
         }
 
         &[data-animation-type=rspin]{
@@ -354,6 +360,34 @@
 
         &[data-animation-type=shake]{
             animation-name: md-ani-shake;
+        }
+
+        &[data-animation-type=shake-v]{
+            animation-name: md-ani-shake-v;
+        }
+
+        &[data-animation-type=shake-h]{
+            animation-name: md-ani-shake-h;
+        }
+
+        &[data-animation-type=blink]{
+            animation-name: md-ani-blink;
+        }
+
+        &[data-animation-type=swing]{
+            animation-name: md-ani-swing;
+        }
+
+        &[data-animation-type=wobble]{
+            animation-name: md-ani-wobble;
+        }
+
+        &[data-animation-type=jelly]{
+            animation-name: md-ani-jelly;
+        }
+
+        &[data-animation-type=beat]{
+            animation-name: md-ani-beat;
         }
 
         &[data-animation-type=rainbow]{
