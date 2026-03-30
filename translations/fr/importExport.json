@@ -2,7 +2,7 @@
 	"header": "Importer / Exporter",
 	"dbExport": {
 		"title": "Exporter les données",
-		"desc": "Sauvegarde vos données actuelles dans un fichier que vous pouvez conserver"
+		"desc": "Sauvegarde vos données actuelles dans un fichier à conserver"
 	},
 	"dbImportDesc": "Attention ! Cela remplacera toutes les données existantes",
 	"dbImport": "Importer des données depuis un fichier de sauvegarde",
@@ -21,7 +21,16 @@
 		"errorTu": "Erreur survenue lors de l’importation des données de Tupperbox.",
 		"exportedApp": "Vos données ont été exportées vers l’emplacement choisi.",
 		"importedOc": "L’export Octocon a été importé. Veuillez redémarrer l’application.",
-		"exportedAppIos": "La sauvegarde a été exportée vers le fichier Ampersand de votre application Fichiers."
+		"exportedAppIos": "La sauvegarde a été exportée vers le fichier Ampersand de votre application Fichiers.",
+		"errorOc": "Erreur survenue lors de l’importation de l’export d’Octocon."
 	},
-	"ocImport": "Importer des données depuis un export Octocon"
+	"ocImport": "Importer des données depuis un export Octocon",
+	"importHeader": "Importer",
+	"thirdPartyHeader": "Intégrations tierces",
+	"exportHeader": "Exporter",
+	"dbImportOld": {
+		"title": "Importer des données depuis une ancienne version d’Ampersand",
+		"desc": "Pour les fichiers de sauvegarde enregistrés depuis Ampersand < 0.2.0",
+		"note": "Les anciennes versions d’Ampersand utilisent un format de fichier (ampdb) désormais obsolète. Si vous conservez d’anciens fichiers de sauvegarde, veuillez les importer dès maintenant et les ré-exporter ; cette option sera retirée dans les prochaines mises à jour."
+	}
 }

@@ -38,7 +38,8 @@
 		"lexend": "Lexend",
 		"atkinson": "Atkinson Hyperlegible",
 		"system-font": "Police du système",
-		"title": "Police"
+		"title": "Police",
+		"comicrelief": "Comic Relief"
 	},
 	"themeIsAmoled": {
 		"title": "Mode AMOLED",
@@ -47,5 +48,10 @@
 	"themeIsVibrant": {
 		"desc": "Rend l’interface utilisateur plus colorée.",
 		"title": "Thème vif"
+	},
+	"colorIndicatorPosition": {
+		"title": "Emplacement de l’indicateur coloré",
+		"avatar": "Bordure de l’image de profil",
+		"listItem": "Bordure de la liste des membres"
 	}
 }

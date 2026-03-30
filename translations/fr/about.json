@@ -3,5 +3,7 @@
 	"madein": "Fait avec amour en Italie",
 	"version": "Version {{version}}",
 	"privacyPolicy": "Politique de confidentialité",
-	"updateAvailable": "Mise à jour disponible : {{newVersion}}"
+	"updateAvailable": "Mise à jour disponible : {{newVersion}}",
+	"ciVersion": "Version CI",
+	"credits": "Crédits"
 }

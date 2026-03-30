@@ -8,7 +8,7 @@
 		"comment": "Commentaire",
 		"presence": {
 			"historyTitle": "Historique de présence",
-			"lastPresence": "La dernière fois, c’était {{presence}} / 10",
+			"lastPresence": "La dernière fois, c’était {{presence}} / 5 étoiles",
 			"addTitle": "À quel point vous sentez-vous présent·e sur une échelle de 0 à 10 ?",
 			"confirmButton": "L’ajouter à l’historique",
 			"date": "Date"

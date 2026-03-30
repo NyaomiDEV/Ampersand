@@ -29,7 +29,8 @@
 	},
 	"memberInfo": {
 		"header": "Dites-en plus sur vous !",
-		"description": "Quelques infos sur vous…"
+		"description": "Quelques infos sur vous…",
+		"invitation": "Vous pourrez continuer de modifier votre profil une fois l’introduction terminée !"
 	},
 	"endScreen": {
 		"header": "Merci d’avoir choisi Ampersand !",

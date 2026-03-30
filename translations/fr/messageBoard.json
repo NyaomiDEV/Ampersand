@@ -39,7 +39,8 @@
 		"pollChoice": "Description du choix",
 		"pollEditWarning": "Toute modification du sondage entraînera la réinitialisation des votes !",
 		"header": "Modifier le message",
-		"member": "Modifier l’auteur du message"
+		"member": "Modifier l’auteur du message",
+		"date": "Modifier la date"
 	},
 	"header": "Tableau d’affichage"
 }

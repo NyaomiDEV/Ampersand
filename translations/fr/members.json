@@ -26,13 +26,15 @@
 		"customFieldsAdd": "Ajouter des champs personnalisés",
 		"color": "Couleur",
 		"noDescription": "Pas de description",
-		"tags": "Modifier les tags"
+		"tags": "Modifier les tags",
+		"imageClip": "Forme de l’image de profil",
+		"system": "Modifier le système d’appartenance"
 	},
 	"toasts": {
 		"removeFromFront": "Membre retiré du front",
 		"addToFront": "Membre ajouté au front",
-		"setMainFronter": "Membre défini comme fronter principal",
-		"setSoleFronter": "Définir ce membre comme fronter unique",
+		"setMainFronter": "Membre défini comme fronteur principal",
+		"setSoleFronter": "Définir ce membre comme fronteur unique",
 		"unsetMainFronter": "Membre retiré du front principal"
 	},
 	"deletedMember": "Membre supprimé",
@@ -41,7 +43,7 @@
 		"addToFront": "Ajouter au front",
 		"removeFromFront": "Retirer du front",
 		"setSoleFronter": "Définir comme fronter",
-		"setMainFronter": "Définir comme fronter principal",
+		"setMainFronter": "Définir comme fronteur principal",
 		"unsetMainFronter": "Retirer du front principal"
 	}
 }

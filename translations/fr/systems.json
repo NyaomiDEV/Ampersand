@@ -19,7 +19,9 @@
 		"isPinned": "Épingler le système",
 		"showMembers": "Afficher les membres de ce système",
 		"parent": "Système parent",
-		"archived": "Archivé"
+		"archived": "Archivé",
+		"color": "Couleur",
+		"imageClip": "Forme de l’image de profil"
 	},
 	"header": "Systèmes",
 	"searchPlaceholder": "Recherchez des systèmes…",
