@@ -181,6 +181,11 @@
         border-radius: 4px;
         padding: 2px 4px;
         background: linear-gradient(var(--markdown-text-bg-degrees), var(--markdown-text-bg-colors));
+
+        &:has(> span.text-border) {
+            padding: 0;
+            display: inline-block;
+        }
     }
 
     span.text-shadow {
