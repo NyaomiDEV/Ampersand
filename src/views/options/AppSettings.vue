@@ -3,10 +3,10 @@
 	import { onMounted, shallowRef, useTemplateRef, watch } from "vue";
 
 	import { appConfig } from "../../lib/config";
-	import { computePercentage } from "../../lib/i18n";
 	import { getSystem } from "../../lib/db/tables/system";
 	import SystemSelect from "../../modals/SystemSelect.vue";
 	import { System } from "../../lib/db/entities";
+	import { languagePicker } from "../../lib/util/misc";
 
 	import languageMD from "@material-symbols/svg-600/outlined/language.svg";
 	import timerMD from "@material-symbols/svg-600/outlined/timer_off.svg";
@@ -57,24 +57,12 @@
 			</IonListHeader>
 
 			<IonList>
-				<IonItem>
+				<IonItem button detail @click="languagePicker().then(res => { if(res) appConfig.locale.language = res; })">
 					<IonIcon slot="start" :icon="languageMD" />
-					<IonSelect  
-						v-model="appConfig.locale.language"
-						label-placement="floating"
-						:label="$t('appSettings:locale.language')"
-						:cancel-text="$t('other:alerts.cancel')"
-						interface="action-sheet"
-						:value="$i18next.languages.find(x => Object.keys($i18next.services.resourceStore.data).includes(x)) || $i18next.languages[0].split('-')[0]"
-					>
-						<IonSelectOption
-							v-for="lng in Object.keys($i18next.services.resourceStore.data)"
-							:key="lng"
-							:value="lng"
-						>
-							{{ $t("other:languageName.local", { lng }) }} ({{ $t("other:languageName.inEnglish", { lng }) }}) ({{ computePercentage(lng) }}%)
-						</IonSelectOption>
-					</IonSelect>
+					<IonLabel>
+						<h3>{{ $t("appSettings:locale.language") }}</h3>
+						<p>{{ $t("other:languageName.local") }} ({{ $t("other:languageName.inEnglish") }})</p>
+					</IonLabel>
 				</IonItem>
 			</IonList>
 

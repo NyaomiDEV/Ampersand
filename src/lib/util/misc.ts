@@ -1,9 +1,9 @@
-import { alertController, createAnimation, getIonPageElement, toastController, TransitionOptions } from "@ionic/vue";
+import { actionSheetController, alertController, createAnimation, getIonPageElement, toastController, TransitionOptions } from "@ionic/vue";
 import dayjs from "dayjs";
 import { Ref } from "vue";
 import { appConfig } from "../config";
 import { Member } from "../db/entities";
-import { getLocaleInfo } from "../i18n";
+import i18next, { computePercentage, getLocaleInfo } from "../i18n";
 import { open } from "@tauri-apps/plugin-dialog";
 import { readFile } from "@tauri-apps/plugin-fs";
 import { basename, sep } from "@tauri-apps/api/path";
@@ -99,6 +99,41 @@ export function slideAnimation(_: HTMLElement, opts: TransitionOptions, directio
 	return transition;
 }
 
+export function languagePicker(): Promise<string> {
+	return new Promise(resolve => {
+		void (async () => {
+			const buttons = Object.entries(i18next.services.resourceStore.data).sort((a, b) => {
+				if (a[0].includes("-x-") && !b[0].includes("-x-")) return 1;
+				else if (!a[0].includes("-x-") && b[0].includes("-x-")) return -1;
+
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
+				const langA: string = (a[1].other as Record<string, any>).languageName.inEnglish || a[0];
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
+				const langB: string = (b[1].other as Record<string, any>).languageName.inEnglish || b[0];
+				return langA.localeCompare(langB);
+			}).map(x => ({
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
+				text: `${(x[1] as any).other.languageName.local} (${(x[1] as any).other.languageName.inEnglish}) (${computePercentage(x[0])}%)`,
+				data: { lng: x[0] }
+			}));
+
+			const controller = await actionSheetController.create({
+				header: i18next.t("appSettings:locale.language"),
+				buttons: [...buttons,
+					{
+						text: i18next.t("other:alerts.cancel"),
+						role: "cancel"
+					}
+				]
+			});
+
+			controller.addEventListener("willDismiss", (e) => resolve(e.detail.data?.lng));
+
+			await controller.present();
+		})();
+	});
+}
+
 export async function toast(message: string, duration = 1500){
 	try {
 		const toast = await toastController.create({
@@ -117,7 +152,6 @@ export async function toast(message: string, duration = 1500){
 export async function promptOkCancel(header: string, subHeader?: string, message?: string){
 	return new Promise((resolve) => {
 		void (async () => {
-			const i18next = (await import("../i18n")).default;
 			const alert = await alertController.create({
 				header,
 				subHeader,
@@ -144,7 +178,6 @@ export async function promptOkCancel(header: string, subHeader?: string, message
 export async function promptYesNo(header: string, subHeader?: string, message?: string) {
 	return new Promise((resolve) => {
 		void (async () => {
-			const i18next = (await import("../i18n")).default;
 			const alert = await alertController.create({
 				header,
 				subHeader,

@@ -1,8 +1,10 @@
 <script setup lang="ts">
 	import { IonContent, IonPage, IonButton, IonIcon, useIonRouter } from "@ionic/vue";
+	import LanguageMD from "@material-symbols/svg-600/outlined/language.svg";
 	import AccessibilityMD from "@material-symbols/svg-600/outlined/accessibility_new.svg";
 	import AmpersandLogo from "../../assets/ampersand_logo.svg";
-	import { slideAnimation } from "../../lib/util/misc";
+	import { slideAnimation, languagePicker } from "../../lib/util/misc";
+	import { appConfig } from "../../lib/config";
 
 	const router = useIonRouter();
 </script>
@@ -19,8 +21,18 @@
 				</IonButton>
 
 				<div class="button">
-					<IonButton class="tonal" shape="round" router-link="/options/accessibility/">
+					<IonButton
+						class="tonal"
+						size="small"
+						shape="round"
+						router-link="/options/accessibility/"
+					>
 						<IonIcon slot="icon-only" :icon="AccessibilityMD" />
+					</IonButton>
+
+					<IonButton class="tonal" size="small" @click="languagePicker().then(res => { if(res) appConfig.locale.language = res; })">
+						<IonIcon slot="start" :icon="LanguageMD" />
+						{{ $t("other:languageName.local") }}
 					</IonButton>
 				</div>
 			</div>
@@ -50,7 +62,9 @@
 		color: var(--ion-color-primary);
 	}
 
-	.button {
+	div.button {
 		margin: 12 auto;
+		display: flex;
+		gap: 16px;
 	}
 </style>
