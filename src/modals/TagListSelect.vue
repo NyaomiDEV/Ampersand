@@ -78,7 +78,7 @@
 		<SpinnerFullscreen v-if="!tags" />
 		<IonContent v-else>
 			<IonList>
-				<VirtualList :entries="tags" :min-size="56" :gap="2" >
+				<VirtualList :entries="tags" :min-size="56" :gap="2">
 					<template #default="{ entry: tag }">
 						<IonItem button>
 							<TagColor slot="start" :tag />

@@ -27,8 +27,8 @@
 	async function updateTags(){
 		if(props.showChips){
 			tags.value = (await Promise.all(props.member.tags.map(async x => await getTag(x))))
-				.filter(x => x!.viewInLists)
-				.sort((a, b) => a!.name.localeCompare(b!.name)) as Tag[];
+				.filter(x => x.viewInLists)
+				.sort((a, b) => a.name.localeCompare(b.name));
 		}
 	}
 
