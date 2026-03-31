@@ -10,12 +10,13 @@
 		IonList,
 	} from "@ionic/vue";
 
-	import { onBeforeMount, onUnmounted, reactive, ref, shallowRef, toRaw, watch } from "vue";
+	import { computed, onBeforeMount, onUnmounted, reactive, ref, shallowRef, toRaw, watch } from "vue";
 	import type { Member } from "../lib/db/entities.d.ts";
 	import { getFilteredMembers } from "../lib/db/tables/members";
 	import { DatabaseEvents, DatabaseEvent } from "../lib/db/events";
 	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
 	import VirtualList from "../components/VirtualList.vue";
+	import InfiniteLoader from "../components/InfiniteLoader.vue";
 
 	import MemberItem from "../components/member/MemberItem.vue";
 
@@ -37,6 +38,8 @@
 	const selectedMembers = reactive<Member[]>([...props.modelValue || []]);
 	const search = ref("");
 	const members = shallowRef<Member[]>();
+	const iter = computed(() => getFilteredMembers(search.value));
+	const iterDone = ref(false);
 
 	const listener = (event: Event) => {
 		if((event as DatabaseEvent).data.table === "members")
@@ -44,20 +47,42 @@
 	};
 
 	watch(search, async () => {
-		await updateMembers();
+		await resetMembers();
 	});
 	
 	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
-		await updateMembers();
+		await resetMembers();
 	});
 
 	onUnmounted(() => {
 		DatabaseEvents.removeEventListener("updated", listener);
 	});
 
-	async function updateMembers(){
-		members.value = await Array.fromAsync(getFilteredMembers(search.value));
+	async function resetMembers(){
+		members.value = undefined;
+		iterDone.value = false;
+		await pollMembers();
+	}
+
+	async function pollMembers(cb?: () => void){
+		let i = 0;
+		const _mems: Member[] = [];
+		while(true) {
+			const data = await iter.value.next();
+			if(data.value) _mems.push(data.value);
+			i++;
+			if(data.done) iterDone.value = true;
+			if(i >= 20 || data.done) break;
+		}
+
+		if(!members.value)
+			members.value = _mems;
+		else
+			members.value = [...members.value, ..._mems];
+
+		if(cb)
+			cb();
 	}
 
 	function check(member: Member, checked: boolean){
@@ -130,6 +155,8 @@
 					</template>
 				</VirtualList>
 			</IonList>
+
+			<InfiniteLoader v-if="!iterDone" @infinite="pollMembers" />
 		</IonContent>
 	</IonModal>
 </template>

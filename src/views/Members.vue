@@ -14,7 +14,7 @@
 		IonBackButton,
 		IonList,
 	} from "@ionic/vue";
-	import { onBeforeMount, onUnmounted, ref, shallowRef, useTemplateRef, watch } from "vue"; 
+	import { computed, onBeforeMount, onUnmounted, ref, shallowRef, useTemplateRef, watch } from "vue"; 
 	import CollapsibleHeaderbar from "../components/CollapsibleHeaderbar.vue";
 
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
@@ -35,6 +35,7 @@
 	import { toast } from "../lib/util/misc.ts";
 	import { useTranslation } from "i18next-vue";
 	import VirtualList from "../components/VirtualList.vue";
+	import InfiniteLoader from "../components/InfiniteLoader.vue";
 
 	const isStandalone = ref(false);
 
@@ -51,8 +52,10 @@
 	}, { immediate: true });
 
 	const members = shallowRef<Member[]>();
+	const iter = computed(() => getFilteredMembers(search.value));
+	const iterDone = ref(false);
 	watch(search, async () => {
-		await updateMembers();
+		await resetMembers();
 	});
 	const frontingEntries = shallowRef<FrontingEntryComplete[]>([]);
 	const list = useTemplateRef("list");
@@ -60,7 +63,7 @@
 	const listeners = [
 		(event: Event) => {
 			if((event as DatabaseEvent).data.table === "members")
-				void updateMembers();
+				void resetMembers();
 		},
 		(event: Event) => {
 			if((event as DatabaseEvent).data.table === "frontingEntries")
@@ -71,7 +74,7 @@
 	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listeners[0]);
 		DatabaseEvents.addEventListener("updated", listeners[1]);
-		await updateMembers();
+		await resetMembers();
 		await updateFronters();
 
 	});
@@ -81,8 +84,30 @@
 		DatabaseEvents.removeEventListener("updated", listeners[1]);
 	});
 
-	async function updateMembers(){
-		members.value = await Array.fromAsync(getFilteredMembers(search.value));
+	async function resetMembers(){
+		members.value = undefined;
+		iterDone.value = false;
+		await pollMembers();
+	}
+
+	async function pollMembers(cb?: () => void){
+		let i = 0;
+		const _mems: Member[] = [];
+		while(true) {
+			const data = await iter.value.next();
+			if(data.value) _mems.push(data.value);
+			i++;
+			if(data.done) iterDone.value = true;
+			if(i >= 20 || data.done) break;
+		}
+
+		if(!members.value)
+			members.value = _mems;
+		else
+			members.value = [...members.value, ..._mems];
+
+		if(cb)
+			cb();
 	}
 
 	async function updateFronters() {
@@ -214,6 +239,9 @@
 					</template>
 				</VirtualList>
 			</IonList>
+
+			<InfiniteLoader v-if="!iterDone" @infinite="pollMembers" />
+
 			<IonFab
 				v-if="!isStandalone"
 				slot="fixed"
