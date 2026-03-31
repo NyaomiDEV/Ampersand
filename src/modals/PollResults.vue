@@ -12,7 +12,7 @@
 	import { onBeforeMount, onUnmounted, shallowRef } from "vue";
 	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
 	import type { Member, Poll } from "../lib/db/entities";
-	import { defaultMember, getMember, getMemberIndex } from "../lib/db/tables/members.ts";
+	import { defaultMember, getMember } from "../lib/db/tables/members.ts";
 	import { DatabaseEvents, DatabaseEvent } from "../lib/db/events.ts";
 
 	import MemberItem from "../components/member/MemberItem.vue";
@@ -25,11 +25,16 @@
 
 	async function getPollMembers(){
 		const pollMemberUUIDs = props.poll.entries.map(x => x.votes.map(x => x.member)).flat(1);
-		console.log(pollMemberUUIDs);
 
-		const _members = await Promise.all(
-			getMemberIndex().filter(x => pollMemberUUIDs.includes(x.uuid)).map(x => getMember(x.uuid))
-		);
+		const _members = (await Promise.all(
+			pollMemberUUIDs.map(async x => {
+				try {
+					return await getMember(x);
+				}catch(_e){
+					return defaultMember(); // deleted member
+				}
+			})
+		)).filter(x => !!x);
 
 		members.value = _members.filter(x => !!x);
 	}
