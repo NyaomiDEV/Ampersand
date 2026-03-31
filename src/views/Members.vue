@@ -32,7 +32,7 @@
 	import { DatabaseEvents, DatabaseEvent } from "../lib/db/events.ts";
 	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
 	import { useRoute } from "vue-router";
-	import { sortMembers, toast } from "../lib/util/misc.ts";
+	import { toast } from "../lib/util/misc.ts";
 	import { useTranslation } from "i18next-vue";
 	import VirtualList from "../components/VirtualList.vue";
 
@@ -82,8 +82,7 @@
 	});
 
 	async function updateMembers(){
-		members.value = (await Array.fromAsync(getFilteredMembers(search.value)))
-			.sort(sortMembers);
+		members.value = await Array.fromAsync(getFilteredMembers(search.value));
 	}
 
 	async function updateFronters() {

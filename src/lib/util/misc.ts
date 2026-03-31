@@ -8,6 +8,7 @@ import { open } from "@tauri-apps/plugin-dialog";
 import { readFile } from "@tauri-apps/plugin-fs";
 import { basename, sep } from "@tauri-apps/api/path";
 import { findMimeType } from "../mime";
+import { IndexEntry } from "../db/tables";
 
 export async function getDocumentFile(extensions?: string[], asFile?: true): Promise<File | undefined>;
 export async function getDocumentFile(extensions?: string[], asFile?: false): Promise<Uint8Array<ArrayBuffer> | undefined>;
@@ -232,17 +233,17 @@ export function flattenObject(obj: object) {
 	return newObj;
 }
 
-export function sortMembers(a: Member, b: Member) {
+export function sortMembers(a: IndexEntry<Member>, b: IndexEntry<Member>) {
 	switch (appConfig.showMembersApartFromCustomFronts) {
 		case "off":
 			if ((a.isPinned || false) === (b.isPinned || false))
-				return a.name.localeCompare(b.name);
+				return a.name!.localeCompare(b.name!);
 			else
 				return a.isPinned && !b.isPinned ? -1 : 1;
 		case "before":
 			if ((a.isPinned || false) === (b.isPinned || false)) {
 				if ((a.isCustomFront || false) === (b.isCustomFront || false))
-					return a.name.localeCompare(b.name);
+					return a.name!.localeCompare(b.name!);
 				else
 					return a.isCustomFront && !b.isCustomFront ? -1 : 1;
 			} else
@@ -250,7 +251,7 @@ export function sortMembers(a: Member, b: Member) {
 		case "after":
 			if ((a.isPinned || false) === (b.isPinned || false)) {
 				if ((a.isCustomFront || false) === (b.isCustomFront || false))
-					return a.name.localeCompare(b.name);
+					return a.name!.localeCompare(b.name!);
 				else
 					return a.isCustomFront && !b.isCustomFront ? 1 : -1;
 			} else

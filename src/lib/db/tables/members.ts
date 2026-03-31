@@ -5,9 +5,35 @@ import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUIDable, Member, UUID } from "../entities";
 import { maxUid, nilUid } from "../../util/consts";
 import { filterMember } from "../../search";
+import { sortMembers } from "../../util/misc";
 
 export function getMembers(){
 	return db.members.iterate();
+}
+
+export async function* getSortedMembers(maxIter = 20){
+	const uuids = db.members.index.sort(sortMembers).map(x => x.uuid);
+
+	const f = (offset: number, maxIter: number) => {
+		const chunk: Promise<Member | undefined>[] = [];
+		for (let i = offset; i < offset + maxIter; i++) {
+			if (uuids[i]) {
+				const data = db.members.get(uuids[i]);
+				chunk.push(data);
+			}
+		}
+		return chunk;
+	};
+
+	let offset = 0;
+	while (offset < uuids.length) {
+		const promises = f(offset, maxIter);
+		offset += maxIter;
+		for (const promise of promises) {
+			const data = await promise;
+			if (data) yield data;
+		}
+	};
 }
 
 export function getMemberIndex(){
@@ -15,7 +41,7 @@ export function getMemberIndex(){
 }
 
 export async function* getFilteredMembers(query: string){
-	for await (const member of getMembers()){
+	for await (const member of getSortedMembers()){
 		if(await filterMember(query, member))
 			yield member;
 	}

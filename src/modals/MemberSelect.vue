@@ -16,7 +16,6 @@
 	import { DatabaseEvents, DatabaseEvent } from "../lib/db/events";
 	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
 	import VirtualList from "../components/VirtualList.vue";
-	import { sortMembers } from "../lib/util/misc.ts";
 
 	import MemberItem from "../components/member/MemberItem.vue";
 
@@ -58,8 +57,7 @@
 	});
 
 	async function updateMembers(){
-		members.value = (await Array.fromAsync(getFilteredMembers(search.value)))
-			.sort(sortMembers);
+		members.value = await Array.fromAsync(getFilteredMembers(search.value));
 	}
 
 	function check(member: Member, checked: boolean){

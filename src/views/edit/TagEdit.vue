@@ -28,7 +28,7 @@
 
 	import { getTag, newTag, removeTag, updateTag } from "../../lib/db/tables/tags";
 	import { Member, Tag } from "../../lib/db/entities";
-	import { getCurrentInstance, h, onBeforeMount, ref, watch } from "vue";
+	import { getCurrentInstance, h, onMounted, ref, watch } from "vue";
 	import { addMaterialColors, rgbaToArgb, unsetMaterialColors } from "../../lib/theme";
 	import { PartialBy } from "../../lib/types";
 	import { getMembers, updateMember } from "../../lib/db/tables/members";
@@ -56,7 +56,7 @@
 	const route = useRoute();
 	const router = useIonRouter();
 
-	const count = ref(0);
+	const count = ref<number>();
 
 	async function tagMembers() {
 		const allMembers = await Array.fromAsync(getMembers());
@@ -175,7 +175,7 @@
 	}
 
 	watch(route, updateRoute);
-	onBeforeMount(updateRoute);
+	onMounted(updateRoute);
 </script>
 
 <template>
@@ -279,7 +279,7 @@
 					<IonIcon slot="start" :icon="journalMD" aria-hidden="true" />
 					<IonLabel>
 						<h3>{{ $t("tagManagement:edit.showJournal.title") }}</h3>
-						<p>{{ $t("tagManagement:edit.showJournal.desc", { count }) }}</p>
+						<p v-if="count">{{ $t("tagManagement:edit.showJournal.desc", { count }) }}</p>
 					</IonLabel>
 				</IonItem>
 			</IonList>

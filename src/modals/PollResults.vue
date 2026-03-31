@@ -12,7 +12,7 @@
 	import { onBeforeMount, onUnmounted, shallowRef } from "vue";
 	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
 	import type { Member, Poll } from "../lib/db/entities";
-	import { defaultMember, getMembers } from "../lib/db/tables/members.ts";
+	import { defaultMember, getMember, getMemberIndex } from "../lib/db/tables/members.ts";
 	import { DatabaseEvents, DatabaseEvent } from "../lib/db/events.ts";
 
 	import MemberItem from "../components/member/MemberItem.vue";
@@ -23,14 +23,25 @@
 
 	const members = shallowRef<Member[]>();
 
+	async function getPollMembers(){
+		const pollMemberUUIDs = props.poll.entries.map(x => x.votes.map(x => x.member)).flat(1);
+		console.log(pollMemberUUIDs);
+
+		const _members = await Promise.all(
+			getMemberIndex().filter(x => pollMemberUUIDs.includes(x.uuid)).map(x => getMember(x.uuid))
+		);
+
+		members.value = _members.filter(x => !!x);
+	}
+
 	const listener = (event: Event) => {
 		if((event as DatabaseEvent).data.table === "members")
-			void Array.fromAsync(getMembers()).then(res => members.value = res);
+			void getPollMembers();
 	};
 
 	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
-		members.value = await Array.fromAsync(getMembers());
+		await getPollMembers();
 	});
 
 	onUnmounted(() => {
