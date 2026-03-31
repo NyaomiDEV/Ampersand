@@ -1,5 +1,17 @@
 {
 	"edit": {
-		"friendlyName": "Editar nombre"
+		"friendlyName": "Editar nombre",
+		"header": "Editar elemento",
+		"attachment": "Reemplazar archivo adjunto",
+		"delete": {
+			"title": "Eliminar elemento",
+			"confirm": "¿Estás seguro de que quieres eliminar este elemento?"
+		}
+	},
+	"header": "Gestor de activos",
+	"searchPlaceholder": "Buscando elementos...",
+	"add": {
+		"header": "Añadir activo",
+		"attachment": "Añadir archivo adjunto"
 	}
 }
