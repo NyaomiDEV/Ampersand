@@ -26,17 +26,15 @@
 	async function getPollMembers(){
 		const pollMemberUUIDs = props.poll.entries.map(x => x.votes.map(x => x.member)).flat(1);
 
-		const _members = (await Promise.all(
+		members.value = (await Promise.all(
 			pollMemberUUIDs.map(async x => {
 				try {
-					return await getMember(x);
+					return await getMember(x) || defaultMember();
 				}catch(_e){
 					return defaultMember(); // deleted member
 				}
 			})
-		)).filter(x => !!x);
-
-		members.value = _members.filter(x => !!x);
+		));
 	}
 
 	const listener = (event: Event) => {
