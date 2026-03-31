@@ -1,12 +1,12 @@
 # Uncomment the next line to define a global platform for your project
 
 target 'ampersand_iOS' do
-platform :ios, '16.2'
+platform :ios, '18.6'
   # Pods for ampersand_iOS
 end
 
 target 'ampersand_macOS' do
-platform :osx, '11.0'
+platform :osx, '14.7'
   # Pods for ampersand_macOS
 end
 
