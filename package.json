@@ -30,7 +30,7 @@
     "@tauri-apps/plugin-store": "2.4.2",
     "colorjs.io": "^0.6.1",
     "dayjs": "^1.11.20",
-    "i18next": "^26.0.1",
+    "i18next": "^26.0.3",
     "i18next-vue": "^5.4.0",
     "marked": "^17.0.5",
     "mermaid": "^11.13.0",
@@ -41,7 +41,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@rsbuild/core": "^1.7.4",
+    "@rsbuild/core": "^1.7.5",
     "@rsbuild/plugin-basic-ssl": "^1.2.2",
     "@rsbuild/plugin-vue": "^1.2.7",
     "@stylistic/eslint-plugin": "^5.10.0",
@@ -52,7 +52,7 @@
     "globals": "^17.4.0",
     "smol-toml": "^1.6.1",
     "typescript": "^6.0.2",
-    "typescript-eslint": "^8.57.2",
+    "typescript-eslint": "^8.58.0",
     "vue-eslint-parser": "^10.4.0",
     "vue-tsc": "^3.2.6"
   }
