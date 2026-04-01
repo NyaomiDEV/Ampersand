@@ -1,10 +1,10 @@
 /* Headerbar in modal */
 .md ion-modal.modal-sheet ion-header ion-toolbar:first-of-type {
-	--ion-safe-area-top: 12px;
+	--ion-safe-area-top: 48px;
 }
 
 .md ion-modal::part(handle) {
-	top: 16px;
+	top: 22px;
 
 	&::before {
 		height: 4px;
@@ -14,6 +14,11 @@
 
 ion-modal::part(content) {
 	border-radius: var(--md3-corner-extra-large);
+}
+
+ion-modal.modal-sheet {
+	--max-width: 640px;
+	--width: 100%;
 }
 
 /* Adapted from danielkleebinder/md3-for-ionic */
