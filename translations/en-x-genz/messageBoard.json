@@ -28,7 +28,7 @@
 		"member": "Who actually wrote this?",
 		"date": "When it dropped",
 		"title": "The headline",
-		"body": "The actual tea",
+		"body": "The actual message",
 		"isPinned": "Pin this to the top",
 		"isArchived": "Put this in the vault",
 		"attachPoll": "Add a poll to the message",

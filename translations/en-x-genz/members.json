@@ -36,7 +36,7 @@
 		"customFront": "Custom front",
 		"archived": "In the vault",
 		"showFrontingEntries": "Show how much this bestie was vibin'",
-		"showBoardEntries": "Show this bestie's tea",
+		"showBoardEntries": "Show this bestie's messages",
 		"showJournalEntries": "Show this bestie's posts",
 		"memberID": "Bestie ID: {{memberID}}",
 		"dateCreated": "Spawned on: {{dateCreated}}",

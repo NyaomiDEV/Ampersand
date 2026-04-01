@@ -9,7 +9,7 @@
 		"header": "Fix the vibing entry",
 		"member": "Change the viber",
 		"customStatus": "Current vibe",
-		"comment": "The tea",
+		"comment": "Comment",
 		"presence": {
 			"historyTitle": "Presence lore",
 			"lastPresence": "Last time it was {{presence}} / 5 stars",
