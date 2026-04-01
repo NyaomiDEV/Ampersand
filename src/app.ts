@@ -56,6 +56,10 @@ import { maybeExit } from "./lib/util/backbutton";
 // Back button icon
 import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
 
+const minWebViewVersions = {
+	"android": 139,
+};
+
 async function setupAmpersand(){
 	const app = createApp(App).use(IonicVue, {
 		hardwareBackButton: true,
@@ -148,8 +152,8 @@ if (!window.isSecureContext) {
 	console.error("Cannot continue, this is not a safe environment!");
 	document.body.innerHTML = "<h1 style='text-align: center;'>Ampersand cannot run on non-HTTPS environments! We're sorry for the trouble.<br>If you think this is an issue, report it on Codeberg.</h1>";
 	await dismissSplash();
-} else if (platform() === "android" && (await getWebkitVersion()).split(".").map(x => parseInt(x, 10))[0] < 131) {
-	document.body.innerHTML = "<h1 style='text-align: center;'>Ampersand cannot run on this WebKit version!<br>Please update your phone's OS version and all of your system apps.</h1>";
+} else if (minWebViewVersions[platform()] && (await getWebkitVersion()).split(".").map(x => parseInt(x, 10))[0] < minWebViewVersions[platform()]) {
+	document.body.innerHTML = "<h1 style='text-align: center;'>Ampersand cannot run on this WebKit/WebView version!<br>Please update your phone's OS version and all of your system apps.</h1>";
 	await dismissSplash();
 } else
 	await setupAmpersand();
