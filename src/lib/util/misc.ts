@@ -108,13 +108,13 @@ export function languagePicker(): Promise<string> {
 				else if (!a[0].includes("-x-") && b[0].includes("-x-")) return -1;
 
 				// eslint-disable-next-line @typescript-eslint/no-explicit-any
-				const langA: string = (a[1].other as Record<string, any>).languageName.inEnglish || a[0];
+				const langA: string = (a[1].other as Record<string, any>)?.languageName?.inEnglish || a[0];
 				// eslint-disable-next-line @typescript-eslint/no-explicit-any
-				const langB: string = (b[1].other as Record<string, any>).languageName.inEnglish || b[0];
+				const langB: string = (b[1].other as Record<string, any>)?.languageName?.inEnglish || b[0];
 				return langA.localeCompare(langB);
 			}).map(x => ({
 				// eslint-disable-next-line @typescript-eslint/no-explicit-any
-				text: `${(x[1] as any).other.languageName.local} (${(x[1] as any).other.languageName.inEnglish}) (${computePercentage(x[0])}%)`,
+				text: `${(x[1] as any).other?.languageName?.local || x[0]} (${(x[1] as any).other?.languageName?.inEnglish || x[0]}) (${computePercentage(x[0])}%)`,
 				data: { lng: x[0] }
 			}));
 

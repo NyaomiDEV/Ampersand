@@ -80,7 +80,7 @@ for(const [{ lang, ns }, translation] of translations.entries())
 // At the end, import DayJS languages
 for(const lang of new Set(translations.keys().map(x => x.lang))){
 	try {
-		await import(`dayjs/locale/${lang}`);
+		await import(`dayjs/locale/${lang.toLowerCase()}`);
 	}catch(_e){
 		console.error("DayJS doesn't have this locale:", lang);
 		try {
