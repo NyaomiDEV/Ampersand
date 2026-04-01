@@ -12,7 +12,7 @@
 		},
 		"delete": {
 			"title": "Yeet this field",
-			"confirm": "You fr about deleting this? It's giving mistake"
+			"confirm": "You fr about deleting this?"
 		}
 	}
 }

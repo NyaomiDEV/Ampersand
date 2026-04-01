@@ -14,7 +14,7 @@
 		"desc": "For backup files from when Ampersand was in its flop era (< 0.2.0)",
 		"note": "Old Ampersand used a file format (ampdb) that's basically ancient history now. If you're still holding onto those old backups, import them ASAP and re-export, because this option is getting deleted soon. Don't say we didn't warn you."
 	},
-	"pkImport": "Import your PluralKit data (it's giving crossover)",
+	"pkImport": "Import your PluralKit data (crossover episode)",
 	"ocImport": "Import your Octocon data (main character energy)",
 	"tuImport": "Import your Tupperbox data (real ones know)",
 	"spImport": "Import your Simply Plural data (we love to see it)",

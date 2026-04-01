@@ -3,7 +3,7 @@
 	"version": "Version {{version}}",
 	"ciVersion": "CI version",
 	"madein": "Cooked with love in Italy",
-	"privacyPolicy": "Privacy Policy (no cap)",
+	"privacyPolicy": "Privacy Policy",
 	"updateAvailable": "New version dropped: {{newVersion}}",
 	"credits": "The Main Characters"
 }
