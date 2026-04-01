@@ -6,18 +6,24 @@
 
 	import { version } from "../../../package.json";
 	import { openUrl } from "@tauri-apps/plugin-opener";
-	import { computed, onMounted, ref } from "vue";
+	import { platform, version as osVersion } from "@tauri-apps/plugin-os";
+	import { computed, inject, onMounted, ref } from "vue";
 
 	import { checkUpdates, checkIsUpdateNewer } from "../../lib/update";
 	import { UpdateCheckResponse } from "../../lib/types";
+	import { getWebkitVersion } from "../../lib/native/plugin";
 	import Markdown from "../../components/Markdown.vue";
 
 	import credits from "../../assets/credits.md";
+
+	const isDev = inject<boolean>("isDev");
 
 	const egg = ref(0);
 	const showDeveloperToggle = computed(() => egg.value >= 10);
 	const newVersion = ref<UpdateCheckResponse>();
 	const isCiVersion = import.meta.env.AMPERSAND_IS_CI_BUILD === "1";
+
+	const webkitVersion = ref();
 
 	async function openPrivacyPolicy(){
 		const url = "https://codeberg.org/Ampersand/app/wiki/Privacy-Policy";
@@ -42,6 +48,8 @@
 		const response = await checkUpdates();
 		if(response && checkIsUpdateNewer(response))
 			newVersion.value = response;
+
+		webkitVersion.value = await getWebkitVersion();
 	});
 </script>
 
@@ -64,6 +72,7 @@
 				<div class="headings">
 					<h3>Ampersand</h3>
 					<span>{{ $t("about:version", { version }) }}{{ isCiVersion ? ` - ${$t("about:ciVersion")}` : "" }}</span>
+					<span v-if="isDev">{{ platform() }} {{ osVersion() }} - {{ webkitVersion }}</span>
 					<span>{{ $t("about:madein") }}</span>
 				</div>
 
