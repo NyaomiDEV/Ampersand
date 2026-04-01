@@ -1,0 +1,99 @@
+{
+	"languageName": {
+		"local": "Engwish",
+		"inEnglish": "Engwish"
+	},
+	"genericDeleteDesc": "You won't be abwe to undo dis action! >.<",
+	"addTimestamp": "Add timestamp",
+	"memberMention": "Mention a membew",
+	"alerts": {
+		"ok": "Ok",
+		"cancel": "Cancew",
+		"clear": "Cweaw",
+		"yes": "Yes",
+		"no": "No"
+	},
+	"presence": {
+		"absent": "Absent",
+		"heavilyDissociating": "Heaviwy dissociating",
+		"dissociating": "Dissociating",
+		"zonedOut": "Zoned out",
+		"present": "Pwesent",
+		"fullyGrounded": "Fuwwy gwounded"
+	},
+	"back": "Back",
+	"time": "Time",
+	"timeSizes": {
+		"years": {
+			"long": "yeaws",
+			"short": "Y"
+		},
+		"months": {
+			"long": "monf-s",
+			"short": "M"
+		},
+		"days": {
+			"long": "days",
+			"short": "D"
+		},
+		"weekdays": {
+			"monday": "Monday",
+			"tuesday": "Tuesday",
+			"wednesday": "Wed-nes-day",
+			"thursday": "Thuwsday",
+			"friday": "Fwiday",
+			"saturday": "Satuwday",
+			"sunday": "Sunday"
+		},
+		"hours": {
+			"long": "houws",
+			"short": "h"
+		},
+		"minutes": {
+			"long": "minutes",
+			"short": "m"
+		},
+		"seconds": {
+			"long": "seconds",
+			"short": "s"
+		}
+	},
+	"shapes": {
+		"arch": "Awch",
+		"arrow": "Awwow",
+		"boom": "Boom",
+		"bun": "Bun",
+		"burst": "Buwst",
+		"clamshell": "Cwam-sheww",
+		"diamond": "Diamond",
+		"fan": "Fan",
+		"flower": "Fwowew",
+		"gem": "Gem",
+		"ghost-ish": "Ghost-ish",
+		"heart": "Heawt",
+		"leaf-clover4": "Weaf Cwovew 4",
+		"leaf-clover8": "Weaf Cwovew 8",
+		"oval": "Ovaw",
+		"pentagon": "Pentagon",
+		"pill": "Piww",
+		"pixel-circle": "Pixew Ciwcwe",
+		"pixel-triangle": "Pixew Twiangwe",
+		"puffy-diamond": "Puffy Diamond",
+		"puffy": "Puffy",
+		"semicircle": "Semiciwcwe",
+		"sided-cookie12": "12-sided Cookie",
+		"sided-cookie4": "4-sided Cookie",
+		"sided-cookie6": "6-sided Cookie",
+		"sided-cookie7": "7-sided Cookie",
+		"sided-cookie9": "9-sided Cookie",
+		"slanted": "Swanted",
+		"soft-boom": "Soft Boom",
+		"soft-burst": "Soft Buwst",
+		"square": "Squawe",
+		"sunny": "Sunny",
+		"triangle": "Twiangwe",
+		"very-sunny": "Vewy Sunny",
+		"noShape": "No shape"
+	},
+	"developerMode": "Devewopew mode"
+}

@@ -1,0 +1,34 @@
+{
+	"header": "Fwont histowy",
+	"searchPlaceholder": "Seawch da fwonting histowy...",
+	"currentlyFronting": "Cuwwentwy fwonting",
+	"wasFronting": "Was stiww fwonting",
+	"frontedThatDay": "Fwonted dat day",
+	"influencing": "Infwuencing {{influencedMember}}",
+	"edit": {
+		"header": "Edit fwonting entwy",
+		"member": "Edit fwonting membew",
+		"customStatus": "Custom status",
+		"comment": "Comment",
+		"presence": {
+			"historyTitle": "Pwesence histowy",
+			"lastPresence": "Wast it was {{presence}} / 5 stawz",
+			"addTitle": "How pwesent awe you in a scawe fwom 0 to 10?",
+			"confirmButton": "Confiwm",
+			"date": "Date"
+		},
+		"influencing": {
+			"select": "Sewect a membew to infwuence",
+			"currentlyInfluencing": "Cuwwentwy infwuencing"
+		},
+		"startTime": "Stawt time",
+		"endTime": "End time",
+		"removeFromFront": "Wemove fwom fwont",
+		"isMainFronter": "Main fwontew",
+		"isLocked": "Wock fwontew",
+		"delete": {
+			"title": "Dewete fwonting entwy",
+			"confirm": "Awe you suwe you want to dewete dis fwonting entwy?"
+		}
+	}
+}

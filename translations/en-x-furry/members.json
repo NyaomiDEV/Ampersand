@@ -1,0 +1,49 @@
+{
+	"header": "Membews",
+	"searchPlaceholder": "Seawch membews...",
+	"select": "Sewect a membew",
+	"deletedMember": "Deweted membew",
+	"deletedCustomFront": "Deweted custom fwont",
+	"actions": {
+		"addToFront": "Add to fwont",
+		"setMainFronter": "Set as main fwontew",
+		"unsetMainFronter": "Unset main fwontew",
+		"setSoleFronter": "Set as fwont",
+		"removeFromFront": "Wemove fwom fwont"
+	},
+	"toasts": {
+		"addToFront": "Membew added to fwont",
+		"setMainFronter": "Membew set to main fwontew",
+		"unsetMainFronter": "Membew unset as main fwontew",
+		"setSoleFronter": "Membew set as sowe fwontew",
+		"removeFromFront": "Membew wemoved fwom fwont"
+	},
+	"edit": {
+		"header": "Membew",
+		"headerAdd": "Add membew",
+		"headerEdit": "Edit membew",
+		"name": "Name",
+		"pronouns": "Pwonouns",
+		"role": "Wowe",
+		"color": "Pwefewwed cowow",
+		"imageClip": "Avataw shape",
+		"customFieldsAdd": "Add custom fiewds",
+		"tags": "Edit tags",
+		"description": "Descwiption",
+		"noDescription": "No descwiption",
+		"system": "Edit membewship system",
+		"isPinned": "Pin membew",
+		"customFront": "Custom fwont",
+		"archived": "Awchived",
+		"showFrontingEntries": "Show fwonting entwies",
+		"showBoardEntries": "Show boawd messages",
+		"showJournalEntries": "Show jouwnaw posts",
+		"memberID": "Membew ID: {{memberID}}",
+		"dateCreated": "Date cweated: {{dateCreated}}",
+		"memberIDcopiedToClipboard": "Membew ID in mention fowmat copied to cwipboawd!",
+		"delete": {
+			"title": "Dewete membew",
+			"confirm": "Awe you suwe you want to dewete dis membew?"
+		}
+	}
+}

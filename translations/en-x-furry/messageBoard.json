@@ -1,0 +1,45 @@
+{
+	"header": "Message boawd",
+	"searchPlaceholder": "Seawch fow messages...",
+	"polls": {
+		"boardMessageContainsPoll": "Contains poww",
+		"collapsePoll": "Hide poww",
+		"voteCast": {
+			"voter": "Sewect da votew",
+			"reason": "Teww da weason",
+			"reasonHint": "Weason",
+			"retractConfirmation": "Awe you suwe you want to wetwact dis vote?"
+		},
+		"resultsHeader": "Vote wesuwts",
+		"resultsButton": "Show poww wesuwts",
+		"choice": {
+			"desc_one": "{{count}} votew",
+			"desc_other": "{{count}} votews"
+		},
+		"defaultPollValues": {
+			"yes": "Yes",
+			"no": "No",
+			"veto": "Veto",
+			"abstain": "Abstain"
+		}
+	},
+	"edit": {
+		"header": "Edit message",
+		"member": "Edit message authow",
+		"date": "Edit date",
+		"title": "Titwe",
+		"body": "Message body",
+		"isPinned": "Pin message",
+		"isArchived": "Awchive message",
+		"attachPoll": "Attach a poww to dis message",
+		"deleteAttachedPoll": "Dewete attached poww",
+		"pollIsMultipleChoice": "Awwow sewecting muwtipwe choices",
+		"pollAddNewChoice": "Add a new choice to da poww",
+		"pollChoice": "Choice descwiption",
+		"pollEditWarning": "Changing any of da poww detaiws wiww weset da votes!",
+		"delete": {
+			"title": "Dewete message on boawd",
+			"confirm": "Awe you suwe you want to dewete dis message?"
+		}
+	}
+}

@@ -1,0 +1,17 @@
+{
+	"header": "Asset managew",
+	"searchPlaceholder": "Seawch assets...",
+	"add": {
+		"header": "Add asset",
+		"attachment": "Add attachment"
+	},
+	"edit": {
+		"header": "Edit asset",
+		"friendlyName": "Edit name",
+		"attachment": "Wepwace attachment",
+		"delete": {
+			"title": "Dewete asset",
+			"confirm": "Awe you suwe you want to dewete dis asset? >w<"
+		}
+	}
+}

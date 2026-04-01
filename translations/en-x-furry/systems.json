@@ -1,0 +1,29 @@
+{
+	"header": "Systems",
+	"searchPlaceholder": "Seawch systems...",
+	"select": "Sewect a system",
+	"edit": {
+		"header": "System",
+		"headerAdd": "Add system",
+		"headerEdit": "Edit system",
+		"name": "System name",
+		"description": "System descwiption",
+		"noDescription": "No descwiption",
+		"color": "Cowow",
+		"imageClip": "Avataw shape",
+		"memberCount": "Membew count",
+		"memberCountText": "{{totalMemberCount}} membew(s), {{memberCount}} active, {{archivedMemberCount}} awchived",
+		"customFrontCountText": "{{totalCustomFrontCount}} custom fwont(s), {{customFrontCount}} active, {{archivedCustomFrontCount}} awchived",
+		"tapToShow": "Tap to show",
+		"showMembers": "Show membews inside dis system",
+		"parent": "Pawent system",
+		"isPinned": "Pin system",
+		"archived": "Awchived",
+		"delete": {
+			"title": "Dewete system",
+			"confirm": "Awe you suwe you want to dewete dis system?"
+		},
+		"systemID": "System ID: {{systemID}}",
+		"systemIDcopiedToClipboard": "System ID in mention fowmat copied to cwipboawd!"
+	}
+}
