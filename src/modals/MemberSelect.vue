@@ -10,7 +10,7 @@
 		IonList,
 	} from "@ionic/vue";
 
-	import { computed, onBeforeMount, onUnmounted, reactive, ref, shallowRef, toRaw, watch } from "vue";
+	import { onBeforeMount, onUnmounted, reactive, ref, shallowRef, toRaw, watch } from "vue";
 	import type { Member } from "../lib/db/entities.d.ts";
 	import { getFilteredMembers } from "../lib/db/tables/members";
 	import { DatabaseEvents, DatabaseEvent } from "../lib/db/events";
@@ -38,7 +38,7 @@
 	const selectedMembers = reactive<Member[]>([...props.modelValue || []]);
 	const search = ref("");
 	const members = shallowRef<Member[]>();
-	const iter = computed(() => getFilteredMembers(search.value));
+	const iter = shallowRef(getFilteredMembers(search.value));
 	const iterDone = ref(false);
 
 	const listener = (event: Event) => {
@@ -62,6 +62,7 @@
 	async function resetMembers(){
 		members.value = undefined;
 		iterDone.value = false;
+		iter.value = getFilteredMembers(search.value);
 		await pollMembers();
 	}
 

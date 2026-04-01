@@ -14,7 +14,7 @@
 		IonBackButton,
 		IonList,
 	} from "@ionic/vue";
-	import { computed, onBeforeMount, onUnmounted, ref, shallowRef, useTemplateRef, watch } from "vue"; 
+	import { onBeforeMount, onUnmounted, ref, shallowRef, useTemplateRef, watch } from "vue"; 
 	import CollapsibleHeaderbar from "../components/CollapsibleHeaderbar.vue";
 
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
@@ -52,7 +52,7 @@
 	}, { immediate: true });
 
 	const members = shallowRef<Member[]>();
-	const iter = computed(() => getFilteredMembers(search.value));
+	const iter = shallowRef(getFilteredMembers(search.value));
 	const iterDone = ref(false);
 	watch(search, async () => {
 		await resetMembers();
@@ -87,6 +87,7 @@
 	async function resetMembers(){
 		members.value = undefined;
 		iterDone.value = false;
+		iter.value = getFilteredMembers(search.value);
 		await pollMembers();
 	}
 
