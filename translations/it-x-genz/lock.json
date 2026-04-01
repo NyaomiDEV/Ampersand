@@ -1,0 +1,8 @@
+{
+	"title": "App bloccata",
+	"hint": "Metti la password, fra",
+	"biometrics": {
+		"title": "App bloccata",
+		"reason": "Sblocca l'app"
+	}
+}

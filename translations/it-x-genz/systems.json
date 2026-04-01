@@ -1,0 +1,29 @@
+{
+	"header": "Sistemi",
+	"searchPlaceholder": "Cerca sistemi...",
+	"select": "Scegli un sistema",
+	"edit": {
+		"header": "Sistema",
+		"headerAdd": "Aggiungi sistema",
+		"headerEdit": "Modifica sistema",
+		"name": "Nome sistema",
+		"description": "Bio sistema",
+		"noDescription": "Nessuna bio",
+		"color": "Colore",
+		"imageClip": "Forma avatar",
+		"memberCount": "Quanti membrə",
+		"memberCountText": "{{totalMemberCount}} membrə, {{memberCount}} attivə, {{archivedMemberCount}} archiviatə",
+		"customFrontCountText": "{{totalCustomFrontCount}} front custom, {{customFrontCount}} attivə, {{archivedCustomFrontCount}} archiviatə",
+		"tapToShow": "Tocca per vedere",
+		"showMembers": "Mostra ə membrə del sistema",
+		"parent": "Sistema genitore",
+		"isPinned": "Fissa sistema",
+		"archived": "Archiviato",
+		"delete": {
+			"title": "Elimina sistema",
+			"confirm": "Vuoi davvero killare questo sistema, fra?"
+		},
+		"systemID": "ID: {{systemID}}",
+		"systemIDcopiedToClipboard": "ID copiato, zì!"
+	}
+}

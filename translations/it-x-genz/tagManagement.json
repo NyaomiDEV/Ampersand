@@ -1,0 +1,43 @@
+{
+	"header": "Gestione tag",
+	"searchPlaceholder": "Cerca tag...",
+	"select": "Scegli i tag",
+	"selector": {
+		"member": "Tag membrə",
+		"journal": "Tag diario"
+	},
+	"edit": {
+		"header": {
+			"member": "Modifica tag membrə",
+			"journal": "Modifica tag diario"
+		},
+		"name": "Nome tag",
+		"description": "Bio tag",
+		"color": "Colore tag",
+		"viewInLists": "Mostra nelle liste",
+		"type": {
+			"header": "Tipo tag",
+			"member": "Membrə",
+			"journal": "Diario",
+			"desc": "Nota: il tipo lo decidi solo quando lo crei, fra!"
+		},
+		"members": {
+			"title": "Chi usa questo tag?",
+			"desc_one": "{{count}} membrə lo usa",
+			"desc_many": "{{count}} membrə lo usano",
+			"desc_other": "{{count}} membrə lo usano"
+		},
+		"showJournal": {
+			"title": "Pagine del diario con questo tag",
+			"desc_one": "{{count}} pagina lo usa",
+			"desc_many": "{{count}} pagine lo usano",
+			"desc_other": "{{count}} pagine lo usano"
+		},
+		"delete": {
+			"title": "Elimina tag",
+			"confirm": "Vuoi davvero killare questo tag, zì?"
+		},
+		"tagID": "ID: {{tagID}}",
+		"tagIDCopiedToClipboard": "ID copiato, fra!"
+	}
+}

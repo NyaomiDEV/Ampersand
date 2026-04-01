@@ -1,0 +1,15 @@
+{
+	"header": "Dashboard",
+	"header_salute": "Bella!",
+	"header_mainfronter": "Bella, {{fronterName}}!",
+	"systemDescription": "Bio del sistema",
+	"nowFronting": "Ora a front",
+	"fronterInfluencing": "Sta influenzando {{influencedMember}}",
+	"addToFront": "Aggiungi al front",
+	"recentFrontingHistory": "Fuori dal front da poco",
+	"messageBoard": {
+		"header": "Bacheca",
+		"add": "Scrivi qualcosa",
+		"view": "Vedi tutto"
+	}
+}

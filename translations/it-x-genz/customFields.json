@@ -1,0 +1,18 @@
+{
+	"header": "Campi custom",
+	"select": "Scegli i campi custom",
+	"searchPlaceholder": "Cerca tra i campi...",
+	"edit": {
+		"header": "Modifica campo",
+		"headerAdd": "Aggiungi campo",
+		"name": "Nome del campo",
+		"default": {
+			"title": "Rendi predefinito",
+			"desc": "Questi campi escono sempre quando modifichi ə membrə"
+		},
+		"delete": {
+			"title": "Elimina campo",
+			"confirm": "Sei sicurə di voler killare questo campo, zì?"
+		}
+	}
+}

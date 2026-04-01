@@ -1,0 +1,49 @@
+{
+	"header": "Membrə",
+	"searchPlaceholder": "Cerca ə membrə...",
+	"select": "Scegli unə membrə",
+	"deletedMember": "Membrə eliminatə",
+	"deletedCustomFront": "Front custom eliminato",
+	"actions": {
+		"addToFront": "Aggiungi al front",
+		"setMainFronter": "Metti come main",
+		"unsetMainFronter": "Togli come main",
+		"setSoleFronter": "Metti come solo front",
+		"removeFromFront": "Togli dal front"
+	},
+	"toasts": {
+		"addToFront": "Membrə aggiuntə, zì",
+		"setMainFronter": "Membrə messo come main",
+		"unsetMainFronter": "Membrə tolto dal main",
+		"setSoleFronter": "Membrə messo come solo front",
+		"removeFromFront": "Membrə rimossə dal front"
+	},
+	"edit": {
+		"header": "Membrə",
+		"headerAdd": "Aggiungi membrə",
+		"headerEdit": "Modifica membrə",
+		"name": "Nome",
+		"pronouns": "Pronomi",
+		"role": "Ruolo",
+		"color": "Colore",
+		"imageClip": "Forma avatar",
+		"customFieldsAdd": "Aggiungi campi custom",
+		"tags": "Cambia i tag",
+		"description": "Bio",
+		"noDescription": "Nessuna bio",
+		"system": "Cambia sistema",
+		"isPinned": "Fissa membrə",
+		"customFront": "Front custom",
+		"archived": "Archiviatə",
+		"showFrontingEntries": "Mostra i front",
+		"showBoardEntries": "Mostra i messaggi",
+		"showJournalEntries": "Mostra il diario",
+		"memberID": "ID: {{memberID}}",
+		"dateCreated": "Creato il: {{dateCreated}}",
+		"memberIDcopiedToClipboard": "ID copiato negli appunti, fra!",
+		"delete": {
+			"title": "Elimina membrə",
+			"confirm": "Vuoi davvero killare questə membrə?"
+		}
+	}
+}

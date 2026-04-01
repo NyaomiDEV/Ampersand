@@ -1,0 +1,39 @@
+{
+	"welcomeScreen": {
+		"header": "Benvenutə su Ampersand!",
+		"start": "Daje, iniziamo!"
+	},
+	"importScreen": {
+		"header": "Vuoi importare roba?",
+		"prevInstall": "Sì, da prima",
+		"simplyPlural": "Sì, Simply Plural",
+		"octocon": "Sì, Octocon",
+		"pluralKit": "Sì, PluralKit",
+		"tupperbox": "Sì, Tupperbox",
+		"startFromScratch": "No, parto da zero",
+		"pleaseWait": "Aspetta che importiamo tutto, fra",
+		"error": "Errore col backup, prova altro.",
+		"errorSp": "Errore con Simply Plural, prova altro.",
+		"errorOc": "Errore con Octocon, prova altro.",
+		"errorPk": "Errore con PluralKit, prova altro.",
+		"errorTu": "Errore con Tupperbox, prova altro.",
+		"allowRemoteContent": {
+			"header": "Ti connetti?",
+			"desc": "Ampersand va offline, quindi serve il permesso per internet. Serve ora per scaricare avatar e banner. Poi puoi staccare tutto in Opzioni > Sicurezza."
+		}
+	},
+	"systemInfo": {
+		"header": "Parlaci del sistema!",
+		"name": "Nome collettivo",
+		"description": "Diteci qualcosa di voi..."
+	},
+	"memberInfo": {
+		"header": "Parlaci di te!",
+		"description": "Qualcosa su di te...",
+		"invitation": "Puoi finire il profilo dopo il tour, zì!"
+	},
+	"endScreen": {
+		"header": "Grazie per aver scelto Ampersand, fra!",
+		"startButton": "Daje!"
+	}
+}

@@ -1,0 +1,17 @@
+{
+	"header": "Gestore asset",
+	"searchPlaceholder": "Cerca roba...",
+	"add": {
+		"header": "Aggiungi asset",
+		"attachment": "Aggiungi allegato"
+	},
+	"edit": {
+		"header": "Modifica asset",
+		"friendlyName": "Cambia nome",
+		"attachment": "Cambia allegato",
+		"delete": {
+			"title": "Elimina asset",
+			"confirm": "Vuoi davvero killare questo asset, fra?"
+		}
+	}
+}
