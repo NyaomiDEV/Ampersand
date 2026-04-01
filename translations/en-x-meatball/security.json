@@ -1,0 +1,29 @@
+{
+	"header": "Securi-ty",
+	"applock": {
+		"title": "App-a loc-ka",
+		"desc": "Loc-ka the applica-tion-a with-a a pass-word-a"
+	},
+	"biometrics": {
+		"title": "Use-a biome-trics-a",
+		"desc": "Un-loc-ka via-a your-a fin-ger-prin-ta or-a fa-ce"
+	},
+	"allowRemoteContent": {
+		"title": "Allow-a remo-te con-ten-ta",
+		"desc": "Allow-a Ampersand-a to use-a the Inter-net-a to que-ry remo-te con-ten-ta, such-a as-a ima-ges-a in Mar-k-down-a field-s-a and-a ava-tar-s-a in third-a-par-ty impor-ts-a."
+	},
+	"passwordAlert": {
+		"header": "War-ning-a",
+		"text": "Are-a you sure-a you wan-ta to pro-ceed-a? Befo-re pro-cee-ding-a, plea-se no-te down-a your-a pass-word-a some-where-a out-si-de Ampersand-a as-a you-a won't-a be-a a-ble to reco-ver-a your-a da-ta or-a re-set-a your-a pass-word-a if-a you lo-se it-a. Be-a sure-a to expor-ta your-a da-ta befo-re set-ting-a one-a!"
+	},
+	"editPassword": "Modi-fy pass-word-a",
+	"inputPassword": {
+		"titleAdd": "En-ter-a your-a new-a pass-word-a",
+		"titleReenter": "Re-en-ter-a pass-word-a",
+		"titleModifyOld": "En-ter-a your-a old-a pass-word-a",
+		"titleModifyNew": "En-ter-a your-a new-a pass-word-a",
+		"titleDisable": "En-ter-a your-a pass-word-a",
+		"hint": "Pass-word-a"
+	},
+	"useIPC": "Sen-da even-ts-a to o-ther-a applica-tions-a"
+}

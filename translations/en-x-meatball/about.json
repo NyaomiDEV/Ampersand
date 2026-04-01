@@ -1,0 +1,9 @@
+{
+	"header": "Abou-ta",
+	"version": "Versio-ne {{version}}",
+	"ciVersion": "CI versio-ne",
+	"madein": "Made-a with-a love in Italy",
+	"privacyPolicy": "Privacy Poli-cy",
+	"updateAvailable": "Upda-te avail-a-ble: {{newVersion}}",
+	"credits": "Credi-ts"
+}

@@ -1,0 +1,39 @@
+{
+	"welcomeScreen": {
+		"header": "Wel-come to Ampersand-a! 🤌",
+		"start": "Star-ta your-a jour-ney-a!"
+	},
+	"importScreen": {
+		"header": "Would-a you wan-ta to impor-ta your-a da-ta?",
+		"prevInstall": "Yes-a, pre-vious-a installa-tion-a",
+		"simplyPlural": "Yes-a, Sim-ply Plural-a",
+		"octocon": "Yes-a, Octocon-a",
+		"pluralKit": "Yes-a, PluralKit-a",
+		"tupperbox": "Yes-a, Tupperbox-a",
+		"startFromScratch": "No-a, I'll-a star-ta from-a scrat-ch-a",
+		"pleaseWait": "Plea-se wai-ta whi-le we-a impor-ta your-a da-ta",
+		"error": "Error-a whi-le impor-ting-a the back-up-a. Plea-se selec-ta ano-ther-a op-tion-a.",
+		"errorSp": "Error-a whi-le impor-ting-a the Sim-ply Plural-a expor-ta. Plea-se selec-ta ano-ther-a op-tion-a.",
+		"errorOc": "Error-a whi-le impor-ting-a the Octocon-a expor-ta. Plea-se selec-ta ano-ther-a op-tion-a.",
+		"errorPk": "Error-a whi-le impor-ting-a the PluralKit-a expor-ta. Plea-se selec-ta ano-ther-a op-tion-a.",
+		"errorTu": "Error-a whi-le impor-ting-a the Tupperbox-a expor-ta. Plea-se selec-ta ano-ther-a op-tion-a.",
+		"allowRemoteContent": {
+			"header": "Allow-a Inter-net-a connec-tion-a?",
+			"desc": "Ampersand-a is-a an off-li-ne-fir-sta applica-tion-a, and-a as-a such-a it-a need-s-a your-a con-sen-ta to connec-ta to the Inter-net-a. It-a would-a connec-ta to the inter-net-a to down-load-a your-a mem-ber's-a ava-tar-s-a and-a ban-ner-s-a at-a this-a sta-ge. You-a can-a tur-na this-a fea-tu-re off-a in Op-tions-a > Securi-ty > Allow-a remo-te con-ten-ta when-a you're-a done-a."
+		}
+	},
+	"systemInfo": {
+		"header": "Tell-a us-a abou-ta your-a sys-tem-a!",
+		"name": "Collec-ti-ve name-a",
+		"description": "A lit-tle abou-ta all-a of-a you-a..."
+	},
+	"memberInfo": {
+		"header": "Tell-a us-a more-a abou-ta you-a!",
+		"description": "A lit-tle abou-ta your-self-a...",
+		"invitation": "Keep-a edi-ting-a your-a pro-fi-le car-da af-ter-a you're-a done-a with-a the on-boar-ding-a!"
+	},
+	"endScreen": {
+		"header": "Than-ks-a for-a choo-sing-a Ampersand-a!",
+		"startButton": "Let's-a star-ta!"
+	}
+}

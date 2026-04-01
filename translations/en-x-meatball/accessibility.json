@@ -1,0 +1,57 @@
+{
+	"header": "Accessi-bili-ty",
+	"highLegibilityFont": {
+		"title": "High-a legibili-ty font-a",
+		"desc": "Use-a high-a legibili-ty font-a instead-a of the standard-a devi-ce font-a"
+	},
+	"highLegibilityFontType": {
+		"title": "High-a legibili-ty font-a fami-ly",
+		"atkinson": "Atkinson-a Hyper-legible",
+		"opendyslexic": "Open-a-Dyslexic",
+		"lexend": "Lexend-a",
+		"comicrelief": "Comic-a Relief-a",
+		"system-font": "Sys-tem Font-a"
+	},
+	"uiVariant": {
+		"title": "UI vari-ant-a",
+		"auto": "Au-to",
+		"light": "Ligh-ta",
+		"dark": "Dar-ka"
+	},
+	"themeIsAmoled": {
+		"title": "AMOLED-a mo-de",
+		"desc": "Use-a to-tal black-a back-a-ground-a when-a in dar-ka mo-de. Can-a reduce-a display-a wear-a."
+	},
+	"themeIsVibrant": {
+		"title": "Vibran-ta theme-a",
+		"desc": "Bring-a more-a color-a to the UI-a."
+	},
+	"colorIndicatorPosition": {
+		"title": "Color-a indica-tor-a posi-tion-a",
+		"avatar": "Ava-tar out-a-line",
+		"listItem": "Lis-ta item-a bor-der"
+	},
+	"useAccentColor": {
+		"title": "Accen-ta color-a",
+		"desc": "Use-a cus-tom accen-ta color-a"
+	},
+	"accentColor": {
+		"title": "Choo-se the accen-ta color-a"
+	},
+	"reducedMotion": {
+		"title": "Reduced-a mo-tion-a",
+		"desc": "Disa-ble in-app-a anima-tions-a"
+	},
+	"disableCovers": {
+		"title": "Disa-ble cover-s-a"
+	},
+	"contrastLevel": {
+		"title": "Contras-ta level-a"
+	},
+	"fontScale": {
+		"title": "Font-a si-ze"
+	},
+	"longPressDuration": {
+		"title": "Long-a press-a dura-tion-a"
+	}
+}

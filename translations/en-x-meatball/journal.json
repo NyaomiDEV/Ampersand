@@ -1,0 +1,29 @@
+{
+	"header": "Jour-nal-a",
+	"searchPlaceholder": "Search-a the jour-nal-a...",
+	"contentWarning": "This-a pos-ta has-a sensi-ti-ve con-ten-ta insi-de",
+	"private": "This-a pos-ta is-a priva-te",
+	"pinnedPosts": "Pin-ned-a pos-ts-a",
+	"alertSubheader": "Do-a you real-ly wan-ta to read-a this-a pos-ta?",
+	"edit": {
+		"header": "Pos-ta",
+		"headerAdd": "Add-a new-a pos-ta",
+		"headerEdit": "Edi-ta pos-ta",
+		"headerOptions": "Pos-ta op-tions-a",
+		"author": "Edi-ta author-a",
+		"date": "Edi-ta da-te",
+		"title": "Ti-tle",
+		"subtitle": "Sub-ti-tle",
+		"body": "Pos-ta bo-dy",
+		"tags": "Tag-s-a",
+		"isPinned": "Pin-ned-a pos-ta",
+		"isPrivate": "Priva-te pos-ta",
+		"contentWarning": "Con-ten-ta war-ning-a",
+		"postID": "Pos-ta ID: {{postID}}",
+		"postIDcopiedToClipboard": "Pos-ta ID in men-tion-a for-mat-a copied-a to clip-board-a!",
+		"delete": {
+			"title": "Dele-te jour-nal-a pos-ta",
+			"confirm": "Are-a you sure-a you wan-ta to dele-te this-a pos-ta?"
+		}
+	}
+}

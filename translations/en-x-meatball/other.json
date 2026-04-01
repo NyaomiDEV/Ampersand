@@ -1,0 +1,99 @@
+{
+	"languageName": {
+		"local": "Eng-lish-a",
+		"inEnglish": "Meatball English"
+	},
+	"genericDeleteDesc": "You-a won't-a be-a a-ble to un-do-a this-a ac-tion-a!",
+	"addTimestamp": "Add-a ti-me-stam-pa",
+	"memberMention": "Men-tion-a a mem-ber-a",
+	"alerts": {
+		"ok": "Ok-a",
+		"cancel": "Can-cel-a",
+		"clear": "Clear-a",
+		"yes": "Yes-a",
+		"no": "No-a"
+	},
+	"presence": {
+		"absent": "Ab-sen-ta",
+		"heavilyDissociating": "Heavi-ly dissocia-ting-a",
+		"dissociating": "Dissocia-ting-a",
+		"zonedOut": "Zo-ned-a out-a",
+		"present": "Presen-ta",
+		"fullyGrounded": "Ful-ly groun-ded-a"
+	},
+	"back": "Bac-ka",
+	"time": "Ti-me",
+	"timeSizes": {
+		"years": {
+			"long": "year-s-a",
+			"short": "Y"
+		},
+		"months": {
+			"long": "mon-th-s-a",
+			"short": "M"
+		},
+		"days": {
+			"long": "day-s-a",
+			"short": "D"
+		},
+		"weekdays": {
+			"monday": "Mon-day-a",
+			"tuesday": "Tues-day-a",
+			"wednesday": "Wed-nes-day-a",
+			"thursday": "Thur-s-day-a",
+			"friday": "Fri-day-a",
+			"saturday": "Sa-tur-day-a",
+			"sunday": "Sun-day-a"
+		},
+		"hours": {
+			"long": "hour-s-a",
+			"short": "h"
+		},
+		"minutes": {
+			"long": "minu-tes-a",
+			"short": "m"
+		},
+		"seconds": {
+			"long": "secon-ds-a",
+			"short": "s"
+		}
+	},
+	"shapes": {
+		"arch": "Ar-ch-a",
+		"arrow": "Ar-row-a",
+		"boom": "Boom-a",
+		"bun": "Bun-a",
+		"burst": "Bur-sta",
+		"clamshell": "Clam-shell-a",
+		"diamond": "Dia-mond-a",
+		"fan": "Fan-a",
+		"flower": "Flow-er-a",
+		"gem": "Gem-a",
+		"ghost-ish": "Ghos-ta-ish-a",
+		"heart": "Hear-ta",
+		"leaf-clover4": "Leaf-a Clo-ver-a 4",
+		"leaf-clover8": "Leaf-a Clo-ver-a 8",
+		"oval": "Oval-a",
+		"pentagon": "Pen-ta-gon-a",
+		"pill": "Pil-la",
+		"pixel-circle": "Pix-el-a Cir-cle",
+		"pixel-triangle": "Pix-el-a Trian-gle",
+		"puffy-diamond": "Puf-fy Dia-mond-a",
+		"puffy": "Puf-fy",
+		"semicircle": "Semi-cir-cle",
+		"sided-cookie12": "12-si-ded-a Coo-kie",
+		"sided-cookie4": "4-si-ded-a Coo-kie",
+		"sided-cookie6": "6-si-ded-a Coo-kie",
+		"sided-cookie7": "7-si-ded-a Coo-kie",
+		"sided-cookie9": "9-si-ded-a Coo-kie",
+		"slanted": "Slan-ted-a",
+		"soft-boom": "Sof-ta Boom-a",
+		"soft-burst": "Sof-ta Bur-sta",
+		"square": "Squa-re",
+		"sunny": "Sun-ny",
+		"triangle": "Trian-gle",
+		"very-sunny": "Ve-ry Sun-ny",
+		"noShape": "No-a sha-pe"
+	},
+	"developerMode": "Devel-o-per-a mo-de"
+}

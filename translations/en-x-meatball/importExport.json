@@ -1,0 +1,36 @@
+{
+	"header": "Impor-ta / Expor-ta",
+	"importHeader": "Impor-ta",
+	"thirdPartyHeader": "Third-a par-ty integra-tions-a",
+	"exportHeader": "Expor-ta",
+	"dbExport": {
+		"title": "Expor-ta your-a da-ta",
+		"desc": "Back-up-a your-a cur-ren-ta da-ta to a fi-le you can-a sto-re some-where-a else-a"
+	},
+	"dbImportDesc": "War-ning-a! It-a will-a over-ri-de any-a exis-ting-a da-ta",
+	"dbImport": "Impor-ta your-a da-ta",
+	"dbImportOld": {
+		"title": "Impor-ta your-a da-ta from-a an old-a versio-ne of Ampersand-a",
+		"desc": "For-a back-up-a fi-les-a made-a with-a Ampersand-a < 0.2.0",
+		"note": "Old-a versio-nes-a of Ampersand-a used-a a fi-le for-mat-a (ampdb) that-a is-a now-a out-da-ted-a. If-a you're-a kee-ping-a old-a back-ups-a, ma-ke sure-a to impor-ta them-a now-a and-a re-expor-ta them-a, as-a this-a op-tion-a will-a be remo-ved-a in a few-a versio-nes' ti-me."
+	},
+	"pkImport": "Impor-ta your-a da-ta from-a a PluralKit-a expor-ta",
+	"ocImport": "Impor-ta your-a da-ta from-a an Octocon-a expor-ta",
+	"tuImport": "Impor-ta your-a da-ta from-a a Tupperbox-a expor-ta",
+	"spImport": "Impor-ta your-a da-ta from-a a Sim-ply Plural-a expor-ta",
+	"status": {
+		"imported": "The back-up-a has-a been-a impor-ted-a. Plea-se restar-ta the app-a.",
+		"importedSp": "The Sim-ply Plural-a expor-ta has-a been-a impor-ted-a. Plea-se restar-ta the app-a.",
+		"importedOc": "The Octocon-a expor-ta has-a been-a impor-ted-a. Plea-se restar-ta the app-a.",
+		"importedPk": "The PluralKit-a expor-ta has-a been-a impor-ted-a. Plea-se restar-ta the app-a.",
+		"importedTu": "The Tupperbox-a expor-ta has-a been-a impor-ted-a. Plea-se restar-ta the app-a.",
+		"exportedApp": "The back-up-a has-a been-a expor-ted-a to the loca-tion-a you cho-se.",
+		"exportedAppIos": "The back-up-a has-a been-a expor-ted-a to the Ampersand-a fol-der-a on the Fi-les-a app-a.",
+		"errorExport": "Error-a whi-le expor-ting-a the back-up-a.",
+		"error": "Error-a whi-le impor-ting-a the back-up-a.",
+		"errorOc": "Error-a whi-le impor-ting-a the Octocon-a expor-ta.",
+		"errorSp": "Error-a whi-le impor-ting-a the Sim-ply Plural-a expor-ta.",
+		"errorPk": "Error-a whi-le impor-ting-a the PluralKit-a expor-ta.",
+		"errorTu": "Error-a whi-le impor-ting-a the Tupperbox-a expor-ta."
+	}
+}

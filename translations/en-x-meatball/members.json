@@ -1,0 +1,49 @@
+{
+	"header": "Mem-bers-a",
+	"searchPlaceholder": "Search-a mem-bers-a...",
+	"select": "Selec-ta a mem-ber-a",
+	"deletedMember": "Dele-ted-a mem-ber-a",
+	"deletedCustomFront": "Dele-ted-a cus-tom fron-ta",
+	"actions": {
+		"addToFront": "Add-a to fron-ta",
+		"setMainFronter": "Set-a as-a main-a fron-ter-a",
+		"unsetMainFronter": "Un-set-a main-a fron-ter-a",
+		"setSoleFronter": "Set-a as-a fron-ta",
+		"removeFromFront": "Remo-ve from-a fron-ta"
+	},
+	"toasts": {
+		"addToFront": "Mem-ber-a add-ed-a to fron-ta",
+		"setMainFronter": "Mem-ber-a set-a to main-a fron-ter-a",
+		"unsetMainFronter": "Mem-ber-a un-set-a as-a main-a fron-ter-a",
+		"setSoleFronter": "Mem-ber-a set-a as-a so-le fron-ter-a",
+		"removeFromFront": "Mem-ber-a remo-ved-a from-a fron-ta"
+	},
+	"edit": {
+		"header": "Mem-ber-a",
+		"headerAdd": "Add-a mem-ber-a",
+		"headerEdit": "Edi-ta mem-ber-a",
+		"name": "Name-a",
+		"pronouns": "Pro-noun-s-a",
+		"role": "Ro-le",
+		"color": "Prefer-red-a color-a",
+		"imageClip": "Ava-tar sha-pe",
+		"customFieldsAdd": "Add-a cus-tom field-s-a",
+		"tags": "Edi-ta tag-s-a",
+		"description": "Descrip-tion-a",
+		"noDescription": "No-a descrip-tion-a",
+		"system": "Edi-ta mem-ber-ship-a sys-tem-a",
+		"isPinned": "Pin-a mem-ber-a",
+		"customFront": "Cus-tom fron-ta",
+		"archived": "Archi-ved-a",
+		"showFrontingEntries": "Show-a fron-ting-a en-tries-a",
+		"showBoardEntries": "Show-a board-a messa-ges-a",
+		"showJournalEntries": "Show-a jour-nal-a pos-ts-a",
+		"memberID": "Mem-ber-a ID: {{memberID}}",
+		"dateCreated": "Da-te crea-ted-a: {{dateCreated}}",
+		"memberIDcopiedToClipboard": "Mem-ber-a ID in men-tion-a for-mat-a copied-a to clip-board-a!",
+		"delete": {
+			"title": "Dele-te mem-ber-a",
+			"confirm": "Are-a you sure-a you wan-ta to dele-te this-a mem-ber-a?"
+		}
+	}
+}

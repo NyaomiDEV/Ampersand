@@ -1,0 +1,34 @@
+{
+	"header": "Fron-ta his-tory-a",
+	"searchPlaceholder": "Search-a the fron-ting-a his-tory-a...",
+	"currentlyFronting": "Cur-ren-tly fron-ting-a",
+	"wasFronting": "Was-a still-a fron-ting-a",
+	"frontedThatDay": "Fron-ted-a that-a day-a",
+	"influencing": "Influen-cing-a {{influencedMember}}",
+	"edit": {
+		"header": "Edi-ta fron-ting-a en-try-a",
+		"member": "Edi-ta fron-ting-a mem-ber-a",
+		"customStatus": "Cus-tom sta-tus-a",
+		"comment": "Com-men-ta",
+		"presence": {
+			"historyTitle": "Presen-ce his-tory-a",
+			"lastPresence": "Las-ta it-a was-a {{presence}} / 5 star-s-a",
+			"addTitle": "How-a presen-ta are-a you in a sca-le from-a 0 to 10?",
+			"confirmButton": "Confir-ma",
+			"date": "Da-te"
+		},
+		"influencing": {
+			"select": "Selec-ta a mem-ber-a to influen-ce",
+			"currentlyInfluencing": "Cur-ren-tly influen-cing-a"
+		},
+		"startTime": "Star-ta ti-me",
+		"endTime": "End-a ti-me",
+		"removeFromFront": "Remo-ve from-a fron-ta",
+		"isMainFronter": "Main-a fron-ter-a",
+		"isLocked": "Loc-ka fron-ter-a",
+		"delete": {
+			"title": "Dele-te fron-ting-a en-try-a",
+			"confirm": "Are-a you sure-a you wan-ta to dele-te this-a fron-ting-a en-try-a?"
+		}
+	}
+}

@@ -1,0 +1,17 @@
+{
+	"header": "Asset-a mana-ger-a",
+	"searchPlaceholder": "Search-a asset-s-a...",
+	"add": {
+		"header": "Add-a asset-a",
+		"attachment": "Add-a attach-men-ta"
+	},
+	"edit": {
+		"header": "Edi-ta asset-a",
+		"friendlyName": "Edi-ta name-a",
+		"attachment": "Repla-ce attach-men-ta",
+		"delete": {
+			"title": "Dele-te asset-a",
+			"confirm": "Are-a you sure-a you wan-ta to dele-te this-a asset-a?"
+		}
+	}
+}
