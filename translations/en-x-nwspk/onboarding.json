@@ -1,0 +1,39 @@
+{
+	"welcomeScreen": {
+		"header": "Welcome to Ampersand!",
+		"start": "Start journey!"
+	},
+	"importScreen": {
+		"header": "In-port data?",
+		"prevInstall": "Yes, old install",
+		"simplyPlural": "Yes, Simply Plural",
+		"octocon": "Yes, Octocon",
+		"pluralKit": "Yes, PluralKit",
+		"tupperbox": "Yes, Tupperbox",
+		"startFromScratch": "No, start new",
+		"pleaseWait": "Wait for in-port",
+		"error": "Error in-porting. Select other.",
+		"errorSp": "Error in-porting Simply Plural. Select other.",
+		"errorOc": "Error in-porting Octocon. Select other.",
+		"errorPk": "Error in-porting PluralKit. Select other.",
+		"errorTu": "Error in-porting Tupperbox. Select other.",
+		"allowRemoteContent": {
+			"header": "Allow Internet?",
+			"desc": "Ampersand is off-line. Needs consent for Internet to download avatars. Can un-allow in Security later."
+		}
+	},
+	"systemInfo": {
+		"header": "Tell about system!",
+		"name": "Collective name",
+		"description": "About all of you..."
+	},
+	"memberInfo": {
+		"header": "Tell about you!",
+		"description": "About yourself...",
+		"invitation": "Keep editing after onboarding!"
+	},
+	"endScreen": {
+		"header": "Thanks for Ampersand!",
+		"startButton": "Start!"
+	}
+}

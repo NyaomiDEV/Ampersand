@@ -1,0 +1,9 @@
+{
+	"header": "About",
+	"version": "Version {{version}}",
+	"ciVersion": "CI version",
+	"madein": "Goodmade in Italy",
+	"privacyPolicy": "Privacy Policy",
+	"updateAvailable": "Plus-update: {{newVersion}}",
+	"credits": "Credits"
+}

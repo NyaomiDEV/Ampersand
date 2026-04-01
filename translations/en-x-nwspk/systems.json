@@ -1,0 +1,29 @@
+{
+	"header": "Systems",
+	"searchPlaceholder": "Search systems...",
+	"select": "Select system",
+	"edit": {
+		"header": "System",
+		"headerAdd": "Add system",
+		"headerEdit": "Edit system",
+		"name": "System name",
+		"description": "System description",
+		"noDescription": "Un-description",
+		"color": "Color",
+		"imageClip": "Avatar shape",
+		"memberCount": "Member count",
+		"memberCountText": "{{totalMemberCount}} members, {{memberCount}} active, {{archivedMemberCount}} archived",
+		"customFrontCountText": "{{totalCustomFrontCount}} custom fronts, {{customFrontCount}} active, {{archivedCustomFrontCount}} archived",
+		"tapToShow": "Tap to show",
+		"showMembers": "Show members in system",
+		"parent": "Parent system",
+		"isPinned": "Pin system",
+		"archived": "Archived",
+		"delete": {
+			"title": "Un-system",
+			"confirm": "Are you sure you want to un-system this?"
+		},
+		"systemID": "System ID: {{systemID}}",
+		"systemIDcopiedToClipboard": "System ID copied!"
+	}
+}

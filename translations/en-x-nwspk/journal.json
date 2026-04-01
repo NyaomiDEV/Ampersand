@@ -1,0 +1,29 @@
+{
+	"header": "Journal",
+	"searchPlaceholder": "Search journal...",
+	"contentWarning": "Ungood content inside",
+	"private": "Private post",
+	"pinnedPosts": "Pinned posts",
+	"alertSubheader": "Do you really want to read this?",
+	"edit": {
+		"header": "Post",
+		"headerAdd": "Add new post",
+		"headerEdit": "Edit post",
+		"headerOptions": "Post options",
+		"author": "Edit author",
+		"date": "Edit date",
+		"title": "Title",
+		"subtitle": "Subtitle",
+		"body": "Post body",
+		"tags": "Tags",
+		"isPinned": "Pinned post",
+		"isPrivate": "Private post",
+		"contentWarning": "Ungood warning",
+		"postID": "Post ID: {{postID}}",
+		"postIDcopiedToClipboard": "Post ID copied!",
+		"delete": {
+			"title": "Un-post",
+			"confirm": "Are you sure you want to un-post this?"
+		}
+	}
+}

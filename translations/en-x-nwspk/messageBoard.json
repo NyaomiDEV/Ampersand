@@ -1,0 +1,45 @@
+{
+	"header": "Message board",
+	"searchPlaceholder": "Search messages...",
+	"polls": {
+		"boardMessageContainsPoll": "Contains poll",
+		"collapsePoll": "Un-show poll",
+		"voteCast": {
+			"voter": "Select voter",
+			"reason": "Tell reason",
+			"reasonHint": "Reason",
+			"retractConfirmation": "Are you sure you want to un-vote?"
+		},
+		"resultsHeader": "Vote results",
+		"resultsButton": "Show poll results",
+		"choice": {
+			"desc_one": "{{count}} voter",
+			"desc_other": "{{count}} voters"
+		},
+		"defaultPollValues": {
+			"yes": "Good",
+			"no": "Ungood",
+			"veto": "Veto",
+			"abstain": "Abstain"
+		}
+	},
+	"edit": {
+		"header": "Edit message",
+		"member": "Edit author",
+		"date": "Edit date",
+		"title": "Title",
+		"body": "Message body",
+		"isPinned": "Pin message",
+		"isArchived": "Archive message",
+		"attachPoll": "Attach poll",
+		"deleteAttachedPoll": "Un-poll",
+		"pollIsMultipleChoice": "Allow plus-choices",
+		"pollAddNewChoice": "Add choice",
+		"pollChoice": "Choice description",
+		"pollEditWarning": "Changing details will un-vote all!",
+		"delete": {
+			"title": "Un-message",
+			"confirm": "Are you sure you want to un-message this?"
+		}
+	}
+}

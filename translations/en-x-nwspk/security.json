@@ -1,0 +1,29 @@
+{
+	"header": "Security",
+	"applock": {
+		"title": "App lock",
+		"desc": "Lock app with password"
+	},
+	"biometrics": {
+		"title": "Use biometrics",
+		"desc": "Un-lock via finger or face"
+	},
+	"allowRemoteContent": {
+		"title": "Allow remote content",
+		"desc": "Allow Internet for remote content."
+	},
+	"passwordAlert": {
+		"header": "Warning",
+		"text": "Proceed? Note password outside Ampersand. Cannot un-lock if lost. Out-port data first!"
+	},
+	"editPassword": "Change password",
+	"inputPassword": {
+		"titleAdd": "Enter new password",
+		"titleReenter": "Re-enter password",
+		"titleModifyOld": "Enter old password",
+		"titleModifyNew": "Enter new password",
+		"titleDisable": "Enter password",
+		"hint": "Password"
+	},
+	"useIPC": "Send events to other apps"
+}

@@ -1,0 +1,50 @@
+{
+	"remindersAreNotFinished": {
+		"header": "Reminders unfinish!",
+		"content": "Now-time, all-this be only UI-look! You can-save reminders soon-time but mind-keep this no-link to any tell-system! On Android you can-fix stuff for work-time when system-base finish, but mind-keep this no-work on Web-side, so no-joy for computer-reminders. Plus if you be code-worker, help-us!"
+	},
+	"header": "Reminders",
+	"eventBasedHeader": "Event-base reminders",
+	"periodicHeader": "Time-base reminders",
+	"edit": {
+		"header": "Fix-change reminder",
+		"name": "Reminder name",
+		"title": "Reminder tell-head",
+		"message": "Reminder tell-word",
+		"type": {
+			"title": "Reminder sort",
+			"eventBased": "Event-base",
+			"periodic": "Time-base"
+		},
+		"eventBased": {
+			"title": "Start-event",
+			"addedToFront": "After member plus-front",
+			"removedFromFront": "After member minus-front",
+			"memberFilterQuery": "Member sort-word",
+			"timing": "Time-fix",
+			"delay": {
+				"title": "Wait-time",
+				"desc": "After {{delay}}"
+			}
+		},
+		"periodic": {
+			"title": "Time-gap",
+			"timeOfDay": {
+				"title": "Day-time",
+				"desc": "At {{timeOfDay}}"
+			},
+			"dayOfMonth": {
+				"title": "Month-day",
+				"desc_undefined": "Repeat all-days",
+				"desc_ordinal_one": "Repeat every {{count}}st month-day",
+				"desc_ordinal_two": "Repeat every {{count}}nd month-day",
+				"desc_ordinal_few": "Repeat every {{count}}rd month-day",
+				"desc_ordinal_other": "Repeat every {{count}}th month-day"
+			}
+		},
+		"delete": {
+			"title": "Un-make reminder",
+			"confirm": "You want un-make this reminder?"
+		}
+	}
+}

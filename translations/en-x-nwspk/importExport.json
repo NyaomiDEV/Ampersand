@@ -1,0 +1,36 @@
+{
+	"header": "Import / Export",
+	"importHeader": "In-port",
+	"thirdPartyHeader": "Other integrations",
+	"exportHeader": "Out-port",
+	"dbExport": {
+		"title": "Out-port data",
+		"desc": "Backup data to file"
+	},
+	"dbImportDesc": "Warning! Will over-write data",
+	"dbImport": "In-port data",
+	"dbImportOld": {
+		"title": "In-port data from old Ampersand",
+		"desc": "For backup files < 0.2.0",
+		"note": "Old files are doubleplus-outdated. In-port now and re-out-port."
+	},
+	"pkImport": "In-port PluralKit",
+	"ocImport": "In-port Octocon",
+	"tuImport": "In-port Tupperbox",
+	"spImport": "In-port Simply Plural",
+	"status": {
+		"imported": "Backup in-ported. Restart app.",
+		"importedSp": "Simply Plural in-ported. Restart app.",
+		"importedOc": "Octocon in-ported. Restart app.",
+		"importedPk": "PluralKit in-ported. Restart app.",
+		"importedTu": "Tupperbox in-ported. Restart app.",
+		"exportedApp": "Backup out-ported.",
+		"exportedAppIos": "Backup out-ported to Files app.",
+		"errorExport": "Error out-porting.",
+		"error": "Error in-porting.",
+		"errorOc": "Error in-porting Octocon.",
+		"errorSp": "Error in-porting Simply Plural.",
+		"errorPk": "Error in-porting PluralKit.",
+		"errorTu": "Error in-porting Tupperbox."
+	}
+}

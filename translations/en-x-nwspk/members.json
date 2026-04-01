@@ -1,0 +1,49 @@
+{
+	"header": "Members",
+	"searchPlaceholder": "Search members...",
+	"select": "Select member",
+	"deletedMember": "Un-member",
+	"deletedCustomFront": "Un-front",
+	"actions": {
+		"addToFront": "Add to front",
+		"setMainFronter": "Set main fronter",
+		"unsetMainFronter": "Un-set main fronter",
+		"setSoleFronter": "Set as front",
+		"removeFromFront": "Un-front"
+	},
+	"toasts": {
+		"addToFront": "Member added to front",
+		"setMainFronter": "Member set to main",
+		"unsetMainFronter": "Member un-set from main",
+		"setSoleFronter": "Member set as sole front",
+		"removeFromFront": "Member un-fronted"
+	},
+	"edit": {
+		"header": "Member",
+		"headerAdd": "Add member",
+		"headerEdit": "Edit member",
+		"name": "Name",
+		"pronouns": "Pronouns",
+		"role": "Role",
+		"color": "Color",
+		"imageClip": "Avatar shape",
+		"customFieldsAdd": "Add custom fields",
+		"tags": "Edit tags",
+		"description": "Description",
+		"noDescription": "Un-description",
+		"system": "Edit membership system",
+		"isPinned": "Pin member",
+		"customFront": "Custom front",
+		"archived": "Archived",
+		"showFrontingEntries": "Show fronting entries",
+		"showBoardEntries": "Show board messages",
+		"showJournalEntries": "Show journal posts",
+		"memberID": "Member ID: {{memberID}}",
+		"dateCreated": "Date created: {{dateCreated}}",
+		"memberIDcopiedToClipboard": "Member ID copied!",
+		"delete": {
+			"title": "Un-member",
+			"confirm": "Are you sure you want to un-member this?"
+		}
+	}
+}
