@@ -1,0 +1,18 @@
+{
+	"header": "Custom marks",
+	"select": "Pick yer marks",
+	"searchPlaceholder": "Search the marks...",
+	"edit": {
+		"header": "Edit mark",
+		"headerAdd": "Add a mark",
+		"name": "Mark name",
+		"default": {
+			"title": "Toggle default",
+			"desc": "Default marks will always show when editin' a matey"
+		},
+		"delete": {
+			"title": "Burn the mark",
+			"confirm": "Are ye sure ye want to burn this mark?"
+		}
+	}
+}

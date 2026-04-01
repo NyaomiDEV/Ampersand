@@ -1,0 +1,39 @@
+{
+	"welcomeScreen": {
+		"header": "Welcome to Ampersand, matey!",
+		"start": "Start yer voyage!"
+	},
+	"importScreen": {
+		"header": "Would ye like to bring yer charts aboard?",
+		"prevInstall": "Aye, from a previous voyage",
+		"simplyPlural": "Aye, Simply Plural",
+		"octocon": "Aye, Octocon",
+		"pluralKit": "Aye, PluralKit",
+		"tupperbox": "Aye, Tupperbox",
+		"startFromScratch": "Nay, I'll start fresh",
+		"pleaseWait": "Hold fast while we bring yer charts aboard",
+		"error": "Error bringin' the backup aboard. Pick another option.",
+		"errorSp": "Error bringin' the Simply Plural charts aboard. Pick another option.",
+		"errorOc": "Error bringin' the Octocon charts aboard. Pick another option.",
+		"errorPk": "Error bringin' the PluralKit charts aboard. Pick another option.",
+		"errorTu": "Error bringin' the Tupperbox charts aboard. Pick another option.",
+		"allowRemoteContent": {
+			"header": "Allow connection to the world?",
+			"desc": "Ampersand stays in the cove by default, so it needs yer word to connect to the world. It'll connect to fetch yer crew's avatars and banners now. Ye can turn this off later in Options > Security."
+		}
+	},
+	"systemInfo": {
+		"header": "Tell us about yer fleet!",
+		"name": "Fleet name",
+		"description": "A bit about all o' ye..."
+	},
+	"memberInfo": {
+		"header": "Tell us more about yerself!",
+		"description": "A bit about yerself...",
+		"invitation": "Keep fixin' yer profile card after the voyage starts!"
+	},
+	"endScreen": {
+		"header": "Fair winds for choosin' Ampersand!",
+		"startButton": "Let's set sail!"
+	}
+}

@@ -1,0 +1,17 @@
+{
+	"header": "Loot manager",
+	"searchPlaceholder": "Search the loot...",
+	"add": {
+		"header": "Add loot",
+		"attachment": "Add attachment"
+	},
+	"edit": {
+		"header": "Edit loot",
+		"friendlyName": "Change the name",
+		"attachment": "Swap the attachment",
+		"delete": {
+			"title": "Toss loot overboard",
+			"confirm": "Are ye sure ye want to toss this loot?"
+		}
+	}
+}

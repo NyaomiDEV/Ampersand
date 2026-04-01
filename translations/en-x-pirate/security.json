@@ -1,0 +1,29 @@
+{
+	"header": "Security",
+	"applock": {
+		"title": "Ship lock",
+		"desc": "Lock the vessel with a secret word"
+	},
+	"biometrics": {
+		"title": "Use yer eye or thumb",
+		"desc": "Unlock via yer fingerprint or face"
+	},
+	"allowRemoteContent": {
+		"title": "Allow remote cargo",
+		"desc": "Allow Ampersand to use the world's connection to fetch cargo, like images and avatars."
+	},
+	"passwordAlert": {
+		"header": "Avast!",
+		"text": "Are ye sure? Write down yer secret word somewhere safe outside the ship, for if ye lose it, yer charts be lost forever! Export yer data before settin' one!"
+	},
+	"editPassword": "Change the secret word",
+	"inputPassword": {
+		"titleAdd": "Enter yer new secret word",
+		"titleReenter": "Enter it again",
+		"titleModifyOld": "Enter yer old secret word",
+		"titleModifyNew": "Enter yer new secret word",
+		"titleDisable": "Enter yer secret word",
+		"hint": "Secret word"
+	},
+	"useIPC": "Send signals to other ships"
+}

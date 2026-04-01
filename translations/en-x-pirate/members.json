@@ -1,0 +1,49 @@
+{
+	"header": "The Crew",
+	"searchPlaceholder": "Search the crew...",
+	"select": "Pick a matey",
+	"deletedMember": "Matey sent to Davy Jones",
+	"deletedCustomFront": "Custom front sent to Davy Jones",
+	"actions": {
+		"addToFront": "Add to the helm",
+		"setMainFronter": "Set as main matey at the helm",
+		"unsetMainFronter": "Unset main matey",
+		"setSoleFronter": "Set as the only one at the helm",
+		"removeFromFront": "Remove from the helm"
+	},
+	"toasts": {
+		"addToFront": "Matey added to the helm",
+		"setMainFronter": "Matey set as main at the helm",
+		"unsetMainFronter": "Matey no longer main at the helm",
+		"setSoleFronter": "Matey set as sole at the helm",
+		"removeFromFront": "Matey removed from the helm"
+	},
+	"edit": {
+		"header": "Matey",
+		"headerAdd": "Add a matey",
+		"headerEdit": "Edit matey",
+		"name": "Name",
+		"pronouns": "Pronouns",
+		"role": "Role",
+		"color": "Preferred color",
+		"imageClip": "Avatar shape",
+		"customFieldsAdd": "Add custom marks",
+		"tags": "Edit tags",
+		"description": "Description",
+		"noDescription": "No description",
+		"system": "Edit fleet membership",
+		"isPinned": "Pin matey",
+		"customFront": "Custom front",
+		"archived": "In the hold",
+		"showFrontingEntries": "Show helm entries",
+		"showBoardEntries": "Show board messages",
+		"showJournalEntries": "Show log entries",
+		"memberID": "Matey ID: {{memberID}}",
+		"dateCreated": "Date they joined: {{dateCreated}}",
+		"memberIDcopiedToClipboard": "Matey ID copied to the clipboard!",
+		"delete": {
+			"title": "Walk the plank",
+			"confirm": "Are ye sure ye want this matey to walk the plank?"
+		}
+	}
+}

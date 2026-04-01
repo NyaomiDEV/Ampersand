@@ -1,0 +1,20 @@
+{
+	"header": "Resources",
+	"ampersand": "On Ampersand",
+	"website": {
+		"title": "The Cove",
+		"desc": "Get the latest version and follow our charts."
+	},
+	"blog": {
+		"title": "The Log",
+		"desc": "Get the latest news and follow our ramblin's."
+	},
+	"wiki": {
+		"title": "The Wiki",
+		"desc": "Get help on sailin' this vessel."
+	},
+	"repository": {
+		"title": "The Shipyard",
+		"desc": "Help build the ship and report leaks."
+	}
+}

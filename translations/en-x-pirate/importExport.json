@@ -1,0 +1,36 @@
+{
+	"header": "Import / Export",
+	"importHeader": "Bring aboard",
+	"thirdPartyHeader": "Other fleets",
+	"exportHeader": "Send away",
+	"dbExport": {
+		"title": "Export yer charts",
+		"desc": "Backup yer current charts to a file ye can hide elsewhere"
+	},
+	"dbImportDesc": "Avast! This will sink any existin' charts!",
+	"dbImport": "Bring yer charts aboard",
+	"dbImportOld": {
+		"title": "Bring charts from an old version o' Ampersand",
+		"desc": "For backup files made with Ampersand < 0.2.0",
+		"note": "Old versions used a format (ampdb) that be outdated. If ye have old backups, bring 'em aboard now and re-export 'em, or they'll be lost to the depths soon."
+	},
+	"pkImport": "Bring charts from a PluralKit export",
+	"ocImport": "Bring charts from an Octocon export",
+	"tuImport": "Bring charts from a Tupperbox export",
+	"spImport": "Bring charts from a Simply Plural export",
+	"status": {
+		"imported": "The backup be aboard. Restart the ship!",
+		"importedSp": "The Simply Plural charts be aboard. Restart the ship!",
+		"importedOc": "The Octocon charts be aboard. Restart the ship!",
+		"importedPk": "The PluralKit charts be aboard. Restart the ship!",
+		"importedTu": "The Tupperbox charts be aboard. Restart the ship!",
+		"exportedApp": "The backup has been sent to the cove ye chose.",
+		"exportedAppIos": "The backup has been sent to the Ampersand folder in the Files app.",
+		"errorExport": "Error while sendin' the backup away.",
+		"error": "Error while bringin' the backup aboard.",
+		"errorOc": "Error while bringin' the Octocon charts aboard.",
+		"errorSp": "Error while bringin' the Simply Plural charts aboard.",
+		"errorPk": "Error while bringin' the PluralKit charts aboard.",
+		"errorTu": "Error while bringin' the Tupperbox charts aboard."
+	}
+}

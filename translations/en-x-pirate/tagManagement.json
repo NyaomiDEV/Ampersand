@@ -1,0 +1,41 @@
+{
+	"header": "Tag management",
+	"searchPlaceholder": "Search for tags...",
+	"select": "Pick some tags",
+	"selector": {
+		"member": "Crew tags",
+		"journal": "Log tags"
+	},
+	"edit": {
+		"header": {
+			"member": "Edit crew tag",
+			"journal": "Edit log tag"
+		},
+		"name": "Tag name",
+		"description": "Tag description",
+		"color": "Tag color",
+		"viewInLists": "See in lists",
+		"type": {
+			"header": "Tag type",
+			"member": "Matey",
+			"journal": "Log",
+			"desc": "Note: ye can only set the type when ye first forge the tag!"
+		},
+		"members": {
+			"title": "Pick mateys usin' this tag",
+			"desc_one": "{{count}} matey uses this tag",
+			"desc_other": "{{count}} mateys use this tag"
+		},
+		"showJournal": {
+			"title": "Show log entries with this tag",
+			"desc_one": "{{count}} log entry has this tag",
+			"desc_other": "{{count}} log entries have this tag"
+		},
+		"delete": {
+			"title": "Burn the tag",
+			"confirm": "Are ye sure ye want to burn this tag?"
+		},
+		"tagID": "Tag ID: {{tagID}}",
+		"tagIDCopiedToClipboard": "Tag ID copied to the clipboard!"
+	}
+}

@@ -1,0 +1,29 @@
+{
+	"header": "Ship's Log",
+	"searchPlaceholder": "Search the log...",
+	"contentWarning": "This entry has sensitive cargo inside",
+	"private": "This entry be private",
+	"pinnedPosts": "Pinned entries",
+	"alertSubheader": "Do ye really want to read this entry, matey?",
+	"edit": {
+		"header": "Log Entry",
+		"headerAdd": "Add new entry",
+		"headerEdit": "Edit entry",
+		"headerOptions": "Entry options",
+		"author": "Edit author",
+		"date": "Edit date",
+		"title": "Title",
+		"subtitle": "Subtitle",
+		"body": "Log body",
+		"tags": "Tags",
+		"isPinned": "Pinned entry",
+		"isPrivate": "Private entry",
+		"contentWarning": "Content warning",
+		"postID": "Entry ID: {{postID}}",
+		"postIDcopiedToClipboard": "Entry ID copied to the clipboard!",
+		"delete": {
+			"title": "Burn the log entry",
+			"confirm": "Are ye sure ye want to burn this entry?"
+		}
+	}
+}

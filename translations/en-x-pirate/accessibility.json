@@ -1,0 +1,57 @@
+{
+	"header": "Navigatin' the Seas",
+	"highLegibilityFont": {
+		"title": "Clear-eye font",
+		"desc": "Use a font for sharp eyes instead o' the standard scrawl"
+	},
+	"highLegibilityFontType": {
+		"title": "Clear-eye font family",
+		"atkinson": "Atkinson Hyperlegible",
+		"opendyslexic": "OpenDyslexic",
+		"lexend": "Lexend",
+		"comicrelief": "Comic Relief",
+		"system-font": "Ship's Font"
+	},
+	"uiVariant": {
+		"title": "UI variant",
+		"auto": "As the wind blows",
+		"light": "Daylight",
+		"dark": "Midnight"
+	},
+	"themeIsAmoled": {
+		"title": "Black Hole mode",
+		"desc": "Use a total black background when sailin' at night. Keeps yer glass from wearin' out."
+	},
+	"themeIsVibrant": {
+		"title": "Vibrant colors",
+		"desc": "Bring more color to the deck."
+	},
+	"colorIndicatorPosition": {
+		"title": "Color mark position",
+		"avatar": "Avatar outline",
+		"listItem": "List item border"
+	},
+	"useAccentColor": {
+		"title": "Accent color",
+		"desc": "Use a custom color for yer flag"
+	},
+	"accentColor": {
+		"title": "Pick yer accent color"
+	},
+	"reducedMotion": {
+		"title": "Calm seas",
+		"desc": "Stop the swayin' animations"
+	},
+	"disableCovers": {
+		"title": "Hide the covers"
+	},
+	"contrastLevel": {
+		"title": "Contrast level"
+	},
+	"fontScale": {
+		"title": "Size o' the scrawl"
+	},
+	"longPressDuration": {
+		"title": "Long press duration"
+	}
+}

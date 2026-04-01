@@ -1,0 +1,15 @@
+{
+	"header": "The Cabin",
+	"header_salute": "Ahoy!",
+	"header_mainfronter": "Ahoy, {{fronterName}}!",
+	"systemDescription": "Fleet description",
+	"nowFronting": "At the helm",
+	"fronterInfluencing": "Influencin' {{influencedMember}}",
+	"addToFront": "Add to the helm",
+	"recentFrontingHistory": "Recently stepped down",
+	"messageBoard": {
+		"header": "Message board",
+		"add": "Pin to the board",
+		"view": "See more"
+	}
+}

@@ -1,0 +1,45 @@
+{
+	"header": "Message board",
+	"searchPlaceholder": "Search for messages...",
+	"polls": {
+		"boardMessageContainsPoll": "Contains a vote",
+		"collapsePoll": "Hide the vote",
+		"voteCast": {
+			"voter": "Pick the voter",
+			"reason": "State yer reason",
+			"reasonHint": "Reason",
+			"retractConfirmation": "Are ye sure ye want to take back yer vote?"
+		},
+		"resultsHeader": "Vote results",
+		"resultsButton": "Show the results",
+		"choice": {
+			"desc_one": "{{count}} voter",
+			"desc_other": "{{count}} voters"
+		},
+		"defaultPollValues": {
+			"yes": "Aye",
+			"no": "Nay",
+			"veto": "Veto",
+			"abstain": "Abstain"
+		}
+	},
+	"edit": {
+		"header": "Edit message",
+		"member": "Edit message author",
+		"date": "Edit date",
+		"title": "Title",
+		"body": "Message body",
+		"isPinned": "Pin message",
+		"isArchived": "Archive message",
+		"attachPoll": "Start a vote on this message",
+		"deleteAttachedPoll": "Sink the vote",
+		"pollIsMultipleChoice": "Allow many choices",
+		"pollAddNewChoice": "Add a new choice to the vote",
+		"pollChoice": "Choice description",
+		"pollEditWarning": "Changin' the vote details will reset all the ballots!",
+		"delete": {
+			"title": "Burn the message",
+			"confirm": "Are ye sure ye want to burn this message?"
+		}
+	}
+}

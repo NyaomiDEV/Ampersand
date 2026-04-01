@@ -1,0 +1,29 @@
+{
+	"header": "Fleets",
+	"searchPlaceholder": "Search fleets...",
+	"select": "Pick a fleet",
+	"edit": {
+		"header": "Fleet",
+		"headerAdd": "Add a fleet",
+		"headerEdit": "Edit fleet",
+		"name": "Fleet name",
+		"description": "Fleet description",
+		"noDescription": "No description",
+		"color": "Color",
+		"imageClip": "Avatar shape",
+		"memberCount": "Crew count",
+		"memberCountText": "{{totalMemberCount}} matey(s), {{memberCount}} active, {{archivedMemberCount}} in the hold",
+		"customFrontCountText": "{{totalCustomFrontCount}} custom front(s), {{customFrontCount}} active, {{archivedCustomFrontCount}} in the hold",
+		"tapToShow": "Tap to show",
+		"showMembers": "Show the crew in this fleet",
+		"parent": "Parent fleet",
+		"isPinned": "Pin fleet",
+		"archived": "In the hold",
+		"delete": {
+			"title": "Sink the fleet",
+			"confirm": "Are ye sure ye want to sink this fleet?"
+		},
+		"systemID": "Fleet ID: {{systemID}}",
+		"systemIDcopiedToClipboard": "Fleet ID copied to the clipboard!"
+	}
+}

@@ -1,0 +1,34 @@
+{
+	"header": "Log o' the helm",
+	"searchPlaceholder": "Search the log...",
+	"currentlyFronting": "Currently at the helm",
+	"wasFronting": "Was still at the helm",
+	"frontedThatDay": "Was at the helm that day",
+	"influencing": "Influencin' {{influencedMember}}",
+	"edit": {
+		"header": "Edit log entry",
+		"member": "Edit matey at the helm",
+		"customStatus": "Custom status",
+		"comment": "Scrawl a comment",
+		"presence": {
+			"historyTitle": "Presence log",
+			"lastPresence": "Last it was {{presence}} / 5 stars",
+			"addTitle": "How present be ye on a scale from 0 to 10?",
+			"confirmButton": "Aye!",
+			"date": "Date"
+		},
+		"influencing": {
+			"select": "Pick a matey to influence",
+			"currentlyInfluencing": "Currently influencin'"
+		},
+		"startTime": "Start o' the watch",
+		"endTime": "End o' the watch",
+		"removeFromFront": "Remove from the helm",
+		"isMainFronter": "Main matey at the helm",
+		"isLocked": "Lock the helm",
+		"delete": {
+			"title": "Burn the log entry",
+			"confirm": "Are ye sure ye want to burn this log entry?"
+		}
+	}
+}
