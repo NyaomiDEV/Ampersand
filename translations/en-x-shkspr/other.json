@@ -1,0 +1,99 @@
+{
+	"languageName": {
+		"local": "Shakespearean English",
+		"inEnglish": "Shakespearean English"
+	},
+	"genericDeleteDesc": "Thou shalt not be able to undo this deed!",
+	"addTimestamp": "Add a mark of time",
+	"memberMention": "Speak of a fellow",
+	"alerts": {
+		"ok": "Tis well",
+		"cancel": "Halt",
+		"clear": "Purge",
+		"yes": "Aye",
+		"no": "Nay"
+	},
+	"presence": {
+		"absent": "Away",
+		"heavilyDissociating": "Sorely adrift",
+		"dissociating": "Adrift",
+		"zonedOut": "Lost in thought",
+		"present": "Here",
+		"fullyGrounded": "Firmly planted"
+	},
+	"back": "Return",
+	"time": "Time",
+	"timeSizes": {
+		"years": {
+			"long": "years",
+			"short": "Y"
+		},
+		"months": {
+			"long": "months",
+			"short": "M"
+		},
+		"days": {
+			"long": "days",
+			"short": "D"
+		},
+		"weekdays": {
+			"monday": "Monday",
+			"tuesday": "Tuesday",
+			"wednesday": "Wednesday",
+			"thursday": "Thursday",
+			"friday": "Friday",
+			"saturday": "Saturday",
+			"sunday": "Sunday"
+		},
+		"hours": {
+			"long": "hours",
+			"short": "h"
+		},
+		"minutes": {
+			"long": "minutes",
+			"short": "m"
+		},
+		"seconds": {
+			"long": "seconds",
+			"short": "s"
+		}
+	},
+	"shapes": {
+		"arch": "Arch",
+		"arrow": "Arrow",
+		"boom": "Boom",
+		"bun": "Bun",
+		"burst": "Burst",
+		"clamshell": "Clamshell",
+		"diamond": "Diamond",
+		"fan": "Fan",
+		"flower": "Flower",
+		"gem": "Gem",
+		"ghost-ish": "Ghostly",
+		"heart": "Heart",
+		"leaf-clover4": "Four-leaf Clover",
+		"leaf-clover8": "Eight-leaf Clover",
+		"oval": "Oval",
+		"pentagon": "Pentagon",
+		"pill": "Pill",
+		"pixel-circle": "Pixel Circle",
+		"pixel-triangle": "Pixel Triangle",
+		"puffy-diamond": "Puffy Diamond",
+		"puffy": "Puffy",
+		"semicircle": "Semicircle",
+		"sided-cookie12": "12-sided Cake",
+		"sided-cookie4": "4-sided Cake",
+		"sided-cookie6": "6-sided Cake",
+		"sided-cookie7": "7-sided Cake",
+		"sided-cookie9": "9-sided Cake",
+		"slanted": "Slanted",
+		"soft-boom": "Soft Boom",
+		"soft-burst": "Soft Burst",
+		"square": "Square",
+		"sunny": "Sunny",
+		"triangle": "Triangle",
+		"very-sunny": "Very Sunny",
+		"noShape": "No shape"
+	},
+	"developerMode": "Master Scribe Mode"
+}

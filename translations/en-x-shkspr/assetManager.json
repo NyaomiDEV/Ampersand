@@ -1,0 +1,17 @@
+{
+	"header": "Keeper of Riches",
+	"searchPlaceholder": "Seek thy riches...",
+	"add": {
+		"header": "Bestow Riches",
+		"attachment": "Add an Annex"
+	},
+	"edit": {
+		"header": "Amend Riches",
+		"friendlyName": "Amend the Name",
+		"attachment": "Replace the Annex",
+		"delete": {
+			"title": "Banish Riches",
+			"confirm": "Art thou certain thou wouldst banish these riches?"
+		}
+	}
+}

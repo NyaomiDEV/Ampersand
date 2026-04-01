@@ -1,0 +1,18 @@
+{
+	"header": "Custom Scrolls",
+	"select": "Choose thy scrolls",
+	"searchPlaceholder": "Seek thy scrolls...",
+	"edit": {
+		"header": "Amend Scroll",
+		"headerAdd": "Bestow Scroll",
+		"name": "Name of the Scroll",
+		"default": {
+			"title": "Toggle Default",
+			"desc": "Default scrolls shall ever appear when amending a member"
+		},
+		"delete": {
+			"title": "Banish Scroll",
+			"confirm": "Art thou certain thou wouldst banish this scroll?"
+		}
+	}
+}

@@ -1,0 +1,29 @@
+{
+	"header": "Fellowships",
+	"searchPlaceholder": "Seek fellowships...",
+	"select": "Choose a fellowship",
+	"edit": {
+		"header": "Fellowship",
+		"headerAdd": "Add fellowship",
+		"headerEdit": "Amend fellowship",
+		"name": "Name of the Fellowship",
+		"description": "Account of the Fellowship",
+		"noDescription": "No account given",
+		"color": "Hue",
+		"imageClip": "Shape of the Visage",
+		"memberCount": "Tally of Fellows",
+		"memberCountText": "{{totalMemberCount}} fellows, {{memberCount}} active, {{archivedMemberCount}} in the archives",
+		"customFrontCountText": "{{totalCustomFrontCount}} custom fronts, {{customFrontCount}} active, {{archivedCustomFrontCount}} in the archives",
+		"tapToShow": "Touch to behold",
+		"showMembers": "Show fellows within this fellowship",
+		"parent": "Parent Fellowship",
+		"isPinned": "Pin the fellowship",
+		"archived": "In the archives",
+		"delete": {
+			"title": "Banish fellowship",
+			"confirm": "Art thou certain thou wouldst banish this fellowship?"
+		},
+		"systemID": "Fellowship Mark: {{systemID}}",
+		"systemIDcopiedToClipboard": "Fellowship Mark copied to thy scroll!"
+	}
+}

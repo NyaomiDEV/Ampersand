@@ -1,0 +1,29 @@
+{
+	"header": "The Diary",
+	"searchPlaceholder": "Seek through the diary...",
+	"contentWarning": "This missive contains heavy matter",
+	"private": "This missive is for thine eyes only",
+	"pinnedPosts": "Missives pinned to the wall",
+	"alertSubheader": "Dost thou truly wish to read this missive?",
+	"edit": {
+		"header": "Missive",
+		"headerAdd": "Write a new missive",
+		"headerEdit": "Amend the missive",
+		"headerOptions": "Missive choices",
+		"author": "Amend the scribe",
+		"date": "Amend the date",
+		"title": "Title",
+		"subtitle": "Subtitle",
+		"body": "Body of the missive",
+		"tags": "Tokens",
+		"isPinned": "Pinned missive",
+		"isPrivate": "Private missive",
+		"contentWarning": "Warning of matter",
+		"postID": "Missive Mark: {{postID}}",
+		"postIDcopiedToClipboard": "Missive Mark copied to thy scroll!",
+		"delete": {
+			"title": "Banish missive",
+			"confirm": "Art thou certain thou wouldst banish this missive?"
+		}
+	}
+}

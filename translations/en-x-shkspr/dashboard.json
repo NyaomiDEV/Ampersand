@@ -1,0 +1,15 @@
+{
+	"header": "The Great Hall",
+	"header_salute": "Greetings!",
+	"header_mainfronter": "Hail, {{fronterName}}!",
+	"systemDescription": "Tale of the System",
+	"nowFronting": "Presently at the Fore",
+	"fronterInfluencing": "Swaying {{influencedMember}}",
+	"addToFront": "Summon to the Fore",
+	"recentFrontingHistory": "Lately departed",
+	"messageBoard": {
+		"header": "Board of Tidings",
+		"add": "Post to the Board",
+		"view": "Behold more"
+	}
+}

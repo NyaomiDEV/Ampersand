@@ -1,0 +1,36 @@
+{
+	"header": "Bring Forth / Send Away",
+	"importHeader": "Bring Forth",
+	"thirdPartyHeader": "Foreign Alliances",
+	"exportHeader": "Send Away",
+	"dbExport": {
+		"title": "Send away thy lore",
+		"desc": "Save thy current lore to a scroll for safekeeping elsewhere"
+	},
+	"dbImportDesc": "Hark! This shall strike out all existing lore",
+	"dbImport": "Bring forth thy lore",
+	"dbImportOld": {
+		"title": "Bring forth lore from an ancient version of Ampersand",
+		"desc": "For scrolls wrought with Ampersand < 0.2.0",
+		"note": "Ancient versions used a format (ampdb) now withered. If thou keepest old scrolls, bring them forth now and send them away anew, for this path shall soon be closed."
+	},
+	"pkImport": "Bring forth lore from a PluralKit scroll",
+	"ocImport": "Bring forth lore from an Octocon scroll",
+	"tuImport": "Bring forth lore from a Tupperbox scroll",
+	"spImport": "Bring forth lore from a Simply Plural scroll",
+	"status": {
+		"imported": "The lore hath been brought forth. Pray, restart the work.",
+		"importedSp": "The Simply Plural lore hath been brought forth. Pray, restart the work.",
+		"importedOc": "The Octocon lore hath been brought forth. Pray, restart the work.",
+		"importedPk": "The PluralKit lore hath been brought forth. Pray, restart the work.",
+		"importedTu": "The Tupperbox lore hath been brought forth. Pray, restart the work.",
+		"exportedApp": "The lore hath been sent away to thy chosen station.",
+		"exportedAppIos": "The lore hath been sent away to the Ampersand fold in the Files work.",
+		"errorExport": "Foul play during the sending away of lore.",
+		"error": "Foul play during the bringing forth of lore.",
+		"errorOc": "Foul play during the Octocon bringing forth.",
+		"errorSp": "Foul play during the Simply Plural bringing forth.",
+		"errorPk": "Foul play during the PluralKit bringing forth.",
+		"errorTu": "Foul play during the Tupperbox bringing forth."
+	}
+}

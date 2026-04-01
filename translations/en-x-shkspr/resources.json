@@ -1,0 +1,20 @@
+{
+	"header": "Stores",
+	"ampersand": "Upon Ampersand",
+	"website": {
+		"title": "The Web Site",
+		"desc": "Fetch the latest edition and follow our path."
+	},
+	"blog": {
+		"title": "The Blog",
+		"desc": "Hear the latest tidings and our development rambles."
+	},
+	"wiki": {
+		"title": "The Wiki",
+		"desc": "Seek aid in using this work."
+	},
+	"repository": {
+		"title": "The Vault of Code",
+		"desc": "Lend thy hand to our work and report foul play."
+	}
+}

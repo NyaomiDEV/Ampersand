@@ -1,0 +1,29 @@
+{
+	"header": "Safety",
+	"applock": {
+		"title": "Bar the Gates",
+		"desc": "Lock the work with a watchword"
+	},
+	"biometrics": {
+		"title": "Use thy Body",
+		"desc": "Unbar via thy finger or face"
+	},
+	"allowRemoteContent": {
+		"title": "Allow the World In",
+		"desc": "Allow Ampersand to reach the world for images and visages."
+	},
+	"passwordAlert": {
+		"header": "Hark",
+		"text": "Art thou sure? Write thy watchword elsewhere, for if it be lost, thy lore is lost forever. Send away thy lore ere thou settest a watchword!"
+	},
+	"editPassword": "Amend watchword",
+	"inputPassword": {
+		"titleAdd": "Enter thy new watchword",
+		"titleReenter": "Speak it again",
+		"titleModifyOld": "Enter thy old watchword",
+		"titleModifyNew": "Enter thy new watchword",
+		"titleDisable": "Enter thy watchword",
+		"hint": "Watchword"
+	},
+	"useIPC": "Send tidings to other works"
+}

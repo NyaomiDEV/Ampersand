@@ -1,0 +1,49 @@
+{
+	"header": "The Fellowship",
+	"searchPlaceholder": "Seek thy fellows...",
+	"select": "Choose a fellow",
+	"deletedMember": "Banished fellow",
+	"deletedCustomFront": "Banished custom front",
+	"actions": {
+		"addToFront": "Summon to the Fore",
+		"setMainFronter": "Appoint as Chief",
+		"unsetMainFronter": "Dismiss as Chief",
+		"setSoleFronter": "Set as the Fore",
+		"removeFromFront": "Banish from the Fore"
+	},
+	"toasts": {
+		"addToFront": "Fellow summoned to the Fore",
+		"setMainFronter": "Fellow appointed as Chief",
+		"unsetMainFronter": "Fellow dismissed as Chief",
+		"setSoleFronter": "Fellow set as the only one at the Fore",
+		"removeFromFront": "Fellow banished from the Fore"
+	},
+	"edit": {
+		"header": "Fellow",
+		"headerAdd": "Add a fellow",
+		"headerEdit": "Amend a fellow",
+		"name": "Name",
+		"pronouns": "Styles of Address",
+		"role": "Office",
+		"color": "Favored Hue",
+		"imageClip": "Shape of the Visage",
+		"customFieldsAdd": "Add custom scrolls",
+		"tags": "Amend tokens",
+		"description": "Account",
+		"noDescription": "No account given",
+		"system": "Amend the fellowship",
+		"isPinned": "Pin the fellow",
+		"customFront": "Custom front",
+		"archived": "In the archives",
+		"showFrontingEntries": "Show entries of the Fore",
+		"showBoardEntries": "Show board tidings",
+		"showJournalEntries": "Show diary missives",
+		"memberID": "Fellow Mark: {{memberID}}",
+		"dateCreated": "Date of creation: {{dateCreated}}",
+		"memberIDcopiedToClipboard": "Fellow Mark copied to thy scroll!",
+		"delete": {
+			"title": "Banish fellow",
+			"confirm": "Art thou certain thou wouldst banish this fellow?"
+		}
+	}
+}
