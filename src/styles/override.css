@@ -78,7 +78,7 @@ ion-content:not(ion-tabs *) {
 	--padding-bottom: calc(var(--ion-safe-area-bottom, 0px) + 8px);
 }
 
-ion-content:has(> ion-fab.fab-vertical-bottom[slot="fixed"]) {
+ion-content:has(> ion-fab.fab-vertical-bottom[slot="fixed"]:not(:empty)) {
 	--padding-bottom: 88px;
 }
 
