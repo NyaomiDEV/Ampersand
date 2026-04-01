@@ -1,3 +1,43 @@
 {
-	"header": "Gistiuni di li tag"
+	"header": "Gistioni de' tag",
+	"searchPlaceholder": "Cerca ntra i tag...",
+	"select": "Seliizziona certi tag",
+	"selector": {
+		"member": "Tag de' membra",
+		"journal": "Tag dû diariu"
+	},
+	"edit": {
+		"header": {
+			"member": "Mudìfica tag de' membra",
+			"journal": "Mudìfica tag dû diariu"
+		},
+		"name": "Nomi dû tag",
+		"description": "Discrizzioni dû tag",
+		"color": "Culuri dû tag",
+		"viewInLists": "Mustra nall'elenchi",
+		"type": {
+			"header": "Tipu dû tag",
+			"member": "Membru",
+			"journal": "Diariu",
+			"desc": "Nota: poi difiniri u tipu dû tag sulo ô mumentu dâ criazzioni!"
+		},
+		"members": {
+			"title": "Scegghi i membra chi ùsanu stu tag",
+			"desc_one": "{{count}} membru usa stu tag",
+			"desc_many": "{{count}} membra ùsanu stu tag",
+			"desc_other": "{{count}} membra ùsanu stu tag"
+		},
+		"showJournal": {
+			"title": "Mustra i pàggini dû diariu chi ùsanu stu tag",
+			"desc_one": "{{count}} pàggina dû diariu usa stu tag",
+			"desc_many": "{{count}} pàggini dû diariu ùsanu stu tag",
+			"desc_other": "{{count}} pàggini dû diariu ùsanu stu tag"
+		},
+		"delete": {
+			"title": "Elimina tag",
+			"confirm": "Voi pi daveru eliminari stu tag?"
+		},
+		"tagID": "ID dû tag: {{tagID}}",
+		"tagIDCopiedToClipboard": "ID dû tag 'n furmatu menzioni cupiatu nê nòtuli!"
+	}
 }

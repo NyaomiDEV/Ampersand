@@ -1,3 +1,8 @@
 {
-	"title": "L'applicaziuni iè bluccata"
+	"title": "L'app è bloccata",
+	"hint": "Pi favuri metti a password",
+	"biometrics": {
+		"title": "L'app è bloccata",
+		"reason": "Sblocca l'applicazzioni"
+	}
 }

@@ -1,5 +1,49 @@
 {
 	"remindersAreNotFinished": {
-		"header": "I promemoria non su finiti!"
+		"header": "I prumemoria nun sunnu finuti!",
+		"content": "Pi d'ora, tuttu chistu è sulu n'antiprima di l'interfaccia utenti! A un certu puntu putriti sarvari i vostri prumemoria, ma tiniti a menti ca nenti è ancora culligatu a nuddu sistema di nutifica! Si siti supra Android duvissivu ggià èssiri capaci di cunfigurari certi cosi ca fùnzianu quannu finiremu u sistema di sutta, ma accura ca chistu nun fùnziana supra a virsioni Web, donca nun v'abbampiati d'usari i prumemoria supra u computer. Inoltri, si siti sviluppatura, datini na manu!"
+	},
+	"header": "Prumemoria",
+	"eventBasedHeader": "Prumemoria pi l'eventi",
+	"periodicHeader": "Prumemoria piriodici",
+	"edit": {
+		"header": "Mudìfica prumemoria",
+		"name": "Nnomu dû prumemoria",
+		"title": "Tìtulu di nutifica dû prumemoria",
+		"message": "Missaggiu di nutifica dû prumemoria",
+		"type": {
+			"title": "Tipu di prumemoria",
+			"eventBased": "Eventu",
+			"periodic": "Piriodicu"
+		},
+		"eventBased": {
+			"title": "Eventu scatinanti",
+			"addedToFront": "Dopu ca un membru fu agghiuntu ô front",
+			"removedFromFront": "Dopu ca un membru fu livatu dû front",
+			"memberFilterQuery": "Filtru dî membra",
+			"timing": "Timpìstica",
+			"delay": {
+				"title": "Ritardu",
+				"desc": "Dopu {{delay}}"
+			}
+		},
+		"periodic": {
+			"title": "Intervallu di tempu",
+			"timeOfDay": {
+				"title": "Uràriu",
+				"desc": "Ê {{timeOfDay}}"
+			},
+			"dayOfMonth": {
+				"title": "Giorno dû misi",
+				"desc_undefined": "Ripeti ogni jornu",
+				"desc_ordinal_one": "Ripeti ogni {{count}}° jornu dû misi",
+				"desc_ordinal_many": "Ripeti ogni {{count}}° jornu dû misi",
+				"desc_ordinal_other": "Ripeti ogni {{count}}° jornu dû misi"
+			}
+		},
+		"delete": {
+			"title": "Elìmina prumemoria",
+			"confirm": "Voi pi daveru eliminari stu prumemoria?"
+		}
 	}
 }

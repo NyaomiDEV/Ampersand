@@ -1,3 +1,15 @@
 {
-	"header": "Cruscottu"
+	"header": "Dashboard",
+	"header_salute": "Sabbinirica!",
+	"header_mainfronter": "Ciao, {{fronterName}}!",
+	"systemDescription": "Discrizzioni dû sistema",
+	"nowFronting": "Ora a front",
+	"fronterInfluencing": "Influinzannu a {{influencedMember}}",
+	"addToFront": "Agghiunci a front",
+	"recentFrontingHistory": "Usciutu dû front di pocu",
+	"messageBoard": {
+		"header": "Bacheca de' missaggi",
+		"add": "Agghiunci missaggiu",
+		"view": "Vidi tutti"
+	}
 }

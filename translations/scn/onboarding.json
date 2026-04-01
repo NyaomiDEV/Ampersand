@@ -1,39 +1,39 @@
 {
 	"welcomeScreen": {
-		"header": "Benvinutu supra Ampersand!",
-		"start": "Accumincia u to viaggiu!"
+		"header": "Bimminuti supra Ampersand!",
+		"start": "Accumincia u tò viaggiu!"
 	},
 	"importScreen": {
-		"header": "Voi mpurtari i to dati?",
-		"prevInstall": "Sì, nstallazzioni pricidenti",
+		"header": "Voi mportari i tò dati?",
+		"prevInstall": "Sì, installazzioni pricidenti",
 		"simplyPlural": "Sì, Simply Plural",
 		"octocon": "Sì, Octocon",
 		"pluralKit": "Sì, PluralKit",
 		"tupperbox": "Sì, Tupperbox",
 		"startFromScratch": "No, accuminciu di zeru",
-		"pleaseWait": "Attendi mentri mpurtemu i to dati",
-		"error": "Erruri mentri mpurtau u backup. Pi favuri scegghia n'autra opzioni.",
-		"errorSp": "Erruri mentri mpurtau l'esport di Simply Plural. Pi favuri scegghia n'autra opzioni.",
-		"errorOc": "Erruri mentri mpurtau l'esport di Octocon. Pi favuri scegghia n'autra opzioni.",
-		"errorPk": "Erruri mentri mpurtau l'esport di PluralKit. Pi favuri scegghia n'autra opzioni.",
-		"errorTu": "Erruri mentri mpurtau l'esport di Tupperbox. Pi favuri scegghia n'autra opzioni.",
+		"pleaseWait": "Attendi mentri mportamu i tò dati",
+		"error": "Erruri duranti l'importazzioni dû backup. Pi favuri scegghi n'autra opzioni.",
+		"errorSp": "Erruri duranti l'importazzioni de l'export di Simply Plural. Pi favuri scegghi n'autra opzioni.",
+		"errorOc": "Erruri duranti l'importazzioni de l'export di Octocon. Pi favuri scegghi n'autra opzioni.",
+		"errorPk": "Erruri duranti l'importazzioni de l'export di PluralKit. Pi favuri scegghi n'autra opzioni.",
+		"errorTu": "Erruri duranti l'importazzioni de l'export di Tupperbox. Pi favuri scegghi n'autra opzioni.",
 		"allowRemoteContent": {
 			"header": "Permetti a cunnessioni a Internet?",
-			"desc": "Ampersand è n'app ca funziona primariamenti offline, quindi idda abbisogna du to consensu pi cunnettiu a Internet. In stu mumentu idda si vulissi cunnetti a Internet pi scaricari l'avatar e i banner di membra da mpurtari. Quannu finisci, poi disattivari sta funziunalità in Opzioni > Sicurezza > Permetti cuntinuti rimoti."
+			"desc": "Ampersand è n'app chi funziona principarmenti offline, quindi havi bisognu dû tò cunsensu pi cunnettisi a Internet. Ntra stu mumentu si vulissi cunnetti pi scaricari l'avatar e i banner de' membra di mportari. Quannu finisci, poi disattivari sta funziunalità ntra Opzioni > Sicurezza > Permetti cuntinuti rimoti."
 		}
 	},
 	"systemInfo": {
-		"header": "Parline d'u to sistema!",
-		"name": "Nnomu cullettivu",
-		"description": "Quarchi cosa supra di vui..."
+		"header": "Cùntaci dû tò sistema!",
+		"name": "Nomi cullettivu",
+		"description": "Certi cosi supra di vui..."
 	},
 	"memberInfo": {
-		"header": "Parline chiù di tia!",
-		"description": "Quarchi cosa supra di tia...",
-		"invitation": "Cuntinuau a canciari u to prufilu dopu ca finisci cu l'introduzzioni!"
+		"header": "Cùntaci cchiù cosi di tia!",
+		"description": "Certi cosi supra di tia...",
+		"invitation": "Cuntìnuu a mudificari u tò prufilu doppu chi finisci cu l'introduzzioni!"
 	},
 	"endScreen": {
-		"header": "Grazzi pi aviri sceltu Ampersand!",
-		"startButton": "Accumincemu!"
+		"header": "Grazzi pi aviri sceḍḍutu Ampersand!",
+		"startButton": "Accuminciamu!"
 	}
 }

@@ -1,3 +1,29 @@
 {
-	"header": "Diariu"
+	"header": "Diariu",
+	"searchPlaceholder": "Cerca ntra u diariu...",
+	"contentWarning": "Stu post havi cuntinutu sensìbbili",
+	"private": "Stu post è privatu",
+	"pinnedPosts": "Post fissati",
+	"alertSubheader": "Voi pi daveru leggiri stu post?",
+	"edit": {
+		"header": "Post",
+		"headerAdd": "Agghiunci novu post",
+		"headerEdit": "Mudìfica post",
+		"headerOptions": "Opzioni dû post",
+		"author": "Mudìfica l'auturi",
+		"date": "Mudìfica data",
+		"title": "Tìtulu",
+		"subtitle": "Suttatìtulu",
+		"body": "Corpu dû post",
+		"tags": "Tag",
+		"isPinned": "Post fissatu",
+		"isPrivate": "Post privatu",
+		"contentWarning": "Avvisu supra u cuntinutu sensìbbili",
+		"postID": "ID dû post: {{postID}}",
+		"postIDcopiedToClipboard": "ID dû post 'n furmatu menzioni cupiatu nê nòtuli!",
+		"delete": {
+			"title": "Elimina post dû diariu",
+			"confirm": "Voi pi daveru eliminari stu post?"
+		}
+	}
 }

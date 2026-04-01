@@ -1,3 +1,57 @@
 {
-	"header": "Accessibilità"
+	"header": "Accessibbilità",
+	"highLegibilityFont": {
+		"title": "Font ad àuta liggibbiità",
+		"desc": "Usa un font ad àuta liggibbiità mmeci dû font dû dispusitivu"
+	},
+	"highLegibilityFontType": {
+		"title": "Famigghia dî font ad àuta liggibbiità",
+		"atkinson": "Atkinson Hyperlegible",
+		"opendyslexic": "OpenDyslexic",
+		"lexend": "Lexend",
+		"comicrelief": "Comic Relief",
+		"system-font": "Font di sistema"
+	},
+	"uiVariant": {
+		"title": "Varianti d'interfaccia",
+		"auto": "Auto",
+		"light": "Chiara",
+		"dark": "Scura"
+	},
+	"themeIsAmoled": {
+		"title": "Mudalità AMOLED",
+		"desc": "Usa un sfunnu tutalmenti nìuru 'n mudalità scura. Pò arridùciri l'usura di certi schermi."
+	},
+	"themeIsVibrant": {
+		"title": "Tema vivaci",
+		"desc": "Porta cchiù culuri nall'interfaccia utenti."
+	},
+	"colorIndicatorPosition": {
+		"title": "Pusizzioni d'indicaturi dû culuri",
+		"avatar": "Cuntornu de l'avatar",
+		"listItem": "Bordu de l'elementu 'n lista"
+	},
+	"useAccentColor": {
+		"title": "Culuri primariu",
+		"desc": "Usa un culuri primariu pirsunalizzatu"
+	},
+	"accentColor": {
+		"title": "Scegghi u culuri primariu"
+	},
+	"reducedMotion": {
+		"title": "Muvimenti arridutti",
+		"desc": "Disabbìlita l'animazzioni nall'app"
+	},
+	"disableCovers": {
+		"title": "Disabbìlita i copertini nall'elenchi"
+	},
+	"contrastLevel": {
+		"title": "Liveḍḍu di cuntrastu"
+	},
+	"fontScale": {
+		"title": "Diminsioni dû testu"
+	},
+	"longPressDuration": {
+		"title": "Durata dâ prissioni"
+	}
 }

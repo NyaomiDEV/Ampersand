@@ -1,3 +1,36 @@
 {
-	"header": "Importa / Esporta"
+	"header": "Mporta / Esporta",
+	"importHeader": "Mporta",
+	"thirdPartyHeader": "Integrazzioni cu terzi parti",
+	"exportHeader": "Esporta",
+	"dbExport": {
+		"title": "Esporta i tò dati",
+		"desc": "Fai u backup de' tò dati pi tignìlli d'autra banna"
+	},
+	"dbImportDesc": "Attenzioni! Chistu va a suprascriviri ogni datu esistenti",
+	"dbImport": "Mporta i tò dati",
+	"dbImportOld": {
+		"title": "Mporta i tò dati d'una vecchia virsioni di Ampersand",
+		"desc": "Pi i file di backup criati cu Ampersand < 0.2.0",
+		"note": "I vecchi virsioni di Ampersand usàvanu un furmatu di file (ampdb) ormai anticu. Si tìni vecchi backup, assicùrati di mportàlli ora e d'esportàlli n'autra vota pirchì st'opzioni veni livata ntra pocu."
+	},
+	"spImport": "Mporta i tò dati d'un export di Simply Plural",
+	"ocImport": "Mporta i tò dati d'un export di Octocon.",
+	"pkImport": "Mporta i tò dati d'un export di PluralKit",
+	"tuImport": "Mporta i tò dati d'un export di Tupperbox",
+	"status": {
+		"imported": "U backup fu mportatu. Pi favuri fa ripartiri l'app.",
+		"importedSp": "L'export di Simply Plural fu mportatu. Pi favuri fa ripartiri l'app.",
+		"importedOc": "L'export di Octocon fu mportatu. Pi favuri fa ripartiri l'app.",
+		"importedPk": "L'export di PluralKit fu mportatu. Pi favuri fa ripartiri l'app.",
+		"importedTu": "L'export di Tupperbox fu mportatu. Pi favuri fa ripartiri l'app.",
+		"exportedApp": "U backup fu esportatu nâ pusizzioni sceḍḍuta.",
+		"exportedAppIos": "U backup fu esportatu nâ cartedda Ampersand de l'app Documenti.",
+		"errorExport": "Erruri duranti l'esportazzioni dû backup.",
+		"error": "Erruri duranti l'importazzioni dû backup.",
+		"errorOc": "Erruri duranti l'importazzioni de l'export di Octocon.",
+		"errorSp": "Erruri duranti l'importazzioni de l'export di Simply Plural.",
+		"errorPk": "Erruri duranti l'importazzioni de l'export di PluralKit.",
+		"errorTu": "Erruri duranti l'importazzioni de l'export di Tupperbox."
+	}
 }

@@ -1,5 +1,29 @@
 {
+	"header": "Sistemi",
+	"searchPlaceholder": "Cerca ntra i sistemi...",
+	"select": "Seliizziona un sistema",
 	"edit": {
-		"header": "Sistema"
+		"header": "Sistema",
+		"headerAdd": "Agghiunci sistema",
+		"headerEdit": "Mudìfica sistema",
+		"name": "Nomi dû sistema",
+		"description": "Discrizzioni dû sistema",
+		"noDescription": "Nudda discrizzioni",
+		"color": "Culuri",
+		"imageClip": "Forma de l'avatar",
+		"memberCount": "Nùmmuru di membra",
+		"memberCountText": "{{totalMemberCount}} membru/a, {{memberCount}} attivu/i, {{archivedMemberCount}} archiviatu/i",
+		"customFrontCountText": "{{totalCustomFrontCount}} front pirsunalizzatu/i, {{customFrontCount}} attivu/i, {{archivedCustomFrontCount}} archiviatu/i",
+		"tapToShow": "Clicca pi mustrari",
+		"showMembers": "Mustra i membra dintra stu sistema",
+		"parent": "Sistema genituri",
+		"isPinned": "Fissa sistema",
+		"archived": "Archiviatu",
+		"delete": {
+			"title": "Elimina sistema",
+			"confirm": "Voi pi daveru eliminari stu sistema?"
+		},
+		"systemID": "ID sistema: {{systemID}}",
+		"systemIDcopiedToClipboard": "ID dû sistema 'n furmatu menzioni cupiatu nê nòtuli!"
 	}
 }

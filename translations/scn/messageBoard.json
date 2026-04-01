@@ -1,3 +1,46 @@
 {
-	"header": "Tavula de' missaggi"
+	"header": "Bacheca de' missaggi",
+	"searchPlaceholder": "Cerca ntra i missaggi...",
+	"polls": {
+		"boardMessageContainsPoll": "Conteni un sondaggiu",
+		"collapsePoll": "Ammuccia sondaggiu",
+		"voteCast": {
+			"voter": "Seliizziona u votanti",
+			"reason": "Duna a ragiuni",
+			"reasonHint": "Ragiuni",
+			"retractConfirmation": "Voi pi daveru annuḍḍari u votu?"
+		},
+		"resultsHeader": "Risultati de' voti",
+		"resultsButton": "Mustra i risultati dû sondaggiu",
+		"choice": {
+			"desc_one": "{{count}} votanti",
+			"desc_many": "{{count}} votanti",
+			"desc_other": "{{count}} votanti"
+		},
+		"defaultPollValues": {
+			"yes": "Sì",
+			"no": "No",
+			"veto": "Veto",
+			"abstain": "Astinutu"
+		}
+	},
+	"edit": {
+		"header": "Mudìfica missaggiu",
+		"member": "Mudìfica l'auturi dû missaggiu",
+		"date": "Mudìfica data",
+		"title": "Tìtulu",
+		"body": "Corpu dû missaggiu",
+		"isPinned": "Fissa missaggiu",
+		"isArchived": "Archivia missaggiu",
+		"attachPoll": "Allega un sondaggiu ô missaggiu",
+		"deleteAttachedPoll": "Elimina u sondaggiu allegatu",
+		"pollIsMultipleChoice": "Permetti cchiù di na sceḍḍta",
+		"pollAddNewChoice": "Agghiunci na nova sceḍḍta ô sondaggiu",
+		"pollChoice": "Discrizzioni dâ sceḍḍta",
+		"pollEditWarning": "I voti vèninu resettati si canci quarsiasi dittagghiu dû sondaggiu!",
+		"delete": {
+			"title": "Elimina missaggiu dâ bacheca",
+			"confirm": "Voi pi daveru eliminari stu missaggiu?"
+		}
+	}
 }

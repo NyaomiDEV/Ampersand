@@ -1,4 +1,9 @@
 {
-	"header": "Supra",
-	"version": "Virsiuni {{version}}"
+	"header": "Nfurmazzioni",
+	"version": "Virsioni {{version}}",
+	"ciVersion": "virsioni CI",
+	"madein": "Fattu cu amuri n'Italia",
+	"privacyPolicy": "Pulìtichi pi la privacy",
+	"updateAvailable": "Aggiornamentu disponìbbili: {{newVersion}}",
+	"credits": "Crèditi"
 }

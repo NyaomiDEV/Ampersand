@@ -1,3 +1,49 @@
 {
-	"header": "Membri"
+	"header": "Membra",
+	"searchPlaceholder": "Cerca ntra i membra...",
+	"select": "Seliizziona un membru",
+	"deletedMember": "Membru eliminatu",
+	"deletedCustomFront": "Front pirsunalizzatu eliminatu",
+	"actions": {
+		"addToFront": "Agghiunci a front",
+		"setMainFronter": "Imposta comu fronter principali",
+		"unsetMainFronter": "Leva comu fronter principali",
+		"setSoleFronter": "Imposta comu sulo front",
+		"removeFromFront": "Leva dû front"
+	},
+	"toasts": {
+		"addToFront": "Membru agghiuntu a front",
+		"setMainFronter": "Membru impostatu comu fronter principali",
+		"unsetMainFronter": "Membru livatu dû front principali",
+		"setSoleFronter": "Membru impostatu comu sulo front",
+		"removeFromFront": "Membru livatu dû front"
+	},
+	"edit": {
+		"header": "Membru",
+		"headerAdd": "Agghiunci membru",
+		"headerEdit": "Mudìfica membru",
+		"name": "Nomi",
+		"pronouns": "Prunomi",
+		"role": "Rolu",
+		"color": "Culuri prifirutu",
+		"imageClip": "Forma de l'avatar",
+		"customFieldsAdd": "Agghiunci campi pirsunalizzati",
+		"tags": "Mudìfica i tag",
+		"description": "Discrizzioni",
+		"noDescription": "Nudda discrizzioni",
+		"system": "Mudìfica sistema d'appartinenza",
+		"isPinned": "Fissa membru",
+		"customFront": "Front pirsunalizzatu",
+		"archived": "Archiviatu",
+		"showFrontingEntries": "Mustra i vuci di front",
+		"showBoardEntries": "Mustra i missaggi nâ bacheca",
+		"showJournalEntries": "Mustra i pàggini dû diariu",
+		"memberID": "ID dû membru: {{memberID}}",
+		"dateCreated": "Data di criazzioni: {{dateCreated}}",
+		"memberIDcopiedToClipboard": "ID dû membru 'n furmatu menzioni cupiatu nê nòtuli!",
+		"delete": {
+			"title": "Elimina membru",
+			"confirm": "Voi pi daveru eliminari stu membru?"
+		}
+	}
 }

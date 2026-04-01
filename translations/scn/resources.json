@@ -1,0 +1,20 @@
+{
+	"header": "Risorsi",
+	"ampersand": "Supra Ampersand",
+	"website": {
+		"title": "Situ web",
+		"desc": "Scarica l'ùrtima virsioni de l'app e sequi l'aggiornamenti."
+	},
+	"blog": {
+		"title": "Blog",
+		"desc": "Aggiornati supra l'ùrtimi nuvità e sequi i nòstri discursi supra u sviluppu."
+	},
+	"wiki": {
+		"title": "Wiki",
+		"desc": "Otteni aiutu nall'usu de l'applicazzioni."
+	},
+	"repository": {
+		"title": "Repository dû còdici",
+		"desc": "Cuntribbuisci â nòstra applicazzioni e signala prubblemi."
+	}
+}

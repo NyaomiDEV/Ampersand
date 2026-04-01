@@ -1,3 +1,34 @@
 {
-	"header": "Storia de frunti"
+	"header": "Crunuluggìa dû front",
+	"searchPlaceholder": "Cerca nâ crunuluggìa dû front...",
+	"currentlyFronting": "Attuarmenti ô front",
+	"wasFronting": "Era ancora ô front",
+	"frontedThatDay": "Havi fruntatu ddu jornu",
+	"influencing": "Influenza {{influencedMember}}",
+	"edit": {
+		"header": "Mudìfica vuci di front",
+		"member": "Mudìfica u membru a front",
+		"customStatus": "Statu pirsunalizzatu",
+		"comment": "Cummentu",
+		"presence": {
+			"historyTitle": "Storia dâ prisenza",
+			"lastPresence": "L'ùrtima vota era {{presence}} / 5 steḍḍi",
+			"addTitle": "Quantu sì prisenti ntra 0 e 10?",
+			"confirmButton": "Cunferma",
+			"date": "Data"
+		},
+		"influencing": {
+			"select": "Seliizziona un membru d'influinzari",
+			"currentlyInfluencing": "Sta influinzannu"
+		},
+		"startTime": "Data d'inizziu",
+		"endTime": "Data di fini",
+		"removeFromFront": "Leva dû front",
+		"isMainFronter": "Fronter principali",
+		"isLocked": "Blocca fronter",
+		"delete": {
+			"title": "Elimina vuci di front",
+			"confirm": "Voi pi daveru eliminari sta vuci di front?"
+		}
+	}
 }

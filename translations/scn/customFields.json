@@ -1,3 +1,18 @@
 {
-	"header": "Campi pirsunalizzati"
+	"header": "Campi pirsunalizzati",
+	"select": "Seliizziona campi pirsunalizzati",
+	"searchPlaceholder": "Cerca ntra i campi pirsunalizzati...",
+	"edit": {
+		"header": "Mudìfica campu pirsunalizzatu",
+		"headerAdd": "Agghiunci campu pirsunalizzatu",
+		"name": "Nomi dû campu pirsunalizzatu",
+		"default": {
+			"title": "Rendi pridifinitu",
+			"desc": "I campi pirsunalizzati pridifiniti apparirannu sempri nâ schermata di mudìfica dû membru"
+		},
+		"delete": {
+			"title": "Elimina campu pirsunalizzatu",
+			"confirm": "Sì sicuru di vuliri eliminari stu campu pirsunalizzatu?"
+		}
+	}
 }

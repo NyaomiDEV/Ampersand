@@ -1,3 +1,17 @@
 {
-	"header": "Gisturi di li asset"
+	"header": "Gisturi de l'asset",
+	"searchPlaceholder": "Cerca ntra l'asset...",
+	"add": {
+		"header": "Agghiunci asset",
+		"attachment": "Agghiunci allegatu"
+	},
+	"edit": {
+		"header": "Mudìfica asset",
+		"friendlyName": "Mudìfica u nomi",
+		"attachment": "Rimpiazza allegatu",
+		"delete": {
+			"title": "Elimina asset",
+			"confirm": "Voi pi daveru eliminari st'asset?"
+		}
+	}
 }

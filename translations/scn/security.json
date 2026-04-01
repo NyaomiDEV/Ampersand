@@ -1,3 +1,29 @@
 {
-	"header": "Sicurizza"
+	"header": "Sicurezza",
+	"applock": {
+		"title": "Bloccu applicazzioni",
+		"desc": "Blocca l'applicazzioni cu na password"
+	},
+	"allowRemoteContent": {
+		"title": "Permetti cuntinuti rimoti",
+		"desc": "Permetti a Ampersand d'usari Internet pi scaricari cuntinuti rimoti, comu l'immàggini nê campi Markdown e l'avatar nê mport di terzi parti."
+	},
+	"biometrics": {
+		"title": "Usa l'autinticazzioni biomètrica",
+		"desc": "Sblocca tramiti a tò impronta diggitale o a facci"
+	},
+	"passwordAlert": {
+		"header": "Attenzioni",
+		"text": "Sì sicuru di vuliri prucediri? Prima di prucediri, pi favuri signati a password d'autra banna fora di Ampersand pirchì nun poi ricupirari i tò dati o resettari a password si t'a scordi. Assicùrati di fari un backup prima d'impostàrinni una!"
+	},
+	"editPassword": "Mudìfica password",
+	"inputPassword": {
+		"titleAdd": "Metti na nova password",
+		"titleReenter": "Rimetti a password",
+		"titleModifyOld": "Metti a tò vecchia password",
+		"titleModifyNew": "Metti a tò nova password",
+		"titleDisable": "Metti a tò password",
+		"hint": "Password"
+	},
+	"useIPC": "Invia eventi a applicazzioni terzi"
 }

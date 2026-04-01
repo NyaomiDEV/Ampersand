@@ -1,5 +1,99 @@
 {
 	"languageName": {
-		"local": "Sicilianu"
-	}
+		"local": "Sicilianu",
+		"inEnglish": "Sicilian"
+	},
+	"genericDeleteDesc": "Nun poi annuḍḍari st'azzioni!",
+	"addTimestamp": "Agghiunci data e ura",
+	"memberMention": "Menziona un membru",
+	"alerts": {
+		"ok": "Ok",
+		"cancel": "Annuḍḍa",
+		"clear": "Scancella",
+		"yes": "Sì",
+		"no": "No"
+	},
+	"presence": {
+		"absent": "Assenti",
+		"heavilyDissociating": "Dissuciannu assai",
+		"dissociating": "Dissuciatu",
+		"zonedOut": "Spaisatu",
+		"present": "Prisenti",
+		"fullyGrounded": "Ancuratu â rialtà"
+	},
+	"back": "Arreri",
+	"time": "Ura",
+	"timeSizes": {
+		"years": {
+			"long": "anni",
+			"short": "Y"
+		},
+		"months": {
+			"long": "misi",
+			"short": "M"
+		},
+		"days": {
+			"long": "jorna",
+			"short": "D"
+		},
+		"weekdays": {
+			"monday": "Lunedì",
+			"tuesday": "Martedì",
+			"wednesday": "Mercoledì",
+			"thursday": "Giovedì",
+			"friday": "Venerdì",
+			"saturday": "Sàbbatu",
+			"sunday": "Dumìnica"
+		},
+		"hours": {
+			"long": "uri",
+			"short": "h"
+		},
+		"minutes": {
+			"long": "minuti",
+			"short": "m"
+		},
+		"seconds": {
+			"long": "sicunni",
+			"short": "s"
+		}
+	},
+	"shapes": {
+		"arch": "Arcu",
+		"arrow": "Freccia",
+		"boom": "Sfunnu",
+		"bun": "Paninu",
+		"burst": "Scoppiu",
+		"clamshell": "Cunchiglia",
+		"diamond": "Diamanti",
+		"fan": "Ventagghiu",
+		"flower": "Ciuri",
+		"gem": "Gemma",
+		"ghost-ish": "Fantasimili",
+		"heart": "Cori",
+		"leaf-clover4": "Quadrifogghiu",
+		"leaf-clover8": "Quadrifogghiu a ottu fogghi",
+		"oval": "Ovali",
+		"pentagon": "Pintàgunu",
+		"pill": "Pìllula",
+		"pixel-circle": "Cìrculu pixel",
+		"pixel-triangle": "Triàngulu pixel",
+		"puffy-diamond": "Diamanti murbidazzu",
+		"puffy": "Mòrbidu",
+		"semicircle": "Semicìrculu",
+		"sided-cookie12": "Biscottu a 12 lati",
+		"sided-cookie4": "Biscottu a 4 lati",
+		"sided-cookie6": "Biscottu a 6 lati",
+		"sided-cookie7": "Biscottu a 7 lati",
+		"sided-cookie9": "Biscottu a 9 lati",
+		"slanted": "Inclinatu",
+		"soft-boom": "Sfunnu moddu",
+		"soft-burst": "Scoppiu moddu",
+		"square": "Quatratu",
+		"sunny": "Sulari",
+		"triangle": "Triàngulu",
+		"very-sunny": "Assai sulari",
+		"noShape": "Nudda forma"
+	},
+	"developerMode": "Mudalità sviluppaturi"
 }
