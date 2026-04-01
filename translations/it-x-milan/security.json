@@ -1,0 +1,29 @@
+{
+	"header": "Security",
+	"applock": {
+		"title": "Blocco App",
+		"desc": "Metti una password, non farti sgamare"
+	},
+	"allowRemoteContent": {
+		"title": "Contenuti remoti",
+		"desc": "Permetti a Ampersand di usare internet per immagini e avatar."
+	},
+	"biometrics": {
+		"title": "Biometria",
+		"desc": "Sblocca col dito o con la faccia"
+	},
+	"passwordAlert": {
+		"header": "Occhio!",
+		"text": "Segnati la password da qualche parte, che se la perdi sei fritto. Non c'è il 'recupera password' qui. Fai un backup prima!"
+	},
+	"editPassword": "Cambia password",
+	"inputPassword": {
+		"titleAdd": "Nuova password",
+		"titleReenter": "Riscrivila",
+		"titleModifyOld": "Vecchia password",
+		"titleModifyNew": "Nuova password",
+		"titleDisable": "Metti la password",
+		"hint": "Password"
+	},
+	"useIPC": "Invia eventi ad app terze"
+}

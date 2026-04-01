@@ -1,0 +1,34 @@
+{
+	"header": "History del front",
+	"searchPlaceholder": "Cerca nella history...",
+	"currentlyFronting": "Al front ora",
+	"wasFronting": "Era ancora al front",
+	"frontedThatDay": "Ha frontato quel giorno",
+	"influencing": "Influenza {{influencedMember}}",
+	"edit": {
+		"header": "Modifica voce front",
+		"member": "Cambia il membro in front",
+		"customStatus": "Status custom",
+		"comment": "Commento",
+		"presence": {
+			"historyTitle": "History presenza",
+			"lastPresence": "L'ultima volta era {{presence}} / 5 stelle",
+			"addTitle": "Quanto sei presente (0-10)?",
+			"confirmButton": "Conferma",
+			"date": "Data"
+		},
+		"influencing": {
+			"select": "Scegli chi influenzare",
+			"currentlyInfluencing": "Sta influenzando"
+		},
+		"startTime": "Start",
+		"endTime": "End",
+		"removeFromFront": "Togli dal front",
+		"isMainFronter": "Fronter principale",
+		"isLocked": "Blocca fronter",
+		"delete": {
+			"title": "Elimina voce front",
+			"confirm": "Vuoi davvero piallare questa voce?"
+		}
+	}
+}

@@ -1,0 +1,18 @@
+{
+	"header": "Campi Custom",
+	"select": "Seleziona campi custom",
+	"searchPlaceholder": "Cerca tra i campi custom...",
+	"edit": {
+		"header": "Modifica campo custom",
+		"headerAdd": "Aggiungi campo custom",
+		"name": "Nome del campo",
+		"default": {
+			"title": "Rendi predefinito",
+			"desc": "I campi custom predefiniti saltano fuori nella lista membri"
+		},
+		"delete": {
+			"title": "Elimina campo custom",
+			"confirm": "Sei sicuro di voler piallare questo campo?"
+		}
+	}
+}

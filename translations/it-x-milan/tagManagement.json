@@ -1,0 +1,43 @@
+{
+	"header": "Gestione Tag",
+	"searchPlaceholder": "Cerca tag...",
+	"select": "Scegli tag",
+	"selector": {
+		"member": "Tag membri",
+		"journal": "Tag diario"
+	},
+	"edit": {
+		"header": {
+			"member": "Modifica tag membri",
+			"journal": "Modifica tag diario"
+		},
+		"name": "Nome tag",
+		"description": "Descrizione tag",
+		"color": "Colore tag",
+		"viewInLists": "Mostra nelle liste",
+		"type": {
+			"header": "Tipo tag",
+			"member": "Membro",
+			"journal": "Diario",
+			"desc": "Nota: il tipo lo decidi solo all'inizio!"
+		},
+		"members": {
+			"title": "Chi usa questo tag",
+			"desc_one": "{{count}} membro lo usa",
+			"desc_many": "{{count}} membri lo usano",
+			"desc_other": "{{count}} membri lo usano"
+		},
+		"showJournal": {
+			"title": "Pagine diario con questo tag",
+			"desc_one": "{{count}} pagina lo usa",
+			"desc_many": "{{count}} pagine lo usano",
+			"desc_other": "{{count}} pagine lo usano"
+		},
+		"delete": {
+			"title": "Elimina tag",
+			"confirm": "Vuoi davvero piallare questo tag?"
+		},
+		"tagID": "ID tag: {{tagID}}",
+		"tagIDCopiedToClipboard": "ID tag copiato!"
+	}
+}

@@ -1,0 +1,36 @@
+{
+	"header": "Import / Export",
+	"importHeader": "Import",
+	"thirdPartyHeader": "Integrazioni terze parti",
+	"exportHeader": "Export",
+	"dbExport": {
+		"title": "Esporta i dati",
+		"desc": "Fai il backup, non fare il barbone con i tuoi dati"
+	},
+	"dbImportDesc": "Occhio! Qui sovrascrivi tutto, non si scherza",
+	"dbImport": "Importa i dati",
+	"dbImportOld": {
+		"title": "Importa da vecchia versione Ampersand",
+		"desc": "Per i backup < 0.2.0",
+		"note": "Il formato .ampdb è preistoria. Importa ora o perdi tutto, vedi tu."
+	},
+	"spImport": "Importa da Simply Plural",
+	"ocImport": "Importa da Octocon",
+	"pkImport": "Importa da PluralKit",
+	"tuImport": "Importa da Tupperbox",
+	"status": {
+		"imported": "Backup importato. Riavvia l'app, dai.",
+		"importedSp": "Simply Plural importato. Riavvia.",
+		"importedOc": "Octocon importato. Riavvia.",
+		"importedPk": "PluralKit importato. Riavvia.",
+		"importedTu": "Tupperbox importato. Riavvia.",
+		"exportedApp": "Backup esportato dove hai detto tu.",
+		"exportedAppIos": "Backup salvato nella cartella Ampersand su Documenti.",
+		"errorExport": "Errore nell'export. Disastro.",
+		"error": "Errore nell'import. Non va un tubo.",
+		"errorOc": "Errore import Octocon.",
+		"errorSp": "Errore import Simply Plural.",
+		"errorPk": "Errore import PluralKit.",
+		"errorTu": "Errore import Tupperbox."
+	}
+}

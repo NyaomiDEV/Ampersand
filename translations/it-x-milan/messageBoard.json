@@ -1,0 +1,46 @@
+{
+	"header": "Bacheca",
+	"searchPlaceholder": "Cerca messaggi...",
+	"polls": {
+		"boardMessageContainsPoll": "C'è un sondaggio",
+		"collapsePoll": "Nascondi sondaggio",
+		"voteCast": {
+			"voter": "Chi vota?",
+			"reason": "Perché?",
+			"reasonHint": "Motivazione",
+			"retractConfirmation": "Vuoi davvero ritirare il voto?"
+		},
+		"resultsHeader": "Risultati",
+		"resultsButton": "Vedi i risultati",
+		"choice": {
+			"desc_one": "{{count}} votante",
+			"desc_many": "{{count}} votanti",
+			"desc_other": "{{count}} votanti"
+		},
+		"defaultPollValues": {
+			"yes": "Sì",
+			"no": "No",
+			"veto": "Veto",
+			"abstain": "Mi dissocio"
+		}
+	},
+	"edit": {
+		"header": "Modifica messaggio",
+		"member": "Cambia autore",
+		"date": "Cambia data",
+		"title": "Titolo",
+		"body": "Testo",
+		"isPinned": "Fissa messaggio",
+		"isArchived": "Archivia messaggio",
+		"attachPoll": "Mettici un sondaggio",
+		"deleteAttachedPoll": "Togli il sondaggio",
+		"pollIsMultipleChoice": "Scelta multipla",
+		"pollAddNewChoice": "Aggiungi opzione",
+		"pollChoice": "Descrizione opzione",
+		"pollEditWarning": "Se cambi qualcosa, i voti saltano tutti!",
+		"delete": {
+			"title": "Elimina messaggio",
+			"confirm": "Vuoi davvero piallare questo messaggio?"
+		}
+	}
+}

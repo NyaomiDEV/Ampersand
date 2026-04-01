@@ -1,0 +1,9 @@
+{
+	"header": "Info",
+	"version": "Versione {{version}}",
+	"ciVersion": "Versione CI",
+	"madein": "Fatto col cuore a Milano (e dintorni)",
+	"privacyPolicy": "Privacy Policy",
+	"updateAvailable": "Update pronto: {{newVersion}}",
+	"credits": "Credits"
+}

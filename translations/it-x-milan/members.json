@@ -1,0 +1,49 @@
+{
+	"header": "Membri",
+	"searchPlaceholder": "Cerca tra i membri...",
+	"select": "Scegli un membro",
+	"deletedMember": "Membro piallato",
+	"deletedCustomFront": "Front custom piallato",
+	"actions": {
+		"addToFront": "Metti in front",
+		"setMainFronter": "Imposta come main",
+		"unsetMainFronter": "Togli come main",
+		"setSoleFronter": "Imposta come unico",
+		"removeFromFront": "Togli dal front"
+	},
+	"toasts": {
+		"addToFront": "Membro messo in front",
+		"setMainFronter": "Membro impostato come main",
+		"unsetMainFronter": "Membro rimosso dal main",
+		"setSoleFronter": "Membro impostato come unico",
+		"removeFromFront": "Membro rimosso dal front"
+	},
+	"edit": {
+		"header": "Membro",
+		"headerAdd": "Aggiungi membro",
+		"headerEdit": "Modifica membro",
+		"name": "Nome",
+		"pronouns": "Pronomi",
+		"role": "Ruolo",
+		"color": "Colore",
+		"imageClip": "Forma avatar",
+		"customFieldsAdd": "Aggiungi campi custom",
+		"tags": "Modifica tag",
+		"description": "Descrizione",
+		"noDescription": "Nessuna descrizione",
+		"system": "Cambia sistema",
+		"isPinned": "Fissa membro",
+		"customFront": "Front custom",
+		"archived": "Archiviato",
+		"showFrontingEntries": "Mostra voci di front",
+		"showBoardEntries": "Mostra messaggi bacheca",
+		"showJournalEntries": "Mostra pagine diario",
+		"memberID": "ID membro: {{memberID}}",
+		"dateCreated": "Creato il: {{dateCreated}}",
+		"memberIDcopiedToClipboard": "ID membro copiato!",
+		"delete": {
+			"title": "Elimina membro",
+			"confirm": "Vuoi davvero piallare questo membro?"
+		}
+	}
+}

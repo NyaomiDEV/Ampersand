@@ -1,0 +1,20 @@
+{
+	"header": "Risorse",
+	"ampersand": "Info Ampersand",
+	"website": {
+		"title": "Sito Web",
+		"desc": "Scarica l'ultima release."
+	},
+	"blog": {
+		"title": "Blog",
+		"desc": "News e sproloqui vari."
+	},
+	"wiki": {
+		"title": "Wiki",
+		"desc": "Se non capisci come funziona, leggi qui."
+	},
+	"repository": {
+		"title": "Repo",
+		"desc": "Codice e bug report."
+	}
+}

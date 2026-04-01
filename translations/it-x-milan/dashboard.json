@@ -1,0 +1,15 @@
+{
+	"header": "Dashboard",
+	"header_salute": "Uè!",
+	"header_mainfronter": "Uè, {{fronterName}}!",
+	"systemDescription": "Descrizione sistema",
+	"nowFronting": "In front adesso",
+	"fronterInfluencing": "Sta influenzando {{influencedMember}}",
+	"addToFront": "Metti in front",
+	"recentFrontingHistory": "Usciti dal front da poco",
+	"messageBoard": {
+		"header": "Bacheca",
+		"add": "Aggiungi messaggio",
+		"view": "Vedi tutto"
+	}
+}

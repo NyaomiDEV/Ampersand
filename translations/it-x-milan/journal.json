@@ -1,0 +1,29 @@
+{
+	"header": "Diario",
+	"searchPlaceholder": "Cerca nel diario...",
+	"contentWarning": "Occhio: contenuto sensibile",
+	"private": "Post privato",
+	"pinnedPosts": "Post fissati",
+	"alertSubheader": "Sicuro di voler leggere?",
+	"edit": {
+		"header": "Post",
+		"headerAdd": "Nuovo post",
+		"headerEdit": "Modifica post",
+		"headerOptions": "Opzioni post",
+		"author": "Cambia autore",
+		"date": "Cambia data",
+		"title": "Titolo",
+		"subtitle": "Sottotitolo",
+		"body": "Testo del post",
+		"tags": "Tag",
+		"isPinned": "Fissa post",
+		"isPrivate": "Post privato",
+		"contentWarning": "Content Warning",
+		"postID": "ID post: {{postID}}",
+		"postIDcopiedToClipboard": "ID post copiato negli appunti!",
+		"delete": {
+			"title": "Elimina post",
+			"confirm": "Vuoi davvero piallare questo post?"
+		}
+	}
+}

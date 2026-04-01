@@ -1,0 +1,57 @@
+{
+	"header": "Accessibilità",
+	"highLegibilityFont": {
+		"title": "Font leggibile",
+		"desc": "Usa un font che si legge bene, non quella roba di serie"
+	},
+	"highLegibilityFontType": {
+		"title": "Famiglia font leggibili",
+		"atkinson": "Atkinson Hyperlegible",
+		"opendyslexic": "OpenDyslexic",
+		"lexend": "Lexend",
+		"comicrelief": "Comic Relief",
+		"system-font": "Font di sistema"
+	},
+	"uiVariant": {
+		"title": "Variante UI",
+		"auto": "Auto",
+		"light": "Light",
+		"dark": "Dark"
+	},
+	"themeIsAmoled": {
+		"title": "Modalità AMOLED",
+		"desc": "Sfondo nero totale in dark mode. Risparmiamo batteria, che il tempo è denaro."
+	},
+	"themeIsVibrant": {
+		"title": "Tema Vibrant",
+		"desc": "Mettici un po' di colore in 'sta UI."
+	},
+	"colorIndicatorPosition": {
+		"title": "Posizione indicatore colore",
+		"avatar": "Contorno avatar",
+		"listItem": "Bordo dell'item in lista"
+	},
+	"useAccentColor": {
+		"title": "Colore primario",
+		"desc": "Usa un colore primario custom"
+	},
+	"accentColor": {
+		"title": "Scegli il colore primario"
+	},
+	"reducedMotion": {
+		"title": "Movimenti ridotti",
+		"desc": "Togli le animazioni, che dobbiamo andare veloci"
+	},
+	"disableCovers": {
+		"title": "Togli le copertine nelle liste"
+	},
+	"contrastLevel": {
+		"title": "Livello contrasto"
+	},
+	"fontScale": {
+		"title": "Dimensione testo"
+	},
+	"longPressDuration": {
+		"title": "Durata pressione"
+	}
+}
