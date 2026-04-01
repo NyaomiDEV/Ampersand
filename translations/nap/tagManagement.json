@@ -24,13 +24,11 @@
 		"members": {
 			"title": "Scerne 'e mmiembre ca usano stu tag",
 			"desc_one": "{{count}} mmembro ausa stu tag",
-			"desc_many": "{{count}} mmiembre ausano stu tag",
 			"desc_other": "{{count}} mmiembre ausano stu tag"
 		},
 		"showJournal": {
 			"title": "Famme vedé 'e paggene d' 'o diario ca usano stu tag",
 			"desc_one": "{{count}} paggena d' 'o diario ausa stu tag",
-			"desc_many": "{{count}} paggene d' 'o diario ausano stu tag",
 			"desc_other": "{{count}} paggene d' 'o diario ausano stu tag"
 		},
 		"delete": {
