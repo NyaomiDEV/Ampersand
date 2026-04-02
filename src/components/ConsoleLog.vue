@@ -1,5 +1,25 @@
 <script setup lang="ts">
 	import { store as console } from "../lib/console";
+	
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	function mapData(x: any){
+		switch(typeof x){
+			case "string":
+			case "number":
+			case "bigint":
+			case "boolean":
+			case "symbol":
+				return x.toString().replace(/(?:\x1B[@-Z\\-_]|[\x80-\x9A\x9C-\x9F]|(?:\x1B\[|\x9B)[0-?]*[ -/]*[@-~])/, "");
+			case "undefined":
+				return "undefined";
+			case "function":
+				return (x as () => unknown).toString();
+			case "object":
+				if(x instanceof Error)
+					return `${x.name}: ${x.message}`;
+				return JSON.stringify(x);
+		}
+	}
 </script>
 
 <template>
@@ -13,7 +33,9 @@
 				{{ entry.date.toISOString() }}
 			</span>
 			<span class="content">
-				{{ JSON.stringify(entry.data) }}
+				<span v-for="[i, obj] in entry.data.map(mapData).entries()" :key="i">
+					{{ obj }}
+				</span>
 			</span>
 		</p>
 	</div>
