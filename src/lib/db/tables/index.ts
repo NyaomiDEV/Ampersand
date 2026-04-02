@@ -264,13 +264,13 @@ export function getTables(): GetTableTauriExport {
 }
 
 export const db = {
-	systems: await makeTable<System>("system", ["parent"]),
+	systems: await makeTable<System>("system", ["name", "parent", "isPinned", "isArchived"]),
 	members: await makeTable<Member>("members", ["name", "system", "isPinned", "isArchived", "isCustomFront"]),
 	boardMessages: await makeTable<BoardMessage>("boardMessages", ["member", "date", "isPinned", "isArchived"]),
 	frontingEntries: await makeTable<FrontingEntry>("frontingEntries", ["member", "startTime", "endTime", "isLocked", "isMainFronter"]),
 	journalPosts: await makeTable<JournalPost>("journalPosts", ["member", "date", "isPinned"]),
 	reminders: await makeTable<Reminder>("reminders", []),
-	tags: await makeTable<Tag>("tags", []),
-	assets: await makeTable<Asset>("assets", []),
-	customFields: await makeTable<CustomField>("customFields", [])
+	tags: await makeTable<Tag>("tags", ["name"]),
+	assets: await makeTable<Asset>("assets", ["friendlyName"]),
+	customFields: await makeTable<CustomField>("customFields", ["name"])
 };
