@@ -200,28 +200,28 @@
     "@iconify/types" "^2.0.0"
     mlly "^1.8.0"
 
-"@ionic/core@8.8.2":
-  version "8.8.2"
-  resolved "https://registry.yarnpkg.com/@ionic/core/-/core-8.8.2.tgz#a315d127867c9ea4e0e8dd9a8c942bad516807bc"
-  integrity sha512-br0XaVX/mct0d+ArQk7Gg6R8iLsfcgGdSVs+554iv5U4TjmqVIbmkF+o4IZSe2WkulUHnLVF20/EJ1ZH00aTnw==
+"@ionic/core@8.8.3":
+  version "8.8.3"
+  resolved "https://registry.yarnpkg.com/@ionic/core/-/core-8.8.3.tgz#194794e2dc5bb67d5fe069d5d51ac67c474713c9"
+  integrity sha512-qvl+bRgZRvAJ35eW2iW0Vlo11T/EQsPazMU6z45QxJvcLukGJ59MwubjDTx6dPKteful4/FBzVt9etCvcNp8Gg==
   dependencies:
     "@stencil/core" "4.43.0"
     ionicons "^8.0.13"
     tslib "^2.1.0"
 
-"@ionic/vue-router@^8.8.2":
-  version "8.8.2"
-  resolved "https://registry.yarnpkg.com/@ionic/vue-router/-/vue-router-8.8.2.tgz#894fa4f534fc659c2418c603a69f3f3b62629c3a"
-  integrity sha512-aBrTww1gTWEclhpAzVaQA4r1hYlviovFT8rwBWqlZGn4YnvN6GrtaG6GJxIPhyCHPTqSiDV942mZ9p4IVSo+Vg==
+"@ionic/vue-router@^8.8.3":
+  version "8.8.3"
+  resolved "https://registry.yarnpkg.com/@ionic/vue-router/-/vue-router-8.8.3.tgz#c681c1179b2df4b1fbdf16f043b7c6b4686507ea"
+  integrity sha512-jR5NDspvg5kbrzr9zgu+6cZYVjubDegdB8WZd5x6y0A7mTXSVb0PJOwf5JtJZT9DqwMGChOaasMjcYQpnPChRA==
   dependencies:
-    "@ionic/vue" "8.8.2"
+    "@ionic/vue" "8.8.3"
 
-"@ionic/vue@8.8.2":
-  version "8.8.2"
-  resolved "https://registry.yarnpkg.com/@ionic/vue/-/vue-8.8.2.tgz#4abc0b29ddea31b633110aa40c429202d785411f"
-  integrity sha512-egNOq0UfDrI9nq0OZcKGVstrqpajvOuAbplNF5izx0eeDCwU/3o7z+ehU7zzqnEBgK1DWW4v/TEdAxRUREMAcA==
+"@ionic/vue@8.8.3":
+  version "8.8.3"
+  resolved "https://registry.yarnpkg.com/@ionic/vue/-/vue-8.8.3.tgz#ca72576895487c722774f185d03d09a1ec954727"
+  integrity sha512-6bwi2RodoxECt2Ef6C6km4ZkuH4TweyhF800/XpunOKjM2Iya3pD1j230KSRd35cJpAenGc1uplLdIZhAyMsWg==
   dependencies:
-    "@ionic/core" "8.8.2"
+    "@ionic/core" "8.8.3"
     "@stencil/vue-output-target" "0.10.7"
     ionicons "^8.0.13"
 
@@ -269,10 +269,10 @@
   resolved "https://registry.yarnpkg.com/@material/material-color-utilities/-/material-color-utilities-0.4.0.tgz#bf7151aadf482a2534ac03c8e746e17625c0ec51"
   integrity sha512-dlq6VExJReb8dhjj3a/yTigr3ncNwoFmL5Iy2ENtbDX03EmNeOEdZ+vsaGrj7RTuO+mB7L58II4LCsl4NpM8uw==
 
-"@mermaid-js/parser@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@mermaid-js/parser/-/parser-1.0.1.tgz#51c5f43c918a37c35904adef40c98e5862effbdf"
-  integrity sha512-opmV19kN1JsK0T6HhhokHpcVkqKpF+x2pPDKKM2ThHtZAB5F4PROopk0amuVYK5qMrIA4erzpNm8gmPNJgMDxQ==
+"@mermaid-js/parser@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@mermaid-js/parser/-/parser-1.1.0.tgz#8f96c35ddab34a1b12af58f2c59f5abb7d4743fc"
+  integrity sha512-gxK9ZX2+Fex5zu8LhRQoMeMPEHbc73UKZ0FQ54YrQtUxE1VVhMwzeNtKRPAu5aXks4FasbMe4xB4bWrmq6Jlxw==
   dependencies:
     langium "^4.0.0"
 
@@ -2131,14 +2131,14 @@ marked@^17.0.5:
   resolved "https://registry.yarnpkg.com/marked/-/marked-17.0.5.tgz#8fc6878a439463a007b05d346d2ad50a87ec3f0e"
   integrity sha512-6hLvc0/JEbRjRgzI6wnT2P1XuM1/RrrDEX0kPt0N7jGm1133g6X7DlxFasUIx+72aKAr904GTxhSLDrd5DIlZg==
 
-mermaid@^11.13.0:
-  version "11.13.0"
-  resolved "https://registry.yarnpkg.com/mermaid/-/mermaid-11.13.0.tgz#da1a05337073a3141aa8c7d2608048f5db9ed587"
-  integrity sha512-fEnci+Immw6lKMFI8sqzjlATTyjLkRa6axrEgLV2yHTfv8r+h1wjFbV6xeRtd4rUV1cS4EpR9rwp3Rci7TRWDw==
+mermaid@^11.14.0:
+  version "11.14.0"
+  resolved "https://registry.yarnpkg.com/mermaid/-/mermaid-11.14.0.tgz#ce81b22bc10f3117ef7737406ef2d10ee1741769"
+  integrity sha512-GSGloRsBs+JINmmhl0JDwjpuezCsHB4WGI4NASHxL3fHo3o/BRXTxhDLKnln8/Q0lRFRyDdEjmk1/d5Sn1Xz8g==
   dependencies:
     "@braintree/sanitize-url" "^7.1.1"
     "@iconify/utils" "^3.0.2"
-    "@mermaid-js/parser" "^1.0.1"
+    "@mermaid-js/parser" "^1.1.0"
     "@types/d3" "^7.4.3"
     "@upsetjs/venn.js" "^2.0.0"
     cytoscape "^3.33.1"
