@@ -43,7 +43,7 @@
 
 	const listener = (event: Event) => {
 		if((event as DatabaseEvent).data.table === "members")
-			void Array.fromAsync(getFilteredMembers(search.value)).then(res => members.value = res);
+			void resetMembers();
 	};
 
 	watch(search, async () => {
