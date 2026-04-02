@@ -24,20 +24,20 @@
 
 <template>
 	<div class="console">
-		<p
+		<div
 			v-for="entry in console"
 			:key="entry.date.valueOf()"
 			:class="[entry.severity]"
 		>
-			<span class="date">
+			<div class="date">
 				{{ entry.date.toISOString() }}
-			</span>
-			<span class="content">
+			</div>
+			<div class="content">
 				<span v-for="[i, obj] in entry.data.map(mapData).entries()" :key="i">
 					{{ obj }}
 				</span>
-			</span>
-		</p>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -50,35 +50,43 @@
 		max-height: 800px;
 		overflow-x: hidden;
 		overflow-y: scroll;
-	}
 
-	.console p {
-		padding: 8px 16px;
-		margin: 0;
-		display: grid;
-		grid-template-columns: 1fr 3fr;
-		gap: 2px;
-		border-radius: 4px;
-		background-color: rgb(var(--md3-surface-container));
+		> div {
+			padding: 8px 16px;
+			margin: 0;
+			display: grid;
+			grid-template-columns: 1fr 3fr;
+			gap: 2px;
+			border-radius: 4px;
+			background-color: rgb(var(--md3-surface-container));
 
-		&.info {
-			color: rgb(var(--md3-primary));
-			background-color: rgb(var(--md3-primary-container));
-		}
+			&.info {
+				color: rgb(var(--md3-primary));
+				background-color: rgb(var(--md3-primary-container));
+			}
 
-		&.debug {
-			color: rgb(var(--md3-secondary));
-			background-color: rgb(var(--md3-secondary-container));
-		}
+			&.debug {
+				color: rgb(var(--md3-secondary));
+				background-color: rgb(var(--md3-secondary-container));
+			}
 
-		&.warn {
-			color: rgb(var(--md3-tertiary));
-			background-color: rgb(var(--md3-tertiary-container));
-		}
+			&.warn {
+				color: rgb(var(--md3-tertiary));
+				background-color: rgb(var(--md3-tertiary-container));
+			}
 
-		&.error {
-			color: rgb(var(--md3-error));
-			background-color: rgb(var(--md3-error-container));
+			&.error {
+				color: rgb(var(--md3-error));
+				background-color: rgb(var(--md3-error-container));
+			}
+
+			span:has(~ span), span ~ span {
+				display: inline-block;
+				padding: 2px;
+				border-radius: 2px;
+				border: 1px solid;
+				margin: 1px;
+			}
 		}
 	}
 </style>
