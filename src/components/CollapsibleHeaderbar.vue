@@ -183,10 +183,10 @@
 
 	@keyframes content_anim {
 		0% {
-			transform: translateX(0);
+			transform: translateX(calc(-1px * v-bind('contentOffset')));
 		}
 		100% {
-			transform: translateX(calc(-1 * v-bind('contentOffset')));
+			transform: translateX(0);
 		}
 	}
 
@@ -203,7 +203,7 @@
 
 	@keyframes slots_anim {
 		0% {
-			transform: translateY(0);
+			transform: translateY(calc(var(--transition-size) / 2 * -1));
 		}
 		100% {
 			transform: translateY(calc(var(--transition-size) / 2));
