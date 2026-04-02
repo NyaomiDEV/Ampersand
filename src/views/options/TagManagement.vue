@@ -17,6 +17,7 @@
 	import { promptOkCancel, toast } from "../../lib/util/misc.ts";
 	import { useTranslation } from "i18next-vue";
 	import VirtualList from "../../components/VirtualList.vue";
+	import InfiniteLoader from "../../components/InfiniteLoader.vue";
 
 	const route = useRoute();
 	const i18next = useTranslation();
@@ -30,25 +31,54 @@
 	});
 
 	const type = ref("member");
-
 	const tags = shallowRef<Tag[]>();
+	const iter = shallowRef(getFilteredTags(search.value));
+	const iterDone = ref(false);
+
 	watch([search, type], async () => {
-		tags.value = (await Array.fromAsync(getFilteredTags(search.value))).filter(x => x.type === type.value).sort((a, b) => a.name.localeCompare(b.name));
-	}, { immediate: true });
+		await resetTags();
+	});
 
 	const listener = (event: Event) => {
 		if((event as DatabaseEvent).data.table === "tags")
-			void Array.fromAsync(getFilteredTags(search.value)).then(res => tags.value = res.filter(x => x.type === type.value).sort((a, b) => a.name.localeCompare(b.name)));
+			void resetTags();
 	};
 
 	onMounted(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
-		tags.value = (await Array.fromAsync(getFilteredTags(search.value))).filter(x => x.type === type.value).sort((a, b) => a.name.localeCompare(b.name));
+		await resetTags();
 	});
 
 	onUnmounted(() => {
 		DatabaseEvents.removeEventListener("updated", listener);
 	});
+
+	async function resetTags(){
+		tags.value = undefined;
+		iterDone.value = false;
+		iter.value = getFilteredTags(search.value);
+		await pollTags();
+	}
+
+	async function pollTags(cb?: () => void){
+		let i = 0;
+		const _tags: Tag[] = [];
+		while(true) {
+			const data = await iter.value.next();
+			if(data.value) _tags.push(data.value);
+			i++;
+			if(data.done) iterDone.value = true;
+			if(i >= 20 || data.done) break;
+		}
+
+		if(!tags.value)
+			tags.value = _tags;
+		else
+			tags.value = [...tags.value, ..._tags];
+
+		if(cb)
+			cb();
+	}
 
 	function closeSlidingItems() {
 		const el: globalThis.HTMLIonListElement = list.value?.$el;
@@ -58,12 +88,18 @@
 	}
 
 	async function deleteTag(tag: Tag){
-		if(await promptOkCancel(
-			i18next.t("tagManagement:edit.delete.title"),
-			undefined,
-			i18next.t("tagManagement:edit.delete.confirm")
-		))
-			await removeTag(tag.uuid);
+		try{
+			if(await promptOkCancel(
+				i18next.t("tagManagement:edit.delete.title"),
+				undefined,
+				i18next.t("tagManagement:edit.delete.confirm")
+			)){
+				const result = await removeTag(tag.uuid);
+				if(!result.success) throw new Error(`E: ${result.err as Error}`);
+			}
+		}catch(e){
+			await toast((e as Error).message);
+		}
 		closeSlidingItems();
 	}
 
@@ -116,7 +152,7 @@
 		<SpinnerFullscreen v-if="!tags" />
 		<IonContent v-else>
 			<IonList ref="list">
-				<VirtualList :entries="tags" :min-size="56" :gap="2">
+				<VirtualList :entries="tags.filter(x => x.type === type)" :min-size="56" :gap="2">
 					<template #default="{ entry: tag }">
 						<IonItemSliding>
 							<IonItem
@@ -138,6 +174,8 @@
 					</template>
 				</VirtualList>
 			</IonList>
+
+			<InfiniteLoader v-if="!iterDone" @infinite="pollTags" />
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
 				<IonFabButton router-link="/options/tagManagement/edit">

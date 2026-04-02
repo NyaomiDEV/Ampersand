@@ -11,13 +11,15 @@
 		IonCheckbox,
 	} from "@ionic/vue";
 
-	import { onBeforeMount, reactive, ref, shallowRef, toRaw, watch } from "vue";
+	import { onMounted, onUnmounted, reactive, ref, shallowRef, toRaw, watch } from "vue";
 	import { getFilteredTags } from "../lib/db/tables/tags";
 	import { Tag } from "../lib/db/entities";
 	import TagColor from "../components/tag/TagColor.vue";
 	import TagLabel from "../components/tag/TagLabel.vue";
 	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
 	import VirtualList from "../components/VirtualList.vue";
+	import InfiniteLoader from "../components/InfiniteLoader.vue";
+	import { DatabaseEvent, DatabaseEvents } from "../lib/db/events";
 
 	const props = defineProps<{
 		customTitle?: string,
@@ -32,18 +34,57 @@
 	const selectedTags = reactive<Tag[]>([...props.modelValue || []]);
 	const search = ref("");
 	const tags = shallowRef<Tag[]>();
+	const iter = shallowRef(getFilteredTags(search.value));
+	const iterDone = ref(false);
 
 	watch(selectedTags, () => {
 		emit("update:modelValue",  [...toRaw(selectedTags)]);
 	});
 
+	const listener = (event: Event) => {
+		if((event as DatabaseEvent).data.table === "tags")
+			void resetTags();
+	};
+
 	watch(search, async () => {
-		tags.value = (await Array.fromAsync(getFilteredTags(search.value))).filter(x => x.type === props.type).sort((a, b) => a.name.localeCompare(b.name));
+		await resetTags();
 	});
 
-	onBeforeMount(async () => {
-		tags.value = (await Array.fromAsync(getFilteredTags(search.value))).filter(x => x.type === props.type).sort((a, b) => a.name.localeCompare(b.name));
+	onMounted(async () => {
+		DatabaseEvents.addEventListener("updated", listener);
+		await resetTags();
 	});
+
+	onUnmounted(() => {
+		DatabaseEvents.removeEventListener("updated", listener);
+	});
+
+	async function resetTags(){
+		tags.value = undefined;
+		iterDone.value = false;
+		iter.value = getFilteredTags(search.value);
+		await pollTags();
+	}
+
+	async function pollTags(cb?: () => void){
+		let i = 0;
+		const _tags: Tag[] = [];
+		while(true) {
+			const data = await iter.value.next();
+			if(data.value) _tags.push(data.value);
+			i++;
+			if(data.done) iterDone.value = true;
+			if(i >= 20 || data.done) break;
+		}
+
+		if(!tags.value)
+			tags.value = _tags;
+		else
+			tags.value = [...tags.value, ..._tags];
+
+		if(cb)
+			cb();
+	}
 
 	function check(tag: Tag, checked: boolean){
 		if(checked)
@@ -78,7 +119,7 @@
 		<SpinnerFullscreen v-if="!tags" />
 		<IonContent v-else>
 			<IonList>
-				<VirtualList :entries="tags" :min-size="56" :gap="2">
+				<VirtualList :entries="tags.filter(x => x.type === props.type)" :min-size="56" :gap="2">
 					<template #default="{ entry: tag }">
 						<IonItem button>
 							<TagColor slot="start" :tag />
@@ -89,6 +130,9 @@
 					</template>
 				</VirtualList>
 			</IonList>
+
+			<InfiniteLoader v-if="!iterDone" @infinite="pollTags" />
+
 		</IonContent>
 	</IonModal>
 </template>
