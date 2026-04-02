@@ -24,5 +24,9 @@
 	},
 	"contrastLevel": {
 		"title": "Nivel de contraste"
+	},
+	"header": "Accesibilidad",
+	"highLegibilityFont": {
+		"title": "Fuente claramente legible"
 	}
 }
