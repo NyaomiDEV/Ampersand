@@ -82,11 +82,10 @@ for(const lang of new Set(translations.keys().map(x => x.lang))){
 	try {
 		await import(`dayjs/locale/${lang.toLowerCase()}`);
 	}catch(_e){
-		console.error("DayJS doesn't have this locale:", lang);
 		try {
 			await import(`../../translations/${lang}/dayjs`);
 		}catch(_e){
-			console.error("... and we don't have a replacement for that", lang);
+			console.error("DayJS does not have this locale and we don't have a replacement for that", lang);
 		}
 	}
 }
