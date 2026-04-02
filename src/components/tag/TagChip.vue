@@ -19,6 +19,12 @@
 		clickable?: boolean
 	}>();
 
+	async function click(e: Event){
+		if(!props.clickable) return;
+		e.stopPropagation();
+		await showModal();
+	}
+
 	async function showModal(){
 		const vnode = h(TagDescription, {
 			tag: props.tag,
@@ -34,7 +40,7 @@
 </script>
 
 <template>
-	<IonChip @click="e => { if(props.clickable) { e.stopPropagation(); void showModal() } }">
+	<IonChip @click="click">
 		<IonIcon v-if="!props.tag.color" :icon="tagMD" />
 		<TagColor :tag="props.tag" />
 		<TagLabel :tag="props.tag" />

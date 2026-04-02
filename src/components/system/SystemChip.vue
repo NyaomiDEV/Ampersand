@@ -2,6 +2,7 @@
 	import {
 		IonChip,
 		IonLabel,
+		useIonRouter,
 	} from "@ionic/vue";
 
 	import { System } from "../../lib/db/entities";
@@ -9,6 +10,8 @@
 
 	import Avatar from "../Avatar.vue";
 	import accountCircle from "@material-symbols/svg-600/outlined/supervised_user_circle.svg";
+
+	const router = useIonRouter();
 
 	const props = withDefaults(defineProps<{
 		system: System,
@@ -18,7 +21,11 @@
 		showBorderColor: true
 	});
 
-	const routerLink = props.clickable ? `/options/systems/edit?uuid=${props.system.uuid}` : undefined;
+	function click(e: Event){
+		if(!props.clickable) return;
+		e.stopPropagation();
+		router.push(`/options/systems/edit?uuid=${props.system.uuid}`);
+	}
 
 	function getStyle(){
 		const style: Record<string, string> = {};
@@ -36,8 +43,7 @@
 			'with-border-color': props.showBorderColor && accessibilityConfig.colorIndicatorPosition === 'list-item'
 		}"
 		:style="getStyle()"
-		:router-link
-		@click="(e) => e.stopPropagation()"
+		@click="click"
 	>
 		<Avatar
 			:image="system.image"
