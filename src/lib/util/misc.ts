@@ -2,7 +2,7 @@ import { actionSheetController, alertController, createAnimation, getIonPageElem
 import dayjs from "dayjs";
 import { Ref } from "vue";
 import { appConfig } from "../config";
-import { Member, System } from "../db/entities";
+import { Member, System, Tag } from "../db/entities";
 import i18next, { computePercentage, getLocaleInfo } from "../i18n";
 import { open } from "@tauri-apps/plugin-dialog";
 import { readFile } from "@tauri-apps/plugin-fs";
@@ -266,6 +266,10 @@ export function sortSystems(a: IndexEntry<System>, b: IndexEntry<System>) {
 	if (a.isPinned && !b.isPinned) return -1;
 	if (!a.isPinned && b.isPinned) return 1;
 
+	return a.name!.localeCompare(b.name!);
+}
+
+export function sortTags(a: IndexEntry<Tag>, b: IndexEntry<Tag>) {
 	return a.name!.localeCompare(b.name!);
 }
 

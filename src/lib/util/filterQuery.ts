@@ -1,4 +1,4 @@
-import { getTagFromNameHashtag } from "../db/tables/tags";
+import { getTagFromName } from "../db/tables/tags";
 import { UUID } from "../db/entities";
 
 export type SystemFilterQuery = {
@@ -133,7 +133,7 @@ export async function parseMemberFilterQuery(search: string): Promise<MemberFilt
 	};
 
 	for(const [_tag, shouldInclude] of rawParsed.tags.entries()){
-		const tag = await getTagFromNameHashtag(_tag);
+		const tag = await getTagFromName(_tag, true);
 		if (tag) result.tags.set(tag.uuid, shouldInclude);
 	}
 
@@ -259,7 +259,7 @@ export async function parseJournalPostFilterQuery(search: string) {
 	};
 
 	for(const [_tag, shouldInclude] of rawParsed.tags.entries()){
-		const tag = await getTagFromNameHashtag(_tag);
+		const tag = await getTagFromName(_tag, true);
 		if (tag) result.tags.set(tag.uuid, shouldInclude);
 	}
 

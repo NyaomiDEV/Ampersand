@@ -5,9 +5,31 @@ import { filterTag } from "../../search";
 import { getMembers, updateMember } from "./members";
 import { getJournalPosts, updateJournalPost } from "./journalPosts";
 import { TransactionStatus } from "../types";
+import { sortTags } from "../../util/misc";
 
-export function getTags(){
-	return db.tags.iterate();
+export async function* getTags(maxIter = 20){
+	const uuids = db.tags.index.sort(sortTags).map(x => x.uuid);
+	
+	const f = (offset: number, maxIter: number) => {
+		const chunk: Promise<Tag | undefined>[] = [];
+		for (let i = offset; i < offset + maxIter; i++) {
+			if (uuids[i]) {
+				const data = db.tags.get(uuids[i]);
+				chunk.push(data);
+			}
+		}
+		return chunk;
+	};
+	
+	let offset = 0;
+	while (offset < uuids.length) {
+		const promises = f(offset, maxIter);
+		offset += maxIter;
+		for (const promise of promises) {
+			const data = await promise;
+			if (data) yield data;
+		}
+	};
 }
 
 export async function* getFilteredTags(query: string){
@@ -100,11 +122,14 @@ export async function updateTag(uuid: UUID, newContent: Partial<Tag>): Promise<T
 	}
 }
 
-export async function getTagFromNameHashtag(name: string){
-	for await (const x of db.tags.iterate()){
-		if(
-			x.name.toLowerCase().replace(/\s/g, "") === name.toLowerCase()
-		) return x;
+export async function getTagFromName(name: string, allAttached: boolean){
+	for (const x of db.tags.index){
+		if(allAttached){
+			if (
+				x.name!.toLowerCase().replace(/\s/g, "") === name.toLowerCase()
+			) return getTag(x.uuid);
+		} else 
+			if(x.name!.toLowerCase() === name.toLowerCase()) return getTag(x.uuid);
 	}
-	return;
+	return undefined;
 }
