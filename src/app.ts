@@ -1,3 +1,6 @@
+// setup console
+import "./lib/console";
+
 // Vue and Ionic
 import { createApp, watch } from "vue";
 import { IonicVue } from "@ionic/vue";

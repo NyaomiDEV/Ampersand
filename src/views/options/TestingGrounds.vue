@@ -32,6 +32,7 @@
 	import { onMounted, ref } from "vue";
 	import { exportDatabaseToJSON, importDatabaseFromJSON } from "../../lib/db/ioutils/json";
 	import { getTables } from "../../lib/db/tables";
+	import ConsoleLog from "../../components/ConsoleLog.vue";
 	
 	const i18next = useTranslation();
 
@@ -203,6 +204,10 @@
 		</IonHeader>
 
 		<IonContent>
+			<IonListHeader>Console output</IonListHeader>
+			<IonList>
+				<ConsoleLog />
+			</IonList>
 			<IonListHeader>Pay your respects here</IonListHeader>
 			<IonList>
 				<IonItem button>
