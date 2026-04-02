@@ -84,7 +84,7 @@ export async function replace(value: any) {
 	} else if (value instanceof File) {			
 		return {
 			_meta: { type: "file", name: value.name, mimeType: value.type },
-			value: await value.bytes()
+			value: new Uint8Array(await value.arrayBuffer())
 		};
 	} else if ("_meta" in value) {
 		// escape "_meta" properties
