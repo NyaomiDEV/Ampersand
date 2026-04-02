@@ -116,40 +116,63 @@
 	}
 
 	async function addFrontingEntry(member: Member) {
-		await newFrontingEntry({
-			member: member.uuid,
-			startTime: new Date(),
-			isMainFronter: false,
-			isLocked: false
-		});
-		void sendFrontingChangedEvent();
-		await toast(i18next.t("members:toasts.addToFront"));
+		try {
+			const result = await newFrontingEntry({
+				member: member.uuid,
+				startTime: new Date(),
+				isMainFronter: false,
+				isLocked: false
+			});
+			if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+
+			void sendFrontingChangedEvent();
+			await toast(i18next.t("members:toasts.addToFront"));
+		}catch(e){
+			await toast((e as Error).message);
+		}
 
 		closeSlidingItems();
 	}
 
 	async function removeFrontingEntry(member: Member) {
-		await removeFronter(member);
-		void sendFrontingChangedEvent();
-		await toast(i18next.t("members:toasts.removeFromFront"));
+		try{
+			const result = await removeFronter(member);
+			if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+
+			void sendFrontingChangedEvent();
+			await toast(i18next.t("members:toasts.removeFromFront"));
+		}catch(e){
+			await toast((e as Error).message);
+		}
 
 		closeSlidingItems();
 	}
 
 	async function setMainFrontingEntry(member: Member, value: boolean){
-		await setMainFronter(member, value);
-		void sendFrontingChangedEvent();
-		if(value) await toast(i18next.t("members:toasts.setMainFronter"));
-		else await toast(i18next.t("members:toasts.unsetMainFronter"));
+		try{
+			const result = await setMainFronter(member, value);
+			if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+
+			void sendFrontingChangedEvent();
+			if(value) await toast(i18next.t("members:toasts.setMainFronter"));
+			else await toast(i18next.t("members:toasts.unsetMainFronter"));
+		}catch(e){
+			await toast((e as Error).message);
+		}
 
 		closeSlidingItems();
 	}
 
 	async function setSoleFrontingEntry(member: Member){
-		await setSoleFronter(member);
-		void sendFrontingChangedEvent();
-		await toast(i18next.t("members:toasts.setSoleFronter"));
-		
+		try{
+			const result = await setSoleFronter(member);
+			if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+
+			void sendFrontingChangedEvent();
+			await toast(i18next.t("members:toasts.setSoleFronter"));
+		}catch(e){
+			await toast((e as Error).message);
+		}
 		closeSlidingItems();
 	}
 

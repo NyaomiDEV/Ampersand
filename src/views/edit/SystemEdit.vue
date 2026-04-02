@@ -64,18 +64,24 @@
 		const uuid = system.value.uuid;
 		const _system = toRaw(system.value);
 
-		if(!uuid){
-			await newSystem({
-				..._system
-			});
-			router.back();
+		try{
+			if(!uuid){
+				const result = await newSystem({
+					..._system
+				});
+				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
 
-			return;
+				router.back();
+				return;
+			}
+
+			const result = await updateSystem(uuid, _system);
+			if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+
+			isEditing.value = false;
+		}catch(e){
+			await toast((e as Error).message);
 		}
-
-		await updateSystem(uuid, _system);
-
-		isEditing.value = false;
 	}
 
 	async function modifyPicture(){
@@ -101,13 +107,19 @@
 	}
 
 	async function removeSystem() {
-		if(await promptOkCancel(
-			i18next.t("systems:edit.delete.title"),
-			undefined,
-			i18next.t("systems:edit.delete.confirm")
-		)){
-			await deleteSystem(system.value.uuid!);
-			router.back();
+		try{
+			if(await promptOkCancel(
+				i18next.t("systems:edit.delete.title"),
+				undefined,
+				i18next.t("systems:edit.delete.confirm")
+			)){
+				const result = await deleteSystem(system.value.uuid!);
+				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+
+				router.back();
+			}
+		}catch(e){
+			await toast((e as Error).message);
 		}
 	}
 

@@ -4,6 +4,7 @@ import { UUIDable, JournalPost, UUID } from "../entities";
 import { getMember, defaultMember } from "./members";
 import dayjs from "dayjs";
 import { filterJournalPost } from "../../search";
+import { TransactionStatus } from "../types";
 
 export function getJournalPosts(){
 	return db.journalPosts.iterate();
@@ -16,22 +17,26 @@ export async function toJournalPostComplete(journalPost: JournalPost){
 	};
 }
 
-export async function newJournalPost(journalPost: Omit<JournalPost, keyof UUIDable>) {
+export async function newJournalPost(journalPost: Omit<JournalPost, keyof UUIDable>): Promise<TransactionStatus<string>> {
 	try{
 		const uuid = window.crypto.randomUUID();
-		await db.journalPosts.add(uuid, {
+		const result = await db.journalPosts.add(uuid, {
 			...journalPost,
 			uuid
 		});
+
+		if(!result) throw new Error("already exists in database");
+
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "journalPosts",
 			event: "new",
 			uuid,
 			newData: journalPost
 		}));
-		return uuid;
-	}catch(_error){
-		return false;
+		return { success: true, detail: uuid };
+	}catch(_e){
+		console.error(_e);
+		return { success: false, err: _e };
 	}
 }
 
@@ -39,7 +44,7 @@ export async function getJournalPost(uuid: UUID){
 	return await db.journalPosts.get(uuid);
 }
 
-export async function deleteJournalPost(uuid: UUID) {
+export async function deleteJournalPost(uuid: UUID): Promise<TransactionStatus<void>> {
 	try {
 		await db.journalPosts.delete(uuid);
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
@@ -48,13 +53,14 @@ export async function deleteJournalPost(uuid: UUID) {
 			uuid,
 			delta: {}
 		}));
-		return true;
-	} catch (_error) {
-		return false;
+		return { success: true };
+	} catch (_e) {
+		console.error(_e);
+		return { success: false, err: _e };
 	}
 }
 
-export async function updateJournalPost(uuid: UUID, newContent: Partial<JournalPost>) {
+export async function updateJournalPost(uuid: UUID, newContent: Partial<JournalPost>): Promise<TransactionStatus<{ oldData: JournalPost, newData: JournalPost }>> {
 	try{
 		const updated = await db.journalPosts.update(uuid, newContent);
 		if(updated) {
@@ -66,11 +72,12 @@ export async function updateJournalPost(uuid: UUID, newContent: Partial<JournalP
 				oldData: updated.oldData,
 				newData: updated.newData
 			}));
-			return true;
+			return { success: true, detail: updated };
 		}
-		return false;
-	}catch(_error){
-		return false;
+		throw new Error("not updated, did not exist in db");
+	}catch(_e){
+		console.error(_e);
+		return { success: false, err: _e };
 	}
 }
 

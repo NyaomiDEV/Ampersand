@@ -2,8 +2,9 @@ import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUID, UUIDable, Tag } from "../entities";
 import { filterTag } from "../../search";
-import { getMembers } from "./members";
-import { getJournalPosts } from "./journalPosts";
+import { getMembers, updateMember } from "./members";
+import { getJournalPosts, updateJournalPost } from "./journalPosts";
+import { TransactionStatus } from "../types";
 
 export function getTags(){
 	return db.tags.iterate();
@@ -16,7 +17,7 @@ export async function* getFilteredTags(query: string){
 	}
 }
 
-export async function newTag(tag: Omit<Tag, keyof UUIDable>) {
+export async function newTag(tag: Omit<Tag, keyof UUIDable>): Promise<TransactionStatus<string>> {
 	try{
 		const uuid = window.crypto.randomUUID();
 		await db.tags.add(uuid, {
@@ -29,9 +30,10 @@ export async function newTag(tag: Omit<Tag, keyof UUIDable>) {
 			uuid,
 			newData: tag
 		}));
-		return uuid;
-	}catch(_error){
-		return false;
+		return { success: true, detail: uuid };
+	}catch(_e){
+		console.error(_e);
+		return { success: false, err: _e };
 	}
 }
 
@@ -39,43 +41,45 @@ export function getTag(uuid: UUID){
 	return db.tags.get(uuid);
 }
 
-export async function removeTag(uuid: UUID){
-	const tag = await db.tags.get(uuid);
-	if(tag.type === "member"){
-		const members = getMembers();
-		for await (const member of members){
-			const delta = { tags: member.tags?.filter(tag => tag !== uuid) };
-			await db.members.update(member.uuid, delta);
-			DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
-				table: "members",
-				event: "modified",
-				uuid: member.uuid,
-				delta
-			}));
+export async function removeTag(uuid: UUID): Promise<TransactionStatus<void>> {
+	try {
+		const tag = await db.tags.get(uuid);
+
+		switch(tag.type){
+			case "member":
+				for await (const member of getMembers()) {
+					if (!member.tags.includes(uuid)) continue;
+
+					const delta = { tags: member.tags.filter(tag => tag !== uuid) };
+					await updateMember(member.uuid, delta);	
+				}
+				break;
+			case "journal":
+				for await (const journalPost of getJournalPosts()) {
+					if(!journalPost.tags.includes(uuid)) continue;
+
+					const delta = { tags: journalPost.tags.filter(tag => tag !== uuid) };
+					await updateJournalPost(journalPost.uuid, delta);
+				}
+				break;
 		}
-	} else if(tag.type === "journal") {
-		const journalPosts = getJournalPosts();
-		for await (const journalPost of journalPosts) {
-			const delta = { tags: journalPost.tags?.filter(tag => tag !== uuid) };
-			await db.journalPosts.update(journalPost.uuid, delta);
-			DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
-				table: "journalPosts",
-				event: "modified",
-				uuid: journalPost.uuid,
-				delta
-			}));
-		}
+
+		await db.tags.delete(uuid);
+		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
+			table: "tags",
+			event: "deleted",
+			uuid,
+			delta: {}
+		}));
+
+		return { success: true };
+	} catch(_e){
+		console.error(_e);
+		return { success: false, err: _e };
 	}
-	await db.tags.delete(uuid);
-	DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
-		table: "tags",
-		event: "deleted",
-		uuid,
-		delta: {}
-	}));
 }
 
-export async function updateTag(uuid: UUID, newContent: Partial<Tag>) {
+export async function updateTag(uuid: UUID, newContent: Partial<Tag>): Promise<TransactionStatus<{ oldData: Tag, newData: Tag }>> {
 	try{
 		const updated = await db.tags.update(uuid, newContent);
 		if(updated) {
@@ -87,11 +91,12 @@ export async function updateTag(uuid: UUID, newContent: Partial<Tag>) {
 				oldData: updated.oldData,
 				newData: updated.newData
 			}));
-			return true;
+			return { success: true, detail: updated };
 		}
-		return false;
-	}catch(_error){
-		return false;
+		throw new Error("not updated, did not exist in db");
+	}catch(_e){
+		console.error(_e);
+		return { success: false, err: _e };
 	}
 }
 

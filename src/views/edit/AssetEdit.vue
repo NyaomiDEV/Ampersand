@@ -25,7 +25,7 @@
 	import { PartialBy } from "../../lib/types";
 	import { useRoute } from "vue-router";
 	import { useTranslation } from "i18next-vue";
-	import { getDocumentFile, promptOkCancel } from "../../lib/util/misc";
+	import { getDocumentFile, promptOkCancel, toast } from "../../lib/util/misc";
 	import { useBlob } from "../../lib/util/blob";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import AssetItem from "../../components/AssetItem.vue";
@@ -65,24 +65,36 @@
 
 		if(!_asset.file.size) return;
 
-		if(!uuid){
-			await newAsset(_asset as PartialBy<Asset, "uuid">);
-			router.back();
-			return;
-		}
+		try{
+			if(!uuid){
+				const result = await newAsset(_asset as PartialBy<Asset, "uuid">);
+				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+				router.back();
+				return;
+			}
 
-		await updateAsset(uuid, _asset);
-		router.back();
+			const result = await updateAsset(uuid, _asset);
+			if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+
+			router.back();
+		}catch(e){
+			await toast((e as Error).message);
+		}
 	}
 
 	async function removeAsset(){
-		if(await promptOkCancel(
-			i18next.t("assetManager:edit.delete.title"),
-			undefined,
-			i18next.t("assetManager:edit.delete.confirm"),
-		)){
-			await deleteAsset(asset.value.uuid!);
-			router.back();
+		try{
+			if(await promptOkCancel(
+				i18next.t("assetManager:edit.delete.title"),
+				undefined,
+				i18next.t("assetManager:edit.delete.confirm"),
+			)){
+				const result = await deleteAsset(asset.value.uuid!);
+				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+				router.back();
+			}
+		}catch(e){
+			await toast((e as Error).message);
 		}
 	}
 

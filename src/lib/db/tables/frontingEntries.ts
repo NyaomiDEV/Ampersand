@@ -7,6 +7,7 @@ import { filterFrontingEntry } from "../../search";
 import { securityConfig } from "../../config";
 import { broadcastEvent } from "../../native/plugin";
 import { deleteFile } from "../../serialization";
+import { TransactionStatus } from "../types";
 
 export function getFrontingEntries(){
 	return db.frontingEntries.iterate();
@@ -24,26 +25,30 @@ export async function toFrontingEntryComplete(frontingEntry: FrontingEntry): Pro
 	};
 }
 
-export async function newFrontingEntry(frontingEntry: Omit<FrontingEntry, keyof UUIDable>) {
+export async function newFrontingEntry(frontingEntry: Omit<FrontingEntry, keyof UUIDable>): Promise<TransactionStatus<string>> {
 	try{
 		const uuid = window.crypto.randomUUID();
-		await db.frontingEntries.add(uuid, {
+		const result = await db.frontingEntries.add(uuid, {
 			...frontingEntry,
 			uuid
 		});
+
+		if(!result) throw new Error("already exists in database");
+
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "frontingEntries",
 			event: "new",
 			uuid,
 			newData: frontingEntry
 		}));
-		return uuid;
-	}catch(_error){
-		return false;
+		return { success: true, detail: uuid };
+	}catch(_e){
+		console.error(_e);
+		return { success: false, err: _e };
 	}
 }
 
-export async function deleteFrontingEntry(uuid: UUID) {
+export async function deleteFrontingEntry(uuid: UUID): Promise<TransactionStatus<void>> {
 	try {
 		await db.frontingEntries.delete(uuid);
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
@@ -52,15 +57,16 @@ export async function deleteFrontingEntry(uuid: UUID) {
 			uuid,
 			delta: {}
 		}));
-		return true;
-	} catch (_error) {
-		return false;
+		return { success: true };
+	} catch (_e) {
+		console.log(_e);
+		return { success: false, err: _e };
 	}
 }
 
 // HACK: Think of a better way
 let shouldDebounce = false;
-export async function updateFrontingEntry(uuid: UUID, newContent: Partial<FrontingEntry>) {
+export async function updateFrontingEntry(uuid: UUID, newContent: Partial<FrontingEntry>): Promise<TransactionStatus<{ oldData: FrontingEntry, newData: FrontingEntry }>> {
 	try{
 		const updated = await db.frontingEntries.update(uuid, newContent);
 		if(updated) {
@@ -70,8 +76,11 @@ export async function updateFrontingEntry(uuid: UUID, newContent: Partial<Fronti
 					.map(x => x.uuid);
 				shouldDebounce = true;
 
-				for (const _uuid of toUpdate)
-					await updateFrontingEntry(_uuid, { isMainFronter: false });
+				for (const _uuid of toUpdate){
+					const res = await updateFrontingEntry(_uuid, { isMainFronter: false });
+					if(res.err)
+						throw new Error(`updating non-main-fronter entry failed with error: ${res.err as Error}`);
+				}
 
 				shouldDebounce = false;
 			}
@@ -86,45 +95,66 @@ export async function updateFrontingEntry(uuid: UUID, newContent: Partial<Fronti
 					newData: updated.newData
 				}));
 			}
-			return true;
+			return { success: true, detail: updated };
 		}
-		return false;
-	}catch(_error){
-		return false;
+		throw new Error("not updated, did not exist in db");
+	}catch(_e){
+		console.error(_e);
+		return { success: false, err: _e };
 	}
 }
 
 export async function removeFronter(member: Member) {
-	const f = await getCurrentFrontEntryForMember(member);
-	if(!f) return false;
+	try{
+		const f = await getCurrentFrontEntryForMember(member);
+		if(!f) throw new Error("no fronting entry for said member");
 
-	return updateFrontingEntry(f.uuid, { endTime: new Date() });
+		return updateFrontingEntry(f.uuid, { endTime: new Date() });
+	}catch(_e){
+		console.error(_e);
+		return { success: false, err: _e };
+	}
 }
 
 export async function setMainFronter(member: Member, value: boolean){
-	const f = await getCurrentFrontEntryForMember(member);
-	if (!f) return false;
+	try {
+		const f = await getCurrentFrontEntryForMember(member);
+		if (!f) throw new Error("no fronting entry for said member");
 	
-	return updateFrontingEntry(f.uuid, { isMainFronter: value });
+		return updateFrontingEntry(f.uuid, { isMainFronter: value });
+	}catch (_e) {
+		console.error(_e);
+		return { success: false, err: _e };
+	}
 }
 
 export async function setSoleFronter(member: Member) {
-	const toUpdate = db.frontingEntries.index
-		.filter(x => !x.endTime && !x.isLocked && x.member !== member.uuid)
-		.map(x => x.uuid);
+	try{
+		const toUpdate = db.frontingEntries.index
+			.filter(x => !x.endTime && !x.isLocked && x.member !== member.uuid)
+			.map(x => x.uuid);
 
-	const endTime = new Date();
+		const endTime = new Date();
 
-	for(const uuid of toUpdate)
-		await updateFrontingEntry(uuid, { endTime });
+		for(const uuid of toUpdate){
+			const res = await updateFrontingEntry(uuid, { endTime });
+			if (res.err)
+				throw new Error(`updating fronter entry failed with error: ${res.err as Error}`);
+		}
 
-	if(!await getCurrentFrontEntryForMember(member)){
-		await newFrontingEntry({
-			member: member.uuid,
-			startTime: endTime,
-			isMainFronter: false,
-			isLocked: false
-		});
+		if(!await getCurrentFrontEntryForMember(member)){
+			return newFrontingEntry({
+				member: member.uuid,
+				startTime: endTime,
+				isMainFronter: false,
+				isLocked: false
+			});
+		}
+
+		return { success: true };
+	}catch(_e){
+		console.error(_e);
+		return { success: false, err: _e };
 	}
 }
 

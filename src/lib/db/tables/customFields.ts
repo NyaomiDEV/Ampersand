@@ -2,6 +2,7 @@ import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUID, UUIDable, CustomField } from "../entities";
 import { filterCustomField } from "../../search";
+import { TransactionStatus } from "../types";
 
 export function getCustomFields(){
 	return db.customFields.iterate();
@@ -14,26 +15,30 @@ export async function* getFilteredCustomFields(query: string){
 	}
 }
 
-export async function newCustomField(customField: Omit<CustomField, keyof UUIDable>) {
+export async function newCustomField(customField: Omit<CustomField, keyof UUIDable>): Promise<TransactionStatus<string>> {
 	try{
 		const uuid = window.crypto.randomUUID();
-		await db.customFields.add(uuid, {
+		const result = await db.customFields.add(uuid, {
 			...customField,
 			uuid
 		});
+
+		if(!result) throw new Error("already exists in database");
+
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "customFields",
 			event: "new",
 			uuid,
 			newData: customField
 		}));
-		return uuid;
-	}catch(_error){
-		return false;
+		return { success: true, detail: uuid };
+	}catch(_e){
+		console.error(_e);
+		return { success: false, err: _e };
 	}
 }
 
-export async function deleteCustomField(uuid: UUID) {
+export async function deleteCustomField(uuid: UUID): Promise<TransactionStatus<void>> {
 	try {
 		await db.customFields.delete(uuid);
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
@@ -42,13 +47,14 @@ export async function deleteCustomField(uuid: UUID) {
 			uuid,
 			delta: {}
 		}));
-		return true;
-	} catch (_error) {
-		return false;
+		return { success: true };
+	} catch (_e) {
+		console.log(_e);
+		return { success: false, err: _e };
 	}
 }
 
-export async function updateCustomField(uuid: UUID, newContent: Partial<CustomField>) {
+export async function updateCustomField(uuid: UUID, newContent: Partial<CustomField>): Promise<TransactionStatus<{ oldData: CustomField, newData: CustomField }>> {
 	try{
 		const updated = await db.customFields.update(uuid, newContent);
 		if(updated) {
@@ -60,10 +66,11 @@ export async function updateCustomField(uuid: UUID, newContent: Partial<CustomFi
 				oldData: updated.oldData,
 				newData: updated.newData
 			}));
-			return true;
+			return { success: true, detail: updated };
 		}
-		return false;
-	}catch(_error){
-		return false;
+		throw new Error("not updated, did not exist in db");
+	}catch(_e){
+		console.error(_e);
+		return { success: false, err: _e };
 	}
 }

@@ -4,6 +4,7 @@ import { UUID, UUIDable, BoardMessage, BoardMessageComplete } from "../entities"
 import { defaultMember, getMember } from "../tables/members";
 import dayjs from "dayjs";
 import { filterBoardMessage } from "../../search";
+import { TransactionStatus } from "../types";
 
 export function getBoardMessages(){
 	return db.boardMessages.iterate();
@@ -20,26 +21,30 @@ export async function toBoardMessageComplete(boardMessage: BoardMessage): Promis
 	};
 }
 
-export async function newBoardMessage(boardMessage: Omit<BoardMessage, keyof UUIDable>) {
+export async function newBoardMessage(boardMessage: Omit<BoardMessage, keyof UUIDable>): Promise<TransactionStatus<string>> {
 	try{
 		const uuid = window.crypto.randomUUID();
-		await db.boardMessages.add(uuid, {
+		const result = await db.boardMessages.add(uuid, {
 			...boardMessage,
 			uuid
 		});
+
+		if(!result) throw new Error("already exists in database");
+
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "boardMessages",
 			event: "new",
 			uuid,
 			newData: boardMessage
 		}));
-		return uuid;
-	}catch(_error){
-		return false;
+		return { success: true, detail: uuid };
+	}catch(_e){
+		console.error(_e);
+		return { success: false, err: _e };
 	}
 }
 
-export async function deleteBoardMessage(uuid: UUID) {
+export async function deleteBoardMessage(uuid: UUID): Promise<TransactionStatus<void>> {
 	try {
 		await db.boardMessages.delete(uuid);
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
@@ -48,13 +53,14 @@ export async function deleteBoardMessage(uuid: UUID) {
 			uuid,
 			delta: {}
 		}));
-		return true;
-	} catch (_error) {
-		return false;
+		return { success: true };
+	} catch (_e) {
+		console.error(_e);
+		return { success: false, err: _e };
 	}
 }
 
-export async function updateBoardMessage(uuid: UUID, newContent: Partial<BoardMessage>) {
+export async function updateBoardMessage(uuid: UUID, newContent: Partial<BoardMessage>): Promise<TransactionStatus<{ oldData: BoardMessage, newData: BoardMessage }>> {
 	try{
 		const updated = await db.boardMessages.update(uuid, newContent);
 		if(updated) {
@@ -66,11 +72,12 @@ export async function updateBoardMessage(uuid: UUID, newContent: Partial<BoardMe
 				oldData: updated.oldData,
 				newData: updated.newData
 			}));
-			return true;
+			return { success: true, detail: updated };
 		}
-		return false;
-	}catch(_error){
-		return false;
+		throw new Error("not updated, did not exist in db");
+	}catch(_e){
+		console.error(_e);
+		return { success: false, err: _e };
 	}
 }
 

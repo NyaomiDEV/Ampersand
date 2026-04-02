@@ -100,24 +100,38 @@
 		const uuid = tag.value.uuid;
 		const _tag = tag.value;
 
-		if(!uuid){
-			await newTag(_tag);
-			router.back();
-			return;
-		}
+		try{
+			if(!uuid){
+				const result = await newTag(_tag);
+				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
 
-		await updateTag(uuid, _tag);
-		router.back();
+				router.back();
+				return;
+			}
+
+			const result = await updateTag(uuid, _tag);
+			if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+
+			router.back();
+		}catch(e){
+			await toast((e as Error).message);
+		}
 	}
 
 	async function deleteTag(){
-		if(await promptOkCancel(
-			i18next.t("tagManagement:edit.delete.title"),
-			undefined,
-			i18next.t("tagManagement:edit.delete.confirm")
-		)){
-			await removeTag(tag.value.uuid!);
-			router.back();
+		try{
+			if(await promptOkCancel(
+				i18next.t("tagManagement:edit.delete.title"),
+				undefined,
+				i18next.t("tagManagement:edit.delete.confirm")
+			)){
+				const result = await removeTag(tag.value.uuid!);
+				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+
+				router.back();
+			}
+		}catch(e){
+			await toast((e as Error).message);
 		}
 	}
 

@@ -30,7 +30,7 @@
 	import MemberSelect from "./MemberSelect.vue";
 	import DatePopupPicker from "../components/DatePopupPicker.vue";
 	import { useTranslation } from "i18next-vue";
-	import { formatDate, promptOkCancel } from "../lib/util/misc";
+	import { formatDate, promptOkCancel, toast } from "../lib/util/misc";
 	import MemberItem from "../components/member/MemberItem.vue";
 
 	const i18next = useTranslation();
@@ -90,38 +90,44 @@
 
 		const _boardMessage = toRaw(boardMessage.value);
 
-		if(!_boardMessage.title.length)
-			_boardMessage.title = formatDate(_boardMessage.date, "collapsed");
-
-		if(!uuid){
-			await newBoardMessage({ ..._boardMessage, member: _boardMessage.member?.uuid || undefined });
-			await modalController.dismiss(null, "added");
-	
-			return;
-		}
-
-		await updateBoardMessage(uuid, {
-			..._boardMessage,
-			member: _boardMessage.member?.uuid || undefined
-		});
-
 		try{
-			await modalController.dismiss(null, "modified");
-		}catch(_){ /* empty */ }
-		// catch an error because the type might get changed, causing the parent to be removed from DOM
-		// however it's safe for us to ignore
+			if(!_boardMessage.title.length)
+				_boardMessage.title = formatDate(_boardMessage.date, "collapsed");
+
+			if(!uuid){
+				const result = await newBoardMessage({ ..._boardMessage, member: _boardMessage.member?.uuid || undefined });
+				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+
+				await modalController.dismiss(null, "added");	
+				return;
+			}
+
+			const result = await updateBoardMessage(uuid, {
+				..._boardMessage,
+				member: _boardMessage.member?.uuid || undefined
+			});
+			if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+
+			await modalController.dismiss(null, "modified").catch(() => false);		
+		}catch(e){
+			await toast((e as Error).message);
+		}
 	}
 
 	async function removeBoardMessage(){
-		if(await promptOkCancel(
-			i18next.t("messageBoard:edit.delete.title"),
-			undefined,
-			i18next.t("messageBoard:edit.delete.confirm")
-		)){
-			await deleteBoardMessage(boardMessage.value.uuid!);
-			try{
-				await modalController.dismiss(null, "deleted");
-			}catch(_){ /* empty */ }
+		try{
+			if(await promptOkCancel(
+				i18next.t("messageBoard:edit.delete.title"),
+				undefined,
+				i18next.t("messageBoard:edit.delete.confirm")
+			)){
+				const result = await deleteBoardMessage(boardMessage.value.uuid!);
+				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+
+				await modalController.dismiss(null, "deleted").catch(() => false);
+			}
+		}catch(e){
+			await toast((e as Error).message);
 		}
 	}
 </script>

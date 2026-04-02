@@ -25,7 +25,7 @@
 
 	import { PartialBy } from "../lib/types";
 	import { useTranslation } from "i18next-vue";
-	import { promptOkCancel } from "../lib/util/misc";
+	import { promptOkCancel, toast } from "../lib/util/misc";
 
 
 	const i18next = useTranslation();
@@ -46,33 +46,38 @@
 		const uuid = customField.value?.uuid;
 		const _customField = toRaw(customField.value);
 
-		if(!uuid) {
-			await newCustomField({ ..._customField });
-
-			await modalController.dismiss(null, "added");
-
-			return;
-		}
-
-		await updateCustomField(uuid, { ..._customField });
-
 		try{
-			await modalController.dismiss(null, "modified");
-		}catch(_){ /* empty */ }
-		// catch an error because the type might get changed, causing the parent to be removed from DOM
-		// however it's safe for us to ignore
+			if(!uuid) {
+				const result = await newCustomField({ ..._customField });
+				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+
+				await modalController.dismiss(null, "added");
+				return;
+			}
+
+			const result = await updateCustomField(uuid, { ..._customField });
+			if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+	
+			await modalController.dismiss(null, "modified").catch(() => false);
+		}catch(e){
+			await toast((e as Error).message);
+		}
 	}
 
 	async function removeCustomField(){
-		if (await promptOkCancel(
-			i18next.t("customFields:edit.delete.title"),
-			undefined,
-			i18next.t("customFields:edit.delete.confirm")
-		)){
-			await deleteCustomField(customField.value.uuid!);
-			try{
-				await modalController.dismiss(undefined, "deleted");
-			}catch(_){ /* empty */ }
+		try{
+			if (await promptOkCancel(
+				i18next.t("customFields:edit.delete.title"),
+				undefined,
+				i18next.t("customFields:edit.delete.confirm")
+			)){
+				const result = await deleteCustomField(customField.value.uuid!);
+				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+
+				await modalController.dismiss(undefined, "deleted").catch(() => false);
+			}
+		}catch(e){
+			await toast((e as Error).message);
 		}
 	}
 </script>

@@ -24,3 +24,9 @@ export type DatabaseEventData = {
 	oldData?: unknown,
 	newData?: unknown
 };
+
+export type TransactionStatus<T = unknown, E = unknown> = {
+	success: boolean,
+	err?: E,
+	detail?: T
+};

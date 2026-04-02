@@ -41,14 +41,20 @@
 	const tags = props.tags;
 
 	async function removePost() {
-		if(await promptOkCancel(
-			i18next.t("journal:edit.delete.title"),
-			undefined,
-			i18next.t("journal:edit.delete.confirm")
-		)){
-			await deleteJournalPost(post.value.uuid!);
-			await modalController.dismiss();
-			router.back();
+		try{
+			if(await promptOkCancel(
+				i18next.t("journal:edit.delete.title"),
+				undefined,
+				i18next.t("journal:edit.delete.confirm")
+			)){
+				const result = await deleteJournalPost(post.value.uuid!);
+				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+
+				await modalController.dismiss();
+				router.back();
+			}
+		}catch(e){
+			await toast((e as Error).message);
 		}
 	}
 

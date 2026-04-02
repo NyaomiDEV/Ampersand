@@ -2,6 +2,7 @@ import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUID, UUIDable, Asset } from "../entities";
 import { filterAsset } from "../../search";
+import { TransactionStatus } from "../types";
 
 export function getAssets(){
 	return db.assets.iterate();
@@ -14,22 +15,32 @@ export async function* getFilteredAssets(query: string){
 	}
 }
 
-export async function newAsset(asset: Omit<Asset, keyof UUIDable>) {
+export async function newAsset(asset: Omit<Asset, keyof UUIDable>): Promise<TransactionStatus<string>> {
 	try{
 		const uuid = window.crypto.randomUUID();
-		await db.assets.add(uuid, {
+		const result = await db.assets.add(uuid, {
 			...asset,
 			uuid
 		});
+
+		if(!result) throw new Error("already exists in database");
+
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "assets",
 			event: "new",
 			uuid,
 			newData: asset
 		}));
-		return uuid;
-	}catch(_error){
-		return false;
+		return {
+			success: true,
+			detail: uuid
+		};
+	}catch(_e){
+		console.error(_e);
+		return {
+			success: false,
+			err: _e
+		};
 	}
 }
 
@@ -37,7 +48,7 @@ export function getAsset(uuid: UUID){
 	return db.assets.get(uuid);
 }
 
-export async function deleteAsset(uuid: UUID) {
+export async function deleteAsset(uuid: UUID): Promise<TransactionStatus<void>> {
 	try {
 		await db.assets.delete(uuid);
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
@@ -46,13 +57,17 @@ export async function deleteAsset(uuid: UUID) {
 			uuid,
 			delta: {}
 		}));
-		return true;
-	} catch (_error) {
-		return false;
+		return { success: true };
+	} catch (_e) {
+		console.error(_e);
+		return {
+			success: false,
+			err: _e
+		};
 	}
 }
 
-export async function updateAsset(uuid: UUID, newContent: Partial<Asset>) {
+export async function updateAsset(uuid: UUID, newContent: Partial<Asset>): Promise<TransactionStatus<{ oldData: Asset, newData: Asset }>> {
 	try{
 		const updated = await db.assets.update(uuid, newContent);
 		if(updated) {
@@ -64,10 +79,14 @@ export async function updateAsset(uuid: UUID, newContent: Partial<Asset>) {
 				oldData: updated.oldData,
 				newData: updated.newData
 			}));
-			return true;
+			return { success: true, detail: updated };
 		}
-		return false;
-	}catch(_error){
-		return false;
+		throw new Error("not updated, did not exist in db");
+	}catch(_e){
+		console.error(_e);
+		return {
+			success: false,
+			err: _e
+		};
 	}
 }

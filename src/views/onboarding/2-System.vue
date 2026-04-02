@@ -2,7 +2,7 @@
 	import { IonContent, IonList, IonPage, IonButton, IonIcon, IonInput, IonFab, IonFabButton, IonItem, IonTextarea, useIonRouter } from "@ionic/vue";
 	import { onBeforeMount, ref, toRaw } from "vue";
 	import Avatar from "../../components/Avatar.vue";
-	import { slideAnimation } from "../../lib/util/misc";
+	import { slideAnimation, toast } from "../../lib/util/misc";
 	import { getResizedImage } from "../../lib/util/image";
 	import { getSystem, newSystem, updateSystem } from "../../lib/db/tables/system";
 
@@ -29,13 +29,19 @@
 	}
 
 	async function save() {
-		if(!await getSystem(appConfig.defaultSystem)) {
-			const uuid = await newSystem({ ...toRaw(system.value) });
-			if(uuid) appConfig.defaultSystem = uuid;
-		} else
-			await updateSystem(appConfig.defaultSystem, { ...toRaw(system.value) });
-	
-		router.replace("/onboarding/member/", slideAnimation);
+		try {
+			if(!await getSystem(appConfig.defaultSystem)) {
+				const result = await newSystem({ ...toRaw(system.value) });
+				if(result.success) appConfig.defaultSystem = result.detail!;
+				else throw new Error(`E: ${result.err as Error || "failed"}`);
+			} else {
+				const result = await updateSystem(appConfig.defaultSystem, { ...toRaw(system.value) });
+				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+			}
+			router.replace("/onboarding/member/", slideAnimation);
+		}catch(e){
+			await toast((e as Error).message);
+		}
 	}
 
 	onBeforeMount(async () => {

@@ -20,7 +20,7 @@
 
 	import { Member } from "../../lib/db/entities";
 	import { newMember } from "../../lib/db/tables/members";
-	import { slideAnimation } from "../../lib/util/misc";
+	import { slideAnimation, toast } from "../../lib/util/misc";
 	import { getResizedImage } from "../../lib/util/image";
 	import { ref, toRaw } from "vue";
 	import { PartialBy } from "../../lib/types";
@@ -54,12 +54,18 @@
 	}
 
 	async function save(){
-		const _member = toRaw(member.value);
-		await newMember({
-			..._member,
-			dateCreated: new Date()
-		});
-		router.replace("/onboarding/end/", slideAnimation);
+		try{
+			const _member = toRaw(member.value);
+			const result = await newMember({
+				..._member,
+				dateCreated: new Date()
+			});
+			if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+			router.replace("/onboarding/end/", slideAnimation);
+		}catch(e){
+			await toast((e as Error).message);
+		}
+		
 	}
 </script>
 

@@ -33,7 +33,7 @@
 	import { useRoute } from "vue-router";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import { useTranslation } from "i18next-vue";
-	import { promptOkCancel } from "../../lib/util/misc";
+	import { promptOkCancel, toast } from "../../lib/util/misc";
 
 	const route = useRoute();
 	const router = useIonRouter();
@@ -61,13 +61,19 @@
 	const periodicDayOfMonthPopupPicker = useTemplateRef("periodicDayOfMonthPopupPicker");
 
 	async function deleteReminder(){
-		if(await promptOkCancel(
-			i18next.t("reminders:edit.delete.title"),
-			undefined,
-			i18next.t("reminders:edit.delete.confirm")
-		)){
-			await removeReminder(reminder.value.uuid!);
-			router.back();
+		try{
+			if(await promptOkCancel(
+				i18next.t("reminders:edit.delete.title"),
+				undefined,
+				i18next.t("reminders:edit.delete.confirm")
+			)){
+				const result = await removeReminder(reminder.value.uuid!);
+				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+
+				router.back();
+			}
+		}catch(e){
+			await toast((e as Error).message);
 		}
 	}
 
@@ -86,14 +92,22 @@
 				delete _reminder.delay;
 		}
 
-		if(!uuid) {
-			await newReminder({ ..._reminder });
-			router.back();
-			return;
-		}
+		try{
+			if(!uuid) {
+				const result = await newReminder({ ..._reminder });
+				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
 
-		await updateReminder(uuid, { ..._reminder } as Reminder);
-		router.back();
+				router.back();
+				return;
+			}
+
+			const result = await updateReminder(uuid, { ..._reminder } as Reminder);
+			if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+
+			router.back();
+		}catch(e){
+			await toast((e as Error).message);
+		}
 	}
 
 	function switchType() {

@@ -6,6 +6,7 @@ import { UUIDable, Member, UUID } from "../entities";
 import { maxUid, nilUid } from "../../util/consts";
 import { filterMember } from "../../search";
 import { sortMembers } from "../../util/misc";
+import { TransactionStatus } from "../types";
 
 export function getMembers(){
 	return db.members.iterate();
@@ -47,22 +48,26 @@ export async function* getFilteredMembers(query: string){
 	}
 }
 
-export async function newMember(member: Omit<Member, keyof UUIDable>) {
+export async function newMember(member: Omit<Member, keyof UUIDable>): Promise<TransactionStatus<string>> {
 	try{
 		const uuid = window.crypto.randomUUID();
-		await db.members.add(uuid, {
+		const result = await db.members.add(uuid, {
 			...member,
 			uuid
 		});
+
+		if(!result) throw new Error("already exists in database");
+
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "members",
 			event: "new",
 			uuid,
 			newData: member
 		}));
-		return uuid;
-	}catch(_error){
-		return false;
+		return { success: true, detail: uuid };
+	}catch(_e){
+		console.error(_e);
+		return { success: false, err: _e };
 	}
 }
 
@@ -71,8 +76,8 @@ export async function getMember(uuid: UUID){
 	return await db.members.get(uuid);
 }
 
-export async function deleteMember(uuid: UUID) {
-	if (uuid === nilUid) return false;
+export async function deleteMember(uuid: UUID): Promise<TransactionStatus<void>> {
+	if (uuid === nilUid) return { success: false };
 	try {
 		await db.members.delete(uuid);
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
@@ -81,14 +86,15 @@ export async function deleteMember(uuid: UUID) {
 			uuid,
 			delta: {}
 		}));
-		return true;
-	} catch (_error) {
-		return false;
+		return { success: true };
+	} catch (_e) {
+		console.error(_e);
+		return { success: false, err: _e };
 	}
 }
 
-export async function updateMember(uuid: UUID, newContent: Partial<Member>) {
-	if (uuid === nilUid) return undefined;
+export async function updateMember(uuid: UUID, newContent: Partial<Member>): Promise<TransactionStatus<{ oldData: Member, newData: Member }>> {
+	if (uuid === nilUid) return { success: false };
 	try{
 		const updated = await db.members.update(uuid, newContent);
 		if(updated) {
@@ -100,11 +106,12 @@ export async function updateMember(uuid: UUID, newContent: Partial<Member>) {
 				oldData: updated.oldData,
 				newData: updated.newData
 			}));
-			return true;
+			return { success: true, detail: updated };
 		}
-		return false;
-	}catch(_error){
-		return false;
+		throw new Error("not updated, did not exist in db");
+	}catch(_e){
+		console.error(_e);
+		return { success: false, err: _e };
 	}
 }
 

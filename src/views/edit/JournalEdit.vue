@@ -31,7 +31,7 @@
 
 	import { JournalPostComplete, Tag } from "../../lib/db/entities";
 	import { newJournalPost, updateJournalPost, getJournalPost, toJournalPostComplete } from "../../lib/db/tables/journalPosts";
-	import { formatDate } from "../../lib/util/misc";
+	import { formatDate, toast } from "../../lib/util/misc";
 	import { getResizedImage } from "../../lib/util/image";
 	import { h, onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
 	import Markdown from "../../components/Markdown.vue";
@@ -81,25 +81,32 @@
 		const uuid = post.value.uuid;
 		const _post = toRaw(post.value);
 
-		if(!_post.title.length)
-			_post.title = formatDate(_post.date, "collapsed");
+		try {
+			if(!_post.title.length)
+				_post.title = formatDate(_post.date, "collapsed");
 
-		if(!uuid){
-			await newJournalPost({
+			if(!uuid){
+				const result = await newJournalPost({
+					..._post,
+					member: _post.member?.uuid || undefined,
+				});
+				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+
+				router.back();
+				return;
+			}
+
+			const result = await updateJournalPost(uuid, {
 				..._post,
-				member: _post.member?.uuid || undefined,
+				member: _post.member?.uuid || undefined
 			});
-			router.back();
 
-			return;
+			if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+
+			isEditing.value = false;
+		}catch(e){
+			await toast((e as Error).message);
 		}
-
-		await updateJournalPost(uuid, {
-			..._post,
-			member: _post.member?.uuid || undefined
-		});
-
-		isEditing.value = false;
 	}
 
 	async function modifyCover(){

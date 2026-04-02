@@ -3,6 +3,7 @@ import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUIDable, System, UUID } from "../entities";
 import { nilUid } from "../../util/consts";
 import { filterSystem } from "../../search";
+import { TransactionStatus } from "../types";
 
 export function getSystems(){
 	return db.systems.iterate();
@@ -20,27 +21,31 @@ export async function* getFilteredSystems(query: string){
 	}
 }
 
-export async function newSystem(system: Omit<System, keyof UUIDable>){
+export async function newSystem(system: Omit<System, keyof UUIDable>): Promise<TransactionStatus<string>> {
 	try{
 		const uuid = window.crypto.randomUUID();
-		await db.systems.add(uuid, {
+		const result = await db.systems.add(uuid, {
 			...system,
 			uuid
 		});
+
+		if(!result) throw new Error("already exists in database");
+
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "systems",
 			event: "new",
 			uuid,
 			newData: system
 		}));
-		return uuid;
-	}catch(_error){
-		return false;
+		return { success: true, detail: uuid };
+	}catch(_e){
+		console.error(_e);
+		return { success: false, err: _e };
 	}
 }
 
-export async function deleteSystem(uuid: UUID) {
-	if (uuid === nilUid) return false;
+export async function deleteSystem(uuid: UUID): Promise<TransactionStatus<void>> {
+	if (uuid === nilUid) return { success: false };
 	try {
 		await db.systems.delete(uuid);
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
@@ -49,13 +54,14 @@ export async function deleteSystem(uuid: UUID) {
 			uuid,
 			delta: {}
 		}));
-		return true;
-	} catch (_error) {
-		return false;
+		return { success: true };
+	} catch (_e) {
+		console.error(_e);
+		return { success: false, err: _e };
 	}
 }
 
-export async function updateSystem(uuid: UUID, system: Partial<System>) {
+export async function updateSystem(uuid: UUID, system: Partial<System>): Promise<TransactionStatus<{ oldData: System, newData: System }>> {
 	try {
 		const updated = await db.systems.update(uuid, system);
 		if(updated){
@@ -65,11 +71,12 @@ export async function updateSystem(uuid: UUID, system: Partial<System>) {
 				uuid,
 				delta: system
 			}));
-			return true;
+			return { success: true, detail: updated };
 		}
-		return false;
-	} catch (_error) {
-		return false;
+		throw new Error("not updated, did not exist in db");
+	} catch (_e) {
+		console.error(_e);
+		return { success: false, err: _e };
 	}
 }
 

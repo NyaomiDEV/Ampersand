@@ -110,19 +110,25 @@
 		const uuid = member.value.uuid;
 		const _member = toRaw(member.value);
 
-		if(!uuid){
-			await newMember({
-				..._member,
-				dateCreated: new Date()
-			});
-			router.back();
+		try{
+			if(!uuid){
+				const result = await newMember({
+					..._member,
+					dateCreated: new Date()
+				});
+				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
 
-			return;
+				router.back();
+				return;
+			}
+
+			const result = await updateMember(uuid, _member);
+			if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+
+			isEditing.value = false;
+		}catch(e){
+			await toast((e as Error).message);
 		}
-
-		await updateMember(uuid, _member);
-
-		isEditing.value = false;
 	}
 
 	async function modifyPicture(){
@@ -148,13 +154,19 @@
 	}
 
 	async function removeMember() {
-		if(await promptOkCancel(
-			i18next.t("members:edit.delete.title"),
-			undefined,
-			i18next.t("members:edit.delete.confirm")
-		)){
-			await deleteMember(member.value.uuid!);
-			router.back();
+		try{
+			if(await promptOkCancel(
+				i18next.t("members:edit.delete.title"),
+				undefined,
+				i18next.t("members:edit.delete.confirm")
+			)){
+				const result = await deleteMember(member.value.uuid!);
+				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+
+				router.back();
+			}
+		}catch(e){
+			await toast((e as Error).message);
 		}
 	}
 

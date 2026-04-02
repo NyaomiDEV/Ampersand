@@ -30,7 +30,7 @@
 	import ContentEditable from "../components/ContentEditable.vue";
 
 	import { PartialBy } from "../lib/types";
-	import { formatDate, promptOkCancel } from "../lib/util/misc";
+	import { formatDate, promptOkCancel, toast } from "../lib/util/misc";
 	import { useTranslation } from "i18next-vue";
 	import PresenceRating from "../components/PresenceRating.vue";
 	import MemberItem from "../components/member/MemberItem.vue";
@@ -70,47 +70,56 @@
 		if(_frontingEntry.endTime)
 			_frontingEntry.isLocked = false;
 
-		if(!uuid) {
-			await newFrontingEntry({
+		try {
+			if(!uuid) {
+				const result = await newFrontingEntry({
+					..._frontingEntry,
+					member: _frontingEntry.member.uuid,
+					influencing: _frontingEntry.influencing?.uuid
+				});
+				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+
+				void sendFrontingChangedEvent();
+
+				if(dismissAfter)
+					await modalController.dismiss(null, "added");
+
+				return;
+			}
+
+			const result = await updateFrontingEntry(uuid, {
 				..._frontingEntry,
 				member: _frontingEntry.member.uuid,
 				influencing: _frontingEntry.influencing?.uuid
 			});
+			if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+
 			void sendFrontingChangedEvent();
 
+		
 			if(dismissAfter)
-				await modalController.dismiss(null, "added");
-
-			return;
+				await modalController.dismiss(null, "modified").catch(() => false);
+		}catch(e){
+			await toast((e as Error).message);
 		}
-
-		await updateFrontingEntry(uuid, {
-			..._frontingEntry,
-			member: _frontingEntry.member.uuid,
-			influencing: _frontingEntry.influencing?.uuid
-		});
-		void sendFrontingChangedEvent();
-
-		try{
-			if(dismissAfter)
-				await modalController.dismiss(null, "modified");
-		}catch(_){ /* empty */ }
-		// catch an error because the type might get changed, causing the parent to be removed from DOM
-		// however it's safe for us to ignore
 	}
 
 	async function removeFrontingEntry(){
-		if(await promptOkCancel(
-			i18next.t("frontHistory:edit.delete.title"),
-			undefined,
-			i18next.t("frontHistory:edit.delete.confirm"),
-		)){
-			await deleteFrontingEntry(frontingEntry.value.uuid!);
-			void sendFrontingChangedEvent();
+		try{
+			if(await promptOkCancel(
+				i18next.t("frontHistory:edit.delete.title"),
+				undefined,
+				i18next.t("frontHistory:edit.delete.confirm"),
+			)){
+				const result = await deleteFrontingEntry(frontingEntry.value.uuid!);
+				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
 
-			try{
-				await modalController.dismiss(undefined, "deleted");
-			}catch(_){ /* empty */ }
+				void sendFrontingChangedEvent();
+			
+				await modalController.dismiss(undefined, "deleted").catch(() => false);
+			}
+		}catch(e){
+			await toast((e as Error).message);
 		}
 	}
 
