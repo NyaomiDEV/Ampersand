@@ -19,6 +19,7 @@
 	import { PartialBy } from "../lib/types";
 	import SystemItem from "../components/system/SystemItem.vue";
 	import VirtualList from "../components/VirtualList.vue";
+	import InfiniteLoader from "../components/InfiniteLoader.vue";
 
 	const props = defineProps<{
 		customTitle?: string,
@@ -36,39 +37,58 @@
 	const selectedSystem = shallowRef<System | undefined>(props.modelValue);
 	const search = ref("");
 	const systems = shallowRef<System[]>();
+	const iter = shallowRef(getFilteredSystems(search.value));
+	const iterDone = ref(false);
 
 	const disallowedSystems = shallowRef<System[]>([]);
 
 	const listener = (event: Event) => {
 		if((event as DatabaseEvent).data.table === "systems")
-			void Array.fromAsync(getFilteredSystems(search.value)).then(res => systems.value = res);
+			void resetSystems();
 	};
 
 	watch(search, async () => {
-		await updateSystems();
+		await resetSystems();
 	});
 
 	watch(appConfig, async () => {
-		await updateSystems();
+		await resetSystems();
 	});
 
 	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
-		await updateSystems();
+		await resetSystems();
 	});
 
 	onUnmounted(() => {
 		DatabaseEvents.removeEventListener("updated", listener);
 	});
 
-	async function updateSystems(){
-		systems.value = (await Array.fromAsync(getFilteredSystems(search.value)))
-			.sort((a, b) => {
-				if (a.uuid === appConfig.defaultSystem) return -1;
-				if (b.uuid === appConfig.defaultSystem) return 1;
+	async function resetSystems(){
+		systems.value = undefined;
+		iterDone.value = false;
+		iter.value = getFilteredSystems(search.value);
+		await pollSystems();
+	}
 
-				return a.name.localeCompare(b.name);
-			});
+	async function pollSystems(cb?: () => void){
+		let i = 0;
+		const _syss: System[] = [];
+		while(true) {
+			const data = await iter.value.next();
+			if(data.value) _syss.push(data.value);
+			i++;
+			if(data.done) iterDone.value = true;
+			if(i >= 20 || data.done) break;
+		}
+
+		if(!systems.value)
+			systems.value = _syss;
+		else
+			systems.value = [...systems.value, ..._syss];
+
+		if(cb)
+			cb();
 	}
 
 	function check(system: System){
@@ -147,6 +167,8 @@
 					</template>
 				</VirtualList>
 			</IonList>
+
+			<InfiniteLoader v-if="!iterDone" @infinite="pollSystems" />
 		</IonContent>
 	</IonModal>
 </template>

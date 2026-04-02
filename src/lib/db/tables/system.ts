@@ -4,9 +4,31 @@ import { UUIDable, System, UUID } from "../entities";
 import { nilUid } from "../../util/consts";
 import { filterSystem } from "../../search";
 import { TransactionStatus } from "../types";
+import { sortSystems } from "../../util/misc";
 
-export function getSystems(){
-	return db.systems.iterate();
+export async function* getSystems(maxIter = 20){
+	const uuids = db.systems.index.sort(sortSystems).map(x => x.uuid);
+	
+	const f = (offset: number, maxIter: number) => {
+		const chunk: Promise<System | undefined>[] = [];
+		for (let i = offset; i < offset + maxIter; i++) {
+			if (uuids[i]) {
+				const data = db.systems.get(uuids[i]);
+				chunk.push(data);
+			}
+		}
+		return chunk;
+	};
+	
+	let offset = 0;
+	while (offset < uuids.length) {
+		const promises = f(offset, maxIter);
+		offset += maxIter;
+		for (const promise of promises) {
+			const data = await promise;
+			if (data) yield data;
+		}
+	};
 }
 
 export async function getSystem(uuid: UUID) {

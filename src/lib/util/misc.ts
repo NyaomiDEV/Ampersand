@@ -2,7 +2,7 @@ import { actionSheetController, alertController, createAnimation, getIonPageElem
 import dayjs from "dayjs";
 import { Ref } from "vue";
 import { appConfig } from "../config";
-import { Member } from "../db/entities";
+import { Member, System } from "../db/entities";
 import i18next, { computePercentage, getLocaleInfo } from "../i18n";
 import { open } from "@tauri-apps/plugin-dialog";
 import { readFile } from "@tauri-apps/plugin-fs";
@@ -257,6 +257,16 @@ export function sortMembers(a: IndexEntry<Member>, b: IndexEntry<Member>) {
 			} else
 				return a.isPinned && !b.isPinned ? -1 : 1;
 	}
+}
+
+export function sortSystems(a: IndexEntry<System>, b: IndexEntry<System>) {
+	if (a.uuid === appConfig.defaultSystem) return -1;
+	if (b.uuid === appConfig.defaultSystem) return 1;
+
+	if (a.isPinned && !b.isPinned) return -1;
+	if (!a.isPinned && b.isPinned) return 1;
+
+	return a.name!.localeCompare(b.name!);
 }
 
 export const imageClips = import.meta.webpackContext("../../assets/shapes/", { recursive: false, include: /\.svg$/ }).keys().map(x => x.replace(/^\.\/(.*)\.svg$/, "$1"));

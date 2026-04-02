@@ -30,6 +30,7 @@
 	import { toast } from "../../lib/util/misc.ts";
 	import { useTranslation } from "i18next-vue";
 	import VirtualList from "../../components/VirtualList.vue";
+	import InfiniteLoader from "../../components/InfiniteLoader.vue";
 
 	const route = useRoute();
 	const i18next = useTranslation();
@@ -43,40 +44,56 @@
 	});
 
 	const systems = shallowRef<System[]>();
+	const iter = shallowRef(getFilteredSystems(search.value));
+	const iterDone = ref(false);
 
 	watch(search, async () => {
-		await updateSystems();
+		await resetSystems();
 	});
 
 	watch(appConfig, async () => {
-		await updateSystems();
+		await resetSystems();
 	});
 
 	const listener = (event: Event) => {
 		if((event as DatabaseEvent).data.table === "systems")
-			void updateSystems();
+			void resetSystems();
 	};
 
 	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
-		await updateSystems();
+		await resetSystems();
 	});
 
 	onUnmounted(() => {
 		DatabaseEvents.removeEventListener("updated", listener);
 	});
 
-	async function updateSystems(){
-		systems.value = (await Array.fromAsync(getFilteredSystems(search.value)))
-			.sort((a, b) => {
-				if (a.uuid === appConfig.defaultSystem) return -1;
-				if (b.uuid === appConfig.defaultSystem) return 1;
+	async function resetSystems(){
+		systems.value = undefined;
+		iterDone.value = false;
+		iter.value = getFilteredSystems(search.value);
+		await pollSystems();
+	}
 
-				if (a.isPinned && !b.isPinned) return -1;
-				if (!a.isPinned && b.isPinned) return 1;
+	async function pollSystems(cb?: () => void){
+		let i = 0;
+		const _syss: System[] = [];
+		while(true) {
+			const data = await iter.value.next();
+			if(data.value) _syss.push(data.value);
+			i++;
+			if(data.done) iterDone.value = true;
+			if(i >= 20 || data.done) break;
+		}
 
-				return a.name.localeCompare(b.name);
-			});
+		if(!systems.value)
+			systems.value = _syss;
+		else
+			systems.value = [...systems.value, ..._syss];
+
+		if(cb)
+			cb();
 	}
 
 	function closeSlidingItems() {
@@ -142,6 +159,8 @@
 					</template>
 				</VirtualList>
 			</IonList>
+
+			<InfiniteLoader v-if="!iterDone" @infinite="pollSystems" />
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
 				<IonFabButton router-link="/options/systems/edit/">
