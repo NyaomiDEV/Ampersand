@@ -101,7 +101,7 @@
 				return;
 			}
 
-			const result = await updateReminder(uuid, { ..._reminder } as Reminder);
+			const result = await updateReminder(_reminder as Reminder);
 			if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
 
 			router.back();

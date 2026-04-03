@@ -152,22 +152,25 @@ export class ShittyTable<T extends UUIDable> {
 
 	async refresh(){
 		for(const data of this.index)
-			await this.update(data.uuid, {});
+			await this.update({ uuid: data.uuid as string } as UUIDable & Partial<T>);
 	}
 
-	async write(uuid: string, data: T) {
+	async write(data: T, saveIndexAfterwards: boolean) {
+		const { uuid } = data;
 		const _path = this.path + sep() + uuid;
 		await fs.writeFile(_path, encode(deleteNull(await walkAsync(data, replace))));
-		await this.updateIndexWithData(data);
+
+		await this.updateIndexWithData(data, saveIndexAfterwards);
 	}
 
 	exists(uuid: string) {
 		return !!this.index.find(x => uuid === x.uuid);
 	}
 
-	async add(uuid: string, data: T) {
+	async add(data: T, saveIndexAfterwards = true) {
+		const { uuid } = data;
 		if (!this.exists(uuid)) {
-			await this.write(uuid, data);
+			await this.write(data, saveIndexAfterwards);
 			return true;
 		}
 		return false;
@@ -186,12 +189,13 @@ export class ShittyTable<T extends UUIDable> {
 		await this.saveIndexToDisk();
 	}
 
-	async update(uuid: string, newData: Partial<T>) {
+	async update(newData: UUIDable & Partial<T>, saveIndexAfterwards = true) {
+		const { uuid } = newData;
 		const oldData = await this.get(uuid);
 
 		if (oldData) {
 			const data = { ...oldData, ...newData } as T;
-			await this.write(uuid, data);
+			await this.write(data, saveIndexAfterwards);
 			return { oldData, newData: data };
 		}
 

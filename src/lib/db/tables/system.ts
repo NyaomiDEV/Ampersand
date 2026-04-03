@@ -44,7 +44,7 @@ export async function* getFilteredSystems(query: string){
 export async function newSystem(system: Omit<System, keyof UUIDable>): Promise<TransactionStatus<string>> {
 	try{
 		const uuid = window.crypto.randomUUID();
-		const result = await db.systems.add(uuid, {
+		const result = await db.systems.add({
 			...system,
 			uuid
 		});
@@ -81,15 +81,15 @@ export async function deleteSystem(uuid: UUID): Promise<TransactionStatus<void>>
 	}
 }
 
-export async function updateSystem(uuid: UUID, system: Partial<System>): Promise<TransactionStatus<{ oldData: System, newData: System }>> {
+export async function updateSystem(newContent: UUIDable & Partial<System>): Promise<TransactionStatus<{ oldData: System, newData: System }>> {
 	try {
-		const updated = await db.systems.update(uuid, system);
+		const updated = await db.systems.update(newContent);
 		if(updated){
 			DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 				table: "systems",
 				event: "modified",
-				uuid,
-				delta: system
+				uuid: newContent.uuid,
+				delta: newContent
 			}));
 			return { success: true, detail: updated };
 		}

@@ -14,7 +14,8 @@ export async function members(table: ShittyTable<Member>, version: number){
 
 		for (const memberIndex of table.index) {
 			if (!memberIndex.system) {
-				await table.update(memberIndex.uuid, {
+				await table.update({
+					uuid: memberIndex.uuid,
 					system: systemId
 				});
 			}
@@ -69,7 +70,8 @@ export async function systems(table: ShittyTable<System>, version: number){
 	async function oneToTwo() {
 		for (const systemIndex of table.index) {
 			if (!systemIndex.isPinned || !systemIndex.isArchived) {
-				if(!await table.update(systemIndex.uuid, {
+				if(!await table.update({
+					uuid: systemIndex.uuid,
 					isArchived: systemIndex.isArchived || false,
 					isPinned: systemIndex.isPinned || false
 				})) return false;

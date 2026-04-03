@@ -29,7 +29,7 @@
 	import personAddMD from "@material-symbols/svg-600/outlined/person_add.svg";
 	import clockAddMD from "@material-symbols/svg-600/outlined/more_time.svg";
 
-	import { JournalPostComplete, Tag } from "../../lib/db/entities";
+	import { JournalPost, JournalPostComplete, Tag } from "../../lib/db/entities";
 	import { newJournalPost, updateJournalPost, getJournalPost, toJournalPostComplete } from "../../lib/db/tables/journalPosts";
 	import { formatDate, toast } from "../../lib/util/misc";
 	import { getResizedImage } from "../../lib/util/image";
@@ -96,10 +96,10 @@
 				return;
 			}
 
-			const result = await updateJournalPost(uuid, {
+			const result = await updateJournalPost({
 				..._post,
 				member: _post.member?.uuid || undefined
-			});
+			} as JournalPost);
 
 			if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
 

@@ -73,7 +73,7 @@
 				return;
 			}
 
-			const result = await updateAsset(uuid, _asset);
+			const result = await updateAsset(_asset as Asset);
 			if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
 
 			router.back();

@@ -53,7 +53,8 @@
 	}
 
 	async function quickRemoveFronter(clickedFrontingEntry: FrontingEntryComplete){
-		await updateFrontingEntry(clickedFrontingEntry.uuid, {
+		await updateFrontingEntry({
+			uuid: clickedFrontingEntry.uuid,
 			endTime: new Date()
 		});
 

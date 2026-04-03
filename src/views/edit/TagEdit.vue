@@ -69,13 +69,15 @@
 					if(members.map(x => x.uuid).includes(member.uuid)){
 						if(member.tags.includes(tag.value.uuid!)) continue;
 
-						await updateMember(member.uuid, {
+						await updateMember({
+							uuid: member.uuid,
 							tags: [...member.tags, tag.value.uuid!]
 						});
 					} else {
 						if(!member.tags.includes(tag.value.uuid!)) continue;
 
-						await updateMember(member.uuid, {
+						await updateMember({
+							uuid: member.uuid,
 							tags: [...member.tags.filter(x => x !== tag.value.uuid!)]
 						});
 					}
@@ -109,7 +111,7 @@
 				return;
 			}
 
-			const result = await updateTag(uuid, _tag);
+			const result = await updateTag(_tag as Tag);
 			if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
 
 			router.back();

@@ -20,7 +20,7 @@
 	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
 
-	import { FrontingEntryComplete } from "../lib/db/entities";
+	import { FrontingEntry, FrontingEntryComplete } from "../lib/db/entities";
 	import { newFrontingEntry, updateFrontingEntry, deleteFrontingEntry, sendFrontingChangedEvent, getFrontingBetweenComplete } from "../lib/db/tables/frontingEntries";
 	import { ref, toRaw, useTemplateRef, watch } from "vue";
 
@@ -87,11 +87,11 @@
 				return;
 			}
 
-			const result = await updateFrontingEntry(uuid, {
+			const result = await updateFrontingEntry({
 				..._frontingEntry,
 				member: _frontingEntry.member.uuid,
 				influencing: _frontingEntry.influencing?.uuid
-			});
+			} as FrontingEntry);
 			if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
 
 			void sendFrontingChangedEvent();

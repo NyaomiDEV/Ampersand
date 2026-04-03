@@ -79,7 +79,7 @@
 			const oldPriority = field.priority;
 			const newPriority = _customFields.findIndex(x => x === field.uuid);
 			if(oldPriority === newPriority) continue;
-			await updateCustomField(field.uuid, { priority: newPriority });
+			await updateCustomField({ uuid: field.uuid, priority: newPriority });
 		}
 
 		// now that we committed crimes against humanity, register the listener again

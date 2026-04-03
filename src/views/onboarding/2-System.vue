@@ -29,15 +29,20 @@
 	}
 
 	async function save() {
-		try {
-			if(!await getSystem(appConfig.defaultSystem)) {
-				const result = await newSystem({ ...toRaw(system.value) });
-				if(result.success) appConfig.defaultSystem = result.detail!;
-				else throw new Error(`E: ${result.err as Error || "failed"}`);
+		const uuid = system.value.uuid;
+		const _system = toRaw(system.value);
+
+		try{
+			if(!uuid){
+				const result = await newSystem({
+					..._system
+				});
+				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
 			} else {
-				const result = await updateSystem(appConfig.defaultSystem, { ...toRaw(system.value) });
+				const result = await updateSystem(_system as System);
 				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
 			}
+			
 			router.replace("/onboarding/member/", slideAnimation);
 		}catch(e){
 			await toast((e as Error).message);

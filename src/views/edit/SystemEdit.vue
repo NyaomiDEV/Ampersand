@@ -75,7 +75,7 @@
 				return;
 			}
 
-			const result = await updateSystem(uuid, _system);
+			const result = await updateSystem(_system as System);
 			if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
 
 			isEditing.value = false;

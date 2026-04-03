@@ -55,7 +55,7 @@
 				return;
 			}
 
-			const result = await updateCustomField(uuid, { ..._customField });
+			const result = await updateCustomField(_customField as CustomField);
 			if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
 	
 			await modalController.dismiss(null, "modified").catch(() => false);

@@ -44,7 +44,7 @@ export async function toBoardMessageComplete(boardMessage: BoardMessage): Promis
 export async function newBoardMessage(boardMessage: Omit<BoardMessage, keyof UUIDable>): Promise<TransactionStatus<string>> {
 	try{
 		const uuid = window.crypto.randomUUID();
-		const result = await db.boardMessages.add(uuid, {
+		const result = await db.boardMessages.add({
 			...boardMessage,
 			uuid
 		});
@@ -80,14 +80,14 @@ export async function deleteBoardMessage(uuid: UUID): Promise<TransactionStatus<
 	}
 }
 
-export async function updateBoardMessage(uuid: UUID, newContent: Partial<BoardMessage>): Promise<TransactionStatus<{ oldData: BoardMessage, newData: BoardMessage }>> {
+export async function updateBoardMessage(newContent: UUIDable & Partial<BoardMessage>): Promise<TransactionStatus<{ oldData: BoardMessage, newData: BoardMessage }>> {
 	try{
-		const updated = await db.boardMessages.update(uuid, newContent);
+		const updated = await db.boardMessages.update(newContent);
 		if(updated) {
 			DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 				table: "boardMessages",
 				event: "modified",
-				uuid,
+				uuid: newContent.uuid,
 				delta: newContent,
 				oldData: updated.oldData,
 				newData: updated.newData

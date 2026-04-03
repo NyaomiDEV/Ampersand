@@ -48,7 +48,7 @@ export async function toFrontingEntryComplete(frontingEntry: FrontingEntry): Pro
 export async function newFrontingEntry(frontingEntry: Omit<FrontingEntry, keyof UUIDable>): Promise<TransactionStatus<string>> {
 	try{
 		const uuid = window.crypto.randomUUID();
-		const result = await db.frontingEntries.add(uuid, {
+		const result = await db.frontingEntries.add({
 			...frontingEntry,
 			uuid
 		});
@@ -86,18 +86,18 @@ export async function deleteFrontingEntry(uuid: UUID): Promise<TransactionStatus
 
 // HACK: Think of a better way
 let shouldDebounce = false;
-export async function updateFrontingEntry(uuid: UUID, newContent: Partial<FrontingEntry>): Promise<TransactionStatus<{ oldData: FrontingEntry, newData: FrontingEntry }>> {
+export async function updateFrontingEntry(newContent: UUIDable & Partial<FrontingEntry>): Promise<TransactionStatus<{ oldData: FrontingEntry, newData: FrontingEntry }>> {
 	try{
-		const updated = await db.frontingEntries.update(uuid, newContent);
+		const updated = await db.frontingEntries.update(newContent);
 		if(updated) {
 			if(newContent.isMainFronter){
 				const toUpdate = (await getFrontingBetween(updated.newData.startTime, updated.newData.endTime))
-					.filter(x => x.uuid !== uuid)
+					.filter(x => x.uuid !== newContent.uuid)
 					.map(x => x.uuid);
 				shouldDebounce = true;
 
 				for (const _uuid of toUpdate){
-					const res = await updateFrontingEntry(_uuid, { isMainFronter: false });
+					const res = await updateFrontingEntry({ uuid: _uuid, isMainFronter: false });
 					if(res.err)
 						throw new Error(`updating non-main-fronter entry failed with error: ${res.err as Error}`);
 				}
@@ -109,7 +109,7 @@ export async function updateFrontingEntry(uuid: UUID, newContent: Partial<Fronti
 				DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 					table: "frontingEntries",
 					event: "modified",
-					uuid,
+					uuid: newContent.uuid,
 					delta: newContent,
 					oldData: updated.oldData,
 					newData: updated.newData
@@ -129,7 +129,7 @@ export async function removeFronter(member: Member) {
 		const f = await getCurrentFrontEntryForMember(member);
 		if(!f) throw new Error("no fronting entry for said member");
 
-		return updateFrontingEntry(f.uuid, { endTime: new Date() });
+		return updateFrontingEntry({ uuid: f.uuid, endTime: new Date() });
 	}catch(_e){
 		console.error(_e);
 		return { success: false, err: _e };
@@ -141,7 +141,7 @@ export async function setMainFronter(member: Member, value: boolean){
 		const f = await getCurrentFrontEntryForMember(member);
 		if (!f) throw new Error("no fronting entry for said member");
 	
-		return updateFrontingEntry(f.uuid, { isMainFronter: value });
+		return updateFrontingEntry({ uuid: f.uuid, isMainFronter: value });
 	}catch (_e) {
 		console.error(_e);
 		return { success: false, err: _e };
@@ -157,7 +157,7 @@ export async function setSoleFronter(member: Member) {
 		const endTime = new Date();
 
 		for(const uuid of toUpdate){
-			const res = await updateFrontingEntry(uuid, { endTime });
+			const res = await updateFrontingEntry({ uuid, endTime });
 			if (res.err)
 				throw new Error(`updating fronter entry failed with error: ${res.err as Error}`);
 		}

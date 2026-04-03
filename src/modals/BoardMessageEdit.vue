@@ -23,7 +23,7 @@
 	import chartMD from "@material-symbols/svg-600/outlined/bar_chart.svg";
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
 
-	import { BoardMessageComplete } from "../lib/db/entities";
+	import { BoardMessage, BoardMessageComplete } from "../lib/db/entities";
 	import { updateBoardMessage, deleteBoardMessage, newBoardMessage } from "../lib/db/tables/boardMessages";
 	import { ref, toRaw, useTemplateRef } from "vue";
 	import { PartialBy } from "../lib/types";
@@ -102,10 +102,11 @@
 				return;
 			}
 
-			const result = await updateBoardMessage(uuid, {
+			const result = await updateBoardMessage({
 				..._boardMessage,
 				member: _boardMessage.member?.uuid || undefined
-			});
+			} as BoardMessage);
+
 			if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
 
 			await modalController.dismiss(null, "modified").catch(() => false);		

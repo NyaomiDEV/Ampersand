@@ -45,7 +45,7 @@ export async function* getFilteredMembers(query: string){
 export async function newMember(member: Omit<Member, keyof UUIDable>): Promise<TransactionStatus<string>> {
 	try{
 		const uuid = window.crypto.randomUUID();
-		const result = await db.members.add(uuid, {
+		const result = await db.members.add({
 			...member,
 			uuid
 		});
@@ -87,15 +87,15 @@ export async function deleteMember(uuid: UUID): Promise<TransactionStatus<void>>
 	}
 }
 
-export async function updateMember(uuid: UUID, newContent: Partial<Member>): Promise<TransactionStatus<{ oldData: Member, newData: Member }>> {
-	if (uuid === nilUid) return { success: false };
+export async function updateMember(newContent: UUIDable & Partial<Member>): Promise<TransactionStatus<{ oldData: Member, newData: Member }>> {
+	if (newContent.uuid === nilUid) return { success: false };
 	try{
-		const updated = await db.members.update(uuid, newContent);
+		const updated = await db.members.update(newContent);
 		if(updated) {
 			DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 				table: "members",
 				event: "modified",
-				uuid,
+				uuid: newContent.uuid,
 				delta: newContent,
 				oldData: updated.oldData,
 				newData: updated.newData

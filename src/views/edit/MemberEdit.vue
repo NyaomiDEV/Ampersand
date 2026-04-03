@@ -122,7 +122,7 @@
 				return;
 			}
 
-			const result = await updateMember(uuid, _member);
+			const result = await updateMember(_member as Member);
 			if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
 
 			isEditing.value = false;

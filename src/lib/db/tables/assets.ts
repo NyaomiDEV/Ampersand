@@ -38,7 +38,7 @@ export async function* getFilteredAssets(query: string){
 export async function newAsset(asset: Omit<Asset, keyof UUIDable>): Promise<TransactionStatus<string>> {
 	try{
 		const uuid = window.crypto.randomUUID();
-		const result = await db.assets.add(uuid, {
+		const result = await db.assets.add({
 			...asset,
 			uuid
 		});
@@ -87,14 +87,14 @@ export async function deleteAsset(uuid: UUID): Promise<TransactionStatus<void>> 
 	}
 }
 
-export async function updateAsset(uuid: UUID, newContent: Partial<Asset>): Promise<TransactionStatus<{ oldData: Asset, newData: Asset }>> {
+export async function updateAsset(newContent: UUIDable & Partial<Asset>): Promise<TransactionStatus<{ oldData: Asset, newData: Asset }>> {
 	try{
-		const updated = await db.assets.update(uuid, newContent);
+		const updated = await db.assets.update(newContent);
 		if(updated) {
 			DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 				table: "assets",
 				event: "modified",
-				uuid,
+				uuid: newContent.uuid,
 				delta: newContent,
 				oldData: updated.oldData,
 				newData: updated.newData

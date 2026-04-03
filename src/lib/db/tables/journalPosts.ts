@@ -40,7 +40,7 @@ export async function toJournalPostComplete(journalPost: JournalPost){
 export async function newJournalPost(journalPost: Omit<JournalPost, keyof UUIDable>): Promise<TransactionStatus<string>> {
 	try{
 		const uuid = window.crypto.randomUUID();
-		const result = await db.journalPosts.add(uuid, {
+		const result = await db.journalPosts.add({
 			...journalPost,
 			uuid
 		});
@@ -80,14 +80,14 @@ export async function deleteJournalPost(uuid: UUID): Promise<TransactionStatus<v
 	}
 }
 
-export async function updateJournalPost(uuid: UUID, newContent: Partial<JournalPost>): Promise<TransactionStatus<{ oldData: JournalPost, newData: JournalPost }>> {
+export async function updateJournalPost(newContent: UUIDable & Partial<JournalPost>): Promise<TransactionStatus<{ oldData: JournalPost, newData: JournalPost }>> {
 	try{
-		const updated = await db.journalPosts.update(uuid, newContent);
+		const updated = await db.journalPosts.update(newContent);
 		if(updated) {
 			DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 				table: "journalPosts",
 				event: "modified",
-				uuid,
+				uuid: newContent.uuid,
 				delta: newContent,
 				oldData: updated.oldData,
 				newData: updated.newData

@@ -29,7 +29,7 @@ export async function* getReminders(maxIter = 20){
 export async function newReminder(reminder: Omit<Reminder, keyof UUIDable>): Promise<TransactionStatus<string>> {
 	try{
 		const uuid = window.crypto.randomUUID();
-		const result = await db.reminders.add(uuid, {
+		const result = await db.reminders.add({
 			...reminder,
 			uuid
 		} as Reminder);
@@ -70,14 +70,14 @@ export async function removeReminder(uuid: UUID): Promise<TransactionStatus<void
 	}
 }
 
-export async function updateReminder(uuid: UUID, newContent: Partial<Reminder>): Promise<TransactionStatus<{ oldData: Reminder, newData: Reminder }>> {
+export async function updateReminder(newContent: UUIDable & Partial<Reminder>): Promise<TransactionStatus<{ oldData: Reminder, newData: Reminder }>> {
 	try{
-		const updated = await db.reminders.update(uuid, newContent);
+		const updated = await db.reminders.update(newContent);
 		if(updated) {
 			DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 				table: "reminders",
 				event: "modified",
-				uuid,
+				uuid: newContent.uuid,
 				delta: newContent,
 				oldData: updated.oldData,
 				newData: updated.newData

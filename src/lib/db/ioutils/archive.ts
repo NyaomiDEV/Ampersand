@@ -161,7 +161,7 @@ export function importArchive() {
 							default: {
 								const _data = data as ArchiveStreamDatabase;
 								const table: ShittyTable<UUIDable> = getTables()[_data.table];
-								const result = await table.add(_data.data.uuid, _data.data);
+								const result = await table.add(_data.data, false);
 								if (!result) throw new Error(`item already exists: ${_data.data.uuid}`);
 							}
 						}
@@ -169,6 +169,9 @@ export function importArchive() {
 					break;
 				}
 			}
+
+			for (const table of Object.values(getTables()))
+				await table.saveIndexToDisk();
 
 			progress.dispatchEvent(new Event("finish"));
 			return true;

@@ -131,7 +131,7 @@
 			}
 		}
 
-		await updateBoardMessage(props.boardMessage.uuid, { poll });
+		await updateBoardMessage({ uuid: props.boardMessage.uuid, poll });
 	}
 
 	function calcPercentageVoted(choice: PollEntry){

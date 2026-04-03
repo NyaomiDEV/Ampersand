@@ -40,7 +40,7 @@ export async function* getFilteredTags(query: string){
 export async function newTag(tag: Omit<Tag, keyof UUIDable>): Promise<TransactionStatus<string>> {
 	try{
 		const uuid = window.crypto.randomUUID();
-		await db.tags.add(uuid, {
+		await db.tags.add({
 			...tag,
 			uuid
 		});
@@ -70,16 +70,16 @@ export async function removeTag(uuid: UUID): Promise<TransactionStatus<void>> {
 				for await (const member of getMembers()) {
 					if (!member.tags.includes(uuid)) continue;
 
-					const delta = { tags: member.tags.filter(tag => tag !== uuid) };
-					await updateMember(member.uuid, delta);	
+					const delta = { uuid: member.uuid, tags: member.tags.filter(tag => tag !== uuid) };
+					await updateMember(delta);	
 				}
 				break;
 			case "journal":
 				for await (const journalPost of getJournalPosts()) {
 					if(!journalPost.tags.includes(uuid)) continue;
 
-					const delta = { tags: journalPost.tags.filter(tag => tag !== uuid) };
-					await updateJournalPost(journalPost.uuid, delta);
+					const delta = { uuid: journalPost.uuid, tags: journalPost.tags.filter(tag => tag !== uuid) };
+					await updateJournalPost(delta);
 				}
 				break;
 		}
@@ -99,14 +99,14 @@ export async function removeTag(uuid: UUID): Promise<TransactionStatus<void>> {
 	}
 }
 
-export async function updateTag(uuid: UUID, newContent: Partial<Tag>): Promise<TransactionStatus<{ oldData: Tag, newData: Tag }>> {
+export async function updateTag(newContent: UUIDable & Partial<Tag>): Promise<TransactionStatus<{ oldData: Tag, newData: Tag }>> {
 	try{
-		const updated = await db.tags.update(uuid, newContent);
+		const updated = await db.tags.update(newContent);
 		if(updated) {
 			DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 				table: "tags",
 				event: "modified",
-				uuid,
+				uuid: newContent.uuid,
 				delta: newContent,
 				oldData: updated.oldData,
 				newData: updated.newData
