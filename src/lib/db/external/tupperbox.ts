@@ -3,7 +3,7 @@
 import { appConfig, securityConfig } from "../../config";
 import { Member, Tag, System } from "../entities";
 import { getTables } from "../tables";
-import { fetch } from "@tauri-apps/plugin-http";
+import { fetchImage } from "../../util/fetchImage";
 
 function tag(tuExport: any){
 	const tagMapping = new Map<number, string>();
@@ -44,8 +44,8 @@ async function member(tuExport: any, systemInfo: System, tagMapping: Map<number,
 		};
 		if (tuMember.avatar_url && securityConfig.allowRemoteContent) {
 			try {
-				const request = await fetch(tuMember.avatar_url);
-				member.image = new File([await request.blob()], (tuMember.avatar_url as string).split("/").pop()!);
+				const request = await fetchImage(tuMember.avatar_url);
+				member.image = new File([request.blob], (tuMember.avatar_url as string).split("/").pop()!);
 			} catch (_e) {
 				// whatever, again
 			}
@@ -53,8 +53,8 @@ async function member(tuExport: any, systemInfo: System, tagMapping: Map<number,
 		// This is assumed as we cannot subscribe to TupperBox Premium to figure out the exact format
 		if (tuMember.banner && securityConfig.allowRemoteContent) {
 			try {
-				const request = await fetch(tuMember.banner);
-				member.cover = new File([await request.blob()], (tuMember.banner as string).split("/").pop()!);
+				const request = await fetchImage(tuMember.banner);
+				member.cover = new File([request.blob], (tuMember.banner as string).split("/").pop()!);
 			} catch (_e) {
 				// whatever, again
 			}

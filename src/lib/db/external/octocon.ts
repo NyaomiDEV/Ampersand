@@ -6,7 +6,7 @@
 import { appConfig, securityConfig } from "../../config";
 import { nilUid } from "../../util/consts";
 import { BoardMessage, CustomField, FrontingEntry, Member, System, Tag } from "../entities";
-import { fetch } from "@tauri-apps/plugin-http";
+import { fetchImage } from "../../util/fetchImage";
 import { getTables } from "../tables";
 
 import type { OctoconExport } from "./octocon_types";
@@ -14,7 +14,7 @@ import type { OctoconExport } from "./octocon_types";
 async function getImage(url?: string){
 	if(!url || !securityConfig.allowRemoteContent) return undefined;
 	try {
-		const req = await (await fetch(url)).blob();
+		const req = (await fetchImage(url)).blob;
 		return new File([req], new URL(url).pathname.split("/").pop()!);
 	}catch(_e){
 		return undefined;

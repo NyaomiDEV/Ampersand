@@ -3,8 +3,8 @@
 	import { useBlob } from "../lib/util/blob";
 	import { securityConfig } from "../lib/config";
 	import { getAssets } from "../lib/db/tables/assets";
-	import { fetch } from "@tauri-apps/plugin-http";
 	import { getExtension } from "../lib/mime";
+	import { fetchImage } from "../lib/util/fetchImage";
 
 	const { getObjectURL } = useBlob();
 
@@ -17,6 +17,7 @@
 	}>();
 
 	const source = ref<string>("#");
+	const alt = ref<string>(props.alt || "");
 
 	onMounted(async () => {
 		// then let's put the href to asset code
@@ -30,8 +31,9 @@
 			}
 		} else {
 			if (securityConfig.allowRemoteContent) {
-				const blob = await (await fetch(props.src)).blob();
-				source.value = getObjectURL(new File([blob], `markdownimg_${Date.now()}.${getExtension(blob.type)}`));
+				const res = (await fetchImage(props.src));
+				source.value = getObjectURL(new File([res.blob], `markdownimg_${Date.now()}.${getExtension(res.blob.type)}`));
+				if(res.extras.alt && !alt.value.length) alt.value = res.extras.alt;
 			}
 		}
 	});
@@ -41,7 +43,7 @@
 	<img
 		:src="source"
 		:title="props.title"
-		:alt="props.alt"
+		:alt="alt"
 		:width="props.width"
 		:height="props.height"
 	/>

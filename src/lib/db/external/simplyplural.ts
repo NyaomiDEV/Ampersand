@@ -1,7 +1,7 @@
 import { System, Member, FrontingEntry, Tag, BoardMessage, CustomField, JournalPost } from "../entities";
 import { getTables } from "../tables";
 import { t } from "i18next";
-import { fetch } from "@tauri-apps/plugin-http";
+import { fetchImage } from "../../util/fetchImage";
 import { resizeImage } from "../../util/image";
 import { maxUid, nilUid } from "../../util/consts";
 import { appConfig, securityConfig } from "../../config";
@@ -46,7 +46,7 @@ async function getAvatarFromUuid(systemId: string, avatarUuid: string){
 	if (!avatarUuid || !avatarUuid.length || !securityConfig.allowRemoteContent) return undefined;
 	try {
 		const url = `https://spaces.apparyllis.com/avatars/${systemId}/${avatarUuid}`;
-		const req = await (await fetch(url)).blob();
+		const req = (await fetchImage(url)).blob;
 		return new File([req], `${avatarUuid}.${req.type.split("/")[1]}`);
 	}catch(_e){
 		return undefined;
@@ -68,7 +68,7 @@ async function system(spExport: SimplyPluralExport){
 	if (spSystem.avatarUrl?.length && securityConfig.allowRemoteContent) {
 		try {
 			const image = new File(
-				[await (await fetch(spSystem.avatarUrl)).blob()],
+				[(await fetchImage(spSystem.avatarUrl)).blob],
 				spSystem.avatarUrl.split("/").pop()!
 			);
 			systemInfo.image = await resizeImage(image);
@@ -170,7 +170,7 @@ export async function member(spExport: SimplyPluralExport, systemInfo: System, s
 		if (spMember.avatarUrl?.length && securityConfig.allowRemoteContent) {
 			try {
 				const image = new File(
-					[await (await fetch(spMember.avatarUrl)).blob()],
+					[(await fetchImage(spMember.avatarUrl)).blob],
 					spMember.avatarUrl.split("/").pop()!
 				);
 				member.image = await resizeImage(image);
@@ -207,7 +207,7 @@ export async function member(spExport: SimplyPluralExport, systemInfo: System, s
 		if (spCustomFront.avatarUrl?.length && securityConfig.allowRemoteContent) {
 			try {
 				const image = new File(
-					[await (await fetch(spCustomFront.avatarUrl)).blob()],
+					[(await fetchImage(spCustomFront.avatarUrl)).blob],
 					spCustomFront.avatarUrl.split("/").pop()!
 				);
 				member.image = await resizeImage(image);

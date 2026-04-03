@@ -3,7 +3,7 @@
 
 import { CustomField, FrontingEntry, Member, System, Tag } from "../entities";
 import { getTables } from "../tables";
-import { fetch } from "@tauri-apps/plugin-http";
+import { fetchImage } from "../../util/fetchImage";
 import { nilUid } from "../../util/consts";
 import { appConfig, securityConfig } from "../../config";
 
@@ -26,8 +26,8 @@ async function system(pkExport: any){
 	};
 	if (pkExport.avatar_url && securityConfig.allowRemoteContent) {
 		try {
-			const request = await fetch(pkExport.avatar_url);
-			systemInfo.image = new File([await request.blob()], (pkExport.avatar_url as string).split("/").pop()!);
+			const request = await fetchImage(pkExport.avatar_url);
+			systemInfo.image = new File([request.blob], (pkExport.avatar_url as string).split("/").pop()!);
 		} catch (_e) {
 			// whatever
 		}
@@ -80,16 +80,16 @@ async function member(pkExport: any, tagMapping: Map<string, string>, systemInfo
 		};
 		if (pkMember.avatar_url && securityConfig.allowRemoteContent) {
 			try {
-				const request = await fetch(pkMember.avatar_url);
-				member.image = new File([await request.blob()], pkMember.avatar_url.split("/").pop());
+				const request = await fetchImage(pkMember.avatar_url);
+				member.image = new File([request.blob], pkMember.avatar_url.split("/").pop());
 			} catch (_e) {
 				// whatever, again
 			}
 		}
 		if (pkMember.banner && securityConfig.allowRemoteContent) {
 			try {
-				const request = await fetch(pkMember.banner);
-				member.cover = new File([await request.blob()], pkMember.banner.split("/").pop());
+				const request = await fetchImage(pkMember.banner);
+				member.cover = new File([request.blob], pkMember.banner.split("/").pop());
 			} catch (_e) {
 				// whatever, again
 			}
