@@ -33,7 +33,7 @@ export function exportDatabaseToBinary() {
 				else path = undefined; // save file got canceled
 			}
 
-			if(!path) return false;
+			if(!path) throw new Error("no path");
 
 			progress.dispatchEvent(new Event("start"));
 			const config = { appConfig, accessibilityConfig, securityConfig };
@@ -77,6 +77,7 @@ export function exportDatabaseToBinary() {
 			progress.dispatchEvent(new Event("finish"));
 			return true;
 		} catch (_e) {
+			console.error(_e);
 			return false;
 		}
 	}
@@ -95,11 +96,11 @@ export function importDatabaseFromBinary() {
 				fileAccessMode: "scoped",
 				pickerMode: "document"
 			});
-			if (!path) return false;
+			if (!path) throw new Error("no path");
 
 			let array = await readFile(path);
 			const magicVersion = matchMagicOld(array);
-			if (!magicVersion) return false;
+			if (!magicVersion) throw new Error("this is not an ampdb file");
 
 			switch (magicVersion) {
 				case 1: {
@@ -128,7 +129,7 @@ export function importDatabaseFromBinary() {
 				case 2: {
 					// in all other cases we need to strip our magic
 					const stripped = stripMagicOld(array, magicVersion);
-					if (!stripped) return false;
+					if (!stripped) throw new Error("unable to strip magic from ampdb file");
 					array = stripped;
 					break;
 				}
@@ -157,13 +158,8 @@ export function importDatabaseFromBinary() {
 			for (const key of Object.getOwnPropertyNames(revived.database)) {
 				const table: ShittyTable<UUIDable> = getTables()[key];
 				if (table) {
-					try {
-						await table.clear();
-						await table.bulkAdd(revived.database[key]);
-					} catch (e) {
-						console.error(e);
-						return false;
-					}
+					await table.clear();
+					await table.bulkAdd(revived.database[key]);
 				}
 				progressCurrent++;
 				progress.dispatchEvent(new CustomEvent("progress", { detail: { progress: progressCurrent / progressTotal } }));
@@ -172,6 +168,7 @@ export function importDatabaseFromBinary() {
 			progress.dispatchEvent(new Event("finish"));
 			return true;
 		} catch (_e) {
+			console.error(_e);
 			return false;
 		}
 	}

@@ -47,13 +47,9 @@ export async function toFrontingEntryComplete(frontingEntry: FrontingEntry): Pro
 
 export async function newFrontingEntry(frontingEntry: Omit<FrontingEntry, keyof UUIDable>): Promise<TransactionStatus<string>> {
 	try{
-		const uuid = window.crypto.randomUUID();
-		const result = await db.frontingEntries.add({
-			...frontingEntry,
-			uuid
-		});
+		const uuid = await db.frontingEntries.add(frontingEntry);
 
-		if(!result) throw new Error("already exists in database");
+		if(!uuid) throw new Error("already exists in database");
 
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "frontingEntries",

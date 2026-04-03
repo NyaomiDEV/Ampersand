@@ -39,13 +39,9 @@ export async function toJournalPostComplete(journalPost: JournalPost){
 
 export async function newJournalPost(journalPost: Omit<JournalPost, keyof UUIDable>): Promise<TransactionStatus<string>> {
 	try{
-		const uuid = window.crypto.randomUUID();
-		const result = await db.journalPosts.add({
-			...journalPost,
-			uuid
-		});
+		const uuid = await db.journalPosts.add(journalPost);
 
-		if(!result) throw new Error("already exists in database");
+		if(!uuid) throw new Error("already exists in database");
 
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "journalPosts",

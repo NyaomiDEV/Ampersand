@@ -28,13 +28,9 @@ export async function* getReminders(maxIter = 20){
 
 export async function newReminder(reminder: Omit<Reminder, keyof UUIDable>): Promise<TransactionStatus<string>> {
 	try{
-		const uuid = window.crypto.randomUUID();
-		const result = await db.reminders.add({
-			...reminder,
-			uuid
-		} as Reminder);
+		const uuid = await db.reminders.add(reminder);
 
-		if(!result) throw new Error("already exists in database");
+		if(!uuid) throw new Error("already exists in database");
 
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "reminders",

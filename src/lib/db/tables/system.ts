@@ -43,13 +43,9 @@ export async function* getFilteredSystems(query: string){
 
 export async function newSystem(system: Omit<System, keyof UUIDable>): Promise<TransactionStatus<string>> {
 	try{
-		const uuid = window.crypto.randomUUID();
-		const result = await db.systems.add({
-			...system,
-			uuid
-		});
+		const uuid = await db.systems.add(system);
 
-		if(!result) throw new Error("already exists in database");
+		if(!uuid) throw new Error("already exists in database");
 
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "systems",

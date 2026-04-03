@@ -37,13 +37,9 @@ export async function* getFilteredCustomFields(query: string){
 
 export async function newCustomField(customField: Omit<CustomField, keyof UUIDable>): Promise<TransactionStatus<string>> {
 	try{
-		const uuid = window.crypto.randomUUID();
-		const result = await db.customFields.add({
-			...customField,
-			uuid
-		});
+		const uuid = await db.customFields.add(customField);
 
-		if(!result) throw new Error("already exists in database");
+		if(!uuid) throw new Error("already exists in database");
 
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "customFields",

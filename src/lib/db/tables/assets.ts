@@ -37,13 +37,9 @@ export async function* getFilteredAssets(query: string){
 
 export async function newAsset(asset: Omit<Asset, keyof UUIDable>): Promise<TransactionStatus<string>> {
 	try{
-		const uuid = window.crypto.randomUUID();
-		const result = await db.assets.add({
-			...asset,
-			uuid
-		});
+		const uuid = await db.assets.add(asset);
 
-		if(!result) throw new Error("already exists in database");
+		if(!uuid) throw new Error("already exists in database");
 
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "assets",

@@ -182,7 +182,6 @@ export function importDatabaseFromJSON() {
 			let progressCurrent = 0;
 			for (const [name, entries] of Object.entries(json.database)) {
 				const table: ShittyTable<UUIDable> = getTables()[name];
-				const tableData: UUIDable[] = [];
 
 				await table.clear();
 
@@ -190,69 +189,69 @@ export function importDatabaseFromJSON() {
 					switch (name) {
 						case "boardMessages": {
 							const _data = data as BoardMessageJSON;
-							tableData.push({
+							await table.add({
 								..._data,
 								date: new Date(_data.date)
-							} as BoardMessage);
+							} as BoardMessage, false);
 							break;
 						}
 						case "frontingEntries": {
 							const _data = data as FrontingEntryJSON;
-							tableData.push({
+							await table.add({
 								..._data,
 								startTime: new Date(_data.startTime),
 								endTime: _data.endTime ? new Date(_data.endTime) : undefined,
 								presence: _data.presence
 									? new Map(Object.entries(_data.presence).map(x => [new Date(x[0]), x[1]]))
 									: undefined
-							} as FrontingEntry);
+							} as FrontingEntry, false);
 							break;
 						}
 						case "journalPosts": {
 							const _data = data as JournalPostJSON;
-							tableData.push({
+							await table.add({
 								..._data,
 								date: new Date(_data.date),
 								cover: _data.cover ? await fromDataURI(_data.cover) : undefined,
-							} as JournalPost);
+							} as JournalPost, false);
 							break;
 						}
 						case "members": {
 							const _data = data as MemberJSON;
-							tableData.push({
+							await table.add({
 								..._data,
 								image: _data.image ? await fromDataURI(_data.image) : undefined,
 								cover: _data.cover ? await fromDataURI(_data.cover) : undefined,
 								customFields: _data.customFields ? new Map(Object.entries(_data.customFields)) : undefined,
 								dateCreated: new Date(_data.dateCreated)
-							} as Member);
+							} as Member, false);
 							break;
 						}
 						case "systems": {
 							const _data = data as SystemJSON;
-							tableData.push({
+							await table.add({
 								..._data,
 								image: _data.image ? await fromDataURI(_data.image) : undefined,
 								cover: _data.cover ? await fromDataURI(_data.cover) : undefined,
-							} as System);
+							} as System, false);
 							break;
 						}
 						case "assets": {
 							const _data = data as AssetJSON;
-							tableData.push({
+							await table.add({
 								..._data,
 								file: _data.file ? await fromDataURI(_data.file) : undefined,
-							} as Asset);
+							} as Asset, false);
 							break;
 						}
 						default:
-							tableData.push(data as UUIDable);
+							await table.add(data as UUIDable, false);
 							break;
 					}
 					progressCurrent++;
 					progress.dispatchEvent(new CustomEvent("progress", { detail: { progress: progressCurrent / progressTotal } }));
 				}
-				await table.bulkAdd(tableData);
+				await table.saveIndexToDisk();
 			}
 
 			progress.dispatchEvent(new Event("finish"));

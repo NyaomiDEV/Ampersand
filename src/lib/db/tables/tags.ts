@@ -39,11 +39,10 @@ export async function* getFilteredTags(query: string){
 
 export async function newTag(tag: Omit<Tag, keyof UUIDable>): Promise<TransactionStatus<string>> {
 	try{
-		const uuid = window.crypto.randomUUID();
-		await db.tags.add({
-			...tag,
-			uuid
-		});
+		const uuid = await db.tags.add(tag);
+
+		if (!uuid) throw new Error("already exists in database");
+
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "tags",
 			event: "new",

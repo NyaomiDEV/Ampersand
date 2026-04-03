@@ -44,13 +44,9 @@ export async function* getFilteredMembers(query: string){
 
 export async function newMember(member: Omit<Member, keyof UUIDable>): Promise<TransactionStatus<string>> {
 	try{
-		const uuid = window.crypto.randomUUID();
-		const result = await db.members.add({
-			...member,
-			uuid
-		});
+		const uuid = await db.members.add(member);
 
-		if(!result) throw new Error("already exists in database");
+		if(!uuid) throw new Error("already exists in database");
 
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "members",

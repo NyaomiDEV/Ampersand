@@ -5,6 +5,7 @@ import { decode, encode } from "@msgpack/msgpack";
 import type { AmpersandEntityMapping, MigrationsMapping } from "../types";
 import { deleteNull, replace, revive, walk, walkAsync } from "../../serialization";
 import { assets, journalPosts, members, systems } from "./migrations";
+import { PartialBy } from "../../types";
 
 export type IndexEntry<T> = UUIDable & Partial<T>;
 type SecondaryKey<T> = (Exclude<keyof T, keyof UUIDable>);
@@ -167,11 +168,11 @@ export class ShittyTable<T extends UUIDable> {
 		return !!this.index.find(x => uuid === x.uuid);
 	}
 
-	async add(data: T, saveIndexAfterwards = true) {
-		const { uuid } = data;
-		if (!this.exists(uuid)) {
-			await this.write(data, saveIndexAfterwards);
-			return true;
+	async add(data: PartialBy<T, keyof UUIDable>, saveIndexAfterwards = true) {
+		data.uuid = data.uuid || window.crypto.randomUUID();
+		if (!this.exists(data.uuid)) {
+			await this.write(data as T, saveIndexAfterwards);
+			return data.uuid;
 		}
 		return false;
 	}

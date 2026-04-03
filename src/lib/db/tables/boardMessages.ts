@@ -43,13 +43,9 @@ export async function toBoardMessageComplete(boardMessage: BoardMessage): Promis
 
 export async function newBoardMessage(boardMessage: Omit<BoardMessage, keyof UUIDable>): Promise<TransactionStatus<string>> {
 	try{
-		const uuid = window.crypto.randomUUID();
-		const result = await db.boardMessages.add({
-			...boardMessage,
-			uuid
-		});
+		const uuid = await db.boardMessages.add(boardMessage);
 
-		if(!result) throw new Error("already exists in database");
+		if(!uuid) throw new Error("already exists in database");
 
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "boardMessages",
