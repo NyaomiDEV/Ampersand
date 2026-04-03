@@ -107,11 +107,6 @@
 
 		&::part(native){
 			height: 100%;
-			position: relative;
-
-			* {
-				z-index: 1;
-			}
 		}
 
 		&.influencing {
