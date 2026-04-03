@@ -8,9 +8,31 @@ import { securityConfig } from "../../config";
 import { broadcastEvent } from "../../native/plugin";
 import { deleteFile } from "../../serialization";
 import { TransactionStatus } from "../types";
+import { sortFrontingEntries } from "../../util/misc";
 
-export function getFrontingEntries(){
-	return db.frontingEntries.iterate();
+export async function* getFrontingEntries(maxIter = 20){
+	const uuids = db.frontingEntries.index.sort(sortFrontingEntries).map(x => x.uuid);
+		
+	const f = (offset: number, maxIter: number) => {
+		const chunk: Promise<FrontingEntry | undefined>[] = [];
+		for (let i = offset; i < offset + maxIter; i++) {
+			if (uuids[i]) {
+				const data = db.frontingEntries.get(uuids[i]);
+				chunk.push(data);
+			}
+		}
+		return chunk;
+	};
+		
+	let offset = 0;
+	while (offset < uuids.length) {
+		const promises = f(offset, maxIter);
+		offset += maxIter;
+		for (const promise of promises) {
+			const data = await promise;
+			if (data) yield data;
+		}
+	};
 }
 
 export function getFrontingEntry(uuid: UUID){

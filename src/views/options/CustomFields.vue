@@ -45,7 +45,7 @@
 	});
 
 	async function getCustomFields(){
-		customFields.value = (await Array.fromAsync(getFilteredCustomFields(search.value))).sort((a, b) => a.priority - b.priority);
+		customFields.value = (await Array.fromAsync(getFilteredCustomFields(search.value)));
 	}
 
 	async function showModal(clickedCustomField?: CustomField){

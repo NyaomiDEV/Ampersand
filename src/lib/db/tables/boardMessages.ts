@@ -5,9 +5,31 @@ import { defaultMember, getMember } from "../tables/members";
 import dayjs from "dayjs";
 import { filterBoardMessage } from "../../search";
 import { TransactionStatus } from "../types";
+import { sortBoardMessages } from "../../util/misc";
 
-export function getBoardMessages(){
-	return db.boardMessages.iterate();
+export async function* getBoardMessages(maxIter = 20){
+	const uuids = db.boardMessages.index.sort(sortBoardMessages).map(x => x.uuid);
+
+	const f = (offset: number, maxIter: number) => {
+		const chunk: Promise<BoardMessage | undefined>[] = [];
+		for (let i = offset; i < offset + maxIter; i++) {
+			if (uuids[i]) {
+				const data = db.boardMessages.get(uuids[i]);
+				chunk.push(data);
+			}
+		}
+		return chunk;
+	};
+
+	let offset = 0;
+	while (offset < uuids.length) {
+		const promises = f(offset, maxIter);
+		offset += maxIter;
+		for (const promise of promises) {
+			const data = await promise;
+			if (data) yield data;
+		}
+	};
 }
 
 export function getBoardMessage(uuid: UUID){
@@ -84,6 +106,7 @@ export async function updateBoardMessage(uuid: UUID, newContent: Partial<BoardMe
 export async function getRecentBoardMessages() {
 	return Promise.all(
 		db.boardMessages.index
+			.sort(sortBoardMessages)
 			.filter(x => !x.isArchived && (x.isPinned || dayjs().startOf("day").valueOf() - dayjs(x.date).startOf("day").valueOf() <= 3 * 24 * 60 * 60 * 1000))
 			.map(async x => toBoardMessageComplete(await db.boardMessages.get(x.uuid)))
 	);

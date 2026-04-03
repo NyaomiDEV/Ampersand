@@ -67,7 +67,7 @@
 	function getGrouped(entries: FrontingEntryComplete[]){
 		const map = new Map<string, FrontingEntryComplete[]>();
 
-		for(const entry of entries.sort((a, b) => b.startTime.getTime() - a.startTime.getTime())){
+		for(const entry of entries){
 			if(!entry.endTime){
 				const collection = map.get("currentlyFronting");
 				if(!collection)

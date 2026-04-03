@@ -2,7 +2,7 @@ import { actionSheetController, alertController, createAnimation, getIonPageElem
 import dayjs from "dayjs";
 import { Ref } from "vue";
 import { appConfig } from "../config";
-import { Member, System, Tag } from "../db/entities";
+import { Asset, BoardMessage, CustomField, FrontingEntry, Member, System } from "../db/entities";
 import i18next, { computePercentage, getLocaleInfo } from "../i18n";
 import { open } from "@tauri-apps/plugin-dialog";
 import { readFile } from "@tauri-apps/plugin-fs";
@@ -269,8 +269,29 @@ export function sortSystems(a: IndexEntry<System>, b: IndexEntry<System>) {
 	return a.name!.localeCompare(b.name!);
 }
 
-export function sortTags(a: IndexEntry<Tag>, b: IndexEntry<Tag>) {
+export function sortFrontingEntries(a: IndexEntry<FrontingEntry>, b: IndexEntry<FrontingEntry>) {
+	return b.startTime!.valueOf() - a.startTime!.valueOf();
+}
+
+export function sortBoardMessages(a: IndexEntry<BoardMessage>, b: IndexEntry<BoardMessage>){
+	if (a.isPinned && !b.isPinned) return -1;
+	if (!a.isPinned && b.isPinned) return 1;
+	return sortDate(a, b);
+}
+
+export function sortAssets(a: IndexEntry<Asset>, b: IndexEntry<Asset>) {
+	return a.friendlyName!.localeCompare(b.friendlyName!);
+}
+
+export function sortCustomFields(a: IndexEntry<CustomField>, b: IndexEntry<CustomField>) {
+	return a.priority! - b.priority!;
+}
+export function sortName(a: IndexEntry<{ name: string }>, b: IndexEntry<{ name: string }>) {
 	return a.name!.localeCompare(b.name!);
+}
+
+export function sortDate(a: IndexEntry<{ date: Date; }>, b: IndexEntry<{ date: Date; }>) {
+	return b.date!.valueOf() - a.date!.valueOf();
 }
 
 export const imageClips = import.meta.webpackContext("../../assets/shapes/", { recursive: false, include: /\.svg$/ }).keys().map(x => x.replace(/^\.\/(.*)\.svg$/, "$1"));

@@ -59,7 +59,7 @@ export function exportDatabaseToJSON(withFiles: boolean) {
 			for (const [name, table] of Object.entries(tables)) {
 				if(name === "reminders") continue; // we are not supporting those yet
 				if(name === "assets" && !withFiles) continue;
-				for await (const data of table.iterate()) {
+				for await (const data of table.iterate(10)) {
 					switch(name){
 						case "boardMessages": {
 							const _data = data as BoardMessage;

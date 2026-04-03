@@ -46,7 +46,7 @@ export function exportDatabaseToBinary() {
 			let progressCurrent = 0;
 			for (const [name, table] of Object.entries(getTables())) {
 				database[name] = [];
-				for await (const data of table.iterate()) {
+				for await (const data of table.iterate(10)) {
 					database[name].push(data);
 					progressCurrent++;
 					progress.dispatchEvent(new CustomEvent("progress", { detail: { progress: progressCurrent / progressTotal } }));

@@ -5,9 +5,31 @@ import { getMember, defaultMember } from "./members";
 import dayjs from "dayjs";
 import { filterJournalPost } from "../../search";
 import { TransactionStatus } from "../types";
+import { sortDate } from "../../util/misc";
 
-export function getJournalPosts(){
-	return db.journalPosts.iterate();
+export async function* getJournalPosts(maxIter = 20){
+	const uuids = db.journalPosts.index.sort(sortDate).map(x => x.uuid);
+		
+	const f = (offset: number, maxIter: number) => {
+		const chunk: Promise<JournalPost | undefined>[] = [];
+		for (let i = offset; i < offset + maxIter; i++) {
+			if (uuids[i]) {
+				const data = db.journalPosts.get(uuids[i]);
+				chunk.push(data);
+			}
+		}
+		return chunk;
+	};
+		
+	let offset = 0;
+	while (offset < uuids.length) {
+		const promises = f(offset, maxIter);
+		offset += maxIter;
+		for (const promise of promises) {
+			const data = await promise;
+			if (data) yield data;
+		}
+	};
 }
 
 export async function toJournalPostComplete(journalPost: JournalPost){

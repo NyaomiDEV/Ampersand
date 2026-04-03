@@ -3,9 +3,31 @@ import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUID, UUIDable, CustomField } from "../entities";
 import { filterCustomField } from "../../search";
 import { TransactionStatus } from "../types";
+import { sortCustomFields } from "../../util/misc";
 
-export function getCustomFields(){
-	return db.customFields.iterate();
+export async function* getCustomFields(maxIter = 20){
+	const uuids = db.customFields.index.sort(sortCustomFields).map(x => x.uuid);
+	
+	const f = (offset: number, maxIter: number) => {
+		const chunk: Promise<CustomField | undefined>[] = [];
+		for (let i = offset; i < offset + maxIter; i++) {
+			if (uuids[i]) {
+				const data = db.customFields.get(uuids[i]);
+				chunk.push(data);
+			}
+		}
+		return chunk;
+	};
+	
+	let offset = 0;
+	while (offset < uuids.length) {
+		const promises = f(offset, maxIter);
+		offset += maxIter;
+		for (const promise of promises) {
+			const data = await promise;
+			if (data) yield data;
+		}
+	};
 }
 
 export async function* getFilteredCustomFields(query: string){

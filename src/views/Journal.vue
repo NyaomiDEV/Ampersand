@@ -79,7 +79,7 @@
 	function getGrouped(entries: JournalPostComplete[]) {
 		const map = new Map<string, JournalPostComplete[]>();
 
-		for(const entry of entries.filter(x => x.isPinned).sort((a, b) => b.date.getTime() - a.date.getTime())){
+		for(const entry of entries.filter(x => x.isPinned)){
 			const collection = map.get("pinnedPosts");
 			if(!collection)
 				map.set("pinnedPosts", [entry]);
@@ -87,7 +87,7 @@
 				collection.push(entry);
 		}
 
-		for (const entry of entries.filter(x => !x.isPinned).sort((a, b) => b.date.getTime() - a.date.getTime())) {
+		for (const entry of entries.filter(x => !x.isPinned)) {
 			const key = dayjs(entry.date).startOf("day").toISOString();
 
 			const collection = map.get(key);

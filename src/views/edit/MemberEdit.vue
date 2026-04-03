@@ -186,8 +186,8 @@
 
 		loading.value = true;
 
-		tags.value = (await Array.fromAsync(getTags())).filter(x => x.type === "member").sort((a, b) => a.name.localeCompare(b.name));
-		customFields.value = (await Array.fromAsync(getCustomFields())).sort((a, b) => a.priority - b.priority);
+		tags.value = (await Array.fromAsync(getTags())).filter(x => x.type === "member");
+		customFields.value = (await Array.fromAsync(getCustomFields()));
 
 		if(route.query.uuid){
 			const _member = await getMember(route.query.uuid as string);

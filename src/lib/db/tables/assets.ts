@@ -3,9 +3,31 @@ import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUID, UUIDable, Asset } from "../entities";
 import { filterAsset } from "../../search";
 import { TransactionStatus } from "../types";
+import { sortAssets } from "../../util/misc";
 
-export function getAssets(){
-	return db.assets.iterate();
+export async function* getAssets(maxIter = 20){
+	const uuids = db.assets.index.sort(sortAssets).map(x => x.uuid);
+
+	const f = (offset: number, maxIter: number) => {
+		const chunk: Promise<Asset | undefined>[] = [];
+		for (let i = offset; i < offset + maxIter; i++) {
+			if (uuids[i]) {
+				const data = db.assets.get(uuids[i]);
+				chunk.push(data);
+			}
+		}
+		return chunk;
+	};
+
+	let offset = 0;
+	while (offset < uuids.length) {
+		const promises = f(offset, maxIter);
+		offset += maxIter;
+		for (const promise of promises) {
+			const data = await promise;
+			if (data) yield data;
+		}
+	};
 }
 
 export async function* getFilteredAssets(query: string){

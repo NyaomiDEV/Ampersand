@@ -67,11 +67,11 @@ export async function systems(table: ShittyTable<System>, version: number){
 	}
 
 	async function oneToTwo() {
-		for await (const system of table.iterate()) {
-			if (!system.isPinned || !system.isArchived) {
-				if(!await table.update(system.uuid, {
-					isArchived: system.isArchived || false,
-					isPinned: system.isPinned || false
+		for (const systemIndex of table.index) {
+			if (!systemIndex.isPinned || !systemIndex.isArchived) {
+				if(!await table.update(systemIndex.uuid, {
+					isArchived: systemIndex.isArchived || false,
+					isPinned: systemIndex.isPinned || false
 				})) return false;
 			}
 		}

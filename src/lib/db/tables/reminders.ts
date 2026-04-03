@@ -3,8 +3,29 @@ import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUIDable, Reminder, UUID } from "../entities";
 import { TransactionStatus } from "../types";
 
-export function getReminders(){
-	return db.reminders.iterate();
+export async function* getReminders(maxIter = 20){
+	const uuids = db.reminders.index.map(x => x.uuid);
+	
+	const f = (offset: number, maxIter: number) => {
+		const chunk: Promise<Reminder | undefined>[] = [];
+		for (let i = offset; i < offset + maxIter; i++) {
+			if (uuids[i]) {
+				const data = db.reminders.get(uuids[i]);
+				chunk.push(data);
+			}
+		}
+		return chunk;
+	};
+	
+	let offset = 0;
+	while (offset < uuids.length) {
+		const promises = f(offset, maxIter);
+		offset += maxIter;
+		for (const promise of promises) {
+			const data = await promise;
+			if (data) yield data;
+		}
+	};
 }
 
 export async function newReminder(reminder: Omit<Reminder, keyof UUIDable>): Promise<TransactionStatus<string>> {

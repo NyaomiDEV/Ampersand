@@ -90,7 +90,7 @@ export function exportArchive() {
 
 			let progressCurrent = 0;
 			for (const [name, table] of Object.entries(getTables())) {
-				for await (const data of table.iterate()) {
+				for await (const data of table.iterate(10)) {
 					await fd.write(await encode({ table: name, data }));
 					progressCurrent++;
 					progress.dispatchEvent(new CustomEvent("progress", { detail: { progress: progressCurrent / progressTotal } }));

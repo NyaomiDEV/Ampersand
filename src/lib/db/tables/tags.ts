@@ -5,10 +5,10 @@ import { filterTag } from "../../search";
 import { getMembers, updateMember } from "./members";
 import { getJournalPosts, updateJournalPost } from "./journalPosts";
 import { TransactionStatus } from "../types";
-import { sortTags } from "../../util/misc";
+import { sortName } from "../../util/misc";
 
 export async function* getTags(maxIter = 20){
-	const uuids = db.tags.index.sort(sortTags).map(x => x.uuid);
+	const uuids = db.tags.index.sort(sortName).map(x => x.uuid);
 	
 	const f = (offset: number, maxIter: number) => {
 		const chunk: Promise<Tag | undefined>[] = [];

@@ -8,11 +8,7 @@ import { filterMember } from "../../search";
 import { sortMembers } from "../../util/misc";
 import { TransactionStatus } from "../types";
 
-export function getMembers(){
-	return db.members.iterate();
-}
-
-export async function* getSortedMembers(maxIter = 20){
+export async function* getMembers(maxIter = 20){
 	const uuids = db.members.index.sort(sortMembers).map(x => x.uuid);
 
 	const f = (offset: number, maxIter: number) => {
@@ -42,7 +38,7 @@ export function getMemberIndex(){
 }
 
 export async function* getFilteredMembers(query: string){
-	for await (const member of getSortedMembers()){
+	for await (const member of getMembers()){
 		if(await filterMember(query, member))
 			yield member;
 	}

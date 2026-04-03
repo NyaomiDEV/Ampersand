@@ -12,11 +12,7 @@
 	const boardMessages = shallowRef<BoardMessageComplete[]>();
 
 	async function updateBoardMessages(){
-		boardMessages.value = (await getRecentBoardMessages()).sort((a, b) => {
-			if(a.isPinned && !b.isPinned) return -1;
-			if(!a.isPinned && b.isPinned) return 1;
-			return b.date.getTime() - a.date.getTime();
-		});
+		boardMessages.value = (await getRecentBoardMessages());
 	}
 
 	const listener = (event: Event) => {

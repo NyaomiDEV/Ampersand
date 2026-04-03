@@ -68,7 +68,7 @@
 	function getGrouped(entries: BoardMessageComplete[]){
 		const map = new Map<string, BoardMessageComplete[]>();
 
-		for(const entry of entries.sort((a, b) => b.date.getTime() - a.date.getTime())){
+		for(const entry of entries){
 			const key = dayjs(entry.date).startOf("day").toISOString();
 			
 			const collection = map.get(key);

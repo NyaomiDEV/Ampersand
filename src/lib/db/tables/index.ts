@@ -120,7 +120,14 @@ export class ShittyTable<T extends UUIDable> {
 		return this.index.length;
 	}
 
-	async* iterate(maxIter: number = 20) {
+	/**
+	 * IMPORTANT:
+	 * This method here is just a convenient "polyfill" and
+	 * it should preferably not be used as-is, as we might
+	 * want to do preliminary sorting of indices or stuff
+	 * like that instead.
+	 **/
+	async* iterate(maxIter: number) {
 		const uuids = this.index.map(x => x.uuid);
 
 		const f = (offset: number, maxIter: number) => {
@@ -272,5 +279,5 @@ export const db = {
 	reminders: await makeTable<Reminder>("reminders", []),
 	tags: await makeTable<Tag>("tags", ["name"]),
 	assets: await makeTable<Asset>("assets", ["friendlyName"]),
-	customFields: await makeTable<CustomField>("customFields", ["name"])
+	customFields: await makeTable<CustomField>("customFields", ["name", "priority"])
 };
