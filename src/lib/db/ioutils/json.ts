@@ -30,7 +30,7 @@ export function exportDatabaseToJSON(withFiles: boolean) {
 				else path = undefined; // save file got canceled
 			}
 
-			if (!path) return false;
+			if (!path) throw new Error("no path");
 
 			progress.dispatchEvent(new Event("start"));
 			const json: DatabaseJSON = {
@@ -145,6 +145,7 @@ export function exportDatabaseToJSON(withFiles: boolean) {
 			progress.dispatchEvent(new Event("finish"));
 			return true;
 		} catch (_e) {
+			console.error(_e);
 			return false;
 		}
 	}
@@ -163,7 +164,7 @@ export function importDatabaseFromJSON() {
 				fileAccessMode: "scoped",
 				pickerMode: "document"
 			});
-			if (!path) return false;
+			if (!path) throw new Error("no path");
 
 			const jsonText = await readTextFile(path);
 			const json = JSON.parse(jsonText) as DatabaseJSON;
@@ -183,12 +184,7 @@ export function importDatabaseFromJSON() {
 				const table: ShittyTable<UUIDable> = getTables()[name];
 				const tableData: UUIDable[] = [];
 
-				try {
-					await table.clear();
-				} catch (e) {
-					console.error(e);
-					return false;
-				}
+				await table.clear();
 
 				for (const data of entries) {
 					switch (name) {
@@ -262,6 +258,7 @@ export function importDatabaseFromJSON() {
 			progress.dispatchEvent(new Event("finish"));
 			return true;
 		} catch (_e) {
+			console.error(_e);
 			return false;
 		}
 	}
