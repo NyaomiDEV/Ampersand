@@ -63,7 +63,7 @@ export function exportArchive() {
 				else path = undefined; // save file got canceled
 			}
 
-			if (!path) return false;
+			if (!path) throw new Error("no path");
 
 			const magic = AMPERSAND_ARCHIVE_MAGICS.get(1)!;
 
@@ -101,6 +101,7 @@ export function exportArchive() {
 			progress.dispatchEvent(new Event("finish"));
 			return true;
 		} catch (_e) {
+			console.error(_e);
 			return false;
 		}
 	}
@@ -119,7 +120,7 @@ export function importArchive() {
 				fileAccessMode: "scoped",
 				pickerMode: "document"
 			});
-			if (!path) return false;
+			if (!path) throw new Error("no path");
 
 			const fd = await openFile(path, { read: true });
 
@@ -131,23 +132,17 @@ export function importArchive() {
 
 			const magicBytesMaybe = new Uint8Array(10);
 			const bytesRead = await fd.read(magicBytesMaybe);
-			if (bytesRead === null || bytesRead === 0) return false;
+			if (bytesRead === null || bytesRead === 0) throw new Error("eol before it even started");
 
 			_progress(bytesRead);
 
 			const magicVersion = matchMagicNew(magicBytesMaybe);
-			if (!magicVersion) return false;
+			if (!magicVersion) throw new Error("this is not an ampersand archive");
 
 			switch (magicVersion) {
 				case 1: {
-					for (const table of Object.values(getTables())){
-						try{
-							await table.clear();
-						}catch(e){
-							console.error(e);
-							return false;
-						}
-					}
+					for (const table of Object.values(getTables()))
+						await table.clear();
 
 					const stream = intoStream(fd, _progress);
 
@@ -164,15 +159,10 @@ export function importArchive() {
 								break;
 							}
 							default: {
-								try {
-									const _data = data as ArchiveStreamDatabase;
-									const table: ShittyTable<UUIDable> = getTables()[_data.table];
-									const result = await table.add(_data.data.uuid, _data.data);
-									if (!result) throw new Error(`item already exists: ${_data.data.uuid}`);
-								} catch(e) {
-									console.error(e);
-									return false;
-								}
+								const _data = data as ArchiveStreamDatabase;
+								const table: ShittyTable<UUIDable> = getTables()[_data.table];
+								const result = await table.add(_data.data.uuid, _data.data);
+								if (!result) throw new Error(`item already exists: ${_data.data.uuid}`);
 							}
 						}
 					}
@@ -183,6 +173,7 @@ export function importArchive() {
 			progress.dispatchEvent(new Event("finish"));
 			return true;
 		} catch (_e) {
+			console.error(_e);
 			return false;
 		}
 	}
