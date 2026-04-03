@@ -131,7 +131,7 @@ export class ShittyTable<T extends UUIDable> {
 		const uuids = this.index.map(x => x.uuid);
 
 		const f = (offset: number, maxIter: number) => {
-			const chunk: Promise<T | undefined>[] = [];
+			const chunk: Promise<T>[] = [];
 			for(let i = offset; i < offset + maxIter; i++){
 				if(uuids[i]){
 					const data = this.get(uuids[i]);
@@ -145,10 +145,8 @@ export class ShittyTable<T extends UUIDable> {
 		while(offset < uuids.length) {
 			const promises = f(offset, maxIter);
 			offset += maxIter;
-			for (const promise of promises) {
-				const data = await promise;
-				if (data) yield data;
-			}
+			for (const promise of promises)
+				yield await promise;
 		};
 	}
 

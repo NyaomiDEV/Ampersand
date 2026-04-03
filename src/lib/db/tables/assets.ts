@@ -9,7 +9,7 @@ export async function* getAssets(maxIter = 20){
 	const uuids = db.assets.index.sort(sortAssets).map(x => x.uuid);
 
 	const f = (offset: number, maxIter: number) => {
-		const chunk: Promise<Asset | undefined>[] = [];
+		const chunk: Promise<Asset>[] = [];
 		for (let i = offset; i < offset + maxIter; i++) {
 			if (uuids[i]) {
 				const data = db.assets.get(uuids[i]);
@@ -23,10 +23,8 @@ export async function* getAssets(maxIter = 20){
 	while (offset < uuids.length) {
 		const promises = f(offset, maxIter);
 		offset += maxIter;
-		for (const promise of promises) {
-			const data = await promise;
-			if (data) yield data;
-		}
+		for (const promise of promises)
+			yield await promise;
 	};
 }
 

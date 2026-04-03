@@ -7,7 +7,7 @@ export async function* getReminders(maxIter = 20){
 	const uuids = db.reminders.index.map(x => x.uuid);
 	
 	const f = (offset: number, maxIter: number) => {
-		const chunk: Promise<Reminder | undefined>[] = [];
+		const chunk: Promise<Reminder>[] = [];
 		for (let i = offset; i < offset + maxIter; i++) {
 			if (uuids[i]) {
 				const data = db.reminders.get(uuids[i]);
@@ -21,10 +21,8 @@ export async function* getReminders(maxIter = 20){
 	while (offset < uuids.length) {
 		const promises = f(offset, maxIter);
 		offset += maxIter;
-		for (const promise of promises) {
-			const data = await promise;
-			if (data) yield data;
-		}
+		for (const promise of promises)
+			yield await promise;
 	};
 }
 

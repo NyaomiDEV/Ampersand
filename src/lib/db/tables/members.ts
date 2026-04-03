@@ -12,7 +12,7 @@ export async function* getMembers(maxIter = 20){
 	const uuids = db.members.index.sort(sortMembers).map(x => x.uuid);
 
 	const f = (offset: number, maxIter: number) => {
-		const chunk: Promise<Member | undefined>[] = [];
+		const chunk: Promise<Member>[] = [];
 		for (let i = offset; i < offset + maxIter; i++) {
 			if (uuids[i]) {
 				const data = db.members.get(uuids[i]);
@@ -26,10 +26,8 @@ export async function* getMembers(maxIter = 20){
 	while (offset < uuids.length) {
 		const promises = f(offset, maxIter);
 		offset += maxIter;
-		for (const promise of promises) {
-			const data = await promise;
-			if (data) yield data;
-		}
+		for (const promise of promises) 
+			yield await promise;
 	};
 }
 

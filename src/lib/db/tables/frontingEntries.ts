@@ -14,7 +14,7 @@ export async function* getFrontingEntries(maxIter = 20){
 	const uuids = db.frontingEntries.index.sort(sortFrontingEntries).map(x => x.uuid);
 		
 	const f = (offset: number, maxIter: number) => {
-		const chunk: Promise<FrontingEntry | undefined>[] = [];
+		const chunk: Promise<FrontingEntry>[] = [];
 		for (let i = offset; i < offset + maxIter; i++) {
 			if (uuids[i]) {
 				const data = db.frontingEntries.get(uuids[i]);
@@ -28,10 +28,8 @@ export async function* getFrontingEntries(maxIter = 20){
 	while (offset < uuids.length) {
 		const promises = f(offset, maxIter);
 		offset += maxIter;
-		for (const promise of promises) {
-			const data = await promise;
-			if (data) yield data;
-		}
+		for (const promise of promises)
+			yield await promise;
 	};
 }
 

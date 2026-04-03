@@ -10,7 +10,7 @@ export async function* getSystems(maxIter = 20){
 	const uuids = db.systems.index.sort(sortSystems).map(x => x.uuid);
 	
 	const f = (offset: number, maxIter: number) => {
-		const chunk: Promise<System | undefined>[] = [];
+		const chunk: Promise<System>[] = [];
 		for (let i = offset; i < offset + maxIter; i++) {
 			if (uuids[i]) {
 				const data = db.systems.get(uuids[i]);
@@ -24,10 +24,8 @@ export async function* getSystems(maxIter = 20){
 	while (offset < uuids.length) {
 		const promises = f(offset, maxIter);
 		offset += maxIter;
-		for (const promise of promises) {
-			const data = await promise;
-			if (data) yield data;
-		}
+		for (const promise of promises)
+			yield await promise;
 	};
 }
 
