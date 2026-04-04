@@ -31,6 +31,10 @@ export async function* getTags(maxIter = 20){
 	};
 }
 
+export function getTagsIndex(){
+	return db.tags.index;
+}
+
 export async function* getFilteredTags(query: string){
 	for await (const tag of getTags()){
 		if(filterTag(query, tag))

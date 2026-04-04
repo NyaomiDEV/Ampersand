@@ -283,7 +283,7 @@ export const db = {
 	frontingEntries: await makeTable<FrontingEntry>("frontingEntries", ["member", "startTime", "endTime", "isLocked", "isMainFronter"]),
 	journalPosts: await makeTable<JournalPost>("journalPosts", ["member", "date", "isPinned"]),
 	reminders: await makeTable<Reminder>("reminders", []),
-	tags: await makeTable<Tag>("tags", ["name", "isArchived"]),
+	tags: await makeTable<Tag>("tags", ["name", "isArchived", "viewInLists"]),
 	assets: await makeTable<Asset>("assets", ["friendlyName"]),
 	customFields: await makeTable<CustomField>("customFields", ["name", "priority"])
 };

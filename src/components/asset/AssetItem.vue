@@ -7,8 +7,9 @@
 	import documentMD from "@material-symbols/svg-600/outlined/draft.svg";
 	import { openFile } from "../../lib/native/plugin";
 	import { isReactive, onBeforeMount, shallowRef, watch, WatchStopHandle } from "vue";
-	import { getTag } from "../../lib/db/tables/tags";
+	import { getTag, getTagsIndex } from "../../lib/db/tables/tags";
 	import TagChip from "../tag/TagChip.vue";
+	import { sortName } from "../../lib/util/misc";
 
 	const { getObjectURL } = useBlob();
 
@@ -24,11 +25,23 @@
 		detail?: boolean
 	}>();
 
+	function shouldShowTags(){
+		return props.showTags && props.asset.tags
+			.filter(x => {
+				const tagIndex = getTagsIndex().find(y => y.uuid === x);
+				return !tagIndex?.isArchived && tagIndex?.viewInLists;
+			}).length > 0;
+	}
+
 	async function updateTags(){
-		if(props.showTags && props.asset.tags.length){
-			tags.value = (await Promise.all(props.asset.tags.map(async x => await getTag(x))))
-				.filter(x => x.viewInLists && !x.isArchived)
-				.sort((a, b) => a.name.localeCompare(b.name));
+		if(props.showTags){
+			tags.value = (await Promise.all(props.asset.tags
+				.filter(x => {
+					const tagIndex = getTagsIndex().find(y => y.uuid === x);
+					return !tagIndex?.isArchived && tagIndex?.viewInLists;
+				})
+				.map(x => getTag(x))))
+				.sort(sortName);
 		}
 	}
 
@@ -91,8 +104,8 @@
 				{{ props.asset.friendlyName }}
 			</template>
 			<div
-				v-if="props.showTags && props.asset.tags.length"
-				class="chips"
+				v-if="shouldShowTags()"
+				class="tags"
 				@pointerdown="(e) => e.stopPropagation()"
 				@touchstart="(e) => e.stopPropagation()"
 			>
@@ -118,7 +131,7 @@
 		height: 48px;
 	}
 
-	div.chips {
+	div.tags {
 		white-space: nowrap;
 		overflow-x: scroll;
 		scrollbar-width: none;

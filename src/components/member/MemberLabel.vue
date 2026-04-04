@@ -6,10 +6,11 @@
 	import { Member, Tag, System } from "../../lib/db/entities";
 	import TagChip from "../tag/TagChip.vue";
 	import { isReactive, onBeforeMount, shallowRef, watch, WatchStopHandle } from "vue";
-	import { getTag } from "../../lib/db/tables/tags";
+	import { getTag, getTagsIndex } from "../../lib/db/tables/tags";
 	import SystemChip from "../system/SystemChip.vue";
 	import { getSystem } from "../../lib/db/tables/system";
 	import { appConfig } from "../../lib/config";
+	import { sortName } from "../../lib/util/misc";
 
 	const props = withDefaults(defineProps<{
 		member: Member,
@@ -24,11 +25,27 @@
 	const system = shallowRef<System>({ name: "", uuid: props.member.system, isPinned: false, isArchived: false });
 	const tags = shallowRef<Tag[]>();
 
+	function shouldShowChips(){
+		return props.showChips && (
+			props.member.tags.filter(x => {
+				const tagIndex = getTagsIndex().find(y => y.uuid === x);
+				return !tagIndex?.isArchived && tagIndex?.viewInLists;
+			}).length > 0 || 
+			system.value.uuid !== appConfig.defaultSystem ||
+			appConfig.showDefaultSystemInMemberList
+		);
+	}
+
 	async function updateTags(){
-		if(props.showChips && props.member.tags.length){
-			tags.value = (await Promise.all(props.member.tags.map(async x => await getTag(x))))
-				.filter(x => x.viewInLists && !x.isArchived)
-				.sort((a, b) => a.name.localeCompare(b.name));
+		if(props.showChips){
+			tags.value = (await Promise.all(props.member.tags
+				.filter(x => {
+					const tagIndex = getTagsIndex().find(y => y.uuid === x);
+					return !tagIndex?.isArchived && tagIndex?.viewInLists;
+				})
+				.map(x => getTag(x))))
+				.sort(sortName)
+				.filter(x => x.viewInLists);
 		}
 	}
 
@@ -75,7 +92,7 @@
 		</h3>
 		<slot />
 		<div
-			v-if="props.showChips && (props.member.tags.length || system.uuid !== appConfig.defaultSystem || appConfig.showDefaultSystemInMemberList)"
+			v-if="shouldShowChips()"
 			class="chips"
 			@pointerdown="(e) => e.stopPropagation()"
 			@touchstart="(e) => e.stopPropagation()"

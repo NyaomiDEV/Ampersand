@@ -4,9 +4,9 @@
 	import Avatar from "../Avatar.vue";
 	import TagChip from "../tag/TagChip.vue";
 	import { JournalPostComplete, Tag } from "../../lib/db/entities";
-	import { formatDate } from "../../lib/util/misc";
+	import { formatDate, sortName } from "../../lib/util/misc";
 	import { isReactive, onBeforeMount, shallowRef, watch, WatchStopHandle } from "vue";
-	import { getTag } from "../../lib/db/tables/tags";
+	import { getTag, getTagsIndex } from "../../lib/db/tables/tags";
 	import { useBlob } from "../../lib/util/blob";
 	import { accessibilityConfig } from "../../lib/config";
 
@@ -24,10 +24,24 @@
 		showBorderColor: true
 	});
 
+	function shouldShowTags(){
+		return props.showTags && props.post.tags
+			.filter(x => {
+				const tagIndex = getTagsIndex().find(y => y.uuid === x);
+				return !tagIndex?.isArchived && tagIndex?.viewInLists;
+			}).length > 0;
+	}
+
 	async function updateTags() {
-		if(props.showTags && props.post.tags){
-			tags.value = (await Promise.all(props.post.tags.map(async x => await getTag(x))))
-				.filter(x => x.viewInLists && !x.isArchived);
+		if(props.showTags){
+			tags.value = (await Promise.all(props.post.tags
+				.filter(x => {
+					const tagIndex = getTagsIndex().find(y => y.uuid === x);
+					return !tagIndex?.isArchived && tagIndex?.viewInLists;
+				})
+				.map(x => getTag(x))))
+				.sort(sortName)
+				.filter(x => x.viewInLists);
 		}
 	}
 
@@ -78,7 +92,7 @@
 			<h1>{{ props.post.title }}</h1>
 			<h2 v-if="props.post.subtitle?.length">{{ props.post.subtitle }}</h2>
 			
-			<div v-if="props.showTags && props.post.tags.length" class="tags">
+			<div v-if="shouldShowTags()" class="tags">
 				<TagChip v-for="tag in tags" :key="tag.uuid" :tag="tag" />
 			</div>
 		</IonLabel>
