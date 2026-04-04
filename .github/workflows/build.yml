@@ -26,10 +26,7 @@ jobs:
       upload_url: ${{ steps.release.outputs.upload_url }}
     steps:
     - name: Checkout
-      if: ${{ github.ref_name == 'main' }}
       uses: actions/checkout@v6
-      with:
-        fetch-depth: 0
     - name: Set up Node
       uses: actions/setup-node@v6
       with:
