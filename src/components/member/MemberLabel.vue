@@ -38,19 +38,16 @@
 	}
 
 	let watchHandle: WatchStopHandle | undefined;
-	watch(props, async () => {
-		await updateSystem();
-		await updateTags();
+	watch(props, () => {
 		if(isReactive(props.member)){
 			watchHandle = watch(props.member, async () => {
 				await updateSystem();
 				await updateTags();
 			});
-		} else
-			if(watchHandle){
-				watchHandle();
-				watchHandle = undefined;
-			}
+		} else if(watchHandle){
+			watchHandle();
+			watchHandle = undefined;
+		}
 	});
 
 	onBeforeMount(async () => {

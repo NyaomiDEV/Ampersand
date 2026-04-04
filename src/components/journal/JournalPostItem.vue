@@ -36,22 +36,17 @@
 		return style;
 	}
 
-	onBeforeMount(async () => {
-		await updateTags();
-	});
-
 	let watchHandle: WatchStopHandle | undefined;
-	watch(props, async () => {
-		await updateTags();
+	watch(props, () => {
 		if (isReactive(props.post))
 			watchHandle = watch(props.post, updateTags);
-		else
-			if (watchHandle) {
-				watchHandle();
-				watchHandle = undefined;
-			}
-	}, { immediate: true });
+		else if (watchHandle) {
+			watchHandle();
+			watchHandle = undefined;
+		}
+	});
 
+	onBeforeMount(updateTags);
 </script>
 
 <template>

@@ -54,15 +54,13 @@
 	}
 
 	let watchHandle: WatchStopHandle | undefined;
-	watch(props, async () => {
-		await updateTags();
+	watch(props, () => {
 		if(isReactive(props.asset))
 			watchHandle = watch(props.asset, updateTags);
-		else
-			if(watchHandle){
-				watchHandle();
-				watchHandle = undefined;
-			}
+		else if(watchHandle){
+			watchHandle();
+			watchHandle = undefined;
+		}
 	});
 
 	onBeforeMount(updateTags);
