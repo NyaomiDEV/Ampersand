@@ -34,6 +34,7 @@ export type BoardMessageFilterQuery = {
 
 export type AssetFilterQuery = {
 	query: string,
+	tags: Map<string, boolean>,
 	type?: string,
 	filename?: string
 };
@@ -209,12 +210,18 @@ export function parseBoardMessageFilterQuery(search: string) {
 	return result;
 }
 
-export function parseAssetFilterQuery(search: string) {
+export async function parseAssetFilterQuery(search: string) {
 	const rawParsed = splitTokens(search);
 
 	const result: AssetFilterQuery = {
 		query: rawParsed.query,
+		tags: new Map()
 	};
+
+	for (const [_tag, shouldInclude] of rawParsed.tags.entries()) {
+		const tag = await getTagFromName(_tag, true);
+		if (tag) result.tags.set(tag.uuid, shouldInclude);
+	}
 
 	for (const [variable, value] of rawParsed.variables) {
 		switch (variable.toLowerCase()) {

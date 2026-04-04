@@ -9,6 +9,7 @@
 		"header": "Edi-ta asset-a",
 		"friendlyName": "Edi-ta name-a",
 		"attachment": "Repla-ce attach-men-ta",
+		"tags": "Tag-s-a",
 		"delete": {
 			"title": "Dele-te asset-a",
 			"confirm": "Are-a you sure-a you wan-ta to dele-te this-a asset-a?"

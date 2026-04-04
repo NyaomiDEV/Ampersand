@@ -4,12 +4,14 @@
 	"select": "Scegli i tag",
 	"selector": {
 		"member": "Tag membrə",
-		"journal": "Tag diario"
+		"journal": "Tag diario",
+		"asset": "Tag asset"
 	},
 	"edit": {
 		"header": {
 			"member": "Modifica tag membrə",
-			"journal": "Modifica tag diario"
+			"journal": "Modifica tag diario",
+			"asset": "Modifica tag asset"
 		},
 		"name": "Nome tag",
 		"description": "Bio tag",
@@ -19,6 +21,7 @@
 			"header": "Tipo tag",
 			"member": "Membrə",
 			"journal": "Diario",
+			"asset": "Asset",
 			"desc": "Nota: il tipo lo decidi solo quando lo crei, fra!"
 		},
 		"members": {
@@ -32,6 +35,12 @@
 			"desc_one": "{{count}} pagina lo usa",
 			"desc_many": "{{count}} pagine lo usano",
 			"desc_other": "{{count}} pagine lo usano"
+		},
+		"showAssets": {
+			"title": "Assets con questo tag",
+			"desc_one": "{{count}} asset lo usa",
+			"desc_many": "{{count}} assets lo usano",
+			"desc_other": "{{count}} assets lo usano"
 		},
 		"isArchived": "Archivia tag",
 		"delete": {

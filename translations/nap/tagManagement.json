@@ -4,12 +4,14 @@
 	"select": "Scerne quacche tag",
 	"selector": {
 		"member": "Tag d' 'e mmiembre",
-		"journal": "Tag d' 'o diario"
+		"journal": "Tag d' 'o diario",
+		"asset": "Tag d' 'o documento"
 	},
 	"edit": {
 		"header": {
 			"member": "Cagna 'e tag d' 'e mmiembre",
-			"journal": "Cagna 'e tag d' 'o diario"
+			"journal": "Cagna 'e tag d' 'o diario",
+			"asset": "Cagna 'e tag d' 'o documento"
 		},
 		"name": "Nomme d' 'o tag",
 		"description": "Descrizzione d' 'o tag",
@@ -19,6 +21,7 @@
 			"header": "Tipo 'e tag",
 			"member": "Membro",
 			"journal": "Diario",
+			"asset": "Documento",
 			"desc": "Nota: 'o tipo 'e tag 'o puo' decidere sulo quanno 'o criaje!"
 		},
 		"members": {
@@ -30,6 +33,11 @@
 			"title": "Famme vedé 'e paggene d' 'o diario ca usano stu tag",
 			"desc_one": "{{count}} paggena d' 'o diario ausa stu tag",
 			"desc_other": "{{count}} paggene d' 'o diario ausano stu tag"
+		},
+		"showAssets": {
+			"title": "Famme vedé 'e documenti ca usano stu tag",
+			"desc_one": "{{count}} documento ausa stu tag",
+			"desc_other": "{{count}} documenti ausano stu tag"
 		},
 		"delete": {
 			"title": "Scancella 'o tag",

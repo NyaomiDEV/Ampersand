@@ -1,13 +1,18 @@
 <script setup lang="ts">
 	import { IonThumbnail, IonLabel, IonItem, IonIcon } from "@ionic/vue";
-	import { Asset } from "../lib/db/entities";
-	import { useBlob } from "../lib/util/blob";
-	import { PartialBy } from "../lib/types";
+	import { Asset, Tag } from "../../lib/db/entities";
+	import { useBlob } from "../../lib/util/blob";
+	import { PartialBy } from "../../lib/types";
 
 	import documentMD from "@material-symbols/svg-600/outlined/draft.svg";
-	import { openFile } from "../lib/native/plugin";
+	import { openFile } from "../../lib/native/plugin";
+	import { isReactive, shallowRef, watch, WatchStopHandle } from "vue";
+	import { getTag } from "../../lib/db/tables/tags";
+	import TagChip from "../tag/TagChip.vue";
 
 	const { getObjectURL } = useBlob();
+
+	const tags = shallowRef<Tag[]>();
 
 	const props = defineProps<{
 		asset: PartialBy<Asset, "uuid">,
@@ -15,8 +20,17 @@
 		routeToOpenFile?: boolean,
 		showFilenameAndType?: boolean,
 		showThumbnail?: boolean,
+		showTags?: boolean,
 		detail?: boolean
 	}>();
+
+	async function updateTags(){
+		if(props.showTags){
+			tags.value = (await Promise.all(props.asset.tags.map(async x => await getTag(x))))
+				.filter(x => x.viewInLists && !x.isArchived)
+				.sort((a, b) => a.name.localeCompare(b.name));
+		}
+	}
 
 	function canPreview(){
 		if(props.asset.file.size){
@@ -38,6 +52,18 @@
 	async function open(){
 		await openFile(props.asset.file);
 	}
+
+	let watchHandle: WatchStopHandle | undefined;
+	watch(props, async () => {
+		await updateTags();
+		if(isReactive(props.asset))
+			watchHandle = watch(props.asset, updateTags);
+		else
+			if(watchHandle){
+				watchHandle();
+				watchHandle = undefined;
+			}
+	}, { immediate: true });
 </script>
 
 <template>
@@ -64,6 +90,14 @@
 			<template v-else>
 				{{ props.asset.friendlyName }}
 			</template>
+			<div
+				v-if="props.showTags"
+				class="chips"
+				@pointerdown="(e) => e.stopPropagation()"
+				@touchstart="(e) => e.stopPropagation()"
+			>
+				<TagChip v-for="tag in tags" :key="tag.uuid" :tag="tag" />
+			</div>
 		</IonLabel>
 	</IonItem>
 </template>
@@ -82,5 +116,11 @@
 	ion-icon {
 		width: 48px;
 		height: 48px;
+	}
+
+	div.chips {
+		white-space: nowrap;
+		overflow-x: scroll;
+		scrollbar-width: none;
 	}
 </style>

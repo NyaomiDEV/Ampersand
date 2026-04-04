@@ -4,12 +4,14 @@
 	"select": "Seliizziona certi tag",
 	"selector": {
 		"member": "Tag de' membra",
-		"journal": "Tag dû diariu"
+		"journal": "Tag dû diariu",
+		"asset": "Tag de l'asset"
 	},
 	"edit": {
 		"header": {
 			"member": "Mudìfica tag de' membra",
-			"journal": "Mudìfica tag dû diariu"
+			"journal": "Mudìfica tag dû diariu",
+			"asset": "Mudìfica tag de l'asset"
 		},
 		"name": "Nomi dû tag",
 		"description": "Discrizzioni dû tag",
@@ -19,6 +21,7 @@
 			"header": "Tipu dû tag",
 			"member": "Membru",
 			"journal": "Diariu",
+			"asset": "Asset",
 			"desc": "Nota: poi difiniri u tipu dû tag sulo ô mumentu dâ criazzioni!"
 		},
 		"members": {
@@ -32,6 +35,12 @@
 			"desc_one": "{{count}} pàggina dû diariu usa stu tag",
 			"desc_many": "{{count}} pàggini dû diariu ùsanu stu tag",
 			"desc_other": "{{count}} pàggini dû diariu ùsanu stu tag"
+		},
+		"showAssets": {
+			"title": "Mustra l'assets ca ùsanu stu tag",
+			"desc_one": "{{count}} asset usa stu tag",
+			"desc_many": "{{count}} assets ùsanu stu tag",
+			"desc_other": "{{count}} assets ùsanu stu tag"
 		},
 		"delete": {
 			"title": "Elimina tag",

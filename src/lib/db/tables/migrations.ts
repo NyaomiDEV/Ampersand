@@ -136,12 +136,32 @@ export async function assets(table: ShittyTable<Asset>, version: number) {
 		return true;
 	}
 
-	switch (version) {
-		case 0:
-			if (!await zeroToOne()) return 0;
+	async function oneToTwo() {
+		// add tags
+		const uuids = table.index.map(x => x.uuid);
+
+		for (const uuid of uuids) {
+			try {
+				await table.update({ uuid, tags: [] }, false);
+			} catch (_e) {
+				return false;
+			}
+		}
+
+		await table.saveIndexToDisk();
+
+		return true;
 	}
 
-	return 1;
+	switch (version) {
+		// @ts-expect-error fallthrough
+		case 0:
+			if (!await zeroToOne()) return 0;
+		case 1:
+			if (!await oneToTwo()) return 1;
+	}
+
+	return 2;
 }
 
 export async function journalPosts(table: ShittyTable<JournalPost>, version: number) {

@@ -1,17 +1,18 @@
 {
-	"header": "Keeper of Riches",
-	"searchPlaceholder": "Seek thy riches...",
+	"header": "Keeper of Scrolls",
+	"searchPlaceholder": "Seek thy scrolls...",
 	"add": {
-		"header": "Bestow Riches",
+		"header": "Bestow new scroll",
 		"attachment": "Add an Annex"
 	},
 	"edit": {
-		"header": "Amend Riches",
-		"friendlyName": "Amend the Name",
+		"header": "Amend scroll",
+		"friendlyName": "Name",
 		"attachment": "Replace the Annex",
+		"tags": "Tokens",
 		"delete": {
-			"title": "Banish Riches",
-			"confirm": "Art thou certain thou wouldst banish these riches?"
+			"title": "Banish scroll",
+			"confirm": "Art thou certain thou wouldst banish this scroll?"
 		}
 	}
 }

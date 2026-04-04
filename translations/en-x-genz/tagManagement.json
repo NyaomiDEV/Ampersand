@@ -4,12 +4,14 @@
 	"select": "Pick some tags",
 	"selector": {
 		"member": "Bestie tags",
-		"journal": "Lore book tags"
+		"journal": "Lore book tags",
+		"asset": "Asset tags"
 	},
 	"edit": {
 		"header": {
 			"member": "Edit bestie tag",
-			"journal": "Edit lore book tag"
+			"journal": "Edit lore book tag",
+			"asset": "Edit asset tag"
 		},
 		"name": "Tag name",
 		"description": "Tag lore",
@@ -19,6 +21,7 @@
 			"header": "Tag vibe",
 			"member": "Bestie",
 			"journal": "Lore book",
+			"asset": "Asset",
 			"desc": "Lowkey you can only set the vibe when you first make it!"
 		},
 		"members": {
@@ -30,6 +33,11 @@
 			"title": "Show the pieces of lore with this tag",
 			"desc_one": "{{count}} piece of lore has this tag",
 			"desc_other": "{{count}} pieces of lore have this tag"
+		},
+		"showAssets": {
+			"title": "Show assets having this tag",
+			"desc_one": "{{count}} asset has this tag",
+			"desc_other": "{{count}} assets have this tag"
 		},
 		"isArchived": "In the vault",
 		"delete": {

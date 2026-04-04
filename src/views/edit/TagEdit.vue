@@ -25,6 +25,7 @@
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
 	import peopleMD from "@material-symbols/svg-600/outlined/group.svg";
 	import journalMD from "@material-symbols/svg-600/outlined/book.svg";
+	import assetMD from "@material-symbols/svg-600/outlined/folder_open.svg";
 
 	import { getTag, newTag, removeTag, updateTag } from "../../lib/db/tables/tags";
 	import { Member, Tag } from "../../lib/db/entities";
@@ -40,6 +41,7 @@
 	import MemberSelect from "../../modals/MemberSelect.vue";
 	import { promptOkCancel, toast } from "../../lib/util/misc";
 	import ContentEditable from "../../components/ContentEditable.vue";
+	import { getAssets } from "../../lib/db/tables/assets";
 
 	const loading = ref(false);
 
@@ -150,16 +152,25 @@
 
 				let _count = 0;
 
-				if(tag.value.type === "member"){
-					for await (const member of getMembers()){
-						if(member.tags.includes(tag.value.uuid!))
-							_count++;
-					}
-				} else { //journal
-					for await (const journalPost of getJournalPosts()){
-						if(journalPost.tags.includes(tag.value.uuid!))
-							_count++;
-					}
+				switch(tag.value.type){
+					case "member":
+						for await (const member of getMembers()){
+							if(member.tags.includes(tag.value.uuid!))
+								_count++;
+						}
+						break;
+					case "journal":
+						for await (const journalPost of getJournalPosts()){
+							if(journalPost.tags.includes(tag.value.uuid!))
+								_count++;
+						}
+						break;
+					case "asset":
+						for await (const asset of getAssets()){
+							if(asset.tags.includes(tag.value.uuid!))
+								_count++;
+						}
+						break;
 				}
 
 				count.value = _count;
@@ -203,7 +214,7 @@
 					slot="start"
 					default-href="/options/tagManagement/"
 				/>
-				<IonTitle>{{ tag.type === "member" ? $t("tagManagement:edit.header.member") : $t("tagManagement:edit.header.journal") }}</IonTitle>
+				<IonTitle>{{ tag.type === "member" ? $t("tagManagement:edit.header.member") : tag.type === "journal" ? $t("tagManagement:edit.header.journal") : $t("tagManagement:edit.header.asset") }}</IonTitle>
 			</IonToolbar>
 		</IonHeader>
 
@@ -269,6 +280,11 @@
 									{{ $t("tagManagement:edit.type.journal") }}
 								</IonLabel>
 							</IonSegmentButton>
+							<IonSegmentButton value="asset">
+								<IonLabel>
+									{{ $t("tagManagement:edit.type.asset") }}
+								</IonLabel>
+							</IonSegmentButton>
 						</IonSegment>
 						<p class="centered-text">{{ $t("tagManagement:edit.type.desc") }}</p>
 					</IonLabel>
@@ -296,7 +312,20 @@
 					<IonIcon slot="start" :icon="journalMD" aria-hidden="true" />
 					<IonLabel>
 						<h3>{{ $t("tagManagement:edit.showJournal.title") }}</h3>
-						<p v-if="count">{{ $t("tagManagement:edit.showJournal.desc", { count }) }}</p>
+						<p v-if="count !== undefined">{{ $t("tagManagement:edit.showJournal.desc", { count }) }}</p>
+					</IonLabel>
+				</IonItem>
+
+				<IonItem 
+					v-if="tag.uuid && tag.type === 'asset'"
+					:detail="true" 
+					button 
+					:router-link="`/options/assetManager/?q=${encodeURIComponent(`#${tag.name.toLowerCase().replace(/\s+/g, '')}`)}`"
+				>
+					<IonIcon slot="start" :icon="assetMD" aria-hidden="true" />
+					<IonLabel>
+						<h3>{{ $t("tagManagement:edit.showAssets.title") }}</h3>
+						<p v-if="count !== undefined">{{ $t("tagManagement:edit.showAssets.desc", { count }) }}</p>
 					</IonLabel>
 				</IonItem>
 			</IonList>

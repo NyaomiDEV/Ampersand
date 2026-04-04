@@ -4,12 +4,14 @@
 	"select": "Seleziona alcuni tag",
 	"selector": {
 		"member": "Tag deɜ membrɜ",
-		"journal": "Tag del diario"
+		"journal": "Tag del diario",
+		"asset": "Tag dell'asset"
 	},
 	"edit": {
 		"header": {
 			"member": "Modifica tag deɜ membrɜ",
-			"journal": "Modifica tag del diario"
+			"journal": "Modifica tag del diario",
+			"asset": "Modifica tag dell'asset"
 		},
 		"name": "Nome del tag",
 		"description": "Descrizione del tag",
@@ -19,6 +21,7 @@
 			"header": "Tipo del tag",
 			"member": "Membrə",
 			"journal": "Diario",
+			"asset": "Asset",
 			"desc": "Nota: puoi definire il tipo del tag solo al momento della creazione!"
 		},
 		"members": {
@@ -32,6 +35,12 @@
 			"desc_one": "{{count}} pagina del diario usa questo tag",
 			"desc_many": "{{count}} pagine del diario usano questo tag",
 			"desc_other": "{{count}} pagine del diario usano questo tag"
+		},
+		"showAssets": {
+			"title": "Mostra gli assets che usano questo tag",
+			"desc_one": "{{count}} asset usa questo tag",
+			"desc_many": "{{count}} assets usano questo tag",
+			"desc_other": "{{count}} assets usano questo tag"
 		},
 		"isArchived": "Archivia tag",
 		"delete": {

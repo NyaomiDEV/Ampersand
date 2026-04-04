@@ -20,15 +20,18 @@
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
 
 	import { newAsset, deleteAsset, updateAsset, getAsset } from "../../lib/db/tables/assets";
-	import { Asset } from "../../lib/db/entities";
-	import { onBeforeMount, ref, watch } from "vue";
+	import { Asset, Tag } from "../../lib/db/entities";
+	import { onBeforeMount, ref, shallowRef, useTemplateRef, watch } from "vue";
 	import { PartialBy } from "../../lib/types";
 	import { useRoute } from "vue-router";
 	import { useTranslation } from "i18next-vue";
 	import { getDocumentFile, promptOkCancel, toast } from "../../lib/util/misc";
 	import { useBlob } from "../../lib/util/blob";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
-	import AssetItem from "../../components/AssetItem.vue";
+	import AssetItem from "../../components/asset/AssetItem.vue";
+	import TagChip from "../../components/tag/TagChip.vue";
+	import { getTags } from "../../lib/db/tables/tags";
+	import TagListSelect from "../../modals/TagListSelect.vue";
 
 	const { getObjectURL } = useBlob();
 
@@ -36,9 +39,12 @@
 
 	const emptyAsset: PartialBy<Asset, "uuid"> = {
 		friendlyName: "",
-		file: new File([], "")
+		file: new File([], ""),
+		tags: []
 	};
 	const asset = ref({ ...emptyAsset });
+	const tags = shallowRef<Tag[]>([]);
+	const tagSelectionModal = useTemplateRef("tagSelectionModal");
 
 	const route = useRoute();
 	const router = useIonRouter();
@@ -103,6 +109,8 @@
 
 		loading.value = true;
 
+		tags.value = (await Array.fromAsync(getTags())).filter(x => x.type === "asset");
+
 		if(route.query.uuid){
 			const _asset = await getAsset(route.query.uuid as string);
 			if(_asset)
@@ -164,6 +172,18 @@
 						{{ !asset.file.size ? $t("assetManager:add.attachment") : $t("assetManager:edit.attachment") }}
 					</IonLabel>
 				</IonItem>
+				<IonItem button :detail="true" @click="tagSelectionModal?.$el.present()">
+					<IonLabel>
+						{{ $t("assetManager:edit.tags") }}
+						<div v-if="tags?.length" class="asset-tags">
+							<TagChip
+								v-for="tag in asset.tags.map(x => tags.find(y => y.uuid === x)!)"
+								:key="tag.uuid"
+								:tag
+							/>
+						</div>
+					</IonLabel>
+				</IonItem>
 				<IonItem
 					v-if="asset.uuid"
 					button
@@ -188,6 +208,13 @@
 					<IonIcon :icon="saveMD" />
 				</IonFabButton>
 			</IonFab>
+
+			<TagListSelect
+				ref="tagSelectionModal"
+				type="asset"
+				:model-value="asset.tags.map(uuid => tags.find(x => x.uuid === uuid)!)"
+				@update:model-value="tags => { asset.tags = tags.map(x => x.uuid) }"
+			/>
 		</IonContent>
 	</IonPage>
 </template>

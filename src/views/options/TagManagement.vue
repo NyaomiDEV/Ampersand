@@ -144,6 +144,9 @@
 					<IonSegmentButton value="journal">
 						<IonLabel>{{ $t("tagManagement:selector.journal") }}</IonLabel>
 					</IonSegmentButton>
+					<IonSegmentButton value="asset">
+						<IonLabel>{{ $t("tagManagement:selector.asset") }}</IonLabel>
+					</IonSegmentButton>
 				</IonSegment>
 			</IonToolbar>
 		</IonHeader>

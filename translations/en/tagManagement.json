@@ -4,12 +4,14 @@
 	"select": "Select some tags",
 	"selector": {
 		"member": "Member tags",
-		"journal": "Journal tags"
+		"journal": "Journal tags",
+		"asset": "Asset tags"
 	},
 	"edit": {
 		"header": {
 			"member": "Edit member tag",
-			"journal": "Edit journal tag"
+			"journal": "Edit journal tag",
+			"asset": "Edit asset tag"
 		},
 		"name": "Tag name",
 		"description": "Tag description",
@@ -19,6 +21,7 @@
 			"header": "Tag type",
 			"member": "Member",
 			"journal": "Journal",
+			"asset": "Asset",
 			"desc": "Note: you can only define the tag type upon creation!"
 		},
 		"members": {
@@ -30,6 +33,11 @@
 			"title": "Show journal posts having this tag",
 			"desc_one": "{{count}} journal post has this tag",
 			"desc_other": "{{count}} journal posts have this tag"
+		},
+		"showAssets": {
+			"title": "Show assets having this tag",
+			"desc_one": "{{count}} asset has this tag",
+			"desc_other": "{{count}} assets have this tag"
 		},
 		"isArchived": "Archive tag",
 		"delete": {

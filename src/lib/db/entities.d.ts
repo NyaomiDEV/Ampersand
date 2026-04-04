@@ -195,7 +195,7 @@ export interface System extends UUIDable {
 export interface Tag extends UUIDable {
 	name: string,
 	description?: string,
-	type: "member" | "journal",
+	type: "member" | "journal" | "asset",
 	color?: string,
 	isArchived: boolean,
 	viewInLists: boolean
@@ -203,7 +203,8 @@ export interface Tag extends UUIDable {
 
 export interface Asset extends UUIDable {
 	file: File,
-	friendlyName: string
+	friendlyName: string,
+	tags: UUID[] // array of UUIDs
 }
 
 export interface CustomField extends UUIDable {

@@ -20,7 +20,7 @@
 
 	const props = defineProps<{
 		customTitle?: string,
-		type: "member" | "journal"
+		type: "member" | "journal" | "asset"
 		modelValue?: Tag[]
 	}>();
 

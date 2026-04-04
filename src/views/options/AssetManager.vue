@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { IonBackButton, IonContent, IonHeader, IonSearchbar, IonList, IonIcon, IonPage, IonTitle, IonToolbar, IonFab, IonFabButton } from "@ionic/vue";
 	import { onBeforeMount, onUnmounted, ref, shallowRef, watch } from "vue";
-	import AssetItem from "../../components/AssetItem.vue";
+	import AssetItem from "../../components/asset/AssetItem.vue";
 	import { Asset } from "../../lib/db/entities";
 	import { getFilteredAssets } from "../../lib/db/tables/assets";
 	import { DatabaseEvent, DatabaseEvents } from "../../lib/db/events";
@@ -71,6 +71,7 @@
 					:key="asset.uuid"
 					route-to-edit-page
 					show-thumbnail
+					show-tags
 					:asset
 				/>
 			</IonList>

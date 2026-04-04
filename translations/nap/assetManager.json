@@ -1,17 +1,18 @@
 {
-	"header": "Gestore d' 'e pruprietà",
-	"searchPlaceholder": "Cerca mmiezo a 'e pruprietà...",
+	"header": "Gestore d' 'e documenti",
+	"searchPlaceholder": "Cerca mmiezo a 'e documenti...",
 	"add": {
-		"header": "Aggiunge na pruprietà",
+		"header": "Aggiunge nu documento",
 		"attachment": "Aggiunge n'allegato"
 	},
 	"edit": {
-		"header": "Cagna 'a pruprietà",
+		"header": "Cagna 'o documento",
 		"friendlyName": "Cagna 'o nomme",
 		"attachment": "Cagna l'allegato",
+		"tags": "Tag",
 		"delete": {
-			"title": "Scancella 'a pruprietà",
-			"confirm": "Vuò scancellà overo 'sta pruprietà?"
+			"title": "Scancella 'o documento",
+			"confirm": "Vuò scancellà overo 'sto documento?"
 		}
 	}
 }

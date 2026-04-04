@@ -9,6 +9,7 @@
 		"header": "Fix the asset",
 		"friendlyName": "New name who dis",
 		"attachment": "Swap the file",
+		"tags": "Tags",
 		"delete": {
 			"title": "Yeet the asset",
 			"confirm": "No cap, you tryna delete this for real?"

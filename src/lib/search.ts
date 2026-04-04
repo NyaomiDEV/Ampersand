@@ -146,8 +146,8 @@ export function filterBoardMessage(search: string, boardMessage: BoardMessage) {
 	return true;
 }
 
-export function filterAsset(search: string, asset: Asset) {
-	const parsed = parseAssetFilterQuery(search.length ? search : appConfig.defaultFilterQueries.assetManager || "");
+export async function filterAsset(search: string, asset: Asset) {
+	const parsed = await parseAssetFilterQuery(search.length ? search : appConfig.defaultFilterQueries.assetManager || "");
 
 	if(parsed.query.length){
 		if (!asset.friendlyName.toLowerCase().includes(parsed.query.toLowerCase()))
@@ -161,6 +161,11 @@ export function filterAsset(search: string, asset: Asset) {
 
 	if (parsed.filename) {
 		if (asset.file.name.toLowerCase() !== parsed.filename.toLowerCase())
+			return false;
+	}
+
+	if (parsed.tags.size) {
+		if (!parsed.tags.entries().every(([uuid, include]) => include === asset.tags.includes(uuid)))
 			return false;
 	}
 

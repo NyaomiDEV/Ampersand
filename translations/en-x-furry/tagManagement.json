@@ -4,12 +4,14 @@
 	"select": "Sewect some tags",
 	"selector": {
 		"member": "Membew tags",
-		"journal": "Jouwnaw tags"
+		"journal": "Jouwnaw tags",
+		"asset": "Asset tags"
 	},
 	"edit": {
 		"header": {
 			"member": "Edit membew tag",
-			"journal": "Edit jouwnaw tag"
+			"journal": "Edit jouwnaw tag",
+			"asset": "Edit asset tag"
 		},
 		"name": "Tag name",
 		"description": "Tag descwiption",
@@ -19,6 +21,7 @@
 			"header": "Tag type",
 			"member": "Membew",
 			"journal": "Jouwnaw",
+			"asset": "Asset",
 			"desc": "Note: you can onwy define da tag type upon cweation!"
 		},
 		"members": {
@@ -30,6 +33,11 @@
 			"title": "Show jouwnaw posts having dis tag",
 			"desc_one": "{{count}} jouwnaw post has dis tag",
 			"desc_other": "{{count}} jouwnaw posts have dis tag"
+		},
+		"showAssets": {
+			"title": "Show assets having dis tag",
+			"desc_one": "{{count}} asset has dis tag",
+			"desc_other": "{{count}} assets have dis tag"
 		},
 		"isArchived": "Awchive tag",
 		"delete": {

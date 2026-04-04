@@ -5,7 +5,7 @@
 
 	import { Member, Tag, System } from "../../lib/db/entities";
 	import TagChip from "../tag/TagChip.vue";
-	import { isReactive, onBeforeMount, shallowRef, watch, WatchStopHandle } from "vue";
+	import { isReactive, shallowRef, watch, WatchStopHandle } from "vue";
 	import { getTag } from "../../lib/db/tables/tags";
 	import SystemChip from "../system/SystemChip.vue";
 	import { getSystem } from "../../lib/db/tables/system";
@@ -31,10 +31,6 @@
 				.sort((a, b) => a.name.localeCompare(b.name));
 		}
 	}
-
-	onBeforeMount(async () => {
-		await updateTags();
-	});
 
 	let watchHandle: WatchStopHandle | undefined;
 	watch(props, async () => {

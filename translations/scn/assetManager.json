@@ -9,6 +9,7 @@
 		"header": "Mudìfica asset",
 		"friendlyName": "Mudìfica u nomi",
 		"attachment": "Rimpiazza allegatu",
+		"tags": "Tag",
 		"delete": {
 			"title": "Elimina asset",
 			"confirm": "Voi pi daveru eliminari st'asset?"

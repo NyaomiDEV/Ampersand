@@ -30,7 +30,7 @@ export async function* getAssets(maxIter = 20){
 
 export async function* getFilteredAssets(query: string){
 	for await (const asset of getAssets()){
-		if (filterAsset(query, asset))
+		if (await filterAsset(query, asset))
 			yield asset;
 	}
 }

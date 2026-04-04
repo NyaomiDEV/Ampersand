@@ -9,6 +9,7 @@
 		"header": "Modifica asset",
 		"friendlyName": "Cambia nome",
 		"attachment": "Sostituisci allegato",
+		"tags": "Tag",
 		"delete": {
 			"title": "Elimina asset",
 			"confirm": "Vuoi davvero piallare questo asset?"

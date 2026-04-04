@@ -9,6 +9,7 @@
 		"header": "Edit asset",
 		"friendlyName": "Edit name",
 		"attachment": "Wepwace attachment",
+		"tags": "Tags",
 		"delete": {
 			"title": "Dewete asset",
 			"confirm": "Awe you suwe you want to dewete dis asset? >w<"
