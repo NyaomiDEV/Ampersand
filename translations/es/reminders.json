@@ -8,15 +8,19 @@
 		"message": "Mensaje de la notificación de recordatorio",
 		"type": {
 			"title": "Tipo de recordatorio",
-			"eventBased": "Basado en un evento"
+			"eventBased": "Basado en un evento",
+			"periodic": "Periódico"
 		},
 		"eventBased": {
 			"title": "Evento detonante",
 			"addedToFront": "Después de que un miembro haya sido añadido al frente",
 			"removedFromFront": "Después de que un miembro haya sido removido del frente",
 			"delay": {
-				"desc": "Después {{delay}}"
-			}
+				"desc": "Después {{delay}}",
+				"title": "Retraso"
+			},
+			"memberFilterQuery": "Consulta de filtro de miembros",
+			"timing": "Momento oportuno"
 		},
 		"periodic": {
 			"title": "Intervalo de tiempo",
@@ -26,7 +30,10 @@
 			},
 			"dayOfMonth": {
 				"desc_undefined": "Repetir cada día",
-				"title": "Día del mes"
+				"title": "Día del mes",
+				"desc_ordinal_one": "Repetir cada {{count}} día del mes",
+				"desc_ordinal_many": "Repetir cada {{count}} días del mes",
+				"desc_ordinal_other": "Repetir cada {{count}} días del mes"
 			}
 		},
 		"delete": {
@@ -34,5 +41,9 @@
 			"confirm": "¿Está seguro de que quiere eliminar el recordatorio?"
 		}
 	},
-	"header": "Recordatorios"
+	"header": "Recordatorios",
+	"remindersAreNotFinished": {
+		"header": "¡Los recordatorios no han terminado!",
+		"content": "¡Por ahora, todo esto es solo una vista previa de la interfaz de usuario! Es posible que en algún momento puedas guardar tus recordatorios, pero ten en cuenta que esto aún no está conectado a ningún sistema de notificaciones. Si utilizas Android, ya deberías poder configurar algunas cosas que funcionarán cuando terminemos el sistema subyacente, pero ten en cuenta que esto no funcionará en la versión web, así que no te ilusiones demasiado con el uso de recordatorios en tu ordenador. Además, si eres desarrollador, ¡Por favor, ayúdanos!"
+	}
 }

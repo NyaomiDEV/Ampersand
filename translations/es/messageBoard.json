@@ -17,8 +17,12 @@
 			"desc_other": "{{count}} votantes"
 		},
 		"defaultPollValues": {
-			"abstain": "Abstenerse"
-		}
+			"abstain": "Abstenerse",
+			"yes": "Sí",
+			"no": "No",
+			"veto": "Veto"
+		},
+		"boardMessageContainsPoll": "Contiene una encuesta"
 	},
 	"edit": {
 		"member": "Editar autor del mensaje",
@@ -31,7 +35,12 @@
 		"pollChoice": "Descripción de la elección",
 		"pollEditWarning": "¡Cambiar cualquiera de los detalles de la encuesta reiniciará los votos!",
 		"delete": {
-			"title": "Eliminar mensaje en el tablero"
-		}
+			"title": "Eliminar mensaje en el tablero",
+			"confirm": "¿Estás seguro de que quieres borrar este mensaje?"
+		},
+		"title": "Título",
+		"header": "Editar mensaje",
+		"date": "Fecha de edición",
+		"pollIsMultipleChoice": "Permitir seleccionar varias opciones"
 	}
 }

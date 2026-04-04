@@ -11,15 +11,24 @@
 		"presence": {
 			"historyTitle": "Historial de presencia",
 			"addTitle": "¿Qué tan presente estás en una escala del 0 al 10?",
-			"confirmButton": "Agregado al historial"
+			"confirmButton": "Confirmar",
+			"lastPresence": "La última vez fue {{presence}} / 5 estrellas",
+			"date": "Fecha"
 		},
 		"influencing": {
-			"currentlyInfluencing": "Actualmente influenciando"
+			"currentlyInfluencing": "Actualmente influenciando",
+			"select": "Selecciona a un miembro al que quieras influir"
 		},
 		"removeFromFront": "Remover del frente",
 		"delete": {
 			"title": "Eliminar entrada al frente",
 			"confirm": "¿Estás seguro que quieres eliminar ésta entrada del frente?"
-		}
-	}
+		},
+		"comment": "Comentario",
+		"startTime": "Hora de inicio",
+		"endTime": "Hora de finalización",
+		"isMainFronter": "Frontal",
+		"isLocked": "Contraportada"
+	},
+	"searchPlaceholder": "Buscar en el historial de páginas de inicio..."
 }

@@ -1,9 +1,11 @@
 {
 	"applock": {
-		"desc": "Bloquea la aplicación con una contraseña"
+		"desc": "Bloquea la aplicación con una contraseña",
+		"title": "Bloqueo de aplicaciones"
 	},
 	"biometrics": {
-		"desc": "Desbloquear mediante tu huella dactilar o cara"
+		"desc": "Desbloquear mediante tu huella dactilar o cara",
+		"title": "Utiliza datos biométricos"
 	},
 	"editPassword": "Modificar contraseña",
 	"inputPassword": {
@@ -11,8 +13,17 @@
 		"titleReenter": "Reingresa la contraseña",
 		"titleModifyOld": "Introduce tu contraseña vieja",
 		"titleDisable": "Introduce tu contraseña",
-		"hint": "Contraseña"
+		"hint": "Contraseña",
+		"titleModifyNew": "Introduce tu nueva contraseña"
 	},
-
-	"useIPC": "Enviar eventos a otras aplicaciones"
+	"useIPC": "Enviar eventos a otras aplicaciones",
+	"header": "Seguridad",
+	"allowRemoteContent": {
+		"title": "Permitir contenido remoto",
+		"desc": "Permite que Ampersand utilice Internet para consultar contenido remoto, como imágenes en campos Markdown y avatares en importaciones de terceros."
+	},
+	"passwordAlert": {
+		"header": "Advertencia",
+		"text": "¿Estás seguro de que quieres continuar? Antes de continuar, anota tu contraseña en algún lugar fuera de Ampersand, ya que no podrás recuperar tus datos ni restablecer tu contraseña si la pierdes. ¡Asegúrate de exportar tus datos antes de establecerla!"
+	}
 }

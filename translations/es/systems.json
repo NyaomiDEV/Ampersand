@@ -12,6 +12,18 @@
 			"title": "Borrar el sistema",
 			"confirm": "¿Estás seguro de que quieres borrar este sistema?"
 		},
-		"systemID": "ID del sistema: {{systemID}}"
-	}
+		"systemID": "ID del sistema: {{systemID}}",
+		"header": "Sistema",
+		"noDescription": "Sin descripción",
+		"color": "Color",
+		"imageClip": "Forma del avatar",
+		"showMembers": "Mostrar los miembros de este sistema",
+		"parent": "Sistema principal",
+		"isPinned": "Pin del sistema",
+		"archived": "Archivado",
+		"systemIDcopiedToClipboard": "¡El ID del sistema copiado en el portapapeles!"
+	},
+	"header": "Sistemas",
+	"searchPlaceholder": "Buscando sistemas…",
+	"select": "Selecciona un sistema"
 }

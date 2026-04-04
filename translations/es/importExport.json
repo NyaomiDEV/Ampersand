@@ -4,7 +4,7 @@
 		"desc": "Respalda tus datos actuales a un archivo que puedes guardar en otro lugar"
 	},
 	"dbImportDesc": "¡Advertencia! Esto sobreescribirá toda información existente",
-	"dbImport": "Importa tu información de un archivo respaldado",
+	"dbImport": "Importa tus datos",
 	"pkImport": "Importar tu información de una exportación de PluralKit",
 	"tuImport": "Importar tu información de una exportación de Tupperbox",
 	"spImport": "Importa tu información de una exportación de Simply Plural",
@@ -18,6 +18,19 @@
 		"error": "Error al importar el respaldo.",
 		"errorSp": "Error al importar la exportación de Simply Plural.",
 		"errorPk": "Error al importar la exportación de PluralKit.",
-		"errorTu": "Error al importar la exportación de Tupperbox."
-	}
+		"errorTu": "Error al importar la exportación de Tupperbox.",
+		"importedOc": "Se ha importado el archivo de exportación de Octocon. Por favor, reinicia la aplicación.",
+		"exportedAppIos": "La copia de seguridad se ha exportado a la carpeta «Ampersand» de la aplicación «Archivos».",
+		"errorOc": "Se ha producido un error al importar de Octocon."
+	},
+	"header": "Importar / Exportar",
+	"importHeader": "Importar",
+	"thirdPartyHeader": "Integraciones con terceros",
+	"exportHeader": "Exportar",
+	"dbImportOld": {
+		"title": "Importa tus datos desde una versión anterior de Ampersand",
+		"desc": "Para archivos de copia de seguridad creados con Ampersand < 0.2.0",
+		"note": "Las versiones antiguas de Ampersand utilizaban un formato de archivo (ampdb) que ya ha quedado obsoleto. Si conservas copias de seguridad antiguas, asegúrate de importarlas ahora y volver a exportarlas, ya que esta opción se eliminará en unas pocas versiones."
+	},
+	"ocImport": "Importa tus datos desde una exportación de Octocon"
 }

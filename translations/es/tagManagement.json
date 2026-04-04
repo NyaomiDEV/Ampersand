@@ -16,7 +16,8 @@
 		"type": {
 			"header": "Tipo de etiqueta",
 			"journal": "Diario",
-			"desc": "Nota: ¡solo puedes definir el tipo de etiqueta en su creación!"
+			"desc": "Nota: ¡solo puedes definir el tipo de etiqueta en su creación!",
+			"member": "Miembro"
 		},
 		"members": {
 			"title": "Escoge a los miembros usando ésta etiqueta",
@@ -33,6 +34,10 @@
 		"delete": {
 			"title": "Eliminar etiqueta",
 			"confirm": "¿Estás seguro que quieres eliminar ésta etiqueta?"
-		}
-	}
+		},
+		"name": "Nombre de la etiqueta",
+		"tagID": "ID de la etiqueta: {{tagID}}",
+		"tagIDCopiedToClipboard": "¡ID de la etiqueta copiada en el portapapeles!"
+	},
+	"searchPlaceholder": "Buscando las etiquetas..."
 }

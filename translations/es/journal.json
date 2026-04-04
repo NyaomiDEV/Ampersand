@@ -8,13 +8,22 @@
 	"edit": {
 		"header": "Publicación",
 		"author": "Editar autor",
-		"date": "Editar fecha",
+		"date": "Fecha de edición",
 		"body": "Cuerpo de la publicación",
 		"isPrivate": "Publicación privada",
 		"contentWarning": "Advertencia de contenido",
 		"postID": "ID de la publicación: {{postID}}",
 		"delete": {
-			"title": "Eliminar publicación del diario"
-		}
+			"title": "Eliminar publicación del diario",
+			"confirm": "¿Estás seguro de que quieres eliminar este tema?"
+		},
+		"headerAdd": "Añadir una nuevo tema",
+		"headerEdit": "Editar el tema",
+		"headerOptions": "Opciones del tema",
+		"title": "Título",
+		"subtitle": "Subtítulo",
+		"tags": "Etiquetas",
+		"isPinned": "Tema fijado",
+		"postIDcopiedToClipboard": "¡El ID del tema se ha copiado en el portapapeles!"
 	}
 }

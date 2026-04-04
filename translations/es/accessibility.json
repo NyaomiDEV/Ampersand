@@ -3,10 +3,15 @@
 		"atkinson": "Atkinson hiperlegible",
 		"opendyslexic": "OpenDyslexic",
 		"lexend": "Lexend",
-		"system-font": "Fuente del sistema"
+		"system-font": "Fuente del sistema",
+		"title": "Fuente legible",
+		"comicrelief": "Comic Relief"
 	},
 	"uiVariant": {
-		"title": "Variante de la interfaz"
+		"title": "Variante de la interfaz",
+		"auto": "Automáticamente",
+		"light": "Claro",
+		"dark": "Oscuro"
 	},
 	"useAccentColor": {
 		"title": "Color de acentuado",
@@ -20,13 +25,34 @@
 		"desc": "Desactivar animaciones en la aplicación"
 	},
 	"disableCovers": {
-		"desc": "Si es activado, los miembros de la lista principal también se mostrarán de una manera más compacta"
+		"desc": "Si es activado, los miembros de la lista principal también se mostrarán de una manera más compacta",
+		"title": "Desactivar portadas"
 	},
 	"contrastLevel": {
 		"title": "Nivel de contraste"
 	},
 	"header": "Accesibilidad",
 	"highLegibilityFont": {
-		"title": "Fuente claramente legible"
+		"title": "Fuente claramente legible",
+		"desc": "Utiliza una fuente legible en lugar de la fuente predeterminada del dispositivo"
+	},
+	"themeIsAmoled": {
+		"title": "Pantallas AMOLED",
+		"desc": "Utiliza un fondo totalmente negro cuando estés en modo oscuro. Esto puede reducir el desgaste de la pantalla."
+	},
+	"themeIsVibrant": {
+		"title": "Tema llamativo",
+		"desc": "Aporta más color a la interfaz de usuario."
+	},
+	"colorIndicatorPosition": {
+		"title": "Posición del indicador de color",
+		"avatar": "Contorno del avatar",
+		"listItem": "Borde del elemento de la lista"
+	},
+	"fontScale": {
+		"title": "Tamaño de letra"
+	},
+	"longPressDuration": {
+		"title": "Duración de la pulsación prolongada"
 	}
 }

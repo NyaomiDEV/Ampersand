@@ -10,7 +10,13 @@
 		"error": "Error al importar el respaldo. Por favor selecciona otra opción.",
 		"errorSp": "Error al importar la exportación de Simply Plural. Por favor selecciona otra opción.",
 		"errorPk": "Error al importar la exportación de PluralKit. Por favor selecciona otra opción.",
-		"errorTu": "Error al importar la exportación de Tupperbox. Por favor selecciona otra opción."
+		"errorTu": "Error al importar la exportación de Tupperbox. Por favor selecciona otra opción.",
+		"octocon": "Sí, Octocon",
+		"errorOc": "Se ha producido un error al importar la exportación de Octocon. Por favor, selecciona otra opción.",
+		"allowRemoteContent": {
+			"header": "¿Permitir la conexión a Internet?",
+			"desc": "Ampersand es una aplicación diseñada para funcionar principalmente sin conexión, por lo que necesita tu consentimiento para conectarse a Internet. En este momento, se conectaría a Internet para descargar los avatares y los banners de tus miembros. Cuando hayas terminado, puedes desactivar esta función en Opciones > Seguridad > Permitir contenido remoto."
+		}
 	},
 	"systemInfo": {
 		"header": "¡Dinos sobre tu sistema!",
@@ -19,10 +25,15 @@
 	},
 	"memberInfo": {
 		"header": "¡Dinos más sobre ti!",
-		"description": "Un poco sobre ti..."
+		"description": "Un poco sobre ti...",
+		"invitation": "¡Sigue editando tu ficha de perfil una vez que hayas completado el proceso de registro!"
 	},
 	"endScreen": {
 		"header": "¡Gracias por escoger Ampersand!",
 		"startButton": "¡Vamos a empezar!"
+	},
+	"welcomeScreen": {
+		"header": "¡Bienvenido a Ampersand!",
+		"start": "¡Empieza tu viaje!"
 	}
 }

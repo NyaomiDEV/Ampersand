@@ -6,11 +6,16 @@
 	"actions": {
 		"addToFront": "Agregar al frente",
 		"setMainFronter": "Definir como el principial del frente",
-		"removeFromFront": "Remover del frente"
+		"removeFromFront": "Remover del frente",
+		"unsetMainFronter": "Desactivar el borde principal",
+		"setSoleFronter": "Establecer como principal"
 	},
 	"toasts": {
 		"addToFront": "Miembro añadido al frente",
-		"removeFromFront": "Miembro removido del frente"
+		"removeFromFront": "Miembro removido del frente",
+		"setMainFronter": "Miembro asignado a la primera línea",
+		"unsetMainFronter": "Se ha desactivado la opción de miembro como usuario principal",
+		"setSoleFronter": "Miembro designado como único representante"
 	},
 	"edit": {
 		"headerAdd": "Agregar miembro",
@@ -28,6 +33,17 @@
 		"delete": {
 			"title": "Eliminar miembro",
 			"confirm": "¿Estás seguro de que quieres eliminar este miembro?"
-		}
-	}
+		},
+		"noDescription": "Sin descripción",
+		"imageClip": "Forma del avatar",
+		"archived": "Archivado",
+		"header": "Miembro",
+		"name": "Nombre",
+		"pronouns": "Pronombres",
+		"tags": "Editar etiquetas",
+		"description": "Descripción",
+		"system": "Editar el sistema de afiliación",
+		"memberIDcopiedToClipboard": "¡El ID de usuario en formato de mención se ha copiado en el portapapeles!"
+	},
+	"header": "Miembros"
 }
