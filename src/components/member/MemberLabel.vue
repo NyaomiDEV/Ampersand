@@ -109,6 +109,7 @@
 	div.chips {
 		white-space: nowrap;
 		overflow-x: scroll;
+		overflow-y: hidden;
 		scrollbar-width: none;
 		height: 42px;
 	}
