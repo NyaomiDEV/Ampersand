@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { IonBackButton, IonContent, IonHeader, IonSearchbar, IonList, IonIcon, IonPage, IonTitle, IonToolbar, IonFab, IonFabButton } from "@ionic/vue";
-	import { onBeforeMount, onUnmounted, ref, shallowRef, watch } from "vue";
+	import { onMounted, onUnmounted, ref, shallowRef, watch } from "vue";
 	import AssetItem from "../../components/asset/AssetItem.vue";
 	import { Asset } from "../../lib/db/entities";
 	import { getFilteredAssets } from "../../lib/db/tables/assets";
@@ -9,6 +9,8 @@
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
+	import VirtualList from "../../components/VirtualList.vue";
+	import InfiniteLoader from "../../components/InfiniteLoader.vue";
 
 	const route = useRoute();
 
@@ -19,18 +21,48 @@
 	});
 
 	const assets = shallowRef<Asset[]>();
+	const iter = shallowRef(getFilteredAssets(search.value));
+	const iterDone = ref(false);
+
 	watch(search, async () => {
-		assets.value = await Array.fromAsync(getFilteredAssets(search.value));
+		await resetAssets();
 	});
 
 	const listener = (event: Event) => {
 		if(["assets"].includes((event as DatabaseEvent).data.table))
-			void Array.fromAsync(getFilteredAssets(search.value)).then(res => assets.value = res);
+			void resetAssets();
 	};
 
-	onBeforeMount(async () => {
+	async function resetAssets(){
+		assets.value = undefined;
+		iterDone.value = false;
+		iter.value = getFilteredAssets(search.value);
+		await pollAssets();
+	}
+
+	async function pollAssets(cb?: () => void){
+		let i = 0;
+		const _assets: Asset[] = [];
+		while(true) {
+			const data = await iter.value.next();
+			if(data.value) _assets.push(data.value);
+			i++;
+			if(data.done) iterDone.value = true;
+			if(i >= 20 || data.done) break;
+		}
+
+		if(!assets.value)
+			assets.value = _assets;
+		else
+			assets.value = [...assets.value, ..._assets];
+
+		if(cb)
+			cb();
+	}
+
+	onMounted(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
-		assets.value = await Array.fromAsync(getFilteredAssets(search.value));
+		await resetAssets();
 	});
 
 	onUnmounted(() => {
@@ -66,15 +98,19 @@
 		<SpinnerFullscreen v-if="!assets" />
 		<IonContent v-else>
 			<IonList>
-				<AssetItem
-					v-for="asset in assets"
-					:key="asset.uuid"
-					route-to-edit-page
-					show-thumbnail
-					show-tags
-					:asset
-				/>
+				<VirtualList :entries="assets" :min-size="56" :gap="2">
+					<template #default="{ entry: asset }">
+						<AssetItem
+							route-to-edit-page
+							show-thumbnail
+							show-tags
+							:asset
+						/>
+					</template>
+				</VirtualList>
 			</IonList>
+
+			<InfiniteLoader v-if="!iterDone" @infinite="pollAssets" />
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
 				<IonFabButton router-link="/options/assetManager/edit/">
