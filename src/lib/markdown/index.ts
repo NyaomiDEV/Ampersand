@@ -33,6 +33,8 @@ import emojiExtension from "./emojiExtension";
 import MarkdownImage from "../../components/MarkdownImage.vue";
 import MarkdownLink from "../../components/MarkdownLink.vue";
 import animationExtension from "./animationExtension";
+import positionExtension from "./positionExtension";
+import rotationExtension from "./rotationExtension";
 
 export function useMarked(){
 	const marked = new Marked<(VNode | string)[], VNode | string>();
@@ -138,7 +140,9 @@ export function useMarked(){
 		fontFamilyExtension,
 		mermaidExtension,
 		emojiExtension,
-		animationExtension
+		animationExtension,
+		positionExtension,
+		rotationExtension
 	);
 
 	return marked;

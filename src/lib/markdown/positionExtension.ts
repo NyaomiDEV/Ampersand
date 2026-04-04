@@ -1,20 +1,20 @@
 import { h, type VNode } from "vue";
 import { MarkedExtension } from "marked";
 
-const fontSizeExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
+const positionExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [
 		{
-			name: "font-size",
+			name: "position",
 			level: "inline",
-			start(src: string) { return src.match(/\[fs=/)?.index; },
+			start(src: string) { return src.match(/\[pos=/)?.index; },
 			tokenizer(src: string) {
-				const rule = /^\[fs=(\d*\.?\d+(?::\d*\.?\d+)?)\](.+?)\[\/fs\]/;
+				const rule = /^\[pos=(\d*\.?\d+:\d*\.?\d+)\](.+?)\[\/pos\]/;
 				const match = rule.exec(src);
 				if (match) {
 					const token = {
-						type: "font-size",
+						type: "position",
 						raw: match[0],
-						size: match[1],
+						position: match[1],
 						text: match[2],
 						tokens: this.lexer.inlineTokens(match[2])
 					};
@@ -23,14 +23,12 @@ const fontSizeExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 				return;
 			},
 			renderer(token) {
-				const sizes = (token.size as string).split(":").map(x => parseFloat(x));
+				const pos = (token.position as string).split(":").map(x => parseFloat(x));
 				const cssStyle: Record<string, string> = {};
-				if(sizes.length > 1){
+				if(pos.length === 2){
 					cssStyle.display = "inline-block";
-					cssStyle["font-size"] = `${sizes[0]}em`;
-					cssStyle.transform = `scaleY(${sizes[1] / sizes[0]})`;
-				} else 
-					cssStyle["font-size"] = `${sizes[0]}em`;
+					cssStyle.transform = `translate(${pos[0]}em, ${pos[1]}em)`;
+				}
 				
 				return h("span", {
 					style: cssStyle
@@ -40,4 +38,4 @@ const fontSizeExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	]
 };
 
-export default fontSizeExtension;
+export default positionExtension;
