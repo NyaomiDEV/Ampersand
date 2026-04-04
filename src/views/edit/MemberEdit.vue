@@ -302,9 +302,9 @@
 
 				<div v-if="tags?.length" class="member-tags">
 					<TagChip
-						v-for="tag in member.tags"
-						:key="tag"
-						:tag="tags.find(x => x.uuid === tag)!"
+						v-for="tag in member.tags.map(x => tags.find(y => x === y.uuid)!).filter(x => !x.isArchived)"
+						:key="tag.uuid"
+						:tag
 						:clickable="true"
 					/>
 				</div>

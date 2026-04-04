@@ -31,6 +31,7 @@
 			"desc_one": "{{count}} jouwnaw post has dis tag",
 			"desc_other": "{{count}} jouwnaw posts have dis tag"
 		},
+		"isArchived": "Awchive tag",
 		"delete": {
 			"title": "Dewete tag",
 			"confirm": "Awe you suwe you want to dewete dis tag?"

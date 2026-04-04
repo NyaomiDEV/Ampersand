@@ -14,6 +14,7 @@ function tag(tuExport: any){
 			description: tuGroup.description || undefined,
 			type: "member",
 			viewInLists: false,
+			isArchived: false,
 			uuid: window.crypto.randomUUID()
 		};
 		tags.push(tag);

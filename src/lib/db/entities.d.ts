@@ -197,6 +197,7 @@ export interface Tag extends UUIDable {
 	description?: string,
 	type: "member" | "journal",
 	color?: string,
+	isArchived: boolean,
 	viewInLists: boolean
 }
 

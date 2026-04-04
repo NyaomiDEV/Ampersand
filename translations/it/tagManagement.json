@@ -33,6 +33,7 @@
 			"desc_many": "{{count}} pagine del diario usano questo tag",
 			"desc_other": "{{count}} pagine del diario usano questo tag"
 		},
+		"isArchived": "Archivia tag",
 		"delete": {
 			"title": "Elimina tag",
 			"confirm": "Vuoi davvero eliminare questo tag?"

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { IonContent, IonSearchbar, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonSegment, IonSegmentButton, IonLabel, IonFab, IonFabButton, IonIcon, IonItem, IonItemSliding, IonItemOptions, IonItemOption } from "@ionic/vue";
+	import { IonContent, IonSearchbar, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonSegment, IonSegmentButton, IonLabel, IonFab, IonFabButton, IonIcon, IonItemSliding, IonItemOptions, IonItemOption } from "@ionic/vue";
 	import { onMounted, onUnmounted, ref, shallowRef, useTemplateRef, watch } from "vue";
 	import { useRoute } from "vue-router";
 
@@ -12,8 +12,7 @@
 	import { DatabaseEvents, DatabaseEvent } from "../../lib/db/events";
 
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
-	import TagColor from "../../components/tag/TagColor.vue";
-	import TagLabel from "../../components/tag/TagLabel.vue";
+	import TagItem from "../../components/tag/TagItem.vue";
 	import { promptOkCancel, toast } from "../../lib/util/misc.ts";
 	import { useTranslation } from "i18next-vue";
 	import VirtualList from "../../components/VirtualList.vue";
@@ -155,13 +154,13 @@
 				<VirtualList :entries="tags.filter(x => x.type === type)" :min-size="56" :gap="2">
 					<template #default="{ entry: tag }">
 						<IonItemSliding>
-							<IonItem
+							<TagItem
+								:tag
 								button
+								show-effects
+								show-icons
 								:router-link="`/options/tagManagement/edit?uuid=${tag.uuid}`"
-							>
-								<TagColor slot="start" :tag />
-								<TagLabel :tag />
-							</IonItem>
+							/>
 							<IonItemOptions>
 								<IonItemOption color="danger" @click="deleteTag(tag)">
 									<IonIcon slot="icon-only" :icon="trashMD" />

@@ -49,6 +49,7 @@
 	const emptyTag: PartialBy<Tag, "uuid"> = {
 		name: "",
 		type: "member",
+		isArchived: false,
 		viewInLists: false
 	};
 	const tag = ref({ ...emptyTag });
@@ -301,6 +302,14 @@
 			</IonList>
 
 			<IonList>
+				<IonItem button :detail="false">
+					<IonToggle v-model="tag.isArchived">
+						<IonLabel>
+							{{ $t("tagManagement:edit.isArchived") }}
+						</IonLabel>
+					</IonToggle>
+				</IonItem>
+
 				<IonItem
 					v-if="tag.uuid"
 					button

@@ -237,9 +237,9 @@
 					<h2 v-if="post.subtitle?.length">{{ post.subtitle }}</h2>
 					<div v-if="tags?.length" class="journal-tags">
 						<TagChip
-							v-for="tag in post.tags"
-							:key="tag"
-							:tag="tags.find(x => x.uuid === tag)!"
+							v-for="tag in post.tags.map(x => tags.find(y => x === y.uuid)!).filter(x => !x.isArchived)"
+							:key="tag.uuid"
+							:tag
 							:clickable="true"
 						/>
 					</div>

@@ -33,6 +33,7 @@
 			"desc_many": "{{count}} pagine lo usano",
 			"desc_other": "{{count}} pagine lo usano"
 		},
+		"isArchived": "Archivia tag",
 		"delete": {
 			"title": "Elimina tag",
 			"confirm": "Vuoi davvero piallare questo tag?"

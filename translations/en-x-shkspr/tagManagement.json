@@ -31,6 +31,7 @@
 			"desc_one": "{{count}} missive has this token",
 			"desc_other": "{{count}} missives have this token"
 		},
+		"isArchived": "In the archives",
 		"delete": {
 			"title": "Banish token",
 			"confirm": "Art thou certain thou wouldst banish this token?"

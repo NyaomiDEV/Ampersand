@@ -12,6 +12,10 @@
 
 <template>
 	<IonLabel>
-		{{ props.tag.name }}
+		<slot name="before" />
+		<h2>
+			{{ props.tag.name }}
+		</h2>
+		<slot />
 	</IonLabel>
 </template>

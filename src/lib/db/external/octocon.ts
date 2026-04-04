@@ -80,6 +80,7 @@ function tags(ocExport: OctoconExport, members: Member[], memberMapping: Map<num
 			color: tag.color,
 			description: tag.description,
 			type: "member",
+			isArchived: false,
 			viewInLists: false
 		});
 

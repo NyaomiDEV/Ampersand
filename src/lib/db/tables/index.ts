@@ -4,7 +4,7 @@ import type { Asset, BoardMessage, CustomField, FrontingEntry, JournalPost, Memb
 import { decode, encode } from "@msgpack/msgpack";
 import type { AmpersandEntityMapping, MigrationsMapping } from "../types";
 import { deleteNull, replace, revive, walk, walkAsync } from "../../serialization";
-import { assets, journalPosts, members, systems } from "./migrations";
+import { assets, journalPosts, members, systems, tags } from "./migrations";
 import { PartialBy } from "../../types";
 
 export type IndexEntry<T> = UUIDable & Partial<T>;
@@ -252,6 +252,9 @@ export class ShittyTable<T extends UUIDable> {
 			case "assets":
 				version = await assets(this as unknown as ShittyTable<Asset>, version);
 				break;
+			case "tags":
+				version = await tags(this as unknown as ShittyTable<Tag>, version);
+				break;
 		}
 		await this.saveMigrationVersion(version);
 	}
@@ -280,7 +283,7 @@ export const db = {
 	frontingEntries: await makeTable<FrontingEntry>("frontingEntries", ["member", "startTime", "endTime", "isLocked", "isMainFronter"]),
 	journalPosts: await makeTable<JournalPost>("journalPosts", ["member", "date", "isPinned"]),
 	reminders: await makeTable<Reminder>("reminders", []),
-	tags: await makeTable<Tag>("tags", ["name"]),
+	tags: await makeTable<Tag>("tags", ["name", "isArchived"]),
 	assets: await makeTable<Asset>("assets", ["friendlyName"]),
 	customFields: await makeTable<CustomField>("customFields", ["name", "priority"])
 };

@@ -1,13 +1,13 @@
 <script setup lang="ts">
 	import {
 		IonChip,
-		IonIcon
+		IonIcon,
+		IonLabel
 	} from "@ionic/vue";
 
 	import { Tag } from "../../lib/db/entities";
 
 	import TagColor from "./TagColor.vue";
-	import TagLabel from "./TagLabel.vue";
 	import TagDescription from "../../modals/TagDescription.vue";
 	import { h } from "vue";
 	import { addModal, removeModal } from "../../lib/modals";
@@ -43,6 +43,6 @@
 	<IonChip @click="click">
 		<IonIcon v-if="!props.tag.color" :icon="tagMD" />
 		<TagColor :tag="props.tag" />
-		<TagLabel :tag="props.tag" />
+		<IonLabel>{{ props.tag.name }}</IonLabel>
 	</IonChip>
 </template>

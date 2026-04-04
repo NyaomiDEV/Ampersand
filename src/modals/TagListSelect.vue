@@ -5,17 +5,14 @@
 		IonList,
 		IonToolbar,
 		IonTitle,
-		IonItem,
 		IonModal,
 		IonSearchbar,
-		IonCheckbox,
 	} from "@ionic/vue";
 
 	import { onMounted, onUnmounted, reactive, ref, shallowRef, toRaw, watch } from "vue";
 	import { getFilteredTags } from "../lib/db/tables/tags";
 	import { Tag } from "../lib/db/entities";
-	import TagColor from "../components/tag/TagColor.vue";
-	import TagLabel from "../components/tag/TagLabel.vue";
+	import TagItem from "../components/tag/TagItem.vue";
 	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
 	import VirtualList from "../components/VirtualList.vue";
 	import InfiniteLoader from "../components/InfiniteLoader.vue";
@@ -121,12 +118,14 @@
 			<IonList>
 				<VirtualList :entries="tags.filter(x => x.type === props.type)" :min-size="56" :gap="2">
 					<template #default="{ entry: tag }">
-						<IonItem button>
-							<TagColor slot="start" :tag />
-							<IonCheckbox :value="tag.uuid" :checked="!!selectedTags.find(x => x.uuid === tag.uuid)" @update:model-value="value => check(tag, value)">
-								<TagLabel :tag />
-							</IonCheckbox>
-						</IonItem>
+						<TagItem
+							button
+							:tag
+							has-toggle="checkbox"
+							:toggle-value="tag.uuid"
+							:toggle-checked="!!selectedTags.find(x => x.uuid === tag.uuid)"
+							@toggle-update="value => check(tag, value)"
+						/>
 					</template>
 				</VirtualList>
 			</IonList>

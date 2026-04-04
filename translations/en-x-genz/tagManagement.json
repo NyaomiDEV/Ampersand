@@ -31,6 +31,7 @@
 			"desc_one": "{{count}} piece of lore has this tag",
 			"desc_other": "{{count}} pieces of lore have this tag"
 		},
+		"isArchived": "In the vault",
 		"delete": {
 			"title": "Yeet tag",
 			"confirm": "You fr want to yeet this tag?"

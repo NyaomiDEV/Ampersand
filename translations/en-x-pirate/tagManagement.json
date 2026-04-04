@@ -31,6 +31,7 @@
 			"desc_one": "{{count}} log entry has this tag",
 			"desc_other": "{{count}} log entries have this tag"
 		},
+		"isArchived": "In the hold",
 		"delete": {
 			"title": "Burn the tag",
 			"confirm": "Are ye sure ye want to burn this tag?"

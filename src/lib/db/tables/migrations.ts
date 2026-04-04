@@ -3,7 +3,7 @@ import { decode } from "@msgpack/msgpack";
 import { ShittyTable } from ".";
 import { appConfig } from "../../config";
 import { nilUid } from "../../util/consts";
-import { Asset, JournalPost, Member, System } from "../entities";
+import { Asset, JournalPost, Member, System, Tag } from "../entities";
 import { Serialized } from "../../serialization";
 
 export async function members(table: ShittyTable<Member>, version: number){
@@ -69,7 +69,7 @@ export async function systems(table: ShittyTable<System>, version: number){
 
 	async function oneToTwo() {
 		for (const systemIndex of table.index) {
-			if (!systemIndex.isPinned || !systemIndex.isArchived) {
+			if (typeof systemIndex.isPinned === "undefined" || typeof systemIndex.isArchived === "undefined") {
 				if(!await table.update({
 					uuid: systemIndex.uuid,
 					isArchived: systemIndex.isArchived || false,
@@ -157,6 +157,29 @@ export async function journalPosts(table: ShittyTable<JournalPost>, version: num
 					await table.refresh();
 					break;
 				}
+			} catch (_e) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	switch (version) {
+		case 0:
+			if (!await zeroToOne()) return 0;
+	}
+
+	return 1;
+}
+
+export async function tags(table: ShittyTable<Tag>, version: number) {
+	async function zeroToOne() {
+		// add isArchived
+		for (const tagIndex of table.index) {
+			try {
+				if(typeof tagIndex.isArchived === "undefined")
+					await table.update({ uuid: tagIndex.uuid, isArchived: false });
 			} catch (_e) {
 				return false;
 			}

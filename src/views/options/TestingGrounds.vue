@@ -92,6 +92,7 @@
 			await newTag({
 				name: `Tag ${i}`,
 				type: "member",
+				isArchived: false,
 				viewInLists: false
 			});
 			barProgress.value = i / 100;

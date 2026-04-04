@@ -27,7 +27,7 @@
 	async function updateTags(){
 		if(props.showChips){
 			tags.value = (await Promise.all(props.member.tags.map(async x => await getTag(x))))
-				.filter(x => x.viewInLists)
+				.filter(x => x.viewInLists && !x.isArchived)
 				.sort((a, b) => a.name.localeCompare(b.name));
 		}
 	}

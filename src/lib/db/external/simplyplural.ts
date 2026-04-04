@@ -96,6 +96,7 @@ function tag(spExport: SimplyPluralExport){
 			description: spGroup.desc?.length ? spGroup.desc : undefined,
 			color: normalizeSPColor(spGroup.color),
 			type: "member",
+			isArchived: false,
 			viewInLists: false,
 			uuid: window.crypto.randomUUID()
 		};

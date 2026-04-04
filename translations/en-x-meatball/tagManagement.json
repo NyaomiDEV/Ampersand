@@ -31,6 +31,7 @@
 			"desc_one": "{{count}} jour-nal-a pos-ta has-a this-a tag-a",
 			"desc_other": "{{count}} jour-nal-a pos-ts-a ha-ve this-a tag-a"
 		},
+		"isArchived": "Archi-ve-a tag-a",
 		"delete": {
 			"title": "Dele-te tag-a",
 			"confirm": "Are-a you sure-a you wan-ta to dele-te this-a tag-a?"

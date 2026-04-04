@@ -46,6 +46,7 @@ function tag(pkExport: any){
 			description: pkGroup.description || undefined,
 			color: pkGroup.color ? `#${pkGroup.color}` : undefined,
 			type: "member",
+			isArchived: false,
 			viewInLists: false,
 			uuid: window.crypto.randomUUID()
 		};

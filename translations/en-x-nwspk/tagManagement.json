@@ -31,6 +31,7 @@
 			"desc_one": "{{count}} post has tag",
 			"desc_other": "{{count}} posts have tag"
 		},
+		"isArchived": "Archive tag",
 		"delete": {
 			"title": "Un-tag",
 			"confirm": "Are you sure you want to un-tag this?"

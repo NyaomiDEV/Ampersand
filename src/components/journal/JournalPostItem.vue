@@ -24,7 +24,7 @@
 	});
 
 	async function updateTags() {
-		tags.value = (await Promise.all(props.post.tags.map(async x => await getTag(x)))).filter(x => x?.viewInLists);
+		tags.value = (await Promise.all(props.post.tags.map(async x => await getTag(x)))).filter(x => x.viewInLists && !x.isArchived);
 	}
 
 	function getStyle(){
