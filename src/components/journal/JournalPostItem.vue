@@ -18,13 +18,17 @@
 
 	const props = withDefaults(defineProps<{
 		post: JournalPostComplete,
+		showTags: boolean,
 		showBorderColor?: boolean
 	}>(), {
 		showBorderColor: true
 	});
 
 	async function updateTags() {
-		tags.value = (await Promise.all(props.post.tags.map(async x => await getTag(x)))).filter(x => x.viewInLists && !x.isArchived);
+		if(props.showTags && props.post.tags){
+			tags.value = (await Promise.all(props.post.tags.map(async x => await getTag(x))))
+				.filter(x => x.viewInLists && !x.isArchived);
+		}
 	}
 
 	function getStyle(){
@@ -74,7 +78,7 @@
 			<h1>{{ props.post.title }}</h1>
 			<h2 v-if="props.post.subtitle?.length">{{ props.post.subtitle }}</h2>
 			
-			<div class="tags">
+			<div v-if="props.showTags && props.post.tags.length" class="tags">
 				<TagChip v-for="tag in tags" :key="tag.uuid" :tag="tag" />
 			</div>
 		</IonLabel>
@@ -99,5 +103,6 @@
 		overflow-x: scroll;
 		overflow-y: hidden;
 		scrollbar-width: none;
+		height: 42px;
 	}
 </style>

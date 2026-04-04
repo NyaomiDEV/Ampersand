@@ -219,6 +219,7 @@
 						:key="post.uuid"
 					>
 						<JournalPostItem
+							show-tags
 							:post
 							@click="openPost(post)"
 						/>

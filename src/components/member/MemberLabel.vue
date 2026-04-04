@@ -25,7 +25,7 @@
 	const tags = shallowRef<Tag[]>();
 
 	async function updateTags(){
-		if(props.showChips){
+		if(props.showChips && props.member.tags.length){
 			tags.value = (await Promise.all(props.member.tags.map(async x => await getTag(x))))
 				.filter(x => x.viewInLists && !x.isArchived)
 				.sort((a, b) => a.name.localeCompare(b.name));
@@ -75,7 +75,7 @@
 		</h3>
 		<slot />
 		<div
-			v-if="props.showChips"
+			v-if="props.showChips && (props.member.tags.length || system.uuid !== appConfig.defaultSystem || appConfig.showDefaultSystemInMemberList)"
 			class="chips"
 			@pointerdown="(e) => e.stopPropagation()"
 			@touchstart="(e) => e.stopPropagation()"
@@ -93,6 +93,7 @@
 		white-space: nowrap;
 		overflow-x: scroll;
 		scrollbar-width: none;
+		height: 42px;
 	}
 
 	div.tag-chips {

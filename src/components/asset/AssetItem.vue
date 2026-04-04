@@ -25,7 +25,7 @@
 	}>();
 
 	async function updateTags(){
-		if(props.showTags){
+		if(props.showTags && props.asset.tags.length){
 			tags.value = (await Promise.all(props.asset.tags.map(async x => await getTag(x))))
 				.filter(x => x.viewInLists && !x.isArchived)
 				.sort((a, b) => a.name.localeCompare(b.name));
@@ -91,7 +91,7 @@
 				{{ props.asset.friendlyName }}
 			</template>
 			<div
-				v-if="props.showTags"
+				v-if="props.showTags && props.asset.tags.length"
 				class="chips"
 				@pointerdown="(e) => e.stopPropagation()"
 				@touchstart="(e) => e.stopPropagation()"
@@ -122,5 +122,6 @@
 		white-space: nowrap;
 		overflow-x: scroll;
 		scrollbar-width: none;
+		height: 42px;
 	}
 </style>
