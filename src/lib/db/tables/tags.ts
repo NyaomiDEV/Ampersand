@@ -6,6 +6,7 @@ import { getMembers, updateMember } from "./members";
 import { getJournalPosts, updateJournalPost } from "./journalPosts";
 import { TransactionStatus } from "../types";
 import { sortName } from "../../util/misc";
+import { getAssets, updateAsset } from "./assets";
 
 export async function* getTags(maxIter = 20){
 	const uuids = db.tags.index.sort(sortName).map(x => x.uuid);
@@ -79,6 +80,14 @@ export async function removeTag(uuid: UUID): Promise<TransactionStatus<void>> {
 
 					const delta = { uuid: journalPost.uuid, tags: journalPost.tags.filter(tag => tag !== uuid) };
 					await updateJournalPost(delta);
+				}
+				break;
+			case "asset":
+				for await (const asset of getAssets()) {
+					if (!asset.tags.includes(uuid)) continue;
+
+					const delta = { uuid: asset.uuid, tags: asset.tags.filter(tag => tag !== uuid) };
+					await updateAsset(delta);
 				}
 				break;
 		}
