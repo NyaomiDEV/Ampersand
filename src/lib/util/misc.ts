@@ -2,7 +2,7 @@ import { actionSheetController, alertController, createAnimation, getIonPageElem
 import dayjs from "dayjs";
 import { Ref } from "vue";
 import { appConfig } from "../config";
-import { Asset, BoardMessage, CustomField, FrontingEntry, Member, System } from "../db/entities";
+import { Asset, BoardMessage, CustomField, FrontingEntry, ImageClip, Member, System } from "../db/entities";
 import i18next, { computePercentage, getLocaleInfo } from "../i18n";
 import { open } from "@tauri-apps/plugin-dialog";
 import { readFile } from "@tauri-apps/plugin-fs";
@@ -100,7 +100,7 @@ export function slideAnimation(_: HTMLElement, opts: TransitionOptions, directio
 	return transition;
 }
 
-export function languagePicker(): Promise<string> {
+export function languagePicker(): Promise<string | undefined> {
 	return new Promise(resolve => {
 		void (async () => {
 			const buttons = Object.entries(i18next.services.resourceStore.data).sort((a, b) => {
@@ -294,4 +294,34 @@ export function sortDate(a: IndexEntry<{ date: Date; }>, b: IndexEntry<{ date: D
 	return b.date!.valueOf() - a.date!.valueOf();
 }
 
-export const imageClips = import.meta.webpackContext("../../assets/shapes/", { recursive: false, include: /\.svg$/ }).keys().map(x => x.replace(/^\.\/(.*)\.svg$/, "$1"));
+export const imageClips = import.meta.webpackContext("../../assets/shapes/", { recursive: false, include: /\.svg$/ });
+export function imageClipPicker(header): Promise<ImageClip | null | undefined> {
+	return new Promise(resolve => {
+		void (async () => {
+			const buttons = imageClips.keys().map(x => ({
+				text: i18next.t(`other:shapes.${x.replace(/^\.\/(.*)\.svg$/, "$1")}`),
+				icon: imageClips(x) as string, // resolves to data URI with svg inside
+				data: { it: x.replace(/^\.\/(.*)\.svg$/, "$1") }
+			}));
+
+			const controller = await actionSheetController.create({
+				header,
+				buttons: [
+					...buttons,
+					{
+						text: i18next.t("other:shapes.noShape"),
+						data: { it: null }
+					},
+					{
+						text: i18next.t("other:alerts.cancel"),
+						role: "cancel"
+					}
+				]
+			});
+
+			controller.addEventListener("willDismiss", (e) => resolve(e.detail.data?.it));
+
+			await controller.present();
+		})();
+	});
+}

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonButton, IonIcon, IonInput, IonFab, IonFabButton, IonItem, IonLabel, useIonRouter, IonTextarea, IonToggle, IonSelect, IonSelectOption, IonProgressBar } from "@ionic/vue";
+	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonButton, IonIcon, IonInput, IonFab, IonFabButton, IonItem, IonLabel, useIonRouter, IonTextarea, IonToggle, IonProgressBar } from "@ionic/vue";
 	import { getCurrentInstance, onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
-	import { promptOkCancel, toast, imageClips } from "../../lib/util/misc";
+	import { promptOkCancel, toast, imageClipPicker } from "../../lib/util/misc";
 	import { getResizedImage } from "../../lib/util/image";
 	import { deleteSystem, getSystem, newSystem, updateSystem, countSystemMembers } from "../../lib/db/tables/system";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
@@ -17,7 +17,7 @@
 	import { appConfig } from "../../lib/config";
 	import { useRoute } from "vue-router";
 	import { PartialBy } from "../../lib/types";
-	import { ImageClip, System } from "../../lib/db/entities";
+	import { System } from "../../lib/db/entities";
 	import { useTranslation } from "i18next-vue";
 	import Markdown from "../../components/Markdown.vue";
 	import Color from "../../components/Color.vue";
@@ -391,22 +391,11 @@
 							/>
 						</IonButton>
 					</IonItem>
-					<IonItem>
-						<IonSelect
-							:model-value="system.imageClip || ''"
-							label-placement="floating"
-							:label="$t('members:edit.imageClip')"
-							:cancel-text="$t('other:alerts.cancel')"
-							interface="action-sheet"
-							@update:model-value="(v: ImageClip) => { system.imageClip = v.length ? v : undefined; }"
-						>
-							<IonSelectOption v-for="clip in imageClips" :key="clip" :value="clip">
-								{{ $t(`other:shapes.${clip}`) }}
-							</IonSelectOption>
-							<IonSelectOption :value="''">
-								{{ $t(`other:shapes.noShape`) }}
-							</IonSelectOption>
-						</IonSelect>
+					<IonItem button detail @click="imageClipPicker($t('systems:edit.imageClip')).then(res => { if(res !== undefined) system.imageClip = res ?? undefined; })">
+						<IonLabel>
+							<h3>{{ $t("systems:edit.imageClip") }}</h3>
+							<p>{{ system.imageClip ? $t(`other:shapes.${system.imageClip}`) : $t("other:shapes.noShape") }}</p>
+						</IonLabel>
 					</IonItem>
 					<IonItem button :detail="false">
 						<IonToggle v-model="system.isPinned">

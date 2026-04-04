@@ -17,8 +17,6 @@
 		IonBackButton,
 		useIonRouter,
 		IonPage,
-		IonSelect,
-		IonSelectOption,
 		IonProgressBar
 	} from "@ionic/vue";
 	import Color from "../../components/Color.vue";
@@ -35,7 +33,7 @@
 	import FrontHistoryMD from "@material-symbols/svg-600/outlined/show_chart.svg";
 	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
 
-	import { CustomField, ImageClip, Member, System, Tag } from "../../lib/db/entities";
+	import { CustomField, Member, System, Tag } from "../../lib/db/entities";
 	import { newMember, deleteMember, updateMember, defaultMember, getMember } from "../../lib/db/tables/members";
 	import { getTags } from "../../lib/db/tables/tags";
 	import { promptOkCancel, toast } from "../../lib/util/misc";
@@ -46,7 +44,7 @@
 	import { PartialBy } from "../../lib/types";
 	import { useRoute } from "vue-router";
 	import { useTranslation } from "i18next-vue";
-	import { formatDate, imageClips } from "../../lib/util/misc";
+	import { formatDate, imageClipPicker } from "../../lib/util/misc";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import Avatar from "../../components/Avatar.vue";
 	import Cover from "../../components/Cover.vue";
@@ -445,22 +443,11 @@
 							/>
 						</IonButton>
 					</IonItem>
-					<IonItem>
-						<IonSelect
-							:model-value="member.imageClip || ''"
-							label-placement="floating"
-							:label="$t('members:edit.imageClip')"
-							:cancel-text="$t('other:alerts.cancel')"
-							interface="action-sheet"
-							@update:model-value="(v: ImageClip) => { member.imageClip = v.length ? v : undefined; }"
-						>
-							<IonSelectOption v-for="clip in imageClips" :key="clip" :value="clip">
-								{{ $t(`other:shapes.${clip}`) }}
-							</IonSelectOption>
-							<IonSelectOption :value="''">
-								{{ $t(`other:shapes.noShape`) }}
-							</IonSelectOption>
-						</IonSelect>
+					<IonItem button detail @click="imageClipPicker($t('members:edit.imageClip')).then(res => { if(res !== undefined) member.imageClip = res ?? undefined; })">
+						<IonLabel>
+							<h3>{{ $t("members:edit.imageClip") }}</h3>
+							<p>{{ member.imageClip ? $t(`other:shapes.${member.imageClip}`) : $t("other:shapes.noShape") }}</p>
+						</IonLabel>
 					</IonItem>
 					<IonItem button :detail="false">
 						<IonToggle v-model="member.isPinned">
