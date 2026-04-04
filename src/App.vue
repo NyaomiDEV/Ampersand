@@ -8,6 +8,7 @@
 	import { dismissSplash } from "./lib/native/plugin";
 	import { appConfig } from "./lib/config";
 
+	provide("isDevServer", computed(() => import.meta.env.MODE === "development"));
 	provide("isDev", computed(() => import.meta.env.MODE === "development" || appConfig.isDeveloperMode));
 
 	const ionRouter = useIonRouter();
