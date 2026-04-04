@@ -50,6 +50,10 @@ export type JournalPostFilterQuery = {
 	member?: UUID | boolean;
 };
 
+export type TagFilterQuery = {
+	query: string,
+	isArchived?: boolean;
+};
 
 function reduceToValue(value: string, emptyMeansTrue?: boolean, trueMeansValueItself?: false): boolean;
 function reduceToValue(value: string, emptyMeansTrue?: boolean, trueMeansValueItself?: true): boolean | string;
@@ -274,6 +278,25 @@ export async function parseJournalPostFilterQuery(search: string) {
 		switch (variable.toLowerCase()) {
 			case "member":
 				result.member = reduceToValue(value, true, true);
+				break;
+		}
+		break;
+	}
+
+	return result;
+}
+
+export function parseTagFilterQuery(search: string) {
+	const rawParsed = splitTokens(search);
+
+	const result: TagFilterQuery = {
+		query: rawParsed.query,
+	};
+
+	for (const [variable, value] of rawParsed.variables) {
+		switch (variable.toLowerCase()) {
+			case "archived":
+				result.isArchived = reduceToValue(value);
 				break;
 		}
 		break;

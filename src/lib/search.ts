@@ -1,6 +1,6 @@
 
 import { Member, Tag, Asset, CustomField, JournalPost, BoardMessage, FrontingEntry, System } from "./db/entities";
-import { parseAssetFilterQuery, parseBoardMessageFilterQuery, parseCustomFieldFilterQuery, parseFrontingHistoryFilterQuery, parseJournalPostFilterQuery, parseMemberFilterQuery, parseSystemFilterQuery } from "./util/filterQuery";
+import { parseAssetFilterQuery, parseBoardMessageFilterQuery, parseCustomFieldFilterQuery, parseFrontingHistoryFilterQuery, parseJournalPostFilterQuery, parseMemberFilterQuery, parseSystemFilterQuery, parseTagFilterQuery } from "./util/filterQuery";
 import { appConfig } from "./config";
 import { getMemberIndex } from "./db/tables/members";
 
@@ -75,12 +75,19 @@ export async function filterMember(search: string, member: Member){
 }
 
 export function filterTag(search: string, tag: Tag) {
-	const query = search.length ? search : appConfig.defaultFilterQueries.tags || "";
+	const parsed = parseTagFilterQuery(search.length ? search : appConfig.defaultFilterQueries.tags || "");
 
-	if(!query.length)
-		return true;
-	else
-		return tag.name.toLowerCase().includes(query.toLowerCase());
+	if(parsed.query.length){
+		if (!tag.name.toLowerCase().includes(parsed.query.toLowerCase()))
+			return false;
+	}
+
+	if (parsed.isArchived !== undefined) {
+		if (tag.isArchived !== parsed.isArchived)
+			return false;
+	}
+
+	return true;
 }
 
 export function filterFrontingEntry(search: string, frontingEntry: FrontingEntry){
