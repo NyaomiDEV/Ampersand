@@ -6,7 +6,7 @@
 
 	import documentMD from "@material-symbols/svg-600/outlined/draft.svg";
 	import { openFile } from "../../lib/native/plugin";
-	import { isReactive, shallowRef, watch, WatchStopHandle } from "vue";
+	import { isReactive, onBeforeMount, shallowRef, watch, WatchStopHandle } from "vue";
 	import { getTag } from "../../lib/db/tables/tags";
 	import TagChip from "../tag/TagChip.vue";
 
@@ -63,7 +63,9 @@
 				watchHandle();
 				watchHandle = undefined;
 			}
-	}, { immediate: true });
+	});
+
+	onBeforeMount(updateTags);
 </script>
 
 <template>

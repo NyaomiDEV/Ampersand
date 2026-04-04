@@ -5,7 +5,7 @@
 
 	import { Member, Tag, System } from "../../lib/db/entities";
 	import TagChip from "../tag/TagChip.vue";
-	import { isReactive, shallowRef, watch, WatchStopHandle } from "vue";
+	import { isReactive, onBeforeMount, shallowRef, watch, WatchStopHandle } from "vue";
 	import { getTag } from "../../lib/db/tables/tags";
 	import SystemChip from "../system/SystemChip.vue";
 	import { getSystem } from "../../lib/db/tables/system";
@@ -44,7 +44,9 @@
 				watchHandle();
 				watchHandle = undefined;
 			}
-	}, { immediate: true });
+	});
+
+	onBeforeMount(updateTags);
 </script>
 
 <template>
