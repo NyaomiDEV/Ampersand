@@ -98,7 +98,7 @@
 		<SpinnerFullscreen v-if="!assets" />
 		<IonContent v-else>
 			<IonList>
-				<VirtualList :entries="assets" :min-size="56" :gap="2">
+				<VirtualList :entries="assets" :min-size="72	" :gap="2">
 					<template #default="{ entry: asset }">
 						<AssetItem
 							route-to-edit-page
