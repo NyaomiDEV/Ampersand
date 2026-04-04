@@ -52,14 +52,14 @@
       "icons/icon.png"
     ],
     "android": {
-      "versionCode": 1556
+      "versionCode": 1557
     },
     "iOS": {
-      "bundleVersion": "1556"
+      "bundleVersion": "1557"
     },
     "macOS": {
       "entitlements": "./Entitlements.plist",
-      "bundleVersion": "1556"
+      "bundleVersion": "1557"
     },
     "linux": {
       "appimage": {
