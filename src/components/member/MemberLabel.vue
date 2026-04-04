@@ -32,21 +32,31 @@
 		}
 	}
 
-	let watchHandle: WatchStopHandle | undefined;
-	watch(props, async () => {
+	async function updateSystem(){
 		const _sys = await getSystem(props.member.system);
 		if (_sys) system.value = _sys;
+	}
+
+	let watchHandle: WatchStopHandle | undefined;
+	watch(props, async () => {
+		await updateSystem();
 		await updateTags();
-		if(isReactive(props.member))
-			watchHandle = watch(props.member, updateTags);
-		else
+		if(isReactive(props.member)){
+			watchHandle = watch(props.member, async () => {
+				await updateSystem();
+				await updateTags();
+			});
+		} else
 			if(watchHandle){
 				watchHandle();
 				watchHandle = undefined;
 			}
 	});
 
-	onBeforeMount(updateTags);
+	onBeforeMount(async () => {
+		await updateSystem();
+		await updateTags();
+	});
 </script>
 
 <template>
