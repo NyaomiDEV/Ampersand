@@ -35,6 +35,7 @@ import MarkdownLink from "../../components/MarkdownLink.vue";
 import animationExtension from "./animationExtension";
 import positionExtension from "./positionExtension";
 import rotationExtension from "./rotationExtension";
+import customTableExtension from "./customTableExtension";
 
 export function useMarked(){
 	const marked = new Marked<(VNode | string)[], VNode | string>();
@@ -142,7 +143,8 @@ export function useMarked(){
 		emojiExtension,
 		animationExtension,
 		positionExtension,
-		rotationExtension
+		rotationExtension,
+		customTableExtension
 	);
 
 	return marked;

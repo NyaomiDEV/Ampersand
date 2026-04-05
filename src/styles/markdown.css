@@ -44,6 +44,18 @@
 		}
 	}
 
+	.custom-table {
+		th {
+			background-color: var(--markdown-th-bg);
+			color: var(--markdown-th-fg);
+		}
+
+		td {
+			background-color: var(--markdown-td-bg);
+			color: var(--markdown-td-fg);
+		}
+	}
+
 	:is(h1, h2, h3, h4, h5, h6, p, ul, ol, li) {
 		margin-top: 0;
 		margin-bottom: 0.25rem;
