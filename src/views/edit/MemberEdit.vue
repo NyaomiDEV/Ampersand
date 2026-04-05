@@ -308,14 +308,14 @@
 				</div>
 
 				<IonList>
-					<IonItem>
-						<IonLabel class="member-description">
+					<IonItem class="member-field member-description">
+						<IonLabel>
 							<h3>{{ $t("members:edit.description") }}</h3>
 							<Markdown :markdown="member.description || $t('members:edit.noDescription')" />
 						</IonLabel>
 					</IonItem>
 					<template v-for="customField in customFieldsToShowInViewMode" :key="customField.uuid">
-						<IonItem class="member-custom-field">
+						<IonItem class="member-field">
 							<IonLabel>
 								<h3>{{ customField.name }}</h3>
 								<Markdown :markdown="member.customFields?.get(customField.uuid)!" />
@@ -551,26 +551,26 @@
 		width: 100%;
 		height: 256px;
 		margin-bottom: 16px;
-	}
 
-	div.cover-container > div.edit-buttons {
-		position: absolute;
-		bottom: 8px;
-		display: flex;
-		flex-direction: column-reverse;
-		gap: 8px;
-		right: calc(24px + var(--ion-safe-area-right, 0px));
-	}
+		> div.edit-buttons {
+			position: absolute;
+			bottom: 8px;
+			display: flex;
+			flex-direction: column-reverse;
+			gap: 8px;
+			right: calc(24px + var(--ion-safe-area-right, 0px));
+		}
 
-	img.cover {
-		mask-image: linear-gradient(black, transparent);
-		border-radius: 16px 16px 0 0;
-		width: 100%;
-		height: 100%;
-		display: block;
-		object-fit: cover;
-		z-index: -1;
-		position: absolute;
+		img.cover {
+			mask-image: linear-gradient(black, transparent);
+			border-radius: 16px 16px 0 0;
+			width: 100%;
+			height: 100%;
+			display: block;
+			object-fit: cover;
+			z-index: -1;
+			position: absolute;
+		}
 	}
 
 	div.avatar-container {
@@ -578,21 +578,21 @@
 		width: fit-content;
 		height: fit-content;
 		display: block;
-	}
 
-	div.avatar-container > div.edit-buttons {
-		position: absolute;
-		bottom: 8px;
-		width: 100%;
-		display: flex;
-		justify-content: space-between;
-		flex-direction: row-reverse;
-	}
+		> div.edit-buttons {
+			position: absolute;
+			bottom: 8px;
+			width: 100%;
+			display: flex;
+			justify-content: space-between;
+			flex-direction: row-reverse;
+		}
 
-	div.avatar-container .avatar {
-		width: 192px;
-		height: 192px;
-		outline-width: 8px !important;
+		.avatar {
+			width: 192px;
+			height: 192px;
+			outline-width: 8px !important;
+		}
 	}
 
 	div.edit-buttons ion-button {
@@ -623,18 +623,13 @@
 		display: block;
 		margin: auto;
 		text-align: center;
+
+		* {
+			margin: 0;
+		}
 	}
 
-	div.member-info * {
+	.member-field ion-label {
 		margin: 0;
-	}
-
-	div.member-description, div.member-custom-field {
-		padding: 16px calc(16px + var(--ion-safe-area-right, 0px)) 0px calc(16px + var(--ion-safe-area-left, 0px));
-	}
-
-	div.member-description ion-label,
-	div.member-custom-field ion-label {
-		color: var(--ion-color-step-600, var(--ion-text-color-step-400, #666666));
 	}
 </style>
