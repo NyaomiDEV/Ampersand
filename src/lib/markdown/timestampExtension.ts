@@ -10,7 +10,7 @@ const timestampExtension: MarkedExtension<(VNode | string)[], VNode | string> = 
 			level: "inline",
 			start(src: string) { return src.match(/<t/)?.index; },
 			tokenizer(src: string) {
-				const rule = /^<t:(\d+?):([FfDdMmYyKkGgTt])>/;
+				const rule = /^<t:(\d+?):([FfDdMmYyKkGgTtSsR])>/;
 				const match = rule.exec(src);
 				if (match) {
 					const token = {
@@ -46,12 +46,22 @@ const timestampExtension: MarkedExtension<(VNode | string)[], VNode | string> = 
 
 					T: getLocaleInfo().lts,
 					t: getLocaleInfo().lt,
+
+					s: "L LT",
+					S: "L LTS"
 				};
 
-				return h("span", {
-					class: "timestamp",
-					"data-timestamp": token.timestamp
-				}, dayjs(token.timestamp).format(formats[token.format]));
+				if(token.format === "R"){
+					return h("span", {
+						class: "timestamp",
+						"data-timestamp": token.timestamp
+					}, dayjs().to(token.timestamp));
+				} else {
+					return h("span", {
+						class: "timestamp",
+						"data-timestamp": token.timestamp
+					}, dayjs(token.timestamp).format(formats[token.format]));
+				}
 			}
 		}
 	]

@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
 import LocalizedFormat from "dayjs/plugin/localizedFormat";
+import RelativeTime from "dayjs/plugin/relativeTime";
 import Duration from "dayjs/plugin/duration";
 import UTC from "dayjs/plugin/utc";
 import i18next from "i18next";
@@ -91,6 +92,7 @@ for(const lang of new Set(translations.keys().map(x => x.lang))){
 }
 
 dayjs.extend(LocalizedFormat);
+dayjs.extend(RelativeTime);
 dayjs.extend(Duration);
 dayjs.extend(UTC);
 dayjs.locale(i18next.language);
