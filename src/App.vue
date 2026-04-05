@@ -7,6 +7,7 @@
 	import { setRouterCanGoBack } from "./lib/util/backbutton";
 	import { dismissSplash } from "./lib/native/plugin";
 	import { appConfig } from "./lib/config";
+	import AssetFonts from "./components/AssetFonts.vue";
 
 	provide("isDevServer", computed(() => import.meta.env.MODE === "development"));
 	provide("isDev", computed(() => import.meta.env.MODE === "development" || appConfig.isDeveloperMode));
@@ -28,5 +29,6 @@
 	<IonApp>
 		<IonRouterOutlet />
 		<ModalContainer />
+		<AssetFonts />
 	</IonApp>
 </template>

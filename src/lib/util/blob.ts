@@ -15,6 +15,19 @@ export function useBlob(){
 		return url;
 	}
 
+	function revokeObjectURL(urlOrFile: string | File){
+		const url = dataURLs.entries().find(x => {
+			if(urlOrFile instanceof File)
+				return x[1] === urlOrFile;
+			return x[0] === urlOrFile;
+		})?.[0];
+
+		if(url){
+			URL.revokeObjectURL(url);
+			dataURLs.delete(url);
+		}
+	}
+
 	function getFile(url: string): File | undefined {
 		return Array.from(dataURLs.entries()).find(_obj => _obj[0] === url)?.[1];
 	}
@@ -27,6 +40,7 @@ export function useBlob(){
 	return {
 		getFile,
 		getObjectURL,
+		revokeObjectURL,
 		clear
 	};
 }

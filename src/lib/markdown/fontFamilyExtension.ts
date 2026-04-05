@@ -1,5 +1,6 @@
 import { h, type VNode } from "vue";
 import { MarkedExtension } from "marked";
+import MarkdownFontFamily from "../../components/MarkdownFontFamily.vue";
 
 const disallowedFontParameters = ["wght", "wdth", "slnt", "ital", "opsz"];
 
@@ -37,99 +38,99 @@ const fontFamilyExtension: MarkedExtension<(VNode | string)[], VNode | string> =
 			},
 			renderer(token) {
 				if(token.fontFamily.length){
-					const cssStyle: Record<string, string> = {};
+					let fontFamily = token.fontFamily;
 					switch((token.fontFamily as string).toLowerCase()){
 						case "cursive":
-							cssStyle["--markdown-font-family"] = "Rochester";
+							fontFamily = "Rochester";
 							break;
 						case "pixel":
-							cssStyle["--markdown-font-family"] = "Departure Mono";
+							fontFamily = "Departure Mono";
 							break;
 						case "dots":
-							cssStyle["--markdown-font-family"] = "Bitcount Single";
+							fontFamily = "Bitcount Single";
 							break;
 						case "digital":
-							cssStyle["--markdown-font-family"] = "Orbitron";
+							fontFamily = "Orbitron";
 							break;
 						case "handwritten":
-							cssStyle["--markdown-font-family"] = "Shantell Sans";
+							fontFamily = "Shantell Sans";
 							break;
 						case "serif":
-							cssStyle["--markdown-font-family"] = "Eb Garamond";
+							fontFamily = "Eb Garamond";
 							break;
 						case "monospace":
-							cssStyle["--markdown-font-family"] = "Source Code Pro";
+							fontFamily = "Source Code Pro";
 							break;
 						case "playful":
-							cssStyle["--markdown-font-family"] = "Lobster Two";
+							fontFamily = "Lobster Two";
 							break;
 						case "holy":
-							cssStyle["--markdown-font-family"] = "Cinzel";
+							fontFamily = "Cinzel";
 							break;
 						case "bubbly":
-							cssStyle["--markdown-font-family"] = "Gluten";
+							fontFamily = "Gluten";
 							break;
 						case "marker":
-							cssStyle["--markdown-font-family"] = "Permanent Marker";
+							fontFamily = "Permanent Marker";
 							break;
 						case "gothic":
-							cssStyle["--markdown-font-family"] = "Unifraktur Maguntia";
+							fontFamily = "Unifraktur Maguntia";
 							break;
 						case "stencil":
-							cssStyle["--markdown-font-family"] = "Stick No Bills";
+							fontFamily = "Stick No Bills";
 							break;
 						case "mystery":
-							cssStyle["--markdown-font-family"] = "Mystery Quest";
+							fontFamily = "Mystery Quest";
 							break;
 						case "italian":
-							cssStyle["--markdown-font-family"] = "Playwrite IT Traditional";
+							fontFamily = "Playwrite IT Traditional";
 							break;
 						case "metal":
-							cssStyle["--markdown-font-family"] = "Metal Mania";
+							fontFamily = "Metal Mania";
 							break;
 						case "cutesy":
-							cssStyle["--markdown-font-family"] = "Twinkle Stars";
+							fontFamily = "Twinkle Stars";
 							break;
 						case "thin":
-							cssStyle["--markdown-font-family"] = "Comic Neue";
+							fontFamily = "Comic Neue";
 							break;
 						case "deco":
-							cssStyle["--markdown-font-family"] = "Ribeye Marrow";
+							fontFamily = "Ribeye Marrow";
 							break;
 						case "western":
-							cssStyle["--markdown-font-family"] = "Rye";
+							fontFamily = "Rye";
 							break;
 						case "glitch":
-							cssStyle["--markdown-font-family"] = "Rubik Glitch";
+							fontFamily = "Rubik Glitch";
 							break;
 						case "indie":
-							cssStyle["--markdown-font-family"] = "Amatic SC";
+							fontFamily = "Amatic SC";
 							break;
 						case "stripes":
-							cssStyle["--markdown-font-family"] = "Zen Tokyo Zoo";
+							fontFamily = "Zen Tokyo Zoo";
 							break;
 						case "comic":
-							cssStyle["--markdown-font-family"] = "Comic Relief";
+							fontFamily = "Comic Relief";
 							break;
 						case "lexend":
-							cssStyle["--markdown-font-family"] = "Lexend";
+							fontFamily = "Lexend";
 							break;
 						case "atkinson":
-							cssStyle["--markdown-font-family"] = "Atkinson Hyperlegible";
+							fontFamily = "Atkinson Hyperlegible";
 							break;
 						case "dyslexic":
-							cssStyle["--markdown-font-family"] = "OpenDyslexic";
+							fontFamily = "OpenDyslexic";
 							break;
 						case "inter":
-							cssStyle["--markdown-font-family"] = "Inter";
+							fontFamily = "Inter";
 							break;
 					}
 
-					cssStyle["--markdown-font-variation-settings"] = (token.fontVarSettings as [string, number]).map(x => `"${x[0]}" ${x[1]}`).join(", ");
-					return h("span", {
-						class: "font-family",
-						style: cssStyle
-					}, token.tokens && token.tokens.length ? this.parser.parseInline(token.tokens) : token.text);
+					const fontVariation = (token.fontVarSettings as [string, number]).map(x => `"${x[0]}" ${x[1]}`).join(", ");
+					return h(MarkdownFontFamily, {
+						fontFamily,
+						fontVariation
+					}, token.tokens && token.tokens.length ? () => this.parser.parseInline(token.tokens!) : () => token.text as string);
 				}
 
 				return h("span", {}, token.tokens && token.tokens.length ? this.parser.parseInline(token.tokens) : token.text);
