@@ -23,26 +23,25 @@
 
 	/* Tables */
 	table {
-		border: 1px solid var(--ion-text-color-step-400);
+		table-layout: fixed;
 		margin-bottom: 8px;
 	}
 
-	table tr {
-		border-bottom: 1px solid var(--ion-text-color-step-400);
+	table, th, td {
+		border: 1px solid var(--ion-text-color-step-400);
+		border-collapse: collapse;
 	}
 
-	table th {
-		border-left: 1px solid var(--ion-text-color-step-400);
-		border-right: 1px solid var(--ion-text-color-step-400);
-	}
-
-	table td {
-		border-left: 1px solid var(--ion-text-color-step-400);
-		border-right: 1px solid var(--ion-text-color-step-400);
-	}
-
-	table :is(td, th) {
+	td, th {
 		padding: 8px;
+	}
+
+	table tr:nth-child(odd) {
+		background-color: rgb(var(--md3-surface-container));
+
+			&:is(ion-item *) {
+				background-color: rgb(var(--md3-surface-container-high));
+		}
 	}
 
 	:is(h1, h2, h3, h4, h5, h6, p, ul, ol, li) {
