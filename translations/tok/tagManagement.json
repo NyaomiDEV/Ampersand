@@ -4,12 +4,14 @@
 	"select": "nimi sona pi wile sina",
 	"selector": {
 		"member": "nimi sona pi ijo kulupu",
-		"journal": "nimi sona lipu"
+		"journal": "nimi sona lipu",
+		"asset": "nimi sona pi ijo namako"
 	},
 	"edit": {
 		"header": {
 			"member": "sina ante e nimi sona pi ijo kulupu",
-			"journal": "ante pi nimi sona lipu"
+			"journal": "ante pi nimi sona lipu",
+			"asset": "sina ante e nimi sona pi ijo namako"
 		},
 		"name": "nimi pi nimi sona",
 		"description": "sona pi nimi sona",
@@ -19,21 +21,28 @@
 			"header": "poki pi nimi sona",
 			"member": "ijo kulupu",
 			"journal": "lipu",
-			"desc": "o sona e ni; sina pini pali e nimi sona la sina ken ala ante e poki pi nimi sona!"
+			"desc": "o sona e ni; sina pini pali e nimi sona la sina ken ala ante e poki pi nimi sona!",
+			"asset": "ijo namako"
 		},
 		"members": {
 			"title": "sina pana e nimi sona ni tawa ijo kulupu",
-			"desc_one": "ijo kulupu {{count}} li kepeken nimi sona ni"
+			"desc_one": "ijo kulupu {{count}} li kepeken nimi sona ni",
+			"desc_other": ""
 		},
 		"showJournal": {
 			"title": "sina lukin e lipu pi nimi sona ni",
-			"desc_one": "lipu {{count}} li jo nimi sona ni"
+			"desc_one": "lipu {{count}} li jo e nimi sona ni"
 		},
 		"delete": {
 			"title": "weka pi nimi sona",
 			"confirm": "sina wile ala wile weka e nimi sona ni?"
 		},
 		"tagID": "nimi ilo pi nimi sona: {{tagID}}",
-		"tagIDCopiedToClipboard": "sina kama jo e nimi ilo pi nimi sona!"
+		"tagIDCopiedToClipboard": "sina kama jo e nimi ilo pi nimi sona!",
+		"showAssets": {
+			"title": "sina lukin e ijo namako pi nimi sona ni",
+			"desc_one": "ijo namako {{count}} li jo e nimi sona ni"
+		},
+		"isArchived": "nimi sona len"
 	}
 }
