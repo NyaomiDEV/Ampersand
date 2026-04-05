@@ -4,7 +4,7 @@ import { getTables, ShittyTable } from "../tables";
 import { deleteNull, replace, revive, walk, walkAsync } from "../../serialization";
 import { dirname, documentDir, sep } from "@tauri-apps/api/path";
 import { mkdir, open as openFile, readFile } from "@tauri-apps/plugin-fs";
-import { open, save } from "@tauri-apps/plugin-dialog";
+import { open, save } from "../../native/open";
 import { AMPERSAND_BACKUP_MAGICS, matchMagicOld, stripMagicOld } from "./magic";
 import { UUIDable } from "../entities";
 import { decompressGzip } from "../../util/misc";

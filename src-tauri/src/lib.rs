@@ -35,6 +35,7 @@ pub fn run() {
         .plugin(tauri_plugin_ampersand::init())
         .plugin(tauri_plugin_process::init())
         .invoke_handler(tauri::generate_handler![
+            commands::noop,
             commands::our_temp_dir,
             commands::clear_temp_dir,
             commands::get_webkit_version

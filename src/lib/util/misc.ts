@@ -4,7 +4,7 @@ import { Ref } from "vue";
 import { appConfig } from "../config";
 import { Asset, BoardMessage, CustomField, FrontingEntry, ImageClip, Member, System } from "../db/entities";
 import i18next, { computePercentage, getLocaleInfo } from "../i18n";
-import { open } from "@tauri-apps/plugin-dialog";
+import { open } from "../native/open";
 import { readFile } from "@tauri-apps/plugin-fs";
 import { basename, sep } from "@tauri-apps/api/path";
 import { findMimeType } from "../mime";

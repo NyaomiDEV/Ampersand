@@ -4,7 +4,7 @@ import { getTables, ShittyTable } from "../tables";
 import { mkdir, readTextFile, writeTextFile } from "@tauri-apps/plugin-fs";
 import dayjs from "dayjs";
 import { platform } from "@tauri-apps/plugin-os";
-import { open, save } from "@tauri-apps/plugin-dialog";
+import { open, save } from "../../native/open";
 import { Asset, BoardMessage, CustomField, FrontingEntry, JournalPost, Member, System, Tag, UUIDable } from "../entities";
 import { AssetJSON, BoardMessageJSON, DatabaseJSON, FrontingEntryJSON, JournalPostJSON, MemberJSON, SystemJSON } from "./json_types";
 import { fromDataURI, toDataURI } from "../../util/blob";

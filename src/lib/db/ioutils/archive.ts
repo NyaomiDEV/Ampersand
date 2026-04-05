@@ -5,7 +5,7 @@ import { getTables, ShittyTable } from "../tables";
 import { deleteNull, replace, walk, revive, walkAsync } from "../../serialization";
 import { dirname, documentDir, sep } from "@tauri-apps/api/path";
 import { FileHandle, mkdir, open as openFile } from "@tauri-apps/plugin-fs";
-import { open, save } from "@tauri-apps/plugin-dialog";
+import { open, save } from "../../native/open";
 import { AMPERSAND_ARCHIVE_MAGICS, matchMagicNew } from "./magic";
 import dayjs from "dayjs";
 import { platform } from "@tauri-apps/plugin-os";
