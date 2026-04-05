@@ -4,12 +4,14 @@
 	"select": "Wybierz tagi",
 	"selector": {
 		"member": "Tagi członków",
-		"journal": "Tagi dziennika"
+		"journal": "Tagi dziennika",
+		"asset": "Tagi zasobów"
 	},
 	"edit": {
 		"header": {
 			"member": "Edytuj tag członków",
-			"journal": "Edytuj tag dziennika"
+			"journal": "Edytuj tag dziennika",
+			"asset": "Edytuj tag zasobów"
 		},
 		"name": "Nazwa tagu",
 		"description": "Opis tagu",
@@ -19,7 +21,8 @@
 			"header": "Rodzaj tagu",
 			"member": "Członek",
 			"journal": "Dziennik",
-			"desc": "Uwaga: rodzaj tagu można zdefiniować dopiero po jego utworzeniu!"
+			"desc": "Uwaga: rodzaj tagu można zdefiniować dopiero po jego utworzeniu!",
+			"asset": "Zasób"
 		},
 		"members": {
 			"title": "Wybierz członków systemu korzystających z tego tagu",
@@ -38,6 +41,13 @@
 			"confirm": "Czy na pewno chcesz usunąć ten tag?"
 		},
 		"tagID": "ID tagu: {{tagID}}",
-		"tagIDCopiedToClipboard": "ID tagu w formacie wzmianki zostało skopiowane do schowka!"
+		"tagIDCopiedToClipboard": "ID tagu w formacie wzmianki zostało skopiowane do schowka!",
+		"showAssets": {
+			"title": "Pokaż zasoby oznaczone tym tagiem",
+			"desc_one": "{{count}} zasób jest oznaczony tym tagiem",
+			"desc_few": "{{count}} zasoby są oznaczone tym tagiem",
+			"desc_many": "{{count}} zasobów jest oznaczonych tym tagiem"
+		},
+		"isArchived": "Zarchiwizuj tag"
 	}
 }

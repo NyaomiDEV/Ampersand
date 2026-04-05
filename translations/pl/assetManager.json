@@ -12,6 +12,7 @@
 		"delete": {
 			"title": "Usuń zasób",
 			"confirm": "Czy na pewno chcesz usunąć ten zasób?"
-		}
+		},
+		"tags": "Tagi"
 	}
 }
