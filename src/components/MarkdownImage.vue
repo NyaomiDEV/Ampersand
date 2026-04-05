@@ -12,8 +12,8 @@
 		src: string
 		alt?: string,
 		title?: string,
-		width?: string,
-		height?: string
+		width?: number,
+		height?: number
 	}>();
 
 	const source = ref<string>("#");
