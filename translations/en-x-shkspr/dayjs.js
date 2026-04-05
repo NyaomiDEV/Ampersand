@@ -22,7 +22,15 @@ const locale = {
 		MM: '%d months',
 		y: 'a year',
 		yy: '%d years'
-	}
+	},
+	formats: {
+		LTS: 'h:mm:ss A',
+		LT: 'h:mm A',
+		L: 'MM/DD/YYYY',
+		LL: 'MMMM D, YYYY',
+		LLL: 'MMMM D, YYYY h:mm A',
+		LLLL: 'dddd, MMMM D, YYYY h:mm A'
+	},
 }
 
 dayjs.locale(locale, null, true)
