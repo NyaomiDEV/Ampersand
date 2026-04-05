@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { watch, ref } from "vue";
-	import { getAssets } from "../lib/db/tables/assets";
+	import { getAsset, getAssetsIndex } from "../lib/db/tables/assets";
 	import { useAssetFonts } from "../lib/assetFonts";
 
 	const props = defineProps<{
@@ -20,12 +20,15 @@
 		// then let's put the href to asset code
 		if (props.fontFamily.startsWith("@")) {
 			const friendlyNameMaybe = props.fontFamily.slice(1);
-			for await (const x of getAssets()) {
-				if (x.friendlyName === friendlyNameMaybe && fontTypes.includes(x.file.type)) {
-					useAssetFonts.appendFont(x.friendlyName, x.file);
-					isUsingCustomFont = true;
-					fontFamily.value = x.friendlyName;
-					break;
+			for (const x of getAssetsIndex()) {
+				if (x.friendlyName === friendlyNameMaybe) {
+					const asset = await getAsset(x.uuid);
+					if(fontTypes.includes(asset.file.type)){
+						useAssetFonts.appendFont(asset.friendlyName, asset.file);
+						isUsingCustomFont = true;
+						fontFamily.value = asset.friendlyName;
+						break;
+					}
 				}
 			}
 		} else {

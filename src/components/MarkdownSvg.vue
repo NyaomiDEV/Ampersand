@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { onBeforeMount, ref } from "vue";
-	import { getAssets } from "../lib/db/tables/assets";
+	import { getAsset, getAssetsIndex } from "../lib/db/tables/assets";
 	import Svg from "./Svg.vue";
 	import { useBlob } from "../lib/util/blob";
 	import { securityConfig } from "../lib/config";
@@ -20,9 +20,10 @@
 	onBeforeMount(async () => {
 		if (props.src.startsWith("@")) {
 			const [assetNameMaybe, ...parts] = props.src.slice(1).split("#");
-			for await (const x of getAssets()) {
+			for (const x of getAssetsIndex()) {
 				if (x.friendlyName === assetNameMaybe) {
-					source.value = getObjectURL(x.file) + (parts.length ? `#${parts.join("#")}` : "");
+					const asset = await getAsset(x.uuid);
+					source.value = getObjectURL(asset.file) + (parts.length ? `#${parts.join("#")}` : "");
 					break;
 				}
 			}

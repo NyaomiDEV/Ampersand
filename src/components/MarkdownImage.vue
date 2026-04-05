@@ -2,7 +2,7 @@
 	import { onMounted, ref } from "vue";
 	import { useBlob } from "../lib/util/blob";
 	import { securityConfig } from "../lib/config";
-	import { getAssets } from "../lib/db/tables/assets";
+	import { getAsset, getAssetsIndex } from "../lib/db/tables/assets";
 	import { getExtension } from "../lib/mime";
 	import { fetchImage } from "../lib/util/fetchImage";
 
@@ -23,9 +23,10 @@
 		// then let's put the href to asset code
 		if (props.src.startsWith("@")) {
 			const friendlyNameMaybe = props.src.slice(1);
-			for await (const x of getAssets()) {
+			for (const x of getAssetsIndex()) {
 				if (x.friendlyName === friendlyNameMaybe) {
-					source.value = getObjectURL(x.file);
+					const asset = await getAsset(x.uuid);
+					source.value = getObjectURL(asset.file);
 					break;
 				}
 			}

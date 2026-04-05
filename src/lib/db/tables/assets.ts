@@ -28,6 +28,10 @@ export async function* getAssets(maxIter = 20){
 	};
 }
 
+export function getAssetsIndex(){
+	return db.assets.index;
+}
+
 export async function* getFilteredAssets(query: string){
 	for await (const asset of getAssets()){
 		if (await filterAsset(query, asset))
