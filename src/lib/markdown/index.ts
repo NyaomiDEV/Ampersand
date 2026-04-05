@@ -87,7 +87,7 @@ export function useMarked(){
 				// checking for lone surrogates the shitty way
 				try {
 					const href = encodeURI(token.href).replace(/%25/g, "%");
-					return h(MarkdownLink, { href, title: token.title || undefined }, inlineParsed);
+					return h(MarkdownLink, { href, title: token.title || undefined }, () => inlineParsed);
 				} catch (_e) {
 					return h(Fragment, inlineParsed);
 				}
