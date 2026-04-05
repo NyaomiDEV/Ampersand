@@ -1,5 +1,5 @@
 {
-	"header": "The Cabin",
+	"header": "Cabin",
 	"header_salute": "Ahoy!",
 	"header_mainfronter": "Ahoy, {{fronterName}}!",
 	"systemDescription": "Fleet description",
