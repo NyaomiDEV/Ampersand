@@ -247,7 +247,7 @@
 		margin-inline-end: 0.5em;
 	}
 
-	div.callout {
+	.callout {
 		display: block;
 		border: 2px solid color-mix(in srgb, var(--markdown-callout-color, var(--ion-color-primary)) 30%, transparent);
 		background: color-mix(in srgb, var(--markdown-callout-color, var(--ion-color-primary)) 15%, transparent);
@@ -256,11 +256,12 @@
 		border-radius: 12px;
 	}
 
-	span.callout-title {
-		display: block;
+	.callout summary {
+		display: list-item;
 		color: var(--markdown-callout-color, var(--ion-color-primary));
 		margin-bottom: 8px;
 		font-weight: bold;
+		list-style-position: inside;
 	}
 
 	span.font-family {
