@@ -6,7 +6,8 @@
 		"delete": {
 			"title": "Eliminar elemento",
 			"confirm": "¿Estás seguro de que quieres eliminar este elemento?"
-		}
+		},
+		"tags": "Etiquetas"
 	},
 	"header": "Gestor de activos",
 	"searchPlaceholder": "Buscando elementos...",

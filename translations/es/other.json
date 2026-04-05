@@ -9,5 +9,17 @@
 		"days": {
 			"short": "D"
 		}
+	},
+	"addTimestamp": "Añadir marca de tiempo",
+	"alerts": {
+		"ok": "De acuerdo",
+		"cancel": "Cancelar",
+		"clear": "Limpiar",
+		"yes": "Sí",
+		"no": "No"
+	},
+	"presence": {
+		"absent": "Ausente",
+		"heavilyDissociating": "Disociación intensa"
 	}
 }
