@@ -8,7 +8,7 @@ const positionExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 			level: "inline",
 			start(src: string) { return src.match(/\[pos=/)?.index; },
 			tokenizer(src: string) {
-				const rule = /^\[pos=(\d*\.?\d+:\d*\.?\d+)\](.+?)\[\/pos\]/;
+				const rule = /^\[pos=(-?\d*\.?\d+:-?\d*\.?\d+)\](.+?)\[\/pos\]/;
 				const match = rule.exec(src);
 				if (match) {
 					const token = {
