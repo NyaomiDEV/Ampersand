@@ -16,6 +16,12 @@
 	--color: var(--ion-color-contrast, rgb(var(--md3-on-surface)));
 	color: var(--color);
 
+	ion-label {
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		overflow: hidden;
+	}
+
 	ion-icon {
 		width: 1.125rem;
 		height: 1.125rem;
