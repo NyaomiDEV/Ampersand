@@ -16,6 +16,7 @@
 	} from "@ionic/vue";
 	import { onBeforeMount, onUnmounted, ref, shallowRef, useTemplateRef, watch } from "vue"; 
 	import CollapsibleHeaderbar from "../components/CollapsibleHeaderbar.vue";
+	import { accessibilityConfig } from "../lib/config/index.ts";
 
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 	import addToFrontMD from "@material-symbols/svg-600/outlined/person_add.svg";
@@ -237,6 +238,9 @@
 								show-chips
 								show-icons
 								show-archived
+								show-role
+								:show-pronouns="!accessibilityConfig.compactLists"
+								:smaller-avatar="accessibilityConfig.compactLists"
 								:router-link="`/members/edit?uuid=${member.uuid}`"
 							/>
 							<IonItemOptions>

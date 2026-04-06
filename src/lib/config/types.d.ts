@@ -35,6 +35,7 @@ export type AccessibilityConfig = {
 	useAccentColor: boolean,
 	accentColor?: string,
 	reducedMotion: boolean,
+	compactLists: boolean,
 	disableCovers: boolean,
 	contrastLevel: number,
 	fontScale: number,

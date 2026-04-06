@@ -17,6 +17,7 @@
 	} from "@ionic/vue";
 	import { onBeforeMount, onUnmounted, ref, shallowRef, useTemplateRef, watch } from "vue";
 	import { appConfig } from "../../lib/config/index.ts";
+	import { accessibilityConfig } from "../../lib/config/index.ts";
 
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 	import copyMD from "@material-symbols/svg-600/outlined/content_copy.svg";
@@ -148,6 +149,7 @@
 								show-icons
 								show-effects
 								button
+								:smaller-avatar="accessibilityConfig.compactLists"
 								:router-link="`/options/systems/edit?uuid=${system.uuid}`"
 							/>
 							<IonItemOptions>

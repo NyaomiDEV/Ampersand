@@ -17,7 +17,8 @@
 		clipShape?: ImageClip,
 		color?: string,
 		icon?: string,
-		withOutline?: boolean
+		withOutline?: boolean,
+		smaller?: boolean
 	}>(), { withOutline: true });
 	
 	const avatarColor = ref("var(--ion-color-primary)");
@@ -33,7 +34,8 @@
 			'avatar',
 			{ 'with-outline': props.withOutline && accessibilityConfig.colorIndicatorPosition === 'avatar' },
 			{ 'with-shape': !!props.clipShape },
-			{ [`shape-${props.clipShape}`]: !!props.clipShape }
+			{ [`shape-${props.clipShape}`]: !!props.clipShape },
+			{ 'smaller': !!props.smaller }
 		]"
 	>
 		<img aria-hidden="true" :src="getObjectURL(props.image)" />
@@ -51,6 +53,11 @@
 	.avatar {
 		width: 56px;
 		height: 56px;
+
+		&.smaller {
+			width: 48px;
+			height: 48px;
+		}
 	}
 
 	.with-color {

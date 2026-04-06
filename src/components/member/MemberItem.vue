@@ -24,7 +24,8 @@
 		showCover?: boolean,
 		showArchived?: boolean,
 		button?: boolean,
-		showBorderColor?: boolean
+		showBorderColor?: boolean,
+		smallerAvatar?: boolean
 	}>(), {
 		showChips: false,
 		showIcons: false,
@@ -77,6 +78,7 @@
 			:clip-shape="member.imageClip"
 			:color="member.color"
 			:icon="accountCircle"
+			:smaller="props.smallerAvatar"
 		/>
 		<IonCheckbox
 			v-if="props.hasToggle === 'checkbox'"

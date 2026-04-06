@@ -30,6 +30,7 @@ const defaultAccessibilityConfig: AccessibilityConfig = {
 	useAccentColor: false,
 	accentColor: "#30628C",
 	reducedMotion: false,
+	compactLists: false,
 	disableCovers: false,
 	contrastLevel: 0,
 	fontScale: 1,
