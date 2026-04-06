@@ -16,7 +16,7 @@ export async function getDocumentFile(extensions?: string[], asFile?: boolean) {
 	const path = await open({
 		multiple: false,
 		filters: extensions ? [{ name: "File", extensions }]: [],
-		fileAccessMode: "copy", // TODO: use scoped access in future Tauri updates (iOS)
+		fileAccessMode: "scoped",
 		pickerMode: "document"
 	});
 	if(!path) return;
