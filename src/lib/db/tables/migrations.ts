@@ -106,7 +106,7 @@ export async function systems(table: ShittyTable<System>, version: number){
 			if (typeof systemIndex.viewInLists === "undefined") {
 				if (!await table.update({
 					uuid: systemIndex.uuid,
-					viewInLists: true
+					viewInLists: systemIndex.uuid !== appConfig.defaultSystem
 				})) return false;
 			}
 		}
