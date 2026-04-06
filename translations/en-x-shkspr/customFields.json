@@ -1,18 +1,18 @@
 {
-	"header": "Custom Scrolls",
-	"select": "Choose thy scrolls",
-	"searchPlaceholder": "Seek thy scrolls...",
+	"header": "Custom felds",
+	"select": "Choose thy felds",
+	"searchPlaceholder": "Seek thy felds...",
 	"edit": {
-		"header": "Amend Scroll",
-		"headerAdd": "Bestow Scroll",
-		"name": "Name of the Scroll",
+		"header": "Amend feld",
+		"headerAdd": "Bestow felds",
+		"name": "Name of the feld",
 		"default": {
 			"title": "Toggle Default",
-			"desc": "Default scrolls shall ever appear when amending a member"
+			"desc": "Default custom felds shall ever appear when amending a member"
 		},
 		"delete": {
-			"title": "Banish Scroll",
-			"confirm": "Art thou certain thou wouldst banish this scroll?"
+			"title": "Banish feld",
+			"confirm": "Art thou certain thou wouldst banish this feld?"
 		}
 	}
 }
