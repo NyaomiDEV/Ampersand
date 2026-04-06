@@ -10,6 +10,7 @@
 		IonList,
 	} from "@ionic/vue";
 
+	import { accessibilityConfig } from "../lib/config/index.ts";
 	import { onBeforeMount, onUnmounted, reactive, ref, shallowRef, toRaw, watch } from "vue";
 	import type { Member } from "../lib/db/entities.d.ts";
 	import { getFilteredMembers } from "../lib/db/tables/members";
@@ -147,6 +148,8 @@
 							button
 							:member
 							show-archived
+							:show-pronouns="!accessibilityConfig.compactLists"
+							:smaller-avatar="accessibilityConfig.compactLists"
 							:disabled="(props.membersToInclude && !props.membersToInclude.find(x => x.uuid === member.uuid)) || !!props.membersToExclude?.find(x => x.uuid === member.uuid)"
 							has-toggle="checkbox"
 							:toggle-value="member.uuid"

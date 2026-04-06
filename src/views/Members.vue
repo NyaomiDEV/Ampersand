@@ -235,7 +235,7 @@
 								button
 								:member
 								:associated-fronting-entry="feGet(member)"
-								show-chips
+								:show-chips="!accessibilityConfig.compactLists"
 								show-icons
 								show-archived
 								show-role

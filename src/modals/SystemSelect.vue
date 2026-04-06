@@ -11,6 +11,7 @@
 	} from "@ionic/vue";
 
 	import { onBeforeMount, onUnmounted, ref, shallowRef, toRaw, watch } from "vue";
+	import { accessibilityConfig } from "../lib/config/index.ts";
 	import type { System } from "../lib/db/entities";
 	import { DatabaseEvents, DatabaseEvent } from "../lib/db/events.ts";
 	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
@@ -158,6 +159,7 @@
 							button
 							:show-icons="false"
 							show-effects
+							:smaller-avatar="accessibilityConfig.compactLists"
 							has-toggle="checkbox"
 							:toggle-value="system.uuid"
 							:toggle-checked="selectedSystem?.uuid === system.uuid"
