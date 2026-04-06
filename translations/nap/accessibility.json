@@ -42,6 +42,9 @@
 		"title": "Muvimiente ridotte",
 		"desc": "Leva 'e animazione 'int'â l'app"
 	},
+	"compactLists": {
+		"title": "Liste compatte"
+	},
 	"disableCovers": {
 		"title": "Leva 'e cupertine 'int'ê liste"
 	},

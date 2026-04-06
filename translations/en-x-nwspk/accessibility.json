@@ -42,6 +42,9 @@
 		"title": "Unmotion",
 		"desc": "Un-animate app"
 	},
+	"compactLists": {
+		"title": "Shortlists"
+	},
 	"disableCovers": {
 		"title": "Un-covers"
 	},

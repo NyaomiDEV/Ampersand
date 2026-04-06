@@ -42,6 +42,9 @@
 		"title": "Stilled Motion",
 		"desc": "Halt the moving spirits within the work"
 	},
+	"compactLists": {
+		"title": "Lists most brief"
+	},
 	"disableCovers": {
 		"title": "Banish the Covers"
 	},

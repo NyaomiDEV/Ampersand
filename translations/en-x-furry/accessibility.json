@@ -42,6 +42,9 @@
 		"title": "Weduced motion",
 		"desc": "Disabwe in-app animations"
 	},
+	"compactLists": {
+		"title": "Compact wists"
+	},
 	"disableCovers": {
 		"title": "Disabwe covews"
 	},

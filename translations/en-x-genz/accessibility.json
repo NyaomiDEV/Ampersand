@@ -42,6 +42,9 @@
 		"title": "No shaky",
 		"desc": "Turn off the animations"
 	},
+	"compactLists": {
+		"title": "Smaller lists"
+	},
 	"disableCovers": {
 		"title": "No covers"
 	},

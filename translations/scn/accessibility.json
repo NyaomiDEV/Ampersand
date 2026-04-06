@@ -42,6 +42,9 @@
 		"title": "Muvimenti arridutti",
 		"desc": "Disabbìlita l'animazzioni nall'app"
 	},
+	"compactLists": {
+		"title": "Listi cumpatti"
+	},
 	"disableCovers": {
 		"title": "Disabbìlita i copertini nall'elenchi"
 	},

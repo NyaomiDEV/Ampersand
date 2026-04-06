@@ -42,6 +42,9 @@
 		"title": "Movimenti ridotti",
 		"desc": "Togli le animazioni, che dobbiamo andare veloci"
 	},
+	"compactLists": {
+		"title": "Liste brevi che non c'ho tempo"
+	},
 	"disableCovers": {
 		"title": "Togli le copertine nelle liste"
 	},

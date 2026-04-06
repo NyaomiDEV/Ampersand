@@ -42,6 +42,9 @@
 		"title": "Movimenti ridotti",
 		"desc": "Togli le animazioni, fra"
 	},
+	"compactLists": {
+		"title": "Liste più piccole"
+	},
 	"disableCovers": {
 		"title": "Togli le copertine nelle liste"
 	},

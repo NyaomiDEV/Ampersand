@@ -42,6 +42,9 @@
 		"title": "Movimenti ridotti",
 		"desc": "Disabilita le animazioni in app"
 	},
+	"compactLists": {
+		"title": "Liste compatte"
+	},
 	"disableCovers": {
 		"title": "Disabilita le copertine nelle liste"
 	},

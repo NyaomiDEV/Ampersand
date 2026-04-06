@@ -12,6 +12,7 @@
 	import bigTextMD from "@material-symbols/svg-600/outlined/text_increase.svg";
 	import colorMD from "@material-symbols/svg-600/outlined/palette.svg";
 	import colorsMD from "@material-symbols/svg-600/outlined/colors.svg";
+	import compactMD from "@material-symbols/svg-600/outlined/list_alt.svg";
 	import hideCoverMD from "@material-symbols/svg-600/outlined/hide_image.svg";
 	import motionMD from "@material-symbols/svg-600/outlined/masked_transitions.svg";
 	import lightMD from "@material-symbols/svg-600/outlined/light_mode.svg";
@@ -200,6 +201,13 @@
 							{{ $t("accessibility:colorIndicatorPosition.listItem") }}
 						</IonSelectOption>
 					</IonSelect>
+				</IonItem>
+
+				<IonItem>
+					<IonIcon slot="start" :icon="compactMD" />
+					<IonToggle v-model="accessibilityConfig.compactLists">
+						<IonLabel> {{ $t("accessibility:compactLists.title") }} </IonLabel>
+					</IonToggle>
 				</IonItem>
 
 				<IonItem>

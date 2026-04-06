@@ -42,6 +42,9 @@
 		"title": "Reduced motion",
 		"desc": "Disable in-app animations"
 	},
+	"compactLists": {
+		"title": "Compact lists"
+	},
 	"disableCovers": {
 		"title": "Disable covers"
 	},

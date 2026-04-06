@@ -42,6 +42,9 @@
 		"title": "Calm seas",
 		"desc": "Stop the swayin' animations"
 	},
+	"compactLists": {
+		"title": "Stowed-away lists"
+	},
 	"disableCovers": {
 		"title": "Hide the covers"
 	},
