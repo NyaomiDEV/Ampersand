@@ -101,6 +101,19 @@ export async function systems(table: ShittyTable<System>, version: number){
 		return true;
 	}
 
+	async function threeToFour() {
+		for (const systemIndex of table.index) {
+			if (typeof systemIndex.viewInLists === "undefined") {
+				if (!await table.update({
+					uuid: systemIndex.uuid,
+					viewInLists: true
+				})) return false;
+			}
+		}
+
+		return true;
+	}
+
 	switch(version){
 		// @ts-expect-error fallthrough
 		case 0:
@@ -108,11 +121,14 @@ export async function systems(table: ShittyTable<System>, version: number){
 		// @ts-expect-error fallthrough
 		case 1:
 			if(!await oneToTwo()) return 1;
+		// @ts-expect-error fallthrough
 		case 2:
 			if(!await twoToThree()) return 2;
+		case 3:
+			if(!await threeToFour()) return 3;
 	}
 
-	return 3;
+	return 4;
 }
 
 export async function assets(table: ShittyTable<Asset>, version: number) {

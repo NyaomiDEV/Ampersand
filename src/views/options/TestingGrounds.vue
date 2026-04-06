@@ -108,7 +108,8 @@
 			await newSystem({
 				name: `System ${i}`,
 				isPinned: false,
-				isArchived: false
+				isArchived: false,
+				viewInLists: true
 			});
 			barProgress.value = i / 100;
 		}

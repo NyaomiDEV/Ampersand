@@ -22,7 +22,8 @@ async function system(pkExport: any){
 		description: pkExport.description,
 		uuid: window.crypto.randomUUID(),
 		isPinned: false,
-		isArchived: false
+		isArchived: false,
+		viewInLists: true
 	};
 	if (pkExport.avatar_url && securityConfig.allowRemoteContent) {
 		try {

@@ -8,7 +8,6 @@ const defaultAppConfig: AppConfig = {
 	locale: {},
 	defaultSystem: nilUid,
 	showSystemDescriptionInDashboard: false,
-	showDefaultSystemInMemberList: false,
 	showMembersApartFromCustomFronts: "after",
 	hideFrontingTimer: false,
 	view: "dashboard",

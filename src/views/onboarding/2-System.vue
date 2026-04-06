@@ -18,7 +18,7 @@
 
 	const router = useIonRouter();
 
-	const emptySystem: PartialBy<System, "uuid"> = { name: "", isArchived: false, isPinned: false };
+	const emptySystem: PartialBy<System, "uuid"> = { name: "", isArchived: false, isPinned: false, viewInLists: true };
 	const system = ref<PartialBy<System, "uuid">>({ ...emptySystem });
 
 	async function modifyPicture(){

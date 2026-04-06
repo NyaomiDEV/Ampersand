@@ -12,7 +12,6 @@
 	import timerMD from "@material-symbols/svg-600/outlined/timer_off.svg";
 	import dashboardMD from "@material-symbols/svg-600/outlined/space_dashboard.svg";
 	import membersBeforeMD from "@material-symbols/svg-600/outlined/person_text.svg";
-	import defaultSystemMD from "@material-symbols/svg-600/outlined/bookmark_star.svg";
 	import peopleMD from "@material-symbols/svg-600/outlined/group.svg";
 	import journalMD from "@material-symbols/svg-600/outlined/book.svg";
 	import homeMD from "@material-symbols/svg-600/outlined/home.svg";
@@ -22,7 +21,8 @@
 		uuid: appConfig.defaultSystem,
 		name: "",
 		isArchived: false,
-		isPinned: false
+		isPinned: false,
+		viewInLists: true
 	});
 	const systemSelectModal = useTemplateRef("systemSelectModal");
 
@@ -117,15 +117,6 @@
 							{{ $t("journal:header") }}
 						</IonSelectOption>
 					</IonSelect>
-				</IonItem>
-
-				<IonItem button :detail="false">
-					<IonIcon slot="start" :icon="defaultSystemMD" />
-					<IonToggle v-model="appConfig.showDefaultSystemInMemberList">
-						<IonLabel>
-							{{ $t("appSettings:showDefaultSystemInMemberList") }}
-						</IonLabel>
-					</IonToggle>
 				</IonItem>
 
 				<IonItem>

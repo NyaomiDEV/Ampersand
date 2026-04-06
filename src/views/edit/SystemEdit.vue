@@ -38,7 +38,8 @@
 	const emptySystem: PartialBy<System, "uuid"> = {
 		name: "",
 		isPinned: false,
-		isArchived: false
+		isArchived: false,
+		viewInLists: true
 	};
 	const system = ref({ ...emptySystem });
 
@@ -396,6 +397,13 @@
 							<h3>{{ $t("systems:edit.imageClip") }}</h3>
 							<p>{{ system.imageClip ? $t(`other:shapes.${system.imageClip}`) : $t("other:shapes.noShape") }}</p>
 						</IonLabel>
+					</IonItem>
+					<IonItem button :detail="false">
+						<IonToggle v-model="system.viewInLists">
+							<IonLabel>
+								{{ $t("systems:edit.viewInLists") }}
+							</IonLabel>
+						</IonToggle>
 					</IonItem>
 					<IonItem button :detail="false">
 						<IonToggle v-model="system.isPinned">

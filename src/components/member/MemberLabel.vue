@@ -9,7 +9,6 @@
 	import { getTag, getTagsIndex } from "../../lib/db/tables/tags";
 	import SystemChip from "../system/SystemChip.vue";
 	import { getSystem } from "../../lib/db/tables/system";
-	import { appConfig } from "../../lib/config";
 	import { sortName } from "../../lib/util/misc";
 
 	const props = withDefaults(defineProps<{
@@ -22,7 +21,7 @@
 		showRole: true
 	});
 
-	const system = shallowRef<System>({ name: "", uuid: props.member.system, isPinned: false, isArchived: false });
+	const system = shallowRef<System>({ name: "", uuid: props.member.system, isPinned: false, isArchived: false, viewInLists: true });
 	const tags = shallowRef<Tag[]>();
 
 	function shouldShowChips(){
@@ -31,8 +30,7 @@
 				const tagIndex = getTagsIndex().find(y => y.uuid === x);
 				return !tagIndex?.isArchived && tagIndex?.viewInLists;
 			}).length > 0 || 
-			system.value.uuid !== appConfig.defaultSystem ||
-			appConfig.showDefaultSystemInMemberList
+			system.value.viewInLists
 		);
 	}
 
@@ -97,7 +95,7 @@
 			@pointerdown="(e) => e.stopPropagation()"
 			@touchstart="(e) => e.stopPropagation()"
 		>
-			<SystemChip v-if="system.uuid !== appConfig.defaultSystem || appConfig.showDefaultSystemInMemberList" :system />
+			<SystemChip v-if="system.viewInLists" :system />
 			<div v-if="tags?.length" class="tag-chips">
 				<TagChip v-for="tag in tags" :key="tag.uuid" :tag="tag" />
 			</div>

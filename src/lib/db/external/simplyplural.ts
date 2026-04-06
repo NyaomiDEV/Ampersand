@@ -62,7 +62,8 @@ async function system(spExport: SimplyPluralExport){
 		description: spSystem.desc,
 		uuid: window.crypto.randomUUID(),
 		isPinned: false,
-		isArchived: false
+		isArchived: false,
+		viewInLists: true
 	};
 
 	if (spSystem.avatarUrl?.length && securityConfig.allowRemoteContent) {

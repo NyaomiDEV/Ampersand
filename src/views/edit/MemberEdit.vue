@@ -74,7 +74,7 @@
 	};
 	const member = ref({ ...emptyMember });
 
-	const system = ref<System>({ uuid: member.value.system, name: "", isPinned: false, isArchived: false });
+	const system = ref<System>({ uuid: member.value.system, name: "", isPinned: false, isArchived: false, viewInLists: true });
 	const tags = shallowRef<Tag[]>([]);
 	const tagSelectionModal = useTemplateRef("tagSelectionModal");
 	const systemSelectModal = useTemplateRef("systemSelectModal");

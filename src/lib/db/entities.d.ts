@@ -189,7 +189,8 @@ export interface System extends UUIDable {
 	parent?: UUID,
 	color?: string,
 	isPinned: boolean,
-	isArchived: boolean
+	isArchived: boolean,
+	viewInLists: boolean
 }
 
 export interface Tag extends UUIDable {

@@ -16,7 +16,7 @@
 		"name": "Tag name",
 		"description": "Tag descwiption",
 		"color": "Tag cowow",
-		"viewIn lists": "View in wists",
+		"viewInLists": "View in wists",
 		"type": {
 			"header": "Tag type",
 			"member": "Membew",
