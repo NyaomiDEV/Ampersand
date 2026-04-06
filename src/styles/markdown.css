@@ -23,36 +23,80 @@
 
 	/* Tables */
 	table {
+		--border: 1px solid var(--ion-text-color-step-400);
 		table-layout: fixed;
 		margin-bottom: 8px;
-	}
 
-	table, th, td {
-		border: 1px solid var(--ion-text-color-step-400);
-		border-collapse: collapse;
-	}
+		th, td {
+			border: var(--border);
+			border-collapse: collapse;
+			padding: 8px;
+		}
 
-	td, th {
-		padding: 8px;
-	}
-
-	table tr:nth-child(odd) {
-		background-color: rgb(var(--md3-surface-container));
+		tr:nth-child(odd) td {
+			background-color: rgb(var(--md3-surface-container));
 
 			&:is(ion-item *) {
 				background-color: rgb(var(--md3-surface-container-high));
+			}
 		}
 	}
 
-	.custom-table {
-		th {
-			background-color: var(--markdown-th-bg);
-			color: var(--markdown-th-fg);
-		}
+	div.custom-table {
+		display: inline;
 
-		td {
-			background-color: var(--markdown-td-bg);
-			color: var(--markdown-td-fg);
+		table {
+				border-collapse: var(--markdown-border-collapse, collapse);
+				border-spacing: var(--markdown-border-spacing, 2px);
+				border-top: var(--markdown-table-bt-top, var(--border));
+				border-right: var(--markdown-table-bt-right, var(--border));
+				border-bottom: var(--markdown-table-bt-bottom, var(--border));
+				border-left: var(--markdown-table-bt-left, var(--border));
+
+			th {
+				background-color: var(--markdown-th-bg, unset);
+				color: var(--markdown-th-fg, unset);
+				border-top: var(--markdown-th-bt-top, var(--border));
+				border-right: var(--markdown-th-bt-right, var(--border));
+				border-bottom: var(--markdown-th-bt-bottom, var(--border));
+				border-left: var(--markdown-th-bt-left, var(--border));
+			}
+
+			td {
+				background-color: var(--markdown-td-bg, unset);
+				color: var(--markdown-td-fg, unset);
+				border-top: var(--markdown-td-bt-top, var(--border));
+				border-right: var(--markdown-td-bt-right, var(--border));
+				border-bottom: var(--markdown-td-bt-bottom, var(--border));
+				border-left: var(--markdown-td-bt-left, var(--border));
+
+				&:first-child {
+					background-color: var(--markdown-first-col-bg, var(--markdown-td-bg, unset));
+					color: var(--markdown-first-col-fg, var(--markdown-td-fg, unset));
+					border-top: var(--markdown-first-col-bt-top, var(--markdown-td-bt-top, var(--border)));
+					border-right: var(--markdown-first-col-bt-right, var(--markdown-td-bt-right, var(--border)));
+					border-bottom: var(--markdown-first-col-bt-bottom, var(--markdown-td-bt-bottom, var(--border)));
+					border-left: var(--markdown-first-col-bt-left, var(--markdown-td-bt-left, var(--border)));
+				}
+			}
+
+			tr:nth-child(odd) td {
+				background-color: var(--markdown-odd-td-bg, var(--markdown-td-bg, unset));
+				color: var(--markdown-odd-td-fg, var(--markdown-td-fg, unset));
+				border-top: var(--markdown-odd-td-bt-top, var(--markdown-td-bt-top, var(--border)));
+				border-right: var(--markdown-odd-td-bt-right, var(--markdown-td-bt-right, var(--border)));
+				border-bottom: var(--markdown-odd-td-bt-bottom, var(--markdown-td-bt-bottom, var(--border)));
+				border-left: var(--markdown-odd-td-bt-left, var(--markdown-td-bt-left, var(--border)));
+
+				&:first-child {
+					background-color: var(--markdown-first-col-bg, var(--markdown-odd-td-bg, var(--markdown-td-bg, unset)));
+					color: var(--markdown-first-col-fg, var(--markdown-odd-td-fg, var(--markdown-td-fg, unset)));
+					border-top: var(--markdown-first-col-bt-top, var(--markdown-odd-td-bt-top, var(--markdown-td-bt-top, var(--border))));
+					border-right: var(--markdown-first-col-bt-right, var(--markdown-odd-td-bt-right, var(--markdown-td-bt-right, var(--border))));
+					border-bottom: var(--markdown-first-col-bt-bottom, var(--markdown-odd-td-bt-bottom, var(--markdown-td-bt-bottom, var(--border))));
+					border-left: var(--markdown-first-col-bt-left, var(--markdown-odd-td-bt-left, var(--markdown-td-bt-left, var(--border))));
+				}
+			}
 		}
 	}
 

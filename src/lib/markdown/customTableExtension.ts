@@ -8,11 +8,11 @@ function parseStyle(style: string) {
 		.map(x => {
 			const i = x.indexOf(" ");
 			return [
-				x.slice(0, i),
+				x.slice(0, i).trim(),
 				Object.fromEntries(
-					x.slice(i+1).split(",").map(y => {
+					x.slice(i+1).trim().split(";").map(y => {
 						const j = y.indexOf("=");
-						return [y.slice(0, j), y.slice(j+1).split(":")];
+						return [y.slice(0, j).trim(), y.slice(j+1).trim().split(":").map(z => z.trim())];
 					})
 				)
 			];
@@ -46,17 +46,181 @@ const customTableExtension: MarkedExtension<(VNode | string)[], VNode | string> 
 
 				for(const part in map){
 					switch(part){
-						case "th":
+						case "table":
+							if(map[part].collapse[0] === "false") 
+								cssStyle["--markdown-border-collapse"] = "separate";
+
+							if(map[part].spacing?.length)
+								cssStyle["--markdown-border-spacing"] = map[part].spacing[0];
+
+							if(map[part].bt) {
+								switch(map[part].bt.length) {
+									case 1:
+										cssStyle["--markdown-table-bt-left"] = map[part].bt[0];
+										cssStyle["--markdown-table-bt-top"] = map[part].bt[0];
+										cssStyle["--markdown-table-bt-right"] = map[part].bt[0];
+										cssStyle["--markdown-table-bt-bottom"] = map[part].bt[0];
+										break;
+									case 2:
+										cssStyle["--markdown-table-bt-left"] = map[part].bt[1];
+										cssStyle["--markdown-table-bt-top"] = map[part].bt[0];
+										cssStyle["--markdown-table-bt-right"] = map[part].bt[1];
+										cssStyle["--markdown-table-bt-bottom"] = map[part].bt[0];
+										break;
+									case 3:
+										cssStyle["--markdown-table-bt-left"] = map[part].bt[1];
+										cssStyle["--markdown-table-bt-top"] = map[part].bt[0];
+										cssStyle["--markdown-table-bt-right"] = map[part].bt[1];
+										cssStyle["--markdown-table-bt-bottom"] = map[part].bt[2];
+										break;
+									case 4:
+										cssStyle["--markdown-table-bt-top"] = map[part].bt[0];
+										cssStyle["--markdown-table-bt-right"] = map[part].bt[1];
+										cssStyle["--markdown-table-bt-bottom"] = map[part].bt[2];
+										cssStyle["--markdown-table-bt-left"] = map[part].bt[3];
+										break;
+								}
+							}
+							break;
+
+						case "header":
 							if(map[part].bg)
 								cssStyle["--markdown-th-bg"] = map[part].bg[0];
 							if(map[part].fg)
 								cssStyle["--markdown-th-fg"] = map[part].fg[0];
+							if(map[part].bt) {
+								switch(map[part].bt.length) {
+									case 1:
+										cssStyle["--markdown-th-bt-left"] = map[part].bt[0];
+										cssStyle["--markdown-th-bt-top"] = map[part].bt[0];
+										cssStyle["--markdown-th-bt-right"] = map[part].bt[0];
+										cssStyle["--markdown-th-bt-bottom"] = map[part].bt[0];
+										break;
+									case 2:
+										cssStyle["--markdown-th-bt-left"] = map[part].bt[1];
+										cssStyle["--markdown-th-bt-top"] = map[part].bt[0];
+										cssStyle["--markdown-th-bt-right"] = map[part].bt[1];
+										cssStyle["--markdown-th-bt-bottom"] = map[part].bt[0];
+										break;
+									case 3:
+										cssStyle["--markdown-th-bt-left"] = map[part].bt[1];
+										cssStyle["--markdown-th-bt-top"] = map[part].bt[0];
+										cssStyle["--markdown-th-bt-right"] = map[part].bt[1];
+										cssStyle["--markdown-th-bt-bottom"] = map[part].bt[2];
+										break;
+									case 4:
+										cssStyle["--markdown-th-bt-top"] = map[part].bt[0];
+										cssStyle["--markdown-th-bt-right"] = map[part].bt[1];
+										cssStyle["--markdown-th-bt-bottom"] = map[part].bt[2];
+										cssStyle["--markdown-th-bt-left"] = map[part].bt[3];
+										break;
+								}
+							}
 							break;
-						case "td":
+
+						case "cell":
 							if(map[part].bg)
 								cssStyle["--markdown-td-bg"] = map[part].bg[0];
 							if(map[part].fg)
 								cssStyle["--markdown-td-fg"] = map[part].fg[0];
+							if(map[part].bt) {
+								switch(map[part].bt.length) {
+									case 1:
+										cssStyle["--markdown-td-bt-left"] = map[part].bt[0];
+										cssStyle["--markdown-td-bt-top"] = map[part].bt[0];
+										cssStyle["--markdown-td-bt-right"] = map[part].bt[0];
+										cssStyle["--markdown-td-bt-bottom"] = map[part].bt[0];
+										break;
+									case 2:
+										cssStyle["--markdown-td-bt-left"] = map[part].bt[1];
+										cssStyle["--markdown-td-bt-top"] = map[part].bt[0];
+										cssStyle["--markdown-td-bt-right"] = map[part].bt[1];
+										cssStyle["--markdown-td-bt-bottom"] = map[part].bt[0];
+										break;
+									case 3:
+										cssStyle["--markdown-td-bt-left"] = map[part].bt[1];
+										cssStyle["--markdown-td-bt-top"] = map[part].bt[0];
+										cssStyle["--markdown-td-bt-right"] = map[part].bt[1];
+										cssStyle["--markdown-td-bt-bottom"] = map[part].bt[2];
+										break;
+									case 4:
+										cssStyle["--markdown-td-bt-top"] = map[part].bt[0];
+										cssStyle["--markdown-td-bt-right"] = map[part].bt[1];
+										cssStyle["--markdown-td-bt-bottom"] = map[part].bt[2];
+										cssStyle["--markdown-td-bt-left"] = map[part].bt[3];
+										break;
+								}
+							}
+							break;
+
+						case "first-col":
+							if(map[part].bg)
+								cssStyle["--markdown-first-col-bg"] = map[part].bg[0];
+							if(map[part].fg)
+								cssStyle["--markdown-first-col-fg"] = map[part].fg[0];
+							if(map[part].bt) {
+								switch(map[part].bt.length) {
+									case 1:
+										cssStyle["--markdown-first-col-bt-left"] = map[part].bt[0];
+										cssStyle["--markdown-first-col-bt-top"] = map[part].bt[0];
+										cssStyle["--markdown-first-col-bt-right"] = map[part].bt[0];
+										cssStyle["--markdown-first-col-bt-bottom"] = map[part].bt[0];
+										break;
+									case 2:
+										cssStyle["--markdown-first-col-bt-left"] = map[part].bt[1];
+										cssStyle["--markdown-first-col-bt-top"] = map[part].bt[0];
+										cssStyle["--markdown-first-col-bt-right"] = map[part].bt[1];
+										cssStyle["--markdown-first-col-bt-bottom"] = map[part].bt[0];
+										break;
+									case 3:
+										cssStyle["--markdown-first-col-bt-left"] = map[part].bt[1];
+										cssStyle["--markdown-first-col-bt-top"] = map[part].bt[0];
+										cssStyle["--markdown-first-col-bt-right"] = map[part].bt[1];
+										cssStyle["--markdown-first-col-bt-bottom"] = map[part].bt[2];
+										break;
+									case 4:
+										cssStyle["--markdown-first-col-bt-top"] = map[part].bt[0];
+										cssStyle["--markdown-first-col-bt-right"] = map[part].bt[1];
+										cssStyle["--markdown-first-col-bt-bottom"] = map[part].bt[2];
+										cssStyle["--markdown-first-col-bt-left"] = map[part].bt[3];
+										break;
+								}
+							} 
+							break;
+
+						case "odd-cell":
+							if(map[part].bg)
+								cssStyle["--markdown-odd-td-bg"] = map[part].bg[0];
+							if(map[part].fg)
+								cssStyle["--markdown-odd-td-fg"] = map[part].fg[0];
+							if(map[part].bt) {
+								switch(map[part].bt.length) {
+									case 1:
+										cssStyle["--markdown-odd-td-bt-left"] = map[part].bt[0];
+										cssStyle["--markdown-odd-td-bt-top"] = map[part].bt[0];
+										cssStyle["--markdown-odd-td-bt-right"] = map[part].bt[0];
+										cssStyle["--markdown-odd-td-bt-bottom"] = map[part].bt[0];
+										break;
+									case 2:
+										cssStyle["--markdown-odd-td-bt-left"] = map[part].bt[1];
+										cssStyle["--markdown-odd-td-bt-top"] = map[part].bt[0];
+										cssStyle["--markdown-odd-td-bt-right"] = map[part].bt[1];
+										cssStyle["--markdown-odd-td-bt-bottom"] = map[part].bt[0];
+										break;
+									case 3:
+										cssStyle["--markdown-odd-td-bt-left"] = map[part].bt[1];
+										cssStyle["--markdown-odd-td-bt-top"] = map[part].bt[0];
+										cssStyle["--markdown-odd-td-bt-right"] = map[part].bt[1];
+										cssStyle["--markdown-odd-td-bt-bottom"] = map[part].bt[2];
+										break;
+									case 4:
+										cssStyle["--markdown-odd-td-bt-top"] = map[part].bt[0];
+										cssStyle["--markdown-odd-td-bt-right"] = map[part].bt[1];
+										cssStyle["--markdown-odd-td-bt-bottom"] = map[part].bt[2];
+										cssStyle["--markdown-odd-td-bt-left"] = map[part].bt[3];
+										break;
+								}
+							}
 							break;
 					}
 				}
