@@ -2,150 +2,8 @@ import { h, type VNode } from "vue";
 import { MarkedExtension } from "marked";
 import mermaid from "mermaid";
 import { isDarkMode } from "../mode";
-
-const themeCSS = `
-.error-icon {
-	fill: rgb(var(--md3-on-error));
-}
-
-.error-text {
-	fill: rgb(var(--md3-on-error));
-	stroke: rgb(var(--md3-on-error));
-}
-
-.marker {
-	fill: rgb(var(--md3-on-surface));
-	stroke: rgb(var(--md3-on-surface));
-
-	.cross, &.aggregation, &.extension, &.composition {
-		stroke: rgb(var(--md3-on-surface)) !important;
-	}
-
-	&.composition {
-		fill: rgb(var(--md3-on-surface)) !important;
-	}
-}
-
-span {
-	color: rgb(var(--md3-on-surface));
-}
-
-.chart-title text, .left-axis .title text {
-	fill: rgb(var(--md3-on-surface));
-}
-
-.label {
-	color: rgb(var(--md3-on-surface));
-
-	text {
-		fill: rgb(var(--md3-on-surface));
-		color: rgb(var(--md3-on-surface));
-	}
-}
-
-.cluster-label {
-	text {
-		fill: rgb(var(--md3-on-surface));
-	}
-
-	span {
-		color: rgb(var(--md3-on-surface));
-	}
-}
-
-.node :is(rect, circle, ellipse, polygon, path) {
-	fill: rgb(var(--md3-surface-container-highest));
-	stroke: rgb(var(--md3-on-surface-variant));
-}
-
-.node .label-container path {
-	fill: rgb(var(--md3-surface-container-highest)) !important;
-	stroke: rgb(var(--md3-on-surface-variant)) !important;
-}
-
-.node .katex path {
-  fill: rgb(var(--md3-on-surface));
-  stroke: rgb(var(--md3-on-surface));
-}
-
-.root .anchor path {
-  fill: rgb(var(--md3-on-surface)) !important;
-  stroke: rgb(var(--md3-on-surface));
-}
-
-.arrowheadPath {
-  fill: rgb(var(--md3-on-surface));
-}
-
-.edgePath .path, .edgePaths path {
-  stroke: rgb(var(--md3-on-surface));
-}
-
-.flowchart-link {
-  stroke: rgb(var(--md3-on-surface));
-}
-
-.edgeLabel {
-  background-color: rgb(var(--md3-surface-container));
-
-  p, rect {
-	background-color: rgb(var(--md3-surface-container));
-  }
-}
-
-.labelBkg {
-  background-color: rgba(var(--md3-surface-container), 0.5);
-}
-
-.cluster {
-	rect {
-		fill: rgb(var(--md3-surface-container)) !important;
-		stroke: rgb(var(--md3-on-surface)) !important;
-	}
-
-	text {
-		fill: rgb(var(--md3-on-surface));
-	}
-
-	span {
-		color: rgb(var(--md3-on-surface));
-	}
-}
-
-.flowchartTitleText {
-	fill: rgb(var(--md3-on-surface));
-}
-
-.icon-shape, .image-shape {
-	background-color: rgb(var(--md3-surface-container));
-
-	p, rect {
-		background-color: rgb(var(--md3-surface-container));
-	}
-
-	rect {
-		fill: rgb(var(--md3-surface-container));
-	}
-}
-
-.background {
-	fill: transparent;
-}
-
-.plot {
-	rect {
-		fill: rgb(var(--md3-surface-container-highest));
-	}
-
-	path {
-		stroke: rgb(var(--md3-primary));
-	}
-}
-
-.axis-line path, .axisl-line path, .ticks path {
-	stroke: rgb(var(--md3-on-surface));
-}
-`;
+import { getMaterialColors } from "../theme";
+import { hexFromArgb } from "@material/material-color-utilities";
 
 const mermaidExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	renderer: {
@@ -166,6 +24,43 @@ const mermaidExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 					// @ts-expect-error this is due to number to string conversion on map(); TODO: substitute with toHex()
 					const hashHex = hash.map((b) => b.toString(16).padStart(2, "0")).join("");
 
+					const theme = new Map<string, string>(getMaterialColors().entries().map(x => [x[0], hexFromArgb(x[1])]));
+
+					const themeVariables: Record<string, unknown> = {
+						darkMode: isDarkMode(),
+						background: theme.get("surface"),
+						lineColor: theme.get("outline"),
+						textColor: theme.get("on_surface"),
+						primaryColor: theme.get("surface_container_high"),
+						primaryTextColor: theme.get("on_surface"),
+						primaryBorderColor: theme.get("outline"),
+						secondaryColor: theme.get("surface_container"),
+						secondaryTextColor: theme.get("on_surface"),
+						secondaryBorderColor: theme.get("outline"),
+						tertiaryColor: theme.get("surface_container_low"),
+						tertiaryTextColor: theme.get("on_surface"),
+						tertiaryBorderColor: theme.get("outline"),
+						noteBkgColor: theme.get("surface_container_highest"),
+						noteTextColor: theme.get("on_surface"),
+						noteBorderColor: theme.get("outline"),
+						errorBkgColor: theme.get("error"),
+						errorTextColor: theme.get("on_error"),
+
+						activationBkgColor: theme.get("surface_container_highest"),
+						activationBorderColor: theme.get("outline"),
+
+						pie1: theme.get("on_primary_container"),
+						pie2: theme.get("on_secondary_container"),
+						pie3: theme.get("on_tertiary_container"),
+						pie4: theme.get("on_error_container"),
+						pie5: theme.get("error"),
+						pieTitleTextColor: theme.get("on_surface"),
+						pieSectionTextColor: theme.get("surface"),
+						pieStrokeColor: theme.get("outline"),
+						pieOuterStrokeColor: theme.get("outline"),
+
+					};
+
 					mermaid.initialize({
 						startOnLoad: false,
 						theme: "base",
@@ -174,7 +69,7 @@ const mermaidExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 						securityLevel: "strict",
 						deterministicIds: true,
 						deterministicIDSeed: hashHex,
-						themeCSS
+						themeVariables
 					});
 
 					const result = await mermaid.render(`mermaid-render-${hashHex}`, token.text);
