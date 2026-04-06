@@ -29,6 +29,10 @@ export async function* getSystems(maxIter = 20){
 	};
 }
 
+export function getSystemsIndex(){
+	return db.systems.index;
+}
+
 export async function getSystem(uuid: UUID) {
 	if (uuid === nilUid) return undefined;
 	return await db.systems.get(uuid);

@@ -8,7 +8,7 @@
 	import { isReactive, onBeforeMount, shallowRef, watch, WatchStopHandle } from "vue";
 	import { getTag, getTagsIndex } from "../../lib/db/tables/tags";
 	import SystemChip from "../system/SystemChip.vue";
-	import { getSystem } from "../../lib/db/tables/system";
+	import { getSystem, getSystemsIndex } from "../../lib/db/tables/system";
 	import { sortName } from "../../lib/util/misc";
 
 	const props = withDefaults(defineProps<{
@@ -21,7 +21,7 @@
 		showRole: true
 	});
 
-	const system = shallowRef<System>({ name: "", uuid: props.member.system, isPinned: false, isArchived: false, viewInLists: true });
+	const system = shallowRef<System>({ name: "", uuid: props.member.system, isPinned: false, isArchived: false, viewInLists: false });
 	const tags = shallowRef<Tag[]>();
 
 	function shouldShowChips(){
@@ -30,7 +30,7 @@
 				const tagIndex = getTagsIndex().find(y => y.uuid === x);
 				return !tagIndex?.isArchived && tagIndex?.viewInLists;
 			}).length > 0 || 
-			system.value.viewInLists
+			getSystemsIndex().find(x => props.member.system === x.uuid)?.viewInLists
 		);
 	}
 
