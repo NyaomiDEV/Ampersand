@@ -27,13 +27,7 @@
 		const pollMemberUUIDs = props.poll.entries.map(x => x.votes.map(x => x.member)).flat(1);
 
 		members.value = (await Promise.all(
-			pollMemberUUIDs.map(async x => {
-				try {
-					return await getMember(x) || defaultMember();
-				}catch(_e){
-					return defaultMember(); // deleted member
-				}
-			})
+			pollMemberUUIDs.map(async x => await getMember(x).catch(() => defaultMember(x)))
 		));
 	}
 

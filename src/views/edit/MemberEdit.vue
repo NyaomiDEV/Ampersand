@@ -188,9 +188,12 @@
 		customFields.value = (await Array.fromAsync(getCustomFields()));
 
 		if(route.query.uuid){
-			const _member = await getMember(route.query.uuid as string);
-			if(_member) member.value = _member;
-			else member.value = defaultMember();
+			try{
+				member.value = await getMember(route.query.uuid as string);
+			} catch (e){
+				console.error(e);
+				member.value = defaultMember();
+			}
 		} else member.value = { ...emptyMember };
 
 		if(!member.value.customFields)

@@ -62,7 +62,9 @@ export async function newMember(member: Omit<Member, keyof UUIDable>): Promise<T
 }
 
 export async function getMember(uuid: UUID){
-	if(uuid === nilUid) return undefined;
+	if(uuid === nilUid)
+		return defaultMember();
+
 	return await db.members.get(uuid);
 }
 
@@ -105,7 +107,7 @@ export async function updateMember(newContent: UUIDable & Partial<Member>): Prom
 	}
 }
 
-export const defaultMember = (): Member => ({
+export const defaultMember = (uuid?: UUID): Member => ({
 	name: t("members:deletedMember"),
 	system: nilUid,
 	isArchived: false,
@@ -113,7 +115,7 @@ export const defaultMember = (): Member => ({
 	isPinned: false,
 	dateCreated: new Date(0),
 	tags: [],
-	uuid: nilUid
+	uuid: uuid || nilUid
 });
 
 export const defaultCustomFront = (): Member => ({

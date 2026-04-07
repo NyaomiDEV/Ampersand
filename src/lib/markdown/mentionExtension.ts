@@ -78,19 +78,36 @@ const mentionExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 			case "mention":
 				switch (token.mentionedType) {
 					case "member":
-						token.member = await getMember(token.uuid);
+						try {
+							token.member = await getMember(token.uuid);
+						} catch(e) {
+							console.error(e);
+						}
 						break;
 
 					case "journal":
-						token.post = await getJournalPost(token.uuid);
+						try {
+							token.post = await getJournalPost(token.uuid);
+						} catch(e) {
+							console.error(e);
+						}
 						break;
 
 					case "system":
-						token.system = await getSystem(token.uuid);
+						try {
+							token.system = await getSystem(token.uuid);
+						} catch (e) {
+							console.error(e);
+						}
 						break;
-					
+
 					case "tag":
-						token.tag = await getTag(token.uuid);
+						try {
+							token.tag = await getTag(token.uuid);
+						} catch (e) {
+							console.error(e);
+						}
+
 						break;
 				}
 				break;

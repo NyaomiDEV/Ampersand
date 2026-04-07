@@ -37,7 +37,7 @@ export function getBoardMessage(uuid: UUID){
 export async function toBoardMessageComplete(boardMessage: BoardMessage): Promise<BoardMessageComplete> {
 	return {
 		...boardMessage,
-		member: boardMessage.member ? (await getMember(boardMessage.member)) || defaultMember() : undefined
+		member: boardMessage.member ? (await getMember(boardMessage.member).catch(() => defaultMember(boardMessage.member))) || defaultMember() : undefined
 	};
 }
 

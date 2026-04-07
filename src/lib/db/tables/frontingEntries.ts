@@ -40,8 +40,8 @@ export function getFrontingEntry(uuid: UUID){
 export async function toFrontingEntryComplete(frontingEntry: FrontingEntry): Promise<FrontingEntryComplete> {
 	return {
 		...frontingEntry,
-		member: (await getMember(frontingEntry.member)) || defaultMember(),
-		influencing: frontingEntry.influencing ? (await getMember(frontingEntry.influencing)) || defaultMember() : undefined
+		member: (await getMember(frontingEntry.member).catch(() => defaultMember(frontingEntry.member))),
+		influencing: frontingEntry.influencing ? (await getMember(frontingEntry.influencing).catch(() => defaultMember(frontingEntry.influencing))) || defaultMember() : undefined
 	};
 }
 
@@ -186,7 +186,7 @@ export async function getMainFronter(){
 		.find(x => !x.endTime && x.isMainFronter);
 	if(!mainFronterIndexEntry) return;
 
-	return await getMember(mainFronterIndexEntry.member!);
+	return await getMember(mainFronterIndexEntry.member!).catch((e) => { console.error(e); return undefined; });
 }
 
 export async function getFronting() {
