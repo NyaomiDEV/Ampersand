@@ -2,8 +2,10 @@
 
 set -euo pipefail
 
+IS_CI_BUILD="$(if [ "$GITHUB_REF_NAME" = "main" ]; then echo -n "true"; fi)"
+
 APP_NAME="ampersand"
-APP_PRODUCT="Ampersand"
+APP_PRODUCT="Ampersand$(if [ -n "$IS_CI_BUILD" ]; then echo -n " (CI)"; fi)"
 PROJECT_DIR="src-tauri/gen/apple"
 PROJECT_PATH="$PROJECT_DIR/${APP_NAME}.xcodeproj"
 SCHEME="${APP_NAME}_iOS"
@@ -11,6 +13,7 @@ ARCHIVE_PATH="$PROJECT_DIR/build/App.xcarchive"
 DERIVED_DATA_PATH="$PROJECT_DIR/DerivedData"
 APP_BUNDLE_PATH="$ARCHIVE_PATH/Products/Applications/${APP_PRODUCT}.app"
 IPA_PATH="${IPA_PATH:-Ampersand.ipa}"
+GITHUB_REF_NAME="${GITHUB_REF_NAME:-""}"
 
 IDENTIFIER="$(node -p "require('./src-tauri/tauri.conf.json').identifier")"
 TMP_DIR="$(node -p "require('os').tmpdir()")"
@@ -84,7 +87,9 @@ xcodebuild archive \
   CODE_SIGNING_ALLOWED=NO \
   CODE_SIGN_IDENTITY="" \
   CODE_SIGN_ENTITLEMENTS="" \
-  CODE_SIGNING_INJECT_BASE_ENTITLEMENTS=NO
+  CODE_SIGNING_INJECT_BASE_ENTITLEMENTS=NO \
+  PRODUCT_BUNDLE_IDENTIFIER="moe.ampersand.app$(if [ -n "$IS_CI_BUILD" ]; then echo -n ".ci"; fi)" \
+  PRODUCT_NAME="$APP_PRODUCT"
 
 if [[ ! -d "$APP_BUNDLE_PATH" ]]; then
   echo "Error: archived app bundle not found at $APP_BUNDLE_PATH"
