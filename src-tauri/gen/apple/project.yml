@@ -70,7 +70,7 @@ targets:
         EXCLUDED_ARCHS[sdk=iphoneos*]: x86_64
       configs:
         debug:
-          PRODUCT_NAME: Ampersand (Debug)
+          PRODUCT_NAME: Ampersand Debug
           PRODUCT_BUNDLE_IDENTIFIER: moe.ampersand.app.debug
       groups: [app]
     dependencies:
