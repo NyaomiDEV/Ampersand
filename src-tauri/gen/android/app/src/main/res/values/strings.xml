@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Ampersand</string>
-    <string name="app_name_ci">Ampersand (CI)</string>
-    <string name="app_name_debug">Ampersand (Debug)</string>
+    <string name="app_name_ci">Ampersand CI</string>
+    <string name="app_name_debug">Ampersand Debug</string>
 </resources>
