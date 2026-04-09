@@ -23,7 +23,8 @@
 		"isPinned": "kulupu sewi",
 		"archived": "len",
 		"color": "kule",
-		"imageClip": "sijelo sitelen"
+		"imageClip": "sijelo sitelen",
+		"viewInLists": "kulupu li lon lipu pi ijo kulupu"
 	},
 	"select": "kulupu pi wile sina"
 }

@@ -3,21 +3,24 @@
 	"select": "Selecciona algunas etiquetas",
 	"selector": {
 		"member": "Etiquetas del miembro",
-		"journal": "Etiquetas del diario"
+		"journal": "Etiquetas del diario",
+		"asset": "Etiquetas de activos"
 	},
 	"edit": {
 		"header": {
 			"member": "Editar etiqueta del miembro",
-			"journal": "Editar etiquetas del diario"
+			"journal": "Editar etiquetas del diario",
+			"asset": "Editar etiqueta del activo"
 		},
 		"description": "Descripción de la etiqueta",
 		"color": "Color de la etiqueta",
-		"viewInLists": "Mirar en las listas",
+		"viewInLists": "Ver en las listas",
 		"type": {
 			"header": "Tipo de etiqueta",
 			"journal": "Diario",
 			"desc": "Nota: ¡solo puedes definir el tipo de etiqueta en su creación!",
-			"member": "Miembro"
+			"member": "Miembro",
+			"asset": "Activo"
 		},
 		"members": {
 			"title": "Escoge a los miembros usando ésta etiqueta",
@@ -37,7 +40,14 @@
 		},
 		"name": "Nombre de la etiqueta",
 		"tagID": "ID de la etiqueta: {{tagID}}",
-		"tagIDCopiedToClipboard": "¡ID de la etiqueta copiada en el portapapeles!"
+		"tagIDCopiedToClipboard": "¡ID de la etiqueta copiada en el portapapeles!",
+		"showAssets": {
+			"title": "Mostrar recursos con esta etiqueta",
+			"desc_one": "{{count}} recurso tienen esta etiqueta",
+			"desc_many": "{{count}} recursos tienen esta etiqueta",
+			"desc_other": "{{count}} recursos tienen esta etiqueta"
+		},
+		"isArchived": "Etiqueta de archivo"
 	},
 	"searchPlaceholder": "Buscando las etiquetas..."
 }

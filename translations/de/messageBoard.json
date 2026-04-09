@@ -9,14 +9,17 @@
 		},
 		"voteCast": {
 			"reason": "Gebe einen Grund an",
-			"reasonHint": "Grund"
+			"reasonHint": "Begründung",
+			"voter": "Abstimmende/r auswählen",
+			"retractConfirmation": "Bist du dir sicher, dass du deine Stimme zurücknehmen möchtest?"
 		},
 		"resultsHeader": "Abstimmungsergebnisse",
 		"resultsButton": "Zeige Umfrageergebnisse",
 		"choice": {
 			"desc_one": "{{count}} Abstimmende/r",
 			"desc_other": "{{count}} Abstimmende"
-		}
+		},
+		"collapsePoll": "Umfrage ausblenden"
 	},
 	"searchPlaceholder": "Suche nach Nachrichten...",
 	"edit": {
@@ -33,7 +36,9 @@
 			"title": "Nachricht auf dem Anschlagbrett löschen",
 			"confirm": "Bist du dir sicher, dass du die Nachricht löschen möchtest?"
 		},
-		"date": "Datum bearbeiten"
+		"date": "Datum bearbeiten",
+		"isArchived": "Nachricht archivieren",
+		"pollEditWarning": "Jede Änderung der Umfragedetails führt zum Zurücksetzen der Stimmen!"
 	},
 	"header": "Anschlagbrett"
 }

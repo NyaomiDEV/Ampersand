@@ -11,14 +11,16 @@
 		"startFromScratch": "Nein, ich starte neu",
 		"pleaseWait": "Bitte warte, während wir deine Daten importieren",
 		"prevInstall": "Ja, von der vorherigen Installation",
-		"error": "Beim Importieren der Sicherheitskopie ist ein Fehler aufgetreten. Bitte wähle eine andere Option."
+		"error": "Beim Importieren der Sicherheitskopie ist ein Fehler aufgetreten. Bitte wähle eine andere Option.",
+		"octocon": "Ja, Octocon"
 	},
 	"memberInfo": {
 		"header": "Erzähle uns mehr über dich!",
 		"description": "Ein paar Informationen über dich..."
 	},
 	"systemInfo": {
-		"description": "Ein paar Informationen über euch alle..."
+		"description": "Ein paar Informationen über euch alle...",
+		"name": "Kollektiver Name"
 	},
 	"endScreen": {
 		"header": "Danke, dass du Ampersand nutzt!",

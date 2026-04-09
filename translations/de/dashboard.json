@@ -2,5 +2,6 @@
 	"header_salute": "Hallo!",
 	"systemDescription": "Systembeschreibung",
 	"header": "Startseite",
-	"header_mainfronter": "Hallo, {{fronterName}}!"
+	"header_mainfronter": "Hallo, {{fronterName}}!",
+	"fronterInfluencing": "Beeinflusst {{influencedMember}}"
 }

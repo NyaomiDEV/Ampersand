@@ -1,4 +1,7 @@
 {
 	"header": "Schlagwortverwaltung",
-	"searchPlaceholder": "Suche nach Schlagwörtern..."
+	"searchPlaceholder": "Suche nach Schlagwörtern...",
+	"selector": {
+		"member": "Mitglieder-Tags"
+	}
 }

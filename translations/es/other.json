@@ -7,7 +7,37 @@
 	"memberMention": "Mencionar un miembro",
 	"timeSizes": {
 		"days": {
-			"short": "D"
+			"short": "D",
+			"long": "días"
+		},
+		"years": {
+			"long": "años",
+			"short": "a."
+		},
+		"months": {
+			"long": "meses",
+			"short": "m."
+		},
+		"weekdays": {
+			"monday": "Lunes",
+			"tuesday": "Martes",
+			"wednesday": "Miercoles",
+			"thursday": "Jueves",
+			"friday": "Viernes",
+			"saturday": "Sábado",
+			"sunday": "Domingo"
+		},
+		"hours": {
+			"long": "horas",
+			"short": "h."
+		},
+		"minutes": {
+			"long": "minutos",
+			"short": "min"
+		},
+		"seconds": {
+			"long": "segundos",
+			"short": "s"
 		}
 	},
 	"addTimestamp": "Añadir marca de tiempo",
@@ -20,6 +50,16 @@
 	},
 	"presence": {
 		"absent": "Ausente",
-		"heavilyDissociating": "Disociación intensa"
+		"heavilyDissociating": "Disociación intensa",
+		"dissociating": "Desvinculación",
+		"zonedOut": "Ausente",
+		"present": "Presente",
+		"fullyGrounded": "Con conexión a tierra"
+	},
+	"back": "Atrás",
+	"time": "Hora",
+	"shapes": {
+		"arch": "Arch",
+		"arrow": "Flecha"
 	}
 }

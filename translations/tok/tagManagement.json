@@ -16,7 +16,7 @@
 		"name": "nimi pi nimi sona",
 		"description": "sona pi nimi sona",
 		"color": "kule pi nimi sona",
-		"viewInLists": "nimi sona li lon lipu pi ijo kulupu",
+		"viewInLists": "kulupu li lon lipu pi ijo kulupu",
 		"type": {
 			"header": "poki pi nimi sona",
 			"member": "ijo kulupu",
@@ -31,7 +31,8 @@
 		},
 		"showJournal": {
 			"title": "sina lukin e lipu pi nimi sona ni",
-			"desc_one": "lipu {{count}} li jo e nimi sona ni"
+			"desc_one": "lipu {{count}} li jo e nimi sona ni",
+			"desc_other": ""
 		},
 		"delete": {
 			"title": "weka pi nimi sona",
@@ -41,7 +42,8 @@
 		"tagIDCopiedToClipboard": "sina kama jo e nimi ilo pi nimi sona!",
 		"showAssets": {
 			"title": "sina lukin e ijo namako pi nimi sona ni",
-			"desc_one": "ijo namako {{count}} li jo e nimi sona ni"
+			"desc_one": "ijo namako {{count}} li jo e nimi sona ni",
+			"desc_other": ""
 		},
 		"isArchived": "nimi sona len"
 	}
