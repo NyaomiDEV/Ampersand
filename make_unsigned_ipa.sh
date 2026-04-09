@@ -5,7 +5,7 @@ set -euo pipefail
 IS_CI_BUILD="$(if [ "$GITHUB_REF_NAME" = "main" ]; then echo -n "true"; fi)"
 
 APP_NAME="ampersand"
-APP_PRODUCT="Ampersand$(if [ -n "$IS_CI_BUILD" ]; then echo -n " (CI)"; fi)"
+APP_PRODUCT="Ampersand$(if [ -n "$IS_CI_BUILD" ]; then echo -n " CI"; fi)"
 PROJECT_DIR="src-tauri/gen/apple"
 PROJECT_PATH="$PROJECT_DIR/${APP_NAME}.xcodeproj"
 SCHEME="${APP_NAME}_iOS"
