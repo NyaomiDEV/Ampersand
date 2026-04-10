@@ -150,6 +150,7 @@
 							button
 							:member
 							show-archived
+							:show-role="!accessibilityConfig.compactLists"
 							:show-pronouns="!accessibilityConfig.compactLists"
 							:smaller-avatar="accessibilityConfig.compactLists"
 							:disabled="(props.membersToInclude && !props.membersToInclude.find(x => x.uuid === member.uuid)) || !!props.membersToExclude?.find(x => x.uuid === member.uuid)"

@@ -239,7 +239,7 @@
 								:show-chips="!accessibilityConfig.compactLists"
 								show-icons
 								show-archived
-								show-role
+								:show-role="!accessibilityConfig.compactLists"
 								:show-pronouns="!accessibilityConfig.compactLists"
 								:smaller-avatar="accessibilityConfig.compactLists"
 								:router-link="`/members/edit?uuid=${member.uuid}`"
