@@ -20,7 +20,7 @@
 
 	const props = defineProps<{
 		customTitle?: string,
-		type: "member" | "journal" | "asset"
+		type: Tag["type"],
 		modelValue?: Tag[]
 	}>();
 
@@ -31,7 +31,7 @@
 	const selectedTags = reactive<Tag[]>([...props.modelValue || []]);
 	const search = ref("");
 	const tags = shallowRef<Tag[]>();
-	const iter = shallowRef(getFilteredTags(search.value));
+	const iter = shallowRef<AsyncGenerator<Tag>>();
 	const iterDone = ref(false);
 
 	watch(selectedTags, () => {
@@ -59,11 +59,13 @@
 	async function resetTags(){
 		tags.value = undefined;
 		iterDone.value = false;
-		iter.value = getFilteredTags(search.value);
+		iter.value = getFilteredTags(props.type, search.value);
 		await pollTags();
 	}
 
 	async function pollTags(cb?: () => void){
+		if(!iter.value) return;
+
 		let i = 0;
 		const _tags: Tag[] = [];
 		while(true) {

@@ -7,7 +7,7 @@ import { filterJournalPost } from "../../search";
 import { TransactionStatus } from "../types";
 import { sortDate } from "../../util/misc";
 
-export async function* getJournalPosts(maxIter = 20){
+export async function* getJournalPosts(maxIter = 10){
 	const uuids = db.journalPosts.index.sort(sortDate).map(x => x.uuid);
 		
 	const f = (offset: number, maxIter: number) => {

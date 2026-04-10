@@ -38,7 +38,7 @@
 	const selectedSystem = shallowRef<System | undefined>(props.modelValue);
 	const search = ref("");
 	const systems = shallowRef<System[]>();
-	const iter = shallowRef(getFilteredSystems(search.value));
+	const iter = shallowRef<AsyncGenerator<System>>();
 	const iterDone = ref(false);
 
 	const disallowedSystems = shallowRef<System[]>([]);
@@ -73,6 +73,8 @@
 	}
 
 	async function pollSystems(cb?: () => void){
+		if(!iter.value) return;
+
 		let i = 0;
 		const _syss: System[] = [];
 		while(true) {

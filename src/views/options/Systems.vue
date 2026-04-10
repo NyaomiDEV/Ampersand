@@ -45,7 +45,7 @@
 	});
 
 	const systems = shallowRef<System[]>();
-	const iter = shallowRef(getFilteredSystems(search.value));
+	const iter = shallowRef<AsyncGenerator<System>>();
 	const iterDone = ref(false);
 
 	watch(search, async () => {
@@ -78,6 +78,8 @@
 	}
 
 	async function pollSystems(cb?: () => void){
+		if(!iter.value) return;
+
 		let i = 0;
 		const _syss: System[] = [];
 		while(true) {

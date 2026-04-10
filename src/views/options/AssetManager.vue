@@ -21,7 +21,7 @@
 	});
 
 	const assets = shallowRef<Asset[]>();
-	const iter = shallowRef(getFilteredAssets(search.value));
+	const iter = shallowRef<AsyncGenerator<Asset>>();
 	const iterDone = ref(false);
 
 	watch(search, async () => {
@@ -41,6 +41,8 @@
 	}
 
 	async function pollAssets(cb?: () => void){
+		if(!iter.value) return;
+
 		let i = 0;
 		const _assets: Asset[] = [];
 		while(true) {

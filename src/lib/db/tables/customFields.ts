@@ -5,7 +5,7 @@ import { filterCustomField } from "../../search";
 import { TransactionStatus } from "../types";
 import { sortCustomFields } from "../../util/misc";
 
-export async function* getCustomFields(maxIter = 20){
+export async function* getCustomFields(maxIter = 10){
 	const uuids = db.customFields.index.sort(sortCustomFields).map(x => x.uuid);
 	
 	const f = (offset: number, maxIter: number) => {

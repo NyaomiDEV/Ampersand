@@ -5,7 +5,7 @@ import { filterAsset } from "../../search";
 import { TransactionStatus } from "../types";
 import { sortAssets } from "../../util/misc";
 
-export async function* getAssets(maxIter = 20){
+export async function* getAssets(maxIter = 10){
 	const uuids = db.assets.index.sort(sortAssets).map(x => x.uuid);
 
 	const f = (offset: number, maxIter: number) => {

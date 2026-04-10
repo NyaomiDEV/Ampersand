@@ -109,7 +109,7 @@
 
 		loading.value = true;
 
-		tags.value = (await Array.fromAsync(getTags())).filter(x => x.type === "asset");
+		tags.value = (await Array.fromAsync(getTags("asset")));
 
 		if(route.query.uuid){
 			const _asset = await getAsset(route.query.uuid as string);

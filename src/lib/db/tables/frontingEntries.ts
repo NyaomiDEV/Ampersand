@@ -10,7 +10,7 @@ import { deleteFile } from "../../serialization";
 import { TransactionStatus } from "../types";
 import { sortFrontingEntries } from "../../util/misc";
 
-export async function* getFrontingEntries(maxIter = 20){
+export async function* getFrontingEntries(maxIter = 10){
 	const uuids = db.frontingEntries.index.sort(sortFrontingEntries).map(x => x.uuid);
 		
 	const f = (offset: number, maxIter: number) => {

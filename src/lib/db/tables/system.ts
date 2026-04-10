@@ -6,7 +6,7 @@ import { filterSystem } from "../../search";
 import { TransactionStatus } from "../types";
 import { sortSystems } from "../../util/misc";
 
-export async function* getSystems(maxIter = 20){
+export async function* getSystems(maxIter = 10){
 	const uuids = db.systems.index.sort(sortSystems).map(x => x.uuid);
 	
 	const f = (offset: number, maxIter: number) => {

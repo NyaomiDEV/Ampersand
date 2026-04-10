@@ -3,7 +3,7 @@ import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUIDable, Reminder, UUID } from "../entities";
 import { TransactionStatus } from "../types";
 
-export async function* getReminders(maxIter = 20){
+export async function* getReminders(maxIter = 10){
 	const uuids = db.reminders.index.map(x => x.uuid);
 	
 	const f = (offset: number, maxIter: number) => {

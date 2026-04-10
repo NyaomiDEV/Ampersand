@@ -39,7 +39,7 @@
 	const selectedMembers = reactive<Member[]>([...props.modelValue || []]);
 	const search = ref("");
 	const members = shallowRef<Member[]>();
-	const iter = shallowRef(getFilteredMembers(search.value));
+	const iter = shallowRef<AsyncGenerator<Member>>();
 	const iterDone = ref(false);
 
 	const listener = (event: Event) => {
@@ -68,6 +68,8 @@
 	}
 
 	async function pollMembers(cb?: () => void){
+		if(!iter.value) return;
+
 		let i = 0;
 		const _mems: Member[] = [];
 		while(true) {

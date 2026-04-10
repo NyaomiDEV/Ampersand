@@ -8,8 +8,8 @@ import { TransactionStatus } from "../types";
 import { sortName } from "../../util/misc";
 import { getAssets, updateAsset } from "./assets";
 
-export async function* getTags(maxIter = 20){
-	const uuids = db.tags.index.sort(sortName).map(x => x.uuid);
+export async function* getTags(type: Tag["type"], maxIter = 10){
+	const uuids = db.tags.index.filter(x => x.type === type).sort(sortName).map(x => x.uuid);
 	
 	const f = (offset: number, maxIter: number) => {
 		const chunk: Promise<Tag>[] = [];
@@ -31,12 +31,18 @@ export async function* getTags(maxIter = 20){
 	};
 }
 
+export async function* getAllTags(maxIter = 10) {
+	for await (const tag of getTags("member", maxIter)) yield tag;
+	for await (const tag of getTags("journal", maxIter)) yield tag;
+	for await (const tag of getTags("asset", maxIter)) yield tag;
+}
+
 export function getTagsIndex(){
 	return db.tags.index;
 }
 
-export async function* getFilteredTags(query: string){
-	for await (const tag of getTags()){
+export async function* getFilteredTags(type: Tag["type"], query: string){
+	for await (const tag of getTags(type)){
 		if(filterTag(query, tag))
 			yield tag;
 	}

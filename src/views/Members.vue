@@ -53,7 +53,7 @@
 	}, { immediate: true });
 
 	const members = shallowRef<Member[]>();
-	const iter = shallowRef(getFilteredMembers(search.value));
+	const iter = shallowRef<AsyncGenerator<Member>>();
 	const iterDone = ref(false);
 	watch(search, async () => {
 		await resetMembers();
@@ -77,7 +77,6 @@
 		DatabaseEvents.addEventListener("updated", listeners[1]);
 		await resetMembers();
 		await updateFronters();
-
 	});
 
 	onUnmounted(() => {
@@ -93,6 +92,8 @@
 	}
 
 	async function pollMembers(cb?: () => void){
+		if(!iter.value) return;
+
 		let i = 0;
 		const _mems: Member[] = [];
 		while(true) {

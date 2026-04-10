@@ -7,7 +7,7 @@ import { filterBoardMessage } from "../../search";
 import { TransactionStatus } from "../types";
 import { sortBoardMessages } from "../../util/misc";
 
-export async function* getBoardMessages(maxIter = 20){
+export async function* getBoardMessages(maxIter = 10){
 	const uuids = db.boardMessages.index.sort(sortBoardMessages).map(x => x.uuid);
 
 	const f = (offset: number, maxIter: number) => {

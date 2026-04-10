@@ -8,7 +8,7 @@ import { filterMember } from "../../search";
 import { sortMembers } from "../../util/misc";
 import { TransactionStatus } from "../types";
 
-export async function* getMembers(maxIter = 20){
+export async function* getMembers(maxIter = 10){
 	const uuids = db.members.index.sort(sortMembers).map(x => x.uuid);
 
 	const f = (offset: number, maxIter: number) => {

@@ -29,9 +29,9 @@
 			search.value = route.query.q as string;
 	});
 
-	const type = ref("member");
+	const type = ref<Tag["type"]>("member");
 	const tags = shallowRef<Tag[]>();
-	const iter = shallowRef(getFilteredTags(search.value));
+	const iter = shallowRef<AsyncGenerator<Tag>>();
 	const iterDone = ref(false);
 
 	watch([search, type], async () => {
@@ -55,11 +55,13 @@
 	async function resetTags(){
 		tags.value = undefined;
 		iterDone.value = false;
-		iter.value = getFilteredTags(search.value);
+		iter.value = getFilteredTags(type.value, search.value);
 		await pollTags();
 	}
 
 	async function pollTags(cb?: () => void){
+		if(!iter.value) return;
+
 		let i = 0;
 		const _tags: Tag[] = [];
 		while(true) {

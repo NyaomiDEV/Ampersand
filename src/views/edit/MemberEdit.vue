@@ -184,7 +184,7 @@
 
 		loading.value = true;
 
-		tags.value = (await Array.fromAsync(getTags())).filter(x => x.type === "member");
+		tags.value = (await Array.fromAsync(getTags("member")));
 		customFields.value = (await Array.fromAsync(getCustomFields()));
 
 		if(route.query.uuid){
