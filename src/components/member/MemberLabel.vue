@@ -75,12 +75,7 @@
 	<IonLabel class="nowrap">
 		<slot name="before" />
 		<p v-if="props.showRole">
-			{{
-				[
-					props.member.isCustomFront ? $t("members:edit.customFront") : null,
-					props.member.role,
-				].filter(Boolean).join(" - ")
-			}}
+			{{ props.member.role }}
 		</p>
 		<h2>
 			{{ props.member.name }}

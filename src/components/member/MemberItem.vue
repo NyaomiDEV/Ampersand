@@ -8,8 +8,10 @@
 
 	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
 	import pinMD from "@material-symbols/svg-600/outlined/keep.svg";
+	import customFrontMD from "@material-symbols/svg-600/outlined/checkroom.svg";
 	import archivedMD from "@material-symbols/svg-600/outlined/archive.svg";
-	import mainFronterMD from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
+	import fronterMD from "@material-symbols/svg-600/outlined/person_pin_circle.svg";
+	import mainFronterMD from "@material-symbols/svg-600/outlined/person_pin_circle-fill.svg";
 
 	const props = withDefaults(defineProps<{
 		member: Member,
@@ -47,9 +49,9 @@
 
 		if(props.associatedFrontingEntry){
 			if(props.associatedFrontingEntry.isMainFronter)
-				style["--background"] = "var(--ion-background-color-step-200)";
+				style["--background"] = "var(--ion-background-color-step-350)";
 			else
-				style["--background"] = "var(--ion-background-color-step-150)";
+				style["--background"] = "var(--ion-background-color-step-250)";
 		}
 
 		if(props.member.cover)
@@ -111,9 +113,11 @@
 			<slot />
 		</MemberLabel>
 		<template v-if="props.showIcons">
-			<IonIcon v-if="member.isPinned" slot="end" :icon="pinMD" />
-			<IonIcon v-if="member.isArchived" slot="end" :icon="archivedMD" />
+			<IonIcon v-if="member.isCustomFront" slot="end" :icon="customFrontMD" />
 			<IonIcon v-if="associatedFrontingEntry?.isMainFronter" slot="end" :icon="mainFronterMD" />
+			<IonIcon v-if="associatedFrontingEntry && !associatedFrontingEntry?.isMainFronter" slot="end" :icon="fronterMD" />
+			<IonIcon v-if="member.isArchived" slot="end" :icon="archivedMD" />
+			<IonIcon v-if="member.isPinned && !member.isArchived" slot="end" :icon="pinMD" />
 		</template>
 		<slot name="end" />
 	</IonItem>

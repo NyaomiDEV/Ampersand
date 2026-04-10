@@ -101,7 +101,7 @@
 	}
 
 	ion-item.default-system {
-		--background: var(--ion-background-color-step-150);
+		--background: var(--ion-background-color-step-250);
 	}
 
 	ion-item.with-cover::part(native)::before {
