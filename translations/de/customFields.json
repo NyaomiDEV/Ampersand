@@ -3,6 +3,16 @@
 	"searchPlaceholder": "Benutzerdefinierte Felder durchsuchen...",
 	"edit": {
 		"header": "Benutzerdefiniertes Feld bearbeiten",
-		"headerAdd": "Benutzerdefiniertes Felde hinzufügen"
-	}
+		"headerAdd": "Benutzerdefiniertes Felde hinzufügen",
+		"delete": {
+			"title": "Benutzerdefiniertes Feld verwerfen",
+			"confirm": "Bist du dir sicher, dass du dieses Benutzerdefinierte Feld löschen möchtest?"
+		},
+		"default": {
+			"title": "Standard ein-/ausschalten",
+			"desc": "Standardmäßig werden benutzerdefinierte Felder immer auf dem Mitgliederbearbeitungsbildschirm angezeigt."
+		},
+		"name": "Name des benutzerdefinierten Feldes"
+	},
+	"select": "Benutzerdefinierte Felder auswählen"
 }

@@ -3,5 +3,12 @@
 	"systemDescription": "Systembeschreibung",
 	"header": "Startseite",
 	"header_mainfronter": "Hallo, {{fronterName}}!",
-	"fronterInfluencing": "Beeinflusst {{influencedMember}}"
+	"fronterInfluencing": "Beeinflusst {{influencedMember}}",
+	"messageBoard": {
+		"header": "Pinnwand",
+		"add": "Zur Pinnwand hinzufügen"
+	},
+	"nowFronting": "Am Fronten",
+	"addToFront": "Zur Front hinzufügen",
+	"recentFrontingHistory": "Kürzlich ausgewechselt"
 }

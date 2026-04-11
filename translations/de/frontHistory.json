@@ -1,4 +1,25 @@
 {
 	"header": "Verlauf",
-	"searchPlaceholder": "Verlauf durchsuchen..."
+	"searchPlaceholder": "Verlauf durchsuchen...",
+	"currentlyFronting": "Aktuell an der Front",
+	"wasFronting": "Noch am Fronten",
+	"influencing": "Beeinflusst {{influencedMember}}",
+	"edit": {
+		"header": "Front-Eintrag anpassen",
+		"member": "Front-Mitglied anpassen",
+		"customStatus": "Benutzerdefinierter Status",
+		"comment": "Kommentar",
+		"presence": {
+			"historyTitle": "Anwesendheitsverlauf",
+			"addTitle": "Wie anwesend bist du auf einer Skala von 0 bis 10?",
+			"confirmButton": "Bestätigen",
+			"date": "Datum"
+		},
+		"influencing": {
+			"select": "Ein Mitglied zum Beeinflussen wählen",
+			"currentlyInfluencing": "Beeinflusst momentan"
+		},
+		"startTime": "Startzeit"
+	},
+	"frontedThatDay": "An dem Tag gefrontet"
 }

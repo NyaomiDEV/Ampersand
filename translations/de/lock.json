@@ -3,5 +3,6 @@
 	"biometrics": {
 		"title": "Die App ist gesperrt",
 		"reason": "Anwendung entsperren"
-	}
+	},
+	"hint": "Bitte geben Sie ihr App Passwort ein"
 }

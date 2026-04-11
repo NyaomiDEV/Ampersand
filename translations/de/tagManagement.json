@@ -1,7 +1,50 @@
 {
-	"header": "Schlagwortverwaltung",
-	"searchPlaceholder": "Suche nach Schlagwörtern...",
+	"header": "Tagverwaltung",
+	"searchPlaceholder": "Suche nach Tags...",
 	"selector": {
-		"member": "Mitglieder-Tags"
-	}
+		"member": "Mitglieder-Tags",
+		"journal": "Tagebuch-Tags",
+		"asset": "Asset-Tags"
+	},
+	"edit": {
+		"delete": {
+			"confirm": "Willst du diesen Tag wirklich verwerfen?",
+			"title": "Tag verwerfen"
+		},
+		"tagID": "Tag ID: {{tagID}}",
+		"header": {
+			"member": "Mitgliede/r-Tags verwalten",
+			"journal": "Tagebuch-Tags anpassen",
+			"asset": "Asset-Tag anpassen"
+		},
+		"name": "Tag-Name",
+		"description": "Tag-Beschreibung",
+		"color": "Tag-Farbe",
+		"viewInLists": "In Listen anzeigen",
+		"type": {
+			"header": "Tag-Typ",
+			"member": "Mitglied",
+			"journal": "Tagebuch",
+			"asset": "Asset",
+			"desc": "Anmerkung: Der Tag-Typ kann nur bei der Erstellung festgelegt werden!"
+		},
+		"showAssets": {
+			"desc_one": "{{count}} Asset hat diesen Tag",
+			"desc_other": "{{count}} Assets haben diesen Tag",
+			"title": "Asset anhand dieses Tags anzeigen"
+		},
+		"members": {
+			"desc_one": "{{count}} Mitglied nutzt diesen Tag",
+			"desc_other": "{{count}} Mitgliede/r nutzen diesen Tag",
+			"title": "Mitgliede/r anhand dieses Tags aussuchen"
+		},
+		"showJournal": {
+			"title": "Tagebuch-Einträge anhand dieses Tags anzeigen",
+			"desc_one": "{{count}} Tagebuch-Eintrag hat diesen Tag",
+			"desc_other": "{{count}} Tagebuch-Einträge haben diesen Tag"
+		},
+		"isArchived": "Tag archivieren",
+		"tagIDCopiedToClipboard": "Tag-ID im Erwähnungsformat in die Zwischenablage kopiert!"
+	},
+	"select": "Wählen Sie Tags aus"
 }

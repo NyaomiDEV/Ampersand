@@ -6,7 +6,9 @@
 	"genericDeleteDesc": "Du kannst diese Aktion nicht rückgängig machen!",
 	"alerts": {
 		"ok": "OK",
-		"cancel": "Abbrechen"
+		"cancel": "Abbrechen",
+		"yes": "Ja",
+		"no": "Nein"
 	},
 	"back": "Zurück",
 	"time": "Dauer",
@@ -61,6 +63,11 @@
 		"gem": "Edelstein"
 	},
 	"presence": {
-		"absent": "Abwesend"
-	}
+		"absent": "Abwesend",
+		"heavilyDissociating": "Stark dissoziierend",
+		"dissociating": "Dissoziieren",
+		"fullyGrounded": "Völlig bodenständig",
+		"present": "Anwesend"
+	},
+	"memberMention": "Mitglied erwähnen"
 }

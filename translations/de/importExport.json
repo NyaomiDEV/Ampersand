@@ -4,13 +4,14 @@
 		"errorTu": "Fehler beim Importieren des Tupperbox-Exports.",
 		"importedPk": "Der Pluralkit-Export wurde importiert. Bitte die App neustarten.",
 		"imported": "Die Sicherheitskopie wurde importiert. Bitte die App neustarten.",
-		"importedSp": "Der Simply Plural-Export wurde importiert. Bitte die App neustarten.",
+		"importedSp": "Die Simply Plural-Kopie wurde importiert. Bitte die App neustarten.",
 		"importedTu": "Der Tupperbox-Export wurde importiert. Bitte die App neustarten.",
 		"exportedApp": "Die Sicherheitskopie wurde zu dem gewählten Speicherort exportiert.",
 		"errorExport": "Fehler beim Exportieren der Sicherheitskopie.",
 		"errorSp": "Fehler beim Importieren des Simply Plural-Exports.",
 		"errorPk": "Fehler beim Importieren des PluralKit-Exports.",
-		"error": "Fehler beim Importieren der Sicherheitskopie."
+		"error": "Fehler beim Importieren der Sicherheitskopie.",
+		"importedOc": "Die Octocon-Kopie wurde importiert. Bitte die App neustarten."
 	},
 	"header": "Importieren / Exportieren",
 	"dbExport": {
@@ -19,6 +20,15 @@
 	},
 	"dbImport": "Importiere deine Dateien von einer Sicherheitskopie",
 	"pkImport": "Importiere deine Daten von einem PluralKit-Export",
-	"tuImport": "Importiere deine Daten von einem Tupperbox-Export",
-	"spImport": "Importiere deine Daten von einem Simply Plural-Export"
+	"tuImport": "Importiere deine Daten von einer Tupperbox-Kopie",
+	"spImport": "Importiere deine Daten von einer Simply Plural-Kopie",
+	"importHeader": "Importieren",
+	"exportHeader": "Exportieren",
+	"dbImportOld": {
+		"title": "Importiere deine Datein von einer vorherigen Ampersand-Version",
+		"desc": "Für Sicherheitskopien erstellt mit Ampersand vor 0.2.0",
+		"note": "Ältere Versionen von Ampersand verwendeten ein Dateiformat (ampdb), das mittlerweile veraltet ist. Falls Sie alte Backups aufbewahren, sollten Sie diese jetzt importieren und anschließend erneut exportieren, da diese Option in einigen Versionen entfernt wird."
+	},
+	"ocImport": "Importiere deine Daten von einem Octocon-Kopie",
+	"thirdPartyHeader": "Drittanbieter Integrationen"
 }

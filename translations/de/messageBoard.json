@@ -13,7 +13,7 @@
 			"voter": "Abstimmende/r auswählen",
 			"retractConfirmation": "Bist du dir sicher, dass du deine Stimme zurücknehmen möchtest?"
 		},
-		"resultsHeader": "Abstimmungsergebnisse",
+		"resultsHeader": "Umfrageergebnisse",
 		"resultsButton": "Zeige Umfrageergebnisse",
 		"choice": {
 			"desc_one": "{{count}} Abstimmende/r",
@@ -33,12 +33,13 @@
 		"pollAddNewChoice": "Auswahlmöglichkeit hinzufügen",
 		"pollChoice": "Auswahl-Beschreibung",
 		"delete": {
-			"title": "Nachricht auf dem Anschlagbrett löschen",
+			"title": "Nachricht auf der Pinnwand löschen",
 			"confirm": "Bist du dir sicher, dass du die Nachricht löschen möchtest?"
 		},
-		"date": "Datum bearbeiten",
+		"date": "Datum anpassen",
 		"isArchived": "Nachricht archivieren",
-		"pollEditWarning": "Jede Änderung der Umfragedetails führt zum Zurücksetzen der Stimmen!"
+		"pollEditWarning": "Jede Änderung der Umfragedetails führt zum Zurücksetzen der Stimmen!",
+		"member": "Nachrichtenautor anpassen"
 	},
-	"header": "Anschlagbrett"
+	"header": "Pinnwand"
 }

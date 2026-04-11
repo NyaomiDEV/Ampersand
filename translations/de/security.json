@@ -1,17 +1,27 @@
 {
 	"header": "Sicherheit",
 	"applock": {
-		"title": "App-Sperre"
+		"title": "App-Sperre",
+		"desc": "Sperren Sie die App mit einem Passwort"
 	},
 	"inputPassword": {
 		"titleAdd": "Neues Passwort eingeben",
 		"titleModifyNew": "Neues Passwort eingeben",
 		"titleDisable": "Passwort eingeben",
 		"hint": "Passwort",
-		"titleModifyOld": "Altes Passwort eingeben"
+		"titleModifyOld": "Altes Passwort eingeben",
+		"titleReenter": "Passwort bestätigen"
 	},
 	"editPassword": "Passwort ändern",
 	"biometrics": {
-		"title": "Biometrie nutzen"
+		"title": "Biometrie nutzen",
+		"desc": "Entsperren Sie mit Ihrem Fingerabdruck oder Ihrer Gesichtserkennung"
+	},
+	"allowRemoteContent": {
+		"desc": "Erlaube Ampersand, das Internet zu nutzen, um Remote-Inhalte abzufragen, wie z. B. Bilder in Markdown-Feldern und Avatare bei Importen von Drittanbietern.",
+		"title": "Remote-Inhalte zulassen"
+	},
+	"passwordAlert": {
+		"header": "Warnung"
 	}
 }

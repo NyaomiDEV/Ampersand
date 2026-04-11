@@ -7,9 +7,9 @@
 		"headerAdd": "Mitglied hinzufügen",
 		"headerEdit": "Mitglied bearbeiten",
 		"color": "Bevorzugte Farbe",
-		"customFieldsAdd": "Eigenes Feld hinzufügen",
+		"customFieldsAdd": "Benutzerdefiniertes Feld hinzufügen",
 		"isPinned": "Mitglied anpinnen",
-		"showBoardEntries": "Anschlagbrett-Nachrichten anzeigen",
+		"showBoardEntries": "Pinnwand-Einträge anzeigen",
 		"showJournalEntries": "Zeige Tagebuch-Einträge",
 		"memberID": "Mitgliedernummer: {{memberID}}",
 		"name": "Name",
@@ -19,5 +19,18 @@
 		"noDescription": "Keine Beschreibung",
 		"archived": "Archiviert",
 		"header": "Mitglied"
+	},
+	"deletedCustomFront": "Benutzerdefinierte Front verwerfen",
+	"actions": {
+		"addToFront": "Zur Front hinzufügen",
+		"setMainFronter": "Als Hauptfronter festlegen",
+		"setSoleFronter": "In Front setzen",
+		"removeFromFront": "Aus der Front entfernen"
+	},
+	"toasts": {
+		"addToFront": "Mitglied zur Front hinzugefügt",
+		"setMainFronter": "Mitglied als Haupt-Fronter hinzugefügt",
+		"setSoleFronter": "Mitglied als alleiniger Fronter festgelegt",
+		"removeFromFront": "Mitglied der Front entfernt"
 	}
 }

@@ -2,7 +2,7 @@
 	"pinnedPosts": "Angeheftete Einträge",
 	"edit": {
 		"isPinned": "Angehefteter Eintrag",
-		"body": "Text des Eintrages",
+		"body": "Textkörper",
 		"isPrivate": "Privater Eintrag",
 		"title": "Titel",
 		"header": "Eintrag",
@@ -15,10 +15,11 @@
 		"subtitle": "Untertitel",
 		"contentWarning": "Inhaltswarnung",
 		"author": "Autor bearbeiten",
-		"tags": "Schlagwörter",
-		"date": "Datum bearbeiten",
+		"tags": "Tags",
+		"date": "Datum anpassen",
 		"postID": "Eintrag ID: {{postID}}",
-		"postIDcopiedToClipboard": "Eintrag ID wurde im Zitierformat in die Zwischenablage kopiert!"
+		"postIDcopiedToClipboard": "Eintrag ID wurde im Zitierformat in die Zwischenablage kopiert!",
+		"headerOptions": "Eintrags-Einstellungen"
 	},
 	"header": "Tagebuch",
 	"searchPlaceholder": "Tagebuch durchsuchen...",

@@ -14,19 +14,25 @@
 			"periodic": "Regelmäßig"
 		},
 		"eventBased": {
-			"addedToFront": "Nachdem ein [member] zur [front] hinzugefügt wurde",
-			"removedFromFront": "Nachdem ein [member] von der [front] entfernt wurde"
+			"addedToFront": "Nachdem ein Mitglied zur Front hinzugefügt wurde",
+			"removedFromFront": "Nachdem ein Mitglied von der Front entfernt wurde",
+			"delay": {
+				"title": "Zeitverzögerung"
+			}
 		},
 		"periodic": {
 			"dayOfMonth": {
 				"title": "Tag des Monats",
-				"desc_undefined": "Jeden Tag wiederholen ((check context for wording!))"
+				"desc_undefined": "Jeden Tag wiederholen ((check context for wording!))",
+				"desc_ordinal_one": "Wiederholt sich jeden {{count}}ten im Monat",
+				"desc_ordinal_other": "Wiederholt sich jeden {{count}}ten im Monat"
 			}
 		},
 		"delete": {
 			"title": "Erinnerung löschen",
 			"confirm": "Bist du dir sicher, dass du diese Erinnerung löschen möchtest?"
-		}
+		},
+		"message": "Erinnerungsbenachrichtigung"
 	},
 	"eventBasedHeader": "Ereignisbasierte Erinnerungen"
 }

@@ -1,7 +1,7 @@
 {
 	"header": "Barrierefreiheit",
 	"highLegibilityFont": {
-		"title": "Lesbare Schrift",
+		"title": "Bedienungsfreundliche Schrift",
 		"desc": "Nutze eine lesbare Schriftart anstelle der Standard-Schriftart des Gerätes"
 	},
 	"highLegibilityFontType": {
@@ -40,9 +40,22 @@
 	},
 	"disableCovers": {
 		"desc": "Wenn aktiviert werden Mitglieder in der Hauptliste auch in einer kompakter angezeigt",
-		"title": "Mitglieder Cover in Liste deaktivieren"
+		"title": "Mitglieder Cover in der Liste deaktivieren"
 	},
 	"themeIsAmoled": {
-		"title": "AMOLED-Modus"
+		"title": "AMOLED-Modus",
+		"desc": "Verwende einen vollständig schwarzen Hintergrund, wenn der Dunkelmodus aktiv ist. Kann Display-Abnutzung reduzieren."
+	},
+	"themeIsVibrant": {
+		"desc": "Füge der Benutzeroberfläche mehr Farbe hinzu.",
+		"title": "Vibrantes-Thema"
+	},
+	"colorIndicatorPosition": {
+		"title": "Position des Farbindikators",
+		"avatar": "Avatar-Umriss",
+		"listItem": "Listenelement-Grenze"
+	},
+	"compactLists": {
+		"title": "Kompakte Listen"
 	}
 }

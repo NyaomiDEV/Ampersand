@@ -16,7 +16,7 @@
 		"name": "nimi pi nimi sona",
 		"description": "sona pi nimi sona",
 		"color": "kule pi nimi sona",
-		"viewInLists": "kulupu li lon lipu pi ijo kulupu",
+		"viewInLists": "ni li lon lipu pi ijo kulupu",
 		"type": {
 			"header": "poki pi nimi sona",
 			"member": "ijo kulupu",

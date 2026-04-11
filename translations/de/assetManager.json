@@ -12,6 +12,7 @@
 		"delete": {
 			"title": "Asset löschen",
 			"confirm": "Bist du dir sicher, dass du dieses Asset löschen möchtest?"
-		}
+		},
+		"tags": "Tags"
 	}
 }

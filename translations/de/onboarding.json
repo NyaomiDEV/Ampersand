@@ -12,7 +12,14 @@
 		"pleaseWait": "Bitte warte, während wir deine Daten importieren",
 		"prevInstall": "Ja, von der vorherigen Installation",
 		"error": "Beim Importieren der Sicherheitskopie ist ein Fehler aufgetreten. Bitte wähle eine andere Option.",
-		"octocon": "Ja, Octocon"
+		"octocon": "Ja, Octocon",
+		"errorSp": "Beim Importieren der Simply Plural-Kopie ist ein Fehler aufgetreten. Bitte wähle eine andere Option.",
+		"errorOc": "Beim Importieren der Octocon-Kopie ist ein Fehler aufgetreten. Bitte wähle eine andere Option.",
+		"errorPk": "Beim Importieren der PluralKit-Kopie ist ein Fehler aufgetreten. Bitte wähle eine andere Option.",
+		"errorTu": "Beim Importieren der Tupperbox-Kopie ist ein Fehler aufgetreten. Bitte wähle eine andere Option.",
+		"allowRemoteContent": {
+			"header": "Internet-Verbindung erlauben?"
+		}
 	},
 	"memberInfo": {
 		"header": "Erzähle uns mehr über dich!",
@@ -20,7 +27,8 @@
 	},
 	"systemInfo": {
 		"description": "Ein paar Informationen über euch alle...",
-		"name": "Kollektiver Name"
+		"name": "Kollektiver Name",
+		"header": "Stellen Sie uns Ihr System kurz vor!"
 	},
 	"endScreen": {
 		"header": "Danke, dass du Ampersand nutzt!",
