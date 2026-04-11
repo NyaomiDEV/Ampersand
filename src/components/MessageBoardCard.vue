@@ -2,18 +2,20 @@
 
 	import { alertController, IonButton, IonItem, IonLabel } from "@ionic/vue";
 	import Avatar from "./Avatar.vue";
-	import { BoardMessageComplete, Member, PollEntry } from "../lib/db/entities";
+	import { BoardMessageComplete, Member, PollEntry, System } from "../lib/db/entities";
 	import Markdown from "./Markdown.vue";
 	import MemberSelect from "../modals/MemberSelect.vue";
 	import { addModal, removeModal } from "../lib/modals";
-	import { h, ref, toRaw } from "vue";
+	import { h, onBeforeMount, ref, shallowRef, toRaw } from "vue";
 	import { updateBoardMessage } from "../lib/db/tables/boardMessages";
 	import PollResults from "../modals/PollResults.vue";
 	import { useTranslation } from "i18next-vue";
 	import { formatDate, promptOkCancel } from "../lib/util/misc";
 
 	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
+	import systemCircle from "@material-symbols/svg-600/outlined/supervised_user_circle.svg";
 	import { accessibilityConfig } from "../lib/config";
+	import { getSystem } from "../lib/db/tables/system";
 
 	const i18next = useTranslation();
 
@@ -26,6 +28,15 @@
 	});
 
 	const isPollHidden = ref(props.hidePoll);
+	const system = shallowRef<System>();
+
+	async function updateAuthorSystem(){
+		if(!props.boardMessage.member) return;
+		const _sys = await getSystem(props.boardMessage.member.system);
+		if(_sys) system.value = _sys;
+	}
+
+	onBeforeMount(updateAuthorSystem);
 
 	/* Wait for Firefox and Safari to implement field-sizing in CSS and then use that instead of rows: 4 */
 
@@ -168,7 +179,15 @@
 			:clip-shape="props.boardMessage.member.imageClip"
 			:color="props.boardMessage.member.color"
 			:icon="accountCircle"
-		/>
+		>
+			<Avatar
+				v-if="system && system.viewInLists"
+				:image="system.image"
+				:clip-shape="system.imageClip"
+				:color="system.color"
+				:icon="systemCircle"
+			/>
+		</Avatar>
 		<div class="flexbox">
 			<div class="subheader">
 				<span v-if="props.boardMessage.member">{{ props.boardMessage.member.name }}</span>

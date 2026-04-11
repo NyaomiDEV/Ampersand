@@ -28,62 +28,70 @@
 </script>
 
 <template>
-	<IonAvatar
-		v-if="props.image"
+	<div
 		:class="[
 			'avatar',
+			{ 'smaller': !!props.smaller },
 			{ 'with-outline': props.withOutline && accessibilityConfig.colorIndicatorPosition === 'avatar' },
 			{ 'with-shape': !!props.clipShape },
 			{ [`shape-${props.clipShape}`]: !!props.clipShape },
-			{ 'smaller': !!props.smaller }
 		]"
 	>
-		<img aria-hidden="true" :src="getObjectURL(props.image)" />
-	</IonAvatar>
-	<IonIcon
-		v-else
-		:class="['avatar', {
-			'with-color': props.withOutline && accessibilityConfig.colorIndicatorPosition === 'avatar'
-		}]"
-		:icon="props.icon"
-	/>
+		<IonAvatar v-if="props.image">
+			<img aria-hidden="true" :src="getObjectURL(props.image)" />
+		</IonAvatar>
+		<IonIcon v-else :icon="props.icon" />
+		<div class="subavatar">
+			<slot />
+		</div>
+	</div>
 </template>
 
 <style scoped>
 	.avatar {
 		width: 56px;
 		height: 56px;
+		position: relative;
 
 		&.smaller {
 			width: 48px;
 			height: 48px;
 		}
-	}
 
-	.with-color {
-		color: v-bind('avatarColor') !important;
-	}
+		> .subavatar {
+			position: absolute;
+			bottom: 0;
+			z-index: 1;
+			transform: scale(0.4);
+			transform-origin: 100% 100%;
+		}
 
-	ion-avatar {
-		position: relative;
-	}
+		> * {
+			width: 100%;
+			height: 100%;
+		}
 
-	ion-avatar.with-outline {
-		outline-width: 2px;
-		outline-style: solid;
-		outline-color: v-bind('avatarColor');
-		background-color: v-bind('avatarColor');
-	}
+		> ion-icon {
+			color: v-bind('avatarColor') !important;
+		}
 
-	ion-avatar.with-shape {
-		--border-radius: 0px;
+		&.with-outline > ion-avatar {
+			outline-width: 2px;
+			outline-style: solid;
+			outline-color: v-bind('avatarColor');
+			background-color: v-bind('avatarColor');
+		}
 
-		&.with-outline {
+		&.with-shape > ion-avatar {
+			--border-radius: 0px;
+		}
+
+		&.with-shape.with-outline > ion-avatar {
 			outline-style: none;
 			background-color: unset;
 		}
 
-		&.with-outline::before {
+		&.with-shape.with-outline > ion-avatar::before {
 			position: absolute;
 			width: calc(100%);
 			height: calc(100%);
@@ -98,117 +106,117 @@
 			z-index: 0;
 		}
 
-		img {
+		&.with-shape > ion-avatar > img {
 			mask-repeat: no-repeat;
 			mask-position: center;
 			mask-size: contain;
-		};
+		}
 
-		&.with-outline img {
+		&.with-shape.with-outline > ion-avatar > img {
 			transform: scale(90%);
 			z-index: 1;
 		}
 
-		&.shape-arch img, &.shape-arch::before {
+		&.with-shape.shape-arch > ion-avatar > img, &.with-shape.shape-arch > ion-avatar::before {
 			mask-image: url(../assets/shapes/arch.svg);
 		}
-		&.shape-arrow img, &.shape-arrow::before {
+		&.with-shape.shape-arrow > ion-avatar > img, &.with-shape.shape-arrow > ion-avatar::before {
 			mask-image: url(../assets/shapes/arrow.svg);
 		}
-		&.shape-boom img, &.shape-boom::before {
+		&.with-shape.shape-boom > ion-avatar > img, &.with-shape.shape-boom > ion-avatar::before {
 			mask-image: url(../assets/shapes/boom.svg);
 		}
-		&.shape-bun img, &.shape-bun::before {
+		&.with-shape.shape-bun > ion-avatar > img, &.with-shape.shape-bun > ion-avatar::before {
 			mask-image: url(../assets/shapes/bun.svg);
 		}
-		&.shape-burst img, &.shape-burst::before {
+		&.with-shape.shape-burst > ion-avatar > img, &.with-shape.shape-burst > ion-avatar::before {
 			mask-image: url(../assets/shapes/burst.svg);
 		}
-		&.shape-clamshell img, &.shape-clamshell::before {
+		&.with-shape.shape-clamshell > ion-avatar > img, &.with-shape.shape-clamshell > ion-avatar::before {
 			mask-image: url(../assets/shapes/clamshell.svg);
 		}
-		&.shape-diamond img, &.shape-diamond::before {
+		&.with-shape.shape-diamond > ion-avatar > img, &.with-shape.shape-diamond > ion-avatar::before {
 			mask-image: url(../assets/shapes/diamond.svg);
 		}
-		&.shape-fan img, &.shape-fan::before {
+		&.with-shape.shape-fan > ion-avatar > img, &.with-shape.shape-fan > ion-avatar::before {
 			mask-image: url(../assets/shapes/fan.svg);
 		}
-		&.shape-flower img, &.shape-flower::before {
+		&.with-shape.shape-flower > ion-avatar > img, &.with-shape.shape-flower > ion-avatar::before {
 			mask-image: url(../assets/shapes/flower.svg);
 		}
-		&.shape-gem img, &.shape-gem::before {
+		&.with-shape.shape-gem > ion-avatar > img, &.with-shape.shape-gem > ion-avatar::before {
 			mask-image: url(../assets/shapes/gem.svg);
 		}
-		&.shape-ghost-ish img, &.shape-ghost-ish::before {
+		&.with-shape.shape-ghost-ish > ion-avatar > img, &.with-shape.shape-ghost-ish > ion-avatar::before {
 			mask-image: url(../assets/shapes/ghost-ish.svg);
 		}
-		&.shape-heart img, &.shape-heart::before {
+		&.with-shape.shape-heart > ion-avatar > img, &.with-shape.shape-heart > ion-avatar::before {
 			mask-image: url(../assets/shapes/heart.svg);
 		}
-		&.shape-leaf-clover4 img, &.shape-leaf-clover4::before {
+		&.with-shape.shape-leaf-clover4 > ion-avatar > img, &.with-shape.shape-leaf-clover4 > ion-avatar::before {
 			mask-image: url(../assets/shapes/leaf-clover4.svg);
 		}
-		&.shape-leaf-clover8 img, &.shape-leaf-clover8::before {
+		&.with-shape.shape-leaf-clover8 > ion-avatar > img, &.with-shape.shape-leaf-clover8 > ion-avatar::before {
 			mask-image: url(../assets/shapes/leaf-clover8.svg);
 		}
-		&.shape-oval img, &.shape-oval::before {
+		&.with-shape.shape-oval > ion-avatar > img, &.with-shape.shape-oval > ion-avatar::before {
 			mask-image: url(../assets/shapes/oval.svg);
 		}
-		&.shape-pentagon img, &.shape-pentagon::before {
+		&.with-shape.shape-pentagon > ion-avatar > img, &.with-shape.shape-pentagon > ion-avatar::before {
 			mask-image: url(../assets/shapes/pentagon.svg);
 		}
-		&.shape-pill img, &.shape-pill::before {
+		&.with-shape.shape-pill > ion-avatar > img, &.with-shape.shape-pill > ion-avatar::before {
 			mask-image: url(../assets/shapes/pill.svg);
 		}
-		&.shape-pixel-circle img, &.shape-pixel-circle::before {
+		&.with-shape.shape-pixel-circle > ion-avatar > img, &.with-shape.shape-pixel-circle > ion-avatar::before {
 			mask-image: url(../assets/shapes/pixel-circle.svg);
 		}
-		&.shape-pixel-triangle img, &.shape-pixel-triangle::before {
+		&.with-shape.shape-pixel-triangle > ion-avatar > img, &.with-shape.shape-pixel-triangle > ion-avatar::before {
 			mask-image: url(../assets/shapes/pixel-triangle.svg);
 		}
-		&.shape-puffy-diamond img, &.shape-puffy-diamond::before {
+		&.with-shape.shape-puffy-diamond > ion-avatar > img, &.with-shape.shape-puffy-diamond > ion-avatar::before {
 			mask-image: url(../assets/shapes/puffy-diamond.svg);
 		}
-		&.shape-puffy img, &.shape-puffy::before {
+		&.with-shape.shape-puffy > ion-avatar > img, &.with-shape.shape-puffy > ion-avatar::before {
 			mask-image: url(../assets/shapes/puffy.svg);
 		}
-		&.shape-semicircle img, &.shape-semicircle::before {
+		&.with-shape.shape-semicircle > ion-avatar > img, &.with-shape.shape-semicircle > ion-avatar::before {
 			mask-image: url(../assets/shapes/semicircle.svg);
 		}
-		&.shape-sided-cookie12 img, &.shape-sided-cookie12::before {
+		&.with-shape.shape-sided-cookie12 > ion-avatar > img, &.with-shape.shape-sided-cookie12 > ion-avatar::before {
 			mask-image: url(../assets/shapes/sided-cookie12.svg);
 		}
-		&.shape-sided-cookie4 img, &.shape-sided-cookie4::before {
+		&.with-shape.shape-sided-cookie4 > ion-avatar > img, &.with-shape.shape-sided-cookie4 > ion-avatar::before {
 			mask-image: url(../assets/shapes/sided-cookie4.svg);
 		}
-		&.shape-sided-cookie6 img, &.shape-sided-cookie6::before {
+		&.with-shape.shape-sided-cookie6 > ion-avatar > img, &.with-shape.shape-sided-cookie6 > ion-avatar::before {
 			mask-image: url(../assets/shapes/sided-cookie6.svg);
 		}
-		&.shape-sided-cookie7 img, &.shape-sided-cookie7::before {
+		&.with-shape.shape-sided-cookie7 > ion-avatar > img, &.with-shape.shape-sided-cookie7 > ion-avatar::before {
 			mask-image: url(../assets/shapes/sided-cookie7.svg);
 		}
-		&.shape-sided-cookie9 img, &.shape-sided-cookie9::before {
+		&.with-shape.shape-sided-cookie9 > ion-avatar > img, &.with-shape.shape-sided-cookie9 > ion-avatar::before {
 			mask-image: url(../assets/shapes/sided-cookie9.svg);
 		}
-		&.shape-slanted img, &.shape-slanted::before {
+		&.with-shape.shape-slanted > ion-avatar > img, &.with-shape.shape-slanted > ion-avatar::before {
 			mask-image: url(../assets/shapes/slanted.svg);
 		}
-		&.shape-soft-boom img, &.shape-soft-boom::before {
+		&.with-shape.shape-soft-boom > ion-avatar > img, &.with-shape.shape-soft-boom > ion-avatar::before {
 			mask-image: url(../assets/shapes/soft-boom.svg);
 		}
-		&.shape-soft-burst img, &.shape-soft-burst::before {
+		&.with-shape.shape-soft-burst > ion-avatar > img, &.with-shape.shape-soft-burst > ion-avatar::before {
 			mask-image: url(../assets/shapes/soft-burst.svg);
 		}
-		&.shape-square img, &.shape-square::before {
+		&.with-shape.shape-square > ion-avatar > img, &.with-shape.shape-square > ion-avatar::before {
 			mask-image: url(../assets/shapes/square.svg);
 		}
-		&.shape-sunny img, &.shape-sunny::before {
+		&.with-shape.shape-sunny > ion-avatar > img, &.with-shape.shape-sunny > ion-avatar::before {
 			mask-image: url(../assets/shapes/sunny.svg);
 		}
-		&.shape-triangle img, &.shape-triangle::before {
+		&.with-shape.shape-triangle > ion-avatar > img, &.with-shape.shape-triangle > ion-avatar::before {
 			mask-image: url(../assets/shapes/triangle.svg);
 		}
-		&.shape-very-sunny img, &.shape-very-sunny::before {
+		&.with-shape.shape-very-sunny > ion-avatar > img, &.with-shape.shape-very-sunny > ion-avatar::before {
 			mask-image: url(../assets/shapes/very-sunny.svg);
 		}
 	}

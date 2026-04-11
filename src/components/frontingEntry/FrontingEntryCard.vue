@@ -4,12 +4,15 @@
 	import Avatar from "../Avatar.vue";
 	import PresenceRating from "../PresenceRating.vue";
 	import { appConfig, accessibilityConfig } from "../../lib/config";
-	import { FrontingEntryComplete, Member } from "../../lib/db/entities";
+	import { FrontingEntryComplete, Member, System } from "../../lib/db/entities";
 	import { useBlob } from "../../lib/util/blob";
 	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
+	import systemCircle from "@material-symbols/svg-600/outlined/supervised_user_circle.svg";
 	import FrontingEntryInterval from "./FrontingEntryInterval.vue";
 	import { getMaterialColors } from "../../lib/theme";
 	import { hexFromArgb } from "@material/material-color-utilities";
+	import { onBeforeMount, shallowRef } from "vue";
+	import { getSystem } from "../../lib/db/tables/system";
 
 	const { getObjectURL } = useBlob();
 
@@ -22,6 +25,15 @@
 		showCover: true,
 		showBorderColor: true
 	});
+
+	const system = shallowRef<System>();
+
+	async function updateMemberSystem(){
+		const _sys = await getSystem(props.entry.member.system);
+		if(_sys) system.value = _sys;
+	}
+
+	onBeforeMount(updateMemberSystem);
 
 	function getMostRecentPresence(){
 		if(!props.entry.presence) return [undefined, undefined];
@@ -74,7 +86,15 @@
 				:clip-shape="props.entry.member.imageClip"
 				:color="props.entry.member.color"
 				:icon="accountCircle"
-			/>
+			>
+				<Avatar
+					v-if="system && system.viewInLists"
+					:image="system.image"
+					:clip-shape="system.imageClip"
+					:color="system.color"
+					:icon="systemCircle"
+				/>
+			</Avatar>
 			<IonLabel>
 				<h2>
 					{{ props.entry.member.name }}

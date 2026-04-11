@@ -3,7 +3,7 @@
 	import { IonItem, IonLabel } from "@ionic/vue";
 	import Avatar from "../Avatar.vue";
 	import TagChip from "../tag/TagChip.vue";
-	import { JournalPostComplete, Tag } from "../../lib/db/entities";
+	import { JournalPostComplete, System, Tag } from "../../lib/db/entities";
 	import { formatDate, sortName } from "../../lib/util/misc";
 	import { isReactive, onBeforeMount, shallowRef, watch, WatchStopHandle } from "vue";
 	import { getTag, getTagsIndex } from "../../lib/db/tables/tags";
@@ -13,8 +13,11 @@
 	const { getObjectURL } = useBlob();
 
 	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
+	import systemCircle from "@material-symbols/svg-600/outlined/supervised_user_circle.svg";
+	import { getSystem } from "../../lib/db/tables/system";
 
 	const tags = shallowRef<Tag[]>();
+	const system = shallowRef<System>();
 
 	const props = withDefaults(defineProps<{
 		post: JournalPostComplete,
@@ -54,17 +57,29 @@
 		return style;
 	}
 
+	async function updateAuthorSystem(){
+		if(!props.post.member) return;
+		const _sys = await getSystem(props.post.member.system);
+		if(_sys) system.value = _sys;
+	}
+
 	let watchHandle: WatchStopHandle | undefined;
 	watch(props, () => {
-		if (isReactive(props.post))
-			watchHandle = watch(props.post, updateTags);
-		else if (watchHandle) {
+		if (isReactive(props.post)){
+			watchHandle = watch(props.post, async () => {
+				await updateTags();
+				await updateAuthorSystem();
+			});
+		} else if (watchHandle) {
 			watchHandle();
 			watchHandle = undefined;
 		}
 	});
 
-	onBeforeMount(updateTags);
+	onBeforeMount(async () => {
+		await updateTags();
+		await updateAuthorSystem();
+	});
 </script>
 
 <template>
@@ -82,7 +97,15 @@
 			:clip-shape="props.post.member.imageClip"
 			:color="props.post.member.color"
 			:icon="accountCircle"
-		/>
+		>
+			<Avatar
+				v-if="system && system.viewInLists"
+				:image="system.image"
+				:clip-shape="system.imageClip"
+				:color="system.color"
+				:icon="systemCircle"
+			/>
+		</Avatar>
 		<IonLabel>
 			<img v-if="props.post.cover" class="cover" :src="getObjectURL(props.post.cover)" />
 			<p v-if="formatDate(props.post.date, 'collapsed') !== props.post.title">

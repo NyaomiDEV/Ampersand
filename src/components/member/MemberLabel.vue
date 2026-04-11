@@ -3,12 +3,10 @@
 		IonLabel,
 	} from "@ionic/vue";
 
-	import { Member, Tag, System } from "../../lib/db/entities";
+	import { Member, Tag } from "../../lib/db/entities";
 	import TagChip from "../tag/TagChip.vue";
 	import { isReactive, onBeforeMount, shallowRef, watch, WatchStopHandle } from "vue";
 	import { getTag, getTagsIndex } from "../../lib/db/tables/tags";
-	import SystemChip from "../system/SystemChip.vue";
-	import { getSystem, getSystemsIndex } from "../../lib/db/tables/system";
 	import { sortName } from "../../lib/util/misc";
 
 	const props = withDefaults(defineProps<{
@@ -21,7 +19,6 @@
 		showRole: true
 	});
 
-	const system = shallowRef<System>({ name: "", uuid: props.member.system, isPinned: false, isArchived: false, viewInLists: false });
 	const tags = shallowRef<Tag[]>();
 
 	function shouldShowChips(){
@@ -29,8 +26,7 @@
 			props.member.tags.filter(x => {
 				const tagIndex = getTagsIndex().find(y => y.uuid === x);
 				return !tagIndex?.isArchived && tagIndex?.viewInLists;
-			}).length > 0 || 
-			getSystemsIndex().find(x => props.member.system === x.uuid)?.viewInLists
+			}).length > 0
 		);
 	}
 
@@ -47,16 +43,10 @@
 		}
 	}
 
-	async function updateSystem(){
-		const _sys = await getSystem(props.member.system);
-		if (_sys) system.value = _sys;
-	}
-
 	let watchHandle: WatchStopHandle | undefined;
 	watch(props, () => {
 		if(isReactive(props.member)){
 			watchHandle = watch(props.member, async () => {
-				await updateSystem();
 				await updateTags();
 			});
 		} else if(watchHandle){
@@ -66,7 +56,6 @@
 	});
 
 	onBeforeMount(async () => {
-		await updateSystem();
 		await updateTags();
 	});
 </script>
@@ -90,10 +79,7 @@
 			@pointerdown="(e) => e.stopPropagation()"
 			@touchstart="(e) => e.stopPropagation()"
 		>
-			<SystemChip v-if="system.viewInLists" :system />
-			<div v-if="tags?.length" class="tag-chips">
-				<TagChip v-for="tag in tags" :key="tag.uuid" :tag="tag" />
-			</div>
+			<TagChip v-for="tag in tags" :key="tag.uuid" :tag="tag" />
 		</div>
 	</IonLabel>
 </template>
@@ -105,19 +91,9 @@
 		overflow-y: hidden;
 		scrollbar-width: none;
 		height: 42px;
-	}
-
-	div.tag-chips {
-		display: inline-block;
-		border-left: 1px solid var(--ion-text-color-step-400);
-		margin: 4px 0;
-	}
-
-	div.chips > div.tag-chips:first-child {
-		border-left: none;
-	}
-
-	div.tag-chips > ion-chip {
-		margin: 0 4px;
+		
+		> ion-chip {
+			margin: 0 4px;
+		}
 	}
 </style>

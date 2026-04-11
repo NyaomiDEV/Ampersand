@@ -2,11 +2,14 @@
 	import { IonItem, IonIcon, IonCheckbox } from "@ionic/vue";
 	import Avatar from "../Avatar.vue";
 	import MemberLabel from "./MemberLabel.vue";
-	import { FrontingEntryComplete, Member } from "../../lib/db/entities";
+	import { FrontingEntryComplete, Member, System } from "../../lib/db/entities";
 	import { useBlob } from "../../lib/util/blob";
 	import { accessibilityConfig } from "../../lib/config";
+	import { getSystem } from "../../lib/db/tables/system";
+	import { isReactive, onBeforeMount, shallowRef, watch, WatchStopHandle } from "vue";
 
 	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
+	import systemCircle from "@material-symbols/svg-600/outlined/supervised_user_circle.svg";
 	import pinMD from "@material-symbols/svg-600/outlined/keep.svg";
 	import customFrontMD from "@material-symbols/svg-600/outlined/checkroom.svg";
 	import archivedMD from "@material-symbols/svg-600/outlined/archive.svg";
@@ -38,6 +41,8 @@
 		showBorderColor: true
 	});
 
+	const system = shallowRef<System>();
+
 	const emit = defineEmits<{
 		"toggleUpdate": [boolean],
 	}>();
@@ -62,6 +67,25 @@
 
 		return style;
 	}
+
+	async function updateSystem(){
+		const _sys = await getSystem(props.member.system);
+		if(_sys) system.value = _sys;
+	}
+
+	onBeforeMount(updateSystem);
+
+	let watchHandle: WatchStopHandle | undefined;
+	watch(props, () => {
+		if(isReactive(props.member)){
+			watchHandle = watch(props.member, async () => {
+				await updateSystem();
+			});
+		} else if(watchHandle){
+			watchHandle();
+			watchHandle = undefined;
+		}
+	});
 </script>
 
 <template>
@@ -81,7 +105,15 @@
 			:color="member.color"
 			:icon="accountCircle"
 			:smaller="props.smallerAvatar"
-		/>
+		>
+			<Avatar
+				v-if="system && system.viewInLists"
+				:image="system.image"
+				:clip-shape="system.imageClip"
+				:color="system.color"
+				:icon="systemCircle"
+			/>
+		</Avatar>
 		<IonCheckbox
 			v-if="props.hasToggle === 'checkbox'"
 			:value="props.toggleValue"
