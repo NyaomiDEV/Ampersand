@@ -218,6 +218,9 @@ export class ShittyTable<T extends UUIDable> {
 			this.index = this.index.filter(x => x.uuid !== file.name);
 		}
 
+		if (await fs.exists(`${this.path + sep()}.migrations`))
+			await fs.remove(`${this.path + sep()}.migrations`);
+
 		await this.saveIndexToDisk();
 	}
 

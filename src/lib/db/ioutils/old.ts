@@ -160,6 +160,7 @@ export function importDatabaseFromBinary() {
 				if (table) {
 					await table.clear();
 					await table.bulkAdd(revived.database[key]);
+					await table.migrate();
 				}
 				progressCurrent++;
 				progress.dispatchEvent(new CustomEvent("progress", { detail: { progress: progressCurrent / progressTotal } }));
