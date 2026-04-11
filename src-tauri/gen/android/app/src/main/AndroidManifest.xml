@@ -16,6 +16,7 @@
             android:value="true" />
         <activity
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode"
+            android:windowSoftInputMode="adjustNothing"
             android:launchMode="singleTask"
             android:name=".MainActivity"
             android:exported="true">
