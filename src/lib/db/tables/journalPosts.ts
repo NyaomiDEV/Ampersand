@@ -100,7 +100,7 @@ export async function updateJournalPost(newContent: UUIDable & Partial<JournalPo
 export async function* getJournalPostsOfDay(date: Date, includePinned: boolean, query: string) {
 	const _date = dayjs(date).startOf("day");
 
-	for(const entry of db.journalPosts.index){
+	for(const entry of db.journalPosts.index.sort(sortDate)){
 		if ((includePinned && !entry.isPinned) && dayjs(entry.date).startOf("day").valueOf() !== _date.valueOf())
 			continue;
 

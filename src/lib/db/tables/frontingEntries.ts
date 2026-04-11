@@ -158,16 +158,29 @@ export async function setSoleFronter(member: Member) {
 				throw new Error(`updating fronter entry failed with error: ${res.err as Error}`);
 		}
 
-		if(!await getCurrentFrontEntryForMember(member)){
-			return newFrontingEntry({
+		let uuid: string;
+		const _entry = await getCurrentFrontEntryForMember(member);
+		if(!_entry){
+			const res = await newFrontingEntry({
 				member: member.uuid,
 				startTime: endTime,
-				isMainFronter: false,
+				isMainFronter: true,
 				isLocked: false
 			});
+			if(res.success)
+				uuid = res.detail!;
+			else throw res.err;
+		} else {
+			const res = await updateFrontingEntry({
+				uuid: _entry.uuid,
+				isMainFronter: true
+			});
+			if (res.success)
+				uuid = _entry.uuid;
+			else throw res.err;
 		}
 
-		return { success: true };
+		return { success: true, detail: uuid };
 	}catch(_e){
 		console.error(_e);
 		return { success: false, err: _e };
@@ -190,7 +203,7 @@ export async function getMainFronter(){
 }
 
 export async function getFronting() {
-	const entries = Promise.all(db.frontingEntries.index.map(async x => {
+	const entries = Promise.all(db.frontingEntries.index.sort(sortFrontingEntries).map(async x => {
 		if(x.endTime) return;
 
 		return toFrontingEntryComplete(await db.frontingEntries.get(x.uuid));
@@ -201,7 +214,7 @@ export async function getFronting() {
 
 export async function getFrontingBetween(start: Date, end?: Date){
 	if(!end) end = new Date();
-	const entries = Promise.all(db.frontingEntries.index.map(x => {
+	const entries = Promise.all(db.frontingEntries.index.sort(sortFrontingEntries).map(x => {
 		const _start = x.startTime!;
 		const _end = x.endTime || new Date(end);
 		if(start.valueOf() <= _end.valueOf() && end.valueOf() >= _start.valueOf())
@@ -231,7 +244,7 @@ export async function getRecentlyFronted() {
 export async function* getFrontingEntriesOfDay(date: Date, query: string) {
 	const _date = dayjs(date).startOf("day").valueOf();
 
-	for(const entry of db.frontingEntries.index){
+	for(const entry of db.frontingEntries.index.sort(sortFrontingEntries)){
 		const startDay = dayjs(entry.startTime).startOf("day").valueOf();
 		const endDay = entry.endTime ? dayjs(entry.endTime).endOf("day").valueOf() : dayjs().endOf("day").valueOf();
 
