@@ -12,6 +12,7 @@
 	import bigTextMD from "@material-symbols/svg-600/outlined/text_increase.svg";
 	import colorMD from "@material-symbols/svg-600/outlined/palette.svg";
 	import colorsMD from "@material-symbols/svg-600/outlined/colors.svg";
+	import borderMD from "@material-symbols/svg-600/outlined/border_color.svg";
 	import compactMD from "@material-symbols/svg-600/outlined/list_alt.svg";
 	import hideCoverMD from "@material-symbols/svg-600/outlined/hide_image.svg";
 	import motionMD from "@material-symbols/svg-600/outlined/masked_transitions.svg";
@@ -186,7 +187,8 @@
 				</IonItem>
 
 				<IonItem>
-					<IonIcon slot="start" :icon="colorsMD" />
+					<IonIcon v-if="accessibilityConfig.colorIndicatorPosition === 'avatar'" slot="start" :icon="colorsMD" />
+					<IonIcon v-if="accessibilityConfig.colorIndicatorPosition === 'list-item'" slot="start" :icon="borderMD" />
 					<IonSelect
 						v-model="accessibilityConfig.colorIndicatorPosition"
 						label-placement="floating"
