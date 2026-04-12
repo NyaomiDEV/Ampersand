@@ -9,7 +9,7 @@
 	import { importSimplyPlural } from "../../lib/db/external/simplyplural";
 	import { importOctocon } from "../../lib/db/external/octocon";
 	import { useTranslation } from "i18next-vue";
-	import { getTables } from "../../lib/db/tables";
+	import { clearAllDatabase } from "../../lib/db/tables";
 	import { resetConfig, securityConfig } from "../../lib/config";
 
 	import importMD from "@material-symbols/svg-600/outlined/download.svg";
@@ -41,7 +41,7 @@
 			if(!result) throw new Error("errored out");
 		}catch(_e){
 			resetConfig();
-			await Promise.all(Object.values(getTables()).map(x => x.clear()));
+			await clearAllDatabase();
 			await toast(i18next.t("onboarding:importScreen.error"));
 			loading.value = false;
 			return;
@@ -59,7 +59,7 @@
 			const result = await importSimplyPlural(spExport);
 			if (!result) throw new Error("errored out");
 		}catch(_e){
-			await Promise.all(Object.values(getTables()).map(x => x.clear()));
+			await clearAllDatabase();
 			await toast(i18next.t("onboarding:importScreen.errorSp"));
 			loading.value = false;
 			return;
@@ -77,7 +77,7 @@
 			const result = await importOctocon(ocExport);
 			if(!result) throw new Error("errored out");
 		}catch(_e){
-			await Promise.all(Object.values(getTables()).map(x => x.clear()));
+			await clearAllDatabase();
 			await toast(i18next.t("onboarding:importScreen.errorOc"));
 			loading.value = false;
 			return;
@@ -95,7 +95,7 @@
 			const result = await importPluralKit(pkExport);
 			if(!result) throw new Error("errored out");
 		}catch(_e){
-			await Promise.all(Object.values(getTables()).map(x => x.clear()));
+			await clearAllDatabase();
 			await toast(i18next.t("onboarding:importScreen.errorPk"));
 			loading.value = false;
 			return;
@@ -113,7 +113,7 @@
 			const result = await importTupperBox(tuExport);
 			if(!result) throw new Error("errored out");
 		}catch(_e){
-			await Promise.all(Object.values(getTables()).map(x => x.clear()));
+			await clearAllDatabase();
 			await toast(i18next.t("onboarding:importScreen.errorTu"));
 			loading.value = false;
 			return;

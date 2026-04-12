@@ -7,7 +7,7 @@ import { appConfig, securityConfig } from "../../config";
 import { nilUid } from "../../util/consts";
 import { BoardMessage, CustomField, FrontingEntry, Member, System, Tag } from "../entities";
 import { fetchImage } from "../../util/fetchImage";
-import { getTables } from "../tables";
+import { clearAllDatabase, getTables } from "../tables";
 
 import type { OctoconExport } from "./octocon_types";
 
@@ -211,7 +211,7 @@ export async function importOctocon(ocExport: OctoconExport){
 		const _boardMessages = polls(ocExport, memberMapping);
 
 		// WIPE AMPERSAND
-		await Promise.all(Object.values(getTables()).map(x => x.clear()));
+		await clearAllDatabase();
 
 		// ADD TO DATABASE
 		const tables = getTables();

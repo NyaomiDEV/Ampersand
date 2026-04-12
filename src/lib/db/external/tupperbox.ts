@@ -2,7 +2,7 @@
 
 import { appConfig, securityConfig } from "../../config";
 import { Member, Tag, System } from "../entities";
-import { getTables } from "../tables";
+import { clearAllDatabase, getTables } from "../tables";
 import { fetchImage } from "../../util/fetchImage";
 
 function tag(tuExport: any){
@@ -77,7 +77,7 @@ export async function importTupperBox(tuExport: any){
 
 	try {
 		// WIPE AMPERSAND
-		await Promise.all(Object.values(getTables()).map(x => x.clear()));
+		await clearAllDatabase();
 
 		// ADD TO DATABASE
 		const tables = getTables();

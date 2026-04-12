@@ -1,5 +1,5 @@
 import { System, Member, FrontingEntry, Tag, BoardMessage, CustomField, JournalPost } from "../entities";
-import { getTables } from "../tables";
+import { clearAllDatabase, getTables } from "../tables";
 import { t } from "i18next";
 import { fetchImage } from "../../util/fetchImage";
 import { resizeImage } from "../../util/image";
@@ -420,7 +420,7 @@ export async function importSimplyPlural(spExport: SimplyPluralExport) {
 
 	try{
 		// WIPE AMPERSAND
-		await Promise.all(Object.values(getTables()).map(x => x.clear()));
+		await clearAllDatabase();
 
 		// ADD TO DATABASE
 		const tables = getTables();

@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { CustomField, FrontingEntry, Member, System, Tag } from "../entities";
-import { getTables } from "../tables";
+import { clearAllDatabase, getTables } from "../tables";
 import { fetchImage } from "../../util/fetchImage";
 import { nilUid } from "../../util/consts";
 import { appConfig, securityConfig } from "../../config";
@@ -154,7 +154,7 @@ export async function importPluralKit(pkExport: any){
 
 	try {
 		// WIPE AMPERSAND
-		await Promise.all(Object.values(getTables()).map(x => x.clear()));
+		await clearAllDatabase();
 
 		// ADD TO DATABASE
 		const tables = getTables();
