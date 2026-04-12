@@ -52,6 +52,8 @@
 				border-right: var(--markdown-table-bt-right, var(--border));
 				border-bottom: var(--markdown-table-bt-bottom, var(--border));
 				border-left: var(--markdown-table-bt-left, var(--border));
+				background: var(--markdown-table-bg, unset);
+				color: var(--markdown-table-fg, unset);
 
 			th {
 				background-color: var(--markdown-th-bg, unset);

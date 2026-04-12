@@ -47,6 +47,12 @@ const customTableExtension: MarkedExtension<(VNode | string)[], VNode | string> 
 				for(const part in map){
 					switch(part){
 						case "table":
+							if(map[part].bg)
+								cssStyle["--markdown-table-bg"] = map[part].bg[0];
+
+							if (map[part].fg)
+								cssStyle["--markdown-table-fg"] = map[part].fg[0];
+
 							if(map[part].collapse?.[0] === "false") 
 								cssStyle["--markdown-border-collapse"] = "separate";
 
