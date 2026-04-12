@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { decodeMultiStream, encode as msgpackEncode } from "@msgpack/msgpack";
 import { accessibilityConfig, appConfig, securityConfig } from "../../config";
-import { getTables, ShittyTable } from "../tables";
+import { getTables } from "../tables";
+import type { ShittyTable } from "../impl/shittytable";
 import { deleteNull, replace, walk, revive, walkAsync } from "../../serialization";
 import { dirname, documentDir, sep } from "@tauri-apps/api/path";
 import { FileHandle, mkdir, open as openFile } from "@tauri-apps/plugin-fs";

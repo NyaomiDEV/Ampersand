@@ -1,6 +1,7 @@
 import { decode, encode } from "@msgpack/msgpack";
 import { accessibilityConfig, appConfig, securityConfig } from "../../config";
-import { getTables, ShittyTable } from "../tables";
+import { getTables } from "../tables";
+import type { ShittyTable } from "../impl/shittytable";
 import { deleteNull, replace, revive, walk, walkAsync } from "../../serialization";
 import { dirname, documentDir, sep } from "@tauri-apps/api/path";
 import { mkdir, open as openFile, readFile } from "@tauri-apps/plugin-fs";

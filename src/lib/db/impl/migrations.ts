@@ -1,6 +1,6 @@
 /* eslint-disable no-fallthrough */
 import { decode } from "@msgpack/msgpack";
-import { ShittyTable } from ".";
+import type { ShittyTable } from "./shittytable";
 import { appConfig } from "../../config";
 import { nilUid } from "../../util/consts";
 import { Asset, JournalPost, Member, System, Tag } from "../entities";

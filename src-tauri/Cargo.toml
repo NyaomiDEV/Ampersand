@@ -1,6 +1,6 @@
 [package]
 name = "ampersand"
-version = "0.2.0"
+version = "0.2.1"
 description = "Tracking app for plural systems"
 authors = ["nao"]
 license = ""

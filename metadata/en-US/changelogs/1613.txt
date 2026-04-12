@@ -1,0 +1,10 @@
+Ampersand Alpha 0.2.1
+
+- Added a compact lists mode in Accessibility Settings
+- Added custom tables Markdown format
+- Added collapsible callouts
+- Added more timestamp formats
+- Added custom font families
+- Members now display their parent systems on their avatars as a badge
+  - You can toggle it in each system's edit page
+- Bug fixes

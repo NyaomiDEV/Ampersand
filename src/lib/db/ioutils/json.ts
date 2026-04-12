@@ -1,6 +1,7 @@
 import { dirname, documentDir, sep } from "@tauri-apps/api/path";
 import { deleteNull } from "../../serialization";
-import { getTables, ShittyTable } from "../tables";
+import { getTables } from "../tables";
+import type { ShittyTable } from "../impl/shittytable";
 import { mkdir, readTextFile, writeTextFile } from "@tauri-apps/plugin-fs";
 import dayjs from "dayjs";
 import { platform } from "@tauri-apps/plugin-os";

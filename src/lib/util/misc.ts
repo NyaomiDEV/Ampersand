@@ -8,7 +8,7 @@ import { open } from "../native/open";
 import { readFile } from "@tauri-apps/plugin-fs";
 import { basename, sep } from "@tauri-apps/api/path";
 import { findMimeType } from "../mime";
-import { IndexEntry } from "../db/tables";
+import type { IndexEntry } from "../db/impl/types";
 
 export async function getDocumentFile(extensions?: string[], asFile?: true): Promise<File | undefined>;
 export async function getDocumentFile(extensions?: string[], asFile?: false): Promise<Uint8Array<ArrayBuffer> | undefined>;

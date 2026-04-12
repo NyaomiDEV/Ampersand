@@ -1,7 +1,7 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
   "productName": "Ampersand",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "identifier": "moe.ampersand.app",
   "build": {
     "frontendDist": "../dist",
@@ -52,14 +52,14 @@
       "icons/icon.png"
     ],
     "android": {
-      "versionCode": 1557
+      "versionCode": 1613
     },
     "iOS": {
-      "bundleVersion": "1557"
+      "bundleVersion": "1613"
     },
     "macOS": {
       "entitlements": "./Entitlements.plist",
-      "bundleVersion": "1557"
+      "bundleVersion": "1613"
     },
     "linux": {
       "appimage": {
