@@ -52,6 +52,7 @@
 		width: 56px;
 		height: 56px;
 		position: relative;
+		z-index: 0;
 
 		&.smaller {
 			width: 48px;
