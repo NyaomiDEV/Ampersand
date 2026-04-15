@@ -42,12 +42,12 @@ export async function filterMember(search: string, member: Member){
 	}
 
 	if (parsed.pronouns) {
-		if (!member.pronouns || member.pronouns.toLowerCase() !== parsed.pronouns.toLowerCase())
+		if (!member.pronouns || !member.pronouns.toLowerCase().includes(parsed.pronouns.toLowerCase()))
 			return false;
 	}
 
 	if (parsed.role) {
-		if (!member.role || member.role.toLowerCase() !== parsed.role.toLowerCase())
+		if (!member.role || !member.role.toLowerCase().includes(parsed.role.toLowerCase()))
 			return false;
 	}
 
