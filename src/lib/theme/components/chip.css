@@ -16,13 +16,21 @@
 	--color: var(--ion-color-contrast, rgb(var(--md3-on-surface)));
 	color: var(--color);
 
+	&:has(> ion-label:first-child){
+		padding-inline-start: 8px;
+	}
+
+	&:has(> ion-label:last-child){
+		padding-inline-end: 8px;
+	}
+
 	ion-label {
 		white-space: nowrap;
 		text-overflow: ellipsis;
 		overflow: hidden;
 	}
 
-	ion-icon {
+	> ion-icon, > ion-avatar {
 		width: 1.125rem;
 		height: 1.125rem;
 		--color: var(--ion-color-contrast, rgb(var(--md3-primary)));

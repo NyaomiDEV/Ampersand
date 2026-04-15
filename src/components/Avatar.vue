@@ -41,7 +41,7 @@
 			<img aria-hidden="true" :src="getObjectURL(props.image)" />
 		</IonAvatar>
 		<IonIcon v-else :icon="props.icon" />
-		<div class="subavatar">
+		<div v-if="$slots.default" class="subavatar">
 			<slot />
 		</div>
 	</div>
@@ -53,6 +53,29 @@
 		height: 56px;
 		position: relative;
 		z-index: 0;
+
+		&:is(ion-chip > *){
+			flex-shrink: 0;
+			width: 24px;
+			height: 24px;
+			margin-top: 0;
+			margin-bottom: 0;
+
+			&.smaller {
+				width: 1.125rem;
+				height: 1.125rem;
+			}
+
+			&:first-child {
+				margin-inline-end: 8px;
+				margin-inline-start: -8px;
+			}
+
+			&:last-child {
+				margin-inline-end: -8px;
+				margin-inline-start: 8px;
+			}
+		}
 
 		&.smaller {
 			width: 48px;
@@ -68,8 +91,9 @@
 		}
 
 		> * {
-			width: 100%;
-			height: 100%;
+			width: 100% !important;
+			height: 100% !important;
+			margin: 0 !important;
 		}
 
 		> ion-icon {
