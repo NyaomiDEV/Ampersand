@@ -70,10 +70,17 @@
 						:show-role="false"
 						:show-pronouns="false"
 					>
-						<p>{{ vote.reason }}</p>
+						<p class="reason">{{ vote.reason }}</p>
 					</MemberItem>
 				</template>
 			</IonList>
 		</IonContent>
 	</IonModal>
 </template>
+
+<style scoped>
+	p.reason {
+		text-wrap: wrap !important;
+		overflow: visible !important;
+	}
+</style>
