@@ -47,8 +47,8 @@ const timestampExtension: MarkedExtension<(VNode | string)[], VNode | string> = 
 					T: getLocaleInfo().lts,
 					t: getLocaleInfo().lt,
 
-					s: "L LT",
-					S: "L LTS"
+					s: `L ${getLocaleInfo().lt}`,
+					S: `L ${getLocaleInfo().lts}`
 				};
 
 				if(token.format === "R"){
