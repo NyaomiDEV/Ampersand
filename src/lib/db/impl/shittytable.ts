@@ -173,8 +173,10 @@ export class ShittyTable<T extends UUIDable> {
 	}
 
 	async walkDir() {
-		const dir = (await fs.readDir(this.path)).filter(x => x.name !== ".index" && x.name !== ".migrations");
-		return dir;
+		return (await fs.readDir(this.path))
+			.filter(
+				x => ![".index", ".hashes", ".migrations"].includes(x.name)
+			);
 	}
 
 	count() {
