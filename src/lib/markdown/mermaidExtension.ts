@@ -4,6 +4,7 @@ import mermaid from "mermaid";
 import { isDarkMode } from "../mode";
 import { getMaterialColors } from "../theme";
 import { hexFromArgb } from "@material/material-color-utilities";
+import { sha256 } from "../util/misc";
 
 const mermaidExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	renderer: {
@@ -20,10 +21,6 @@ const mermaidExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 		switch(token.type){
 			case "code":
 				if (token.lang === "mermaid") {
-					const hash = new Uint8Array(await window.crypto.subtle.digest("SHA-256", new TextEncoder().encode(token.text)));
-					// @ts-expect-error this is due to number to string conversion on map(); TODO: substitute with toHex()
-					const hashHex = hash.map((b) => b.toString(16).padStart(2, "0")).join("");
-
 					const theme = new Map<string, string>(getMaterialColors().entries().map(x => [x[0], hexFromArgb(x[1])]));
 
 					const themeVariables: Record<string, unknown> = {
@@ -61,6 +58,7 @@ const mermaidExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 
 					};
 
+					const hashHex = await sha256(token.text);
 					mermaid.initialize({
 						startOnLoad: false,
 						theme: "base",
@@ -72,7 +70,7 @@ const mermaidExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 						themeVariables
 					});
 
-					const result = await mermaid.render(`mermaid-render-${hashHex}`, token.text);
+					const result = await mermaid.render(`mermaid-render-${hashHex.slice(0, 7)}`, token.text);
 					// eslint-disable-next-line @typescript-eslint/no-explicit-any
 					(token as any).renderResult = result.svg;
 				}

@@ -9,6 +9,7 @@ async function makeTable<T extends UUIDable>(tableName: string, secondaryKeys: S
 	await fs.mkdir(_path, { recursive: true });
 
 	const table = new ShittyTable<T>(tableName, _path, secondaryKeys);
+	await table.initializeHashes();
 	await table.initializeIndex();
 	await table.migrate();
 

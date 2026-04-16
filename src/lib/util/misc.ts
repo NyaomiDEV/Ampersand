@@ -233,6 +233,17 @@ export function flattenObject(obj: object) {
 	return newObj;
 }
 
+export async function sha256(data: string | BufferSource){
+	if(typeof data === "string")
+		data = new TextEncoder().encode(data);
+
+	const hash = new Uint8Array(await window.crypto.subtle.digest("SHA-256", data));
+
+	let hex = "";
+	hash.forEach(b => hex += b.toString(16).padStart(2, "0"));
+	return hex;
+}
+
 export function sortMembers(a: IndexEntry<Member>, b: IndexEntry<Member>) {
 	switch (appConfig.showMembersApartFromCustomFronts) {
 		case "off":

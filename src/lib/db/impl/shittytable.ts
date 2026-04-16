@@ -1,24 +1,27 @@
 import { sep } from "@tauri-apps/api/path";
 import * as fs from "@tauri-apps/plugin-fs";
-import type { Asset, JournalPost, Member, System, Tag, UUIDable } from "../entities";
+import type { Asset, JournalPost, Member, System, Tag, UUIDable, UUID } from "../entities";
 import { decode, encode } from "@msgpack/msgpack";
 import type { MigrationsMapping } from "../types";
 import { deleteNull, replace, revive, walk, walkAsync } from "../../serialization";
 import { assets, journalPosts, members, systems, tags } from "./migrations";
 import { PartialBy } from "../../types";
 import type { SecondaryKey, IndexEntry } from "./types";
+import { sha256 } from "../../util/misc";
 
 export class ShittyTable<T extends UUIDable> {
 	name: string;
 	path: string;
 	secondaryKeys: SecondaryKey<T>[];
 	index: IndexEntry<T>[];
+	hashes: Record<UUID, string>;
 
 	constructor(name: string, path: string, secondaryKeys: SecondaryKey<T>[]) {
 		this.name = name;
 		this.path = path;
 		this.secondaryKeys = secondaryKeys;
 		this.index = [];
+		this.hashes = {};
 	}
 
 	async getIndexFromDisk() {
@@ -36,7 +39,10 @@ export class ShittyTable<T extends UUIDable> {
 
 	async saveIndexToDisk() {
 		const _path = `${this.path + sep()}.index`;
-		await fs.writeFile(_path, encode(await walkAsync(this.index, replace)));
+		if(this.index.length)
+			await fs.writeFile(_path, encode(await walkAsync(this.index, replace)));
+		else
+			if(await fs.exists(_path)) await fs.remove(_path);
 	}
 
 	async updateIndexWithData(data: T, saveAfterwards: boolean = true) {
@@ -100,6 +106,62 @@ export class ShittyTable<T extends UUIDable> {
 		await this.saveIndexToDisk();
 	}
 
+	async getHashesFromDisk() {
+		const _path = `${this.path + sep()}.hashes`;
+		try {
+			return decode(await fs.readFile(_path)) as Record<UUID, string>;
+		} catch (_e) {
+			// nothing
+		}
+		return undefined;
+	}
+
+	async saveHashesToDisk() {
+		const _path = `${this.path + sep()}.hashes`;
+		if(Object.keys(this.hashes).length)
+			await fs.writeFile(_path, encode(this.hashes));
+		else
+			if (await fs.exists(_path)) await fs.remove(_path);
+	}
+
+	async updateHashesWithData(fileName: string, data: Uint8Array<ArrayBuffer>, saveAfterwards: boolean = true) {
+		this.hashes[fileName] = await sha256(data);
+		if (saveAfterwards)
+			await this.saveHashesToDisk();
+	}
+
+	async removeHash(fileName: string) {
+		if(!this.hashes[fileName]) return;
+
+		delete this.hashes[fileName];
+		await this.saveHashesToDisk();
+	}
+
+	async initializeHashes() {
+		const dir = await this.walkDir();
+		if (!dir) return;
+
+		const diskHashes = await this.getHashesFromDisk();
+
+		if (diskHashes && diskHashes.length) {
+			this.hashes = diskHashes;
+
+			for (const fileName of Object.keys(this.hashes)) {
+				if (!dir.find(x => x.name === fileName)) {
+					delete this.hashes[fileName];
+					continue;
+				}
+			}
+		}
+
+		for (const file of dir) {
+			if (!this.hashes[file.name]) 
+				await this.updateHashesWithData(file.name, await this.getRaw(file.name), false);
+		}
+
+		await this.saveHashesToDisk();
+	}
+
 	async getRaw(uuid: string) {
 		const _path = this.path + sep() + uuid;
 		return await fs.readFile(_path);
@@ -154,57 +216,72 @@ export class ShittyTable<T extends UUIDable> {
 			await this.update({ uuid: data.uuid as string } as UUIDable & Partial<T>);
 	}
 
-	async write(data: T, saveIndexAfterwards: boolean) {
+	async write(data: T, saveIndexAndHashesAfterwards: boolean) {
 		const { uuid } = data;
 		const _path = this.path + sep() + uuid;
-		await fs.writeFile(_path, encode(deleteNull(await walkAsync(data, replace))));
-
-		await this.updateIndexWithData(data, saveIndexAfterwards);
+		const _data = encode(deleteNull(await walkAsync(data, replace)));
+		await fs.writeFile(_path, _data);
+		await this.updateHashesWithData(uuid, _data, saveIndexAndHashesAfterwards);
+		await this.updateIndexWithData(data, saveIndexAndHashesAfterwards);
 	}
 
 	exists(uuid: string) {
 		return !!this.index.find(x => uuid === x.uuid);
 	}
 
-	async add(data: PartialBy<T, keyof UUIDable>, saveIndexAfterwards = true) {
+	async add(data: PartialBy<T, keyof UUIDable>, saveIndexAndHashesAfterwards = true) {
 		data.uuid = data.uuid || window.crypto.randomUUID();
 		if (!this.exists(data.uuid)) {
-			await this.write(data as T, saveIndexAfterwards);
+			await this.write(data as T, saveIndexAndHashesAfterwards);
 			return data.uuid;
 		}
 		return false;
 	}
 
 	async bulkAdd(contents: T[]) {
-		for (const content of contents) {
-			// copy of add routine but just because we suck
-			if (!this.exists(content.uuid)) {
-				const _path = this.path + sep() + content.uuid;
-				await fs.writeFile(_path, encode(deleteNull(await walkAsync(content, replace))));
-				await this.updateIndexWithData(content, false);
-			}
-		}
+		const returnValues = await Promise.all(
+			contents.map(x => this.add(x, false))
+		);
 
 		await this.saveIndexToDisk();
+		await this.saveHashesToDisk();
+
+		return returnValues;
 	}
 
-	async update(newData: UUIDable & Partial<T>, saveIndexAfterwards = true) {
+	async update(newData: UUIDable & Partial<T>, saveIndexAndHashesAfterwards = true) {
 		const { uuid } = newData;
 		const oldData = await this.get(uuid);
 
 		if (oldData) {
 			const data = { ...oldData, ...newData } as T;
-			await this.write(data, saveIndexAfterwards);
+			await this.write(data, saveIndexAndHashesAfterwards);
 			return { oldData, newData: data };
 		}
 
 		return false;
 	}
 
-	async delete(uuid: string) {
+	async bulkUpdate(contents: (UUIDable & Partial<T>)[]) {
+		const returnValues = await Promise.all(
+			contents.map(x => this.update(x, false))
+		);
+
+		await this.saveIndexToDisk();
+		await this.saveHashesToDisk();
+
+		return returnValues;
+	}
+
+	async delete(uuid: UUID) {
 		const _path = this.path + sep() + uuid;
 		await fs.remove(_path);
 		await this.removeIndex(uuid);
+		await this.removeHash(uuid);
+	}
+
+	async bulkDelete(uuids: UUID[]){
+		await Promise.all(uuids.map(x => this.delete(x)));
 	}
 
 	async clear() {
@@ -220,6 +297,7 @@ export class ShittyTable<T extends UUIDable> {
 			await fs.remove(`${this.path + sep()}.migrations`);
 
 		await this.saveIndexToDisk();
+		await this.saveHashesToDisk();
 	}
 
 	async getMigrationVersion() {
