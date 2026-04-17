@@ -4,6 +4,96 @@
 		"inEnglish": "Portuguese"
 	},
 	"genericDeleteDesc": "Você não poderá desfazer essa ação!",
-	"addTimestamp": "Adicionar carimbo de data/hora",
-	"memberMention": "Mencione um membro"
+	"addTimestamp": "Adicionar carimbo de tempo",
+	"memberMention": "Mencione um membro",
+	"alerts": {
+		"cancel": "Cancelar",
+		"clear": "Limpar",
+		"yes": "Sim",
+		"ok": "Ok",
+		"no": "Não"
+	},
+	"presence": {
+		"absent": "Ausente",
+		"present": "Presente",
+		"heavilyDissociating": "Dissociando intensamente",
+		"dissociating": "Dissociando",
+		"zonedOut": "Distraído",
+		"fullyGrounded": "Inteiramente presente"
+	},
+	"back": "Voltar",
+	"time": "Hora",
+	"timeSizes": {
+		"years": {
+			"long": "anos",
+			"short": "Y"
+		},
+		"months": {
+			"long": "meses",
+			"short": "M"
+		},
+		"days": {
+			"long": "dias",
+			"short": "D"
+		},
+		"weekdays": {
+			"monday": "Segunda-feira",
+			"tuesday": "Terça-feira",
+			"wednesday": "Quarta-feira",
+			"thursday": "Quinta-feira",
+			"friday": "Sexta-feira",
+			"saturday": "Sábado",
+			"sunday": "Domingo"
+		},
+		"hours": {
+			"long": "horas",
+			"short": "h"
+		},
+		"minutes": {
+			"long": "minutos",
+			"short": "m"
+		},
+		"seconds": {
+			"long": "segundos",
+			"short": "s"
+		}
+	},
+	"shapes": {
+		"arrow": "Seta",
+		"burst": "Estouro",
+		"diamond": "Diamante",
+		"flower": "Flor",
+		"heart": "Coração",
+		"pill": "Pílula",
+		"semicircle": "Semicírculo",
+		"boom": "Explosão",
+		"fan": "Fã",
+		"square": "Quadrado",
+		"arch": "Arco",
+		"bun": "Pãozinho",
+		"clamshell": "Concha",
+		"gem": "Gema",
+		"ghost-ish": "Fantasmoso",
+		"leaf-clover4": "Trevo de quatro folhas",
+		"leaf-clover8": "Trevo de oito folhas",
+		"oval": "Oval",
+		"pentagon": "Pentágono",
+		"pixel-circle": "Círculo de pixels",
+		"pixel-triangle": "Triângulo de pixels",
+		"puffy-diamond": "Diamante inchado",
+		"puffy": "Inchado",
+		"sided-cookie12": "Cookie de doze lados",
+		"sided-cookie4": "Cookie de quatro lados",
+		"sided-cookie6": "Cookie de seis lados",
+		"sided-cookie7": "Cookie de sete lados",
+		"sided-cookie9": "Cookie de nove lados",
+		"slanted": "Inclinado",
+		"soft-boom": "Explosão suave",
+		"soft-burst": "Estouro suave",
+		"sunny": "Ensolarado",
+		"very-sunny": "Muito ensolarado",
+		"triangle": "Triângulo",
+		"noShape": "Sem Forma"
+	},
+	"developerMode": "Modo de desenvolvedor"
 }

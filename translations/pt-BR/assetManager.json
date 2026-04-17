@@ -1,12 +1,18 @@
 {
-	"header": "Gerenciamento de Recursos",
-	"searchPlaceholder": "Procurar recursos...",
+	"header": "Gerenciamento de Arquivos",
+	"searchPlaceholder": "Procurar por arquivos...",
 	"add": {
-		"header": "Adicionar recurso",
+		"header": "Adicionar arquivo",
 		"attachment": "Adicionar anexo"
 	},
 	"edit": {
-		"header": "Editar recurso",
-		"friendlyName": "Editar nome"
+		"header": "Editar arquivo",
+		"friendlyName": "Editar nome",
+		"tags": "Tags",
+		"delete": {
+			"confirm": "Tem certeza que deseja excluir esse arquivo?",
+			"title": "Excluir Arquivo"
+		},
+		"attachment": "Remover anexo"
 	}
 }

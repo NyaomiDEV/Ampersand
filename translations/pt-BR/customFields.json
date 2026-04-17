@@ -1,10 +1,18 @@
 {
-	"header": "Campos customizados",
-	"select": "Selecionar campos customizados",
-	"searchPlaceholder": "Procurar campos customizados...",
+	"header": "Campos personalizados",
+	"select": "Selecionar campos personalizados",
+	"searchPlaceholder": "Procurar campos personalizados...",
 	"edit": {
-		"header": "Editar campo customizado",
-		"headerAdd": "Adicionar campo customizado",
-		"name": "Nome de campo customizado"
+		"header": "Editar campo personalizado",
+		"headerAdd": "Adicionar campo personalizado",
+		"name": "Nome do campo personalizado",
+		"delete": {
+			"confirm": "Tem certeza que quer excluir esse campo customizado?",
+			"title": "Excluir campo personalizado"
+		},
+		"default": {
+			"title": "Alternar para padrão",
+			"desc": "Os campos personalizados padrões sempre aparecerão na tela de edição de membros"
+		}
 	}
 }

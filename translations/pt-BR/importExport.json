@@ -5,7 +5,32 @@
 		"desc": "Salve seus dados atuais para um arquivo que você possa guardar em algum outro lugar"
 	},
 	"dbImportDesc": "Aviso! Isso irá sobrescrever qualquer dado existente",
-	"dbImport": "Importar seus dados de arquivo de backup",
+	"dbImport": "Importar seus dados",
 	"pkImport": "Importar seus dados de exportação do Pluralkit",
-	"tuImport": "Importar seus dados de exportação do Tupperbox"
+	"tuImport": "Importar seus dados de exportação do Tupperbox",
+	"importHeader": "Importar",
+	"exportHeader": "Exportar",
+	"spImport": "Importar seus dados de exportação do Simply Plural",
+	"thirdPartyHeader": "Integrações com terceiros",
+	"dbImportOld": {
+		"title": "Importe seus dados a partir de uma versão anterior do Ampersand",
+		"desc": "Para arquivos de backup feitos com Ampersand < (abaixo de) 0.2.0",
+		"note": "Versões antigas do Ampersand usavam um formato de arquivo (ampdb) que agora é datado. Se você está mantendo backups antigos, tenha certeza de importar eles agora e re-exportar eles, pois essa opção será removida no futuro."
+	},
+	"ocImport": "Importar seus dados de um exporte do Octocon",
+	"status": {
+		"imported": "O backup foi importado. Por favor reinicie o app.",
+		"importedSp": "O exporte do Simply Plural foi importado. Por favor reinicie o app.",
+		"importedOc": "O exporte do Octocon foi importado. Por favor reinicie o app.",
+		"importedPk": "O exporte do PluralKit foi importado. Por favor reinicie o app.",
+		"importedTu": "O exporte do Tupperbox foi importado. Por favor reinicie o app.",
+		"exportedApp": "O backup foi exportado para a localização que você escolheu.",
+		"exportedAppIos": "O backup foi exportado para a pasta do Ampersand no gerenciador de arquivos.",
+		"errorExport": "Erro enquanto exportava o backup.",
+		"error": "Erro enquanto importava o backup.",
+		"errorOc": "Erro ao importar o exporte do Octocon.",
+		"errorSp": "Erro ao importar exporte do Simply Plural.",
+		"errorPk": "Erro ao importar do exporte do PluralKit.",
+		"errorTu": "Erro ao importar do exporte do Tupperbox."
+	}
 }

@@ -1,14 +1,53 @@
 {
-	"header": "Gerenciamento de Etiquetas",
-	"searchPlaceholder": "Procurar por etiquetas...",
-	"select": "Selecione algumas etiquetas",
+	"header": "Gerenciamento de Tags",
+	"searchPlaceholder": "Procurar por tags...",
+	"select": "Selecione algumas tags",
 	"selector": {
 		"member": "Etiquetas de Membros",
-		"journal": "Etiquetas de diário"
+		"journal": "Tags do diário",
+		"asset": "Tags de Arquivos"
 	},
 	"edit": {
 		"header": {
-			"member": "Editar etiqueta de membro"
-		}
+			"member": "Editar tag de membro",
+			"journal": "Editar tag do diário",
+			"asset": "Editar tag de arquivo"
+		},
+		"name": "Nome da tag",
+		"type": {
+			"member": "Membro",
+			"journal": "Diário",
+			"asset": "Arquivo",
+			"header": "Tipo de tag",
+			"desc": "Nota: Você pode definir o tipo de tag apenas durante sua criação!"
+		},
+		"delete": {
+			"title": "Excluir tag",
+			"confirm": "Tem certeza que quer excluir essa tag?"
+		},
+		"description": "Descrição da Tag",
+		"members": {
+			"desc_one": "{{count}} membro usa essa tag",
+			"desc_many": "{{count}} membros usam essa tag",
+			"desc_other": "{{count}} membros usam essa tag",
+			"title": "Escolha membros usando essa tag"
+		},
+		"showJournal": {
+			"desc_one": "{{count}} anotação do diário tem essa tag",
+			"desc_many": "{{count}} anotações do diário tem essa tag",
+			"desc_other": "{{count}} anotações do diário tem essa tag",
+			"title": "Mostrar anotações do diário que tenham essa tag"
+		},
+		"showAssets": {
+			"desc_one": "{{count}} arquivo tem essa tag",
+			"desc_many": "{{count}} arquivos tem essa tag",
+			"desc_other": "{{count}} arquivos tem essa tag",
+			"title": "Mostre arquivos com essa tag"
+		},
+		"viewInLists": "Ver nas listas",
+		"isArchived": "Tag de Arquivamento",
+		"tagID": "ID da tag: {{tagID}}",
+		"tagIDCopiedToClipboard": "ID da Tag em formato mencionado foi copiada à área de transferência!",
+		"color": "Cor da tag"
 	}
 }

@@ -1,0 +1,9 @@
+{
+	"header": "Rakenduse teave",
+	"ciVersion": "CI versioon",
+	"version": "Versioon {{version}}",
+	"madein": "Tehtud Itaalias suure armastusega",
+	"privacyPolicy": "Andmekaitsepõhimõtted",
+	"updateAvailable": "Saadaval on uuendus: {{newVersion}}",
+	"credits": "Tänuavaldused"
+}

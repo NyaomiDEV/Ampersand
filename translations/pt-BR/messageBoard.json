@@ -1,13 +1,46 @@
 {
 	"header": "Painel de Mensagens",
-	"searchPlaceholder": "Procure por mensagens...",
+	"searchPlaceholder": "Procurar por mensagens...",
 	"polls": {
 		"boardMessageContainsPoll": "Contém enquete",
 		"collapsePoll": "Esconda a enquete",
 		"voteCast": {
 			"voter": "Selecione o votante",
 			"reason": "Diga a razão",
-			"reasonHint": "Razão"
+			"reasonHint": "Razão",
+			"retractConfirmation": "Tem certeza de que quer retirar seu voto?"
+		},
+		"resultsButton": "Mostrar resultados",
+		"defaultPollValues": {
+			"yes": "Sim",
+			"veto": "Veto",
+			"abstain": "Abster-se",
+			"no": "Não"
+		},
+		"resultsHeader": "Resultados do voto",
+		"choice": {
+			"desc_one": "{{count}} votante",
+			"desc_many": "{{count}} votantes",
+			"desc_other": "{{count}} votantes"
 		}
+	},
+	"edit": {
+		"title": "Título",
+		"body": "Corpo da mensagem",
+		"pollIsMultipleChoice": "Permitir múltiplas escolhas",
+		"delete": {
+			"confirm": "Tem certeza de que deseja excluir essa mensagem?",
+			"title": "Apagar mensagem do painel"
+		},
+		"pollChoice": "Descrição da escolha",
+		"date": "Editar data",
+		"member": "Editar autor da mensagem",
+		"isArchived": "Arquivar mensagem",
+		"attachPoll": "Anexe um enquete a essa mensagem",
+		"deleteAttachedPoll": "Excluir enquete anexada",
+		"pollAddNewChoice": "Adicionar uma nova escolha à enquete",
+		"pollEditWarning": "Mudar qualquer detalhe da enquete irá resetar os votos!",
+		"header": "Editar Mensagem",
+		"isPinned": "Fixar Mensagem"
 	}
 }

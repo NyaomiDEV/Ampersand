@@ -1,7 +1,7 @@
 {
 	"header": "Segurança",
 	"applock": {
-		"title": "Tranca de Aplicativo",
+		"title": "Bloqueio do app",
 		"desc": "Bloquear o aplicativo com uma senha"
 	},
 	"biometrics": {
@@ -9,6 +9,21 @@
 		"desc": "Desbloqueie usando sua digital ou face"
 	},
 	"allowRemoteContent": {
-		"title": "Permitir conteúdo remoto"
-	}
+		"title": "Permitir conteúdo remoto",
+		"desc": "Permitir Ampersand para usar a internet para consultar conteúdo remoto, como as imagens em campos Markdown e avatares em importações de terceiros."
+	},
+	"passwordAlert": {
+		"header": "Aviso",
+		"text": "Você tem certeza que quer proceder? Antes que proceda, por favor anote sua senha em algum lugar fora do Ampersand pois você não poderá recuperar seus dados ou resetar sua senha se perdê-la. Tenha certeza de exportar seus dados antes de estabelecer-la!"
+	},
+	"inputPassword": {
+		"titleAdd": "Digite sua nova senha",
+		"titleReenter": "Redigite a senha",
+		"titleModifyOld": "Digite Sua Senha Antiga",
+		"titleModifyNew": "Digite sua nova senha",
+		"hint": "Senha",
+		"titleDisable": "Digite sua senha"
+	},
+	"editPassword": "Modificar a senha",
+	"useIPC": "Envie eventos a outros aplicativos"
 }

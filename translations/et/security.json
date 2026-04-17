@@ -1,0 +1,14 @@
+{
+	"header": "Turvalisus",
+	"applock": {
+		"title": "Rakenduse lukustus",
+		"desc": "Lukusta rakendus salasõnaga"
+	},
+	"biometrics": {
+		"title": "Kasuta biomeetriat",
+		"desc": "Ava lukustus sõrmejälje või näotuvastusega"
+	},
+	"allowRemoteContent": {
+		"title": "Luba kuvada mujal asuvat sisu"
+	}
+}

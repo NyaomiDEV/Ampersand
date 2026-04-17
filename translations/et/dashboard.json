@@ -1,0 +1,6 @@
+{
+	"header": "Töölaud",
+	"header_salute": "Tere!",
+	"header_mainfronter": "Hei, {{fronterName}}!",
+	"systemDescription": "Süsteemi kirjeldus"
+}

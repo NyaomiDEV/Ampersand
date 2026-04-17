@@ -1,12 +1,29 @@
 {
 	"header": "Diário",
 	"searchPlaceholder": "Procurar no diário...",
-	"contentWarning": "Esse post contêm conteúdo sensível",
-	"private": "Esse post é particular",
-	"pinnedPosts": "Posts fixados",
-	"alertSubheader": "Você realmente quer ler esse post?",
+	"contentWarning": "Essa anotação contêm conteúdo sensível",
+	"private": "Essa anotação é particular",
+	"pinnedPosts": "Anotações fixadas",
+	"alertSubheader": "Você realmente quer ler essa anotação?",
 	"edit": {
-		"header": "Postagem",
-		"headerAdd": "Adicionar nova postagem"
+		"header": "Anotação",
+		"headerAdd": "Adicionar nova anotação",
+		"tags": "Tags",
+		"headerEdit": "Editar anotação",
+		"title": "Título",
+		"subtitle": "Subtítulo",
+		"isPinned": "Anotação fixada",
+		"isPrivate": "Anotação particular",
+		"contentWarning": "Aviso de conteúdo",
+		"delete": {
+			"confirm": "Tem certeza que quer excluir essa anotação?",
+			"title": "Apagar anotação do diário"
+		},
+		"headerOptions": "Opções da anotação",
+		"author": "Editar Autor",
+		"date": "Editar data",
+		"body": "Corpo da anotação",
+		"postID": "ID de anotação: {{postID}}",
+		"postIDcopiedToClipboard": "ID da anotação no formato mencionado foi copiado a sua área de transferência!"
 	}
 }

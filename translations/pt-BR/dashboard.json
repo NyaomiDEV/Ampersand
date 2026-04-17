@@ -2,8 +2,14 @@
 	"header": "Painel",
 	"header_salute": "Olá!",
 	"header_mainfronter": "Oi, {{fronterName}}!",
-	"systemDescription": "Descrição de sistema",
-	"nowFronting": "Frontando agora",
+	"systemDescription": "Descrição do sistema",
+	"nowFronting": "No fronte agora",
 	"fronterInfluencing": "Influenciando {{influencedMember}}",
-	"addToFront": "Adicionar ao front"
+	"addToFront": "Adicionar ao fronte",
+	"messageBoard": {
+		"header": "Painel de Mensagens",
+		"add": "Adicionar ao painel",
+		"view": "Ver mais"
+	},
+	"recentFrontingHistory": "Recentemente substituído"
 }

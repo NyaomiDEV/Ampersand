@@ -5,6 +5,26 @@
 	"edit": {
 		"header": "Sistema",
 		"headerAdd": "Adicione sistema",
-		"headerEdit": "Editar sistema"
+		"headerEdit": "Editar sistema",
+		"noDescription": "Sem descrição",
+		"color": "Cor",
+		"imageClip": "Formato do avatar",
+		"archived": "Arquivado",
+		"delete": {
+			"title": "Deletar sistema",
+			"confirm": "Tem certeza que quer deletar esse sistema?"
+		},
+		"description": "Descrição do sistema",
+		"name": "Nome do sistema",
+		"memberCount": "Número de membros",
+		"memberCountText": "{{totalMemberCount}} membro(s), {{memberCount}} ativo(s), {{archivedMemberCount}} arquivado(s)",
+		"viewInLists": "Ver nas listas",
+		"customFrontCountText": "{{totalCustomFrontCount}} fronte(s) personalizado(s), {{customFrontCount}} ativo(s), {{archivedCustomFrontCount}} arquivado(s)",
+		"tapToShow": "Toque para mostrar",
+		"showMembers": "Mostre os membros dentro deste sistema",
+		"parent": "Sistema-pai",
+		"isPinned": "Fixar sistema",
+		"systemID": "ID do sistema: {{systemID}}",
+		"systemIDcopiedToClipboard": "ID do sistema em formato mencionado foi copiado à área de transferência!"
 	}
 }

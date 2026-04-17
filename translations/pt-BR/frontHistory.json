@@ -1,11 +1,34 @@
 {
-	"header": "Histórico de Front",
-	"searchPlaceholder": "Procurar o histórico de front...",
-	"currentlyFronting": "Frontando atualmente",
-	"wasFronting": "Estava frontando ainda",
-	"frontedThatDay": "Frontou naquele dia",
+	"header": "Histórico de Fronte",
+	"searchPlaceholder": "Procurar o histórico de fronte...",
+	"currentlyFronting": "Atualmente no fronte",
+	"wasFronting": "Estava no fronte ainda",
+	"frontedThatDay": "Estava no fronte naquele dia",
 	"influencing": "Influenciando {{influencedMember}}",
 	"edit": {
-		"header": "Editar entrada de front"
+		"header": "Editar entrada de fronte",
+		"comment": "Comentário",
+		"presence": {
+			"confirmButton": "Confirmar",
+			"date": "Data",
+			"historyTitle": "Histórico de presença",
+			"lastPresence": "Da última vez estava {{presence}} / 5 estrelas",
+			"addTitle": "Quão presente você está, numa escala de 0 a 10?"
+		},
+		"startTime": "Horário de início",
+		"endTime": "Horário de término",
+		"delete": {
+			"confirm": "Tem certeza que quer deletar essa entrada de front?",
+			"title": "Excluir entrada de fronte"
+		},
+		"removeFromFront": "Remover do fronte",
+		"member": "Editar membro de fronte",
+		"customStatus": "Status personalizado",
+		"influencing": {
+			"select": "Escolha um membro para influenciar",
+			"currentlyInfluencing": "Atualmente influenciando"
+		},
+		"isMainFronter": "Fronte principal",
+		"isLocked": "Trave o fronte"
 	}
 }

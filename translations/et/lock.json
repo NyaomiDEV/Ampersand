@@ -1,0 +1,8 @@
+{
+	"title": "Rakendus on lukustatud",
+	"hint": "Palun sisesta oma rakenduse salasõna",
+	"biometrics": {
+		"title": "See rakendus on lukustatud",
+		"reason": "Ava lukustus"
+	}
+}

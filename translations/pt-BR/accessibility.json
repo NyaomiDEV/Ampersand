@@ -2,11 +2,59 @@
 	"header": "Acessibilidade",
 	"highLegibilityFont": {
 		"title": "Fonte de alta legibilidade",
-		"desc": "Usar uma fonte de alta legibilidade da fonte padrão do dispositivo"
+		"desc": "Usar uma fonte de alta legibilidade ao invés da fonte padrão do dispositivo"
 	},
 	"highLegibilityFontType": {
 		"title": "Família de fonte de alta legibilidade",
 		"atkinson": "Atkinson Hyperlegible",
-		"opendyslexic": "OpenDyslexic"
+		"opendyslexic": "OpenDyslexic",
+		"lexend": "Lexend",
+		"comicrelief": "Comic Relief",
+		"system-font": "Fonte do Sistema"
+	},
+	"uiVariant": {
+		"auto": "Automáticamente",
+		"dark": "Escuro",
+		"light": "Claro",
+		"title": "Variante da Interface de Usuário"
+	},
+	"useAccentColor": {
+		"title": "Cor de destaque",
+		"desc": "Cor de destaque personalizada"
+	},
+	"fontScale": {
+		"title": "Tamanho da fonte"
+	},
+	"longPressDuration": {
+		"title": "Duração de pressionamento longo"
+	},
+	"themeIsAmoled": {
+		"title": "Modo tela AMOLED",
+		"desc": "Use um plano de fundo totalmente preto enquanto no modo escuro. Pode ajudar a diminuir desgaste de tela."
+	},
+	"themeIsVibrant": {
+		"title": "Tema vibrante",
+		"desc": "Traga mais cor à interface de usuário."
+	},
+	"colorIndicatorPosition": {
+		"title": "Posição do indicador de cor",
+		"avatar": "Contorno do avatar",
+		"listItem": "Borda do item da lista"
+	},
+	"accentColor": {
+		"title": "Escolha a cor de destaque"
+	},
+	"reducedMotion": {
+		"title": "Movimento reduzido",
+		"desc": "Desativar animação no app"
+	},
+	"compactLists": {
+		"title": "Listas compactas"
+	},
+	"disableCovers": {
+		"title": "Desabilitar capas"
+	},
+	"contrastLevel": {
+		"title": "Nível de contraste"
 	}
 }

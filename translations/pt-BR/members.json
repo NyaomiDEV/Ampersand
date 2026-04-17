@@ -1,11 +1,49 @@
 {
 	"header": "Membros",
-	"searchPlaceholder": "Procure por membros...",
+	"searchPlaceholder": "Procurar por membros...",
 	"select": "Selecione um membro",
-	"deletedMember": "Membro deletado",
-	"deletedCustomFront": "Front customizado deletado",
+	"deletedMember": "Membro excluído",
+	"deletedCustomFront": "Fronte personalizado excluído",
 	"actions": {
-		"addToFront": "Adicionar ao front",
-		"setMainFronter": "Escolha como front principal"
+		"addToFront": "Adicionar ao fronte",
+		"setMainFronter": "Escolha como fronte principal",
+		"removeFromFront": "Remover do fronte",
+		"unsetMainFronter": "Retirar do fronte principal",
+		"setSoleFronter": "Escolher como fronte"
+	},
+	"edit": {
+		"noDescription": "Sem descrição",
+		"imageClip": "Formato do avatar",
+		"header": "Membro",
+		"headerAdd": "Adicionar membro",
+		"name": "Nome",
+		"pronouns": "Pronomes",
+		"archived": "Arquivado",
+		"role": "Cargo",
+		"customFieldsAdd": "Adicionar campos personalizados",
+		"tags": "Editar tags",
+		"description": "Descrição",
+		"delete": {
+			"title": "Deletar Membro",
+			"confirm": "Tem certeza que quer deletar esse membro?"
+		},
+		"headerEdit": "Editar Membro",
+		"color": "Cor preferida",
+		"system": "Editar o sistema de afiliação",
+		"isPinned": "Fixar membro",
+		"customFront": "Fronte personalizado",
+		"showFrontingEntries": "Mostrar entradas de fronte",
+		"showBoardEntries": "Mostrar painel de mensagens",
+		"showJournalEntries": "Mostrar anotações do diário",
+		"memberID": "ID de membro: {{memberID}}",
+		"dateCreated": "Data criada: {{dateCreated}}",
+		"memberIDcopiedToClipboard": "ID do membro em formato mencionado foi copiado à área de transferência!"
+	},
+	"toasts": {
+		"addToFront": "Adicionar membro ao fronte",
+		"setMainFronter": "Membro designado como fronte principal",
+		"unsetMainFronter": "Membro retirado do fronte principal",
+		"setSoleFronter": "Membro designado como fronte único",
+		"removeFromFront": "Membro removido do fronte"
 	}
 }
