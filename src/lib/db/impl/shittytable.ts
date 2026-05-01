@@ -143,7 +143,7 @@ export class ShittyTable<T extends UUIDable> {
 
 		const diskHashes = await this.getHashesFromDisk();
 
-		if (diskHashes && diskHashes.length) {
+		if (diskHashes) {
 			this.hashes = diskHashes;
 
 			for (const fileName of Object.keys(this.hashes)) {
