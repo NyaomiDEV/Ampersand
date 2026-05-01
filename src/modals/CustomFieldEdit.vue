@@ -130,7 +130,7 @@
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton :disabled="!customField.name.replace(/^[\u200B-\u200F\uFEFF]/, '').length" @click="save">
+				<IonFabButton :disabled="!customField.name.replace(/^[\u200B-\u200F\uFEFF]/, '').trim().length" @click="save">
 					<IonIcon :icon="saveMD" />
 				</IonFabButton>
 			</IonFab>
