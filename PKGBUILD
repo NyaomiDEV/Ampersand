@@ -1,7 +1,7 @@
 pkgname=ampersand-git
 pkgver=0.2.1
 pkgrel=1
-pkgdesc="Tracking app for plural systems"
+pkgdesc="Tracking app for people with complex dissociative disorders"
 url="https://codeberg.org/Ampersand/app"
 license=("AGPL-v3.0-only")
 

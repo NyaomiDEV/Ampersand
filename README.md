@@ -1,6 +1,6 @@
 # Ampersand
 
-Welcome to Ampersand.
+> Ampersand is not a medical product, and as such it does not constitute medical advice.
 
 [![Liberapay patrons](https://img.shields.io/liberapay/patrons/Ampersand)](https://liberapay.com/Ampersand)
 ![Android Build Status](https://img.shields.io/github/actions/workflow/status/NyaomiDEV/Ampersand/build-android.yml?style=flat&label=android%20build)
@@ -15,27 +15,7 @@ Welcome to Ampersand.
 
 ## What is Ampersand?
 
-Ampersand is a research project, and also an app. It wants to do one thing and do it reasonably well: tracking and journaling for plural systems.
-
-## Wait, why would anyone reinvent the wheel?
-
-Because all other approaches up until now are cloud based. We need at least one app that can be used fully offline, and that is developed with an offline-first mindset.
-
-## So, is this for privacy reasons?
-
-It is not. It's just because it's unreasonable that other apps and services out here do require an account somewhere to work, and while some do offer an "offline mode", they still require online signup. What if one wants their data to live and die on their phone/tablet/desktop/laptop?
-
-But if you want to think of it on those terms, sure, having an offline app could also mean privacy.
-
-## Is Ampersand something I can use on a day-to-day basis?
-
-Ampersand is NOT something you can use on a day-to-day basis. Or at least, not yet.
-
-Do not expect stability from an application still in its infancy.
-
-Currently Ampersand performs poorly for systems with a large number of members, tags or custom fields; therefore, if you're a polyfragmented system, please stick with more stable alternatives until we solve all the issues contributing to this instability.
-
-Other than this, Ampersand is still to be considered alpha software, meaning it still has a long ways to go.
+Ampersand is a research project, and also an app. It wants to do one thing and do it reasonably well: tracking and journaling for people with complex dissociative symptoms such as DID and OSDD.
 
 ## What is Ampersand compatible with?
 Please read the relevant [wiki page](https://codeberg.org/Ampersand/app/wiki/Requirements).
