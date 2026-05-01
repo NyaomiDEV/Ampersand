@@ -60,14 +60,36 @@
 		"semicircle": "Halbkreis",
 		"square": "Quadrat",
 		"sunny": "Sonnig",
-		"gem": "Edelstein"
+		"gem": "Edelstein",
+		"arrow": "Pfeil",
+		"boom": "Explosion",
+		"bun": "Laib Brot",
+		"burst": "Ausbruch",
+		"clamshell": "Muschelschale",
+		"diamond": "Diamant",
+		"fan": "Fächer",
+		"leaf-clover4": "vierblättriges Kleeblatt",
+		"leaf-clover8": "achtblättriges Kleeblatt",
+		"pixel-circle": "Pixelkreis",
+		"pixel-triangle": "Pixeldreieck",
+		"sided-cookie12": "zwölfseitiger Keks",
+		"sided-cookie4": "vierseitiger Keks",
+		"sided-cookie6": "sechsseitiger Keks",
+		"sided-cookie7": "siebenseitiger Keks",
+		"sided-cookie9": "neunseitiger Keks",
+		"soft-boom": "sanfte Explosion",
+		"soft-burst": "sanfter Anbruch",
+		"arch": "Bogen",
+		"ghost-ish": "Geisterhaft"
 	},
 	"presence": {
 		"absent": "Abwesend",
 		"heavilyDissociating": "Stark dissoziierend",
 		"dissociating": "Dissoziieren",
 		"fullyGrounded": "Völlig bodenständig",
-		"present": "Anwesend"
+		"present": "Anwesend",
+		"zonedOut": "Geistesabwesend"
 	},
-	"memberMention": "Mitglied erwähnen"
+	"memberMention": "Mitglied erwähnen",
+	"developerMode": "Entwickleroptionen"
 }

@@ -9,6 +9,21 @@
 		"desc": "Ava lukustus sõrmejälje või näotuvastusega"
 	},
 	"allowRemoteContent": {
-		"title": "Luba kuvada mujal asuvat sisu"
+		"title": "Luba kuvada mujal asuvat sisu",
+		"desc": "Luba Ampersandil kasutada internetiühendust kaugsisu otsimiseks, näiteks Markdowni sisu pilte ja kolmandate osapoolte imporditud tunnuspilte."
+	},
+	"inputPassword": {
+		"titleModifyOld": "Sisesta oma senine salasõna",
+		"titleModifyNew": "Sisesta oma uus salasõna",
+		"titleDisable": "Sisesta oma salasõna",
+		"hint": "Salasõna",
+		"titleAdd": "Sisesta oma uus salasõna",
+		"titleReenter": "Korda salasõna"
+	},
+	"editPassword": "Muuda salasõna",
+	"useIPC": "Saada sündmusi teistesse rakendustesse",
+	"passwordAlert": {
+		"text": "Kas oled kindel, et soovid jätkata? Enne jätkamist palun märgi üles oma salasõna väljaspool Ampersandi (näiteks turvalisse salasõnahaldurisse). Kui peaksid salsasõna kaotama, siis kaotad ka võimaluse taastada oma andmeid ja lähtestada salasõna. Palun kontrolli, et oled ka andmed eksportinud!",
+		"header": "Hoiatus"
 	}
 }

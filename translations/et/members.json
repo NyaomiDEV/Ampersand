@@ -1,1 +1,7 @@
-{}
+{
+	"header": "Liikmed",
+	"select": "Vali liige",
+	"actions": {
+		"addToFront": "Lisa esiplaanile"
+	}
+}

@@ -5,8 +5,9 @@
 	"header_mainfronter": "Hallo, {{fronterName}}!",
 	"fronterInfluencing": "Beeinflusst {{influencedMember}}",
 	"messageBoard": {
-		"header": "Pinnwand",
-		"add": "Zur Pinnwand hinzufügen"
+		"header": "Nachrichtenwand",
+		"add": "Zur Pinnwand hinzufügen",
+		"view": "Sehe mehr"
 	},
 	"nowFronting": "Am Fronten",
 	"addToFront": "Zur Front hinzufügen",

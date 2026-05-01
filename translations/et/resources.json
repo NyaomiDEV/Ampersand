@@ -1,1 +1,20 @@
-{}
+{
+	"header": "Ressursid",
+	"website": {
+		"title": "Veebisait",
+		"desc": "Laadi alla rakenduse viimane versioon ja kasuta meie lisatud uuendusi."
+	},
+	"ampersand": "Ampersandis",
+	"blog": {
+		"title": "Ajaveeb",
+		"desc": "Loe viimaseid uudiseid ja jälgi meie arengut."
+	},
+	"wiki": {
+		"title": "Viki",
+		"desc": "Abiteave rakenduse kohta."
+	},
+	"repository": {
+		"desc": "Tee kaastööd rakenduse arendamisel ja anna teava vigadest või probleemidest.",
+		"title": "Lähtekoodi hoidla"
+	}
+}

@@ -18,19 +18,30 @@
 		"description": "Beschreibung",
 		"noDescription": "Keine Beschreibung",
 		"archived": "Archiviert",
-		"header": "Mitglied"
+		"header": "Mitglied",
+		"imageClip": "Profilbild-Form",
+		"tags": "Tags bearbeiten",
+		"showFrontingEntries": "Front-Einträge anzeigen",
+		"dateCreated": "Erstellungsdatum: {{dateCreated}}",
+		"delete": {
+			"title": "Mitglied verwerfen",
+			"confirm": "Bist du sicher, dass du dieses Mitglied löschen möchtest?"
+		},
+		"system": "Bearbeite Mitgliedersystem"
 	},
 	"deletedCustomFront": "Benutzerdefinierte Front verwerfen",
 	"actions": {
 		"addToFront": "Zur Front hinzufügen",
 		"setMainFronter": "Als Hauptfronter festlegen",
 		"setSoleFronter": "In Front setzen",
-		"removeFromFront": "Aus der Front entfernen"
+		"removeFromFront": "Aus der Front entfernen",
+		"unsetMainFronter": "Als Hauptfronter verwerfen"
 	},
 	"toasts": {
 		"addToFront": "Mitglied zur Front hinzugefügt",
 		"setMainFronter": "Mitglied als Haupt-Fronter hinzugefügt",
 		"setSoleFronter": "Mitglied als alleiniger Fronter festgelegt",
-		"removeFromFront": "Mitglied der Front entfernt"
+		"removeFromFront": "Mitglied der Front entfernt",
+		"unsetMainFronter": "Mitglied als Haupt-Fronter verworfen"
 	}
 }

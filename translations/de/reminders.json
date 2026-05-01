@@ -17,8 +17,10 @@
 			"addedToFront": "Nachdem ein Mitglied zur Front hinzugefügt wurde",
 			"removedFromFront": "Nachdem ein Mitglied von der Front entfernt wurde",
 			"delay": {
-				"title": "Zeitverzögerung"
-			}
+				"title": "Zeitverzögerung",
+				"desc": "Nach {{delay}}"
+			},
+			"timing": "Timing"
 		},
 		"periodic": {
 			"dayOfMonth": {
@@ -26,6 +28,11 @@
 				"desc_undefined": "Jeden Tag wiederholen ((check context for wording!))",
 				"desc_ordinal_one": "Wiederholt sich jeden {{count}}ten im Monat",
 				"desc_ordinal_other": "Wiederholt sich jeden {{count}}ten im Monat"
+			},
+			"title": "Zeitspanne",
+			"timeOfDay": {
+				"title": "Tageszeit",
+				"desc": "Um {{timeOfDay}}"
 			}
 		},
 		"delete": {

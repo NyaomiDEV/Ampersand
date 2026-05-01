@@ -1,1 +1,6 @@
-{}
+{
+	"searchPlaceholder": "Otsi sõnumeid…",
+	"polls": {
+		"collapsePoll": "Peida küsitlus"
+	}
+}

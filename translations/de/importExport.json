@@ -11,7 +11,9 @@
 		"errorSp": "Fehler beim Importieren des Simply Plural-Exports.",
 		"errorPk": "Fehler beim Importieren des PluralKit-Exports.",
 		"error": "Fehler beim Importieren der Sicherheitskopie.",
-		"importedOc": "Die Octocon-Kopie wurde importiert. Bitte die App neustarten."
+		"importedOc": "Die Octocon-Kopie wurde importiert. Bitte die App neustarten.",
+		"exportedAppIos": "Die Sicherungsdatei wurde in den Ordner „Ampersand“ in der Dateien-App exportiert.",
+		"errorOc": "Fehler beim Importieren des Octocon-Exports."
 	},
 	"header": "Importieren / Exportieren",
 	"dbExport": {

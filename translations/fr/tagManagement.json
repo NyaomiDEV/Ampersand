@@ -3,7 +3,8 @@
 	"select": "Sélectionner des tags",
 	"selector": {
 		"member": "Tags des membres",
-		"journal": "Tags du journal"
+		"journal": "Tags du journal",
+		"asset": "Étiquettes d’assets"
 	},
 	"edit": {
 		"type": {

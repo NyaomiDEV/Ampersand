@@ -1,1 +1,8 @@
-{}
+{
+	"header": "Siltide haldus",
+	"searchPlaceholder": "Otsi silte…",
+	"select": "Vali mõned sildid",
+	"selector": {
+		"member": "Liikmete sildid"
+	}
+}

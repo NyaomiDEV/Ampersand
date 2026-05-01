@@ -1,1 +1,29 @@
-{}
+{
+	"edit": {
+		"tags": "Sildid",
+		"delete": {
+			"confirm": "Kas sa oled kindel, et soovid selle postituse kustutada?",
+			"title": "Kustuta päevikupostitus"
+		},
+		"header": "Postitus",
+		"headerAdd": "Lisa uus postitus",
+		"headerEdit": "Muuda postitust",
+		"headerOptions": "Postituse valikud",
+		"author": "Muuda autorit",
+		"date": "Muuda kuupäeva",
+		"title": "Pealkiri",
+		"subtitle": "Alapealkiri",
+		"body": "Postituse sisu",
+		"isPinned": "Esiletõstetud postitus",
+		"isPrivate": "Privaatne postitus",
+		"postID": "Postituse tunnus: {{postID}}",
+		"postIDcopiedToClipboard": "Mainitud vormingus postituse tunnus on kopeeritud lõikelauale!",
+		"contentWarning": "Sisuhoiatus"
+	},
+	"header": "Päevik",
+	"searchPlaceholder": "Otsi päevikut...",
+	"contentWarning": "Selles postituses on delikaatset sisu",
+	"private": "See postitus on privaatne",
+	"pinnedPosts": "Esiletõstetud postitused",
+	"alertSubheader": "Kas sa kindlasti soovid seda postitust lugeda?"
+}

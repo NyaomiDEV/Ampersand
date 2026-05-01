@@ -1,1 +1,16 @@
-{}
+{
+	"languageName": {
+		"local": "inglise keel",
+		"inEnglish": "Estonian"
+	},
+	"addTimestamp": "Lisa ajatempel",
+	"alerts": {
+		"ok": "Sobib",
+		"yes": "Jah",
+		"cancel": "Katkesta",
+		"clear": "Tühjenda",
+		"no": "Ei"
+	},
+	"genericDeleteDesc": "Sa ei saa seda tegevust tagasi pöörata!",
+	"memberMention": "Maini liiget"
+}

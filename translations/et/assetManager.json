@@ -1,1 +1,8 @@
-{}
+{
+	"add": {
+		"attachment": "Lisa manus"
+	},
+	"edit": {
+		"friendlyName": "Muuda nime"
+	}
+}

@@ -13,13 +13,20 @@
 			"historyTitle": "Anwesendheitsverlauf",
 			"addTitle": "Wie anwesend bist du auf einer Skala von 0 bis 10?",
 			"confirmButton": "Bestätigen",
-			"date": "Datum"
+			"date": "Datum",
+			"lastPresence": "Zuletzt waren es {{presence}} von 5 Sternen"
 		},
 		"influencing": {
 			"select": "Ein Mitglied zum Beeinflussen wählen",
 			"currentlyInfluencing": "Beeinflusst momentan"
 		},
-		"startTime": "Startzeit"
+		"startTime": "Startzeit",
+		"removeFromFront": "Aus der Front verwerfen",
+		"isMainFronter": "Hauptfronter",
+		"delete": {
+			"title": "Front-Eintrag verwerfen",
+			"confirm": "Bist du sicher, dass du diesen Front-Eintrag verwerfen möchtest?"
+		}
 	},
 	"frontedThatDay": "An dem Tag gefrontet"
 }

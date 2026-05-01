@@ -1,1 +1,9 @@
-{}
+{
+	"header": "Import/Eksport",
+	"importHeader": "Impordi",
+	"exportHeader": "Ekspordi",
+	"thirdPartyHeader": "Kolmandate osapoolte lõimingud",
+	"dbExport": {
+		"title": "Ekspordi oma andmed"
+	}
+}
