@@ -36,6 +36,7 @@ import animationExtension from "./animationExtension";
 import positionExtension from "./positionExtension";
 import rotationExtension from "./rotationExtension";
 import customTableExtension from "./customTableExtension";
+import boxShadowExtension from "./boxShadowExtension";
 
 export function useMarked(){
 	const marked = new Marked<(VNode | string)[], VNode | string>();
@@ -124,6 +125,7 @@ export function useMarked(){
 		textColorFgExtension,
 		textColorBgExtension,
 		textShadowExtension,
+		boxShadowExtension,
 		textBorderExtension,
 		textDecorationExtension,
 		fontSizeExtension,
