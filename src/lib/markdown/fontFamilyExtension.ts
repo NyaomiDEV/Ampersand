@@ -58,8 +58,11 @@ const fontFamilyExtension: MarkedExtension<(VNode | string)[], VNode | string> =
 						case "serif":
 							fontFamily = "Eb Garamond";
 							break;
+						case "typewriter":
+							fontFamily = "TT2020";
+							break;
 						case "monospace":
-							fontFamily = "Source Code Pro";
+							fontFamily = "JetBrains Mono";
 							break;
 						case "playful":
 							fontFamily = "Lobster Two";
@@ -74,7 +77,7 @@ const fontFamilyExtension: MarkedExtension<(VNode | string)[], VNode | string> =
 							fontFamily = "Permanent Marker";
 							break;
 						case "gothic":
-							fontFamily = "Unifraktur Maguntia";
+							fontFamily = "KJV1611";
 							break;
 						case "stencil":
 							fontFamily = "Stick No Bills";
@@ -91,11 +94,14 @@ const fontFamilyExtension: MarkedExtension<(VNode | string)[], VNode | string> =
 						case "cutesy":
 							fontFamily = "Twinkle Stars";
 							break;
-						case "thin":
-							fontFamily = "Comic Neue";
+						case "indie":
+							fontFamily = "Amatic SC";
 							break;
 						case "deco":
 							fontFamily = "Ribeye Marrow";
+							break;
+						case "terminal":
+							fontFamily = "Workbench";
 							break;
 						case "western":
 							fontFamily = "Rye";
@@ -103,11 +109,14 @@ const fontFamilyExtension: MarkedExtension<(VNode | string)[], VNode | string> =
 						case "glitch":
 							fontFamily = "Rubik Glitch";
 							break;
-						case "indie":
-							fontFamily = "Amatic SC";
-							break;
 						case "stripes":
 							fontFamily = "Zen Tokyo Zoo";
+							break;
+						case "drip":
+							fontFamily = "Rubik Wet Paint";
+							break;
+						case "cracks":
+							fontFamily = "Rubik Distressed";
 							break;
 						case "comic":
 							fontFamily = "Comic Relief";
