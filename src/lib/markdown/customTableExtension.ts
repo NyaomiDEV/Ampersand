@@ -59,6 +59,9 @@ const customTableExtension: MarkedExtension<(VNode | string)[], VNode | string> 
 							if(map[part].spacing?.length)
 								cssStyle["--markdown-border-spacing"] = map[part].spacing[0];
 
+							if(map[part].radius?.length)
+								cssStyle["--markdown-border-radius"] = map[part].radius[0];
+
 							if(map[part].bt) {
 								switch(map[part].bt.length) {
 									case 1:
@@ -92,8 +95,13 @@ const customTableExtension: MarkedExtension<(VNode | string)[], VNode | string> 
 						case "header":
 							if(map[part].bg)
 								cssStyle["--markdown-th-bg"] = map[part].bg[0];
+
 							if(map[part].fg)
 								cssStyle["--markdown-th-fg"] = map[part].fg[0];
+
+							if(map[part].radius?.length)
+								cssStyle["--markdown-th-radius"] = map[part].radius[0];
+
 							if(map[part].bt) {
 								switch(map[part].bt.length) {
 									case 1:
@@ -127,8 +135,13 @@ const customTableExtension: MarkedExtension<(VNode | string)[], VNode | string> 
 						case "cell":
 							if(map[part].bg)
 								cssStyle["--markdown-td-bg"] = map[part].bg[0];
+
 							if(map[part].fg)
 								cssStyle["--markdown-td-fg"] = map[part].fg[0];
+
+							if(map[part].radius?.length)
+								cssStyle["--markdown-td-radius"] = map[part].radius[0];
+
 							if(map[part].bt) {
 								switch(map[part].bt.length) {
 									case 1:

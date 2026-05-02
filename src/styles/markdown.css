@@ -47,6 +47,7 @@
 
 		table {
 				border-collapse: var(--markdown-border-collapse, collapse);
+				border-radius: var(--markdown-border-radius);
 				border-spacing: var(--markdown-border-spacing, 2px);
 				border-top: var(--markdown-table-bt-top, var(--border));
 				border-right: var(--markdown-table-bt-right, var(--border));
@@ -62,6 +63,7 @@
 				border-right: var(--markdown-th-bt-right, var(--border));
 				border-bottom: var(--markdown-th-bt-bottom, var(--border));
 				border-left: var(--markdown-th-bt-left, var(--border));
+				border-radius: var(--markdown-th-radius, var(--markdown-border-radius));
 			}
 
 			td {
@@ -71,6 +73,7 @@
 				border-right: var(--markdown-td-bt-right, var(--border));
 				border-bottom: var(--markdown-td-bt-bottom, var(--border));
 				border-left: var(--markdown-td-bt-left, var(--border));
+				border-radius: var(--markdown-td-radius, var(--markdown-border-radius));
 
 				&:first-child {
 					background-color: var(--markdown-first-col-bg, var(--markdown-td-bg, unset));
