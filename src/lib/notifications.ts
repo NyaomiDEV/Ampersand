@@ -1,4 +1,6 @@
-import { cancel, isPermissionGranted, Options, requestPermission, sendNotification } from "@choochmeque/tauri-plugin-notifications-api";
+import { cancel, createChannel, Importance, isPermissionGranted, Options, requestPermission, sendNotification, Visibility } from "@choochmeque/tauri-plugin-notifications-api";
+import { platform } from "@tauri-apps/plugin-os";
+import { t } from "i18next";
 
 async function ensureNotifyPerms(request: boolean){
 	if(await isPermissionGranted())
@@ -9,7 +11,20 @@ async function ensureNotifyPerms(request: boolean){
 	const perm = await requestPermission();
 	if(perm !== "granted") return false;
 
+	await registerChannels();
 	return true;
+}
+
+async function registerChannels(){
+	if(platform() !== "android") return;
+
+	await createChannel({
+		id: "frontingNotifications",
+		name: t("accessibility:frontingNotification.title"),
+		lights: false,
+		importance: Importance.None,
+		visibility: Visibility.Private
+	});
 }
 
 export async function notify(opts: Options){

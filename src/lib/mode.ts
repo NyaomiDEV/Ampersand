@@ -63,7 +63,8 @@ export async function updateFrontingNotification(fronting: FrontingEntryComplete
 			body: platform() === "android" ? undefined : body,
 			largeBody: platform() === "android" ? body : undefined,
 			ongoing: true,
-			icon: "ic_notify_ampersand"
+			icon: "ic_notify_ampersand",
+			channelId: "frontingNotifications"
 		});
 	} else 
 		await unnotify(1);
