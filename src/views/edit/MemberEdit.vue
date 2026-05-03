@@ -98,7 +98,7 @@
 
 		if(member.value.customFields){
 			member.value.customFields.forEach((v, k) => {
-				if(!v.length)
+				if(!v.trim().length)
 					member.value.customFields!.delete(k);
 			});
 		}
