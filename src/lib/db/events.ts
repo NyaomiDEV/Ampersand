@@ -46,6 +46,9 @@ DatabaseEvents.addEventListener("updated", (event) => {
 		case "customFields":
 			eventName = "customField";
 			break;
+		case "notes":
+			eventName = "note";
+			break;
 	}
 
 	switch ((event as DatabaseEvent).data.event){

@@ -146,7 +146,6 @@
 					<template #default="{ entry: system }">
 						<IonItemSliding>
 							<SystemItem
-
 								:system
 								show-icons
 								show-effects

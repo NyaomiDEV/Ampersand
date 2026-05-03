@@ -6,7 +6,6 @@ export type AppConfig = {
 	},
 	view: ViewName,
 	defaultSystem: UUID,
-	showSystemDescriptionInDashboard: boolean,
 	showMembersApartFromCustomFronts: "off" | "before" | "after",
 	hideFrontingTimer: boolean,
 	isDeveloperMode: boolean,
@@ -18,7 +17,8 @@ export type AppConfig = {
 		messageBoard?: string,
 		journal?: string,
 		assetManager?: string,
-		customFields?: string
+		customFields?: string,
+		notes?: string
 	}
 };
 

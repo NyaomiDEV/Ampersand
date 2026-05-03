@@ -44,6 +44,11 @@ export type CustomFieldFilterQuery = {
 	default?: boolean
 };
 
+export type NoteFilterQuery = {
+	query: string,
+	isArchived?: boolean
+};
+
 export type JournalPostFilterQuery = {
 	query: string,
 	tags: Map<string, boolean>,
@@ -253,6 +258,25 @@ export function parseCustomFieldFilterQuery(search: string) {
 		switch (variable.toLowerCase()) {
 			case "default":
 				result.default = reduceToValue(value);
+				break;
+		}
+		break;
+	}
+
+	return result;
+}
+
+export function parseNoteFilterQuery(search: string) {
+	const rawParsed = splitTokens(search);
+
+	const result: NoteFilterQuery = {
+		query: rawParsed.query,
+	};
+
+	for (const [variable, value] of rawParsed.variables) {
+		switch (variable.toLowerCase()) {
+			case "archived":
+				result.isArchived = reduceToValue(value);
 				break;
 		}
 		break;

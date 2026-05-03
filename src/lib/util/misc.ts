@@ -2,7 +2,7 @@ import { actionSheetController, alertController, createAnimation, getIonPageElem
 import dayjs from "dayjs";
 import { Ref } from "vue";
 import { appConfig } from "../config";
-import { Asset, BoardMessage, CustomField, FrontingEntry, ImageClip, Member, System } from "../db/entities";
+import { Asset, BoardMessage, CustomField, FrontingEntry, ImageClip, Member, Note, System } from "../db/entities";
 import i18next, { computePercentage, getLocaleInfo } from "../i18n";
 import { open } from "../native/open";
 import { readFile } from "@tauri-apps/plugin-fs";
@@ -297,6 +297,11 @@ export function sortAssets(a: IndexEntry<Asset>, b: IndexEntry<Asset>) {
 export function sortCustomFields(a: IndexEntry<CustomField>, b: IndexEntry<CustomField>) {
 	return a.priority! - b.priority!;
 }
+
+export function sortNotes(a: IndexEntry<Note>, b: IndexEntry<Note>) {
+	return a.priority! - b.priority!;
+}
+
 export function sortName(a: IndexEntry<{ name: string }>, b: IndexEntry<{ name: string }>) {
 	return a.name!.localeCompare(b.name!);
 }

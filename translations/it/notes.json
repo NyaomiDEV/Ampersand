@@ -1,0 +1,15 @@
+{
+    "header": "Note adesive",
+    "searchPlaceholder": "Cerca tra le note...",
+    "edit": {
+        "header": "Modifica nota",
+        "headerAdd": "Aggiungi nota",
+        "title": "Titolo della nota",
+        "content": "Contenuto della nota",
+        "isArchived": "Archivia la nota",
+        "delete": {
+            "title": "Elimina nota",
+            "confirm": "Sei sicurə di voler eliminare questa nota?"
+        }
+    }
+}

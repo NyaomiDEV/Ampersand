@@ -1,6 +1,6 @@
 import { appDataDir, sep } from "@tauri-apps/api/path";
 import * as fs from "@tauri-apps/plugin-fs";
-import type { Asset, BoardMessage, CustomField, FrontingEntry, JournalPost, Member, Reminder, System, Tag, UUIDable } from "../entities";
+import type { Asset, BoardMessage, CustomField, FrontingEntry, JournalPost, Member, Note, Reminder, System, Tag, UUIDable } from "../entities";
 import { ShittyTable } from "../impl/shittytable";
 import type { SecondaryKey } from "../impl/types";
 
@@ -42,7 +42,8 @@ const db = {
 	reminders: await makeTable<Reminder>("reminders", []),
 	tags: await makeTable<Tag>("tags", ["name", "type", "isArchived", "viewInLists"]),
 	assets: await makeTable<Asset>("assets", ["friendlyName"]),
-	customFields: await makeTable<CustomField>("customFields", ["name", "priority"])
+	customFields: await makeTable<CustomField>("customFields", ["name", "priority"]),
+	notes: await makeTable<Note>("notes", ["title", "priority", "isArchived"])
 };
 
 export { db };

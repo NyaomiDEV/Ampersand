@@ -211,5 +211,12 @@ export interface Asset extends UUIDable {
 export interface CustomField extends UUIDable {
 	name: string,
 	priority: number,
-	default: boolean,
+	default: boolean
+}
+
+export interface Note extends UUIDable {
+	title: string,
+	content: string,
+	priority: number,
+	isArchived: boolean
 }

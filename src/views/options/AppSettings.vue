@@ -10,7 +10,6 @@
 
 	import languageMD from "@material-symbols/svg-600/outlined/language.svg";
 	import timerMD from "@material-symbols/svg-600/outlined/timer_off.svg";
-	import dashboardMD from "@material-symbols/svg-600/outlined/space_dashboard.svg";
 	import membersBeforeMD from "@material-symbols/svg-600/outlined/person_text.svg";
 	import peopleMD from "@material-symbols/svg-600/outlined/group.svg";
 	import journalMD from "@material-symbols/svg-600/outlined/book.svg";
@@ -141,15 +140,6 @@
 				</IonItem>
 
 				<IonItem button :detail="false">
-					<IonIcon slot="start" :icon="dashboardMD" />
-					<IonToggle v-model="appConfig.showSystemDescriptionInDashboard">
-						<IonLabel>
-							{{ $t("appSettings:showSystemDescriptionInDashboard") }}
-						</IonLabel>
-					</IonToggle>
-				</IonItem>
-
-				<IonItem button :detail="false">
 					<IonIcon slot="start" :icon="timerMD" />
 					<IonToggle v-model="appConfig.hideFrontingTimer">
 						<IonLabel>
@@ -234,6 +224,15 @@
 						fill="solid"
 						label-placement="floating"
 						:label="$t('customFields:header')"
+					/>
+				</IonItem>
+
+				<IonItem>
+					<IonInput
+						v-model="appConfig.defaultFilterQueries.notes"
+						fill="solid"
+						label-placement="floating"
+						:label="$t('notes:header')"
 					/>
 				</IonItem>
 			</IonList>

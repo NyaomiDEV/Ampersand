@@ -1,6 +1,6 @@
 
-import { Member, Tag, Asset, CustomField, JournalPost, BoardMessage, FrontingEntry, System } from "./db/entities";
-import { parseAssetFilterQuery, parseBoardMessageFilterQuery, parseCustomFieldFilterQuery, parseFrontingHistoryFilterQuery, parseJournalPostFilterQuery, parseMemberFilterQuery, parseSystemFilterQuery, parseTagFilterQuery } from "./util/filterQuery";
+import { Member, Tag, Asset, CustomField, JournalPost, BoardMessage, FrontingEntry, System, Note } from "./db/entities";
+import { parseAssetFilterQuery, parseBoardMessageFilterQuery, parseCustomFieldFilterQuery, parseFrontingHistoryFilterQuery, parseJournalPostFilterQuery, parseMemberFilterQuery, parseSystemFilterQuery, parseTagFilterQuery, parseNoteFilterQuery } from "./util/filterQuery";
 import { appConfig } from "./config";
 import { getMemberIndex } from "./db/tables/members";
 
@@ -195,6 +195,27 @@ export function filterCustomField(search: string, customField: CustomField) {
 
 	if (parsed.default) {
 		if (!customField.default)
+			return false;
+	}
+
+	return true;
+}
+
+export function filterNote(search: string, note: Note) {
+	const parsed = parseNoteFilterQuery(search.length ? search : appConfig.defaultFilterQueries.notes || "");
+
+	if(parsed.query.length) {
+		if (!(
+			note.title.toLowerCase().includes(parsed.query.toLowerCase()) ||
+			note.content.toLowerCase().includes(parsed.query.toLowerCase())
+		))
+			return false;
+	}
+
+	if (parsed.isArchived !== undefined) {
+		if (parsed.isArchived && !note.isArchived)
+			return false;
+		else if (!parsed.isArchived && note.isArchived)
 			return false;
 	}
 

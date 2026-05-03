@@ -9,7 +9,8 @@ export type AmpersandEntityMapping = {
 	systems: System
 	tags: Tag,
 	assets: Asset,
-	customFields: CustomField
+	customFields: CustomField,
+	notes: Note
 };
 
 export type MigrationsMapping = {

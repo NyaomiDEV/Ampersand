@@ -7,7 +7,6 @@ import { nilUid } from "../util/consts";
 const defaultAppConfig: AppConfig = {
 	locale: {},
 	defaultSystem: nilUid,
-	showSystemDescriptionInDashboard: false,
 	showMembersApartFromCustomFronts: "after",
 	hideFrontingTimer: false,
 	view: "dashboard",
@@ -95,15 +94,20 @@ if ((appConfig as Record<string, unknown>).showMembersBeforeCustomFronts){
 	appConfig.showMembersApartFromCustomFronts = "before";
 	(appConfig as Record<string, unknown>).showMembersBeforeCustomFronts = undefined;
 }
+
 if ((accessibilityConfig as Record<string, unknown>).disableMemberCoversInList) {
 	accessibilityConfig.disableCovers = (accessibilityConfig as Record<string, unknown>).disableMemberCoversInList as boolean;
 	(accessibilityConfig as Record<string, unknown>).disableMemberCoversInList = undefined;
 }
+
 if (((appConfig as Record<string, unknown>).locale as Record<string, unknown>).firstWeekOfDayIsSunday)
 	((appConfig as Record<string, unknown>).locale as Record<string, unknown>).firstWeekOfDayIsSunday = undefined;
 
 if (((appConfig as Record<string, unknown>).locale as Record<string, unknown>).twelveHourClock)
 	((appConfig as Record<string, unknown>).locale as Record<string, unknown>).twelveHourClock = undefined;
+
+if ((appConfig as Record<string, unknown>).showSystemDescriptionInDashboard)
+	(appConfig as Record<string, unknown>).showSystemDescriptionInDashboard = undefined;
 
 if ((appConfig as Record<string, unknown>).useIPC) {
 	securityConfig.useIPC = true;

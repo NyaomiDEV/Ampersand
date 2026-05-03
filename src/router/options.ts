@@ -17,6 +17,11 @@ const options: RouteRecordRaw[] = [
 		component: () => import("../views/options/CustomFields.vue"),
 	},
 	{
+		path: "/options/notes",
+		name: "Notes",
+		component: () => import("../views/options/Notes.vue"),
+	},
+	{
 		path: "/options/frontHistory",
 		name: "FrontHistory",
 		component: () => import("../views/options/FrontHistory.vue"),

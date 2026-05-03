@@ -1,9 +1,21 @@
 /* Adapted from danielkleebinder/md3-for-ionic */
 .md ion-accordion-group {
 	border-radius: var(--md3-corner-medium);
-	border: 1px solid rgb(var(--md3-outline-variant));
+	border: unset;
 	background: rgb(var(--md3-surface));
 	color: rgb(var(--md3-on-surface));
 	overflow: hidden;
 	margin: 16px;
+	gap: 2px;
+	display: flex;
+	flex-direction: column;
+}
+
+.md ion-accordion {
+	&::part(content) {
+		background-color: rgb(var(--md3-surface-container));
+		margin-top: 2px;
+		border-radius: 4px;
+		padding: 8px 16px;
+	}
 }

@@ -17,6 +17,7 @@
 	import FolderMD from "@material-symbols/svg-600/outlined/folder_open.svg";
 	import CustomFieldsMD from "@material-symbols/svg-600/outlined/format_list_bulleted_add.svg";
 	import ResourcesMD from "@material-symbols/svg-600/outlined/menu_book.svg";
+	import NotesMD from "@material-symbols/svg-600/outlined/note_stack.svg";
 
 	import { securityConfig } from "../lib/config";
 	import { lock } from "../lib/applock";
@@ -48,16 +49,6 @@
 
 			<IonList>
 
-				<IonItem button router-link="/options/systems">
-					<IonIcon slot="start" :icon="SystemMD" aria-hidden="true" />
-					<IonLabel>{{ $t("systems:header") }}</IonLabel>
-				</IonItem>
-
-				<IonItem button router-link="/options/customFields">
-					<IonIcon slot="start" :icon="CustomFieldsMD" aria-hidden="true" />
-					<IonLabel>{{ $t("customFields:header") }}</IonLabel>
-				</IonItem>
-
 				<IonItem button router-link="/options/frontHistory">
 					<IonIcon slot="start" :icon="FrontHistoryMD" aria-hidden="true" />
 					<IonLabel>{{ $t("frontHistory:header") }}</IonLabel>
@@ -68,6 +59,11 @@
 					<IonLabel>{{ $t("messageBoard:header") }}</IonLabel>
 				</IonItem>
 
+				<IonItem button router-link="/options/systems">
+					<IonIcon slot="start" :icon="SystemMD" aria-hidden="true" />
+					<IonLabel>{{ $t("systems:header") }}</IonLabel>
+				</IonItem>
+
 				<IonItem button router-link="/options/tagManagement">
 					<IonIcon slot="start" :icon="TagMD" aria-hidden="true" />
 					<IonLabel>{{ $t("tagManagement:header") }}</IonLabel>
@@ -76,6 +72,16 @@
 				<IonItem button router-link="/options/assetManager">
 					<IonIcon slot="start" :icon="FolderMD" aria-hidden="true" />
 					<IonLabel>{{ $t("assetManager:header") }}</IonLabel>
+				</IonItem>
+
+				<IonItem button router-link="/options/notes">
+					<IonIcon slot="start" :icon="NotesMD" aria-hidden="true" />
+					<IonLabel>{{ $t("notes:header") }}</IonLabel>
+				</IonItem>
+
+				<IonItem button router-link="/options/customFields">
+					<IonIcon slot="start" :icon="CustomFieldsMD" aria-hidden="true" />
+					<IonLabel>{{ $t("customFields:header") }}</IonLabel>
 				</IonItem>
 
 				<IonItem v-if="isDevServer" button router-link="/options/reminders">
