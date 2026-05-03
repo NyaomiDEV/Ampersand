@@ -1,17 +1,18 @@
 <script setup lang="ts">
 	import { onMounted } from "vue";
-	import { IonPage, IonContent, IonLabel, IonInput, useIonRouter, IonList, IonItem, IonIcon } from "@ionic/vue";
+	import { IonPage, IonContent, IonLabel, IonInput, useIonRouter, IonList, IonItem, IonIcon, IonButton } from "@ionic/vue";
 	import { unlockWithPassword, unlockWithBiometrics } from "../lib/applock";
 	import { securityConfig } from "../lib/config";
 	import { useRoute } from "vue-router";
 
 	import LockMD from "@material-symbols/svg-600/outlined/lock-fill.svg";
+	import biometricsMD from "@material-symbols/svg-600/outlined/fingerprint.svg";
 	
 	const router = useIonRouter();
 	const route = useRoute();
 
 	onMounted(() => {
-		setTimeout(tryBiometrics, 100);
+		setTimeout(tryBiometrics, 500);
 	});
 
 	async function tryBiometrics(){
@@ -45,7 +46,15 @@
 						/>
 					</IonItem>
 				</IonList>
-
+				<IonButton
+					v-if="true"
+					class="tonal"
+					size="small"
+					shape="round"
+					@click="tryBiometrics"
+				>
+					<IonIcon slot="icon-only" :icon="biometricsMD" />
+				</IonButton>
 			</div>
 
 		</IonContent>

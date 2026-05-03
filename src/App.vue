@@ -23,7 +23,9 @@
 
 	onMounted(async () => {
 		await dismissSplash();
-		await sendFrontingChangedEvent(true);
+
+		// defer fronting changed event to not conflict with other more important UI-level things
+		setTimeout(() => void sendFrontingChangedEvent(true), 250);
 	});
 </script>
 

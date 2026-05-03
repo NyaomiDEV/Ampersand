@@ -4,6 +4,7 @@ import { md5 } from "./util/md5";
 import { t } from "i18next";
 import { ref } from "vue";
 import { platform } from "@tauri-apps/plugin-os";
+import { invoke } from "@tauri-apps/api/core";
 
 export const isLocked = ref(false);
 
@@ -46,24 +47,34 @@ export function lock(){
 }
 
 export async function unlockWithBiometrics(){
-	try{
-		await authenticate(t("lock:biometrics.reason"), {
-			allowDeviceCredential: false,
-			cancelTitle: t("other:alerts.cancel"),
+	const promise = authenticate(t("lock:biometrics.reason"), {
+		allowDeviceCredential: false,
+		cancelTitle: t("other:alerts.cancel"),
 
-			// iOS
-			fallbackTitle: t("lock:biometrics.title"),
+		// iOS
+		fallbackTitle: t("lock:biometrics.title"),
 
-			// Android
-			confirmationRequired: true,
-			title: t("lock:biometrics.title")
-		});
+		// Android
+		confirmationRequired: true,
+		title: t("lock:biometrics.title")
+	});
+
+	let iid = 0;
+
+	if (platform() === "android")
+		iid = setInterval(async () => await invoke("noop"), 200);
+
+	try {
+		await promise;
 		isLocked.value = false;
 		return true;
-	}catch(e){
+	} catch (e) {
 		console.error(e);
 		return false;
-	}
+	} finally {
+		if(platform() === "android")
+			clearInterval(iid);
+	}	
 }
 
 export function unlockWithPassword(plaintextPwd: string) {
