@@ -203,7 +203,7 @@
 
 	span.timestamp::before {
 		content: "\A";
-		mask-image: url(/node_modules/@material-symbols/svg-600/outlined/nest_clock_farsight_analog.svg);
+		mask-image: url(../../node_modules/@material-symbols/svg-600/outlined/nest_clock_farsight_analog.svg);
 		background-color: rgb(var(--md3-on-surface-variant));
 		mask-size: contain;
 		mask-repeat: no-repeat;
