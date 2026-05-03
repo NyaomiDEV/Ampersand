@@ -47,7 +47,7 @@
 					</IonItem>
 				</IonList>
 				<IonButton
-					v-if="true"
+					v-if="securityConfig.useBiometrics"
 					class="tonal"
 					size="small"
 					shape="round"
