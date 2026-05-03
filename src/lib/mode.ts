@@ -3,6 +3,7 @@ import { accessibilityConfig } from "./config";
 import { platform } from "@tauri-apps/plugin-os";
 import { notify, unnotify } from "./notifications";
 import { FrontingEntryComplete } from "./db/entities";
+import i18next from "./i18n";
 
 export function isDarkMode() {
 	switch (accessibilityConfig.theme) {
@@ -58,7 +59,7 @@ export async function updateFrontingNotification(fronting: FrontingEntryComplete
 		const body = fronting.map(x => x.member.name).join(", ");
 		await notify({
 			id: 1,
-			title: "Fronting now",
+			title: i18next.t("frontHistory:currentlyFronting"),
 			body: platform() === "android" ? undefined : body,
 			largeBody: platform() === "android" ? body : undefined,
 			ongoing: true,
