@@ -12,6 +12,17 @@
 }
 
 .md ion-accordion {
+	.ion-accordion-toggle-icon {
+		border-radius: var(--md3-corner-full);
+		padding: 12px 4px;
+		margin: 0px 0px;
+		transition: background var(--md3-expressive-fast-effects-duration) var(--md3-expressive-fast-effects);
+
+		&:is(.accordion-expanded *){
+			background: rgb(var(--md3-surface));
+		}
+	}
+
 	&::part(content) {
 		background-color: rgb(var(--md3-surface-container));
 		margin-top: 2px;
