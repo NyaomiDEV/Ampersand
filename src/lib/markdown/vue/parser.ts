@@ -1,4 +1,4 @@
-import { MarkedOptions, MarkedToken, Token, Renderer, Parser as MarkedParser, TextRenderer } from "marked";
+import { MarkedOptions, MarkedToken, Token, Renderer, TextRenderer } from "marked";
 import { renderer } from "./renderer.ts";
 import { textRenderer } from "./textRenderer.ts";
 import { h, isVNode, type VNode } from "vue";
@@ -15,7 +15,7 @@ export class Parser {
 		this.options = options ?? { renderer };
 		this.textRenderer = textRenderer;
 		this.renderer = this.options.renderer!;
-		this.renderer.parser = this as unknown as MarkedParser<(VNode | string)[], VNode | string>;
+		this.renderer.parser = this;
 	}
 
 	/**
@@ -95,7 +95,7 @@ export class Parser {
 				default: {
 					// Run any renderer extensions for generic tokens
 					if (this.options.extensions?.renderers?.[anyToken.type]) {
-						const ret = this.options.extensions.renderers[anyToken.type].call({ parser: this as unknown as MarkedParser<(VNode | string)[], VNode | string> }, anyToken);
+						const ret = this.options.extensions.renderers[anyToken.type].call({ parser: this }, anyToken);
 						if (ret) {
 							if (isVNode(ret)) out.push(ret);
 							else out.push(h("span", { innerHTML: ret }));
@@ -186,7 +186,7 @@ export class Parser {
 				default: {
 					// Run any renderer extensions
 					if (this.options.extensions?.renderers?.[anyToken.type]) {
-						const ret = this.options.extensions.renderers[anyToken.type].call({ parser: this as unknown as MarkedParser<(VNode | string)[], VNode | string> }, anyToken);
+						const ret = this.options.extensions.renderers[anyToken.type].call({ parser: this }, anyToken);
 						if (ret) {
 							if (isVNode(ret)) out.push(ret);
 							else out.push(h("span", { innerHTML: ret }));

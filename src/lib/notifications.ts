@@ -1,8 +1,10 @@
 import { cancel, isPermissionGranted, Options, requestPermission, sendNotification } from "@choochmeque/tauri-plugin-notifications-api";
 
-async function ensureNotifyPerms(){
+async function ensureNotifyPerms(request: boolean){
 	if(await isPermissionGranted())
 		return true;
+
+	if(!request) return false;
 
 	const perm = await requestPermission();
 	if(perm !== "granted") return false;
@@ -11,7 +13,7 @@ async function ensureNotifyPerms(){
 }
 
 export async function notify(opts: Options){
-	await ensureNotifyPerms();
+	await ensureNotifyPerms(true);
 
 	try{
 		await sendNotification(opts);
@@ -24,7 +26,7 @@ export async function notify(opts: Options){
 }
 
 export async function unnotify(id: number | number[]) {
-	await ensureNotifyPerms();
+	await ensureNotifyPerms(false);
 
 	try {
 		await cancel(typeof id === "number" ? [id] : id);

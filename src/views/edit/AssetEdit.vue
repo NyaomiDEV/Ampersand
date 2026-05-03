@@ -73,7 +73,7 @@
 
 		try{
 			if(!uuid){
-				const result = await newAsset(_asset as PartialBy<Asset, "uuid">);
+				const result = await newAsset(_asset);
 				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
 				router.back();
 				return;

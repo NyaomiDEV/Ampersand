@@ -6,7 +6,7 @@ import { mkdir, readTextFile, writeTextFile } from "@tauri-apps/plugin-fs";
 import dayjs from "dayjs";
 import { platform } from "@tauri-apps/plugin-os";
 import { open, save } from "../../native/open";
-import { Asset, BoardMessage, CustomField, FrontingEntry, JournalPost, Member, System, Tag, UUIDable } from "../entities";
+import { Asset, BoardMessage, FrontingEntry, JournalPost, Member, System, UUIDable } from "../entities";
 import { AssetJSON, BoardMessageJSON, DatabaseJSON, FrontingEntryJSON, JournalPostJSON, MemberJSON, SystemJSON } from "./json_types";
 import { fromDataURI, toDataURI } from "../../util/blob";
 import { appConfig, accessibilityConfig, securityConfig } from "../../config";
@@ -67,7 +67,7 @@ export function exportDatabaseToJSON(withFiles: boolean) {
 							json.database[name].push({
 								..._data,
 								date: _data.date.toISOString()
-							} as BoardMessageJSON);
+							});
 							break;
 						}
 						case "frontingEntries": {
@@ -81,7 +81,7 @@ export function exportDatabaseToJSON(withFiles: boolean) {
 											.map(x => [x[0].toISOString(), x[1]])
 										)
 									: undefined
-							} as FrontingEntryJSON);
+							});
 							break;
 						}
 						case "journalPosts": {
@@ -90,7 +90,7 @@ export function exportDatabaseToJSON(withFiles: boolean) {
 								..._data,
 								date: _data.date.toISOString(),
 								cover: withFiles && _data.cover ? await toDataURI(_data.cover) : undefined,
-							} as JournalPostJSON);
+							});
 							break;
 						}
 						case "members": {
@@ -101,7 +101,7 @@ export function exportDatabaseToJSON(withFiles: boolean) {
 								cover: withFiles && _data.cover ? await toDataURI(_data.cover) : undefined,
 								customFields: _data.customFields ? Object.fromEntries(_data.customFields.entries()) : undefined,
 								dateCreated: _data.dateCreated.toISOString()
-							} as MemberJSON);
+							});
 							break;
 						}
 						case "systems": {
@@ -110,7 +110,7 @@ export function exportDatabaseToJSON(withFiles: boolean) {
 								..._data,
 								image: withFiles && _data.image ? await toDataURI(_data.image) : undefined,
 								cover: withFiles &&_data.cover ? await toDataURI(_data.cover) : undefined,
-							} as SystemJSON);
+							});
 							break;
 						}
 						case "assets": {
@@ -122,10 +122,10 @@ export function exportDatabaseToJSON(withFiles: boolean) {
 							break;
 						}
 						case "customFields":
-							json.database[name].push((data as CustomField));
+							json.database[name].push(data);
 							break;
 						case "tags":
-							json.database[name].push((data as Tag));
+							json.database[name].push(data);
 							break;
 					}
 					progressCurrent++;
@@ -190,6 +190,7 @@ export function importDatabaseFromJSON() {
 					switch (name) {
 						case "boardMessages": {
 							const _data = data as BoardMessageJSON;
+							// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
 							await table.add({
 								..._data,
 								date: new Date(_data.date)

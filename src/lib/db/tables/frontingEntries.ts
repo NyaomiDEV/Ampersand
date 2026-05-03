@@ -278,11 +278,13 @@ export async function getFrontingEntriesDays(query: string, start: Date, end: Da
 	}, new Map<number, number>());
 }
 
-export async function sendFrontingChangedEvent(){
+export async function sendFrontingChangedEvent(backfill?: boolean){
 	const fronting = await getFronting();
 
-	if(securityConfig.useIPC)
-		await broadcastEvent("fronting_changed", deleteFile(fronting));
+	if(!backfill){
+		if (securityConfig.useIPC)
+			await broadcastEvent("fronting_changed", deleteFile(fronting));
+	}
 
 	await updateFrontingNotification(fronting);
 }

@@ -135,8 +135,6 @@ async function setupAmpersand(){
 		window.addEventListener("orientationchange", () => void updateInsets());
 	}
 
-	await sendFrontingChangedEvent();
-
 	watch(accessibilityConfig, async () => {
 		await updateDarkMode();
 		updateMaterialColors();

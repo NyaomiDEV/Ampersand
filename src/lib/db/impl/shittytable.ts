@@ -215,7 +215,7 @@ export class ShittyTable<T extends UUIDable> {
 
 	async refresh() {
 		for (const data of this.index)
-			await this.update({ uuid: data.uuid as string } as UUIDable & Partial<T>);
+			await this.update({ uuid: data.uuid } as UUIDable & Partial<T>);
 	}
 
 	async write(data: T, saveIndexAndHashesAfterwards: boolean) {
@@ -256,7 +256,7 @@ export class ShittyTable<T extends UUIDable> {
 		const oldData = await this.get(uuid);
 
 		if (oldData) {
-			const data = { ...oldData, ...newData } as T;
+			const data = { ...oldData, ...newData };
 			await this.write(data, saveIndexAndHashesAfterwards);
 			return { oldData, newData: data };
 		}

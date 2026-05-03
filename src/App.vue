@@ -8,6 +8,7 @@
 	import { dismissSplash } from "./lib/native/plugin";
 	import { appConfig } from "./lib/config";
 	import AssetFonts from "./components/AssetFonts.vue";
+	import { sendFrontingChangedEvent } from "./lib/db/tables/frontingEntries";
 
 	provide("isDevServer", computed(() => import.meta.env.MODE === "development"));
 	provide("isDev", computed(() => import.meta.env.MODE === "development" || appConfig.isDeveloperMode));
@@ -22,6 +23,7 @@
 
 	onMounted(async () => {
 		await dismissSplash();
+		await sendFrontingChangedEvent(true);
 	});
 </script>
 
