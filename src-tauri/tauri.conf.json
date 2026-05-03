@@ -62,7 +62,7 @@
     "macOS": {
       "entitlements": "./Entitlements.plist",
       "bundleVersion": "1613",
-      "minimumSystemVersion": "15.6"
+      "minimumSystemVersion": "15.0"
     },
     "windows": {
       "allowDowngrades": false,
