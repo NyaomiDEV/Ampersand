@@ -1,15 +1,15 @@
 {
-    "header": "Sticky notes",
-    "searchPlaceholder": "Search for notes...",
-    "edit": {
-        "header": "Edit note",
-        "headerAdd": "Add note",
-        "title": "Note title",
-        "content": "Note content",
-        "isArchived": "Archive note",
-        "delete": {
-            "title": "Delete note",
-            "confirm": "Are you sure you want to delete this note?"
-        }
-    }
+	"header": "Sticky notes",
+	"searchPlaceholder": "Search for notes...",
+	"edit": {
+		"header": "Edit note",
+		"headerAdd": "Add note",
+		"title": "Note title",
+		"content": "Note content",
+		"isArchived": "Archive note",
+		"delete": {
+			"title": "Delete note",
+			"confirm": "Are you sure you want to delete this note?"
+		}
+	}
 }
