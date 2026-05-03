@@ -4,7 +4,7 @@ version = "0.2.1"
 authors = ["nao"]
 description = "Tauri plugin for Ampersand"
 edition = "2021"
-rust-version = "1.93.0"
+rust-version = "1.95.0"
 links = "tauri-plugin-ampersand"
 
 [dependencies]

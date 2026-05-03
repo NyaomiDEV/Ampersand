@@ -48,6 +48,9 @@
 	"disableCovers": {
 		"title": "Disable covers"
 	},
+	"frontingNotification": {
+		"title": "Fronting notification"
+	},
 	"contrastLevel": {
 		"title": "Contrast level"
 	},

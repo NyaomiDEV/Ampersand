@@ -30,6 +30,7 @@ const defaultAccessibilityConfig: AccessibilityConfig = {
 	reducedMotion: false,
 	compactLists: false,
 	disableCovers: false,
+	frontingNotification: false,
 	contrastLevel: 0,
 	fontScale: 1,
 	longPressDuration: 750

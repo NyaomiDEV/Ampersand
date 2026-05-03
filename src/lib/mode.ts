@@ -1,6 +1,8 @@
 import { M3 } from "tauri-plugin-m3";
 import { accessibilityConfig } from "./config";
 import { platform } from "@tauri-apps/plugin-os";
+import { notify, unnotify } from "./notifications";
+import { FrontingEntryComplete } from "./db/entities";
 
 export function isDarkMode() {
 	switch (accessibilityConfig.theme) {
@@ -49,4 +51,19 @@ export function updateAccessibility() {
 		document.documentElement.style.setProperty("font-size", `${fontScale}em`);
 	else
 		document.documentElement.style.removeProperty("font-size");
+}
+
+export async function updateFrontingNotification(fronting: FrontingEntryComplete[]){
+	if (accessibilityConfig.frontingNotification && fronting.length) {
+		const body = fronting.map(x => x.member.name).join(", ");
+		await notify({
+			id: 1,
+			title: "Fronting now",
+			body: platform() === "android" ? undefined : body,
+			largeBody: platform() === "android" ? body : undefined,
+			ongoing: true,
+			icon: "ic_notify_ampersand"
+		});
+	} else 
+		await unnotify(1);
 }

@@ -58,6 +58,8 @@ import { maybeExit } from "./lib/util/backbutton";
 
 // Back button icon
 import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
+import { sendFrontingChangedEvent } from "./lib/db/tables/frontingEntries";
+import { unnotify } from "./lib/notifications";
 
 const minWebViewVersions = {
 	"android": 139,
@@ -133,10 +135,17 @@ async function setupAmpersand(){
 		window.addEventListener("orientationchange", () => void updateInsets());
 	}
 
+	await sendFrontingChangedEvent();
+
 	watch(accessibilityConfig, async () => {
 		await updateDarkMode();
 		updateMaterialColors();
 		updateAccessibility();
+
+		if(accessibilityConfig.frontingNotification)
+			await sendFrontingChangedEvent();
+		else
+			await unnotify(1);
 	});
 
 	await router.isReady().then(async () => {

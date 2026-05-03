@@ -6,7 +6,7 @@ authors = ["nao"]
 license = ""
 repository = ""
 edition = "2021"
-rust-version = "1.93.0"
+rust-version = "1.95.0"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -32,6 +32,7 @@ tauri-plugin-dialog = "2.7.0"
 tauri-plugin-opener = "2.5.3"
 tauri-plugin-http = "2.5.8"
 tauri-plugin-process = "2.3.1"
+tauri-plugin-notifications = "0.4"
 tauri-plugin-ampersand = { path = "./plugin" }
 
 [target.'cfg(target_os = "android")'.dependencies]

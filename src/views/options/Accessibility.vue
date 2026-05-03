@@ -19,6 +19,7 @@
 	import lightMD from "@material-symbols/svg-600/outlined/light_mode.svg";
 	import darkMD from "@material-symbols/svg-600/outlined/dark_mode.svg";
 	import autoMD from "@material-symbols/svg-600/outlined/routine.svg";
+	import frontingNotificationMD from "@material-symbols/svg-600/outlined/notification_important.svg";
 </script>
 
 <template>
@@ -216,6 +217,13 @@
 					<IonIcon slot="start" :icon="hideCoverMD" />
 					<IonToggle v-model="accessibilityConfig.disableCovers">
 						<IonLabel> {{ $t("accessibility:disableCovers.title") }} </IonLabel>
+					</IonToggle>
+				</IonItem>
+
+				<IonItem>
+					<IonIcon slot="start" :icon="frontingNotificationMD" />
+					<IonToggle v-model="accessibilityConfig.frontingNotification">
+						<IonLabel> {{ $t("accessibility:frontingNotification.title") }} </IonLabel>
 					</IonToggle>
 				</IonItem>
 

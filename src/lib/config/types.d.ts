@@ -36,6 +36,7 @@ export type AccessibilityConfig = {
 	reducedMotion: boolean,
 	compactLists: boolean,
 	disableCovers: boolean,
+	frontingNotification: boolean,
 	contrastLevel: number,
 	fontScale: number,
 	longPressDuration: number

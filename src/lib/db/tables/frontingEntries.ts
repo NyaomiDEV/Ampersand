@@ -9,6 +9,7 @@ import { broadcastEvent } from "../../native/plugin";
 import { deleteFile } from "../../serialization";
 import { TransactionStatus } from "../types";
 import { sortFrontingEntries } from "../../util/misc";
+import { updateFrontingNotification } from "../../mode";
 
 export async function* getFrontingEntries(maxIter = 10){
 	const uuids = db.frontingEntries.index.sort(sortFrontingEntries).map(x => x.uuid);
@@ -282,4 +283,6 @@ export async function sendFrontingChangedEvent(){
 
 	if(securityConfig.useIPC)
 		await broadcastEvent("fronting_changed", deleteFile(fronting));
+
+	await updateFrontingNotification(fronting);
 }

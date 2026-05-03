@@ -48,6 +48,9 @@
 	"disableCovers": {
 		"title": "Disabilita le copertine nelle liste"
 	},
+	"frontingNotification": {
+		"title": "Notifica del fronting"
+	},
 	"contrastLevel": {
 		"title": "Livello di contrasto"
 	},

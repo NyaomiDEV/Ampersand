@@ -11,6 +11,7 @@
     "fs:default",
     "dialog:default",
     "opener:default",
-    "process:default"
+    "process:default",
+    "notifications:default"
   ]
 }
