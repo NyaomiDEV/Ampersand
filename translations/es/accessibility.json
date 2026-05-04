@@ -57,5 +57,8 @@
 	},
 	"compactLists": {
 		"title": "Listas compactas"
+	},
+	"frontingNotification": {
+		"title": "Notificación previa"
 	}
 }
