@@ -1,14 +1,15 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonFab, IonListHeader, IonFabButton, IonIcon, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonLabel, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonItem, IonToggle, ToggleChangeEventDetail } from "@ionic/vue";
+	import { IonContent, IonHeader, IonFab, IonFabButton, IonIcon, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonLabel, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonItem, IonToggle, ToggleChangeEventDetail } from "@ionic/vue";
 	import { onBeforeMount, onUnmounted, shallowRef } from "vue";
 
 	import { Reminder } from "../../lib/db/entities";
-	import { getReminders } from "../../lib/db/tables/reminders";
+	import { getReminders, updateReminder } from "../../lib/db/tables/reminders";
 	import { DatabaseEvent, DatabaseEvents } from "../../lib/db/events";
 
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
+	import { toast } from "../../lib/util/misc";
 
 	const reminders = shallowRef<Reminder[]>();
 
@@ -26,8 +27,16 @@
 		DatabaseEvents.removeEventListener("updated", listener);
 	});
 
-	async function toggleReminder(_reminder: Reminder, _e: CustomEvent<ToggleChangeEventDetail>){
-		// do smth
+	async function toggleReminder(reminder: Reminder, e: CustomEvent<ToggleChangeEventDetail>){
+		try {
+			await updateReminder({
+				uuid: reminder.uuid,
+				active: e.detail.checked
+			});
+		}catch(e){
+			console.error(e);
+			await toast((e as Error).message);
+		}
 	}
 </script>
 
@@ -55,55 +64,22 @@
 				<IonCardContent>{{ $t("reminders:remindersAreNotFinished.content") }}</IonCardContent>
 			</IonCard>
 
-			<IonListHeader>
-				<IonLabel>
-					{{ $t("reminders:eventBasedHeader") }}
-				</IonLabel>
-			</IonListHeader>
-
 			<IonList>
 				<IonItem
-					v-for="eventReminder in reminders?.filter(x => x.type === 'event')"
-					:key="eventReminder.uuid"
+					v-for="reminder in reminders"
+					:key="reminder.uuid"
 					button
-					:router-link="`/options/reminders/edit?uuid=${eventReminder.uuid}`"
+					:router-link="`/options/reminders/edit?uuid=${reminder.uuid}`"
 				>
 					<IonLabel>
-						{{ eventReminder.name }}
+						{{ reminder.title }}
 					</IonLabel>
 
 					<div slot="end">
 						<IonToggle
-							:checked="!!eventReminder.nativeId"
+							:checked="reminder.active"
 							@click="(e) => e.stopPropagation()"
-							@ion-change="(e) => toggleReminder(eventReminder, e)"
-						/>
-					</div>
-				</IonItem>
-			</IonList>
-
-			<IonListHeader>
-				<IonLabel>
-					{{ $t("reminders:periodicHeader") }}
-				</IonLabel>
-			</IonListHeader>
-
-			<IonList>
-				<IonItem
-					v-for="periodicReminder in reminders?.filter(x => x.type === 'periodic')"
-					:key="periodicReminder.uuid"
-					button
-					:router-link="`/options/reminders/edit?uuid=${periodicReminder.uuid}`"
-				>
-					<IonLabel>
-						{{ periodicReminder.name }}
-					</IonLabel>
-
-					<div slot="end">
-						<IonToggle
-							:checked="!!periodicReminder.nativeId"
-							@click="(e) => e.stopPropagation()"
-							@ion-change="(e) => toggleReminder(periodicReminder, e)"
+							@ion-change="(e) => toggleReminder(reminder, e)"
 						/>
 					</div>
 				</IonItem>

@@ -10,6 +10,7 @@ import { deleteFile } from "../../serialization";
 import { TransactionStatus } from "../types";
 import { sortFrontingEntries } from "../../util/misc";
 import { updateFrontingNotification } from "../../mode";
+import { triggerReminders } from "./reminders";
 
 export async function* getFrontingEntries(maxIter = 10){
 	const uuids = db.frontingEntries.index.sort(sortFrontingEntries).map(x => x.uuid);
@@ -287,4 +288,5 @@ export async function sendFrontingChangedEvent(backfill?: boolean){
 	}
 
 	await updateFrontingNotification(fronting);
+	await triggerReminders(fronting);
 }
