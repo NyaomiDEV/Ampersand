@@ -1,9 +1,0 @@
-{
-	"header": "The Lore",
-	"version": "Version {{version}}",
-	"ciVersion": "CI version",
-	"madein": "Cooked with love in Italy",
-	"privacyPolicy": "Privacy Policy",
-	"updateAvailable": "New version dropped: {{newVersion}}",
-	"credits": "The Main Characters"
-}
