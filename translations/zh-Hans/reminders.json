@@ -3,8 +3,6 @@
 	"edit": {
 		"title": "提醒通知标题",
 		"message": "提醒通知内容",
-		"triggeringEvent": {
-		},
 		"delete": {
 			"title": "删除提醒",
 			"confirm": "您确认要删除这个提示吗？"
