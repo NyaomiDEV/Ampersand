@@ -7,8 +7,6 @@
 			"confirm": "Kas sa oled kindel, et soovid selle meeldetuletuse kustutada?",
 			"title": "Kustuta meeldetuletus"
 		},
-		"header": "Muuda meeldetuletust",
-		"triggeringEvent": {
-		}
+		"header": "Muuda meeldetuletust"
 	}
 }
