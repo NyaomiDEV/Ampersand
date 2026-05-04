@@ -56,5 +56,8 @@
 	},
 	"compactLists": {
 		"title": "Kompaktowe listy"
+	},
+	"frontingNotification": {
+		"title": "Powiadomienie o frontowaniu"
 	}
 }
