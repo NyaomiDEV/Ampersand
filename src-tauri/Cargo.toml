@@ -45,5 +45,5 @@ tauri-plugin-biometric = "2.3.2"
 tauri-plugin-single-instance = "2.4.2"
 
 [target.'cfg(all(not(dev), target_os = "macos"))'.dependencies]
-tauri-plugin-notifications = { git = "https://github.com/Choochmeque/tauri-plugin-notifications.git", default_features = false }
+tauri-plugin-notifications = { git = "https://github.com/Choochmeque/tauri-plugin-notifications.git", default-features = false }
 
