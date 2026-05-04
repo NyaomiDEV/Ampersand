@@ -24,7 +24,6 @@
 
 	const router = useIonRouter();
 	const isDev = inject<boolean>("isDev");
-	const isDevServer = inject<boolean>("isDevServer");
 	
 	function lockImmediately(){
 		if(lock())
@@ -84,7 +83,7 @@
 					<IonLabel>{{ $t("customFields:header") }}</IonLabel>
 				</IonItem>
 
-				<IonItem v-if="isDevServer" button router-link="/options/reminders">
+				<IonItem v-if="isDev" button router-link="/options/reminders">
 					<IonIcon slot="start" :icon="RemindersMD" aria-hidden="true" />
 					<IonLabel>{{ $t("reminders:header") }}</IonLabel>
 				</IonItem>
