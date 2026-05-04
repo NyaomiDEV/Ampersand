@@ -1,1 +1,15 @@
-{}
+{
+	"header": "lipu lili",
+	"searchPlaceholder": "o alasa e lipu lili...",
+	"edit": {
+		"header": "ante pi lipu lili",
+		"headerAdd": "pali pi lipu lili sin",
+		"title": "nimi suli pi lipu lili",
+		"content": "sijelo pi lipu lili",
+		"isArchived": "len pi lipu lili",
+		"delete": {
+			"title": "weka pi lipu lili",
+			"confirm": "sina wile ala wile weka e lipu lili ni?"
+		}
+	}
+}

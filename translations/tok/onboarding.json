@@ -25,11 +25,11 @@
 	"systemInfo": {
 		"header": "o toki lon kulupu sina!",
 		"name": "nimi kulupu",
-		"description": "o toki lili lon sina ale"
+		"description": "o toki lili lon sina ale..."
 	},
 	"memberInfo": {
 		"header": "o toki lon sina!",
-		"description": "o toki lili lon sina",
+		"description": "o toki lili lon sina...",
 		"invitation": "sina pini kama la sina ken awen ante e lipu sina!"
 	},
 	"endScreen": {

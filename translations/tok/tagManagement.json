@@ -1,6 +1,6 @@
 {
 	"header": "lawa pi nimi sona",
-	"searchPlaceholder": "o alasa e nimi sona",
+	"searchPlaceholder": "o alasa e nimi sona...",
 	"select": "nimi sona pi wile sina",
 	"selector": {
 		"member": "nimi sona pi ijo kulupu",
@@ -45,6 +45,6 @@
 			"desc_one": "ijo namako {{count}} li jo e nimi sona ni",
 			"desc_other": ""
 		},
-		"isArchived": "nimi sona len"
+		"isArchived": "len pi nimi sona"
 	}
 }
