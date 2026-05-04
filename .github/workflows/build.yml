@@ -50,7 +50,7 @@ jobs:
         GH_TOKEN: ${{ github.token }}
     - name: Publish release
       id: release
-      uses: softprops/action-gh-release@v2.5.0
+      uses: softprops/action-gh-release@v3.0.0
       with:
         name: ${{ github.ref_name != 'main' && format('Release ({0})', env.AMPERSAND_VERSION) || format('CI build ({0})', env.AMPERSAND_VERSION) }}
         tag_name: ${{ github.ref_name != 'main' && github.ref_name || 'dev' }}
@@ -90,7 +90,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Publish release
-        uses: softprops/action-gh-release@v2.5.0
+        uses: softprops/action-gh-release@v3.0.0
         with:
           tag_name: ${{ github.ref_name != 'main' && github.ref_name || 'dev' }}
           prerelease: ${{ github.ref_name == 'main' && true || false }}

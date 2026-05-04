@@ -40,7 +40,7 @@ jobs:
           node-version: 24
           cache: 'yarn'
       - name: Set up Rust toolchain
-        uses: actions-rust-lang/setup-rust-toolchain@v1.15.2
+        uses: actions-rust-lang/setup-rust-toolchain@v1.16.0
         with:
           rust-src-dir: "src-tauri"
           target: ${{ matrix.platform == 'macos-26' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
@@ -57,7 +57,7 @@ jobs:
         run: yarn tauri build --ci ${{ matrix.args }}
       - name: Publish artifacts (Linux)
         if: matrix.platform == 'ubuntu-latest'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: PC build for Linux
           path: |
@@ -66,14 +66,14 @@ jobs:
             ./src-tauri/target/release/bundle/appimage/Ampersand_*.AppImage
       - name: Publish artifacts (macOS)
         if: matrix.platform == 'macos-26'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: PC build for macOS
           path: |
             ./src-tauri/target/universal-apple-darwin/release/bundle/dmg/Ampersand_*.dmg
       - name: Publish artifacts (Windows)
         if: matrix.platform == 'windows-latest'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: PC build for Windows
           path: |
