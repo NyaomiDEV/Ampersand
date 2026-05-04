@@ -1,38 +1,14 @@
 {
+	"header": "Meeldetuletused",
 	"edit": {
 		"title": "Meeldetuletuse teavituse pealkiri",
 		"message": "Meeldetuletuse teavituse sõnum",
-		"type": {
-			"periodic": "Perioodiline",
-			"title": "Meeldetuletuse tüüp",
-			"eventBased": "Sündmusepõhine"
-		},
 		"delete": {
 			"confirm": "Kas sa oled kindel, et soovid selle meeldetuletuse kustutada?",
 			"title": "Kustuta meeldetuletus"
 		},
 		"header": "Muuda meeldetuletust",
-		"name": "Meeldetuletuse nimi",
-		"eventBased": {
-			"timing": "Ajastus",
-			"delay": {
-				"title": "Viivitus"
-			}
-		},
-		"periodic": {
-			"dayOfMonth": {
-				"desc_ordinal_one": "Korda kuu igal {{count}}-l päeval",
-				"desc_ordinal_other": "Korda kuu igal {{count}}-l päeval",
-				"desc_undefined": "Korda iga päev",
-				"title": "Päev kuus"
-			},
-			"timeOfDay": {
-				"desc": "Kell {{timeOfDay}}",
-				"title": "Aeg päevas"
-			}
+		"triggeringEvent": {
 		}
-	},
-	"header": "Meeldetuletused",
-	"eventBasedHeader": "Sündmusepõhised meeldetuletused",
-	"periodicHeader": "Perioodilised meeldetuletused"
+	}
 }

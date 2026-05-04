@@ -1,50 +1,25 @@
 {
-	"remindersAreNotFinished": {
-		"header": "Reminders be not finished!",
-		"content": "Right now, all o' this be just a preview for yer eyes! Ye may be able to stash yer reminders at some point, but keep in mind that this be not yet wired to any signal system! If ye be sailin' on Android, ye should already be able to rig some stuff that'll work when we finish up the hull o' the system, but bear in mind that this won't work on the Web version, so don't be gettin' too excited 'bout usin' reminders on yer land-lubbin' computer. Also, if ye be a developer, lend us a hand, matey!"
+	"notOnPC": {
+		"header": "Reminders be not workin' on this here land-lubber's PC",
+		"content": "Howbeit, since ye may haul the booty off this PC and onto a phone or Mac, ye can organize yer reminders here."
 	},
 	"header": "Reminders",
-	"eventBasedHeader": "Event based reminders",
-	"periodicHeader": "Periodic reminders",
 	"edit": {
 		"header": "Fix the reminder",
-		"name": "Reminder name",
-		"title": "Reminder signal title",
-		"message": "Reminder signal message",
-		"type": {
-			"title": "Kind o' reminder",
-			"eventBased": "Event based",
-			"periodic": "Periodic"
-		},
-		"eventBased": {
-			"title": "Triggerin' event",
-			"addedToFront": "After a matey has been added to front",
-			"removedFromFront": "After a matey has been removed from front",
-			"memberFilterQuery": "Matey filter query",
-			"timing": "Timin'",
-			"delay": {
-				"title": "Delay",
-				"desc": "After {{delay}}"
-			}
-		},
-		"periodic": {
-			"title": "Interval o' time",
-			"timeOfDay": {
-				"title": "Time o' day",
-				"desc": "At {{timeOfDay}}"
-			},
-			"dayOfMonth": {
-				"title": "Day o' month",
-				"desc_undefined": "Repeat every day",
-				"desc_ordinal_one": "Repeat every {{count}}st day o' month",
-				"desc_ordinal_two": "Repeat every {{count}}nd day o' month",
-				"desc_ordinal_few": "Repeat every {{count}}rd day o' month",
-				"desc_ordinal_other": "Repeat every {{count}}th day o' month"
-			}
+		"headerAdd": "Add a reminder",
+		"active": "Set the reminder live",
+		"title": "Reminder's name",
+		"message": "The reminder's tale",
+		"delay": "Wait for these many minutes",
+		"members": "Pick yer crew",
+		"triggeringEvent": {
+			"title": "The event what starts it",
+			"addedToFront": "After a matey's been added to the front",
+			"removedFromFront": "After a matey's been tossed from the front"
 		},
 		"delete": {
 			"title": "Scuttle the reminder",
-			"confirm": "Be ye sure ye want to scuttle this reminder?"
+			"confirm": "Be ye certain ye want to scuttle this here reminder?"
 		}
 	}
 }

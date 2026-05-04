@@ -1,8 +1,0 @@
-{
-	"title": "App is locked",
-	"hint": "Input password",
-	"biometrics": {
-		"title": "App is locked",
-		"reason": "Un-lock app"
-	}
-}

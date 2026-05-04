@@ -4,15 +4,12 @@
 		"content": "However, since you may export the data off this PC and onto a phone or Mac, you can organize your reminders here."
 	},
 	"header": "Reminders",
-	"eventBasedHeader": "Event based reminders",
-	"periodicHeader": "Periodic reminders",
 	"edit": {
 		"header": "Edit reminder",
 		"headerAdd": "Add reminder",
 		"active": "Activate reminder",
-		"name": "Reminder name",
-		"title": "Reminder notification title",
-		"message": "Reminder notification message",
+		"title": "Reminder title",
+		"message": "Reminder message",
 		"delay": "Delay in minutes",
 		"members": "Select members",
 		"triggeringEvent": {

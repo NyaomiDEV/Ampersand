@@ -1,9 +1,0 @@
-{
-	"header": "Info",
-	"version": "Versione {{version}}",
-	"ciVersion": "versione CI",
-	"madein": "Fatto col cuore in Italia, zì",
-	"privacyPolicy": "Privacy",
-	"updateAvailable": "Nuovo update: {{newVersion}}",
-	"credits": "Credits"
-}

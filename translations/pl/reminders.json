@@ -1,45 +1,13 @@
 {
-	"remindersAreNotFinished": {
-		"header": "Przypomnienia nie są jeszcze ukończone!",
-		"content": "Na razie to wszystko to jedynie podgląd interfejsu użytkownika! W przyszłości zapisywanie przypomnień może stać się możliwe, ale na ten moment nie są one jeszcze połączone z żadnym systemem powiadomień! Jeśli korzystasz z Androida, powinno dać się skonfigurować pewne rzeczy, które będą działać po ukończeniu systemu bazowego; pamiętaj jednak, że nie będzie to działać w wersji przeglądarkowej, więc nie ekscytuj się zbytnio korzystaniem z przypomnień na komputerze. A jeśli jesteś programistą, zawsze przyda nam się pomocna dłoń!"
-	},
 	"header": "Przypomnienia",
-	"eventBasedHeader": "Przypomnienia oparte na wydarzeniach",
-	"periodicHeader": "Przypomnienia okresowe",
 	"edit": {
 		"header": "Edytuj przypomnienie",
-		"name": "Nazwa przypomnienia",
 		"title": "Tytuł powiadomienia o przypomnieniu",
 		"message": "Treść powiadomienia o przypomnieniu",
-		"type": {
-			"title": "Rodzaj przypomnienia",
-			"eventBased": "Oparte na wydarzeniach",
-			"periodic": "Okresowe"
-		},
-		"eventBased": {
+		"triggeringEvent": {
 			"title": "Wywoływacz",
 			"addedToFront": "Po dodaniu członka systemu na front",
-			"removedFromFront": "Po zdjęciu członka systemu z frontu",
-			"timing": "Czas",
-			"delay": {
-				"title": "Opóźnienie",
-				"desc": "Po {{delay}}"
-			},
-			"memberFilterQuery": "Filtr członków"
-		},
-		"periodic": {
-			"title": "Przedział czasu",
-			"timeOfDay": {
-				"title": "Pora dnia",
-				"desc": "O {{timeOfDay}}"
-			},
-			"dayOfMonth": {
-				"title": "Dzień miesiąca",
-				"desc_undefined": "Powtarzaj codziennie",
-				"desc_ordinal_one": "Powtarzaj każdego {{count}}. dnia miesiąca",
-				"desc_ordinal_few": "Powtarzaj każdego {{count}}. dnia miesiąca",
-				"desc_ordinal_many": "Powtarzaj każdego {{count}}. dnia miesiąca"
-			}
+			"removedFromFront": "Po zdjęciu członka systemu z frontu"
 		},
 		"delete": {
 			"title": "Usuń przypomnienie",

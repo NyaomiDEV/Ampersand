@@ -1,13 +1,6 @@
 {
-	"remindersAreNotFinished": {
-		"header": "Herinneringen zijn nog niet klaar!"
-	},
 	"header": "Herinneringen",
 	"edit": {
-		"header": "Wijzig reminder",
-		"name": "Reminder naam",
-		"type": {
-			"title": "Soort reminder"
-		}
+		"header": "Wijzig reminder"
 	}
 }

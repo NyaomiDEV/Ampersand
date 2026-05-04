@@ -1,49 +1,25 @@
 {
-	"remindersAreNotFinished": {
-		"header": "Uè, i promemoria non sono mica finiti!",
-		"content": "Al momento, tutta 'sta roba è solo un'anteprima della UI, figa! Prima o poi potrete salvare i vostri reminder, ma occhio che non c'è ancora sotto un tubo di sistema di notifiche! Se siete su Android dovreste già riuscire a settare due robe che funzioneranno quando avremo finito il backend, ma sappiate che sulla versione Web non va una mazza, quindi non state lì a gasarvi per usare i reminder sul PC. E poi, se siete dei dev, dateci una mano, dai!"
+	"notOnPC": {
+		"header": "I promemoria sul PC non fatturano",
+		"content": "Però, visto che puoi switchare i dati sul cellu, organizza pure i tuoi reminder qui. Taaac!"
 	},
 	"header": "Reminder",
-	"eventBasedHeader": "Reminder eventi",
-	"periodicHeader": "Reminder periodici",
 	"edit": {
 		"header": "Modifica il reminder",
-		"name": "Nome del reminder",
-		"title": "Titolo notifica del reminder",
-		"message": "Messaggio notifica del reminder",
-		"type": {
-			"title": "Tipo di reminder",
-			"eventBased": "Evento",
-			"periodic": "Periodico"
-		},
-		"eventBased": {
-			"title": "Trigger dell'evento",
-			"addedToFront": "Dopo che unə membrə è statə messə in front",
-			"removedFromFront": "Dopo che unə membrə è statə levatə dal front",
-			"memberFilterQuery": "Filtro deɜ membrɜ",
-			"timing": "Timing",
-			"delay": {
-				"title": "Delay",
-				"desc": "Dopo {{delay}}"
-			}
-		},
-		"periodic": {
-			"title": "Intervallo di tempo",
-			"timeOfDay": {
-				"title": "Orario",
-				"desc": "Alle {{timeOfDay}}"
-			},
-			"dayOfMonth": {
-				"title": "Giorno del mese",
-				"desc_undefined": "Ripeti ogni giorno",
-				"desc_ordinal_one": "Ripeti ogni {{count}}° giorno del mese",
-				"desc_ordinal_many": "Ripeti ogni {{count}}° giorno del mese",
-				"desc_ordinal_other": "Ripeti ogni {{count}}° giorno del mese"
-			}
+		"headerAdd": "Aggiungi un reminder",
+		"active": "Attiva il reminder",
+		"title": "Titolo del reminder",
+		"message": "Messaggio del reminder",
+		"delay": "Delay in minuti",
+		"members": "Seleziona il team",
+		"triggeringEvent": {
+			"title": "Evento scatenante",
+			"addedToFront": "Dopo che uno del team è entrato in front",
+			"removedFromFront": "Dopo che uno del team è uscito dal front"
 		},
 		"delete": {
-			"title": "Cassa il reminder",
-			"confirm": "Vuoi davvero cassare questo reminder?"
+			"title": "Cestina il reminder",
+			"confirm": "Vuoi davvero piallare questo reminder?"
 		}
 	}
 }

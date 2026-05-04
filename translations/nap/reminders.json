@@ -1,1 +1,25 @@
-{}
+{
+	"notOnPC": {
+		"header": "E promemoria nun funzionano 'o PC",
+		"content": "Però, siccome se ponno esportà 'e date ncopp'ê cellulare, t'e puo' urganizzà ccà."
+	},
+	"header": "Promemoria",
+	"edit": {
+		"header": "Cagna promemoria",
+		"headerAdd": "Aggiunge promemoria",
+		"active": "Attiva promemoria",
+		"title": "Titolo d' 'o promemoria",
+		"message": "Messaggio d' 'o promemoria",
+		"delay": "Ritardo 'e minute",
+		"members": "Scerne 'e mmiembre",
+		"triggeringEvent": {
+			"title": "Evento scatenante",
+			"addedToFront": "Doppo ca nu membro è stato aggiunto ô front",
+			"removedFromFront": "Doppo ca nu membro è stato levato d' 'o front"
+		},
+		"delete": {
+			"title": "Scancella promemoria",
+			"confirm": "Vuò scancellà overamente stu promemoria?"
+		}
+	}
+}
