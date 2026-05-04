@@ -135,6 +135,9 @@ export function getNativeID(reminder: IndexEntry<Reminder>){
 
 let frontingCache: FrontingEntryComplete[];
 export async function triggerReminders(fronting: FrontingEntryComplete[]){
+	// scheduled notifications are unsupported on computers
+	if(!["macos", "ios", "android"].includes(platform())) return;
+
 	if(!frontingCache){
 		// cannot trigger anything if we don't know the previous state
 		frontingCache = fronting;
@@ -152,6 +155,7 @@ export async function triggerReminders(fronting: FrontingEntryComplete[]){
 				) {
 					await notify({
 						id: getNativeID(reminder),
+						channelId: "reminders",
 						title: reminder.title,
 						body: platform() === "android" ? undefined : reminder.message,
 						largeBody: platform() === "android" ? reminder.message : undefined,
@@ -175,6 +179,7 @@ export async function triggerReminders(fronting: FrontingEntryComplete[]){
 				) {
 					await notify({
 						id: getNativeID(reminder),
+						channelId: "reminders",
 						title: reminder.title,
 						body: platform() === "android" ? undefined : reminder.message,
 						largeBody: platform() === "android" ? reminder.message : undefined,

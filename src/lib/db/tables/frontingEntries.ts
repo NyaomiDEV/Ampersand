@@ -77,7 +77,7 @@ export async function deleteFrontingEntry(uuid: UUID): Promise<TransactionStatus
 		}));
 		return { success: true };
 	} catch (_e) {
-		console.log(_e);
+		console.error(_e);
 		return { success: false, err: _e };
 	}
 }

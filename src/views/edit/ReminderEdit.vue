@@ -24,14 +24,15 @@
 	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
 
-	import { onBeforeMount, ref, toRaw, watch } from "vue";
-	import { Reminder } from "../../lib/db/entities";
-	import { getReminder, newReminder, removeReminder, updateReminder } from "../../lib/db/tables/reminders";
+	import { onBeforeMount, ref, toRaw, useTemplateRef, watch } from "vue";
+	import { ReminderComplete } from "../../lib/db/entities";
+	import { getReminder, newReminder, removeReminder, toReminderComplete, updateReminder } from "../../lib/db/tables/reminders";
 	import { PartialBy } from "../../lib/types";
 	import { useRoute } from "vue-router";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import { useTranslation } from "i18next-vue";
 	import { promptOkCancel, toast } from "../../lib/util/misc";
+	import MemberSelect from "../../modals/MemberSelect.vue";
 
 	const route = useRoute();
 	const router = useIonRouter();
@@ -39,7 +40,7 @@
 
 	const loading = ref(false);
 
-	const emptyReminder: PartialBy<Reminder, "uuid"> = {
+	const emptyReminder: PartialBy<ReminderComplete, "uuid"> = {
 		active: false,
 		title: "",
 		message: "",
@@ -47,7 +48,9 @@
 		trigger: "fronting",
 		delay: 0
 	};
-	const reminder = ref<PartialBy<Reminder, "uuid">>({ ...emptyReminder });
+	const reminder = ref<PartialBy<ReminderComplete, "uuid">>({ ...emptyReminder });
+
+	const memberSelectModal = useTemplateRef("memberSelectModal");
 
 	async function deleteReminder(){
 		try{
@@ -72,14 +75,21 @@
 
 		try{
 			if(!uuid) {
-				const result = await newReminder({ ..._reminder });
+				const result = await newReminder({
+					..._reminder,
+					members: _reminder.members.map(x => x.uuid)
+				});
 				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
 
 				router.back();
 				return;
 			}
 
-			const result = await updateReminder(_reminder as Reminder);
+			const result = await updateReminder({
+				uuid,
+				..._reminder,
+				members: _reminder.members.map(x => x.uuid)
+			});
 			if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
 
 			router.back();
@@ -92,7 +102,7 @@
 		if(route.name !== "ReminderEdit") return;
 
 		if(route.query.uuid){
-			const rem = await getReminder(route.query.uuid as string);
+			const rem = await toReminderComplete(await getReminder(route.query.uuid as string));
 			if(rem) reminder.value = rem;
 			else reminder.value = { ...emptyReminder };
 		} else reminder.value = { ...emptyReminder };
@@ -111,7 +121,7 @@
 					slot="start"
 					default-href="/options/reminders/"
 				/>
-				<IonTitle>{{ $t("reminders:edit.header") }}</IonTitle>
+				<IonTitle>{{ reminder.uuid ? $t("reminders:edit.header") : $t("reminders:edit.headerAdd") }}</IonTitle>
 			</IonToolbar>
 		</IonHeader>
 
@@ -148,7 +158,7 @@
 
 			<IonListHeader>
 				<IonLabel>
-					{{ $t("reminders:edit.eventBased.title") }}
+					{{ $t("reminders:edit.triggeringEvent.title") }}
 				</IonLabel>
 			</IonListHeader>
 
@@ -156,22 +166,29 @@
 				<IonRadioGroup v-model="reminder.trigger">
 					<IonItem>
 						<IonRadio value="fronting" justify="space-between">
-							{{ $t("reminders:edit.eventBased.addedToFront") }}
+							{{ $t("reminders:edit.triggeringEvent.addedToFront") }}
 						</IonRadio>
 					</IonItem>
 					<IonItem>
 						<IonRadio value="fronted" justify="space-between">
-							{{ $t("reminders:edit.eventBased.removedFromFront") }}
+							{{ $t("reminders:edit.triggeringEvent.removedFromFront") }}
 						</IonRadio>
 					</IonItem>
 				</IonRadioGroup>
+
+				<IonItem button detail @click="memberSelectModal?.$el.present()">
+					<IonLabel>
+						<h3>{{ $t("reminders:edit.members") }}</h3>
+						<p>{{ reminder.members.map(x => x.name).join(", ") }}</p>
+					</IonLabel>
+				</IonItem>
 			</IonList>
 
 			<IonList>
 				<IonItem>
 					<IonRange
 						v-model="reminder.delay"
-						:label="$t('reminders:edit.eventBased.delay.title')"
+						:label="$t('reminders:edit.delay')"
 						label-placement="stacked"
 						:min="0"
 						:max="1000 * 60 * 60"
@@ -208,6 +225,14 @@
 				</IonFabButton>
 			</IonFab>
 		</IonContent>
+
+		<MemberSelect
+			ref="memberSelectModal"
+			v-model="reminder.members"
+			:custom-title="$t('reminder:edit.members')"
+			:hide-checkboxes="false"
+			:always-emit="true"
+		/>
 	</IonPage>
 </template>
 

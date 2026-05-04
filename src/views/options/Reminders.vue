@@ -1,15 +1,17 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonFab, IonFabButton, IonIcon, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonLabel, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonItem, IonToggle, ToggleChangeEventDetail } from "@ionic/vue";
+	import { IonContent, IonHeader, IonFab, IonFabButton, IonIcon, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonLabel, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonItem } from "@ionic/vue";
 	import { onBeforeMount, onUnmounted, shallowRef } from "vue";
 
 	import { Reminder } from "../../lib/db/entities";
-	import { getReminders, updateReminder } from "../../lib/db/tables/reminders";
+	import { getReminders } from "../../lib/db/tables/reminders";
 	import { DatabaseEvent, DatabaseEvents } from "../../lib/db/events";
 
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
-	import { toast } from "../../lib/util/misc";
+	import { platform } from "@tauri-apps/plugin-os";
+
+	const isUnsupportedPlatform = ["macos", "ios", "android"].includes(platform());
 
 	const reminders = shallowRef<Reminder[]>();
 
@@ -26,18 +28,6 @@
 	onUnmounted(() => {
 		DatabaseEvents.removeEventListener("updated", listener);
 	});
-
-	async function toggleReminder(reminder: Reminder, e: CustomEvent<ToggleChangeEventDetail>){
-		try {
-			await updateReminder({
-				uuid: reminder.uuid,
-				active: e.detail.checked
-			});
-		}catch(e){
-			console.error(e);
-			await toast((e as Error).message);
-		}
-	}
 </script>
 
 <template>
@@ -56,12 +46,11 @@
 
 		<SpinnerFullscreen v-if="!reminders" />
 		<IonContent v-else>
-			<!-- remove this when its completed -->
-			<IonCard color="warning">
+			<IonCard v-if="isUnsupportedPlatform" color="warning">
 				<IonCardHeader>
-					<IonCardTitle>{{ $t("reminders:remindersAreNotFinished.header") }}</IonCardTitle>
+					<IonCardTitle>{{ $t("reminders:notOnPC.header") }}</IonCardTitle>
 				</IonCardHeader>
-				<IonCardContent>{{ $t("reminders:remindersAreNotFinished.content") }}</IonCardContent>
+				<IonCardContent>{{ $t("reminders:notOnPC.content") }}</IonCardContent>
 			</IonCard>
 
 			<IonList>
@@ -69,19 +58,14 @@
 					v-for="reminder in reminders"
 					:key="reminder.uuid"
 					button
+					detail
+					:class="{ inactive: !reminder.active }"
 					:router-link="`/options/reminders/edit?uuid=${reminder.uuid}`"
 				>
 					<IonLabel>
-						{{ reminder.title }}
+						<h3>{{ reminder.title }}</h3>
+						<p>{{ reminder.message }}</p>
 					</IonLabel>
-
-					<div slot="end">
-						<IonToggle
-							:checked="reminder.active"
-							@click="(e) => e.stopPropagation()"
-							@ion-change="(e) => toggleReminder(reminder, e)"
-						/>
-					</div>
 				</IonItem>
 			</IonList>
 
@@ -93,3 +77,13 @@
 		</IonContent>
 	</IonPage>
 </template>
+
+<style scoped>
+	ion-card {
+		margin: 16px;
+	}
+
+	ion-item.inactive {
+		opacity: .5;
+	}
+</style>

@@ -65,7 +65,7 @@ export async function deleteCustomField(uuid: UUID): Promise<TransactionStatus<v
 		}));
 		return { success: true };
 	} catch (_e) {
-		console.log(_e);
+		console.error(_e);
 		return { success: false, err: _e };
 	}
 }

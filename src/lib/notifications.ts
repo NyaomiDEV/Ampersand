@@ -18,16 +18,26 @@ async function ensureNotifyPerms(request: boolean){
 }
 
 async function registerChannels(){
+	// channels are only available on android
 	if(platform() !== "android") return;
 
 	const _channels = await channels();
-	const _channelsWeWant = [{
-		id: "frontingNotifications",
-		name: t("accessibility:frontingNotification.title"),
-		lights: false,
-		importance: Importance.None,
-		visibility: Visibility.Private
-	}];
+	const _channelsWeWant = [
+		{
+			id: "frontingNotifications",
+			name: t("accessibility:frontingNotification.title"),
+			lights: false,
+			importance: Importance.Min,
+			visibility: Visibility.Private
+		},
+		{
+			id: "reminders",
+			name: t("reminders:header"),
+			lights: false,
+			importance: Importance.Default,
+			visibility: Visibility.Private
+		},
+	];
 
 	for(const channel of _channelsWeWant){
 		const existing = _channels.find(x => x.id === channel.id);
@@ -63,7 +73,9 @@ export async function notify(opts: Options){
 }
 
 export async function unnotify(id: number | number[]) {
-	await ensureNotifyPerms(false);
+	// canceling notifications is not available on pc
+	if(!["android", "macos", "ios"].includes(platform()))
+		return false;
 
 	try {
 		await cancel(typeof id === "number" ? [id] : id);
