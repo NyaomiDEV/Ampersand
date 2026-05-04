@@ -1,0 +1,15 @@
+{
+	"header": "Note adesive",
+	"searchPlaceholder": "Cerca mmiez'ê note...",
+	"edit": {
+		"header": "Cagna 'a nota",
+		"headerAdd": "Aggiungi 'a nota",
+		"title": "Titolo d''a nota",
+		"content": "Cuntenuto d''a nota",
+		"isArchived": "Archivia 'a nota",
+		"delete": {
+			"title": "Scancella 'a nota",
+			"confirm": "Sî sicurə ca vuò scancellà 'sta nota?"
+		}
+	}
+}

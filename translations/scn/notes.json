@@ -1,0 +1,15 @@
+{
+	"header": "Pizzini",
+	"searchPlaceholder": "Cerca ntra li pizzini...",
+	"edit": {
+		"header": "Cancia pizzinu",
+		"headerAdd": "Agghiunci pizzinu",
+		"title": "Titulu dû pizzinu",
+		"content": "Cuntinutu dû pizzinu",
+		"isArchived": "Archivia lu pizzinu",
+		"delete": {
+			"title": "Scancella pizzinu",
+			"confirm": "Sì sicuru ca voi scancillari stu pizzinu?"
+		}
+	}
+}

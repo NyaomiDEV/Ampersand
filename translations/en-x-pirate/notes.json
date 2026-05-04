@@ -1,0 +1,15 @@
+{
+	"header": "Sticky notes",
+	"searchPlaceholder": "Scour the notes...",
+	"edit": {
+		"header": "Fix the note",
+		"headerAdd": "Add a note",
+		"title": "Note's name",
+		"content": "Note's booty",
+		"isArchived": "Stow the note away",
+		"delete": {
+			"title": "Scuttle the note",
+			"confirm": "Be ye certain ye want to scuttle this note?"
+		}
+	}
+}

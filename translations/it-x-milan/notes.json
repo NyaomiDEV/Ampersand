@@ -1,0 +1,15 @@
+{
+	"header": "Post-it",
+	"searchPlaceholder": "Fà un check tra le note...",
+	"edit": {
+		"header": "Dà un occhio alla nota",
+		"headerAdd": "Butta su una nota",
+		"title": "Titolo del pezzo",
+		"content": "Brief della nota",
+		"isArchived": "Metti in archivio",
+		"delete": {
+			"title": "Cassa la nota",
+			"confirm": "Figa, sei sicuro di voler cassare 'sta nota?"
+		}
+	}
+}
