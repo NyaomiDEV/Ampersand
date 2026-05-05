@@ -36,6 +36,7 @@ export async function members(table: ShittyTable<Member>, version: number){
 					break;
 				}
 			} catch (_e) {
+				console.error(_e);
 				return false;
 			}
 		}
@@ -94,6 +95,7 @@ export async function systems(table: ShittyTable<System>, version: number){
 					break;
 				}
 			}catch(_e){
+				console.error(_e);
 				return false;				
 			}
 		}
@@ -145,6 +147,7 @@ export async function assets(table: ShittyTable<Asset>, version: number) {
 					break;
 				}
 			} catch (_e) {
+				console.error(_e);
 				return false;
 			}
 		}
@@ -160,6 +163,7 @@ export async function assets(table: ShittyTable<Asset>, version: number) {
 			try {
 				await table.update({ uuid, tags: [] }, false);
 			} catch (_e) {
+				console.error(_e);
 				return false;
 			}
 		}
@@ -200,6 +204,7 @@ export async function journalPosts(table: ShittyTable<JournalPost>, version: num
 					break;
 				}
 			} catch (_e) {
+				console.error(_e);
 				return false;
 			}
 		}
@@ -220,8 +225,8 @@ export async function journalPosts(table: ShittyTable<JournalPost>, version: num
 						members: typeof obj.member === "string" ? [obj.member] : []
 					}, true
 				);
-				break;
 			} catch (_e) {
+				console.error(_e);
 				return false;
 			}
 		}
@@ -260,8 +265,8 @@ export async function boardMessages(table: ShittyTable<BoardMessage>, version: n
 						members: typeof obj.member === "string" ? [obj.member] : []
 					}, true
 				);
-				break;
 			} catch (_e) {
+				console.error(_e);
 				return false;
 			}
 		}
@@ -285,6 +290,7 @@ export async function tags(table: ShittyTable<Tag>, version: number) {
 				if(typeof tagIndex.isArchived === "undefined")
 					await table.update({ uuid: tagIndex.uuid, isArchived: false });
 			} catch (_e) {
+				console.error(_e);
 				return false;
 			}
 		}
