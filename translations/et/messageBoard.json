@@ -13,7 +13,8 @@
 		"defaultPollValues": {
 			"yes": "Jah",
 			"veto": "Veto",
-			"abstain": "Erapooletu"
+			"abstain": "Erapooletu",
+			"no": "Ei"
 		},
 		"resultsHeader": "Hääletuse tulemused",
 		"choice": {
