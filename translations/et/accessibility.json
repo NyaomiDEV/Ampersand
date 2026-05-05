@@ -1,3 +1,14 @@
 {
-	"header": "Hõlbustus ja ligipääsetavus"
+	"header": "Hõlbustus ja ligipääsetavus",
+	"uiVariant": {
+		"light": "Hele kujundus",
+		"dark": "Tume kujundus"
+	},
+	"highLegibilityFontType": {
+		"title": "Üliloetav kirjatüüp",
+		"opendyslexic": "OpenDyslexic",
+		"lexend": "Lexend",
+		"comicrelief": "Comic Relief",
+		"system-font": "Süsteemi kirjatüüp"
+	}
 }

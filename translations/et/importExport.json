@@ -4,6 +4,33 @@
 	"exportHeader": "Ekspordi",
 	"thirdPartyHeader": "Kolmandate osapoolte lõimingud",
 	"dbExport": {
-		"title": "Ekspordi oma andmed"
+		"title": "Ekspordi oma andmed",
+		"desc": "Varunda oma senised andmed faili, mida saad hoida kusagil mujal"
+	},
+	"dbImportDesc": "Hoiatus! Sellega kirjutatakse kõik olemasolevad andmed üle",
+	"dbImport": "Impordi oma andmed",
+	"dbImportOld": {
+		"title": "Impordi oma andmed vanast Ampersandi versioonist",
+		"desc": "Varukoopiate jaoks, mid on tehtud Ampersandi versiooniga < 0.2.0",
+		"note": "Vanad Ampersandi versioonid kasutasid tänaseks aegunud vormingut (ampdb). Kui sul on vanad varukoopiad veel alles, siis impordi nad nüüd ja ekspordi nad uues vormingus varukoopiatena. Selline võimalus kaob mõne versiooni pärast."
+	},
+	"pkImport": "Impordi oma andmed PluralKiti ekspordifailist",
+	"ocImport": "Impordi oma andmed Octoconi ekspordifailist",
+	"tuImport": "Impordi oma andmed Tupperboxi ekspordifailist",
+	"spImport": "Impordi oma andmed Simply Plurali ekspordifailist",
+	"status": {
+		"imported": "Varukoopia on imporditud. Palun käivita rakendus uuesti.",
+		"importedSp": "Simply Plurali varukoopia on imporditud. Palun käivita rakendus uuesti.",
+		"importedOc": "Octoconi varukoopia on imporditud. Palun käivita rakendus uuesti.",
+		"importedPk": "PluralKiti varukoopia on imporditud. Palun käivita rakendus uuesti.",
+		"importedTu": "Tupperboxi varukoopia on imporditud. Palun käivita rakendus uuesti.",
+		"exportedApp": "Varukoopia on eksporditud sinu näidatud asukohta.",
+		"exportedAppIos": "Varukoopia on eksporditud failirakenduse Ampersandi kausta.",
+		"errorExport": "Viga varukoopia loomisel.",
+		"error": "Viga varukoopia importimisel.",
+		"errorOc": "Viga Octoconi varukoopia importimisel.",
+		"errorSp": "Viga Simply Plurali varukoopia importimisel.",
+		"errorPk": "Viga PluralKiti varukoopia importimisel.",
+		"errorTu": "Viga Tupperboxi varukoopia importimisel."
 	}
 }

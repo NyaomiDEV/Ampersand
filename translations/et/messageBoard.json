@@ -2,19 +2,37 @@
 	"searchPlaceholder": "Otsi sõnumeid…",
 	"polls": {
 		"collapsePoll": "Peida küsitlus",
-		"boardMessageContainsPoll": "Selles postituses on küsitlus.",
+		"boardMessageContainsPoll": "Sisaldab küsitlust",
 		"voteCast": {
 			"reasonHint": "Põhjus",
-			"retractConfirmation": "Kas oled kindel, et soovite selle raja kustutada?"
+			"retractConfirmation": "Kas oled kindel, et soovid selle hääle tagasi võtta?",
+			"voter": "Vali hääletaja",
+			"reason": "Räägi põhjusest"
 		},
-		"resultsButton": "Näita tulemusi",
+		"resultsButton": "Näita küsitluse tulemusi",
 		"defaultPollValues": {
-			"yes": "Jah"
+			"yes": "Jah",
+			"veto": "Veto",
+			"abstain": "Erapooletu"
+		},
+		"resultsHeader": "Hääletuse tulemused",
+		"choice": {
+			"desc_one": "{{count}} hääletaja",
+			"desc_other": "{{count}} hääletajat"
 		}
 	},
 	"edit": {
 		"header": "Muuda sõnumit",
 		"date": "Muuda kuupäeva",
-		"pollChoice": "Vestluse kirjeldus"
+		"pollChoice": "Valiku kirjeldus",
+		"member": "Muuda sõnumi autorit",
+		"title": "Pealkiri",
+		"body": "Sõnumi sisu",
+		"isPinned": "Tõsta sõnum esile",
+		"isArchived": "Arhiveeri sõnum",
+		"attachPoll": "Lisa sellele sõnumile küsitlus",
+		"deleteAttachedPoll": "Kustuta lisatud küsitlus",
+		"pollIsMultipleChoice": "Luba mitu vastusevalikut",
+		"pollAddNewChoice": "Lisa küsitlusele uus valik"
 	}
 }

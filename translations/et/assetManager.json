@@ -3,6 +3,8 @@
 		"attachment": "Lisa manus"
 	},
 	"edit": {
-		"friendlyName": "Muuda nime"
+		"friendlyName": "Muuda nime",
+		"tags": "Sildid",
+		"attachment": "Asenda manus"
 	}
 }

@@ -1,12 +1,25 @@
 {
 	"header": "Meeldetuletused",
 	"edit": {
-		"title": "Meeldetuletuse teavituse pealkiri",
-		"message": "Meeldetuletuse teavituse sõnum",
+		"title": "Meeldetuletuse pealkiri",
+		"message": "Meeldetuletuse sõnum",
 		"delete": {
 			"confirm": "Kas sa oled kindel, et soovid selle meeldetuletuse kustutada?",
 			"title": "Kustuta meeldetuletus"
 		},
-		"header": "Muuda meeldetuletust"
+		"header": "Muuda meeldetuletust",
+		"headerAdd": "Lisa meeldetuletus",
+		"active": "Muuda meeldetuletus aktiivseks",
+		"delay": "Viivitus minutites",
+		"members": "Vali liikmed",
+		"triggeringEvent": {
+			"title": "Käivitav sündmus",
+			"addedToFront": "Kui liige on lisatud esiplaanile",
+			"removedFromFront": "Kui liige on eemaldatud esiplaanilt"
+		}
+	},
+	"notOnPC": {
+		"header": "Meeldetuletused ei toimi personaalarvutis",
+		"content": "Kuna sa saad oma andmed personaalarvutist eksportida telefoni või Maci arvutisse, siis võid meeldetuletusi hallata seal."
 	}
 }
