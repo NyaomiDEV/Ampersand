@@ -8,6 +8,12 @@
 	gap: 2px;
 }
 
+.md ion-reorder-group {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
 .md ion-list-header {
 	padding-left: 24px;
 	--color: rgb(var(--md3-primary));

@@ -15,6 +15,7 @@
 	import journalMD from "@material-symbols/svg-600/outlined/book.svg";
 	import homeMD from "@material-symbols/svg-600/outlined/home.svg";
 	import SystemItem from "../../components/system/SystemItem.vue";
+	import DashboardSettings from "../../modals/DashboardSettings.vue";
 
 	const defaultSystem = shallowRef<System>({
 		uuid: appConfig.defaultSystem,
@@ -24,6 +25,7 @@
 		viewInLists: true
 	});
 	const systemSelectModal = useTemplateRef("systemSelectModal");
+	const dashboardSettingsModal = useTemplateRef("dashboardSettingsModal");
 
 	watch(defaultSystem, () => {
 		if(defaultSystem.value && appConfig.defaultSystem !== defaultSystem.value.uuid)
@@ -116,6 +118,11 @@
 							{{ $t("journal:header") }}
 						</IonSelectOption>
 					</IonSelect>
+				</IonItem>
+
+				<IonItem button detail @click="dashboardSettingsModal?.$el.present()">
+					<IonIcon slot="start" :icon="homeMD" />
+					<IonLabel>{{ $t("appSettings:dashboard.title") }}</IonLabel>
 				</IonItem>
 
 				<IonItem>
@@ -243,6 +250,8 @@
 				:discard-on-select="true"
 				:hide-checkboxes="true"
 			/>
+
+			<DashboardSettings ref="dashboardSettingsModal" />
 
 		</IonContent>
 	</IonPage>
