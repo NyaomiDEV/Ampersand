@@ -156,7 +156,6 @@
 			if(!colors.length) return;
 
 			style["--data-gradient"] = `linear-gradient(225deg, ${colors.join(",")})`;
-			console.log(style);
 		}
 
 		return style;
