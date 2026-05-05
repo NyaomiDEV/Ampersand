@@ -24,5 +24,6 @@
 		"noDescription": "Keine Beschreibung"
 	},
 	"searchPlaceholder": "Systeme durchsuchen...",
-	"select": "System auswählen"
+	"select": "System auswählen",
+	"header": "Systeme"
 }
