@@ -10,7 +10,7 @@ import { open, save } from "../../native/open";
 import { AMPERSAND_ARCHIVE_MAGICS, matchMagicNew } from "./magic";
 import dayjs from "dayjs";
 import { platform } from "@tauri-apps/plugin-os";
-import { UUIDable } from "../entities";
+import { System, UUIDable } from "../entities";
 import { ArchiveStreamConfig, ArchiveStreamDatabase } from "./archive_types";
 async function encode(data: any){
 	return msgpackEncode(deleteNull(await walkAsync(data, replace)));
@@ -157,6 +157,14 @@ export function importArchive() {
 								Object.assign(appConfig, _data.data.appConfig);
 								Object.assign(accessibilityConfig, _data.data.accessibilityConfig);
 								Object.assign(securityConfig, _data.data.securityConfig);
+								break;
+							}
+							// Migrate system (old) to systems (new) upon import
+							case "system": {
+								const _data = data as ArchiveStreamDatabase;
+								const table: ShittyTable<System> = getTables().systems;
+								const result = await table.add(_data.data as System, false);
+								if (!result) throw new Error(`item already exists: ${_data.data.uuid}`);
 								break;
 							}
 							default: {

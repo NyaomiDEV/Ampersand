@@ -157,7 +157,8 @@ export function importDatabaseFromBinary() {
 			progressCurrent++;
 
 			for (const key of Object.getOwnPropertyNames(revived.database)) {
-				const table: ShittyTable<UUIDable> = getTables()[key];
+				// also mitigate system (old) to systems (new)
+				const table: ShittyTable<UUIDable> = getTables()[key === "system" ? "systems" : key];
 				if (table) {
 					await table.clear();
 					await table.bulkAdd(revived.database[key]);
