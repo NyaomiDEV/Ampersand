@@ -2,9 +2,11 @@
 	import { FrontingEntryComplete } from "../../lib/db/entities";
 	import dayjs from "dayjs";
 	import { formatDate } from "../../lib/util/misc";
+	import PresenceRating from "../PresenceRating.vue";
 
 	const props = defineProps<{
 		entry: FrontingEntryComplete,
+		showDate: boolean
 	}>();
 
 	function format(startTime: Date, endTime?: Date){
@@ -18,6 +20,14 @@
 		
 		return `${formatDate(startTime, "expanded")} - ${formatDate(endTime, "expanded")}`;
 	}
+
+	function getMostRecentPresence(){
+		if(!props.entry.presence) return [undefined, undefined];
+
+		const presenceVal = Array.from(props.entry.presence.entries());
+
+		return presenceVal.sort((a, b) => a[0].valueOf() - b[0].valueOf()).pop() || [undefined, undefined];
+	}
 </script>
 
 <template>
@@ -27,7 +37,10 @@
 	<p v-if="props.entry.customStatus" class="custom-status" style="color: inherit;">
 		{{ props.entry.customStatus }}
 	</p>
-	<p>
+	<p v-if="props.entry.presence?.size">
+		<PresenceRating :rating="getMostRecentPresence()[1] ?? 0" />
+	</p>
+	<p v-if="props.showDate">
 		{{ format(props.entry.startTime, props.entry.endTime) }}
 	</p>
 </template>

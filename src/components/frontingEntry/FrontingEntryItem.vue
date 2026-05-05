@@ -14,9 +14,13 @@
 		entry: FrontingEntryComplete,
 		influencedBy?: Member[],
 		button?: boolean,
+		showDate?: boolean,
 		showCover?: boolean,
 		showEffects?: boolean
-	}>(), { showEffects: true });
+	}>(), {
+		showDate: true,
+		showEffects: true
+	});
 
 	function getStyle(){
 		const style: Record<string, string> = {};
@@ -58,7 +62,7 @@
 				</FrontingEntryInterval>
 			</h3>
 		</template>
-		<FrontingEntryLabel :entry="props.entry" />
+		<FrontingEntryLabel :entry="props.entry" :show-date="props.showDate" />
 		<template #end>
 			<IonIcon v-if="props.entry.comment?.length" slot="end" :icon="commentMD" />
 		</template>
@@ -76,7 +80,7 @@
 		}
 
 		&.influenced::part(native) {
-			background-color: color-mix(in srgb, transparent 85%, var(--data-influencing-color) 15%);
+			background-color: color-mix(in srgb, var(--background) 85%, var(--data-influencing-color) 15%);
 		}
 	}
 </style>

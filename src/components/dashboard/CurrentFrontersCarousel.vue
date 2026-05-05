@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { IonCard, IonCardContent, IonLabel, IonListHeader, IonIcon, IonButton, IonList, IonItemSliding, IonItemOption, IonItemOptions } from "@ionic/vue";
+	import { IonCard, IonCardContent, IonLabel, IonListHeader, IonIcon, IonButton, IonList, IonItemSliding, IonItemOption, IonItemOptions, IonItem } from "@ionic/vue";
 	import { h, onMounted, onUnmounted, ref, shallowRef } from "vue";
 	import type { FrontingEntryComplete } from "../../lib/db/entities.d.ts";
 	import { getFronting, newFrontingEntry, sendFrontingChangedEvent, updateFrontingEntry } from "../../lib/db/tables/frontingEntries";
@@ -111,6 +111,7 @@
 				button
 				:entry
 				show-cover
+				:show-date="false"
 				:influenced-by="frontingEntries.filter(x => x.influencing?.uuid === entry.member.uuid).map(x => x.member)"
 				@click="showModal(entry)"
 			/>
@@ -120,6 +121,16 @@
 				</IonItemOption>
 			</IonItemOptions>
 		</IonItemSliding>
+		<IonItem
+			button
+			class="add-fronting"
+			@click="showModalAddToFront"
+		>
+			<IonIcon slot="start" :icon="addMD" />
+			<IonLabel>
+				{{ $t("dashboard:addToFront") }}
+			</IonLabel>
+		</IonItem>
 	</IonList>
 
 	<div v-else class="carousel">
