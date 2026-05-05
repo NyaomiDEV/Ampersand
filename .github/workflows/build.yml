@@ -24,6 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       upload_url: ${{ steps.release.outputs.upload_url }}
+      ampersand_version: ${{ steps.vcs.outputs.ampersand_version }}
     steps:
     - name: Checkout
       uses: actions/checkout@v6
@@ -37,6 +38,7 @@ jobs:
     - name: Install frontend dependencies
       run: yarn install --frozen-lockfile
     - name: Get Ampersand version from upgrade-vcs script
+      id: vcs
       run: yarn run upgrade-vcs
       env:
         NO_PATCH: 1
@@ -52,7 +54,6 @@ jobs:
       id: release
       uses: softprops/action-gh-release@v3.0.0
       with:
-        name: ${{ github.ref_name != 'main' && format('Release ({0})', env.AMPERSAND_VERSION) || format('CI build ({0})', env.AMPERSAND_VERSION) }}
         tag_name: ${{ github.ref_name != 'main' && github.ref_name || 'dev' }}
         prerelease: ${{ github.ref_name == 'main' && true || false }}
         draft: true
@@ -91,5 +92,6 @@ jobs:
       - name: Publish release
         uses: softprops/action-gh-release@v3.0.0
         with:
+          name: ${{ github.ref_name != 'main' && format('Release ({0})', needs.prepare-build.outputs.ampersand_version) || format('CI build ({0})', needs.prepare-build.outputs.ampersand_version) }}
           tag_name: ${{ github.ref_name != 'main' && github.ref_name || 'dev' }}
           draft: false
