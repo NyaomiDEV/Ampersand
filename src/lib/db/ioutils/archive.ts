@@ -181,7 +181,7 @@ export function importArchive() {
 
 			for (const table of Object.values(getTables())){
 				await table.saveIndexToDisk();
-				await table.migrate();
+				await table.migrate(0);
 			}
 
 			progress.dispatchEvent(new Event("finish"));

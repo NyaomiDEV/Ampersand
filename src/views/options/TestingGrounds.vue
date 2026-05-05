@@ -66,6 +66,31 @@
 		loading.value = false;
 	}
 
+	async function remigrate(){
+		loading.value = true;
+		barProgress.value = 0;
+		let progress = 0;
+
+		const totalTables = Object.values(getTables()).length;
+		let success = true;
+		for(const table of Object.values(getTables())){
+			try{
+				await table.migrate(0);
+				progress++;
+				barProgress.value = progress / totalTables;
+			}catch(e){
+				await toast(`Error: ${(e as Error)}`);
+				success = false;
+			}
+		}
+
+		if(success)
+			await toast("Tables remigrated");
+
+		barProgress.value = -1;
+		loading.value = false;
+	}
+
 	async function genMembers() {
 		loading.value = true;
 		barProgress.value = 0;
@@ -241,6 +266,10 @@
 				<IonItem button detail @click="refreshAllData">
 					<IonIcon slot="start" :icon="tagMD" />
 					<IonLabel>Refresh the database</IonLabel>
+				</IonItem>
+				<IonItem button detail @click="remigrate">
+					<IonIcon slot="start" :icon="tagMD" />
+					<IonLabel>Remigrate tables</IonLabel>
 				</IonItem>
 			</IonList>
 

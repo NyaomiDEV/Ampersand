@@ -318,8 +318,8 @@ export class ShittyTable<T extends UUIDable> {
 		await fs.writeFile(_path, encode({ version }));
 	}
 
-	async migrate() {
-		let version = await this.getMigrationVersion() || 0;
+	async migrate(versionOverride?: number) {
+		let version = versionOverride || await this.getMigrationVersion() || 0;
 		switch (this.name) {
 			case "members":
 				version = await members(this as unknown as ShittyTable<Member>, version);
