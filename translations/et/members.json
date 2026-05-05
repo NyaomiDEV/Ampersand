@@ -3,5 +3,11 @@
 	"select": "Vali liige",
 	"actions": {
 		"addToFront": "Lisa esiplaanile"
+	},
+	"edit": {
+		"header": "Liige",
+		"name": "Nimi",
+		"pronouns": "Asesõnad",
+		"role": "Roll"
 	}
 }

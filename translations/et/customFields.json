@@ -1,3 +1,8 @@
 {
-	"header": "Kohandatud väljad"
+	"header": "Kohandatud väljad",
+	"edit": {
+		"delete": {
+			"confirm": "Kas sa oled kindel, et soovid selle jutulõnga kustutada?"
+		}
+	}
 }

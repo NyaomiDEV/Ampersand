@@ -1,1 +1,10 @@
-{}
+{
+	"edit": {
+		"presence": {
+			"confirmButton": "Kinnita",
+			"date": "Kuupäev"
+		},
+		"startTime": "Alguse aeg",
+		"endTime": "Lõpu aeg"
+	}
+}

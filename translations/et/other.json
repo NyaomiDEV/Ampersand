@@ -12,5 +12,7 @@
 		"no": "Ei"
 	},
 	"genericDeleteDesc": "Sa ei saa seda tegevust tagasi pöörata!",
-	"memberMention": "Maini liiget"
+	"memberMention": "Maini liiget",
+	"back": "Tagasi",
+	"time": "Aeg"
 }

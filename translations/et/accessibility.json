@@ -2,7 +2,8 @@
 	"header": "Hõlbustus ja ligipääsetavus",
 	"uiVariant": {
 		"light": "Hele kujundus",
-		"dark": "Tume kujundus"
+		"dark": "Tume kujundus",
+		"auto": "Automaatne"
 	},
 	"highLegibilityFontType": {
 		"title": "Üliloetav kirjatüüp",
@@ -10,5 +11,8 @@
 		"lexend": "Lexend",
 		"comicrelief": "Comic Relief",
 		"system-font": "Süsteemi kirjatüüp"
+	},
+	"useAccentColor": {
+		"title": "Aktsentvärv"
 	}
 }

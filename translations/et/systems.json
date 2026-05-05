@@ -1,6 +1,11 @@
 {
 	"header": "Süsteemid",
 	"edit": {
-		"header": "Süsteem"
+		"header": "Süsteem",
+		"delete": {
+			"title": "Kustuta kirje",
+			"confirm": "Kas sa oled kindel, et soovid selle objekti kustutada?"
+		},
+		"systemIDcopiedToClipboard": "Mainitud vormingus postituse tunnus on kopeeritud lõikelauale!"
 	}
 }

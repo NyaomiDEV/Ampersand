@@ -34,6 +34,9 @@
 		"attachPoll": "Lisa sellele sõnumile küsitlus",
 		"deleteAttachedPoll": "Kustuta lisatud küsitlus",
 		"pollIsMultipleChoice": "Luba mitu vastusevalikut",
-		"pollAddNewChoice": "Lisa küsitlusele uus valik"
+		"pollAddNewChoice": "Lisa küsitlusele uus valik",
+		"delete": {
+			"confirm": "Kas olete kindel, et soovite selle sõnumi kustutada?"
+		}
 	}
 }
