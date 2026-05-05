@@ -10,6 +10,33 @@ const defaultAppConfig: AppConfig = {
 	showMembersApartFromCustomFronts: "after",
 	hideFrontingTimer: false,
 	view: "dashboard",
+	dashboardSettings: {
+		notesAccordion: {
+			active: true,
+			priority: 0,
+		},
+		currentFrontersCarousel: {
+			active: true,
+			priority: 1,
+			settings: {
+				type: "cards"
+			}
+		},
+		messageBoardCarousel: {
+			active: true,
+			priority: 2,
+			settings: {
+				maxDays: 3
+			}
+		},
+		frontingHistoryCarousel: {
+			active: true,
+			priority: 3,
+			settings: {
+				maxDays: 2
+			}
+		}
+	},
 	isDeveloperMode: false,
 	defaultFilterQueries: {
 		members: "@archived:no",

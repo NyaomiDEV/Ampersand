@@ -8,11 +8,12 @@
 	import MessageBoardCard from "../MessageBoardCard.vue";
 	import { DatabaseEvents, DatabaseEvent } from "../../lib/db/events";
 	import { addModal, removeModal } from "../../lib/modals.ts";
+	import { appConfig } from "../../lib/config/index.ts";
 
 	const boardMessages = shallowRef<BoardMessageComplete[]>();
 
 	async function updateBoardMessages(){
-		boardMessages.value = (await getRecentBoardMessages());
+		boardMessages.value = (await getRecentBoardMessages(appConfig.dashboardSettings.messageBoardCarousel.settings.maxDays));
 	}
 
 	const listener = (event: Event) => {

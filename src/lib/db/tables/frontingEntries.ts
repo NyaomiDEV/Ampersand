@@ -234,10 +234,10 @@ export async function getFrontingBetweenComplete(start: Date, end?: Date) {
 	);
 }
 
-export async function getRecentlyFronted() {
+export async function getRecentlyFronted(days: number) {
 	return Promise.all(
 		db.frontingEntries.index
-			.filter(x => x.endTime && Date.now() - x.endTime.getTime() <= 48 * 60 * 60 * 1000)
+			.filter(x => x.endTime && Date.now() - x.endTime.getTime() <= days * 24 * 60 * 60 * 1000)
 			.sort((a, b) => b.endTime!.getTime() - a.endTime!.getTime())
 			.map(async x => toFrontingEntryComplete(await db.frontingEntries.get(x.uuid)))
 	);

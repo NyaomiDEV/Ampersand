@@ -97,11 +97,11 @@ export async function updateBoardMessage(newContent: UUIDable & Partial<BoardMes
 	}
 }
 
-export async function getRecentBoardMessages() {
+export async function getRecentBoardMessages(days: number) {
 	return Promise.all(
 		db.boardMessages.index
 			.sort(sortBoardMessages)
-			.filter(x => !x.isArchived && (x.isPinned || dayjs().startOf("day").valueOf() - dayjs(x.date).startOf("day").valueOf() <= 3 * 24 * 60 * 60 * 1000))
+			.filter(x => !x.isArchived && (x.isPinned || dayjs().startOf("day").valueOf() - dayjs(x.date).startOf("day").valueOf() <= days * 24 * 60 * 60 * 1000))
 			.map(async x => toBoardMessageComplete(await db.boardMessages.get(x.uuid)))
 	);
 }

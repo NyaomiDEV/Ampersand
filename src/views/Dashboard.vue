@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { IonContent, useIonRouter, IonFab, IonIcon, IonFabButton, IonPage, IonTitle, IonToolbar } from "@ionic/vue";
-	import { onBeforeMount, onUnmounted, shallowRef } from "vue";
+	import { type Component, onBeforeMount, onUnmounted, shallowRef } from "vue";
 	import { getMainFronter } from "../lib/db/tables/frontingEntries.ts";
 	import type { Member } from "../lib/db/entities";
 
@@ -11,7 +11,7 @@
 	import MessageBoardCarousel from "../components/dashboard/MessageBoardCarousel.vue";
 	import FrontingHistoryCarousel from "../components/dashboard/FrontingHistoryCarousel.vue";
 	import { DatabaseEvents, DatabaseEvent } from "../lib/db/events.ts";
-	import { securityConfig } from "../lib/config/index.ts";
+	import { appConfig, securityConfig } from "../lib/config/index.ts";
 	import { lock } from "../lib/applock.ts";
 	import CollapsibleHeaderbar from "../components/CollapsibleHeaderbar.vue";
 
@@ -36,6 +36,20 @@
 		if(lock())
 			router.replace("/lock");
 	}
+
+	function getDashboardElements(){
+		const settings = appConfig.dashboardSettings;
+		const array: [number, Component][] = [];
+		
+		if(settings.currentFrontersCarousel.active) array.push([settings.currentFrontersCarousel.priority, CurrentFrontersCarousel]);
+		if(settings.frontingHistoryCarousel.active) array.push([settings.frontingHistoryCarousel.priority, FrontingHistoryCarousel]);
+
+		if(settings.notesAccordion.active) array.push([settings.notesAccordion.priority, NotesAccordion]);
+
+		if(settings.messageBoardCarousel.active) array.push([settings.messageBoardCarousel.priority, MessageBoardCarousel]);
+
+		return array.sort((a, b) => a[0] - b[0]);
+	}
 </script>
 
 <template>
@@ -51,10 +65,8 @@
 					</IonTitle>
 				</IonToolbar>
 			</CollapsibleHeaderbar>
-			<NotesAccordion />
-			<CurrentFrontersCarousel />
-			<MessageBoardCarousel />
-			<FrontingHistoryCarousel />
+
+			<component :is="cmp[1]" v-for="cmp in getDashboardElements()" :key="cmp[1].name" />
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
 				<IonFabButton v-if="securityConfig.password && securityConfig.usePassword" @click="lockImmediately">

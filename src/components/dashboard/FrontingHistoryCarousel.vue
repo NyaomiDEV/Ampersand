@@ -8,11 +8,12 @@
 	import { addModal, removeModal } from "../../lib/modals.ts";
 
 	import FrontingEntryItem from "../frontingEntry/FrontingEntryItem.vue";
+	import { appConfig } from "../../lib/config/index.ts";
 
 	const frontingEntries = shallowRef<FrontingEntryComplete[]>();
 
 	async function updateFrontingEntries(){
-		frontingEntries.value = await getRecentlyFronted();
+		frontingEntries.value = await getRecentlyFronted(appConfig.dashboardSettings.frontingHistoryCarousel.settings.maxDays);
 	}
 
 	const listener = (event: Event) => {

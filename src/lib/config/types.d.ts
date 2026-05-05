@@ -5,6 +5,7 @@ export type AppConfig = {
 		language?: string
 	},
 	view: ViewName,
+	dashboardSettings: DashboardSettings,
 	defaultSystem: UUID,
 	showMembersApartFromCustomFronts: "off" | "before" | "after",
 	hideFrontingTimer: boolean,
@@ -23,6 +24,36 @@ export type AppConfig = {
 };
 
 type ViewName = "members" | "journal" | "dashboard";
+
+export type DashboardSettings = {
+	notesAccordion: DashboardSetting,
+	currentFrontersCarousel: CurrentFrontersCarouselSettings,
+	messageBoardCarousel: MessageBoardCarouselSettings,
+	frontingHistoryCarousel: FrontingHistoryCarouselSettings
+};
+
+export interface DashboardSetting {
+	active: boolean,
+	priority: number
+}
+
+export interface CurrentFrontersCarouselSettings extends DashboardSetting {
+	settings: {
+		type: "cards" | "list"
+	}
+}
+
+export interface MessageBoardCarouselSettings extends DashboardSetting {
+	settings: {
+		maxDays: number
+	}
+}
+
+export interface FrontingHistoryCarouselSettings extends DashboardSetting {
+	settings: {
+		maxDays: number
+	}
+}
 
 export type AccessibilityConfig = {
 	highLegibility: boolean,

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { IonCard, IonCardContent, IonLabel, IonListHeader, IonIcon, IonButton } from "@ionic/vue";
+	import { IonCard, IonCardContent, IonLabel, IonListHeader, IonIcon, IonButton, IonList, IonItemSliding, IonItemOption, IonItemOptions } from "@ionic/vue";
 	import { h, onMounted, onUnmounted, ref, shallowRef } from "vue";
 	import type { FrontingEntryComplete } from "../../lib/db/entities.d.ts";
 	import { getFronting, newFrontingEntry, sendFrontingChangedEvent, updateFrontingEntry } from "../../lib/db/tables/frontingEntries";
@@ -11,6 +11,8 @@
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 	import removeFromFrontMD from "@material-symbols/svg-600/outlined/person_remove.svg";
 	import FrontingEntryCard from "../frontingEntry/FrontingEntryCard.vue";
+	import { appConfig } from "../../lib/config/index.ts";
+	import FrontingEntryItem from "../frontingEntry/FrontingEntryItem.vue";
 
 	const frontingEntries = shallowRef<FrontingEntryComplete[]>([]);
 	const quickDelete = ref(false);
@@ -90,7 +92,7 @@
 	<IonListHeader>
 		<IonLabel>{{ $t("dashboard:nowFronting") }}</IonLabel>
 		<IonButton
-			v-if="frontingEntries.length"
+			v-if="frontingEntries.length && appConfig.dashboardSettings.currentFrontersCarousel.settings.type === 'cards'"
 			color="danger"
 			size="small"
 			shape="round"
@@ -100,7 +102,25 @@
 			<IonIcon slot="icon-only" :icon="removeFromFrontMD" />
 		</IonButton>
 	</IonListHeader>
-	<div class="carousel">
+
+	<IonList v-if="appConfig.dashboardSettings.currentFrontersCarousel.settings.type === 'list'">
+		<IonItemSliding v-for="entry in frontingEntries" :key="entry.uuid">
+			<FrontingEntryItem
+				button
+				:entry
+				show-cover
+				:influenced-by="frontingEntries.filter(x => x.influencing?.uuid === entry.member.uuid).map(x => x.member)"
+				@click="showModal(entry)"
+			/>
+			<IonItemOptions>
+				<IonItemOption color="danger" @click="quickRemoveFronter(entry)">
+					<IonIcon slot="icon-only" :icon="removeFromFrontMD" />
+				</IonItemOption>
+			</IonItemOptions>
+		</IonItemSliding>
+	</IonList>
+
+	<div v-else class="carousel">
 		<FrontingEntryCard
 			v-for="entry in frontingEntries"
 			:key="entry.uuid"
@@ -122,6 +142,7 @@
 			</IonCardContent>
 		</IonCard>
 	</div>
+
 </template>
 
 <style scoped>
