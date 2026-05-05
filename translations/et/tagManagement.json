@@ -11,7 +11,8 @@
 		"color": "Sildi värv",
 		"viewInLists": "Vaata loendites",
 		"type": {
-			"header": "Sildi tüüp"
+			"header": "Sildi tüüp",
+			"member": "Liige"
 		},
 		"header": {
 			"member": "Muuda liikme silti"
