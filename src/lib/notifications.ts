@@ -1,23 +1,20 @@
-import { cancel, channels, createChannel, Importance, isPermissionGranted, Options, removeChannel, requestPermission, sendNotification, Visibility } from "@choochmeque/tauri-plugin-notifications-api";
+import { cancel, channels, createChannel, Importance, isPermissionGranted, Options, removeActive, removeChannel, requestPermission, sendNotification, Visibility } from "@choochmeque/tauri-plugin-notifications-api";
 import { platform } from "@tauri-apps/plugin-os";
 import { t } from "i18next";
 
-async function ensureNotifyPerms(request: boolean){
-	if(await isPermissionGranted()){
-		await registerChannels();
+export async function ensureNotifyPerms(request: boolean){
+	if(await isPermissionGranted())
 		return true;
-	}
 
 	if(!request) return false;
 
 	const perm = await requestPermission();
 	if(perm !== "granted") return false;
 
-	await registerChannels();
 	return true;
 }
 
-async function registerChannels(){
+export async function registerChannels(){
 	// channels are only available on android
 	if(platform() !== "android") return;
 
@@ -60,8 +57,6 @@ async function registerChannels(){
 }
 
 export async function notify(opts: Options){
-	await ensureNotifyPerms(true);
-
 	try{
 		await sendNotification(opts);
 	}catch(_e){
@@ -79,6 +74,25 @@ export async function unnotify(id: number | number[]) {
 
 	try {
 		await cancel(typeof id === "number" ? [id] : id);
+	} catch (_e) {
+		console.error(_e);
+		return false;
+	}
+
+	return true;
+}
+
+export async function remove(id: number | number[]){
+	// canceling notifications is not available on pc
+	if (!["android", "macos", "ios"].includes(platform()))
+		return false;
+
+	try {
+		await removeActive(
+			typeof id === "number"
+				? [{ id }]
+				: id.map(x => ({ id: x }))
+		);
 	} catch (_e) {
 		console.error(_e);
 		return false;

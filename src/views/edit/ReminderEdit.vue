@@ -201,23 +201,25 @@
 				</IonItem>
 			</IonList>
 
-			<IonItem
-				v-if="reminder.uuid"
-				button
-				:detail="false"
-				@click="deleteReminder"
-			>
-				<IonIcon
-					slot="start"
-					:icon="trashMD"
-					aria-hidden="true"
-					color="danger"
-				/>
-				<IonLabel color="danger">
-					<h3>{{ $t("reminders:edit.delete.title") }}</h3>
-					<p>{{ $t("other:genericDeleteDesc") }}</p>
-				</IonLabel>
-			</IonItem>
+			<IonList>
+				<IonItem
+					v-if="reminder.uuid"
+					button
+					:detail="false"
+					@click="deleteReminder"
+				>
+					<IonIcon
+						slot="start"
+						:icon="trashMD"
+						aria-hidden="true"
+						color="danger"
+					/>
+					<IonLabel color="danger">
+						<h3>{{ $t("reminders:edit.delete.title") }}</h3>
+						<p>{{ $t("other:genericDeleteDesc") }}</p>
+					</IonLabel>
+				</IonItem>
+			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
 				<IonFabButton :disabled="!reminder.title.length" @click="save">
@@ -229,7 +231,7 @@
 		<MemberSelect
 			ref="memberSelectModal"
 			v-model="reminder.members"
-			:custom-title="$t('reminder:edit.members')"
+			:custom-title="$t('reminders:edit.members')"
 			:hide-checkboxes="false"
 			:always-emit="true"
 		/>

@@ -159,7 +159,8 @@ export async function triggerReminders(fronting: FrontingEntryComplete[]){
 						title: reminder.title,
 						body: platform() === "android" ? undefined : reminder.message,
 						largeBody: platform() === "android" ? reminder.message : undefined,
-						schedule: Schedule.at(new Date(Date.now() + reminder.delay), false, true)
+						schedule: reminder.delay > 0 ? Schedule.at(new Date(Date.now() + reminder.delay), false, true) : undefined,
+						icon: "ic_notify_ampersand"
 					});
 				} else if (
 					frontingCache.find(x => reminder.members.includes(x.member.uuid)) &&
@@ -183,7 +184,8 @@ export async function triggerReminders(fronting: FrontingEntryComplete[]){
 						title: reminder.title,
 						body: platform() === "android" ? undefined : reminder.message,
 						largeBody: platform() === "android" ? reminder.message : undefined,
-						schedule: Schedule.at(new Date(Date.now() + reminder.delay), false, true)
+						schedule: reminder.delay > 0 ? Schedule.at(new Date(Date.now() + reminder.delay), false, true) : undefined,
+						icon: "ic_notify_ampersand"
 					});
 				}
 				break;

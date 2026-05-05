@@ -10,6 +10,9 @@
 	import AssetFonts from "./components/AssetFonts.vue";
 	import { sendFrontingChangedEvent } from "./lib/db/tables/frontingEntries";
 
+	// Notifications
+	import { ensureNotifyPerms, registerChannels } from "./lib/notifications";
+
 	provide("isDevServer", computed(() => import.meta.env.MODE === "development"));
 	provide("isDev", computed(() => import.meta.env.MODE === "development" || appConfig.isDeveloperMode));
 
@@ -23,6 +26,10 @@
 
 	onMounted(async () => {
 		await dismissSplash();
+
+		// notifications
+		if(await ensureNotifyPerms(true))
+			await registerChannels();
 
 		// defer fronting changed event to not conflict with other more important UI-level things
 		setTimeout(() => void sendFrontingChangedEvent(true), 250);

@@ -1,7 +1,7 @@
 import { M3 } from "tauri-plugin-m3";
 import { accessibilityConfig } from "./config";
 import { platform } from "@tauri-apps/plugin-os";
-import { notify, unnotify } from "./notifications";
+import { notify, remove } from "./notifications";
 import { FrontingEntryComplete } from "./db/entities";
 import i18next from "./i18n";
 
@@ -67,5 +67,5 @@ export async function updateFrontingNotification(fronting: FrontingEntryComplete
 			channelId: "frontingNotifications"
 		});
 	} else 
-		await unnotify(1);
+		await remove(1);
 }

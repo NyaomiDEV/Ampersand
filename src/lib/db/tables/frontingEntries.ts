@@ -287,6 +287,6 @@ export async function sendFrontingChangedEvent(backfill?: boolean){
 			await broadcastEvent("fronting_changed", deleteFile(fronting));
 	}
 
-	await updateFrontingNotification(fronting);
 	await triggerReminders(fronting);
+	await updateFrontingNotification(fronting);
 }
