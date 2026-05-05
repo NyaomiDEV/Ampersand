@@ -56,7 +56,6 @@ jobs:
         tag_name: ${{ github.ref_name != 'main' && github.ref_name || 'dev' }}
         prerelease: ${{ github.ref_name == 'main' && true || false }}
         draft: true
-        generate_release_notes: true
   build-android:
     uses: ./.github/workflows/build-android.yml
     needs: prepare-build
@@ -93,5 +92,4 @@ jobs:
         uses: softprops/action-gh-release@v3.0.0
         with:
           tag_name: ${{ github.ref_name != 'main' && github.ref_name || 'dev' }}
-          prerelease: ${{ github.ref_name == 'main' && true || false }}
           draft: false
