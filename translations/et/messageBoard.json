@@ -1,6 +1,20 @@
 {
 	"searchPlaceholder": "Otsi sõnumeid…",
 	"polls": {
-		"collapsePoll": "Peida küsitlus"
+		"collapsePoll": "Peida küsitlus",
+		"boardMessageContainsPoll": "Selles postituses on küsitlus.",
+		"voteCast": {
+			"reasonHint": "Põhjus",
+			"retractConfirmation": "Kas oled kindel, et soovite selle raja kustutada?"
+		},
+		"resultsButton": "Näita tulemusi",
+		"defaultPollValues": {
+			"yes": "Jah"
+		}
+	},
+	"edit": {
+		"header": "Muuda sõnumit",
+		"date": "Muuda kuupäeva",
+		"pollChoice": "Vestluse kirjeldus"
 	}
 }
