@@ -47,3 +47,6 @@ tauri-plugin-single-instance = "2.4.2"
 [target.'cfg(all(not(dev), target_os = "macos"))'.dependencies]
 tauri-plugin-notifications = { version = "0.4.6", default-features = false }
 
+# patch tauri for now, drop it later
+[patch.crates-io]
+tauri = { git = "https://github.com/tauri-apps/tauri", rev = "5e3126ff7045aec54811b227cb4d33d78b3957b5" }
