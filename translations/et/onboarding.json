@@ -1,1 +1,21 @@
-{}
+{
+	"importScreen": {
+		"allowRemoteContent": {
+			"header": "Kas lubad internetiühenduse kasutamist?"
+		},
+		"header": "Kas sa tahaksid oma andmeid importida?",
+		"prevInstall": "Jah, eelmine paigaldus",
+		"simplyPlural": "Jah, Simply Plural",
+		"octocon": "Jah, Octocon",
+		"pluralKit": "Jah, PluralKit",
+		"tupperbox": "Jah, Tupperbox",
+		"startFromScratch": "Ei, ma alustan nullist",
+		"pleaseWait": "Palun oota, kuni me impordime andmeid"
+	},
+	"memberInfo": {
+		"header": "Räägi meile endast lähemalt!"
+	},
+	"welcomeScreen": {
+		"start": "Alusta oma teekonda!"
+	}
+}

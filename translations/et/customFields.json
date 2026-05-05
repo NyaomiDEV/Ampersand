@@ -2,7 +2,12 @@
 	"header": "Kohandatud väljad",
 	"edit": {
 		"delete": {
-			"confirm": "Kas sa oled kindel, et soovid selle jutulõnga kustutada?"
-		}
-	}
+			"confirm": "Kas sa oled kindel, et soovid selle kohandatud välja kustutada?",
+			"title": "Kustuta kohandatud väli"
+		},
+		"header": "Muuda kohendatud välja",
+		"headerAdd": "Lisa kohandatud väli",
+		"name": "Kohandatud välja nimi"
+	},
+	"select": "Vali kohandatud väljad"
 }

@@ -4,7 +4,9 @@
 			"confirmButton": "Kinnita",
 			"date": "Kuupäev"
 		},
-		"startTime": "Alguse aeg",
-		"endTime": "Lõpu aeg"
+		"startTime": "Algusaeg",
+		"endTime": "Lõpuaeg",
+		"comment": "Kommentaar",
+		"customStatus": "Kohandatud olek"
 	}
 }

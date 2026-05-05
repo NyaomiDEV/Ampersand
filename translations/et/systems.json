@@ -3,9 +3,19 @@
 	"edit": {
 		"header": "Süsteem",
 		"delete": {
-			"title": "Kustuta kirje",
-			"confirm": "Kas sa oled kindel, et soovid selle objekti kustutada?"
+			"title": "Kustuta süsteem",
+			"confirm": "Kas sa oled kindel, et soovid selle süsteemi kustutada?"
 		},
-		"systemIDcopiedToClipboard": "Mainitud vormingus postituse tunnus on kopeeritud lõikelauale!"
-	}
+		"systemIDcopiedToClipboard": "Mainimisvormingus süsteemitunnus on kopeeritud lõikelauale!",
+		"description": "Süsteemi kirjeldus",
+		"noDescription": "Kirjeldust pole",
+		"color": "Värv",
+		"headerAdd": "Lisa süsteem",
+		"headerEdit": "Muuda süsteemi",
+		"name": "Süsteemi nimi",
+		"memberCount": "Liikmete arv",
+		"memberCountText": "{{totalMemberCount}} liige(t), neist aktiivsena {{memberCount}}, {{archivedMemberCount}} arhiveeritud"
+	},
+	"searchPlaceholder": "Otsi süsteeme…",
+	"select": "Vali süsteem"
 }

@@ -2,5 +2,9 @@
 	"header": "Töölaud",
 	"header_salute": "Tere!",
 	"header_mainfronter": "Hei, {{fronterName}}!",
-	"systemDescription": "Süsteemi kirjeldus"
+	"systemDescription": "Süsteemi kirjeldus",
+	"messageBoard": {
+		"header": "Teadete tahvel",
+		"view": "Vaata veel"
+	}
 }

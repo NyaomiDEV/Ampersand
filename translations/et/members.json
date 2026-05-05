@@ -9,5 +9,7 @@
 		"name": "Nimi",
 		"pronouns": "Asesõnad",
 		"role": "Roll"
-	}
+	},
+	"searchPlaceholder": "Otsi liikmeid…",
+	"deletedMember": "Kustutatud liige"
 }

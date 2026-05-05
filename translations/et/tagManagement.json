@@ -4,5 +4,17 @@
 	"select": "Vali mõned sildid",
 	"selector": {
 		"member": "Liikmete sildid"
+	},
+	"edit": {
+		"name": "Sildi nimi",
+		"description": "Sildi kirjeldus",
+		"color": "Sildi värv",
+		"viewInLists": "Vaata loendites",
+		"type": {
+			"header": "Sildi tüüp"
+		},
+		"header": {
+			"member": "Muuda liikme silti"
+		}
 	}
 }

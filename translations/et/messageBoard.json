@@ -36,7 +36,10 @@
 		"pollIsMultipleChoice": "Luba mitu vastusevalikut",
 		"pollAddNewChoice": "Lisa küsitlusele uus valik",
 		"delete": {
-			"confirm": "Kas olete kindel, et soovite selle sõnumi kustutada?"
-		}
-	}
+			"confirm": "Kas oled kindel, et soovid selle sõnumi kustutada?",
+			"title": "Kustuta sõnum tahvlilt"
+		},
+		"pollEditWarning": "Ükspuha missuguse küsitluse üksikasja muutmine nullib kõik seni antud hääled!"
+	},
+	"header": "Teadete tahvel"
 }
