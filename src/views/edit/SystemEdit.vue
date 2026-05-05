@@ -521,7 +521,10 @@
 		.avatar {
 			width: 192px;
 			height: 192px;
-			outline-width: 8px !important;
+
+			&.with-outline > :deep(ion-avatar) {
+				outline-width: 8px !important;
+			}
 		}
 	}
 
