@@ -66,6 +66,10 @@
 				</IonToolbar>
 			</CollapsibleHeaderbar>
 
+			<div v-if="!getDashboardElements().length" class="mia">
+				<img src="../assets/emojis/mia_whuh.webp" />
+			</div>
+
 			<component :is="cmp[1]" v-for="cmp in getDashboardElements()" :key="cmp[1].name" />
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
@@ -76,3 +80,18 @@
 		</IonContent>
 	</IonPage>
 </template>
+
+<style scoped>
+
+	.mia {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: calc(100% - 120px);
+
+		> img {
+			max-width: 80%;
+		}
+	}
+
+</style>
