@@ -2,8 +2,8 @@
 	"header": "Przypomnienia",
 	"edit": {
 		"header": "Edytuj przypomnienie",
-		"title": "Tytuł powiadomienia o przypomnieniu",
-		"message": "Treść powiadomienia o przypomnieniu",
+		"title": "Tytuł przypomnienia",
+		"message": "Treść przypomnienia",
 		"triggeringEvent": {
 			"title": "Wywoływacz",
 			"addedToFront": "Po dodaniu członka systemu na front",
@@ -12,6 +12,14 @@
 		"delete": {
 			"title": "Usuń przypomnienie",
 			"confirm": "Czy na pewno chcesz usunąć to przypomnienie?"
-		}
+		},
+		"headerAdd": "Dodaj przypomnienie",
+		"active": "Aktywuj przypomnienie",
+		"delay": "Opóźnienie w minutach",
+		"members": "Wybierz członków"
+	},
+	"notOnPC": {
+		"header": "Przypomnienia nie działają na PC",
+		"content": "Ponieważ możesz jednak eksportować dane z tego komputera na telefon albo Maca, tutaj masz możliwość uporządkować swoje przypomnienia."
 	}
 }
