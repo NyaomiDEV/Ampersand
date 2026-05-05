@@ -33,7 +33,7 @@ tauri-plugin-opener = "2.5.4"
 tauri-plugin-http = "2.5.9"
 tauri-plugin-process = "2.3.1"
 tauri-plugin-notifications = "0.4.6"
-tauri-plugin-ampersand = { path = "./plugin" }
+tauri-plugin-ampersand = { path = "../src-tauri-plugin" }
 
 [target.'cfg(target_os = "android")'.dependencies]
 tauri-plugin-m3 = "0.3.2"
