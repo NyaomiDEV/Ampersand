@@ -63,7 +63,7 @@
 		if(!frontingEntries.value.length)
 			quickDelete.value = false;
 
-		await sendFrontingChangedEvent();
+		void sendFrontingChangedEvent();
 	}
 
 	async function showModalAddToFront(){
