@@ -135,24 +135,23 @@ export function filterBoardMessage(search: string, boardMessage: BoardMessage) {
 	}
 
 	if(parsed.query.length){
-		const memberIndex = getMemberIndex().find(x => x.uuid === boardMessage.member);
+		const memberIndices = getMemberIndex().filter(x => boardMessage.members.includes(x.uuid));
+
 		if (
 			![
 				boardMessage.title.toLowerCase().split(" "),
-				memberIndex?.name?.toLowerCase().split(" ")
+				memberIndices.map(x => x.name!.toLowerCase().split(" ")).flat()
 			].filter(x => !!x).flat().find(x => x.includes(parsed.query.toLowerCase()))
 		)
 			return false;
 	}
 
 	if (typeof parsed.member !== "undefined") {
-		if(boardMessage.member){
-			if(parsed.member === false)
-				return false;
+		if (parsed.member === false && boardMessage.members.length)
+			return false;
 
-			if (boardMessage.member !== parsed.member)
-				return false;
-		}
+		if (!boardMessage.members.find(x => x === parsed.member))
+			return false;
 	}
 
 	return true;
@@ -224,21 +223,21 @@ export function filterNote(search: string, note: Note) {
 export async function filterJournalPost(search: string, post: JournalPost) {
 	const parsed = await parseJournalPostFilterQuery(search.length ? search : appConfig.defaultFilterQueries.journal || "");
 	if (parsed.query.length) {
-		const memberIndex = getMemberIndex().find(x => x.uuid === post.member);
+		const memberIndices = getMemberIndex().filter(x => post.members.includes(x.uuid));
 		if (
 			![
 				post.title.toLowerCase().split(" "),
-				memberIndex?.name?.toLowerCase().split(" ")
+				memberIndices.map(x => x.name!.toLowerCase().split(" ")).flat()
 			].filter(x => !!x).flat().find(x => x.includes(parsed.query.toLowerCase()))
 		)
 			return false;
 	}
 
 	if (typeof parsed.member !== "undefined") {
-		if(parsed.member === false && post.member)
+		if(parsed.member === false && post.members.length)
 			return false;
 
-		if (post.member !== parsed.member)
+		if (!post.members.find(x => x === parsed.member))
 			return false;
 	}
 

@@ -41,7 +41,7 @@ export type ImageClip =
 	"very-sunny";
 
 export interface BoardMessage extends UUIDable {
-	member?: UUID,
+	members: UUID[],
 	title: string,
 	body: string,
 	date: Date,
@@ -51,7 +51,7 @@ export interface BoardMessage extends UUIDable {
 }
 
 export interface BoardMessageComplete extends BoardMessage {
-	member?: Member
+	members: Member[]
 }
 
 export interface Poll {
@@ -87,7 +87,7 @@ export interface FrontingEntryComplete extends FrontingEntry {
 }
 
 export interface JournalPost extends UUIDable {
-	member?: UUID,
+	members: UUID[],
 	date: Date,
 	title: string,
 	subtitle?: string,
@@ -100,7 +100,7 @@ export interface JournalPost extends UUIDable {
 }
 
 export interface JournalPostComplete extends JournalPost {
-	member?: Member
+	members: Member[]
 }
 
 export interface Member extends UUIDable {

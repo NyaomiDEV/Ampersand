@@ -34,7 +34,7 @@
 	const tagSelectionModal = useTemplateRef("tagSelectionModal");
 
 	const props = defineProps<{
-		post: Ref<PartialBy<JournalPostComplete, "uuid" | "member">>
+		post: Ref<PartialBy<JournalPostComplete, "uuid">>
 		tags: ShallowRef<Tag[]>
 	}>();
 	const post = props.post;

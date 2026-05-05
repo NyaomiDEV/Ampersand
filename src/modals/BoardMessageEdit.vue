@@ -31,16 +31,17 @@
 	import DatePopupPicker from "../components/DatePopupPicker.vue";
 	import { useTranslation } from "i18next-vue";
 	import { formatDate, promptOkCancel, toast } from "../lib/util/misc";
-	import MemberItem from "../components/member/MemberItem.vue";
+	import MemberChip from "../components/member/MemberChip.vue";
 
 	const i18next = useTranslation();
 
 	const props = defineProps<{
-		boardMessage?: PartialBy<BoardMessageComplete, "uuid" | "member">,
+		boardMessage?: PartialBy<BoardMessageComplete, "uuid">,
 		dateOverride?: Date
 	}>();
 
-	const emptyBoardMessage: PartialBy<BoardMessageComplete, "uuid" | "member"> = {
+	const emptyBoardMessage: PartialBy<BoardMessageComplete, "uuid"> = {
+		members: [],
 		title: "",
 		body: "",
 		date: props.dateOverride || new Date(),
@@ -95,7 +96,10 @@
 				_boardMessage.title = formatDate(_boardMessage.date, "collapsed");
 
 			if(!uuid){
-				const result = await newBoardMessage({ ..._boardMessage, member: _boardMessage.member?.uuid || undefined });
+				const result = await newBoardMessage({
+					..._boardMessage,
+					members: _boardMessage.members.map(x => x.uuid)
+				});
 				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
 
 				await modalController.dismiss(null, "added");	
@@ -104,7 +108,7 @@
 
 			const result = await updateBoardMessage({
 				..._boardMessage,
-				member: _boardMessage.member?.uuid || undefined
+				members: _boardMessage.members.map(x => x.uuid)
 			} as BoardMessage);
 
 			if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
@@ -143,41 +147,16 @@
 
 		<IonContent>
 			<IonList>
-				<MemberItem
-					v-if="boardMessage.member"
-					button
-					:member="boardMessage.member"
-					:show-cover="false"
-					:show-chips="false"
-					:show-pronouns="false"
-					:show-role="false"
-					@click="memberSelectModal?.$el.present()"
-				>
-					<p>{{ $t("messageBoard:edit.member") }}</p>
-					<template #end>
-						<IonButton
-							slot="end"
-							shape="round"
-							fill="outline"
-							size="small"
-							@click="(e) => { e.stopPropagation(); boardMessage.member = undefined; }"
-						>
-							<IonIcon
-								slot="icon-only"
-								:icon="trashMD"
-								color="danger"
-							/>
-						</IonButton>
-					</template>
-				</MemberItem>
 				<IonItem
-					v-else
 					button
 					detail
 					@click="memberSelectModal?.$el.present()"
 				>
 					<IonLabel>
 						<h2>{{ $t("messageBoard:edit.member") }}</h2>
+						<p>
+							<MemberChip v-for="member in boardMessage.members" :key="member.uuid" :member />
+						</p>
 					</IonLabel>
 				</IonItem>
 				<IonItem button :detail="true" @click="($refs.datePicker as any)?.$el.present()">
@@ -349,13 +328,9 @@
 
 			<MemberSelect
 				ref="memberSelectModal"
+				v-model="boardMessage.members"
 				:custom-title="$t('messageBoard:edit.member')"
-				:only-one="true"
-				:discard-on-select="true"
-				:hide-checkboxes="true"
 				:always-emit="true"
-				:model-value="boardMessage.member ? [boardMessage.member] : []"
-				@update:model-value="(e) => { if(e[0]) boardMessage.member = e[0] }"
 			/>
 
 			<MemberSelect

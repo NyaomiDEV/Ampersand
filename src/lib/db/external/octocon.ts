@@ -165,6 +165,7 @@ function polls(ocExport: OctoconExport, memberMapping: Map<number, string>){
 	const boardMessages: BoardMessage[] = [];
 	for(const poll of ocExport.polls){
 		boardMessages.push({
+			members: [],
 			uuid: window.crypto.randomUUID(),
 			title: poll.title,
 			body: poll.description,

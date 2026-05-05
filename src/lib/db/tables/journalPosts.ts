@@ -33,7 +33,7 @@ export async function* getJournalPosts(maxIter = 10){
 export async function toJournalPostComplete(journalPost: JournalPost){
 	return {
 		...journalPost,
-		member: journalPost.member ? (await getMember(journalPost.member).catch(() => defaultMember(journalPost.member))) || defaultMember() : undefined
+		members: await Promise.all(journalPost.members.map(async x => (await getMember(x).catch(() => defaultMember(x))) || defaultMember()))
 	};
 }
 

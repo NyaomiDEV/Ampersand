@@ -38,10 +38,6 @@
 		selectedTags.value = [...props.modelValue || []];
 	});
 
-	watch(selectedTags, () => {
-		emit("update:modelValue",  [...toRaw(selectedTags.value)]);
-	});
-
 	const listener = (event: Event) => {
 		if((event as DatabaseEvent).data.table === "tags")
 			void resetTags();
@@ -97,6 +93,8 @@
 			if(index > -1)
 				selectedTags.value.splice(index, 1);
 		}
+
+		emit("update:modelValue",  [...toRaw(selectedTags.value)]);
 	}
 </script>
 

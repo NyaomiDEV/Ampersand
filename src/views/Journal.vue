@@ -221,6 +221,7 @@
 						<JournalPostItem
 							show-tags
 							:post
+							:show-date-in-date-time="tuple[0] === 'pinnedPosts'"
 							@click="openPost(post)"
 						/>
 						<IonItemOptions>

@@ -44,7 +44,7 @@
 	import { useBlob } from "../../lib/util/blob";
 	import { getTags } from "../../lib/db/tables/tags";
 	import { addModal, removeModal } from "../../lib/modals";
-	import MemberItem from "../../components/member/MemberItem.vue";
+	import MemberChip from "../../components/member/MemberChip.vue";
 
 	const { getObjectURL } = useBlob();
 	const router = useIonRouter();
@@ -58,8 +58,9 @@
 
 	const tags = shallowRef<Tag[]>([]);
 
-	const emptyPost: PartialBy<JournalPostComplete, "uuid" | "member"> = {
+	const emptyPost: PartialBy<JournalPostComplete, "uuid"> = {
 		title: "",
+		members: [],
 		date: new Date(),
 		body: "",
 		tags: [],
@@ -88,7 +89,7 @@
 			if(!uuid){
 				const result = await newJournalPost({
 					..._post,
-					member: _post.member?.uuid || undefined,
+					members: _post.members.map(x => x.uuid)
 				});
 				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
 
@@ -98,7 +99,7 @@
 
 			const result = await updateJournalPost({
 				..._post,
-				member: _post.member?.uuid || undefined
+				members: _post.members.map(x => x.uuid)
 			} as JournalPost);
 
 			if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
@@ -208,21 +209,16 @@
 
 			<IonList v-if="!isEditing">
 
-				<MemberItem
-					v-if="post.member"
-					:member="post.member"
-					button
-					class="surface"
-					:show-cover="false"
-					:show-pronouns="false"
-					:show-role="false"
-					:show-border-color="false"
-					:router-link="`/members/edit?uuid=${post.member.uuid}`"
-				>
-					<p v-if="post.date">{{ formatDate(post.date, "expanded") }}</p>
-				</MemberItem>
-				<IonItem v-else class="surface">
+				<IonItem class="surface">
 					<IonLabel>
+						<h3>
+							<MemberChip
+								v-for="member in post.members"
+								:key="member.uuid"
+								:member
+								clickable
+							/>
+						</h3>
 						<p v-if="post.date">{{ formatDate(post.date, "expanded") }}</p>
 					</IonLabel>
 				</IonItem>
@@ -245,41 +241,16 @@
 
 			<template v-else>
 				<IonList>
-
-					<MemberItem
-						v-if="post.member"
-						:member="post.member"
-						buttton
-						:show-role="false"
-						:show-cover="false"
-						:show-pronouns="false"
-						@click="memberSelectModal?.$el.present()"
-					>
-						<p>{{ $t("journal:edit.author") }}</p>
-						<template #end>
-							<IonButton
-								slot="end"
-								shape="round"
-								fill="outline"
-								size="small"
-								@click="(e) => { e.stopPropagation(); post.member = undefined; }"
-							>
-								<IonIcon
-									slot="icon-only"
-									:icon="trashMD"
-									color="danger"
-								/>
-							</IonButton>
-						</template>
-					</MemberItem>
 					<IonItem
-						v-else
 						button
 						detail
 						@click="memberSelectModal?.$el.present()"
 					>
 						<IonLabel>
 							<h2>{{ $t("journal:edit.author") }}</h2>
+							<p>
+								<MemberChip v-for="member in post.members" :key="member.uuid" :member />
+							</p>
 						</IonLabel>
 					</IonItem>
 
@@ -309,12 +280,8 @@
 
 			<MemberSelect
 				ref="memberSelectModal"
-				:only-one="true"
-				:discard-on-select="true"
-				:hide-checkboxes="true"
+				v-model="post.members"
 				:always-emit="true"
-				:model-value="post.member ? [post.member] : []"
-				@update:model-value="(e) => { if (e[0]) post.member = e[0]; }"
 			/>
 
 			<MemberSelect

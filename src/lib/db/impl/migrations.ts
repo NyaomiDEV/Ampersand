@@ -3,7 +3,7 @@ import { decode } from "@msgpack/msgpack";
 import type { ShittyTable } from "./shittytable";
 import { appConfig } from "../../config";
 import { nilUid } from "../../util/consts";
-import { Asset, JournalPost, Member, System, Tag } from "../entities";
+import { Asset, BoardMessage, JournalPost, Member, System, Tag, UUID } from "../entities";
 import { Serialized } from "../../serialization";
 
 export async function members(table: ShittyTable<Member>, version: number){
@@ -181,6 +181,12 @@ export async function assets(table: ShittyTable<Asset>, version: number) {
 }
 
 export async function journalPosts(table: ShittyTable<JournalPost>, version: number) {
+	
+	interface JPOne extends JournalPost {
+		member: UUID,
+		members: never
+	}
+
 	async function zeroToOne() {
 		// old serialization -> new serialization
 		const uuids = table.index.map(x => x.uuid);
@@ -191,6 +197,72 @@ export async function journalPosts(table: ShittyTable<JournalPost>, version: num
 				const decoded = decode(raw) as Serialized<JournalPost>;
 				if (typeof decoded.cover?.value === "string" || typeof decoded.cover?.value === "string") {
 					await table.refresh();
+					break;
+				}
+			} catch (_e) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	async function oneToTwo(){
+		// member -> members
+		const uuids = table.index.map(x => x.uuid);
+
+		for (const uuid of uuids) {
+			try {
+				const obj = await table.get(uuid) as JPOne;
+				if (typeof obj.member === "string") {
+					await table.write(
+						{
+							...obj,
+							members: [obj.member]
+						}, true
+					);
+					break;
+				}
+			} catch (_e) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	switch (version) {
+		// @ts-expect-error fallthrough
+		case 0:
+			if (!await zeroToOne()) return 0;
+		case 1:
+			if (!await oneToTwo()) return 1;
+	}
+
+	return 2;
+}
+
+export async function boardMessages(table: ShittyTable<BoardMessage>, version: number) {
+
+	interface BMZero extends BoardMessage {
+		member: UUID,
+		members: never;
+	}
+
+	async function zeroToOne() {
+		// member -> members
+		const uuids = table.index.map(x => x.uuid);
+
+		for (const uuid of uuids) {
+			try {
+				const obj = await table.get(uuid) as BMZero;
+				if (typeof obj.member === "string") {
+					await table.write(
+						{
+							...obj,
+							members: [obj.member]
+						}, true
+					);
 					break;
 				}
 			} catch (_e) {

@@ -34,10 +34,6 @@
 		selectedCustomFields.value = [...props.modelValue || []];
 	});
 
-	watch(selectedCustomFields, () => {
-		emit("update:modelValue",  [...toRaw(selectedCustomFields.value)]);
-	});
-
 	watch(search, async () => {
 		await getCustomFields();
 	});
@@ -58,6 +54,8 @@
 			if(index > -1)
 				selectedCustomFields.value.splice(index, 1);
 		}
+
+		emit("update:modelValue",  [...toRaw(selectedCustomFields.value)]);
 	}
 </script>
 

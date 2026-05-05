@@ -1,10 +1,10 @@
 import { sep } from "@tauri-apps/api/path";
 import * as fs from "@tauri-apps/plugin-fs";
-import type { Asset, JournalPost, Member, System, Tag, UUIDable, UUID } from "../entities";
+import type { Asset, JournalPost, Member, System, Tag, UUIDable, UUID, BoardMessage } from "../entities";
 import { decode, encode } from "@msgpack/msgpack";
 import type { MigrationsMapping } from "../types";
 import { deleteNull, replace, revive, walk, walkAsync } from "../../serialization";
-import { assets, journalPosts, members, systems, tags } from "./migrations";
+import { assets, boardMessages, journalPosts, members, systems, tags } from "./migrations";
 import { PartialBy } from "../../types";
 import type { SecondaryKey, IndexEntry } from "./types";
 import { sha256 } from "../../util/misc";
@@ -326,6 +326,9 @@ export class ShittyTable<T extends UUIDable> {
 				break;
 			case "system":
 				version = await systems(this as unknown as ShittyTable<System>, version);
+				break;
+			case "boardMessages":
+				version = await boardMessages(this as unknown as ShittyTable<BoardMessage>, version);
 				break;
 			case "journalPosts":
 				version = await journalPosts(this as unknown as ShittyTable<JournalPost>, version);

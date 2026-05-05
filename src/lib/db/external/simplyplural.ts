@@ -267,7 +267,7 @@ function boardMessage(spExport: SimplyPluralExport, memberMapping: Map<string, s
 	for (const spBoardMessage of spExport.boardMessages) {
 		console.debug("[SP] Creating message board entry for:", spBoardMessage);
 		const boardMessage: BoardMessage = {
-			member: memberMapping.get(spBoardMessage.writtenBy) || nilUid,
+			members: memberMapping.get(spBoardMessage.writtenBy) ? [memberMapping.get(spBoardMessage.writtenBy)!] : [],
 			title: spBoardMessage.title,
 			body: `@<m:${memberMapping.get(spBoardMessage.writtenFor)}>\n\n${spBoardMessage.message?.length ? spBoardMessage.message : ""}`,
 			date: spBoardMessage.writtenAt ? new Date(spBoardMessage.writtenAt) : new Date(),
@@ -285,7 +285,7 @@ function boardMessage(spExport: SimplyPluralExport, memberMapping: Map<string, s
 	for (const spPoll of spExport.polls) {
 		console.debug("[SP] Creating message board entry for poll:", spPoll);
 		const boardMessage: BoardMessage = {
-			member: nilUid,
+			members: [],
 			title: spPoll.name,
 			body: spPoll.desc?.length ? spPoll.desc : "",
 			date: spPoll.lastOperationTime ? new Date(spPoll.lastOperationTime) : new Date(),
@@ -360,7 +360,7 @@ function journalPost(spExport: SimplyPluralExport, memberMapping: Map<string, st
 		const post: JournalPost = {
 			title: spNote.title || "--",
 			body: spNote.note,
-			member: spNote.member ? memberMapping.get(spNote.member) || nilUid : nilUid,
+			members: spNote.member ? [memberMapping.get(spNote.member) || nilUid] : [],
 			tags: [],
 			isPrivate: false,
 			isPinned: false,

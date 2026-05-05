@@ -1,21 +1,19 @@
 <script setup lang="ts">
 
 	import { alertController, IonButton, IonItem, IonLabel } from "@ionic/vue";
-	import Avatar from "./Avatar.vue";
-	import { BoardMessageComplete, Member, PollEntry, System } from "../lib/db/entities";
+	import AvatarStack from "./AvatarStack.vue";
+	import { BoardMessageComplete, Member, PollEntry } from "../lib/db/entities";
 	import Markdown from "./Markdown.vue";
 	import MemberSelect from "../modals/MemberSelect.vue";
 	import { addModal, removeModal } from "../lib/modals";
-	import { h, onBeforeMount, ref, shallowRef, toRaw } from "vue";
+	import { h, ref, toRaw } from "vue";
 	import { updateBoardMessage } from "../lib/db/tables/boardMessages";
 	import PollResults from "../modals/PollResults.vue";
 	import { useTranslation } from "i18next-vue";
 	import { formatDate, promptOkCancel } from "../lib/util/misc";
 
 	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
-	import systemCircle from "@material-symbols/svg-600/outlined/supervised_user_circle.svg";
 	import { accessibilityConfig } from "../lib/config";
-	import { getSystem } from "../lib/db/tables/system";
 
 	const i18next = useTranslation();
 
@@ -28,15 +26,6 @@
 	});
 
 	const isPollHidden = ref(props.hidePoll);
-	const system = shallowRef<System>();
-
-	async function updateAuthorSystem(){
-		if(!props.boardMessage.member) return;
-		const _sys = await getSystem(props.boardMessage.member.system);
-		if(_sys) system.value = _sys;
-	}
-
-	onBeforeMount(updateAuthorSystem);
 
 	/* Wait for Firefox and Safari to implement field-sizing in CSS and then use that instead of rows: 4 */
 
@@ -155,8 +144,20 @@
 	function getStyle(){
 		const style: Record<string, string> = {};
 
-		if(props.boardMessage.member?.color)
-			style["--data-color"] = props.boardMessage.member.color;
+		if(props.boardMessage.members.length){
+			const colors: string[] = props.boardMessage.members
+				.filter(x => x.color)
+				.map(x => x.color)
+				.map((x, i, a) => {
+					const percent = (i + 1) / a.length;
+					return `${x as string} 0 ${percent * 100}%`;
+				});
+
+			if(!colors.length) return;
+
+			style["--data-gradient"] = `linear-gradient(225deg, ${colors.join(",")})`;
+			console.log(style);
+		}
 
 		return style;
 	}
@@ -172,25 +173,18 @@
 			'with-border-color': props.showBorderColor && accessibilityConfig.colorIndicatorPosition === 'list-item'
 		}"
 	>
-		<Avatar
-			v-if="props.boardMessage.member"
+		<AvatarStack
 			slot="start"
-			:image="props.boardMessage.member.image"
-			:clip-shape="props.boardMessage.member.imageClip"
-			:color="props.boardMessage.member.color"
-			:icon="accountCircle"
-		>
-			<Avatar
-				v-if="system && system.viewInLists"
-				:image="system.image"
-				:clip-shape="system.imageClip"
-				:color="system.color"
-				:icon="systemCircle"
-			/>
-		</Avatar>
+			:avatars="props.boardMessage.members.map(member => ({
+				image: member.image,
+				clipShape: member.imageClip,
+				color: member.color,
+				icon: accountCircle
+			}))"
+		/>
 		<div class="flexbox">
 			<div class="subheader">
-				<span v-if="props.boardMessage.member">{{ props.boardMessage.member.name }}</span>
+				<span v-if="props.boardMessage.members.length">{{ props.boardMessage.members.map(x => x.name).join(", ") }}</span>
 				<p v-if="formatDate(props.boardMessage.date, 'collapsed') !== props.boardMessage.title">
 					{{ formatDate(props.boardMessage.date, "collapsed") }}
 				</p>
@@ -254,8 +248,24 @@
 			opacity: 0.5;
 		}
 
-		&.with-border-color::part(native){
-			border-inline-start: 4px solid var(--data-color, transparent);
+		&.with-border-color::part(native) {
+			padding-inline-start: calc(4px + var(--padding-start) + var(--ion-safe-area-left, 0px));
+		}
+
+		&.with-border-color::part(native)::before {
+			content: "\A";
+			display: block;
+			position: absolute;
+			top: 0;
+			left: 0;
+			background: var(--data-gradient);
+			height: 100%;
+			width: 4px;
+		}
+
+		:dir(rtl) &.with-border-color::part(native)::before{
+			right: 0;
+			left: unset;
 		}
 
 		ion-item, ion-list {
@@ -278,6 +288,7 @@
 				flex-direction: row;
 				justify-content: space-between;
 				align-items: center;
+				gap: 16px;
 
 				* {
 					margin: 0;
@@ -286,10 +297,14 @@
 				span {
 					font-size: 1.1em;
 					color: var(--ion-text-color-step-400);
+					white-space: nowrap;
+					overflow: hidden;
+					text-overflow: ellipsis;
 				}
 
 				p {
 					text-align: right;
+					flex-shrink: 0;
 				}
 			}
 

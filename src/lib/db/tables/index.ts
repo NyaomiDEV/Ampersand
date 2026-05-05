@@ -36,9 +36,9 @@ export function getTables() {
 const db = {
 	systems: await makeTable<System>("systems", ["name", "parent", "isPinned", "isArchived", "viewInLists"]),
 	members: await makeTable<Member>("members", ["name", "system", "isPinned", "isArchived", "isCustomFront"]),
-	boardMessages: await makeTable<BoardMessage>("boardMessages", ["member", "date", "isPinned", "isArchived"]),
+	boardMessages: await makeTable<BoardMessage>("boardMessages", ["members", "date", "isPinned", "isArchived"]),
 	frontingEntries: await makeTable<FrontingEntry>("frontingEntries", ["member", "startTime", "endTime", "isLocked", "isMainFronter"]),
-	journalPosts: await makeTable<JournalPost>("journalPosts", ["member", "date", "isPinned"]),
+	journalPosts: await makeTable<JournalPost>("journalPosts", ["members", "date", "isPinned"]),
 	reminders: await makeTable<Reminder>("reminders", ["active"]),
 	tags: await makeTable<Tag>("tags", ["name", "type", "isArchived", "viewInLists"]),
 	assets: await makeTable<Asset>("assets", ["friendlyName"]),
