@@ -7,7 +7,7 @@
 	import TestingMD from "@material-symbols/svg-600/outlined/taunt.svg";
 	import SystemMD from "@material-symbols/svg-600/outlined/groups.svg";
 	import FrontHistoryMD from "@material-symbols/svg-600/outlined/show_chart.svg";
-	import MessageBoardMD from "@material-symbols/svg-600/outlined/newspaper.svg";
+	import MessageBoardMD from "@material-symbols/svg-600/outlined/newsmode.svg";
 	import TagMD from "@material-symbols/svg-600/outlined/sell.svg";
 	import RemindersMD from "@material-symbols/svg-600/outlined/notification_add.svg";
 	import SettingsMD from "@material-symbols/svg-600/outlined/settings.svg";

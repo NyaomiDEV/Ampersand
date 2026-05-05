@@ -19,7 +19,7 @@
 	import lightMD from "@material-symbols/svg-600/outlined/light_mode.svg";
 	import darkMD from "@material-symbols/svg-600/outlined/dark_mode.svg";
 	import autoMD from "@material-symbols/svg-600/outlined/routine.svg";
-	import frontingNotificationMD from "@material-symbols/svg-600/outlined/notification_important.svg";
+	import frontingNotificationMD from "@material-symbols/svg-600/outlined/notifications_unread.svg";
 </script>
 
 <template>

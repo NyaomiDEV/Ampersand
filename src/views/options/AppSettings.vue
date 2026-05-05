@@ -14,6 +14,7 @@
 	import peopleMD from "@material-symbols/svg-600/outlined/group.svg";
 	import journalMD from "@material-symbols/svg-600/outlined/book.svg";
 	import homeMD from "@material-symbols/svg-600/outlined/home.svg";
+	import dashboardMD from "@material-symbols/svg-600/outlined/dashboard_customize.svg";
 	import SystemItem from "../../components/system/SystemItem.vue";
 	import DashboardSettings from "../../modals/DashboardSettings.vue";
 
@@ -121,7 +122,7 @@
 				</IonItem>
 
 				<IonItem button detail @click="dashboardSettingsModal?.$el.present()">
-					<IonIcon slot="start" :icon="homeMD" />
+					<IonIcon slot="start" :icon="dashboardMD" />
 					<IonLabel>{{ $t("appSettings:dashboard.title") }}</IonLabel>
 				</IonItem>
 
