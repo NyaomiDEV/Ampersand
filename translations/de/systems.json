@@ -1,0 +1,28 @@
+{
+	"edit": {
+		"color": "Farbe",
+		"imageClip": "Profilbild",
+		"memberCount": "Mitgliederzahl",
+		"memberCountText": "{{totalMemberCount}} Mitglieder, {{memberCount}} aktiv, {{archivedMemberCount}} archiviert",
+		"tapToShow": "Zum Anzeigen antippen",
+		"showMembers": "Zeige Mitglieder in diesem System",
+		"parent": "Übergeordnetes System",
+		"viewInLists": "In Liste anzeigen",
+		"isPinned": "System anpinnen",
+		"archived": "Archiviert",
+		"delete": {
+			"title": "System löschen",
+			"confirm": "Sind Sie sicher, dass Sie das System löschen wollen?"
+		},
+		"systemID": "System-ID: {{systemID}}",
+		"systemIDcopiedToClipboard": "System-ID im Erwähnungsformat in die Zwischenablage kopiert!",
+		"header": "System",
+		"headerAdd": "System hinzufügen",
+		"headerEdit": "System bearbeiten",
+		"name": "Systemname",
+		"description": "Systembeschreibung",
+		"noDescription": "Keine Beschreibung"
+	},
+	"searchPlaceholder": "Systeme durchsuchen...",
+	"select": "System auswählen"
+}

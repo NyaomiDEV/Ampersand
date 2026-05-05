@@ -2,15 +2,18 @@
 	"header": "Erinnerungen",
 	"edit": {
 		"header": "Erinnerung bearbeiten",
-		"title": "Erinnerung Benachrichtigungs-Titel",
+		"title": "Titel der Erinnerung",
 		"message": "Erinnerungsbenachrichtigung",
 		"triggeringEvent": {
 			"addedToFront": "Nachdem ein Mitglied zur Front hinzugefügt wurde",
-			"removedFromFront": "Nachdem ein Mitglied von der Front entfernt wurde"
+			"removedFromFront": "Nachdem ein Mitglied von der Front entfernt wurde",
+			"title": "Auslösendes Ereignis"
 		},
 		"delete": {
 			"title": "Erinnerung löschen",
 			"confirm": "Bist du dir sicher, dass du diese Erinnerung löschen möchtest?"
-		}
+		},
+		"delay": "Verzögerung in Minuten",
+		"active": "Erinnerung einschalten"
 	}
 }
