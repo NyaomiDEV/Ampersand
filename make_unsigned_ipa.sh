@@ -2,10 +2,11 @@
 
 set -euo pipefail
 
-IS_CI_BUILD="$(if [ "$GITHUB_REF_NAME" = "main" ]; then echo -n "true"; fi)"
+GITHUB_REF_NAME="${GITHUB_REF_NAME:-""}"
+IS_CI_DEV_BUILD="$(if [ "$GITHUB_REF_NAME" = "main" ]; then echo -n "true"; fi)"
 
 APP_NAME="ampersand"
-APP_PRODUCT="Ampersand$(if [ -n "$IS_CI_BUILD" ]; then echo -n " CI"; fi)"
+APP_PRODUCT="Ampersand$(if [ -n "$IS_CI_DEV_BUILD" ]; then echo -n " CI"; fi)"
 PROJECT_DIR="src-tauri/gen/apple"
 PROJECT_PATH="$PROJECT_DIR/${APP_NAME}.xcodeproj"
 SCHEME="${APP_NAME}_iOS"
@@ -13,7 +14,11 @@ ARCHIVE_PATH="$PROJECT_DIR/build/App.xcarchive"
 DERIVED_DATA_PATH="$PROJECT_DIR/DerivedData"
 APP_BUNDLE_PATH="$ARCHIVE_PATH/Products/Applications/${APP_PRODUCT}.app"
 IPA_PATH="${IPA_PATH:-Ampersand.ipa}"
-GITHUB_REF_NAME="${GITHUB_REF_NAME:-""}"
+XCCONFIG_FILE="$PROJECT_DIR/xcconfig/Production.xcconfig"
+
+if [[ -n "$IS_CI_DEV_BUILD" ]]; then
+  XCCONFIG_FILE="$PROJECT_DIR/xcconfig/CI.xcconfig"
+fi
 
 IDENTIFIER="$(node -p "require('./src-tauri/tauri.conf.json').identifier")"
 TMP_DIR="$(node -p "require('os').tmpdir()")"
@@ -75,21 +80,20 @@ if [[ ! -s "$SERVER_ADDR_FILE" ]]; then
   exit 1
 fi
 
-echo "--- Archiving unsigned app ---"
+echo "--- Archiving unsigned app with $XCCONFIG_FILE ---"
 xcodebuild archive \
   -project "$PROJECT_PATH" \
   -scheme "$SCHEME" \
   -archivePath "$ARCHIVE_PATH" \
   -derivedDataPath "$DERIVED_DATA_PATH" \
   -configuration release \
+  -xcconfig "$XCCONFIG_FILE" \
   -destination "generic/platform=iOS" \
   CODE_SIGNING_REQUIRED=NO \
   CODE_SIGNING_ALLOWED=NO \
   CODE_SIGN_IDENTITY="" \
   CODE_SIGN_ENTITLEMENTS="" \
-  CODE_SIGNING_INJECT_BASE_ENTITLEMENTS=NO \
-  PRODUCT_BUNDLE_IDENTIFIER="moe.ampersand.app$(if [ -n "$IS_CI_BUILD" ]; then echo -n ".ci"; fi)" \
-  PRODUCT_NAME="$APP_PRODUCT"
+  CODE_SIGNING_INJECT_BASE_ENTITLEMENTS=NO
 
 if [[ ! -d "$APP_BUNDLE_PATH" ]]; then
   echo "Error: archived app bundle not found at $APP_BUNDLE_PATH"

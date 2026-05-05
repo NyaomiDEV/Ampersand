@@ -42,7 +42,7 @@ async function getVersion(){
 	}
 }
 
-async function patchFiles(ciBuild) {
+async function patchFiles(ciBuild, buildTarget) {
 	// Read manifest files
 	const packageJson = JSON.parse(await readFile(resolve(import.meta.dirname, "package.json"), "utf-8"));
 	const tauriConfJson = JSON.parse(await readFile(resolve(import.meta.dirname, "src-tauri", "tauri.conf.json"), "utf-8"));
@@ -58,7 +58,7 @@ async function patchFiles(ciBuild) {
 	if (ciBuild) {
 		// Modify parsed manifests
 		packageJson.version = version;
-		tauriConfJson.version = version;
+		tauriConfJson.version = buildTarget === "ios" ? packageVersion : version;
 		tauriCargoToml.package.version = version;
 		tauriPluginCargoToml.package.version = version;
 
@@ -78,6 +78,7 @@ async function patchFiles(ciBuild) {
 
 const { revcount, packageVersion, version } = await getVersion();
 const isCiBuild = process.env.GITHUB_REF_NAME === "main";
+const buildTarget = process.env.AMPERSAND_BUILD_TARGET;
 
 console.log("New version is", isCiBuild ? version : packageVersion);
 
@@ -96,4 +97,4 @@ if (process.env.GITHUB_ENV) {
 
 // If NO_PATCH is not set, patch files
 if(!process.env.NO_PATCH)
-	await patchFiles(isCiBuild);
+	await patchFiles(isCiBuild, buildTarget);

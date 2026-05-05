@@ -40,6 +40,8 @@ jobs:
       - name: Update versioning
         id: vcs
         run: yarn run upgrade-vcs
+        env:
+          AMPERSAND_BUILD_TARGET: ios
       - name: Build unsigned IPA
         run: bash ./make_unsigned_ipa.sh
         env:
