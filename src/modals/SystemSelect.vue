@@ -41,6 +41,10 @@
 	const iter = shallowRef<AsyncGenerator<System>>();
 	const iterDone = ref(false);
 
+	watch(props, () => {
+		selectedSystem.value = props.modelValue;
+	});
+
 	const disallowedSystems = shallowRef<System[]>([]);
 
 	const listener = (event: Event) => {

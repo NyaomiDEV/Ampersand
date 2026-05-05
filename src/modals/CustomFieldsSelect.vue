@@ -12,7 +12,7 @@
 		IonLabel,
 	} from "@ionic/vue";
 
-	import { onBeforeMount, reactive, ref, shallowRef, toRaw, watch } from "vue";
+	import { onBeforeMount, ref, shallowRef, toRaw, watch } from "vue";
 	import { CustomField } from "../lib/db/entities";
 	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
 	import { getFilteredCustomFields } from "../lib/db/tables/customFields";
@@ -26,12 +26,16 @@
 		"update:modelValue": [CustomField[]],
 	}>();
 
-	const selectedCustomFields = reactive<CustomField[]>([...props.modelValue || []]);
+	const selectedCustomFields = ref<CustomField[]>([...props.modelValue || []]);
 	const search = ref("");
 	const customFields = shallowRef<CustomField[]>();
 
+	watch(props, () => {
+		selectedCustomFields.value = [...props.modelValue || []];
+	});
+
 	watch(selectedCustomFields, () => {
-		emit("update:modelValue",  [...toRaw(selectedCustomFields)]);
+		emit("update:modelValue",  [...toRaw(selectedCustomFields.value)]);
 	});
 
 	watch(search, async () => {
@@ -48,11 +52,11 @@
 
 	function check(customField: CustomField, checked: boolean){
 		if(checked)
-			selectedCustomFields.push(customField);
+			selectedCustomFields.value.push(customField);
 		else {
-			const index = selectedCustomFields.findIndex(x => x.uuid === customField.uuid);
+			const index = selectedCustomFields.value.findIndex(x => x.uuid === customField.uuid);
 			if(index > -1)
-				selectedCustomFields.splice(index, 1);
+				selectedCustomFields.value.splice(index, 1);
 		}
 	}
 </script>

@@ -9,7 +9,7 @@
 		IonSearchbar,
 	} from "@ionic/vue";
 
-	import { onMounted, onUnmounted, reactive, ref, shallowRef, toRaw, watch } from "vue";
+	import { onMounted, onUnmounted, ref, shallowRef, toRaw, watch } from "vue";
 	import { getFilteredTags } from "../lib/db/tables/tags";
 	import { Tag } from "../lib/db/entities";
 	import TagItem from "../components/tag/TagItem.vue";
@@ -28,14 +28,18 @@
 		"update:modelValue": [Tag[]],
 	}>();
 
-	const selectedTags = reactive<Tag[]>([...props.modelValue || []]);
+	const selectedTags = ref<Tag[]>([...props.modelValue || []]);
 	const search = ref("");
 	const tags = shallowRef<Tag[]>();
 	const iter = shallowRef<AsyncGenerator<Tag>>();
 	const iterDone = ref(false);
 
+	watch(props, () => {
+		selectedTags.value = [...props.modelValue || []];
+	});
+
 	watch(selectedTags, () => {
-		emit("update:modelValue",  [...toRaw(selectedTags)]);
+		emit("update:modelValue",  [...toRaw(selectedTags.value)]);
 	});
 
 	const listener = (event: Event) => {
@@ -87,11 +91,11 @@
 
 	function check(tag: Tag, checked: boolean){
 		if(checked)
-			selectedTags.push(tag);
+			selectedTags.value.push(tag);
 		else {
-			const index = selectedTags.findIndex(x => x.uuid === tag.uuid);
+			const index = selectedTags.value.findIndex(x => x.uuid === tag.uuid);
 			if(index > -1)
-				selectedTags.splice(index, 1);
+				selectedTags.value.splice(index, 1);
 		}
 	}
 </script>

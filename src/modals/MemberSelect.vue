@@ -11,7 +11,7 @@
 	} from "@ionic/vue";
 
 	import { accessibilityConfig } from "../lib/config/index.ts";
-	import { onBeforeMount, onUnmounted, reactive, ref, shallowRef, toRaw, watch } from "vue";
+	import { onBeforeMount, onUnmounted, ref, shallowRef, toRaw, watch } from "vue";
 	import type { Member } from "../lib/db/entities.d.ts";
 	import { getFilteredMembers } from "../lib/db/tables/members";
 	import { DatabaseEvents, DatabaseEvent } from "../lib/db/events";
@@ -36,11 +36,15 @@
 		"update:modelValue": [Member[]],
 	}>();
 
-	const selectedMembers = reactive<Member[]>([...props.modelValue || []]);
+	const selectedMembers = shallowRef<Member[]>([...props.modelValue || []]);
 	const search = ref("");
 	const members = shallowRef<Member[]>();
 	const iter = shallowRef<AsyncGenerator<Member>>();
 	const iterDone = ref(false);
+
+	watch(props, () => {
+		selectedMembers.value = [...props.modelValue || []];
+	});
 
 	const listener = (event: Event) => {
 		if((event as DatabaseEvent).data.table === "members")
@@ -94,27 +98,27 @@
 		const onlyOne = props.onlyOne || props.hideCheckboxes;
 		if(checked){
 			if(onlyOne)
-				selectedMembers.length = 0;
-			selectedMembers.push(member);
+				selectedMembers.value.length = 0;
+			selectedMembers.value.push(member);
 		} else {
-			const index = selectedMembers.findIndex(x => x.uuid === member.uuid);
+			const index = selectedMembers.value.findIndex(x => x.uuid === member.uuid);
 			if(index > -1){
-				if(selectedMembers.length === 1 && onlyOne){
+				if(selectedMembers.value.length === 1 && onlyOne){
 					// selected the one who was already selected since we're in "selection mode"
 					// we will just not uncheck it
 					// (hideCheckboxes implies onlyOne)
 					if(props.discardOnSelect){
 						void modalController.dismiss();
 						if(props.alwaysEmit)
-							emit("update:modelValue", [...toRaw(selectedMembers)]);
+							emit("update:modelValue", [...toRaw(selectedMembers.value)]);
 					}
 					return;
 				}
-				selectedMembers.splice(index, 1);
+				selectedMembers.value.splice(index, 1);
 			}
 		}
 
-		emit("update:modelValue", [...toRaw(selectedMembers)]);
+		emit("update:modelValue", [...toRaw(selectedMembers.value)]);
 
 		if(onlyOne && props.discardOnSelect)
 			void modalController.dismiss();

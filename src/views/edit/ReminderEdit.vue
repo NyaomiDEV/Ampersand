@@ -33,6 +33,7 @@
 	import { useTranslation } from "i18next-vue";
 	import { promptOkCancel, toast } from "../../lib/util/misc";
 	import MemberSelect from "../../modals/MemberSelect.vue";
+	import MemberChip from "../../components/member/MemberChip.vue";
 
 	const route = useRoute();
 	const router = useIonRouter();
@@ -179,7 +180,9 @@
 				<IonItem button detail @click="memberSelectModal?.$el.present()">
 					<IonLabel>
 						<h3>{{ $t("reminders:edit.members") }}</h3>
-						<p>{{ reminder.members.map(x => x.name).join(", ") }}</p>
+						<p v-if="reminder.members.length">
+							<MemberChip v-for="member in reminder.members" :key="member.uuid" :member />
+						</p>
 					</IonLabel>
 				</IonItem>
 			</IonList>
