@@ -11,7 +11,7 @@
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 	import { platform } from "@tauri-apps/plugin-os";
 
-	const isUnsupportedPlatform = ["macos", "ios", "android"].includes(platform());
+	const isUnsupportedPlatform = !["macos", "ios", "android"].includes(platform());
 
 	const reminders = shallowRef<Reminder[]>();
 
