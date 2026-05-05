@@ -214,15 +214,13 @@ export async function journalPosts(table: ShittyTable<JournalPost>, version: num
 		for (const uuid of uuids) {
 			try {
 				const obj = await table.get(uuid) as JPOne;
-				if (typeof obj.member === "string") {
-					await table.write(
-						{
-							...obj,
-							members: [obj.member]
-						}, true
-					);
-					break;
-				}
+				await table.write(
+					{
+						...obj,
+						members: typeof obj.member === "string" ? [obj.member] : []
+					}, true
+				);
+				break;
 			} catch (_e) {
 				return false;
 			}
@@ -256,15 +254,13 @@ export async function boardMessages(table: ShittyTable<BoardMessage>, version: n
 		for (const uuid of uuids) {
 			try {
 				const obj = await table.get(uuid) as BMZero;
-				if (typeof obj.member === "string") {
-					await table.write(
-						{
-							...obj,
-							members: [obj.member]
-						}, true
-					);
-					break;
-				}
+				await table.write(
+					{
+						...obj,
+						members: typeof obj.member === "string" ? [obj.member] : []
+					}, true
+				);
+				break;
 			} catch (_e) {
 				return false;
 			}
