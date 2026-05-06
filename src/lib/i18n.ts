@@ -13,7 +13,7 @@ import { flattenObject } from "./util/misc";
 const context = import.meta.webpackContext("../../translations/", {
 	recursive: true,
 	regExp: /\.json$/,
-	include: /translations[\\/](de|en|en-x-pirate|es|fr|it|it-x-milan|nap|nl|pl|pt-BR|ro|ru|scn|tok|tr)[\\/]/
+	include: /translations[\\/](de|en|en-x-pirate|es|et|fr|it|it-x-milan|nap|nl|pl|pt-BR|ro|ru|scn|tok|tr)[\\/]/
 });
 
 const translations: Map<{ lang: string, ns: string }, unknown> = new Map();
