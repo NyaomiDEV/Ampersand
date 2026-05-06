@@ -17,7 +17,7 @@
 		"members": "Miembros seleccionados",
 		"headerAdd": "Añadir recordatorio",
 		"active": "Activar recordatorio",
-		"delay": "Retraso en minutos"
+		"delay": "Retraso"
 	},
 	"notOnPC": {
 		"header": "Los recordatorios no funcionan en el ordenador",

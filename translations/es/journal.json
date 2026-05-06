@@ -6,7 +6,7 @@
 	"pinnedPosts": "Publicaciones fijadas",
 	"alertSubheader": "¿De verdad quieres leer esta publicación?",
 	"edit": {
-		"header": "Tema",
+		"header": "Publicación",
 		"author": "Editar autor",
 		"date": "Fecha de edición",
 		"body": "Cuerpo de la publicación",
@@ -23,7 +23,7 @@
 		"title": "Título",
 		"subtitle": "Subtítulo",
 		"tags": "Etiquetas",
-		"isPinned": "Tema fijado",
+		"isPinned": "Publicación fijada",
 		"postIDcopiedToClipboard": "¡El ID del tema se ha copiado en el portapapeles!"
 	}
 }
