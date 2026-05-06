@@ -169,6 +169,7 @@
 						:key="boardMessage.uuid"
 						:board-message
 						:hide-poll="boardMessage.isArchived"
+						:show-date-in-date-time="false"
 						@click="showModal(boardMessage)"
 					/>
 				</template>

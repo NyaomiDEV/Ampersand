@@ -53,6 +53,7 @@
 			:key="boardMessage.uuid"
 			:board-message
 			:hide-poll="!boardMessage.isPinned"
+			show-date-in-date-time
 			@click="showModal(boardMessage)"
 		/>
 	</IonList>

@@ -20,7 +20,8 @@
 	const props = withDefaults(defineProps<{
 		boardMessage: BoardMessageComplete,
 		hidePoll?: boolean,
-		showBorderColor?: boolean
+		showBorderColor?: boolean,
+		showDateInDateTime: boolean
 	}>(), {
 		showBorderColor: true
 	});
@@ -184,8 +185,8 @@
 		<div class="flexbox">
 			<div class="subheader">
 				<span v-if="props.boardMessage.members.length">{{ props.boardMessage.members.map(x => x.name).join(", ") }}</span>
-				<p v-if="formatDate(props.boardMessage.date, 'collapsed') !== props.boardMessage.title">
-					{{ formatDate(props.boardMessage.date, "collapsed") }}
+				<p v-if="formatDate(props.boardMessage.date, props.showDateInDateTime ? 'collapsed' : undefined) !== props.boardMessage.title">
+					{{ formatDate(props.boardMessage.date, props.showDateInDateTime ? 'collapsed' : undefined) }}
 				</p>
 			</div>
 			<div class="contents">
