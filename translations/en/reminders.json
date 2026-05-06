@@ -10,7 +10,7 @@
 		"active": "Activate reminder",
 		"title": "Reminder title",
 		"message": "Reminder message",
-		"delay": "Delay in minutes",
+		"delay": "Delay",
 		"triggerOnAllMembers": "Send for all members",
 		"members": "Select members",
 		"triggeringEvent": {

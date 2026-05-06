@@ -17,7 +17,6 @@
 		IonPage,
 		IonBackButton,
 		useIonRouter,
-		IonRange,
 		IonToggle
 	} from "@ionic/vue";
 
@@ -34,6 +33,7 @@
 	import { promptOkCancel, toast } from "../../lib/util/misc";
 	import MemberSelect from "../../modals/MemberSelect.vue";
 	import MemberChip from "../../components/member/MemberChip.vue";
+	import PopupPicker from "../../components/PopupPicker.vue";
 
 	const route = useRoute();
 	const router = useIonRouter();
@@ -50,9 +50,12 @@
 	};
 	const reminder = ref<PartialBy<ReminderComplete, "uuid">>({ ...emptyReminder });
 
+	const delayMap = ref(new Map([["hours", 0], ["minutes", 0]]));
+
 	const allMembers = ref(false);
 
 	const memberSelectModal = useTemplateRef("memberSelectModal");
+	const popupPicker = useTemplateRef("popupPicker");
 
 	async function deleteReminder(){
 		try{
@@ -71,12 +74,22 @@
 		}
 	}
 
+	function syncDelayMap(){
+		const minutes = Math.floor(reminder.value.delay / 1000 / 60) % 60;
+		const hours = Math.floor(reminder.value.delay / 1000 / 60 / 60);
+
+		delayMap.value.set("minutes", minutes);
+		delayMap.value.set("hours", hours);
+	}
+
 	async function save(){
 		const uuid = reminder.value?.uuid;
 		const _reminder = toRaw(reminder.value);
 
 		if(allMembers.value)
 			_reminder.members = undefined;
+
+		_reminder.delay = ((delayMap.value.get("hours") || 0) * 60 * 60 * 1000) + ((delayMap.value.get("minutes") || 0) * 60 * 1000);
 
 		try{
 			if(!uuid) {
@@ -113,6 +126,7 @@
 		} else reminder.value = { ...emptyReminder };
 
 		allMembers.value = !reminder.value.members;
+		syncDelayMap();
 	}
 
 	watch(route, updateRoute);
@@ -205,19 +219,11 @@
 			</IonList>
 
 			<IonList>
-				<IonItem>
-					<IonRange
-						v-model="reminder.delay"
-						:label="$t('reminders:edit.delay')"
-						label-placement="stacked"
-						:min="0"
-						:max="1000 * 60 * 60"
-						:step="1000 * 60 * 5"
-						:snaps="true"
-						:ticks="false"
-						:pin="true"
-						:pin-formatter="(v) => `${v / 1000 / 60}`"
-					/>
+				<IonItem detail button @click="popupPicker?.$el.present()">
+					<IonLabel>
+						<h2>{{ $t("reminders:edit.delay") }}</h2>
+						<p>{{ delayMap.get("hours")?.toString().padStart(2, "0") || "00" }}:{{ delayMap.get("minutes")?.toString().padStart(2, "0") || "00" }}</p>
+					</IonLabel>
 				</IonItem>
 			</IonList>
 
@@ -254,6 +260,31 @@
 			:custom-title="$t('reminders:edit.members')"
 			:hide-checkboxes="false"
 			:always-emit="true"
+		/>
+
+		<PopupPicker
+			ref="popupPicker"
+			v-model="delayMap"
+			:content="[
+				{
+					name: 'hours',
+					values: [...Array(24).keys().map(x => ({
+						name: x.toString().padStart(2, '0'),
+						value: x,
+						default: x === 0
+					}))],
+					suffix: $t('other:timeSizes.hours.long')
+				},
+				{
+					name: 'minutes',
+					values: [...Array(60).keys().map(x => ({
+						name: x.toString().padStart(2, '0'),
+						value: x,
+						default: x === 0
+					}))],
+					suffix: $t('other:timeSizes.minutes.long')
+				}
+			]"
 		/>
 	</IonPage>
 </template>

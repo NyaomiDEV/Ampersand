@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { IonModal, IonPicker, IonPickerColumn, IonPickerColumnOption } from "@ionic/vue";
-	import { onMounted, reactive, watch } from "vue";
+	import { onMounted } from "vue";
 
 	type ColumnContent = {
 		name: string,
@@ -19,22 +19,13 @@
 
 	const props = defineProps<{
 		content: ColumnContent[],
-		modelValue?: Map<string, string | number | undefined>
 	}>();
 
-	const emit = defineEmits<{
-		"update:modelValue": [Map<string, string | number | undefined>],
-	}>();
-
-	const values = reactive(new Map<string, string | number | undefined>(props.modelValue));
-
-	watch(values, () => {
-		emit("update:modelValue", new Map(values));
-	});
+	const model = defineModel<Map<string, string | number | undefined>>();
 
 	onMounted(() => {
 		for(const column of props.content)
-			values.set(column.name, column.values.find(x => x.default)?.value || undefined);
+			model.value?.set(column.name, column.values.find(x => x.default)?.value || undefined);
 	});
 </script>
 
@@ -44,8 +35,8 @@
 			<IonPickerColumn
 				v-for="column in props.content"
 				:key="column.name"
-				:value="values.get(column.name) || column.values.find(x => x.default)?.value || undefined"
-				@ion-change="(e) => { values.set(column.name, e.detail.value) }"
+				:value="model?.get(column.name) || column.values.find(x => x.default)?.value || undefined"
+				@ion-change="(e) => { model?.set(column.name, e.detail.value) }"
 			>
 				<div v-if="column.prefix" slot="prefix">{{ column.prefix }}</div>
 				<IonPickerColumnOption

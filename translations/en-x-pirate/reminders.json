@@ -10,7 +10,7 @@
 		"active": "Set the reminder live",
 		"title": "Reminder's name",
 		"message": "The reminder's tale",
-		"delay": "Wait for these many minutes",
+		"delay": "Wait for these many hours and minutes",
 		"members": "Pick yer crew",
 		"triggerOnAllMembers": "Send for all yer mateys",
 		"triggeringEvent": {

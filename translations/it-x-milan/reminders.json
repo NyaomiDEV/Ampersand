@@ -10,7 +10,7 @@
 		"active": "Attiva il reminder",
 		"title": "Titolo del reminder",
 		"message": "Messaggio del reminder",
-		"delay": "Delay in minuti",
+		"delay": "Delay",
 		"members": "Seleziona il team",
 		"triggerOnAllMembers": "Manda per tutto il team",
 		"triggeringEvent": {

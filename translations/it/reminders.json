@@ -10,7 +10,7 @@
 		"active": "Attiva promemoria",
 		"title": "Titolo del promemoria",
 		"message": "Messaggio del promemoria",
-		"delay": "Ritardo in minuti",
+		"delay": "Ritardo",
 		"members": "Seleziona membrɜ",
 		"triggerOnAllMembers": "Manda per tuttɜ ɜ membrɜ",
 		"triggeringEvent": {
