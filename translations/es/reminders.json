@@ -2,8 +2,8 @@
 	"header": "Recordatorios",
 	"edit": {
 		"header": "Editar recordatorio",
-		"title": "Título de la notificación de recordatorio",
-		"message": "Mensaje de la notificación de recordatorio",
+		"title": "Título del recordatorio",
+		"message": "Mensaje de recordatorio",
 		"triggeringEvent": {
 			"title": "Evento detonante",
 			"addedToFront": "Después de que un miembro haya sido añadido al frente",
@@ -12,6 +12,15 @@
 		"delete": {
 			"title": "Eliminar recordatorio",
 			"confirm": "¿Está seguro de que quiere eliminar el recordatorio?"
-		}
+		},
+		"triggerOnAllMembers": "Enviar a todos los miembros",
+		"members": "Miembros seleccionados",
+		"headerAdd": "Añadir recordatorio",
+		"active": "Activar recordatorio",
+		"delay": "Retraso en minutos"
+	},
+	"notOnPC": {
+		"header": "Los recordatorios no funcionan en el ordenador",
+		"content": "Sin embargo, como puedes exportar los datos de este ordenador a un teléfono o a un Mac, puedes organizar tus recordatorios aquí."
 	}
 }
