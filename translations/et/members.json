@@ -27,7 +27,8 @@
 		"showBoardEntries": "Näita teadetetahvli sõnumeid",
 		"showJournalEntries": "Näita päevikupostitusi",
 		"memberID": "Liikme tunnus: {{memberID}}",
-		"dateCreated": "Loomise kuupäev: {{dateCreated}}"
+		"dateCreated": "Loomise kuupäev: {{dateCreated}}",
+		"archived": "Arhiveeritud"
 	},
 	"searchPlaceholder": "Otsi liikmeid…",
 	"deletedMember": "Kustutatud liige"

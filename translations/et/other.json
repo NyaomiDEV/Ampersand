@@ -14,5 +14,13 @@
 	"genericDeleteDesc": "Sa ei saa seda tegevust tagasi pöörata!",
 	"memberMention": "Maini liiget",
 	"back": "Tagasi",
-	"time": "Aeg"
+	"time": "Aeg",
+	"timeSizes": {
+		"hours": {
+			"short": "t"
+		},
+		"minutes": {
+			"short": "m"
+		}
+	}
 }
