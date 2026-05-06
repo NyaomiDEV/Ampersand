@@ -56,7 +56,20 @@ export function updateAccessibility() {
 
 export async function updateFrontingNotification(fronting: FrontingEntryComplete[]){
 	if (accessibilityConfig.frontingNotification && fronting.length) {
-		const body = fronting.map(x => x.member.name).join(", ");
+
+		const body = fronting
+			.sort((a, b) => {
+				if (a.isMainFronter && !b.isMainFronter) return -1;
+				if (!a.isMainFronter && b.isMainFronter) return 1;
+
+				if (a.influencing && !b.influencing) return 1;
+				if (!a.influencing && b.influencing) return -1;
+
+				return a.member.name.localeCompare(b.member.name);
+			})
+			.map(x => x.member.name)
+			.join(", ");
+
 		await notify(
 			1,
 			i18next.t("frontHistory:currentlyFronting"),
