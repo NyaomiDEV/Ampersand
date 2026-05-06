@@ -8,7 +8,8 @@ export type SimplyPluralExport = {
 	polls: Poll[],
 	members: Member[],
 	frontStatuses: FrontStatus[],
-	boardMessages: BoardMessage[]
+	boardMessages: BoardMessage[],
+	automatedReminders: AutomatedReminder[],
 	[x: string]: unknown
 };
 
@@ -181,4 +182,12 @@ interface BoardMessage extends withSystemID, MongoDocument {
 	writtenAt: number,
 	supportMarkdown: boolean,
 	lastOperationTime: number
+}
+
+interface AutomatedReminder extends withSystemID, MongoDocument {
+	name: string,
+	message: string,
+	action: number, // always zero?
+	delayInHours: number, // literally an hour (float)
+	type: number // 0 - Member, 1 - Custom Front, 2 - Member or custom front
 }

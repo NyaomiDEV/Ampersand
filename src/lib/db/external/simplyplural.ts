@@ -1,4 +1,4 @@
-import { System, Member, FrontingEntry, Tag, BoardMessage, CustomField, JournalPost } from "../entities";
+import { System, Member, FrontingEntry, Tag, BoardMessage, CustomField, JournalPost, Reminder } from "../entities";
 import { clearAllDatabase, getTables } from "../tables";
 import { t } from "i18next";
 import { fetchImage } from "../../util/fetchImage";
@@ -401,6 +401,23 @@ function remap(
 	
 }
 
+function reminder(spExport: SimplyPluralExport) {
+	const reminders: Reminder[] = [];
+
+	for(const reminder of spExport.automatedReminders){
+		reminders.push({
+			uuid: window.crypto.randomUUID(),
+			title: reminder.name,
+			active: true,
+			message: reminder.message,
+			trigger: "fronting",
+			delay: reminder.delayInHours * 60 * 60 * 1000
+		});
+	}
+
+	return reminders;
+}
+
 export async function importSimplyPlural(spExport: SimplyPluralExport) {
 	const _system = await system(spExport);
 	if(!_system) return false;
@@ -412,6 +429,7 @@ export async function importSimplyPlural(spExport: SimplyPluralExport) {
 	const frontingEntries = frontingEntry(spExport, memberMapping);
 	const boardMessages = boardMessage(spExport, memberMapping);
 	const posts = journalPost(spExport, memberMapping);
+	const reminders = reminder(spExport);
 
 	remap(
 		memberMapping,
@@ -432,6 +450,7 @@ export async function importSimplyPlural(spExport: SimplyPluralExport) {
 		await tables.frontingEntries.bulkAdd(frontingEntries);
 		await tables.boardMessages.bulkAdd(boardMessages);
 		await tables.journalPosts.bulkAdd(posts);
+		await tables.reminders.bulkAdd(reminders);
 	}catch(_e){
 		console.error(_e);
 		return false;
