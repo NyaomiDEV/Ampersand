@@ -3,7 +3,9 @@
 	"searchPlaceholder": "Otsi silte…",
 	"select": "Vali mõned sildid",
 	"selector": {
-		"member": "Liikmete sildid"
+		"member": "Liikmete sildid",
+		"asset": "Vara sildid",
+		"journal": "Päeviku(kirje) sildid"
 	},
 	"edit": {
 		"name": "Sildi nimi",
@@ -12,14 +14,37 @@
 		"viewInLists": "Vaata loendites",
 		"type": {
 			"header": "Sildi tüüp",
-			"member": "Liige"
+			"member": "Liige",
+			"journal": "Päevik",
+			"asset": "Vara",
+			"desc": "Märkus: saad sildi määratleda vaid loomisel!"
 		},
 		"header": {
-			"member": "Muuda liikme silti"
+			"member": "Muuda liikme silti",
+			"asset": "Muuda vara silti",
+			"journal": "Muuda päeviku(kirje) silti"
 		},
 		"delete": {
-			"confirm": "Kas oled kindel, et soovite selle raja kustutada?"
+			"confirm": "Kas oled kindel, et soovid selle sildi kustutada?",
+			"title": "Kustuta silt"
 		},
-		"tagIDCopiedToClipboard": "Mainitud vormingus postituse tunnus on kopeeritud lõikelauale!"
+		"tagIDCopiedToClipboard": "Mainimisvormingus sildi tunnus on kopeeritud lõikelauale!",
+		"members": {
+			"title": "Vali selle sildi alusel liikmeid",
+			"desc_one": "{{count}} liige kasutab seda silti",
+			"desc_other": "{{count}} liiget kasutavad seda silti"
+		},
+		"showJournal": {
+			"title": "Näita selle sildiga päevikupostitusi",
+			"desc_one": "{{count}} päevikupostitus on märgitud selle sildiga",
+			"desc_other": "{{count}} päevikupostitust on märgitud selle sildiga"
+		},
+		"showAssets": {
+			"title": "Näita selle sildiga varasid",
+			"desc_one": "{{count}} vara on märgitud selle sildiga",
+			"desc_other": "{{count}} vara on märgitud selle sildiga"
+		},
+		"isArchived": "Arhibeeri silt",
+		"tagID": "Sildi tunnus: {{tagID}}"
 	}
 }

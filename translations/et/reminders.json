@@ -16,7 +16,8 @@
 			"title": "Käivitav sündmus",
 			"addedToFront": "Kui liige on lisatud esiplaanile",
 			"removedFromFront": "Kui liige on eemaldatud esiplaanilt"
-		}
+		},
+		"triggerOnAllMembers": "Saada kõikidele kasutajatele"
 	},
 	"notOnPC": {
 		"header": "Meeldetuletused ei toimi personaalarvutis",

@@ -45,7 +45,8 @@
 		"title": "Vali aktsentvärv"
 	},
 	"reducedMotion": {
-		"desc": "Lülita rakendusesisesed animatsioonid välja"
+		"desc": "Lülita rakendusesisesed animatsioonid välja",
+		"title": "Vähem liikumist"
 	},
 	"compactLists": {
 		"title": "Kompaktsed loendid"

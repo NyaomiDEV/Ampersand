@@ -1,8 +1,15 @@
 {
-	"searchPlaceholder": "Otsi märkusi",
+	"searchPlaceholder": "Otsi märkmeid…",
 	"edit": {
 		"delete": {
-			"confirm": "Kas sa oled kindel, et soovid selle postituse kustutada?"
-		}
-	}
+			"confirm": "Kas sa oled kindel, et soovid selle märkme kustutada?",
+			"title": "Kustuta märge"
+		},
+		"header": "Muuda märget",
+		"headerAdd": "Lisa märge",
+		"title": "Märkme pealkiri",
+		"content": "Märkme sisu",
+		"isArchived": "Arhiveeri märge"
+	},
+	"header": "Kleepsuga märkmed"
 }
