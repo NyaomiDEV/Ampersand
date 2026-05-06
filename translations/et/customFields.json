@@ -7,7 +7,12 @@
 		},
 		"header": "Muuda kohendatud välja",
 		"headerAdd": "Lisa kohandatud väli",
-		"name": "Kohandatud välja nimi"
+		"name": "Kohandatud välja nimi",
+		"default": {
+			"title": "Lülita vaikimisi väärtus sisse/välja",
+			"desc": "Vaikimisi kohandatud väljad on alati nähtavad liikme muutmisvaates"
+		}
 	},
-	"select": "Vali kohandatud väljad"
+	"select": "Vali kohandatud väljad",
+	"searchPlaceholder": "Otsi kohandatud välju…"
 }

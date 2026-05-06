@@ -3,22 +3,57 @@
 	"uiVariant": {
 		"light": "Hele kujundus",
 		"dark": "Tume kujundus",
-		"auto": "Automaatne"
+		"auto": "Automaatne",
+		"title": "Kasutusliidese variant"
 	},
 	"highLegibilityFontType": {
 		"title": "Üliloetav kirjatüüp",
 		"opendyslexic": "OpenDyslexic",
 		"lexend": "Lexend",
 		"comicrelief": "Comic Relief",
-		"system-font": "Süsteemi kirjatüüp"
+		"system-font": "Süsteemi kirjatüüp",
+		"atkinson": "Atkinson Hyperlegible"
 	},
 	"useAccentColor": {
-		"title": "Aktsentvärv"
+		"title": "Aktsentvärv",
+		"desc": "Kasuta sinuvalitud aktsentvärvi"
 	},
 	"fontScale": {
-		"title": "Fondi suurus"
+		"title": "Kirjatüübi suurus"
 	},
 	"longPressDuration": {
-		"title": "Pika puhkepausi kestus"
+		"title": "Pika vajutuse kestus"
+	},
+	"highLegibilityFont": {
+		"desc": "Seadme standardse kirjatüübi asemel kasuta üliloetavat kirjatüüpi",
+		"title": "Üliloetav kirjatüüp"
+	},
+	"themeIsAmoled": {
+		"title": "AMOLED-i režiim",
+		"desc": "Saad tumedas kujunduses kasutada süsimusta tausta. Võib vähendada ekraani väsimist ja kulumist."
+	},
+	"themeIsVibrant": {
+		"title": "Ergas kujundus",
+		"desc": "Saad kasutajaliidesele lisada värve."
+	},
+	"colorIndicatorPosition": {
+		"title": "Värvinäidiku asukoht",
+		"avatar": "Tunnuspildi piirjooned",
+		"listItem": "Loendiobjekti äärejooned"
+	},
+	"accentColor": {
+		"title": "Vali aktsentvärv"
+	},
+	"reducedMotion": {
+		"desc": "Lülita rakendusesisesed animatsioonid välja"
+	},
+	"compactLists": {
+		"title": "Kompaktsed loendid"
+	},
+	"disableCovers": {
+		"title": "Ära näita kaanepilte"
+	},
+	"contrastLevel": {
+		"title": "Kontrastsus"
 	}
 }

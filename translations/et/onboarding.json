@@ -1,7 +1,8 @@
 {
 	"importScreen": {
 		"allowRemoteContent": {
-			"header": "Kas lubad internetiühenduse kasutamist?"
+			"header": "Kas lubad internetiühenduse kasutamist?",
+			"desc": "Ampersand on eelkõige võrguühenduseta toimiv rakendus ning seetõttu vajab see sinu nõusolekut internetiühenduse loomiseks. Selles etapis loob rakendus ühenduse internetiga, et alla laadida sinu liikmete tunnuspildid ja bännerid. Kui oled lõpetanud, saad selle võimaluse välja lülitada menüüst „Valikud“ → „Turvalisus“ → „Luba sisu internetist“."
 		},
 		"header": "Kas sa tahaksid oma andmeid importida?",
 		"prevInstall": "Jah, eelmine paigaldus",
@@ -10,12 +11,29 @@
 		"pluralKit": "Jah, PluralKit",
 		"tupperbox": "Jah, Tupperbox",
 		"startFromScratch": "Ei, ma alustan nullist",
-		"pleaseWait": "Palun oota, kuni me impordime andmeid"
+		"pleaseWait": "Palun oota, kuni me impordime andmeid",
+		"error": "Viga varukoopia importimisel. Palun vali midagi muud.",
+		"errorSp": "Simply Plurali varukoopia importimisel tekkis viga. Palun vali midagi muud.",
+		"errorOc": "Octoconi varukoopia importimisel tekkis viga. Palun vali midagi muud.",
+		"errorPk": "PluralKiti varukoopia importimisel tekkis viga. Palun vali midagi muud.",
+		"errorTu": "Tupperboxi varukoopia importimisel tekkis viga. Palun vali midagi muud."
 	},
 	"memberInfo": {
-		"header": "Räägi meile endast lähemalt!"
+		"header": "Räägi meile endast lähemalt!",
+		"description": "Natuke teavet sinu enda kohta...",
+		"invitation": "Jätka oma profiilikaardi muutmist ka pärast sissejuhatava vaate sulgemist!"
 	},
 	"welcomeScreen": {
-		"start": "Alusta oma teekonda!"
+		"start": "Alusta oma teekonda!",
+		"header": "Tere tulemast, see on Ampersand!"
+	},
+	"systemInfo": {
+		"header": "Räägi meile oma süsteemist!",
+		"description": "Natuke teavet kõigi teie kohta...",
+		"name": "Kollektiivne nimi"
+	},
+	"endScreen": {
+		"header": "Tänud, et kasutad Ampersandi!",
+		"startButton": "Alustame!"
 	}
 }

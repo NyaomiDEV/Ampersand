@@ -10,11 +10,24 @@
 		"pronouns": "Asesõnad",
 		"role": "Roll",
 		"description": "Kirjeldus",
-		"noDescription": "kirjeldus:",
-		"memberIDcopiedToClipboard": "Mainitud vormingus postituse tunnus on kopeeritud lõikelauale!",
+		"noDescription": "Kirjeldust pole",
+		"memberIDcopiedToClipboard": "Mainimisvormingus liikme tunnus on kopeeritud lõikelauale!",
 		"delete": {
-			"confirm": "Kas olete kindel, et soovite selle sõnumi kustutada?"
-		}
+			"confirm": "Kas oled kindel, et soovid selle liikme kustutada?",
+			"title": "Kustuta liige"
+		},
+		"headerAdd": "Lisa liige",
+		"headerEdit": "Muuda liiget",
+		"color": "Eelistatud värv",
+		"imageClip": "Tunnuspildi kuju",
+		"customFieldsAdd": "Lisa kohandatud välju",
+		"tags": "Muuda silte",
+		"system": "Muuda liikmelisuse süsteemi",
+		"isPinned": "Tõsta liige esile",
+		"showBoardEntries": "Näita teadetetahvli sõnumeid",
+		"showJournalEntries": "Näita päevikupostitusi",
+		"memberID": "Liikme tunnus: {{memberID}}",
+		"dateCreated": "Loomise kuupäev: {{dateCreated}}"
 	},
 	"searchPlaceholder": "Otsi liikmeid…",
 	"deletedMember": "Kustutatud liige"

@@ -5,6 +5,7 @@
 	"systemDescription": "Süsteemi kirjeldus",
 	"messageBoard": {
 		"header": "Teadete tahvel",
-		"view": "Vaata veel"
+		"view": "Vaata veel",
+		"add": "Lisa tahvlile"
 	}
 }

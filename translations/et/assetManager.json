@@ -1,10 +1,18 @@
 {
 	"add": {
-		"attachment": "Lisa manus"
+		"attachment": "Lisa manus",
+		"header": "Lisa vara"
 	},
 	"edit": {
 		"friendlyName": "Muuda nime",
 		"tags": "Sildid",
-		"attachment": "Asenda manus"
-	}
+		"attachment": "Asenda manus",
+		"header": "Muuda vara",
+		"delete": {
+			"title": "Kustuta vara",
+			"confirm": "Kas oled kindel, et soovid selle vara kustutada?"
+		}
+	},
+	"header": "Varade haldus",
+	"searchPlaceholder": "Otsi varasid…"
 }
