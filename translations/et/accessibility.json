@@ -14,5 +14,11 @@
 	},
 	"useAccentColor": {
 		"title": "Aktsentvärv"
+	},
+	"fontScale": {
+		"title": "Fondi suurus"
+	},
+	"longPressDuration": {
+		"title": "Pika puhkepausi kestus"
 	}
 }

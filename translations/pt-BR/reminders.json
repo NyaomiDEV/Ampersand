@@ -14,7 +14,9 @@
 			"confirm": "Tem certeza de que deseja excluir esse lembrete?"
 		},
 		"active": "Ativar lembrete",
-		"delay": "Atraso em minutos"
+		"delay": "Atraso em minutos",
+		"headerAdd": "Adicionar lembrete",
+		"members": "Selecionar membros"
 	},
 	"notOnPC": {
 		"header": "Lembretes não estão funcionando no PC",

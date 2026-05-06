@@ -8,7 +8,13 @@
 		"header": "Liige",
 		"name": "Nimi",
 		"pronouns": "Asesõnad",
-		"role": "Roll"
+		"role": "Roll",
+		"description": "Kirjeldus",
+		"noDescription": "kirjeldus:",
+		"memberIDcopiedToClipboard": "Mainitud vormingus postituse tunnus on kopeeritud lõikelauale!",
+		"delete": {
+			"confirm": "Kas olete kindel, et soovite selle sõnumi kustutada?"
+		}
 	},
 	"searchPlaceholder": "Otsi liikmeid…",
 	"deletedMember": "Kustutatud liige"
