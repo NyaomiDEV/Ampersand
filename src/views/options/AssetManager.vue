@@ -11,6 +11,7 @@
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 	import VirtualList from "../../components/VirtualList.vue";
 	import InfiniteLoader from "../../components/InfiniteLoader.vue";
+	import TheresNothingHere from "../../components/TheresNothingHere.vue";
 
 	const route = useRoute();
 
@@ -99,7 +100,8 @@
 		
 		<SpinnerFullscreen v-if="!assets" />
 		<IonContent v-else>
-			<IonList>
+			<TheresNothingHere v-if="!assets.length" />
+			<IonList v-else>
 				<VirtualList :entries="assets" :min-size="72" :gap="2">
 					<template #default="{ entry: asset }">
 						<AssetItem

@@ -10,6 +10,7 @@
 
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 	import { platform } from "@tauri-apps/plugin-os";
+	import TheresNothingHere from "../../components/TheresNothingHere.vue";
 
 	const isUnsupportedPlatform = !["macos", "ios", "android"].includes(platform());
 
@@ -53,6 +54,7 @@
 				<IonCardContent>{{ $t("reminders:notOnPC.content") }}</IonCardContent>
 			</IonCard>
 
+			<TheresNothingHere v-if="!reminders.length" />
 			<IonList>
 				<IonItem
 					v-for="reminder in reminders"

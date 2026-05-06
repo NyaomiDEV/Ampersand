@@ -32,6 +32,7 @@
 	import { useTranslation } from "i18next-vue";
 	import VirtualList from "../../components/VirtualList.vue";
 	import InfiniteLoader from "../../components/InfiniteLoader.vue";
+	import TheresNothingHere from "../../components/TheresNothingHere.vue";
 
 	const route = useRoute();
 	const i18next = useTranslation();
@@ -141,6 +142,7 @@
 		
 		<SpinnerFullscreen v-if="!systems" />
 		<IonContent v-else>
+			<TheresNothingHere v-if="!systems.length" />
 			<IonList ref="list">
 				<VirtualList :entries="systems" :min-size="72" :gap="2">
 					<template #default="{ entry: system }">

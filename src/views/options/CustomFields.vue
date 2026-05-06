@@ -13,6 +13,7 @@
 	import reorderMD from "@material-symbols/svg-600/outlined/swap_vert.svg";
 	import doneMD from "@material-symbols/svg-600/outlined/done_all.svg";
 	import dragMD from "@material-symbols/svg-600/outlined/drag_handle.svg";
+	import TheresNothingHere from "../../components/TheresNothingHere.vue";
 
 	const route = useRoute();
 
@@ -122,7 +123,8 @@
 		
 		<SpinnerFullscreen v-if="!customFields" />
 		<IonContent v-else>
-			<IonList>
+			<TheresNothingHere v-if="!customFields.length" />
+			<IonList v-else>
 				<IonReorderGroup :disabled="!isReordering" @ion-reorder-end="handleReorder">
 					<IonItem
 						v-for="customField in customFields"

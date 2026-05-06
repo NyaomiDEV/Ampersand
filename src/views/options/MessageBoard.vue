@@ -15,6 +15,7 @@
 	import { useRoute } from "vue-router";
 	import { addModal, removeModal } from "../../lib/modals.ts";
 	import DatetimeUtc, { DatetimeParts } from "../../components/DatetimeUtc.vue";
+	import TheresNothingHere from "../../components/TheresNothingHere.vue";
 
 	const route = useRoute();
 
@@ -157,6 +158,7 @@
 			<div v-if="boardMessages === undefined" class="spinner-container">
 				<Spinner size="72px" />
 			</div>
+			<TheresNothingHere v-else-if="!boardMessages.length" compress-vertical />
 			<IonList v-else>
 				<template v-for="tuple in getGrouped(boardMessages)" :key="tuple[0]">
 					<IonItemDivider sticky>

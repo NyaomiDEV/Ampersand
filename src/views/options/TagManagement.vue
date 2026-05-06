@@ -17,6 +17,7 @@
 	import { useTranslation } from "i18next-vue";
 	import VirtualList from "../../components/VirtualList.vue";
 	import InfiniteLoader from "../../components/InfiniteLoader.vue";
+	import TheresNothingHere from "../../components/TheresNothingHere.vue";
 
 	const route = useRoute();
 	const i18next = useTranslation();
@@ -155,6 +156,7 @@
 		
 		<SpinnerFullscreen v-if="!tags" />
 		<IonContent v-else>
+			<TheresNothingHere v-if="!tags.filter(x => x.type === type).length" />
 			<IonList ref="list">
 				<VirtualList :entries="tags.filter(x => x.type === type)" :min-size="56" :gap="2">
 					<template #default="{ entry: tag }">

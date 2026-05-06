@@ -14,6 +14,7 @@
 	import { useTranslation } from "i18next-vue";
 	import DatetimeUtc, { DatetimeParts } from "../../components/DatetimeUtc.vue";
 	import FrontingEntryItem from "../../components/frontingEntry/FrontingEntryItem.vue";
+	import TheresNothingHere from "../../components/TheresNothingHere.vue";
 
 	const route = useRoute();
 	const i18next = useTranslation();
@@ -186,6 +187,7 @@
 			<div v-if="frontingEntries === undefined" class="spinner-container">
 				<Spinner size="72px" />
 			</div>
+			<TheresNothingHere v-else-if="!frontingEntries.length" compress-vertical />
 			<IonList v-else>
 				<template v-for="tuple in getGrouped(frontingEntries)" :key="tuple[0]">
 					<IonItemDivider sticky>

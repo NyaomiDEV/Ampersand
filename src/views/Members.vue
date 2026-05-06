@@ -37,6 +37,7 @@
 	import { useTranslation } from "i18next-vue";
 	import VirtualList from "../components/VirtualList.vue";
 	import InfiniteLoader from "../components/InfiniteLoader.vue";
+	import TheresNothingHere from "../components/TheresNothingHere.vue";
 
 	const isStandalone = ref(false);
 
@@ -228,7 +229,8 @@
 				</IonToolbar>
 			</CollapsibleHeaderbar>
 
-			<IonList ref="list">
+			<TheresNothingHere v-if="!members.length" sibling-header />
+			<IonList v-else ref="list">
 				<VirtualList :entries="members" :min-size="86" :gap="2">
 					<template #default="{ entry: member }">
 						<IonItemSliding>

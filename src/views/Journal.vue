@@ -16,6 +16,7 @@
 	import { useTranslation } from "i18next-vue";
 	import { promptOkCancel, toast } from "../lib/util/misc";
 	import DatetimeUtc, { DatetimeParts } from "../components/DatetimeUtc.vue";
+	import TheresNothingHere from "../components/TheresNothingHere.vue";
 
 	const isStandalone = ref(false);
 
@@ -203,6 +204,7 @@
 			<div v-if="posts === undefined" class="spinner-container">
 				<Spinner size="72px" />
 			</div>
+			<TheresNothingHere v-else-if="!posts.length" compress-vertical />
 			<IonList v-else ref="list">
 				<template v-for="tuple in getGrouped(posts)" :key="tuple[0]">
 					<IonItemDivider sticky>
