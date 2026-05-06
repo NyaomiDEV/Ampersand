@@ -8,10 +8,10 @@ rust-version = "1.95.0"
 links = "tauri-plugin-ampersand"
 
 [dependencies]
-tauri = "2.11.0"
+tauri = "2.11.1"
 serde = "1"
 thiserror = "2"
 tauri-plugin-opener = "2.5.4"
 
 [build-dependencies]
-tauri-plugin = { version = "2.6.0", features = ["build"] }
+tauri-plugin = { version = "2.6.1", features = ["build"] }
