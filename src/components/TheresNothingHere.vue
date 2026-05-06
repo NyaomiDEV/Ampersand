@@ -14,7 +14,10 @@
 		}"
 	>
 		<slot v-if="$slots.default" />
-		<span v-else>(╯°□°）╯︵ ┻━┻</span>
+		<template v-else>
+			<span class="kaomoji">(╯°□°）╯︵ ┻━┻</span>
+			<span>{{ $t("other:theresNothingHere") }}</span>
+		</template>
 	</div>
 </template>
 
@@ -25,6 +28,8 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		flex-direction: column;
+		gap: .5em;
 		opacity: .25;
 
 		&.compress-vertical {
@@ -43,14 +48,18 @@
 		}
 
 		> span {
-			font-family: "JetBrains Mono", monospace;
-			font-weight: bold;
-			font-size: 2em;
 			white-space: nowrap;
 			text-overflow: unset;
 			overflow: hidden;
 			user-select: none;
 			cursor: default;
+
+			&.kaomoji {
+				font-family: "JetBrains Mono", monospace;
+				font-weight: bold;
+				font-size: 2em;
+			}
 		}
+
 	}
 </style>
