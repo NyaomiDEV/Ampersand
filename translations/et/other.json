@@ -50,7 +50,8 @@
 		"semicircle": "Poolring",
 		"sunny": "Päikseline",
 		"very-sunny": "Väga päikseline",
-		"noShape": "Kujundit pole"
+		"noShape": "Kujundit pole",
+		"triangle": "Kolmnurk"
 	},
 	"presence": {
 		"absent": "Pole kohal"

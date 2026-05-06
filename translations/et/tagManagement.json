@@ -16,6 +16,10 @@
 		},
 		"header": {
 			"member": "Muuda liikme silti"
-		}
+		},
+		"delete": {
+			"confirm": "Kas oled kindel, et soovite selle raja kustutada?"
+		},
+		"tagIDCopiedToClipboard": "Mainitud vormingus postituse tunnus on kopeeritud lõikelauale!"
 	}
 }
