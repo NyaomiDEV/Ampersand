@@ -20,7 +20,28 @@
 			"short": "t"
 		},
 		"minutes": {
-			"short": "m"
+			"short": "m",
+			"long": "minutit"
+		},
+		"weekdays": {
+			"monday": "Esmaspäev",
+			"tuesday": "Teisipäev",
+			"wednesday": "Kolmapäev",
+			"thursday": "Neljapäev",
+			"friday": "Reede",
+			"saturday": "Laupäev",
+			"sunday": "Pühapäev"
+		},
+		"seconds": {
+			"long": "sekundit"
 		}
+	},
+	"shapes": {
+		"arrow": "Nool",
+		"diamond": "Teemant",
+		"flower": "Lill",
+		"heart": "Süda",
+		"pill": "Tablett",
+		"square": "Väljak"
 	}
 }
