@@ -2,8 +2,8 @@
 	"header": "Lembretes",
 	"edit": {
 		"header": "Editar lembrete",
-		"title": "Título da notificação de lembrete",
-		"message": "Mensagem da notificação de lembrete",
+		"title": "Título do lembrete",
+		"message": "Mensagem do lembrete",
 		"triggeringEvent": {
 			"title": "Evento de gatilho",
 			"addedToFront": "Depois de que um membro foi adicionado ao fronte",
@@ -12,6 +12,12 @@
 		"delete": {
 			"title": "Excluir lembrete",
 			"confirm": "Tem certeza de que deseja excluir esse lembrete?"
-		}
+		},
+		"active": "Ativar lembrete",
+		"delay": "Atraso em minutos"
+	},
+	"notOnPC": {
+		"header": "Lembretes não estão funcionando no PC",
+		"content": "No entanto, já que você pode exportar os dados desse PC e importar em um celular ou Mac, você pode organizar seus lembretes aqui."
 	}
 }
