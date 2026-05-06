@@ -12,6 +12,7 @@
 		"message": "Messaggio d' 'o promemoria",
 		"delay": "Ritardo 'e minute",
 		"members": "Scerne 'e mmiembre",
+		"triggerOnAllMembers": "Manda pe' tutte 'e mmiembre",
 		"triggeringEvent": {
 			"title": "Evento scatenante",
 			"addedToFront": "Doppo ca nu membro è stato aggiunto ô front",

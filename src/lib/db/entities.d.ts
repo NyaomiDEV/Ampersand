@@ -126,12 +126,12 @@ export interface Reminder extends UUIDable {
 	title: string,
 	message: string,
 	trigger: "fronting" | "fronted",
-	members: UUID[],
+	members?: UUID[],
 	delay: number // milliseconds
 }
 
 export interface ReminderComplete extends Reminder {
-	members: Member[]
+	members?: Member[]
 }
 
 export interface System extends UUIDable {

@@ -12,6 +12,7 @@
 		"message": "Messaggio del promemoria",
 		"delay": "Ritardo in minuti",
 		"members": "Seleziona membrɜ",
+		"triggerOnAllMembers": "Manda per tuttɜ ɜ membrɜ",
 		"triggeringEvent": {
 			"title": "Evento scatenante",
 			"addedToFront": "Dopo che unə membrə è statə aggiuntə al front",

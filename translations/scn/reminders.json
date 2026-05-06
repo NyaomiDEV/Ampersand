@@ -12,6 +12,7 @@
 		"message": "Missaggiu dû pruminniri",
 		"delay": "Ritardu 'n minuti",
 		"members": "Sèlicciuna i membra",
+		"triggerOnAllMembers": "Manna pi tutti i membra",
 		"triggeringEvent": {
 			"title": "Eventu scatinanti",
 			"addedToFront": "Dopu ca un membru fù agghiuntu ô front",

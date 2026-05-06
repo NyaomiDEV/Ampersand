@@ -12,6 +12,7 @@
 		"message": "Messaggio del reminder",
 		"delay": "Delay in minuti",
 		"members": "Seleziona il team",
+		"triggerOnAllMembers": "Manda per tutto il team",
 		"triggeringEvent": {
 			"title": "Evento scatenante",
 			"addedToFront": "Dopo che uno del team è entrato in front",

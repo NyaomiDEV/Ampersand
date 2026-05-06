@@ -12,6 +12,7 @@
 		"message": "The reminder's tale",
 		"delay": "Wait for these many minutes",
 		"members": "Pick yer crew",
+		"triggerOnAllMembers": "Send for all yer mateys",
 		"triggeringEvent": {
 			"title": "The event what starts it",
 			"addedToFront": "After a matey's been added to the front",

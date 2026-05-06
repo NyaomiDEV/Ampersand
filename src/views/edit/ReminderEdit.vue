@@ -45,11 +45,12 @@
 		active: false,
 		title: "",
 		message: "",
-		members: [],
 		trigger: "fronting",
 		delay: 0
 	};
 	const reminder = ref<PartialBy<ReminderComplete, "uuid">>({ ...emptyReminder });
+
+	const allMembers = ref(false);
 
 	const memberSelectModal = useTemplateRef("memberSelectModal");
 
@@ -74,11 +75,14 @@
 		const uuid = reminder.value?.uuid;
 		const _reminder = toRaw(reminder.value);
 
+		if(allMembers.value)
+			_reminder.members = undefined;
+
 		try{
 			if(!uuid) {
 				const result = await newReminder({
 					..._reminder,
-					members: _reminder.members.map(x => x.uuid)
+					members: _reminder.members ? _reminder.members.map(x => x.uuid) : undefined
 				});
 				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
 
@@ -89,7 +93,7 @@
 			const result = await updateReminder({
 				uuid,
 				..._reminder,
-				members: _reminder.members.map(x => x.uuid)
+				members: _reminder.members ? _reminder.members.map(x => x.uuid) : undefined
 			});
 			if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
 
@@ -107,6 +111,8 @@
 			if(rem) reminder.value = rem;
 			else reminder.value = { ...emptyReminder };
 		} else reminder.value = { ...emptyReminder };
+
+		allMembers.value = !reminder.value.members;
 	}
 
 	watch(route, updateRoute);
@@ -177,10 +183,21 @@
 					</IonItem>
 				</IonRadioGroup>
 
-				<IonItem button detail @click="memberSelectModal?.$el.present()">
+				<IonItem>
+					<IonToggle v-model="allMembers">
+						<IonLabel>{{ $t("reminders:edit.triggerOnAllMembers") }}</IonLabel>
+					</IonToggle>
+				</IonItem>
+
+				<IonItem
+					v-if="!allMembers"
+					button
+					detail
+					@click="memberSelectModal?.$el.present()"
+				>
 					<IonLabel>
 						<h3>{{ $t("reminders:edit.members") }}</h3>
-						<p v-if="reminder.members.length">
+						<p v-if="reminder.members?.length">
 							<MemberChip v-for="member in reminder.members" :key="member.uuid" :member />
 						</p>
 					</IonLabel>
