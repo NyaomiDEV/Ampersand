@@ -20,7 +20,7 @@
 			"short": "t"
 		},
 		"minutes": {
-			"short": "m",
+			"short": "min",
 			"long": "minutit"
 		},
 		"weekdays": {
@@ -42,6 +42,17 @@
 		"flower": "Lill",
 		"heart": "Süda",
 		"pill": "Tablett",
-		"square": "Väljak"
-	}
+		"square": "Ruut",
+		"arch": "Kaar",
+		"oval": "Ovaal",
+		"pentagon": "Viisnurk",
+		"semicircle": "Poolring",
+		"sunny": "Päikseline",
+		"very-sunny": "Väga päikseline",
+		"noShape": "Kujundit pole"
+	},
+	"presence": {
+		"absent": "Pole kohal"
+	},
+	"developerMode": "Arendaja režiim"
 }

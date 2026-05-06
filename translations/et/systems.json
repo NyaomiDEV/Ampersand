@@ -15,7 +15,14 @@
 		"name": "Süsteemi nimi",
 		"memberCount": "Liikmete arv",
 		"memberCountText": "{{totalMemberCount}} liige(t), neist aktiivsena {{memberCount}}, {{archivedMemberCount}} arhiveeritud",
-		"archived": "Arhiveeritud"
+		"archived": "Arhiveeritud",
+		"imageClip": "Tunnuspildi kuju",
+		"tapToShow": "Klõpsa näitamiseks",
+		"showMembers": "Näita liikmeid selle süsteemi sees",
+		"parent": "Ülemsüsteem",
+		"viewInLists": "Näita loendites",
+		"isPinned": "Tõsta süsteem esile",
+		"systemID": "Süsteemi tunnus: {{systemID}}"
 	},
 	"searchPlaceholder": "Otsi süsteeme…",
 	"select": "Vali süsteem"
