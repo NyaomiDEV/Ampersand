@@ -289,3 +289,8 @@
 	</IonPage>
 </template>
 
+<style scoped>
+	ion-item, ion-radio::part(label) {
+		text-wrap: wrap !important;
+	}
+</style>
