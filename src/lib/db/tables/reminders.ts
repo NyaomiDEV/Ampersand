@@ -154,15 +154,13 @@ export async function triggerReminders(fronting: FrontingEntryComplete[]){
 						!frontingCache.find(x => reminder.members!.includes(x.member.uuid)) &&
 						fronting.find(x => reminder.members!.includes(x.member.uuid))
 					) {
-						await notify({
-							id: getNativeID(reminder),
-							channelId: "reminders",
-							title: reminder.title,
-							body: platform() === "android" ? undefined : reminder.message,
-							largeBody: platform() === "android" ? reminder.message : undefined,
-							schedule: reminder.delay > 0 ? Schedule.at(new Date(Date.now() + reminder.delay), false, true) : undefined,
-							icon: "ic_notify_ampersand"
-						});
+						await notify(
+							getNativeID(reminder),
+							reminder.title,
+							reminder.message,
+							"reminders",
+							reminder.delay > 0 ? Schedule.at(new Date(Date.now() + reminder.delay), false, true) : undefined
+						);
 					} else if (
 						frontingCache.find(x => reminder.members!.includes(x.member.uuid)) &&
 						!fronting.find(x => reminder.members!.includes(x.member.uuid))
@@ -170,15 +168,13 @@ export async function triggerReminders(fronting: FrontingEntryComplete[]){
 						await unnotify(getNativeID(reminder));
 				} else {
 					if (frontingCache.length < fronting.length) {
-						await notify({
-							id: getNativeID(reminder),
-							channelId: "reminders",
-							title: reminder.title,
-							body: platform() === "android" ? undefined : reminder.message,
-							largeBody: platform() === "android" ? reminder.message : undefined,
-							schedule: reminder.delay > 0 ? Schedule.at(new Date(Date.now() + reminder.delay), false, true) : undefined,
-							icon: "ic_notify_ampersand"
-						});
+						await notify(
+							getNativeID(reminder),
+							reminder.title,
+							reminder.message,
+							"reminders",
+							reminder.delay > 0 ? Schedule.at(new Date(Date.now() + reminder.delay), false, true) : undefined
+						);
 					}
 				}
 				break;
@@ -193,27 +189,23 @@ export async function triggerReminders(fronting: FrontingEntryComplete[]){
 						frontingCache.find(x => reminder.members!.includes(x.member.uuid)) &&
 						!fronting.find(x => reminder.members!.includes(x.member.uuid))
 					) {
-						await notify({
-							id: getNativeID(reminder),
-							channelId: "reminders",
-							title: reminder.title,
-							body: platform() === "android" ? undefined : reminder.message,
-							largeBody: platform() === "android" ? reminder.message : undefined,
-							schedule: reminder.delay > 0 ? Schedule.at(new Date(Date.now() + reminder.delay), false, true) : undefined,
-							icon: "ic_notify_ampersand"
-						});
+						await notify(
+							getNativeID(reminder),
+							reminder.title,
+							reminder.message,
+							"reminders",
+							reminder.delay > 0 ? Schedule.at(new Date(Date.now() + reminder.delay), false, true) : undefined
+						);
 					}
 				} else {
 					if (frontingCache.length > fronting.length) {
-						await notify({
-							id: getNativeID(reminder),
-							channelId: "reminders",
-							title: reminder.title,
-							body: platform() === "android" ? undefined : reminder.message,
-							largeBody: platform() === "android" ? reminder.message : undefined,
-							schedule: reminder.delay > 0 ? Schedule.at(new Date(Date.now() + reminder.delay), false, true) : undefined,
-							icon: "ic_notify_ampersand"
-						});
+						await notify(
+							getNativeID(reminder),
+							reminder.title,
+							reminder.message,
+							"reminders",
+							reminder.delay > 0 ? Schedule.at(new Date(Date.now() + reminder.delay), false, true) : undefined
+						);
 					}
 				}
 				break;

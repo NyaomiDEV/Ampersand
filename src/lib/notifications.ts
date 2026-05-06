@@ -1,4 +1,4 @@
-import { cancel, channels, createChannel, Importance, isPermissionGranted, Options, removeActive, removeChannel, requestPermission, sendNotification, Visibility } from "@choochmeque/tauri-plugin-notifications-api";
+import { cancel, channels, createChannel, Importance, isPermissionGranted, Options, removeActive, removeChannel, requestPermission, Schedule, sendNotification, Visibility } from "@choochmeque/tauri-plugin-notifications-api";
 import { platform } from "@tauri-apps/plugin-os";
 import { t } from "i18next";
 
@@ -56,9 +56,18 @@ export async function registerChannels(){
 	}
 }
 
-export async function notify(opts: Options){
+export async function notify(id: number, title: string, body: string, channelId?: string, schedule?: Schedule, opts?: Partial<Options>){
 	try{
-		await sendNotification(opts);
+		await sendNotification({
+			id,
+			title,
+			body,
+			largeBody: body,
+			schedule,
+			channelId,
+			icon: "ic_notify_ampersand",
+			...opts
+		});
 	}catch(_e){
 		console.error(_e);
 		return false;

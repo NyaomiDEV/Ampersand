@@ -57,15 +57,17 @@ export function updateAccessibility() {
 export async function updateFrontingNotification(fronting: FrontingEntryComplete[]){
 	if (accessibilityConfig.frontingNotification && fronting.length) {
 		const body = fronting.map(x => x.member.name).join(", ");
-		await notify({
-			id: 1,
-			title: i18next.t("frontHistory:currentlyFronting"),
-			body: platform() === "android" ? undefined : body,
-			largeBody: platform() === "android" ? body : undefined,
-			ongoing: true,
-			icon: "ic_notify_ampersand",
-			channelId: "frontingNotifications"
-		});
+		await notify(
+			1,
+			i18next.t("frontHistory:currentlyFronting"),
+			body,
+			"frontingNotifications",
+			undefined,
+			{
+				ongoing: true,
+				silent: true
+			}
+		);
 	} else 
 		await remove(1);
 }
