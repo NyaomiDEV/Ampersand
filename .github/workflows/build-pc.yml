@@ -55,20 +55,36 @@ jobs:
         run: yarn run upgrade-vcs
       - name: Build Ampersand
         run: yarn tauri build --ci ${{ matrix.args }}
-      - name: Publish artifacts (Linux)
+      - name: Publish artifacts (Linux - DEB)
         if: matrix.platform == 'ubuntu-latest'
         uses: actions/upload-artifact@v7
         with:
-          name: PC build for Linux
+          name: PC build for Linux (DEB)
+          archive: false
           path: |
             ./src-tauri/target/release/bundle/deb/Ampersand_*.deb
+      - name: Publish artifacts (Linux - RPM)
+        if: matrix.platform == 'ubuntu-latest'
+        uses: actions/upload-artifact@v7
+        with:
+          name: PC build for Linux (RPM)
+          archive: false
+          path: |
             ./src-tauri/target/release/bundle/rpm/Ampersand-*.rpm
+      - name: Publish artifacts (Linux - AppImage)
+        if: matrix.platform == 'ubuntu-latest'
+        uses: actions/upload-artifact@v7
+        with:
+          name: PC build for Linux (AppImage)
+          archive: false
+          path: |
             ./src-tauri/target/release/bundle/appimage/Ampersand_*.AppImage
       - name: Publish artifacts (macOS)
         if: matrix.platform == 'macos-26'
         uses: actions/upload-artifact@v7
         with:
           name: PC build for macOS
+          archive: false
           path: |
             ./src-tauri/target/universal-apple-darwin/release/bundle/dmg/Ampersand_*.dmg
       - name: Publish artifacts (Windows)
@@ -76,6 +92,7 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: PC build for Windows
+          archive: false
           path: |
             ./src-tauri/target/release/bundle/msi/Ampersand*.msi
       - name: Publish to release (Linux DEB)
