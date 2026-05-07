@@ -26,6 +26,7 @@
 	import MessageBoardSettings from "../components/dashboard/settings/MessageBoardSettings.vue";
 	import FrontingHistorySettings from "../components/dashboard/settings/FrontingHistorySettings.vue";
 	import CurrentFrontersSettings from "../components/dashboard/settings/CurrentFrontersSettings.vue";
+	import JournalPostSettings from "../components/dashboard/settings/JournalPostSettings.vue";
 
 	const isReordering = ref(false);
 	const settings = ref(Object.entries(appConfig.dashboardSettings).sort((a, b) => a[1].priority - b[1].priority).map(([key, v]) => [key, v.priority]));
@@ -33,7 +34,8 @@
 	const fragments = {
 		messageBoardCarousel: MessageBoardSettings,
 		frontingHistoryCarousel: FrontingHistorySettings,
-		currentFrontersCarousel: CurrentFrontersSettings
+		currentFrontersCarousel: CurrentFrontersSettings,
+		journalPostCarousel: JournalPostSettings
 	};
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any

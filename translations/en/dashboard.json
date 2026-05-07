@@ -11,5 +11,8 @@
 		"header": "Message board",
 		"add": "Add to board",
 		"view": "View more"
+	},
+	"journal": {
+		"header": "Recent posts"
 	}
 }

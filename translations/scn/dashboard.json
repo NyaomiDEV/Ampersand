@@ -11,5 +11,8 @@
 		"header": "Bacheca de' missaggi",
 		"add": "Agghiunci missaggiu",
 		"view": "Vidi tutti"
+	},
+	"journal": {
+		"header": "Post ricenti"
 	}
 }

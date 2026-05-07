@@ -11,5 +11,8 @@
 		"header": "Message board",
 		"add": "Pin to the board",
 		"view": "See more"
+	},
+	"journal": {
+		"header": "Recent log entries"
 	}
 }

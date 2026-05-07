@@ -10,6 +10,7 @@
 	import CurrentFrontersCarousel from "../components/dashboard/CurrentFrontersCarousel.vue";
 	import MessageBoardCarousel from "../components/dashboard/MessageBoardCarousel.vue";
 	import FrontingHistoryCarousel from "../components/dashboard/FrontingHistoryCarousel.vue";
+	import JournalPostCarousel from "../components/dashboard/JournalPostCarousel.vue";
 	import { DatabaseEvents, DatabaseEvent } from "../lib/db/events.ts";
 	import { appConfig, securityConfig } from "../lib/config/index.ts";
 	import { lock } from "../lib/applock.ts";
@@ -47,6 +48,7 @@
 		if(settings.notesAccordion.active) array.push([settings.notesAccordion.priority, NotesAccordion]);
 
 		if(settings.messageBoardCarousel.active) array.push([settings.messageBoardCarousel.priority, MessageBoardCarousel]);
+		if(settings.journalPostCarousel.active) array.push([settings.journalPostCarousel.priority, JournalPostCarousel]);
 
 		return array.sort((a, b) => a[0] - b[0]);
 	}

@@ -29,9 +29,16 @@ const defaultAppConfig: AppConfig = {
 				maxDays: 3
 			}
 		},
+		journalPostCarousel: {
+			active: false,
+			priority: 3,
+			settings: {
+				maxDays: 2
+			}
+		},
 		frontingHistoryCarousel: {
 			active: true,
-			priority: 3,
+			priority: 4,
 			settings: {
 				maxDays: 2
 			}
@@ -72,9 +79,9 @@ const defaultSecurityConfig: SecurityConfig = {
 };
 
 const store = await load(`${await appConfigDir() + sep()}appConfig.json`);
-const appConfig = reactive<AppConfig>({ ...structuredClone(defaultAppConfig), ...await get("appConfig") });
-const accessibilityConfig = reactive<AccessibilityConfig>({ ...structuredClone(defaultAccessibilityConfig), ...await get("accessibilityConfig") });
-const securityConfig = reactive<SecurityConfig>({ ...structuredClone(defaultSecurityConfig), ...await get("securityConfig") });
+const appConfig = reactive<AppConfig>(merge<AppConfig>({}, structuredClone(defaultAppConfig), await get("appConfig")));
+const accessibilityConfig = reactive<AccessibilityConfig>(merge<AccessibilityConfig>({}, structuredClone(defaultAccessibilityConfig), await get("accessibilityConfig")));
+const securityConfig = reactive<SecurityConfig>(merge<SecurityConfig>({}, structuredClone(defaultSecurityConfig), await get("securityConfig")));
 
 export function set(key: string, value: unknown): Promise<void> {
 	return store.set(key, value);
@@ -142,6 +149,29 @@ if ((appConfig as Record<string, unknown>).useIPC) {
 	(appConfig as Record<string, unknown>).useIPC = undefined;
 }
 // end config migration here
+
+// utils
+function isObject(item: object): item is object {
+	return (item && typeof item === "object" && !Array.isArray(item));
+}
+
+function merge<T>(target: object, ...sources: (object | undefined)[]): T {
+	sources = sources.filter(x => !!x);
+	const source = sources.shift();
+	if (!source) return target as T;
+
+	if (isObject(target) && isObject(source)) {
+		for (const key in source) {
+			if (isObject(source[key])) {
+				if (!target[key]) Object.assign(target, { [key]: {} });
+				merge(target[key], source[key]);
+			} else
+				Object.assign(target, { [key]: source[key] });
+
+		}
+	}
+	return merge(target, ...sources);
+}
 
 export {
 	appConfig,

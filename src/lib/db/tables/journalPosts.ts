@@ -97,6 +97,15 @@ export async function updateJournalPost(newContent: UUIDable & Partial<JournalPo
 	}
 }
 
+export async function getRecentJournalPosts(days: number) {
+	return Promise.all(
+		db.journalPosts.index
+			.toSorted(sortDate)
+			.filter(x => (x.isPinned || dayjs().startOf("day").valueOf() - dayjs(x.date).startOf("day").valueOf() <= days * 24 * 60 * 60 * 1000))
+			.map(async x => toJournalPostComplete(await db.journalPosts.get(x.uuid)))
+	);
+}
+
 export async function* getJournalPostsOfDay(date: Date, includePinned: boolean, query: string) {
 	const _date = dayjs(date).startOf("day");
 

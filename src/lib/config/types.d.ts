@@ -29,7 +29,8 @@ export type DashboardSettings = {
 	notesAccordion: DashboardSetting,
 	currentFrontersCarousel: CurrentFrontersCarouselSettings,
 	messageBoardCarousel: MessageBoardCarouselSettings,
-	frontingHistoryCarousel: FrontingHistoryCarouselSettings
+	frontingHistoryCarousel: FrontingHistoryCarouselSettings,
+	journalPostCarousel: JournalPostCarouselSettings
 };
 
 export interface DashboardSetting {
@@ -53,6 +54,12 @@ export interface FrontingHistoryCarouselSettings extends DashboardSetting {
 	settings: {
 		maxDays: number
 	}
+}
+
+export interface JournalPostCarouselSettings extends DashboardSetting {
+	settings: {
+		maxDays: number;
+	};
 }
 
 export type AccessibilityConfig = {

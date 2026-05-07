@@ -11,5 +11,8 @@
 		"header": "Bacheca",
 		"add": "Aggiungi messaggio",
 		"view": "Vedi tutto"
+	},
+	"journal": {
+		"header": "Post recenti"
 	}
 }
