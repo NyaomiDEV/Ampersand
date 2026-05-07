@@ -31,7 +31,7 @@
 
 	import { JournalPost, JournalPostComplete, Tag } from "../../lib/db/entities";
 	import { newJournalPost, updateJournalPost, getJournalPost, toJournalPostComplete } from "../../lib/db/tables/journalPosts";
-	import { formatDate, toast } from "../../lib/util/misc";
+	import { formatDate, sortName, toast } from "../../lib/util/misc";
 	import { getResizedImage } from "../../lib/util/image";
 	import { h, onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
 	import Markdown from "../../components/Markdown.vue";
@@ -213,7 +213,7 @@
 					<IonLabel>
 						<h3>
 							<MemberChip
-								v-for="member in post.members"
+								v-for="member in post.members.toSorted(sortName)"
 								:key="member.uuid"
 								:member
 								clickable
@@ -228,7 +228,7 @@
 					<h2 v-if="post.subtitle?.length">{{ post.subtitle }}</h2>
 					<div v-if="tags?.length" class="journal-tags">
 						<TagChip
-							v-for="tag in post.tags.map(x => tags.find(y => x === y.uuid)!).filter(x => !x.isArchived)"
+							v-for="tag in post.tags.map(x => tags.find(y => x === y.uuid)!).filter(x => !x.isArchived).sort(sortName)"
 							:key="tag.uuid"
 							:tag
 							:clickable="true"
@@ -249,7 +249,7 @@
 						<IonLabel>
 							<h2>{{ $t("journal:edit.author") }}</h2>
 							<p>
-								<MemberChip v-for="member in post.members" :key="member.uuid" :member />
+								<MemberChip v-for="member in post.members.toSorted(sortName)" :key="member.uuid" :member />
 							</p>
 						</IonLabel>
 					</IonItem>

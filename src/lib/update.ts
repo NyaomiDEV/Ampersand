@@ -30,7 +30,7 @@ export async function checkUpdates(): Promise<UpdateCheckResponse | undefined> {
 
 	const latestRelease = isCiBuild
 		? releases.find(x => x.tag_name === "dev")
-		: releases.sort((a, b) => new Date(b.created_at).valueOf() - new Date(a.created_at).valueOf()).find(x => x.prerelease === false && x.draft === false);
+		: releases.toSorted((a, b) => new Date(b.created_at).valueOf() - new Date(a.created_at).valueOf()).find(x => x.prerelease === false && x.draft === false);
 
 	if(latestRelease){
 		const versionMatch = latestRelease.name?.match(/\((\d+\.\d+\.\d+(?:\+?\d+))\)/);

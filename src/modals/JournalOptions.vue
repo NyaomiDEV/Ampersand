@@ -22,7 +22,7 @@
 	import TagChip from "../components/tag/TagChip.vue";
 	import { useTranslation } from "i18next-vue";
 	import { Ref, ShallowRef, useTemplateRef } from "vue";
-	import { promptOkCancel, toast, formatDate } from "../lib/util/misc";
+	import { promptOkCancel, toast, formatDate, sortName } from "../lib/util/misc";
 	import { deleteJournalPost } from "../lib/db/tables/journalPosts";
 
 	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
@@ -98,9 +98,9 @@
 						{{ $t("journal:edit.tags") }}
 						<div v-if="tags?.length" class="journal-tags">
 							<TagChip
-								v-for="tag in post.tags"
-								:key="tag"
-								:tag="tags.find(x => x.uuid === tag)!"
+								v-for="tag in post.tags.map(x => tags.find(y => y.uuid === x)!).sort(sortName)"
+								:key="tag.uuid"
+								:tag
 							/>
 						</div>
 					</IonLabel>

@@ -30,7 +30,7 @@
 	import { useRoute } from "vue-router";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import { useTranslation } from "i18next-vue";
-	import { promptOkCancel, toast } from "../../lib/util/misc";
+	import { promptOkCancel, sortName, toast } from "../../lib/util/misc";
 	import MemberSelect from "../../modals/MemberSelect.vue";
 	import MemberChip from "../../components/member/MemberChip.vue";
 	import PopupPicker from "../../components/PopupPicker.vue";
@@ -212,7 +212,7 @@
 					<IonLabel>
 						<h3>{{ $t("reminders:edit.members") }}</h3>
 						<p v-if="reminder.members?.length">
-							<MemberChip v-for="member in reminder.members" :key="member.uuid" :member />
+							<MemberChip v-for="member in reminder.members.toSorted(sortName)" :key="member.uuid" :member />
 						</p>
 					</IonLabel>
 				</IonItem>

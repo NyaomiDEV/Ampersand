@@ -93,7 +93,7 @@
 	>
 		<AvatarStack
 			slot="start"
-			:avatars="props.post.members.map(member => ({
+			:avatars="props.post.members.toSorted(sortName).map(member => ({
 				image: member.image,
 				clipShape: member.imageClip,
 				color: member.color,
@@ -103,10 +103,7 @@
 		<IonLabel>
 			<img v-if="props.post.cover" class="cover" :src="getObjectURL(props.post.cover)" />
 
-			<!--<div v-if="props.post.members?.length" class="authors">
-				<MemberChip v-for="member in props.post.members" :key="member.uuid" :member />
-			</div>-->
-			<h3 v-if="props.post.members.length">{{ props.post.members.map(x => x.name).join(", ") }}</h3>
+			<h3 v-if="props.post.members.length">{{ props.post.members.toSorted(sortName).map(x => x.name).join(", ") }}</h3>
 
 			<h1>{{ props.post.title }}</h1>
 			<h2 v-if="props.post.subtitle?.length">{{ props.post.subtitle }}</h2>

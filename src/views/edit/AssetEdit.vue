@@ -25,7 +25,7 @@
 	import { PartialBy } from "../../lib/types";
 	import { useRoute } from "vue-router";
 	import { useTranslation } from "i18next-vue";
-	import { getDocumentFile, promptOkCancel, toast } from "../../lib/util/misc";
+	import { getDocumentFile, promptOkCancel, sortName, toast } from "../../lib/util/misc";
 	import { useBlob } from "../../lib/util/blob";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import AssetItem from "../../components/asset/AssetItem.vue";
@@ -177,7 +177,7 @@
 						{{ $t("assetManager:edit.tags") }}
 						<div v-if="tags?.length" class="asset-tags">
 							<TagChip
-								v-for="tag in asset.tags.map(x => tags.find(y => y.uuid === x)!)"
+								v-for="tag in asset.tags.map(x => tags.find(y => y.uuid === x)!).sort(sortName)"
 								:key="tag.uuid"
 								:tag
 							/>

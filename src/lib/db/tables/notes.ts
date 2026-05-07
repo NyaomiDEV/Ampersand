@@ -6,7 +6,7 @@ import { TransactionStatus } from "../types";
 import { sortNotes } from "../../util/misc";
 
 export async function* getNotes(maxIter = 10){
-	const uuids = db.notes.index.sort(sortNotes).map(x => x.uuid);
+	const uuids = db.notes.index.toSorted(sortNotes).map(x => x.uuid);
 	
 	const f = (offset: number, maxIter: number) => {
 		const chunk: Promise<Note>[] = [];

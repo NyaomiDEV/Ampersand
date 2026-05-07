@@ -30,7 +30,7 @@
 	import MemberSelect from "./MemberSelect.vue";
 	import DatePopupPicker from "../components/DatePopupPicker.vue";
 	import { useTranslation } from "i18next-vue";
-	import { formatDate, promptOkCancel, toast } from "../lib/util/misc";
+	import { formatDate, promptOkCancel, sortName, toast } from "../lib/util/misc";
 	import MemberChip from "../components/member/MemberChip.vue";
 
 	const i18next = useTranslation();
@@ -155,7 +155,7 @@
 					<IonLabel>
 						<h2>{{ $t("messageBoard:edit.member") }}</h2>
 						<p>
-							<MemberChip v-for="member in boardMessage.members" :key="member.uuid" :member />
+							<MemberChip v-for="member in boardMessage.members.toSorted(sortName)" :key="member.uuid" :member />
 						</p>
 					</IonLabel>
 				</IonItem>

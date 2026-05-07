@@ -8,7 +8,7 @@ import { TransactionStatus } from "../types";
 import { sortBoardMessages } from "../../util/misc";
 
 export async function* getBoardMessages(maxIter = 10){
-	const uuids = db.boardMessages.index.sort(sortBoardMessages).map(x => x.uuid);
+	const uuids = db.boardMessages.index.toSorted(sortBoardMessages).map(x => x.uuid);
 
 	const f = (offset: number, maxIter: number) => {
 		const chunk: Promise<BoardMessage>[] = [];
@@ -100,7 +100,7 @@ export async function updateBoardMessage(newContent: UUIDable & Partial<BoardMes
 export async function getRecentBoardMessages(days: number) {
 	return Promise.all(
 		db.boardMessages.index
-			.sort(sortBoardMessages)
+			.toSorted(sortBoardMessages)
 			.filter(x => !x.isArchived && (x.isPinned || dayjs().startOf("day").valueOf() - dayjs(x.date).startOf("day").valueOf() <= days * 24 * 60 * 60 * 1000))
 			.map(async x => toBoardMessageComplete(await db.boardMessages.get(x.uuid)))
 	);

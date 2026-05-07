@@ -13,7 +13,7 @@ import { updateFrontingNotification } from "../../mode";
 import { triggerReminders } from "./reminders";
 
 export async function* getFrontingEntries(maxIter = 10){
-	const uuids = db.frontingEntries.index.sort(sortFrontingEntries).map(x => x.uuid);
+	const uuids = db.frontingEntries.index.toSorted(sortFrontingEntries).map(x => x.uuid);
 		
 	const f = (offset: number, maxIter: number) => {
 		const chunk: Promise<FrontingEntry>[] = [];
@@ -205,7 +205,7 @@ export async function getMainFronter(){
 }
 
 export async function getFronting() {
-	const entries = Promise.all(db.frontingEntries.index.sort(sortFrontingEntries).map(async x => {
+	const entries = Promise.all(db.frontingEntries.index.toSorted(sortFrontingEntries).map(async x => {
 		if(x.endTime) return;
 
 		return toFrontingEntryComplete(await db.frontingEntries.get(x.uuid));
@@ -216,7 +216,7 @@ export async function getFronting() {
 
 export async function getFrontingBetween(start: Date, end?: Date){
 	if(!end) end = new Date();
-	const entries = Promise.all(db.frontingEntries.index.sort(sortFrontingEntries).map(x => {
+	const entries = Promise.all(db.frontingEntries.index.toSorted(sortFrontingEntries).map(x => {
 		const _start = x.startTime!;
 		const _end = x.endTime || new Date(end);
 		if(start.valueOf() <= _end.valueOf() && end.valueOf() >= _start.valueOf())
@@ -246,7 +246,7 @@ export async function getRecentlyFronted(days: number) {
 export async function* getFrontingEntriesOfDay(date: Date, query: string) {
 	const _date = dayjs(date).startOf("day").valueOf();
 
-	for(const entry of db.frontingEntries.index.sort(sortFrontingEntries)){
+	for(const entry of db.frontingEntries.index.toSorted(sortFrontingEntries)){
 		const startDay = dayjs(entry.startTime).startOf("day").valueOf();
 		const endDay = entry.endTime ? dayjs(entry.endTime).endOf("day").valueOf() : dayjs().endOf("day").valueOf();
 

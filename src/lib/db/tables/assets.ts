@@ -6,7 +6,7 @@ import { TransactionStatus } from "../types";
 import { sortAssets } from "../../util/misc";
 
 export async function* getAssets(maxIter = 10){
-	const uuids = db.assets.index.sort(sortAssets).map(x => x.uuid);
+	const uuids = db.assets.index.toSorted(sortAssets).map(x => x.uuid);
 
 	const f = (offset: number, maxIter: number) => {
 		const chunk: Promise<Asset>[] = [];

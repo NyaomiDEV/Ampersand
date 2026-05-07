@@ -7,7 +7,7 @@ import { TransactionStatus } from "../types";
 import { sortSystems } from "../../util/misc";
 
 export async function* getSystems(maxIter = 10){
-	const uuids = db.systems.index.sort(sortSystems).map(x => x.uuid);
+	const uuids = db.systems.index.toSorted(sortSystems).map(x => x.uuid);
 	
 	const f = (offset: number, maxIter: number) => {
 		const chunk: Promise<System>[] = [];

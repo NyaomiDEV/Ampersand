@@ -8,7 +8,7 @@ import { TransactionStatus } from "../types";
 import { sortDate } from "../../util/misc";
 
 export async function* getJournalPosts(maxIter = 10){
-	const uuids = db.journalPosts.index.sort(sortDate).map(x => x.uuid);
+	const uuids = db.journalPosts.index.toSorted(sortDate).map(x => x.uuid);
 		
 	const f = (offset: number, maxIter: number) => {
 		const chunk: Promise<JournalPost>[] = [];
@@ -100,7 +100,7 @@ export async function updateJournalPost(newContent: UUIDable & Partial<JournalPo
 export async function* getJournalPostsOfDay(date: Date, includePinned: boolean, query: string) {
 	const _date = dayjs(date).startOf("day");
 
-	for(const entry of db.journalPosts.index.sort(sortDate)){
+	for(const entry of db.journalPosts.index.toSorted(sortDate)){
 		if ((includePinned && !entry.isPinned) && dayjs(entry.date).startOf("day").valueOf() !== _date.valueOf())
 			continue;
 

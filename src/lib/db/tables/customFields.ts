@@ -6,7 +6,7 @@ import { TransactionStatus } from "../types";
 import { sortCustomFields } from "../../util/misc";
 
 export async function* getCustomFields(maxIter = 10){
-	const uuids = db.customFields.index.sort(sortCustomFields).map(x => x.uuid);
+	const uuids = db.customFields.index.toSorted(sortCustomFields).map(x => x.uuid);
 	
 	const f = (offset: number, maxIter: number) => {
 		const chunk: Promise<CustomField>[] = [];

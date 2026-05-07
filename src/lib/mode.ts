@@ -58,7 +58,7 @@ export async function updateFrontingNotification(fronting: FrontingEntryComplete
 	if (accessibilityConfig.frontingNotification && fronting.length) {
 
 		const body = fronting
-			.sort((a, b) => {
+			.toSorted((a, b) => {
 				if (a.isMainFronter && !b.isMainFronter) return -1;
 				if (!a.isMainFronter && b.isMainFronter) return 1;
 

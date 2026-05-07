@@ -36,7 +36,7 @@
 	import { CustomField, Member, System, Tag } from "../../lib/db/entities";
 	import { newMember, deleteMember, updateMember, defaultMember, getMember } from "../../lib/db/tables/members";
 	import { getTags } from "../../lib/db/tables/tags";
-	import { promptOkCancel, toast } from "../../lib/util/misc";
+	import { promptOkCancel, sortName, toast } from "../../lib/util/misc";
 	import { getResizedImage } from "../../lib/util/image";
 	import { getCurrentInstance, onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
 	import Markdown from "../../components/Markdown.vue";
@@ -303,7 +303,7 @@
 
 				<div v-if="tags?.length" class="member-tags">
 					<TagChip
-						v-for="tag in member.tags.map(x => tags.find(y => x === y.uuid)!).filter(x => !x.isArchived)"
+						v-for="tag in member.tags.map(x => tags.find(y => x === y.uuid)!).filter(x => !x.isArchived).sort(sortName)"
 						:key="tag.uuid"
 						:tag
 						:clickable="true"
@@ -418,9 +418,9 @@
 							{{ $t("members:edit.tags") }}
 							<div v-if="tags?.length" class="member-tags">
 								<TagChip
-									v-for="tag in member.tags"
-									:key="tag"
-									:tag="tags.find(x => x.uuid === tag)!"
+									v-for="tag in member.tags.map(x => tags.find(y => y.uuid === x)!).sort(sortName)"
+									:key="tag.uuid"
+									:tag
 								/>
 							</div>
 						</IonLabel>

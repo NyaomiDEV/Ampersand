@@ -110,7 +110,7 @@ function frontingEntry(pkExport: any, memberMapping: Map<string, string>){
 	const trackedFronting = new Map<string, FrontingEntry>();
 	const frontingEntries: FrontingEntry[] = [];
 
-	for (const pkSwitch of pkExport.switches.sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime())) {
+	for (const pkSwitch of pkExport.switches.toSorted((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime())) {
 		const date = new Date(pkSwitch.timestamp);
 
 		// check who left

@@ -10,7 +10,7 @@
 	import { updateBoardMessage } from "../lib/db/tables/boardMessages";
 	import PollResults from "../modals/PollResults.vue";
 	import { useTranslation } from "i18next-vue";
-	import { formatDate, promptOkCancel } from "../lib/util/misc";
+	import { formatDate, promptOkCancel, sortName } from "../lib/util/misc";
 
 	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
 	import { accessibilityConfig } from "../lib/config";
@@ -175,7 +175,7 @@
 	>
 		<AvatarStack
 			slot="start"
-			:avatars="props.boardMessage.members.map(member => ({
+			:avatars="props.boardMessage.members.toSorted(sortName).map(member => ({
 				image: member.image,
 				clipShape: member.imageClip,
 				color: member.color,
@@ -184,7 +184,7 @@
 		/>
 		<div class="flexbox">
 			<div class="subheader">
-				<span v-if="props.boardMessage.members.length">{{ props.boardMessage.members.map(x => x.name).join(", ") }}</span>
+				<span v-if="props.boardMessage.members.length">{{ props.boardMessage.members.toSorted(sortName).map(x => x.name).join(", ") }}</span>
 				<p v-if="formatDate(props.boardMessage.date, props.showDateInDateTime ? 'collapsed' : undefined) !== props.boardMessage.title">
 					{{ formatDate(props.boardMessage.date, props.showDateInDateTime ? 'collapsed' : undefined) }}
 				</p>
