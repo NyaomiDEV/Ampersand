@@ -173,7 +173,7 @@
 
 	function updateColors(){
 		if(system.value.color){
-			if(self?.vnode.el) addMaterialColors(rgbaToArgb(system.value.color), self?.vnode.el as HTMLElement);
+			if(self?.vnode.el) addMaterialColors(rgbaToArgb(system.value.color), undefined, self?.vnode.el as HTMLElement);
 		} else 
 			if(self?.vnode.el) unsetMaterialColors(self?.vnode.el as HTMLElement);
 	}

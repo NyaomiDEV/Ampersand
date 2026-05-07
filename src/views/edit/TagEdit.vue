@@ -185,7 +185,7 @@
 
 	function updateColors(){
 		if(tag.value.color){
-			if(self?.vnode.el) addMaterialColors(rgbaToArgb(tag.value.color), self?.vnode.el as HTMLElement);
+			if(self?.vnode.el) addMaterialColors(rgbaToArgb(tag.value.color), undefined, self?.vnode.el as HTMLElement);
 		} else 
 			if(self?.vnode.el) unsetMaterialColors(self?.vnode.el as HTMLElement);
 		

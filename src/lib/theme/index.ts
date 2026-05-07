@@ -1,4 +1,4 @@
-import { argbFromHex, blueFromArgb, greenFromArgb, Hct, MaterialDynamicColors, redFromArgb, SchemeFidelity, SchemeTonalSpot } from "@material/material-color-utilities";
+import { argbFromHex, blueFromArgb, DynamicScheme, greenFromArgb, Hct, MaterialDynamicColors, redFromArgb, TonalPalette, Variant } from "@material/material-color-utilities";
 import { accessibilityConfig } from "../config";
 import { M3 } from "tauri-plugin-m3";
 import { platform } from "@tauri-apps/plugin-os";
@@ -11,8 +11,8 @@ const customColorsWeWant = [
 	"on_primary_container"
 ];
 
-const defaultColor = "#30628C";
-const systemColor = await (async () => {
+const defaultPrimaryColor = "#30628C";
+const systemPrimaryColor = await (async () => {
 	if(platform() === "android"){
 		const colors = await M3.getColors("system");
 		if(colors) return colors.primaryContainer;
@@ -28,12 +28,12 @@ function rgbFromArgb(argb: number){
 	].join(", ");
 }
 
-function calculateHex(){
+function calculatePrimaryColor(){
 	const useAccentColor = accessibilityConfig.useAccentColor;
 	const accentColor = accessibilityConfig.accentColor;
 	return useAccentColor && accentColor
 		? rgbaToArgb(accentColor)
-		: (systemColor ? rgbaToArgb(systemColor) : defaultColor);
+		: (systemPrimaryColor ? rgbaToArgb(systemPrimaryColor) : defaultPrimaryColor);
 }
 
 export function rgbaToArgb(rgba: string) {
@@ -49,7 +49,7 @@ export function rgbaToArgb(rgba: string) {
 }
 
 export function updateMaterialColors(target?: HTMLElement){
-	addMaterialColors(undefined, target);
+	return addMaterialColors(undefined, undefined, target);
 }
 
 export function unsetMaterialColors(target?: HTMLElement){
@@ -65,18 +65,32 @@ export function unsetMaterialColors(target?: HTMLElement){
 		.forEach(x => document.documentElement.style.removeProperty(x));
 }
 
-export function getMaterialColors(hex?: string, isDarkMode?: boolean){
-	if (!hex) hex = calculateHex();
+export function getScheme(primary?: string, neutral?: string, isDarkMode?: boolean){
+	if (!primary) primary = calculatePrimaryColor();
+	if (!neutral) neutral = primary; // for now!
 	if (!isDarkMode) isDarkMode = calculateDarkMode();
 
-	const schemeVariant = accessibilityConfig.themeIsVibrant ? SchemeFidelity : SchemeTonalSpot;
-	const scheme = new schemeVariant(
-		Hct.fromInt(argbFromHex(hex)),
-		isDarkMode,
-		accessibilityConfig.contrastLevel,
-		"2025",
-		"phone"
-	);
+	const primaryColorHct = Hct.fromInt(argbFromHex(primary));
+	const neutralColorHct = Hct.fromInt(argbFromHex(neutral));
+
+	return new DynamicScheme({
+		isDark: isDarkMode,
+		variant: accessibilityConfig.themeIsVibrant ? Variant.FIDELITY : Variant.TONAL_SPOT,
+		specVersion: "2025",
+		platform: "phone",
+		contrastLevel: accessibilityConfig.contrastLevel,
+		sourceColorHct: primaryColorHct,
+		neutralPalette: accessibilityConfig.themeIsVibrant
+			? TonalPalette.fromHueAndChroma(neutralColorHct.hue, neutralColorHct.chroma / 8.0) // 2025 color spec
+			: TonalPalette.fromHueAndChroma(neutralColorHct.hue, 5), // 2025 color spec
+		neutralVariantPalette: accessibilityConfig.themeIsVibrant
+			? TonalPalette.fromHueAndChroma(neutralColorHct.hue, (neutralColorHct.chroma / 8.0) + 4.0) // 2025 color spec
+			: TonalPalette.fromHueAndChroma(neutralColorHct.hue, 5 * 1.7), // 2025 color spec
+	});
+}
+
+export function getMaterialColors(primary?: string, secondary?: string, isDarkMode?: boolean){
+	const scheme = getScheme(primary, secondary, isDarkMode);
 
 	const styleSheet: Map<string, number> = new Map();
 	const colors = new MaterialDynamicColors();
@@ -100,31 +114,21 @@ export function getMaterialColors(hex?: string, isDarkMode?: boolean){
 	return styleSheet;
 }
 
-export function getPaletteTones(hex?: string, isDarkMode?: boolean){
-	if (!hex) hex = calculateHex();
-	if (!isDarkMode) isDarkMode = calculateDarkMode();
-
+export function getPaletteTones(primary?: string, neutral?: string, isDarkMode?: boolean){
 	const paletteTones: Map<number, number> = new Map();
-	const schemeVariant = accessibilityConfig.themeIsVibrant ? SchemeFidelity : SchemeTonalSpot;
-	const scheme = new schemeVariant(
-		Hct.fromInt(argbFromHex(hex)),
-		isDarkMode || false,
-		accessibilityConfig.contrastLevel,
-		"2025",
-		"phone"
-	);
+	const scheme = getScheme(primary, neutral, isDarkMode);
 	for (let i = 5; i <= 100; i += 5) 
 		paletteTones.set(i, scheme.neutralPalette.tone(i));
 
 	return paletteTones;
 }
 
-export function addMaterialColors(hex?: string, target?: HTMLElement){
+export function addMaterialColors(primary?: string, neutral?: string, target?: HTMLElement){
 	const styleSheet: Map<string, string> = new Map();
 	for(const uiMode of ["light", "dark"]){
-		const palette = getMaterialColors(hex, uiMode === "dark");
-		const paletteSuccess = getMaterialColors("#00ff00", uiMode === "dark");
-		const paletteWarning = getMaterialColors("#ffff00", uiMode === "dark");
+		const palette = getMaterialColors(primary, neutral, uiMode === "dark");
+		const paletteSuccess = getMaterialColors("#00ff00", undefined, uiMode === "dark");
+		const paletteWarning = getMaterialColors("#ffff00", undefined, uiMode === "dark");
 
 		for (const [key, value] of palette.entries()){
 			styleSheet.set(
@@ -148,7 +152,8 @@ export function addMaterialColors(hex?: string, target?: HTMLElement){
 			);
 		}
 	}
-	const tones = getPaletteTones(hex, false);
+	
+	const tones = getPaletteTones(primary, neutral, false);
 
 	for (const [i, value] of tones.entries()) {
 		styleSheet.set(
