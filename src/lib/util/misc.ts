@@ -260,6 +260,30 @@ export async function sha256(data: string | BufferSource){
 	return hex;
 }
 
+export function presencePhrase(rating: number): string {
+	rating = Math.round(rating);
+	switch (rating) {
+		case 0:
+			return i18next.t("other:presence.absent");
+		case 1:
+		case 2:
+			return i18next.t("other:presence.heavilyDissociating");
+		case 3:
+		case 4:
+			return i18next.t("other:presence.dissociating");
+		case 5:
+		case 6:
+			return i18next.t("other:presence.zonedOut");
+		case 7:
+		case 8:
+			return i18next.t("other:presence.present");
+		case 9:
+		case 10:
+			return i18next.t("other:presence.fullyGrounded");
+	}
+	return "";
+}
+
 export function sortMembers(a: IndexEntry<Member>, b: IndexEntry<Member>) {
 	switch (appConfig.showMembersApartFromCustomFronts) {
 		case "off":

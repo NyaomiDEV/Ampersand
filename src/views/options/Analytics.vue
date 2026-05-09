@@ -3,7 +3,7 @@
 	import { getFrontingStatistics } from "../../lib/db/tables/frontingEntries";
 	import { h, onMounted, ref, shallowRef, useTemplateRef, watch } from "vue";
 	import DatePopupPicker from "../../components/DatePopupPicker.vue";
-	import { formatDate, formatWrittenTimeAbsolute } from "../../lib/util/misc";
+	import { formatDate, formatWrittenTimeAbsolute, presencePhrase } from "../../lib/util/misc";
 	import dayjs from "dayjs";
 	import MemberItem from "../../components/member/MemberItem.vue";
 	import { FrontingEntry, Member } from "../../lib/db/entities";
@@ -13,6 +13,7 @@
 	import AnalyticsDetail from "../../modals/AnalyticsDetail.vue";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import TheresNothingHere from "../../components/TheresNothingHere.vue";
+	import PresenceRating from "../../components/PresenceRating.vue";
 
 	import statsMD from "@material-symbols/svg-600/outlined/stacked_bar_chart.svg";
 	import routineMD from "@material-symbols/svg-600/outlined/routine.svg";
@@ -23,14 +24,15 @@
 	import dayMD from "@material-symbols/svg-600/outlined/wb_sunny.svg";
 	import eveningMD from "@material-symbols/svg-600/outlined/wb_twilight_2.svg";
 	import nightMD from "@material-symbols/svg-600/outlined/moon_stars.svg";
-
-	
+	import presenceMD from "@material-symbols/svg-600/rounded/star_half.svg";
 
 	const analytics = shallowRef<Awaited<ReturnType<typeof getFrontingStatistics>>>();
 	const members = shallowRef<Member[]>();
 
 	const startDate = ref(new Date());
 	const endDate = ref(new Date());
+
+	const currentTab = ref("stats");
 
 	const startDatePicker = useTemplateRef("startDatePicker");
 	const endDatePicker = useTemplateRef("endDatePicker");
@@ -45,7 +47,6 @@
 			...Object.keys(_analytics).map(k => [...(_analytics[k] as Map<string, number>).keys()]),
 		].flat())).map(x => getMember(x)));
 
-		console.log(_analytics);
 		analytics.value = _analytics;
 	}
 
@@ -77,7 +78,7 @@
 				<IonTitle>{{ $t("analytics:header") }}</IonTitle>
 			</IonToolbar>
 			<IonToolbar v-if="analytics && members">
-				<IonSegment value="stats">
+				<IonSegment v-model="currentTab">
 					<IonSegmentButton value="stats" content-id="stats">
 						<IonIcon :icon="statsMD" />
 						<IonLabel>{{ $t("analytics:stats") }}</IonLabel>
@@ -85,6 +86,10 @@
 					<IonSegmentButton value="daytime" content-id="daytime">
 						<IonIcon :icon="routineMD" />
 						<IonLabel>{{ $t("analytics:daytime") }}</IonLabel>
+					</IonSegmentButton>
+					<IonSegmentButton value="presence" content-id="presence">
+						<IonIcon :icon="presenceMD" />
+						<IonLabel>{{ $t("analytics:presence") }}</IonLabel>
 					</IonSegmentButton>
 				</IonSegment>
 			</IonToolbar>
@@ -351,6 +356,53 @@
 								</div>
 							</MemberItem>
 						</template>
+					</IonList>
+				</IonSegmentContent>
+				<IonSegmentContent id="presence">
+					<TheresNothingHere v-if="!analytics.frontingCount.size && !analytics.influencingCount.size" />
+					<IonList v-else>
+						<template v-if="analytics.frontingCount.size">
+							<IonListHeader>
+								{{ $t("analytics:subheaders.fronting") }}
+							</IonListHeader>
+							<MemberItem
+								v-for="member in Array.from(analytics.frontingCount.keys()).map(x => members?.find(y => y.uuid === x)).filter(x => !!x).sort((a, b) => {
+									return (analytics?.frontingCount.get(b.uuid) || 0) - (analytics?.frontingCount.get(a.uuid) || 0)
+								})"
+								:key="member.uuid"
+								button
+								:member
+								:show-role="false"
+								:show-pronouns="false"
+								:show-cover="false"
+								@click="showModal(analytics.frontingEntries.get(member.uuid) || [])"
+							>
+								<h2>{{ presencePhrase(analytics.frontingPresenceMean.get(member.uuid) || 0) }}</h2>
+								<p><PresenceRating :rating="analytics.frontingPresenceMean.get(member.uuid) || 0" /></p>
+							</MemberItem>
+						</template>
+
+						<template v-if="analytics.influencingCount.size">
+							<IonListHeader>
+								{{ $t("analytics:subheaders.influencing") }}
+							</IonListHeader>
+							<MemberItem
+								v-for="member in Array.from(analytics.influencingCount.keys()).map(x => members?.find(y => y.uuid === x)).filter(x => !!x).sort((a, b) => {
+									return (analytics?.influencingCount.get(b.uuid) || 0) - (analytics?.influencingCount.get(a.uuid) || 0)
+								})"
+								:key="member.uuid"
+								button
+								:member
+								:show-role="false"
+								:show-pronouns="false"
+								:show-cover="false"
+								@click="showModal(analytics.influencingEntries.get(member.uuid) || [])"
+							>
+								<h2>{{ presencePhrase(analytics.influencingPresenceMean.get(member.uuid) || 0) }}</h2>
+								<p><PresenceRating :rating="analytics.influencingPresenceMean.get(member.uuid) || 0" /></p>
+							</MemberItem>
+						</template>
+
 					</IonList>
 				</IonSegmentContent>
 			</IonSegmentView>

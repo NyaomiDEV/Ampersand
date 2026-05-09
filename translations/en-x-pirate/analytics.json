@@ -3,6 +3,7 @@
 	"detail": "A piece of the Ledger",
 	"stats": "Tally o' the Crew",
     "daytime": "Position o' the Sun",
+	"presence": "Presence",
 	"startDate": "Day we weighed anchor",
 	"endDate": "Day we hit port",
 	"subheaders": {
