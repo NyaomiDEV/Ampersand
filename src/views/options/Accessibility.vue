@@ -11,7 +11,7 @@
 	import fontMD from "@material-symbols/svg-600/outlined/format_size.svg";
 	import smallTextMD from "@material-symbols/svg-600/outlined/text_decrease.svg";
 	import bigTextMD from "@material-symbols/svg-600/outlined/text_increase.svg";
-	import colorMD from "@material-symbols/svg-600/outlined/palette.svg";
+	import customColorMD from "@material-symbols/svg-600/outlined/palette.svg";
 	import colorsMD from "@material-symbols/svg-600/outlined/colors.svg";
 	import borderMD from "@material-symbols/svg-600/outlined/border_color.svg";
 	import compactMD from "@material-symbols/svg-600/outlined/list_alt.svg";
@@ -21,6 +21,8 @@
 	import darkMD from "@material-symbols/svg-600/outlined/dark_mode.svg";
 	import autoMD from "@material-symbols/svg-600/outlined/routine.svg";
 	import frontingNotificationMD from "@material-symbols/svg-600/outlined/notifications_unread.svg";
+	import appColorMD from "@material-symbols/svg-600/outlined/colorize.svg";
+	import systemColorMD from "@material-symbols/svg-600/outlined/devices.svg";
 </script>
 
 <template>
@@ -81,7 +83,9 @@
 				</IonItem>
 
 				<IonItem>
-					<IonIcon slot="start" :icon="colorMD" />
+					<IonIcon v-if="accessibilityConfig.colors === 'app'" slot="start" :icon="appColorMD" />
+					<IonIcon v-if="accessibilityConfig.colors === 'system'" slot="start" :icon="systemColorMD" />
+					<IonIcon v-if="accessibilityConfig.colors === 'custom'" slot="start" :icon="customColorMD" />
 					<IonSelect
 						v-model="accessibilityConfig.colors"
 						label-placement="floating"
