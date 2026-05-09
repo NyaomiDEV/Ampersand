@@ -303,6 +303,8 @@
 		flex-direction: row;
 		justify-content: stretch;
 		border-radius: 16px;
+		overflow: hidden;
+		margin-bottom: 8px;
 
 		> * {
 			width: 100%;
