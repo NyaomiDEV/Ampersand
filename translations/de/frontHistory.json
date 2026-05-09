@@ -26,7 +26,8 @@
 		"delete": {
 			"title": "Front-Eintrag verwerfen",
 			"confirm": "Bist du sicher, dass du diesen Front-Eintrag verwerfen möchtest?"
-		}
+		},
+		"endTime": "Endzeit"
 	},
 	"frontedThatDay": "An dem Tag gefrontet"
 }

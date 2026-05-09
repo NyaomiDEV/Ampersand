@@ -20,7 +20,7 @@
 		"title": "Exportiere deine Daten",
 		"desc": "Sichere deine aktuelle Daten auf einer Datei, die du woanders speichern kannst"
 	},
-	"dbImport": "Importiere deine Dateien von einer Sicherheitskopie",
+	"dbImport": "Importiere deine Dateien",
 	"pkImport": "Importiere deine Daten von einem PluralKit-Export",
 	"tuImport": "Importiere deine Daten von einer Tupperbox-Kopie",
 	"spImport": "Importiere deine Daten von einer Simply Plural-Kopie",
