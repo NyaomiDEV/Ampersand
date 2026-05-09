@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { IonBackButton, IonContent, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonPage, IonSegment, IonSegmentButton, IonSegmentContent, IonSegmentView, IonTitle, IonToolbar } from "@ionic/vue";
+	import { IonBackButton, IonContent, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonPage, IonSegment, IonSegmentButton, IonSegmentContent, IonSegmentView, IonTitle, IonToolbar, useIonRouter } from "@ionic/vue";
 	import { getFrontingStatistics } from "../../lib/db/tables/frontingEntries";
 	import { onMounted, ref, shallowRef, useTemplateRef, watch } from "vue";
 	import DatePopupPicker from "../../components/DatePopupPicker.vue";
@@ -13,6 +13,9 @@
 
 	import statsMD from "@material-symbols/svg-600/outlined/bar_chart.svg";
 	import routineMD from "@material-symbols/svg-600/outlined/routine.svg";
+	import { maxUid, nilUid } from "../../lib/util/consts";
+
+	const router = useIonRouter();
 
 	const analytics = shallowRef<Awaited<ReturnType<typeof getFrontingStatistics>>>();
 	const members = shallowRef<Member[]>();
@@ -32,6 +35,12 @@
 		members.value = await Promise.all(Array.from(new Set([
 			...Object.keys(analytics.value).map(k => [...(analytics.value![k] as Map<string, number>).keys()]),
 		].flat())).map(x => getMember(x)));
+	}
+
+	function clickMember(member: Member){
+		if(member.uuid === nilUid || member.uuid === maxUid) return;
+
+		router.push(`/members/edit?uuid=${member.uuid}`);
 	}
 
 	watch([startDate, endDate], async () => {
@@ -98,7 +107,7 @@
 								:show-role="false"
 								:show-pronouns="false"
 								:show-cover="false"
-								:router-link="`/members/edit?uuid=${member.uuid}`"
+								@click="clickMember(member)"
 							>
 								<p>{{ $t("analytics:frontingCount", { count: analytics.frontingCount.get(member.uuid) || 0 }) }}</p>
 								<p>
@@ -134,7 +143,7 @@
 								:show-role="false"
 								:show-pronouns="false"
 								:show-cover="false"
-								:router-link="`/members/edit?uuid=${member.uuid}`"
+								@click="clickMember(member)"
 							>
 								<p>{{ $t("analytics:influencingCount", { count: analytics.influencingCount.get(member.uuid) || 0 }) }}</p>
 								<p>
@@ -170,7 +179,7 @@
 								:show-role="false"
 								:show-pronouns="false"
 								:show-cover="false"
-								:router-link="`/members/edit?uuid=${member.uuid}`"
+								@click="clickMember(member)"
 							>
 								<p>{{ $t("analytics:influencedCount", { count: analytics.influencedCount.get(member.uuid) || 0 }) }}</p>
 								<p>
@@ -210,7 +219,7 @@
 								:show-role="false"
 								:show-pronouns="false"
 								:show-cover="false"
-								:router-link="`/members/edit?uuid=${member.uuid}`"
+								@click="clickMember(member)"
 							>
 								<p v-if="analytics.nightFronters.get(member.uuid) || 0">{{ $t("analytics:night", { count: analytics.nightFronters.get(member.uuid) || 0 }) }}</p>
 								<p v-if="analytics.morningFronters.get(member.uuid) || 0">{{ $t("analytics:morning", { count: analytics.morningFronters.get(member.uuid) || 0 }) }}</p>
@@ -233,7 +242,7 @@
 								:show-role="false"
 								:show-pronouns="false"
 								:show-cover="false"
-								:router-link="`/members/edit?uuid=${member.uuid}`"
+								@click="clickMember(member)"
 							>
 								<p v-if="analytics.nightInfluencers.get(member.uuid) || 0">{{ $t("analytics:night", { count: analytics.nightInfluencers.get(member.uuid) || 0 }) }}</p>
 								<p v-if="analytics.morningInfluencers.get(member.uuid) || 0">{{ $t("analytics:morning", { count: analytics.morningInfluencers.get(member.uuid) || 0 }) }}</p>
@@ -256,7 +265,7 @@
 								:show-role="false"
 								:show-pronouns="false"
 								:show-cover="false"
-								:router-link="`/members/edit?uuid=${member.uuid}`"
+								@click="clickMember(member)"
 							>
 								<p v-if="analytics.nightInfluenced.get(member.uuid) || 0">{{ $t("analytics:night", { count: analytics.nightInfluenced.get(member.uuid) || 0 }) }}</p>
 								<p v-if="analytics.morningInfluenced.get(member.uuid) || 0">{{ $t("analytics:morning", { count: analytics.morningInfluenced.get(member.uuid) || 0 }) }}</p>
@@ -303,16 +312,15 @@
 	}
 
 	div.datePickers {
-		display: flex;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
 		gap: 2px;
-		flex-direction: row;
-		justify-content: stretch;
 		border-radius: 16px;
 		overflow: hidden;
 		margin-bottom: 8px;
 
-		> * {
-			width: 100%;
+		> ion-item::part(native) {
+			height: 100%;
 		}
 	}
 </style>
