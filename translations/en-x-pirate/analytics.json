@@ -1,6 +1,8 @@
 {
 	"header": "The Ship's Ledger",
 	"detail": "A piece of the Ledger",
+	"stats": "Tally o' the Crew",
+    "daytime": "Position o' the Sun",
 	"startDate": "Day we weighed anchor",
 	"endDate": "Day we hit port",
 	"subheaders": {
@@ -15,15 +17,11 @@
 	"influencedCount_one": "Was being influenced {{count}} time",
 	"influencedCount_other": "Was being influenced {{count}} times",
 	"total": "All for {{time}}",
-	"average": "Average for {{time}}",
-	"max": "At the most for {{time}}",
-	"min": "At the least for {{time}}",
-	"night_one": "{{count}} time under the stars",
-	"night_other": "{{count}} times under the stars",
-	"morning_one": "{{count}} time at first light",
-	"morning_other": "{{count}} times at first light",
-	"day_one": "{{count}} time while the sun be high",
-	"day_other": "{{count}} times while the sun be high",
-	"evening_one": "{{count}} time at sundown",
-	"evening_other": "{{count}} times at sundown"
+	"average": "Average",
+	"max": "At the most",
+	"min": "At the least",
+	"morning": "Times at first light",
+	"day": "Times while the sun be high",
+	"evening": "Times at sundown",
+	"night": "Times under the stars"
 }

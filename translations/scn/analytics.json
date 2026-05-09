@@ -1,6 +1,8 @@
 {
 	"header": "Analitichi",
 	"detail": "Dittagghiu di l'analitichi",
+	"stats": "Statìstichi",
+    "daytime": "Ura dû jornu",
 	"startDate": "Data di nizziu",
 	"endDate": "Data di fini",
 	"subheaders": {
@@ -15,15 +17,11 @@
 	"influencedCount_one": "Fu nfluenzatu di l'autri {{count}} vota",
 	"influencedCount_other": "Fu nfluenzatu di l'autri {{count}} voti",
 	"total": "In tutali pi {{time}}",
-	"average": "In media pi {{time}}",
-	"max": "Ô màssimu pi {{time}}",
-	"min": "Ô mìnimu pi {{time}}",
-	"night_one": "{{count}} vota di notti",
-	"night_other": "{{count}} voti di notti",
-	"morning_one": "{{count}} vota â matina",
-	"morning_other": "{{count}} voti â matina",
-	"day_one": "{{count}} vota duranti u jornu",
-	"day_other": "{{count}} voti duranti u jornu",
-	"evening_one": "{{count}} vota di sira",
-	"evening_other": "{{count}} voti di sira"
+	"average": "In media",
+	"max": "Ô màssimu",
+	"min": "Ô mìnimu",
+	"morning": "Voti â matina",
+	"day": "Voti duranti u jornu",
+	"evening": "Voti di sira",
+	"night": "Voti di notti"
 }

@@ -1,6 +1,8 @@
 {
 	"header": "Analitiche",
 	"detail": "Dettaglio d' 'e analitiche",
+	"stats": "Statistiche",
+	"daytime": "Mument' 'a jurnata",
 	"startDate": "Data 'e inizio",
 	"endDate": "Data 'e fine",
 	"subheaders": {
@@ -15,15 +17,11 @@
 	"influencedCount_one": "È stato 'nfluenzato 'a ll'ate {{count}} vota",
 	"influencedCount_other": "È stato 'nfluenzato 'a ll'ate {{count}} vote",
 	"total": "In totale pe {{time}}",
-	"average": "In media pe {{time}}",
-	"max": "Ô massimo pe {{time}}",
-	"min": "Ô minimo pe {{time}}",
-	"night_one": "{{count}} vota 'e notte",
-	"night_other": "{{count}} vote 'e notte",
-	"morning_one": "{{count}} vota 'a matina",
-	"morning_other": "{{count}} vote 'a matina",
-	"day_one": "{{count}} vota 'o juorno",
-	"day_other": "{{count}} vote 'o juorno",
-	"evening_one": "{{count}} vota 'a sera",
-	"evening_other": "{{count}} vote 'a sera"
+	"average": "In media",
+	"max": "Ô massimo",
+	"min": "Ô minimo",
+	"morning": "Vote 'a matina",
+	"day": "Vote 'o juorno",
+	"evening": "Vote 'a sera",
+	"night": "Vote 'e notte"
 }

@@ -8,13 +8,23 @@
 	import MemberItem from "../../components/member/MemberItem.vue";
 	import { FrontingEntry, Member } from "../../lib/db/entities";
 	import { getMember } from "../../lib/db/tables/members";
+	import { addModal, removeModal } from "../../lib/modals";
+
+	import AnalyticsDetail from "../../modals/AnalyticsDetail.vue";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import TheresNothingHere from "../../components/TheresNothingHere.vue";
 
-	import statsMD from "@material-symbols/svg-600/outlined/bar_chart.svg";
+	import statsMD from "@material-symbols/svg-600/outlined/stacked_bar_chart.svg";
 	import routineMD from "@material-symbols/svg-600/outlined/routine.svg";
-	import AnalyticsDetail from "../../modals/AnalyticsDetail.vue";
-	import { addModal, removeModal } from "../../lib/modals";
+	import minMD from "@material-symbols/svg-600/outlined/stat_minus_2.svg";
+	import maxMD from "@material-symbols/svg-600/outlined/stat_2.svg";
+	import averageMD from "@material-symbols/svg-600/outlined/avg_pace.svg";
+	import morningMD from "@material-symbols/svg-600/outlined/wb_twilight.svg";
+	import dayMD from "@material-symbols/svg-600/outlined/wb_sunny.svg";
+	import eveningMD from "@material-symbols/svg-600/outlined/wb_twilight_2.svg";
+	import nightMD from "@material-symbols/svg-600/outlined/moon_stars.svg";
+
+	
 
 	const analytics = shallowRef<Awaited<ReturnType<typeof getFrontingStatistics>>>();
 	const members = shallowRef<Member[]>();
@@ -70,9 +80,11 @@
 				<IonSegment value="stats">
 					<IonSegmentButton value="stats" content-id="stats">
 						<IonIcon :icon="statsMD" />
+						<IonLabel>{{ $t("analytics:stats") }}</IonLabel>
 					</IonSegmentButton>
 					<IonSegmentButton value="daytime" content-id="daytime">
 						<IonIcon :icon="routineMD" />
+						<IonLabel>{{ $t("analytics:daytime") }}</IonLabel>
 					</IonSegmentButton>
 				</IonSegment>
 			</IonToolbar>
@@ -121,18 +133,23 @@
 									{{ $t("analytics:total", { time: formatWrittenTimeAbsolute(analytics.frontingTotalSpan.get(member.uuid) || 0) }) }}
 									- {{ (analytics.frontingPercent.get(member.uuid) || 0).toFixed(2) }}%
 								</p>
-								<p>
-									{{ $t("analytics:average", { time: formatWrittenTimeAbsolute(
-										(analytics.frontingTotalSpan.get(member.uuid) || 0) /
-											(analytics.frontingCount.get(member.uuid) || 0)
-									) }) }}
-								</p>
-								<p>
-									{{ $t("analytics:min", { time: formatWrittenTimeAbsolute(analytics.frontingMinSpan.get(member.uuid) || 0) }) }}
-								</p>
-								<p>
-									{{ $t("analytics:max", { time: formatWrittenTimeAbsolute(analytics.frontingMaxSpan.get(member.uuid) || 0) }) }}
-								</p>
+								<div class="with-icons">
+									<span>
+										<IonIcon :icon="averageMD" :aria-label="$t('analytics:average')" />
+										{{ formatWrittenTimeAbsolute(
+											(analytics.frontingTotalSpan.get(member.uuid) || 0) /
+												(analytics.frontingCount.get(member.uuid) || 0)
+										) }}
+									</span>
+									<span>
+										<IonIcon :icon="minMD" :aria-label="$t('analytics:min')" />
+										{{ formatWrittenTimeAbsolute(analytics.frontingMinSpan.get(member.uuid) || 0) }}
+									</span>
+									<span>
+										<IonIcon :icon="maxMD" :aria-label="$t('analytics:max')" />
+										{{ formatWrittenTimeAbsolute(analytics.frontingMaxSpan.get(member.uuid) || 0) }}
+									</span>
+								</div>
 							</MemberItem>
 						</template>
 
@@ -157,18 +174,23 @@
 									{{ $t("analytics:total", { time: formatWrittenTimeAbsolute(analytics.influencingTotalSpan.get(member.uuid) || 0) }) }}
 									- {{ (analytics.influencingPercent.get(member.uuid) || 0).toFixed(2) }}%
 								</p>
-								<p>
-									{{ $t("analytics:average", { time: formatWrittenTimeAbsolute(
-										(analytics.influencingTotalSpan.get(member.uuid) || 0) /
-											(analytics.influencingCount.get(member.uuid) || 0)
-									) }) }}
-								</p>
-								<p>
-									{{ $t("analytics:min", { time: formatWrittenTimeAbsolute(analytics.influencingMinSpan.get(member.uuid) || 0) }) }}
-								</p>
-								<p>
-									{{ $t("analytics:max", { time: formatWrittenTimeAbsolute(analytics.influencingMaxSpan.get(member.uuid) || 0) }) }}
-								</p>
+								<div class="with-icons">
+									<span>
+										<IonIcon :icon="averageMD" :aria-label="$t('analytics:average')" />
+										{{ formatWrittenTimeAbsolute(
+											(analytics.influencingTotalSpan.get(member.uuid) || 0) /
+												(analytics.influencingCount.get(member.uuid) || 0)
+										) }}
+									</span>
+									<span> 
+										<IonIcon :icon="minMD" :aria-label="$t('analytics:min')" />
+										{{ formatWrittenTimeAbsolute(analytics.influencingMinSpan.get(member.uuid) || 0) }}
+									</span>
+									<span>
+										<IonIcon :icon="maxMD" :aria-label="$t('analytics:max')" />
+										{{ formatWrittenTimeAbsolute(analytics.influencingMaxSpan.get(member.uuid) || 0) }}
+									</span>
+								</div>
 							</MemberItem>
 						</template>
 
@@ -193,18 +215,23 @@
 									{{ $t("analytics:total", { time: formatWrittenTimeAbsolute(analytics.influencedTotalSpan.get(member.uuid) || 0) }) }}
 									- {{ (analytics.influencedPercent.get(member.uuid) || 0).toFixed(2) }}%
 								</p>
-								<p>
-									{{ $t("analytics:average", { time: formatWrittenTimeAbsolute(
-										(analytics.influencedTotalSpan.get(member.uuid) || 0) /
-											(analytics.influencedCount.get(member.uuid) || 0)
-									) }) }}
-								</p>
-								<p>
-									{{ $t("analytics:min", { time: formatWrittenTimeAbsolute(analytics.influencedMinSpan.get(member.uuid) || 0) }) }}
-								</p>
-								<p>
-									{{ $t("analytics:max", { time: formatWrittenTimeAbsolute(analytics.influencedMaxSpan.get(member.uuid) || 0) }) }}
-								</p>
+								<div class="with-icons">
+									<span>
+										<IonIcon :icon="averageMD" :aria-label="$t('analytics:average')" />
+										{{ formatWrittenTimeAbsolute(
+											(analytics.influencedTotalSpan.get(member.uuid) || 0) /
+												(analytics.influencedCount.get(member.uuid) || 0)
+										) }}
+									</span>
+									<span>
+										<IonIcon :icon="minMD" :aria-label="$t('analytics:min')" />
+										{{ formatWrittenTimeAbsolute(analytics.influencedMinSpan.get(member.uuid) || 0) }}
+									</span>
+									<span>
+										<IonIcon :icon="maxMD" :aria-label="$t('analytics:max')" />
+										{{ formatWrittenTimeAbsolute(analytics.influencedMaxSpan.get(member.uuid) || 0) }}
+									</span>
+								</div>
 							</MemberItem>
 						</template>
 					</IonList>
@@ -228,10 +255,26 @@
 								:show-cover="false"
 								@click="showModal(analytics.frontingEntries.get(member.uuid) || [])"
 							>
-								<p v-if="analytics.nightFronters.get(member.uuid) || 0">{{ $t("analytics:night", { count: analytics.nightFronters.get(member.uuid) || 0 }) }}</p>
-								<p v-if="analytics.morningFronters.get(member.uuid) || 0">{{ $t("analytics:morning", { count: analytics.morningFronters.get(member.uuid) || 0 }) }}</p>
-								<p v-if="analytics.dayFronters.get(member.uuid) || 0">{{ $t("analytics:day", { count: analytics.dayFronters.get(member.uuid) || 0 }) }}</p>
-								<p v-if="analytics.eveningFronters.get(member.uuid) || 0">{{ $t("analytics:evening", { count: analytics.eveningFronters.get(member.uuid) || 0 }) }}</p>
+								<div class="with-icons">
+									<span v-if="analytics.morningFronters.get(member.uuid) || 0">
+										<IonIcon :icon="morningMD" :aria-label="$t('analytics:morning')" />
+										{{ analytics.morningFronters.get(member.uuid) || 0 }}
+									</span>
+									<span v-if="analytics.dayFronters.get(member.uuid) || 0">
+										<IonIcon :icon="dayMD" :aria-label="$t('analytics:day')" />
+										{{ analytics.dayFronters.get(member.uuid) || 0 }}
+									</span>
+
+									<span v-if="analytics.eveningFronters.get(member.uuid) || 0">
+										<IonIcon :icon="eveningMD" :aria-label="$t('analytics:evening')" />
+										{{ analytics.eveningFronters.get(member.uuid) || 0 }}
+									</span>
+
+									<span v-if="analytics.nightFronters.get(member.uuid) || 0">
+										<IonIcon :icon="nightMD" :aria-label="$t('analytics:night')" />
+										{{ analytics.nightFronters.get(member.uuid) || 0 }}
+									</span>
+								</div>
 							</MemberItem>
 						</template>
 
@@ -251,10 +294,24 @@
 								:show-cover="false"
 								@click="showModal(analytics.influencingEntries.get(member.uuid) || [])"
 							>
-								<p v-if="analytics.nightInfluencers.get(member.uuid) || 0">{{ $t("analytics:night", { count: analytics.nightInfluencers.get(member.uuid) || 0 }) }}</p>
-								<p v-if="analytics.morningInfluencers.get(member.uuid) || 0">{{ $t("analytics:morning", { count: analytics.morningInfluencers.get(member.uuid) || 0 }) }}</p>
-								<p v-if="analytics.dayInfluencers.get(member.uuid) || 0">{{ $t("analytics:day", { count: analytics.dayInfluencers.get(member.uuid) || 0 }) }}</p>
-								<p v-if="analytics.eveningInfluencers.get(member.uuid) || 0">{{ $t("analytics:evening", { count: analytics.eveningInfluencers.get(member.uuid) || 0 }) }}</p>
+								<div class="with-icons">
+									<span v-if="analytics.morningInfluencers.get(member.uuid) || 0">
+										<IonIcon :icon="morningMD" :aria-label="$t('analytics:morning')" />
+										{{ analytics.morningInfluencers.get(member.uuid) || 0 }}
+									</span>
+									<span v-if="analytics.dayInfluencers.get(member.uuid) || 0">
+										<IonIcon :icon="dayMD" :aria-label="$t('analytics:day')" />
+										{{ analytics.dayInfluencers.get(member.uuid) || 0 }}
+									</span>
+									<span v-if="analytics.eveningInfluencers.get(member.uuid) || 0">
+										<IonIcon :icon="eveningMD" :aria-label="$t('analytics:evening')" />
+										{{ analytics.eveningInfluencers.get(member.uuid) || 0 }}
+									</span>
+									<span v-if="analytics.nightInfluencers.get(member.uuid) || 0">
+										<IonIcon :icon="nightMD" :aria-label="$t('analytics:night')" />
+										{{ analytics.nightInfluencers.get(member.uuid) || 0 }}
+									</span>
+								</div>
 							</MemberItem>
 						</template>
 
@@ -274,10 +331,24 @@
 								:show-cover="false"
 								@click="showModal(analytics.influencedEntries.get(member.uuid) || [])"
 							>
-								<p v-if="analytics.nightInfluenced.get(member.uuid) || 0">{{ $t("analytics:night", { count: analytics.nightInfluenced.get(member.uuid) || 0 }) }}</p>
-								<p v-if="analytics.morningInfluenced.get(member.uuid) || 0">{{ $t("analytics:morning", { count: analytics.morningInfluenced.get(member.uuid) || 0 }) }}</p>
-								<p v-if="analytics.dayInfluenced.get(member.uuid) || 0">{{ $t("analytics:day", { count: analytics.dayInfluenced.get(member.uuid) || 0 }) }}</p>
-								<p v-if="analytics.eveningInfluenced.get(member.uuid) || 0">{{ $t("analytics:evening", { count: analytics.eveningInfluenced.get(member.uuid) || 0 }) }}</p>
+								<div class="with-icons">
+									<span v-if="analytics.morningInfluenced.get(member.uuid) || 0">
+										<IonIcon :icon="morningMD" :aria-label="$t('analytics:morning')" />
+										{{ analytics.morningInfluenced.get(member.uuid) || 0 }}
+									</span>
+									<span v-if="analytics.dayInfluenced.get(member.uuid) || 0">
+										<IonIcon :icon="dayMD" :aria-label="$t('analytics:day')" />
+										{{ analytics.dayInfluenced.get(member.uuid) || 0 }}
+									</span>
+									<span v-if="analytics.eveningInfluenced.get(member.uuid) || 0">
+										<IonIcon :icon="eveningMD" :aria-label="$t('analytics:evening')" />
+										{{ analytics.eveningInfluenced.get(member.uuid) || 0 }}
+									</span>
+									<span v-if="analytics.nightInfluenced.get(member.uuid) || 0">
+										<IonIcon :icon="nightMD" :aria-label="$t('analytics:night')" />
+										{{ analytics.nightInfluenced.get(member.uuid) || 0 }}
+									</span>
+								</div>
 							</MemberItem>
 						</template>
 					</IonList>
@@ -330,4 +401,15 @@
 			height: 100%;
 		}
 	}
+
+	span ion-icon {
+		vertical-align: middle;
+	}
+
+	div.with-icons {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0px 0.5em;
+	}
+
 </style>

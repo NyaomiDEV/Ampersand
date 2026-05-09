@@ -1,6 +1,8 @@
 {
 	"header": "Analytics",
 	"detail": "Analytics detail",
+	"stats": "Stats",
+	"daytime": "Time of day",
 	"startDate": "Start date",
 	"endDate": "End date",
 	"subheaders": {
@@ -15,15 +17,11 @@
 	"influencedCount_one": "Was influenced by others {{count}} time",
 	"influencedCount_other": "Was influenced by others {{count}} times",
 	"total": "In total for {{time}}",
-	"average": "On average for {{time}}",
-	"max": "At most for {{time}}",
-	"min": "At least for {{time}}",
-	"night_one": "{{count}} time at night",
-	"night_other": "{{count}} times at night",
-	"morning_one": "{{count}} time in the morning",
-	"morning_other": "{{count}} times in the morning",
-	"day_one": "{{count}} time in the day",
-	"day_other": "{{count}} times in the day",
-	"evening_one": "{{count}} time in the evening",
-	"evening_other": "{{count}} times in the evening"
+	"average": "On average",
+	"max": "At most",
+	"min": "At least",
+	"morning": "Times in the morning",
+	"day": "Times in the day",
+	"evening": "Times in the evening",
+	"night": "Times at night"
 }
