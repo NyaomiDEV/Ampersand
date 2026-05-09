@@ -16,10 +16,6 @@
 	"contrastLevel": {
 		"title": "Niveau de contraste"
 	},
-	"useAccentColor": {
-		"title": "Couleur d’accent",
-		"desc": "Personnaliser la couleur d’accent"
-	},
 	"disableCovers": {
 		"title": "Cacher les bannières des membres dans la liste"
 	},

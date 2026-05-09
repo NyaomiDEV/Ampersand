@@ -13,10 +13,6 @@
 		"light": "Claro",
 		"dark": "Oscuro"
 	},
-	"useAccentColor": {
-		"title": "Color de acentuado",
-		"desc": "Usar un color de acento personalizado"
-	},
 	"accentColor": {
 		"title": "Elige el color acentuado"
 	},

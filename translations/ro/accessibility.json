@@ -16,10 +16,6 @@
 		"light": "Deschisă",
 		"dark": "Întunecată"
 	},
-	"useAccentColor": {
-		"title": "Culoarea de accent",
-		"desc": "Folosiți o culoare de accent personalizată"
-	},
 	"accentColor": {
 		"title": "Alegeți culoarea de accent"
 	},

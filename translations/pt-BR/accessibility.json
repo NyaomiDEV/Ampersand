@@ -18,10 +18,6 @@
 		"light": "Claro",
 		"title": "Variante da Interface de Usuário"
 	},
-	"useAccentColor": {
-		"title": "Cor de destaque",
-		"desc": "Cor de destaque personalizada"
-	},
 	"fontScale": {
 		"title": "Tamanho da fonte"
 	},

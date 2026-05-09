@@ -31,12 +31,17 @@
 		"avatar": "Avatar outline",
 		"listItem": "List item border"
 	},
-	"useAccentColor": {
-		"title": "Accent color",
-		"desc": "Use a custom color for yer flag"
+	"colors": {
+		"title": "Accent and background colors",
+		"app": "App colors",
+		"system": "System colors",
+		"custom": "Custom colors"
 	},
 	"accentColor": {
 		"title": "Pick yer accent color"
+	},
+	"backgroundColor": {
+		"title": "Pick yer background color"
 	},
 	"reducedMotion": {
 		"title": "Calm seas",

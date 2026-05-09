@@ -69,8 +69,11 @@ export type AccessibilityConfig = {
 	colorIndicatorPosition: "avatar" | "list-item",
 	themeIsAmoled: boolean,
 	themeIsVibrant: boolean,
-	useAccentColor: boolean,
-	accentColor?: string,
+	colors: "app" | "system" | "custom",
+	customColors: {
+		accentColor?: string,
+		backgroundColor?: string
+	},
 	reducedMotion: boolean,
 	compactLists: boolean,
 	disableCovers: boolean,

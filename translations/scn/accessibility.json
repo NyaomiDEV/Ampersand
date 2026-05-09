@@ -31,12 +31,17 @@
 		"avatar": "Cuntornu de l'avatar",
 		"listItem": "Bordu de l'elementu 'n lista"
 	},
-	"useAccentColor": {
-		"title": "Culuri primariu",
-		"desc": "Usa un culuri primariu pirsunalizzatu"
+	"colors": {
+		"title": "Culuri primariu e di sfunnu",
+		"app": "Culuri di l'app",
+		"system": "Culuri di sistema",
+		"custom": "Culuri pirsunalizzati"
 	},
 	"accentColor": {
 		"title": "Scegghi u culuri primariu"
+	},
+	"backgroundColor": {
+		"title": "Scegghi u culuri di sfunnu"
 	},
 	"reducedMotion": {
 		"title": "Muvimenti arridutti",

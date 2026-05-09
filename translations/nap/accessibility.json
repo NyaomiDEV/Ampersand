@@ -31,12 +31,17 @@
 		"avatar": "Cuntuorno de l'immaggine",
 		"listItem": "Bordo 'e l'elemento ncopp'â lista"
 	},
-	"useAccentColor": {
-		"title": "Culore primario",
-		"desc": "Usa nu culore primario personalizzato"
+	"colors": {
+		"title": "Culore primario e d'ô funno",
+		"app": "Culore d'â app",
+		"system": "Culore 'e sistema",
+		"custom": "Culore a piacere"
 	},
 	"accentColor": {
 		"title": "Scegli 'o culore primario"
+	},
+	"backgroundColor": {
+		"title": "Scegli 'o culore 'e funno"
 	},
 	"reducedMotion": {
 		"title": "Muvimiente ridotte",

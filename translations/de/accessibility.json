@@ -18,10 +18,6 @@
 		"light": "Hell",
 		"dark": "Dunkel"
 	},
-	"useAccentColor": {
-		"desc": "Eigene Akzentfarbe nutzen",
-		"title": "Akzentfarbe"
-	},
 	"accentColor": {
 		"title": "Akzentfarbe auswählen"
 	},

@@ -16,10 +16,6 @@
 		"light": "Licht",
 		"dark": "Donker"
 	},
-	"useAccentColor": {
-		"title": "Accentkleur",
-		"desc": "Gebruik een aangepaste accentkleur"
-	},
 	"accentColor": {
 		"title": "Kies de accentkleur"
 	},

@@ -14,10 +14,6 @@
 		"system-font": "Süsteemi kirjatüüp",
 		"atkinson": "Atkinson Hyperlegible"
 	},
-	"useAccentColor": {
-		"title": "Aktsentvärv",
-		"desc": "Kasuta sinuvalitud aktsentvärvi"
-	},
 	"fontScale": {
 		"title": "Kirjatüübi suurus"
 	},

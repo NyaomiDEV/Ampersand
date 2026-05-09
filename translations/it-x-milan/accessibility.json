@@ -31,12 +31,17 @@
 		"avatar": "Contorno avatar",
 		"listItem": "Bordo dell'item in lista"
 	},
-	"useAccentColor": {
-		"title": "Colore primario",
-		"desc": "Usa un colore primario custom"
+	"colors": {
+		"title": "Colore primario e di sfondo",
+		"app": "Colori dell'app",
+		"system": "Colori di sistema",
+		"custom": "Colori personalizzati"
 	},
 	"accentColor": {
 		"title": "Scegli il colore primario"
+	},
+	"backgroundColor": {
+		"title": "Scegli il colore di sfondo"
 	},
 	"reducedMotion": {
 		"title": "Movimenti ridotti",

@@ -16,10 +16,6 @@
 		"opendyslexic": "OpenDyslexic",
 		"lexend": "Lexend"
 	},
-	"useAccentColor": {
-		"title": "Акцентный цвет",
-		"desc": "Пользовательский акцентный цвет"
-	},
 	"accentColor": {
 		"title": "Выберите цвет акцента"
 	},

@@ -18,10 +18,6 @@
 		"light": "walo",
 		"dark": "pimeja"
 	},
-	"useAccentColor": {
-		"title": "kule namako ilo",
-		"desc": "ilo li kepeken kule namako pi wile sina"
-	},
 	"accentColor": {
 		"title": "kule namako pi wile sina"
 	},

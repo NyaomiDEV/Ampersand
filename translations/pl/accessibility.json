@@ -18,10 +18,6 @@
 		"light": "Jasny",
 		"dark": "Ciemny"
 	},
-	"useAccentColor": {
-		"title": "Kolor akcentu",
-		"desc": "Wybierz niestandardowy kolor akcentu"
-	},
 	"accentColor": {
 		"title": "Wybierz kolor akcentu"
 	},

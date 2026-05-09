@@ -12,10 +12,19 @@ const customColorsWeWant = [
 ];
 
 const defaultPrimaryColor = "#30628C";
+const defaultBackgroundColor = "#308C88";
+
 const systemPrimaryColor = await (async () => {
 	if(platform() === "android"){
 		const colors = await M3.getColors("system");
 		if(colors) return colors.primaryContainer;
+	}
+	return undefined;
+})();
+const systemBackgroundColor = await (async () => {
+	if (platform() === "android") {
+		const colors = await M3.getColors("system");
+		if (colors) return colors.background;
 	}
 	return undefined;
 })();
@@ -29,11 +38,25 @@ function rgbFromArgb(argb: number){
 }
 
 function calculatePrimaryColor(){
-	const useAccentColor = accessibilityConfig.useAccentColor;
-	const accentColor = accessibilityConfig.accentColor;
-	return useAccentColor && accentColor
-		? rgbaToArgb(accentColor)
-		: (systemPrimaryColor ? rgbaToArgb(systemPrimaryColor) : defaultPrimaryColor);
+	switch(accessibilityConfig.colors){
+		case "app":
+			return rgbaToArgb(defaultPrimaryColor);
+		case "system":
+			return rgbaToArgb(systemPrimaryColor || defaultPrimaryColor);
+		case "custom":
+			return rgbaToArgb(accessibilityConfig.customColors.accentColor || defaultPrimaryColor);
+	}
+}
+
+function calculateBackgroundColor() {
+	switch (accessibilityConfig.colors) {
+		case "app":
+			return rgbaToArgb(defaultBackgroundColor);
+		case "system":
+			return rgbaToArgb(systemBackgroundColor || defaultBackgroundColor);
+		case "custom":
+			return rgbaToArgb(accessibilityConfig.customColors.backgroundColor || defaultBackgroundColor);
+	}
 }
 
 export function rgbaToArgb(rgba: string) {
@@ -67,7 +90,7 @@ export function unsetMaterialColors(target?: HTMLElement){
 
 export function getScheme(primary?: string, neutral?: string, isDarkMode?: boolean){
 	if (!primary) primary = calculatePrimaryColor();
-	if (!neutral) neutral = primary; // for now!
+	if (!neutral) neutral = calculateBackgroundColor();
 	if (!isDarkMode) isDarkMode = calculateDarkMode();
 
 	const primaryColorHct = Hct.fromInt(argbFromHex(primary));

@@ -59,8 +59,11 @@ const defaultAccessibilityConfig: AccessibilityConfig = {
 	colorIndicatorPosition: "avatar",
 	themeIsAmoled: false,
 	themeIsVibrant: true,
-	useAccentColor: false,
-	accentColor: "#30628C",
+	colors: "app",
+	customColors: {
+		accentColor: "#30628C",
+		backgroundColor: "#308C88",
+	},
 	reducedMotion: false,
 	compactLists: false,
 	disableCovers: false,
@@ -147,6 +150,17 @@ if ((appConfig as Record<string, unknown>).showSystemDescriptionInDashboard)
 if ((appConfig as Record<string, unknown>).useIPC) {
 	securityConfig.useIPC = true;
 	(appConfig as Record<string, unknown>).useIPC = undefined;
+}
+
+if((accessibilityConfig as Record<string, unknown>).useAccentColor){
+	delete (accessibilityConfig as Record<string, unknown>).useAccentColor;
+	accessibilityConfig.colors = "custom";
+}
+
+if ((accessibilityConfig as Record<string, unknown>).accentColor) {
+	accessibilityConfig.customColors.accentColor = (accessibilityConfig as Record<string, unknown>).accentColor as string;
+	accessibilityConfig.customColors.backgroundColor = (accessibilityConfig as Record<string, unknown>).accentColor as string;
+	delete (accessibilityConfig as Record<string, unknown>).accentColor;
 }
 // end config migration here
 

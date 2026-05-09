@@ -27,10 +27,6 @@
 	"longPressDuration": {
 		"title": "Uzun basma süresi"
 	},
-	"useAccentColor": {
-		"title": "Vurgu rengi",
-		"desc": "Özelleştirilmiş bir vurgu rengi kullan"
-	},
 	"accentColor": {
 		"title": "Vurgu rengini seç"
 	},

@@ -31,12 +31,17 @@
 		"avatar": "Avatar outline",
 		"listItem": "List item border"
 	},
-	"useAccentColor": {
-		"title": "Accent color",
-		"desc": "Use a custom accent color"
+	"colors": {
+		"title": "Accent and background colors",
+		"app": "App colors",
+		"system": "System colors",
+		"custom": "Custom colors"
 	},
 	"accentColor": {
 		"title": "Choose the accent color"
+	},
+	"backgroundColor": {
+		"title": "Choose the background color"
 	},
 	"reducedMotion": {
 		"title": "Reduced motion",

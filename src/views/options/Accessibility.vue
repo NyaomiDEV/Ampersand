@@ -1,6 +1,7 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonItem, IonRange, IonLabel, IonToggle, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonSelect, IonSelectOption, IonIcon } from "@ionic/vue";
 	import { accessibilityConfig } from "../../lib/config";
+	import { platform } from "@tauri-apps/plugin-os";
 	import Color from "../../components/Color.vue";
 
 	import lowContrastMD from "@material-symbols/svg-600/outlined/brightness_1.svg";
@@ -81,18 +82,37 @@
 
 				<IonItem>
 					<IonIcon slot="start" :icon="colorMD" />
-					<IonToggle v-model="accessibilityConfig.useAccentColor">
-						<IonLabel>
-							<h3>{{ $t("accessibility:useAccentColor.title") }}</h3>
-							<p>{{ $t("accessibility:useAccentColor.desc") }}</p>
-						</IonLabel>
-					</IonToggle>
+					<IonSelect
+						v-model="accessibilityConfig.colors"
+						label-placement="floating"
+						:label="$t('accessibility:colors.title')"
+						:cancel-text="$t('other:alerts.cancel')"
+						interface="action-sheet"
+					>
+						<IonSelectOption value="app">
+							{{ $t("accessibility:colors.app") }}
+						</IonSelectOption>
+						<IonSelectOption v-if="platform() === 'android'" value="system">
+							{{ $t("accessibility:colors.system") }}
+						</IonSelectOption>
+						<IonSelectOption value="custom">
+							{{ $t("accessibility:colors.custom") }}
+						</IonSelectOption>
+					</IonSelect>
 				</IonItem>
 
-				<IonItem v-if="accessibilityConfig.useAccentColor" button :detail="false">
-					<Color v-model="accessibilityConfig.accentColor">
+				<IonItem v-if="accessibilityConfig.colors === 'custom'" button :detail="false">
+					<Color v-model="accessibilityConfig.customColors.accentColor">
 						<IonLabel>
 							<h3>{{ $t("accessibility:accentColor.title") }}</h3>
+						</IonLabel>
+					</Color>
+				</IonItem>
+
+				<IonItem v-if="accessibilityConfig.colors === 'custom'" button :detail="false">
+					<Color v-model="accessibilityConfig.customColors.backgroundColor">
+						<IonLabel>
+							<h3>{{ $t("accessibility:backgroundColor.title") }}</h3>
 						</IonLabel>
 					</Color>
 				</IonItem>
