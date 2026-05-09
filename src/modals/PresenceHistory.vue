@@ -22,10 +22,8 @@
 	import { h, ref } from "vue";
 	import PresenceEdit from "./PresenceEdit.vue";
 	import PresenceRating from "../components/PresenceRating.vue";
-	import { useTranslation } from "i18next-vue";
 	import { addModal, removeModal } from "../lib/modals";
-
-	const i18next = useTranslation();
+	import { presencePhrase } from "../lib/util/misc";
 
 	const props = defineProps<{
 		modelValue?: Map<Date, number>
@@ -36,29 +34,6 @@
 	}>();
 
 	const presence = ref<Map<Date, number>>(props.modelValue || new Map());
-
-	function presencePhrase(rating: number): string {
-		switch (rating) {
-			case 0:
-				return i18next.t("other:presence.absent");
-			case 1:
-			case 2:
-				return i18next.t("other:presence.heavilyDissociating");
-			case 3:
-			case 4:
-				return i18next.t("other:presence.dissociating");
-			case 5:
-			case 6:
-				return i18next.t("other:presence.zonedOut");
-			case 7:
-			case 8:
-				return i18next.t("other:presence.present");
-			case 9:
-			case 10:
-				return i18next.t("other:presence.fullyGrounded");
-		}
-		return "";
-	}
 
 	async function presentEdit(date?: Date, range?: number){
 		const modelValue = { date: date || new Date(), range: range || 0 };

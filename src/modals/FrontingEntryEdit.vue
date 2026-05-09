@@ -30,7 +30,7 @@
 	import ContentEditable from "../components/ContentEditable.vue";
 
 	import { PartialBy } from "../lib/types";
-	import { formatDate, promptOkCancel, toast } from "../lib/util/misc";
+	import { formatDate, promptOkCancel, toast, presencePhrase } from "../lib/util/misc";
 	import { useTranslation } from "i18next-vue";
 	import PresenceRating from "../components/PresenceRating.vue";
 	import MemberItem from "../components/member/MemberItem.vue";
@@ -133,29 +133,6 @@
 		const presenceVal = Array.from(frontingEntry.value.presence.entries());
 
 		return presenceVal.sort((a, b) => a[0].valueOf() - b[0].valueOf()).pop() || [undefined, undefined];
-	}
-
-	function presencePhrase(rating: number): string {
-		switch (rating) {
-			case 0:
-				return i18next.t("other:presence.absent");
-			case 1:
-			case 2:
-				return i18next.t("other:presence.heavilyDissociating");
-			case 3:
-			case 4:
-				return i18next.t("other:presence.dissociating");
-			case 5:
-			case 6:
-				return i18next.t("other:presence.zonedOut");
-			case 7:
-			case 8:
-				return i18next.t("other:presence.present");
-			case 9:
-			case 10:
-				return i18next.t("other:presence.fullyGrounded");
-		}
-		return "";
 	}
 
 	watch(frontingEntry.value, async () => {
