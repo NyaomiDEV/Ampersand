@@ -357,7 +357,7 @@ export async function getFrontingStatistics(start: Date, end: Date){
 				maps.morningFronters.set(entry.member, count + 1);
 			}
 
-			if (hour >= 11 && hour < 17) {
+			if (hour >= 10 && hour < 17) {
 				const count = maps.dayFronters.get(entry.member) || 0;
 				maps.dayFronters.set(entry.member, count + 1);
 			}
