@@ -359,15 +359,15 @@
 					</IonList>
 				</IonSegmentContent>
 				<IonSegmentContent id="presence">
-					<TheresNothingHere v-if="!analytics.frontingCount.size && !analytics.influencingCount.size" />
+					<TheresNothingHere v-if="!analytics.frontingPresenceMean.size && !analytics.influencingPresenceMean.size" />
 					<IonList v-else>
-						<template v-if="analytics.frontingCount.size">
+						<template v-if="analytics.frontingPresenceMean.size">
 							<IonListHeader>
 								{{ $t("analytics:subheaders.fronting") }}
 							</IonListHeader>
 							<MemberItem
-								v-for="member in Array.from(analytics.frontingCount.keys()).map(x => members?.find(y => y.uuid === x)).filter(x => !!x).sort((a, b) => {
-									return (analytics?.frontingCount.get(b.uuid) || 0) - (analytics?.frontingCount.get(a.uuid) || 0)
+								v-for="member in Array.from(analytics.frontingPresenceMean.keys()).map(x => members?.find(y => y.uuid === x)).filter(x => !!x).sort((a, b) => {
+									return (analytics?.frontingPresenceMean.get(b.uuid) || 0) - (analytics?.frontingPresenceMean.get(a.uuid) || 0)
 								})"
 								:key="member.uuid"
 								button
@@ -375,20 +375,20 @@
 								:show-role="false"
 								:show-pronouns="false"
 								:show-cover="false"
-								@click="showModal(analytics.frontingEntries.get(member.uuid) || [])"
+								@click="showModal(analytics.frontingEntries.get(member.uuid)?.filter(x => x.presence?.size) || [])"
 							>
 								<h2>{{ presencePhrase(analytics.frontingPresenceMean.get(member.uuid) || 0) }}</h2>
 								<p><PresenceRating :rating="analytics.frontingPresenceMean.get(member.uuid) || 0" /></p>
 							</MemberItem>
 						</template>
 
-						<template v-if="analytics.influencingCount.size">
+						<template v-if="analytics.influencingPresenceMean.size">
 							<IonListHeader>
 								{{ $t("analytics:subheaders.influencing") }}
 							</IonListHeader>
 							<MemberItem
-								v-for="member in Array.from(analytics.influencingCount.keys()).map(x => members?.find(y => y.uuid === x)).filter(x => !!x).sort((a, b) => {
-									return (analytics?.influencingCount.get(b.uuid) || 0) - (analytics?.influencingCount.get(a.uuid) || 0)
+								v-for="member in Array.from(analytics.influencingPresenceMean.keys()).map(x => members?.find(y => y.uuid === x)).filter(x => !!x).sort((a, b) => {
+									return (analytics?.influencingPresenceMean.get(b.uuid) || 0) - (analytics?.influencingPresenceMean.get(a.uuid) || 0)
 								})"
 								:key="member.uuid"
 								button
@@ -396,7 +396,7 @@
 								:show-role="false"
 								:show-pronouns="false"
 								:show-cover="false"
-								@click="showModal(analytics.influencingEntries.get(member.uuid) || [])"
+								@click="showModal(analytics.influencingEntries.get(member.uuid)?.filter(x => x.presence?.size) || [])"
 							>
 								<h2>{{ presencePhrase(analytics.influencingPresenceMean.get(member.uuid) || 0) }}</h2>
 								<p><PresenceRating :rating="analytics.influencingPresenceMean.get(member.uuid) || 0" /></p>

@@ -416,13 +416,15 @@ export async function getFrontingStatistics(start: Date, end: Date){
 	for(const [member, entries] of maps.frontingEntries.entries()){
 		const withPresence = entries.filter(x => x.presence?.size);
 		const total = withPresence.length;
-		maps.frontingPresenceMean.set(member, withPresence.reduce((p, c) => p + (c.presence!.values().reduce((x, y) => x + y, 0) / c.presence!.size), 0) / total);
+		if(total)
+			maps.frontingPresenceMean.set(member, withPresence.reduce((p, c) => p + (c.presence!.values().reduce((x, y) => x + y, 0) / c.presence!.size), 0) / total);
 	}
 
 	for (const [member, entries] of maps.influencingEntries.entries()) {
 		const withPresence = entries.filter(x => x.presence?.size);
 		const total = withPresence.length;
-		maps.influencingPresenceMean.set(member, withPresence.reduce((p, c) => p + (c.presence!.values().reduce((x, y) => x + y, 0) / c.presence!.size), 0) / total);
+		if(total)
+			maps.influencingPresenceMean.set(member, withPresence.reduce((p, c) => p + (c.presence!.values().reduce((x, y) => x + y, 0) / c.presence!.size), 0) / total);
 	}
 
 	return maps;
