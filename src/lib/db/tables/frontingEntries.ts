@@ -317,7 +317,7 @@ export async function getFrontingStatistics(start: Date, end: Date){
 				maps.morningInfluenced.set(entry.influencing, influencedCount + 1);
 			}
 
-			if (hour >= 11 && hour < 17) {
+			if (hour >= 10 && hour < 17) {
 				const influencersCount = maps.dayInfluencers.get(entry.member) || 0;
 				maps.dayInfluencers.set(entry.member, influencersCount + 1);
 
