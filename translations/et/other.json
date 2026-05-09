@@ -56,5 +56,6 @@
 	"presence": {
 		"absent": "Pole kohal"
 	},
-	"developerMode": "Arendaja režiim"
+	"developerMode": "Arendaja režiim",
+	"theresNothingHere": "Siin pole mitte midagi"
 }
