@@ -1,5 +1,6 @@
 {
 	"header": "The Ship's Ledger",
+	"detail": "A piece of the Ledger",
 	"startDate": "Day we weighed anchor",
 	"endDate": "Day we hit port",
 	"subheaders": {

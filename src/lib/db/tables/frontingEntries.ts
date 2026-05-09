@@ -293,7 +293,7 @@ export async function getFrontingStatistics(start: Date, end: Date){
 			maps.influencingMinSpan.set(entry.member, influencingMinSpan === 0 ? span : Math.min(influencingMinSpan, span));
 			maps.influencingMaxSpan.set(entry.member, Math.max(influencingMaxSpan, span));
 
-			if (maps.influencingEntries.has(entry.member))
+			if (!maps.influencingEntries.has(entry.member))
 				maps.influencingEntries.set(entry.member, influencingEntries);
 
 			influencingEntries.push(entry);
@@ -302,14 +302,14 @@ export async function getFrontingStatistics(start: Date, end: Date){
 			const influencedTotalSpan = maps.influencedTotalSpan.get(entry.influencing) || 0;
 			const influencedMinSpan = maps.influencedMinSpan.get(entry.influencing) || 0;
 			const influencedMaxSpan = maps.influencedMaxSpan.get(entry.influencing) || 0;
-			const influencedEntries = maps.influencingEntries.get(entry.influencing) || [];
+			const influencedEntries = maps.influencedEntries.get(entry.influencing) || [];
 
 			maps.influencedCount.set(entry.influencing, influencedCount + 1);
 			maps.influencedTotalSpan.set(entry.influencing, influencedTotalSpan + span);
 			maps.influencedMinSpan.set(entry.influencing, influencedMinSpan === 0 ? span : Math.min(influencedMinSpan, span));
 			maps.influencedMaxSpan.set(entry.influencing, Math.max(influencedMaxSpan, span));
 
-			if (maps.influencedEntries.has(entry.influencing))
+			if (!maps.influencedEntries.has(entry.influencing))
 				maps.influencedEntries.set(entry.influencing, influencedEntries);
 
 			influencedEntries.push(entry);
@@ -361,8 +361,8 @@ export async function getFrontingStatistics(start: Date, end: Date){
 			maps.frontingMinSpan.set(entry.member, frontingMinSpan === 0 ? span : Math.min(frontingMinSpan, span));
 			maps.frontingMaxSpan.set(entry.member, Math.max(frontingMaxSpan, span));
 
-			if (maps.influencedEntries.has(entry.member))
-				maps.influencedEntries.set(entry.member, frontingEntries);
+			if (!maps.frontingEntries.has(entry.member))
+				maps.frontingEntries.set(entry.member, frontingEntries);
 
 			frontingEntries.push(entry);
 

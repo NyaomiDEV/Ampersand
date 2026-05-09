@@ -1,20 +1,20 @@
 <script setup lang="ts">
-	import { IonBackButton, IonContent, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonPage, IonSegment, IonSegmentButton, IonSegmentContent, IonSegmentView, IonTitle, IonToolbar, useIonRouter } from "@ionic/vue";
+	import { IonBackButton, IonContent, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonPage, IonSegment, IonSegmentButton, IonSegmentContent, IonSegmentView, IonTitle, IonToolbar } from "@ionic/vue";
 	import { getFrontingStatistics } from "../../lib/db/tables/frontingEntries";
-	import { onMounted, ref, shallowRef, useTemplateRef, watch } from "vue";
+	import { h, onMounted, ref, shallowRef, useTemplateRef, watch } from "vue";
 	import DatePopupPicker from "../../components/DatePopupPicker.vue";
 	import { formatDate, formatWrittenTimeAbsolute } from "../../lib/util/misc";
 	import dayjs from "dayjs";
 	import MemberItem from "../../components/member/MemberItem.vue";
-	import { Member } from "../../lib/db/entities";
-	import { getMember, isValidMember } from "../../lib/db/tables/members";
+	import { FrontingEntry, Member } from "../../lib/db/entities";
+	import { getMember } from "../../lib/db/tables/members";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import TheresNothingHere from "../../components/TheresNothingHere.vue";
 
 	import statsMD from "@material-symbols/svg-600/outlined/bar_chart.svg";
 	import routineMD from "@material-symbols/svg-600/outlined/routine.svg";
-
-	const router = useIonRouter();
+	import AnalyticsDetail from "../../modals/AnalyticsDetail.vue";
+	import { addModal, removeModal } from "../../lib/modals";
 
 	const analytics = shallowRef<Awaited<ReturnType<typeof getFrontingStatistics>>>();
 	const members = shallowRef<Member[]>();
@@ -35,12 +35,19 @@
 			...Object.keys(_analytics).map(k => [...(_analytics[k] as Map<string, number>).keys()]),
 		].flat())).map(x => getMember(x)));
 
+		console.log(_analytics);
 		analytics.value = _analytics;
 	}
 
-	function clickMember(member: Member){
-		if(!isValidMember(member)) return;
-		router.push(`/members/edit?uuid=${member.uuid}`);
+	async function showModal(entries: FrontingEntry[]){
+		const vnode = h(AnalyticsDetail, {
+			entries,
+			onDidDismiss: () => removeModal(vnode)
+		});
+
+		const modal = await addModal(vnode);
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-call
+		await (modal.el as any).present();
 	}
 
 	watch([startDate, endDate], async () => {
@@ -107,7 +114,7 @@
 								:show-role="false"
 								:show-pronouns="false"
 								:show-cover="false"
-								@click="clickMember(member)"
+								@click="showModal(analytics.frontingEntries.get(member.uuid) || [])"
 							>
 								<p>{{ $t("analytics:frontingCount", { count: analytics.frontingCount.get(member.uuid) || 0 }) }}</p>
 								<p>
@@ -143,7 +150,7 @@
 								:show-role="false"
 								:show-pronouns="false"
 								:show-cover="false"
-								@click="clickMember(member)"
+								@click="showModal(analytics.influencingEntries.get(member.uuid) || [])"
 							>
 								<p>{{ $t("analytics:influencingCount", { count: analytics.influencingCount.get(member.uuid) || 0 }) }}</p>
 								<p>
@@ -179,7 +186,7 @@
 								:show-role="false"
 								:show-pronouns="false"
 								:show-cover="false"
-								@click="clickMember(member)"
+								@click="showModal(analytics.influencedEntries.get(member.uuid) || [])"
 							>
 								<p>{{ $t("analytics:influencedCount", { count: analytics.influencedCount.get(member.uuid) || 0 }) }}</p>
 								<p>
@@ -219,7 +226,7 @@
 								:show-role="false"
 								:show-pronouns="false"
 								:show-cover="false"
-								@click="clickMember(member)"
+								@click="showModal(analytics.frontingEntries.get(member.uuid) || [])"
 							>
 								<p v-if="analytics.nightFronters.get(member.uuid) || 0">{{ $t("analytics:night", { count: analytics.nightFronters.get(member.uuid) || 0 }) }}</p>
 								<p v-if="analytics.morningFronters.get(member.uuid) || 0">{{ $t("analytics:morning", { count: analytics.morningFronters.get(member.uuid) || 0 }) }}</p>
@@ -242,7 +249,7 @@
 								:show-role="false"
 								:show-pronouns="false"
 								:show-cover="false"
-								@click="clickMember(member)"
+								@click="showModal(analytics.influencingEntries.get(member.uuid) || [])"
 							>
 								<p v-if="analytics.nightInfluencers.get(member.uuid) || 0">{{ $t("analytics:night", { count: analytics.nightInfluencers.get(member.uuid) || 0 }) }}</p>
 								<p v-if="analytics.morningInfluencers.get(member.uuid) || 0">{{ $t("analytics:morning", { count: analytics.morningInfluencers.get(member.uuid) || 0 }) }}</p>
@@ -265,7 +272,7 @@
 								:show-role="false"
 								:show-pronouns="false"
 								:show-cover="false"
-								@click="clickMember(member)"
+								@click="showModal(analytics.influencedEntries.get(member.uuid) || [])"
 							>
 								<p v-if="analytics.nightInfluenced.get(member.uuid) || 0">{{ $t("analytics:night", { count: analytics.nightInfluenced.get(member.uuid) || 0 }) }}</p>
 								<p v-if="analytics.morningInfluenced.get(member.uuid) || 0">{{ $t("analytics:morning", { count: analytics.morningInfluenced.get(member.uuid) || 0 }) }}</p>
