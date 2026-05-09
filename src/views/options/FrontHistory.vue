@@ -198,6 +198,7 @@
 						:key="entry.uuid"
 						:entry="entry"
 						button
+						:presence-average="tuple[0] !== 'currentlyFronting'"
 						@click="showModal(entry)"
 					/>
 				</template>
