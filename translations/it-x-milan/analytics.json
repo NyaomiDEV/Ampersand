@@ -1,0 +1,28 @@
+{
+	"header": "Analitiche",
+	"startDate": "Data di inizio",
+	"endDate": "Data di fine",
+	"subheaders": {
+		"fronting": "Gente al front",
+		"influencing": "Gente che influenza",
+		"influenced": "Gente influenzata"
+	},
+	"frontingCount_one": "Al front {{count}} volta, top",
+	"frontingCount_other": "Al front {{count}} volte, figa",
+	"influencingCount_one": "Ha influenzato {{count}} volta, un pro",
+	"influencingCount_other": "Ha influenzato {{count}} volte, un drago",
+	"influencedCount_one": "È statə influenzatə {{count}} volta, ci sta",
+	"influencedCount_other": "È statə influenzatə {{count}} volte, vabbè",
+	"total": "In totale per {{time}}, fatturato vero",
+	"average": "In media per {{time}}, senza sbatti",
+	"max": "Al massimo per {{time}}, tanta roba",
+	"min": "Almeno per {{time}}, il minimo sindacale",
+	"night_one": "{{count}} volta di notte, che sbatti",
+	"night_other": "{{count}} volte di notte, no stop",
+	"morning_one": "{{count}} volta al mattino, operativo",
+	"morning_other": "{{count}} volte al mattino, carichissimo",
+	"day_one": "{{count}} volta durante il giorno, sul pezzo",
+	"day_other": "{{count}} volte durante il giorno, business as usual",
+	"evening_one": "{{count}} volta di sera, aperitivo?",
+	"evening_other": "{{count}} volte di sera, Milano da bere"
+}

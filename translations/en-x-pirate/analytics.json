@@ -1,0 +1,28 @@
+{
+	"header": "The Ship's Ledger",
+	"startDate": "Day we weighed anchor",
+	"endDate": "Day we hit port",
+	"subheaders": {
+		"fronting": "Mates bein' at the helm",
+		"influencing": "Mates influencin' the crew",
+		"influenced": "Mates bein' influenced"
+	},
+	"frontingCount_one": "Was at the helm {{count}} time",
+	"frontingCount_other": "Was at the helm {{count}} times",
+	"influencingCount_one": "Influenced the crew {{count}} time",
+	"influencingCount_other": "Influenced the crew {{count}} times",
+	"influencedCount_one": "Was being influenced {{count}} time",
+	"influencedCount_other": "Was being influenced {{count}} times",
+	"total": "All for {{time}}",
+	"average": "Average for {{time}}",
+	"max": "At the most for {{time}}",
+	"min": "At the least for {{time}}",
+	"night_one": "{{count}} time under the stars",
+	"night_other": "{{count}} times under the stars",
+	"morning_one": "{{count}} time at first light",
+	"morning_other": "{{count}} times at first light",
+	"day_one": "{{count}} time while the sun be high",
+	"day_other": "{{count}} times while the sun be high",
+	"evening_one": "{{count}} time at sundown",
+	"evening_other": "{{count}} times at sundown"
+}

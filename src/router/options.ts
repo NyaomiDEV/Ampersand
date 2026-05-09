@@ -47,6 +47,11 @@ const options: RouteRecordRaw[] = [
 		component: () => import("../views/options/Reminders.vue"),
 	},
 	{
+		path: "/options/analytics",
+		name: "Analytics",
+		component: () => import("../views/options/Analytics.vue"),
+	},
+	{
 		path: "/options/appSettings",
 		name: "AppSettings",
 		component: () => import("../views/options/AppSettings.vue"),

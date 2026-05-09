@@ -1,0 +1,28 @@
+{
+	"header": "Analitichi",
+	"startDate": "Data di nizziu",
+	"endDate": "Data di fini",
+	"subheaders": {
+		"fronting": "Membri ô front",
+		"influencing": "Membri chi nfluenzanu a l'autri",
+		"influenced": "Membri nfluenzati di l'autri"
+	},
+	"frontingCount_one": "Ô front {{count}} vota",
+	"frontingCount_other": "Ô front {{count}} voti",
+	"influencingCount_one": "Nfluenzau a l'autri {{count}} vota",
+	"influencingCount_other": "Nfluenzau a l'autri {{count}} voti",
+	"influencedCount_one": "Fu nfluenzatu di l'autri {{count}} vota",
+	"influencedCount_other": "Fu nfluenzatu di l'autri {{count}} voti",
+	"total": "In tutali pi {{time}}",
+	"average": "In media pi {{time}}",
+	"max": "Ô màssimu pi {{time}}",
+	"min": "Ô mìnimu pi {{time}}",
+	"night_one": "{{count}} vota di notti",
+	"night_other": "{{count}} voti di notti",
+	"morning_one": "{{count}} vota â matina",
+	"morning_other": "{{count}} voti â matina",
+	"day_one": "{{count}} vota duranti u jornu",
+	"day_other": "{{count}} voti duranti u jornu",
+	"evening_one": "{{count}} vota di sira",
+	"evening_other": "{{count}} voti di sira"
+}

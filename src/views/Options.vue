@@ -10,6 +10,7 @@
 	import MessageBoardMD from "@material-symbols/svg-600/outlined/newsmode.svg";
 	import TagMD from "@material-symbols/svg-600/outlined/sell.svg";
 	import RemindersMD from "@material-symbols/svg-600/outlined/notification_add.svg";
+	import AnalyticsMD from "@material-symbols/svg-600/outlined/analytics.svg";
 	import SettingsMD from "@material-symbols/svg-600/outlined/settings.svg";
 	import AccessibilityMD from "@material-symbols/svg-600/outlined/accessibility_new.svg";
 	import ImportExportMD from "@material-symbols/svg-600/outlined/swap_vert.svg";
@@ -86,6 +87,11 @@
 				<IonItem v-if="isDev" button router-link="/options/reminders">
 					<IonIcon slot="start" :icon="RemindersMD" aria-hidden="true" />
 					<IonLabel>{{ $t("reminders:header") }}</IonLabel>
+				</IonItem>
+
+				<IonItem button router-link="/options/analytics">
+					<IonIcon slot="start" :icon="AnalyticsMD" aria-hidden="true" />
+					<IonLabel>{{ $t("analytics:header") }}</IonLabel>
 				</IonItem>
 
 			</IonList>

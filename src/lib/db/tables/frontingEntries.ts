@@ -240,15 +240,18 @@ export async function getFrontingStatistics(start: Date, end: Date){
 	const maps = {
 		frontingCount: new Map<string, number>(),
 		frontingTotalSpan: new Map<string, number>(),
+		frontingPercent: new Map<string, number>(),
 		frontingMinSpan: new Map<string, number>(),
 		frontingMaxSpan: new Map<string, number>(),
 
 		influencingCount: new Map<string, number>(),
+		influencingPercent: new Map<string, number>(),
 		influencingTotalSpan: new Map<string, number>(),
 		influencingMinSpan: new Map<string, number>(),
 		influencingMaxSpan: new Map<string, number>(),
 
 		influencedCount: new Map<string, number>(),
+		influencedPercent: new Map<string, number>(),
 		influencedTotalSpan: new Map<string, number>(),
 		influencedMinSpan: new Map<string, number>(),
 		influencedMaxSpan: new Map<string, number>(),
@@ -366,6 +369,27 @@ export async function getFrontingStatistics(start: Date, end: Date){
 
 		}
 	}
+
+	const allFrontingSpan = maps.frontingTotalSpan.values().reduce((p, c) => p + c, 0);
+	const allInfluencingSpan = maps.influencingTotalSpan.values().reduce((p, c) => p + c, 0);
+	const allInfluencedSpan = maps.influencedTotalSpan.values().reduce((p, c) => p + c, 0);
+
+	for(const [member, span] of maps.frontingTotalSpan.entries()){
+		const percent = (span / allFrontingSpan) * 100;
+		maps.frontingPercent.set(member, percent);
+	}
+
+	for (const [member, span] of maps.influencingTotalSpan.entries()) {
+		const percent = (span / allInfluencingSpan) * 100;
+		maps.influencingPercent.set(member, percent);
+	}
+
+	for (const [member, span] of maps.influencedTotalSpan.entries()) {
+		const percent = (span / allInfluencedSpan) * 100;
+		maps.influencedPercent.set(member, percent);
+	}
+
+	return maps;
 }
 
 export async function getRecentlyFronted(days: number) {

@@ -1,0 +1,28 @@
+{
+	"header": "Analitiche",
+	"startDate": "Data di inizio",
+	"endDate": "Data di fine",
+	"subheaders": {
+		"fronting": "Membrɜ al front",
+		"influencing": "Membrɜ che influenzano altrɜ",
+		"influenced": "Membrɜ influenzati daɜ altrɜ"
+	},
+	"frontingCount_one": "Al front {{count}} volta",
+	"frontingCount_other": "Al front {{count}} volte",
+	"influencingCount_one": "Ha influenzato altrɜ {{count}} volta",
+	"influencingCount_other": "Ha influenzato altrɜ {{count}} volte",
+	"influencedCount_one": "È statə influenzatə daɜ altrɜ {{count}} volta",
+	"influencedCount_other": "È statə influenzatə daɜ altrɜ {{count}} volte",
+	"total": "In totale per {{time}}",
+	"average": "In media per {{time}}",
+	"max": "Al massimo per {{time}}",
+	"min": "Almeno per {{time}}",
+	"night_one": "{{count}} volta di notte",
+	"night_other": "{{count}} volte di notte",
+	"morning_one": "{{count}} volta al mattino",
+	"morning_other": "{{count}} volte al mattino",
+	"day_one": "{{count}} volta durante il giorno",
+	"day_other": "{{count}} volte durante il giorno",
+	"evening_one": "{{count}} volta di sera",
+	"evening_other": "{{count}} volte di sera"
+}

@@ -57,14 +57,30 @@ export function decompressGzip(data: BufferSource) {
 		.pipeThrough<Uint8Array>(new DecompressionStream("gzip"));
 }
 
-export function formatDate(date: Date, withDate?: "collapsed" | "expanded"){
-	if(withDate)
-		return dayjs(date).format(`${withDate === "expanded" ? "LL" : "ll"}, ${getLocaleInfo().lt}`);
+export function formatDate(date: Date, withDate?: "collapsed" | "expanded" | "only-collapsed" | "only-expanded"){
+	if(withDate){
+		switch(withDate){
+			case "collapsed":
+				return dayjs(date).format(`ll, ${getLocaleInfo().lt}`);
+			case "expanded":
+				return dayjs(date).format(`LL, ${getLocaleInfo().lt}`);
+			case "only-collapsed":
+				return dayjs(date).format("ll");
+			case "only-expanded":
+				return dayjs(date).format("LL");
+		}
+	}
 	return dayjs(date).format(getLocaleInfo().lt);
 }
 
 export function formatWrittenTime(dateStart: Date, dateEnd: Date){
 	const duration = dayjs.duration(dayjs(dateStart).diff(dateEnd));
+
+	return duration.format("Y[y] M[M] D[d] H[h] m[m] s[s]").replace(/(?<![1-9])0\w\s?/g, "");
+}
+
+export function formatWrittenTimeAbsolute(durationMs: number) {
+	const duration = dayjs.duration(dayjs(durationMs).diff(0));
 
 	return duration.format("Y[y] M[M] D[d] H[h] m[m] s[s]").replace(/(?<![1-9])0\w\s?/g, "");
 }
