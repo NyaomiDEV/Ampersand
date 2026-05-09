@@ -235,7 +235,7 @@ export async function getFrontingBetweenComplete(start: Date, end?: Date) {
 }
 
 export async function getFrontingStatistics(start: Date, end: Date){
-	const frontingEntries = await getFrontingBetween(start, end);
+	const entries = await getFrontingBetween(start, end);
 
 	const maps = {
 		frontingCount: new Map<string, number>(),
@@ -243,18 +243,21 @@ export async function getFrontingStatistics(start: Date, end: Date){
 		frontingPercent: new Map<string, number>(),
 		frontingMinSpan: new Map<string, number>(),
 		frontingMaxSpan: new Map<string, number>(),
+		frontingEntries: new Map<string, FrontingEntry[]>(),
 
 		influencingCount: new Map<string, number>(),
 		influencingPercent: new Map<string, number>(),
 		influencingTotalSpan: new Map<string, number>(),
 		influencingMinSpan: new Map<string, number>(),
 		influencingMaxSpan: new Map<string, number>(),
+		influencingEntries: new Map<string, FrontingEntry[]>(),
 
 		influencedCount: new Map<string, number>(),
 		influencedPercent: new Map<string, number>(),
 		influencedTotalSpan: new Map<string, number>(),
 		influencedMinSpan: new Map<string, number>(),
 		influencedMaxSpan: new Map<string, number>(),
+		influencedEntries: new Map<string, FrontingEntry[]>(),
 
 		morningFronters: new Map<string, number>(),
 		dayFronters: new Map<string, number>(),
@@ -272,7 +275,7 @@ export async function getFrontingStatistics(start: Date, end: Date){
 		nightInfluenced: new Map<string, number>()
 	};
 
-	for(const entry of frontingEntries){
+	for(const entry of entries){
 		if(!entry.endTime) continue;
 
 		const span = entry.endTime.valueOf() - entry.startTime.valueOf();
@@ -283,21 +286,34 @@ export async function getFrontingStatistics(start: Date, end: Date){
 			const influencingTotalSpan = maps.influencingTotalSpan.get(entry.member) || 0;
 			const influencingMinSpan = maps.influencingMinSpan.get(entry.member) || 0;
 			const influencingMaxSpan = maps.influencingMaxSpan.get(entry.member) || 0;
+			const influencingEntries = maps.influencingEntries.get(entry.member) || [];
 
 			maps.influencingCount.set(entry.member, influencingCount + 1);
 			maps.influencingTotalSpan.set(entry.member, influencingTotalSpan + span);
 			maps.influencingMinSpan.set(entry.member, influencingMinSpan === 0 ? span : Math.min(influencingMinSpan, span));
 			maps.influencingMaxSpan.set(entry.member, Math.max(influencingMaxSpan, span));
 
+			if (maps.influencingEntries.has(entry.member))
+				maps.influencingEntries.set(entry.member, influencingEntries);
+
+			influencingEntries.push(entry);
+
 			const influencedCount = maps.influencedCount.get(entry.influencing) || 0;
 			const influencedTotalSpan = maps.influencedTotalSpan.get(entry.influencing) || 0;
 			const influencedMinSpan = maps.influencedMinSpan.get(entry.influencing) || 0;
 			const influencedMaxSpan = maps.influencedMaxSpan.get(entry.influencing) || 0;
+			const influencedEntries = maps.influencingEntries.get(entry.influencing) || [];
 
 			maps.influencedCount.set(entry.influencing, influencedCount + 1);
 			maps.influencedTotalSpan.set(entry.influencing, influencedTotalSpan + span);
 			maps.influencedMinSpan.set(entry.influencing, influencedMinSpan === 0 ? span : Math.min(influencedMinSpan, span));
 			maps.influencedMaxSpan.set(entry.influencing, Math.max(influencedMaxSpan, span));
+
+			if (maps.influencedEntries.has(entry.influencing))
+				maps.influencedEntries.set(entry.influencing, influencedEntries);
+
+			influencedEntries.push(entry);
+
 
 			const hour = entry.startTime.getHours();
 
@@ -332,18 +348,23 @@ export async function getFrontingStatistics(start: Date, end: Date){
 				const influencedCount = maps.eveningInfluenced.get(entry.influencing) || 0;
 				maps.eveningInfluenced.set(entry.influencing, influencedCount + 1);
 			}
-
 		} else {
 
 			const frontingCount = maps.frontingCount.get(entry.member) || 0;
 			const frontingTotalSpan = maps.frontingTotalSpan.get(entry.member) || 0;
 			const frontingMinSpan = maps.frontingMinSpan.get(entry.member) || 0;
 			const frontingMaxSpan = maps.frontingMaxSpan.get(entry.member) || 0;
+			const frontingEntries = maps.frontingEntries.get(entry.member) || [];
 
 			maps.frontingCount.set(entry.member, frontingCount + 1);
 			maps.frontingTotalSpan.set(entry.member, frontingTotalSpan + span);
 			maps.frontingMinSpan.set(entry.member, frontingMinSpan === 0 ? span : Math.min(frontingMinSpan, span));
 			maps.frontingMaxSpan.set(entry.member, Math.max(frontingMaxSpan, span));
+
+			if (maps.influencedEntries.has(entry.member))
+				maps.influencedEntries.set(entry.member, frontingEntries);
+
+			frontingEntries.push(entry);
 
 			const hour = entry.startTime.getHours();
 
