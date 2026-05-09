@@ -6,7 +6,8 @@
 
 	const props = defineProps<{
 		entry: FrontingEntryComplete,
-		showDate: boolean
+		showDate: boolean,
+		presenceAverage?: boolean
 	}>();
 
 	function format(startTime: Date, endTime?: Date){
@@ -19,6 +20,12 @@
 			return `${formatDate(startTime)}~${formatDate(endTime)}`;
 		
 		return `${formatDate(startTime, "expanded")} - ${formatDate(endTime, "expanded")}`;
+	}
+
+	function getPresenceAverage(){
+		if(!props.entry.presence) return undefined;
+
+		return (props.entry.presence.values().reduce((x, y) => x + y, 0) / props.entry.presence.size);
 	}
 
 	function getMostRecentPresence(){
@@ -38,7 +45,7 @@
 		{{ props.entry.customStatus }}
 	</p>
 	<p v-if="props.entry.presence?.size">
-		<PresenceRating :rating="getMostRecentPresence()[1] ?? 0" />
+		<PresenceRating :rating="props.presenceAverage ? getPresenceAverage() ?? 0 : getMostRecentPresence()[1] ?? 0" />
 	</p>
 	<p v-if="props.showDate">
 		{{ format(props.entry.startTime, props.entry.endTime) }}

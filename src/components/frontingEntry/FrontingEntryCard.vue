@@ -20,7 +20,8 @@
 		entry: FrontingEntryComplete,
 		influencedBy?: Member[],
 		showBorderColor?: boolean,
-		showCover?: boolean
+		showCover?: boolean,
+		presenceAverage?: boolean
 	}>(), {
 		showCover: true,
 		showBorderColor: true
@@ -34,6 +35,12 @@
 	}
 
 	onBeforeMount(updateMemberSystem);
+
+	function getPresenceAverage(){
+		if(!props.entry.presence) return undefined;
+
+		return (props.entry.presence.values().reduce((x, y) => x + y, 0) / props.entry.presence.size);
+	}
 
 	function getMostRecentPresence(){
 		if(!props.entry.presence) return [undefined, undefined];
@@ -112,7 +119,7 @@
 					{{ props.entry.customStatus }}
 				</p>
 				<p v-if="props.entry.presence?.size">
-					<PresenceRating :rating="getMostRecentPresence()[1] ?? 0" />
+					<PresenceRating :rating="props.presenceAverage ? getPresenceAverage() ?? 0 : getMostRecentPresence()[1] ?? 0" />
 				</p>
 			</IonLabel>
 		</IonCardContent>
