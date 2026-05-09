@@ -13,7 +13,7 @@
 	import { accessibilityConfig } from "../lib/config/index.ts";
 	import { onBeforeMount, onUnmounted, ref, shallowRef, toRaw, watch } from "vue";
 	import type { Member } from "../lib/db/entities.d.ts";
-	import { getFilteredMembers } from "../lib/db/tables/members";
+	import { getFilteredMembers, isValidMember } from "../lib/db/tables/members";
 	import { DatabaseEvents, DatabaseEvent } from "../lib/db/events";
 	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
 	import VirtualList from "../components/VirtualList.vue";
@@ -64,6 +64,10 @@
 		DatabaseEvents.removeEventListener("updated", listener);
 	});
 
+	function emitFiltered(members: Member[]){
+		return emit("update:modelValue", members.filter(x => isValidMember(x)));
+	}
+
 	async function resetMembers(){
 		members.value = undefined;
 		iterDone.value = false;
@@ -110,7 +114,7 @@
 					if(props.discardOnSelect){
 						void modalController.dismiss();
 						if(props.alwaysEmit)
-							emit("update:modelValue", [...toRaw(selectedMembers.value)]);
+							emitFiltered([...toRaw(selectedMembers.value)]);
 					}
 					return;
 				}
@@ -118,7 +122,7 @@
 			}
 		}
 
-		emit("update:modelValue", [...toRaw(selectedMembers.value)]);
+		emitFiltered([...toRaw(selectedMembers.value)]);
 
 		if(onlyOne && props.discardOnSelect)
 			void modalController.dismiss();

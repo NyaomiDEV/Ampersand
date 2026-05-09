@@ -107,6 +107,10 @@ export async function updateMember(newContent: UUIDable & Partial<Member>): Prom
 	}
 }
 
+export function isValidMember(member: Member | UUID){
+	return typeof member === "string" ? !!getMemberIndex().find(x => x.uuid === member) : !!getMemberIndex().find(x => x.uuid === member.uuid);
+}
+
 export const defaultMember = (uuid?: UUID): Member => ({
 	name: t("members:deletedMember"),
 	system: nilUid,

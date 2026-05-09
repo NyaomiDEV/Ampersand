@@ -12,6 +12,7 @@
 	import Avatar from "../Avatar.vue";
 
 	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
+	import { isValidMember } from "../../lib/db/tables/members";
 
 	const router = useIonRouter();
 
@@ -25,7 +26,7 @@
 
 
 	function click(e: Event){
-		if(!props.clickable) return;
+		if(!props.clickable || !isValidMember(props.member)) return;
 		e.stopPropagation();
 		router.push(`/members/edit?uuid=${props.member.uuid}`);
 	}

@@ -7,13 +7,12 @@
 	import dayjs from "dayjs";
 	import MemberItem from "../../components/member/MemberItem.vue";
 	import { Member } from "../../lib/db/entities";
-	import { getMember } from "../../lib/db/tables/members";
+	import { getMember, isValidMember } from "../../lib/db/tables/members";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import TheresNothingHere from "../../components/TheresNothingHere.vue";
 
 	import statsMD from "@material-symbols/svg-600/outlined/bar_chart.svg";
 	import routineMD from "@material-symbols/svg-600/outlined/routine.svg";
-	import { maxUid, nilUid } from "../../lib/util/consts";
 
 	const router = useIonRouter();
 
@@ -40,8 +39,7 @@
 	}
 
 	function clickMember(member: Member){
-		if(member.uuid === nilUid || member.uuid === maxUid) return;
-
+		if(!isValidMember(member)) return;
 		router.push(`/members/edit?uuid=${member.uuid}`);
 	}
 
