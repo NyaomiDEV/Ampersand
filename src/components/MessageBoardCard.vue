@@ -28,7 +28,7 @@
 
 	const isPollHidden = ref(props.hidePoll);
 
-	/* Wait for Firefox and Safari to implement field-sizing in CSS and then use that instead of rows: 4 */
+	/* field-sizing would be better than "rows: 4" but the min Safari version is literally 26.2 */
 
 	function showReasonAlert(): Promise<string | undefined>{
 		return new Promise((resolve) => {
@@ -184,10 +184,10 @@
 		/>
 		<div class="flexbox">
 			<div class="subheader">
-				<span v-if="props.boardMessage.members.length">{{ props.boardMessage.members.toSorted(sortName).map(x => x.name).join(", ") }}</span>
 				<p v-if="formatDate(props.boardMessage.date, props.showDateInDateTime ? 'collapsed' : undefined) !== props.boardMessage.title">
 					{{ formatDate(props.boardMessage.date, props.showDateInDateTime ? 'collapsed' : undefined) }}
 				</p>
+				<span v-if="props.boardMessage.members.length">{{ props.boardMessage.members.toSorted(sortName).map(x => x.name).join(", ") }}</span>
 			</div>
 			<div class="contents">
 				<h1>{{ props.boardMessage.title }}</h1>
@@ -280,15 +280,12 @@
 		.flexbox {
 			display: flex;
 			flex-direction: column;
-			gap: .25em;
 			width: 100%;
 
 			.subheader {
 				display: flex;
-				flex-direction: row;
-				justify-content: space-between;
-				align-items: center;
-				gap: 16px;
+				flex-direction: column;
+				gap: 0.25em;
 
 				* {
 					margin: 0;
@@ -296,15 +293,14 @@
 
 				span {
 					font-size: 1.1em;
-					color: var(--ion-text-color-step-400);
 					white-space: nowrap;
 					overflow: hidden;
 					text-overflow: ellipsis;
 				}
 
 				p {
-					text-align: right;
-					flex-shrink: 0;
+					color: var(--ion-text-color-step-400);
+					font-size: .9em;
 				}
 			}
 
@@ -320,6 +316,7 @@
 				> h1 {
 					font-size: 1.30em;
 					margin-bottom: 0;
+					margin-top: 0;
 					line-height: 1.5em;
 				}
 			}
