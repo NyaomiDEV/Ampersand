@@ -33,7 +33,7 @@
 		);
 
 		members.value = await Promise.all(Array.from(new Set([
-			...Object.keys(_analytics).map(k => [...(analytics.value![k] as Map<string, number>).keys()]),
+			...Object.keys(_analytics).map(k => [...(_analytics[k] as Map<string, number>).keys()]),
 		].flat())).map(x => getMember(x)));
 
 		analytics.value = _analytics;
