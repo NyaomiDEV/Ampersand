@@ -244,6 +244,7 @@ export async function getFrontingStatistics(start: Date, end: Date){
 		frontingMinSpan: new Map<string, number>(),
 		frontingMaxSpan: new Map<string, number>(),
 		frontingEntries: new Map<string, FrontingEntry[]>(),
+		frontingPresenceMean: new Map<string, number>(),
 
 		influencingCount: new Map<string, number>(),
 		influencingPercent: new Map<string, number>(),
@@ -251,6 +252,7 @@ export async function getFrontingStatistics(start: Date, end: Date){
 		influencingMinSpan: new Map<string, number>(),
 		influencingMaxSpan: new Map<string, number>(),
 		influencingEntries: new Map<string, FrontingEntry[]>(),
+		influencingPresenceMean: new Map<string, number>(),
 
 		influencedCount: new Map<string, number>(),
 		influencedPercent: new Map<string, number>(),
@@ -348,6 +350,7 @@ export async function getFrontingStatistics(start: Date, end: Date){
 				const influencedCount = maps.eveningInfluenced.get(entry.influencing) || 0;
 				maps.eveningInfluenced.set(entry.influencing, influencedCount + 1);
 			}
+
 		} else {
 
 			const frontingCount = maps.frontingCount.get(entry.member) || 0;
@@ -408,6 +411,18 @@ export async function getFrontingStatistics(start: Date, end: Date){
 	for (const [member, span] of maps.influencedTotalSpan.entries()) {
 		const percent = (span / allInfluencedSpan) * 100;
 		maps.influencedPercent.set(member, percent);
+	}
+
+	for(const [member, entries] of maps.frontingEntries.entries()){
+		const withPresence = entries.filter(x => x.presence?.size);
+		const total = withPresence.length;
+		maps.frontingPresenceMean.set(member, withPresence.reduce((p, c) => p + (c.presence!.values().reduce((x, y) => x + y, 0) / c.presence!.size), 0) / total);
+	}
+
+	for (const [member, entries] of maps.influencingEntries.entries()) {
+		const withPresence = entries.filter(x => x.presence?.size);
+		const total = withPresence.length;
+		maps.influencingPresenceMean.set(member, withPresence.reduce((p, c) => p + (c.presence!.values().reduce((x, y) => x + y, 0) / c.presence!.size), 0) / total);
 	}
 
 	return maps;
