@@ -27,14 +27,16 @@
 	const endDatePicker = useTemplateRef("endDatePicker");
 
 	async function getAnalytics(){
-		analytics.value = await getFrontingStatistics(
+		const _analytics = await getFrontingStatistics(
 			startDate.value,
 			endDate.value
 		);
 
 		members.value = await Promise.all(Array.from(new Set([
-			...Object.keys(analytics.value).map(k => [...(analytics.value![k] as Map<string, number>).keys()]),
+			...Object.keys(_analytics).map(k => [...(analytics.value![k] as Map<string, number>).keys()]),
 		].flat())).map(x => getMember(x)));
+
+		analytics.value = _analytics;
 	}
 
 	function clickMember(member: Member){
