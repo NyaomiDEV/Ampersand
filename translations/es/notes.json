@@ -8,7 +8,8 @@
 		"delete": {
 			"title": "Borrar nota",
 			"confirm": "¿Estás seguro de que quieres eliminar esta nota?"
-		}
+		},
+		"header": "Editar nota"
 	},
 	"header": "Notas rápidas"
 }
