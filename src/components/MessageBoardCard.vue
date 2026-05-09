@@ -38,7 +38,7 @@
 					buttons: [
 						{
 							text: i18next.t("other:alerts.cancel"),
-							role: "outline",
+							role: "cancel",
 							handler: () => resolve(undefined)
 						},
 						{

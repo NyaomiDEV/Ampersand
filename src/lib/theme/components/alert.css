@@ -89,7 +89,7 @@
 			color: rgb(var(--md3-on-error));
 		}
 
-		&.alert-button-role-outline {
+		&.alert-button-role-cancel {
 			border-color: rgb(var(--md3-outline));
 			border-style: solid;
 			border-width: 1px;
