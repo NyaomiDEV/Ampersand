@@ -2,7 +2,7 @@
 	"header": "Accessibility",
 	"highLegibilityFont": {
 		"title": "High legibility font",
-		"desc": "Use an high legibility font instead of the standard device font"
+		"desc": "Use a high legibility font instead of the standard device font"
 	},
 	"highLegibilityFontType": {
 		"title": "High legibility font family",
