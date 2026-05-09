@@ -89,7 +89,7 @@
 					<IonLabel>{{ $t("customFields:header") }}</IonLabel>
 				</IonItem>
 
-				<IonItem v-if="isDev" button router-link="/options/reminders">
+				<IonItem button router-link="/options/reminders">
 					<IonIcon slot="start" :icon="RemindersMD" aria-hidden="true" />
 					<IonLabel>{{ $t("reminders:header") }}</IonLabel>
 				</IonItem>
