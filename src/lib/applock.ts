@@ -104,7 +104,7 @@ export function disableApplock(plaintextPwd: string) {
 }
 
 export function enableApplock(plaintextPwd: string) {
-	if (isLocked.value) return false;
+	if (isLocked.value || securityConfig.password) return false;
 
 	securityConfig.password = hashPassword(plaintextPwd);
 	securityConfig.usePassword = true;
