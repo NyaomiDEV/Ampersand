@@ -13,10 +13,11 @@
 
 	watch(props, () => {
 		const _stars: VNode[] = [];
+		const _rating = Math.round(props.rating);
 
 		for (let i = 0; i < 10; i+=2) {
-			if (i < props.rating) {
-				if (i+1 < props.rating) 
+			if (i < _rating) {
+				if (i+1 < _rating) 
 					_stars.push(h(IonIcon, { icon: fullStar }));
 				else 
 					_stars.push(h(IonIcon, { icon: halfStar }));
