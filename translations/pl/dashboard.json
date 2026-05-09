@@ -11,5 +11,8 @@
 		"header": "Tablica ogłoszeń",
 		"add": "Dodaj na tablicę",
 		"view": "Zobacz więcej"
+	},
+	"journal": {
+		"header": "Najnowsze posty"
 	}
 }

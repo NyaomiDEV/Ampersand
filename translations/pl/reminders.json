@@ -15,8 +15,9 @@
 		},
 		"headerAdd": "Dodaj przypomnienie",
 		"active": "Aktywuj przypomnienie",
-		"delay": "Opóźnienie w minutach",
-		"members": "Wybierz członków"
+		"delay": "Opóźnienie",
+		"members": "Wybierz członków",
+		"triggerOnAllMembers": "Wyślij wszystkim członkom"
 	},
 	"notOnPC": {
 		"header": "Przypomnienia nie działają na PC",
