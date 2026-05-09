@@ -61,7 +61,7 @@
 	"shapes": {
 		"arch": "Arch",
 		"arrow": "Flecha",
-		"boom": "¡Boom!",
+		"boom": "Búm",
 		"bun": "Bollo",
 		"burst": "Explosión",
 		"clamshell": "Concha",
@@ -73,7 +73,7 @@
 		"heart": "Corazón",
 		"leaf-clover4": "Trébol de cuatro hojas",
 		"leaf-clover8": "Trébol de ocho hojas",
-		"oval": "Oval",
+		"oval": "Elíptico",
 		"pentagon": "Pentágono",
 		"pill": "Pastilla",
 		"pixel-circle": "Círculo de píxeles",

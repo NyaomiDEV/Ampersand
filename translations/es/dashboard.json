@@ -11,5 +11,8 @@
 	},
 	"header": "Panel de control",
 	"header_salute": "¡Hola!",
-	"recentFrontingHistory": "Recientemente sustituido"
+	"recentFrontingHistory": "Recientemente sustituido",
+	"journal": {
+		"header": "Publicaciones recientes"
+	}
 }
