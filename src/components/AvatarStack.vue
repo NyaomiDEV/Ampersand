@@ -31,10 +31,20 @@
 		position: relative;
 		display: flex;
 		align-items: center;
+		width: 56px;
+		transform-origin: 0% 50%;
 
 		> * {
 			flex-shrink: 0;
 			flex-grow: 1;
+		}
+
+		&:has(:nth-child(2)){
+			transform: scale(0.8235294118);
+		}
+
+		&:has(:nth-child(3)){
+			transform: scale(0.7);
 		}
 	}
 
