@@ -41,7 +41,7 @@
 			<IonList>
 				<VirtualList :entries="complete" :min-size="86" :gap="2">
 					<template #default="{ entry }">
-						<FrontingEntryItem :entry="entry" />
+						<FrontingEntryItem :entry="entry" :show-effects="false" />
 					</template>
 				</VirtualList>
 			</IonList>
