@@ -297,6 +297,11 @@
 		overflow-y: auto;
 	}
 
+	ion-label > p {
+		text-wrap: wrap !important;
+		overflow: visible !important;
+	}
+
 	div.datePickers {
 		display: flex;
 		gap: 2px;
