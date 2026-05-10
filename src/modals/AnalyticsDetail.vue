@@ -8,12 +8,12 @@
 		IonModal
 	} from "@ionic/vue";
 
-	import { onBeforeMount, shallowRef } from "vue";
+	import { onMounted, shallowRef } from "vue";
 	import type { FrontingEntry, FrontingEntryComplete } from "../lib/db/entities";
 	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
 	import FrontingEntryItem from "../components/frontingEntry/FrontingEntryItem.vue";
 	import VirtualList from "../components/VirtualList.vue";
-	import { toFrontingEntryComplete } from "../lib/db/tables/frontingEntries";
+	import { defaultMember, getMember } from "../lib/db/tables/members";
 
 	const props = defineProps<{
 		entries: FrontingEntry[]
@@ -21,10 +21,13 @@
 
 	const complete = shallowRef<FrontingEntryComplete[]>();
 
-	onBeforeMount(async () => {
-		complete.value = await Promise.all(
-			props.entries.map(x => toFrontingEntryComplete(x))
-		);
+	onMounted(async () => {
+		const _memberSet = await Promise.all(Array.from(new Set(props.entries.map(x => [x.member, x.influencing].filter((x): x is string => !!x)).flat(1))).map(x => getMember(x)));
+		complete.value = props.entries.map(x => ({
+			...x,
+			member: _memberSet.find(y => y.uuid === x.member) || defaultMember(),
+			influencing: x.influencing ? _memberSet.find(y => y.uuid === x.influencing) : undefined
+		}));
 	});
 </script>
 
