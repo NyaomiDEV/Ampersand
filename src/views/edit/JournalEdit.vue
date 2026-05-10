@@ -45,7 +45,7 @@
 	import { getTags } from "../../lib/db/tables/tags";
 	import { addModal, removeModal } from "../../lib/modals";
 	import MemberChip from "../../components/member/MemberChip.vue";
-	import PostComments from "../../modals/PostComments.vue";
+	import Comments from "../../modals/Comments.vue";
 
 	const { getObjectURL } = useBlob();
 	const router = useIonRouter();
@@ -56,6 +56,7 @@
 
 	const memberSelectModal = useTemplateRef("memberSelectModal");
 	const memberTagModal = useTemplateRef("memberTagModal");
+	const postComments = useTemplateRef("postComments");
 
 	const tags = shallowRef<Tag[]>([]);
 
@@ -122,21 +123,6 @@
 		const vnode = h(JournalOptions, {
 			post,
 			tags,
-			onDidDismiss: () => removeModal(vnode)
-		});
-
-		const modal = await addModal(vnode);
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-call
-		await (modal.el as any).present();
-	}
-
-	async function showPostComments(){
-		if(!post.value.uuid) return;
-
-		const vnode = h(PostComments, {
-			// (it is necessary actually)
-			// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-			post: post.value as JournalPostComplete,
 			onDidDismiss: () => removeModal(vnode)
 		});
 
@@ -234,10 +220,11 @@
 				</div>
 
 				<IonItem
+					v-if="post.uuid"
 					class="surface comments"
 					button
 					detail
-					@click="(e) => { e.stopPropagation(); void showPostComments() }"
+					@click="postComments?.$el.present()"
 				>
 					{{ $t("other:comments.commentCount", { count: post.comments?.length || 0 }) }}
 				</IonItem>
@@ -312,6 +299,20 @@
 				:always-emit="true"
 				:model-value="[]"
 				@update:model-value="(e) => { if(e[0]) post.body = `${post.body || ''}@<m:${e[0].uuid}>` }"
+			/>
+
+			<Comments
+				v-if="post.uuid"
+				ref="postComments"
+				:model-value="post.comments"
+				@update:model-value="async (e) => {
+					console.log(e);
+					post.comments = e;
+					await updateJournalPost({
+						...post as JournalPostComplete,
+						members: post.members.map(x => x.uuid)
+					}); 
+				}"
 			/>
 
 		</IonContent>

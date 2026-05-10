@@ -6,7 +6,7 @@
 	import Markdown from "./Markdown.vue";
 	import MemberSelect from "../modals/MemberSelect.vue";
 	import { addModal, removeModal } from "../lib/modals";
-	import { h, ref, toRaw } from "vue";
+	import { h, ref, toRaw, useTemplateRef } from "vue";
 	import { updateBoardMessage } from "../lib/db/tables/boardMessages";
 	import PollResults from "../modals/PollResults.vue";
 	import { useTranslation } from "i18next-vue";
@@ -14,9 +14,10 @@
 
 	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
 	import { accessibilityConfig } from "../lib/config";
-	import BoardComments from "../modals/BoardComments.vue";
+	import Comments from "../modals/Comments.vue";
 
 	const i18next = useTranslation();
+	const boardComments = useTemplateRef("boardComments");
 
 	const props = withDefaults(defineProps<{
 		boardMessage: BoardMessageComplete,
@@ -143,19 +144,6 @@
 		return choice.votes.length / allVotes;
 	}
 
-	async function showComments() {
-		const vnode = h(BoardComments, {
-			boardMessage: props.boardMessage,
-			onDidDismiss: () => {
-				removeModal(vnode);
-			},
-		});
-
-		const modal = await addModal(vnode);
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-explicit-any
-		await (modal.el as any).present();
-	}
-
 	function getStyle(){
 		const style: Record<string, string> = {};
 
@@ -249,12 +237,13 @@
 				<IonButton
 					size="small"
 					fill="clear"
-					@click="(e) => { e.stopPropagation(); void showComments() }"
+					@click="(e) => { e.stopPropagation(); boardComments?.$el.present() }"
 				>
 					{{ $t("other:comments.commentCount", { count: props.boardMessage.comments?.length || 0 }) }}
 				</IonButton>
 			</div>
 		</div>
+		<Comments ref="boardComments" :model-value="props.boardMessage.comments" @update:model-value="updateBoardMessage({ ...boardMessage, members: boardMessage.members.map(x => x.uuid), comments: $event })" />
 	</IonItem>
 </template>
 

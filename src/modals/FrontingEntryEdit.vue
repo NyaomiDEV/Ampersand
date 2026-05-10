@@ -22,9 +22,8 @@
 
 	import { FrontingEntry, FrontingEntryComplete } from "../lib/db/entities";
 	import { newFrontingEntry, updateFrontingEntry, deleteFrontingEntry, sendFrontingChangedEvent, toFrontingEntryComplete, getFrontingBetween } from "../lib/db/tables/frontingEntries";
-	import { h, ref, toRaw, useTemplateRef, watch } from "vue";
+	import { ref, toRaw, useTemplateRef, watch } from "vue";
 	import { useTranslation } from "i18next-vue";
-	import { addModal, removeModal } from "../lib/modals";
 	import { PartialBy } from "../lib/types";
 	import { formatDate, promptOkCancel, toast, presencePhrase } from "../lib/util/misc";
 
@@ -34,7 +33,7 @@
 	import ContentEditable from "../components/ContentEditable.vue";
 	import PresenceRating from "../components/PresenceRating.vue";
 	import MemberItem from "../components/member/MemberItem.vue";
-	import FrontingEntryComments from "./FrontingEntryComments.vue";
+	import Comments from "./Comments.vue";
 
 	const i18next = useTranslation();
 
@@ -57,6 +56,7 @@
 	const memberSelectModal = useTemplateRef("memberSelectModal");
 	const memberInfluencingModal = useTemplateRef("memberInfluencingModal");
 	const memberTagModal = useTemplateRef("memberTagModal");
+	const frontingEntryComments = useTemplateRef("frontingEntryComments");
 
 	async function save(dismissAfter = true){
 		const uuid = frontingEntry.value?.uuid;
@@ -133,21 +133,6 @@
 		const presenceVal = Array.from(frontingEntry.value.presence.entries());
 
 		return presenceVal.sort((a, b) => a[0].valueOf() - b[0].valueOf()).pop() || [undefined, undefined];
-	}
-
-	async function showEntryComments(){
-		if(!frontingEntry.value.uuid) return;
-
-		const vnode = h(FrontingEntryComments, {
-			// (it is necessary actually)
-			// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-			entry: frontingEntry.value as FrontingEntryComplete,
-			onDidDismiss: () => removeModal(vnode)
-		});
-
-		const modal = await addModal(vnode);
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-call
-		await (modal.el as any).present();
 	}
 
 	watch(frontingEntry.value, async () => {
@@ -341,7 +326,7 @@
 				<IonItem
 					button
 					detail
-					@click="showEntryComments"
+					@click="frontingEntryComments?.$el.present()"
 				>
 					{{ $t("other:comments.commentCount", { count: frontingEntry.comments?.length || 0 }) }}
 				</IonItem>
@@ -414,6 +399,20 @@
 				:always-emit="true"
 				:model-value="[]"
 				@update:model-value="(e) => { if(e[0]) frontingEntry.comment = `${frontingEntry.comment || ''}@<m:${e[0].uuid}>` }"
+			/>
+
+			<Comments
+				v-if="frontingEntry.uuid"
+				ref="frontingEntryComments"
+				:model-value="frontingEntry.comments"
+				@update:model-value="(e) => {
+					frontingEntry.comments = e;
+					updateFrontingEntry({
+						...frontingEntry as FrontingEntryComplete,
+						member: frontingEntry.member?.uuid,
+						influencing: frontingEntry.influencing?.uuid,
+					});
+				}"
 			/>
 		</IonContent>
 	</IonModal>

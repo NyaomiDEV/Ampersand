@@ -15,12 +15,10 @@
 		IonItemOption,
 	} from "@ionic/vue";
 
-	import { h, onBeforeMount, onUnmounted, ref, shallowRef, toRaw, useTemplateRef } from "vue";
+	import { h, onBeforeMount, onBeforeUpdate, shallowRef, useTemplateRef } from "vue";
 	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
-	import type { Member, Comment, BoardMessageComplete } from "../lib/db/entities";
-	import { updateBoardMessage } from "../lib/db/tables/boardMessages.ts";
+	import type { Member, Comment } from "../lib/db/entities";
 	import { defaultMember, getMember } from "../lib/db/tables/members.ts";
-	import { DatabaseEvents, DatabaseEvent } from "../lib/db/events.ts";
 	import { addModal, removeModal } from "../lib/modals.ts";
 	import { formatDate, promptOkCancel, sortDateAsc } from "../lib/util/misc.ts";
 	import { useTranslation } from "i18next-vue";
@@ -35,17 +33,16 @@
 
 	const i18next = useTranslation();
 
-	const props = defineProps<{
-		boardMessage: BoardMessageComplete
-	}>();
+	const comments = defineModel<Comment[]>({
+		default: []
+	});
 
 	const members = shallowRef<Member[]>();
-	const boardMessage = ref(props.boardMessage);
 
 	const list = useTemplateRef("list");
 
 	async function getCommentMembers(){
-		const commentMemberUUIDs = boardMessage.value.comments?.map(x => x.member) || [];
+		const commentMemberUUIDs = comments.value?.map(x => x.member) || [];
 
 		members.value = (await Promise.all(
 			commentMemberUUIDs.map(async x => await getMember(x))
@@ -130,19 +127,16 @@
 			member: commenter.uuid
 		};
 
-		boardMessage.value.comments?.push(comment);
-
-		await updateBoardMessage({ ...toRaw(boardMessage.value), members: boardMessage.value.members.map(x => x.uuid) });
+		comments.value = [...comments.value, comment];
 	}
 
 	async function deleteComment(comment: Comment){
 		closeSlidingItems();
 		if(await promptOkCancel(i18next.t("other:comments.deleteConfirmation"))){
-			boardMessage.value.comments?.splice(
-				boardMessage.value.comments.indexOf(comment),
+			comments.value = comments.value.toSpliced(
+				comments.value.indexOf(comment),
 				1
 			);
-			await updateBoardMessage({ ...toRaw(boardMessage.value), members: boardMessage.value.members.map(x => x.uuid) });
 		}
 	}
 
@@ -151,40 +145,31 @@
 		const newBody = await showCommentAlert(comment.comment);
 		if(!newBody) return;
 
-		comment.comment = newBody;
-		await updateBoardMessage({ ...toRaw(boardMessage.value), members: boardMessage.value.members.map(x => x.uuid) });
+		comments.value = [
+			...comments.value.toSpliced(
+				comments.value.indexOf(comment),
+				1
+			),
+			{ ...comment, comment: newBody }
+		];
 	}
 
-	const listener = (event: Event) => {
-		if(["members", "boardMessages"].includes((event as DatabaseEvent).data.table))
-			void getCommentMembers();
-	};
-
-	onBeforeMount(async () => {
-		if(!boardMessage.value.comments)
-			boardMessage.value.comments = [];
-
-		DatabaseEvents.addEventListener("updated", listener);
-		await getCommentMembers();
-	});
-
-	onUnmounted(() => {
-		DatabaseEvents.removeEventListener("updated", listener);
-	});
+	onBeforeMount(getCommentMembers);
+	onBeforeUpdate(getCommentMembers);
 </script>
 
 <template>
-	<IonModal class="poll-results-modal" :breakpoints="[0,0.75,1]" initial-breakpoint="1">
+	<IonModal class="comments-modal" :breakpoints="[0,0.75,1]" initial-breakpoint="1">
 		<IonHeader>
 			<IonToolbar>
 				<IonTitle>{{ $t("other:comments.header") }}</IonTitle>
 			</IonToolbar>
 		</IonHeader>
 
-		<SpinnerFullscreen v-if="!members || !boardMessage.comments" />
+		<SpinnerFullscreen v-if="!members || !comments" />
 		<IonContent v-else>
 			<IonList ref="list">
-				<VirtualList :entries="boardMessage.comments.toSorted(sortDateAsc)" :gap="8" :min-size="92">
+				<VirtualList :entries="comments.toSorted(sortDateAsc)" :gap="8" :min-size="92">
 					<template #default="{ entry: comment }">
 						<IonItemSliding>
 							<MemberItem
