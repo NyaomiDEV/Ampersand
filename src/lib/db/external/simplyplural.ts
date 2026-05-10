@@ -247,11 +247,14 @@ function frontingEntry(spExport: SimplyPluralExport, memberMapping: Map<string, 
 			isMainFronter: false,
 			isLocked: false,
 			uuid: window.crypto.randomUUID(),
-			comment: spExport.comments
+			comments: spExport.comments
 				.filter(x => x.collection === "frontHistory" && x.documentId === spFrontHistory._id)
 				.sort((a, b) => a.time - b.time)
-				.map(x => `<t:${Math.round(x.time / 1000)}:f> - ${x.text}`)
-				.join("\n\n")
+				.map(x => ({
+					date: new Date(x.time),
+					comment: x.text,
+					member: memberMapping.get(spFrontHistory.member!) || (spFrontHistory.custom ? maxUid : nilUid)
+				}))
 		};
 
 		frontingEntries.push(frontingEntry);
