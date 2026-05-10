@@ -88,10 +88,10 @@ if (process.env.GITHUB_ENV) {
 	await appendFile(process.env.GITHUB_OUTPUT, `ampersand_version=${isUnstableBuild ? version : packageVersion}\n`, "utf-8");
 
 	if (isUnstableBuild) {
-		await appendFile(process.env.GITHUB_ENV, "AMPERSAND_IS_CI_BUILD=1\n", "utf-8");
-		await appendFile(process.env.GITHUB_OUTPUT, `ampersand_is_ci_build=true\n`, "utf-8");
+		await appendFile(process.env.GITHUB_ENV, "AMPERSAND_IS_UNSTABLE_BUILD=1\n", "utf-8");
+		await appendFile(process.env.GITHUB_OUTPUT, `ampersand_is_unstable_build=true\n`, "utf-8");
 	} else {
-		await appendFile(process.env.GITHUB_OUTPUT, `ampersand_is_ci_build=false\n`, "utf-8");
+		await appendFile(process.env.GITHUB_OUTPUT, `ampersand_is_unstable_build=false\n`, "utf-8");
 	}
 }
 
