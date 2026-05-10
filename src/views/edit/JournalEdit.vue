@@ -45,6 +45,7 @@
 	import { getTags } from "../../lib/db/tables/tags";
 	import { addModal, removeModal } from "../../lib/modals";
 	import MemberChip from "../../components/member/MemberChip.vue";
+	import PostComments from "../../modals/PostComments.vue";
 
 	const { getObjectURL } = useBlob();
 	const router = useIonRouter();
@@ -120,6 +121,22 @@
 	async function showJournalOptions(){
 		const vnode = h(JournalOptions, {
 			post,
+			tags,
+			onDidDismiss: () => removeModal(vnode)
+		});
+
+		const modal = await addModal(vnode);
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-call
+		await (modal.el as any).present();
+	}
+
+	async function showPostComments(){
+		if(!post.value.uuid) return;
+
+		const vnode = h(PostComments, {
+			// (it is necessary actually)
+			// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+			post: post.value as JournalPostComplete,
 			tags,
 			onDidDismiss: () => removeModal(vnode)
 		});
@@ -208,22 +225,26 @@
 			</div>
 
 			<IonList v-if="!isEditing">
+				<div class="member-chips">
+					<MemberChip
+						v-for="member in post.members.toSorted(sortName)"
+						:key="member.uuid"
+						:member
+						clickable
+					/>
+				</div>
 
-				<IonItem class="surface">
-					<IonLabel>
-						<h3>
-							<MemberChip
-								v-for="member in post.members.toSorted(sortName)"
-								:key="member.uuid"
-								:member
-								clickable
-							/>
-						</h3>
-						<p v-if="post.date">{{ formatDate(post.date, "expanded") }}</p>
-					</IonLabel>
+				<IonItem
+					class="surface comments"
+					button
+					detail
+					@click="(e) => { e.stopPropagation(); void showPostComments() }"
+				>
+					{{ $t("other:comments.commentCount", { count: post.comments?.length || 0 }) }}
 				</IonItem>
 
 				<div class="post-body">
+					<p v-if="post.date" class="date">{{ formatDate(post.date, "expanded") }}</p>
 					<h1>{{ post.title }}</h1>
 					<h2 v-if="post.subtitle?.length">{{ post.subtitle }}</h2>
 					<div v-if="tags?.length" class="journal-tags">
@@ -358,7 +379,11 @@
 		right: unset;
 	}
 
-	div.journal-tags {
+	div.member-chips {
+		margin-inline: 16px;
+	}
+
+	div.journal-tags, div.member-chips {
 		display: flex;
 		flex-direction: row;
 		flex-wrap: wrap;
@@ -369,7 +394,12 @@
 	}
 
 	div.post-body {
-		margin: 1rem calc(1rem + var(--ion-safe-area-left, 0px)) 0 calc(1rem + var(--ion-safe-area-right, 0px));
+		margin: 0 calc(1rem + var(--ion-safe-area-left, 0px)) 0 calc(1rem + var(--ion-safe-area-right, 0px));
+	}
+
+	div.post-body > p.date {
+		margin-top: .25rem;
+		opacity: 0.5;
 	}
 
 	div.post-body > h1 {
@@ -399,6 +429,10 @@
 	ion-item.edit-body ion-textarea {
 		--padding-top: 0;
 		--padding-bottom: 0;
+	}
+
+	ion-item.comments {
+		--min-height: 48px;
 	}
 
 	ion-buttons {

@@ -103,7 +103,8 @@ export interface JournalPost extends UUIDable {
 	tags: UUID[], // array of UUIDs
 	isPinned: boolean,
 	isPrivate: boolean,
-	contentWarning?: string
+	contentWarning?: string,
+	comments?: Comment[]
 }
 
 export interface JournalPostComplete extends JournalPost {
