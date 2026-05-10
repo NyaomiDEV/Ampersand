@@ -23,6 +23,7 @@
 	import { DatabaseEvents, DatabaseEvent } from "../lib/db/events.ts";
 	import { addModal, removeModal } from "../lib/modals.ts";
 	import { formatDate, promptOkCancel, sortDateAsc } from "../lib/util/misc.ts";
+	import { useTranslation } from "i18next-vue";
 
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 	import pencilMD from "@material-symbols/svg-600/outlined/edit.svg";
@@ -30,7 +31,7 @@
 
 	import MemberItem from "../components/member/MemberItem.vue";
 	import MemberSelect from "./MemberSelect.vue";
-	import { useTranslation } from "i18next-vue";
+	import VirtualList from "../components/VirtualList.vue";
 
 	const i18next = useTranslation();
 
@@ -183,27 +184,29 @@
 		<SpinnerFullscreen v-if="!members || !boardMessage.comments" />
 		<IonContent v-else>
 			<IonList ref="list">
-				<template v-for="comment in boardMessage.comments.toSorted(sortDateAsc)" :key="boardMessage.comments.indexOf(comment)">
-					<IonItemSliding>
-						<MemberItem
-							:member="members.find(x => comment.member === x.uuid) || defaultMember()"
-							:show-cover="false"
-							:show-role="false"
-							:show-pronouns="false"
-						>
-							<h3 class="comment">{{ comment.comment }}</h3>
-							<p>{{ formatDate(comment.date, "collapsed") }}</p>
-						</MemberItem>
-						<IonItemOptions>
-							<IonItemOption color="secondary" @click="modifyComment(comment)">
-								<IonIcon slot="icon-only" :icon="pencilMD" />
-							</IonItemOption>
-							<IonItemOption color="danger" @click="deleteComment(comment)">
-								<IonIcon slot="icon-only" :icon="trashMD" />
-							</IonItemOption>
-						</IonItemOptions>
-					</IonItemSliding>
-				</template>
+				<VirtualList :entries="boardMessage.comments.toSorted(sortDateAsc)" :gap="8" :min-size="92">
+					<template #default="{ entry: comment }">
+						<IonItemSliding>
+							<MemberItem
+								:member="members.find(x => comment.member === x.uuid) || defaultMember()"
+								:show-cover="false"
+								:show-role="false"
+								:show-pronouns="false"
+							>
+								<h3 class="comment">{{ comment.comment }}</h3>
+								<p>{{ formatDate(comment.date, "collapsed") }}</p>
+							</MemberItem>
+							<IonItemOptions>
+								<IonItemOption color="secondary" @click="modifyComment(comment)">
+									<IonIcon slot="icon-only" :icon="pencilMD" />
+								</IonItemOption>
+								<IonItemOption color="danger" @click="deleteComment(comment)">
+									<IonIcon slot="icon-only" :icon="trashMD" />
+								</IonItemOption>
+							</IonItemOptions>
+						</IonItemSliding>
+					</template>
+				</VirtualList>
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">

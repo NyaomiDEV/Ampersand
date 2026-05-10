@@ -1,15 +1,16 @@
-<script setup lang="ts" generic="T extends UUIDable">
+<script setup lang="ts" generic="T extends object">
 	import { useVirtualizer } from "@tanstack/vue-virtual";
 	import { ComponentPublicInstance, computed, onMounted, onUpdated, ref, shallowRef, watch } from "vue";
-	import { UUIDable } from "../lib/db/entities";
 
 	const props = withDefaults(defineProps<{
 		entries: T[],
 		minSize?: number,
-		gap?: number
+		gap?: number,
+		overscan?: number
 	}>(), {
 		minSize: 64,
-		gap: 2
+		gap: 2,
+		overscan: 5
 	});
 
 	const scroller = shallowRef<HTMLElement | null>(null);
@@ -19,13 +20,13 @@
 		gap: props.gap,
 		getScrollElement: () => scroller.value,
 		estimateSize: () => props.minSize,
-		getItemKey: (index: number) => props.entries[index]?.uuid ?? index,
+		getItemKey: (index: number) => (props.entries[index] && "uuid" in props.entries[index]) ? props.entries[index].uuid as string : index,
 		measureElement: (element: HTMLElement): number => {
 			const styles = window.getComputedStyle(element);
 			const margin = parseFloat(styles.marginTop) + parseFloat(styles.marginBottom);
 			return element.offsetHeight + margin;
 		},
-		overscan: 5,
+		overscan: props.overscan,
 	});
 
 	watch(props, () => {
