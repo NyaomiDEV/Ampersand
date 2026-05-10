@@ -154,7 +154,8 @@ export async function member(spExport: SimplyPluralExport, systemInfo: System, s
 			tags: [
 				...spExport.groups
 					.filter(x => x.members?.includes(spMember._id))
-					.map(x => tagMapping.get(x._id)!)
+					.map(x => tagMapping.get(x._id))
+					.filter((x): x is string => !!x)
 			],
 			customFields: new Map(
 				Object.entries(spMember.info || {})
