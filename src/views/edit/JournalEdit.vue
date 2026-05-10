@@ -153,8 +153,8 @@
 		tags.value = await Array.fromAsync(getTags("journal"));
 
 		if(route.query.uuid){
-			const _post = await getJournalPost(route.query.uuid as string);
-			if(_post) post.value = await toJournalPostComplete([_post])[0] || { ...emptyPost };
+			const _post = await toJournalPostComplete([await getJournalPost(route.query.uuid as string)].filter(x => !!x));
+			if(_post.length) post.value = _post[0];
 			else post.value = { ...emptyPost };
 		} else post.value = { ...emptyPost };
 
