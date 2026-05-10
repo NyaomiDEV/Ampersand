@@ -220,7 +220,7 @@ export async function journalPosts(table: ShittyTable<JournalPost>, version: num
 			try {
 				const obj = await table.get(uuid) as JPOne;
 				const members = typeof obj.member === "string" ? [obj.member] : [];
-				delete obj.member;
+				if(obj.member) delete obj.member;
 				await table.write(
 					{
 						...obj,
@@ -262,7 +262,7 @@ export async function boardMessages(table: ShittyTable<BoardMessage>, version: n
 			try {
 				const obj = await table.get(uuid) as BMZero;
 				const members = typeof obj.member === "string" ? [obj.member] : [];
-				delete obj.member;
+				if(obj.member) delete obj.member;
 				await table.write(
 					{
 						...obj,
