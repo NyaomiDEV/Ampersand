@@ -303,7 +303,7 @@
 
 				<div v-if="tags?.length" class="member-tags">
 					<TagChip
-						v-for="tag in member.tags.map(x => tags.find(y => x === y.uuid)!).filter(x => !x.isArchived).sort(sortName)"
+						v-for="tag in member.tags.map(x => tags.find(y => x === y.uuid)).filter((x): x is Tag => !!x && !x.isArchived).sort(sortName)"
 						:key="tag.uuid"
 						:tag
 						:clickable="true"
@@ -418,7 +418,7 @@
 							{{ $t("members:edit.tags") }}
 							<div v-if="tags?.length" class="member-tags">
 								<TagChip
-									v-for="tag in member.tags.map(x => tags.find(y => y.uuid === x)!).sort(sortName)"
+									v-for="tag in member.tags.map(x => tags.find(y => y.uuid === x)).filter(x => !!x).sort(sortName)"
 									:key="tag.uuid"
 									:tag
 								/>
@@ -530,7 +530,7 @@
 			<TagListSelect
 				ref="tagSelectionModal"
 				type="member"
-				:model-value="member.tags.map(uuid => tags.find(x => x.uuid === uuid)!)"
+				:model-value="member.tags.map(uuid => tags.find(x => x.uuid === uuid)).filter(x => !!x)"
 				@update:model-value="tags => { member.tags = tags.map(x => x.uuid) }"
 			/>
 

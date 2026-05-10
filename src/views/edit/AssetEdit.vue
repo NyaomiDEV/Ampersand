@@ -177,7 +177,7 @@
 						{{ $t("assetManager:edit.tags") }}
 						<div v-if="tags?.length" class="asset-tags">
 							<TagChip
-								v-for="tag in asset.tags.map(x => tags.find(y => y.uuid === x)!).sort(sortName)"
+								v-for="tag in asset.tags.map(x => tags.find(y => y.uuid === x)).filter(x => !!x).sort(sortName)"
 								:key="tag.uuid"
 								:tag
 							/>
@@ -212,7 +212,7 @@
 			<TagListSelect
 				ref="tagSelectionModal"
 				type="asset"
-				:model-value="asset.tags.map(uuid => tags.find(x => x.uuid === uuid)!)"
+				:model-value="asset.tags.map(uuid => tags.find(x => x.uuid === uuid)).filter(x => !!x)"
 				@update:model-value="tags => { asset.tags = tags.map(x => x.uuid) }"
 			/>
 		</IonContent>

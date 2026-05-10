@@ -138,6 +138,10 @@ export async function updateTag(newContent: UUIDable & Partial<Tag>): Promise<Tr
 	}
 }
 
+export function isValidTag(tag: Tag | UUID){
+	return typeof tag === "string" ? !!getTagsIndex().find(x => x.uuid === tag) : !!getTagsIndex().find(x => x.uuid === tag.uuid);
+}
+
 export async function getTagFromName(name: string, allAttached: boolean){
 	for (const x of db.tags.index){
 		if(allAttached){

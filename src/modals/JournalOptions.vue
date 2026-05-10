@@ -98,7 +98,7 @@
 						{{ $t("journal:edit.tags") }}
 						<div v-if="tags?.length" class="journal-tags">
 							<TagChip
-								v-for="tag in post.tags.map(x => tags.find(y => y.uuid === x)!).sort(sortName)"
+								v-for="tag in post.tags.map(x => tags.find(y => y.uuid === x)).filter(x => !!x).sort(sortName)"
 								:key="tag.uuid"
 								:tag
 							/>
@@ -169,7 +169,7 @@
 			<TagListSelect
 				ref="tagSelectionModal"
 				type="journal"
-				:model-value="post.tags.map(uuid => tags.find(x => x.uuid === uuid)!)"
+				:model-value="post.tags.map(uuid => tags.find(x => x.uuid === uuid)).filter(x => !!x)"
 				@update:model-value="tags => { post.tags = tags.map(x => x.uuid); }"
 			/>
 

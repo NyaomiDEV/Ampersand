@@ -10,7 +10,7 @@
 	} from "@ionic/vue";
 
 	import { onMounted, onUnmounted, ref, shallowRef, toRaw, watch } from "vue";
-	import { getFilteredTags } from "../lib/db/tables/tags";
+	import { getFilteredTags, isValidTag } from "../lib/db/tables/tags";
 	import { Tag } from "../lib/db/entities";
 	import TagItem from "../components/tag/TagItem.vue";
 	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
@@ -56,6 +56,10 @@
 		DatabaseEvents.removeEventListener("updated", listener);
 	});
 
+	function emitFiltered(tags: Tag[]){
+		return emit("update:modelValue", tags.filter(x => isValidTag(x)));
+	}
+
 	async function resetTags(){
 		tags.value = undefined;
 		iterDone.value = false;
@@ -94,7 +98,7 @@
 				selectedTags.value.splice(index, 1);
 		}
 
-		emit("update:modelValue",  [...toRaw(selectedTags.value)]);
+		emitFiltered([...toRaw(selectedTags.value)]);
 	}
 </script>
 
