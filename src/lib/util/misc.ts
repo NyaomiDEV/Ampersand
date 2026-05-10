@@ -351,7 +351,7 @@ export function sortDate(a: { date?: Date; }, b: { date?: Date; }) {
 }
 
 export function sortDateAsc(a: { date?: Date; }, b: { date?: Date; }) {
-	return b.date!.valueOf() - a.date!.valueOf();
+	return a.date!.valueOf() - b.date!.valueOf();
 }
 
 export const imageClips = import.meta.webpackContext("../../assets/shapes/", { recursive: false, include: /\.svg$/ });
