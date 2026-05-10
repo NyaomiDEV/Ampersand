@@ -187,7 +187,7 @@ export async function assets(table: ShittyTable<Asset>, version: number) {
 export async function journalPosts(table: ShittyTable<JournalPost>, version: number) {
 	
 	interface JPOne extends JournalPost {
-		member: UUID,
+		member?: UUID,
 		members: never
 	}
 
@@ -219,10 +219,12 @@ export async function journalPosts(table: ShittyTable<JournalPost>, version: num
 		for (const uuid of uuids) {
 			try {
 				const obj = await table.get(uuid) as JPOne;
+				const members = typeof obj.member === "string" ? [obj.member] : [];
+				delete obj.member;
 				await table.write(
 					{
 						...obj,
-						members: typeof obj.member === "string" ? [obj.member] : []
+						members
 					}, true
 				);
 			} catch (_e) {
@@ -248,7 +250,7 @@ export async function journalPosts(table: ShittyTable<JournalPost>, version: num
 export async function boardMessages(table: ShittyTable<BoardMessage>, version: number) {
 
 	interface BMZero extends BoardMessage {
-		member: UUID,
+		member?: UUID,
 		members: never;
 	}
 
@@ -259,10 +261,12 @@ export async function boardMessages(table: ShittyTable<BoardMessage>, version: n
 		for (const uuid of uuids) {
 			try {
 				const obj = await table.get(uuid) as BMZero;
+				const members = typeof obj.member === "string" ? [obj.member] : [];
+				delete obj.member;
 				await table.write(
 					{
 						...obj,
-						members: typeof obj.member === "string" ? [obj.member] : []
+						members
 					}, true
 				);
 			} catch (_e) {
