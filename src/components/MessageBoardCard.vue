@@ -251,7 +251,7 @@
 					fill="clear"
 					@click="(e) => { e.stopPropagation(); void showComments() }"
 				>
-					{{ $t("messageBoard:comments.commentCount", { count: props.boardMessage.comments?.length || 0 }) }}
+					{{ $t("other:comments.commentCount", { count: props.boardMessage.comments?.length || 0 }) }}
 				</IonButton>
 			</div>
 		</div>

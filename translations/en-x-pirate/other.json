@@ -13,6 +13,15 @@
 		"yes": "Aye",
 		"no": "Nay"
 	},
+	"comments": {
+		"header": "Tales",
+		"commenter": "Pick a salty dog",
+		"comment": "The tale's heart",
+		"commentHint": "Speak yer mind...",
+		"commentCount_one": "{{count}} tale",
+		"commentCount_other": "{{count}} tales",
+		"deleteConfirmation": "Be ye certain ye want to toss this tale overboard?"
+	},
 	"presence": {
 		"absent": "Not on deck",
 		"heavilyDissociating": "Lost at sea",

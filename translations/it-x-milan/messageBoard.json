@@ -24,15 +24,6 @@
 			"abstain": "Mi dissocio"
 		}
 	},
-	"comments": {
-		"header": "Commenti",
-		"commenter": "Scegli chi l'ha scritto",
-		"comment": "Il succo del discorso",
-		"commentHint": "Dì la tua...",
-		"commentCount_one": "{{count}} commento",
-		"commentCount_other": "{{count}} commenti",
-		"deleteConfirmation": "Figa, lo vuoi piallare davvero 'sto commento?"
-	},
 	"edit": {
 		"header": "Modifica messaggio",
 		"member": "Cambia autore",

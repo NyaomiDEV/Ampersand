@@ -66,7 +66,7 @@
 					onlyOne: true,
 					discardOnSelect: true,
 					hideCheckboxes: true,
-					customTitle: i18next.t("messageBoard:comments.commenter"),
+					customTitle: i18next.t("other:comments.commenter"),
 					onDidDismiss: () => {
 						removeModal(vnode);
 						resolve(member);
@@ -85,7 +85,7 @@
 		return new Promise((resolve) => {
 			void (async () => {
 				const alert = await alertController.create({
-					header: i18next.t("messageBoard:comments.comment"),
+					header: i18next.t("other:comments.comment"),
 					buttons: [
 						{
 							text: i18next.t("other:alerts.cancel"),
@@ -106,7 +106,7 @@
 								rows: 4
 							},
 							value: oldBody,
-							placeholder: i18next.t("messageBoard:comments.commentHint")
+							placeholder: i18next.t("other:comments.commentHint")
 						}
 					]
 				});
@@ -136,7 +136,7 @@
 
 	async function deleteComment(comment: Comment){
 		closeSlidingItems();
-		if(await promptOkCancel(i18next.t("messageBoard:comments.deleteConfirmation"))){
+		if(await promptOkCancel(i18next.t("other:comments.deleteConfirmation"))){
 			boardMessage.value.comments?.splice(
 				boardMessage.value.comments.indexOf(comment),
 				1
@@ -176,7 +176,7 @@
 	<IonModal class="poll-results-modal" :breakpoints="[0,0.75,1]" initial-breakpoint="1">
 		<IonHeader>
 			<IonToolbar>
-				<IonTitle>{{ $t("messageBoard:comments.header") }}</IonTitle>
+				<IonTitle>{{ $t("other:comments.header") }}</IonTitle>
 			</IonToolbar>
 		</IonHeader>
 
@@ -244,9 +244,15 @@
 	ion-item::part(inner) {
 		background-color: rgb(var(--md3-surface-container));
 		padding: 8px 16px;
-		border-radius: 16px 16px 16px 0;
+		border-radius: 16px;
+		border-bottom-left-radius: 0;
 		width: min-content;
 		overflow: visible;
+	}
+
+	:dir(rtl) ion-item::part(inner){
+		border-bottom-right-radius: 0;
+		border-bottom-left-radius: 16px;
 	}
 
 	ion-item::part(inner)::before {
@@ -258,5 +264,11 @@
 		width: 16px;
 		height: 16px;
 		clip-path: path("M16 16H0C8.83656 16 16 8.83656 16 0V16Z");
+	}
+
+	:dir(rtl) ion-item::part(inner)::before {
+		left: unset;
+		right: -16px;
+		transform: scaleX(-100%);
 	}
 </style>
