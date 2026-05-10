@@ -56,7 +56,7 @@ android {
             ) {
                 applicationIdSuffix = ".ci"
                 manifestPlaceholders["appName"] = "@string/app_name_ci"
-                base.archivesName.set("ampersand-ci")
+                base.archivesName.set("ampersand-unstable")
                 isDebuggable = true
                 isJniDebuggable = true
                 isMinifyEnabled = false
