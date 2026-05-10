@@ -1,12 +1,8 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
-set -euo pipefail
-
-GITHUB_REF_NAME="${GITHUB_REF_NAME:-""}"
-IS_UNSTABLE_DEV_BUILD="$(if [ "$GITHUB_REF_NAME" = "main" ]; then echo -n "true"; fi)"
+APP_PRODUCT="Ampersand$(if [ "$AMPERSAND_IS_UNSTABLE_BUILD" = "1" ]; then printf " Unstable"; fi)"
 
 APP_NAME="ampersand"
-APP_PRODUCT="Ampersand$(if [ -n "$IS_UNSTABLE_DEV_BUILD" ]; then echo -n "-Unstable"; fi)"
 PROJECT_DIR="src-tauri/gen/apple"
 PROJECT_PATH="$PROJECT_DIR/${APP_NAME}.xcodeproj"
 SCHEME="${APP_NAME}_iOS"
@@ -16,7 +12,7 @@ APP_BUNDLE_PATH="$ARCHIVE_PATH/Products/Applications/${APP_PRODUCT}.app"
 IPA_PATH="${IPA_PATH:-Ampersand.ipa}"
 XCCONFIG_FILE="$PROJECT_DIR/xcconfig/Production.xcconfig"
 
-if [[ -n "$IS_UNSTABLE_DEV_BUILD" ]]; then
+if [ "$AMPERSAND_IS_UNSTABLE_BUILD" = "1" ]; then
   XCCONFIG_FILE="$PROJECT_DIR/xcconfig/Unstable.xcconfig"
 fi
 
@@ -27,27 +23,27 @@ TAURI_OPEN_LOG="${TAURI_OPEN_LOG:-$TMP_DIR/${APP_NAME}-ios-build-open.log}"
 TAURI_PID=""
 
 cleanup() {
-  local exit_code=$?
+  _exit_code=$?
 
-  if [[ -n "$TAURI_PID" ]] && kill -0 "$TAURI_PID" 2>/dev/null; then
+  if [ -n "$TAURI_PID" ] && kill -0 "$TAURI_PID" 2>/dev/null; then
     kill "$TAURI_PID" 2>/dev/null || true
     wait "$TAURI_PID" 2>/dev/null || true
   fi
 
   rm -f "$SERVER_ADDR_FILE"
 
-  if [[ "${KEEP_XCODE_ARTIFACTS:-0}" != "1" ]]; then
+  if [ "${KEEP_XCODE_ARTIFACTS:-0}" != "1" ]; then
     rm -rf "$PROJECT_DIR/build" "$DERIVED_DATA_PATH" "$PROJECT_DIR/assets"
   fi
 
-  if [[ $exit_code -ne 0 && -f "$TAURI_OPEN_LOG" ]]; then
+  if [ $_exit_code -ne 0 ] && [ -f "$TAURI_OPEN_LOG" ]; then
     echo "--- tauri ios build --open log ---"
     cat "$TAURI_OPEN_LOG"
-  elif [[ -f "$TAURI_OPEN_LOG" ]]; then
+  elif [ -f "$TAURI_OPEN_LOG" ]; then
     rm -f "$TAURI_OPEN_LOG"
   fi
 
-  exit "$exit_code"
+  exit "$_exit_code"
 }
 
 trap cleanup EXIT
@@ -63,7 +59,7 @@ TAURI_PID="$!"
 
 echo "--- Waiting for Tauri CLI websocket bridge ---"
 for _ in $(seq 1 120); do
-  if [[ -s "$SERVER_ADDR_FILE" ]]; then
+  if [ -s "$SERVER_ADDR_FILE" ]; then
     break
   fi
 
@@ -75,7 +71,7 @@ for _ in $(seq 1 120); do
   sleep 1
 done
 
-if [[ ! -s "$SERVER_ADDR_FILE" ]]; then
+if [ ! -s "$SERVER_ADDR_FILE" ]; then
   echo "Error: timed out waiting for $SERVER_ADDR_FILE"
   exit 1
 fi
@@ -95,7 +91,7 @@ xcodebuild archive \
   CODE_SIGN_ENTITLEMENTS="" \
   CODE_SIGNING_INJECT_BASE_ENTITLEMENTS=NO
 
-if [[ ! -d "$APP_BUNDLE_PATH" ]]; then
+if [ ! -d "$APP_BUNDLE_PATH" ]; then
   echo "Error: archived app bundle not found at $APP_BUNDLE_PATH"
   exit 1
 fi
@@ -106,7 +102,7 @@ cp -R "$APP_BUNDLE_PATH" "$PAYLOAD_DIR/Payload/"
 
 echo "--- Packaging IPA ---"
 (
-  cd "$PAYLOAD_DIR"
+  cd "$PAYLOAD_DIR" || exit
   COPYFILE_DISABLE=1 zip -qry "$OLDPWD/$IPA_PATH" Payload
 )
 rm -rf "$PAYLOAD_DIR"

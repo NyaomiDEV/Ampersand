@@ -51,7 +51,6 @@ jobs:
         run: node make_altstore_json.mjs
         env:
           IPA_PATH: Ampersand-${{ ! startsWith(github.ref, 'refs/tags/') && 'Unstable-' || '' }}${{ steps.vcs.outputs.ampersand_version }}.ipa
-          GITHUB_REF_NAME: ${{ github.ref_name }}
       - name: Publish artifact (Unsigned IPA)
         uses: actions/upload-artifact@v7
         with:
