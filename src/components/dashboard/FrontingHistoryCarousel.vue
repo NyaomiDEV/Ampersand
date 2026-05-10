@@ -2,7 +2,7 @@
 	import { IonList, IonListHeader, IonLabel } from "@ionic/vue";
 	import { h, onBeforeMount, onUnmounted, shallowRef } from "vue";
 	import type { FrontingEntryComplete } from "../../lib/db/entities.d.ts";
-	import { getRecentlyFronted } from "../../lib/db/tables/frontingEntries";
+	import { getRecentlyFronted, toFrontingEntryComplete } from "../../lib/db/tables/frontingEntries";
 	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
 	import { DatabaseEvents, DatabaseEvent } from "../../lib/db/events";
 	import { addModal, removeModal } from "../../lib/modals.ts";
@@ -13,7 +13,7 @@
 	const frontingEntries = shallowRef<FrontingEntryComplete[]>();
 
 	async function updateFrontingEntries(){
-		frontingEntries.value = await getRecentlyFronted(appConfig.dashboardSettings.frontingHistoryCarousel.settings.maxDays);
+		frontingEntries.value = await toFrontingEntryComplete(await getRecentlyFronted(appConfig.dashboardSettings.frontingHistoryCarousel.settings.maxDays));
 	}
 
 	const listener = (event: Event) => {

@@ -13,7 +13,7 @@
 	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
 	import FrontingEntryItem from "../components/frontingEntry/FrontingEntryItem.vue";
 	import VirtualList from "../components/VirtualList.vue";
-	import { defaultMember, getMember } from "../lib/db/tables/members";
+	import { toFrontingEntryComplete } from "../lib/db/tables/frontingEntries";
 
 	const props = defineProps<{
 		entries: FrontingEntry[]
@@ -22,12 +22,7 @@
 	const complete = shallowRef<FrontingEntryComplete[]>();
 
 	onMounted(async () => {
-		const _memberSet = await Promise.all(Array.from(new Set(props.entries.map(x => [x.member, x.influencing].filter((x): x is string => !!x)).flat(1))).map(x => getMember(x)));
-		complete.value = props.entries.map(x => ({
-			...x,
-			member: _memberSet.find(y => y.uuid === x.member) || defaultMember(),
-			influencing: x.influencing ? _memberSet.find(y => y.uuid === x.influencing) : undefined
-		}));
+		complete.value = await toFrontingEntryComplete(props.entries);
 	});
 </script>
 

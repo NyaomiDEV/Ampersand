@@ -34,11 +34,15 @@ export function getBoardMessage(uuid: UUID){
 	return db.boardMessages.get(uuid);
 }
 
-export async function toBoardMessageComplete(boardMessage: BoardMessage): Promise<BoardMessageComplete> {
-	return {
-		...boardMessage,
-		members: await Promise.all(boardMessage.members.map(async x => (await getMember(x).catch(() => defaultMember(x))) || defaultMember()))
-	};
+export async function toBoardMessageComplete(boardMessages: BoardMessage[]): Promise<BoardMessageComplete[]> {
+	const _memberSet = await Promise.all(Array.from(new Set(
+		boardMessages.map(x => x.members).flat(1)
+	)).map(x => getMember(x)));
+
+	return boardMessages.map(x => ({
+		...x,
+		members: x.members.map(member => _memberSet.find(y => y.uuid === member) || defaultMember(member)),
+	}));
 }
 
 export async function newBoardMessage(boardMessage: Omit<BoardMessage, keyof UUIDable>): Promise<TransactionStatus<string>> {
@@ -102,7 +106,7 @@ export async function getRecentBoardMessages(days: number) {
 		db.boardMessages.index
 			.toSorted(sortBoardMessages)
 			.filter(x => !x.isArchived && (x.isPinned || dayjs().startOf("day").valueOf() - dayjs(x.date).startOf("day").valueOf() <= days * 24 * 60 * 60 * 1000))
-			.map(async x => toBoardMessageComplete(await db.boardMessages.get(x.uuid)))
+			.map(x => db.boardMessages.get(x.uuid))
 	);
 }
 
@@ -115,7 +119,7 @@ export async function* getBoardMessagesOfDay(date: Date, query: string) {
 
 		const boardMessage = await db.boardMessages.get(entry.uuid);
 		if (filterBoardMessage(query, boardMessage))
-			yield await toBoardMessageComplete(boardMessage);
+			yield boardMessage;
 	}
 }
 

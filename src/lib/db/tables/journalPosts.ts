@@ -1,6 +1,6 @@
 import { db } from ".";
 import { DatabaseEvents, DatabaseEvent } from "../events";
-import { UUIDable, JournalPost, UUID } from "../entities";
+import { UUIDable, JournalPost, UUID, JournalPostComplete } from "../entities";
 import { getMember, defaultMember } from "./members";
 import dayjs from "dayjs";
 import { filterJournalPost } from "../../search";
@@ -30,11 +30,15 @@ export async function* getJournalPosts(maxIter = 10){
 	};
 }
 
-export async function toJournalPostComplete(journalPost: JournalPost){
-	return {
-		...journalPost,
-		members: await Promise.all(journalPost.members.map(async x => (await getMember(x).catch(() => defaultMember(x))) || defaultMember()))
-	};
+export async function toJournalPostComplete(journalPosts: JournalPost[]): Promise<JournalPostComplete[]> {
+	const _memberSet = await Promise.all(Array.from(new Set(
+		journalPosts.map(x => x.members).flat(1)
+	)).map(x => getMember(x)));
+
+	return journalPosts.map(x => ({
+		...x,
+		members: x.members.map(member => _memberSet.find(y => y.uuid === member) || defaultMember(member)),
+	}));
 }
 
 export async function newJournalPost(journalPost: Omit<JournalPost, keyof UUIDable>): Promise<TransactionStatus<string>> {
@@ -102,7 +106,7 @@ export async function getRecentJournalPosts(days: number) {
 		db.journalPosts.index
 			.toSorted(sortDate)
 			.filter(x => (x.isPinned || dayjs().startOf("day").valueOf() - dayjs(x.date).startOf("day").valueOf() <= days * 24 * 60 * 60 * 1000))
-			.map(async x => toJournalPostComplete(await db.journalPosts.get(x.uuid)))
+			.map(x => db.journalPosts.get(x.uuid))
 	);
 }
 
@@ -116,7 +120,7 @@ export async function* getJournalPostsOfDay(date: Date, includePinned: boolean, 
 		const post = await db.journalPosts.get(entry.uuid);
 
 		if (await filterJournalPost(query, post))
-			yield await toJournalPostComplete(post);
+			yield post;
 	}
 }
 

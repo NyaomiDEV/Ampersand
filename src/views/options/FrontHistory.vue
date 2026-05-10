@@ -2,7 +2,7 @@
 	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonLabel, IonToolbar, IonBackButton, IonItemDivider, IonIcon, IonSearchbar, IonFabButton, IonFab } from "@ionic/vue";
 	import { h, onBeforeMount, onUnmounted, ref, shallowRef, watch } from "vue";
 	import type { FrontingEntryComplete } from "../../lib/db/entities.d.ts";
-	import { getFrontingEntriesOfDay, getFrontingEntriesDays } from "../../lib/db/tables/frontingEntries";
+	import { getFrontingEntriesOfDay, getFrontingEntriesDays, toFrontingEntryComplete } from "../../lib/db/tables/frontingEntries";
 	import Spinner from "../../components/Spinner.vue";
 	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
 	import dayjs from "dayjs";
@@ -57,7 +57,7 @@
 	});
 
 	async function getEntries(){
-		frontingEntries.value = await Array.fromAsync(getFrontingEntriesOfDay(date.value, search.value));
+		frontingEntries.value = await toFrontingEntryComplete(await Array.fromAsync(getFrontingEntriesOfDay(date.value, search.value)));
 	}
 
 	async function resetEntries(){

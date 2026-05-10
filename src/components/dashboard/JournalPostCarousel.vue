@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { IonList, IonLabel, IonListHeader, useIonRouter } from "@ionic/vue";
 	import { onBeforeMount, onUnmounted, shallowRef } from "vue";
-	import { getRecentJournalPosts } from "../../lib/db/tables/journalPosts.ts";
+	import { getRecentJournalPosts, toJournalPostComplete } from "../../lib/db/tables/journalPosts.ts";
 	import type { JournalPostComplete } from "../../lib/db/entities";
 
 	import { DatabaseEvents, DatabaseEvent } from "../../lib/db/events.ts";
@@ -16,7 +16,7 @@
 	const posts = shallowRef<JournalPostComplete[]>();
 
 	async function updateJournalPosts(){
-		posts.value = (await getRecentJournalPosts(appConfig.dashboardSettings.journalPostCarousel.settings.maxDays));
+		posts.value = await toJournalPostComplete(await getRecentJournalPosts(appConfig.dashboardSettings.journalPostCarousel.settings.maxDays));
 	}
 
 	async function openPost(post: JournalPostComplete){

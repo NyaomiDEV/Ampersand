@@ -28,7 +28,7 @@
 
 	import { getFilteredMembers } from "../lib/db/tables/members.ts";
 	import type { Member, FrontingEntryComplete } from "../lib/db/entities";
-	import { getFronting, newFrontingEntry, removeFronter, sendFrontingChangedEvent, setMainFronter, setSoleFronter } from "../lib/db/tables/frontingEntries.ts";
+	import { getFronting, newFrontingEntry, removeFronter, sendFrontingChangedEvent, setMainFronter, setSoleFronter, toFrontingEntryComplete } from "../lib/db/tables/frontingEntries.ts";
 	import MemberItem from "../components/member/MemberItem.vue";
 	import { DatabaseEvents, DatabaseEvent } from "../lib/db/events.ts";
 	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
@@ -115,7 +115,7 @@
 	}
 
 	async function updateFronters() {
-		frontingEntries.value = await getFronting();
+		frontingEntries.value = await toFrontingEntryComplete(await getFronting());
 	}
 
 	async function addFrontingEntry(member: Member) {

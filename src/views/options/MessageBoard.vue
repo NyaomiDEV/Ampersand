@@ -2,7 +2,7 @@
 	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonFab, IonFabButton, IonIcon, IonSearchbar, IonLabel, IonItemDivider } from "@ionic/vue";
 	import { h, onBeforeMount, onUnmounted, ref, shallowRef, watch } from "vue";
 	import type { BoardMessageComplete } from "../../lib/db/entities.d.ts";
-	import { getBoardMessagesDays, getBoardMessagesOfDay } from "../../lib/db/tables/boardMessages";
+	import { getBoardMessagesDays, getBoardMessagesOfDay, toBoardMessageComplete } from "../../lib/db/tables/boardMessages";
 	import BoardMessageEdit from "../../modals/BoardMessageEdit.vue";
 	import Spinner from "../../components/Spinner.vue";
 
@@ -57,7 +57,7 @@
 	});
 
 	async function getEntries(_date: Date){
-		boardMessages.value = await Array.fromAsync(getBoardMessagesOfDay(_date, search.value));
+		boardMessages.value = await toBoardMessageComplete(await Array.fromAsync(getBoardMessagesOfDay(_date, search.value)));
 		return;
 	}
 

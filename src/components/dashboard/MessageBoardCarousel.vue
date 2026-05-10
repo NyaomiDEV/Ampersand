@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { IonList, IonLabel, IonButton, IonListHeader } from "@ionic/vue";
 	import { h, onBeforeMount, onUnmounted, shallowRef } from "vue";
-	import { getRecentBoardMessages } from "../../lib/db/tables/boardMessages";
+	import { getRecentBoardMessages, toBoardMessageComplete } from "../../lib/db/tables/boardMessages";
 	import type { BoardMessageComplete } from "../../lib/db/entities.d.ts";
 	import BoardMessageEdit from "../../modals/BoardMessageEdit.vue";
 
@@ -13,7 +13,7 @@
 	const boardMessages = shallowRef<BoardMessageComplete[]>();
 
 	async function updateBoardMessages(){
-		boardMessages.value = (await getRecentBoardMessages(appConfig.dashboardSettings.messageBoardCarousel.settings.maxDays));
+		boardMessages.value = await toBoardMessageComplete(await getRecentBoardMessages(appConfig.dashboardSettings.messageBoardCarousel.settings.maxDays));
 	}
 
 	const listener = (event: Event) => {

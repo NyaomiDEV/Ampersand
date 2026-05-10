@@ -155,7 +155,7 @@
 
 		if(route.query.uuid){
 			const _post = await getJournalPost(route.query.uuid as string);
-			if(_post) post.value = await toJournalPostComplete(_post);
+			if(_post) post.value = await toJournalPostComplete([_post])[0] || { ...emptyPost };
 			else post.value = { ...emptyPost };
 		} else post.value = { ...emptyPost };
 

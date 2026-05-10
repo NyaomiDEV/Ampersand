@@ -120,8 +120,8 @@
 		if(route.name !== "ReminderEdit") return;
 
 		if(route.query.uuid){
-			const rem = await toReminderComplete(await getReminder(route.query.uuid as string));
-			if(rem) reminder.value = rem;
+			const rem = await toReminderComplete([await getReminder(route.query.uuid as string)]);
+			if(rem.length) reminder.value = rem[0];
 			else reminder.value = { ...emptyReminder };
 		} else reminder.value = { ...emptyReminder };
 

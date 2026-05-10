@@ -65,11 +65,15 @@ export async function getReminderFromNativeID(id: number){
 	return getReminder(index.uuid);
 }
 
-export async function toReminderComplete(reminder: Reminder): Promise<ReminderComplete> {
-	return {
+export async function toReminderComplete(reminders: Reminder[]): Promise<ReminderComplete[]> {
+	const _memberSet = await Promise.all(Array.from(new Set(
+		reminders.map(x => x.members).filter(x => !!x).flat(1)
+	)).map(x => getMember(x)));
+
+	return reminders.map(reminder => ({
 		...reminder,
-		members: reminder.members ? await Promise.all(reminder.members.map(async x => await getMember(x).catch(() => defaultMember(x)))) : undefined,
-	};
+		members: reminder.members ? reminder.members.map(member => _memberSet.find(x => x.uuid === member) || defaultMember(member)) : undefined
+	}));
 }
 
 export async function newReminder(reminder: Omit<Reminder, keyof UUIDable>): Promise<TransactionStatus<string>> {

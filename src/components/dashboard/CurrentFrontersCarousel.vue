@@ -2,7 +2,7 @@
 	import { IonCard, IonCardContent, IonLabel, IonListHeader, IonIcon, IonButton, IonList, IonItemSliding, IonItemOption, IonItemOptions, IonItem } from "@ionic/vue";
 	import { h, onMounted, onUnmounted, ref, shallowRef } from "vue";
 	import type { FrontingEntryComplete } from "../../lib/db/entities.d.ts";
-	import { getFronting, newFrontingEntry, sendFrontingChangedEvent, updateFrontingEntry } from "../../lib/db/tables/frontingEntries";
+	import { getFronting, newFrontingEntry, sendFrontingChangedEvent, toFrontingEntryComplete, updateFrontingEntry } from "../../lib/db/tables/frontingEntries";
 	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
 	import { DatabaseEvents, DatabaseEvent } from "../../lib/db/events";
 	import { addModal, removeModal } from "../../lib/modals.ts";
@@ -18,7 +18,7 @@
 	const quickDelete = ref(false);
 
 	async function updateFrontingEntries() {
-		frontingEntries.value = (await getFronting()).sort((a, b) => {
+		frontingEntries.value = (await toFrontingEntryComplete(await getFronting())).sort((a, b) => {
 			if(a.isMainFronter && !b.isMainFronter) return -1;
 			if(!a.isMainFronter && b.isMainFronter) return 1;
 

@@ -12,7 +12,7 @@
 	import { JournalPostComplete } from "../lib/db/entities";
 	import dayjs from "dayjs";
 	import { DatabaseEvent, DatabaseEvents } from "../lib/db/events";
-	import { getJournalPostsDays, getJournalPostsOfDay } from "../lib/db/tables/journalPosts";
+	import { getJournalPostsDays, getJournalPostsOfDay, toJournalPostComplete } from "../lib/db/tables/journalPosts";
 	import { useTranslation } from "i18next-vue";
 	import { promptOkCancel, toast } from "../lib/util/misc";
 	import DatetimeUtc, { DatetimeParts } from "../components/DatetimeUtc.vue";
@@ -69,7 +69,7 @@
 	});
 
 	async function getEntries(_date: Date) {
-		posts.value = await Array.fromAsync(getJournalPostsOfDay(_date, true, search.value));
+		posts.value = await toJournalPostComplete(await Array.fromAsync(getJournalPostsOfDay(_date, true, search.value)));
 	}
 
 	async function resetEntries() {
