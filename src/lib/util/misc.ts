@@ -342,11 +342,15 @@ export function sortNotes(a: IndexEntry<Note>, b: IndexEntry<Note>) {
 	return a.priority! - b.priority!;
 }
 
-export function sortName(a: IndexEntry<{ name: string }>, b: IndexEntry<{ name: string }>) {
+export function sortName(a: { name?: string }, b: { name?: string }) {
 	return a.name!.localeCompare(b.name!);
 }
 
-export function sortDate(a: IndexEntry<{ date: Date; }>, b: IndexEntry<{ date: Date; }>) {
+export function sortDate(a: { date?: Date; }, b: { date?: Date; }) {
+	return b.date!.valueOf() - a.date!.valueOf();
+}
+
+export function sortDateAsc(a: { date?: Date; }, b: { date?: Date; }) {
 	return b.date!.valueOf() - a.date!.valueOf();
 }
 

@@ -22,7 +22,7 @@
 	import { defaultMember, getMember } from "../lib/db/tables/members.ts";
 	import { DatabaseEvents, DatabaseEvent } from "../lib/db/events.ts";
 	import { addModal, removeModal } from "../lib/modals.ts";
-	import { formatDate, promptOkCancel } from "../lib/util/misc.ts";
+	import { formatDate, promptOkCancel, sortDateAsc } from "../lib/util/misc.ts";
 
 	import addMD from "@material-symbols/svg-600/outlined/add.svg";
 	import pencilMD from "@material-symbols/svg-600/outlined/edit.svg";
@@ -183,7 +183,7 @@
 		<SpinnerFullscreen v-if="!members || !boardMessage.comments" />
 		<IonContent v-else>
 			<IonList ref="list">
-				<template v-for="comment in boardMessage.comments" :key="boardMessage.comments.indexOf(comment)">
+				<template v-for="comment in boardMessage.comments.toSorted(sortDateAsc)" :key="boardMessage.comments.indexOf(comment)">
 					<IonItemSliding>
 						<MemberItem
 							:member="members.find(x => comment.member === x.uuid) || defaultMember()"
