@@ -22,7 +22,7 @@
 		"archived": "Archiviatu",
 		"delete": {
 			"title": "Elimina sistema",
-			"confirm": "Voi pi daveru eliminari stu sistema?"
+			"confirm": "Voi pi daveru scancillari stu sistema?"
 		},
 		"systemID": "ID sistema: {{systemID}}",
 		"systemIDcopiedToClipboard": "ID dû sistema 'n furmatu menzioni cupiatu nê nòtuli!"

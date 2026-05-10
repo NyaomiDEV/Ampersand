@@ -14,6 +14,7 @@
 
 	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
 	import { accessibilityConfig } from "../lib/config";
+	import BoardComments from "../modals/BoardComments.vue";
 
 	const i18next = useTranslation();
 
@@ -142,6 +143,19 @@
 		return choice.votes.length / allVotes;
 	}
 
+	async function showComments() {
+		const vnode = h(BoardComments, {
+			boardMessage: props.boardMessage,
+			onDidDismiss: () => {
+				removeModal(vnode);
+			},
+		});
+
+		const modal = await addModal(vnode);
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-explicit-any
+		await (modal.el as any).present();
+	}
+
 	function getStyle(){
 		const style: Record<string, string> = {};
 
@@ -196,7 +210,7 @@
 					v-if="props.boardMessage.poll && isPollHidden"
 					size="small"
 					fill="clear"
-					@click="(e) => {e.stopPropagation(); isPollHidden = false}"
+					@click="(e) => { e.stopPropagation(); isPollHidden = false }"
 				>
 					{{ $t("messageBoard:polls.boardMessageContainsPoll") }}
 				</IonButton>
@@ -229,6 +243,15 @@
 					@click="(e) => {e.stopPropagation(); isPollHidden = true}"
 				>
 					{{ $t("messageBoard:polls.collapsePoll") }}
+				</IonButton>
+			</div>
+			<div class="comments">
+				<IonButton
+					size="small"
+					fill="clear"
+					@click="(e) => { e.stopPropagation(); void showComments() }"
+				>
+					{{ $t("messageBoard:comments.commentCount", { count: props.boardMessage.comments?.length || 0 }) }}
 				</IonButton>
 			</div>
 		</div>
@@ -349,6 +372,11 @@
 				height: 4px;
 				background-color: var(--ion-color-primary);
 				border-radius: 4px;
+			}
+
+			.comments {
+				display: flex;
+				flex-direction: column;
 			}
 		}
 	}

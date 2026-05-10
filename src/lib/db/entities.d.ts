@@ -47,7 +47,8 @@ export interface BoardMessage extends UUIDable {
 	date: Date,
 	isPinned: boolean,
 	isArchived: boolean,
-	poll?: Poll
+	poll?: Poll,
+	comments?: Comment[]
 }
 
 export interface BoardMessageComplete extends BoardMessage {
@@ -67,6 +68,12 @@ export interface PollEntry {
 export interface Vote {
 	member: UUID,
 	reason?: string
+}
+
+export interface Comment {
+	member: UUID,
+	comment: string,
+	date: Date
 }
 
 export interface FrontingEntry extends UUIDable {

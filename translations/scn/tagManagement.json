@@ -44,7 +44,7 @@
 		},
 		"delete": {
 			"title": "Elimina tag",
-			"confirm": "Voi pi daveru eliminari stu tag?"
+			"confirm": "Voi pi daveru scancillari stu tag?"
 		},
 		"tagID": "ID dû tag: {{tagID}}",
 		"tagIDCopiedToClipboard": "ID dû tag 'n furmatu menzioni cupiatu nê nòtuli!"

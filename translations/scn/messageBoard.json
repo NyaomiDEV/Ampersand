@@ -24,6 +24,15 @@
 			"abstain": "Astinutu"
 		}
 	},
+	"comments": {
+		"header": "Cummenti",
+		"commenter": "Selezziuna l'auturi dû cummentu",
+		"comment": "Corpu dû cummentu",
+		"commentHint": "Scrivi un cummentu...",
+		"commentCount_one": "{{count}} cummentu",
+		"commentCount_other": "{{count}} cummenti",
+		"deleteConfirmation": "Voi pi daveru scancillari stu cummentu?"
+	},
 	"edit": {
 		"header": "Mudìfica missaggiu",
 		"member": "Mudìfica l'auturi dû missaggiu",
@@ -40,7 +49,7 @@
 		"pollEditWarning": "I voti vèninu resettati si canci quarsiasi dittagghiu dû sondaggiu!",
 		"delete": {
 			"title": "Elimina missaggiu dâ bacheca",
-			"confirm": "Voi pi daveru eliminari stu missaggiu?"
+			"confirm": "Voi pi daveru scancillari stu missaggiu?"
 		}
 	}
 }

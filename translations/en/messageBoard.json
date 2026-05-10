@@ -23,6 +23,15 @@
 			"abstain": "Abstain"
 		}
 	},
+	"comments": {
+		"header": "Comments",
+		"commenter": "Select commenter",
+		"comment": "Comment body",
+		"commentHint": "Comment...",
+		"commentCount_one": "{{count}} comment",
+		"commentCount_other": "{{count}} comments",
+		"deleteConfirmation": "Are you sure you want to delete this comment?"
+	},
 	"edit": {
 		"header": "Edit message",
 		"member": "Edit message author",

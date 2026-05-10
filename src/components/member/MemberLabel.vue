@@ -5,7 +5,7 @@
 
 	import { Member, Tag } from "../../lib/db/entities";
 	import TagChip from "../tag/TagChip.vue";
-	import { isReactive, onBeforeMount, shallowRef, watch, WatchStopHandle } from "vue";
+	import { onBeforeMount, shallowRef, watch } from "vue";
 	import { getTag, getTagsIndex } from "../../lib/db/tables/tags";
 	import { sortName } from "../../lib/util/misc";
 
@@ -43,17 +43,7 @@
 		}
 	}
 
-	let watchHandle: WatchStopHandle | undefined;
-	watch(props, () => {
-		if(isReactive(props.member)){
-			watchHandle = watch(props.member, async () => {
-				await updateTags();
-			});
-		} else if(watchHandle){
-			watchHandle();
-			watchHandle = undefined;
-		}
-	});
+	watch(() => props.member.tags, updateTags);
 
 	onBeforeMount(async () => {
 		await updateTags();

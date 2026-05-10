@@ -23,6 +23,15 @@
 			"abstain": "Astennuto"
 		}
 	},
+	"comments": {
+		"header": "Cummiente",
+		"commenter": "Scerne l'autore d' 'o cummiento",
+		"comment": "'O cummiento",
+		"commentHint": "Fa' nu cummiento...",
+		"commentCount_one": "{{count}} cummiento",
+		"commentCount_other": "{{count}} cummiente",
+		"deleteConfirmation": "Vuò overo cancellà stu cummiento?"
+	},
 	"edit": {
 		"header": "Cagna 'o messaggio",
 		"member": "Cagna l'autore d' 'o messaggio",

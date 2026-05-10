@@ -12,7 +12,7 @@
 		"tags": "Tag",
 		"delete": {
 			"title": "Elimina asset",
-			"confirm": "Voi pi daveru eliminari st'asset?"
+			"confirm": "Voi pi daveru scancillari st'asset?"
 		}
 	}
 }

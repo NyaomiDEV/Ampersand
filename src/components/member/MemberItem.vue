@@ -6,7 +6,7 @@
 	import { useBlob } from "../../lib/util/blob";
 	import { accessibilityConfig } from "../../lib/config";
 	import { getSystem } from "../../lib/db/tables/system";
-	import { isReactive, onBeforeMount, shallowRef, watch, WatchStopHandle } from "vue";
+	import { onBeforeMount, shallowRef, watch } from "vue";
 
 	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
 	import systemCircle from "@material-symbols/svg-600/outlined/supervised_user_circle.svg";
@@ -75,17 +75,7 @@
 
 	onBeforeMount(updateSystem);
 
-	let watchHandle: WatchStopHandle | undefined;
-	watch(props, () => {
-		if(isReactive(props.member)){
-			watchHandle = watch(props.member, async () => {
-				await updateSystem();
-			});
-		} else if(watchHandle){
-			watchHandle();
-			watchHandle = undefined;
-		}
-	});
+	watch(() => props.member.system, updateSystem);
 </script>
 
 <template>

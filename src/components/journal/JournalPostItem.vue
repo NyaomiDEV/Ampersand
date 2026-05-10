@@ -4,7 +4,7 @@
 	import TagChip from "../tag/TagChip.vue";
 	import { JournalPostComplete, Tag } from "../../lib/db/entities";
 	import { formatDate, sortName } from "../../lib/util/misc";
-	import { isReactive, onBeforeMount, shallowRef, watch, WatchStopHandle } from "vue";
+	import { onBeforeMount, shallowRef, watch } from "vue";
 	import { getTag, getTagsIndex } from "../../lib/db/tables/tags";
 	import { useBlob } from "../../lib/util/blob";
 	import { accessibilityConfig } from "../../lib/config";
@@ -66,17 +66,7 @@
 		return style;
 	}
 
-	let watchHandle: WatchStopHandle | undefined;
-	watch(props, () => {
-		if (isReactive(props.post)){
-			watchHandle = watch(props.post, async () => {
-				await updateTags();
-			});
-		} else if (watchHandle) {
-			watchHandle();
-			watchHandle = undefined;
-		}
-	});
+	watch(() => props.post.tags, updateTags);
 
 	onBeforeMount(async () => {
 		await updateTags();
