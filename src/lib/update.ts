@@ -19,16 +19,16 @@ async function getReleases(){
 
 export async function checkUpdates(): Promise<UpdateCheckResponse | undefined> {
 	if(!securityConfig.allowRemoteContent) return undefined;
-	const isCiBuild = import.meta.env.AMPERSAND_IS_CI_BUILD === "1";
+	const isUnstableBuild = import.meta.env.AMPERSAND_IS_CI_BUILD === "1";
 	const releases = await getReleases();
 	if(!releases) return undefined;
 
 	const response: UpdateCheckResponse = {
 		version: "",
-		url: `https://github.com/NyaomiDEV/Ampersand/releases/${isCiBuild ? "dev" : "latest"}`,
+		url: `https://github.com/NyaomiDEV/Ampersand/releases/${isUnstableBuild ? "dev" : "latest"}`,
 	};
 
-	const latestRelease = isCiBuild
+	const latestRelease = isUnstableBuild
 		? releases.find(x => x.tag_name === "dev")
 		: releases.toSorted((a, b) => new Date(b.created_at).valueOf() - new Date(a.created_at).valueOf()).find(x => x.prerelease === false && x.draft === false);
 
