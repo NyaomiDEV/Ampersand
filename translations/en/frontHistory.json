@@ -9,7 +9,7 @@
 		"header": "Edit fronting entry",
 		"member": "Edit fronting member",
 		"customStatus": "Custom status",
-		"comment": "Comment",
+		"comment": "Fronter's comment",
 		"presence": {
 			"historyTitle": "Presence history",
 			"lastPresence": "Last it was {{presence}} / 5 stars",

@@ -137,7 +137,6 @@
 			// (it is necessary actually)
 			// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
 			post: post.value as JournalPostComplete,
-			tags,
 			onDidDismiss: () => removeModal(vnode)
 		});
 

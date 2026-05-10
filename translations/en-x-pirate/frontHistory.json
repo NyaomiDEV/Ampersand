@@ -9,7 +9,7 @@
 		"header": "Edit log entry",
 		"member": "Edit matey at the helm",
 		"customStatus": "Custom status",
-		"comment": "Scrawl a comment",
+		"comment": "Comment of the matey",
 		"presence": {
 			"historyTitle": "Presence log",
 			"lastPresence": "Last it was {{presence}} / 5 stars",

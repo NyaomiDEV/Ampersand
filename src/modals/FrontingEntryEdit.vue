@@ -22,19 +22,19 @@
 
 	import { FrontingEntry, FrontingEntryComplete } from "../lib/db/entities";
 	import { newFrontingEntry, updateFrontingEntry, deleteFrontingEntry, sendFrontingChangedEvent, toFrontingEntryComplete, getFrontingBetween } from "../lib/db/tables/frontingEntries";
-	import { ref, toRaw, useTemplateRef, watch } from "vue";
+	import { h, ref, toRaw, useTemplateRef, watch } from "vue";
+	import { useTranslation } from "i18next-vue";
+	import { addModal, removeModal } from "../lib/modals";
+	import { PartialBy } from "../lib/types";
+	import { formatDate, promptOkCancel, toast, presencePhrase } from "../lib/util/misc";
 
 	import MemberSelect from "./MemberSelect.vue";
 	import PresenceHistory from "./PresenceHistory.vue";
 	import DatePopupPicker from "../components/DatePopupPicker.vue";
 	import ContentEditable from "../components/ContentEditable.vue";
-
-	import { PartialBy } from "../lib/types";
-	import { formatDate, promptOkCancel, toast, presencePhrase } from "../lib/util/misc";
-	import { useTranslation } from "i18next-vue";
 	import PresenceRating from "../components/PresenceRating.vue";
 	import MemberItem from "../components/member/MemberItem.vue";
-
+	import FrontingEntryComments from "./FrontingEntryComments.vue";
 
 	const i18next = useTranslation();
 
@@ -133,6 +133,21 @@
 		const presenceVal = Array.from(frontingEntry.value.presence.entries());
 
 		return presenceVal.sort((a, b) => a[0].valueOf() - b[0].valueOf()).pop() || [undefined, undefined];
+	}
+
+	async function showEntryComments(){
+		if(!frontingEntry.value.uuid) return;
+
+		const vnode = h(FrontingEntryComments, {
+			// (it is necessary actually)
+			// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+			entry: frontingEntry.value as FrontingEntryComplete,
+			onDidDismiss: () => removeModal(vnode)
+		});
+
+		const modal = await addModal(vnode);
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-call
+		await (modal.el as any).present();
 	}
 
 	watch(frontingEntry.value, async () => {
@@ -323,6 +338,13 @@
 			</IonList>
 
 			<IonList>
+				<IonItem
+					button
+					detail
+					@click="showEntryComments"
+				>
+					{{ $t("other:comments.commentCount", { count: frontingEntry.comments?.length || 0 }) }}
+				</IonItem>
 				<IonItem v-if="!frontingEntry.endTime" button :detail="false">
 					<IonToggle v-model="frontingEntry.isLocked">
 						<IonLabel>

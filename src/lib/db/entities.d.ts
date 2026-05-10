@@ -85,7 +85,8 @@ export interface FrontingEntry extends UUIDable {
 	customStatus?: string,
 	influencing?: UUID,
 	presence?: Map<Date, number>
-	comment?: string
+	comment?: string, // this is the AUTHOR's fronting comment
+	comments?: Comment[] // This is for comments made by others
 }
 
 export interface FrontingEntryComplete extends FrontingEntry {
