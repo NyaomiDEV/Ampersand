@@ -4,6 +4,6 @@
 	"version": "Version {{version}}",
 	"privacyPolicy": "Politique de confidentialité",
 	"updateAvailable": "Mise à jour disponible : {{newVersion}}",
-	"ciVersion": "Version CI",
+	"ciVersion": "Version unstable",
 	"credits": "Crédits"
 }

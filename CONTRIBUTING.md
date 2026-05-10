@@ -22,7 +22,7 @@ anyone speaking that language.
 
 You have to use our issue templates and you have to fill issues by hand.
 
-You must check and reproduce your issue on the CI build before reporting it on Codeberg.
+You must check and reproduce your issue on the unstable build before reporting it on Codeberg.
 
 You must not use AI to generate an issue report, unless it's machine translation from your native language to English in the case you're not familiar with English itself.
 

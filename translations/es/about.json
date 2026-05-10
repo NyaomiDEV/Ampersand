@@ -1,7 +1,7 @@
 {
 	"header": "Acerca de",
 	"version": "Versión {{version}}",
-	"ciVersion": "Versión de CI",
+	"ciVersion": "Versión unstable",
 	"madein": "Hecho con cariño en Italia",
 	"privacyPolicy": "Política de privacidad",
 	"updateAvailable": "Hay una actualización disponible: {{newVersion}}",

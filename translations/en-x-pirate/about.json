@@ -1,7 +1,7 @@
 {
 	"header": "About the Crew",
 	"version": "Version {{version}}",
-	"ciVersion": "CI version",
+	"ciVersion": "Unstable version",
 	"madein": "Crafted with love in Italy",
 	"privacyPolicy": "The Code o' Privacy",
 	"updateAvailable": "New booty available: {{newVersion}}",

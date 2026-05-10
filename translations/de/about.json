@@ -4,6 +4,6 @@
 	"madein": "Mit Liebe in Italien gemacht",
 	"updateAvailable": "Aktualisierung verfügbar: {{newVersion}}",
 	"privacyPolicy": "Datenschutzerklärung",
-	"ciVersion": "CI Version",
+	"ciVersion": "Unstable Version",
 	"credits": "Mitwirkende"
 }

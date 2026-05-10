@@ -10,7 +10,7 @@ body:
       description: What version type of Ampersand are you running?
       options:
         - Stable
-        - CI build
+        - Unstable build
     validations:
       required: true
 

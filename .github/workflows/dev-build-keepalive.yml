@@ -1,4 +1,4 @@
-name: CI Build Keepalive
+name: Unstable Build Keepalive
 
 on:
   # Runs on pushes not targeting the default branch

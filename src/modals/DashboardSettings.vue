@@ -17,7 +17,7 @@
 		IonToggle
 	} from "@ionic/vue";
 
-	import { ref } from "vue";
+	import { ref, toRaw } from "vue";
 
 	import reorderMD from "@material-symbols/svg-600/outlined/swap_vert.svg";
 	import doneMD from "@material-symbols/svg-600/outlined/done_all.svg";
@@ -29,7 +29,7 @@
 	import JournalPostSettings from "../components/dashboard/settings/JournalPostSettings.vue";
 
 	const isReordering = ref(false);
-	const settings = ref(Object.entries(appConfig.dashboardSettings).sort((a, b) => a[1].priority - b[1].priority).map(([key, v]) => [key, v.priority]));
+	const settings = ref(getSettings());
 
 	const fragments = {
 		messageBoardCarousel: MessageBoardSettings,
@@ -38,24 +38,44 @@
 		journalPostCarousel: JournalPostSettings
 	};
 
+	function getSettings(){
+		const _settings = appConfig.dashboardSettings;
+		const _array: [string, number][] = [];
+
+		for(const setting of Object.keys(_settings)){
+			const priority = _settings[setting].priority;
+			_array.push([setting, priority]);
+		}
+
+		_array.sort((a, b) => a[1] - b[1]);
+		return _array;
+	}
+
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	function handleReorder(e: any){
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
-		e.detail.complete();
-		if(e.detail.from === e.detail.to) return;
+		if(e.detail.from === e.detail.to){
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+			e.detail.complete();
+			return;
+		}
 
 		const element = settings.value[e.detail.from];
-		settings.value.splice(e.detail.from, 1);
-		settings.value.splice(e.detail.to, 0, element);
+		const _settings = [...toRaw(settings.value)];
+		_settings.splice(e.detail.from, 1);
+		_settings.splice(e.detail.to, 0, element);
 
-		for(const key in appConfig.dashboardSettings){
+		for(const key of Object.keys(appConfig.dashboardSettings)){
 			const oldPriority = appConfig.dashboardSettings[key].priority;
-			const newPriority = settings.value.findIndex(x => x[0] === key);
-			if(oldPriority === newPriority) continue;
+			const newPriority = _settings.findIndex(x => x[0] === key);
+			if(oldPriority === newPriority || newPriority < 0) continue;
 
 			appConfig.dashboardSettings[key].priority = newPriority;
-			if(newPriority !== appConfig.dashboardSettings[key].priority) console.log(key, appConfig.dashboardSettings[key], newPriority);
 		}
+
+		settings.value = getSettings();
+
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+		e.detail.complete();
 	}
 </script>
 
@@ -75,7 +95,7 @@
 		<IonContent>
 			<IonList v-if="isReordering">
 				<IonReorderGroup :disabled="false" @ion-reorder-end="handleReorder">
-					<IonItem v-for="item in settings" :key="item[1]">
+					<IonItem v-for="item in settings" :key="item[0]">
 						<IonLabel>{{ $t(`appSettings:dashboard.${item[0]}.title`) }}</IonLabel>
 						<IonReorder slot="end">
 							<IonIcon :icon="dragMD" />

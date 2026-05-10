@@ -42,7 +42,7 @@ async function getVersion(){
 	}
 }
 
-async function patchFiles(ciBuild, buildTarget) {
+async function patchFiles(unstableBuild, buildTarget) {
 	// Read manifest files
 	const packageJson = JSON.parse(await readFile(resolve(import.meta.dirname, "package.json"), "utf-8"));
 	const tauriConfJson = JSON.parse(await readFile(resolve(import.meta.dirname, "src-tauri", "tauri.conf.json"), "utf-8"));
@@ -54,8 +54,8 @@ async function patchFiles(ciBuild, buildTarget) {
 	tauriConfJson.bundle.iOS.bundleVersion = `${revcount}`;
 	tauriConfJson.bundle.macOS.bundleVersion = `${revcount}`;
 
-	// If this is a CI build, automate it
-	if (ciBuild) {
+	// If this is an unstable build, automate it
+	if (unstableBuild) {
 		// Modify parsed manifests
 		packageJson.version = version;
 		tauriConfJson.version = buildTarget === "ios" ? packageVersion : version;
@@ -77,15 +77,15 @@ async function patchFiles(ciBuild, buildTarget) {
 //
 
 const { revcount, packageVersion, version } = await getVersion();
-const isCiBuild = process.env.GITHUB_REF_NAME === "main";
+const isUnstableBuild = process.env.GITHUB_REF_NAME === "main";
 const buildTarget = process.env.AMPERSAND_BUILD_TARGET;
 
-console.log("New version is", isCiBuild ? version : packageVersion);
+console.log("New version is", isUnstableBuild ? version : packageVersion);
 
 // If in CI, export as env
 if (process.env.GITHUB_ENV) {
-	await appendFile(process.env.GITHUB_ENV, `AMPERSAND_VERSION=${isCiBuild ? version : packageVersion}\n`, "utf-8");
-	await appendFile(process.env.GITHUB_OUTPUT, `ampersand_version=${isCiBuild ? version : packageVersion}\n`, "utf-8");
+	await appendFile(process.env.GITHUB_ENV, `AMPERSAND_VERSION=${isUnstableBuild ? version : packageVersion}\n`, "utf-8");
+	await appendFile(process.env.GITHUB_OUTPUT, `ampersand_version=${isUnstableBuild ? version : packageVersion}\n`, "utf-8");
 
 	if (isCiBuild) {
 		await appendFile(process.env.GITHUB_ENV, "AMPERSAND_IS_CI_BUILD=1\n", "utf-8");
@@ -97,4 +97,4 @@ if (process.env.GITHUB_ENV) {
 
 // If NO_PATCH is not set, patch files
 if(!process.env.NO_PATCH)
-	await patchFiles(isCiBuild, buildTarget);
+	await patchFiles(isUnstableBuild, buildTarget);
