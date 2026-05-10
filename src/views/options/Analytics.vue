@@ -29,8 +29,8 @@
 	const analytics = shallowRef<Awaited<ReturnType<typeof getFrontingStatistics>>>();
 	const members = shallowRef<Member[]>();
 
-	const startDate = ref(new Date());
-	const endDate = ref(new Date());
+	const startDate = ref(dayjs().subtract(1, "month").toDate());
+	const endDate = ref(dayjs().toDate());
 
 	const currentTab = ref("stats");
 
