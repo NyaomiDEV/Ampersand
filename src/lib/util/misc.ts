@@ -76,13 +76,13 @@ export function formatDate(date: Date, withDate?: "collapsed" | "expanded" | "on
 export function formatWrittenTime(dateStart: Date, dateEnd: Date){
 	const duration = dayjs.duration(dayjs(dateStart).diff(dateEnd));
 
-	return duration.format("Y[y] M[M] D[d] H[h] m[m] s[s]").replace(/(?<![1-9])0\w\s?/g, "");
+	return duration.format("Y[y] M[M] D[d] H[h] m[m] s[s]").replace(/^(?:(?<![1-9])0[yMdhm]\s?)+/g, "");
 }
 
 export function formatWrittenTimeAbsolute(durationMs: number) {
 	const duration = dayjs.duration(dayjs(durationMs).diff(0));
 
-	return duration.format("Y[y] M[M] D[d] H[h] m[m] s[s]").replace(/(?<![1-9])0\w\s?/g, "");
+	return duration.format("Y[y] M[M] D[d] H[h] m[m] s[s]").replace(/^(?:(?<![1-9])0[yMdhm]\s?)+/g, "");
 }
 
 export function slideAnimation(_: HTMLElement, opts: TransitionOptions, directionOverride?: Ref<string>) {
