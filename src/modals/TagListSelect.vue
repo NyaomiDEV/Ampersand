@@ -7,6 +7,10 @@
 		IonTitle,
 		IonModal,
 		IonSearchbar,
+		IonFabButton,
+		IonIcon,
+		IonFab,
+		modalController
 	} from "@ionic/vue";
 
 	import { onMounted, onUnmounted, ref, shallowRef, toRaw, watch } from "vue";
@@ -18,9 +22,12 @@
 	import InfiniteLoader from "../components/InfiniteLoader.vue";
 	import { DatabaseEvent, DatabaseEvents } from "../lib/db/events";
 
+	import checkMD from "@material-symbols/svg-600/outlined/check.svg";
+
 	const props = defineProps<{
 		customTitle?: string,
 		type: Tag["type"],
+		hideFab?: boolean,
 		modelValue?: Tag[]
 	}>();
 
@@ -139,6 +146,17 @@
 			</IonList>
 
 			<InfiniteLoader v-if="!iterDone" @infinite="pollTags" />
+
+			<IonFab
+				v-if="!props.hideFab"
+				slot="fixed"
+				vertical="bottom"
+				horizontal="end"
+			>
+				<IonFabButton @click="modalController.dismiss()">
+					<IonIcon :icon="checkMD" />
+				</IonFabButton>
+			</IonFab>
 
 		</IonContent>
 	</IonModal>

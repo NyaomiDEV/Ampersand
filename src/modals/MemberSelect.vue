@@ -8,6 +8,8 @@
 		IonSearchbar,
 		modalController,
 		IonList,
+		IonFab,
+		IonFabButton,
 	} from "@ionic/vue";
 
 	import { accessibilityConfig } from "../lib/config/index.ts";
@@ -18,14 +20,16 @@
 	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
 	import VirtualList from "../components/VirtualList.vue";
 	import InfiniteLoader from "../components/InfiniteLoader.vue";
-
 	import MemberItem from "../components/member/MemberItem.vue";
+
+	import checkMD from "@material-symbols/svg-600/outlined/check.svg";
 
 	const props = defineProps<{
 		customTitle?: string,
 		onlyOne?: boolean,
 		alwaysEmit?: boolean,
 		discardOnSelect?: boolean,
+		hideFab?: boolean,
 		modelValue?: Member[],
 		hideCheckboxes?: boolean,
 		membersToExclude?: Member[],
@@ -172,6 +176,17 @@
 			</IonList>
 
 			<InfiniteLoader v-if="!iterDone" @infinite="pollMembers" />
+
+			<IonFab
+				v-if="!props.hideFab && !props.discardOnSelect"
+				slot="fixed"
+				vertical="bottom"
+				horizontal="end"
+			>
+				<IonFabButton @click="modalController.dismiss()">
+					<IonIcon :icon="checkMD" />
+				</IonFabButton>
+			</IonFab>
 		</IonContent>
 	</IonModal>
 </template>

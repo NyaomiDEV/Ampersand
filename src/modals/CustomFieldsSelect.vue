@@ -10,6 +10,10 @@
 		IonSearchbar,
 		IonCheckbox,
 		IonLabel,
+		IonFab,
+		IonFabButton,
+		IonIcon,
+		modalController
 	} from "@ionic/vue";
 
 	import { onBeforeMount, ref, shallowRef, toRaw, watch } from "vue";
@@ -17,9 +21,12 @@
 	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
 	import { getFilteredCustomFields } from "../lib/db/tables/customFields";
 
+	import checkMD from "@material-symbols/svg-600/outlined/check.svg";
+
 	const props = defineProps<{
 		customTitle?: string,
-		modelValue?: CustomField[]
+		modelValue?: CustomField[],
+		hideFab?: boolean
 	}>();
 
 	const emit = defineEmits<{
@@ -92,6 +99,17 @@
 					</IonCheckbox>
 				</IonItem>
 			</IonList>
+
+			<IonFab
+				v-if="!props.hideFab"
+				slot="fixed"
+				vertical="bottom"
+				horizontal="end"
+			>
+				<IonFabButton @click="modalController.dismiss()">
+					<IonIcon :icon="checkMD" />
+				</IonFabButton>
+			</IonFab>
 		</IonContent>
 	</IonModal>
 </template>
