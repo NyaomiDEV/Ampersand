@@ -18,6 +18,7 @@
 
 	const i18next = useTranslation();
 	const boardComments = useTemplateRef("boardComments");
+	const pollResults = useTemplateRef("pollResults");
 
 	const props = withDefaults(defineProps<{
 		boardMessage: BoardMessageComplete,
@@ -87,17 +88,6 @@
 				await (modal.el as any).present();
 			})();
 		});
-	}
-
-	async function showPollResults(){
-		const vnode = h(PollResults, {
-			onDidDismiss: () => removeModal(vnode),
-			poll: props.boardMessage.poll!
-		});
-
-		const modal = await addModal(vnode);
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-explicit-any
-		await (modal.el as any).present();
 	}
 
 	async function voteFor(choice: PollEntry){
@@ -223,7 +213,7 @@
 						/>
 					</IonLabel>
 				</IonItem>
-				<IonButton size="small" @click="showPollResults">{{ $t("messageBoard:polls.resultsButton") }}</IonButton>
+				<IonButton size="small" @click="pollResults?.$el.present()">{{ $t("messageBoard:polls.resultsButton") }}</IonButton>
 				<IonButton
 					v-if="props.boardMessage.poll && props.hidePoll && !isPollHidden"
 					size="small"
@@ -244,6 +234,12 @@
 			</div>
 		</div>
 		<Comments ref="boardComments" :model-value="props.boardMessage.comments" @update:model-value="updateBoardMessage({ ...boardMessage, members: boardMessage.members.map(x => x.uuid), comments: $event })" />
+		<PollResults
+			v-if="props.boardMessage.poll"
+			ref="pollResults"
+			:poll="props.boardMessage.poll"
+			@poll="updateBoardMessage({ ...boardMessage, members: boardMessage.members.map(x => x.uuid), poll: $event })"
+		/>
 	</IonItem>
 </template>
 
