@@ -60,7 +60,7 @@
 			padding: 8px 16px;
 			margin: 0;
 			display: grid;
-			grid-template-columns: 0.5fr 1fr 1fr;
+			grid-template-columns: 0.5fr 1fr;
 			gap: 8px;
 			border-radius: 4px;
 			background-color: rgb(var(--md3-surface-container));
@@ -71,12 +71,18 @@
 				width: 100%;
 			}
 
-			> div.stack > span {
-				display: block;
-				margin-bottom: .5em;
+			> div.stack {
+				grid-column: 1 / span 2;
+				border-top: 1px solid;
+				padding-top: 8px;
+				
+				> span {
+					display: block;
+					margin-bottom: .5em;
 
-				&::before {
-					content: "- ";
+					&::before {
+						content: "- ";
+					}
 				}
 			}
 
