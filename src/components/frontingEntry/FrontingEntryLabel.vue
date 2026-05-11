@@ -48,19 +48,20 @@
 	<p v-if="props.entry.presence?.size">
 		<PresenceRating :rating="props.presenceAverage ? getPresenceAverage() ?? 0 : getMostRecentPresence()[1] ?? 0" />
 	</p>
-	<p v-if="props.showDate">
+	<p v-if="props.showDate" class="date">
 		{{ format(props.entry.startTime, props.entry.endTime) }}
 	</p>
 </template>
 
 <style scoped>
-	h2, p.custom-status {
+	h2 {
 		text-wrap: nowrap;
 		text-overflow: ellipsis;
 		overflow: hidden;
 	}
 
-	p.custom-status {
-		text-wrap: wrap;
+	p.custom-status, p.date {
+		text-wrap: wrap !important;
+		overflow: visible !important;
 	}
 </style>
