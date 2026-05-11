@@ -26,6 +26,8 @@
 		"pronouns": "Pronouns",
 		"role": "Role",
 		"age": "Age",
+		"ageDisplay_one": "age {{count}}",
+		"ageDisplay_other": "age {{count}}",
 		"color": "Preferred color",
 		"imageClip": "Avatar shape",
 		"customFieldsAdd": "Add custom fields",

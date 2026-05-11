@@ -295,7 +295,7 @@
 
 				<div class="member-info">
 					<h3>{{ member.name }}</h3>
-					<p>{{ member.pronouns }}</p>
+					<p>{{ member.pronouns }}{{ member.age && ` - ${$t("members:edit.ageDisplay", { count: member.age })}` }}</p>
 					<p>{{ member.role }}</p>
 					<p v-if="member.isCustomFront">{{ $t("members:edit.customFront") }}</p>
 					<p v-if="member.isArchived">{{ $t("members:edit.archived") }}</p>
@@ -363,7 +363,7 @@
 					</IonItem>
 					<IonItem>
 						<IonInput
-							v-model="member.age"
+							v-model.number="member.age"
 							fill="solid"
 							:label="$t('members:edit.age')"
 							label-placement="floating"

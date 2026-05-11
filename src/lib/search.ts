@@ -31,7 +31,7 @@ export function filterSystem(search: string, system: System) {
 
 export async function filterMember(search: string, member: Member){
 	const parsed = await parseMemberFilterQuery(search.length ? search : appConfig.defaultFilterQueries.members || "");
-
+	console.log(parsed);
 	if (parsed.query.length){
 		if (!(
 			member.name.toLowerCase().includes(parsed.query.toLowerCase()) ||
@@ -53,6 +53,11 @@ export async function filterMember(search: string, member: Member){
 
 	if (parsed.role) {
 		if (!member.role || !member.role.toLowerCase().includes(parsed.role.toLowerCase()))
+			return false;
+	}
+
+	if(parsed.age !== undefined) {
+		if(member.age !== parsed.age)
 			return false;
 	}
 

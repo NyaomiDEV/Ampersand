@@ -26,6 +26,8 @@
 		"pronouns": "Pronomi",
 		"role": "Ruolo",
 		"age": "Età",
+		"ageDisplay_one": "{{count}} anno",
+		"ageDisplay_other": "{{count}} anni",
 		"color": "Colore preferito",
 		"imageClip": "Forma dell'avatar",
 		"customFieldsAdd": "Aggiungi campi personalizzati",

@@ -17,6 +17,7 @@ export type MemberFilterQuery = {
 	isCustomFront?: boolean,
 	pronouns?: string,
 	role?: string,
+	age?: number
 };
 
 export type FrontingHistoryFilterQuery = {
@@ -166,6 +167,9 @@ export async function parseMemberFilterQuery(search: string): Promise<MemberFilt
 				break;
 			case "role":
 				result.role = value;
+				break;
+			case "age":
+				result.age = parseInt(value);
 				break;
 		}
 	}
