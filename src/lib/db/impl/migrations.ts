@@ -157,11 +157,14 @@ export async function assets(table: ShittyTable<Asset>, version: number) {
 
 	async function oneToTwo() {
 		// add tags
-		const uuids = table.index.map(x => x.uuid);
+		const index = table.index.map(x => x.uuid);
 
-		for (const uuid of uuids) {
+		for (const uuid of index) {
 			try {
-				await table.update({ uuid, tags: [] }, false);
+				// This is slow but I know no other way
+				const asset = await table.get(uuid);
+				if(!asset.tags)
+					await table.update({ uuid, tags: [] });
 			} catch (_e) {
 				console.error(_e);
 				return false;
