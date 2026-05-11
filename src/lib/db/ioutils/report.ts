@@ -92,7 +92,6 @@ function getFrontingEntryHeader(){
 }
 
 function frontingEntryToHtml(entry: FrontingEntry) {
-	console.log(entry);
 	return [
 		`<div class="fronting-entry${entry.isMainFronter ? " is-main-fronter" : ""}">`,
 		`<span class="member">${getMemberIndex().find(x => x.uuid === entry.member)?.name || entry.member}</span>`,

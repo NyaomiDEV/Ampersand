@@ -306,7 +306,6 @@
 				ref="postComments"
 				:model-value="post.comments"
 				@update:model-value="async (e) => {
-					console.log(e);
 					post.comments = e;
 					await updateJournalPost({
 						...post as JournalPostComplete,
