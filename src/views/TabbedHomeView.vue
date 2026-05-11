@@ -5,6 +5,11 @@
 	import JournalMD from "@material-symbols/svg-600/outlined/book.svg";
 	import HomeMD from "@material-symbols/svg-600/outlined/home.svg";
 	import OptionsMD from "@material-symbols/svg-600/outlined/menu.svg";
+	import PeopleFillMD from "@material-symbols/svg-600/outlined/group-fill.svg";
+	import JournalFillMD from "@material-symbols/svg-600/outlined/book-fill.svg";
+	import HomeFillMD from "@material-symbols/svg-600/outlined/home-fill.svg";
+	import OptionsFillMD from "@material-symbols/svg-600/outlined/menu-fill.svg";
+
 	import { slideAnimation } from "../lib/util/misc";
 	import { useRoute } from "vue-router";
 	import { ref, useTemplateRef } from "vue";
@@ -13,6 +18,7 @@
 	const route = useRoute();
 
 	const tabBar = useTemplateRef("tabBar");
+	const currentTab = ref();
 
 	// store a value to pass by ref to the cached animation
 	const directionOverride = ref("forward");
@@ -41,27 +47,27 @@
 
 <template>
 	<IonPage>
-		<IonTabs>
+		<IonTabs @ion-tabs-did-change="currentTab = $event.tab">
 			<IonRouterOutlet />
 
 			<IonTabBar slot="bottom" ref="tabBar">
 				<IonTabButton tab="members" href="/members" @click="clickReplaceHandler('/members')">
-					<IonIcon :icon="PeopleMD" />
+					<IonIcon :icon="currentTab === 'members' ? PeopleFillMD : PeopleMD" />
 					{{ $t("members:header") }}
 				</IonTabButton>
 
 				<IonTabButton tab="journal" href="/journal" @click="clickReplaceHandler('/journal')">
-					<IonIcon :icon="JournalMD" />
+					<IonIcon :icon="currentTab === 'journal' ? JournalFillMD : JournalMD" />
 					{{ $t("journal:header") }}
 				</IonTabButton>
 
 				<IonTabButton tab="dashboard" href="/dashboard" @click="clickReplaceHandler('/dashboard')">
-					<IonIcon :icon="HomeMD" />
+					<IonIcon :icon="currentTab === 'dashboard' ? HomeFillMD : HomeMD" />
 					{{ $t("dashboard:header") }}
 				</IonTabButton>
 
 				<IonTabButton tab="options" href="/options" @click="clickReplaceHandler('/options')">
-					<IonIcon :icon="OptionsMD" />
+					<IonIcon :icon="currentTab === 'options' ? OptionsFillMD : OptionsMD" />
 					{{ $t("options:header") }}
 				</IonTabButton>
 			</IonTabBar>
