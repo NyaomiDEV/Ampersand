@@ -5,7 +5,7 @@ html {
 
 .grid {
 	display: grid;
-	grid-template-columns: 1fr 1fr;
+	grid-template-columns: repeat(auto-fill, minmax(30em, max-content));
 	gap: 0 2em;
 }
 
@@ -34,7 +34,6 @@ section.header {
 section.systems {
 	&::before {
 		display: block;
-		grid-column: 1 / span 2;
 		content: "{{systems:header}}";
 		font-size: 2em;
 		font-weight: bold;
@@ -150,6 +149,15 @@ section.fronting-entries .fronting-entry {
 	break-inside: avoid;
 
 	&.header {
+		opacity: 0.5;
+	}
+
+	&.is-main-fronter {
+		background-color: rgba(0, 0, 0, 0.1);
+	}
+
+	.influencing {
+		display: block;
 		opacity: 0.5;
 	}
 

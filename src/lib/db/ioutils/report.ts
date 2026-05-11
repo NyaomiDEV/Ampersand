@@ -74,6 +74,8 @@ async function memberToHtml(member: Member){
 		member.role && `<span class="role">${escape(member.role)}</span>`,
 		member.pronouns && `<span class="pronouns">${escape(member.pronouns)}</span>`,
 		member.age && `<span class="age">${member.age}</span>`,
+		member.isArchived && `<span class="custom-front">${i18next.t("members:edit.archived")}</span>`,
+		member.isCustomFront && `<span class="custom-front">${i18next.t("members:edit.customFront")}</span>`,
 		"</div>",
 		"</div>"
 	].filter(x => !!x).join("");
@@ -94,7 +96,13 @@ function getFrontingEntryHeader(){
 function frontingEntryToHtml(entry: FrontingEntry) {
 	return [
 		`<div class="fronting-entry${entry.isMainFronter ? " is-main-fronter" : ""}">`,
-		`<span class="member">${getMemberIndex().find(x => x.uuid === entry.member)?.name || entry.member}</span>`,
+		`<span class="member">${
+			getMemberIndex().find(x => x.uuid === entry.member)?.name || entry.member
+		}${entry.influencing ?
+			`<span class="influencing">${
+				i18next.t("frontHistory:influencing", { influencedMember: getMemberIndex().find(x => x.uuid === entry.influencing)?.name || entry.influencing })
+			}</span>` : ""
+		}</span>`,
 		`<span class="start-date"><date value="${entry.startTime.valueOf()}">${formatDate(entry.startTime, "collapsed")}</date></span>`,
 		entry.endTime && `<span class="end-date"><date value="${entry.endTime.valueOf()}">${formatDate(entry.endTime, "collapsed")}</date></span>`,
 		entry.customStatus && `<span class="custom-status">${escape(entry.customStatus)}</span>`,
@@ -142,7 +150,7 @@ export function exportReport(systems: UUID[]) {
 
 			// make progress computations
 			const members = getMemberIndex().filter(x => systems.includes(x.system!)).map(x => x.uuid);
-			const frontingEntries = getFrontingEntryIndex().filter(x => members.includes(x.member!) && x.endTime).map(x => x.uuid);
+			const frontingEntries = getFrontingEntryIndex().filter(x => members.includes(x.member!) && x.endTime && Date.now() - x.startTime!.valueOf() < 1000 * 60 * 60 * 24 * 30).map(x => x.uuid);
 
 			const progressTotal = systems.length + members.length + frontingEntries.length;
 			let progressCurrent = 0;
@@ -158,14 +166,14 @@ export function exportReport(systems: UUID[]) {
 			await fd.write(encoder.encode("</div></section>"));
 
 			// write members info
-			await fd.write(encoder.encode("<section class=\"members\">"));
+			await fd.write(encoder.encode("<section class=\"members\"><div class=\"grid\">"));
 			for (const index of members) {
 				const member = await getMember(index);
 				if (member) await fd.write(encoder.encode(await memberToHtml(member)));
 				progressCurrent++;
 				progress.dispatchEvent(new CustomEvent("progress", { detail: { progress: progressCurrent / progressTotal } }));
 			}
-			await fd.write(encoder.encode("</section>"));
+			await fd.write(encoder.encode("</div></section>"));
 
 			// write fronting entry info
 			await fd.write(encoder.encode("<section class=\"fronting-entries\">"));
