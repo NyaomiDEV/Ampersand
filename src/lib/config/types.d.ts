@@ -68,7 +68,7 @@ export type AccessibilityConfig = {
 	theme: "auto" | "dark" | "light",
 	colorIndicatorPosition: "avatar" | "list-item",
 	themeIsAmoled: boolean,
-	themeIsVibrant: boolean,
+	themeScheme: "neutral" | "tonal-spot" | "vibrant" | "expressive",
 	colors: "app" | "system" | "custom",
 	customColors: {
 		accentColor?: string,

@@ -74,12 +74,26 @@
 
 				<IonItem>
 					<IonIcon slot="start" :icon="vibrantMD" />
-					<IonToggle v-model="accessibilityConfig.themeIsVibrant">
-						<IonLabel>
-							<h3>{{ $t("accessibility:themeIsVibrant.title") }}</h3>
-							<p>{{ $t("accessibility:themeIsVibrant.desc") }}</p>
-						</IonLabel>
-					</IonToggle>
+					<IonSelect
+						v-model="accessibilityConfig.themeScheme"
+						label-placement="floating"
+						:label="$t('accessibility:themeScheme.title')"
+						:cancel-text="$t('other:alerts.cancel')"
+						interface="action-sheet"
+					>
+						<IonSelectOption value="tonal-spot">
+							{{ $t("accessibility:themeScheme.tonalSpot") }}
+						</IonSelectOption>
+						<IonSelectOption value="neutral">
+							{{ $t("accessibility:themeScheme.neutral") }}
+						</IonSelectOption>
+						<IonSelectOption value="vibrant">
+							{{ $t("accessibility:themeScheme.vibrant") }}
+						</IonSelectOption>
+						<IonSelectOption value="expressive">
+							{{ $t("accessibility:themeScheme.expressive") }}
+						</IonSelectOption>
+					</IonSelect>
 				</IonItem>
 
 				<IonItem>

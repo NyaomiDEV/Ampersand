@@ -58,7 +58,7 @@ const defaultAccessibilityConfig: AccessibilityConfig = {
 	theme: "auto",
 	colorIndicatorPosition: "avatar",
 	themeIsAmoled: false,
-	themeIsVibrant: true,
+	themeScheme: "tonal-spot",
 	colors: "app",
 	customColors: {
 		accentColor: "#30628C",
@@ -155,6 +155,11 @@ if ((appConfig as Record<string, unknown>).useIPC) {
 if((accessibilityConfig as Record<string, unknown>).useAccentColor){
 	delete (accessibilityConfig as Record<string, unknown>).useAccentColor;
 	accessibilityConfig.colors = "custom";
+}
+
+if ((accessibilityConfig as Record<string, unknown>).themeIsVibrant) {
+	delete (accessibilityConfig as Record<string, unknown>).themeIsVibrant;
+	accessibilityConfig.themeScheme = "vibrant";
 }
 
 if ((accessibilityConfig as Record<string, unknown>).accentColor) {

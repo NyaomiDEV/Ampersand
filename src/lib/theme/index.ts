@@ -59,6 +59,23 @@ function calculateBackgroundColor() {
 	}
 }
 
+function isMonochrome(argb: number){
+	return redFromArgb(argb) === greenFromArgb(argb) && greenFromArgb(argb) === blueFromArgb(argb);
+}
+
+function schemeFromAccessibilityConfig(){
+	switch(accessibilityConfig.themeScheme){
+		case "neutral":
+			return Variant.NEUTRAL;
+		case "tonal-spot":
+			return Variant.TONAL_SPOT;
+		case "vibrant":
+			return Variant.VIBRANT;
+		case "expressive":
+			return Variant.EXPRESSIVE;
+	}
+}
+
 export function rgbaToArgb(rgba: string) {
 	const matches = rgba.replace("#", "").match(/.{1,2}/g);
 
@@ -96,19 +113,20 @@ export function getScheme(primary?: string, neutral?: string, isDarkMode?: boole
 	const primaryColorHct = Hct.fromInt(argbFromHex(primary));
 	const neutralColorHct = Hct.fromInt(argbFromHex(neutral));
 
+	const variant = schemeFromAccessibilityConfig();
+
+	const primaryVariant = isMonochrome(argbFromHex(primary)) ? Variant.NEUTRAL : variant;
+	const neutralVariant = isMonochrome(argbFromHex(neutral)) ? Variant.NEUTRAL : variant;
+
 	return new DynamicScheme({
 		isDark: isDarkMode,
-		variant: accessibilityConfig.themeIsVibrant ? Variant.FIDELITY : Variant.TONAL_SPOT,
+		variant: primaryVariant,
 		specVersion: "2025",
 		platform: "phone",
 		contrastLevel: accessibilityConfig.contrastLevel,
 		sourceColorHct: primaryColorHct,
-		neutralPalette: accessibilityConfig.themeIsVibrant
-			? TonalPalette.fromHueAndChroma(neutralColorHct.hue, neutralColorHct.chroma / 8.0) // 2025 color spec
-			: TonalPalette.fromHueAndChroma(neutralColorHct.hue, 5), // 2025 color spec
-		neutralVariantPalette: accessibilityConfig.themeIsVibrant
-			? TonalPalette.fromHueAndChroma(neutralColorHct.hue, (neutralColorHct.chroma / 8.0) + 4.0) // 2025 color spec
-			: TonalPalette.fromHueAndChroma(neutralColorHct.hue, 5 * 1.7), // 2025 color spec
+		neutralPalette: getNeutralPalette2025(neutralVariant, neutralColorHct, isDarkMode), // 2025 color spec
+		neutralVariantPalette: getNeutralVariantPalette2025(neutralVariant, neutralColorHct, isDarkMode) // 2025 color spec
 	});
 }
 
@@ -194,4 +212,41 @@ export function addMaterialColors(primary?: string, neutral?: string, target?: H
 
 	for (const [key, value] of styleSheet)
 		document.documentElement.style.setProperty(key, value);
+}
+
+function getNeutralPalette2025(variant: Variant, sourceColorHct: Hct, isDark: boolean): TonalPalette | undefined {
+	switch (variant) {
+		case Variant.NEUTRAL:
+			return TonalPalette.fromHueAndChroma(sourceColorHct.hue, 1.4);
+		case Variant.TONAL_SPOT:
+			return TonalPalette.fromHueAndChroma(sourceColorHct.hue, 5);
+		case Variant.EXPRESSIVE: {
+			const neutralHue = DynamicScheme.getRotatedHue(sourceColorHct, [0, 71, 124, 253, 278, 300, 360], [10, 0, 10, 0, 10, 0]);
+			return TonalPalette.fromHueAndChroma(neutralHue,(isDark ? (Hct.isYellow(neutralHue) ? 6 : 14) : 18));
+		}
+		case Variant.VIBRANT: {
+			const neutralHue = DynamicScheme.getRotatedHue(sourceColorHct, [0, 38, 105, 140, 333, 360], [-14, 10, -14, 10, -14]);
+			return TonalPalette.fromHueAndChroma(neutralHue, 28);
+		}
+	}
+	return undefined;
+}
+
+function getNeutralVariantPalette2025(variant: Variant, sourceColorHct: Hct, isDark: boolean): TonalPalette | undefined {
+	switch (variant) {
+		case Variant.NEUTRAL:
+			return TonalPalette.fromHueAndChroma(sourceColorHct.hue, 1.4 * 2.2);
+		case Variant.TONAL_SPOT:
+			return TonalPalette.fromHueAndChroma(sourceColorHct.hue, 10 * 1.7);
+		case Variant.EXPRESSIVE: {
+			const neutralHue = DynamicScheme.getRotatedHue(sourceColorHct, [0, 71, 124, 253, 278, 300, 360], [10, 0, 10, 0, 10, 0]);
+			const neutralChroma = (isDark ? (Hct.isYellow(neutralHue) ? 6 : 14) : 18);
+			return TonalPalette.fromHueAndChroma(neutralHue, neutralChroma * (neutralHue >= 105 && neutralHue < 125 ? 1.6 : 2.3));
+		}
+		case Variant.VIBRANT: {
+			const neutralHue = DynamicScheme.getRotatedHue(sourceColorHct, [0, 38, 105, 140, 333, 360], [-14, 10, -14, 10, -14]);
+			return TonalPalette.fromHueAndChroma(neutralHue, 28 * 1.29);
+		}
+	}
+	return undefined;
 }
