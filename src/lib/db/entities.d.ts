@@ -118,6 +118,7 @@ export interface Member extends UUIDable {
 	pronouns?: string,
 	description?: string,
 	role?: string,
+	age?: number,
 	image?: File,
 	imageClip?: ImageClip,
 	cover?: File,

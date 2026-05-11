@@ -36,3 +36,12 @@
 		--border-width: 3px;
 	}
 }
+
+.md ion-input input[type="number"] {
+	appearance: textfield;
+
+	&::-webkit-inner-spin-button,
+	&::-webkit-outer-spin-button {
+		appearance: none;
+	}
+}

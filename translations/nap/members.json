@@ -25,6 +25,7 @@
 		"name": "Nomme",
 		"pronouns": "Pronomi",
 		"role": "Ruolo",
+		"age": "Età",
 		"color": "Culore preferito",
 		"imageClip": "Forma de l'immaggine",
 		"customFieldsAdd": "Aggiungi campi personalizzati",

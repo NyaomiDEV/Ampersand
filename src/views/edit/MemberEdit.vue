@@ -344,8 +344,8 @@
 			</template>
 
 			<template v-else>
-				<IonList class="surface">
-					<IonItem>
+				<IonList class="surface grid-2">
+					<IonItem class="take-row">
 						<IonInput
 							v-model="member.name"
 							fill="solid"
@@ -363,13 +363,22 @@
 					</IonItem>
 					<IonItem>
 						<IonInput
+							v-model="member.age"
+							fill="solid"
+							:label="$t('members:edit.age')"
+							label-placement="floating"
+							type="number"
+						/>
+					</IonItem>
+					<IonItem class="take-row">
+						<IonInput
 							v-model="member.role"
 							fill="solid"
 							:label="$t('members:edit.role')"
 							label-placement="floating"
 						/>
 					</IonItem>
-					<IonItem>
+					<IonItem class="take-row">
 						<IonTextarea
 							v-model="member.description"
 							fill="solid"
@@ -381,6 +390,7 @@
 					<IonItem
 						v-for="customField in customFieldsToShowInEditMode"
 						:key="customField.uuid"
+						class="take-row"
 					>
 						<IonTextarea
 							fill="solid"
@@ -391,7 +401,7 @@
 							@update:model-value="(v) => member.customFields?.set(customField.uuid, v)"
 						/>
 					</IonItem>
-					<IonItem button @click="customFieldsSelectionModal?.$el.present()">
+					<IonItem class="take-row" button @click="customFieldsSelectionModal?.$el.present()">
 						<IonIcon slot="start" :icon="addMD" aria-hidden="true" />
 						<IonLabel>
 							{{ $t("members:edit.customFieldsAdd") }}
@@ -637,5 +647,18 @@
 
 	.member-field ion-label {
 		margin: 0;
+	}
+
+	.grid-2 {
+		display: grid;
+		grid-template-columns: 2fr 1fr;
+	}
+
+	.take-row {
+		grid-column: 1 / span 2;
+	}
+
+	.grid-2 ion-item::part(native) {
+		height: 100%;
 	}
 </style>

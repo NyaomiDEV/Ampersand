@@ -25,6 +25,7 @@
 		"name": "Nome",
 		"pronouns": "Pronomi",
 		"role": "Ruolo",
+		"age": "Età",
 		"color": "Colore",
 		"imageClip": "Forma avatar",
 		"customFieldsAdd": "Aggiungi campi custom",

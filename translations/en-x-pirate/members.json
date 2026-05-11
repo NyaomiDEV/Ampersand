@@ -25,6 +25,7 @@
 		"name": "Name",
 		"pronouns": "Pronouns",
 		"role": "Role",
+		"age": "Age",
 		"color": "Preferred color",
 		"imageClip": "Avatar shape",
 		"customFieldsAdd": "Add custom marks",
