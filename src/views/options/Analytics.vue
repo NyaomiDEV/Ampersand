@@ -10,6 +10,7 @@
 	import { getMember } from "../../lib/db/tables/members";
 	import { addModal, removeModal } from "../../lib/modals";
 	import { FrontingCo } from "../../lib/db/types";
+	import { accessibilityConfig } from "../../lib/config";
 
 	import AnalyticsDetail from "../../modals/AnalyticsDetail.vue";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
@@ -57,7 +58,7 @@
 	}
 
 	function flattenFrontingCo(analytics: Awaited<ReturnType<typeof getFrontingStatistics>>){
-		if(!analytics) return;
+		if(!analytics || !members.value) return;
 
 		const flattenedFrontingCo = new Map<string, FrontingCo>();
 
@@ -72,7 +73,9 @@
 			}
 		}
 
-		return new Map<[string, string], FrontingCo>(flattenedFrontingCo.entries().map(x => [x[0].split(":") as [string, string], x[1]]));
+		return new Map<Member[], FrontingCo>(flattenedFrontingCo.entries().map(x => [
+			members.value!.filter(y => x[0].split(":").includes(y.uuid)).sort(sortName),
+			x[1]]));
 	}
 
 	async function showModal(entries: FrontingEntry[]){
@@ -84,6 +87,26 @@
 		const modal = await addModal(vnode);
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-call
 		await (modal.el as any).present();
+	}
+
+	function getStyle(members: Member[]){
+		const style: Record<string, string> = {};
+
+		if(members.length){
+			const colors: string[] = members
+				.filter(x => x.color)
+				.map(x => x.color)
+				.map((x, i, a) => {
+					const percent = (i + 1) / a.length;
+					return `${x as string} 0 ${percent * 100}%`;
+				});
+
+			if(!colors.length) return;
+
+			style["--data-gradient"] = `linear-gradient(225deg, ${colors.join(",")})`;
+		}
+
+		return style;
 	}
 
 	watch([startDate, endDate], async () => {
@@ -482,10 +505,12 @@
 						<IonItem
 							v-for="memberCouple in flattenFrontingCo(analytics)"
 							:key="memberCouple[0].join(':')"
+							:class="{ 'with-border-color': accessibilityConfig.colorIndicatorPosition === 'list-item' }"
+							:style="getStyle(memberCouple[0])"
 						>
 							<AvatarStack
 								slot="start"
-								:avatars="members.filter(x => memberCouple[0].includes(x.uuid)).sort(sortName).map(member => ({
+								:avatars="memberCouple[0].map(member => ({
 									image: member.image,
 									clipShape: member.imageClip,
 									color: member.color,
@@ -495,7 +520,7 @@
 							<IonLabel>
 
 								<p class="right">{{ memberCouple[1].percent.toFixed(2) }}%</p>
-								<h2>{{ members.filter(x => memberCouple[0].includes(x.uuid)).sort(sortName).map(x => x.name).join(" + ") }}</h2>
+								<h2>{{ memberCouple[0].map(x => x.name).join(" + ") }}</h2>
 								<p>
 									{{ $t("analytics:cofrontingCount", { count: memberCouple[1].count }) }}
 								</p>
@@ -550,6 +575,26 @@
 <style scoped>
 	ion-segment-content {
 		overflow-y: auto;
+	}
+
+	ion-item.with-border-color::part(native) {
+		padding-inline-start: calc(4px + var(--padding-start) + var(--ion-safe-area-left, 0px));
+	}
+
+	ion-item.with-border-color::part(native)::before {
+		content: "\A";
+		display: block;
+		position: absolute;
+		top: 0;
+		left: 0;
+		background: var(--data-gradient);
+		height: 100%;
+		width: 4px;
+	}
+
+	:dir(rtl) ion-item.with-border-color::part(native)::before{
+		right: 0;
+		left: unset;
 	}
 
 	ion-label > p {
