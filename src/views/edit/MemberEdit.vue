@@ -546,10 +546,11 @@
 
 			<SystemSelect
 				ref="systemSelectModal"
-				v-model="system"
+				:model-value="[system]"
 				:only-one="true"
 				:discard-on-select="true"
 				:hide-checkboxes="false"
+				@update:model-value="e => { if(e[0]) system = e[0] }"
 			/>
 		</IonContent>
 	</IonPage>

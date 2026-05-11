@@ -15,37 +15,36 @@
 	import type { System } from "../lib/db/entities";
 	import { DatabaseEvents, DatabaseEvent } from "../lib/db/events.ts";
 	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
-	import { getFilteredSystems, getSystem } from "../lib/db/tables/system.ts";
+	import { getFilteredSystems, isValidSystem } from "../lib/db/tables/system.ts";
 	import { appConfig } from "../lib/config/index.ts";
-	import { PartialBy } from "../lib/types";
 	import SystemItem from "../components/system/SystemItem.vue";
 	import VirtualList from "../components/VirtualList.vue";
 	import InfiniteLoader from "../components/InfiniteLoader.vue";
 
 	const props = defineProps<{
 		customTitle?: string,
+		onlyOne?: boolean,
 		alwaysEmit?: boolean,
 		discardOnSelect?: boolean,
-		modelValue?: System,
+		modelValue?: System[],
 		hideCheckboxes?: boolean,
-		childSystem?: PartialBy<System, "uuid">
+		systemsToExclude?: System[],
+		systemsToInclude?: System[]
 	}>();
 
 	const emit = defineEmits<{
-		"update:modelValue": [System],
+		"update:modelValue": [System[]],
 	}>();
 
-	const selectedSystem = shallowRef<System | undefined>(props.modelValue);
+	const selectedSystems = shallowRef<System[]>([...props.modelValue || []]);
 	const search = ref("");
 	const systems = shallowRef<System[]>();
 	const iter = shallowRef<AsyncGenerator<System>>();
 	const iterDone = ref(false);
 
 	watch(props, () => {
-		selectedSystem.value = props.modelValue;
+		selectedSystems.value = [...props.modelValue || []];
 	});
-
-	const disallowedSystems = shallowRef<System[]>([]);
 
 	const listener = (event: Event) => {
 		if((event as DatabaseEvent).data.table === "systems")
@@ -68,6 +67,10 @@
 	onUnmounted(() => {
 		DatabaseEvents.removeEventListener("updated", listener);
 	});
+
+	function emitFiltered(systems: System[]){
+		return emit("update:modelValue", systems.filter(x => isValidSystem(x)));
+	}
 
 	async function resetSystems(){
 		systems.value = undefined;
@@ -98,42 +101,36 @@
 			cb();
 	}
 
-	function check(system: System){
-		if(selectedSystem.value?.uuid !== system.uuid){
-			selectedSystem.value = system;
-
-			emit("update:modelValue", toRaw(selectedSystem.value));
+	function check(system: System, checked: boolean){
+		// hideCheckboxes implies onlyOne
+		const onlyOne = props.onlyOne || props.hideCheckboxes;
+		if(checked){
+			if(onlyOne)
+				selectedSystems.value.length = 0;
+			selectedSystems.value.push(system);
 		} else {
-			if(props.alwaysEmit && selectedSystem.value)
-				emit("update:modelValue", toRaw(selectedSystem.value));
+			const index = selectedSystems.value.findIndex(x => x.uuid === system.uuid);
+			if(index > -1){
+				if(selectedSystems.value.length === 1 && onlyOne){
+					// selected the one who was already selected since we're in "selection mode"
+					// we will just not uncheck it
+					// (hideCheckboxes implies onlyOne)
+					if(props.discardOnSelect){
+						void modalController.dismiss();
+						if(props.alwaysEmit)
+							emitFiltered([...toRaw(selectedSystems.value)]);
+					}
+					return;
+				}
+				selectedSystems.value.splice(index, 1);
+			}
 		}
 
-		if(props.discardOnSelect)
+		emitFiltered([...toRaw(selectedSystems.value)]);
+
+		if(onlyOne && props.discardOnSelect)
 			void modalController.dismiss();
 	}
-
-	async function updateParents(){
-		const parents: System[] = [];
-
-		let _system = props.childSystem;
-		// for our purpose (disallowing systems to pick themselves or their parents) a system is also its own parent
-		if(_system?.uuid) parents.push(_system as System);
-
-		while(_system){
-			if(_system.parent){
-				const parent = await getSystem(_system.parent);
-				if(parent) parents.push(parent);
-				_system = parent;
-			} else 
-				_system = undefined;
-		}
-
-		disallowedSystems.value = parents;
-	}
-
-	watch(props, async () => {
-		await updateParents();
-	}, { immediate: true });
 </script>
 
 <template>
@@ -166,11 +163,11 @@
 							:show-icons="false"
 							show-effects
 							:smaller-avatar="accessibilityConfig.compactLists"
+							:disabled="(props.systemsToInclude && !props.systemsToInclude.find(x => x.uuid === system.uuid)) || !!props.systemsToExclude?.find(x => x.uuid === system.uuid)"
 							has-toggle="checkbox"
 							:toggle-value="system.uuid"
-							:toggle-checked="selectedSystem?.uuid === system.uuid"
-							:disabled="!!disallowedSystems.find(x => x.uuid === system.uuid)"
-							@toggle-update="check(system)"
+							:toggle-checked="!!selectedSystems.find(x => x.uuid === system.uuid)"
+							@toggle-update="value => check(system, value)"
 						/>
 					</template>
 				</VirtualList>

@@ -100,6 +100,10 @@ export async function updateSystem(newContent: UUIDable & Partial<System>): Prom
 	}
 }
 
+export function isValidSystem(system: UUID | System) {
+	return typeof system === "string" ? !!getSystemsIndex().find(x => x.uuid === system) : !!getSystemsIndex().find(x => x.uuid === system.uuid);
+}
+
 export function countSystemMembers(uuid: UUID){
 	const object = {
 		normal: 0,

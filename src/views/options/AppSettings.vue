@@ -247,9 +247,11 @@
 
 			<SystemSelect
 				ref="systemSelectModal"
-				v-model="defaultSystem"
+				:model-value="[defaultSystem]"
+				:only-one="true"
 				:discard-on-select="true"
-				:hide-checkboxes="true"
+				:hide-checkboxes="false"
+				@update:model-value="e => { if(e[0]) defaultSystem = e[0] }"
 			/>
 
 			<DashboardSettings ref="dashboardSettingsModal" />

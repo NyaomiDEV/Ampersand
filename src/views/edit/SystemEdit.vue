@@ -44,6 +44,7 @@
 	const system = ref({ ...emptySystem });
 
 	const parentSystem = shallowRef<System>();
+	const parents = shallowRef<System[]>();
 
 	const systemSelectModal = useTemplateRef("systemSelectModal");
 
@@ -178,9 +179,33 @@
 			if(self?.vnode.el) unsetMaterialColors(self?.vnode.el as HTMLElement);
 	}
 
-	watch(parentSystem, () => {
+
+	async function getParents(){
+		const _parents: System[] = [];
+
+		let _system: PartialBy<System, "uuid"> | undefined = structuredClone(toRaw(system.value));
+		// for our purpose (disallowing systems to pick themselves or their parents) a system is also its own parent
+		if(_system?.uuid) _parents.push(_system as System);
+
+		while(_system){
+			if(_system.parent){
+				const parent = await getSystem(_system.parent);
+				if(parent){
+					_parents.push(parent);
+					_system = parent;
+				}
+			} else 
+				_system = undefined;
+		}
+
+		parents.value = _parents;
+	}
+
+	watch(parentSystem, async () => {
 		if(parentSystem.value) system.value.parent = parentSystem.value.uuid;
 		else system.value.parent = undefined;
+
+		await getParents();
 	});
 
 	watch(route, updateRoute);
@@ -452,11 +477,13 @@
 
 			<SystemSelect
 				ref="systemSelectModal"
-				v-model="parentSystem"
+				:model-value="parentSystem ? [parentSystem] : []"
 				:discard-on-select="true"
 				always-emit
-				:hide-checkboxes="true"
-				:child-system="system"
+				:only-one="true"
+				:hide-checkboxes="false"
+				:systems-to-exclude="parents"
+				@update:model-value="e => { if(e[0]) parentSystem = e[0] }"
 			/>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
