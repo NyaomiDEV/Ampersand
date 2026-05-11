@@ -3,7 +3,7 @@
 	"edit": {
 		"header": "ante pi pana sin sona",
 		"name": "nimi pi pana sin sona",
-		"title": "nimi toki pi pana sin sona",
+		"title": "nimi pi pana sin sona",
 		"message": "toki pi pana sin sona",
 		"triggeringEvent": {
 			"title": "tenpo pi kama pana",
@@ -13,6 +13,15 @@
 		"delete": {
 			"title": "weka pi pana sin sona",
 			"confirm": "sina wile ala wile weka e pana sin sona?"
-		}
+		},
+		"headerAdd": "pali pi pana sin sona",
+		"active": "pana sin sona li ken kama",
+		"delay": "awen",
+		"triggerOnAllMembers": "pana sin sona li kama tan ijo kulupu ale",
+		"members": "ijo kulupu pi wile sina"
+	},
+	"notOnPC": {
+		"header": "sina kepeken ilo suli la pana sin sona li pana ala",
+		"content": "taso, sina ken pana e sona tan ilo suli ni tawa ilo lili anu ilo Mac la, sina ken pali e pana sin sona kepeken ilo ni."
 	}
 }

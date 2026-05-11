@@ -11,5 +11,8 @@
 		"header": "lipu toki",
 		"add": "pana toki",
 		"view": "lukin pi toki ale"
+	},
+	"journal": {
+		"header": "tenpo poka la lipu ni li lon"
 	}
 }

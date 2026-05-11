@@ -9,7 +9,7 @@
 		"header": "ante pi tenpo lon",
 		"member": "ante pi ijo lon",
 		"customStatus": "sona pi lon sina",
-		"comment": "toki",
+		"comment": "toki pi ijo lon",
 		"presence": {
 			"historyTitle": "sona pi mute lon",
 			"lastPresence": "sona pi tenpo poka pini la mute lon li mute {{presence}} / 5",

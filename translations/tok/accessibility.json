@@ -55,5 +55,14 @@
 	},
 	"frontingNotification": {
 		"title": "pana sin sona pi kama lon"
+	},
+	"colors": {
+		"title": "kule namako poki",
+		"app": "kule ilo",
+		"system": "kule pi ilo sina",
+		"custom": "kule pi wile sina"
+	},
+	"backgroundColor": {
+		"title": "kule poki pi wile sina"
 	}
 }
