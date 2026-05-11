@@ -55,5 +55,14 @@
 	},
 	"frontingNotification": {
 		"title": "Powiadomienie o frontowaniu"
+	},
+	"colors": {
+		"title": "Akcent i kolory tła",
+		"app": "Kolory aplikacji",
+		"system": "Kolory systemu",
+		"custom": "Kolory niestandardowe"
+	},
+	"backgroundColor": {
+		"title": "Wybierz kolor tła"
 	}
 }
