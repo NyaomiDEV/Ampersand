@@ -57,9 +57,17 @@
 		"title": "Notificação de fronte"
 	},
 	"themeScheme": {
-		"neutral": "Neutra"
+		"neutral": "Neutro",
+		"title": "Esquema de cores",
+		"tonalSpot": "Foco Tonal",
+		"vibrant": "Vibrante"
 	},
 	"colors": {
-		"custom": "Cores personalizadas:"
+		"custom": "Cores personalizadas",
+		"title": "Cores de fundo e de destaque",
+		"app": "Cores do aplicativo"
+	},
+	"backgroundColor": {
+		"title": "Escolha a cor de fundo"
 	}
 }
