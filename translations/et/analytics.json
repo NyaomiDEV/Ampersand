@@ -2,5 +2,8 @@
 	"header": "Analüütika",
 	"startDate": "Alguskuupäev",
 	"endDate": "Lõpukuupäev",
-	"detail": "Analüütilised üksikasjad"
+	"detail": "Analüütilised üksikasjad",
+	"stats": "Statistika",
+	"daytime": "Aeg päevas",
+	"presence": "Kohalolek"
 }
