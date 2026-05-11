@@ -1,5 +1,6 @@
 {
-	"header": "analüütika",
+	"header": "Analüütika",
 	"startDate": "Alguskuupäev",
-	"endDate": "Lõppkuupäev"
+	"endDate": "Lõpukuupäev",
+	"detail": "Analüütilised üksikasjad"
 }
