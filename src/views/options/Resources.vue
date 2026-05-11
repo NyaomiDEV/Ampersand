@@ -2,9 +2,9 @@
 	import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonBackButton, IonListHeader, IonLabel, IonList } from "@ionic/vue";
 	import ResourceCard from "../../components/ResourceCard.vue";
 
-	import globeMD from "@material-symbols/svg-600/outlined/globe.svg";
-	import newsMD from "@material-symbols/svg-600/outlined/news.svg";
-	import wikiMD from "@material-symbols/svg-600/outlined/book_2.svg";
+	import globeMD from "@material-symbols/svg-600/rounded/globe.svg";
+	import newsMD from "@material-symbols/svg-600/rounded/news.svg";
+	import wikiMD from "@material-symbols/svg-600/rounded/book_2.svg";
 	import CodebergLogo from "../../assets/codeberg_logo.svg";
 </script>
 

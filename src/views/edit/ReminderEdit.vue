@@ -20,8 +20,8 @@
 		IonToggle
 	} from "@ionic/vue";
 
-	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
-	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
+	import saveMD from "@material-symbols/svg-600/rounded/save.svg";
+	import trashMD from "@material-symbols/svg-600/rounded/delete.svg";
 
 	import { onBeforeMount, ref, toRaw, useTemplateRef, watch } from "vue";
 	import { ReminderComplete } from "../../lib/db/entities";

@@ -6,11 +6,11 @@
 	import { useTranslation } from "i18next-vue";
 	import { platform } from "@tauri-apps/plugin-os";
 
-	import lockMD from "@material-symbols/svg-600/outlined/lock.svg";
-	import passwordMD from "@material-symbols/svg-600/outlined/password_2.svg";
-	import biometricsMD from "@material-symbols/svg-600/outlined/fingerprint.svg";
-	import remoteMD from "@material-symbols/svg-600/outlined/network_manage.svg";
-	import ipcMD from "@material-symbols/svg-600/outlined/api.svg";
+	import lockMD from "@material-symbols/svg-600/rounded/lock.svg";
+	import passwordMD from "@material-symbols/svg-600/rounded/password_2.svg";
+	import biometricsMD from "@material-symbols/svg-600/rounded/fingerprint.svg";
+	import remoteMD from "@material-symbols/svg-600/rounded/network_manage.svg";
+	import ipcMD from "@material-symbols/svg-600/rounded/api.svg";
 	import { promptOkCancel } from "../../lib/util/misc";
 
 	const i18next = useTranslation();

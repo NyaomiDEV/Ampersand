@@ -4,7 +4,7 @@
 	import TagLabel from "./TagLabel.vue";
 	import TagColor from "./TagColor.vue";
 
-	import archivedMD from "@material-symbols/svg-600/outlined/archive.svg";
+	import archivedMD from "@material-symbols/svg-600/rounded/archive.svg";
 
 	const props = defineProps<{
 		tag: Tag,

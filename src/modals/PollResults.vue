@@ -23,8 +23,8 @@
 
 	import MemberItem from "../components/member/MemberItem.vue";
 
-	import pencilMD from "@material-symbols/svg-600/outlined/edit.svg";
-	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
+	import pencilMD from "@material-symbols/svg-600/rounded/edit.svg";
+	import trashMD from "@material-symbols/svg-600/rounded/delete.svg";
 
 	const props = defineProps<{ poll: Poll }>();
 	const emit = defineEmits<{ poll: [Poll] }>();

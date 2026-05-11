@@ -19,10 +19,10 @@
 
 	import { ref, toRaw } from "vue";
 
-	import reorderMD from "@material-symbols/svg-600/outlined/swap_vert.svg";
-	import doneMD from "@material-symbols/svg-600/outlined/done_all.svg";
-	import dragMD from "@material-symbols/svg-600/outlined/drag_handle.svg";
-	import resetMD from "@material-symbols/svg-600/outlined/restart_alt.svg";
+	import reorderMD from "@material-symbols/svg-600/rounded/swap_vert.svg";
+	import doneMD from "@material-symbols/svg-600/rounded/done_all.svg";
+	import dragMD from "@material-symbols/svg-600/rounded/drag_handle.svg";
+	import resetMD from "@material-symbols/svg-600/rounded/restart_alt.svg";
 
 	import { defaultAppConfig, appConfig } from "../lib/config";
 	import MessageBoardSettings from "../components/dashboard/settings/MessageBoardSettings.vue";

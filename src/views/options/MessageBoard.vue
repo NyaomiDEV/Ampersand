@@ -6,7 +6,7 @@
 	import BoardMessageEdit from "../../modals/BoardMessageEdit.vue";
 	import Spinner from "../../components/Spinner.vue";
 
-	import addMD from "@material-symbols/svg-600/outlined/add.svg";
+	import addMD from "@material-symbols/svg-600/rounded/add.svg";
 
 	import dayjs from "dayjs";
 

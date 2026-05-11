@@ -12,11 +12,11 @@
 	import { clearAllDatabase } from "../../lib/db/tables";
 	import { resetConfig, securityConfig } from "../../lib/config";
 
-	import importMD from "@material-symbols/svg-600/outlined/download.svg";
-	import octoMD from "@material-symbols/svg-600/outlined/neurology.svg";
-	import spMD from "@material-symbols/svg-600/outlined/spa.svg";
-	import tupMD from "@material-symbols/svg-600/outlined/package_2.svg";
-	import pkMD from "@material-symbols/svg-600/outlined/pet_supplies.svg";
+	import importMD from "@material-symbols/svg-600/rounded/download.svg";
+	import octoMD from "@material-symbols/svg-600/rounded/neurology.svg";
+	import spMD from "@material-symbols/svg-600/rounded/spa.svg";
+	import tupMD from "@material-symbols/svg-600/rounded/package_2.svg";
+	import pkMD from "@material-symbols/svg-600/rounded/pet_supplies.svg";
 
 	const loading = ref(false);
 

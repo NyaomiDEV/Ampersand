@@ -6,10 +6,10 @@
 	import { useBlob } from "../../lib/util/blob";
 	import { appConfig, accessibilityConfig } from "../../lib/config";
 
-	import systemCircle from "@material-symbols/svg-600/outlined/supervised_user_circle.svg";
-	import defaultMD from "@material-symbols/svg-600/outlined/bookmark_star.svg";
-	import pinMD from "@material-symbols/svg-600/outlined/keep.svg";
-	import archivedMD from "@material-symbols/svg-600/outlined/archive.svg";
+	import systemCircle from "@material-symbols/svg-600/rounded/supervised_user_circle.svg";
+	import defaultMD from "@material-symbols/svg-600/rounded/bookmark_star.svg";
+	import pinMD from "@material-symbols/svg-600/rounded/keep.svg";
+	import archivedMD from "@material-symbols/svg-600/rounded/archive.svg";
 
 	const props = withDefaults(defineProps<{
 		system: System,

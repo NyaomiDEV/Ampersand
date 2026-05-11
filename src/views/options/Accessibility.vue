@@ -4,25 +4,25 @@
 	import { platform } from "@tauri-apps/plugin-os";
 	import Color from "../../components/Color.vue";
 
-	import lowContrastMD from "@material-symbols/svg-600/outlined/brightness_1.svg";
-	import highContrastMD from "@material-symbols/svg-600/outlined/contrast.svg";
-	import amoledMD from "@material-symbols/svg-600/outlined/night_sight_max.svg";
-	import vibrantMD from "@material-symbols/svg-600/outlined/brightness_7.svg";
-	import fontMD from "@material-symbols/svg-600/outlined/format_size.svg";
-	import smallTextMD from "@material-symbols/svg-600/outlined/text_decrease.svg";
-	import bigTextMD from "@material-symbols/svg-600/outlined/text_increase.svg";
-	import customColorMD from "@material-symbols/svg-600/outlined/palette.svg";
-	import colorsMD from "@material-symbols/svg-600/outlined/colors.svg";
-	import borderMD from "@material-symbols/svg-600/outlined/border_color.svg";
-	import compactMD from "@material-symbols/svg-600/outlined/list_alt.svg";
-	import hideCoverMD from "@material-symbols/svg-600/outlined/hide_image.svg";
-	import motionMD from "@material-symbols/svg-600/outlined/masked_transitions.svg";
-	import lightMD from "@material-symbols/svg-600/outlined/wb_sunny.svg";
-	import darkMD from "@material-symbols/svg-600/outlined/dark_mode.svg";
-	import autoMD from "@material-symbols/svg-600/outlined/routine.svg";
-	import frontingNotificationMD from "@material-symbols/svg-600/outlined/notifications_unread.svg";
-	import appColorMD from "@material-symbols/svg-600/outlined/colorize.svg";
-	import systemColorMD from "@material-symbols/svg-600/outlined/devices.svg";
+	import lowContrastMD from "@material-symbols/svg-600/rounded/brightness_1.svg";
+	import highContrastMD from "@material-symbols/svg-600/rounded/contrast.svg";
+	import amoledMD from "@material-symbols/svg-600/rounded/night_sight_max.svg";
+	import vibrantMD from "@material-symbols/svg-600/rounded/brightness_7.svg";
+	import fontMD from "@material-symbols/svg-600/rounded/format_size.svg";
+	import smallTextMD from "@material-symbols/svg-600/rounded/text_decrease.svg";
+	import bigTextMD from "@material-symbols/svg-600/rounded/text_increase.svg";
+	import customColorMD from "@material-symbols/svg-600/rounded/palette.svg";
+	import colorsMD from "@material-symbols/svg-600/rounded/colors.svg";
+	import borderMD from "@material-symbols/svg-600/rounded/border_color.svg";
+	import compactMD from "@material-symbols/svg-600/rounded/list_alt.svg";
+	import hideCoverMD from "@material-symbols/svg-600/rounded/hide_image.svg";
+	import motionMD from "@material-symbols/svg-600/rounded/masked_transitions.svg";
+	import lightMD from "@material-symbols/svg-600/rounded/wb_sunny.svg";
+	import darkMD from "@material-symbols/svg-600/rounded/dark_mode.svg";
+	import autoMD from "@material-symbols/svg-600/rounded/routine.svg";
+	import frontingNotificationMD from "@material-symbols/svg-600/rounded/notifications_unread.svg";
+	import appColorMD from "@material-symbols/svg-600/rounded/colorize.svg";
+	import systemColorMD from "@material-symbols/svg-600/rounded/devices.svg";
 </script>
 
 <template>

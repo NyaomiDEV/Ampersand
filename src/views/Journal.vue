@@ -6,8 +6,8 @@
 	import Spinner from "../components/Spinner.vue";
 	import JournalPostItem from "../components/journal/JournalPostItem.vue";
 
-	import addMD from "@material-symbols/svg-600/outlined/add.svg";
-	import copyMD from "@material-symbols/svg-600/outlined/content_copy.svg";
+	import addMD from "@material-symbols/svg-600/rounded/add.svg";
+	import copyMD from "@material-symbols/svg-600/rounded/content_copy.svg";
 
 	import { JournalPostComplete } from "../lib/db/entities";
 	import dayjs from "dayjs";

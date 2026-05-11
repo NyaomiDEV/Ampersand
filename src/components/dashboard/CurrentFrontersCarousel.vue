@@ -8,8 +8,8 @@
 	import { addModal, removeModal } from "../../lib/modals.ts";
 	import MemberSelect from "../../modals/MemberSelect.vue";
 
-	import addMD from "@material-symbols/svg-600/outlined/add.svg";
-	import removeFromFrontMD from "@material-symbols/svg-600/outlined/person_remove.svg";
+	import addMD from "@material-symbols/svg-600/rounded/add.svg";
+	import removeFromFrontMD from "@material-symbols/svg-600/rounded/person_remove.svg";
 	import FrontingEntryCard from "../frontingEntry/FrontingEntryCard.vue";
 	import { appConfig } from "../../lib/config/index.ts";
 	import FrontingEntryItem from "../frontingEntry/FrontingEntryItem.vue";

@@ -8,11 +8,11 @@
 	import SystemSelect from "../../modals/SystemSelect.vue";
 	import Avatar from "../../components/Avatar.vue";
 
-	import accountCircle from "@material-symbols/svg-600/outlined/supervised_user_circle.svg";
-	import pencilMD from "@material-symbols/svg-600/outlined/edit.svg";
-	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
-	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
-	import PeopleMD from "@material-symbols/svg-600/outlined/group.svg";
+	import accountCircle from "@material-symbols/svg-600/rounded/supervised_user_circle.svg";
+	import pencilMD from "@material-symbols/svg-600/rounded/edit.svg";
+	import saveMD from "@material-symbols/svg-600/rounded/save.svg";
+	import trashMD from "@material-symbols/svg-600/rounded/delete.svg";
+	import PeopleMD from "@material-symbols/svg-600/rounded/group.svg";
 
 	import { appConfig } from "../../lib/config";
 	import { useRoute } from "vue-router";

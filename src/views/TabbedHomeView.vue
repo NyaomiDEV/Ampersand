@@ -1,14 +1,14 @@
 <script setup lang="ts">
 	import { IonPage, IonTabs, IonTabBar, IonRouterOutlet, IonTabButton, IonIcon, useIonRouter } from "@ionic/vue";
 
-	import PeopleMD from "@material-symbols/svg-600/outlined/group.svg";
-	import JournalMD from "@material-symbols/svg-600/outlined/book.svg";
-	import HomeMD from "@material-symbols/svg-600/outlined/home.svg";
-	import OptionsMD from "@material-symbols/svg-600/outlined/menu.svg";
-	import PeopleFillMD from "@material-symbols/svg-600/outlined/group-fill.svg";
-	import JournalFillMD from "@material-symbols/svg-600/outlined/book-fill.svg";
-	import HomeFillMD from "@material-symbols/svg-600/outlined/home-fill.svg";
-	import OptionsFillMD from "@material-symbols/svg-600/outlined/menu-fill.svg";
+	import PeopleMD from "@material-symbols/svg-600/rounded/group.svg";
+	import JournalMD from "@material-symbols/svg-600/rounded/book.svg";
+	import HomeMD from "@material-symbols/svg-600/rounded/home.svg";
+	import OptionsMD from "@material-symbols/svg-600/rounded/menu.svg";
+	import PeopleFillMD from "@material-symbols/svg-600/rounded/group-fill.svg";
+	import JournalFillMD from "@material-symbols/svg-600/rounded/book-fill.svg";
+	import HomeFillMD from "@material-symbols/svg-600/rounded/home-fill.svg";
+	import OptionsFillMD from "@material-symbols/svg-600/rounded/menu-fill.svg";
 
 	import { slideAnimation } from "../lib/util/misc";
 	import { useRoute } from "vue-router";

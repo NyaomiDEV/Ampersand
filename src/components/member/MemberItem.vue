@@ -8,13 +8,13 @@
 	import { getSystem } from "../../lib/db/tables/system";
 	import { onBeforeMount, shallowRef, watch } from "vue";
 
-	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
-	import systemCircle from "@material-symbols/svg-600/outlined/supervised_user_circle.svg";
-	import pinMD from "@material-symbols/svg-600/outlined/keep.svg";
-	import customFrontMD from "@material-symbols/svg-600/outlined/no_accounts.svg";
-	import archivedMD from "@material-symbols/svg-600/outlined/archive.svg";
-	import fronterMD from "@material-symbols/svg-600/outlined/person_pin_circle.svg";
-	import mainFronterMD from "@material-symbols/svg-600/outlined/person_pin_circle-fill.svg";
+	import accountCircle from "@material-symbols/svg-600/rounded/account_circle-fill.svg";
+	import systemCircle from "@material-symbols/svg-600/rounded/supervised_user_circle.svg";
+	import pinMD from "@material-symbols/svg-600/rounded/keep.svg";
+	import customFrontMD from "@material-symbols/svg-600/rounded/no_accounts.svg";
+	import archivedMD from "@material-symbols/svg-600/rounded/archive.svg";
+	import fronterMD from "@material-symbols/svg-600/rounded/person_pin_circle.svg";
+	import mainFronterMD from "@material-symbols/svg-600/rounded/person_pin_circle-fill.svg";
 
 	const props = withDefaults(defineProps<{
 		member: Member,

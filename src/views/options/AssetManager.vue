@@ -8,7 +8,7 @@
 	import { useRoute } from "vue-router";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 
-	import addMD from "@material-symbols/svg-600/outlined/add.svg";
+	import addMD from "@material-symbols/svg-600/rounded/add.svg";
 	import VirtualList from "../../components/VirtualList.vue";
 	import InfiniteLoader from "../../components/InfiniteLoader.vue";
 	import TheresNothingHere from "../../components/TheresNothingHere.vue";

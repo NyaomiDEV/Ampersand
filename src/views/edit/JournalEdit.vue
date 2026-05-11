@@ -21,13 +21,13 @@
 		IonProgressBar,
 	} from "@ionic/vue";
 
-	import pencilMD from "@material-symbols/svg-600/outlined/edit.svg";
-	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
-	import imageMD from "@material-symbols/svg-600/outlined/image.svg";
-	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
-	import settingsMD from "@material-symbols/svg-600/outlined/settings.svg";
-	import personAddMD from "@material-symbols/svg-600/outlined/person_add.svg";
-	import clockAddMD from "@material-symbols/svg-600/outlined/more_time.svg";
+	import pencilMD from "@material-symbols/svg-600/rounded/edit.svg";
+	import saveMD from "@material-symbols/svg-600/rounded/save.svg";
+	import imageMD from "@material-symbols/svg-600/rounded/image.svg";
+	import trashMD from "@material-symbols/svg-600/rounded/delete.svg";
+	import settingsMD from "@material-symbols/svg-600/rounded/settings.svg";
+	import personAddMD from "@material-symbols/svg-600/rounded/person_add.svg";
+	import clockAddMD from "@material-symbols/svg-600/rounded/more_time.svg";
 
 	import { JournalPost, JournalPostComplete, Tag } from "../../lib/db/entities";
 	import { newJournalPost, updateJournalPost, getJournalPost, toJournalPostComplete } from "../../lib/db/tables/journalPosts";

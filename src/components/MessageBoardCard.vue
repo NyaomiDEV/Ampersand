@@ -12,7 +12,7 @@
 	import { useTranslation } from "i18next-vue";
 	import { formatDate, promptOkCancel, sortName } from "../lib/util/misc";
 
-	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
+	import accountCircle from "@material-symbols/svg-600/rounded/account_circle-fill.svg";
 	import { accessibilityConfig } from "../lib/config";
 	import Comments from "../modals/Comments.vue";
 

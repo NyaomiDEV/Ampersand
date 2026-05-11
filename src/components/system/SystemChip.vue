@@ -9,7 +9,7 @@
 	import { accessibilityConfig } from "../../lib/config";
 
 	import Avatar from "../Avatar.vue";
-	import accountCircle from "@material-symbols/svg-600/outlined/supervised_user_circle.svg";
+	import accountCircle from "@material-symbols/svg-600/rounded/supervised_user_circle.svg";
 
 	const router = useIonRouter();
 

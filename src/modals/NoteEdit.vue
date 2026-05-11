@@ -16,8 +16,8 @@
 		IonModal,
 	} from "@ionic/vue";
 
-	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
-	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
+	import saveMD from "@material-symbols/svg-600/rounded/save.svg";
+	import trashMD from "@material-symbols/svg-600/rounded/delete.svg";
 
 	import { Note } from "../lib/db/entities";
 	import { newNote, updateNote, deleteNote } from "../lib/db/tables/notes";

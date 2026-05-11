@@ -16,8 +16,8 @@
 
 	import { formatDate } from "../lib/util/misc";
 
-	import addMD from "@material-symbols/svg-600/outlined/add.svg";
-	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
+	import addMD from "@material-symbols/svg-600/rounded/add.svg";
+	import trashMD from "@material-symbols/svg-600/rounded/delete.svg";
 
 	import { h, ref } from "vue";
 	import PresenceEdit from "./PresenceEdit.vue";

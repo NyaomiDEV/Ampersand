@@ -24,14 +24,14 @@
 
 	import TagListSelect from "../../modals/TagListSelect.vue";
 
-	import pencilMD from "@material-symbols/svg-600/outlined/edit.svg";
-	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
-	import newspaperMD from "@material-symbols/svg-600/outlined/newspaper.svg";
-	import journalMD from "@material-symbols/svg-600/outlined/book.svg";
-	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
-	import addMD from "@material-symbols/svg-600/outlined/add.svg";
-	import FrontHistoryMD from "@material-symbols/svg-600/outlined/show_chart.svg";
-	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
+	import pencilMD from "@material-symbols/svg-600/rounded/edit.svg";
+	import saveMD from "@material-symbols/svg-600/rounded/save.svg";
+	import newspaperMD from "@material-symbols/svg-600/rounded/newspaper.svg";
+	import journalMD from "@material-symbols/svg-600/rounded/book.svg";
+	import trashMD from "@material-symbols/svg-600/rounded/delete.svg";
+	import addMD from "@material-symbols/svg-600/rounded/add.svg";
+	import FrontHistoryMD from "@material-symbols/svg-600/rounded/show_chart.svg";
+	import accountCircle from "@material-symbols/svg-600/rounded/account_circle-fill.svg";
 
 	import { CustomField, Member, System, Tag } from "../../lib/db/entities";
 	import { newMember, deleteMember, updateMember, defaultMember, getMember } from "../../lib/db/tables/members";

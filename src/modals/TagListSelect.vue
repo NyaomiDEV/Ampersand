@@ -22,7 +22,7 @@
 	import InfiniteLoader from "../components/InfiniteLoader.vue";
 	import { DatabaseEvent, DatabaseEvents } from "../lib/db/events";
 
-	import checkMD from "@material-symbols/svg-600/outlined/check.svg";
+	import checkMD from "@material-symbols/svg-600/rounded/check.svg";
 
 	const props = defineProps<{
 		customTitle?: string,

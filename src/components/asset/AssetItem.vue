@@ -4,7 +4,7 @@
 	import { useBlob } from "../../lib/util/blob";
 	import { PartialBy } from "../../lib/types";
 
-	import documentMD from "@material-symbols/svg-600/outlined/draft.svg";
+	import documentMD from "@material-symbols/svg-600/rounded/draft.svg";
 	import { openFile } from "../../lib/native/plugin";
 	import { onBeforeMount, shallowRef, watch } from "vue";
 	import { getTag, getTagsIndex } from "../../lib/db/tables/tags";

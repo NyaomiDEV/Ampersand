@@ -21,11 +21,11 @@
 	} from "@ionic/vue";
 	import Color from "../../components/Color.vue";
 
-	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
-	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
-	import peopleMD from "@material-symbols/svg-600/outlined/group.svg";
-	import journalMD from "@material-symbols/svg-600/outlined/book.svg";
-	import assetMD from "@material-symbols/svg-600/outlined/folder_open.svg";
+	import saveMD from "@material-symbols/svg-600/rounded/save.svg";
+	import trashMD from "@material-symbols/svg-600/rounded/delete.svg";
+	import peopleMD from "@material-symbols/svg-600/rounded/group.svg";
+	import journalMD from "@material-symbols/svg-600/rounded/book.svg";
+	import assetMD from "@material-symbols/svg-600/rounded/folder_open.svg";
 
 	import { getTag, newTag, removeTag, updateTag } from "../../lib/db/tables/tags";
 	import { Member, Tag } from "../../lib/db/entities";

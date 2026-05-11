@@ -57,7 +57,7 @@ import { onBackButtonPress } from "@tauri-apps/api/app";
 import { maybeExit } from "./lib/util/backbutton";
 
 // Back button icon
-import backMD from "@material-symbols/svg-600/outlined/arrow_back.svg";
+import backMD from "@material-symbols/svg-600/rounded/arrow_back.svg";
 import { sendFrontingChangedEvent } from "./lib/db/tables/frontingEntries";
 import { unnotify } from "./lib/notifications";
 

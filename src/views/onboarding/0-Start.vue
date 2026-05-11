@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { IonContent, IonPage, IonButton, IonIcon, useIonRouter } from "@ionic/vue";
-	import LanguageMD from "@material-symbols/svg-600/outlined/language.svg";
-	import AccessibilityMD from "@material-symbols/svg-600/outlined/accessibility_new.svg";
+	import LanguageMD from "@material-symbols/svg-600/rounded/language.svg";
+	import AccessibilityMD from "@material-symbols/svg-600/rounded/accessibility_new.svg";
 	import AmpersandLogo from "../../assets/ampersand_logo.svg";
 	import { slideAnimation, languagePicker } from "../../lib/util/misc";
 	import { appConfig } from "../../lib/config";

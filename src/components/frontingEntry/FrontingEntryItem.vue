@@ -3,7 +3,7 @@
 	import { FrontingEntryComplete, Member } from "../../lib/db/entities";
 	import { appConfig } from "../../lib/config";
 	import MemberItem from "../member/MemberItem.vue";
-	import commentMD from "@material-symbols/svg-600/outlined/comment.svg";
+	import commentMD from "@material-symbols/svg-600/rounded/comment.svg";
 	import FrontingEntryLabel from "./FrontingEntryLabel.vue";
 	import FrontingEntryInterval from "./FrontingEntryInterval.vue";
 	import { hexFromArgb } from "@material/material-color-utilities";

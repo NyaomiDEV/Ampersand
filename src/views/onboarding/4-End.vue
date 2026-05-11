@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { IonContent, IonPage, IonButton, IonIcon, useIonRouter } from "@ionic/vue";
 
-	import ArrowMD from "@material-symbols/svg-600/outlined/arrow_forward.svg";
+	import ArrowMD from "@material-symbols/svg-600/rounded/arrow_forward.svg";
 
 	const router = useIonRouter();
 </script>

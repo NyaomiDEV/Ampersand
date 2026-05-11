@@ -2,7 +2,7 @@
 	import { IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonIcon } from "@ionic/vue";
 	import { openUrl } from "@tauri-apps/plugin-opener";
 
-	import forwardMD from "@material-symbols/svg-600/outlined/arrow_forward.svg";
+	import forwardMD from "@material-symbols/svg-600/rounded/arrow_forward.svg";
 
 	const props = defineProps<{
 		url: string,

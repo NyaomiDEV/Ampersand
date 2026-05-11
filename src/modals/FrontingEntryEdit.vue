@@ -17,8 +17,8 @@
 		IonModal,
 	} from "@ionic/vue";
 
-	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
-	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
+	import saveMD from "@material-symbols/svg-600/rounded/save.svg";
+	import trashMD from "@material-symbols/svg-600/rounded/delete.svg";
 
 	import { FrontingEntry, FrontingEntryComplete } from "../lib/db/entities";
 	import { newFrontingEntry, updateFrontingEntry, deleteFrontingEntry, sendFrontingChangedEvent, toFrontingEntryComplete, getFrontingBetween } from "../lib/db/tables/frontingEntries";

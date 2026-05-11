@@ -25,7 +25,7 @@
 	import { promptOkCancel, toast, formatDate, sortName } from "../lib/util/misc";
 	import { deleteJournalPost } from "../lib/db/tables/journalPosts";
 
-	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
+	import trashMD from "@material-symbols/svg-600/rounded/delete.svg";
 
 
 	const i18next = useTranslation();

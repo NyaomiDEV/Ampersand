@@ -3,9 +3,9 @@
 	import { onMounted, onUnmounted, ref, shallowRef, useTemplateRef, watch } from "vue";
 	import { useRoute } from "vue-router";
 
-	import addMD from "@material-symbols/svg-600/outlined/add.svg";
-	import copyMD from "@material-symbols/svg-600/outlined/content_copy.svg";
-	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
+	import addMD from "@material-symbols/svg-600/rounded/add.svg";
+	import copyMD from "@material-symbols/svg-600/rounded/content_copy.svg";
+	import trashMD from "@material-symbols/svg-600/rounded/delete.svg";
 
 	import { getFilteredTags, removeTag } from "../../lib/db/tables/tags";
 	import type { Tag } from "../../lib/db/entities.d.ts";

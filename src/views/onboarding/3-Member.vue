@@ -13,10 +13,10 @@
 		useIonRouter
 	} from "@ionic/vue";
 
-	import pencilMD from "@material-symbols/svg-600/outlined/edit.svg";
-	import arrowMD from "@material-symbols/svg-600/outlined/arrow_forward.svg";
-	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
-	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
+	import pencilMD from "@material-symbols/svg-600/rounded/edit.svg";
+	import arrowMD from "@material-symbols/svg-600/rounded/arrow_forward.svg";
+	import trashMD from "@material-symbols/svg-600/rounded/delete.svg";
+	import accountCircle from "@material-symbols/svg-600/rounded/account_circle-fill.svg";
 
 	import { Member } from "../../lib/db/entities";
 	import { newMember } from "../../lib/db/tables/members";

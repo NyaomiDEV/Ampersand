@@ -24,7 +24,7 @@
 	import VirtualList from "../components/VirtualList.vue";
 	import InfiniteLoader from "../components/InfiniteLoader.vue";
 
-	import checkMD from "@material-symbols/svg-600/outlined/check.svg";
+	import checkMD from "@material-symbols/svg-600/rounded/check.svg";
 
 	const props = defineProps<{
 		customTitle?: string,

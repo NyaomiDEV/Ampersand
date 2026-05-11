@@ -18,10 +18,10 @@
 		IonButton,
 	} from "@ionic/vue";
 
-	import addMD from "@material-symbols/svg-600/outlined/add.svg";
-	import saveMD from "@material-symbols/svg-600/outlined/save.svg";
-	import chartMD from "@material-symbols/svg-600/outlined/bar_chart.svg";
-	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
+	import addMD from "@material-symbols/svg-600/rounded/add.svg";
+	import saveMD from "@material-symbols/svg-600/rounded/save.svg";
+	import chartMD from "@material-symbols/svg-600/rounded/bar_chart.svg";
+	import trashMD from "@material-symbols/svg-600/rounded/delete.svg";
 
 	import { BoardMessage, BoardMessageComplete } from "../lib/db/entities";
 	import { updateBoardMessage, deleteBoardMessage, newBoardMessage } from "../lib/db/tables/boardMessages";

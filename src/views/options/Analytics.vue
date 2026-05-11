@@ -17,18 +17,18 @@
 	import TheresNothingHere from "../../components/TheresNothingHere.vue";
 	import PresenceRating from "../../components/PresenceRating.vue";
 
-	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
+	import accountCircle from "@material-symbols/svg-600/rounded/account_circle-fill.svg";
 
-	import totalMD from "@material-symbols/svg-600/outlined/all_inclusive.svg";
-	import statsMD from "@material-symbols/svg-600/outlined/stacked_bar_chart.svg";
-	import routineMD from "@material-symbols/svg-600/outlined/routine.svg";
-	import minMD from "@material-symbols/svg-600/outlined/stat_minus_2.svg";
-	import maxMD from "@material-symbols/svg-600/outlined/stat_2.svg";
-	import averageMD from "@material-symbols/svg-600/outlined/avg_pace.svg";
-	import morningMD from "@material-symbols/svg-600/outlined/wb_twilight.svg";
-	import dayMD from "@material-symbols/svg-600/outlined/wb_sunny.svg";
-	import eveningMD from "@material-symbols/svg-600/outlined/wb_twilight_2.svg";
-	import nightMD from "@material-symbols/svg-600/outlined/moon_stars.svg";
+	import totalMD from "@material-symbols/svg-600/rounded/all_inclusive.svg";
+	import statsMD from "@material-symbols/svg-600/rounded/stacked_bar_chart.svg";
+	import routineMD from "@material-symbols/svg-600/rounded/routine.svg";
+	import minMD from "@material-symbols/svg-600/rounded/stat_minus_2.svg";
+	import maxMD from "@material-symbols/svg-600/rounded/stat_2.svg";
+	import averageMD from "@material-symbols/svg-600/rounded/avg_pace.svg";
+	import morningMD from "@material-symbols/svg-600/rounded/wb_twilight.svg";
+	import dayMD from "@material-symbols/svg-600/rounded/wb_sunny.svg";
+	import eveningMD from "@material-symbols/svg-600/rounded/wb_twilight_2.svg";
+	import nightMD from "@material-symbols/svg-600/rounded/moon_stars.svg";
 	import presenceMD from "@material-symbols/svg-600/rounded/star_half.svg";
 	import cofrontMD from "@material-symbols/svg-600/rounded/supervisor_account.svg";
 	import AvatarStack from "../../components/AvatarStack.vue";

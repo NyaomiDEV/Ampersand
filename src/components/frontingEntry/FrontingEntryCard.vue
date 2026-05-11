@@ -6,8 +6,8 @@
 	import { appConfig, accessibilityConfig } from "../../lib/config";
 	import { FrontingEntryComplete, Member, System } from "../../lib/db/entities";
 	import { useBlob } from "../../lib/util/blob";
-	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
-	import systemCircle from "@material-symbols/svg-600/outlined/supervised_user_circle.svg";
+	import accountCircle from "@material-symbols/svg-600/rounded/account_circle-fill.svg";
+	import systemCircle from "@material-symbols/svg-600/rounded/supervised_user_circle.svg";
 	import FrontingEntryInterval from "./FrontingEntryInterval.vue";
 	import { getMaterialColors } from "../../lib/theme";
 	import { hexFromArgb } from "@material/material-color-utilities";

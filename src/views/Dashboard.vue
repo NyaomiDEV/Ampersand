@@ -4,7 +4,7 @@
 	import { getMainFronter } from "../lib/db/tables/frontingEntries.ts";
 	import type { Member } from "../lib/db/entities";
 
-	import LockMD from "@material-symbols/svg-600/outlined/lock.svg";
+	import LockMD from "@material-symbols/svg-600/rounded/lock.svg";
 
 	import NotesAccordion from "../components/dashboard/NotesAccordion.vue";
 	import CurrentFrontersCarousel from "../components/dashboard/CurrentFrontersCarousel.vue";

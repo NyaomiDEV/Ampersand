@@ -9,12 +9,12 @@
 	import { importSimplyPlural } from "../../lib/db/external/simplyplural";
 	import { importOctocon } from "../../lib/db/external/octocon";
 
-	import importMD from "@material-symbols/svg-600/outlined/download.svg";
-	import exportMD from "@material-symbols/svg-600/outlined/upload.svg";
-	import octoMD from "@material-symbols/svg-600/outlined/neurology.svg";
-	import spMD from "@material-symbols/svg-600/outlined/spa.svg";
-	import tupMD from "@material-symbols/svg-600/outlined/package_2.svg";
-	import pkMD from "@material-symbols/svg-600/outlined/pet_supplies.svg";
+	import importMD from "@material-symbols/svg-600/rounded/download.svg";
+	import exportMD from "@material-symbols/svg-600/rounded/upload.svg";
+	import octoMD from "@material-symbols/svg-600/rounded/neurology.svg";
+	import spMD from "@material-symbols/svg-600/rounded/spa.svg";
+	import tupMD from "@material-symbols/svg-600/rounded/package_2.svg";
+	import pkMD from "@material-symbols/svg-600/rounded/pet_supplies.svg";
 	import { platform } from "@tauri-apps/plugin-os";
 	import { exportArchive, importArchive } from "../../lib/db/ioutils/archive";
 

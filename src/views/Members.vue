@@ -18,13 +18,13 @@
 	import CollapsibleHeaderbar from "../components/CollapsibleHeaderbar.vue";
 	import { accessibilityConfig } from "../lib/config/index.ts";
 
-	import addMD from "@material-symbols/svg-600/outlined/add.svg";
-	import addToFrontMD from "@material-symbols/svg-600/outlined/person_add.svg";
-	import removeFromFrontMD from "@material-symbols/svg-600/outlined/person_remove.svg";
-	import setMainFronterMD from "@material-symbols/svg-600/outlined/arrow_circle_up.svg";
-	import unsetMainFronterMD from "@material-symbols/svg-600/outlined/arrow_circle_down.svg";
-	import setAsFrontMD from "@material-symbols/svg-600/outlined/person_pin_circle.svg";
-	import copyMD from "@material-symbols/svg-600/outlined/content_copy.svg";
+	import addMD from "@material-symbols/svg-600/rounded/add.svg";
+	import addToFrontMD from "@material-symbols/svg-600/rounded/person_add.svg";
+	import removeFromFrontMD from "@material-symbols/svg-600/rounded/person_remove.svg";
+	import setMainFronterMD from "@material-symbols/svg-600/rounded/arrow_circle_up.svg";
+	import unsetMainFronterMD from "@material-symbols/svg-600/rounded/arrow_circle_down.svg";
+	import setAsFrontMD from "@material-symbols/svg-600/rounded/person_pin_circle.svg";
+	import copyMD from "@material-symbols/svg-600/rounded/content_copy.svg";
 
 	import { getFilteredMembers } from "../lib/db/tables/members.ts";
 	import type { Member, FrontingEntryComplete } from "../lib/db/entities";

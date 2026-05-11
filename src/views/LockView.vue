@@ -5,8 +5,8 @@
 	import { securityConfig } from "../lib/config";
 	import { useRoute } from "vue-router";
 
-	import LockMD from "@material-symbols/svg-600/outlined/lock-fill.svg";
-	import biometricsMD from "@material-symbols/svg-600/outlined/fingerprint.svg";
+	import LockMD from "@material-symbols/svg-600/rounded/lock-fill.svg";
+	import biometricsMD from "@material-symbols/svg-600/rounded/fingerprint.svg";
 	
 	const router = useIonRouter();
 	const route = useRoute();

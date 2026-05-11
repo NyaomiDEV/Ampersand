@@ -23,9 +23,9 @@
 	import { formatDate, promptOkCancel, sortDateAsc } from "../lib/util/misc.ts";
 	import { useTranslation } from "i18next-vue";
 
-	import addMD from "@material-symbols/svg-600/outlined/add.svg";
-	import pencilMD from "@material-symbols/svg-600/outlined/edit.svg";
-	import trashMD from "@material-symbols/svg-600/outlined/delete.svg";
+	import addMD from "@material-symbols/svg-600/rounded/add.svg";
+	import pencilMD from "@material-symbols/svg-600/rounded/edit.svg";
+	import trashMD from "@material-symbols/svg-600/rounded/delete.svg";
 
 	import MemberItem from "../components/member/MemberItem.vue";
 	import MemberSelect from "./MemberSelect.vue";

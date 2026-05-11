@@ -24,11 +24,11 @@
 	import { useTranslation } from "i18next-vue";
 	import { sep, documentDir } from "@tauri-apps/api/path";
 
-	import memberMD from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
-	import systemMD from "@material-symbols/svg-600/outlined/supervised_user_circle.svg";
-	import tagMD from "@material-symbols/svg-600/outlined/sell.svg";
-	import importMD from "@material-symbols/svg-600/outlined/download.svg";
-	import exportMD from "@material-symbols/svg-600/outlined/upload.svg";
+	import memberMD from "@material-symbols/svg-600/rounded/account_circle-fill.svg";
+	import systemMD from "@material-symbols/svg-600/rounded/supervised_user_circle.svg";
+	import tagMD from "@material-symbols/svg-600/rounded/sell.svg";
+	import importMD from "@material-symbols/svg-600/rounded/download.svg";
+	import exportMD from "@material-symbols/svg-600/rounded/upload.svg";
 	import { h, onMounted, ref } from "vue";
 	import { exportDatabaseToJSON, importDatabaseFromJSON } from "../../lib/db/ioutils/json";
 	import { getTables } from "../../lib/db/tables";

@@ -11,7 +11,7 @@
 
 	import Avatar from "../Avatar.vue";
 
-	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
+	import accountCircle from "@material-symbols/svg-600/rounded/account_circle-fill.svg";
 	import { isValidMember } from "../../lib/db/tables/members";
 
 	const router = useIonRouter();

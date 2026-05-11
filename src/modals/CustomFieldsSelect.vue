@@ -21,7 +21,7 @@
 	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
 	import { getFilteredCustomFields } from "../lib/db/tables/customFields";
 
-	import checkMD from "@material-symbols/svg-600/outlined/check.svg";
+	import checkMD from "@material-symbols/svg-600/rounded/check.svg";
 
 	const props = defineProps<{
 		customTitle?: string,

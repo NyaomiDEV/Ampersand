@@ -2,7 +2,7 @@
 	import { IonAccordionGroup, IonAccordion, IonItem, IonLabel } from "@ionic/vue";
 	import { onBeforeMount, shallowRef } from "vue";
 
-	import downMD from "@material-symbols/svg-600/outlined/keyboard_arrow_down.svg";
+	import downMD from "@material-symbols/svg-600/rounded/keyboard_arrow_down.svg";
 
 	import { getNotesToDisplay } from "../../lib/db/tables/notes";
 	import Markdown from "../Markdown.vue";

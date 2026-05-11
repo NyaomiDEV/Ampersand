@@ -19,8 +19,8 @@
 	import { appConfig } from "../../lib/config/index.ts";
 	import { accessibilityConfig } from "../../lib/config/index.ts";
 
-	import addMD from "@material-symbols/svg-600/outlined/add.svg";
-	import copyMD from "@material-symbols/svg-600/outlined/content_copy.svg";
+	import addMD from "@material-symbols/svg-600/rounded/add.svg";
+	import copyMD from "@material-symbols/svg-600/rounded/content_copy.svg";
 
 	import type { System } from "../../lib/db/entities";
 	import { DatabaseEvents, DatabaseEvent } from "../../lib/db/events.ts";

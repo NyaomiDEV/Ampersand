@@ -8,7 +8,7 @@
 
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 
-	import addMD from "@material-symbols/svg-600/outlined/add.svg";
+	import addMD from "@material-symbols/svg-600/rounded/add.svg";
 	import { platform } from "@tauri-apps/plugin-os";
 	import TheresNothingHere from "../../components/TheresNothingHere.vue";
 

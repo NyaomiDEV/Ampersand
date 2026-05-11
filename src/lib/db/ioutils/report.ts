@@ -13,8 +13,8 @@ import { getFrontingEntry, getFrontingEntryIndex } from "../tables/frontingEntri
 
 import reportStyle from "./report_style.css?raw";
 import AmpersandLogo from "../../../assets/ampersand_logo.svg?raw";
-import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg?raw";
-import systemCircle from "@material-symbols/svg-600/outlined/supervised_user_circle.svg?raw";
+import accountCircle from "@material-symbols/svg-600/rounded/account_circle-fill.svg?raw";
+import systemCircle from "@material-symbols/svg-600/rounded/supervised_user_circle.svg?raw";
 
 const encoder = new TextEncoder();
 

@@ -7,7 +7,7 @@
 
 	import { JournalPost } from "../../lib/db/entities";
 
-	import journalMD from "@material-symbols/svg-600/outlined/book.svg";
+	import journalMD from "@material-symbols/svg-600/rounded/book.svg";
 
 	const props = defineProps<{
 		post: JournalPost,

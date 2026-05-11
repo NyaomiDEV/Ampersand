@@ -8,13 +8,13 @@
 	import { System } from "../../lib/db/entities";
 	import { languagePicker } from "../../lib/util/misc";
 
-	import languageMD from "@material-symbols/svg-600/outlined/language.svg";
-	import timerMD from "@material-symbols/svg-600/outlined/timer_off.svg";
-	import membersBeforeMD from "@material-symbols/svg-600/outlined/person_text.svg";
-	import peopleMD from "@material-symbols/svg-600/outlined/group.svg";
-	import journalMD from "@material-symbols/svg-600/outlined/book.svg";
-	import homeMD from "@material-symbols/svg-600/outlined/home.svg";
-	import dashboardMD from "@material-symbols/svg-600/outlined/dashboard_customize.svg";
+	import languageMD from "@material-symbols/svg-600/rounded/language.svg";
+	import timerMD from "@material-symbols/svg-600/rounded/timer_off.svg";
+	import membersBeforeMD from "@material-symbols/svg-600/rounded/person_text.svg";
+	import peopleMD from "@material-symbols/svg-600/rounded/group.svg";
+	import journalMD from "@material-symbols/svg-600/rounded/book.svg";
+	import homeMD from "@material-symbols/svg-600/rounded/home.svg";
+	import dashboardMD from "@material-symbols/svg-600/rounded/dashboard_customize.svg";
 	import SystemItem from "../../components/system/SystemItem.vue";
 	import DashboardSettings from "../../modals/DashboardSettings.vue";
 

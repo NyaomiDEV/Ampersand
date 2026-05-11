@@ -12,7 +12,7 @@
 	import { h } from "vue";
 	import { addModal, removeModal } from "../../lib/modals";
 
-	import tagMD from "@material-symbols/svg-600/outlined/sell.svg";
+	import tagMD from "@material-symbols/svg-600/rounded/sell.svg";
 
 	const props = defineProps<{
 		tag: Tag

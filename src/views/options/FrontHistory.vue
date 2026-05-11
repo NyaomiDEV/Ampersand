@@ -7,7 +7,7 @@
 	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
 	import dayjs from "dayjs";
 
-	import addMD from "@material-symbols/svg-600/outlined/add.svg";
+	import addMD from "@material-symbols/svg-600/rounded/add.svg";
 	import { DatabaseEvents, DatabaseEvent } from "../../lib/db/events";
 	import { addModal, removeModal } from "../../lib/modals.ts";
 	import { useRoute } from "vue-router";
