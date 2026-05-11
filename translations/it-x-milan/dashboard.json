@@ -13,6 +13,7 @@
 		"view": "Vedi tutto"
 	},
 	"journal": {
-		"header": "Post recenti"
+		"header": "Post recenti",
+		"view": "Vedi tutto"
 	}
 }

@@ -9,6 +9,7 @@
 		"add": "Lisa tahvlile"
 	},
 	"journal": {
-		"header": "Hiljutised postitused"
+		"header": "Hiljutised postitused",
+		"view": "Vaata veel"
 	}
 }

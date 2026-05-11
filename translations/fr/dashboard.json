@@ -8,6 +8,9 @@
 		"header": "Tableau d’affichage",
 		"add": "Ajouter au tableau"
 	},
+	"journal": {
+		"view": "Voir plus"
+	},
 	"nowFronting": "Actuellement au front",
 	"fronterInfluencing": "Influence {{influencedMember}}",
 	"addToFront": "Ajouter au front",

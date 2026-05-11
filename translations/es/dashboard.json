@@ -13,6 +13,7 @@
 	"header_salute": "¡Hola!",
 	"recentFrontingHistory": "Recientemente sustituido",
 	"journal": {
-		"header": "Publicaciones recientes"
+		"header": "Publicaciones recientes",
+		"view": "Ver más"
 	}
 }

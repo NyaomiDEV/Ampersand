@@ -9,6 +9,9 @@
 		"add": "Zur Pinnwand hinzufügen",
 		"view": "Sehe mehr"
 	},
+	"journal": {
+		"view": "Sehe mehr"
+	},
 	"nowFronting": "Am Fronten",
 	"addToFront": "Zur Front hinzufügen",
 	"recentFrontingHistory": "Kürzlich ausgewechselt"

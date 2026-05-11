@@ -5,6 +5,9 @@
 		"add": "Voeg to aan prikbord",
 		"view": "Zie meer"
 	},
+	"journal": {
+		"view": "Zie meer"
+	},
 	"header": "Dashboard",
 	"header_salute": "Hallo!",
 	"header_mainfronter": "Hallo, {{fronterName}}!",

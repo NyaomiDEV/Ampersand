@@ -13,6 +13,7 @@
 		"view": "Vidi tutti"
 	},
 	"journal": {
-		"header": "Post ricenti"
+		"header": "Post ricenti",
+		"view": "Vidi tutti"
 	}
 }

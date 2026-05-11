@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { IonList, IonLabel, IonListHeader, useIonRouter } from "@ionic/vue";
+	import { IonList, IonLabel, IonListHeader, useIonRouter, IonButton } from "@ionic/vue";
 	import { onBeforeMount, onUnmounted, shallowRef } from "vue";
 	import { getRecentJournalPosts, toJournalPostComplete } from "../../lib/db/tables/journalPosts.ts";
 	import type { JournalPostComplete } from "../../lib/db/entities";
@@ -71,4 +71,17 @@
 			@click="openPost(post)"
 		/>
 	</IonList>
+
+	<div>
+		<IonButton size="small" router-link="/journal/edit/">{{ $t("journal:edit.headerAdd") }}</IonButton>
+		<IonButton size="small" fill="clear" router-link="/journal/">{{ $t("dashboard:journal.view") }}</IonButton>
+	</div>
 </template>
+
+<style scoped>
+	div {
+		display: flex;
+		justify-content: center;
+		gap: 16px;
+	}
+</style>

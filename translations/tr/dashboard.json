@@ -7,6 +7,9 @@
 		"add": "Panoya ekle",
 		"view": "Daha fazla görünüm"
 	},
+	"journal": {
+		"view": "Daha fazla görünüm"
+	},
 	"header": "Panel",
 	"systemDescription": "Sistem tanımı",
 	"header_salute": "Merhaba!",

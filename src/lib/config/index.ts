@@ -4,7 +4,7 @@ import { load } from "@tauri-apps/plugin-store";
 import { appConfigDir, sep } from "@tauri-apps/api/path";
 import { nilUid } from "../util/consts";
 
-const defaultAppConfig: AppConfig = {
+export const defaultAppConfig: AppConfig = {
 	locale: {},
 	defaultSystem: nilUid,
 	showMembersApartFromCustomFronts: "after",
@@ -52,7 +52,7 @@ const defaultAppConfig: AppConfig = {
 	}
 };
 
-const defaultAccessibilityConfig: AccessibilityConfig = {
+export const defaultAccessibilityConfig: AccessibilityConfig = {
 	highLegibility: false,
 	highLegibilityType: "atkinson",
 	theme: "auto",
@@ -73,7 +73,7 @@ const defaultAccessibilityConfig: AccessibilityConfig = {
 	longPressDuration: 750
 };
 
-const defaultSecurityConfig: SecurityConfig = {
+export const defaultSecurityConfig: SecurityConfig = {
 	usePassword: false,
 	password: undefined,
 	useBiometrics: false,

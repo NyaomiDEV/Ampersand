@@ -11,5 +11,8 @@
 		"header": "Anslagstavla",
 		"add": "Lägg till anslagstavla",
 		"view": "Visa fler"
+	},
+	"journal": {
+		"view": "Visa fler"
 	}
 }

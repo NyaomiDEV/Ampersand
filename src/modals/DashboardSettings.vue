@@ -22,7 +22,9 @@
 	import reorderMD from "@material-symbols/svg-600/outlined/swap_vert.svg";
 	import doneMD from "@material-symbols/svg-600/outlined/done_all.svg";
 	import dragMD from "@material-symbols/svg-600/outlined/drag_handle.svg";
-	import { appConfig } from "../lib/config";
+	import resetMD from "@material-symbols/svg-600/outlined/restart_alt.svg";
+
+	import { defaultAppConfig, appConfig } from "../lib/config";
 	import MessageBoardSettings from "../components/dashboard/settings/MessageBoardSettings.vue";
 	import FrontingHistorySettings from "../components/dashboard/settings/FrontingHistorySettings.vue";
 	import CurrentFrontersSettings from "../components/dashboard/settings/CurrentFrontersSettings.vue";
@@ -77,6 +79,18 @@
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 		e.detail.complete();
 	}
+
+	function restoreDefaultOrdering(){
+		for(const key of Object.keys(appConfig.dashboardSettings)){
+			const oldPriority = appConfig.dashboardSettings[key].priority;
+			const newPriority = defaultAppConfig.dashboardSettings[key].priority;
+			if(oldPriority === newPriority) continue;
+
+			appConfig.dashboardSettings[key].priority = newPriority;
+		}
+
+		settings.value = getSettings();
+	}
 </script>
 
 <template>
@@ -85,6 +99,9 @@
 			<IonToolbar>
 				<IonTitle>{{ $t("appSettings:dashboard.title") }}</IonTitle>
 				<IonButtons slot="secondary">
+					<IonButton v-if="isReordering" @click="restoreDefaultOrdering">
+						<IonIcon slot="icon-only" :icon="resetMD" />
+					</IonButton>
 					<IonButton @click="isReordering = !isReordering">
 						<IonIcon slot="icon-only" :icon="isReordering ? doneMD : reorderMD" />
 					</IonButton>
@@ -121,3 +138,11 @@
 		</IonContent>
 	</IonModal>
 </template>
+
+<style scoped>
+	ion-reorder > ion-icon {
+		width: 24px;
+		height: 24px;
+		color: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.54);
+	}
+</style>

@@ -13,6 +13,7 @@
 		"view": "See more"
 	},
 	"journal": {
-		"header": "Recent log entries"
+		"header": "Recent log entries",
+		"view": "See more"
 	}
 }

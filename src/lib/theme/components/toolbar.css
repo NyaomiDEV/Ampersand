@@ -101,3 +101,6 @@
 	}
 }
 
+.md ion-buttons {
+	gap: 8px;
+}
