@@ -97,9 +97,14 @@
 	},
 	"developerMode": "Modo de desenvolvedor",
 	"comments": {
-		"commentHint": "Comentário",
+		"commentHint": "Comente...",
 		"header": "Comentários",
-		"deleteConfirmation": "Tem certeza que deseja excluir este comentário?"
+		"deleteConfirmation": "Tem certeza que deseja excluir este comentário?",
+		"commenter": "Selecionar comentarista",
+		"comment": "Texto do comentário",
+		"commentCount_one": "{{count}} comentário",
+		"commentCount_many": "{{count}} comentários",
+		"commentCount_other": "{{count}} comentários"
 	},
-	"theresNothingHere": "Não há nada para ver aqui"
+	"theresNothingHere": "Não há nada aqui"
 }
