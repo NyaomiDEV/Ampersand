@@ -29,10 +29,14 @@
 	import tagMD from "@material-symbols/svg-600/outlined/sell.svg";
 	import importMD from "@material-symbols/svg-600/outlined/download.svg";
 	import exportMD from "@material-symbols/svg-600/outlined/upload.svg";
-	import { onMounted, ref } from "vue";
+	import { h, onMounted, ref } from "vue";
 	import { exportDatabaseToJSON, importDatabaseFromJSON } from "../../lib/db/ioutils/json";
 	import { getTables } from "../../lib/db/tables";
 	import ConsoleLog from "../../components/ConsoleLog.vue";
+	import { exportReport } from "../../lib/db/ioutils/report";
+	import SystemSelect from "../../modals/SystemSelect.vue";
+	import { addModal, removeModal } from "../../lib/modals";
+	import { System } from "../../lib/db/entities";
 	
 	const i18next = useTranslation();
 
@@ -164,6 +168,53 @@
 		loading.value = false;
 	}
 
+	async function showSystemSelect(): Promise<System[]> {
+		return new Promise(resolve => {
+			void (async () => {
+				let _systems: System[] = [];
+				const vnode = h(SystemSelect, {
+					modelValue: _systems,
+					"onUpdate:modelValue": (systems) => {
+						_systems = systems;
+					},
+					onDidDismiss: () => {
+						removeModal(vnode);
+						resolve(_systems);
+					}
+				});
+
+				const modal = await addModal(vnode);
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-call
+				await (modal.el as any).present();
+			})();
+		});
+	}
+
+	async function commitExportReport(){
+		loading.value = true;
+		try{
+			const systems = (await showSystemSelect()).map(x => x.uuid);
+
+			const { progress, status } = exportReport(systems);
+
+			progress.addEventListener("start", () => {
+				barProgress.value = 0;
+			});
+			progress.addEventListener("progress", (evt) => {
+				barProgress.value = (evt as CustomEvent).detail.progress;
+			});
+			progress.addEventListener("finish", () => {
+				barProgress.value = -1;
+			});
+
+			if(!await status) throw new Error();
+			await toast("Report Exported");
+		}catch(_e){
+			await toast(i18next.t("importExport:status.errorExport"));
+		}
+		loading.value = false;
+	}
+
 	async function commitExportJSON(doYouHateYourDevice: boolean){
 		loading.value = true;
 		try{
@@ -275,6 +326,13 @@
 
 			<IonListHeader>Import / Export but we're desperate</IonListHeader>
 			<IonList>
+				<IonItemDivider>Experimental Report support</IonItemDivider>
+				<IonItem button :detail="true" @click="commitExportReport()">
+					<IonIcon slot="start" :icon="exportMD" />
+					<IonLabel>
+						<h3>Export Report</h3>
+					</IonLabel>
+				</IonItem>
 				<IonItemDivider>Experimental JSON support</IonItemDivider>
 				<IonItem button :detail="true" @click="commitExportJSON(false)">
 					<IonIcon slot="start" :icon="exportMD" />
