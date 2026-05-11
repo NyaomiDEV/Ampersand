@@ -38,7 +38,10 @@
 		"memberID": "ID de membro: {{memberID}}",
 		"dateCreated": "Data criada: {{dateCreated}}",
 		"memberIDcopiedToClipboard": "ID do membro em formato mencionado foi copiado à área de transferência!",
-		"age": "Idade"
+		"age": "Idade",
+		"ageDisplay_one": "Idade {{count}}",
+		"ageDisplay_many": "Idades {{count}}",
+		"ageDisplay_other": "Idades {{count}}"
 	},
 	"toasts": {
 		"addToFront": "Adicionar membro ao fronte",
