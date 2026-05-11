@@ -97,6 +97,9 @@
 	},
 	"developerMode": "Modo de desenvolvedor",
 	"comments": {
-		"commentHint": "Comentário"
-	}
+		"commentHint": "Comentário",
+		"header": "Comentários",
+		"deleteConfirmation": "Tem certeza que deseja excluir este comentário?"
+	},
+	"theresNothingHere": "Não há nada para ver aqui"
 }
