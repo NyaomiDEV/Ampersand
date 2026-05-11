@@ -11,5 +11,8 @@
 		"add": "Adicionar ao painel",
 		"view": "Ver mais"
 	},
-	"recentFrontingHistory": "Recentemente substituído"
+	"recentFrontingHistory": "Recentemente substituído",
+	"journal": {
+		"header": "Postagens recentes"
+	}
 }

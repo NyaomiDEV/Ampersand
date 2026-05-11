@@ -55,5 +55,11 @@
 	},
 	"frontingNotification": {
 		"title": "Notificação de fronte"
+	},
+	"themeScheme": {
+		"neutral": "Neutra"
+	},
+	"colors": {
+		"custom": "Cores personalizadas:"
 	}
 }
