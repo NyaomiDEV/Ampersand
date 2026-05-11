@@ -38,4 +38,5 @@ export type FrontingCo = {
 	totalSpan: number,
 	minSpan: number,
 	maxSpan: number,
+	entries: FrontingEntry[]
 };
