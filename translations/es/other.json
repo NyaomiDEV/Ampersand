@@ -96,5 +96,15 @@
 		"very-sunny": "Muy soleado"
 	},
 	"developerMode": "Modo desarrollador",
-	"theresNothingHere": "Aquí no hay nada"
+	"theresNothingHere": "Aquí no hay nada",
+	"comments": {
+		"header": "Comentarios",
+		"commenter": "Seleccionar comentarista",
+		"comment": "Texto del comentario",
+		"commentHint": "Contando…",
+		"commentCount_one": "{{count}} comentario",
+		"commentCount_many": "{{count}} comentarios",
+		"commentCount_other": "{{count}} comentarios",
+		"deleteConfirmation": "¿Seguro que quieres eliminar este comentario?"
+	}
 }
