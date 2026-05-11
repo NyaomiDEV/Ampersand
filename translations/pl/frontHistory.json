@@ -9,7 +9,7 @@
 		"header": "Edytuj wpis frontowania",
 		"member": "Edytuj członka na froncie",
 		"customStatus": "Status niestandardowy",
-		"comment": "Komentarz",
+		"comment": "Komentarz osoby frontującej",
 		"presence": {
 			"historyTitle": "Historia obecności",
 			"lastPresence": "Ostatnio było to {{presence}} / 5 gwiazdek",

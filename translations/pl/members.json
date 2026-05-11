@@ -37,7 +37,11 @@
 			"title": "Usuń członka",
 			"confirm": "Czy na pewno chcesz usunąć tego członka?"
 		},
-		"imageClip": "Kształt awatara"
+		"imageClip": "Kształt awatara",
+		"age": "Wiek",
+		"ageDisplay_one": "{{count}} rok",
+		"ageDisplay_few": "{{count}} lata",
+		"ageDisplay_many": "{{count}} lat"
 	},
 	"toasts": {
 		"addToFront": "Członek został dodany na front",

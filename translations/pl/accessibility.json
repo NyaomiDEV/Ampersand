@@ -64,5 +64,12 @@
 	},
 	"backgroundColor": {
 		"title": "Wybierz kolor tła"
+	},
+	"themeScheme": {
+		"title": "Schemat motywu",
+		"tonalSpot": "Punkt tonalny",
+		"neutral": "Neutralny",
+		"vibrant": "Żywy",
+		"expressive": "Wyrazisty"
 	}
 }

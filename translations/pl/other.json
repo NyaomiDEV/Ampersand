@@ -96,5 +96,15 @@
 		"noShape": "Brak kształtu"
 	},
 	"developerMode": "Tryb programisty",
-	"theresNothingHere": "Nic tu nie ma"
+	"theresNothingHere": "Nic tu nie ma",
+	"comments": {
+		"header": "Komentarze",
+		"commenter": "Wybierz osobę komentującą",
+		"comment": "Treść komentarza",
+		"commentHint": "Skomentuj…",
+		"commentCount_one": "{{count}} komentarz",
+		"commentCount_few": "{{count}} komentarze",
+		"commentCount_many": "{{count}} komentarzy",
+		"deleteConfirmation": "Czy na pewno chcesz usunąć ten komentarz?"
+	}
 }
