@@ -76,7 +76,7 @@ export function exportArchive() {
 			}
 
 			// Start the file - write magic sequence
-			const fd = await openFile(path, { create: true, write: true });
+			const fd = await openFile(path, { create: true, write: true, truncate: true });
 			await fd.write(new Uint8Array(magic));
 			progress.dispatchEvent(new Event("start"));
 
