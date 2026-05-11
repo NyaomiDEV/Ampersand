@@ -26,7 +26,7 @@
 
 	import pencilMD from "@material-symbols/svg-600/rounded/edit.svg";
 	import saveMD from "@material-symbols/svg-600/rounded/save.svg";
-	import newspaperMD from "@material-symbols/svg-600/rounded/newspaper.svg";
+	import newspaperMD from "@material-symbols/svg-600/rounded/newsmode.svg";
 	import journalMD from "@material-symbols/svg-600/rounded/book.svg";
 	import trashMD from "@material-symbols/svg-600/rounded/delete.svg";
 	import addMD from "@material-symbols/svg-600/rounded/add.svg";
