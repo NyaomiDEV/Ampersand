@@ -70,7 +70,7 @@
 			onDidDismiss: async (e) => {
 				removeModal(vnode);
 
-				if(e.detail.role !== "confirm")
+				if(e.detail.data !== "confirm")
 					return;
 
 				for(const member of allMembers){

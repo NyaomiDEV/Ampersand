@@ -179,7 +179,7 @@
 					},
 					onDidDismiss: (e) => {
 						removeModal(vnode);
-						if(e.detail.role !== "confirm"){
+						if(e.detail.data !== "confirm"){
 							resolve();
 							return;
 						}
