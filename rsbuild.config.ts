@@ -1,11 +1,11 @@
-import { defineConfig, loadEnv } from '@rsbuild/core';
+import { defineConfig, loadEnv } from "@rsbuild/core";
 import { pluginVue } from "@rsbuild/plugin-vue";
 import { pluginBasicSsl } from "@rsbuild/plugin-basic-ssl";
 
 const host = process.env.TAURI_DEV_HOST;
-const debug = process.env.NODE_ENV === 'development';
+const debug = process.env.NODE_ENV === "development" || process.env.AMPERSAND_IS_UNSTABLE_BUILD === "1";
 
-const { publicVars } = loadEnv({ prefixes: ['TAURI_ENV_', 'AMPERSAND_'] });
+const { publicVars } = loadEnv({ prefixes: ["TAURI_ENV_", "AMPERSAND_"] });
 
 export default defineConfig({
 	dev: {
@@ -23,11 +23,11 @@ export default defineConfig({
 		})
 	],
 	html: {
-		template: './index.html',
+		template: "./index.html",
 	},
 	source: {
 		entry: {
-			index: './src/app.ts',
+			index: "./src/app.ts",
 		},
 		define: publicVars
 	},
@@ -62,7 +62,7 @@ export default defineConfig({
 			addRules([
 				{
 					test: /\.md$/,
-					type: 'asset/source',
+					type: "asset/source",
 				},
 			]);
 		},
