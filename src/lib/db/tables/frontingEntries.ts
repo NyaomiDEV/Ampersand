@@ -374,7 +374,7 @@ export async function getFrontingStatistics(start: Date, end: Date){
 
 			frontingEntries.push(entry);
 
-			for (const betweenEntry of entries.filter(e => entry.startTime.valueOf() <= e.endTime.valueOf() && entry.endTime.valueOf() >= e.startTime.valueOf())){
+			for (const betweenEntry of entries.filter(e => entry.startTime.valueOf() < e.endTime.valueOf() && entry.endTime.valueOf() > e.startTime.valueOf())){
 				// we don't want to co-front with ourselves, and we also don't want to co-front with people influencing others
 				if(betweenEntry.member === entry.member || betweenEntry.influencing) continue;
 
