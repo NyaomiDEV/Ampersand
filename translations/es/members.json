@@ -43,7 +43,11 @@
 		"tags": "Editar etiquetas",
 		"description": "Descripción",
 		"system": "Editar el sistema de afiliación",
-		"memberIDcopiedToClipboard": "¡El ID de usuario en formato de mención se ha copiado en el portapapeles!"
+		"memberIDcopiedToClipboard": "¡El ID de usuario en formato de mención se ha copiado en el portapapeles!",
+		"age": "Edad",
+		"ageDisplay_one": "edad {{count}}",
+		"ageDisplay_many": "edades {{count}}",
+		"ageDisplay_other": "edades {{count}}"
 	},
 	"header": "Miembros"
 }

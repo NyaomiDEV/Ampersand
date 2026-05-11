@@ -24,7 +24,7 @@
 			"title": "Eliminar entrada al frente",
 			"confirm": "¿Estás seguro que quieres eliminar ésta entrada del frente?"
 		},
-		"comment": "Comentario",
+		"comment": "Comentario de Fronter",
 		"startTime": "Hora de inicio",
 		"endTime": "Hora de finalización",
 		"isMainFronter": "Frontal",

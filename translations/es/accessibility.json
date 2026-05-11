@@ -65,5 +65,12 @@
 	},
 	"backgroundColor": {
 		"title": "Elige el color de fondo"
+	},
+	"themeScheme": {
+		"title": "Esquema de colores",
+		"tonalSpot": "Foco tonal",
+		"neutral": "Neutro",
+		"vibrant": "Brillante",
+		"expressive": "Expresivo"
 	}
 }
