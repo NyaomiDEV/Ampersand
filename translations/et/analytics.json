@@ -5,5 +5,13 @@
 	"detail": "Analüütilised üksikasjad",
 	"stats": "Statistika",
 	"daytime": "Aeg päevas",
-	"presence": "Kohalolek"
+	"presence": "Kohalolek",
+	"night": "Öised ajad",
+	"evening": "Õhtused ajad",
+	"day": "Päevased ajad",
+	"morning": "Hommikused ajad",
+	"min": "Vähemalt",
+	"max": "Enim",
+	"average": "Keskmiselt",
+	"total": "Kokku kestusega {{time}}"
 }
