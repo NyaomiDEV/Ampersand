@@ -22,9 +22,12 @@
 		"title": "Black Hole mode",
 		"desc": "Use a total black background when sailin' at night. Keeps yer glass from wearin' out."
 	},
-	"themeIsVibrant": {
-		"title": "Vibrant colors",
-		"desc": "Bring more color to the deck."
+	"themeScheme": {
+		"title": "The Map o' Colors",
+		"tonalSpot": "The Mark o' Tones",
+		"neutral": "Calm Seas",
+		"vibrant": "Full Sail",
+		"expressive": "Loud as a Cannon"
 	},
 	"colorIndicatorPosition": {
 		"title": "Color mark position",

@@ -22,9 +22,12 @@
 		"title": "Mudalità AMOLED",
 		"desc": "Usa un sfunnu tutalmenti nìuru 'n mudalità scura. Pò arridùciri l'usura di certi schermi."
 	},
-	"themeIsVibrant": {
-		"title": "Tema vivaci",
-		"desc": "Porta cchiù culuri nall'interfaccia utenti."
+	"themeScheme": {
+		"title": "Schema dû tema",
+		"tonalSpot": "Puntu tunali",
+		"neutral": "Nìutru",
+		"vibrant": "Vivaci",
+		"expressive": "Esprissivu"
 	},
 	"colorIndicatorPosition": {
 		"title": "Pusizzioni d'indicaturi dû culuri",

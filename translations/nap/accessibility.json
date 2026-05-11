@@ -22,9 +22,12 @@
 		"title": "Modalità AMOLED",
 		"desc": "Usa nu sfunno tutto niro 'int'â modalità scura. Po' ridure l'usura 'e quacche display."
 	},
-	"themeIsVibrant": {
-		"title": "Tema vivace",
-		"desc": "Mitte cchiù culore 'int'â l'interfaccia utente."
+	"themeScheme": {
+		"title": "Schema d' 'o tema",
+		"tonalSpot": "Punto tunale",
+		"neutral": "Neutro",
+		"vibrant": "Vivace",
+		"expressive": "Espressivo"
 	},
 	"colorIndicatorPosition": {
 		"title": "Posizione 'e l'indicatore d''o culore",

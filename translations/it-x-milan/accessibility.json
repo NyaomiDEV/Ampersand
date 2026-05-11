@@ -22,9 +22,12 @@
 		"title": "Modalità AMOLED",
 		"desc": "Sfondo nero totale in dark mode. Risparmiamo batteria, che il tempo è denaro."
 	},
-	"themeIsVibrant": {
-		"title": "Tema Vibrant",
-		"desc": "Mettici un po' di colore in 'sta UI."
+	"themeScheme": {
+		"title": "Schema del tema",
+		"tonalSpot": "Punto tonale, aria professionale",
+		"neutral": "Spento come Milano ad agosto",
+		"vibrant": "Vivace e creativo",
+		"expressive": "Espressivo"
 	},
 	"colorIndicatorPosition": {
 		"title": "Posizione indicatore colore",

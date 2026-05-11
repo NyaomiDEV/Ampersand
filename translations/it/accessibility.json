@@ -22,9 +22,12 @@
 		"title": "Modalità AMOLED",
 		"desc": "Usa uno sfondo totalmente nero in modalità scura. Può ridurre l'usura di alcuni display."
 	},
-	"themeIsVibrant": {
-		"title": "Tema vivace",
-		"desc": "Porta più colore nell'interfaccia utente."
+	"themeScheme": {
+		"title": "Schema del tema",
+		"tonalSpot": "Punto tonale",
+		"neutral": "Neutro",
+		"vibrant": "Vivace",
+		"expressive": "Espressivo"
 	},
 	"colorIndicatorPosition": {
 		"title": "Posizione dell'indicatore del colore",
