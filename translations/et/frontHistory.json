@@ -2,7 +2,8 @@
 	"edit": {
 		"presence": {
 			"confirmButton": "Kinnita",
-			"date": "Kuupäev"
+			"date": "Kuupäev",
+			"addTitle": "Skaalal 0-st 10-ni, kui kohal sa hetkel oled?"
 		},
 		"startTime": "Algusaeg",
 		"endTime": "Lõpuaeg",

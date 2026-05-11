@@ -52,5 +52,14 @@
 	},
 	"contrastLevel": {
 		"title": "Kontrastsus"
+	},
+	"colors": {
+		"title": "Aktsent- ja taustavärv",
+		"app": "Rakenduse värvid",
+		"system": "Süsteemi värvid",
+		"custom": "Kohanadatud värvid"
+	},
+	"backgroundColor": {
+		"title": "Vali tautavärv"
 	}
 }

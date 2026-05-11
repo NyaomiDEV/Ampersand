@@ -57,5 +57,13 @@
 		"absent": "Pole kohal"
 	},
 	"developerMode": "Arendaja režiim",
-	"theresNothingHere": "Siin pole mitte midagi"
+	"theresNothingHere": "Siin pole mitte midagi",
+	"comments": {
+		"header": "Kommentaarid",
+		"commenter": "Vali kommenteerija",
+		"comment": "Kommentaari sisu",
+		"commentCount_one": "{{count}} kommentaar",
+		"commentCount_other": "{{count}} kommentaari",
+		"deleteConfirmation": "Kas oled kindel, et soovid selle kommentaari kustutada?"
+	}
 }
