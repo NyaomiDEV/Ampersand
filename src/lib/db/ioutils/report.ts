@@ -150,7 +150,7 @@ export function exportReport(systems: UUID[]) {
 
 			// make progress computations
 			const members = getMemberIndex().filter(x => systems.includes(x.system!)).map(x => x.uuid);
-			const frontingEntries = getFrontingEntryIndex().filter(x => members.includes(x.member!) && x.endTime && Date.now() - x.startTime!.valueOf() < 1000 * 60 * 60 * 24 * 30).map(x => x.uuid);
+			const frontingEntries = getFrontingEntryIndex().filter(x => members.includes(x.member!) && x.endTime && Date.now() - x.startTime!.valueOf() < 1000 * 60 * 60 * 24 * 120).map(x => x.uuid);
 
 			const progressTotal = systems.length + members.length + frontingEntries.length;
 			let progressCurrent = 0;

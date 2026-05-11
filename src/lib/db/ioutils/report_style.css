@@ -54,7 +54,7 @@ section.systems {
 			width: 10em;
 			height: 10em;
 			border-radius: 100%;
-			object-fit: contain;
+			object-fit: cover;
 		}
 	}
 }
@@ -82,7 +82,7 @@ section.members .member {
 		height: 10em;
 		border-radius: 100%;
 		margin: auto;
-		object-fit: contain;
+		object-fit: cover;
 	}
 
 	.details {
