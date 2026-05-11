@@ -198,6 +198,7 @@
 						:key="entry.uuid"
 						:entry="entry"
 						button
+						:show-date-complete="false"
 						:presence-average="tuple[0] !== 'currentlyFronting'"
 						@click="showModal(entry)"
 					/>

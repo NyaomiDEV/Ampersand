@@ -53,6 +53,7 @@
 			:key="entry.uuid"
 			button
 			:entry
+			show-date-complete
 			@click="showModal(entry)"
 		/>
 	</IonList>

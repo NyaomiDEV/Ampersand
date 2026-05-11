@@ -114,6 +114,7 @@
 				button
 				:entry
 				show-cover
+				:show-date-complete="false"
 				:show-date="false"
 				:influenced-by="frontingEntries.filter(x => x.influencing?.uuid === entry.member.uuid).map(x => x.member)"
 				@click="showModal(entry)"

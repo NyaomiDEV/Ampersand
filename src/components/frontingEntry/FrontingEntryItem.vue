@@ -15,6 +15,7 @@
 		influencedBy?: Member[],
 		button?: boolean,
 		showDate?: boolean,
+		showDateComplete: boolean,
 		showCover?: boolean,
 		showEffects?: boolean,
 		presenceAverage?: boolean
@@ -63,7 +64,12 @@
 				</FrontingEntryInterval>
 			</h3>
 		</template>
-		<FrontingEntryLabel :entry="props.entry" :show-date="props.showDate" :presence-average="props.presenceAverage" />
+		<FrontingEntryLabel
+			:entry="props.entry"
+			:show-date="props.showDate"
+			:show-date-complete="props.showDateComplete"
+			:presence-average="props.presenceAverage"
+		/>
 		<template #end>
 			<IonIcon v-if="props.entry.comment?.length" slot="end" :icon="commentMD" />
 		</template>

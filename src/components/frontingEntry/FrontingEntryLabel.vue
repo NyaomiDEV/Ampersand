@@ -7,6 +7,7 @@
 	const props = defineProps<{
 		entry: FrontingEntryComplete,
 		showDate: boolean,
+		showDateComplete: boolean,
 		presenceAverage?: boolean
 	}>();
 
@@ -16,7 +17,7 @@
 		const start = dayjs(startTime);
 		const end = dayjs(endTime);
 
-		if(end.valueOf() - start.endOf("day").valueOf() <= 0) // same day
+		if(end.valueOf() - start.endOf("day").valueOf() <= 0 && !props.showDateComplete) // same day
 			return `${formatDate(startTime)}~${formatDate(endTime)}`;
 		
 		return `${formatDate(startTime, "expanded")} - ${formatDate(endTime, "expanded")}`;
