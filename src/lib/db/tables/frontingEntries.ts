@@ -378,13 +378,14 @@ export async function getFrontingStatistics(start: Date, end: Date){
 				// we don't want to co-front with ourselves, and we also don't want to co-front with people influencing others
 				if(betweenEntry.member === entry.member || betweenEntry.influencing) continue;
 
-				const co = frontingCo.get(betweenEntry.member) || { count: 0, percent: 0, minSpan: 0, maxSpan: 0, totalSpan: 0 };
+				const co: FrontingCo = frontingCo.get(betweenEntry.member) || { count: 0, percent: 0, minSpan: 0, maxSpan: 0, totalSpan: 0, entries: [] };
 				const coSpan = Math.min(betweenEntry.endTime.valueOf(), entry.endTime.valueOf()) - Math.max(betweenEntry.startTime.valueOf(), entry.startTime.valueOf());
 
 				co.count += 1;
 				co.maxSpan = Math.max(coSpan, co.maxSpan);
 				co.minSpan = co.minSpan === 0 ? coSpan : Math.min(coSpan, co.minSpan);
 				co.totalSpan += coSpan;
+				co.entries.push(entry, betweenEntry);
 
 				frontingCo.set(betweenEntry.member, co);
 			}
@@ -427,6 +428,7 @@ export async function getFrontingStatistics(start: Date, end: Date){
 		const allCofrontingSpan = cos.values().reduce((p, c) => p + c.totalSpan, 0);
 		for(const [withMember, co] of cos.entries()){
 			co.percent = (co.totalSpan / allCofrontingSpan) * 100;
+			co.entries = [...new Set(co.entries)];
 			cos.set(withMember, co);
 		}
 	}
