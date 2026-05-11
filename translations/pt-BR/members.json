@@ -37,7 +37,8 @@
 		"showJournalEntries": "Mostrar anotações do diário",
 		"memberID": "ID de membro: {{memberID}}",
 		"dateCreated": "Data criada: {{dateCreated}}",
-		"memberIDcopiedToClipboard": "ID do membro em formato mencionado foi copiado à área de transferência!"
+		"memberIDcopiedToClipboard": "ID do membro em formato mencionado foi copiado à área de transferência!",
+		"age": "Idade"
 	},
 	"toasts": {
 		"addToFront": "Adicionar membro ao fronte",

@@ -60,12 +60,14 @@
 		"neutral": "Neutro",
 		"title": "Esquema de cores",
 		"tonalSpot": "Foco Tonal",
-		"vibrant": "Vibrante"
+		"vibrant": "Vibrante",
+		"expressive": "Expressivo"
 	},
 	"colors": {
 		"custom": "Cores personalizadas",
 		"title": "Cores de fundo e de destaque",
-		"app": "Cores do aplicativo"
+		"app": "Cores do aplicativo",
+		"system": "Cores do Sistema"
 	},
 	"backgroundColor": {
 		"title": "Escolha a cor de fundo"

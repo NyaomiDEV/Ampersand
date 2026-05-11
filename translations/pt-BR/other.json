@@ -95,5 +95,8 @@
 		"triangle": "Triângulo",
 		"noShape": "Sem Forma"
 	},
-	"developerMode": "Modo de desenvolvedor"
+	"developerMode": "Modo de desenvolvedor",
+	"comments": {
+		"commentHint": "Comentário"
+	}
 }
