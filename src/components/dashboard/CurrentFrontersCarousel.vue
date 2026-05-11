@@ -73,6 +73,9 @@
 			discardOnSelect: true,
 			modelValue: [],
 			membersToExclude: frontingEntries.value.map(x => x.member),
+			onDidDismiss: () => {
+				removeModal(vnode);
+			},
 			"onUpdate:modelValue": async (members) => {
 				await newFrontingEntry({
 					member: members[0].uuid,
