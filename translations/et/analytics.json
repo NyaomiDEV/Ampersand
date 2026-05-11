@@ -13,5 +13,5 @@
 	"min": "Vähemalt",
 	"max": "Enim",
 	"average": "Keskmiselt",
-	"total": "Kokku kestusega {{time}}"
+	"total": "Kokku kestusega"
 }

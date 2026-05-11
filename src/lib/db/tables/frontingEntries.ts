@@ -7,7 +7,7 @@ import { filterFrontingEntry } from "../../search";
 import { securityConfig } from "../../config";
 import { broadcastEvent } from "../../native/plugin";
 import { deleteFile } from "../../serialization";
-import { TransactionStatus } from "../types";
+import { FrontingCo, TransactionStatus } from "../types";
 import { sortFrontingEntries } from "../../util/misc";
 import { updateFrontingNotification } from "../../mode";
 import { triggerReminders } from "./reminders";
@@ -233,7 +233,7 @@ export async function getFrontingBetween(start: Date, end?: Date){
 }
 
 export async function getFrontingStatistics(start: Date, end: Date){
-	const entries = await getFrontingBetween(start, end);
+	const entries = (await getFrontingBetween(start, end)).filter(e => e.endTime) as (FrontingEntry & { endTime: Date })[];
 
 	const maps = {
 		frontingCount: new Map<string, number>(),
@@ -242,6 +242,7 @@ export async function getFrontingStatistics(start: Date, end: Date){
 		frontingMinSpan: new Map<string, number>(),
 		frontingMaxSpan: new Map<string, number>(),
 		frontingEntries: new Map<string, FrontingEntry[]>(),
+		frontingCo: new Map<string, Map<string, FrontingCo>>(),
 		frontingPresenceMean: new Map<string, number>(),
 
 		influencingCount: new Map<string, number>(),
@@ -276,8 +277,6 @@ export async function getFrontingStatistics(start: Date, end: Date){
 	};
 
 	for(const entry of entries){
-		if(!entry.endTime) continue;
-
 		const span = entry.endTime.valueOf() - entry.startTime.valueOf();
 
 		if(entry.influencing){
@@ -356,6 +355,7 @@ export async function getFrontingStatistics(start: Date, end: Date){
 			const frontingMinSpan = maps.frontingMinSpan.get(entry.member) || 0;
 			const frontingMaxSpan = maps.frontingMaxSpan.get(entry.member) || 0;
 			const frontingEntries = maps.frontingEntries.get(entry.member) || [];
+			const frontingCo: Map<string, FrontingCo> = maps.frontingCo.get(entry.member) || new Map();
 
 			maps.frontingCount.set(entry.member, frontingCount + 1);
 			maps.frontingTotalSpan.set(entry.member, frontingTotalSpan + span);
@@ -365,7 +365,25 @@ export async function getFrontingStatistics(start: Date, end: Date){
 			if (!maps.frontingEntries.has(entry.member))
 				maps.frontingEntries.set(entry.member, frontingEntries);
 
+			if (!maps.frontingCo.has(entry.member))
+				maps.frontingCo.set(entry.member, frontingCo);
+
 			frontingEntries.push(entry);
+
+			for (const betweenEntry of entries.filter(e => entry.startTime.valueOf() <= e.endTime.valueOf() && entry.endTime.valueOf() >= e.startTime.valueOf())){
+				// we don't want to co-front with ourselves, and we also don't want to co-front with people influencing others
+				if(betweenEntry.member === entry.member || betweenEntry.influencing) continue;
+
+				const co = frontingCo.get(betweenEntry.member) || { count: 0, percent: 0, minSpan: 0, maxSpan: 0, totalSpan: 0 };
+				const coSpan = Math.min(betweenEntry.endTime.valueOf(), entry.endTime.valueOf()) - Math.max(betweenEntry.startTime.valueOf(), entry.startTime.valueOf());
+
+				co.count += 1;
+				co.maxSpan = Math.max(coSpan, co.maxSpan);
+				co.minSpan = co.minSpan === 0 ? coSpan : Math.min(coSpan, co.minSpan);
+				co.totalSpan += coSpan;
+
+				frontingCo.set(betweenEntry.member, co);
+			}
 
 			const hour = entry.startTime.getHours();
 
@@ -399,6 +417,14 @@ export async function getFrontingStatistics(start: Date, end: Date){
 	for(const [member, span] of maps.frontingTotalSpan.entries()){
 		const percent = (span / allFrontingSpan) * 100;
 		maps.frontingPercent.set(member, percent);
+	}
+
+	for (const cos of maps.frontingCo.values()) {
+		const allCofrontingSpan = cos.values().reduce((p, c) => p + c.totalSpan, 0);
+		for(const [withMember, co] of cos.entries()){
+			co.percent = (co.totalSpan / allCofrontingSpan) * 100;
+			cos.set(withMember, co);
+		}
 	}
 
 	for (const [member, span] of maps.influencingTotalSpan.entries()) {

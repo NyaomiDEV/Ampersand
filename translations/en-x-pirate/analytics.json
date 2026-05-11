@@ -17,7 +17,7 @@
 	"influencingCount_other": "Influenced the crew {{count}} times",
 	"influencedCount_one": "Was being influenced {{count}} time",
 	"influencedCount_other": "Was being influenced {{count}} times",
-	"total": "All for {{time}}",
+	"total": "All",
 	"average": "Average",
 	"max": "At the most",
 	"min": "At the least",

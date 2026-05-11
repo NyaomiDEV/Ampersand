@@ -3,18 +3,22 @@
 	import { getFrontingStatistics } from "../../lib/db/tables/frontingEntries";
 	import { h, onMounted, ref, shallowRef, useTemplateRef, watch } from "vue";
 	import DatePopupPicker from "../../components/DatePopupPicker.vue";
-	import { formatDate, formatWrittenTimeAbsolute, presencePhrase } from "../../lib/util/misc";
+	import { formatDate, formatWrittenTimeAbsolute, presencePhrase, sortName } from "../../lib/util/misc";
 	import dayjs from "dayjs";
 	import MemberItem from "../../components/member/MemberItem.vue";
 	import { FrontingEntry, Member } from "../../lib/db/entities";
 	import { getMember } from "../../lib/db/tables/members";
 	import { addModal, removeModal } from "../../lib/modals";
+	import { FrontingCo } from "../../lib/db/types";
 
 	import AnalyticsDetail from "../../modals/AnalyticsDetail.vue";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import TheresNothingHere from "../../components/TheresNothingHere.vue";
 	import PresenceRating from "../../components/PresenceRating.vue";
 
+	import accountCircle from "@material-symbols/svg-600/outlined/account_circle-fill.svg";
+
+	import totalMD from "@material-symbols/svg-600/outlined/all_inclusive.svg";
 	import statsMD from "@material-symbols/svg-600/outlined/stacked_bar_chart.svg";
 	import routineMD from "@material-symbols/svg-600/outlined/routine.svg";
 	import minMD from "@material-symbols/svg-600/outlined/stat_minus_2.svg";
@@ -25,6 +29,8 @@
 	import eveningMD from "@material-symbols/svg-600/outlined/wb_twilight_2.svg";
 	import nightMD from "@material-symbols/svg-600/outlined/moon_stars.svg";
 	import presenceMD from "@material-symbols/svg-600/rounded/star_half.svg";
+	import cofrontMD from "@material-symbols/svg-600/rounded/supervisor_account.svg";
+	import AvatarStack from "../../components/AvatarStack.vue";
 
 	const analytics = shallowRef<Awaited<ReturnType<typeof getFrontingStatistics>>>();
 	const members = shallowRef<Member[]>();
@@ -48,6 +54,25 @@
 		].flat())).map(x => getMember(x)));
 
 		analytics.value = _analytics;
+	}
+
+	function flattenFrontingCo(analytics: Awaited<ReturnType<typeof getFrontingStatistics>>){
+		if(!analytics) return;
+
+		const flattenedFrontingCo = new Map<string, FrontingCo>();
+
+		for(const [member, cos] of analytics.frontingCo){
+			for(const [withMember, co] of cos){
+
+				const keys = [`${member}:${withMember}`, `${withMember}:${member}`];
+
+				const existing = flattenedFrontingCo.entries().find(x => keys.includes(x[0]));
+				if(!existing) 
+					flattenedFrontingCo.set(keys[0], co);
+			}
+		}
+
+		return new Map<[string, string], FrontingCo>(flattenedFrontingCo.entries().map(x => [x[0].split(":") as [string, string], x[1]]));
 	}
 
 	async function showModal(entries: FrontingEntry[]){
@@ -91,6 +116,10 @@
 						<IonIcon :icon="presenceMD" />
 						<IonLabel>{{ $t("analytics:presence") }}</IonLabel>
 					</IonSegmentButton>
+					<IonSegmentButton value="cofront" content-id="cofront">
+						<IonIcon :icon="cofrontMD" />
+						<IonLabel>{{ $t("analytics:cofront") }}</IonLabel>
+					</IonSegmentButton>
 				</IonSegment>
 			</IonToolbar>
 			<IonToolbar v-if="analytics && members">
@@ -133,12 +162,17 @@
 								:show-cover="false"
 								@click="showModal(analytics.frontingEntries.get(member.uuid) || [])"
 							>
-								<p>{{ $t("analytics:frontingCount", { count: analytics.frontingCount.get(member.uuid) || 0 }) }}</p>
+								<template #before>
+									<p class="right">{{ (analytics.frontingPercent.get(member.uuid) || 0).toFixed(2) }}%</p>
+								</template>
 								<p>
-									{{ $t("analytics:total", { time: formatWrittenTimeAbsolute(analytics.frontingTotalSpan.get(member.uuid) || 0) }) }}
-									- {{ (analytics.frontingPercent.get(member.uuid) || 0).toFixed(2) }}%
+									{{ $t("analytics:frontingCount", { count: analytics.frontingCount.get(member.uuid) || 0 }) }}
 								</p>
 								<div class="with-icons">
+									<span>
+										<IonIcon :icon="totalMD" :aria-label="$t('analytics:total')" />
+										{{ formatWrittenTimeAbsolute(analytics.frontingTotalSpan.get(member.uuid) || 0) }}
+									</span>
 									<span>
 										<IonIcon :icon="averageMD" :aria-label="$t('analytics:average')" />
 										{{ formatWrittenTimeAbsolute(
@@ -174,12 +208,17 @@
 								:show-cover="false"
 								@click="showModal(analytics.influencingEntries.get(member.uuid) || [])"
 							>
-								<p>{{ $t("analytics:influencingCount", { count: analytics.influencingCount.get(member.uuid) || 0 }) }}</p>
+								<template #before>
+									<p class="right">{{ (analytics.influencingPercent.get(member.uuid) || 0).toFixed(2) }}%</p>
+								</template>
 								<p>
-									{{ $t("analytics:total", { time: formatWrittenTimeAbsolute(analytics.influencingTotalSpan.get(member.uuid) || 0) }) }}
-									- {{ (analytics.influencingPercent.get(member.uuid) || 0).toFixed(2) }}%
+									{{ $t("analytics:influencingCount", { count: analytics.influencingCount.get(member.uuid) || 0 }) }}
 								</p>
 								<div class="with-icons">
+									<span>
+										<IonIcon :icon="totalMD" :aria-label="$t('analytics:total')" />
+										{{ formatWrittenTimeAbsolute(analytics.influencingTotalSpan.get(member.uuid) || 0) }}
+									</span>
 									<span>
 										<IonIcon :icon="averageMD" :aria-label="$t('analytics:average')" />
 										{{ formatWrittenTimeAbsolute(
@@ -215,12 +254,17 @@
 								:show-cover="false"
 								@click="showModal(analytics.influencedEntries.get(member.uuid) || [])"
 							>
-								<p>{{ $t("analytics:influencedCount", { count: analytics.influencedCount.get(member.uuid) || 0 }) }}</p>
+								<template #before>
+									<p class="right">{{ (analytics.influencedPercent.get(member.uuid) || 0).toFixed(2) }}%</p>
+								</template>
 								<p>
-									{{ $t("analytics:total", { time: formatWrittenTimeAbsolute(analytics.influencedTotalSpan.get(member.uuid) || 0) }) }}
-									- {{ (analytics.influencedPercent.get(member.uuid) || 0).toFixed(2) }}%
+									{{ $t("analytics:influencedCount", { count: analytics.influencedCount.get(member.uuid) || 0 }) }}
 								</p>
 								<div class="with-icons">
+									<span>
+										<IonIcon :icon="totalMD" :aria-label="$t('analytics:total')" />
+										{{ formatWrittenTimeAbsolute(analytics.influencedTotalSpan.get(member.uuid) || 0) }}
+									</span>
 									<span>
 										<IonIcon :icon="averageMD" :aria-label="$t('analytics:average')" />
 										{{ formatWrittenTimeAbsolute(
@@ -264,20 +308,28 @@
 									<span v-if="analytics.morningFronters.get(member.uuid) || 0">
 										<IonIcon :icon="morningMD" :aria-label="$t('analytics:morning')" />
 										{{ analytics.morningFronters.get(member.uuid) || 0 }}
+										-
+										{{ ((analytics.morningFronters.get(member.uuid) || 0) / (analytics.frontingCount.get(member.uuid) || 0) * 100).toFixed(2) }}%
 									</span>
 									<span v-if="analytics.dayFronters.get(member.uuid) || 0">
 										<IonIcon :icon="dayMD" :aria-label="$t('analytics:day')" />
 										{{ analytics.dayFronters.get(member.uuid) || 0 }}
+										-
+										{{ ((analytics.dayFronters.get(member.uuid) || 0) / (analytics.frontingCount.get(member.uuid) || 0) * 100).toFixed(2) }}%
 									</span>
 
 									<span v-if="analytics.eveningFronters.get(member.uuid) || 0">
 										<IonIcon :icon="eveningMD" :aria-label="$t('analytics:evening')" />
 										{{ analytics.eveningFronters.get(member.uuid) || 0 }}
+										-
+										{{ ((analytics.eveningFronters.get(member.uuid) || 0) / (analytics.frontingCount.get(member.uuid) || 0) * 100).toFixed(2) }}%
 									</span>
 
 									<span v-if="analytics.nightFronters.get(member.uuid) || 0">
 										<IonIcon :icon="nightMD" :aria-label="$t('analytics:night')" />
 										{{ analytics.nightFronters.get(member.uuid) || 0 }}
+										-
+										{{ ((analytics.nightFronters.get(member.uuid) || 0) / (analytics.frontingCount.get(member.uuid) || 0) * 100).toFixed(2) }}%
 									</span>
 								</div>
 							</MemberItem>
@@ -303,18 +355,26 @@
 									<span v-if="analytics.morningInfluencers.get(member.uuid) || 0">
 										<IonIcon :icon="morningMD" :aria-label="$t('analytics:morning')" />
 										{{ analytics.morningInfluencers.get(member.uuid) || 0 }}
+										-
+										{{ ((analytics.morningInfluencers.get(member.uuid) || 0) / (analytics.influencingCount.get(member.uuid) || 0) * 100).toFixed(2) }}%
 									</span>
 									<span v-if="analytics.dayInfluencers.get(member.uuid) || 0">
 										<IonIcon :icon="dayMD" :aria-label="$t('analytics:day')" />
 										{{ analytics.dayInfluencers.get(member.uuid) || 0 }}
+										-
+										{{ ((analytics.dayInfluencers.get(member.uuid) || 0) / (analytics.influencingCount.get(member.uuid) || 0) * 100).toFixed(2) }}%
 									</span>
 									<span v-if="analytics.eveningInfluencers.get(member.uuid) || 0">
 										<IonIcon :icon="eveningMD" :aria-label="$t('analytics:evening')" />
 										{{ analytics.eveningInfluencers.get(member.uuid) || 0 }}
+										-
+										{{ ((analytics.eveningInfluencers.get(member.uuid) || 0) / (analytics.influencingCount.get(member.uuid) || 0) * 100).toFixed(2) }}%
 									</span>
 									<span v-if="analytics.nightInfluencers.get(member.uuid) || 0">
 										<IonIcon :icon="nightMD" :aria-label="$t('analytics:night')" />
 										{{ analytics.nightInfluencers.get(member.uuid) || 0 }}
+										-
+										{{ ((analytics.nightInfluencers.get(member.uuid) || 0) / (analytics.influencingCount.get(member.uuid) || 0) * 100).toFixed(2) }}%
 									</span>
 								</div>
 							</MemberItem>
@@ -340,18 +400,26 @@
 									<span v-if="analytics.morningInfluenced.get(member.uuid) || 0">
 										<IonIcon :icon="morningMD" :aria-label="$t('analytics:morning')" />
 										{{ analytics.morningInfluenced.get(member.uuid) || 0 }}
+										-
+										{{ ((analytics.morningInfluenced.get(member.uuid) || 0) / (analytics.influencedCount.get(member.uuid) || 0) * 100).toFixed(2) }}%
 									</span>
 									<span v-if="analytics.dayInfluenced.get(member.uuid) || 0">
 										<IonIcon :icon="dayMD" :aria-label="$t('analytics:day')" />
 										{{ analytics.dayInfluenced.get(member.uuid) || 0 }}
+										-
+										{{ ((analytics.dayInfluenced.get(member.uuid) || 0) / (analytics.influencedCount.get(member.uuid) || 0) * 100).toFixed(2) }}%
 									</span>
 									<span v-if="analytics.eveningInfluenced.get(member.uuid) || 0">
 										<IonIcon :icon="eveningMD" :aria-label="$t('analytics:evening')" />
 										{{ analytics.eveningInfluenced.get(member.uuid) || 0 }}
+										-
+										{{ ((analytics.eveningInfluenced.get(member.uuid) || 0) / (analytics.influencedCount.get(member.uuid) || 0) * 100).toFixed(2) }}%
 									</span>
 									<span v-if="analytics.nightInfluenced.get(member.uuid) || 0">
 										<IonIcon :icon="nightMD" :aria-label="$t('analytics:night')" />
 										{{ analytics.nightInfluenced.get(member.uuid) || 0 }}
+										-
+										{{ ((analytics.nightInfluenced.get(member.uuid) || 0) / (analytics.influencedCount.get(member.uuid) || 0) * 100).toFixed(2) }}%
 									</span>
 								</div>
 							</MemberItem>
@@ -405,6 +473,54 @@
 
 					</IonList>
 				</IonSegmentContent>
+				<IonSegmentContent id="cofront">
+					<TheresNothingHere v-if="!analytics.frontingCo.size" />
+					<IonList v-else>
+						<IonListHeader>
+							{{ $t("analytics:subheaders.cofronting") }}
+						</IonListHeader>
+						<IonItem
+							v-for="memberCouple in flattenFrontingCo(analytics)"
+							:key="memberCouple[0].join(':')"
+						>
+							<AvatarStack
+								slot="start"
+								:avatars="members.filter(x => memberCouple[0].includes(x.uuid)).sort(sortName).map(member => ({
+									image: member.image,
+									clipShape: member.imageClip,
+									color: member.color,
+									icon: accountCircle
+								}))"
+							/>
+							<IonLabel>
+
+								<p class="right">{{ memberCouple[1].percent.toFixed(2) }}%</p>
+								<h2>{{ members.filter(x => memberCouple[0].includes(x.uuid)).sort(sortName).map(x => x.name).join(" + ") }}</h2>
+								<p>
+									{{ $t("analytics:cofrontingCount", { count: memberCouple[1].count }) }}
+								</p>
+								<div class="with-icons">
+									<span>
+										<IonIcon :icon="totalMD" :aria-label="$t('analytics:total')" />
+										{{ formatWrittenTimeAbsolute(memberCouple[1].totalSpan) }}
+									</span>
+									<span>
+										<IonIcon :icon="averageMD" :aria-label="$t('analytics:average')" />
+										{{ formatWrittenTimeAbsolute(memberCouple[1].totalSpan / memberCouple[1].count) }}
+									</span>
+									<span>
+										<IonIcon :icon="minMD" :aria-label="$t('analytics:min')" />
+										{{ formatWrittenTimeAbsolute(memberCouple[1].minSpan) }}
+									</span>
+									<span>
+										<IonIcon :icon="maxMD" :aria-label="$t('analytics:max')" />
+										{{ formatWrittenTimeAbsolute(memberCouple[1].maxSpan) }}
+									</span>
+								</div>
+							</IonLabel>
+						</IonItem>
+					</IonList>
+				</IonSegmentContent>
 			</IonSegmentView>
 		</IonContent>
 
@@ -441,6 +557,13 @@
 		overflow: visible !important;
 	}
 
+	p.right {
+		margin-top: 2px;
+		line-height: 26px;
+		text-align: end;
+		float: inline-end;
+	}
+
 	div.datePickers {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
@@ -459,9 +582,9 @@
 	}
 
 	div.with-icons {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0px 0.5em;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 0.25em .5em;
+		margin-top: 0.25em;
 	}
-
 </style>

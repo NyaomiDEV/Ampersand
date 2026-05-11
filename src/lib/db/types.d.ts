@@ -31,3 +31,11 @@ export type TransactionStatus<T = unknown, E = unknown> = {
 	err?: E,
 	detail?: T
 };
+
+export type FrontingCo = {
+	count: number,
+	percent: number,
+	totalSpan: number,
+	minSpan: number,
+	maxSpan: number,
+};
