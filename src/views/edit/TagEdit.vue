@@ -67,7 +67,12 @@
 		const vnode = h(MemberSelect, {
 			customTitle: i18next.t("tagManagement:edit.members.title"),
 			modelValue: members,
-			onDidDismiss: async () => {
+			onDidDismiss: async (e) => {
+				removeModal(vnode);
+
+				if(e.detail.role !== "confirm")
+					return;
+
 				for(const member of allMembers){
 					if(members.map(x => x.uuid).includes(member.uuid)){
 						if(member.tags.includes(tag.value.uuid!)) continue;
@@ -85,7 +90,6 @@
 						});
 					}
 				}
-				removeModal(vnode);
 
 				// we can't use allMembers here again because
 				// at this point the db is updated and we don't have

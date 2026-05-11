@@ -183,7 +183,7 @@
 				vertical="bottom"
 				horizontal="end"
 			>
-				<IonFabButton @click="modalController.dismiss()">
+				<IonFabButton @click="modalController.dismiss('confirm')">
 					<IonIcon :icon="checkMD" />
 				</IonFabButton>
 			</IonFab>

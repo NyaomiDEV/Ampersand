@@ -168,7 +168,7 @@
 		loading.value = false;
 	}
 
-	async function showSystemSelect(): Promise<System[]> {
+	async function showSystemSelect(): Promise<System[] | void> {
 		return new Promise(resolve => {
 			void (async () => {
 				let _systems: System[] = [];
@@ -177,8 +177,12 @@
 					"onUpdate:modelValue": (systems) => {
 						_systems = systems;
 					},
-					onDidDismiss: () => {
+					onDidDismiss: (e) => {
 						removeModal(vnode);
+						if(e.detail.role !== "confirm"){
+							resolve();
+							return;
+						}
 						resolve(_systems);
 					}
 				});
@@ -193,7 +197,8 @@
 	async function commitExportReport(){
 		loading.value = true;
 		try{
-			const systems = (await showSystemSelect()).map(x => x.uuid);
+			const systems = (await showSystemSelect())?.map(x => x.uuid);
+			if(!systems) throw new Error("No systems selected");
 
 			const { progress, status } = exportReport(systems);
 
@@ -207,7 +212,7 @@
 				barProgress.value = -1;
 			});
 
-			if(!await status) throw new Error();
+			if(!await status) throw new Error("Error while exporting");
 			await toast("Report Exported");
 		}catch(_e){
 			await toast(i18next.t("importExport:status.errorExport"));
