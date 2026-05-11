@@ -505,8 +505,10 @@
 						<IonItem
 							v-for="memberCouple in flattenFrontingCo(analytics)"
 							:key="memberCouple[0].join(':')"
+							button
 							:class="{ 'with-border-color': accessibilityConfig.colorIndicatorPosition === 'list-item' }"
 							:style="getStyle(memberCouple[0])"
+							@click="showModal(memberCouple[1].entries)"
 						>
 							<AvatarStack
 								slot="start"
