@@ -246,6 +246,8 @@ export function getFrontingStatistics(entries: (FrontingEntry & { endTime: Date 
 		frontingEntries: new Map<string, FrontingEntry[]>(),
 		frontingCo: new Map<string, Map<string, FrontingCo>>(),
 		frontingPresenceMean: new Map<string, number>(),
+		frontingPresenceMin: new Map<string, number>(),
+		frontingPresenceMax: new Map<string, number>(),
 
 		influencingCount: new Map<string, number>(),
 		influencingPercent: new Map<string, number>(),
@@ -254,6 +256,8 @@ export function getFrontingStatistics(entries: (FrontingEntry & { endTime: Date 
 		influencingMaxSpan: new Map<string, number>(),
 		influencingEntries: new Map<string, FrontingEntry[]>(),
 		influencingPresenceMean: new Map<string, number>(),
+		influencingPresenceMin: new Map<string, number>(),
+		influencingPresenceMax: new Map<string, number>(),
 
 		influencedCount: new Map<string, number>(),
 		influencedPercent: new Map<string, number>(),
@@ -444,15 +448,21 @@ export function getFrontingStatistics(entries: (FrontingEntry & { endTime: Date 
 	for(const [member, entries] of maps.frontingEntries.entries()){
 		const withPresence = entries.filter(x => x.presence?.size);
 		const total = withPresence.length;
-		if(total)
+		if(total){
 			maps.frontingPresenceMean.set(member, withPresence.reduce((p, c) => p + (c.presence!.values().reduce((x, y) => x + y, 0) / c.presence!.size), 0) / total);
+			maps.frontingPresenceMin.set(member, withPresence.reduce((p, c) => Math.min(p, (c.presence!.values().reduce((x, y) => Math.min(x, y), 10))), 10));
+			maps.frontingPresenceMax.set(member, withPresence.reduce((p, c) => Math.max(p, (c.presence!.values().reduce((x, y) => Math.max(x, y), 0))), 0));
+		}
 	}
 
 	for (const [member, entries] of maps.influencingEntries.entries()) {
 		const withPresence = entries.filter(x => x.presence?.size);
 		const total = withPresence.length;
-		if(total)
+		if(total){
 			maps.influencingPresenceMean.set(member, withPresence.reduce((p, c) => p + (c.presence!.values().reduce((x, y) => x + y, 0) / c.presence!.size), 0) / total);
+			maps.influencingPresenceMin.set(member, withPresence.reduce((p, c) => Math.min(p, (c.presence!.values().reduce((x, y) => Math.min(x, y), 10))), 10));
+			maps.influencingPresenceMax.set(member, withPresence.reduce((p, c) => Math.max(p, (c.presence!.values().reduce((x, y) => Math.max(x, y), 0))), 0));
+		}
 	}
 
 	return maps;

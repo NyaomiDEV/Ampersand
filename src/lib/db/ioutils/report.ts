@@ -119,7 +119,11 @@ function analyticsToHtml(member: UUID, analytics: ReturnType<typeof getFrontingS
 		`<span class="average">${formatWrittenTimeAbsolute((analytics.frontingTotalSpan.get(member) || 0) / (analytics.frontingCount.get(member) || 0))}</span>`,
 		`<span class="max">${formatWrittenTimeAbsolute(analytics.frontingMaxSpan.get(member) || 0)}</span>`,
 		`<span class="min">${formatWrittenTimeAbsolute(analytics.frontingMinSpan.get(member) || 0)}</span>`,
-		`<span class="presence">${((analytics.frontingPresenceMean.get(member) || 0) / 2).toFixed(1)}</span>`,
+		(analytics.frontingPresenceMean.get(member) || analytics.frontingPresenceMax.get(member) || analytics.frontingPresenceMin.get(member)) && "<span class=\"presence\">",
+		analytics.frontingPresenceMean.get(member) && `<span class="average">${((analytics.frontingPresenceMean.get(member) || 0) / 2).toFixed(1)}</span>`,
+		analytics.frontingPresenceMax.get(member) && `<span class="max">${((analytics.frontingPresenceMax.get(member) || 0) / 2).toFixed(1)}</span>`,
+		analytics.frontingPresenceMin.get(member) && `<span class="min">${((analytics.frontingPresenceMin.get(member) || 0) / 2).toFixed(1)}</span>`,
+		(analytics.frontingPresenceMean.get(member) || analytics.frontingPresenceMax.get(member) || analytics.frontingPresenceMin.get(member)) && "</span>",
 		"</div>"
 	].filter(x => !!x).join("");
 }

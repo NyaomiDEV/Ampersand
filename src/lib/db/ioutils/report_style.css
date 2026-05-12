@@ -168,9 +168,31 @@ section.analytics {
 			opacity: 0.5;
 		}
 
-		.presence:not(.header > *)::after {
-			content: " / 5";
-			opacity: 0.5;
+		.presence:not(.header > *){
+			> span {
+				display: block;
+			}
+
+			> span::after {
+				content: " / 5";
+				opacity: 0.5;
+			}
+
+			> span::before {
+				opacity: 0.5;
+			}
+
+			.average::before {
+				content: "{{analytics:average}}: ";
+			}
+
+			.min::before {
+				content: "{{analytics:min}}: ";
+			}
+
+			.max::before {
+				content: "{{analytics:max}}: ";
+			}
 		}
 	}
 }
