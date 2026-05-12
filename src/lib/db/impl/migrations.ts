@@ -222,14 +222,16 @@ export async function journalPosts(table: ShittyTable<JournalPost>, version: num
 		for (const uuid of uuids) {
 			try {
 				const obj = await table.get(uuid) as JPOne;
-				const members = typeof obj.member === "string" ? [obj.member] : [];
-				if(obj.member) delete obj.member;
-				await table.write(
-					{
-						...obj,
-						members
-					}, true
-				);
+				if(!obj.members){
+					const members = typeof obj.member === "string" ? [obj.member] : [];
+					if (obj.member) delete obj.member;
+					await table.write(
+						{
+							...obj,
+							members
+						}, true
+					);
+				}
 			} catch (_e) {
 				console.error(_e);
 				return false;
@@ -264,14 +266,16 @@ export async function boardMessages(table: ShittyTable<BoardMessage>, version: n
 		for (const uuid of uuids) {
 			try {
 				const obj = await table.get(uuid) as BMZero;
-				const members = typeof obj.member === "string" ? [obj.member] : [];
-				if(obj.member) delete obj.member;
-				await table.write(
-					{
-						...obj,
-						members
-					}, true
-				);
+				if(!obj.members){
+					const members = typeof obj.member === "string" ? [obj.member] : [];
+					if (obj.member) delete obj.member;
+					await table.write(
+						{
+							...obj,
+							members
+						}, true
+					);
+				}
 			} catch (_e) {
 				console.error(_e);
 				return false;
