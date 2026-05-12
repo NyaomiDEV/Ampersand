@@ -44,6 +44,8 @@
 			"title": "weka pi ijo kulupu",
 			"confirm": "sina wile ala wile weka e ijo kulupu ni?"
 		},
-		"imageClip": "sijelo sitelen"
+		"imageClip": "sijelo sitelen",
+		"age": "mute tenpo",
+		"ageDisplay_one": "mute {{count}} pi tenpo sike"
 	}
 }

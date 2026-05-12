@@ -64,5 +64,12 @@
 	},
 	"backgroundColor": {
 		"title": "kule poki pi wile sina"
+	},
+	"themeScheme": {
+		"title": "mute kule",
+		"tonalSpot": "kule lili",
+		"neutral": "kule pi lili mute",
+		"vibrant": "kule pi mute wawa",
+		"expressive": "kule mute"
 	}
 }
