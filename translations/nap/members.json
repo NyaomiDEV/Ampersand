@@ -30,6 +30,7 @@
 		"ageDisplay_one": "{{count}} anno",
 		"ageDisplay_other": "{{count}} anne",
 		"color": "Culore preferito",
+		"nameStyle": "Stile d' 'o nomme",
 		"imageClip": "Forma de l'immaggine",
 		"customFieldsAdd": "Aggiungi campi personalizzati",
 		"tags": "Cagna 'e tag",

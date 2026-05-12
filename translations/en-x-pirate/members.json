@@ -30,6 +30,7 @@
 		"ageDisplay_one": "age {{count}}",
 		"ageDisplay_other": "age {{count}}",
 		"color": "Preferred color",
+		"nameStyle": "Name style",
 		"imageClip": "Avatar shape",
 		"customFieldsAdd": "Add custom marks",
 		"tags": "Edit tags",

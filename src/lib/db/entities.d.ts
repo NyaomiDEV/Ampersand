@@ -40,6 +40,39 @@ export type ImageClip =
 	"triangle" |
 	"very-sunny";
 
+export type NameStyle =
+	"cursive" |
+	"pixel" |
+	"dots" |
+	"digital" |
+	"handwritten" |
+	"serif" |
+	"typewriter" |
+	"monospace" |
+	"playful" |
+	"holy" |
+	"bubbly" |
+	"marker" |
+	"gothic" |
+	"stencil" |
+	"mystery" |
+	"italian" |
+	"metal" |
+	"cutesy" |
+	"indie" |
+	"deco" |
+	"terminal" |
+	"western" |
+	"glitch" |
+	"stripes" |
+	"drip" |
+	"cracks" |
+	"comic" |
+	"lexend" |
+	"atkinson" |
+	"dyslexic" |
+	"inter";
+
 export interface BoardMessage extends UUIDable {
 	members: UUID[],
 	title: string,
@@ -115,6 +148,7 @@ export interface JournalPostComplete extends JournalPost {
 export interface Member extends UUIDable {
 	system: UUID,
 	name: string,
+	nameStyle?: NameStyle,
 	pronouns?: string,
 	description?: string,
 	role?: string,

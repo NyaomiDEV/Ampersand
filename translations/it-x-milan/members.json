@@ -30,6 +30,7 @@
 		"ageDisplay_one": "{{count}} anno",
 		"ageDisplay_other": "{{count}} anni",
 		"color": "Colore",
+		"nameStyle": "Stile nome",
 		"imageClip": "Forma avatar",
 		"customFieldsAdd": "Aggiungi campi custom",
 		"tags": "Modifica tag",

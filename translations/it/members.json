@@ -30,6 +30,7 @@
 		"ageDisplay_one": "{{count}} anno",
 		"ageDisplay_other": "{{count}} anni",
 		"color": "Colore preferito",
+		"nameStyle": "Stile del nome",
 		"imageClip": "Forma dell'avatar",
 		"customFieldsAdd": "Aggiungi campi personalizzati",
 		"tags": "Modifica i tag",

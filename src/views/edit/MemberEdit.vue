@@ -36,7 +36,7 @@
 	import { CustomField, Member, System, Tag } from "../../lib/db/entities";
 	import { newMember, deleteMember, updateMember, defaultMember, getMember } from "../../lib/db/tables/members";
 	import { getTags } from "../../lib/db/tables/tags";
-	import { promptOkCancel, sortName, toast } from "../../lib/util/misc";
+	import { fontFamilies, fontFamilyPicker, promptOkCancel, sortName, toast, formatDate, imageClipPicker } from "../../lib/util/misc";
 	import { getResizedImage } from "../../lib/util/image";
 	import { getCurrentInstance, onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
 	import Markdown from "../../components/Markdown.vue";
@@ -44,7 +44,6 @@
 	import { PartialBy } from "../../lib/types";
 	import { useRoute } from "vue-router";
 	import { useTranslation } from "i18next-vue";
-	import { formatDate, imageClipPicker } from "../../lib/util/misc";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import Avatar from "../../components/Avatar.vue";
 	import Cover from "../../components/Cover.vue";
@@ -294,7 +293,13 @@
 				</div>
 
 				<div class="member-info">
-					<h3>{{ member.name }}</h3>
+					<h3
+						:style="{
+							fontFamily: member.nameStyle ? fontFamilies[member.nameStyle] : undefined
+						}"
+					>
+						{{ member.name }}
+					</h3>
 					<p>{{ member.pronouns }}{{ member.age && ` - ${$t("members:edit.ageDisplay", { count: member.age })}` }}</p>
 					<p>{{ member.role }}</p>
 					<p v-if="member.isCustomFront">{{ $t("members:edit.customFront") }}</p>
@@ -455,6 +460,12 @@
 								color="danger"
 							/>
 						</IonButton>
+					</IonItem>
+					<IonItem button detail @click="fontFamilyPicker($t('members:edit.nameStyle')).then(res => { if(res !== undefined) member.nameStyle = res ?? undefined; })">
+						<IonLabel>
+							<h3>{{ $t("members:edit.nameStyle") }}</h3>
+							<p>{{ member.nameStyle ? $t(`other:fonts.${member.nameStyle}`) : $t("other:fonts.noFont") }}</p>
+						</IonLabel>
 					</IonItem>
 					<IonItem button detail @click="imageClipPicker($t('members:edit.imageClip')).then(res => { if(res !== undefined) member.imageClip = res ?? undefined; })">
 						<IonLabel>

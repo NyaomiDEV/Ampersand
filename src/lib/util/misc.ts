@@ -1,8 +1,8 @@
-import { actionSheetController, alertController, createAnimation, getIonPageElement, toastController, TransitionOptions } from "@ionic/vue";
+import { ActionSheetButton, actionSheetController, alertController, createAnimation, getIonPageElement, toastController, TransitionOptions } from "@ionic/vue";
 import dayjs from "dayjs";
 import { Ref } from "vue";
 import { appConfig } from "../config";
-import { Asset, BoardMessage, CustomField, FrontingEntry, ImageClip, Member, Note, System } from "../db/entities";
+import { Asset, BoardMessage, CustomField, FrontingEntry, ImageClip, Member, NameStyle, Note, System } from "../db/entities";
 import i18next, { computePercentage, getLocaleInfo } from "../i18n";
 import { open } from "../native/open";
 import { readFile } from "@tauri-apps/plugin-fs";
@@ -355,6 +355,7 @@ export function sortDateAsc(a: { date?: Date; }, b: { date?: Date; }) {
 }
 
 export const imageClips = import.meta.webpackContext("../../assets/shapes/", { recursive: false, include: /\.svg$/ });
+
 export function imageClipPicker(header): Promise<ImageClip | null | undefined> {
 	return new Promise(resolve => {
 		void (async () => {
@@ -370,6 +371,73 @@ export function imageClipPicker(header): Promise<ImageClip | null | undefined> {
 					...buttons,
 					{
 						text: i18next.t("other:shapes.noShape"),
+						data: { it: null }
+					},
+					{
+						text: i18next.t("other:alerts.cancel"),
+						role: "cancel"
+					}
+				]
+			});
+
+			controller.addEventListener("willDismiss", (e) => resolve(e.detail.data?.it));
+
+			await controller.present();
+		})();
+	});
+}
+
+export const fontFamilies = {
+	cursive: "Rochester",
+	pixel: "Departure Mono",
+	dots: "Bitcount Single",
+	digital: "Orbitron",
+	handwritten: "Shantell Sans",
+	serif: "Eb Garamond",
+	typewriter: "TT2020",
+	monospace: "JetBrains Mono",
+	playful: "Lobster Two",
+	holy: "Cinzel",
+	bubbly: "Gluten",
+	marker: "Permanent Marker",
+	gothic: "KJV1611",
+	stencil: "Stick No Bills",
+	mystery: "Mystery Quest",
+	italian: "Playwrite IT Traditional",
+	metal: "Metal Mania",
+	cutesy: "Twinkle Stars",
+	indie: "Amatic SC",
+	deco: "Ribeye Marrow",
+	terminal: "Workbench",
+	western: "Rye",
+	glitch: "Rubik Glitch",
+	stripes: "Zen Tokyo Zoo",
+	drip: "Rubik Wet Paint",
+	cracks: "Rubik Distressed",
+	comic: "Comic Relief",
+	lexend: "Lexend",
+	atkinson: "Atkinson Hyperlegible",
+	dyslexic: "OpenDyslexic",
+	inter: "Inter",
+};
+
+export function fontFamilyPicker(header): Promise<NameStyle | null | undefined> {
+	return new Promise(resolve => {
+		void (async () => {
+			const buttons: ActionSheetButton[] = Object.keys(fontFamilies).map(x => ({
+				text: i18next.t(`other:fonts.${x}`),
+				data: { it: x },
+				htmlAttributes: {
+					style: { "font-family": fontFamilies[x] }
+				}
+			}));
+
+			const controller = await actionSheetController.create({
+				header,
+				buttons: [
+					...buttons,
+					{
+						text: i18next.t("other:fonts.noFont"),
 						data: { it: null }
 					},
 					{

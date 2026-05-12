@@ -1,6 +1,7 @@
 import { h, type VNode } from "vue";
 import { MarkedExtension } from "marked";
 import MarkdownFontFamily from "../../components/MarkdownFontFamily.vue";
+import { fontFamilies } from "../util/misc";
 
 const disallowedFontParameters = ["wght", "wdth", "slnt", "ital", "opsz"];
 
@@ -38,103 +39,7 @@ const fontFamilyExtension: MarkedExtension<(VNode | string)[], VNode | string> =
 			},
 			renderer(token) {
 				if(token.fontFamily.length){
-					let fontFamily = token.fontFamily;
-					switch((token.fontFamily as string).toLowerCase()){
-						case "cursive":
-							fontFamily = "Rochester";
-							break;
-						case "pixel":
-							fontFamily = "Departure Mono";
-							break;
-						case "dots":
-							fontFamily = "Bitcount Single";
-							break;
-						case "digital":
-							fontFamily = "Orbitron";
-							break;
-						case "handwritten":
-							fontFamily = "Shantell Sans";
-							break;
-						case "serif":
-							fontFamily = "Eb Garamond";
-							break;
-						case "typewriter":
-							fontFamily = "TT2020";
-							break;
-						case "monospace":
-							fontFamily = "JetBrains Mono";
-							break;
-						case "playful":
-							fontFamily = "Lobster Two";
-							break;
-						case "holy":
-							fontFamily = "Cinzel";
-							break;
-						case "bubbly":
-							fontFamily = "Gluten";
-							break;
-						case "marker":
-							fontFamily = "Permanent Marker";
-							break;
-						case "gothic":
-							fontFamily = "KJV1611";
-							break;
-						case "stencil":
-							fontFamily = "Stick No Bills";
-							break;
-						case "mystery":
-							fontFamily = "Mystery Quest";
-							break;
-						case "italian":
-							fontFamily = "Playwrite IT Traditional";
-							break;
-						case "metal":
-							fontFamily = "Metal Mania";
-							break;
-						case "cutesy":
-							fontFamily = "Twinkle Stars";
-							break;
-						case "indie":
-							fontFamily = "Amatic SC";
-							break;
-						case "deco":
-							fontFamily = "Ribeye Marrow";
-							break;
-						case "terminal":
-							fontFamily = "Workbench";
-							break;
-						case "western":
-							fontFamily = "Rye";
-							break;
-						case "glitch":
-							fontFamily = "Rubik Glitch";
-							break;
-						case "stripes":
-							fontFamily = "Zen Tokyo Zoo";
-							break;
-						case "drip":
-							fontFamily = "Rubik Wet Paint";
-							break;
-						case "cracks":
-							fontFamily = "Rubik Distressed";
-							break;
-						case "comic":
-							fontFamily = "Comic Relief";
-							break;
-						case "lexend":
-							fontFamily = "Lexend";
-							break;
-						case "atkinson":
-							fontFamily = "Atkinson Hyperlegible";
-							break;
-						case "dyslexic":
-							fontFamily = "OpenDyslexic";
-							break;
-						case "inter":
-							fontFamily = "Inter";
-							break;
-					}
-
+					const fontFamily = fontFamilies[token.fontFamily] || token.fontFamily;
 					const fontVariation = (token.fontVarSettings as [string, number]).map(x => `"${x[0]}" ${x[1]}`).join(", ");
 					return h(MarkdownFontFamily, {
 						fontFamily,
