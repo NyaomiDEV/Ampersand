@@ -11,6 +11,12 @@
 
 	import { formatDate } from "../lib/util/misc";
 	import DatePopupPicker from "../components/DatePopupPicker.vue";
+	import { onBeforeMount } from "vue";
+
+	const props = defineProps<{
+		start: Date,
+		end?: Date
+	}>();
 
 	const model = defineModel<{
 		range: number,
@@ -20,6 +26,11 @@
 			range: 0,
 			date: new Date()
 		}
+	});
+
+	onBeforeMount(() => {
+		if(props.end && props.end.valueOf() < model.value.date.valueOf())
+			model.value.date = props.end;
 	});
 
 	async function confirm(){
@@ -52,6 +63,8 @@
 				<DatePopupPicker
 					ref="datePicker"
 					v-model="model.date"
+					:min="props.start"
+					:max="props.end"
 					show-default-buttons
 					:title="$t('frontHistory:edit.presence.date')"
 				/>

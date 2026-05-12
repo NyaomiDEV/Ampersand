@@ -388,6 +388,8 @@
 			<PresenceHistory
 				ref="presenceHistoryModal"
 				:model-value="frontingEntry.presence"
+				:start="frontingEntry.startTime"
+				:end="frontingEntry.endTime"
 				@update:model-value="async (e) => { frontingEntry.presence = e; await save(false) }"
 			/>
 

@@ -26,7 +26,9 @@
 	import { presencePhrase } from "../lib/util/misc";
 
 	const props = defineProps<{
-		modelValue?: Map<Date, number>
+		modelValue?: Map<Date, number>,
+		start: Date,
+		end?: Date
 	}>();
 
 	const emit = defineEmits<{
@@ -39,6 +41,8 @@
 		const modelValue = { date: date || new Date(), range: range || 0 };
 
 		const vnode = h(PresenceEdit, {
+			start: props.start,
+			end: props.end,
 			modelValue,
 			"onUpdate:modelValue": (e) => {
 				modelValue.date = e.date;
