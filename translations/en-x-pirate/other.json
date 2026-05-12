@@ -23,6 +23,7 @@
 		"deleteConfirmation": "Be ye certain ye want to toss this tale overboard?"
 	},
 	"presence": {
+		"header": "Presence",
 		"absent": "Not on deck",
 		"heavilyDissociating": "Lost at sea",
 		"dissociating": "Driftin' away",
@@ -30,8 +31,14 @@
 		"present": "On deck",
 		"fullyGrounded": "Feet on the planks"
 	},
+	"report": {
+		"header": "Ampersand Logbook",
+		"generatedOn": "Scrawled on {{date}}",
+		"coveringDays": "Loot and lore from the past {{count}} suns"
+	},
 	"back": "Back",
 	"time": "Time",
+	"count": "Count",
 	"timeSizes": {
 		"years": {
 			"long": "years",

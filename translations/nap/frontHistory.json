@@ -11,7 +11,7 @@
 		"customStatus": "Stato perzunale",
 		"comment": "Cummento d' 'o fronter",
 		"presence": {
-			"historyTitle": "Storia d' 'a prusenza",
+			"historyTitle": "Storia d' 'a presenza",
 			"lastPresence": "L'urdema vota steva {{presence}} / 5 stelle",
 			"addTitle": "Quanto sî prusente 'a 0 a 10?",
 			"confirmButton": "Cunferma",

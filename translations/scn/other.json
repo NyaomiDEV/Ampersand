@@ -23,6 +23,7 @@
 		"deleteConfirmation": "Voi pi daveru scancillari stu cummentu?"
 	},
 	"presence": {
+		"header": "Prisenza",
 		"absent": "Assenti",
 		"heavilyDissociating": "Dissuciannu assai",
 		"dissociating": "Dissuciatu",
@@ -30,8 +31,14 @@
 		"present": "Prisenti",
 		"fullyGrounded": "Ancuratu â rialtà"
 	},
+	"report": {
+		"header": "Rapportu di Ampersand",
+		"generatedOn": "Generatu u {{data}}",
+		"coveringDays": "Dati chi riguàrdanu l'ùrtimi {{count}} jorna"
+	},
 	"back": "Arreri",
 	"time": "Ura",
+	"count": "Cuntu",
 	"timeSizes": {
 		"years": {
 			"long": "anni",

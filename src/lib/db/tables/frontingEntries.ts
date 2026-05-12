@@ -236,9 +236,7 @@ export async function getFrontingBetween(start: Date, end?: Date){
 	return (await entries).filter(x => x !== undefined);
 }
 
-export async function getFrontingStatistics(start: Date, end: Date){
-	const entries = (await getFrontingBetween(start, end)).filter(e => e.endTime) as (FrontingEntry & { endTime: Date })[];
-
+export function getFrontingStatistics(entries: (FrontingEntry & { endTime: Date })[]){
 	const maps = {
 		frontingCount: new Map<string, number>(),
 		frontingTotalSpan: new Map<string, number>(),

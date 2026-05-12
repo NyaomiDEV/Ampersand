@@ -5,11 +5,11 @@ import dayjs from "dayjs";
 import { platform } from "@tauri-apps/plugin-os";
 import { System, Member, UUID, FrontingEntry } from "../entities";
 import { toDataURI } from "../../util/blob";
-import { getSystem, getSystemsIndex } from "../tables/system";
+import { countSystemMembers, getSystem, getSystemsIndex } from "../tables/system";
 import { getMember, getMemberIndex } from "../tables/members";
 import i18next from "../../i18n";
-import { formatDate } from "../../util/misc";
-import { getFrontingEntry, getFrontingEntryIndex } from "../tables/frontingEntries";
+import { formatDate, formatWrittenTimeAbsolute } from "../../util/misc";
+import { getFrontingEntry, getFrontingEntryIndex, getFrontingStatistics } from "../tables/frontingEntries";
 
 import reportStyle from "./report_style.css?raw";
 import AmpersandLogo from "../../../assets/ampersand_logo.svg?raw";
@@ -17,6 +17,8 @@ import accountCircle from "@material-symbols/svg-600/rounded/account_circle-fill
 import systemCircle from "@material-symbols/svg-600/rounded/supervised_user_circle.svg?raw";
 
 const encoder = new TextEncoder();
+
+const maxDays = 120;
 
 function escape(string: string) {
 	const htmlEscapes = {
@@ -38,17 +40,20 @@ function getStylesheet(){
 		.trim().replace(/\n?\t*/g, "");
 }
 
-function intestationToHtml(date: string){
+function intestationToHtml(date: Date){
 	return [
 		"<section class=\"header\">",
 		AmpersandLogo.trim().replace(/\n?\t*/g, ""),
-		"<span>Ampersand Report</span>",
-		`<span>${date}</span>`,
+		`<span>${i18next.t("other:report.header")}</span>`,
+		`<span>${i18next.t("other:report.generatedOn", { date: formatDate(date, "collapsed") })}</span>`,
+		`<span>${i18next.t("other:report.coveringDays", { count: maxDays })}</span>`,
 		"</section>"
 	].join("");
 }
 
 async function systemToHtml(system: System) {
+	const count = countSystemMembers(system.uuid);
+
 	return [
 		"<div class=\"system\">",
 		system.image
@@ -57,6 +62,16 @@ async function systemToHtml(system: System) {
 		"<div class=\"details\">",
 		system.color && `<div class="color-dot" style="--data-color: ${system.color}"></div>`,
 		`<h2 class="name">${escape(system.name)}</h2>`,
+		`<span class="member-count">${i18next.t("systems:edit.memberCountText", {
+			totalMemberCount: count.normal + count.archived,
+			memberCount: count.normal,
+			archivedMemberCount: count.archived
+		})}</span>`,
+		`<span class="member-count">${i18next.t("systems:edit.customFrontCountText", {
+			totalCustomFrontCount: count.customFronts + count.archivedCustomFronts,
+			customFrontCount: count.customFronts,
+			archivedCustomFrontCount: count.archivedCustomFronts
+		})}</span>`,
 		"</div>",
 		"</div>",
 	].filter(x => !!x).join("");
@@ -81,14 +96,42 @@ async function memberToHtml(member: Member){
 	].filter(x => !!x).join("");
 }
 
+function getAnalyticsHeader() {
+	return [
+		"<div class=\"analytic header\">",
+		`<span class="member">${i18next.t("members:singular")}</span>`,
+		`<span class="count">${i18next.t("other:count")}</span>`,
+		`<span class="total">${i18next.t("analytics:total")}</span>`,
+		`<span class="average">${i18next.t("analytics:average")}</span>`,
+		`<span class="max">${i18next.t("analytics:max")}</span>`,
+		`<span class="min">${i18next.t("analytics:min")}</span>`,
+		`<span class="presence">${i18next.t("analytics:presence")}</span>`,
+		"</div>"
+	].filter(x => !!x).join("");
+}
+
+function analyticsToHtml(member: UUID, analytics: ReturnType<typeof getFrontingStatistics>) {
+	return [
+		"<div class=\"analytic\">",
+		`<span class="member">${getMemberIndex().find(x => x.uuid === member)?.name || member}</span>`,
+		`<span class="count">${analytics.frontingCount.get(member) || 0} - ${(analytics.frontingPercent.get(member) || 0).toFixed(2)}%</span>`,
+		`<span class="total">${formatWrittenTimeAbsolute(analytics.frontingTotalSpan.get(member) || 0)}</span>`,
+		`<span class="average">${formatWrittenTimeAbsolute((analytics.frontingTotalSpan.get(member) || 0) / (analytics.frontingCount.get(member) || 0))}</span>`,
+		`<span class="max">${formatWrittenTimeAbsolute(analytics.frontingMaxSpan.get(member) || 0)}</span>`,
+		`<span class="min">${formatWrittenTimeAbsolute(analytics.frontingMinSpan.get(member) || 0)}</span>`,
+		`<span class="presence">${((analytics.frontingPresenceMean.get(member) || 0) / 2).toFixed(1)}</span>`,
+		"</div>"
+	].filter(x => !!x).join("");
+}
+
 function getFrontingEntryHeader(){
 	return [
 		"<div class=\"fronting-entry header\">",
-		`<span class="member">${i18next.t("tagManagement:edit.type.member")}</span>`, // i know this is wonky
+		`<span class="member">${i18next.t("members:singular")}</span>`,
 		`<span class="start-date">${i18next.t("frontHistory:edit.startTime")}</span>`,
 		`<span class="end-date">${i18next.t("frontHistory:edit.endTime")}</span>`,
 		`<span class="custom-status">${i18next.t("frontHistory:edit.customStatus")}</span>`,
-		`<span class="presence">${i18next.t("analytics:presence")}</span>`, // i know this is wonky
+		`<span class="presence">${i18next.t("other:presence.header")}</span>`,
 		"</div>"
 	].filter(x => !!x).join("");
 }
@@ -115,8 +158,8 @@ export function exportReport(systems: UUID[]) {
 
 	async function _export() {
 		try {
-			const date = dayjs().format("YYYY-MM-DD");
-			const fileName = `ampersand-report-${date}.html`;
+			const date = new Date();
+			const fileName = `ampersand-report-${dayjs(date).format("YYYY-MM-DD")}.html`;
 			let path: string | undefined = `${await documentDir()}${sep()}${fileName}`;
 
 			if (platform() !== "ios") {
@@ -142,7 +185,7 @@ export function exportReport(systems: UUID[]) {
 			}
 
 			const fd = await openFile(path, { create: true, write: true, truncate: true });
-			await fd.write(encoder.encode(`<!DOCTYPE html><html><head><title>Ampersand Report - ${date}</title><style>${getStylesheet()}</style></head><body>`));
+			await fd.write(encoder.encode(`<!DOCTYPE html><html><head><title>Ampersand Report - ${formatDate(date, "collapsed")}</title><style>${getStylesheet()}</style></head><body>`));
 			progress.dispatchEvent(new Event("start"));
 
 			// write header
@@ -150,9 +193,14 @@ export function exportReport(systems: UUID[]) {
 
 			// make progress computations
 			const members = getMemberIndex().filter(x => systems.includes(x.system!)).map(x => x.uuid);
-			const frontingEntries = getFrontingEntryIndex().filter(x => members.includes(x.member!) && x.endTime && Date.now() - x.startTime!.valueOf() < 1000 * 60 * 60 * 24 * 120).map(x => x.uuid);
+			const frontingEntries = await Promise.all(
+				getFrontingEntryIndex()
+					.filter(x => members.includes(x.member!) && x.endTime && Date.now() - x.startTime!.valueOf() < 1000 * 60 * 60 * 24 * maxDays)
+					.map(x => getFrontingEntry(x.uuid))
+			) as (FrontingEntry & { endTime: Date; })[];
+			const analytics = getFrontingStatistics(frontingEntries);
 
-			const progressTotal = systems.length + members.length + frontingEntries.length;
+			const progressTotal = systems.length + members.length + frontingEntries.length + analytics.frontingCount.size;
 			let progressCurrent = 0;
 
 			// write systems info
@@ -175,12 +223,21 @@ export function exportReport(systems: UUID[]) {
 			}
 			await fd.write(encoder.encode("</div></section>"));
 
+			// write analytics
+			await fd.write(encoder.encode("<section class=\"analytics\">"));
+			await fd.write(encoder.encode(getAnalyticsHeader()));
+			for (const memberId of analytics.frontingCount.keys()) {
+				await fd.write(encoder.encode(analyticsToHtml(memberId, analytics)));
+				progressCurrent++;
+				progress.dispatchEvent(new CustomEvent("progress", { detail: { progress: progressCurrent / progressTotal } }));
+			}
+			await fd.write(encoder.encode("</section>"));
+
 			// write fronting entry info
 			await fd.write(encoder.encode("<section class=\"fronting-entries\">"));
 			await fd.write(encoder.encode(getFrontingEntryHeader()));
-			for (const index of frontingEntries) {
-				const entry = await getFrontingEntry(index);
-				if (entry) await fd.write(encoder.encode(frontingEntryToHtml(entry)));
+			for (const entry of frontingEntries) {
+				await fd.write(encoder.encode(frontingEntryToHtml(entry)));
 				progressCurrent++;
 				progress.dispatchEvent(new CustomEvent("progress", { detail: { progress: progressCurrent / progressTotal } }));
 			}

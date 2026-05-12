@@ -7,6 +7,10 @@
 		"title": "Esporta i tò dati",
 		"desc": "Fai u backup de' tò dati pi tignìlli d'autra banna"
 	},
+	"reportExport": {
+		"title": "Gènera un rapportu",
+		"desc": "Sarva un rapportu pi spartìrilu cu terapisti e pirsuni vicini"
+	},
 	"dbImportDesc": "Attenzioni! Chistu va a suprascriviri ogni datu esistenti",
 	"dbImport": "Mporta i tò dati",
 	"dbImportOld": {
@@ -24,8 +28,10 @@
 		"importedOc": "L'export di Octocon fu mportatu. Pi favuri fa ripartiri l'app.",
 		"importedPk": "L'export di PluralKit fu mportatu. Pi favuri fa ripartiri l'app.",
 		"importedTu": "L'export di Tupperbox fu mportatu. Pi favuri fa ripartiri l'app.",
-		"exportedApp": "U backup fu esportatu nâ pusizzioni sceḍḍuta.",
+		"exportedApp": "U backup fu esportatu unni scigghisti tu.",
 		"exportedAppIos": "U backup fu esportatu nâ cartedda Ampersand de l'app Documenti.",
+		"exportedReport": "U rapportu fù sarvatu unni scigghisti tu.",
+		"exportedReportIos": "U rapportu fù sarvatu nâ cartedda Ampersand de l'app Documenti.",
 		"errorExport": "Erruri duranti l'esportazzioni dû backup.",
 		"error": "Erruri duranti l'importazzioni dû backup.",
 		"errorOc": "Erruri duranti l'importazzioni de l'export di Octocon.",

@@ -14,6 +14,7 @@
 		"no": "No"
 	},
 	"presence": {
+		"header": "Presenza",
 		"absent": "Assente",
 		"heavilyDissociating": "Dissociando pesantemente",
 		"dissociating": "Dissociatə",
@@ -21,8 +22,14 @@
 		"present": "Presente",
 		"fullyGrounded": "Ancoratə alla realtà"
 	},
+	"report": {
+		"header": "Ampersand Report",
+		"generatedOn": "Generato il {{data}}",
+		"coveringDays": "Dati riguardanti i {{count}} giorni passati"
+	},
 	"back": "Indietro",
 	"time": "Ora",
+	"count": "Conto",
 	"timeSizes": {
 		"years": {
 			"long": "anni",

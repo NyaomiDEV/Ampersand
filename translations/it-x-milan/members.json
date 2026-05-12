@@ -1,6 +1,7 @@
 {
 	"header": "Membri",
 	"searchPlaceholder": "Cerca tra i membri...",
+	"singular": "Membro",
 	"select": "Scegli un membro",
 	"deletedMember": "Membro piallato",
 	"deletedCustomFront": "Front custom piallato",

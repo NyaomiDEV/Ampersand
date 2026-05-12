@@ -7,6 +7,10 @@
 		"title": "Export your data",
 		"desc": "Backup your current data to a file you can store somewhere else"
 	},
+	"reportExport": {
+		"title": "Generate a report",
+		"desc": "Save a human-readable report about your data to share with therapists and loved ones"
+	},
 	"dbImportDesc": "Warning! It will override any existing data",
 	"dbImport": "Import your data",
 	"dbImportOld": {
@@ -26,6 +30,8 @@
 		"importedTu": "The Tupperbox export has been imported. Please restart the app.",
 		"exportedApp": "The backup has been exported to the location you chose.",
 		"exportedAppIos": "The backup has been exported to the Ampersand folder on the Files app.",
+		"exportedReport": "The report has been saved in the location you chose.",
+		"exportedReportIos": "The report has been saved in the Ampersand folder on the Files app.",
 		"errorExport": "Error while exporting the backup.",
 		"error": "Error while importing the backup.",
 		"errorOc": "Error while importing the Octocon export.",

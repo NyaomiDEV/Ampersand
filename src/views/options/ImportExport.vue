@@ -1,13 +1,19 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonList, IonItem, IonIcon, IonLabel, IonPage, IonTitle, IonToolbar, IonBackButton, IonProgressBar, IonListHeader, IonNote } from "@ionic/vue";
-	import { ref } from "vue";
+	import { h, ref } from "vue";
 	import { importDatabaseFromBinary } from "../../lib/db/ioutils/old";
-	import { getDocumentFile, toast } from "../../lib/util/misc";
+	import { getDocumentFile, sortName, toast } from "../../lib/util/misc";
 	import { useTranslation } from "i18next-vue";
 	import { importPluralKit } from "../../lib/db/external/pluralkit";
 	import { importTupperBox } from "../../lib/db/external/tupperbox";
 	import { importSimplyPlural } from "../../lib/db/external/simplyplural";
 	import { importOctocon } from "../../lib/db/external/octocon";
+	import { System } from "../../lib/db/entities";
+	import { platform } from "@tauri-apps/plugin-os";
+	import { exportArchive, importArchive } from "../../lib/db/ioutils/archive";
+	import { exportReport } from "../../lib/db/ioutils/report";
+	import { addModal, removeModal } from "../../lib/modals";
+	import SystemSelect from "../../modals/SystemSelect.vue";
 
 	import importMD from "@material-symbols/svg-600/rounded/download.svg";
 	import exportMD from "@material-symbols/svg-600/rounded/upload.svg";
@@ -15,13 +21,39 @@
 	import spMD from "@material-symbols/svg-600/rounded/spa.svg";
 	import tupMD from "@material-symbols/svg-600/rounded/package_2.svg";
 	import pkMD from "@material-symbols/svg-600/rounded/pet_supplies.svg";
-	import { platform } from "@tauri-apps/plugin-os";
-	import { exportArchive, importArchive } from "../../lib/db/ioutils/archive";
 
 	const loading = ref(false);
 	const barProgress = ref(-1);
 
 	const i18next = useTranslation();
+
+	async function showSystemSelect(): Promise<System[] | void> {
+		return new Promise(resolve => {
+			void (async () => {
+				let _systems: System[] = [];
+				const vnode = h(SystemSelect, {
+					modelValue: _systems,
+					"onUpdate:modelValue": (systems) => {
+						_systems = systems;
+					},
+					onDidDismiss: (e) => {
+						removeModal(vnode);
+						if(e.detail.data !== "confirm"){
+							resolve();
+							return;
+						}
+						resolve(_systems.sort(sortName));
+					}
+				});
+
+				const modal = await addModal(vnode);
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-call
+				await (modal.el as any).present();
+			})();
+		});
+	}
+
+	// --- EXPORT
 
 	async function exportDb(){
 		loading.value = true;
@@ -48,6 +80,36 @@
 		} else 
 			await toast(i18next.t("importExport:status.errorExport"));
 
+		loading.value = false;
+	}
+
+	async function exportRp(){
+		loading.value = true;
+		try{
+			const systems = (await showSystemSelect())?.map(x => x.uuid);
+			if(!systems) throw new Error("No systems selected");
+
+			const { progress, status } = exportReport(systems);
+
+			progress.addEventListener("start", () => {
+				barProgress.value = 0;
+			});
+			progress.addEventListener("progress", (evt) => {
+				barProgress.value = (evt as CustomEvent).detail.progress;
+			});
+			progress.addEventListener("finish", () => {
+				barProgress.value = -1;
+			});
+
+			if(!await status) throw new Error("errored out");
+			await toast(
+				platform() === "ios"
+					? i18next.t("importExport:status.exportedReportIos")
+					: i18next.t("importExport:status.exportedReport")
+			);
+		}catch(_e){
+			await toast(i18next.t("importExport:status.errorExport"));
+		}
 		loading.value = false;
 	}
 
@@ -197,6 +259,14 @@
 					<IonLabel>
 						<h3>{{ $t("importExport:dbExport.title") }}</h3>
 						<p>{{ $t("importExport:dbExport.desc") }}</p>
+					</IonLabel>
+				</IonItem>
+
+				<IonItem button :detail="true" @click="exportRp">
+					<IonIcon slot="start" :icon="exportMD" />
+					<IonLabel>
+						<h3>{{ $t("importExport:reportExport.title") }}</h3>
+						<p>{{ $t("importExport:reportExport.desc") }}</p>
 					</IonLabel>
 				</IonItem>
 

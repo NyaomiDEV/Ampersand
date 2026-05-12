@@ -23,6 +23,7 @@
 		"deleteConfirmation": "Are you sure you want to delete this comment?"
 	},
 	"presence": {
+		"header": "Presence",
 		"absent": "Absent",
 		"heavilyDissociating": "Heavily dissociating",
 		"dissociating": "Dissociating",
@@ -30,8 +31,14 @@
 		"present": "Present",
 		"fullyGrounded": "Fully grounded"
 	},
+	"report": {
+		"header": "Ampersand Report",
+		"generatedOn": "Generated on {{date}}",
+		"coveringDays": "Data pertaining to the past {{count}} days"
+	},
 	"back": "Back",
 	"time": "Time",
+	"count": "Count",
 	"timeSizes": {
 		"years": {
 			"long": "years",

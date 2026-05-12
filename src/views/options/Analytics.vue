@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { IonBackButton, IonContent, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonPage, IonSegment, IonSegmentButton, IonSegmentContent, IonSegmentView, IonTitle, IonToolbar } from "@ionic/vue";
-	import { getFrontingStatistics } from "../../lib/db/tables/frontingEntries";
+	import { getFrontingBetween, getFrontingStatistics } from "../../lib/db/tables/frontingEntries";
 	import { h, onMounted, ref, shallowRef, useTemplateRef, watch } from "vue";
 	import DatePopupPicker from "../../components/DatePopupPicker.vue";
 	import { formatDate, formatWrittenTimeAbsolute, presencePhrase, sortName } from "../../lib/util/misc";
@@ -33,7 +33,7 @@
 	import cofrontMD from "@material-symbols/svg-600/rounded/supervisor_account.svg";
 	import AvatarStack from "../../components/AvatarStack.vue";
 
-	const analytics = shallowRef<Awaited<ReturnType<typeof getFrontingStatistics>>>();
+	const analytics = shallowRef<ReturnType<typeof getFrontingStatistics>>();
 	const members = shallowRef<Member[]>();
 
 	const startDate = ref(dayjs().subtract(1, "month").toDate());
@@ -45,9 +45,9 @@
 	const endDatePicker = useTemplateRef("endDatePicker");
 
 	async function getAnalytics(){
-		const _analytics = await getFrontingStatistics(
-			startDate.value,
-			endDate.value
+		const _analytics = getFrontingStatistics(
+			(await getFrontingBetween(startDate.value, endDate.value))
+				.filter(x => x.endTime) as (FrontingEntry & { endTime: Date; })[]
 		);
 
 		members.value = await Promise.all(Array.from(new Set([
@@ -57,7 +57,7 @@
 		analytics.value = _analytics;
 	}
 
-	function flattenFrontingCo(analytics: Awaited<ReturnType<typeof getFrontingStatistics>>){
+	function flattenFrontingCo(analytics: ReturnType<typeof getFrontingStatistics>){
 		if(!analytics || !members.value) return;
 
 		const flattenedFrontingCo = new Map<string, FrontingCo>();

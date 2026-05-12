@@ -1,6 +1,7 @@
 {
 	"header": "Membra",
 	"searchPlaceholder": "Cerca ntra i membra...",
+	"singular": "Membru",
 	"select": "Seliizziona un membru",
 	"deletedMember": "Membru eliminatu",
 	"deletedCustomFront": "Front pirsunalizzatu eliminatu",

@@ -7,6 +7,10 @@
 		"title": "Esporta i dati",
 		"desc": "Fai il backup, non fare il barbone con i tuoi dati"
 	},
+	"reportExport": {
+		"title": "Tira fuori il report",
+		"desc": "Salva un report da mollare ai terapisti e alla family"
+	},
 	"dbImportDesc": "Occhio! Qui sovrascrivi tutto, non si scherza",
 	"dbImport": "Importa i dati",
 	"dbImportOld": {
@@ -24,10 +28,12 @@
 		"importedOc": "Octocon importato. Riavvia.",
 		"importedPk": "PluralKit importato. Riavvia.",
 		"importedTu": "Tupperbox importato. Riavvia.",
-		"exportedApp": "Backup esportato dove hai detto tu.",
-		"exportedAppIos": "Backup salvato nella cartella Ampersand su Documenti.",
+		"exportedApp": "Backup salvato dove hai detto tu.",
+		"exportedAppIos": "Backup salvato nella cartella Ampersand dell'app Documenti.",
+		"exportedReport": "Report salvato dove hai detto tu.",
+		"exportedReportIos": "Report salvato nella cartella Ampersand dell'app Documenti.",
 		"errorExport": "Errore nell'export. Disastro.",
-		"error": "Errore nell'import. Non va un tubo.",
+		"error": "Errore nell'import. Non va un cazzo.",
 		"errorOc": "Errore import Octocon.",
 		"errorSp": "Errore import Simply Plural.",
 		"errorPk": "Errore import PluralKit.",

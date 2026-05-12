@@ -1,6 +1,7 @@
 {
 	"header": "Members",
 	"searchPlaceholder": "Search members...",
+	"singular": "Member",
 	"select": "Select a member",
 	"deletedMember": "Deleted member",
 	"deletedCustomFront": "Deleted custom front",

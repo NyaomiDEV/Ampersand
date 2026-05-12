@@ -7,6 +7,10 @@
 		"title": "Export yer charts",
 		"desc": "Backup yer current charts to a file ye can hide elsewhere"
 	},
+	"reportExport": {
+		"title": "Make a scroll o' accounts",
+		"desc": "Stow away a scroll for sharin' with yer healers and mateys"
+	},
 	"dbImportDesc": "Avast! This will sink any existin' charts!",
 	"dbImport": "Bring yer charts aboard",
 	"dbImportOld": {
@@ -24,8 +28,10 @@
 		"importedOc": "The Octocon charts be aboard. Restart the ship!",
 		"importedPk": "The PluralKit charts be aboard. Restart the ship!",
 		"importedTu": "The Tupperbox charts be aboard. Restart the ship!",
-		"exportedApp": "The backup has been sent to the cove ye chose.",
+		"exportedApp": "The backup has been sent to the spot ye chose.",
 		"exportedAppIos": "The backup has been sent to the Ampersand folder in the Files app.",
+		"exportedReport": "The scroll o' accounts has been sent to the spot ye chose.",
+		"exportedReportIos": "The scroll o' accounts has been sent to the Ampersand folder in the Files app.",
 		"errorExport": "Error while sendin' the backup away.",
 		"error": "Error while bringin' the backup aboard.",
 		"errorOc": "Error while bringin' the Octocon charts aboard.",

@@ -23,6 +23,7 @@
 		"deleteConfirmation": "Figa, lo vuoi piallare davvero 'sto commento?"
 	},
 	"presence": {
+		"header": "Presenza",
 		"absent": "Assente",
 		"heavilyDissociating": "Dissociato male",
 		"dissociating": "Dissociato",
@@ -30,8 +31,14 @@
 		"present": "Presente",
 		"fullyGrounded": "Sul pezzo"
 	},
+	"report": {
+		"header": "Ampersand Report",
+		"generatedOn": "Sfornato il {{data}}",
+		"coveringDays": "Dati dei {{count}} giorni scorsi"
+	},
 	"back": "Indietro",
 	"time": "Ora",
+	"count": "Conto",
 	"timeSizes": {
 		"years": {
 			"long": "anni",

@@ -27,6 +27,7 @@
 		"deleteConfirmation": "Vuò overo cancellà stu cummiento?"
 	},
 	"presence": {
+		"header": "Presenza",
 		"absent": "Assente",
 		"heavilyDissociating": "Sta rincintunito assaje",
 		"dissociating": "Rincintunito",
@@ -34,8 +35,14 @@
 		"present": "Presente",
 		"fullyGrounded": "Cu 'e piere pe' terra"
 	},
+	"report": {
+		"header": "Ampersand Report",
+		"generatedOn": "Fatto 'o {{data}}",
+		"coveringDays": "Dati 'e {{count}} juorne passate"
+	},
 	"back": "Arreto",
 	"time": "Ora",
+	"count": "Cunto",
 	"timeSizes": {
 		"years": {
 			"long": "anne",
