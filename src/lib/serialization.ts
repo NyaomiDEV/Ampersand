@@ -144,7 +144,7 @@ export async function walkAsync(obj: object, replacer: (obj: object) => Promise<
 	return newVal;
 }
 
-export function deleteNull(obj){
+export function deleteNull(obj) {
 	if (Array.isArray(obj)) {
 		return obj
 			.filter(x => x !== null && typeof x !== "undefined")

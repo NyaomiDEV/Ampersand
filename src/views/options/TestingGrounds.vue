@@ -164,10 +164,10 @@
 		loading.value = false;
 	}
 
-	async function commitExportJSON(doYouHateYourDevice: boolean){
+	async function commitExportJSON(){
 		loading.value = true;
 		try{
-			const { progress, status } = exportDatabaseToJSON(doYouHateYourDevice);
+			const { progress, status } = exportDatabaseToJSON();
 
 			progress.addEventListener("start", () => {
 				barProgress.value = 0;
@@ -276,17 +276,10 @@
 			<IonListHeader>Import / Export but we're desperate</IonListHeader>
 			<IonList>
 				<IonItemDivider>Experimental JSON support</IonItemDivider>
-				<IonItem button :detail="true" @click="commitExportJSON(false)">
+				<IonItem button :detail="true" @click="commitExportJSON()">
 					<IonIcon slot="start" :icon="exportMD" />
 					<IonLabel>
 						<h3>Export JSON</h3>
-					</IonLabel>
-				</IonItem>
-				<IonItem button :detail="true" @click="commitExportJSON(true)">
-					<IonIcon slot="start" :icon="exportMD" />
-					<IonLabel>
-						<h3>Export JSON with images as Data URI</h3>
-						<p>WARNING: Your device may crash!</p>
 					</IonLabel>
 				</IonItem>
 				<IonItem button :detail="true" @click="commitImportJSON">

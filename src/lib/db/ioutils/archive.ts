@@ -5,42 +5,21 @@ import { getTables } from "../tables";
 import type { ShittyTable } from "../impl/shittytable";
 import { deleteNull, replace, walk, revive, walkAsync } from "../../serialization";
 import { dirname, documentDir, sep } from "@tauri-apps/api/path";
-import { FileHandle, mkdir, open as openFile } from "@tauri-apps/plugin-fs";
+import { mkdir, open as openFile } from "@tauri-apps/plugin-fs";
 import { open, save } from "../../native/open";
 import { AMPERSAND_ARCHIVE_MAGICS, matchMagicNew } from "./magic";
 import dayjs from "dayjs";
 import { platform } from "@tauri-apps/plugin-os";
 import { System, UUIDable } from "../entities";
 import { ArchiveStreamConfig, ArchiveStreamDatabase } from "./archive_types";
+import { intoStream } from "./utils";
+
 async function encode(data: any){
 	return msgpackEncode(deleteNull(await walkAsync(data, replace)));
 }
 
 function reviver(data: any){
 	return walk(data, revive);
-}
-
-function intoStream(fd: FileHandle, onRead?: (bytes: number) => void){
-	return new ReadableStream({
-		async start(controller) {
-			async function read() {
-				const buf = new Uint8Array(512000);
-				const bytesRead = await fd.read(buf);
-
-				if (bytesRead !== null && bytesRead > 0){
-					controller.enqueue(buf.slice(0, bytesRead));
-					onRead?.(bytesRead);
-				}
-				else if (bytesRead === null){
-					await fd.close();
-					return controller.close();
-				}
-
-				return read();
-			}
-			return read();
-		}
-	});
 }
 
 export function exportArchive() {

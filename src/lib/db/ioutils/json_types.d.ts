@@ -52,3 +52,5 @@ export interface SystemJSON extends System {
 export interface AssetJSON extends Asset {
 	file: string; // Data URI
 }
+
+type SerializableJson<T> = T extends object ? { [k in keyof T]: SerializableJson<T[k]> } : T;
