@@ -14,13 +14,6 @@ import { ArrayStream, arrayStream, matchesJsonPathSelector, objectStream, parseJ
 import { intoStream } from "./utils";
 
 export function exportDatabaseToJSON() {
-	let progressCurrent = 0;
-	let progressTotal = 0;
-
-	function notifyProgress(){
-		progressCurrent++;
-		progress.dispatchEvent(new CustomEvent("progress", { detail: { progress: progressCurrent / progressTotal } }));
-	}
 
 	async function* generateTables<T extends UUIDable>(table: ShittyTable<T>): AsyncGenerator<SerializableJsonValue> {
 		for await (const data of table.iterate(10)) {
@@ -88,18 +81,20 @@ export function exportDatabaseToJSON() {
 					yield deleteNull(data) as SerializableJson<typeof data>;
 					break;
 			}
-			notifyProgress();
 		}
 	}
 
 	function* generateDatabase(): Generator<[string, ArrayStream<SerializableJsonValue>]>{
 		const tables = getTables();
 		
-		for (const table of Object.values(tables))
-			progressTotal += table.count();
+		const progressTotal = Object.keys(getTables()).length;
+		let progressCurrent = 0;
 
-		for (const [name, table] of Object.entries(tables)) 
+		for (const [name, table] of Object.entries(tables)) {
 			yield [name, arrayStream(generateTables(table as unknown as ShittyTable<UUIDable>))];
+			progressCurrent++;
+			emitProgress(progressCurrent, progressTotal);
+		}
 	}
 
 	async function _export() {
@@ -156,6 +151,10 @@ export function exportDatabaseToJSON() {
 			return false;
 		}
 	}
+
+	const emitProgress = (cur: number, tot: number) => {
+		progress.dispatchEvent(new CustomEvent("progress", { detail: { progress: cur / tot } }));
+	};
 
 	const progress = new EventTarget();
 	const status = _export();
@@ -235,11 +234,10 @@ export function importDatabaseFromJSON() {
 
 			const fd = await openFile(path);
 
-			const size = (await fd.stat()).size;
-			let bytes = 0;
-			const _progress = (read) => { bytes += read; emitProgress(bytes, size); };
+			const totalStuffToImport = ["appConfig", "accessibilityConfig", "securityConfig", ...Object.keys(getTables())];
+			const importedTables: string[] = [];
 
-			const jsonStream = intoStream(fd, _progress, true)
+			const jsonStream = intoStream(fd, undefined, true)
 				.pipeThrough(parseJsonStreamWithPaths((path) => {
 					if(!path[0]) return false;
 					if(path.length === 1 && path[0] === "config") return true;
@@ -251,7 +249,7 @@ export function importDatabaseFromJSON() {
 			for (const table of Object.values(getTables()))
 				await table.clear();
 
-			for await (const { path, value } of streamToIterable(jsonStream)){
+			for await (const { path, value } of streamToIterable(jsonStream)){				
 				switch(path[0]){
 					case "config":
 						switch(path[1]){
@@ -272,6 +270,11 @@ export function importDatabaseFromJSON() {
 							if (!result) throw new Error(`item already exists: ${JSON.stringify(value)}`);
 						}
 						break;
+				}
+
+				if (typeof path[1] === "string" && totalStuffToImport.includes(path[1]) && !importedTables.includes(path[1])){
+					importedTables.push(path[1]);
+					emitProgress(importedTables.length, totalStuffToImport.length);
 				}
 			}
 
