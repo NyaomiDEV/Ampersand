@@ -464,8 +464,29 @@
 								:show-cover="false"
 								@click="showModal(analytics.frontingEntries.get(member.uuid)?.filter(x => x.presence?.size) || [])"
 							>
-								<h2>{{ presencePhrase(analytics.frontingPresenceMean.get(member.uuid) || 0) }}</h2>
-								<p><PresenceRating :rating="analytics.frontingPresenceMean.get(member.uuid) || 0" /></p>
+								<div class="presence-stars">
+									<span>
+										<h3>
+											<IonIcon :icon="averageMD" :aria-label="$t('analytics:average')" />
+											{{ presencePhrase(analytics.frontingPresenceMean.get(member.uuid) || 0) }}
+										</h3>
+										<p><PresenceRating :rating="analytics.frontingPresenceMean.get(member.uuid) || 0" /></p>
+									</span>
+									<span>
+										<h3>
+											<IonIcon :icon="minMD" :aria-label="$t('analytics:min')" />
+											{{ presencePhrase(analytics.frontingPresenceMin.get(member.uuid) || 0) }}
+										</h3>
+										<p><PresenceRating :rating="analytics.frontingPresenceMin.get(member.uuid) || 0" /></p>
+									</span>
+									<span>
+										<h3>
+											<IonIcon :icon="maxMD" :aria-label="$t('analytics:max')" />
+											{{ presencePhrase(analytics.frontingPresenceMax.get(member.uuid) || 0) }}
+										</h3>
+										<p><PresenceRating :rating="analytics.frontingPresenceMax.get(member.uuid) || 0" /></p>
+									</span>
+								</div>
 							</MemberItem>
 						</template>
 
@@ -485,8 +506,29 @@
 								:show-cover="false"
 								@click="showModal(analytics.influencingEntries.get(member.uuid)?.filter(x => x.presence?.size) || [])"
 							>
-								<h2>{{ presencePhrase(analytics.influencingPresenceMean.get(member.uuid) || 0) }}</h2>
-								<p><PresenceRating :rating="analytics.influencingPresenceMean.get(member.uuid) || 0" /></p>
+								<div class="presence-stars">
+									<span>
+										<h3>
+											<IonIcon :icon="averageMD" :aria-label="$t('analytics:average')" />
+											{{ presencePhrase(analytics.influencingPresenceMean.get(member.uuid) || 0) }}
+										</h3>
+										<p><PresenceRating :rating="analytics.influencingPresenceMean.get(member.uuid) || 0" /></p>
+									</span>
+									<span>
+										<h3>
+											<IonIcon :icon="minMD" :aria-label="$t('analytics:min')" />
+											{{ presencePhrase(analytics.influencingPresenceMin.get(member.uuid) || 0) }}
+										</h3>
+										<p><PresenceRating :rating="analytics.influencingPresenceMin.get(member.uuid) || 0" /></p>
+									</span>
+									<span>
+										<h3>
+											<IonIcon :icon="maxMD" :aria-label="$t('analytics:max')" />
+											{{ presencePhrase(analytics.influencingPresenceMax.get(member.uuid) || 0) }}
+										</h3>
+										<p><PresenceRating :rating="analytics.influencingPresenceMax.get(member.uuid) || 0" /></p>
+									</span>
+								</div>
 							</MemberItem>
 						</template>
 
@@ -629,5 +671,11 @@
 		grid-template-columns: 1fr 1fr;
 		gap: 0.25em .5em;
 		margin-top: 0.25em;
+	}
+
+	div.presence-stars {
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr;
+		gap: 0em .5em;
 	}
 </style>
