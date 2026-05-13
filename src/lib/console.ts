@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { reactive } from "vue";
 
 type Severity = "log" | "info" | "warn" | "error" | "debug";
@@ -6,7 +5,7 @@ type ConsoleObject = {
 	date: Date,
 	severity: Severity,
 	stack?: ParsedStack[],
-	data: any[]
+	data: string[]
 };
 
 type ParsedStack = {
@@ -60,13 +59,38 @@ function normalizeStackTrace(stack?: string){
 	return parsedStack;
 }
 
+function normalizeLogEntries(...data) {
+	const normalizedData: string[] = [];
+	let styleMarkersRemaining = 0;
+
+	for(const chunk of data){
+		if(styleMarkersRemaining){
+			styleMarkersRemaining--;
+			continue;
+		}
+
+		if(typeof chunk === "string"){
+			const styleMarkersLen = chunk.match(/%c/g)?.length;
+			normalizedData.push(chunk.replace(/%[oOdisfc]/g, ""));
+			if(styleMarkersLen) styleMarkersRemaining = styleMarkersLen;
+		}
+		else if(chunk instanceof Error)
+			normalizedData.push(`${chunk.name}: ${chunk.message}\n${chunk.stack || "No stack available"}\n${chunk.cause ? `Caused by ${normalizeLogEntries(chunk.cause).join("")}` : ""}`);
+		else
+			normalizedData.push(`${chunk}`);
+	}
+	return normalizedData;
+}
+
+
+
 function log(...data){
 	const stack = new Error().stack;
 	store.push({
 		date: new Date(),
 		severity: "log",
 		stack: normalizeStackTrace(stack),
-		data
+		data: normalizeLogEntries(...data)
 	});
 	oldConsole.log(...data);
 }
@@ -77,7 +101,7 @@ function info(...data) {
 		date: new Date(),
 		severity: "info",
 		stack: normalizeStackTrace(stack),
-		data
+		data: normalizeLogEntries(...data)
 	});
 	oldConsole.info(...data);
 }
@@ -88,7 +112,7 @@ function warn(...data) {
 		date: new Date(),
 		severity: "warn",
 		stack: normalizeStackTrace(stack),
-		data
+		data: normalizeLogEntries(...data)
 	});
 	oldConsole.warn(...data);
 }
@@ -99,7 +123,7 @@ function error(...data) {
 		date: new Date(),
 		severity: "error",
 		stack: normalizeStackTrace(stack),
-		data
+		data: normalizeLogEntries(...data)
 	});
 	oldConsole.error(...data);
 }
@@ -110,7 +134,7 @@ function debug(...data) {
 		date: new Date(),
 		severity: "debug",
 		stack: normalizeStackTrace(stack),
-		data
+		data: normalizeLogEntries(...data)
 	});
 	oldConsole.debug(...data);
 }
