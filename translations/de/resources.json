@@ -1,5 +1,12 @@
 {
 	"wiki": {
 		"title": "Wiki"
+	},
+	"header": "Ressourcen",
+	"website": {
+		"title": "Webseite"
+	},
+	"blog": {
+		"title": "Blog"
 	}
 }
