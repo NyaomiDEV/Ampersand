@@ -1,4 +1,4 @@
-import { db } from ".";
+import { db } from "..";
 import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUID, UUIDable, Asset } from "../entities";
 import { filterAsset } from "../../search";

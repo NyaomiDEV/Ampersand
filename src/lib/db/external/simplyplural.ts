@@ -1,5 +1,5 @@
 import { System, Member, FrontingEntry, Tag, BoardMessage, CustomField, JournalPost, Reminder } from "../entities";
-import { clearAllDatabase, getTables } from "../tables";
+import { clearAllDatabase, getTables } from "..";
 import { t } from "i18next";
 import { fetchImage } from "../../util/fetchImage";
 import { resizeImage } from "../../util/image";

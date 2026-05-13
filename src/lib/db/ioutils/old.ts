@@ -1,7 +1,7 @@
 import { decode, encode } from "@msgpack/msgpack";
 import { accessibilityConfig, appConfig, securityConfig } from "../../config";
-import { getTables } from "../tables";
-import type { ShittyTable } from "../impl/shittytable";
+import { getTables } from "..";
+import type { Table } from "../types";
 import { deleteNull, replace, revive, walk, walkAsync } from "../../serialization";
 import { dirname, documentDir, sep } from "@tauri-apps/api/path";
 import { mkdir, open as openFile, readFile } from "@tauri-apps/plugin-fs";
@@ -158,7 +158,7 @@ export function importDatabaseFromBinary() {
 
 			for (const key of Object.getOwnPropertyNames(revived.database)) {
 				// also mitigate system (old) to systems (new)
-				const table: ShittyTable<UUIDable> = getTables()[key === "system" ? "systems" : key];
+				const table: Table<UUIDable> = getTables()[key === "system" ? "systems" : key];
 				if (table) {
 					await table.clear();
 					await table.bulkAdd(revived.database[key]);

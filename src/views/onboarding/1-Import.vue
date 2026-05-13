@@ -9,7 +9,7 @@
 	import { importSimplyPlural } from "../../lib/db/external/simplyplural";
 	import { importOctocon } from "../../lib/db/external/octocon";
 	import { useTranslation } from "i18next-vue";
-	import { clearAllDatabase } from "../../lib/db/tables";
+	import { clearAllDatabase } from "../../lib/db";
 	import { resetConfig, securityConfig } from "../../lib/config";
 
 	import importMD from "@material-symbols/svg-600/rounded/download.svg";

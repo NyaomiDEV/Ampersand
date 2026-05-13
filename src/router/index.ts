@@ -20,6 +20,11 @@ const routes: RouteRecordRaw[] = [
 		name: "LockView",
 		component: () => import("../views/LockView.vue"),
 	},
+	{
+		path: "/dbIsLoading",
+		name: "DatabaseIsLoading",
+		component: () => import("../views/DatabaseIsLoading.vue"),
+	},
 	...onboarding,
 	...standaloneRoutes,
 	...options,

@@ -1,9 +1,9 @@
-import { db } from ".";
+import { db } from "..";
 import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUIDable, Reminder, UUID, ReminderComplete, FrontingEntryComplete } from "../entities";
 import { getMember, defaultMember } from "./members";
 import { TransactionStatus } from "../types";
-import { IndexEntry } from "../impl/types";
+import { IndexEntry } from "../types";
 import { notify, unnotify } from "../../notifications";
 import { platform } from "@tauri-apps/plugin-os";
 import { Schedule } from "@choochmeque/tauri-plugin-notifications-api";

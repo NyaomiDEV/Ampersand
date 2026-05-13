@@ -1,7 +1,7 @@
 import { dirname, documentDir, sep } from "@tauri-apps/api/path";
 import { deleteNull } from "../../serialization";
-import { getTables } from "../tables";
-import type { ShittyTable } from "../impl/shittytable";
+import { getTables } from "..";
+import type { Table } from "../types";
 import { mkdir, open as openFile } from "@tauri-apps/plugin-fs";
 import dayjs from "dayjs";
 import { platform } from "@tauri-apps/plugin-os";
@@ -15,7 +15,7 @@ import { intoStream } from "./utils";
 
 export function exportDatabaseToJSON() {
 
-	async function* generateTables<T extends UUIDable>(table: ShittyTable<T>): AsyncGenerator<SerializableJsonValue> {
+	async function* generateTables<T extends UUIDable>(table: Table<T>): AsyncGenerator<SerializableJsonValue> {
 		for await (const data of table.iterate(10)) {
 			switch (table.name) {
 				case "boardMessages": {
@@ -91,7 +91,7 @@ export function exportDatabaseToJSON() {
 		let progressCurrent = 0;
 
 		for (const [name, table] of Object.entries(tables)) {
-			yield [name, arrayStream(generateTables(table as unknown as ShittyTable<UUIDable>))];
+			yield [name, arrayStream(generateTables(table as unknown as Table<UUIDable>))];
 			progressCurrent++;
 			emitProgress(progressCurrent, progressTotal);
 		}
@@ -214,7 +214,7 @@ export function importDatabaseFromJSON() {
 				return getTables().assets.add({
 					..._data,
 					file: _data.file ? await fromDataURI(_data.file) : undefined,
-				} as Asset, false);
+				}, false);
 			}
 		}
 		

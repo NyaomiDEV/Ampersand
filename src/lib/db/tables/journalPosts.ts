@@ -1,4 +1,4 @@
-import { db } from ".";
+import { db } from "..";
 import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUIDable, JournalPost, UUID, JournalPostComplete } from "../entities";
 import { getMember, defaultMember } from "./members";

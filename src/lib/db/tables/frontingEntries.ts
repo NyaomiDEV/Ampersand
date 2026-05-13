@@ -1,4 +1,4 @@
-import { db } from ".";
+import { db } from "..";
 import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUIDable, Member, FrontingEntry, FrontingEntryComplete, UUID } from "../entities";
 import { defaultMember, getMember } from "./members";

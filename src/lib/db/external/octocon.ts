@@ -7,7 +7,7 @@ import { appConfig, securityConfig } from "../../config";
 import { nilUid } from "../../util/consts";
 import { BoardMessage, CustomField, FrontingEntry, Member, System, Tag } from "../entities";
 import { fetchImage } from "../../util/fetchImage";
-import { clearAllDatabase, getTables } from "../tables";
+import { clearAllDatabase, getTables } from "..";
 
 import type { OctoconExport } from "./octocon_types";
 

@@ -9,7 +9,7 @@ import { IonicVue } from "@ionic/vue";
 import { accessibilityConfig, appConfig } from "./lib/config";
 
 // Database
-import { db } from "./lib/db/tables";
+import { db, initDatabase, databaseDidInit } from "./lib/db";
 
 // App Lock
 import { getLockedStatus } from "./lib/applock";
@@ -60,12 +60,66 @@ import { maybeExit } from "./lib/util/backbutton";
 import backMD from "@material-symbols/svg-600/rounded/arrow_back.svg";
 import { sendFrontingChangedEvent } from "./lib/db/tables/frontingEntries";
 import { unnotify } from "./lib/notifications";
+import { NavigationGuardWithThis } from "vue-router";
 
 const minWebViewVersions = {
 	"android": 139,
 };
 
+const routerGuard: NavigationGuardWithThis<undefined> = (to) => {
+	// database migration flow
+	if (!databaseDidInit()) {
+		if (to.path === "/dbIsLoading")
+			return true;
+
+		return { path: "/dbIsLoading", query: { wantedPath: to.fullPath } };
+	} else {
+		if (to.path === "/dbIsLoading") // for the two people who get stuck in this
+			return { fullPath: "/" }; // just reset
+	}
+
+	// lock flow
+	if (getLockedStatus()) {
+		if (to.path === "/lock")
+			return true;
+
+		return { path: "/lock", query: { wantedPath: to.fullPath } };
+	} else {
+		if (to.path === "/lock") // for the two people who get stuck in this
+			return { fullPath: "/" }; // just reset
+	}
+
+	// first time???
+	if (!db.systems.index.length) {
+		if (to.path.startsWith("/onboarding/") || to.path.startsWith("/options/accessibility"))
+			return true;
+
+		return { path: "/onboarding/start", replace: true };
+	}
+
+	// app just started???
+	if (to.fullPath === "/") {
+		// route to default view
+		switch (appConfig.view) {
+			case "members":
+				return { path: "/members", replace: true };
+			case "journal":
+				return { path: "/journal", replace: true };
+			case "dashboard":
+			default:
+				return { path: "/dashboard", replace: true };
+		}
+	}
+
+	// assume normal navigation
+	return true;
+};
+
 async function setupAmpersand(){
+	void initDatabase();
+	
+	router.beforeEach(routerGuard);
+
 	const app = createApp(App).use(IonicVue, {
 		hardwareBackButton: true,
 		mode: "md",
@@ -75,51 +129,6 @@ async function setupAmpersand(){
 	}).use(router).use(I18NextVue, { i18next: i18n });
 
 	window.Ionic.config.set("navAnimation", slideAnimation);
-
-	const maybeSystem = db.systems.index[0]?.uuid || undefined;
-
-	if (!db.systems.index.map(x => x.uuid).includes(appConfig.defaultSystem)) {
-		if (maybeSystem)
-			appConfig.defaultSystem = maybeSystem;
-	}
-
-	router.beforeEach((to) => {
-		// lock flow
-		if (getLockedStatus()) {
-			if (to.path === "/lock")
-				return true;
-
-			return { path: "/lock", query: { wantedPath: to.fullPath } };
-		} else {
-			if (to.path === "/lock") // for the two people who get stuck in this
-				return { fullPath: "/" }; // just reset
-		}
-
-		// first time???
-		if (!db.systems.index.length){
-			if (to.path.startsWith("/onboarding/") || to.path.startsWith("/options/accessibility"))
-				return true;
-
-			return { path: "/onboarding/start", replace: true };
-		}
-
-		// app just started???
-		if (to.fullPath === "/") {
-			// route to default view
-			switch (appConfig.view) {
-				case "members":
-					return { path: "/members", replace: true };
-				case "journal":
-					return { path: "/journal", replace: true };
-				case "dashboard":
-				default:
-					return { path: "/dashboard", replace: true };
-			}
-		}
-
-		// assume normal navigation
-		return true;
-	});
 
 	await clearTempDir();
 
@@ -146,15 +155,15 @@ async function setupAmpersand(){
 			await unnotify(1);
 	});
 
-	await router.isReady().then(async () => {
-		app.mount(document.body);
+	if(platform() === "android"){
+		await onBackButtonPress(() => {
+			document.dispatchEvent(new Event("backbutton"));
+			void maybeExit();
+		});
+	}
 
-		if(platform() === "android"){
-			await onBackButtonPress(() => {
-				document.dispatchEvent(new Event("backbutton"));
-				void maybeExit();
-			});
-		}
+	await router.isReady().then(() => {
+		app.mount(document.body);
 	});
 }
 

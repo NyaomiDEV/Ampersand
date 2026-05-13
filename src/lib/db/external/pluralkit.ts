@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { CustomField, FrontingEntry, Member, System, Tag } from "../entities";
-import { clearAllDatabase, getTables } from "../tables";
+import { clearAllDatabase, getTables } from "..";
 import { fetchImage } from "../../util/fetchImage";
 import { nilUid } from "../../util/consts";
 import { appConfig, securityConfig } from "../../config";

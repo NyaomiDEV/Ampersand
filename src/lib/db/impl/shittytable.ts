@@ -1,15 +1,35 @@
-import { sep } from "@tauri-apps/api/path";
+import { appDataDir, sep } from "@tauri-apps/api/path";
 import * as fs from "@tauri-apps/plugin-fs";
 import type { Asset, JournalPost, Member, System, Tag, UUIDable, UUID, BoardMessage } from "../entities";
 import { decode, encode } from "@msgpack/msgpack";
-import type { MigrationsMapping } from "../types";
+import type { MigrationsMapping, Table } from "../types";
 import { deleteNull, replace, revive, walk, walkAsync } from "../../serialization";
 import { assets, boardMessages, journalPosts, members, systems, tags } from "./migrations";
 import { PartialBy } from "../../types";
-import type { SecondaryKey, IndexEntry } from "./types";
+import type { SecondaryKey, IndexEntry } from "../types";
 import { sha256 } from "../../util/misc";
 
-export class ShittyTable<T extends UUIDable> {
+const appDataDirPath = await appDataDir();
+export async function makeShittyTable<T extends UUIDable>(tableName: string, secondaryKeys: SecondaryKey<T>[]) {
+	const _path = `${appDataDirPath + sep()}database${sep() + tableName}`;
+
+	if(tableName === "systems"){
+		// move old "system" database table in fs to "systems"
+		if (await fs.exists(`${appDataDirPath + sep()}database${sep()}system`))
+			await fs.rename(`${appDataDirPath + sep()}database${sep()}system`, `${appDataDirPath + sep()}database${sep()}systems`);
+	}
+
+	await fs.mkdir(_path, { recursive: true });
+
+	const table = new ShittyTable<T>(tableName, _path, secondaryKeys);
+	await table.initializeHashes();
+	await table.initializeIndex();
+	await table.migrate();
+
+	return table;
+}
+
+export class ShittyTable<T extends UUIDable> implements Table<T> {
 	name: string;
 	path: string;
 	secondaryKeys: SecondaryKey<T>[];

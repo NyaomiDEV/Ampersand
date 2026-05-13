@@ -31,7 +31,7 @@
 	import exportMD from "@material-symbols/svg-600/rounded/upload.svg";
 	import { onMounted, ref } from "vue";
 	import { exportDatabaseToJSON, importDatabaseFromJSON } from "../../lib/db/ioutils/json";
-	import { getTables } from "../../lib/db/tables";
+	import { getTables } from "../../lib/db";
 	import ConsoleLog from "../../components/ConsoleLog.vue";
 	
 	const i18next = useTranslation();

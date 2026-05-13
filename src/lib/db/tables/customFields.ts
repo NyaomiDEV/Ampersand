@@ -1,4 +1,4 @@
-import { db } from ".";
+import { db } from "..";
 import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUID, UUIDable, CustomField } from "../entities";
 import { filterCustomField } from "../../search";

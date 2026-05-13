@@ -2,7 +2,7 @@
 
 import { appConfig, securityConfig } from "../../config";
 import { Member, Tag, System } from "../entities";
-import { clearAllDatabase, getTables } from "../tables";
+import { clearAllDatabase, getTables } from "..";
 import { fetchImage } from "../../util/fetchImage";
 
 function tag(tuExport: any){

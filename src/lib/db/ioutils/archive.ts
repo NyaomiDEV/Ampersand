@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { decodeMultiStream, encode as msgpackEncode } from "@msgpack/msgpack";
 import { accessibilityConfig, appConfig, securityConfig } from "../../config";
-import { getTables } from "../tables";
-import type { ShittyTable } from "../impl/shittytable";
+import { getTables } from "..";
+import type { Table } from "../types";
 import { deleteNull, replace, walk, revive, walkAsync } from "../../serialization";
 import { dirname, documentDir, sep } from "@tauri-apps/api/path";
 import { mkdir, open as openFile } from "@tauri-apps/plugin-fs";
@@ -141,14 +141,14 @@ export function importArchive() {
 							// Migrate system (old) to systems (new) upon import
 							case "system": {
 								const _data = data as ArchiveStreamDatabase;
-								const table: ShittyTable<System> = getTables().systems;
-								const result = await table.add(_data.data as System, false);
+								const table: Table<System> = getTables().systems;
+								const result = await table.add(_data.data, false);
 								if (!result) throw new Error(`item already exists: ${_data.data.uuid}`);
 								break;
 							}
 							default: {
 								const _data = data as ArchiveStreamDatabase;
-								const table: ShittyTable<UUIDable> = getTables()[_data.table];
+								const table: Table<UUIDable> = getTables()[_data.table];
 								const result = await table.add(_data.data, false);
 								if (!result) throw new Error(`item already exists: ${_data.data.uuid}`);
 							}
