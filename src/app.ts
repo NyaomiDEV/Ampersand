@@ -116,10 +116,16 @@ const routerGuard: NavigationGuardWithThis<undefined> = (to) => {
 };
 
 async function setupAmpersand(){
-	void initDatabase();
-	
+	// first and foremost, put the router guard in place
 	router.beforeEach(routerGuard);
 
+	// let's start initializing the database
+	void initDatabase();
+
+	// now clear the temp dir
+	await clearTempDir();
+
+	// let's set up ionic here
 	const app = createApp(App).use(IonicVue, {
 		hardwareBackButton: true,
 		mode: "md",
@@ -127,23 +133,31 @@ async function setupAmpersand(){
 		toggleOnOffLabels: true,
 		backButtonIcon: backMD
 	}).use(router).use(I18NextVue, { i18next: i18n });
-
 	window.Ionic.config.set("navAnimation", slideAnimation);
 
-	await clearTempDir();
-
-	const darkMode = window.matchMedia("(prefers-color-scheme: dark)");
-	await updateDarkMode();
-
-	darkMode.addEventListener("change", () => void updateDarkMode());
-	updateMaterialColors();
-	updateAccessibility();
-
-	if(platform() === "android"){
+	// if on android, we need to get window insets and set up back button behaviour
+	if (platform() === "android") {
 		await updateInsets();
 		window.addEventListener("orientationchange", () => void updateInsets());
+
+		await onBackButtonPress(() => {
+			document.dispatchEvent(new Event("backbutton"));
+			void maybeExit();
+		});
 	}
 
+	// now we need to set up the dark mode
+	const darkMode = window.matchMedia("(prefers-color-scheme: dark)");
+	darkMode.addEventListener("change", () => void updateDarkMode());
+	await updateDarkMode();
+
+	// and here we can update our color palette
+	updateMaterialColors();
+
+	// here we will apply our accessibility settings
+	updateAccessibility();
+
+	// lastly, we watch for our accessibility configuration as to update some stuff that is dependent to it
 	watch(accessibilityConfig, async () => {
 		await updateDarkMode();
 		updateMaterialColors();
@@ -155,13 +169,7 @@ async function setupAmpersand(){
 			await unnotify(1);
 	});
 
-	if(platform() === "android"){
-		await onBackButtonPress(() => {
-			document.dispatchEvent(new Event("backbutton"));
-			void maybeExit();
-		});
-	}
-
+	// now we just wait for the router to be ready, then we can mount our application
 	await router.isReady().then(() => {
 		app.mount(document.body);
 	});
