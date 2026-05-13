@@ -10,6 +10,7 @@
 		IonList,
 		IonFab,
 		IonFabButton,
+		IonIcon
 	} from "@ionic/vue";
 
 	import { accessibilityConfig } from "../lib/config/index.ts";
