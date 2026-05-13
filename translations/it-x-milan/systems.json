@@ -10,6 +10,7 @@
 		"description": "Descrizione",
 		"noDescription": "Niente da dire",
 		"color": "Colore",
+		"nameStyle": "Stile nome",
 		"imageClip": "Forma avatar",
 		"memberCount": "Quanti membri",
 		"memberCountText": "{{totalMemberCount}} totali, {{memberCount}} attivi, {{archivedMemberCount}} in archivio",

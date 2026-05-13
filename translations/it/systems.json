@@ -10,6 +10,7 @@
 		"description": "Descrizione del sistema",
 		"noDescription": "Nessuna descrizione",
 		"color": "Colore",
+		"nameStyle": "Stile del nome",
 		"imageClip": "Forma dell'avatar",
 		"memberCount": "Numero di membrɜ",
 		"memberCountText": "{{totalMemberCount}} membrə/ɜ, {{memberCount}} attivə/ɜ, {{archivedMemberCount}} archiviatə/ɜ",

@@ -10,6 +10,7 @@
 		"description": "Descrizzione d''o sistema",
 		"noDescription": "Nisciuna descrizzione",
 		"color": "Culore",
+		"nameStyle": "Stile d' 'o nomme",
 		"imageClip": "Forma de l'immaggine",
 		"memberCount": "Quante ne so'",
 		"memberCountText": "{{totalMemberCount}} soci, {{memberCount}} attivi, {{archivedMemberCount}} archiviati",

@@ -10,6 +10,7 @@
 		"description": "Fleet description",
 		"noDescription": "No description",
 		"color": "Color",
+		"nameStyle": "Name style",
 		"imageClip": "Avatar shape",
 		"memberCount": "Crew count",
 		"memberCountText": "{{totalMemberCount}} matey(s), {{memberCount}} active, {{archivedMemberCount}} in the hold",

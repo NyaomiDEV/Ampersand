@@ -180,6 +180,7 @@ export interface ReminderComplete extends Reminder {
 
 export interface System extends UUIDable {
 	name: string,
+	nameStyle?: NameStyle,
 	description?: string,
 	cover?: File,
 	image?: File,

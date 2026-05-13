@@ -10,6 +10,7 @@
 		"description": "Discrizzioni dû sistema",
 		"noDescription": "Nudda discrizzioni",
 		"color": "Culuri",
+		"nameStyle": "Stili dû nomi",
 		"imageClip": "Forma de l'avatar",
 		"memberCount": "Nùmmuru di membra",
 		"memberCountText": "{{totalMemberCount}} membru/a, {{memberCount}} attivu/i, {{archivedMemberCount}} archiviatu/i",
