@@ -108,5 +108,10 @@
 		"commentCount_other": "{{count}} comentários"
 	},
 	"theresNothingHere": "Não há nada aqui",
-	"count": "Contar"
+	"count": "Conta",
+	"report": {
+		"header": "Relatório Ampersand",
+		"generatedOn": "Gerar em {{date}}",
+		"coveringDays": "Dados pertinentes aos últimos {{count}} dias"
+	}
 }

@@ -31,6 +31,12 @@
 		"errorOc": "Erro ao importar o exporte do Octocon.",
 		"errorSp": "Erro ao importar exporte do Simply Plural.",
 		"errorPk": "Erro ao importar do exporte do PluralKit.",
-		"errorTu": "Erro ao importar do exporte do Tupperbox."
+		"errorTu": "Erro ao importar do exporte do Tupperbox.",
+		"exportedReport": "O relatório foi salvo no local de sua escolha.",
+		"exportedReportIos": "O relatório foi salvo na pasta do Ampersand no aplicativo de arquivos."
+	},
+	"reportExport": {
+		"title": "Gerar um relatório",
+		"desc": "Salve um relatório sobre seus dados para compartilhar com terapeutas e pessoas queridas"
 	}
 }
