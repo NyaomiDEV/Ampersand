@@ -65,6 +65,11 @@
 		"comment": "Kommentaari sisu",
 		"commentCount_one": "{{count}} kommentaar",
 		"commentCount_other": "{{count}} kommentaari",
-		"deleteConfirmation": "Kas oled kindel, et soovid selle kommentaari kustutada?"
+		"deleteConfirmation": "Kas oled kindel, et soovid selle kommentaari kustutada?",
+		"commentHint": "Kommenteeri…"
+	},
+	"report": {
+		"header": "Ampersandi aruanne",
+		"generatedOn": "Loodud {{date}}"
 	}
 }

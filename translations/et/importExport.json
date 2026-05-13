@@ -31,6 +31,12 @@
 		"errorOc": "Viga Octoconi varukoopia importimisel.",
 		"errorSp": "Viga Simply Plurali varukoopia importimisel.",
 		"errorPk": "Viga PluralKiti varukoopia importimisel.",
-		"errorTu": "Viga Tupperboxi varukoopia importimisel."
+		"errorTu": "Viga Tupperboxi varukoopia importimisel.",
+		"exportedReport": "Aruanne on salvestatud sinu valitud asukohta.",
+		"exportedReportIos": "Aruanne on salvestatud Ampersandi kausta failirakenduses."
+	},
+	"reportExport": {
+		"title": "Koosta aruanne",
+		"desc": "Salvesta oma andmete kohta inimloetav aruanne, mida saad jagada oma terapeudi ja/või lähedastega"
 	}
 }
