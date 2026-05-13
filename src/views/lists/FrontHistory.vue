@@ -17,9 +17,10 @@
 	import TheresNothingHere from "../../components/TheresNothingHere.vue";
 	import CollapsibleHeaderbar from "../../components/CollapsibleHeaderbar.vue";
 
-	const isStandalone = ref(false);
-
 	const route = useRoute();
+	
+	const isStandalone = route.path.startsWith("/lists/");
+
 	const i18next = useTranslation();
 
 	const search = ref(route.query.q as string || "");
@@ -39,9 +40,6 @@
 	watch(route, () => {
 		if(route.name && ["FrontHistory", "FrontHistoryTab"].includes(route.name.toString()) && route.query.q)
 			search.value = route.query.q as string;
-
-		if(route.path.startsWith("/lists/")) isStandalone.value = true;
-		else isStandalone.value = false;
 	}, { immediate: true });
 
 	watch([search, parts], async () => {

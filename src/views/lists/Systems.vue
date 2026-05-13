@@ -34,9 +34,10 @@
 	import TheresNothingHere from "../../components/TheresNothingHere.vue";
 	import CollapsibleHeaderbar from "../../components/CollapsibleHeaderbar.vue";
 
-	const isStandalone = ref(false);
-
 	const route = useRoute();
+
+	const isStandalone = route.path.startsWith("/lists/");
+
 	const i18next = useTranslation();
 
 	const list = useTemplateRef("list");
@@ -45,9 +46,6 @@
 	watch(route, () => {
 		if(route.name && ["Systems", "SystemsTab"].includes(route.name.toString()) && route.query.q)
 			search.value = route.query.q as string;
-		
-		if(route.path.startsWith("/lists/")) isStandalone.value = true;
-		else isStandalone.value = false;
 	}, { immediate: true });
 
 	const systems = shallowRef<System[]>();

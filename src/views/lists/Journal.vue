@@ -18,10 +18,10 @@
 	import DatetimeUtc, { DatetimeParts } from "../../components/DatetimeUtc.vue";
 	import TheresNothingHere from "../../components/TheresNothingHere.vue";
 
-	const isStandalone = ref(false);
-
 	const route = useRoute();
 	const router = useIonRouter();
+
+	const isStandalone = route.path.startsWith("/lists/");
 
 	const i18next = useTranslation();
 
@@ -45,9 +45,6 @@
 	watch(route, () => {
 		if(route.name && ["Journal", "JournalTab"].includes(route.name.toString()) && route.query.q)
 			search.value = route.query.q as string;
-
-		if(route.path.startsWith("/lists/")) isStandalone.value = true;
-		else isStandalone.value = false;
 	}, { immediate: true });
 
 	watch([search, parts], async () => {

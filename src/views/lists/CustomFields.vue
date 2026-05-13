@@ -16,17 +16,14 @@
 	import TheresNothingHere from "../../components/TheresNothingHere.vue";
 	import CollapsibleHeaderbar from "../../components/CollapsibleHeaderbar.vue";
 
-	const isStandalone = ref(false);
-
 	const route = useRoute();
+
+	const isStandalone = route.path.startsWith("/lists/");
 
 	const search = ref(route.query.q as string || "");
 	watch(route, () => {
 		if(route.name && ["CustomFields", "CustomFieldsTab"].includes(route.name.toString()) && route.query.q)
 			search.value = route.query.q as string;
-
-		if(route.path.startsWith("/lists/")) isStandalone.value = true;
-		else isStandalone.value = false;
 	}, { immediate: true });
 
 	const customFields = shallowRef<CustomField[]>();

@@ -14,22 +14,30 @@
 	const scrollDelta = ref<string>("0");
 	const contentOffset = ref(0);
 
-	onMounted(() => {
+	onMounted(async () => {
 		if(!headerbar.value) return;
 		const headerEl = headerbar.value.$el as HTMLElement;
 		const scrollerEl = props.scroller ?? headerEl.parentElement as HTMLElement;
+		const firstToolbarEl = headerEl.getElementsByTagName("ion-toolbar").item(0);
 
-		setTimeout(() => {
-			const firstToolbarEl = headerEl.getElementsByTagName("ion-toolbar").item(0);
-			const shadow = firstToolbarEl?.shadowRoot;
-			contentOffset.value = (
-				(shadow?.querySelector<HTMLElement>("[part=content]")?.offsetLeft ?? 0) - 
+		const shadow = await new Promise<ShadowRoot>((res) => {
+			const cb = () => {
+				if(firstToolbarEl?.shadowRoot && firstToolbarEl.shadowRoot.children.length)
+					res(firstToolbarEl.shadowRoot);
+				else
+					setTimeout(cb, 1);
+			};
+			cb();
+		});
+
+		contentOffset.value = Math.max(
+			0,
+			(shadow.querySelector<HTMLElement>("[part=content]")?.offsetLeft ?? 0) - 
 				parseFloat(
-					shadow?.querySelector<HTMLElement>("[part=container]")?.computedStyleMap()
+					shadow.querySelector<HTMLElement>("[part=container]")?.computedStyleMap()
 						.get("padding-left")?.toString().replace("px", "") || "0"
 				)
-			);
-		}, 1);
+		);
 
 		if(props.isCssAnim){
 			if(scrollerEl.tagName.toLowerCase() === "ion-content") {
@@ -56,6 +64,7 @@
 	<IonHeader
 		ref="headerbar"
 		:class="{
+			collapsible: true,
 			'css-anim': props.isCssAnim,
 			'js-anim': !props.isCssAnim
 		}"
@@ -65,7 +74,7 @@
 </template>
 
 <style scoped>
-	ion-header {
+	ion-header.collapsible {
 		--toolbar-size: 64px;
 		--transition-size: calc(var(--toolbar-size) - 64px);
 

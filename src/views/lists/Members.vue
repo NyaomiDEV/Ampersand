@@ -39,18 +39,16 @@
 	import InfiniteLoader from "../../components/InfiniteLoader.vue";
 	import TheresNothingHere from "../../components/TheresNothingHere.vue";
 
-	const isStandalone = ref(false);
-
 	const route = useRoute();
+
+	const isStandalone = route.path.startsWith("/lists/");
+
 	const i18next = useTranslation();
 
 	const search = ref(route.query.q as string || "");
 	watch(route, () => {
 		if(route.name && ["Members", "MembersTab"].includes(route.name.toString()) && route.query.q)
 			search.value = route.query.q as string;
-
-		if(route.path.startsWith("/lists/")) isStandalone.value = true;
-		else isStandalone.value = false;
 	}, { immediate: true });
 
 	const members = shallowRef<Member[]>();

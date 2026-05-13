@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { IonContent, IonFab, IonFabButton, IonIcon, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonLabel, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonItem } from "@ionic/vue";
-	import { onBeforeMount, onUnmounted, ref, shallowRef, watch } from "vue";
+	import { onBeforeMount, onUnmounted, shallowRef } from "vue";
 	import { useRoute } from "vue-router";
 
 	import { Reminder } from "../../lib/db/entities";
@@ -14,9 +14,9 @@
 	import TheresNothingHere from "../../components/TheresNothingHere.vue";
 	import CollapsibleHeaderbar from "../../components/CollapsibleHeaderbar.vue";
 
-	const isStandalone = ref(false);
-
 	const route = useRoute();
+
+	const isStandalone = route.path.startsWith("/lists/");
 
 	const isUnsupportedPlatform = !["macos", "ios", "android"].includes(platform());
 
@@ -26,11 +26,6 @@
 		if(["reminders"].includes((event as DatabaseEvent).data.table))
 			void Array.fromAsync(getReminders()).then(res => reminders.value = res);
 	};
-
-	watch(route, () => {
-		if(route.path.startsWith("/lists/")) isStandalone.value = true;
-		else isStandalone.value = false;
-	}, { immediate: true });
 
 	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
