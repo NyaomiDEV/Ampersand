@@ -25,15 +25,14 @@
 		setRouterCanGoBack(ionRouter.canGoBack());
 	});
 
-	onMounted(async () => {
-		// notifications
-		if(await ensureNotifyPerms(true))
-			await registerChannels();
-
+	onMounted(() => {
 		let timeout = setTimeout(dismissSplash, 2000);
-
 		watch(init, async () => {
 			if(!init.value) return;
+
+			// notifications
+			if(await ensureNotifyPerms(true))
+				await registerChannels();
 
 			// defer fronting changed event to not conflict with other more important UI-level things
 			void sendFrontingChangedEvent(true);
