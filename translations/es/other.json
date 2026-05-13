@@ -54,7 +54,8 @@
 		"dissociating": "Desvinculación",
 		"zonedOut": "Ausente",
 		"present": "Presente",
-		"fullyGrounded": "Con conexión a tierra"
+		"fullyGrounded": "Con conexión a tierra",
+		"header": "Presencia"
 	},
 	"back": "Atrás",
 	"time": "Hora",
@@ -106,5 +107,45 @@
 		"commentCount_many": "{{count}} comentarios",
 		"commentCount_other": "{{count}} comentarios",
 		"deleteConfirmation": "¿Seguro que quieres eliminar este comentario?"
+	},
+	"report": {
+		"header": "Informe de Ampersand",
+		"generatedOn": "Generado el {{date}}",
+		"coveringDays": "Datos correspondientes a los últimos {{count}} días"
+	},
+	"count": "Contar",
+	"fonts": {
+		"cursive": "Cursiva",
+		"pixel": "Pixel",
+		"dots": "Puntos",
+		"digital": "Digital",
+		"handwritten": "Manuscrito",
+		"serif": "Serif",
+		"typewriter": "Máquina de escribir",
+		"monospace": "Monoespaciado",
+		"playful": "Divertida",
+		"holy": "Sagrado",
+		"bubbly": "Bubbly",
+		"marker": "Marker (rotulador)",
+		"gothic": "Gótica",
+		"stencil": "Esténcil",
+		"mystery": "Misterio",
+		"italian": "Cursiva",
+		"metal": "Metal",
+		"cutesy": "Cutesy",
+		"indie": "Indie",
+		"deco": "Deco",
+		"terminal": "Terminal",
+		"western": "Western",
+		"glitch": "Glitches",
+		"stripes": "Stripes",
+		"drip": "Drip (fuente de goteo)",
+		"cracks": "Cracks (agrietada)",
+		"comic": "Comic Sans",
+		"lexend": "Lexend",
+		"atkinson": "Atkinson Hyperlegible",
+		"dyslexic": "OpenDyslexic",
+		"inter": "Inter",
+		"noFont": "Sin fuente"
 	}
 }

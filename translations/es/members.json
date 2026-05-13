@@ -47,7 +47,9 @@
 		"age": "Edad",
 		"ageDisplay_one": "edad {{count}}",
 		"ageDisplay_many": "edades {{count}}",
-		"ageDisplay_other": "edades {{count}}"
+		"ageDisplay_other": "edades {{count}}",
+		"nameStyle": "Nombre del estilo"
 	},
-	"header": "Miembros"
+	"header": "Miembros",
+	"singular": "Miembro"
 }

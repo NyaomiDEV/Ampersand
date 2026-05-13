@@ -22,7 +22,8 @@
 		"isPinned": "Pin del sistema",
 		"archived": "Archivado",
 		"systemIDcopiedToClipboard": "¡El ID del sistema copiado en el portapapeles!",
-		"viewInLists": "Ver en las listas"
+		"viewInLists": "Ver en las listas",
+		"nameStyle": "Nombre del estilo"
 	},
 	"header": "Sistemas",
 	"searchPlaceholder": "Buscando sistemas…",
