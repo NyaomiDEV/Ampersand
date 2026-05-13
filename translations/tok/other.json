@@ -19,7 +19,8 @@
 		"dissociating": "lon pi wawa ala",
 		"zonedOut": "lon pi wawa lili",
 		"present": "lon",
-		"fullyGrounded": "lon wawa"
+		"fullyGrounded": "lon wawa",
+		"header": "mute lon"
 	},
 	"back": "tawa sin",
 	"time": "tenpo",
@@ -102,6 +103,7 @@
 		"comment": "sijelo toki",
 		"commentHint": "toki...",
 		"commentCount_one": "toki pi mute {{count}}",
+		"commentCount_other": "",
 		"deleteConfirmation": "sina wile ala wile weka e toki ni?"
 	},
 	"theresNothingHere": "ala li lon",
@@ -140,6 +142,9 @@
 		"cracks": "nasin sitelen pakala",
 		"comic": "nasin sitelen pi lipu musi",
 		"inter": "nasin sitelen Inter",
-		"noFont": "nasin sitelen ala"
+		"noFont": "nasin sitelen ala",
+		"lexend": "nasin sitelen Lexend",
+		"atkinson": "nasin sitelen Atkinson Hyperlegible",
+		"dyslexic": "nasin sitelen OpenDyslexic"
 	}
 }

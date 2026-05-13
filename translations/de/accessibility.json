@@ -61,7 +61,8 @@
 	},
 	"colors": {
 		"app": "App-Farben",
-		"custom": "Benutzerdefinierte Farben"
+		"custom": "Benutzerdefinierte Farben",
+		"system": "Systemfarben"
 	},
 	"backgroundColor": {
 		"title": "Wähle die Hintergrundfarbe"
