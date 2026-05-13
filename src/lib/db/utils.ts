@@ -17,16 +17,21 @@ export function intoStream(fdOrPath: FileHandle | string, onRead?: (bytes: numbe
 		},
 		async pull(controller) {
 			const buf = new Uint8Array(chunkSize);
-			const bytesRead = await fd.read(buf);
-
-			if (bytesRead !== null && bytesRead > 0) {
-				const chk = buf.slice(0, bytesRead);
-				controller.enqueue(toText ? decoder.decode(chk) : chk);
-				onRead?.(bytesRead);
-			}
-			else if (bytesRead === null) {
+			try {
+				const bytesRead = await fd.read(buf);
+				if (bytesRead !== null && bytesRead > 0) {
+					const chk = buf.slice(0, bytesRead);
+					controller.enqueue(toText ? decoder.decode(chk) : chk);
+					onRead?.(bytesRead);
+				}
+				else if (bytesRead === null) {
+					await this.cancel!();
+					return controller.close();
+				}
+			}catch(e){
 				await this.cancel!();
-				return controller.close();
+				controller.error(e);
+				throw e;
 			}
 		}
 	};
