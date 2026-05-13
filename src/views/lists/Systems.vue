@@ -1,7 +1,6 @@
 <script setup lang="ts">
 	import {
 		IonContent,
-		IonHeader,
 		IonList,
 		IonPage,
 		IonSearchbar,
@@ -33,6 +32,9 @@
 	import VirtualList from "../../components/VirtualList.vue";
 	import InfiniteLoader from "../../components/InfiniteLoader.vue";
 	import TheresNothingHere from "../../components/TheresNothingHere.vue";
+	import CollapsibleHeaderbar from "../../components/CollapsibleHeaderbar.vue";
+
+	const isStandalone = ref(false);
 
 	const route = useRoute();
 	const i18next = useTranslation();
@@ -41,9 +43,12 @@
 
 	const search = ref(route.query.q as string || "");
 	watch(route, () => {
-		if(route.name === "Systems" && route.query.q)
+		if(route.name && ["Systems", "SystemsTab"].includes(route.name.toString()) && route.query.q)
 			search.value = route.query.q as string;
-	});
+		
+		if(route.path.startsWith("/lists/")) isStandalone.value = true;
+		else isStandalone.value = false;
+	}, { immediate: true });
 
 	const systems = shallowRef<System[]>();
 	const iter = shallowRef<AsyncGenerator<System>>();
@@ -120,29 +125,29 @@
 
 <template>
 	<IonPage>
-		<IonHeader>
-			<IonToolbar>
-				<IonBackButton slot="start" default-href="/" />
-				<IonTitle>
-					{{ $t("systems:header") }}
-				</IonTitle>
-			</IonToolbar>
-			<IonToolbar>
-				<IonSearchbar
-					:animated="true"
-					:placeholder="$t('systems:searchPlaceholder')"
-					show-cancel-button="focus"
-					show-clear-button="focus"
-					:spellcheck="false"
-					:value="search"
-					@ion-change="e => search = e.detail.value || ''"
-				/>
-			</IonToolbar>
-		</IonHeader>
-		
 		<SpinnerFullscreen v-if="!systems" />
-		<IonContent v-else>
-			<TheresNothingHere v-if="!systems.length" />
+		<IonContent v-else scroll-events>
+			<CollapsibleHeaderbar class="size-large">
+				<IonToolbar>
+					<IonBackButton v-if="isStandalone" slot="start" default-href="/" />
+					<IonTitle>
+						{{ $t("systems:header") }}
+					</IonTitle>
+				</IonToolbar>
+				<IonToolbar>
+					<IonSearchbar
+						:animated="true"
+						:placeholder="$t('systems:searchPlaceholder')"
+						show-cancel-button="focus"
+						show-clear-button="focus"
+						:spellcheck="false"
+						:value="search"
+						@ion-change="e => search = e.detail.value || ''"
+					/>
+				</IonToolbar>
+			</CollapsibleHeaderbar>
+
+			<TheresNothingHere v-if="!systems.length" sibling-header />
 			<IonList ref="list">
 				<VirtualList :entries="systems" :min-size="72" :gap="2">
 					<template #default="{ entry: system }">

@@ -59,7 +59,7 @@
 			<IonToolbar>
 				<IonBackButton
 					slot="start"
-					default-href="/options/"
+					default-href="/tab/options/"
 				/>
 				<IonTitle>
 					{{ $t("about:header") }}

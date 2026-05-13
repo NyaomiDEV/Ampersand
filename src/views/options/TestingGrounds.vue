@@ -221,7 +221,7 @@
 			<IonToolbar>
 				<IonBackButton
 					slot="start"
-					default-href="/options/"
+					default-href="/tab/options/"
 				/>
 				<IonTitle>
 					Testing Grounds

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { IonBackButton, IonContent, IonHeader, IonSearchbar, IonList, IonIcon, IonPage, IonTitle, IonToolbar, IonFab, IonFabButton } from "@ionic/vue";
+	import { IonBackButton, IonContent, IonSearchbar, IonList, IonIcon, IonPage, IonTitle, IonToolbar, IonFab, IonFabButton } from "@ionic/vue";
 	import { onMounted, onUnmounted, ref, shallowRef, watch } from "vue";
 	import AssetItem from "../../components/asset/AssetItem.vue";
 	import { Asset } from "../../lib/db/entities";
@@ -12,14 +12,20 @@
 	import VirtualList from "../../components/VirtualList.vue";
 	import InfiniteLoader from "../../components/InfiniteLoader.vue";
 	import TheresNothingHere from "../../components/TheresNothingHere.vue";
+	import CollapsibleHeaderbar from "../../components/CollapsibleHeaderbar.vue";
+
+	const isStandalone = ref(false);
 
 	const route = useRoute();
 
 	const search = ref(route.query.q as string || "");
 	watch(route, () => {
-		if(route.name === "AssetManager" && route.query.q)
+		if(route.name && ["AssetManager", "AssetManagerTab"].includes(route.name.toString()) && route.query.q)
 			search.value = route.query.q as string;
-	});
+
+		if(route.path.startsWith("/lists/")) isStandalone.value = true;
+		else isStandalone.value = false;
+	}, { immediate: true });
 
 	const assets = shallowRef<Asset[]>();
 	const iter = shallowRef<AsyncGenerator<Asset>>();
@@ -75,32 +81,33 @@
 
 <template>
 	<IonPage>
-		<IonHeader>
-			<IonToolbar>
-				<IonBackButton
-					slot="start"
-					default-href="/"
-				/>
-				<IonTitle>
-					{{ $t("assetManager:header") }}
-				</IonTitle>
-			</IonToolbar>
-			<IonToolbar>
-				<IonSearchbar
-					:animated="true"
-					:placeholder="$t('assetManager:searchPlaceholder')"
-					show-cancel-button="focus"
-					show-clear-button="focus"
-					:spellcheck="false"
-					:value="search"
-					@ion-change="e => search = e.detail.value || ''"
-				/>
-			</IonToolbar>
-		</IonHeader>
-		
 		<SpinnerFullscreen v-if="!assets" />
-		<IonContent v-else>
-			<TheresNothingHere v-if="!assets.length" />
+		<IonContent v-else class="size-large">
+			<CollapsibleHeaderbar>
+				<IonToolbar>
+					<IonBackButton
+						v-if="isStandalone"
+						slot="start"
+						default-href="/"
+					/>
+					<IonTitle>
+						{{ $t("assetManager:header") }}
+					</IonTitle>
+				</IonToolbar>
+				<IonToolbar>
+					<IonSearchbar
+						:animated="true"
+						:placeholder="$t('assetManager:searchPlaceholder')"
+						show-cancel-button="focus"
+						show-clear-button="focus"
+						:spellcheck="false"
+						:value="search"
+						@ion-change="e => search = e.detail.value || ''"
+					/>
+				</IonToolbar>
+			</CollapsibleHeaderbar>
+
+			<TheresNothingHere v-if="!assets.length" sibling-header />
 			<IonList v-else>
 				<VirtualList :entries="assets" :min-size="72" :gap="2">
 					<template #default="{ entry: asset }">

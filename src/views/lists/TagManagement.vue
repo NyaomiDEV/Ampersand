@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { IonContent, IonSearchbar, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonSegment, IonSegmentButton, IonLabel, IonFab, IonFabButton, IonIcon, IonItemSliding, IonItemOptions, IonItemOption } from "@ionic/vue";
+	import { IonContent, IonSearchbar, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonSegment, IonSegmentButton, IonLabel, IonFab, IonFabButton, IonIcon, IonItemSliding, IonItemOptions, IonItemOption } from "@ionic/vue";
 	import { onMounted, onUnmounted, ref, shallowRef, useTemplateRef, watch } from "vue";
 	import { useRoute } from "vue-router";
 
@@ -18,6 +18,9 @@
 	import VirtualList from "../../components/VirtualList.vue";
 	import InfiniteLoader from "../../components/InfiniteLoader.vue";
 	import TheresNothingHere from "../../components/TheresNothingHere.vue";
+	import CollapsibleHeaderbar from "../../components/CollapsibleHeaderbar.vue";
+
+	const isStandalone = ref(false);
 
 	const route = useRoute();
 	const i18next = useTranslation();
@@ -26,9 +29,12 @@
 
 	const search = ref(route.query.q as string || "");
 	watch(route, () => {
-		if(route.name === "TagManagement" && route.query.q)
+		if(route.name && ["TagManagement", "TagManagementTab"].includes(route.name.toString()) && route.query.q)
 			search.value = route.query.q as string;
-	});
+
+		if(route.path.startsWith("/lists/")) isStandalone.value = true;
+		else isStandalone.value = false;
+	}, { immediate: true });
 
 	const type = ref<Tag["type"]>("member");
 	const tags = shallowRef<Tag[]>();
@@ -118,45 +124,46 @@
 
 <template>
 	<IonPage>
-		<IonHeader>
-			<IonToolbar>
-				<IonBackButton
-					slot="start"
-					default-href="/"
-				/>
-				<IonTitle>
-					{{ $t("tagManagement:header") }}
-				</IonTitle>
-			</IonToolbar>
-			<IonToolbar>
-				<IonSearchbar
-					:animated="true"
-					:placeholder="$t('tagManagement:searchPlaceholder')"
-					show-cancel-button="focus"
-					show-clear-button="focus"
-					:spellcheck="false"
-					:value="search"
-					@ion-change="e => search = e.detail.value || ''"
-				/>
-			</IonToolbar>
-			<IonToolbar>
-				<IonSegment v-model="type" value="member">
-					<IonSegmentButton value="member">
-						<IonLabel>{{ $t("tagManagement:selector.member") }}</IonLabel>
-					</IonSegmentButton>
-					<IonSegmentButton value="journal">
-						<IonLabel>{{ $t("tagManagement:selector.journal") }}</IonLabel>
-					</IonSegmentButton>
-					<IonSegmentButton value="asset">
-						<IonLabel>{{ $t("tagManagement:selector.asset") }}</IonLabel>
-					</IonSegmentButton>
-				</IonSegment>
-			</IonToolbar>
-		</IonHeader>
-		
 		<SpinnerFullscreen v-if="!tags" />
-		<IonContent v-else>
-			<TheresNothingHere v-if="!tags.filter(x => x.type === type).length" />
+		<IonContent v-else scroll-events>
+			<CollapsibleHeaderbar class="size-large">
+				<IonToolbar>
+					<IonBackButton
+						v-if="isStandalone"
+						slot="start"
+						default-href="/"
+					/>
+					<IonTitle>
+						{{ $t("tagManagement:header") }}
+					</IonTitle>
+				</IonToolbar>
+				<IonToolbar>
+					<IonSearchbar
+						:animated="true"
+						:placeholder="$t('tagManagement:searchPlaceholder')"
+						show-cancel-button="focus"
+						show-clear-button="focus"
+						:spellcheck="false"
+						:value="search"
+						@ion-change="e => search = e.detail.value || ''"
+					/>
+				</IonToolbar>
+				<IonToolbar>
+					<IonSegment v-model="type" value="member">
+						<IonSegmentButton value="member">
+							<IonLabel>{{ $t("tagManagement:selector.member") }}</IonLabel>
+						</IonSegmentButton>
+						<IonSegmentButton value="journal">
+							<IonLabel>{{ $t("tagManagement:selector.journal") }}</IonLabel>
+						</IonSegmentButton>
+						<IonSegmentButton value="asset">
+							<IonLabel>{{ $t("tagManagement:selector.asset") }}</IonLabel>
+						</IonSegmentButton>
+					</IonSegment>
+				</IonToolbar>
+			</CollapsibleHeaderbar>
+		
+			<TheresNothingHere v-if="!tags.filter(x => x.type === type).length" sibling-header />
 			<IonList ref="list">
 				<VirtualList :entries="tags.filter(x => x.type === type)" :min-size="56" :gap="2">
 					<template #default="{ entry: tag }">

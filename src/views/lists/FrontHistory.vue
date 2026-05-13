@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonLabel, IonToolbar, IonBackButton, IonItemDivider, IonIcon, IonSearchbar, IonFabButton, IonFab } from "@ionic/vue";
+	import { IonContent, IonList, IonPage, IonTitle, IonLabel, IonToolbar, IonBackButton, IonItemDivider, IonIcon, IonSearchbar, IonFabButton, IonFab } from "@ionic/vue";
 	import { h, onBeforeMount, onUnmounted, ref, shallowRef, watch } from "vue";
 	import type { FrontingEntryComplete } from "../../lib/db/entities.d.ts";
 	import { getFrontingEntriesOfDay, getFrontingEntriesDays, toFrontingEntryComplete } from "../../lib/db/tables/frontingEntries";
@@ -15,6 +15,9 @@
 	import DatetimeUtc, { DatetimeParts } from "../../components/DatetimeUtc.vue";
 	import FrontingEntryItem from "../../components/frontingEntry/FrontingEntryItem.vue";
 	import TheresNothingHere from "../../components/TheresNothingHere.vue";
+	import CollapsibleHeaderbar from "../../components/CollapsibleHeaderbar.vue";
+
+	const isStandalone = ref(false);
 
 	const route = useRoute();
 	const i18next = useTranslation();
@@ -34,9 +37,12 @@
 	};
 
 	watch(route, () => {
-		if(route.name === "FrontHistory" && route.query.q)
+		if(route.name && ["FrontHistory", "FrontHistoryTab"].includes(route.name.toString()) && route.query.q)
 			search.value = route.query.q as string;
-	});
+
+		if(route.path.startsWith("/lists/")) isStandalone.value = true;
+		else isStandalone.value = false;
+	}, { immediate: true });
 
 	watch([search, parts], async () => {
 		await populateHighlightedDays(parts.value);
@@ -154,30 +160,31 @@
 
 <template>
 	<IonPage>
-		<IonHeader>
-			<IonToolbar>
-				<IonBackButton
-					slot="start"
-					default-href="/"
-				/>
-				<IonTitle>
-					{{ $t("frontHistory:header") }}
-				</IonTitle>
-			</IonToolbar>
-			<IonToolbar>
-				<IonSearchbar
-					:animated="true"
-					:placeholder="$t('frontHistory:searchPlaceholder')"
-					show-cancel-button="focus"
-					show-clear-button="focus"
-					:spellcheck="false"
-					:value="search"
-					@ion-change="e => search = e.detail.value || ''"
-				/>
-			</IonToolbar>
-		</IonHeader>
+		<IonContent scroll-events>
+			<CollapsibleHeaderbar class="size-large">
+				<IonToolbar>
+					<IonBackButton
+						v-if="isStandalone"
+						slot="start"
+						default-href="/"
+					/>
+					<IonTitle>
+						{{ $t("frontHistory:header") }}
+					</IonTitle>
+				</IonToolbar>
+				<IonToolbar>
+					<IonSearchbar
+						:animated="true"
+						:placeholder="$t('frontHistory:searchPlaceholder')"
+						show-cancel-button="focus"
+						show-clear-button="focus"
+						:spellcheck="false"
+						:value="search"
+						@ion-change="e => search = e.detail.value || ''"
+					/>
+				</IonToolbar>
+			</CollapsibleHeaderbar>
 
-		<IonContent>
 			<DatetimeUtc
 				v-model="date"
 				presentation="date"

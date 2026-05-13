@@ -11,6 +11,7 @@
 	import { addModal, removeModal } from "../../lib/modals";
 	import { FrontingCo } from "../../lib/db/types";
 	import { accessibilityConfig } from "../../lib/config";
+	import { useRoute } from "vue-router";
 
 	import AnalyticsDetail from "../../modals/AnalyticsDetail.vue";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
@@ -32,6 +33,10 @@
 	import presenceMD from "@material-symbols/svg-600/rounded/star_half.svg";
 	import cofrontMD from "@material-symbols/svg-600/rounded/supervisor_account.svg";
 	import AvatarStack from "../../components/AvatarStack.vue";
+
+	const isStandalone = ref(false);
+
+	const route = useRoute();
 
 	const analytics = shallowRef<ReturnType<typeof getFrontingStatistics>>();
 	const members = shallowRef<Member[]>();
@@ -109,6 +114,11 @@
 		return style;
 	}
 
+	watch(route, () => {
+		if(route.path.startsWith("/lists/")) isStandalone.value = true;
+		else isStandalone.value = false;
+	}, { immediate: true });
+
 	watch([startDate, endDate], async () => {
 		await getAnalytics();
 	});
@@ -122,7 +132,7 @@
 	<IonPage>
 		<IonHeader>
 			<IonToolbar>
-				<IonBackButton slot="start" default-href="/" />
+				<IonBackButton v-if="isStandalone" slot="start" default-href="/" />
 				<IonTitle>{{ $t("analytics:header") }}</IonTitle>
 			</IonToolbar>
 			<IonToolbar v-if="analytics && members">

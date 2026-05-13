@@ -29,7 +29,7 @@
 	<IonPage>
 		<IonHeader>
 			<IonToolbar>
-				<IonBackButton slot="start" default-href="/options/" />
+				<IonBackButton slot="start" default-href="/tab/options/" />
 				<IonTitle>
 					{{ $t("accessibility:header") }}
 				</IonTitle>

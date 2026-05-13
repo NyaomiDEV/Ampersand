@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { IonBackButton, IonContent, IonHeader, IonSearchbar, IonList, IonIcon, IonPage, IonTitle, IonToolbar, IonFab, IonFabButton, IonItem, IonLabel, IonReorderGroup, IonReorder, IonButtons, IonButton } from "@ionic/vue";
+	import { IonBackButton, IonContent, IonSearchbar, IonList, IonIcon, IonPage, IonTitle, IonToolbar, IonFab, IonFabButton, IonItem, IonLabel, IonReorderGroup, IonReorder, IonButtons, IonButton } from "@ionic/vue";
 	import { h, onBeforeMount, onUnmounted, ref, shallowRef, watch } from "vue";
 	import { Note } from "../../lib/db/entities";
 	import { getFilteredNotes, updateNote } from "../../lib/db/tables/notes";
@@ -15,14 +15,20 @@
 	import dragMD from "@material-symbols/svg-600/rounded/drag_handle.svg";
 	import archivedMD from "@material-symbols/svg-600/rounded/archive.svg";
 	import TheresNothingHere from "../../components/TheresNothingHere.vue";
+	import CollapsibleHeaderbar from "../../components/CollapsibleHeaderbar.vue";
+
+	const isStandalone = ref(false);
 
 	const route = useRoute();
 
 	const search = ref(route.query.q as string || "");
 	watch(route, () => {
-		if(route.name === "Notes" && route.query.q)
+		if(route.name && ["Notes", "NotesTab"].includes(route.name.toString()) && route.query.q)
 			search.value = route.query.q as string;
-	});
+
+		if(route.path.startsWith("/lists/")) isStandalone.value = true;
+		else isStandalone.value = false;
+	}, { immediate: true });
 
 	const notes = shallowRef<Note[]>();
 
@@ -93,38 +99,39 @@
 </script>
 
 <template>
-	<IonPage>
-		<IonHeader>
-			<IonToolbar>
-				<IonBackButton
-					slot="start"
-					default-href="/"
-				/>
-				<IonTitle>
-					{{ $t("notes:header") }}
-				</IonTitle>
-				<IonButtons slot="secondary">
-					<IonButton @click="isReordering = !isReordering">
-						<IonIcon slot="icon-only" :icon="isReordering ? doneMD : reorderMD" />
-					</IonButton>
-				</IonButtons>
-			</IonToolbar>
-			<IonToolbar>
-				<IonSearchbar
-					:animated="true"
-					:placeholder="$t('notes:searchPlaceholder')"
-					show-cancel-button="focus"
-					show-clear-button="focus"
-					:spellcheck="false"
-					:value="search"
-					@ion-change="e => search = e.detail.value || ''"
-				/>
-			</IonToolbar>
-		</IonHeader>
-		
+	<IonPage>		
 		<SpinnerFullscreen v-if="!notes" />
-		<IonContent v-else>
-			<TheresNothingHere v-if="!notes.length" />
+		<IonContent v-else scroll-events>
+			<CollapsibleHeaderbar class="size-large">
+				<IonToolbar>
+					<IonBackButton
+						v-if="isStandalone"
+						slot="start"
+						default-href="/"
+					/>
+					<IonTitle>
+						{{ $t("notes:header") }}
+					</IonTitle>
+					<IonButtons slot="secondary">
+						<IonButton @click="isReordering = !isReordering">
+							<IonIcon slot="icon-only" :icon="isReordering ? doneMD : reorderMD" />
+						</IonButton>
+					</IonButtons>
+				</IonToolbar>
+				<IonToolbar>
+					<IonSearchbar
+						:animated="true"
+						:placeholder="$t('notes:searchPlaceholder')"
+						show-cancel-button="focus"
+						show-clear-button="focus"
+						:spellcheck="false"
+						:value="search"
+						@ion-change="e => search = e.detail.value || ''"
+					/>
+				</IonToolbar>
+			</CollapsibleHeaderbar>
+
+			<TheresNothingHere v-if="!notes.length" sibling-header />
 			<IonList v-else>
 				<IonReorderGroup :disabled="!isReordering" @ion-reorder-end="handleReorder">
 					<IonItem
@@ -154,19 +161,19 @@
 </template>
 
 <style scoped>
-ion-reorder > ion-icon {
-	width: 24px;
-	height: 24px;
-	color: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.54);
-}
+	ion-reorder > ion-icon {
+		width: 24px;
+		height: 24px;
+		color: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.54);
+	}
 
-ion-reorder-group {
-	display: flex;
-	flex-direction: column;
-	gap: 2px;
-}
+	ion-reorder-group {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+	}
 
-ion-item.archived {
-	opacity: 0.5;
-}
+	ion-item.archived {
+		opacity: 0.5;
+	}
 </style>

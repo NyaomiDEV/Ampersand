@@ -6,6 +6,7 @@ export type AppConfig = {
 	},
 	view: ViewName,
 	dashboardSettings: DashboardSettings,
+	tabOrder: string[],
 	defaultSystem: UUID,
 	showMembersApartFromCustomFronts: "off" | "before" | "after",
 	hideFrontingTimer: boolean,

@@ -44,6 +44,11 @@ export const defaultAppConfig: AppConfig = {
 			}
 		}
 	},
+	tabOrder: [
+		"members",
+		"journal",
+		"dashboard"
+	],
 	isDeveloperMode: false,
 	defaultFilterQueries: {
 		members: "@archived:no",

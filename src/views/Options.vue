@@ -3,6 +3,8 @@
 	import { inject } from "vue";
 	import CollapsibleHeaderbar from "../components/CollapsibleHeaderbar.vue";
 
+	import PeopleMD from "@material-symbols/svg-600/rounded/group.svg";
+	import JournalMD from "@material-symbols/svg-600/rounded/book.svg";
 	import LockMD from "@material-symbols/svg-600/rounded/lock.svg";
 	import TestingMD from "@material-symbols/svg-600/rounded/taunt.svg";
 	import SystemMD from "@material-symbols/svg-600/rounded/groups.svg";
@@ -20,7 +22,7 @@
 	import ResourcesMD from "@material-symbols/svg-600/rounded/menu_book.svg";
 	import NotesMD from "@material-symbols/svg-600/rounded/note_stack.svg";
 
-	import { securityConfig } from "../lib/config";
+	import { appConfig, securityConfig } from "../lib/config";
 	import { lock } from "../lib/applock";
 
 	const router = useIonRouter();
@@ -29,6 +31,10 @@
 	function lockImmediately(){
 		if(lock())
 			router.replace("/lock");
+	}
+
+	function notInTab(which: string){
+		return !appConfig.tabOrder.includes(which);
 	}
 </script>
 
@@ -49,47 +55,57 @@
 
 			<IonList>
 
-				<IonItem button router-link="/lists/frontHistory">
+				<IonItem v-if="notInTab('members')" button router-link="/lists/members">
+					<IonIcon slot="start" :icon="PeopleMD" aria-hidden="true" />
+					<IonLabel>{{ $t("members:header") }}</IonLabel>
+				</IonItem>
+
+				<IonItem v-if="notInTab('journal')" button router-link="/lists/journal">
+					<IonIcon slot="start" :icon="JournalMD" aria-hidden="true" />
+					<IonLabel>{{ $t("journal:header") }}</IonLabel>
+				</IonItem>
+
+				<IonItem v-if="notInTab('frontHistory')" button router-link="/lists/frontHistory">
 					<IonIcon slot="start" :icon="FrontHistoryMD" aria-hidden="true" />
 					<IonLabel>{{ $t("frontHistory:header") }}</IonLabel>
 				</IonItem>
 
-				<IonItem button router-link="/lists/analytics">
+				<IonItem v-if="notInTab('analytics')" button router-link="/lists/analytics">
 					<IonIcon slot="start" :icon="AnalyticsMD" aria-hidden="true" />
 					<IonLabel>{{ $t("analytics:header") }}</IonLabel>
 				</IonItem>
 
-				<IonItem button router-link="/lists/messageBoard">
+				<IonItem v-if="notInTab('messageBoard')" button router-link="/lists/messageBoard">
 					<IonIcon slot="start" :icon="MessageBoardMD" aria-hidden="true" />
 					<IonLabel>{{ $t("messageBoard:header") }}</IonLabel>
 				</IonItem>
 
-				<IonItem button router-link="/lists/systems">
+				<IonItem v-if="notInTab('systems')" button router-link="/lists/systems">
 					<IonIcon slot="start" :icon="SystemMD" aria-hidden="true" />
 					<IonLabel>{{ $t("systems:header") }}</IonLabel>
 				</IonItem>
 
-				<IonItem button router-link="/lists/tagManagement">
+				<IonItem v-if="notInTab('tagManagement')" button router-link="/lists/tagManagement">
 					<IonIcon slot="start" :icon="TagMD" aria-hidden="true" />
 					<IonLabel>{{ $t("tagManagement:header") }}</IonLabel>
 				</IonItem>
 
-				<IonItem button router-link="/lists/assetManager">
+				<IonItem v-if="notInTab('assetManager')" button router-link="/lists/assetManager">
 					<IonIcon slot="start" :icon="FolderMD" aria-hidden="true" />
 					<IonLabel>{{ $t("assetManager:header") }}</IonLabel>
 				</IonItem>
 
-				<IonItem button router-link="/lists/notes">
+				<IonItem v-if="notInTab('notes')" button router-link="/lists/notes">
 					<IonIcon slot="start" :icon="NotesMD" aria-hidden="true" />
 					<IonLabel>{{ $t("notes:header") }}</IonLabel>
 				</IonItem>
 
-				<IonItem button router-link="/lists/customFields">
+				<IonItem v-if="notInTab('customFields')" button router-link="/lists/customFields">
 					<IonIcon slot="start" :icon="CustomFieldsMD" aria-hidden="true" />
 					<IonLabel>{{ $t("customFields:header") }}</IonLabel>
 				</IonItem>
 
-				<IonItem button router-link="/lists/reminders">
+				<IonItem v-if="notInTab('reminders')" button router-link="/lists/reminders">
 					<IonIcon slot="start" :icon="RemindersMD" aria-hidden="true" />
 					<IonLabel>{{ $t("reminders:header") }}</IonLabel>
 				</IonItem>

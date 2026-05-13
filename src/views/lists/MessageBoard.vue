@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonFab, IonFabButton, IonIcon, IonSearchbar, IonLabel, IonItemDivider } from "@ionic/vue";
+	import { IonContent, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonFab, IonFabButton, IonIcon, IonSearchbar, IonLabel, IonItemDivider } from "@ionic/vue";
 	import { h, onBeforeMount, onUnmounted, ref, shallowRef, watch } from "vue";
 	import type { BoardMessageComplete } from "../../lib/db/entities.d.ts";
 	import { getBoardMessagesDays, getBoardMessagesOfDay, toBoardMessageComplete } from "../../lib/db/tables/boardMessages";
@@ -16,6 +16,9 @@
 	import { addModal, removeModal } from "../../lib/modals.ts";
 	import DatetimeUtc, { DatetimeParts } from "../../components/DatetimeUtc.vue";
 	import TheresNothingHere from "../../components/TheresNothingHere.vue";
+	import CollapsibleHeaderbar from "../../components/CollapsibleHeaderbar.vue";
+
+	const isStandalone = ref(false);
 
 	const route = useRoute();
 
@@ -34,9 +37,12 @@
 	};
 
 	watch(route, () => {
-		if(route.name === "MessageBoard" && route.query.q)
+		if(route.name && ["MessageBoard", "MessageBoardTab"].includes(route.name.toString()) && route.query.q)
 			search.value = route.query.q as string;
-	});
+
+		if(route.path.startsWith("/lists/")) isStandalone.value = true;
+		else isStandalone.value = false;
+	}, { immediate: true });
 
 	watch([search, parts], async () => {
 		await populateHighlightedDays(parts.value);
@@ -125,30 +131,31 @@
 
 <template>
 	<IonPage>
-		<IonHeader>
-			<IonToolbar>
-				<IonBackButton
-					slot="start"
-					default-href="/"
-				/>
-				<IonTitle>
-					{{ $t("messageBoard:header") }}
-				</IonTitle>
-			</IonToolbar>
-			<IonToolbar>
-				<IonSearchbar
-					:animated="true"
-					:placeholder="$t('messageBoard:searchPlaceholder')"
-					show-cancel-button="focus"
-					show-clear-button="focus"
-					:spellcheck="false"
-					:value="search"
-					@ion-change="e => search = e.detail.value || ''"
-				/>
-			</IonToolbar>
-		</IonHeader>
+		<IonContent scroll-events>
+			<CollapsibleHeaderbar class="size-large">
+				<IonToolbar>
+					<IonBackButton
+						v-if="isStandalone"
+						slot="start"
+						default-href="/"
+					/>
+					<IonTitle>
+						{{ $t("messageBoard:header") }}
+					</IonTitle>
+				</IonToolbar>
+				<IonToolbar>
+					<IonSearchbar
+						:animated="true"
+						:placeholder="$t('messageBoard:searchPlaceholder')"
+						show-cancel-button="focus"
+						show-clear-button="focus"
+						:spellcheck="false"
+						:value="search"
+						@ion-change="e => search = e.detail.value || ''"
+					/>
+				</IonToolbar>
+			</CollapsibleHeaderbar>
 
-		<IonContent>
 			<DatetimeUtc
 				v-model="date"
 				presentation="date"

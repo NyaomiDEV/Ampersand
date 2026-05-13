@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { IonBackButton, IonContent, IonHeader, IonSearchbar, IonList, IonIcon, IonPage, IonTitle, IonToolbar, IonFab, IonFabButton, IonItem, IonLabel, IonReorderGroup, IonReorder, IonButtons, IonButton } from "@ionic/vue";
+	import { IonBackButton, IonContent, IonSearchbar, IonList, IonIcon, IonPage, IonTitle, IonToolbar, IonFab, IonFabButton, IonItem, IonLabel, IonReorderGroup, IonReorder, IonButtons, IonButton } from "@ionic/vue";
 	import { h, onBeforeMount, onUnmounted, ref, shallowRef, watch } from "vue";
 	import { CustomField } from "../../lib/db/entities";
 	import { getFilteredCustomFields, updateCustomField } from "../../lib/db/tables/customFields";
@@ -14,14 +14,20 @@
 	import doneMD from "@material-symbols/svg-600/rounded/done_all.svg";
 	import dragMD from "@material-symbols/svg-600/rounded/drag_handle.svg";
 	import TheresNothingHere from "../../components/TheresNothingHere.vue";
+	import CollapsibleHeaderbar from "../../components/CollapsibleHeaderbar.vue";
+
+	const isStandalone = ref(false);
 
 	const route = useRoute();
 
 	const search = ref(route.query.q as string || "");
 	watch(route, () => {
-		if(route.name === "CustomFields" && route.query.q)
+		if(route.name && ["CustomFields", "CustomFieldsTab"].includes(route.name.toString()) && route.query.q)
 			search.value = route.query.q as string;
-	});
+
+		if(route.path.startsWith("/lists/")) isStandalone.value = true;
+		else isStandalone.value = false;
+	}, { immediate: true });
 
 	const customFields = shallowRef<CustomField[]>();
 
@@ -93,37 +99,38 @@
 
 <template>
 	<IonPage>
-		<IonHeader>
-			<IonToolbar>
-				<IonBackButton
-					slot="start"
-					default-href="/"
-				/>
-				<IonTitle>
-					{{ $t("customFields:header") }}
-				</IonTitle>
-				<IonButtons slot="secondary">
-					<IonButton @click="isReordering = !isReordering">
-						<IonIcon slot="icon-only" :icon="isReordering ? doneMD : reorderMD" />
-					</IonButton>
-				</IonButtons>
-			</IonToolbar>
-			<IonToolbar>
-				<IonSearchbar
-					:animated="true"
-					:placeholder="$t('customFields:searchPlaceholder')"
-					show-cancel-button="focus"
-					show-clear-button="focus"
-					:spellcheck="false"
-					:value="search"
-					@ion-change="e => search = e.detail.value || ''"
-				/>
-			</IonToolbar>
-		</IonHeader>
-		
 		<SpinnerFullscreen v-if="!customFields" />
-		<IonContent v-else>
-			<TheresNothingHere v-if="!customFields.length" />
+		<IonContent v-else scroll-events>
+			<CollapsibleHeaderbar class="size-large">
+				<IonToolbar>
+					<IonBackButton
+						v-if="isStandalone"
+						slot="start"
+						default-href="/"
+					/>
+					<IonTitle>
+						{{ $t("customFields:header") }}
+					</IonTitle>
+					<IonButtons slot="secondary">
+						<IonButton @click="isReordering = !isReordering">
+							<IonIcon slot="icon-only" :icon="isReordering ? doneMD : reorderMD" />
+						</IonButton>
+					</IonButtons>
+				</IonToolbar>
+				<IonToolbar>
+					<IonSearchbar
+						:animated="true"
+						:placeholder="$t('customFields:searchPlaceholder')"
+						show-cancel-button="focus"
+						show-clear-button="focus"
+						:spellcheck="false"
+						:value="search"
+						@ion-change="e => search = e.detail.value || ''"
+					/>
+				</IonToolbar>
+			</CollapsibleHeaderbar>
+
+			<TheresNothingHere v-if="!customFields.length" sibling-header />
 			<IonList v-else>
 				<IonReorderGroup :disabled="!isReordering" @ion-reorder-end="handleReorder">
 					<IonItem

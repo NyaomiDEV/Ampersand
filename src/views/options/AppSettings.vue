@@ -7,6 +7,9 @@
 	import SystemSelect from "../../modals/SystemSelect.vue";
 	import { System } from "../../lib/db/entities";
 	import { languagePicker } from "../../lib/util/misc";
+	import SystemItem from "../../components/system/SystemItem.vue";
+	import DashboardSettings from "../../modals/DashboardSettings.vue";
+	import TabSettings from "../../modals/TabSettings.vue";
 
 	import languageMD from "@material-symbols/svg-600/rounded/language.svg";
 	import timerMD from "@material-symbols/svg-600/rounded/timer_off.svg";
@@ -15,8 +18,9 @@
 	import journalMD from "@material-symbols/svg-600/rounded/book.svg";
 	import homeMD from "@material-symbols/svg-600/rounded/home.svg";
 	import dashboardMD from "@material-symbols/svg-600/rounded/dashboard_customize.svg";
-	import SystemItem from "../../components/system/SystemItem.vue";
-	import DashboardSettings from "../../modals/DashboardSettings.vue";
+	import tabsMD from "@material-symbols/svg-600/rounded/bottom_navigation.svg";
+
+
 
 	const defaultSystem = shallowRef<System>({
 		uuid: appConfig.defaultSystem,
@@ -27,6 +31,7 @@
 	});
 	const systemSelectModal = useTemplateRef("systemSelectModal");
 	const dashboardSettingsModal = useTemplateRef("dashboardSettingsModal");
+	const tabSettingsModal = useTemplateRef("tabSettingsModal");
 
 	watch(defaultSystem, () => {
 		if(defaultSystem.value && appConfig.defaultSystem !== defaultSystem.value.uuid)
@@ -45,7 +50,7 @@
 			<IonToolbar>
 				<IonBackButton
 					slot="start"
-					default-href="/options/"
+					default-href="/tab/options/"
 				/>
 				<IonTitle>
 					{{ $t("appSettings:header") }}
@@ -124,6 +129,11 @@
 				<IonItem button detail @click="dashboardSettingsModal?.$el.present()">
 					<IonIcon slot="start" :icon="dashboardMD" />
 					<IonLabel>{{ $t("appSettings:dashboard.title") }}</IonLabel>
+				</IonItem>
+
+				<IonItem button detail @click="tabSettingsModal?.$el.present()">
+					<IonIcon slot="start" :icon="tabsMD" />
+					<IonLabel>{{ $t("appSettings:tabSettings") }}</IonLabel>
 				</IonItem>
 
 				<IonItem>
@@ -255,6 +265,7 @@
 			/>
 
 			<DashboardSettings ref="dashboardSettingsModal" />
+			<TabSettings ref="tabSettingsModal" />
 
 		</IonContent>
 	</IonPage>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonFab, IonFabButton, IonIcon, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonLabel, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonItem } from "@ionic/vue";
-	import { onBeforeMount, onUnmounted, shallowRef } from "vue";
+	import { IonContent, IonFab, IonFabButton, IonIcon, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonLabel, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonItem } from "@ionic/vue";
+	import { onBeforeMount, onUnmounted, ref, shallowRef, watch } from "vue";
+	import { useRoute } from "vue-router";
 
 	import { Reminder } from "../../lib/db/entities";
 	import { getReminders } from "../../lib/db/tables/reminders";
@@ -11,6 +12,11 @@
 	import addMD from "@material-symbols/svg-600/rounded/add.svg";
 	import { platform } from "@tauri-apps/plugin-os";
 	import TheresNothingHere from "../../components/TheresNothingHere.vue";
+	import CollapsibleHeaderbar from "../../components/CollapsibleHeaderbar.vue";
+
+	const isStandalone = ref(false);
+
+	const route = useRoute();
 
 	const isUnsupportedPlatform = !["macos", "ios", "android"].includes(platform());
 
@@ -20,6 +26,11 @@
 		if(["reminders"].includes((event as DatabaseEvent).data.table))
 			void Array.fromAsync(getReminders()).then(res => reminders.value = res);
 	};
+
+	watch(route, () => {
+		if(route.path.startsWith("/lists/")) isStandalone.value = true;
+		else isStandalone.value = false;
+	}, { immediate: true });
 
 	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
@@ -33,20 +44,21 @@
 
 <template>
 	<IonPage>
-		<IonHeader>
-			<IonToolbar>
-				<IonBackButton
-					slot="start"
-					default-href="/"
-				/>
-				<IonTitle>
-					{{ $t("reminders:header") }}
-				</IonTitle>
-			</IonToolbar>
-		</IonHeader>
-
 		<SpinnerFullscreen v-if="!reminders" />
-		<IonContent v-else>
+		<IonContent v-else scroll-events>
+			<CollapsibleHeaderbar class="size-large">
+				<IonToolbar>
+					<IonBackButton
+						v-if="isStandalone"
+						slot="start"
+						default-href="/"
+					/>
+					<IonTitle>
+						{{ $t("reminders:header") }}
+					</IonTitle>
+				</IonToolbar>
+			</CollapsibleHeaderbar>
+
 			<IonCard v-if="isUnsupportedPlatform" color="warning">
 				<IonCardHeader>
 					<IonCardTitle>{{ $t("reminders:notOnPC.header") }}</IonCardTitle>
@@ -54,7 +66,7 @@
 				<IonCardContent>{{ $t("reminders:notOnPC.content") }}</IonCardContent>
 			</IonCard>
 
-			<TheresNothingHere v-if="!reminders.length" />
+			<TheresNothingHere v-if="!reminders.length" sibling-header />
 			<IonList>
 				<IonItem
 					v-for="reminder in reminders"

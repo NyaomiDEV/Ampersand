@@ -134,6 +134,7 @@
 			animation-name: header_anim;
 			animation-timing-function: linear;
 
+			transform: translateY(0);
 
 			:deep(ion-toolbar:first-child) {
 				&::part(content) {
@@ -143,6 +144,8 @@
 					animation-fill-mode: forwards;
 					animation-name: content_anim;
 					animation-timing-function: linear;
+
+					transform: translateX(calc(-1px * v-bind('contentOffset')));
 				}
 
 				ion-title {
@@ -167,6 +170,8 @@
 					animation-fill-mode: forwards;
 					animation-name: slots_anim;
 					animation-timing-function: linear;
+
+					transform: translateY(calc(var(--transition-size) / 2 * -1));
 				}
 			}
 		}

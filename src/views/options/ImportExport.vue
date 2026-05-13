@@ -242,7 +242,7 @@
 			<IonToolbar>
 				<IonBackButton
 					slot="start"
-					default-href="/options/"
+					default-href="/tab/options/"
 				/>
 				<IonTitle>{{ $t("importExport:header") }}</IonTitle>
 				<IonProgressBar v-if="loading" :type="barProgress < 0 ? 'indeterminate' : 'determinate'" :value="barProgress > 0 ? barProgress : 0" />
