@@ -1,0 +1,13 @@
+@font-face {
+	font-family: "Cabin Sketch";
+	font-weight: normal;
+	font-style: normal;
+	src: url(../../assets/fonts/cabin-sketch/CabinSketch-Regular.ttf);
+}
+
+@font-face {
+	font-family: "Cabin Sketch";
+	font-weight: bold;
+	font-style: normal;
+	src: url(../../assets/fonts/cabin-sketch/CabinSketch-Bold.ttf);
+}
