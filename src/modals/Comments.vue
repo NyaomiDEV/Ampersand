@@ -148,9 +148,9 @@
 		comments.value = [
 			...comments.value.toSpliced(
 				comments.value.indexOf(comment),
-				1
-			),
-			{ ...comment, comment: newBody }
+				1,
+				{ ...comment, comment: newBody }
+			)
 		];
 	}
 
