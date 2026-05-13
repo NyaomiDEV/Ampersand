@@ -23,5 +23,6 @@
 	"morning": "kipisi tenpo open",
 	"day": "kipisi tenpo suno",
 	"evening": "kipisi tenpo mun",
-	"night": "kipisi tenpo pini"
+	"night": "kipisi tenpo pini",
+	"daytime": "kipisi pi tenpo suno"
 }

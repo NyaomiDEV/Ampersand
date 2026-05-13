@@ -13,7 +13,7 @@
 			"title": "Erinnerung verwerfen",
 			"confirm": "Bist du dir sicher, dass du diese Erinnerung löschen möchtest?"
 		},
-		"delay": "Verzögerung in Minuten",
+		"delay": "Verzögerung",
 		"active": "Erinnerung einschalten",
 		"members": "Elemente auswählen",
 		"headerAdd": "Erinnerung hinzufügen"

@@ -89,7 +89,8 @@
 		"dissociating": "Dissoziieren",
 		"fullyGrounded": "Völlig bodenständig",
 		"present": "Anwesend",
-		"zonedOut": "Geistesabwesend"
+		"zonedOut": "Geistesabwesend",
+		"header": "Vorhandensein"
 	},
 	"memberMention": "Mitglied erwähnen",
 	"developerMode": "Entwickleroptionen",
@@ -99,11 +100,13 @@
 		"commentHint": "Kommentiere...",
 		"commentCount_one": "{{count}} Kommentar",
 		"commentCount_other": "{{count}} Kommentare",
-		"deleteConfirmation": "Sind Sie sicher, dass Sie diesen Kommentar löschen möchten?"
+		"deleteConfirmation": "Sind Sie sicher, dass Sie diesen Kommentar löschen möchten?",
+		"header": "Kommentare"
 	},
 	"report": {
 		"header": "Ampersand Bericht",
 		"generatedOn": "Erstellt am {{date}}",
 		"coveringDays": "Daten der letzten {{count}} Tage"
-	}
+	},
+	"count": "Anzahl"
 }

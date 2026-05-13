@@ -48,5 +48,6 @@
 		"setSoleFronter": "Mitglied als alleiniger Fronter festgelegt",
 		"removeFromFront": "Mitglied der Front entfernt",
 		"unsetMainFronter": "Mitglied als Haupt-Fronter verworfen"
-	}
+	},
+	"singular": "Mitglied"
 }
