@@ -74,7 +74,7 @@
 <template>
 	<IonItem
 		button
-		:router-link="props.routeToEditPage ? `/options/assetManager/edit/?uuid=${props.asset.uuid}` : undefined"
+		:router-link="props.routeToEditPage ? `/edit/asset/?uuid=${props.asset.uuid}` : undefined"
 		:detail="$props.detail"
 		@click="props.routeToOpenFile ? open() : undefined"
 	>

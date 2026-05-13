@@ -51,22 +51,22 @@
 			<IonRouterOutlet />
 
 			<IonTabBar slot="bottom" ref="tabBar">
-				<IonTabButton tab="members" href="/members" @click="clickReplaceHandler('/members')">
+				<IonTabButton tab="members" href="/tab/members" @click="clickReplaceHandler('/tab/members')">
 					<IonIcon :icon="currentTab === 'members' ? PeopleFillMD : PeopleMD" />
 					{{ $t("members:header") }}
 				</IonTabButton>
 
-				<IonTabButton tab="journal" href="/journal" @click="clickReplaceHandler('/journal')">
+				<IonTabButton tab="journal" href="/tab/journal" @click="clickReplaceHandler('/tab/journal')">
 					<IonIcon :icon="currentTab === 'journal' ? JournalFillMD : JournalMD" />
 					{{ $t("journal:header") }}
 				</IonTabButton>
 
-				<IonTabButton tab="dashboard" href="/dashboard" @click="clickReplaceHandler('/dashboard')">
+				<IonTabButton tab="dashboard" href="/tab/dashboard" @click="clickReplaceHandler('/tab/dashboard')">
 					<IonIcon :icon="currentTab === 'dashboard' ? HomeFillMD : HomeMD" />
 					{{ $t("dashboard:header") }}
 				</IonTabButton>
 
-				<IonTabButton tab="options" href="/options" @click="clickReplaceHandler('/options')">
+				<IonTabButton tab="options" href="/tab/options" @click="clickReplaceHandler('/tab/options')">
 					<IonIcon :icon="currentTab === 'options' ? OptionsFillMD : OptionsMD" />
 					{{ $t("options:header") }}
 				</IonTabButton>

@@ -35,7 +35,7 @@ function isOldPassword(){
 }
 
 export function getLockedStatus(){
-	if (securityConfig.password === undefined || !securityConfig.usePassword) return false;
+	if (securityConfig.password === undefined) return false;
 	return isLocked.value;
 }
 
@@ -94,9 +94,8 @@ export function unlockWithPassword(plaintextPwd: string) {
 export function disableApplock(plaintextPwd: string) {
 	if (comparePassword(plaintextPwd)) {
 		isLocked.value = false;
-		securityConfig.usePassword = false;
-		securityConfig.useBiometrics = false;
 		securityConfig.password = undefined;
+		securityConfig.useBiometrics = false;
 		return true;
 	}
 
@@ -104,10 +103,10 @@ export function disableApplock(plaintextPwd: string) {
 }
 
 export function enableApplock(plaintextPwd: string) {
+	console.log(isLocked.value, securityConfig.password);
 	if (isLocked.value || securityConfig.password) return false;
 
 	securityConfig.password = hashPassword(plaintextPwd);
-	securityConfig.usePassword = true;
 
 	return true;
 }

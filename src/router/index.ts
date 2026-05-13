@@ -1,9 +1,8 @@
 import { createRouter, createWebHistory } from "@ionic/vue-router";
 import { RouteRecordRaw } from "vue-router";
-import tabbedRoutes from "./tabbedRoutes";
 import options from "./options";
 import edit from "./edit";
-import standaloneRoutes from "./standaloneRoutes";
+import lists from "./lists";
 import onboarding from "./onboarding";
 
 const routes: RouteRecordRaw[] = [
@@ -12,7 +11,17 @@ const routes: RouteRecordRaw[] = [
 		name: "TabbedHomeView",
 		component: () => import("../views/TabbedHomeView.vue"),
 		children: [
-			...tabbedRoutes
+			{
+				path: "/tab/dashboard",
+				name: "DashboardTab",
+				component: () => import("../views/lists/Dashboard.vue"),
+			},
+			{
+				path: "/tab/options",
+				name: "OptionsTab",
+				component: () => import("../views/Options.vue"),
+			},
+			...lists.map(x => ({ ...x, path: x.path.replace("lists", "tab"), name: `${x.name?.toString()}Tab` })),
 		]
 	},
 	{
@@ -26,7 +35,7 @@ const routes: RouteRecordRaw[] = [
 		component: () => import("../views/DatabaseIsLoading.vue"),
 	},
 	...onboarding,
-	...standaloneRoutes,
+	...lists,
 	...options,
 	...edit,
 ];

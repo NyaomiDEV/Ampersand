@@ -1,58 +1,57 @@
 <script setup lang="ts">
 	import { IonBackButton, IonContent, IonHeader, IonSearchbar, IonList, IonIcon, IonPage, IonTitle, IonToolbar, IonFab, IonFabButton, IonItem, IonLabel, IonReorderGroup, IonReorder, IonButtons, IonButton } from "@ionic/vue";
 	import { h, onBeforeMount, onUnmounted, ref, shallowRef, watch } from "vue";
-	import { Note } from "../../lib/db/entities";
-	import { getFilteredNotes, updateNote } from "../../lib/db/tables/notes";
+	import { CustomField } from "../../lib/db/entities";
+	import { getFilteredCustomFields, updateCustomField } from "../../lib/db/tables/customFields";
 	import { DatabaseEvent, DatabaseEvents } from "../../lib/db/events";
 	import { useRoute } from "vue-router";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
-	import NoteEdit from "../../modals/NoteEdit.vue";
+	import CustomFieldEdit from "../../modals/CustomFieldEdit.vue";
 	import { addModal, removeModal } from "../../lib/modals";
 
 	import addMD from "@material-symbols/svg-600/rounded/add.svg";
 	import reorderMD from "@material-symbols/svg-600/rounded/swap_vert.svg";
 	import doneMD from "@material-symbols/svg-600/rounded/done_all.svg";
 	import dragMD from "@material-symbols/svg-600/rounded/drag_handle.svg";
-	import archivedMD from "@material-symbols/svg-600/rounded/archive.svg";
 	import TheresNothingHere from "../../components/TheresNothingHere.vue";
 
 	const route = useRoute();
 
 	const search = ref(route.query.q as string || "");
 	watch(route, () => {
-		if(route.name === "Notes" && route.query.q)
+		if(route.name === "CustomFields" && route.query.q)
 			search.value = route.query.q as string;
 	});
 
-	const notes = shallowRef<Note[]>();
+	const customFields = shallowRef<CustomField[]>();
 
 	const isReordering = ref(false);
 
 	watch(search, async () => {
-		await getNotes();
+		await getCustomFields();
 	});
 
 	const listener = (event: Event) => {
-		if(["notes"].includes((event as DatabaseEvent).data.table))
-			void getNotes();
+		if(["customFields"].includes((event as DatabaseEvent).data.table))
+			void getCustomFields();
 	};
 
 	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
-		await getNotes();
+		await getCustomFields();
 	});
 
 	onUnmounted(() => {
 		DatabaseEvents.removeEventListener("updated", listener);
 	});
 
-	async function getNotes(){
-		notes.value = (await Array.fromAsync(getFilteredNotes(search.value)));
+	async function getCustomFields(){
+		customFields.value = (await Array.fromAsync(getFilteredCustomFields(search.value)));
 	}
 
-	async function showModal(clickedNote?: Note){
-		const vnode = h(NoteEdit, {
-			note: clickedNote,
+	async function showModal(clickedCustomField?: CustomField){
+		const vnode = h(CustomFieldEdit, {
+			customField: clickedCustomField,
 			onDidDismiss: () => removeModal(vnode)
 		});
 
@@ -69,25 +68,25 @@
 		// actual reorder code
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 		e.detail.complete();
-		if(!notes.value) return;
+		if(!customFields.value) return;
 		if(e.detail.from === e.detail.to) return;
 
-		const _notes = [...notes.value.map(x => x.uuid)];
-		const element = _notes[e.detail.from];
-		_notes.splice(e.detail.from, 1);
-		_notes.splice(e.detail.to, 0, element);
+		const _customFields = [...customFields.value.map(x => x.uuid)];
+		const element = _customFields[e.detail.from];
+		_customFields.splice(e.detail.from, 1);
+		_customFields.splice(e.detail.to, 0, element);
 
-		for(const field of notes.value){
+		for(const field of customFields.value){
 			const oldPriority = field.priority;
-			const newPriority = _notes.findIndex(x => x === field.uuid);
+			const newPriority = _customFields.findIndex(x => x === field.uuid);
 			if(oldPriority === newPriority) continue;
-			await updateNote({ uuid: field.uuid, priority: newPriority });
+			await updateCustomField({ uuid: field.uuid, priority: newPriority });
 		}
 
 		// now that we committed crimes against humanity, register the listener again
 		DatabaseEvents.addEventListener("updated", listener);
 		// and grab ordered list
-		await getNotes();
+		await getCustomFields();
 	}
 
 </script>
@@ -98,10 +97,10 @@
 			<IonToolbar>
 				<IonBackButton
 					slot="start"
-					default-href="/options/"
+					default-href="/"
 				/>
 				<IonTitle>
-					{{ $t("notes:header") }}
+					{{ $t("customFields:header") }}
 				</IonTitle>
 				<IonButtons slot="secondary">
 					<IonButton @click="isReordering = !isReordering">
@@ -112,7 +111,7 @@
 			<IonToolbar>
 				<IonSearchbar
 					:animated="true"
-					:placeholder="$t('notes:searchPlaceholder')"
+					:placeholder="$t('customFields:searchPlaceholder')"
 					show-cancel-button="focus"
 					show-clear-button="focus"
 					:spellcheck="false"
@@ -122,20 +121,19 @@
 			</IonToolbar>
 		</IonHeader>
 		
-		<SpinnerFullscreen v-if="!notes" />
+		<SpinnerFullscreen v-if="!customFields" />
 		<IonContent v-else>
-			<TheresNothingHere v-if="!notes.length" />
+			<TheresNothingHere v-if="!customFields.length" />
 			<IonList v-else>
 				<IonReorderGroup :disabled="!isReordering" @ion-reorder-end="handleReorder">
 					<IonItem
-						v-for="note in notes"
-						:key="note.uuid"
+						v-for="customField in customFields"
+						:key="customField.uuid"
 						button
-						:class="{ 'archived': note.isArchived }"
-						@click="() => { if(!isReordering) void showModal(note); }"
+						:class="{ 'default': customField.default }"
+						@click="() => { if(!isReordering) void showModal(customField); }"
 					>
-						<IonLabel>{{ note.title }}</IonLabel>
-						<IonIcon v-if="note.isArchived" slot="end" :icon="archivedMD" />
+						<IonLabel>{{ customField.name }}</IonLabel>
 						<IonReorder slot="end">
 							<IonIcon :icon="dragMD" />
 						</IonReorder>
@@ -166,7 +164,7 @@ ion-reorder-group {
 	gap: 2px;
 }
 
-ion-item.archived {
-	opacity: 0.5;
+ion-item.default {
+	--background: var(--ion-background-color-step-200);
 }
 </style>

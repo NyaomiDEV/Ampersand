@@ -218,7 +218,7 @@
 			<IonToolbar>
 				<IonBackButton
 					slot="start"
-					default-href="/options/"
+					default-href="/"
 				/>
 				<IonTitle>
 					{{ !isEditing
@@ -333,7 +333,7 @@
 						</IonButton>
 					</IonItem>
 				
-					<IonItem button detail :router-link="`/s/members/?q=@system:${system.uuid}`">
+					<IonItem button detail :router-link="`/lists/members/?q=@system:${system.uuid}`">
 						<IonIcon slot="start" :icon="PeopleMD" aria-hidden="true" />
 						<IonLabel>{{ $t("systems:edit.showMembers") }}</IonLabel>
 					</IonItem>

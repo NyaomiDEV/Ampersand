@@ -122,7 +122,7 @@
 	<IonPage>
 		<IonHeader>
 			<IonToolbar>
-				<IonBackButton slot="start" default-href="/options/" />
+				<IonBackButton slot="start" default-href="/" />
 				<IonTitle>{{ $t("analytics:header") }}</IonTitle>
 			</IonToolbar>
 			<IonToolbar v-if="analytics && members">

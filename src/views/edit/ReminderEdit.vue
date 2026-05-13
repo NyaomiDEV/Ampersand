@@ -140,7 +140,7 @@
 			<IonToolbar>
 				<IonBackButton
 					slot="start"
-					default-href="/options/reminders/"
+					default-href="/"
 				/>
 				<IonTitle>{{ reminder.uuid ? $t("reminders:edit.header") : $t("reminders:edit.headerAdd") }}</IonTitle>
 			</IonToolbar>

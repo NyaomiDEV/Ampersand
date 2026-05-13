@@ -122,7 +122,7 @@
 			<IonToolbar>
 				<IonBackButton
 					slot="start"
-					default-href="/options/"
+					default-href="/"
 				/>
 				<IonTitle>
 					{{ $t("tagManagement:header") }}
@@ -166,7 +166,7 @@
 								button
 								show-effects
 								show-icons
-								:router-link="`/options/tagManagement/edit?uuid=${tag.uuid}`"
+								:router-link="`/edit/tags?uuid=${tag.uuid}`"
 							/>
 							<IonItemOptions>
 								<IonItemOption color="danger" @click="deleteTag(tag)">
@@ -184,7 +184,7 @@
 			<InfiniteLoader v-if="!iterDone" @infinite="pollTags" />
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton router-link="/options/tagManagement/edit">
+				<IonFabButton router-link="/edit/tags">
 					<IonIcon :icon="addMD" />
 				</IonFabButton>
 			</IonFab>

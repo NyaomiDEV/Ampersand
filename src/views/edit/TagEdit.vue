@@ -216,7 +216,7 @@
 			<IonToolbar>
 				<IonBackButton
 					slot="start"
-					default-href="/options/tagManagement/"
+					default-href="/"
 				/>
 				<IonTitle>{{ tag.type === "member" ? $t("tagManagement:edit.header.member") : tag.type === "journal" ? $t("tagManagement:edit.header.journal") : $t("tagManagement:edit.header.asset") }}</IonTitle>
 			</IonToolbar>

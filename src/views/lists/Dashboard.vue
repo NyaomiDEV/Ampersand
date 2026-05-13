@@ -1,20 +1,20 @@
 <script setup lang="ts">
 	import { IonContent, useIonRouter, IonFab, IonIcon, IonFabButton, IonPage, IonTitle, IonToolbar } from "@ionic/vue";
 	import { type Component, onBeforeMount, onUnmounted, shallowRef } from "vue";
-	import { getMainFronter } from "../lib/db/tables/frontingEntries.ts";
-	import type { Member } from "../lib/db/entities";
+	import { getMainFronter } from "../../lib/db/tables/frontingEntries.ts";
+	import type { Member } from "../../lib/db/entities";
 
 	import LockMD from "@material-symbols/svg-600/rounded/lock.svg";
 
-	import NotesAccordion from "../components/dashboard/NotesAccordion.vue";
-	import CurrentFrontersCarousel from "../components/dashboard/CurrentFrontersCarousel.vue";
-	import MessageBoardCarousel from "../components/dashboard/MessageBoardCarousel.vue";
-	import FrontingHistoryCarousel from "../components/dashboard/FrontingHistoryCarousel.vue";
-	import JournalPostCarousel from "../components/dashboard/JournalPostCarousel.vue";
-	import { DatabaseEvents, DatabaseEvent } from "../lib/db/events.ts";
-	import { appConfig, securityConfig } from "../lib/config/index.ts";
-	import { lock } from "../lib/applock.ts";
-	import CollapsibleHeaderbar from "../components/CollapsibleHeaderbar.vue";
+	import NotesAccordion from "../../components/dashboard/NotesAccordion.vue";
+	import CurrentFrontersCarousel from "../../components/dashboard/CurrentFrontersCarousel.vue";
+	import MessageBoardCarousel from "../../components/dashboard/MessageBoardCarousel.vue";
+	import FrontingHistoryCarousel from "../../components/dashboard/FrontingHistoryCarousel.vue";
+	import JournalPostCarousel from "../../components/dashboard/JournalPostCarousel.vue";
+	import { DatabaseEvents, DatabaseEvent } from "../../lib/db/events.ts";
+	import { appConfig, securityConfig } from "../../lib/config/index.ts";
+	import { lock } from "../../lib/applock.ts";
+	import CollapsibleHeaderbar from "../../components/CollapsibleHeaderbar.vue";
 
 	const mainFronter = shallowRef<Member>();
 	const router = useIonRouter();
@@ -69,13 +69,13 @@
 			</CollapsibleHeaderbar>
 
 			<div v-if="!getDashboardElements().length" class="mia">
-				<img src="../assets/emojis/mia_whuh.webp" />
+				<img src="../../assets/emojis/mia_whuh.webp" />
 			</div>
 
 			<component :is="cmp[1]" v-for="cmp in getDashboardElements()" :key="cmp[1].name" />
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton v-if="securityConfig.password && securityConfig.usePassword" @click="lockImmediately">
+				<IonFabButton v-if="securityConfig.password" @click="lockImmediately">
 					<IonIcon :icon="LockMD" />
 				</IonFabButton>
 			</IonFab>

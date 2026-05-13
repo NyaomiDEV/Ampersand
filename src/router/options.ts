@@ -7,51 +7,6 @@ const options: RouteRecordRaw[] = [
 		component: () => import("../views/options/TestingGrounds.vue"),
 	},
 	{
-		path: "/options/systems",
-		name: "Systems",
-		component: () => import("../views/options/Systems.vue"),
-	},
-	{
-		path: "/options/customFields",
-		name: "CustomFields",
-		component: () => import("../views/options/CustomFields.vue"),
-	},
-	{
-		path: "/options/notes",
-		name: "Notes",
-		component: () => import("../views/options/Notes.vue"),
-	},
-	{
-		path: "/options/frontHistory",
-		name: "FrontHistory",
-		component: () => import("../views/options/FrontHistory.vue"),
-	},
-	{
-		path: "/options/messageBoard",
-		name: "MessageBoard",
-		component: () => import("../views/options/MessageBoard.vue"),
-	},
-	{
-		path: "/options/tagManagement",
-		name: "TagManagement",
-		component: () => import("../views/options/TagManagement.vue"),
-	},
-	{
-		path: "/options/assetManager",
-		name: "AssetManager",
-		component: () => import("../views/options/AssetManager.vue"),
-	},
-	{
-		path: "/options/reminders",
-		name: "Reminders",
-		component: () => import("../views/options/Reminders.vue"),
-	},
-	{
-		path: "/options/analytics",
-		name: "Analytics",
-		component: () => import("../views/options/Analytics.vue"),
-	},
-	{
 		path: "/options/appSettings",
 		name: "AppSettings",
 		component: () => import("../views/options/AppSettings.vue"),

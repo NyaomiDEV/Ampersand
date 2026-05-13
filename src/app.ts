@@ -102,12 +102,12 @@ const routerGuard: NavigationGuardWithThis<undefined> = (to) => {
 		// route to default view
 		switch (appConfig.view) {
 			case "members":
-				return { path: "/members", replace: true };
+				return { path: "/tab/members", replace: true };
 			case "journal":
-				return { path: "/journal", replace: true };
+				return { path: "/tab/journal", replace: true };
 			case "dashboard":
 			default:
-				return { path: "/dashboard", replace: true };
+				return { path: "/tab/dashboard", replace: true };
 		}
 	}
 

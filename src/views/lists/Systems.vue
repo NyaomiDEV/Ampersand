@@ -122,7 +122,7 @@
 	<IonPage>
 		<IonHeader>
 			<IonToolbar>
-				<IonBackButton slot="start" default-href="/options/" />
+				<IonBackButton slot="start" default-href="/" />
 				<IonTitle>
 					{{ $t("systems:header") }}
 				</IonTitle>
@@ -153,7 +153,7 @@
 								show-effects
 								button
 								:smaller-avatar="accessibilityConfig.compactLists"
-								:router-link="`/options/systems/edit?uuid=${system.uuid}`"
+								:router-link="`/edit/system?uuid=${system.uuid}`"
 							/>
 							<IonItemOptions>
 								<IonItemOption color="tertiary" @click="copyID(system)">
@@ -168,7 +168,7 @@
 			<InfiniteLoader v-if="!iterDone" @infinite="pollSystems" />
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton router-link="/options/systems/edit/">
+				<IonFabButton router-link="/edit/system/">
 					<IonIcon :icon="addMD" />
 				</IonFabButton>
 			</IonFab>

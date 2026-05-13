@@ -28,7 +28,7 @@
 	function click(e: Event){
 		if(!props.clickable || !isValidMember(props.member)) return;
 		e.stopPropagation();
-		router.push(`/members/edit?uuid=${props.member.uuid}`);
+		router.push(`/edit/member?uuid=${props.member.uuid}`);
 	}
 
 	function getStyle(){

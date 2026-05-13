@@ -15,7 +15,7 @@
 
 	const i18next = useTranslation();
 
-	const usePassword = ref(securityConfig.usePassword);
+	const usePassword = ref(!!securityConfig.password);
 	const biometricsAvailable = ref(false);
 
 	onMounted(async () => {
@@ -54,26 +54,25 @@
 	}
 
 	async function addPassword() {
+		// avoid ion-toggle auto-toggle
+		usePassword.value = false;
+
 		if(!await promptOkCancel(
 			i18next.t("security:passwordAlert.header"),
 			undefined,
 			i18next.t("security:passwordAlert.text")
-		)){
-			usePassword.value = false;
+		))
 			return;
-		}
+		
 
 		const password = await enterPasswordAlert(i18next.t("security:inputPassword.titleAdd"));
-		if(!password){
-			usePassword.value = false;
+		if(!password)
 			return;
-		}
+		
 
 		const passwordAgain = await enterPasswordAlert(i18next.t("security:inputPassword.titleReenter"));
-		if(password !== passwordAgain){
-			usePassword.value = false;
+		if(password !== passwordAgain)
 			return;
-		}
 
 		const result = enableApplock(password);
 		usePassword.value = result;
@@ -94,20 +93,17 @@
 	}
 
 	async function disablePassword() {
+		usePassword.value = true;
 		const password = await enterPasswordAlert(i18next.t("security:inputPassword.titleDisable"));
+		if(!password) return;
 
-		if(password){
-			const result = disableApplock(password);
-			usePassword.value = !result;
-		}
-		else
-			usePassword.value = true;
+		const result = disableApplock(password);
+		usePassword.value = !result;
 	}
 
 	function toggle(){
-		if(usePassword.value) 
+		if(!securityConfig.password) 
 			return addPassword();
-		
 
 		return disablePassword();		
 	}
@@ -129,9 +125,9 @@
 
 		<IonContent>
 			<IonList>
-				<IonItem>
+				<IonItem @click="toggle">
 					<IonIcon slot="start" :icon="lockMD" />
-					<IonToggle v-model="usePassword" @ion-change="toggle">
+					<IonToggle v-model="usePassword">
 						<IonLabel>
 							<h3>{{ $t("security:applock.title") }}</h3>
 							<p>{{ $t("security:applock.desc") }}</p>

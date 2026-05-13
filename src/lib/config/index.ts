@@ -74,7 +74,6 @@ export const defaultAccessibilityConfig: AccessibilityConfig = {
 };
 
 export const defaultSecurityConfig: SecurityConfig = {
-	usePassword: false,
 	password: undefined,
 	useBiometrics: false,
 	useIPC: false,

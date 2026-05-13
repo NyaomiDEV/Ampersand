@@ -24,7 +24,7 @@
 	function click(e: Event){
 		if(!props.clickable) return;
 		e.stopPropagation();
-		router.push(`/options/systems/edit?uuid=${props.system.uuid}`);
+		router.push(`/edit/system?uuid=${props.system.uuid}`);
 	}
 
 	function getStyle(){

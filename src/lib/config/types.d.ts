@@ -84,7 +84,6 @@ export type AccessibilityConfig = {
 };
 
 export type SecurityConfig = {
-	usePassword: boolean,
 	password?: string,
 	useBiometrics: boolean,
 	useIPC: boolean,

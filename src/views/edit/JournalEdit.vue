@@ -171,7 +171,7 @@
 			<IonToolbar>
 				<IonBackButton
 					slot="start"
-					default-href="/journal/"
+					default-href="/"
 				/>
 				<IonTitle>
 					{{ !isEditing ? $t("journal:edit.header") : !post.uuid ? $t("journal:edit.headerAdd") :

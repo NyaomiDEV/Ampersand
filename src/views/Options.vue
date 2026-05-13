@@ -49,47 +49,47 @@
 
 			<IonList>
 
-				<IonItem button router-link="/options/frontHistory">
+				<IonItem button router-link="/lists/frontHistory">
 					<IonIcon slot="start" :icon="FrontHistoryMD" aria-hidden="true" />
 					<IonLabel>{{ $t("frontHistory:header") }}</IonLabel>
 				</IonItem>
 
-				<IonItem button router-link="/options/analytics">
+				<IonItem button router-link="/lists/analytics">
 					<IonIcon slot="start" :icon="AnalyticsMD" aria-hidden="true" />
 					<IonLabel>{{ $t("analytics:header") }}</IonLabel>
 				</IonItem>
 
-				<IonItem button router-link="/options/messageBoard">
+				<IonItem button router-link="/lists/messageBoard">
 					<IonIcon slot="start" :icon="MessageBoardMD" aria-hidden="true" />
 					<IonLabel>{{ $t("messageBoard:header") }}</IonLabel>
 				</IonItem>
 
-				<IonItem button router-link="/options/systems">
+				<IonItem button router-link="/lists/systems">
 					<IonIcon slot="start" :icon="SystemMD" aria-hidden="true" />
 					<IonLabel>{{ $t("systems:header") }}</IonLabel>
 				</IonItem>
 
-				<IonItem button router-link="/options/tagManagement">
+				<IonItem button router-link="/lists/tagManagement">
 					<IonIcon slot="start" :icon="TagMD" aria-hidden="true" />
 					<IonLabel>{{ $t("tagManagement:header") }}</IonLabel>
 				</IonItem>
 
-				<IonItem button router-link="/options/assetManager">
+				<IonItem button router-link="/lists/assetManager">
 					<IonIcon slot="start" :icon="FolderMD" aria-hidden="true" />
 					<IonLabel>{{ $t("assetManager:header") }}</IonLabel>
 				</IonItem>
 
-				<IonItem button router-link="/options/notes">
+				<IonItem button router-link="/lists/notes">
 					<IonIcon slot="start" :icon="NotesMD" aria-hidden="true" />
 					<IonLabel>{{ $t("notes:header") }}</IonLabel>
 				</IonItem>
 
-				<IonItem button router-link="/options/customFields">
+				<IonItem button router-link="/lists/customFields">
 					<IonIcon slot="start" :icon="CustomFieldsMD" aria-hidden="true" />
 					<IonLabel>{{ $t("customFields:header") }}</IonLabel>
 				</IonItem>
 
-				<IonItem button router-link="/options/reminders">
+				<IonItem button router-link="/lists/reminders">
 					<IonIcon slot="start" :icon="RemindersMD" aria-hidden="true" />
 					<IonLabel>{{ $t("reminders:header") }}</IonLabel>
 				</IonItem>
@@ -145,7 +145,7 @@
 			</template>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton v-if="securityConfig.password && securityConfig.usePassword" @click="lockImmediately">
+				<IonFabButton v-if="securityConfig.password" @click="lockImmediately">
 					<IonIcon :icon="LockMD" />
 				</IonFabButton>
 

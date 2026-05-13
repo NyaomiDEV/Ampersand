@@ -237,7 +237,7 @@
 			<IonToolbar>
 				<IonBackButton
 					slot="start"
-					default-href="/members/"
+					default-href="/"
 				/>
 				<IonTitle>{{ !isEditing ? $t("members:edit.header") : !member.uuid ? $t("members:edit.headerAdd") : $t("members:edit.headerEdit") }}</IonTitle>
 				<IonProgressBar v-if="loadingBar" type="indeterminate" />

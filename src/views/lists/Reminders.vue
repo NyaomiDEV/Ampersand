@@ -37,7 +37,7 @@
 			<IonToolbar>
 				<IonBackButton
 					slot="start"
-					default-href="/options/"
+					default-href="/"
 				/>
 				<IonTitle>
 					{{ $t("reminders:header") }}
@@ -62,7 +62,7 @@
 					button
 					detail
 					:class="{ inactive: !reminder.active }"
-					:router-link="`/options/reminders/edit?uuid=${reminder.uuid}`"
+					:router-link="`/edit/reminder?uuid=${reminder.uuid}`"
 				>
 					<IonLabel>
 						<h3>{{ reminder.title }}</h3>
@@ -72,7 +72,7 @@
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton router-link="/options/reminders/edit">
+				<IonFabButton router-link="/edit/reminder">
 					<IonIcon :icon="addMD" />
 				</IonFabButton>
 			</IonFab>

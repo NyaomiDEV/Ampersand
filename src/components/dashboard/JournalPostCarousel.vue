@@ -38,7 +38,7 @@
 				return;
 		}
 
-		router.push(`/journal/edit/?uuid=${post.uuid}`);
+		router.push(`/edit/journal/?uuid=${post.uuid}`);
 	}
 
 	const listener = (event: Event) => {
@@ -73,7 +73,7 @@
 	</IonList>
 
 	<div>
-		<IonButton size="small" router-link="/journal/edit/">{{ $t("journal:edit.headerAdd") }}</IonButton>
+		<IonButton size="small" router-link="/edit/journal/">{{ $t("journal:edit.headerAdd") }}</IonButton>
 		<IonButton size="small" fill="clear" router-link="/journal/">{{ $t("dashboard:journal.view") }}</IonButton>
 	</div>
 </template>

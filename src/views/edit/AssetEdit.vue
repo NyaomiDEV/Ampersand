@@ -131,7 +131,7 @@
 			<IonToolbar>
 				<IonBackButton
 					slot="start"
-					default-href="/options/assetManager/"
+					default-href="/"
 				/>
 				<IonTitle>
 					{{ !asset.uuid ? $t("assetManager:add.header") : $t("assetManager:edit.header") }}

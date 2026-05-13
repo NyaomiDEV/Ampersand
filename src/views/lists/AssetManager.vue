@@ -79,7 +79,7 @@
 			<IonToolbar>
 				<IonBackButton
 					slot="start"
-					default-href="/options/"
+					default-href="/"
 				/>
 				<IonTitle>
 					{{ $t("assetManager:header") }}
@@ -117,7 +117,7 @@
 			<InfiniteLoader v-if="!iterDone" @infinite="pollAssets" />
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton router-link="/options/assetManager/edit/">
+				<IonFabButton router-link="/edit/asset/">
 					<IonIcon :icon="addMD" />
 				</IonFabButton>
 			</IonFab>

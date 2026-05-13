@@ -2,21 +2,21 @@
 	import { IonContent, IonList, IonPage, IonTitle, IonToolbar, IonSearchbar, IonFab, IonFabButton, IonIcon, IonLabel, IonItemDivider, useIonRouter, IonBackButton, IonItemSliding, IonItemOptions, IonItemOption } from "@ionic/vue";
 	import { onBeforeMount, onUnmounted, ref, shallowRef, useTemplateRef, watch } from "vue";
 	import { useRoute } from "vue-router";
-	import CollapsibleHeaderbar from "../components/CollapsibleHeaderbar.vue";
-	import Spinner from "../components/Spinner.vue";
-	import JournalPostItem from "../components/journal/JournalPostItem.vue";
+	import CollapsibleHeaderbar from "../../components/CollapsibleHeaderbar.vue";
+	import Spinner from "../../components/Spinner.vue";
+	import JournalPostItem from "../../components/journal/JournalPostItem.vue";
 
 	import addMD from "@material-symbols/svg-600/rounded/add.svg";
 	import copyMD from "@material-symbols/svg-600/rounded/content_copy.svg";
 
-	import { JournalPostComplete } from "../lib/db/entities";
+	import { JournalPostComplete } from "../../lib/db/entities";
 	import dayjs from "dayjs";
-	import { DatabaseEvent, DatabaseEvents } from "../lib/db/events";
-	import { getJournalPostsDays, getJournalPostsOfDay, toJournalPostComplete } from "../lib/db/tables/journalPosts";
+	import { DatabaseEvent, DatabaseEvents } from "../../lib/db/events";
+	import { getJournalPostsDays, getJournalPostsOfDay, toJournalPostComplete } from "../../lib/db/tables/journalPosts";
 	import { useTranslation } from "i18next-vue";
-	import { promptOkCancel, toast } from "../lib/util/misc";
-	import DatetimeUtc, { DatetimeParts } from "../components/DatetimeUtc.vue";
-	import TheresNothingHere from "../components/TheresNothingHere.vue";
+	import { promptOkCancel, toast } from "../../lib/util/misc";
+	import DatetimeUtc, { DatetimeParts } from "../../components/DatetimeUtc.vue";
+	import TheresNothingHere from "../../components/TheresNothingHere.vue";
 
 	const isStandalone = ref(false);
 
@@ -43,10 +43,10 @@
 	};
 
 	watch(route, () => {
-		if(route.name?.toString().endsWith("Journal") && route.query.q)
+		if(route.name && ["Journal", "JournalTab"].includes(route.name.toString()) && route.query.q)
 			search.value = route.query.q as string;
 
-		if(route.path.startsWith("/s/")) isStandalone.value = true;
+		if(route.path.startsWith("/lists/")) isStandalone.value = true;
 		else isStandalone.value = false;
 	}, { immediate: true });
 
@@ -148,7 +148,7 @@
 				return;
 		}
 
-		router.push(`/journal/edit/?uuid=${post.uuid}`);
+		router.push(`/edit/journal/?uuid=${post.uuid}`);
 	}
 
 	function closeSlidingItems() {
@@ -175,7 +175,7 @@
 			<CollapsibleHeaderbar class="size-large">
 				<IonToolbar>
 					<IonBackButton
-						v-if="route.name === 'StandaloneJournal'"
+						v-if="isStandalone"
 						slot="start"
 						default-href="/"
 					/>
@@ -241,7 +241,7 @@
 				vertical="bottom"
 				horizontal="end"
 			>
-				<IonFabButton :router-link="`/journal/edit/?date=${dayjs(date).toISOString()}`">
+				<IonFabButton :router-link="`/edit/journal/?date=${dayjs(date).toISOString()}`">
 					<IonIcon :icon="addMD" />
 				</IonFabButton>
 			</IonFab>
