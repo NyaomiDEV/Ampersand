@@ -232,12 +232,10 @@ export function importDatabaseFromJSON() {
 			});
 			if (!path) throw new Error("no path");
 
-			const fd = await openFile(path);
-
 			const totalStuffToImport = ["appConfig", "accessibilityConfig", "securityConfig", ...Object.keys(getTables())];
 			const importedTables: string[] = [];
 
-			const jsonStream = intoStream(fd, undefined, true)
+			const jsonStream = intoStream(path, undefined, true)
 				.pipeThrough(parseJsonStreamWithPaths((path) => {
 					if(!path[0]) return false;
 					if(path.length === 1 && path[0] === "config") return true;
