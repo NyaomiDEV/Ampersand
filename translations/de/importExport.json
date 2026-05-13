@@ -13,7 +13,9 @@
 		"error": "Fehler beim Importieren der Sicherheitskopie.",
 		"importedOc": "Die Octocon-Kopie wurde importiert. Bitte die App neustarten.",
 		"exportedAppIos": "Die Sicherungsdatei wurde in den Ordner „Ampersand“ in der Dateien-App exportiert.",
-		"errorOc": "Fehler beim Importieren des Octocon-Exports."
+		"errorOc": "Fehler beim Importieren des Octocon-Exports.",
+		"exportedReport": "Der Bericht wurde an dem von Ihnen gewählten Ort gespeichert.",
+		"exportedReportIos": "Der Bericht wurde im Ordner von Ampersand in der Dateien-App gespeichert."
 	},
 	"header": "Importieren / Exportieren",
 	"dbExport": {
@@ -32,5 +34,9 @@
 		"note": "Ältere Versionen von Ampersand verwendeten ein Dateiformat (ampdb), das mittlerweile veraltet ist. Falls Sie alte Backups aufbewahren, sollten Sie diese jetzt importieren und anschließend erneut exportieren, da diese Option in einigen Versionen entfernt wird."
 	},
 	"ocImport": "Importiere deine Daten von einem Octocon-Kopie",
-	"thirdPartyHeader": "Drittanbieter Integrationen"
+	"thirdPartyHeader": "Drittanbieter Integrationen",
+	"reportExport": {
+		"title": "Erstelle einen Bericht",
+		"desc": "Speichern Sie einen Bericht über Ihre Daten, um ihn mit Therapeuten und Angehörigen zu teilen"
+	}
 }

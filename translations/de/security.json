@@ -22,7 +22,8 @@
 		"title": "Remote-Inhalte zulassen"
 	},
 	"passwordAlert": {
-		"header": "Warnung"
+		"header": "Warnung",
+		"text": "Möchten Sie wirklich fortfahren? Bevor Sie fortfahren, notieren Sie sich bitte Ihr Passwort außerhalb von Ampersand, da Sie Ihre Daten nicht wiederherstellen und Ihr Passwort nicht zurücksetzen können, falls Sie es verlieren sollten. Exportieren Sie unbedingt Ihre Daten, bevor Sie ein Passwort festlegen!"
 	},
 	"useIPC": "Erinnerungen an andere Anwendungen senden"
 }

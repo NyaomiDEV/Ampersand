@@ -6,8 +6,10 @@
 		"content": "Notizinhalt",
 		"isArchived": "Notiz archivieren",
 		"delete": {
-			"title": "Notiz verwerfen"
+			"title": "Notiz verwerfen",
+			"confirm": "Sind Sie sicher, dass Sie das löschen möchten?"
 		}
 	},
-	"searchPlaceholder": "Notizen durchsuchen..."
+	"searchPlaceholder": "Notizen durchsuchen...",
+	"header": "Notizen"
 }

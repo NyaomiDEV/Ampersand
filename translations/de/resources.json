@@ -1,12 +1,19 @@
 {
 	"wiki": {
-		"title": "Wiki"
+		"title": "Wiki",
+		"desc": "Hier bekommen Sie Hilfe zur Nutzung der App."
 	},
 	"header": "Ressourcen",
 	"website": {
-		"title": "Webseite"
+		"title": "Webseite",
+		"desc": "Lade die neueste App-Version herunter und bleibe mit unseren Updates auf dem Laufenden."
 	},
 	"blog": {
-		"title": "Blog"
+		"title": "Blog",
+		"desc": "Erhalte die neuesten Nachrichten und verfolge unsere Entwicklungsschritte."
+	},
+	"ampersand": "Über Ampersand",
+	"repository": {
+		"desc": "Tragen Sie zu unserer Anwendung bei uns melden Sie Fehler."
 	}
 }
