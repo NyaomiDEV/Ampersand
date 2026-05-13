@@ -25,11 +25,11 @@ export function intoStream(fdOrPath: FileHandle | string, onRead?: (bytes: numbe
 					onRead?.(bytesRead);
 				}
 				else if (bytesRead === null) {
-					await this.cancel!();
+					await fd.close();
 					return controller.close();
 				}
 			}catch(e){
-				await this.cancel!();
+				await fd.close();
 				controller.error(e);
 				throw e;
 			}
