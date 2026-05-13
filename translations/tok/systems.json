@@ -24,7 +24,8 @@
 		"archived": "len",
 		"color": "kule",
 		"imageClip": "sijelo sitelen",
-		"viewInLists": "ni li lon lipu pi ijo kulupu"
+		"viewInLists": "ni li lon lipu pi ijo kulupu",
+		"nameStyle": "nasin sitelen nimi"
 	},
 	"select": "kulupu pi wile sina"
 }

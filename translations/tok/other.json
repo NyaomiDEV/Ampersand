@@ -104,5 +104,42 @@
 		"commentCount_one": "toki pi mute {{count}}",
 		"deleteConfirmation": "sina wile ala wile weka e toki ni?"
 	},
-	"theresNothingHere": "ala li lon"
+	"theresNothingHere": "ala li lon",
+	"report": {
+		"header": "lipu sona pi ilo Ampersand",
+		"generatedOn": "ni li pali lon tenpo {{date}}",
+		"coveringDays": "sona ni li tan tenpo pini pi mute {{count}}"
+	},
+	"count": "mute",
+	"fonts": {
+		"cursive": "nasin sitelen pi sike mute",
+		"pixel": "nasin sitelen pi leko lili",
+		"dots": "nasin sitelen pi sike lili",
+		"digital": "nasin sitelen Digital",
+		"handwritten": "nasin sitelen pi toki luka",
+		"serif": "nasin sitelen pi namako Serif",
+		"typewriter": "nasin sitelen pi ilo Typewriter",
+		"monospace": "nasin sitelen pi suli sama",
+		"playful": "nasin sitelen musi",
+		"holy": "nasin sitelen sewi",
+		"bubbly": "nasin sitelen pi sike wawa",
+		"marker": "nasin sitelen pi ilo sitelen telo",
+		"gothic": "nasin sitelen suli namako",
+		"stencil": "nasin sitelen pi ilo pali sama",
+		"mystery": "nasin sitelen Mystery",
+		"italian": "nasin sitelen pi ma Italija",
+		"metal": "nasin sitelen monsuta",
+		"cutesy": "nasin sitelen suwi",
+		"indie": "nasin sitelen Indie",
+		"deco": "nasin sitelen pi namako mute",
+		"terminal": "nasin sitelen pi ilo Terminal",
+		"western": "nasin sitelen Western",
+		"glitch": "nasin sitelen pi pakala ilo",
+		"stripes": "nasin sitelen pi selo mute",
+		"drip": "nasin sitelen telo",
+		"cracks": "nasin sitelen pakala",
+		"comic": "nasin sitelen pi lipu musi",
+		"inter": "nasin sitelen Inter",
+		"noFont": "nasin sitelen ala"
+	}
 }

@@ -1,1 +1,27 @@
-{}
+{
+	"header": "nanpa",
+	"detail": "nanpa ale",
+	"stats": "nanpa lon",
+	"presence": "mute lon",
+	"cofront": "lon pi ijo kulupu tu",
+	"startDate": "tenpo open",
+	"endDate": "tenpo pini",
+	"subheaders": {
+		"fronting": "ijo kulupu lon",
+		"cofronting": "ijo kulupu pi lon tu",
+		"influencing": "ijo kulupu lawa",
+		"influenced": "ijo kulupu pi ante lawa"
+	},
+	"frontingCount_one": "tenpo pi mute {{count}} la ona li kama lon",
+	"cofrontingCount_one": "tenpo pi mute {{count}} la ona li kama lon tu",
+	"influencingCount_one": "tenpo pi mute {{count}} la ona li lawa e ijo kulupu ante",
+	"influencedCount_one": "tenpo pi mute {{count}} la ijo kulupu ante li lawa e ona",
+	"total": "ale",
+	"average": "nanpa insa",
+	"max": "nanpa pi suli nanpa wan",
+	"min": "nanpa pi lili nanpa wan",
+	"morning": "kipisi tenpo open",
+	"day": "kipisi tenpo suno",
+	"evening": "kipisi tenpo mun",
+	"night": "kipisi tenpo pini"
+}
