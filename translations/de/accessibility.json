@@ -53,5 +53,16 @@
 	},
 	"compactLists": {
 		"title": "Kompakte Listen"
+	},
+	"themeScheme": {
+		"title": "Farbschema",
+		"vibrant": "Lebhaft"
+	},
+	"colors": {
+		"app": "App-Farben",
+		"custom": "Benutzerdefinierte Farben"
+	},
+	"backgroundColor": {
+		"title": "Wähle die Hintergrundfarbe"
 	}
 }

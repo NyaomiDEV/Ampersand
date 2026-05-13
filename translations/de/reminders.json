@@ -16,7 +16,8 @@
 		"delay": "Verzögerung",
 		"active": "Erinnerung einschalten",
 		"members": "Elemente auswählen",
-		"headerAdd": "Erinnerung hinzufügen"
+		"headerAdd": "Erinnerung hinzufügen",
+		"triggerOnAllMembers": "Für alle Mitglieder senden"
 	},
 	"notOnPC": {
 		"header": "Erinnerungen funktionieren am PC nicht",
