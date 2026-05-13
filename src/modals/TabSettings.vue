@@ -22,8 +22,12 @@
 	import resetMD from "@material-symbols/svg-600/rounded/restart_alt.svg";
 
 	import { defaultAppConfig, appConfig } from "../lib/config";
+	import { useTranslation } from "i18next-vue";
 
-	const allAvailable = ["dashboard", ...lists.map(x => x.path.replace("/lists/", ""))];
+	const i18next = useTranslation();
+
+	const allAvailable = ["dashboard", ...lists.map(x => x.path.replace("/lists/", ""))]
+		.sort((a, b) => i18next.t(`${a}:header`).localeCompare(i18next.t(`${b}:header`)));
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	function handleReorder(e: any){
