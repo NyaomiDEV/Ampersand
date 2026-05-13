@@ -56,7 +56,8 @@
 	},
 	"themeScheme": {
 		"title": "Farbschema",
-		"vibrant": "Lebhaft"
+		"vibrant": "Lebhaft",
+		"neutral": "Neutral"
 	},
 	"colors": {
 		"app": "App-Farben",

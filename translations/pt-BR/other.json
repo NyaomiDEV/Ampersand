@@ -19,7 +19,8 @@
 		"heavilyDissociating": "Dissociando intensamente",
 		"dissociating": "Dissociando",
 		"zonedOut": "Distraído",
-		"fullyGrounded": "Inteiramente presente"
+		"fullyGrounded": "Inteiramente presente",
+		"header": "Presença"
 	},
 	"back": "Voltar",
 	"time": "Hora",
@@ -106,5 +107,6 @@
 		"commentCount_many": "{{count}} comentários",
 		"commentCount_other": "{{count}} comentários"
 	},
-	"theresNothingHere": "Não há nada aqui"
+	"theresNothingHere": "Não há nada aqui",
+	"count": "Contar"
 }

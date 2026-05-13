@@ -54,7 +54,8 @@
 		"triangle": "Kolmnurk"
 	},
 	"presence": {
-		"absent": "Pole kohal"
+		"absent": "Pole kohal",
+		"header": "Kohalolek"
 	},
 	"developerMode": "Arendaja režiim",
 	"theresNothingHere": "Siin pole mitte midagi",

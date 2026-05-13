@@ -49,5 +49,6 @@
 		"unsetMainFronter": "Membro retirado do fronte principal",
 		"setSoleFronter": "Membro designado como fronte único",
 		"removeFromFront": "Membro removido do fronte"
-	}
+	},
+	"singular": "Membro"
 }
