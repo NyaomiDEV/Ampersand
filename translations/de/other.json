@@ -5,7 +5,7 @@
 	},
 	"genericDeleteDesc": "Du kannst diese Aktion nicht rückgängig machen!",
 	"alerts": {
-		"ok": "OK",
+		"ok": "Ok",
 		"cancel": "Abbrechen",
 		"yes": "Ja",
 		"no": "Nein"

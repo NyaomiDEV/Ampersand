@@ -27,7 +27,12 @@
 			"title": "Mitglied verwerfen",
 			"confirm": "Bist du sicher, dass du dieses Mitglied löschen möchtest?"
 		},
-		"system": "Bearbeite Mitgliedersystem"
+		"system": "Bearbeite Mitgliedersystem",
+		"customFront": "Individuelle Front",
+		"age": "Alter",
+		"ageDisplay_one": "Alter {{count}}",
+		"ageDisplay_other": "Alter {{count}}",
+		"memberIDcopiedToClipboard": "Formatierte Mitgields-ID wurde in die Zwischenablage kopiert!"
 	},
 	"deletedCustomFront": "Benutzerdefinierte Front verwerfen",
 	"actions": {

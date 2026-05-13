@@ -17,5 +17,9 @@
 		"active": "Erinnerung einschalten",
 		"members": "Elemente auswählen",
 		"headerAdd": "Erinnerung hinzufügen"
+	},
+	"notOnPC": {
+		"header": "Erinnerungen funktionieren am PC nicht",
+		"content": "Da die Daten von diesem PC auf ein Handy oder Mac exportiert werden können, lassen sich die Erinnerungen hier bearbeiten."
 	}
 }

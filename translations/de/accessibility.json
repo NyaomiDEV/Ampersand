@@ -2,7 +2,7 @@
 	"header": "Barrierefreiheit",
 	"highLegibilityFont": {
 		"title": "Bedienungsfreundliche Schrift",
-		"desc": "Nutze eine lesbare Schriftart anstelle der Standard-Schriftart des Gerätes"
+		"desc": "Nutze eine gut lesbare Schriftart anstelle der Standard-Schriftart des Gerätes"
 	},
 	"highLegibilityFontType": {
 		"title": "Lesbare Schriftart",
