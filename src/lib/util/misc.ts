@@ -45,18 +45,6 @@ export async function getImageFile() {
 	return array;
 }
 
-export function compressGzip(data: BufferSource) {
-	return new Blob([data])
-		.stream()
-		.pipeThrough<Uint8Array>(new CompressionStream("gzip"));
-}
-
-export function decompressGzip(data: BufferSource) {
-	return new Blob([data])
-		.stream()
-		.pipeThrough<Uint8Array>(new DecompressionStream("gzip"));
-}
-
 export function formatDate(date: Date, withDate?: "collapsed" | "expanded" | "only-collapsed" | "only-expanded"){
 	if(withDate){
 		switch(withDate){

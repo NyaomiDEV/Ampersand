@@ -1,13 +1,14 @@
 import { appDataDir, sep } from "@tauri-apps/api/path";
 import * as fs from "@tauri-apps/plugin-fs";
 import type { Asset, JournalPost, Member, System, Tag, UUIDable, UUID, BoardMessage } from "../entities";
-import { decode, encode } from "@msgpack/msgpack";
+import { decodeAsync, encode } from "@msgpack/msgpack";
 import type { MigrationsMapping, Table } from "../types";
 import { deleteNull, replace, revive, walk, walkAsync } from "../../serialization";
 import { assets, boardMessages, journalPosts, members, systems, tags } from "./migrations";
 import { PartialBy } from "../../types";
 import type { SecondaryKey, IndexEntry } from "../types";
 import { sha256 } from "../../util/misc";
+import { intoStream } from "../utils";
 
 const appDataDirPath = await appDataDir();
 export async function makeShittyTable<T extends UUIDable>(tableName: string, secondaryKeys: SecondaryKey<T>[]) {
@@ -48,7 +49,7 @@ export class ShittyTable<T extends UUIDable> implements Table<T> {
 		const _path = `${this.path + sep()}.index`;
 		try {
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			const obj: any = decode(await fs.readFile(_path));
+			const obj: any = await decodeAsync(intoStream(_path));
 			if (typeof obj !== "undefined" && obj !== null)
 				return walk(obj, revive) as IndexEntry<T>[];
 		} catch (_e) {
@@ -129,7 +130,7 @@ export class ShittyTable<T extends UUIDable> implements Table<T> {
 	async getHashesFromDisk() {
 		const _path = `${this.path + sep()}.hashes`;
 		try {
-			return decode(await fs.readFile(_path)) as Record<UUID, string>;
+			return await decodeAsync(intoStream(_path)) as Record<UUID, string>;
 		} catch (_e) {
 			// nothing
 		}
@@ -187,8 +188,13 @@ export class ShittyTable<T extends UUIDable> implements Table<T> {
 		return await fs.readFile(_path);
 	}
 
+	getRawStream(uuid: string) {
+		const _path = this.path + sep() + uuid;
+		return intoStream(_path);
+	}
+
 	async get(uuid: string) {
-		const obj = decode(await this.getRaw(uuid));
+		const obj = await decodeAsync(this.getRawStream(uuid));
 		return walk(obj as object, revive) as T;
 	}
 
@@ -325,7 +331,7 @@ export class ShittyTable<T extends UUIDable> implements Table<T> {
 	async getMigrationVersion() {
 		const _path = `${this.path + sep()}.migrations`;
 		try {
-			const migrations = decode(await fs.readFile(_path)) as MigrationsMapping;
+			const migrations = await decodeAsync(intoStream(_path)) as MigrationsMapping;
 			return migrations.version;
 		} catch (e) {
 			console.error(e);

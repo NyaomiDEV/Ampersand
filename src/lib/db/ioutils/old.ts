@@ -1,17 +1,17 @@
-import { decode, encode } from "@msgpack/msgpack";
+import { decodeAsync, encode } from "@msgpack/msgpack";
 import { accessibilityConfig, appConfig, securityConfig } from "../../config";
 import { getTables } from "..";
 import type { Table } from "../types";
 import { deleteNull, replace, revive, walk, walkAsync } from "../../serialization";
 import { dirname, documentDir, sep } from "@tauri-apps/api/path";
-import { mkdir, open as openFile, readFile } from "@tauri-apps/plugin-fs";
+import { mkdir, open as openFile, SeekMode } from "@tauri-apps/plugin-fs";
 import { open, save } from "../../native/open";
-import { AMPERSAND_BACKUP_MAGICS, matchMagicOld, stripMagicOld } from "./magic";
+import { AMPERSAND_BACKUP_MAGICS, matchMagicOld } from "./magic";
 import { UUIDable } from "../entities";
-import { decompressGzip } from "../../util/misc";
 import dayjs from "dayjs";
 import { platform } from "@tauri-apps/plugin-os";
 import { DatabaseExport, SerializedDatabaseExport } from "./old_types";
+import { intoStream } from "../utils";
 
 export function exportDatabaseToBinary() {
 
@@ -99,47 +99,34 @@ export function importDatabaseFromBinary() {
 			});
 			if (!path) throw new Error("no path");
 
-			let array = await readFile(path);
-			const magicVersion = matchMagicOld(array);
+			const fd = await openFile(path, { read: true });
+
+			const magicBytesMaybe = new Uint8Array(10);
+			const bytesRead = await fd.read(magicBytesMaybe);
+			if (bytesRead === null || bytesRead === 0) throw new Error("eol before it even started");
+
+			const magicVersion = matchMagicOld(magicBytesMaybe);
 			if (!magicVersion) throw new Error("this is not an ampdb file");
 
+			let stream: ReadableStream<Uint8Array<ArrayBuffer>>;
 			switch (magicVersion) {
 				case 1: {
 					// it's gzip, decompress it
-					const reader = decompressGzip(array).getReader();
-					const chunks: Uint8Array[] = [];
-					while (true) {
-						const { done, value } = await reader.read();
-						if (value) chunks.push(value);
-						if (done) {
-							reader.releaseLock();
-							break;
-						}
-					}
-
-					const length = chunks.reduce((p, c) => p + c.length, 0);
-					let offset = 0;
-
-					array = new Uint8Array(length);
-					chunks.forEach(item => {
-						array.set(item, offset);
-						offset += item.length;
-					});
+					await fd.seek(0, SeekMode.Start);
+					stream = intoStream(fd).pipeThrough(new DecompressionStream("gzip"));
 					break;
 				}
 				case 2: {
 					// in all other cases we need to strip our magic
-					const stripped = stripMagicOld(array, magicVersion);
-					if (!stripped) throw new Error("unable to strip magic from ampdb file");
-					array = stripped;
+					stream = intoStream(fd);
 					break;
 				}
-				default:
-					// possible msgpack without tar.gz?
-					break;
+				default: {
+					throw new Error("what the fuck");
+				}
 			}
 
-			const tablesAndConfig = decode(array) as SerializedDatabaseExport;
+			const tablesAndConfig = await decodeAsync(stream) as SerializedDatabaseExport;
 
 			progress.dispatchEvent(new Event("start"));
 			const revived = walk(tablesAndConfig, revive) as DatabaseExport;

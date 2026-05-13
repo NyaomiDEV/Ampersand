@@ -12,7 +12,7 @@ import dayjs from "dayjs";
 import { platform } from "@tauri-apps/plugin-os";
 import { System, UUIDable } from "../entities";
 import { ArchiveStreamConfig, ArchiveStreamDatabase } from "./archive_types";
-import { intoStream } from "./utils";
+import { intoStream } from "../utils";
 
 async function encode(data: any){
 	return msgpackEncode(deleteNull(await walkAsync(data, replace)));

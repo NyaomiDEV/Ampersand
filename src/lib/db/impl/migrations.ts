@@ -1,5 +1,5 @@
 /* eslint-disable no-fallthrough */
-import { decode } from "@msgpack/msgpack";
+import { decodeAsync } from "@msgpack/msgpack";
 import type { ShittyTable } from "./shittytable";
 import { appConfig } from "../../config";
 import { nilUid } from "../../util/consts";
@@ -29,8 +29,7 @@ export async function members(table: ShittyTable<Member>, version: number){
 
 		for (const uuid of uuids) {
 			try {
-				const raw = await table.getRaw(uuid);
-				const decoded = decode(raw) as Serialized<Member>;
+				const decoded = await decodeAsync(table.getRawStream(uuid)) as Serialized<Member>;
 				if (typeof decoded.image?.value === "string" || typeof decoded.cover?.value === "string") {
 					await table.refresh();
 					break;
@@ -88,8 +87,7 @@ export async function systems(table: ShittyTable<System>, version: number){
 
 		for(const uuid of uuids){
 			try{
-				const raw = await table.getRaw(uuid);
-				const decoded = decode(raw) as Serialized<System>;
+				const decoded = await decodeAsync(table.getRawStream(uuid)) as Serialized<System>;
 				if (typeof decoded.image?.value === "string" || typeof decoded.cover?.value === "string"){
 					await table.refresh();
 					break;
@@ -140,8 +138,7 @@ export async function assets(table: ShittyTable<Asset>, version: number) {
 
 		for (const uuid of uuids) {
 			try {
-				const raw = await table.getRaw(uuid);
-				const decoded = decode(raw) as Serialized<Asset>;
+				const decoded = await decodeAsync(table.getRawStream(uuid)) as Serialized<Asset>;
 				if (typeof decoded.file?.value === "string" || typeof decoded.file?.value === "string") {
 					await table.refresh();
 					break;
@@ -200,8 +197,7 @@ export async function journalPosts(table: ShittyTable<JournalPost>, version: num
 
 		for (const uuid of uuids) {
 			try {
-				const raw = await table.getRaw(uuid);
-				const decoded = decode(raw) as Serialized<JournalPost>;
+				const decoded = await decodeAsync(table.getRawStream(uuid)) as Serialized<JournalPost>;
 				if (typeof decoded.cover?.value === "string" || typeof decoded.cover?.value === "string") {
 					await table.refresh();
 					break;
