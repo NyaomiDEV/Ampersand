@@ -10,7 +10,7 @@
 			"title": "Auslösendes Ereignis"
 		},
 		"delete": {
-			"title": "Erinnerung löschen",
+			"title": "Erinnerung verwerfen",
 			"confirm": "Bist du dir sicher, dass du diese Erinnerung löschen möchtest?"
 		},
 		"delay": "Verzögerung in Minuten",

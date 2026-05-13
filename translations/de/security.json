@@ -23,5 +23,6 @@
 	},
 	"passwordAlert": {
 		"header": "Warnung"
-	}
+	},
+	"useIPC": "Erinnerungen an andere Anwendungen senden"
 }

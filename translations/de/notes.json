@@ -1,1 +1,13 @@
-{}
+{
+	"edit": {
+		"header": "Notiz bearbeiten",
+		"headerAdd": "Notiz hinzufügen",
+		"title": "Notizüberschrift",
+		"content": "Notizinhalt",
+		"isArchived": "Notiz archivieren",
+		"delete": {
+			"title": "Notiz verwerfen"
+		}
+	},
+	"searchPlaceholder": "Notizen durchsuchen..."
+}

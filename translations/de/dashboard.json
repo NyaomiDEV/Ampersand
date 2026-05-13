@@ -10,7 +10,8 @@
 		"view": "Sehe mehr"
 	},
 	"journal": {
-		"view": "Sehe mehr"
+		"view": "Sehe mehr",
+		"header": "Neuste Beiträge"
 	},
 	"nowFronting": "Am Fronten",
 	"addToFront": "Zur Front hinzufügen",

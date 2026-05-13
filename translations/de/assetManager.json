@@ -10,8 +10,8 @@
 		"friendlyName": "Name bearbeiten",
 		"attachment": "Anhang ersetzen",
 		"delete": {
-			"title": "Asset löschen",
-			"confirm": "Bist du dir sicher, dass du dieses Asset löschen möchtest?"
+			"title": "Asset verwerfen",
+			"confirm": "Bist du dir sicher, dass du dieses Asset verwerfen möchtest?"
 		},
 		"tags": "Tags"
 	}
