@@ -356,7 +356,7 @@ export function sortDateAsc(a: { date?: Date; }, b: { date?: Date; }) {
 
 export const imageClips = import.meta.webpackContext("../../assets/shapes/", { recursive: false, include: /\.svg$/ });
 
-export function imageClipPicker(header): Promise<ImageClip | null | undefined> {
+export function imageClipPicker(header: string): Promise<ImageClip | null | undefined> {
 	return new Promise(resolve => {
 		void (async () => {
 			const buttons = imageClips.keys().map(x => ({
@@ -421,11 +421,11 @@ export const fontFamilies = {
 	inter: "Inter",
 };
 
-export function fontFamilyPicker(header): Promise<NameStyle | null | undefined> {
+export function fontFamilyPicker(header: string): Promise<NameStyle | null | undefined> {
 	return new Promise(resolve => {
 		void (async () => {
 			const buttons: ActionSheetButton[] = Object.keys(fontFamilies).map(x => ({
-				text: i18next.t(`other:fonts.${x}`),
+				text: i18next.t(`other:fonts.${x}`) === fontFamilies[x] ? i18next.t(`other:fonts.${x}`) : `${i18next.t(`other:fonts.${x}`)} (${fontFamilies[x]})`,
 				data: { it: x },
 				htmlAttributes: {
 					style: { "font-family": fontFamilies[x] }
