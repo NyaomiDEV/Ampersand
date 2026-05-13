@@ -81,7 +81,8 @@
 		"soft-boom": "sanfte Explosion",
 		"soft-burst": "sanfter Anbruch",
 		"arch": "Bogen",
-		"ghost-ish": "Geisterhaft"
+		"ghost-ish": "Geisterhaft",
+		"slanted": "Schräg"
 	},
 	"presence": {
 		"absent": "Abwesend",
@@ -108,5 +109,6 @@
 		"generatedOn": "Erstellt am {{date}}",
 		"coveringDays": "Daten der letzten {{count}} Tage"
 	},
-	"count": "Anzahl"
+	"count": "Anzahl",
+	"theresNothingHere": "Hier gibt es nichts zu sehen"
 }
