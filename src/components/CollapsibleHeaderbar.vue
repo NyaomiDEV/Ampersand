@@ -20,15 +20,7 @@
 		const scrollerEl = props.scroller ?? headerEl.parentElement as HTMLElement;
 		const firstToolbarEl = headerEl.getElementsByTagName("ion-toolbar").item(0);
 		if(!firstToolbarEl) return;
-
 		const rtl = window.getComputedStyle(firstToolbarEl, null).getPropertyValue("direction") === "rtl";
-
-		const observer = new MutationObserver((mutations) => {
-			console.log(mutations);
-		});
-
-		observer.observe(firstToolbarEl, { childList: true, subtree: true });
-
 		const shadow = await new Promise<ShadowRoot>((res, rej) => {
 			const timeoutId = setTimeout(() => rej(new Error("timed out")), 5000);
 			const cb = () => {
@@ -206,7 +198,7 @@
 					animation-name: content_anim_rtl;
 					transform: translateX(calc(1px * var(--content-offset)));
 				}
-				
+
 				ion-title:not([slot]) {
 					animation-name: content_anim_rtl, title_anim;
 					transform: translateX(calc(1px * var(--content-offset)));
