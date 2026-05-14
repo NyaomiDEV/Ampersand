@@ -685,7 +685,12 @@
 
 	div.presence-stars {
 		display: grid;
-		grid-template-columns: 1fr 1fr 1fr;
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: auto;
 		gap: 0em .5em;
+
+		> :first-child {
+			grid-column: 1 / span 2;
+		}
 	}
 </style>
