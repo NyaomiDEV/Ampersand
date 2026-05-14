@@ -225,5 +225,10 @@ if ((accessibilityConfig as Record<string, unknown>).accentColor) {
 	accessibilityConfig.customColors.backgroundColor = (accessibilityConfig as Record<string, unknown>).accentColor as string;
 	delete (accessibilityConfig as Record<string, unknown>).accentColor;
 }
+
+if((securityConfig as Record<string, unknown>).usePassword === false){
+	securityConfig.password = undefined;
+	delete (securityConfig as Record<string, unknown>).usePassword;
+}
 // end config migration here
 
