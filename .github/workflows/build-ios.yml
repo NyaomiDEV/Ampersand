@@ -35,6 +35,7 @@ jobs:
         with:
           rust-src-dir: "src-tauri"
           target: "aarch64-apple-ios"
+          cache-bin: false
       - name: Install frontend dependencies
         run: yarn install --frozen-lockfile
       - name: Update versioning
