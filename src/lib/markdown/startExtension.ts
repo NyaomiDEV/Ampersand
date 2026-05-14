@@ -5,7 +5,7 @@ const startExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [
 		{
 			name: "start",
-			level: "inline",
+			level: "block",
 			start(src: string) { return src.match(/<</)?.index; },
 			tokenizer(src: string) {
 				const rule = /^<\|(.+?)<\|/;
@@ -15,14 +15,14 @@ const startExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 						type: "start",
 						raw: match[0],
 						text: match[1],
-						tokens: this.lexer.inlineTokens(match[1])
+						tokens: this.lexer.blockTokens(match[1])
 					};
 					return token;
 				}
 				return;
 			},
 			renderer(token) {
-				return h("span", { class: "start" }, token.tokens && token.tokens.length ? this.parser.parseInline(token.tokens) : token.text);
+				return h("span", { class: "start" }, token.tokens && token.tokens.length ? this.parser.parse(token.tokens) : token.text);
 			}
 		}
 	]

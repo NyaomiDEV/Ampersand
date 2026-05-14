@@ -37,7 +37,7 @@ export class Parser {
 	/**
    * Parse Loop
    */
-	parse(tokens: Token[], _top = true) {
+	parse(tokens: Token[]) {
 		const out: (VNode | string)[] = [];
 
 		for (const anyToken of tokens) {

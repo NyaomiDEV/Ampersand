@@ -6,7 +6,7 @@ const centerExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 		{
 			name: "center",
 			level: "block",
-			start(src: string) { return src.match(/>>/)?.index; },
+			start(src: string) { return src.match(/\|>/)?.index; },
 			tokenizer(src: string) {
 				const rule = /^\|>(.+?)<\|/;
 				const match = rule.exec(src);
@@ -15,14 +15,14 @@ const centerExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 						type: "center",
 						raw: match[0],
 						text: match[1],
-						tokens: this.lexer.inlineTokens(match[1])
+						tokens: this.lexer.blockTokens(match[1])
 					};
 					return token;
 				}
 				return;
 			},
 			renderer(token) {
-				return h("p", { class: "center" }, token.tokens && token.tokens.length ? this.parser.parseInline(token.tokens) : token.text);
+				return h("p", { class: "center" }, token.tokens && token.tokens.length ? this.parser.parse(token.tokens) : token.text);
 			}
 		}
 	]

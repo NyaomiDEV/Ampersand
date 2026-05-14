@@ -17,7 +17,7 @@ const calloutExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 						color: match.groups?.color,
 						closed: match.groups?.closed === "-",
 						text: match.groups?.title ? `${match.groups.title}\n${match.groups?.text}` : match.groups?.text,
-						tokens: this.lexer.inlineTokens(match.groups!.text)
+						tokens: this.lexer.blockTokens(match.groups!.text)
 					};
 					if(match.groups?.title){
 						token.tokens.unshift({
@@ -37,7 +37,7 @@ const calloutExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 					style: token.color ? `--markdown-callout-color: ${token.color}` : "",
 					onClick: (e) => e.stopImmediatePropagation()
 				},
-				token.tokens && token.tokens.length ? this.parser.parseInline(token.tokens) : token.text
+				token.tokens && token.tokens.length ? this.parser.parse(token.tokens) : token.text
 				);
 			}
 		},

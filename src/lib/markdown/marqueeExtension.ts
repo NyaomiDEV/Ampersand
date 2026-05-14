@@ -19,7 +19,7 @@ const marqueeExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 						duration: match.groups?.duration ? parseFloat(match.groups.duration) : undefined,
 						bouncy: !!match.groups?.bouncy,
 						text: match.groups?.text,
-						tokens: this.lexer.inlineTokens(match.groups!.text)
+						tokens: this.lexer.blockTokens(match.groups!.text)
 					};
 					return token;
 				}
@@ -31,7 +31,7 @@ const marqueeExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 					duration: token.duration,
 					bouncy: token.bouncy
 				// eslint-disable-next-line @typescript-eslint/no-unsafe-return
-				}, () => token.tokens && token.tokens.length ? this.parser.parseInline(token.tokens) : token.text);
+				}, () => token.tokens && token.tokens.length ? this.parser.parse(token.tokens) : token.text);
 			}
 		}
 	]
