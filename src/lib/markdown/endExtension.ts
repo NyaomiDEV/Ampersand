@@ -6,9 +6,9 @@ const endExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 		{
 			name: "end",
 			level: "block",
-			start(src: string) { return src.match(/>>/)?.index; },
+			start(src: string) { return src.match(/\|>/)?.index; },
 			tokenizer(src: string) {
-				const rule = /^\|>(.+?)\|>/;
+				const rule = /^\|>(.+?)\|>/s;
 				const match = rule.exec(src);
 				if (match) {
 					const token = {
