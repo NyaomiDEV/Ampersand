@@ -3,12 +3,13 @@
 	--background: rgb(var(--md3-surface-container));
 	--color: rgb(var(--md3-on-surface));
 	--border: none;
-	height: 80px;
+	min-height: calc(40px + var(--ion-safe-area-bottom, 0px));
 }
 
 .md ion-tab-bar ion-tab-button {
-	--padding-top: 12px;
-	--padding-bottom: 16px;
+	--padding-top: 6px;
+	--padding-bottom: 6px;
+	height: auto;
 	--ripple-color: transparent;
 	--color: rgb(var(--md3-on-surface-variant));
 	color: rgb(var(--md3-on-surface-variant));
@@ -32,7 +33,7 @@
 }
 
 .md ion-tab-bar ion-tab-button.tab-selected ion-icon {
-	padding: 4px 20px;
+	padding: 4px 16px;
 	background: rgb(var(--md3-secondary-container));
 	color: rgb(var(--md3-on-secondary-container));
 	transition: background-color .2s ease-in-out,

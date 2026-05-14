@@ -54,12 +54,19 @@ html:is(.plt-tablet, .plt-desktop) ion-tabs {
 	flex-direction: row-reverse !important;
 }
 
+ion-tab-bar {
+	overflow-x: auto;
+	justify-content: unset;
+}
+
 html:is(.plt-tablet, .plt-desktop) ion-tab-bar {
 	flex-direction: column;
 	justify-content: center;
 	height: 100%;
 	width: 80px;
 	padding-right: 0;
+	overflow-x: hidden;
+	overflow-y: auto;
 }
 
 html:is(.plt-tablet, .plt-desktop) ion-tab-button {

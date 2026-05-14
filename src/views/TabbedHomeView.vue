@@ -2,9 +2,8 @@
 	import { IonPage, IonTabs, IonTabBar, IonRouterOutlet, IonTabButton, IonIcon, useIonRouter } from "@ionic/vue";
 	import { slideAnimation } from "../lib/util/misc";
 	import { useRoute } from "vue-router";
-	import { h, ref, useTemplateRef, Text, FunctionalComponent } from "vue";
+	import { h, ref, useTemplateRef, FunctionalComponent } from "vue";
 	import { appConfig } from "../lib/config";
-	import { useTranslation } from "i18next-vue";
 
 	import HomeMD from "@material-symbols/svg-600/rounded/home.svg";
 	import OptionsMD from "@material-symbols/svg-600/rounded/menu.svg";
@@ -58,7 +57,6 @@
 
 	const tabBar = useTemplateRef("tabBar");
 	const currentTab = ref<string>("");
-	const i18next = useTranslation();
 
 	const AmpersandTabBar: FunctionalComponent<{ currentTab: string, tabOrder: string[] }> = (props) => 
 		h(IonTabBar, {
@@ -72,7 +70,6 @@
 				h(IonIcon, {
 					icon: props.currentTab === x ? allPossibleTabs[x].iconSelected : allPossibleTabs[x].icon
 				}),
-				h(Text, i18next.t(`${x}:header`))
 			])),
 			h(IonTabButton, {
 				tab: "options",
@@ -82,7 +79,6 @@
 				h(IonIcon, {
 					icon: props.currentTab === "options" ? OptionsFillMD : OptionsMD
 				}),
-				h(Text, i18next.t("options:header"))
 			])
 		]);
 
