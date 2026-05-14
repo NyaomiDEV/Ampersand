@@ -50,17 +50,19 @@ html.high-legibility.hl-system-font {
 	--ion-font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-html:is(.plt-tablet, .plt-desktop) ion-tabs {
-	flex-direction: row-reverse !important;
-}
-
 ion-tab-bar {
 	overflow-x: auto;
 	justify-content: unset;
 }
 
+
+html:is(.plt-tablet, .plt-desktop) ion-tabs {
+	flex-direction: row-reverse !important;
+}
+
 html:is(.plt-tablet, .plt-desktop) ion-tab-bar {
 	flex-direction: column;
+	align-items: center;
 	justify-content: center;
 	height: 100%;
 	width: 80px;
@@ -70,7 +72,8 @@ html:is(.plt-tablet, .plt-desktop) ion-tab-bar {
 }
 
 html:is(.plt-tablet, .plt-desktop) ion-tab-button {
-	max-height: 96px;
+	flex: 0 0;
+	min-height: 80px;
 }
 
 html:is(.plt-tablet, .plt-desktop) ion-tabs :not(ion-tab-bar) {

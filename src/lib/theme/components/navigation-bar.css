@@ -3,13 +3,14 @@
 	--background: rgb(var(--md3-surface-container));
 	--color: rgb(var(--md3-on-surface));
 	--border: none;
-	min-height: calc(40px + var(--ion-safe-area-bottom, 0px));
 }
 
 .md ion-tab-bar ion-tab-button {
 	--padding-top: 6px;
 	--padding-bottom: 6px;
 	height: auto;
+	width: auto;
+	min-width: 80px;
 	--ripple-color: transparent;
 	--color: rgb(var(--md3-on-surface-variant));
 	color: rgb(var(--md3-on-surface-variant));
