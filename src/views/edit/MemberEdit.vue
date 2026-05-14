@@ -333,15 +333,15 @@
 				</IonList>
 
 				<IonList class="member-actions">
-					<IonItem button detail :router-link="`/options/frontHistory?q=@member:${member.uuid}`">
+					<IonItem button detail :router-link="`/lists/frontHistory?q=@member:${member.uuid}`">
 						<IonIcon slot="start" :icon="FrontHistoryMD" aria-hidden="true" />
 						<IonLabel>{{ $t("members:edit.showFrontingEntries") }}</IonLabel>
 					</IonItem>
-					<IonItem button detail :router-link="`/options/messageBoard?q=@member:${member.uuid}`">
+					<IonItem button detail :router-link="`/lists/messageBoard?q=@member:${member.uuid}`">
 						<IonIcon slot="start" :icon="newspaperMD" aria-hidden="true" />
 						<IonLabel>{{ $t("members:edit.showBoardEntries") }}</IonLabel>
 					</IonItem>
-					<IonItem button detail :router-link="`/s/journal?q=@member:${member.uuid}`">
+					<IonItem button detail :router-link="`/lists/journal?q=@member:${member.uuid}`">
 						<IonIcon slot="start" :icon="journalMD" aria-hidden="true" />
 						<IonLabel>{{ $t("members:edit.showJournalEntries") }}</IonLabel>
 					</IonItem>

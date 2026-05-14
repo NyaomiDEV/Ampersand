@@ -60,7 +60,7 @@
 
 	<div>
 		<IonButton size="small" @click="showModal()">{{ $t("dashboard:messageBoard.add") }}</IonButton>
-		<IonButton size="small" fill="clear" router-link="/options/messageBoard">{{ $t("dashboard:messageBoard.view") }}</IonButton>
+		<IonButton size="small" fill="clear" :router-link="appConfig.tabOrder.includes('messageBoard') ? '/tab/messageBoard/' : '/lists/messageBoard/'">{{ $t("dashboard:messageBoard.view") }}</IonButton>
 	</div>
 </template>
 

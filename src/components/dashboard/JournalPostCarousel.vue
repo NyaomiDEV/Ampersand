@@ -74,7 +74,7 @@
 
 	<div>
 		<IonButton size="small" router-link="/edit/journal/">{{ $t("journal:edit.headerAdd") }}</IonButton>
-		<IonButton size="small" fill="clear" router-link="/journal/">{{ $t("dashboard:journal.view") }}</IonButton>
+		<IonButton size="small" fill="clear" :router-link="appConfig.tabOrder.includes('journal') ? '/tab/journal/' : '/lists/journal/'">{{ $t("dashboard:journal.view") }}</IonButton>
 	</div>
 </template>
 

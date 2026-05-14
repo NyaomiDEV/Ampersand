@@ -311,7 +311,7 @@
 					v-if="tag.uuid && tag.type === 'journal'"
 					:detail="true" 
 					button 
-					:router-link="`/s/journal/?q=${encodeURIComponent(`#${tag.name.toLowerCase().replace(/\s+/g, '')}`)}`"
+					:router-link="`/lists/journal/?q=${encodeURIComponent(`#${tag.name.toLowerCase().replace(/\s+/g, '')}`)}`"
 				>
 					<IonIcon slot="start" :icon="journalMD" aria-hidden="true" />
 					<IonLabel>
@@ -324,7 +324,7 @@
 					v-if="tag.uuid && tag.type === 'asset'"
 					:detail="true" 
 					button 
-					:router-link="`/options/assetManager/?q=${encodeURIComponent(`#${tag.name.toLowerCase().replace(/\s+/g, '')}`)}`"
+					:router-link="`/lists/assetManager/?q=${encodeURIComponent(`#${tag.name.toLowerCase().replace(/\s+/g, '')}`)}`"
 				>
 					<IonIcon slot="start" :icon="assetMD" aria-hidden="true" />
 					<IonLabel>
