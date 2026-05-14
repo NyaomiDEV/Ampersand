@@ -1,5 +1,6 @@
 import { h, type VNode } from "vue";
 import { MarkedExtension } from "marked";
+import { isValidCssColor } from "./utils";
 
 const calloutExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [
@@ -14,7 +15,7 @@ const calloutExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 					const token = {
 						type: "callout",
 						raw: match[0],
-						color: match.groups?.color,
+						color: isValidCssColor(match.groups?.color || "") ? match.groups?.color : undefined,
 						closed: match.groups?.closed === "-",
 						text: match.groups?.title ? `${match.groups.title}\n${match.groups?.text}` : match.groups?.text,
 						tokens: this.lexer.blockTokens(match.groups!.text)

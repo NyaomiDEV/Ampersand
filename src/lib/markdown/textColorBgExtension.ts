@@ -1,5 +1,6 @@
 import { h, type VNode } from "vue";
 import { MarkedExtension } from "marked";
+import { isValidCssColor } from "./utils";
 
 const textColorBgExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [
@@ -16,6 +17,9 @@ const textColorBgExtension: MarkedExtension<(VNode | string)[], VNode | string> 
 
 					if (colors[0].match(/(?: ?(?:top|left|right|bottom)){1,2}|(?:-?\d*.?\d+(?:deg|grad|rad|turn))/) !== null) 
 						degrees = colors.shift()!;
+
+					if(!colors.reduce((p, c) => p ? isValidCssColor(c) : p, true))
+						return; // one wasn't a real color
 						
 					const token = {
 						type: "textColorBg",
