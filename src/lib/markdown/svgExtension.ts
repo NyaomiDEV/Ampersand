@@ -1,13 +1,9 @@
 import { Fragment, h, type VNode } from "vue";
 import { MarkedExtension } from "marked";
 import MarkdownSvg from "../../components/MarkdownSvg.vue";
+import { splitArguments } from "./utils";
 
-function split(valueString: string){
-	return Object.fromEntries(valueString.trim().split(" ").map(x => {
-		const pos = x.indexOf("=");
-		return [x.slice(0, pos).trim(), x.slice(pos + 1).trim()];
-	}));
-}
+
 
 const svgExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [{
@@ -18,7 +14,7 @@ const svgExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 			const rule = /^\[svg(.+?)?\](.+?)\[\/svg\]/;
 			const match = rule.exec(src);
 			if (match) {
-				const { color, fill, stroke, strw } = split(match[1] || "");
+				const { color, fill, stroke, strw } = splitArguments(match[1] || "");
 				const token = {
 					type: "svg",
 					raw: match[0],

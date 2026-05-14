@@ -1,23 +1,6 @@
 import { h, type VNode } from "vue";
 import { MarkedExtension } from "marked";
-
-function parseStyle(style: string) {
-	return Object.fromEntries(style
-		.trim()
-		.split("\n")
-		.map(x => {
-			const i = x.indexOf(" ");
-			return [
-				x.slice(0, i).trim(),
-				Object.fromEntries(
-					x.slice(i+1).trim().split(";").map(y => {
-						const j = y.indexOf("=");
-						return [y.slice(0, j).trim(), y.slice(j+1).trim().split(":").map(z => z.trim())];
-					})
-				)
-			];
-		}));
-}
+import { splitBlockArguments } from "./utils";
 
 const customTableExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [
@@ -41,7 +24,7 @@ const customTableExtension: MarkedExtension<(VNode | string)[], VNode | string> 
 				return;
 			},
 			renderer(token) {
-				const map = parseStyle(token.tableStyle);
+				const map = splitBlockArguments(token.tableStyle);
 				const cssStyle: Record<string, string> = {};
 
 				for(const part in map){
