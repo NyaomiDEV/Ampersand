@@ -20,7 +20,9 @@ const emojiExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 		{
 			name: "emoji",
 			level: "inline",
-			start(src) { return src.match(emojiRegex)?.index; },
+			start(src) {
+				return src.match(emojiRegex)?.index;
+			},
 			tokenizer(src: string) {
 				const match = tokenizerRule.exec(src);
 				if (match) {

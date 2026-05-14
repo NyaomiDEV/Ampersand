@@ -1,5 +1,6 @@
 import { h, type VNode } from "vue";
 import { MarkedExtension } from "marked";
+import { splitList } from "./utils";
 
 const textShadowExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [
@@ -11,10 +12,22 @@ const textShadowExtension: MarkedExtension<(VNode | string)[], VNode | string> =
 				const rule = /^\[sh=(.+?)\](.+?)\[\/sh\]/;
 				const match = rule.exec(src);
 				if (match) {
+					const shadows = splitList(match[1] || "");
+
+					const isValid = shadows.reduce((p, c) => {
+						if (!p) return p;
+						if(c.includes(",")) return false;
+
+						const a = document.createElement("div");
+						a.style.textShadow = c;
+						return a.style.textShadow.replace(/\s+/g, "").length > 0;
+					}, true);
+					if (!isValid) return;
+
 					const token = {
 						type: "textShadow",
 						raw: match[0],
-						shadow: match[1],
+						shadows,
 						text: match[2],
 						tokens: this.lexer.inlineTokens(match[2])
 					};
@@ -23,8 +36,8 @@ const textShadowExtension: MarkedExtension<(VNode | string)[], VNode | string> =
 				return;
 			},
 			renderer(token) {
-				if(token.shadow.length){
-					const cssStyle = `--markdown-text-shadow: ${token.shadow};`;
+				if(token.shadows.length){
+					const cssStyle = `--markdown-text-shadow: ${(token.shadows as string[]).join(", ")};`;
 
 					return h("span", {
 						class: "text-shadow",

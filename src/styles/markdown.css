@@ -231,7 +231,7 @@
 	}
 
 	span.text-color-fg {
-		background: linear-gradient(var(--markdown-text-fg-degrees), var(--markdown-text-fg-colors));
+		background: linear-gradient(in var(--markdown-text-fg-colorspace) var(--markdown-text-fg-degrees), var(--markdown-text-fg-colors));
 		-webkit-background-clip: text;
 		background-clip: text;
 		color: transparent;
@@ -240,7 +240,7 @@
 	span.text-color-bg {
 		border-radius: 4px;
 		padding: 2px 4px;
-		background: linear-gradient(var(--markdown-text-bg-degrees), var(--markdown-text-bg-colors));
+		background: linear-gradient(in var(--markdown-text-bg-colorspace) var(--markdown-text-bg-degrees), var(--markdown-text-bg-colors));
 
 		&:has(span.text-border) {
 			padding: 0;

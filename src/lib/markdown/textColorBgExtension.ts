@@ -1,6 +1,6 @@
 import { h, type VNode } from "vue";
 import { MarkedExtension } from "marked";
-import { isValidCssColor } from "./utils";
+import { isColorSpace, isCssLength, isPercentage, isValidCssColor, splitList } from "./utils";
 
 const textColorBgExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [
@@ -12,18 +12,35 @@ const textColorBgExtension: MarkedExtension<(VNode | string)[], VNode | string> 
 				const rule = /^\[bg=(.+?)\](.+?)\[\/bg\]/;
 				const match = rule.exec(src);
 				if (match) {
+					let colorspace = "srgb";
 					let degrees = "90deg";
-					const colors = match[1].split(":");
+					const colors = splitList(match[1] || "");
+
+					if(isColorSpace(colors[0]))
+						colorspace = colors.shift()!;
 
 					if (colors[0].match(/(?: ?(?:top|left|right|bottom)){1,2}|(?:-?\d*.?\d+(?:deg|grad|rad|turn))/) !== null) 
 						degrees = colors.shift()!;
 
-					if(!colors.reduce((p, c) => p ? isValidCssColor(c) : p, true))
+					if(!colors.reduce(
+						(p, c) => {
+							if(!p) return p;
+							const parts = c.split(" ");
+							if (!parts.length || parts.length > 3) return false;
+							const color = parts.shift()!;
+							if(!isValidCssColor(color)) return false;
+							const percentagesIsValid = parts.reduce((p, c) => p ? (isCssLength(c) || isPercentage(c)) : p, true);
+							if(!percentagesIsValid) return false;
+							return true;
+						},
+						true
+					))
 						return; // one wasn't a real color
 						
 					const token = {
 						type: "textColorBg",
 						raw: match[0],
+						colorspace,
 						degrees,
 						colors,
 						text: match[2],
@@ -48,6 +65,7 @@ const textColorBgExtension: MarkedExtension<(VNode | string)[], VNode | string> 
 
 				if(colors.length){
 					const cssStyle: Record<string, string> = {
+						"--markdown-text-bg-colorspace": token.colorspace,
 						"--markdown-text-bg-colors": colors.join(", "),
 						"--markdown-text-bg-degrees": directions.includes(token.degrees) ? `to ${token.degrees}` : token.degrees
 					};

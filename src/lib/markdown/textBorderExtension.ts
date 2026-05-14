@@ -1,5 +1,6 @@
 import { h, type VNode } from "vue";
 import { MarkedExtension } from "marked";
+import { splitList } from "./utils";
 
 const textBorderExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [
@@ -11,10 +12,23 @@ const textBorderExtension: MarkedExtension<(VNode | string)[], VNode | string> =
 				const rule = /^\[bt=(.+?)\](.+?)\[\/bt\]/;
 				const match = rule.exec(src);
 				if (match) {
+					const borders = splitList(match[1] || "");
+
+					const isValid = borders.reduce((p, c) => {
+						if (!p) return p;
+
+						const a = document.createElement("div");
+						a.style.borderTop = c;
+						return a.style.borderTop.replace(/\s+/g, "").length > 0;
+					}, true);
+
+
+					if(!isValid) return;
+
 					const token = {
 						type: "textBorder",
 						raw: match[0],
-						border: match[1],
+						borders,
 						text: match[2],
 						tokens: this.lexer.inlineTokens(match[2])
 					};
@@ -23,8 +37,8 @@ const textBorderExtension: MarkedExtension<(VNode | string)[], VNode | string> =
 				return;
 			},
 			renderer(token) {
-				if(token.border.length){
-					const borders = (token.border as string).split(":").map(x => x.trim());
+				if(token.borders.length){
+					const borders = token.borders as string[];
 					const cssStyle: Record<string, string> = {};
 					switch(borders.length){
 						case 1:

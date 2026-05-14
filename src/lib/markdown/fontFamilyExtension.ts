@@ -3,8 +3,6 @@ import { MarkedExtension } from "marked";
 import MarkdownFontFamily from "../../components/MarkdownFontFamily.vue";
 import { fontFamilies } from "../util/misc";
 
-const disallowedFontParameters = ["wght", "wdth", "slnt", "ital", "opsz"];
-
 const fontFamilyExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [
 		{
@@ -19,11 +17,10 @@ const fontFamilyExtension: MarkedExtension<(VNode | string)[], VNode | string> =
 
 					const parameters = _para.map(x => {
 						const parts = x.trim().split(" ");
-						if(disallowedFontParameters.includes(parts[0].toString()))
-							return undefined;
-
 						return [parts[0].toUpperCase(), parseFloat(parts[1])];
 					}).filter(x => !!x);
+
+					if(!family.startsWith("@") && !fontFamilies[family]) return;
 
 					const token = {
 						type: "fontFamily",

@@ -1,6 +1,7 @@
 import { h, type VNode } from "vue";
 import { MarkedExtension } from "marked";
 import Marquee from "../../components/Marquee.vue";
+import { splitList } from "./utils";
 
 const marqueeExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [
@@ -9,17 +10,23 @@ const marqueeExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 			level: "block",
 			start(src: string) { return src.match(/\[mq=/)?.index; },
 			tokenizer(src: string) {
-				const rule = /^\[mq=(?<direction>top|bottom|left|right)(?: (?<duration>\d*\.?\d+)s)(?: (?<bouncy>bouncy))?\](?<text>.+?)\[\/mq\]/;
+				const rule = /^\[mq=(.+?)\](.+?)\[\/mq\]/;
 				const match = rule.exec(src);
 				if (match) {
+					const parts = splitList(match[1] || "");
+					const direction = parts.find(x => ["top", "bottom", "left", "right"].includes(x));
+					if(!direction) return;
+					const isBouncy = parts.indexOf("bouncy") > 0;
+					const duration = parts.find(x => x.match(/\d*\.?\d+s/) !== null);
+
 					const token = {
 						type: "marquee",
 						raw: match[0],
-						direction: match.groups?.direction,
-						duration: match.groups?.duration ? parseFloat(match.groups.duration) : undefined,
-						bouncy: !!match.groups?.bouncy,
-						text: match.groups?.text,
-						tokens: this.lexer.blockTokens(match.groups!.text)
+						direction,
+						duration: duration ? parseFloat(duration.replaceAll("s", "")) : undefined,
+						bouncy: isBouncy,
+						text: match[2],
+						tokens: this.lexer.blockTokens(match[2])
 					};
 					return token;
 				}

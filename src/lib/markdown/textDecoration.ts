@@ -11,6 +11,11 @@ const textDecorationExtension: MarkedExtension<(VNode | string)[], VNode | strin
 				const rule = /^\[td=(.+?)\](.+?)\[\/td\]/;
 				const match = rule.exec(src);
 				if (match) {
+					// validation
+					const a = document.createElement("div");
+					a.style.textDecoration = match[1];
+					if(a.style.textDecoration.replace(/\s+/g, "").length <= 0) return;
+
 					const token = {
 						type: "textDecoration",
 						raw: match[0],
