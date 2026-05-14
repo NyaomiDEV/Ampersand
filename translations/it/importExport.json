@@ -18,6 +18,10 @@
 		"desc": "Per i file di backup creati con Ampersand < 0.2.0",
 		"note": "Le vecchie versioni di Ampersand utilizzavano un formato di file (ampdb) ormai obsoleto. Se conservi dei vecchi backup, assicurati di importarli ora e di esportarli nuovamente poiché questa opzione verrà rimossa tra poco."
 	},
+	"jsonExport": {
+		"title": "Esporta i tuoi dati in un file JSON",
+		"desc": "Fai il backup dei tuoi dati in un formato che può essere importato in altre applicazioni e strumenti"
+	},
 	"spImport": "Importa i tuoi dati da un export di Simply Plural",
 	"ocImport": "Importa i tuoi dati da un export di Octocon.",
 	"pkImport": "Importa i tuoi dati da un export di PluralKit",
@@ -32,6 +36,8 @@
 		"exportedAppIos": "Il backup è stato esportato nella cartella Ampersand dell'app Documenti.",
 		"exportedReport": "Il report è stato salvato nella posizione scelta.",
 		"exportedReportIos": "Il report è stato salvato nella cartella Ampersand dell'app Documenti.",
+		"exportedJson": "Il file JSON è stato salvato nella posizione scelta.",
+		"exportedJsonIos": "Il file JSON è stato salvato nella cartella Ampersand dell'app Documenti.",
 		"errorExport": "Errore durante l'esportazione del backup.",
 		"error": "Errore durante l'importazione del backup.",
 		"errorOc": "Errore durante l'importazione dell'export di Octocon.",

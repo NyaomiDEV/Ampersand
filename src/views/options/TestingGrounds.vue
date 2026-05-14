@@ -30,7 +30,7 @@
 	import importMD from "@material-symbols/svg-600/rounded/download.svg";
 	import exportMD from "@material-symbols/svg-600/rounded/upload.svg";
 	import { onMounted, ref } from "vue";
-	import { exportDatabaseToJSON, importDatabaseFromJSON } from "../../lib/db/ioutils/json";
+	import { importDatabaseFromJSON } from "../../lib/db/ioutils/json";
 	import { getTables } from "../../lib/db";
 	import ConsoleLog from "../../components/ConsoleLog.vue";
 	
@@ -164,29 +164,6 @@
 		loading.value = false;
 	}
 
-	async function commitExportJSON(){
-		loading.value = true;
-		try{
-			const { progress, status } = exportDatabaseToJSON();
-
-			progress.addEventListener("start", () => {
-				barProgress.value = 0;
-			});
-			progress.addEventListener("progress", (evt) => {
-				barProgress.value = (evt as CustomEvent).detail.progress;
-			});
-			progress.addEventListener("finish", () => {
-				barProgress.value = -1;
-			});
-
-			if(!await status) throw new Error();
-			await toast("JSON Exported");
-		}catch(_e){
-			await toast(i18next.t("importExport:status.errorExport"));
-		}
-		loading.value = false;
-	}
-
 	async function commitImportJSON(){
 		loading.value = true;
 		try{
@@ -275,13 +252,6 @@
 
 			<IonListHeader>Import / Export but we're desperate</IonListHeader>
 			<IonList>
-				<IonItemDivider>Experimental JSON support</IonItemDivider>
-				<IonItem button :detail="true" @click="commitExportJSON()">
-					<IonIcon slot="start" :icon="exportMD" />
-					<IonLabel>
-						<h3>Export JSON</h3>
-					</IonLabel>
-				</IonItem>
 				<IonItem button :detail="true" @click="commitImportJSON">
 					<IonIcon slot="start" :icon="importMD" />
 					<IonLabel>

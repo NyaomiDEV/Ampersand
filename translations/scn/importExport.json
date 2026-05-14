@@ -18,6 +18,10 @@
 		"desc": "Pi i file di backup criati cu Ampersand < 0.2.0",
 		"note": "I vecchi virsioni di Ampersand usàvanu un furmatu di file (ampdb) ormai anticu. Si tìni vecchi backup, assicùrati di mportàlli ora e d'esportàlli n'autra vota pirchì st'opzioni veni livata ntra pocu."
 	},
+	"jsonExport": {
+		"title": "Esporta li tò dati nta un file JSON",
+		"desc": "Fai lu backup dî tò dati nta un furmatu ca pò èssiri mpurtatu nta àutri applicazzioni e strumenti"
+	},
 	"spImport": "Mporta i tò dati d'un export di Simply Plural",
 	"ocImport": "Mporta i tò dati d'un export di Octocon.",
 	"pkImport": "Mporta i tò dati d'un export di PluralKit",
@@ -32,6 +36,8 @@
 		"exportedAppIos": "U backup fu esportatu nâ cartedda Ampersand de l'app Documenti.",
 		"exportedReport": "U rapportu fù sarvatu unni scigghisti tu.",
 		"exportedReportIos": "U rapportu fù sarvatu nâ cartedda Ampersand de l'app Documenti.",
+		"exportedJson": "U file JSON fù sarvatu unni scigghisti tu.",
+		"exportedJsonIos": "U file JSON fù sarvatu nâ cartedda Ampersand de l'app Ducumenti.",
 		"errorExport": "Erruri duranti l'esportazzioni dû backup.",
 		"error": "Erruri duranti l'importazzioni dû backup.",
 		"errorOc": "Erruri duranti l'importazzioni de l'export di Octocon.",

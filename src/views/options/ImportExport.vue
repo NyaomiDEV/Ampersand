@@ -11,6 +11,7 @@
 	import { System } from "../../lib/db/entities";
 	import { platform } from "@tauri-apps/plugin-os";
 	import { exportArchive, importArchive } from "../../lib/db/ioutils/archive";
+	import { exportDatabaseToJSON } from "../../lib/db/ioutils/json";
 	import { exportReport } from "../../lib/db/ioutils/report";
 	import { addModal, removeModal } from "../../lib/modals";
 	import SystemSelect from "../../modals/SystemSelect.vue";
@@ -21,6 +22,7 @@
 	import spMD from "@material-symbols/svg-600/rounded/spa.svg";
 	import tupMD from "@material-symbols/svg-600/rounded/package_2.svg";
 	import pkMD from "@material-symbols/svg-600/rounded/pet_supplies.svg";
+	import jsonMD from "@material-symbols/svg-600/rounded/data_object.svg";
 
 	const loading = ref(false);
 	const barProgress = ref(-1);
@@ -166,6 +168,33 @@
 
 	// --- THIRD PARTY
 
+	async function exportJson(){
+		loading.value = true;
+		try{
+			const { progress, status } = exportDatabaseToJSON();
+
+			progress.addEventListener("start", () => {
+				barProgress.value = 0;
+			});
+			progress.addEventListener("progress", (evt) => {
+				barProgress.value = (evt as CustomEvent).detail.progress;
+			});
+			progress.addEventListener("finish", () => {
+				barProgress.value = -1;
+			});
+
+			if(!await status) throw new Error();
+			await toast(
+				platform() === "ios"
+					? i18next.t("importExport:status.exportedJsonIos")
+					: i18next.t("importExport:status.exportedJson")
+			);
+		}catch(_e){
+			await toast(i18next.t("importExport:status.errorExport"));
+		}
+		loading.value = false;
+	}
+
 	async function importSp() {
 		loading.value = true;
 		try{
@@ -296,6 +325,14 @@
 
 			<IonListHeader>{{ $t("importExport:thirdPartyHeader") }}</IonListHeader>
 			<IonList>
+
+				<IonItem button :detail="true" @click="exportJson">
+					<IonIcon slot="start" :icon="jsonMD" />
+					<IonLabel>
+						<h3>{{ $t("importExport:jsonExport.title") }}</h3>
+						<p>{{ $t("importExport:jsonExport.desc") }}</p>
+					</IonLabel>
+				</IonItem>
 
 				<IonItem button :detail="true" @click="importSp">
 					<IonIcon slot="start" :icon="spMD" />

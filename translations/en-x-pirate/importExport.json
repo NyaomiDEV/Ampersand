@@ -5,7 +5,7 @@
 	"exportHeader": "Send away",
 	"dbExport": {
 		"title": "Export yer charts",
-		"desc": "Backup yer current charts to a file ye can hide elsewhere"
+		"desc": "Backup yer charts to a file ye can hide elsewhere"
 	},
 	"reportExport": {
 		"title": "Make a scroll o' accounts",
@@ -17,6 +17,10 @@
 		"title": "Bring charts from an old version o' Ampersand",
 		"desc": "For backup files made with Ampersand < 0.2.0",
 		"note": "Old versions used a format (ampdb) that be outdated. If ye have old backups, bring 'em aboard now and re-export 'em, or they'll be lost to the depths soon."
+	},
+	"jsonExport": {
+		"title": "Plunder yer data into a JSON file",
+		"desc": "Stow away yer charts in a way that can be hauled aboard other vessels and tools"
 	},
 	"pkImport": "Bring charts from a PluralKit export",
 	"ocImport": "Bring charts from an Octocon export",
@@ -32,6 +36,8 @@
 		"exportedAppIos": "The backup has been sent to the Ampersand folder in the Files app.",
 		"exportedReport": "The scroll o' accounts has been sent to the spot ye chose.",
 		"exportedReportIos": "The scroll o' accounts has been sent to the Ampersand folder in the Files app.",
+		"exportedJSON": "The JSON file has been sent to the spot ye chose.",
+		"exportedJSONIos": "The JSON file has been sent to the Ampersand folder in the Files app.",
 		"errorExport": "Error while sendin' the backup away.",
 		"error": "Error while bringin' the backup aboard.",
 		"errorOc": "Error while bringin' the Octocon charts aboard.",

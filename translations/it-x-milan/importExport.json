@@ -18,6 +18,10 @@
 		"desc": "Per i backup < 0.2.0",
 		"note": "Il formato .ampdb è preistoria. Importa ora o perdi tutto, vedi tu."
 	},
+	"jsonExport": {
+		"title": "Esporta i tuoi dati in un file JSON",
+		"desc": "Fai il backup dei tuoi dati in un formato che può essere importato in altre app e tool"
+	},
 	"spImport": "Importa da Simply Plural",
 	"ocImport": "Importa da Octocon",
 	"pkImport": "Importa da PluralKit",
@@ -32,6 +36,8 @@
 		"exportedAppIos": "Backup salvato nella cartella Ampersand dell'app Documenti.",
 		"exportedReport": "Report salvato dove hai detto tu.",
 		"exportedReportIos": "Report salvato nella cartella Ampersand dell'app Documenti.",
+		"exportedJson": "File JSON salvato dove hai detto tu.",
+		"exportedJsonIos": "File JSON salvato nella cartella Ampersand dell'app Documenti.",
 		"errorExport": "Errore nell'export. Disastro.",
 		"error": "Errore nell'import. Non va un cazzo.",
 		"errorOc": "Errore import Octocon.",

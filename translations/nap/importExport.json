@@ -7,12 +7,20 @@
 		"title": "Esporta 'e date tuoje",
 		"desc": "Faje 'o backup d''e date tuoje accussì 'e può tènere 'a n'ata parte"
 	},
+	"reportExport": {
+		"title": "Faje 'nu report",
+		"desc": "Sanda 'nu report pe' 'o spartere cu 'e terapiste e 'a ggente 'e casa"
+	},
 	"dbImportDesc": "Attenziò! Chisto va a sovrascrivere ogne dato ca già ce sta",
 	"dbImport": "Mpurta 'e date tuoje 'a nu file 'e backup",
 	"dbImportOld": {
 		"title": "Mpurta 'e date tuoje 'a na vecchia verziòne 'e Ampersand",
 		"desc": "Pe' 'e file 'e backup criate cu Ampersand < 0.2.0",
 		"note": " 'E vecchie verziune 'e Ampersand ausàvano nu formato 'e file (ampdb) ca mo è obsoleto. Si tiene ancora 'e vecchie backup, vide 'e mmurtà mo e d'esportà n'ata vota pecché st'opziòne venarrà levata ampressa."
+	},
+	"jsonExport": {
+		"title": "Esporta 'e date tuoje dint'a nu file JSON",
+		"desc": "Faje 'o backup d''e date tuoje dint'a nu formato ca se po' mpurtà dint'a n'ata applicazione o n'atu strumento"
 	},
 	"spImport": "Mpurta 'e date tuoje 'a n'esportazziòne 'e Simply Plural",
 	"ocImport": "Mpurta 'e date tuoje 'a n'esportazziòne 'e Octocon.",
@@ -26,6 +34,10 @@
 		"importedTu": "L'esportazziòne 'e Tupperbox è stata mpurtata. Pe' piacere, fa' partì n'ata vota l'app.",
 		"exportedApp": "'O backup è stato esportato addò asseglie tu.",
 		"exportedAppIos": "'O backup è stato esportato dint'â cartella Ampersand de l'app Documenti.",
+		"exportedReport": "'O report è stato sarvato addò asseglie tu.",
+		"exportedReportIos": "'O report è stato sarvato dint'â cartella Ampersand de l'app Documenti.",
+		"exportedJson": "'O file JSON è stato salvato addò asseglie tu.",
+		"exportedJsonIos": "'O file JSON è stato salvato dint'â cartella Ampersand de l'app Documenti.",
 		"errorExport": "Errore mentr'esportavo 'o backup.",
 		"error": "Errore mentr'impurtavo 'o backup.",
 		"errorOc": "Errore mentr'impurtavo l'esportazziòne 'e Octocon.",
