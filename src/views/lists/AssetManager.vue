@@ -79,8 +79,8 @@
 <template>
 	<IonPage>
 		<SpinnerFullscreen v-if="!assets" />
-		<IonContent v-else class="size-large">
-			<CollapsibleHeaderbar>
+		<IonContent v-else scroll-events>
+			<CollapsibleHeaderbar class="size-large">
 				<IonToolbar>
 					<IonBackButton
 						v-if="isStandalone"
