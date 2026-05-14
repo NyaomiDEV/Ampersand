@@ -34,3 +34,10 @@
 		<component :is="star" v-for="star in stars" :key="star.key" />
 	</span>
 </template>
+
+<style scoped>
+	span.rating {
+		display: inline-block;
+		width: max-content;
+	}
+</style>
