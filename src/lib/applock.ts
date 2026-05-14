@@ -103,7 +103,6 @@ export function disableApplock(plaintextPwd: string) {
 }
 
 export function enableApplock(plaintextPwd: string) {
-	console.log(isLocked.value, securityConfig.password);
 	if (isLocked.value || securityConfig.password) return false;
 
 	securityConfig.password = hashPassword(plaintextPwd);
