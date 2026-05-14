@@ -1,10 +1,10 @@
 <script setup lang="ts">
 	import { watch } from "vue";
-	import { IonPage, IonProgressBar, useIonRouter } from "@ionic/vue";
+	import { IonContent, IonPage, IonProgressBar, useIonRouter } from "@ionic/vue";
 	import { useRoute } from "vue-router";
 
 	import { init, initProgress } from "../lib/db";
-	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
+	import Spinner from "../components/Spinner.vue";
 	
 	const router = useIonRouter();
 	const route = useRoute();
@@ -17,7 +17,35 @@
 
 <template>
 	<IonPage>
-		<IonProgressBar :value="initProgress" />
-		<SpinnerFullscreen />
+		<IonContent>
+			<div class="flex">
+				<div class="text">
+					<h2>{{ $t("other:loading") }}</h2>
+					<Spinner size="96px" />
+				</div>
+				<IonProgressBar :value="initProgress" />
+			</div>
+		</IonContent>
 	</IonPage>
 </template>
+
+<style scoped>
+	ion-content {
+		--padding-bottom: var(--ion-safe-area-bottom, 0px);
+	}
+
+	div.flex, div.text {
+		display: flex;
+		text-align: center;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+		width: 100%;
+		height: 100%;
+	}
+
+	div.text {
+		gap: 16px;
+		padding: 1em;
+	}
+</style>

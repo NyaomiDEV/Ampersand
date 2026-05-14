@@ -26,7 +26,7 @@
 	});
 
 	onMounted(() => {
-		let timeout = setTimeout(dismissSplash, 2000);
+		let timeout = setTimeout(dismissSplash, 3000);
 		watch(init, async () => {
 			if(!init.value) return;
 

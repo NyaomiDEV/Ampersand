@@ -3,6 +3,7 @@
 		"local": "English",
 		"inEnglish": "English"
 	},
+	"loading": "Ampersand is loading",
 	"genericDeleteDesc": "You won't be able to undo this action!",
 	"addTimestamp": "Add timestamp",
 	"memberMention": "Mention a member",
