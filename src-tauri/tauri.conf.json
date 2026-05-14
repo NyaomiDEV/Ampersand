@@ -53,7 +53,8 @@
     ],
     "android": {
       "versionCode": 1613,
-      "minSdkVersion": 29
+      "minSdkVersion": 29,
+      "debugApplicationIdSuffix": ".debug"
     },
     "iOS": {
       "bundleVersion": "1613",

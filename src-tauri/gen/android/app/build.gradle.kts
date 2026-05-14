@@ -68,9 +68,9 @@ android {
             )
         }
         getByName("debug") {
+            applicationIdSuffix = ".debug"
             manifestPlaceholders["usesCleartextTraffic"] = "true"
             manifestPlaceholders["appName"] = "@string/app_name_debug"
-            //applicationIdSuffix = ".debug"
             if(
                 System.getenv("npm_config_argv") !== null &&
                 System.getenv("npm_config_argv").contains("[\"tauri\",\"android\",\"dev\"]")
