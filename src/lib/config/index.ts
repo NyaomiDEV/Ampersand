@@ -1,8 +1,13 @@
-import { reactive, watch } from "vue";
+import { reactive, toRaw, watch } from "vue";
 import type { AccessibilityConfig, AppConfig, SecurityConfig } from "./types";
 import { load } from "@tauri-apps/plugin-store";
 import { appConfigDir, sep } from "@tauri-apps/api/path";
 import { nilUid } from "../util/consts";
+
+const store = await load(`${await appConfigDir() + sep()}appConfig.json`);
+
+// save switch -- means we commit to the underlying store or not
+let shouldSave = true;
 
 export const defaultAppConfig: AppConfig = {
 	locale: {},
@@ -85,10 +90,28 @@ export const defaultSecurityConfig: SecurityConfig = {
 	allowRemoteContent: false
 };
 
-const store = await load(`${await appConfigDir() + sep()}appConfig.json`);
-const appConfig = reactive<AppConfig>(merge<AppConfig>({}, structuredClone(defaultAppConfig), await get("appConfig")));
-const accessibilityConfig = reactive<AccessibilityConfig>(merge<AccessibilityConfig>({}, structuredClone(defaultAccessibilityConfig), await get("accessibilityConfig")));
-const securityConfig = reactive<SecurityConfig>(merge<SecurityConfig>({}, structuredClone(defaultSecurityConfig), await get("securityConfig")));
+export const appConfig = reactive({}) as AppConfig;
+export const accessibilityConfig = reactive({}) as AccessibilityConfig;
+export const securityConfig = reactive({}) as SecurityConfig;
+
+export async function initConfig(){
+	shouldSave = false;
+	for (const key of Object.keys(appConfig))
+		delete appConfig[key];
+
+	for (const key of Object.keys(accessibilityConfig))
+		delete accessibilityConfig[key];
+
+	for (const key of Object.keys(securityConfig))
+		delete securityConfig[key];
+
+	shouldSave = true;
+	Object.assign(appConfig, merge<AppConfig>(structuredClone(defaultAppConfig), await get("appConfig")));
+	Object.assign(accessibilityConfig, merge<AccessibilityConfig>(structuredClone(defaultAccessibilityConfig), await get("accessibilityConfig")));
+	Object.assign(securityConfig, merge<SecurityConfig>({}, structuredClone(defaultSecurityConfig), await get("securityConfig")));
+}
+
+// Utility functions
 
 export function set(key: string, value: unknown): Promise<void> {
 	return store.set(key, value);
@@ -104,31 +127,62 @@ export async function get(key: string): Promise<object | undefined> {
 	return undefined;
 }
 
+function isObject(item: object): item is object {
+	return (item && typeof item === "object" && !Array.isArray(item));
+}
+
+function merge<T>(target: object, ...sources: (object | undefined)[]): T {
+	sources = sources.filter(x => !!x);
+	const source = sources.shift();
+	if (!source) return target as T;
+
+	if (isObject(target) && isObject(source)) {
+		for (const key in source) {
+			if (isObject(source[key])) {
+				if (!target[key]) Object.assign(target, { [key]: {} });
+				merge(target[key], source[key]);
+			} else
+				Object.assign(target, { [key]: source[key] });
+
+		}
+	}
+	return merge(target, ...sources);
+}
+
 export function resetConfig(){
-	for(const key of Object.getOwnPropertyNames(appConfig))
+	shouldSave = false;
+	for(const key of Object.keys(appConfig))
 		delete appConfig[key];
 
-	for (const key of Object.getOwnPropertyNames(accessibilityConfig))
+	for (const key of Object.keys(accessibilityConfig))
 		delete accessibilityConfig[key];
 
-	for (const key of Object.getOwnPropertyNames(securityConfig))
+	for (const key of Object.keys(securityConfig))
 		delete securityConfig[key];
 
+	shouldSave = true;
 	Object.assign(appConfig, structuredClone(defaultAppConfig));
 	Object.assign(accessibilityConfig, structuredClone(defaultAccessibilityConfig));
 	Object.assign(securityConfig, structuredClone(defaultSecurityConfig));
 }
 
+// init
+await initConfig();
+
+// watchers
 watch(appConfig, async () => {
-	await set("appConfig", { ...appConfig });
+	if(shouldSave)
+		await set("appConfig", structuredClone(toRaw(appConfig)));
 });
 
 watch(accessibilityConfig, async () => {
-	await set("accessibilityConfig", { ...accessibilityConfig });
+	if(shouldSave)
+		await set("accessibilityConfig", structuredClone(toRaw(accessibilityConfig)));
 });
 
 watch(securityConfig, async () => {
-	await set("securityConfig", { ...securityConfig });
+	if(shouldSave)
+		await set("securityConfig", structuredClone(toRaw(securityConfig)));
 });
 
 // config migration here
@@ -173,31 +227,3 @@ if ((accessibilityConfig as Record<string, unknown>).accentColor) {
 }
 // end config migration here
 
-// utils
-function isObject(item: object): item is object {
-	return (item && typeof item === "object" && !Array.isArray(item));
-}
-
-function merge<T>(target: object, ...sources: (object | undefined)[]): T {
-	sources = sources.filter(x => !!x);
-	const source = sources.shift();
-	if (!source) return target as T;
-
-	if (isObject(target) && isObject(source)) {
-		for (const key in source) {
-			if (isObject(source[key])) {
-				if (!target[key]) Object.assign(target, { [key]: {} });
-				merge(target[key], source[key]);
-			} else
-				Object.assign(target, { [key]: source[key] });
-
-		}
-	}
-	return merge(target, ...sources);
-}
-
-export {
-	appConfig,
-	accessibilityConfig,
-	securityConfig
-};

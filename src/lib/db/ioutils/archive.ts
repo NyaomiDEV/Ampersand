@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { decodeMultiStream, encode as msgpackEncode } from "@msgpack/msgpack";
-import { accessibilityConfig, appConfig, securityConfig } from "../../config";
+import { accessibilityConfig, appConfig, initConfig, securityConfig } from "../../config";
 import { getTables } from "..";
 import type { Table } from "../types";
 import { deleteNull, replace, walk, revive, walkAsync } from "../../serialization";
@@ -136,6 +136,7 @@ export function importArchive() {
 								Object.assign(appConfig, _data.data.appConfig);
 								Object.assign(accessibilityConfig, _data.data.accessibilityConfig);
 								Object.assign(securityConfig, _data.data.securityConfig);
+								await initConfig();
 								break;
 							}
 							// Migrate system (old) to systems (new) upon import

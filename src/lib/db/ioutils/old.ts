@@ -1,5 +1,5 @@
 import { decodeAsync, encode } from "@msgpack/msgpack";
-import { accessibilityConfig, appConfig, securityConfig } from "../../config";
+import { accessibilityConfig, appConfig, initConfig, securityConfig } from "../../config";
 import { getTables } from "..";
 import type { Table } from "../types";
 import { deleteNull, replace, revive, walk, walkAsync } from "../../serialization";
@@ -142,6 +142,8 @@ export function importDatabaseFromBinary() {
 
 			Object.assign(securityConfig, revived.config.securityConfig);
 			progressCurrent++;
+
+			await initConfig();
 
 			for (const key of Object.getOwnPropertyNames(revived.database)) {
 				// also mitigate system (old) to systems (new)

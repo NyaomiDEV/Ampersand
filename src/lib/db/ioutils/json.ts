@@ -9,9 +9,10 @@ import { open, save } from "../../native/open";
 import { Asset, BoardMessage, FrontingEntry, JournalPost, Member, System, UUIDable } from "../entities";
 import { AssetJSON, BoardMessageJSON, FrontingEntryJSON, JournalPostJSON, MemberJSON, SerializableJson, SystemJSON } from "./json_types";
 import { fromDataURI, toDataURI } from "../../util/blob";
-import { appConfig, accessibilityConfig, securityConfig } from "../../config";
+import { appConfig, accessibilityConfig, securityConfig, initConfig } from "../../config";
 import { ArrayStream, arrayStream, matchesJsonPathSelector, objectStream, parseJsonStreamWithPaths, SerializableJsonValue, streamToIterable, stringifyJsonStream } from "json-stream-es";
 import { intoStream } from "../utils";
+import { AccessibilityConfig, AppConfig, SecurityConfig } from "../../config/types";
 
 export function exportDatabaseToJSON() {
 
@@ -130,7 +131,14 @@ export function exportDatabaseToJSON() {
 			const fd = await openFile(path, { create: true, write: true, truncate: true });
 
 			const json = stringifyJsonStream({
-				config: { appConfig, accessibilityConfig, securityConfig },
+				config: {
+					// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+					appConfig: appConfig as SerializableJson<AppConfig>,
+					// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+					accessibilityConfig: accessibilityConfig as SerializableJson<AccessibilityConfig>,
+					// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+					securityConfig: securityConfig as SerializableJson<SecurityConfig>
+				},
 				database: objectStream(generateDatabase())
 			});
 			const reader = json.getReader();
@@ -253,12 +261,15 @@ export function importDatabaseFromJSON() {
 						switch(path[1]){
 							case "appConfig":
 								Object.assign(appConfig, value);
+								await initConfig();
 								break;
 							case "accessibilityConfig":
 								Object.assign(accessibilityConfig, value);
+								await initConfig();
 								break;
 							case "securityConfig":
 								Object.assign(securityConfig, value);
+								await initConfig();
 								break;
 						}
 						break;
