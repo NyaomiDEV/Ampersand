@@ -21,8 +21,8 @@
 	}
 
 	h2 {
-		font: var(--md3-title-large);
-		letter-spacing: var(--md3-title-large-letter-spacing);
+		font: var(--md3-title-variant-large);
+		letter-spacing: var(--md3-title-variant-large-letter-spacing);
 		margin: unset;
 	}
 

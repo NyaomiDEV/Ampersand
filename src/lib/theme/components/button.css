@@ -94,8 +94,8 @@
 
 .md ion-button.button-large {
 	height: 96px;
-	font: var(--md3-title-large);
-	letter-spacing: var(--md3-title-large-letter-spacing);
+	font: var(--md3-title-variant-large);
+	letter-spacing: var(--md3-title-variant-large-letter-spacing);
 
 	--border-width: 2px;
 	--border-radius: 48px;

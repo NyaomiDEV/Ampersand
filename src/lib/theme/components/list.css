@@ -17,6 +17,7 @@
 .md ion-list-header {
 	padding-left: 24px;
 	--color: rgb(var(--md3-primary));
+	font: var(--md3-title-medium);
 }
 
 .md ion-item {
@@ -53,13 +54,13 @@
 
 	ion-label {
 		> h1 {
-			font: var(--md3-title-large);
-			letter-spacing: var(--md3-title-large-letter-spacing);
+			font: var(--md3-title-variant-large);
+			letter-spacing: var(--md3-title-variant-large-letter-spacing);
 		}
 
 		> h2 {
-			font: var(--md3-title-medium);
-			letter-spacing: var(--md3-title-medium-letter-spacing);
+			font: var(--md3-title-variant-medium);
+			letter-spacing: var(--md3-title-variant-medium-letter-spacing);
 		}
 
 		> h3 {

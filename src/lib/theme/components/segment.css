@@ -5,8 +5,8 @@
 }
 
 .md ion-segment ion-segment-button {
-	font: var(--md3-title-small);
-	letter-spacing: var(--md3-title-small-letter-spacing);
+	font: var(--md3-title-variant-small);
+	letter-spacing: var(--md3-title-variant-small-letter-spacing);
 	text-transform: unset;
 
 	--ripple-color: transparent !important;
