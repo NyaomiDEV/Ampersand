@@ -36,5 +36,5 @@ export function intoStream(fdOrPath: FileHandle | string, onRead?: (bytes: numbe
 		}
 	};
 
-	return new ReadableStream(source);
+	return new ReadableStream(source, { highWaterMark: 4 });
 }
