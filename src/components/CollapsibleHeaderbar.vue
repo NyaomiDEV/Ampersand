@@ -41,23 +41,16 @@
 
 		contentOffset.value = Math.max(0, rtl ? ((container.offsetWidth - content.offsetWidth - content.offsetLeft) - paddingInline) : (content.offsetLeft - paddingInline));
 
-		if(props.isCssAnim){
-			if(scrollerEl.tagName.toLowerCase() === "ion-content") {
-				void (scrollerEl as globalThis.HTMLIonContentElement).getScrollElement()
-					.then(el => el.style.setProperty("scroll-timeline", "--scroller y"));
-			} else 
-				scrollerEl.style.setProperty("scroll-timeline", "--scroller y");
-		} else {
-			if(scrollerEl.tagName.toLowerCase() === "ion-content"){
-				// eslint-disable-next-line @typescript-eslint/no-explicit-any
-				scrollerEl.addEventListener("ionScroll", (ev: any) => {
-					scrollDelta.value = `${ev.detail.scrollTop}`;
-				});
-			} else {
-				scrollerEl.addEventListener("scroll", () => {
-					scrollDelta.value = `${scrollerEl.scrollTop}`;
-				});
-			}
+		let el = scrollerEl;
+		if(el.tagName.toLowerCase() === "ion-content")
+			el = await (el as globalThis.HTMLIonContentElement).getScrollElement();
+
+		if(props.isCssAnim)
+			el.style.setProperty("scroll-timeline", "--scroller y");
+		else {
+			el.addEventListener("scroll", () => {
+				scrollDelta.value = `${el.scrollTop}`;
+			});
 		}
 	});
 </script>
@@ -155,7 +148,7 @@
 			transform: translateY(0);
 
 			:deep(ion-toolbar:first-child) {
-				:not([slot]) {
+				> :not([slot]) {
 					animation-range-start: 0px;
 					animation-range-end: var(--transition-size);
 					animation-timeline: --scroller;
@@ -166,7 +159,7 @@
 					transform: translateX(calc(-1px * var(--content-offset)));
 				}
 
-				ion-title:not([slot]) {
+				> ion-title:not([slot]) {
 					animation-range-start: 0px;
 					animation-range-end: var(--transition-size);
 					animation-timeline: --scroller;
@@ -178,10 +171,10 @@
 					line-height: 2.5rem;
 				}
 
-				[slot="secondary"],
-				[slot="primary"],
-				[slot="start"],
-				[slot="end"] {
+				> [slot="secondary"],
+				> [slot="primary"],
+				> [slot="start"],
+				> [slot="end"] {
 					animation-range-start: 0px;
 					animation-range-end: var(--transition-size);
 					animation-timeline: --scroller;
@@ -194,12 +187,12 @@
 			}
 
 			&:dir(rtl) :deep(ion-toolbar:first-child) {
-				:not([slot]) {
+				> :not([slot]) {
 					animation-name: content_anim_rtl;
 					transform: translateX(calc(1px * var(--content-offset)));
 				}
 
-				ion-title:not([slot]) {
+				> ion-title:not([slot]) {
 					animation-name: content_anim_rtl, title_anim;
 					transform: translateX(calc(1px * var(--content-offset)));
 				}

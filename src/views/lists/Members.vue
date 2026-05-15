@@ -202,7 +202,7 @@
 <template>
 	<IonPage>		
 		<SpinnerFullscreen v-if="!members" />
-		<IonContent v-else :scroll-events="true">
+		<IonContent v-else>
 			<CollapsibleHeaderbar class="size-large">
 				<IonToolbar>
 					<IonBackButton

@@ -168,7 +168,7 @@
 
 <template>
 	<IonPage>
-		<IonContent :scroll-events="true">
+		<IonContent>
 			<CollapsibleHeaderbar class="size-large">
 				<IonToolbar>
 					<IonBackButton

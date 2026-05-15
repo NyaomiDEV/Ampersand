@@ -97,7 +97,7 @@
 <template>
 	<IonPage>
 		<SpinnerFullscreen v-if="!customFields" />
-		<IonContent v-else scroll-events>
+		<IonContent v-else>
 			<CollapsibleHeaderbar class="size-large">
 				<IonToolbar>
 					<IonBackButton
