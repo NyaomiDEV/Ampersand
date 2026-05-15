@@ -5,7 +5,7 @@ import { getMember, defaultMember } from "./members";
 import dayjs from "dayjs";
 import { filterJournalPost } from "../../search";
 import { TransactionStatus } from "../types";
-import { sortDate } from "../../util/misc";
+import { isUuid, sortDate } from "../../util/misc";
 
 export async function* getJournalPosts(maxIter = 10){
 	const uuids = db.journalPosts.index.toSorted(sortDate).map(x => x.uuid);
@@ -143,4 +143,12 @@ export async function getJournalPostsDays(query: string, start: Date, end: Date)
 
 		return occurrences;
 	}, new Map<number, number>());
+}
+
+export function getJournalUUIDByTitle(title: string) {
+	if (isUuid(title)) return title;
+	for (const x of db.journalPosts.index)
+		if(x.title!.toLowerCase() === title.toLowerCase()) return x.uuid;
+	
+	return undefined;
 }

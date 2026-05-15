@@ -4,10 +4,10 @@ import JournalChip from "../../components/journal/JournalChip.vue";
 import SystemChip from "../../components/system/SystemChip.vue";
 import TagChip from "../../components/tag/TagChip.vue";
 import { MarkedExtension } from "marked";
-import { getMember } from "../db/tables/members";
-import { getJournalPost } from "../db/tables/journalPosts";
-import { getSystem } from "../db/tables/system";
-import { getTag } from "../../lib/db/tables/tags";
+import { getMember, getMemberUUIDByName } from "../db/tables/members";
+import { getJournalPost, getJournalUUIDByTitle } from "../db/tables/journalPosts";
+import { getSystem, getSystemUUIDByName } from "../db/tables/system";
+import { getTag, getTagUUIDByName } from "../../lib/db/tables/tags";
 
 const mentionExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [{
@@ -40,7 +40,7 @@ const mentionExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 					type: "mention",
 					raw: match[0],
 					mentionedType,
-					uuid: match[2],
+					uuidOrName: match[2],
 					tokens: []
 				};
 				return token;
@@ -79,7 +79,9 @@ const mentionExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 				switch (token.mentionedType) {
 					case "member":
 						try {
-							token.member = await getMember(token.uuid);
+							const uuid = getMemberUUIDByName(token.uuidOrName as string);
+							if(!uuid) break;
+							token.member = await getMember(uuid);
 						} catch(e) {
 							console.error(e);
 						}
@@ -87,7 +89,9 @@ const mentionExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 
 					case "journal":
 						try {
-							token.post = await getJournalPost(token.uuid);
+							const uuid = getJournalUUIDByTitle(token.uuidOrName as string);
+							if (!uuid) break;
+							token.post = await getJournalPost(uuid);
 						} catch(e) {
 							console.error(e);
 						}
@@ -95,7 +99,9 @@ const mentionExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 
 					case "system":
 						try {
-							token.system = await getSystem(token.uuid);
+							const uuid = getSystemUUIDByName(token.uuidOrName as string);
+							if (!uuid) break;
+							token.system = await getSystem(uuid);
 						} catch (e) {
 							console.error(e);
 						}
@@ -103,7 +109,9 @@ const mentionExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 
 					case "tag":
 						try {
-							token.tag = await getTag(token.uuid);
+							const uuid = getTagUUIDByName(token.uuidOrName as string, false);
+							if (!uuid) break;
+							token.tag = await getTag(uuid);
 						} catch (e) {
 							console.error(e);
 						}

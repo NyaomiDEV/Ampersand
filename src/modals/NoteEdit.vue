@@ -14,14 +14,16 @@
 		IonItem,
 		modalController,
 		IonModal,
+		IonButton,
 	} from "@ionic/vue";
 
 	import saveMD from "@material-symbols/svg-600/rounded/save.svg";
 	import trashMD from "@material-symbols/svg-600/rounded/delete.svg";
+	import MemberSelect from "./MemberSelect.vue";
 
 	import { Note } from "../lib/db/entities";
 	import { newNote, updateNote, deleteNote } from "../lib/db/tables/notes";
-	import { ref, toRaw } from "vue";
+	import { ref, toRaw, useTemplateRef } from "vue";
 
 	import { PartialBy } from "../lib/types";
 	import { useTranslation } from "i18next-vue";
@@ -44,6 +46,8 @@
 	};
 
 	const note = ref({ ...(props.note || emptyNote) });
+
+	const memberTagModal = useTemplateRef("memberTagModal");
 
 	async function save(){
 		const uuid = note.value?.uuid;
@@ -107,6 +111,15 @@
 				<IonItem>
 					<ContentEditable v-model="note.content" fill="solid" :label="$t('notes:edit.content')" />
 				</IonItem>
+
+				<IonItem>
+					<IonButton fill="clear" @click="note.content = `${note.content || ''}<t:${Math.floor(Date.now() / 1000)}:f>`">
+						{{ $t("other:addTimestamp") }}
+					</IonButton>
+					<IonButton fill="clear" @click="memberTagModal?.$el.present()">
+						{{ $t("other:memberMention") }}
+					</IonButton>
+				</IonItem>
 			</IonList>
 			<IonList>
 				<IonItem button :detail="false">
@@ -140,6 +153,16 @@
 					<IonIcon :icon="saveMD" />
 				</IonFabButton>
 			</IonFab>
+
+			<MemberSelect
+				ref="memberTagModal"
+				:only-one="true"
+				:discard-on-select="true"
+				:hide-checkboxes="true"
+				:always-emit="true"
+				:model-value="[]"
+				@update:model-value="(e) => { if(e[0]) note.content = `${note.content || ''}@<m:${e[0].uuid}>` }"
+			/>
 		</IonContent>
 	</IonModal>
 </template>
