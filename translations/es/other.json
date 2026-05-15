@@ -146,6 +146,11 @@
 		"atkinson": "Atkinson Hyperlegible",
 		"dyslexic": "OpenDyslexic",
 		"inter": "Inter",
-		"noFont": "Sin fuente"
-	}
+		"noFont": "Sin fuente",
+		"pop": "Pop",
+		"sketch": "Sketch",
+		"futuristic": "Futurista",
+		"pineapple": "Pineapple"
+	},
+	"loading": "Ampersand se está iniciando"
 }

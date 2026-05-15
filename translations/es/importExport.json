@@ -23,7 +23,9 @@
 		"exportedAppIos": "La copia de seguridad se ha exportado a la carpeta «Ampersand» de la aplicación «Archivos».",
 		"errorOc": "Se ha producido un error al importar de Octocon.",
 		"exportedReport": "El informe se ha guardado en la ubicación que seleccionaste.",
-		"exportedReportIos": "El informe se ha guardado en la carpeta Ampersand de la aplicación Archivos."
+		"exportedReportIos": "El informe se ha guardado en la carpeta Ampersand de la aplicación Archivos.",
+		"exportedJson": "El archivo JSON se ha guardado en la ubicación que seleccionaste.",
+		"exportedJsonIos": "Archivo JSON guardado en la carpeta Ampersand de la aplicación Documentos."
 	},
 	"header": "Importar / Exportar",
 	"importHeader": "Importar",
@@ -38,5 +40,9 @@
 	"reportExport": {
 		"title": "Generar un informe",
 		"desc": "Guarda un informe legible sobre tus datos para compartirlo con terapeutas y seres queridos"
+	},
+	"jsonExport": {
+		"title": "Exporta tus datos a un archivo JSON",
+		"desc": "Realice una copia de seguridad de sus datos en un formato que pueda importarse a otras aplicaciones y herramientas"
 	}
 }
