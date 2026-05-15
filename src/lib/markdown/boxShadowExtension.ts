@@ -16,7 +16,7 @@ const boxShadowExtension: MarkedExtension<(VNode | string)[], VNode | string> = 
 
 					const isValid = shadows.reduce((p, c) => {
 						if(!p) return p;
-						if (c.includes(",")) return false;
+						if (c.match(/(?!\(.*?),(?!.*?\))/) !== null) return false;
 
 						const a = document.createElement("div");
 						a.style.boxShadow = c;

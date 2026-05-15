@@ -11,11 +11,11 @@ export function isValidCssBackground(background: string) {
 }
 
 export function isPercentage(maybePercentage: string){
-	return maybePercentage.match(/^-?\d+%$/) !== null;
+	return maybePercentage.match(/^-?\d*\.?\d+%$/) !== null;
 }
 
 export function isCssLength(maybePercentage: string) {
-	return maybePercentage.match(/^-?\d+(?:r?(?:cap|ch|em|ex|ic|lh)|(?:v|cq)(?:h|w|max|min|b|i)|(?:px|cm|mm|Q|in|pc|pt))$/) !== null;
+	return maybePercentage.match(/^-?\d*\.?\d+(?:r?(?:cap|ch|em|ex|ic|lh)|(?:v|cq)(?:h|w|max|min|b|i)|(?:px|cm|mm|Q|in|pc|pt))$/) !== null;
 }
 
 export function isColorSpace(maybeColorSpace: string) {
