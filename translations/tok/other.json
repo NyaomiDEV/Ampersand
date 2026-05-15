@@ -145,6 +145,11 @@
 		"noFont": "nasin sitelen ala",
 		"lexend": "nasin sitelen Lexend",
 		"atkinson": "nasin sitelen Atkinson Hyperlegible",
-		"dyslexic": "nasin sitelen OpenDyslexic"
-	}
+		"dyslexic": "nasin sitelen OpenDyslexic",
+		"pop": "nasin sitelen Pop",
+		"sketch": "nasin sitelen pi pali sitelen",
+		"futuristic": "nasin sitelen pi tenpo kama",
+		"pineapple": "nasin sitelen pi kili jelo nena"
+	},
+	"loading": "ilo Ampersand li pali"
 }

@@ -24,7 +24,9 @@
 		"importedOc": "sona pi ijo pi ilo Octocon li kama lon ilo ni. o pini e ilo ni, kin la o open sin e ilo ni.",
 		"errorOc": "ijo ilo pi sona sina li tan ilo Octocon. ijo ni li alasa kama tawa ilo sina, taso pakala li kama.",
 		"exportedReport": "lipu sona li lon poki pi wile sina.",
-		"exportedReportIos": "lipu sona li lon poki pi ilo Ampersand. poki ni li lon ilo Files."
+		"exportedReportIos": "lipu sona li lon poki pi ilo Ampersand. poki ni li lon ilo Files.",
+		"exportedJson": "ijo ilo JSON pi sona sina li lon poki pi wile sina.",
+		"exportedJsonIos": "ijo ilo JSON pi sona sina li lon poki pi ilo Ampersand. poki ni li lon ilo Files."
 	},
 	"ocImport": "o pana e sona tawa ilo ni tan ijo pi ilo Octocon",
 	"dbImportOld": {
@@ -38,5 +40,9 @@
 	"reportExport": {
 		"title": "pali pi lipu sona",
 		"desc": "sina ken pali e lipu lon sona pi kulupu sina; ni la sina ken pana e sona sina tawa jan misikeke tawa olin sina"
+	},
+	"jsonExport": {
+		"title": "o kama jo e ijo ilo JSON pi sona sina",
+		"desc": "sona sina li kama ijo ilo; sina ken pana e ijo ilo ni tawa ilo ante"
 	}
 }
