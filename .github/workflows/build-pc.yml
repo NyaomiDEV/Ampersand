@@ -44,7 +44,7 @@ jobs:
         with:
           rust-src-dir: "src-tauri"
           target: ${{ matrix.platform == 'macos-26' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
-          cache-bin: ${{ matrix.platform == 'macos-26' && false || true }}
+          cache-bin: ${{ matrix.platform != 'macos-26' }}
       - name: Install dependencies (Ubuntu only)
         if: matrix.platform == 'ubuntu-latest'
         run: |
