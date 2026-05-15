@@ -235,12 +235,20 @@
 		-webkit-background-clip: text;
 		background-clip: text;
 		color: transparent;
+
+		&.repeating {
+			background: repeating-linear-gradient(in var(--markdown-text-fg-colorspace) var(--markdown-text-fg-degrees), var(--markdown-text-fg-colors));
+		}
 	}
 
 	span.text-color-bg {
 		border-radius: 4px;
 		padding: 2px 4px;
 		background: linear-gradient(in var(--markdown-text-bg-colorspace) var(--markdown-text-bg-degrees), var(--markdown-text-bg-colors));
+
+		&.repeating {
+			background: repeating-linear-gradient(in var(--markdown-text-bg-colorspace) var(--markdown-text-bg-degrees), var(--markdown-text-bg-colors));
+		}
 
 		&:has(span.text-border) {
 			padding: 0;
@@ -288,13 +296,13 @@
 	}
 
 	span.start {
-		float: inline-start;
-		text-align: start;
+		float: left;
+		text-align: left;
 	}
 
 	span.end {
-		float: inline-end;
-		text-align: end;
+		float: right;
+		text-align: right;
 	}
 
 	span.blur {

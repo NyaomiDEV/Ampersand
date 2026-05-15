@@ -12,9 +12,15 @@ const textColorBgExtension: MarkedExtension<(VNode | string)[], VNode | string> 
 				const rule = /^\[bg=(.+?)\](.+?)\[\/bg\]/;
 				const match = rule.exec(src);
 				if (match) {
+					let isRepeating = false;
 					let colorspace = "srgb";
 					let degrees = "90deg";
 					const colors = splitList(match[1] || "");
+
+					if(colors[0] === "repeating") {
+						colors.shift();
+						isRepeating = true;
+					}
 
 					if(isColorSpace(colors[0]))
 						colorspace = colors.shift()!;
@@ -25,7 +31,7 @@ const textColorBgExtension: MarkedExtension<(VNode | string)[], VNode | string> 
 					if(!colors.reduce(
 						(p, c) => {
 							if(!p) return p;
-							const parts = c.split(" ");
+							const parts = c.split(/(?!\(.*?)\s+?(?!.*?\))/);
 							if (!parts.length || parts.length > 3) return false;
 							const color = parts.shift()!;
 							if(!isValidCssColor(color)) return false;
@@ -40,6 +46,7 @@ const textColorBgExtension: MarkedExtension<(VNode | string)[], VNode | string> 
 					const token = {
 						type: "textColorBg",
 						raw: match[0],
+						isRepeating,
 						colorspace,
 						degrees,
 						colors,
@@ -71,7 +78,7 @@ const textColorBgExtension: MarkedExtension<(VNode | string)[], VNode | string> 
 					};
 
 					return h("span", {
-						class: "text-color-bg",
+						class: ["text-color-bg", token.isRepeating ? "repeating" : undefined],
 						style: cssStyle
 					}, token.tokens && token.tokens.length ? this.parser.parseInline(token.tokens) : token.text);
 				}
