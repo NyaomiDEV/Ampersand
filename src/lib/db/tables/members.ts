@@ -5,7 +5,7 @@ import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUIDable, Member, UUID } from "../entities";
 import { maxUid, nilUid } from "../../util/consts";
 import { filterMember } from "../../search";
-import { sortMembers } from "../../util/misc";
+import { isUuid, sortMembers } from "../../util/misc";
 import { TransactionStatus } from "../types";
 
 export async function* getMembers(maxIter = 10){
@@ -37,7 +37,7 @@ export function getMemberIndex(){
 
 export async function* getFilteredMembers(query: string){
 	for await (const member of getMembers()){
-		if(await filterMember(query, member))
+		if(filterMember(query, member))
 			yield member;
 	}
 }
@@ -133,3 +133,10 @@ export const defaultCustomFront = (): Member => ({
 	uuid: maxUid
 });
 
+export function getMemberUUIDByName(name: string) {
+	if (isUuid(name)) return name;
+	for (const x of db.members.index)
+		if(x.name!.toLowerCase() === name.toLowerCase()) return x.uuid;
+	
+	return undefined;
+}

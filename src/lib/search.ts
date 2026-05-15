@@ -29,8 +29,8 @@ export function filterSystem(search: string, system: System) {
 	return true;
 }
 
-export async function filterMember(search: string, member: Member){
-	const parsed = await parseMemberFilterQuery(search.length ? search : appConfig.defaultFilterQueries.members || "");
+export function filterMember(search: string, member: Member){
+	const parsed = parseMemberFilterQuery(search.length ? search : appConfig.defaultFilterQueries.members || "");
 
 	if (parsed.query.length){
 		if (!(
@@ -41,18 +41,17 @@ export async function filterMember(search: string, member: Member){
 			return false;
 	}
 
-	if (parsed.system) {
-		if (member.system !== parsed.system)
-			return false;
-	}
+	if (parsed.system) 
+		return (member.system !== parsed.system.value) !== parsed.system.shouldInclude;
+	
 
 	if (parsed.pronouns) {
-		if (!member.pronouns || !member.pronouns.toLowerCase().includes(parsed.pronouns.toLowerCase()))
+		if (!member.pronouns || !member.pronouns.toLowerCase().includes(parsed.pronouns.value.toLowerCase()) !== parsed.pronouns.shouldInclude)
 			return false;
 	}
 
 	if (parsed.role) {
-		if (!member.role || !member.role.toLowerCase().includes(parsed.role.toLowerCase()))
+		if (!member.role || !member.role.toLowerCase().includes(parsed.role.value.toLowerCase()) !== parsed.role.shouldInclude)
 			return false;
 	}
 
@@ -109,10 +108,9 @@ export function filterFrontingEntry(search: string, frontingEntry: FrontingEntry
 			return false;
 	}
 
-	if (parsed.member) {
-		if (frontingEntry.member !== parsed.member)
-			return false;
-	}
+	if (parsed.member) 
+		return (frontingEntry.member !== parsed.member.value) !== parsed.member.shouldInclude;
+	
 
 	if (parsed.currentlyFronting) {
 		if (frontingEntry.endTime)
@@ -152,28 +150,27 @@ export function filterBoardMessage(search: string, boardMessage: BoardMessage) {
 	}
 
 	if (typeof parsed.member !== "undefined") {
-		if (parsed.member === false && boardMessage.members.length)
+		if(parsed.member.shouldInclude === false && !parsed.member.value && boardMessage.members.length)
 			return false;
 
-		if (!boardMessage.members.find(x => x === parsed.member))
+		if (boardMessage.members.includes(parsed.member?.value) !== parsed.member.shouldInclude)
 			return false;
 	}
 
 	return true;
 }
 
-export async function filterAsset(search: string, asset: Asset) {
-	const parsed = await parseAssetFilterQuery(search.length ? search : appConfig.defaultFilterQueries.assetManager || "");
+export function filterAsset(search: string, asset: Asset) {
+	const parsed = parseAssetFilterQuery(search.length ? search : appConfig.defaultFilterQueries.assetManager || "");
 
 	if(parsed.query.length){
 		if (!asset.friendlyName.toLowerCase().includes(parsed.query.toLowerCase()))
 			return false;
 	}
 
-	if (parsed.type) {
-		if (asset.file.type.split("/")[1].toLowerCase() !== parsed.type.toLowerCase())
-			return false;
-	}
+	if (parsed.type) 
+		return (asset.file.type.split("/")[1].toLowerCase() !== parsed.type.value.toLowerCase()) !== parsed.type.shouldInclude;
+	
 
 	if (parsed.filename) {
 		if (asset.file.name.toLowerCase() !== parsed.filename.toLowerCase())
@@ -225,8 +222,8 @@ export function filterNote(search: string, note: Note) {
 	return true;
 }
 
-export async function filterJournalPost(search: string, post: JournalPost) {
-	const parsed = await parseJournalPostFilterQuery(search.length ? search : appConfig.defaultFilterQueries.journal || "");
+export function filterJournalPost(search: string, post: JournalPost) {
+	const parsed = parseJournalPostFilterQuery(search.length ? search : appConfig.defaultFilterQueries.journal || "");
 	if (parsed.query.length) {
 		const memberIndices = getMemberIndex().filter(x => post.members.includes(x.uuid));
 		if (
@@ -239,10 +236,10 @@ export async function filterJournalPost(search: string, post: JournalPost) {
 	}
 
 	if (typeof parsed.member !== "undefined") {
-		if(parsed.member === false && post.members.length)
+		if(parsed.member.shouldInclude === false && !parsed.member.value && post.members.length)
 			return false;
 
-		if (!post.members.find(x => x === parsed.member))
+		if (post.members.includes(parsed.member?.value) !== parsed.member.shouldInclude)
 			return false;
 	}
 

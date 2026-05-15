@@ -34,7 +34,7 @@ export function getAssetsIndex(){
 
 export async function* getFilteredAssets(query: string){
 	for await (const asset of getAssets()){
-		if (await filterAsset(query, asset))
+		if (filterAsset(query, asset))
 			yield asset;
 	}
 }

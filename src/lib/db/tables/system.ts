@@ -3,6 +3,7 @@ import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUIDable, System, UUID } from "../entities";
 import { nilUid } from "../../util/consts";
 import { filterSystem } from "../../search";
+import { isUuid } from "../../util/misc";
 import { TransactionStatus } from "../types";
 import { sortSystems } from "../../util/misc";
 
@@ -123,4 +124,12 @@ export function countSystemMembers(uuid: UUID){
 	}
 
 	return object;
+}
+
+export function getSystemUUIDByName(name: string) {
+	if (isUuid(name)) return name;
+	for (const x of db.systems.index)
+		if(x.name!.toLowerCase() === name.toLowerCase()) return x.uuid;
+	
+	return undefined;
 }

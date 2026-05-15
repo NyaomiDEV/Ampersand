@@ -119,7 +119,7 @@ export async function* getJournalPostsOfDay(date: Date, includePinned: boolean, 
 
 		const post = await db.journalPosts.get(entry.uuid);
 
-		if (await filterJournalPost(query, post))
+		if (filterJournalPost(query, post))
 			yield post;
 	}
 }
@@ -131,7 +131,7 @@ export async function getJournalPostsDays(query: string, start: Date, end: Date)
 
 		const post = await getJournalPost(x.uuid);
 
-		if(await filterJournalPost(query, post))
+		if(filterJournalPost(query, post))
 			return dayjs(x.date).startOf("day").valueOf();
 
 		return undefined;

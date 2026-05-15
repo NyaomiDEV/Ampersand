@@ -1,5 +1,11 @@
-import { getTagFromName } from "../db/tables/tags";
-import { UUID } from "../db/entities";
+import { getTagUUIDByName } from "../db/tables/tags";
+import { getMemberUUIDByName } from "../db/tables/members";
+import { getSystemUUIDByName } from "../db/tables/system";
+
+type QueryItem = {
+	value: string,
+	shouldInclude: boolean,
+};
 
 export type SystemFilterQuery = {
 	query: string,
@@ -11,32 +17,32 @@ export type SystemFilterQuery = {
 export type MemberFilterQuery = {
 	query: string,
 	tags: Map<string, boolean>,
-	system?: string,
+	system?: QueryItem,
 	isPinned?: boolean,
 	isArchived?: boolean,
 	isCustomFront?: boolean,
-	pronouns?: string,
-	role?: string,
-	age?: number
+	pronouns?: QueryItem,
+	role?: QueryItem,
+	age?: number,
 };
 
 export type FrontingHistoryFilterQuery = {
 	query: string,
 	currentlyFronting?: boolean,
-	member?: UUID
+	member?: QueryItem
 };
 
 export type BoardMessageFilterQuery = {
 	query: string,
 	isPinned?: boolean,
 	isArchived?: boolean,
-	member?: UUID | boolean
+	member?: QueryItem
 };
 
 export type AssetFilterQuery = {
 	query: string,
 	tags: Map<string, boolean>,
-	type?: string,
+	type?: QueryItem,
 	filename?: string
 };
 
@@ -53,7 +59,7 @@ export type NoteFilterQuery = {
 export type JournalPostFilterQuery = {
 	query: string,
 	tags: Map<string, boolean>,
-	member?: UUID | boolean;
+	member?: QueryItem;
 };
 
 export type TagFilterQuery = {
@@ -76,27 +82,51 @@ function reduceToValue(value: string, emptyMeansTrue = true, trueMeansValueItsel
 	}
 }
 
+
 function splitTokens(search: string){
 	const rawTokens = Array.from(search.matchAll(/(?=\S)[^'"\s]*(?:['"][^\\'"]*(?:\\[\s\S][^\\'"]*)*['"][^'"\s]*)*/g)).map(x => x[0]);
 
-	const tags = new Map<string, boolean>();
+	const tags = new Map<string, { 
+		shouldInclude: boolean,
+		allAttached: boolean,
+	}>();
 	const queryParts: string[] = [];
-	const variables = new Map<string, string>();
+	const variables = new Map<string, {
+		value: string,
+		shouldInclude: string,
+	}>();
 
 	for(const token of rawTokens){
 		const tokenParts = token.slice(1).split(":");
+
+		let value = tokenParts[1]?.replace(/['"]/g, "") ?? "";
+		let shouldInclude = tokenParts[2]?.replace(/['"]/g, "") ?? "";
+		
 		switch(token.charAt(0)){
 			case "@":
-				if(tokenParts[1])
-					variables.set(tokenParts[0], tokenParts[1].replace(/['"]/g, ""));
-				else 
-					variables.set(tokenParts[0], "");
+				if (tokenParts[0] === "tag" && tokenParts[1]) {
+					tags.set(tokenParts[1].replace(/['"]/g, ""), {
+						shouldInclude: tokenParts[2] ? reduceToValue(tokenParts[2]?.replace(/['"]/g, "")) : true,
+						allAttached: false
+					});
+					break;
+				}
+
+				if (typeof reduceToValue(value, true, true) === "boolean") {
+					shouldInclude = value;
+					value = "";
+				}
+
+				variables.set(tokenParts[0], {
+					value,
+					shouldInclude,
+				});
 				break;
 			case "#":
-				if(tokenParts[1])
-					tags.set(tokenParts[0], reduceToValue(tokenParts[1].replace(/['"]/g, "")));
-				else 
-					tags.set(tokenParts[0], true);
+				tags.set(tokenParts[0], {
+					shouldInclude: tokenParts[1] ? reduceToValue(tokenParts[1]?.replace(/['"]/g, "")) : true,
+					allAttached: true
+				});
 				break;
 			default:
 				queryParts.push(token);
@@ -118,16 +148,16 @@ export function parseSystemFilterQuery(search: string): SystemFilterQuery {
 		query: rawParsed.query,
 	};
 
-	for(const [variable, value] of rawParsed.variables){
+	for(const [variable, { shouldInclude }] of rawParsed.variables){
 		switch(variable.toLowerCase()){
 			case "default":
-				result.isDefault = reduceToValue(value);
+				result.isDefault = reduceToValue(shouldInclude);
 				break;
 			case "pinned":
-				result.isPinned = reduceToValue(value);
+				result.isPinned = reduceToValue(shouldInclude);
 				break;
 			case "archived":
-				result.isArchived = reduceToValue(value);
+				result.isArchived = reduceToValue(shouldInclude);
 				break;
 		}
 	}
@@ -135,7 +165,7 @@ export function parseSystemFilterQuery(search: string): SystemFilterQuery {
 }
 
 
-export async function parseMemberFilterQuery(search: string): Promise<MemberFilterQuery> {
+export function parseMemberFilterQuery(search: string): MemberFilterQuery {
 	const rawParsed = splitTokens(search);
 
 	const result: MemberFilterQuery = {
@@ -143,30 +173,39 @@ export async function parseMemberFilterQuery(search: string): Promise<MemberFilt
 		tags: new Map()
 	};
 
-	for(const [_tag, shouldInclude] of rawParsed.tags.entries()){
-		const tag = await getTagFromName(_tag, true);
-		if (tag) result.tags.set(tag.uuid, shouldInclude);
+	for(const [_tag, { shouldInclude, allAttached }] of rawParsed.tags.entries()){
+		const tag = getTagUUIDByName(_tag, allAttached);
+		if (tag) result.tags.set(tag, shouldInclude);
 	}
 
-	for(const [variable, value] of rawParsed.variables){
+	for(const [variable, { value, shouldInclude }] of rawParsed.variables){
 		switch(variable.toLowerCase()){
 			case "system":
-				result.system = value;
+				result.system = {
+					value: getSystemUUIDByName(value) ?? "",
+					shouldInclude: reduceToValue(shouldInclude)
+				};
 				break;
 			case "archived":
-				result.isArchived = reduceToValue(value);
+				result.isArchived = reduceToValue(shouldInclude);
 				break;
 			case "customfront":
-				result.isCustomFront = reduceToValue(value);
+				result.isCustomFront = reduceToValue(shouldInclude);
 				break;
 			case "pinned":
-				result.isPinned = reduceToValue(value);
+				result.isPinned = reduceToValue(shouldInclude);
 				break;
 			case "pronouns":
-				result.pronouns = value;
+				result.pronouns = {
+					value,
+					shouldInclude: reduceToValue(shouldInclude)
+				};
 				break;
 			case "role":
-				result.role = value;
+				result.role = {
+					value,
+					shouldInclude: reduceToValue(shouldInclude)
+				};
 				break;
 			case "age":
 				result.age = parseInt(value);
@@ -183,13 +222,16 @@ export function parseFrontingHistoryFilterQuery(search: string) {
 		query: rawParsed.query,
 	};
 
-	for (const [variable, value] of rawParsed.variables) {
+	for (const [variable, { value, shouldInclude }] of rawParsed.variables) {
 		switch (variable.toLowerCase()) {
 			case "current":
-				result.currentlyFronting = reduceToValue(value);
+				result.currentlyFronting = reduceToValue(shouldInclude);
 				break;
 			case "member":
-				result.member = value;
+				result.member = {
+					value: getMemberUUIDByName(value) ?? "",
+					shouldInclude: reduceToValue(shouldInclude)
+				};
 				break;
 		}
 		break;
@@ -205,16 +247,19 @@ export function parseBoardMessageFilterQuery(search: string) {
 		query: rawParsed.query,
 	};
 
-	for (const [variable, value] of rawParsed.variables) {
+	for (const [variable, { value, shouldInclude }] of rawParsed.variables) {
 		switch (variable.toLowerCase()) {
 			case "pinned":
-				result.isPinned = reduceToValue(value);
+				result.isPinned = reduceToValue(shouldInclude);
 				break;
 			case "archived":
-				result.isArchived = reduceToValue(value);
+				result.isArchived = reduceToValue(shouldInclude);
 				break;
 			case "member":
-				result.member = reduceToValue(value, true, true);
+				result.member = {
+					value: getMemberUUIDByName(value) ?? "",
+					shouldInclude: reduceToValue(shouldInclude)
+				};
 				break;
 		}
 		break;
@@ -223,7 +268,7 @@ export function parseBoardMessageFilterQuery(search: string) {
 	return result;
 }
 
-export async function parseAssetFilterQuery(search: string) {
+export function parseAssetFilterQuery(search: string) {
 	const rawParsed = splitTokens(search);
 
 	const result: AssetFilterQuery = {
@@ -231,15 +276,18 @@ export async function parseAssetFilterQuery(search: string) {
 		tags: new Map()
 	};
 
-	for (const [_tag, shouldInclude] of rawParsed.tags.entries()) {
-		const tag = await getTagFromName(_tag, true);
-		if (tag) result.tags.set(tag.uuid, shouldInclude);
+	for(const [_tag, { shouldInclude, allAttached }] of rawParsed.tags.entries()){
+		const tag = getTagUUIDByName(_tag, allAttached);
+		if (tag) result.tags.set(tag, shouldInclude);
 	}
 
-	for (const [variable, value] of rawParsed.variables) {
+	for (const [variable, { value, shouldInclude }] of rawParsed.variables) {
 		switch (variable.toLowerCase()) {
 			case "type":
-				result.type = value;
+				result.type = {
+					value,
+					shouldInclude: reduceToValue(shouldInclude)
+				};
 				break;
 			case "filename":
 				result.filename = value;
@@ -258,10 +306,10 @@ export function parseCustomFieldFilterQuery(search: string) {
 		query: rawParsed.query,
 	};
 
-	for (const [variable, value] of rawParsed.variables) {
+	for (const [variable, { shouldInclude }] of rawParsed.variables) {
 		switch (variable.toLowerCase()) {
 			case "default":
-				result.default = reduceToValue(value);
+				result.default = reduceToValue(shouldInclude);
 				break;
 		}
 		break;
@@ -277,10 +325,10 @@ export function parseNoteFilterQuery(search: string) {
 		query: rawParsed.query,
 	};
 
-	for (const [variable, value] of rawParsed.variables) {
+	for (const [variable, { shouldInclude }] of rawParsed.variables) {
 		switch (variable.toLowerCase()) {
 			case "archived":
-				result.isArchived = reduceToValue(value);
+				result.isArchived = reduceToValue(shouldInclude);
 				break;
 		}
 		break;
@@ -289,7 +337,7 @@ export function parseNoteFilterQuery(search: string) {
 	return result;
 }
 
-export async function parseJournalPostFilterQuery(search: string) {
+export function parseJournalPostFilterQuery(search: string) {
 	const rawParsed = splitTokens(search);
 
 	const result: JournalPostFilterQuery = {
@@ -297,15 +345,18 @@ export async function parseJournalPostFilterQuery(search: string) {
 		tags: new Map()
 	};
 
-	for(const [_tag, shouldInclude] of rawParsed.tags.entries()){
-		const tag = await getTagFromName(_tag, true);
-		if (tag) result.tags.set(tag.uuid, shouldInclude);
+	for(const [_tag, { shouldInclude, allAttached }] of rawParsed.tags.entries()){
+		const tag = getTagUUIDByName(_tag, allAttached);
+		if (tag) result.tags.set(tag, shouldInclude);
 	}
 
-	for (const [variable, value] of rawParsed.variables) {
+	for (const [variable, { value, shouldInclude }] of rawParsed.variables) {
 		switch (variable.toLowerCase()) {
 			case "member":
-				result.member = reduceToValue(value, true, true);
+				result.member = {
+					value: getMemberUUIDByName(value) ?? "",
+					shouldInclude: reduceToValue(shouldInclude)
+				};
 				break;
 		}
 		break;
@@ -321,10 +372,10 @@ export function parseTagFilterQuery(search: string) {
 		query: rawParsed.query,
 	};
 
-	for (const [variable, value] of rawParsed.variables) {
+	for (const [variable, { shouldInclude }] of rawParsed.variables) {
 		switch (variable.toLowerCase()) {
 			case "archived":
-				result.isArchived = reduceToValue(value);
+				result.isArchived = reduceToValue(shouldInclude);
 				break;
 		}
 		break;

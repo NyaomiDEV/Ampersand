@@ -5,7 +5,7 @@ import { filterTag } from "../../search";
 import { getMembers, updateMember } from "./members";
 import { getJournalPosts, updateJournalPost } from "./journalPosts";
 import { TransactionStatus } from "../types";
-import { sortName } from "../../util/misc";
+import { isUuid, sortName } from "../../util/misc";
 import { getAssets, updateAsset } from "./assets";
 
 export async function* getTags(type: Tag["type"], maxIter = 10){
@@ -142,14 +142,15 @@ export function isValidTag(tag: Tag | UUID){
 	return typeof tag === "string" ? !!getTagsIndex().find(x => x.uuid === tag) : !!getTagsIndex().find(x => x.uuid === tag.uuid);
 }
 
-export async function getTagFromName(name: string, allAttached: boolean){
+export function getTagUUIDByName(name: string, allAttached: boolean){
+	if (isUuid(name)) return name;
 	for (const x of db.tags.index){
 		if(allAttached){
 			if (
 				x.name!.toLowerCase().replace(/\s/g, "") === name.toLowerCase()
-			) return getTag(x.uuid);
+			) return x.uuid;
 		} else 
-			if(x.name!.toLowerCase() === name.toLowerCase()) return getTag(x.uuid);
+			if(x.name!.toLowerCase() === name.toLowerCase()) return x.uuid;
 	}
 	return undefined;
 }
