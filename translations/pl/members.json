@@ -41,7 +41,8 @@
 		"age": "Wiek",
 		"ageDisplay_one": "{{count}} rok",
 		"ageDisplay_few": "{{count}} lata",
-		"ageDisplay_many": "{{count}} lat"
+		"ageDisplay_many": "{{count}} lat",
+		"nameStyle": "Styl nazwy"
 	},
 	"toasts": {
 		"addToFront": "Członek został dodany na front",
@@ -49,5 +50,6 @@
 		"unsetMainFronter": "Członek zdjęty z pozycji głównej osoby frontującej",
 		"setSoleFronter": "Członek ustawiony jako jedyna osoba frontująca",
 		"removeFromFront": "Członek został usunięty z frontu"
-	}
+	},
+	"singular": "Członek"
 }

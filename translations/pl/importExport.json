@@ -22,7 +22,11 @@
 		"errorPk": "Błąd podczas importowania eksportu z PluralKit.",
 		"errorTu": "Błąd podczas importowania eksportu z Tupperbox.",
 		"importedOc": "Eksport z Octocon został zaimportowany. Proszę ponownie uruchomić aplikację.",
-		"errorOc": "Błąd podczas importowania eksportu z Octocon."
+		"errorOc": "Błąd podczas importowania eksportu z Octocon.",
+		"exportedReport": "Raport został zapisany w wybranej lokalizacji.",
+		"exportedReportIos": "Raport został zapisany w folderze Ampersandu w aplikacji Pliki.",
+		"exportedJson": "Eksport JSON został zapisany w wybranej lokalizacji.",
+		"exportedJsonIos": "Eksport JSON został zapisany w folderze Ampersandu w aplikacji Pliki."
 	},
 	"ocImport": "Importuj dane z eksportu Octocon",
 	"dbImportOld": {
@@ -32,5 +36,13 @@
 	},
 	"importHeader": "Importuj",
 	"thirdPartyHeader": "Integracje z narzędziami stron trzecich",
-	"exportHeader": "Eksportuj"
+	"exportHeader": "Eksportuj",
+	"reportExport": {
+		"title": "Wygeneruj raport",
+		"desc": "Zapisz czytelny dla ludzi raport dotyczący twoich danych, aby udostępnić go terapeutom i bliskim"
+	},
+	"jsonExport": {
+		"title": "Wyeksportuj swoje dane do pliku JSON",
+		"desc": "Utwórz kopię zapasową danych w formacie, który może zostać zaimportowany do innych aplikacji i narzędzi"
+	}
 }
