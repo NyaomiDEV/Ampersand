@@ -46,17 +46,10 @@
 	const i18next = useTranslation();
 
 	const search = ref(route.query.q as string || "");
-	watch(route, () => {
-		if(route.name && ["Members", "MembersTab"].includes(route.name.toString()) && route.query.q)
-			search.value = route.query.q as string;
-	}, { immediate: true });
 
 	const members = shallowRef<Member[]>();
 	const iter = shallowRef<AsyncGenerator<Member>>();
 	const iterDone = ref(false);
-	watch(search, async () => {
-		await resetMembers();
-	});
 	const frontingEntries = shallowRef<FrontingEntryComplete[]>([]);
 	const list = useTemplateRef("list");
 
@@ -197,6 +190,12 @@
 	function feGet(member: Member){
 		return frontingEntries.value.find(x => x.member.uuid === member.uuid);
 	}
+
+	watch(search, resetMembers);
+	watch(route, () => {
+		if(route.name && ["Members", "MembersTab"].includes(route.name.toString()) && route.query.q)
+			search.value = route.query.q as string;
+	}, { immediate: true });
 </script>
 
 <template>
