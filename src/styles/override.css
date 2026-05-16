@@ -91,6 +91,10 @@ html:is(.sys-macos) ion-tab-button {
 	background-color: transparent;
 }
 
+html:is(.sys-macos) ion-tabs ion-header {
+	--ion-safe-area-top: 0px;
+}
+
 html:is(.plt-tablet, .plt-desktop) ion-tab-button {
 	flex: 0 0;
 	min-height: 80px;
