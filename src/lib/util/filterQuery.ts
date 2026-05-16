@@ -18,6 +18,7 @@ export type MemberFilterQuery = {
 	query: string,
 	tags: Map<string, boolean>,
 	system?: QueryItem,
+	andChildren?: boolean,
 	isPinned?: boolean,
 	isArchived?: boolean,
 	isCustomFront?: boolean,
@@ -185,6 +186,9 @@ export function parseMemberFilterQuery(search: string): MemberFilterQuery {
 					value: getSystemUUIDByName(value) ?? "",
 					shouldInclude: reduceToValue(shouldInclude)
 				};
+				break;
+			case "children":
+				result.andChildren = reduceToValue(shouldInclude);
 				break;
 			case "archived":
 				result.isArchived = reduceToValue(shouldInclude);

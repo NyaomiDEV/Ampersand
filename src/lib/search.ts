@@ -3,6 +3,7 @@ import { Member, Tag, Asset, CustomField, JournalPost, BoardMessage, FrontingEnt
 import { parseAssetFilterQuery, parseBoardMessageFilterQuery, parseCustomFieldFilterQuery, parseFrontingHistoryFilterQuery, parseJournalPostFilterQuery, parseMemberFilterQuery, parseSystemFilterQuery, parseTagFilterQuery, parseNoteFilterQuery } from "./util/filterQuery";
 import { appConfig } from "./config";
 import { getMemberIndex } from "./db/tables/members";
+import { getSystemsIndex } from "./db/tables/system";
 
 export function filterSystem(search: string, system: System) {
 	const parsed = parseSystemFilterQuery(search.length ? search : appConfig.defaultFilterQueries.systems || "");
@@ -42,7 +43,20 @@ export function filterMember(search: string, member: Member){
 	}
 
 	if (parsed.system) {
-		if ((member.system !== parsed.system.value) === parsed.system.shouldInclude)
+		const systemsToCheck = [parsed.system.value];
+		if(parsed.andChildren){
+			let parents = [...systemsToCheck];
+			while(parents.length){
+				const children: string[] = [];
+				for(const system of parents)
+					children.push(...getSystemsIndex().filter(x => x.parent === system).map(x => x.uuid));
+				
+				systemsToCheck.push(...children);
+				parents = [...children];
+			}
+		}
+
+		if ((!systemsToCheck.includes(member.system)) === parsed.system.shouldInclude)
 			return false;
 	}
 
