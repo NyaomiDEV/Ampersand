@@ -1,18 +1,22 @@
 <script setup lang="ts">
-	import { IonBackButton, IonContent, IonSearchbar, IonList, IonIcon, IonPage, IonTitle, IonToolbar, IonFab, IonFabButton } from "@ionic/vue";
-	import { onMounted, onUnmounted, ref, shallowRef, watch } from "vue";
+	import { IonBackButton, IonContent, IonSearchbar, IonList, IonIcon, IonPage, IonTitle, IonToolbar, IonFab, IonFabButton, IonButtons, IonButton } from "@ionic/vue";
+	import { onMounted, onUnmounted, ref, shallowRef, useTemplateRef, watch } from "vue";
 	import AssetItem from "../../components/asset/AssetItem.vue";
 	import { Asset } from "../../lib/db/entities";
 	import { getFilteredAssets } from "../../lib/db/tables/assets";
 	import { DatabaseEvent, DatabaseEvents } from "../../lib/db/events";
 	import { useRoute } from "vue-router";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
+	import { getFilterQueriesIndex } from "../../lib/db/tables/filterQueries.ts";
 
 	import addMD from "@material-symbols/svg-600/rounded/add.svg";
+	import moreMD from "@material-symbols/svg-600/rounded/more_vert.svg";
+
 	import VirtualList from "../../components/VirtualList.vue";
 	import InfiniteLoader from "../../components/InfiniteLoader.vue";
 	import TheresNothingHere from "../../components/TheresNothingHere.vue";
 	import CollapsibleHeaderbar from "../../components/CollapsibleHeaderbar.vue";
+	import FilterQuerySelect from "../../modals/FilterQuerySelect.vue";
 
 	const route = useRoute();
 
@@ -27,6 +31,8 @@
 	const assets = shallowRef<Asset[]>();
 	const iter = shallowRef<AsyncGenerator<Asset>>();
 	const iterDone = ref(false);
+
+	const filterQuerySelect = useTemplateRef("filterQuerySelect");
 
 	watch(search, async () => {
 		await resetAssets();
@@ -101,6 +107,11 @@
 						:value="search"
 						@ion-change="e => search = e.detail.value || ''"
 					/>
+					<IonButtons v-if="getFilterQueriesIndex().filter(x => x.type === 'assetManager').length" slot="end">
+						<IonButton @click="filterQuerySelect?.$el.present()">
+							<IonIcon slot="icon-only" :icon="moreMD" />
+						</IonButton>
+					</IonButtons>
 				</IonToolbar>
 			</CollapsibleHeaderbar>
 
@@ -126,6 +137,7 @@
 				</IonFabButton>
 			</IonFab>
 
+			<FilterQuerySelect ref="filterQuerySelect" type="assetManager" @selected="search = $event.query" />
 		</IonContent>
 	</IonPage>
 </template>

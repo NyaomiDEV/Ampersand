@@ -1,0 +1,16 @@
+{
+	"header": "Filter queries",
+	"select": "Pick a filter query",
+	"searchPlaceholder": "Scour for filter queries...",
+	"edit": {
+		"header": "Fix the query",
+		"headerAdd": "Add a new query",
+		"name": "Query's handle",
+		"query": "Query's guts",
+		"type": "Query's sort",
+		"delete": {
+			"title": "Send query to Davy Jones' locker",
+			"confirm": "Be ye certain ye want to scuttle this query?"
+		}
+	}
+}

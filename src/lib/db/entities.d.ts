@@ -219,3 +219,20 @@ export interface Note extends UUIDable {
 	priority: number,
 	isArchived: boolean
 }
+
+export type FilterQueryType =
+	"members" |
+	"systems" |
+	"journal" |
+	"frontHistory" |
+	"messageBoard" |
+	"assetManager" |
+	"customFields" |
+	"notes" |
+	"tagManagement";
+
+export interface FilterQuery extends UUIDable {
+	name: string,
+	type: FilterQueryType
+	query: string,
+}

@@ -1,0 +1,16 @@
+{
+	"header": "Filter queries",
+	"select": "Select a filter query",
+	"searchPlaceholder": "Search for filter queries...",
+	"edit": {
+		"header": "Edit query",
+		"headerAdd": "Add query",
+		"name": "Query name",
+		"query": "Query body",
+		"type": "Query type",
+		"delete": {
+			"title": "Delete query",
+			"confirm": "Are you sure you want to delete this query?"
+		}
+	}
+}

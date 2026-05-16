@@ -1,0 +1,16 @@
+{
+	"header": "Ricerche",
+	"select": "Scerne na ricerca",
+	"searchPlaceholder": "Cerca miezo ê ricerche...",
+	"edit": {
+		"header": "Cagna 'a ricerca",
+		"headerAdd": "Aggiunge na ricerca",
+		"name": "Nomme d''a ricerca",
+		"query": "Cuorpo d''a ricerca",
+		"type": "Tipo 'e ricerca",
+		"delete": {
+			"title": "Scancella 'a ricerca",
+			"confirm": "Vuò scancellà overamente 'sta ricerca?"
+		}
+	}
+}

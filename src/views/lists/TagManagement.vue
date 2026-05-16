@@ -1,11 +1,13 @@
 <script setup lang="ts">
-	import { IonContent, IonSearchbar, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonSegment, IonSegmentButton, IonLabel, IonFab, IonFabButton, IonIcon, IonItemSliding, IonItemOptions, IonItemOption } from "@ionic/vue";
+	import { IonContent, IonSearchbar, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonSegment, IonSegmentButton, IonLabel, IonFab, IonFabButton, IonIcon, IonItemSliding, IonItemOptions, IonItemOption, IonButtons, IonButton } from "@ionic/vue";
 	import { onMounted, onUnmounted, ref, shallowRef, useTemplateRef, watch } from "vue";
 	import { useRoute } from "vue-router";
+	import { getFilterQueriesIndex } from "../../lib/db/tables/filterQueries.ts";
 
 	import addMD from "@material-symbols/svg-600/rounded/add.svg";
 	import copyMD from "@material-symbols/svg-600/rounded/content_copy.svg";
 	import trashMD from "@material-symbols/svg-600/rounded/delete.svg";
+	import moreMD from "@material-symbols/svg-600/rounded/more_vert.svg";
 
 	import { getFilteredTags, removeTag } from "../../lib/db/tables/tags";
 	import type { Tag } from "../../lib/db/entities.d.ts";
@@ -19,6 +21,7 @@
 	import InfiniteLoader from "../../components/InfiniteLoader.vue";
 	import TheresNothingHere from "../../components/TheresNothingHere.vue";
 	import CollapsibleHeaderbar from "../../components/CollapsibleHeaderbar.vue";
+	import FilterQuerySelect from "../../modals/FilterQuerySelect.vue";
 
 	const route = useRoute();
 
@@ -27,6 +30,7 @@
 	const i18next = useTranslation();
 
 	const list = useTemplateRef("list");
+	const filterQuerySelect = useTemplateRef("filterQuerySelect");
 
 	const search = ref(route.query.q as string || "");
 	watch(route, () => {
@@ -122,8 +126,7 @@
 
 <template>
 	<IonPage>
-		<SpinnerFullscreen v-if="!tags" />
-		<IonContent v-else>
+		<IonContent>
 			<CollapsibleHeaderbar class="size-large">
 				<IonToolbar>
 					<IonBackButton
@@ -145,9 +148,14 @@
 						:value="search"
 						@ion-change="e => search = e.detail.value || ''"
 					/>
+					<IonButtons v-if="getFilterQueriesIndex().filter(x => x.type === 'tagManagement').length" slot="end">
+						<IonButton @click="filterQuerySelect?.$el.present()">
+							<IonIcon slot="icon-only" :icon="moreMD" />
+						</IonButton>
+					</IonButtons>
 				</IonToolbar>
 				<IonToolbar>
-					<IonSegment v-model="type" value="member">
+					<IonSegment v-model="type" value="member" scrollable>
 						<IonSegmentButton value="member">
 							<IonLabel>{{ $t("tagManagement:selector.member") }}</IonLabel>
 						</IonSegmentButton>
@@ -160,39 +168,44 @@
 					</IonSegment>
 				</IonToolbar>
 			</CollapsibleHeaderbar>
-		
-			<TheresNothingHere v-if="!tags.filter(x => x.type === type).length" sibling-header />
-			<IonList ref="list">
-				<VirtualList :entries="tags.filter(x => x.type === type)" :min-size="56" :gap="2">
-					<template #default="{ entry: tag }">
-						<IonItemSliding>
-							<TagItem
-								:tag
-								button
-								show-effects
-								show-icons
-								:router-link="`/edit/tags?uuid=${tag.uuid}`"
-							/>
-							<IonItemOptions>
-								<IonItemOption color="danger" @click="deleteTag(tag)">
-									<IonIcon slot="icon-only" :icon="trashMD" />
-								</IonItemOption>
-								<IonItemOption color="tertiary" @click="copyID(tag)">
-									<IonIcon slot="icon-only" :icon="copyMD" />
-								</IonItemOption>
-							</IonItemOptions>
-						</IonItemSliding>
-					</template>
-				</VirtualList>
-			</IonList>
 
-			<InfiniteLoader v-if="!iterDone" @infinite="pollTags" />
+			<SpinnerFullscreen v-if="!tags" />
+			<template v-else>
+				<TheresNothingHere v-if="!tags.length" sibling-header />
+				<IonList ref="list">
+					<VirtualList :entries="tags" :min-size="56" :gap="2">
+						<template #default="{ entry: tag }">
+							<IonItemSliding>
+								<TagItem
+									:tag
+									button
+									show-effects
+									show-icons
+									:router-link="`/edit/tags?uuid=${tag.uuid}`"
+								/>
+								<IonItemOptions>
+									<IonItemOption color="danger" @click="deleteTag(tag)">
+										<IonIcon slot="icon-only" :icon="trashMD" />
+									</IonItemOption>
+									<IonItemOption color="tertiary" @click="copyID(tag)">
+										<IonIcon slot="icon-only" :icon="copyMD" />
+									</IonItemOption>
+								</IonItemOptions>
+							</IonItemSliding>
+						</template>
+					</VirtualList>
+				</IonList>
 
-			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton router-link="/edit/tags">
-					<IonIcon :icon="addMD" />
-				</IonFabButton>
-			</IonFab>
+				<InfiniteLoader v-if="!iterDone" @infinite="pollTags" />
+
+				<IonFab slot="fixed" vertical="bottom" horizontal="end">
+					<IonFabButton router-link="/edit/tags">
+						<IonIcon :icon="addMD" />
+					</IonFabButton>
+				</IonFab>
+			</template>
+
+			<FilterQuerySelect ref="filterQuerySelect" type="tagManagement" @selected="search = $event.query" />
 		</IonContent>
 	</IonPage>
 </template>

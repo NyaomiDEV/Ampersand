@@ -21,6 +21,7 @@
 	import CustomFieldsMD from "@material-symbols/svg-600/rounded/format_list_bulleted_add.svg";
 	import ResourcesMD from "@material-symbols/svg-600/rounded/menu_book.svg";
 	import NotesMD from "@material-symbols/svg-600/rounded/note_stack.svg";
+	import FilterMD from "@material-symbols/svg-600/rounded/database_search.svg";
 
 	import { appConfig, securityConfig } from "../lib/config";
 	import { lock } from "../lib/applock";
@@ -108,6 +109,11 @@
 				<IonItem v-if="notInTab('reminders')" button router-link="/lists/reminders">
 					<IonIcon slot="start" :icon="RemindersMD" aria-hidden="true" />
 					<IonLabel>{{ $t("reminders:header") }}</IonLabel>
+				</IonItem>
+
+				<IonItem v-if="notInTab('filterQueries')" button router-link="/lists/filterQueries">
+					<IonIcon slot="start" :icon="FilterMD" aria-hidden="true" />
+					<IonLabel>{{ $t("filterQueries:header") }}</IonLabel>
 				</IonItem>
 
 			</IonList>

@@ -56,6 +56,11 @@ const lists: RouteRecordRaw[] = [
 		name: "Analytics",
 		component: () => import("../views/lists/Analytics.vue"),
 	},
+	{
+		path: "/lists/filterQueries",
+		name: "FilterQueries",
+		component: () => import("../views/lists/FilterQueries.vue"),
+	}
 ];
 
 export default lists;

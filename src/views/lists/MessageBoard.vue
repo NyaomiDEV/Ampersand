@@ -1,12 +1,13 @@
 <script setup lang="ts">
-	import { IonContent, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonFab, IonFabButton, IonIcon, IonSearchbar, IonLabel, IonItemDivider } from "@ionic/vue";
-	import { h, onBeforeMount, onUnmounted, ref, shallowRef, watch } from "vue";
+	import { IonContent, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonFab, IonFabButton, IonIcon, IonSearchbar, IonLabel, IonItemDivider, IonButtons, IonButton } from "@ionic/vue";
+	import { h, onBeforeMount, onUnmounted, ref, shallowRef, watch, useTemplateRef } from "vue";
 	import type { BoardMessageComplete } from "../../lib/db/entities.d.ts";
 	import { getBoardMessagesDays, getBoardMessagesOfDay, toBoardMessageComplete } from "../../lib/db/tables/boardMessages";
 	import BoardMessageEdit from "../../modals/BoardMessageEdit.vue";
 	import Spinner from "../../components/Spinner.vue";
 
 	import addMD from "@material-symbols/svg-600/rounded/add.svg";
+	import moreMD from "@material-symbols/svg-600/rounded/more_vert.svg";
 
 	import dayjs from "dayjs";
 
@@ -17,6 +18,8 @@
 	import DatetimeUtc, { DatetimeParts } from "../../components/DatetimeUtc.vue";
 	import TheresNothingHere from "../../components/TheresNothingHere.vue";
 	import CollapsibleHeaderbar from "../../components/CollapsibleHeaderbar.vue";
+	import FilterQuerySelect from "../../modals/FilterQuerySelect.vue";
+	import { getFilterQueriesIndex } from "../../lib/db/tables/filterQueries.ts";
 
 	const route = useRoute();
 
@@ -30,6 +33,8 @@
 	const boardMessagesDays = shallowRef<{ date: string, backgroundColor: string }[]>();
 
 	const date = ref(new Date());
+
+	const filterQuerySelect = useTemplateRef("filterQuerySelect");
 
 	const listener = (event: Event) => {
 		if(["members", "boardMessages"].includes((event as DatabaseEvent).data.table))
@@ -150,6 +155,11 @@
 						:value="search"
 						@ion-change="e => search = e.detail.value || ''"
 					/>
+					<IonButtons v-if="getFilterQueriesIndex().filter(x => x.type === 'messageBoard').length" slot="end">
+						<IonButton @click="filterQuerySelect?.$el.present()">
+							<IonIcon slot="icon-only" :icon="moreMD" />
+						</IonButton>
+					</IonButtons>
 				</IonToolbar>
 			</CollapsibleHeaderbar>
 
@@ -184,6 +194,8 @@
 					<IonIcon :icon="addMD" />
 				</IonFabButton>
 			</IonFab>
+
+			<FilterQuerySelect ref="filterQuerySelect" type="messageBoard" @selected="search = $event.query" />
 		</IonContent>
 	</IonPage>
 </template>

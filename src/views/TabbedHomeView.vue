@@ -22,6 +22,7 @@
 	import FolderMD from "@material-symbols/svg-600/rounded/folder_open.svg";
 	import CustomFieldsMD from "@material-symbols/svg-600/rounded/format_list_bulleted_add.svg";
 	import NotesMD from "@material-symbols/svg-600/rounded/note_stack.svg";
+	import FilterMD from "@material-symbols/svg-600/rounded/database_search.svg";
 
 	import PeopleFillMD from "@material-symbols/svg-600/rounded/group-fill.svg";
 	import JournalFillMD from "@material-symbols/svg-600/rounded/book-fill.svg";
@@ -34,6 +35,7 @@
 	import FolderFillMD from "@material-symbols/svg-600/rounded/folder_open-fill.svg";
 	import CustomFieldsFillMD from "@material-symbols/svg-600/rounded/format_list_bulleted_add-fill.svg";
 	import NotesFillMD from "@material-symbols/svg-600/rounded/note_stack-fill.svg";
+	import FilterFillMD from "@material-symbols/svg-600/rounded/database_search-fill.svg";
 
 	const router = useIonRouter();
 	const route = useRoute();
@@ -52,7 +54,8 @@
 		assetManager: { icon: FolderMD, iconSelected: FolderFillMD },
 		notes: { icon: NotesMD, iconSelected: NotesFillMD },
 		customFields: { icon: CustomFieldsMD, iconSelected: CustomFieldsFillMD },
-		reminders: { icon: RemindersMD, iconSelected: RemindersFillMD }
+		reminders: { icon: RemindersMD, iconSelected: RemindersFillMD },
+		filterQueries: { icon: FilterMD, iconSelected: FilterFillMD }
 	};
 
 	const tabBar = useTemplateRef("tabBar");

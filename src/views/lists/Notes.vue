@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { IonBackButton, IonContent, IonSearchbar, IonList, IonIcon, IonPage, IonTitle, IonToolbar, IonFab, IonFabButton, IonItem, IonLabel, IonReorderGroup, IonReorder, IonButtons, IonButton } from "@ionic/vue";
-	import { h, onBeforeMount, onUnmounted, ref, shallowRef, watch } from "vue";
+	import { h, onBeforeMount, onUnmounted, ref, shallowRef, useTemplateRef, watch } from "vue";
 	import { Note } from "../../lib/db/entities";
 	import { getFilteredNotes, updateNote } from "../../lib/db/tables/notes";
 	import { DatabaseEvent, DatabaseEvents } from "../../lib/db/events";
@@ -8,14 +8,18 @@
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import NoteEdit from "../../modals/NoteEdit.vue";
 	import { addModal, removeModal } from "../../lib/modals";
+	import { getFilterQueriesIndex } from "../../lib/db/tables/filterQueries.ts";
 
 	import addMD from "@material-symbols/svg-600/rounded/add.svg";
 	import reorderMD from "@material-symbols/svg-600/rounded/swap_vert.svg";
 	import doneMD from "@material-symbols/svg-600/rounded/done_all.svg";
 	import dragMD from "@material-symbols/svg-600/rounded/drag_handle.svg";
+	import moreMD from "@material-symbols/svg-600/rounded/more_vert.svg";
+
 	import archivedMD from "@material-symbols/svg-600/rounded/archive.svg";
 	import TheresNothingHere from "../../components/TheresNothingHere.vue";
 	import CollapsibleHeaderbar from "../../components/CollapsibleHeaderbar.vue";
+	import FilterQuerySelect from "../../modals/FilterQuerySelect.vue";
 
 	const route = useRoute();
 
@@ -30,6 +34,7 @@
 	const notes = shallowRef<Note[]>();
 
 	const isReordering = ref(false);
+	const filterQuerySelect = useTemplateRef("filterQuerySelect");
 
 	watch(search, async () => {
 		await getNotes();
@@ -125,6 +130,11 @@
 						:value="search"
 						@ion-change="e => search = e.detail.value || ''"
 					/>
+					<IonButtons v-if="getFilterQueriesIndex().filter(x => x.type === 'notes').length" slot="end">
+						<IonButton @click="filterQuerySelect?.$el.present()">
+							<IonIcon slot="icon-only" :icon="moreMD" />
+						</IonButton>
+					</IonButtons>
 				</IonToolbar>
 			</CollapsibleHeaderbar>
 
@@ -153,6 +163,7 @@
 				</IonFabButton>
 			</IonFab>
 
+			<FilterQuerySelect ref="filterQuerySelect" type="notes" @selected="search = $event.query" />
 		</IonContent>
 	</IonPage>
 </template>

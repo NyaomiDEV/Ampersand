@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { IonBackButton, IonContent, IonSearchbar, IonList, IonIcon, IonPage, IonTitle, IonToolbar, IonFab, IonFabButton, IonItem, IonLabel, IonReorderGroup, IonReorder, IonButtons, IonButton } from "@ionic/vue";
-	import { h, onBeforeMount, onUnmounted, ref, shallowRef, watch } from "vue";
+	import { h, onBeforeMount, onUnmounted, ref, shallowRef, watch, useTemplateRef } from "vue";
 	import { CustomField } from "../../lib/db/entities";
 	import { getFilteredCustomFields, updateCustomField } from "../../lib/db/tables/customFields";
 	import { DatabaseEvent, DatabaseEvents } from "../../lib/db/events";
@@ -8,13 +8,17 @@
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import CustomFieldEdit from "../../modals/CustomFieldEdit.vue";
 	import { addModal, removeModal } from "../../lib/modals";
+	import { getFilterQueriesIndex } from "../../lib/db/tables/filterQueries.ts";
 
 	import addMD from "@material-symbols/svg-600/rounded/add.svg";
 	import reorderMD from "@material-symbols/svg-600/rounded/swap_vert.svg";
 	import doneMD from "@material-symbols/svg-600/rounded/done_all.svg";
 	import dragMD from "@material-symbols/svg-600/rounded/drag_handle.svg";
+	import moreMD from "@material-symbols/svg-600/rounded/more_vert.svg";
+
 	import TheresNothingHere from "../../components/TheresNothingHere.vue";
 	import CollapsibleHeaderbar from "../../components/CollapsibleHeaderbar.vue";
+	import FilterQuerySelect from "../../modals/FilterQuerySelect.vue";
 
 	const route = useRoute();
 
@@ -29,6 +33,8 @@
 	const customFields = shallowRef<CustomField[]>();
 
 	const isReordering = ref(false);
+	
+	const filterQuerySelect = useTemplateRef("filterQuerySelect");
 
 	watch(search, async () => {
 		await getCustomFields();
@@ -124,6 +130,11 @@
 						:value="search"
 						@ion-change="e => search = e.detail.value || ''"
 					/>
+					<IonButtons v-if="getFilterQueriesIndex().filter(x => x.type === 'customFields').length" slot="end">
+						<IonButton @click="filterQuerySelect?.$el.present()">
+							<IonIcon slot="icon-only" :icon="moreMD" />
+						</IonButton>
+					</IonButtons>
 				</IonToolbar>
 			</CollapsibleHeaderbar>
 
@@ -150,6 +161,8 @@
 					<IonIcon :icon="addMD" />
 				</IonFabButton>
 			</IonFab>
+
+			<FilterQuerySelect ref="filterQuerySelect" type="customFields" @selected="search = $event.query" />
 
 		</IonContent>
 	</IonPage>

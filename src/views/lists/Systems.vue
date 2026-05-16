@@ -13,13 +13,17 @@
 		IonItemSliding,
 		IonItemOptions,
 		IonItemOption,
+		IonButtons,
+		IonButton,
 	} from "@ionic/vue";
 	import { onBeforeMount, onUnmounted, ref, shallowRef, useTemplateRef, watch } from "vue";
 	import { appConfig } from "../../lib/config/index.ts";
 	import { accessibilityConfig } from "../../lib/config/index.ts";
+	import { getFilterQueriesIndex } from "../../lib/db/tables/filterQueries.ts";
 
 	import addMD from "@material-symbols/svg-600/rounded/add.svg";
 	import copyMD from "@material-symbols/svg-600/rounded/content_copy.svg";
+	import moreMD from "@material-symbols/svg-600/rounded/more_vert.svg";
 
 	import type { System } from "../../lib/db/entities";
 	import { DatabaseEvents, DatabaseEvent } from "../../lib/db/events.ts";
@@ -33,6 +37,7 @@
 	import InfiniteLoader from "../../components/InfiniteLoader.vue";
 	import TheresNothingHere from "../../components/TheresNothingHere.vue";
 	import CollapsibleHeaderbar from "../../components/CollapsibleHeaderbar.vue";
+	import FilterQuerySelect from "../../modals/FilterQuerySelect.vue";
 
 	const route = useRoute();
 
@@ -41,6 +46,7 @@
 	const i18next = useTranslation();
 
 	const list = useTemplateRef("list");
+	const filterQuerySelect = useTemplateRef("filterQuerySelect");
 
 	const search = ref(route.query.q as string || "");
 	watch(route, () => {
@@ -142,6 +148,11 @@
 						:value="search"
 						@ion-change="e => search = e.detail.value || ''"
 					/>
+					<IonButtons v-if="getFilterQueriesIndex().filter(x => x.type === 'systems').length" slot="end">
+						<IonButton @click="filterQuerySelect?.$el.present()">
+							<IonIcon slot="icon-only" :icon="moreMD" />
+						</IonButton>
+					</IonButtons>
 				</IonToolbar>
 			</CollapsibleHeaderbar>
 
@@ -175,6 +186,8 @@
 					<IonIcon :icon="addMD" />
 				</IonFabButton>
 			</IonFab>
+
+			<FilterQuerySelect ref="filterQuerySelect" type="systems" @selected="search = $event.query" />
 		</IonContent>
 	</IonPage>
 </template>

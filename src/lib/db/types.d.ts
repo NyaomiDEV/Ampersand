@@ -1,4 +1,4 @@
-import { BoardMessage, FrontingEntry, JournalPost, Member, Reminder, System, Tag, Asset, CustomField, UUIDable, Note } from "./entities";
+import { BoardMessage, FrontingEntry, JournalPost, Member, Reminder, System, Tag, Asset, CustomField, UUIDable, Note, FilterQuery } from "./entities";
 export type IndexEntry<T> = UUIDable & Partial<T>;
 
 export type SecondaryKey<T> = (Exclude<keyof T, keyof UUIDable>);
@@ -45,7 +45,8 @@ export type AmpersandTableMapping = {
 	tags: Tag,
 	assets: Asset,
 	customFields: CustomField,
-	notes: Note
+	notes: Note,
+	filterQueries: FilterQuery
 };
 
 export type MigrationsMapping = {

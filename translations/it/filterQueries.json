@@ -1,0 +1,16 @@
+{
+	"header": "Ricerche",
+	"select": "Seleziona una ricerca",
+	"searchPlaceholder": "Cerca tra le ricerche...",
+	"edit": {
+		"header": "Modifica ricerca",
+		"headerAdd": "Aggiungi ricerca",
+		"name": "Nome ricerca",
+		"query": "Corpo della ricerca",
+		"type": "Tipo di ricerca",
+		"delete": {
+			"title": "Elimina ricerca",
+			"confirm": "Vuoi veramente eliminare questa ricerca?"
+		}
+	}
+}

@@ -1,0 +1,16 @@
+{
+	"header": "Queries",
+	"select": "Seleziona una query",
+	"searchPlaceholder": "Cerca tra le queries...",
+	"edit": {
+		"header": "Modifica query",
+		"headerAdd": "Aggiungi query",
+		"name": "Nome query",
+		"query": "Corpo della query",
+		"type": "Tipo di query",
+		"delete": {
+			"title": "Elimina query",
+			"confirm": "Pota, sei sicuro di voler eliminare questa query?"
+		}
+	}
+}

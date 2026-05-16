@@ -13,6 +13,8 @@
 		IonItemOption,
 		IonBackButton,
 		IonList,
+		IonButton,
+		IonButtons,
 	} from "@ionic/vue";
 	import { onBeforeMount, onUnmounted, ref, shallowRef, useTemplateRef, watch } from "vue"; 
 	import CollapsibleHeaderbar from "../../components/CollapsibleHeaderbar.vue";
@@ -25,6 +27,7 @@
 	import unsetMainFronterMD from "@material-symbols/svg-600/rounded/arrow_circle_down.svg";
 	import setAsFrontMD from "@material-symbols/svg-600/rounded/person_pin_circle.svg";
 	import copyMD from "@material-symbols/svg-600/rounded/content_copy.svg";
+	import moreMD from "@material-symbols/svg-600/rounded/more_vert.svg";
 
 	import { getFilteredMembers } from "../../lib/db/tables/members.ts";
 	import type { Member, FrontingEntryComplete } from "../../lib/db/entities";
@@ -38,6 +41,8 @@
 	import VirtualList from "../../components/VirtualList.vue";
 	import InfiniteLoader from "../../components/InfiniteLoader.vue";
 	import TheresNothingHere from "../../components/TheresNothingHere.vue";
+	import FilterQuerySelect from "../../modals/FilterQuerySelect.vue";
+	import { getFilterQueriesIndex } from "../../lib/db/tables/filterQueries.ts";
 
 	const route = useRoute();
 
@@ -52,6 +57,7 @@
 	const iterDone = ref(false);
 	const frontingEntries = shallowRef<FrontingEntryComplete[]>([]);
 	const list = useTemplateRef("list");
+	const filterQuerySelect = useTemplateRef("filterQuerySelect");
 
 	const listeners = [
 		(event: Event) => {
@@ -223,6 +229,11 @@
 						:value="search"
 						@ion-change="e => search = e.detail.value || ''"
 					/>
+					<IonButtons v-if="getFilterQueriesIndex().filter(x => x.type === 'members').length" slot="end">
+						<IonButton @click="filterQuerySelect?.$el.present()">
+							<IonIcon slot="icon-only" :icon="moreMD" />
+						</IonButton>
+					</IonButtons>
 				</IonToolbar>
 			</CollapsibleHeaderbar>
 
@@ -280,6 +291,8 @@
 					<IonIcon :icon="addMD" />
 				</IonFabButton>
 			</IonFab>
+
+			<FilterQuerySelect ref="filterQuerySelect" type="members" @selected="search = $event.query" />
 		</IonContent>
 	</IonPage>
 </template>

@@ -1,4 +1,4 @@
-import type { Asset, BoardMessage, CustomField, FrontingEntry, JournalPost, Member, Note, Reminder, System, Tag } from "./entities";
+import { FilterQuery, type Asset, type BoardMessage, type CustomField, type FrontingEntry, type JournalPost, type Member, type Note, type Reminder, type System, type Tag } from "./entities";
 import { makeShittyTable } from "./impl/shittytable";
 import type { Database } from "./types";
 import { Molise } from "./impl/molise";
@@ -15,7 +15,8 @@ export const db: Database = {
 	tags: new Molise<Tag>("tags"),
 	assets: new Molise<Asset>("assets"),
 	customFields: new Molise<CustomField>("customFields"),
-	notes: new Molise<Note>("notes")
+	notes: new Molise<Note>("notes"),
+	filterQueries: new Molise<FilterQuery>("filterQueries")
 };
 
 export const init = ref(false);
@@ -52,7 +53,8 @@ export async function initDatabase(){
 		tags: await makeShittyTable<Tag>("tags", ["name", "type", "isArchived", "viewInLists"]).then(thenIncrement),
 		assets: await makeShittyTable<Asset>("assets", ["friendlyName"]).then(thenIncrement),
 		customFields: await makeShittyTable<CustomField>("customFields", ["name", "priority"]).then(thenIncrement),
-		notes: await makeShittyTable<Note>("notes", ["title", "priority", "isArchived"]).then(thenIncrement)
+		notes: await makeShittyTable<Note>("notes", ["title", "priority", "isArchived"]).then(thenIncrement),
+		filterQueries: await makeShittyTable<FilterQuery>("filterQueries", ["name", "type"]).then(thenIncrement)
 	};
 
 	Object.assign(db, shittyDb);

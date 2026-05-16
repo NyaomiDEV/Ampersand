@@ -1,0 +1,16 @@
+{
+	"header": "Ricerchi",
+	"select": "Scigghi na ricerca",
+	"searchPlaceholder": "Cerca ntra li ricerchi...",
+	"edit": {
+		"header": "Cancia ricerca",
+		"headerAdd": "Agghiunci ricerca",
+		"name": "Nnomu dâ ricerca",
+		"query": "Corpu dâ ricerca",
+		"type": "Tipu di ricerca",
+		"delete": {
+			"title": "Scancella ricerca",
+			"confirm": "Voi scancillari pi daveru sta ricerca?"
+		}
+	}
+}

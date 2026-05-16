@@ -1,13 +1,16 @@
 <script setup lang="ts">
-	import { IonContent, IonList, IonPage, IonTitle, IonLabel, IonToolbar, IonBackButton, IonItemDivider, IonIcon, IonSearchbar, IonFabButton, IonFab } from "@ionic/vue";
-	import { h, onBeforeMount, onUnmounted, ref, shallowRef, watch } from "vue";
+	import { IonContent, IonList, IonPage, IonTitle, IonLabel, IonToolbar, IonBackButton, IonItemDivider, IonIcon, IonSearchbar, IonFabButton, IonFab, IonButtons, IonButton } from "@ionic/vue";
+	import { h, onBeforeMount, onUnmounted, ref, shallowRef, useTemplateRef, watch } from "vue";
 	import type { FrontingEntryComplete } from "../../lib/db/entities.d.ts";
 	import { getFrontingEntriesOfDay, getFrontingEntriesDays, toFrontingEntryComplete } from "../../lib/db/tables/frontingEntries";
 	import Spinner from "../../components/Spinner.vue";
 	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
 	import dayjs from "dayjs";
+	import { getFilterQueriesIndex } from "../../lib/db/tables/filterQueries.ts";
 
 	import addMD from "@material-symbols/svg-600/rounded/add.svg";
+	import moreMD from "@material-symbols/svg-600/rounded/more_vert.svg";
+
 	import { DatabaseEvents, DatabaseEvent } from "../../lib/db/events";
 	import { addModal, removeModal } from "../../lib/modals.ts";
 	import { useRoute } from "vue-router";
@@ -16,6 +19,7 @@
 	import FrontingEntryItem from "../../components/frontingEntry/FrontingEntryItem.vue";
 	import TheresNothingHere from "../../components/TheresNothingHere.vue";
 	import CollapsibleHeaderbar from "../../components/CollapsibleHeaderbar.vue";
+	import FilterQuerySelect from "../../modals/FilterQuerySelect.vue";
 
 	const route = useRoute();
 	
@@ -31,6 +35,8 @@
 	const frontingEntriesDays = shallowRef<{ date: string, backgroundColor: string }[]>();
 
 	const date = ref(new Date());
+
+	const filterQuerySelect = useTemplateRef("filterQuerySelect");
 
 	const listener = (event: Event) => {
 		if(["frontingEntries", "members"].includes((event as DatabaseEvent).data.table))
@@ -180,6 +186,11 @@
 						:value="search"
 						@ion-change="e => search = e.detail.value || ''"
 					/>
+					<IonButtons v-if="getFilterQueriesIndex().filter(x => x.type === 'frontHistory').length" slot="end">
+						<IonButton @click="filterQuerySelect?.$el.present()">
+							<IonIcon slot="icon-only" :icon="moreMD" />
+						</IonButton>
+					</IonButtons>
 				</IonToolbar>
 			</CollapsibleHeaderbar>
 
@@ -215,6 +226,8 @@
 					<IonIcon :icon="addMD" />
 				</IonFabButton>
 			</IonFab>
+
+			<FilterQuerySelect ref="filterQuerySelect" type="frontHistory" @selected="search = $event.query" />
 		</IonContent>
 	</IonPage>
 </template>

@@ -49,6 +49,9 @@ DatabaseEvents.addEventListener("updated", (event) => {
 		case "notes":
 			eventName = "note";
 			break;
+		case "filterQueries":
+			eventName = "filterQuery";
+			break;
 	}
 
 	switch ((event as DatabaseEvent).data.event){
