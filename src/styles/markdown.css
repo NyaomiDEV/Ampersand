@@ -238,6 +238,9 @@
 
 		&.repeating {
 			background: repeating-linear-gradient(in var(--markdown-text-fg-colorspace) var(--markdown-text-fg-degrees), var(--markdown-text-fg-colors));
+			-webkit-background-clip: text;
+			background-clip: text;
+			color: transparent;
 		}
 	}
 
