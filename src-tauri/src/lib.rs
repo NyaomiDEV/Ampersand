@@ -5,7 +5,7 @@ use tauri::{WebviewWindowBuilder, WebviewUrl};
 #[cfg(desktop)]
 use tauri::Manager;
 
-#[cfg(any(target_os = "macos", target_os = "windows"))]
+#[cfg(target_os = "macos")]
 use tauri::{
     utils::config::WindowEffectsConfig,
     window::{Effect, Color, EffectState}
@@ -59,14 +59,12 @@ pub fn run() {
                 .resizable(true)
                 .inner_size(800.0, 600.0);
 
-            #[cfg(any(target_os = "windows", target_os = "macos"))]
+            #[cfg(target_os = "macos")]
             let win_builder = win_builder
                 .background_color(Color(255, 255, 255, 0))
                 .transparent(true)
                 .effects(WindowEffectsConfig {
                     effects: Vec::from([
-                        Effect::Mica,
-                        Effect::Acrylic,
                         Effect::HudWindow
                     ]),
                     color: None,

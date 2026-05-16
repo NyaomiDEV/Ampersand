@@ -78,16 +78,16 @@ html:is(.plt-tablet, .plt-desktop) ion-tab-bar {
 	overflow-y: auto;
 }
 
-html:is(.sys-windows, .sys-macos),
-html:is(.sys-windows, .sys-macos) body {
+html:is(.sys-macos),
+html:is(.sys-macos) body {
 	background-color: transparent;
 }
 
-html:is(.sys-windows, .sys-macos) ion-tab-bar {
+html:is(.sys-macos) ion-tab-bar {
 	background: rgba(var(--md3-surface-container), 0.85);
 }
 
-html:is(.sys-windows, .sys-macos) ion-tab-button {
+html:is(.sys-macos) ion-tab-button {
 	background-color: transparent;
 }
 
