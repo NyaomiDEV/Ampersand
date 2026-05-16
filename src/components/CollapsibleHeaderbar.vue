@@ -11,13 +11,13 @@
 
 	const headerbar = useTemplateRef("headerbar");
 
-	const scrollDelta = ref<string>("0");
+	const scrollDelta = ref(0);
 	const contentOffset = ref(0);
 
 	onMounted(async () => {
 		if(!headerbar.value) return;
 		const headerEl = headerbar.value.$el as HTMLElement;
-		const scrollerEl = props.scroller ?? headerEl.parentElement as HTMLElement;
+		const scrollerEl = props.scroller ?? headerEl.closest("ion-content") as HTMLElement;
 		const firstToolbarEl = headerEl.getElementsByTagName("ion-toolbar").item(0);
 		if(!firstToolbarEl) return;
 		const rtl = window.getComputedStyle(firstToolbarEl, null).getPropertyValue("direction") === "rtl";
@@ -49,7 +49,7 @@
 			el.style.setProperty("scroll-timeline", "--scroller y");
 		else {
 			el.addEventListener("scroll", () => {
-				scrollDelta.value = `${el.scrollTop}`;
+				scrollDelta.value = el.scrollTop;
 			});
 		}
 	});
