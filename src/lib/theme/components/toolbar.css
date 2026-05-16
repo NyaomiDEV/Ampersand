@@ -73,8 +73,7 @@
 	margin-inline-end: 0px;
 }
 
-.md ion-toolbar ion-back-button.in-toolbar,
-.md ion-toolbar ion-button.in-toolbar {
+.md ion-toolbar :is(ion-back-button, ion-button).in-toolbar {
 	--background: rgb(var(--md3-surface-container-high));
 	--background-hover: rgb(var(--md3-surface-container));
 	--background-focused: rgb(var(--md3-surface-container));
@@ -86,8 +85,11 @@
 	--box-shadow: var(--md3-elevation-0);
 }
 
-.ion-palette-dark .md ion-toolbar ion-back-button.in-toolbar,
-.ion-palette-dark .md ion-toolbar ion-button.in-toolbar {
+.md ion-toolbar :is(ion-back-button, ion-button).in-toolbar ion-icon {
+	color: rgb(var(--md3-on-surface));
+}
+
+.ion-palette-dark .md ion-toolbar :is(ion-back-button, ion-button).in-toolbar {
 	--background: rgb(var(--md3-surface-container-low));
 }
 
