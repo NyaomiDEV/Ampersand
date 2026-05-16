@@ -41,9 +41,10 @@ export function filterMember(search: string, member: Member){
 			return false;
 	}
 
-	if (parsed.system) 
-		return (member.system !== parsed.system.value) !== parsed.system.shouldInclude;
-	
+	if (parsed.system) {
+		if ((member.system !== parsed.system.value) === parsed.system.shouldInclude)
+			return false;
+	}
 
 	if (parsed.pronouns) {
 		if (!member.pronouns || !member.pronouns.toLowerCase().includes(parsed.pronouns.value.toLowerCase()) === parsed.pronouns.shouldInclude)
