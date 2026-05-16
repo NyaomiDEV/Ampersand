@@ -85,7 +85,7 @@ function reduceToValue(value: string, emptyMeansTrue = true, trueMeansValueItsel
 
 function splitTokens(search: string){
 	const rawTokens = Array.from(search.matchAll(/(?=\S)[^"\s]*(?:["][^\\"]*(?:\\[\s\S][^\\"]*)*["][^"\s]*)*/g)).map(x => x[0]);
-	console.log(rawTokens);
+
 	const tags = new Map<string, { 
 		shouldInclude: boolean,
 		allAttached: boolean,
