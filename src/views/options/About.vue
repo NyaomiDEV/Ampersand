@@ -123,6 +123,10 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
+
+		> h3 {
+			font-family: var(--ampersand-header-font-name), var(--ion-font-family);
+		}
 	}
 
 	.logo {
@@ -174,6 +178,7 @@
 			text-align: center;
 			margin: 0;
 			line-height: normal;
+			font-family: var(--ampersand-header-font-name), var(--ion-font-family);
 		}
 	}
 
