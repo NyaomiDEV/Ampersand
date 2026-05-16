@@ -579,6 +579,10 @@
 		* {
 			margin: 0;
 		}
+
+		h3 {
+			font-family: var(--ampersand-header-font-name), var(--ion-font-family);
+		}
 	}
 
 	.system-description ion-label {
