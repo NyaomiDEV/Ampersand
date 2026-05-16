@@ -24,7 +24,7 @@ ion-toast {
 }
 
 html, html.md {
-	--ampersand-header-font-name: 'Inter';
+	--ampersand-header-font-name: 'Urbanist';
 	--ampersand-body-font-name: 'Inter';
 	--ion-default-font: 'Inter', 'Roboto', sans-serif;
 	--ion-font-family: var(--ampersand-body-font-name), var(--ion-default-font);
