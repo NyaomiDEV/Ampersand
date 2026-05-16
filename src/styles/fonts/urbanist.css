@@ -1,0 +1,13 @@
+@font-face {
+	font-family: "Urbanist";
+	font-style: normal;
+	font-weight: 100 900;
+	src: url(../../assets/fonts/urbanist/Urbanist.ttf);
+}
+
+@font-face {
+	font-family: "Urbanist";
+	font-style: italic;
+	font-weight: 100 900;
+	src: url(../../assets/fonts/urbanist/Urbanist-Italic.ttf);
+}

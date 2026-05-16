@@ -415,6 +415,7 @@ export const fontFamilies = {
 	atkinson: "Atkinson Hyperlegible",
 	dyslexic: "OpenDyslexic",
 	inter: "Inter",
+	urbanist: "Urbanist"
 };
 
 export function fontFamilyPicker(header: string): Promise<NameStyle | null | undefined> {
