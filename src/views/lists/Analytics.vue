@@ -138,16 +138,16 @@
 			<IonToolbar v-if="analytics && members">
 				<IonSegment v-model="currentTab">
 					<IonSegmentButton value="stats" content-id="stats">
-						<IonIcon :icon="statsMD" aria-label="$t('analytics:stats')" />
+						<IonIcon :icon="statsMD" :aria-label="$t('analytics:stats')" />
 					</IonSegmentButton>
 					<IonSegmentButton value="daytime" content-id="daytime">
-						<IonIcon :icon="routineMD" aria-label="$t('analytics:daytime')" />
+						<IonIcon :icon="routineMD" :aria-label="$t('analytics:daytime')" />
 					</IonSegmentButton>
 					<IonSegmentButton value="presence" content-id="presence">
-						<IonIcon :icon="presenceMD" aria-label="$t('analytics:presence')" />
+						<IonIcon :icon="presenceMD" :aria-label="$t('analytics:presence')" />
 					</IonSegmentButton>
 					<IonSegmentButton value="cofront" content-id="cofront">
-						<IonIcon :icon="cofrontMD" aria-label="$t('analytics:cofront')" />
+						<IonIcon :icon="cofrontMD" :aria-label="$t('analytics:cofront')" />
 					</IonSegmentButton>
 				</IonSegment>
 			</IonToolbar>

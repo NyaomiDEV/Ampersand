@@ -30,6 +30,7 @@
 	import MemberItem from "../components/member/MemberItem.vue";
 	import MemberSelect from "./MemberSelect.vue";
 	import VirtualList from "../components/VirtualList.vue";
+	import TheresNothingHere from "../components/TheresNothingHere.vue";
 
 	const i18next = useTranslation();
 
@@ -168,7 +169,8 @@
 
 		<SpinnerFullscreen v-if="!members || !comments" />
 		<IonContent v-else>
-			<IonList ref="list">
+			<TheresNothingHere v-if="!comments.length" />
+			<IonList v-else ref="list">
 				<VirtualList :entries="comments.toSorted(sortDateAsc)" :gap="8" :min-size="92">
 					<template #default="{ entry: comment }">
 						<IonItemSliding>

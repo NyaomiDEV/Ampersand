@@ -22,6 +22,7 @@
 	import { promptOkCancel } from "../lib/util/misc.ts";
 
 	import MemberItem from "../components/member/MemberItem.vue";
+	import TheresNothingHere from "../components/TheresNothingHere.vue";
 
 	import pencilMD from "@material-symbols/svg-600/rounded/edit.svg";
 	import trashMD from "@material-symbols/svg-600/rounded/delete.svg";
@@ -122,7 +123,8 @@
 
 		<SpinnerFullscreen v-if="!members" />
 		<IonContent v-else>
-			<IonList ref="list">
+			<TheresNothingHere v-if="!poll.entries.filter(x => x.votes.length).length" />
+			<IonList v-else ref="list">
 				<template v-for="choice in poll.entries.filter(x => x.votes.length)" :key="choice.choice">
 					<IonItemDivider sticky>
 						{{ choice.choice }} - {{ $t("messageBoard:polls.choice.desc", { count: choice.votes.length }) }}

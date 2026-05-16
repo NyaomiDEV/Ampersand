@@ -24,6 +24,7 @@
 	import PresenceRating from "../components/PresenceRating.vue";
 	import { addModal, removeModal } from "../lib/modals";
 	import { presencePhrase } from "../lib/util/misc";
+	import TheresNothingHere from "../components/TheresNothingHere.vue";
 
 	const props = defineProps<{
 		modelValue?: Map<Date, number>,
@@ -79,7 +80,8 @@
 		</IonHeader>
 
 		<IonContent>
-			<IonList>
+			<TheresNothingHere v-if="!presence.size" />
+			<IonList v-else>
 				<IonItem
 					v-for="entry in Array.from(presence.entries()).sort((a, b) => b[0].valueOf() - a[0].valueOf())"
 					:key="entry[0].valueOf()"

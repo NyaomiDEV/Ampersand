@@ -14,6 +14,7 @@
 	import FrontingEntryItem from "../components/frontingEntry/FrontingEntryItem.vue";
 	import VirtualList from "../components/VirtualList.vue";
 	import { toFrontingEntryComplete } from "../lib/db/tables/frontingEntries";
+	import TheresNothingHere from "../components/TheresNothingHere.vue";
 
 	const props = defineProps<{
 		entries: FrontingEntry[]
@@ -36,7 +37,8 @@
 
 		<SpinnerFullscreen v-if="!complete" />
 		<IonContent v-else>
-			<IonList>
+			<TheresNothingHere v-if="!complete.length" />
+			<IonList v-else>
 				<VirtualList :entries="complete" :min-size="86" :gap="2">
 					<template #default="{ entry }">
 						<FrontingEntryItem

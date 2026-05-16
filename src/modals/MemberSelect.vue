@@ -22,6 +22,7 @@
 	import VirtualList from "../components/VirtualList.vue";
 	import InfiniteLoader from "../components/InfiniteLoader.vue";
 	import MemberItem from "../components/member/MemberItem.vue";
+	import TheresNothingHere from "../components/TheresNothingHere.vue";
 
 	import checkMD from "@material-symbols/svg-600/rounded/check.svg";
 
@@ -155,7 +156,8 @@
 
 		<SpinnerFullscreen v-if="!members" />
 		<IonContent v-else>
-			<IonList>
+			<TheresNothingHere v-if="!members.length" />
+			<IonList v-else>
 				<VirtualList :entries="members" :min-size="86" :gap="2">
 					<template #default="{ entry: member }">
 						<MemberItem

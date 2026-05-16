@@ -23,6 +23,7 @@
 	import SystemItem from "../components/system/SystemItem.vue";
 	import VirtualList from "../components/VirtualList.vue";
 	import InfiniteLoader from "../components/InfiniteLoader.vue";
+	import TheresNothingHere from "../components/TheresNothingHere.vue";
 
 	import checkMD from "@material-symbols/svg-600/rounded/check.svg";
 
@@ -160,7 +161,8 @@
 
 		<SpinnerFullscreen v-if="!systems" />
 		<IonContent v-else>
-			<IonList>
+			<TheresNothingHere v-if="!systems.length" />
+			<IonList v-else>
 				<VirtualList :entries="systems" :min-size="72" :gap="2">
 					<template #default="{ entry: system }">
 						<SystemItem

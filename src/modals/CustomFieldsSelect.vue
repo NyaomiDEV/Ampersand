@@ -20,6 +20,7 @@
 	import { CustomField } from "../lib/db/entities";
 	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
 	import { getFilteredCustomFields } from "../lib/db/tables/customFields";
+	import TheresNothingHere from "../components/TheresNothingHere.vue";
 
 	import checkMD from "@material-symbols/svg-600/rounded/check.svg";
 
@@ -87,7 +88,8 @@
 
 		<SpinnerFullscreen v-if="!customFields" />
 		<IonContent v-else>
-			<IonList>
+			<TheresNothingHere v-if="!customFields.length" />
+			<IonList v-else>
 				<IonItem v-for="customField in customFields" :key="customField.uuid" button>
 					<IonCheckbox
 						:disabled="customField.default"

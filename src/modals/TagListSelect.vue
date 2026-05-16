@@ -21,6 +21,7 @@
 	import VirtualList from "../components/VirtualList.vue";
 	import InfiniteLoader from "../components/InfiniteLoader.vue";
 	import { DatabaseEvent, DatabaseEvents } from "../lib/db/events";
+	import TheresNothingHere from "../components/TheresNothingHere.vue";
 
 	import checkMD from "@material-symbols/svg-600/rounded/check.svg";
 
@@ -130,7 +131,8 @@
 
 		<SpinnerFullscreen v-if="!tags" />
 		<IonContent v-else>
-			<IonList>
+			<TheresNothingHere v-if="!tags.length" />
+			<IonList v-else>
 				<VirtualList :entries="tags.filter(x => x.type === props.type)" :min-size="56" :gap="2">
 					<template #default="{ entry: tag }">
 						<TagItem
