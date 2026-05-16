@@ -119,6 +119,9 @@ async function setupAmpersand(){
 	// first and foremost, put the router guard in place
 	router.beforeEach(routerGuard);
 
+	// now we set the class of the current platform
+	document.documentElement.classList.add(`sys-${platform()}`);
+
 	// let's start initializing the database
 	void initDatabase();
 
@@ -135,11 +138,11 @@ async function setupAmpersand(){
 	}).use(router).use(I18NextVue, { i18next: i18n });
 	window.Ionic.config.set("navAnimation", slideAnimation);
 
+	await updateInsets();
+	window.addEventListener("orientationchange", () => void updateInsets());
+
 	// if on android, we need to get window insets and set up back button behaviour
 	if (platform() === "android") {
-		await updateInsets();
-		window.addEventListener("orientationchange", () => void updateInsets());
-
 		await onBackButtonPress(() => {
 			document.dispatchEvent(new Event("backbutton"));
 			void maybeExit();

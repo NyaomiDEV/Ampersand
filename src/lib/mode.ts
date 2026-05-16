@@ -23,13 +23,21 @@ export async function updateDarkMode() {
 }
 
 export async function updateInsets() {
-	if (platform() !== "android") return;
-	const insets = await M3.getInsets();
-	if(insets && !("error" in insets)) {
-		document.documentElement.style.setProperty("--device-inset-top", `${Number(insets.adjustedInsetTop)}px`);
-		document.documentElement.style.setProperty("--device-inset-left", `${Number(insets.adjustedInsetLeft)}px`);
-		document.documentElement.style.setProperty("--device-inset-right", `${Number(insets.adjustedInsetRight)}px`);
-		document.documentElement.style.setProperty("--device-inset-bottom", `${Number(insets.adjustedInsetBottom)}px`);
+	switch(platform()){
+		case "android": {
+			const insets = await M3.getInsets();
+			if (insets && !("error" in insets)) {
+				document.documentElement.style.setProperty("--device-inset-top", `${Number(insets.adjustedInsetTop)}px`);
+				document.documentElement.style.setProperty("--device-inset-left", `${Number(insets.adjustedInsetLeft)}px`);
+				document.documentElement.style.setProperty("--device-inset-right", `${Number(insets.adjustedInsetRight)}px`);
+				document.documentElement.style.setProperty("--device-inset-bottom", `${Number(insets.adjustedInsetBottom)}px`);
+			}
+			break;
+		}
+		case "macos": {
+			document.documentElement.style.setProperty("--device-inset-top", "28px");
+			break;
+		}
 	}
 }
 

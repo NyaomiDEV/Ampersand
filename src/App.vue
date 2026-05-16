@@ -9,6 +9,7 @@
 	import { appConfig } from "./lib/config";
 	import AssetFonts from "./components/AssetFonts.vue";
 	import { sendFrontingChangedEvent } from "./lib/db/tables/frontingEntries";
+	import { platform } from "@tauri-apps/plugin-os";
 
 	// Notifications
 	import { ensureNotifyPerms, registerChannels } from "./lib/notifications";
@@ -46,8 +47,21 @@
 
 <template>
 	<IonApp>
+		<div v-if="platform() === 'macos'" data-tauri-drag-region class="window-overlay-drag" />
 		<IonRouterOutlet />
 		<ModalContainer />
 		<AssetFonts />
 	</IonApp>
 </template>
+
+<style scoped>
+	div.window-overlay-drag {
+		display: block;
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: var(--ion-safe-area-top, 0px);
+		width: 100%;
+		z-index: 1000;
+	}
+</style>

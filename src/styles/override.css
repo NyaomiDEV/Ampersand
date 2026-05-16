@@ -67,6 +67,7 @@ html:is(.plt-tablet, .plt-desktop) ion-tabs {
 }
 
 html:is(.plt-tablet, .plt-desktop) ion-tab-bar {
+	padding-top: var(--ion-safe-area-top, 0px);
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
@@ -75,6 +76,19 @@ html:is(.plt-tablet, .plt-desktop) ion-tab-bar {
 	padding-right: 0;
 	overflow-x: hidden;
 	overflow-y: auto;
+}
+
+html:is(.sys-windows, .sys-macos),
+html:is(.sys-windows, .sys-macos) body {
+	background-color: transparent;
+}
+
+html:is(.sys-windows, .sys-macos) ion-tab-bar {
+	background: rgba(var(--md3-surface-container), 0.85);
+}
+
+html:is(.sys-windows, .sys-macos) ion-tab-button {
+	background-color: transparent;
 }
 
 html:is(.plt-tablet, .plt-desktop) ion-tab-button {

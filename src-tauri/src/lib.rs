@@ -1,5 +1,16 @@
 mod commands;
 
+use tauri::{WebviewWindowBuilder, WebviewUrl};
+
+#[cfg(desktop)]
+use tauri::Manager;
+
+#[cfg(any(target_os = "macos", target_os = "windows"))]
+use tauri::{
+    utils::config::WindowEffectsConfig,
+    window::{Effect, Color, EffectState}
+};
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     let mut builder = tauri::Builder::default();
@@ -7,8 +18,6 @@ pub fn run() {
     #[cfg(desktop)]
     {
         builder = builder.plugin(tauri_plugin_single_instance::init(|app, _args, _cwd| {
-            use tauri::Manager;
-
             let _ = app.get_webview_window("main")
                        .expect("no main window")
                        .set_focus();
@@ -41,7 +50,38 @@ pub fn run() {
             commands::clear_temp_dir,
             commands::get_webkit_version
         ])
-        .setup(|_app: &mut tauri::App| {
+        .setup(|app: &mut tauri::App| {
+            let win_builder = WebviewWindowBuilder::new(app, "main", WebviewUrl::default())
+                .title("Ampersand");
+
+            #[cfg(desktop)]
+            let win_builder = win_builder
+                .resizable(true)
+                .inner_size(800.0, 600.0);
+
+            #[cfg(any(target_os = "windows", target_os = "macos"))]
+            let win_builder = win_builder
+                .background_color(Color(255, 255, 255, 0))
+                .transparent(true)
+                .effects(WindowEffectsConfig {
+                    effects: Vec::from([
+                        Effect::Mica,
+                        Effect::Acrylic,
+                        Effect::HudWindow
+                    ]),
+                    color: None,
+                    radius: None,
+                    state: Some(EffectState::FollowsWindowActiveState)
+                });
+
+            #[cfg(target_os = "macos")]
+            let win_builder = win_builder
+                .title_bar_style(tauri::TitleBarStyle::Overlay)
+                .hidden_title(true);
+
+            let _window = win_builder.build()
+                .expect("cannot build window");
+
             Ok(())
         })
         .run(tauri::generate_context!())
