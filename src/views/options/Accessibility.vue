@@ -7,7 +7,10 @@
 	import lowContrastMD from "@material-symbols/svg-600/rounded/brightness_1.svg";
 	import highContrastMD from "@material-symbols/svg-600/rounded/contrast.svg";
 	import amoledMD from "@material-symbols/svg-600/rounded/night_sight_max.svg";
+	import tonalMD from "@material-symbols/svg-600/rounded/brightness_5.svg";
+	import neutralMD from "@material-symbols/svg-600/rounded/brightness_empty.svg";
 	import vibrantMD from "@material-symbols/svg-600/rounded/brightness_7.svg";
+	import expressiveMD from "@material-symbols/svg-600/rounded/brightness_6.svg";
 	import fontMD from "@material-symbols/svg-600/rounded/format_size.svg";
 	import smallTextMD from "@material-symbols/svg-600/rounded/text_decrease.svg";
 	import bigTextMD from "@material-symbols/svg-600/rounded/text_increase.svg";
@@ -73,7 +76,10 @@
 				</IonItem>
 
 				<IonItem>
-					<IonIcon slot="start" :icon="vibrantMD" />
+					<IonIcon v-if="accessibilityConfig.themeScheme === 'tonal-spot'" slot="start" :icon="tonalMD" />
+					<IonIcon v-if="accessibilityConfig.themeScheme === 'neutral'" slot="start" :icon="neutralMD" />
+					<IonIcon v-if="accessibilityConfig.themeScheme === 'vibrant'" slot="start" :icon="vibrantMD" />
+					<IonIcon v-if="accessibilityConfig.themeScheme === 'expressive'" slot="start" :icon="expressiveMD" />
 					<IonSelect
 						v-model="accessibilityConfig.themeScheme"
 						label-placement="floating"
