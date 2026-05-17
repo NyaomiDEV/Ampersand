@@ -1,5 +1,5 @@
 import { AccessibilityConfig, AppConfig, SecurityConfig } from "../../config/types";
-import type { BoardMessage, FrontingEntry, JournalPost, Member, System, Asset, FilterQuery, Comment } from "../entities.d.ts";
+import type { BoardMessage, FrontingEntry, JournalPost, Member, System, Asset, FilterQuery, Comment, Note } from "../entities.d.ts";
 
 export interface DatabaseJSON {
 	config: {
@@ -17,7 +17,7 @@ export interface DatabaseJSON {
 		tags: Tag[],
 		assets: AssetJSON[],
 		customFields: CustomField[],
-		notes: Notes[],
+		notes: Note[],
 		filterQueries: FilterQuery[]
 	}
 }
