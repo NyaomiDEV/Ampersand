@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { IonContent, IonList, IonPage, IonTitle, IonToolbar, IonSearchbar, IonFab, IonFabButton, IonIcon, IonLabel, IonItemDivider, useIonRouter, IonBackButton, IonItemSliding, IonItemOptions, IonItemOption, IonButtons, IonButton } from "@ionic/vue";
-	import { onBeforeMount, onUnmounted, ref, shallowRef, useTemplateRef, watch } from "vue";
+	import { h, onBeforeMount, onUnmounted, ref, shallowRef, useTemplateRef, watch } from "vue";
 	import { useRoute } from "vue-router";
 	import CollapsibleHeaderbar from "../../components/CollapsibleHeaderbar.vue";
 	import Spinner from "../../components/Spinner.vue";
@@ -19,7 +19,9 @@
 	import DatetimeUtc, { DatetimeParts } from "../../components/DatetimeUtc.vue";
 	import TheresNothingHere from "../../components/TheresNothingHere.vue";
 	import FilterQuerySelect from "../../modals/FilterQuerySelect.vue";
+	import FilterQueryEdit from "../../modals/FilterQueryEdit.vue";
 	import { getFilterQueriesIndex } from "../../lib/db/tables/filterQueries.ts";
+	import { addModal, removeModal } from "../../lib/modals.ts";
 
 	const route = useRoute();
 	const router = useIonRouter();
@@ -168,6 +170,18 @@
 			return;
 		}
 	}
+
+	async function saveFilterQuery(){
+		if(!search.value.length) return;
+		const vnode = h(FilterQueryEdit, {
+			filterQuery: { name: "", type: "journal", query: search.value },
+			onDidDismiss: () => removeModal(vnode)
+		});
+
+		const modal = await addModal(vnode);
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-explicit-any
+		await (modal.el as any).present();
+	}
 </script>
 
 <template>
@@ -194,9 +208,12 @@
 						:value="search"
 						@ion-change="e => search = e.detail.value || ''"
 					/>
-					<IonButtons v-if="getFilterQueriesIndex().filter(x => x.type === 'journal').length" slot="end">
-						<IonButton @click="filterQuerySelect?.$el.present()">
+					<IonButtons slot="end">
+						<IonButton v-if="getFilterQueriesIndex().filter(x => x.type === 'journal').length" @click="filterQuerySelect?.$el.present()">
 							<IonIcon slot="icon-only" :icon="moreMD" />
+						</IonButton>
+						<IonButton v-if="search.length" @click="saveFilterQuery">
+							<IonIcon slot="icon-only" :icon="addMD" />
 						</IonButton>
 					</IonButtons>
 				</IonToolbar>

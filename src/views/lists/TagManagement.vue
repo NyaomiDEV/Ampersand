@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { IonContent, IonSearchbar, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonSegment, IonSegmentButton, IonLabel, IonFab, IonFabButton, IonIcon, IonItemSliding, IonItemOptions, IonItemOption, IonButtons, IonButton } from "@ionic/vue";
-	import { onMounted, onUnmounted, ref, shallowRef, useTemplateRef, watch } from "vue";
+	import { h, onMounted, onUnmounted, ref, shallowRef, useTemplateRef, watch } from "vue";
 	import { useRoute } from "vue-router";
 	import { getFilterQueriesIndex } from "../../lib/db/tables/filterQueries.ts";
 
@@ -22,6 +22,8 @@
 	import TheresNothingHere from "../../components/TheresNothingHere.vue";
 	import CollapsibleHeaderbar from "../../components/CollapsibleHeaderbar.vue";
 	import FilterQuerySelect from "../../modals/FilterQuerySelect.vue";
+	import FilterQueryEdit from "../../modals/FilterQueryEdit.vue";
+	import { addModal, removeModal } from "../../lib/modals.ts";
 
 	const route = useRoute();
 
@@ -122,6 +124,18 @@
 			return;
 		}
 	}
+
+	async function saveFilterQuery(){
+		if(!search.value.length) return;
+		const vnode = h(FilterQueryEdit, {
+			filterQuery: { name: "", type: "tagManagement", query: search.value },
+			onDidDismiss: () => removeModal(vnode)
+		});
+
+		const modal = await addModal(vnode);
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-explicit-any
+		await (modal.el as any).present();
+	}
 </script>
 
 <template>
@@ -148,9 +162,12 @@
 						:value="search"
 						@ion-change="e => search = e.detail.value || ''"
 					/>
-					<IonButtons v-if="getFilterQueriesIndex().filter(x => x.type === 'tagManagement').length" slot="end">
-						<IonButton @click="filterQuerySelect?.$el.present()">
+					<IonButtons slot="end">
+						<IonButton v-if="getFilterQueriesIndex().filter(x => x.type === 'tagManagement').length" @click="filterQuerySelect?.$el.present()">
 							<IonIcon slot="icon-only" :icon="moreMD" />
+						</IonButton>
+						<IonButton v-if="search.length" @click="saveFilterQuery">
+							<IonIcon slot="icon-only" :icon="addMD" />
 						</IonButton>
 					</IonButtons>
 				</IonToolbar>
