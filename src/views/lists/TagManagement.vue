@@ -13,7 +13,7 @@
 	import type { Tag } from "../../lib/db/entities.d.ts";
 	import { DatabaseEvents, DatabaseEvent } from "../../lib/db/events";
 
-	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
+	import Spinner from "../../components/Spinner.vue";
 	import TagItem from "../../components/tag/TagItem.vue";
 	import { promptOkCancel, toast } from "../../lib/util/misc.ts";
 	import { useTranslation } from "i18next-vue";
@@ -169,7 +169,9 @@
 				</IonToolbar>
 			</CollapsibleHeaderbar>
 
-			<SpinnerFullscreen v-if="!tags" />
+			<div v-if="!tags" class="spinner-container">
+				<Spinner size="72px" />
+			</div>
 			<template v-else>
 				<TheresNothingHere v-if="!tags.length" sibling-header />
 				<IonList ref="list">
@@ -209,3 +211,13 @@
 		</IonContent>
 	</IonPage>
 </template>
+
+<style scoped>
+	.spinner-container {
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 16px;
+	}
+</style>

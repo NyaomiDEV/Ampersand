@@ -19,7 +19,7 @@
 	import type { FilterQuery, FilterQueryType } from "../../lib/db/entities";
 	import { DatabaseEvents, DatabaseEvent } from "../../lib/db/events.ts";
 
-	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
+	import Spinner from "../../components/Spinner.vue";
 	import { promptOkCancel, toast } from "../../lib/util/misc.ts";
 	import { useTranslation } from "i18next-vue";
 	import VirtualList from "../../components/VirtualList.vue";
@@ -189,7 +189,9 @@
 				</IonToolbar>
 			</CollapsibleHeaderbar>
 		
-			<SpinnerFullscreen v-if="!filterQueries" />
+			<div v-if="!filterQueries" class="spinner-container">
+				<Spinner size="72px" />
+			</div>
 			<template v-else>
 				<TheresNothingHere v-if="!filterQueries.length" sibling-header />
 				<IonList ref="list">
@@ -226,3 +228,13 @@
 		</IonContent>
 	</IonPage>
 </template>
+
+<style scoped>
+	.spinner-container {
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 16px;
+	}
+</style>
