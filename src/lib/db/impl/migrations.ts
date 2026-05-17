@@ -161,7 +161,7 @@ export async function assets(table: ShittyTable<Asset>, version: number) {
 				// This is slow but I know no other way
 				const asset = await table.get(uuid);
 				if(!asset.tags)
-					await table.update({ uuid, tags: [] });
+					await table.update({ uuid, tags: [] }, false);
 			} catch (_e) {
 				console.error(_e);
 				return false;
