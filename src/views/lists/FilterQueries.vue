@@ -6,16 +6,6 @@
 	import addMD from "@material-symbols/svg-600/rounded/add.svg";
 	import trashMD from "@material-symbols/svg-600/rounded/delete.svg";
 
-	import PeopleMD from "@material-symbols/svg-600/rounded/group.svg";
-	import JournalMD from "@material-symbols/svg-600/rounded/book.svg";
-	import SystemMD from "@material-symbols/svg-600/rounded/groups.svg";
-	import FrontHistoryMD from "@material-symbols/svg-600/rounded/show_chart.svg";
-	import MessageBoardMD from "@material-symbols/svg-600/rounded/newsmode.svg";
-	import TagMD from "@material-symbols/svg-600/rounded/sell.svg";
-	import CustomFieldsMD from "@material-symbols/svg-600/rounded/format_list_bulleted_add.svg";
-	import NotesMD from "@material-symbols/svg-600/rounded/note_stack.svg";
-	import FolderMD from "@material-symbols/svg-600/rounded/folder_open.svg";
-
 	import type { FilterQuery, FilterQueryType } from "../../lib/db/entities";
 	import { DatabaseEvents, DatabaseEvent } from "../../lib/db/events.ts";
 
@@ -29,6 +19,7 @@
 	import { deleteFilterQuery, getFilteredFilterQueries } from "../../lib/db/tables/filterQueries.ts";
 	import FilterQueryEdit from "../../modals/FilterQueryEdit.vue";
 	import { addModal, removeModal } from "../../lib/modals.ts";
+	import { lists } from "../../router/lists.ts";
 
 	const route = useRoute();
 
@@ -159,31 +150,31 @@
 				<IonToolbar>
 					<IonSegment v-model="type" value="members" scrollable>
 						<IonSegmentButton value="members">
-							<IonIcon :icon="PeopleMD" :aria-label="$t('members:header')" />
+							<IonIcon :icon="lists.members.icon" :aria-label="$t('members:header')" />
 						</IonSegmentButton>
 						<IonSegmentButton value="journal">
-							<IonIcon :icon="JournalMD" :aria-label="$t('journal:header')" />
+							<IonIcon :icon="lists.journal.icon" :aria-label="$t('journal:header')" />
 						</IonSegmentButton>
 						<IonSegmentButton value="frontHistory">
-							<IonIcon :icon="FrontHistoryMD" :aria-label="$t('frontHistory:header')" />
+							<IonIcon :icon="lists.frontHistory.icon" :aria-label="$t('frontHistory:header')" />
 						</IonSegmentButton>
 						<IonSegmentButton value="messageBoard">
-							<IonIcon :icon="MessageBoardMD" :aria-label="$t('messageBoard:header')" />
+							<IonIcon :icon="lists.messageBoard.icon" :aria-label="$t('messageBoard:header')" />
 						</IonSegmentButton>
 						<IonSegmentButton value="systems">
-							<IonIcon :icon="SystemMD" :aria-label="$t('systems:header')" />
+							<IonIcon :icon="lists.systems.icon" :aria-label="$t('systems:header')" />
 						</IonSegmentButton>
 						<IonSegmentButton value="tagManagement">
-							<IonIcon :icon="TagMD" :aria-label="$t('tagManagement:header')" />
+							<IonIcon :icon="lists.tagManagement.icon" :aria-label="$t('tagManagement:header')" />
 						</IonSegmentButton>
 						<IonSegmentButton value="assetManager">
-							<IonIcon :icon="FolderMD" :aria-label="$t('assetManager:header')" />
+							<IonIcon :icon="lists.assetManager.icon" :aria-label="$t('assetManager:header')" />
 						</IonSegmentButton>
 						<IonSegmentButton value="notes">
-							<IonIcon :icon="NotesMD" :aria-label="$t('notes:header')" />
+							<IonIcon :icon="lists.notes.icon" :aria-label="$t('notes:header')" />
 						</IonSegmentButton>
 						<IonSegmentButton value="customFields">
-							<IonIcon :icon="CustomFieldsMD" :aria-label="$t('customFields:header')" />
+							<IonIcon :icon="lists.customFields.icon" :aria-label="$t('customFields:header')" />
 						</IonSegmentButton>
 					</IonSegment>
 				</IonToolbar>

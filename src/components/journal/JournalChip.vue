@@ -6,8 +6,7 @@
 	} from "@ionic/vue";
 
 	import { JournalPost } from "../../lib/db/entities";
-
-	import journalMD from "@material-symbols/svg-600/rounded/book.svg";
+	import { lists } from "../../router/lists";
 
 	const props = defineProps<{
 		post: JournalPost,
@@ -19,7 +18,7 @@
 
 <template>
 	<IonChip :router-link @click="(e) => e.stopPropagation()">
-		<IonIcon :icon="journalMD" />
+		<IonIcon :icon="lists.journal.icon" />
 		<IonLabel class="nowrap">
 			{{ props.post.title }}
 		</IonLabel>

@@ -16,17 +16,18 @@
 		IonToggle
 	} from "@ionic/vue";
 
-	import lists from "../router/lists";
+	import { lists } from "../router/lists";
 
 	import dragMD from "@material-symbols/svg-600/rounded/drag_handle.svg";
 	import resetMD from "@material-symbols/svg-600/rounded/restart_alt.svg";
+	import HomeMD from "@material-symbols/svg-600/rounded/home.svg";
 
 	import { defaultAppConfig, appConfig } from "../lib/config";
 	import { useTranslation } from "i18next-vue";
 
 	const i18next = useTranslation();
 
-	const allAvailable = ["dashboard", ...lists.map(x => x.path.replace("/lists/", ""))]
+	const allAvailable = ["dashboard", ...Object.keys(lists)]
 		.sort((a, b) => i18next.t(`${a}:header`).localeCompare(i18next.t(`${b}:header`)));
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -50,6 +51,15 @@
 	function restoreDefaultOrdering(){
 		appConfig.tabOrder = defaultAppConfig.tabOrder;
 	}
+
+	function getIcon(name: string){
+		switch(name){
+			case "dashboard":
+				return HomeMD;
+			default:
+				return name in lists ? lists[name].icon : undefined;
+		}
+	}
 </script>
 
 <template>
@@ -69,6 +79,7 @@
 			<IonList>
 				<IonReorderGroup :disabled="false" @ion-reorder-end="handleReorder">
 					<IonItem v-for="item in appConfig.tabOrder" :key="item">
+						<IonIcon slot="start" :icon="getIcon(item)" aria-hidden="true" />
 						<IonLabel>{{ $t(`${item}:header`) }}</IonLabel>
 						<IonToggle
 							v-if="item !== 'dashboard'"
@@ -85,6 +96,7 @@
 
 			<IonList>
 				<IonItem v-for="item in allAvailable.filter(x => !appConfig.tabOrder.includes(x))" :key="item">
+					<IonIcon slot="start" :icon="getIcon(item)" aria-hidden="true" />
 					<IonLabel>{{ $t(`${item}:header`) }}</IonLabel>
 					<IonToggle slot="end" @ion-change="appConfig.tabOrder.push(item)" />
 				</IonItem>

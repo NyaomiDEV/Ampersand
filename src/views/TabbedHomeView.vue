@@ -10,32 +10,7 @@
 
 	import HomeFillMD from "@material-symbols/svg-600/rounded/home-fill.svg";
 	import OptionsFillMD from "@material-symbols/svg-600/rounded/menu-fill.svg";
-
-	import PeopleMD from "@material-symbols/svg-600/rounded/group.svg";
-	import JournalMD from "@material-symbols/svg-600/rounded/book.svg";
-	import SystemMD from "@material-symbols/svg-600/rounded/groups.svg";
-	import FrontHistoryMD from "@material-symbols/svg-600/rounded/show_chart.svg";
-	import MessageBoardMD from "@material-symbols/svg-600/rounded/newsmode.svg";
-	import TagMD from "@material-symbols/svg-600/rounded/sell.svg";
-	import RemindersMD from "@material-symbols/svg-600/rounded/notification_add.svg";
-	import AnalyticsMD from "@material-symbols/svg-600/rounded/bar_chart.svg";
-	import FolderMD from "@material-symbols/svg-600/rounded/folder_open.svg";
-	import CustomFieldsMD from "@material-symbols/svg-600/rounded/format_list_bulleted_add.svg";
-	import NotesMD from "@material-symbols/svg-600/rounded/note_stack.svg";
-	import FilterMD from "@material-symbols/svg-600/rounded/database_search.svg";
-
-	import PeopleFillMD from "@material-symbols/svg-600/rounded/group-fill.svg";
-	import JournalFillMD from "@material-symbols/svg-600/rounded/book-fill.svg";
-	import SystemFillMD from "@material-symbols/svg-600/rounded/groups-fill.svg";
-	import FrontHistoryFillMD from "@material-symbols/svg-600/rounded/show_chart-fill.svg";
-	import MessageBoardFillMD from "@material-symbols/svg-600/rounded/newsmode-fill.svg";
-	import TagFillMD from "@material-symbols/svg-600/rounded/sell-fill.svg";
-	import RemindersFillMD from "@material-symbols/svg-600/rounded/notification_add-fill.svg";
-	import AnalyticsFillMD from "@material-symbols/svg-600/rounded/bar_chart-fill.svg";
-	import FolderFillMD from "@material-symbols/svg-600/rounded/folder_open-fill.svg";
-	import CustomFieldsFillMD from "@material-symbols/svg-600/rounded/format_list_bulleted_add-fill.svg";
-	import NotesFillMD from "@material-symbols/svg-600/rounded/note_stack-fill.svg";
-	import FilterFillMD from "@material-symbols/svg-600/rounded/database_search-fill.svg";
+	import { lists } from "../router/lists";
 
 	const router = useIonRouter();
 	const route = useRoute();
@@ -44,18 +19,7 @@
 		dashboard: { icon: HomeMD, iconSelected: HomeFillMD },
 		options: { icon: OptionsMD, iconSelected: OptionsFillMD },
 
-		members: { icon: PeopleMD, iconSelected: PeopleFillMD },
-		journal: { icon: JournalMD, iconSelected: JournalFillMD },
-		frontHistory: { icon: FrontHistoryMD, iconSelected: FrontHistoryFillMD },
-		analytics: { icon: AnalyticsMD, iconSelected: AnalyticsFillMD },
-		messageBoard: { icon: MessageBoardMD, iconSelected: MessageBoardFillMD },
-		systems: { icon: SystemMD, iconSelected: SystemFillMD },
-		tagManagement: { icon: TagMD, iconSelected: TagFillMD },
-		assetManager: { icon: FolderMD, iconSelected: FolderFillMD },
-		notes: { icon: NotesMD, iconSelected: NotesFillMD },
-		customFields: { icon: CustomFieldsMD, iconSelected: CustomFieldsFillMD },
-		reminders: { icon: RemindersMD, iconSelected: RemindersFillMD },
-		filterQueries: { icon: FilterMD, iconSelected: FilterFillMD }
+		...lists
 	};
 
 	const tabBar = useTemplateRef("tabBar");

@@ -12,7 +12,7 @@
 	import { h } from "vue";
 	import { addModal, removeModal } from "../../lib/modals";
 
-	import tagMD from "@material-symbols/svg-600/rounded/sell.svg";
+	import { lists } from "../../router/lists";
 
 	const props = defineProps<{
 		tag: Tag
@@ -41,7 +41,7 @@
 
 <template>
 	<IonChip @click="click">
-		<IonIcon v-if="!props.tag.color" :icon="tagMD" />
+		<IonIcon v-if="!props.tag.color" :icon="lists.tagManagement.icon" />
 		<TagColor :tag="props.tag" />
 		<IonLabel>{{ props.tag.name }}</IonLabel>
 	</IonChip>

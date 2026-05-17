@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from "@ionic/vue-router";
 import { RouteRecordRaw } from "vue-router";
 import options from "./options";
 import edit from "./edit";
-import lists from "./lists";
+import { lists } from "./lists";
 import onboarding from "./onboarding";
 
 const routes: RouteRecordRaw[] = [
@@ -21,7 +21,11 @@ const routes: RouteRecordRaw[] = [
 				name: "OptionsTab",
 				component: () => import("../views/Options.vue"),
 			},
-			...lists.map(x => ({ ...x, path: x.path.replace("lists", "tab"), name: `${x.name?.toString()}Tab` })),
+			...Object.entries(lists).map(x => ({
+				path: `/tab/${x[0]}`,
+				name: `${x[1].name?.toString()}Tab`,
+				component: x[1].component,
+			})) as RouteRecordRaw[],
 		]
 	},
 	{
@@ -34,8 +38,14 @@ const routes: RouteRecordRaw[] = [
 		name: "DatabaseIsLoading",
 		component: () => import("../views/DatabaseIsLoading.vue"),
 	},
+
+	...Object.entries(lists).map(x => ({
+		path: `/lists/${x[0]}`,
+		name: x[1].name,
+		component: x[1].component,
+	})) as RouteRecordRaw[],
+	
 	...onboarding,
-	...lists,
 	...options,
 	...edit,
 ];

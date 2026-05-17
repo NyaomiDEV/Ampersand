@@ -7,12 +7,12 @@
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import SystemSelect from "../../modals/SystemSelect.vue";
 	import Avatar from "../../components/Avatar.vue";
+	import { lists } from "../../router/lists";
 
 	import accountCircle from "@material-symbols/svg-600/rounded/supervised_user_circle.svg";
 	import pencilMD from "@material-symbols/svg-600/rounded/edit.svg";
 	import saveMD from "@material-symbols/svg-600/rounded/save.svg";
 	import trashMD from "@material-symbols/svg-600/rounded/delete.svg";
-	import PeopleMD from "@material-symbols/svg-600/rounded/group.svg";
 
 	import { appConfig } from "../../lib/config";
 	import { useRoute } from "vue-router";
@@ -357,7 +357,7 @@
 					</IonItem>
 				
 					<IonItem button detail :router-link="`/lists/members/?q=@system:${system.uuid}`">
-						<IonIcon slot="start" :icon="PeopleMD" aria-hidden="true" />
+						<IonIcon slot="start" :icon="lists.members.icon" aria-hidden="true" />
 						<IonLabel>{{ $t("systems:edit.showMembers") }}</IonLabel>
 					</IonItem>
 				</IonList>

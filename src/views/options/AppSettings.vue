@@ -10,18 +10,15 @@
 	import SystemItem from "../../components/system/SystemItem.vue";
 	import DashboardSettings from "../../modals/DashboardSettings.vue";
 	import TabSettings from "../../modals/TabSettings.vue";
+	import { lists } from "../../router/lists";
 
 	import languageMD from "@material-symbols/svg-600/rounded/language.svg";
 	import timerMD from "@material-symbols/svg-600/rounded/timer_off.svg";
 	import membersBeforeMD from "@material-symbols/svg-600/rounded/person_text.svg";
-	import peopleMD from "@material-symbols/svg-600/rounded/group.svg";
-	import journalMD from "@material-symbols/svg-600/rounded/book.svg";
 	import homeMD from "@material-symbols/svg-600/rounded/home.svg";
 	import dashboardMD from "@material-symbols/svg-600/rounded/dashboard_customize.svg";
 	import tabsMD from "@material-symbols/svg-600/rounded/bottom_navigation.svg";
 	import fontMD from "@material-symbols/svg-600/rounded/brand_family.svg";
-
-
 
 	const defaultSystem = shallowRef<System>({
 		uuid: appConfig.defaultSystem,
@@ -151,8 +148,8 @@
 
 				<IonItem>
 					<IonIcon v-if="appConfig.view === 'dashboard'" slot="start" :icon="homeMD" />
-					<IonIcon v-if="appConfig.view === 'members'" slot="start" :icon="peopleMD" />
-					<IonIcon v-if="appConfig.view === 'journal'" slot="start" :icon="journalMD" />
+					<IonIcon v-if="appConfig.view === 'members'" slot="start" :icon="lists.members.icon" />
+					<IonIcon v-if="appConfig.view === 'journal'" slot="start" :icon="lists.journal.icon" />
 					<IonSelect
 						v-model="appConfig.view"
 						label-placement="floating"

@@ -26,11 +26,8 @@
 
 	import pencilMD from "@material-symbols/svg-600/rounded/edit.svg";
 	import saveMD from "@material-symbols/svg-600/rounded/save.svg";
-	import newspaperMD from "@material-symbols/svg-600/rounded/newsmode.svg";
-	import journalMD from "@material-symbols/svg-600/rounded/book.svg";
 	import trashMD from "@material-symbols/svg-600/rounded/delete.svg";
 	import addMD from "@material-symbols/svg-600/rounded/add.svg";
-	import FrontHistoryMD from "@material-symbols/svg-600/rounded/show_chart.svg";
 	import accountCircle from "@material-symbols/svg-600/rounded/account_circle-fill.svg";
 
 	import { CustomField, Member, System, Tag } from "../../lib/db/entities";
@@ -55,6 +52,7 @@
 	import SystemChip from "../../components/system/SystemChip.vue";
 	import SystemItem from "../../components/system/SystemItem.vue";
 	import Loading from "../../modals/Loading.vue";
+	import { lists } from "../../router/lists";
 
 	const i18next = useTranslation();
 
@@ -357,15 +355,15 @@
 
 				<IonList class="member-actions">
 					<IonItem button detail :router-link="`/lists/frontHistory?q=@member:${member.uuid}`">
-						<IonIcon slot="start" :icon="FrontHistoryMD" aria-hidden="true" />
+						<IonIcon slot="start" :icon="lists.frontHistory.icon" aria-hidden="true" />
 						<IonLabel>{{ $t("members:edit.showFrontingEntries") }}</IonLabel>
 					</IonItem>
 					<IonItem button detail :router-link="`/lists/messageBoard?q=@member:${member.uuid}`">
-						<IonIcon slot="start" :icon="newspaperMD" aria-hidden="true" />
+						<IonIcon slot="start" :icon="lists.messageBoard.icon" aria-hidden="true" />
 						<IonLabel>{{ $t("members:edit.showBoardEntries") }}</IonLabel>
 					</IonItem>
 					<IonItem button detail :router-link="`/lists/journal?q=@member:${member.uuid}`">
-						<IonIcon slot="start" :icon="journalMD" aria-hidden="true" />
+						<IonIcon slot="start" :icon="lists.journal.icon" aria-hidden="true" />
 						<IonLabel>{{ $t("members:edit.showJournalEntries") }}</IonLabel>
 					</IonItem>
 				</IonList>

@@ -23,8 +23,6 @@
 
 	import saveMD from "@material-symbols/svg-600/rounded/save.svg";
 	import trashMD from "@material-symbols/svg-600/rounded/delete.svg";
-	import peopleMD from "@material-symbols/svg-600/rounded/group.svg";
-	import journalMD from "@material-symbols/svg-600/rounded/book.svg";
 	import assetMD from "@material-symbols/svg-600/rounded/folder_open.svg";
 
 	import { getTag, newTag, removeTag, updateTag } from "../../lib/db/tables/tags";
@@ -43,6 +41,7 @@
 	import ContentEditable from "../../components/ContentEditable.vue";
 	import { getAssets } from "../../lib/db/tables/assets";
 	import Loading from "../../modals/Loading.vue";
+	import { lists } from "../../router/lists";
 
 	const loading = ref(false);
 
@@ -324,7 +323,7 @@
 					button
 					@click="tagMembers"
 				>
-					<IonIcon slot="start" :icon="peopleMD" aria-hidden="true" />
+					<IonIcon slot="start" :icon="lists.members.icon" aria-hidden="true" />
 					<IonLabel>
 						<h3>{{ $t("tagManagement:edit.members.title") }}</h3>
 						<p>{{ $t("tagManagement:edit.members.desc", { count }) }}</p>
@@ -337,7 +336,7 @@
 					button 
 					:router-link="`/lists/journal/?q=${encodeURIComponent(`#${tag.name.toLowerCase().replace(/\s+/g, '')}`)}`"
 				>
-					<IonIcon slot="start" :icon="journalMD" aria-hidden="true" />
+					<IonIcon slot="start" :icon="lists.journal.icon" aria-hidden="true" />
 					<IonLabel>
 						<h3>{{ $t("tagManagement:edit.showJournal.title") }}</h3>
 						<p v-if="count !== undefined">{{ $t("tagManagement:edit.showJournal.desc", { count }) }}</p>
