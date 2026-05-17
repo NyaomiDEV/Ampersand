@@ -1,4 +1,4 @@
-import { argbFromHex, blueFromArgb, DynamicScheme, greenFromArgb, Hct, MaterialDynamicColors, redFromArgb, TonalPalette, Variant } from "@material/material-color-utilities";
+import { argbFromHex, blueFromArgb, DynamicScheme, greenFromArgb, Hct, redFromArgb, TonalPalette, Variant } from "@material/material-color-utilities";
 import { accessibilityConfig } from "../config";
 import { M3 } from "tauri-plugin-m3";
 import { platform } from "@tauri-apps/plugin-os";
@@ -133,16 +133,18 @@ export function getScheme(primary?: string, neutral?: string, isDarkMode?: boole
 export function getMaterialColors(primary?: string, secondary?: string, isDarkMode?: boolean){
 	const scheme = getScheme(primary, secondary, isDarkMode);
 
-	const styleSheet: Map<string, number> = new Map();
-	const colors = new MaterialDynamicColors();
+	console.log(scheme.colors.primary().contrastCurve);
+	console.log(scheme.colors.background().contrastCurve);
 
-	for (const dynamicColor of colors.allColors)
+	const styleSheet: Map<string, number> = new Map();
+
+	for (const dynamicColor of scheme.colors.allColors)
 		styleSheet.set(dynamicColor.name, dynamicColor.getArgb(scheme));
 
 	// Add colors that they forgot
-	styleSheet.set("shadow", colors.shadow().getArgb(scheme));
-	styleSheet.set("scrim", colors.scrim().getArgb(scheme));
-	styleSheet.set("surface_tint", colors.surfaceTint().getArgb(scheme));
+	styleSheet.set("shadow", scheme.colors.shadow().getArgb(scheme));
+	styleSheet.set("scrim", scheme.colors.scrim().getArgb(scheme));
+	styleSheet.set("surface_tint", scheme.colors.surfaceTint().getArgb(scheme));
 
 
 	if (isDarkMode && accessibilityConfig.themeIsAmoled) {
