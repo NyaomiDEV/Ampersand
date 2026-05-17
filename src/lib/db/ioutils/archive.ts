@@ -161,6 +161,7 @@ export function importArchive() {
 
 			for (const table of Object.values(getTables())){
 				await table.saveIndexToDisk();
+				await table.saveHashesToDisk?.();
 				await table.migrate(0);
 			}
 

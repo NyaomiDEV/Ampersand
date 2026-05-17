@@ -169,6 +169,7 @@ export async function assets(table: ShittyTable<Asset>, version: number) {
 		}
 
 		await table.saveIndexToDisk();
+		await table.saveHashesToDisk();
 
 		return true;
 	}

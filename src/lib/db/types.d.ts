@@ -16,16 +16,22 @@ export interface Table<T extends UUIDable> {
 	removeIndex(uuid: string): Promise<void>
 	initializeIndex(): Promise<void>
 
+	getHashesFromDisk?(): Promise<Record<string, string> | undefined>
+	saveHashesToDisk?(): Promise<void>
+	updateHashesWithData?(fileName: string, data: Uint8Array<ArrayBuffer>, saveAfterwards: boolean = true): Promise<void>
+	removeHash?(fileName: string): Promise<void>
+	initializeHashes?(): Promise<void>
+
 	getRaw(uuid: string): Promise<Uint8Array<ArrayBuffer>>
 	get(uuid: string): Promise<T>
 	count(): number
 	iterate(maxIter: number): AsyncGenerator<T, void, unknown>
 	refresh(): Promise<void>
-	write(data: T, saveIndexAndHashesAfterwards: boolean): Promise<void>
+	write(data: T, saveIndexAfterwards: boolean): Promise<void>
 	exists(uuid: string): boolean
-	add(data: PartialBy<T, keyof UUIDable>, saveIndexAndHashesAfterwards = true): Promise<false | T["uuid"]>
+	add(data: PartialBy<T, keyof UUIDable>, saveIndexAfterwards = true): Promise<false | T["uuid"]>
 	bulkAdd(contents: T[]): Promise<Array<false | T["uuid"]>>
-	update(newData: UUIDable & Partial<T>, saveIndexAndHashesAfterwards = true): Promise<false | Update<T>>
+	update(newData: UUIDable & Partial<T>, saveIndexAfterwards = true): Promise<false | Update<T>>
 	bulkUpdate(contents: (UUIDable & Partial<T>)[]): Promise<Array<false | Update<T>>>
 	delete(uuid: UUID): Promise<void>
 	bulkDelete(uuids: UUID[]): Promise<void>
