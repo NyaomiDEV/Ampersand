@@ -490,16 +490,6 @@
 	}
 }
 
-@keyframes md-ani-rainbow {
-	0% {
-		filter: hue-rotate(0deg);
-	}
-
-	to {
-		filter: hue-rotate(1turn);
-	}
-}
-
 @keyframes md-ani-fall {
 	from,
 	20%,
