@@ -1,7 +1,7 @@
 {
-	"header": "Queries",
+	"header": "Query",
 	"select": "Seleziona una query",
-	"searchPlaceholder": "Cerca tra le queries...",
+	"searchPlaceholder": "Cerca tra le query...",
 	"edit": {
 		"header": "Modifica query",
 		"headerAdd": "Aggiungi query",

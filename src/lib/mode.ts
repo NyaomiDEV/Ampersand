@@ -1,5 +1,5 @@
 import { M3 } from "tauri-plugin-m3";
-import { accessibilityConfig } from "./config";
+import { accessibilityConfig, appConfig } from "./config";
 import { platform } from "@tauri-apps/plugin-os";
 import { notify, remove } from "./notifications";
 import { FrontingEntryComplete } from "./db/entities";
@@ -42,6 +42,16 @@ export async function updateInsets() {
 }
 
 export function updateAccessibility() {
+	window.Ionic.config.set("animated", !accessibilityConfig.reducedMotion);
+
+	const fontScale = accessibilityConfig.fontScale;
+	if (fontScale !== 1)
+		document.documentElement.style.setProperty("font-size", `${fontScale}em`);
+	else
+		document.documentElement.style.removeProperty("font-size");
+}
+
+export function updateFont() {
 	const highLegibility = accessibilityConfig.highLegibility;
 	if (highLegibility) {
 		document.documentElement.classList.add("high-legibility");
@@ -50,16 +60,16 @@ export function updateAccessibility() {
 
 		document.documentElement.classList.remove(...[...document.documentElement.classList.values()].filter(x => x.startsWith("hl-")));
 		document.documentElement.classList.add(`hl-${highLegibilityType}`);
-	} else
+	} else {
 		document.documentElement.classList.remove("high-legibility", ...[...document.documentElement.classList.values()].filter(x => x.startsWith("hl-")));
 
-	window.Ionic.config.set("animated", !accessibilityConfig.reducedMotion);
+		const fontStyle = appConfig.fontStyle;
+		document.documentElement.classList.remove(...[...document.documentElement.classList.values()].filter(x => x.startsWith("fs-")));
 
-	const fontScale = accessibilityConfig.fontScale;
-	if (fontScale !== 1)
-		document.documentElement.style.setProperty("font-size", `${fontScale}em`);
-	else
-		document.documentElement.style.removeProperty("font-size");
+		if(fontStyle !== "default")
+			document.documentElement.classList.add(`fs-${fontStyle}`);
+	}
+
 }
 
 export async function updateFrontingNotification(fronting: FrontingEntryComplete[]){

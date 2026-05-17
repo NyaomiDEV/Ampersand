@@ -22,7 +22,7 @@ import i18n from "./lib/i18n";
 import I18NextVue from "i18next-vue";
 
 // Dark mode
-import { updateAccessibility, updateDarkMode, updateInsets } from "./lib/mode";
+import { updateAccessibility, updateDarkMode, updateFont, updateInsets } from "./lib/mode";
 
 // App
 import App from "./App.vue";
@@ -157,6 +157,9 @@ async function setupAmpersand(){
 	// and here we can update our color palette
 	updateMaterialColors();
 
+	// update our font
+	updateFont();
+
 	// here we will apply our accessibility settings
 	updateAccessibility();
 
@@ -165,11 +168,17 @@ async function setupAmpersand(){
 		await updateDarkMode();
 		updateMaterialColors();
 		updateAccessibility();
+		updateFont();
 
 		if(accessibilityConfig.frontingNotification)
 			await sendFrontingChangedEvent();
 		else
 			await unnotify(1);
+	});
+	
+	// watch the appConfig for font changes
+	watch(() => appConfig.fontStyle, () => {
+		updateFont();
 	});
 
 	// now we just wait for the router to be ready, then we can mount our application

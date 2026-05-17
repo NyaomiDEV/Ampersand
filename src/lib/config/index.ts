@@ -15,6 +15,7 @@ export const defaultAppConfig: AppConfig = {
 	showMembersApartFromCustomFronts: "after",
 	hideFrontingTimer: false,
 	view: "dashboard",
+	fontStyle: "default",
 	dashboardSettings: {
 		notesAccordion: {
 			active: true,

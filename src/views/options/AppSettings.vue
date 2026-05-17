@@ -19,6 +19,7 @@
 	import homeMD from "@material-symbols/svg-600/rounded/home.svg";
 	import dashboardMD from "@material-symbols/svg-600/rounded/dashboard_customize.svg";
 	import tabsMD from "@material-symbols/svg-600/rounded/bottom_navigation.svg";
+	import fontMD from "@material-symbols/svg-600/rounded/brand_family.svg";
 
 
 
@@ -74,6 +75,51 @@
 			</IonList>
 
 			<IonListHeader>
+				<IonLabel>{{ $t("appSettings:appearanceLabel") }}</IonLabel>
+			</IonListHeader>
+
+			<IonList>
+				<IonItem>
+					<IonIcon slot="start" :icon="fontMD" />
+					<IonSelect
+						v-model="appConfig.fontStyle"
+						label-placement="floating"
+						:label="$t('appSettings:fontStyle.title')"
+						:cancel-text="$t('other:alerts.cancel')"
+						interface="action-sheet"
+					>
+						<IonSelectOption value="default">
+							{{ $t("appSettings:fontStyle.default") }} 
+						</IonSelectOption>
+						<IonSelectOption value="modern">
+							{{ $t("appSettings:fontStyle.modern") }}
+						</IonSelectOption>
+						<IonSelectOption value="digital">
+							{{ $t("appSettings:fontStyle.digital") }}
+						</IonSelectOption>
+						<IonSelectOption value="bold">
+							{{ $t("appSettings:fontStyle.bold") }}
+						</IonSelectOption>
+						<IonSelectOption value="newspaper">
+							{{ $t("appSettings:fontStyle.newspaper") }}
+						</IonSelectOption>
+						<IonSelectOption value="mystic">
+							{{ $t("appSettings:fontStyle.mystic") }}
+						</IonSelectOption>
+					</IonSelect>
+				</IonItem>
+				<IonItem button detail @click="dashboardSettingsModal?.$el.present()">
+					<IonIcon slot="start" :icon="dashboardMD" />
+					<IonLabel>{{ $t("appSettings:dashboard.title") }}</IonLabel>
+				</IonItem>
+
+				<IonItem button detail @click="tabSettingsModal?.$el.present()">
+					<IonIcon slot="start" :icon="tabsMD" />
+					<IonLabel>{{ $t("appSettings:tabSettings") }}</IonLabel>
+				</IonItem>
+			</IonList>
+
+			<IonListHeader>
 				<IonLabel>{{ $t("appSettings:behaviorLabel") }}</IonLabel>
 			</IonListHeader>
 
@@ -124,16 +170,6 @@
 							{{ $t("journal:header") }}
 						</IonSelectOption>
 					</IonSelect>
-				</IonItem>
-
-				<IonItem button detail @click="dashboardSettingsModal?.$el.present()">
-					<IonIcon slot="start" :icon="dashboardMD" />
-					<IonLabel>{{ $t("appSettings:dashboard.title") }}</IonLabel>
-				</IonItem>
-
-				<IonItem button detail @click="tabSettingsModal?.$el.present()">
-					<IonIcon slot="start" :icon="tabsMD" />
-					<IonLabel>{{ $t("appSettings:tabSettings") }}</IonLabel>
 				</IonItem>
 
 				<IonItem>
@@ -270,11 +306,3 @@
 		</IonContent>
 	</IonPage>
 </template>
-
-<style scoped>
-	.clock-style, .first-day {
-		gap: 1em;
-		display: flex;
-		flex-direction: column;
-	}
-</style>

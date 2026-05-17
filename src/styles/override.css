@@ -33,6 +33,36 @@ html {
 	height: 100vh;
 }
 
+html.fs-modern {
+	--ampersand-header-font-name: "Outfit";
+	--ampersand-header-font-weight: 600;
+	--ampersand-body-font-name: 'Montserrat';
+}
+
+html.fs-digital {
+	--ampersand-header-font-name: "Oxanium";
+	--ampersand-header-font-weight: 600;
+	--ampersand-body-font-name: 'Recursive';
+}
+
+html.fs-bold {
+	--ampersand-header-font-name: "Bricolage Grotesque";
+	--ampersand-header-font-weight: 600;
+	--ampersand-body-font-name: 'Nunito';
+}
+
+html.fs-newspaper {
+	--ampersand-header-font-name: "Merriweather";
+	--ampersand-header-font-weight: 600;
+	--ampersand-body-font-name: 'Albert Sans';
+}
+
+html.fs-mystic {
+	--ampersand-header-font-name: "Cinzel Decorative";
+	--ampersand-header-font-weight: 700;
+	--ampersand-body-font-name: 'Amarna';
+}
+
 /* High legibility fonts */
 html.high-legibility {
 	--ampersand-header-font-name: var(--ampersand-body-font-name);

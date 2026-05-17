@@ -1,0 +1,13 @@
+@font-face {
+	font-family: 'Amarna';
+	font-style: normal;
+	font-weight: 100 700;
+	src: url(../../assets/fonts/amarna/Amarna.ttf);
+}
+
+@font-face {
+	font-family: 'Amarna';
+	font-style: italic;
+	font-weight: 100 700;
+	src: url(../../assets/fonts/amarna/Amarna-Italic.ttf);
+}
