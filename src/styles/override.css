@@ -179,7 +179,8 @@ ion-item-option:last-child {
 /* Ion Range being too tall when pin is active, and remove having label being weirdly transformed */
 ion-range.range-label-placement-stacked::part(label) {
 	transform: none;
-	margin-bottom: 10px;
+	margin-top: 8px;
+	margin-bottom: 8px;
 }
 
 /* Prevent ion-label wrapping -- should we still keep this? */
