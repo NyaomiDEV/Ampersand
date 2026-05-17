@@ -242,6 +242,20 @@
 			background-clip: text;
 			color: transparent;
 		}
+
+		&.radial {
+			background: radial-gradient(var(--markdown-text-fg-radial-definition) in var(--markdown-text-fg-colorspace), var(--markdown-text-fg-colors));
+			-webkit-background-clip: text;
+			background-clip: text;
+			color: transparent;
+
+			&.repeating {
+				background: repeating-radial-gradient(var(--markdown-text-fg-radial-definition) in var(--markdown-text-fg-colorspace), var(--markdown-text-fg-colors));
+				-webkit-background-clip: text;
+				background-clip: text;
+				color: transparent;
+			}
+		}
 	}
 
 	span.text-color-bg {
@@ -251,6 +265,14 @@
 
 		&.repeating {
 			background: repeating-linear-gradient(in var(--markdown-text-bg-colorspace) var(--markdown-text-bg-degrees), var(--markdown-text-bg-colors));
+		}
+
+		&.radial {
+			background: radial-gradient(var(--markdown-text-bg-radial-definition) in var(--markdown-text-bg-colorspace), var(--markdown-text-bg-colors));
+
+			&.repeating {
+				background: repeating-radial-gradient(var(--markdown-text-bg-radial-definition) in var(--markdown-text-bg-colorspace), var(--markdown-text-bg-colors));
+			}
 		}
 
 		&:has(span.text-border) {

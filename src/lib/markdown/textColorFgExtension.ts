@@ -13,9 +13,18 @@ const textColorExtension: MarkedExtension<(VNode | string)[], VNode | string> = 
 				const match = rule.exec(src);
 				if (match) {
 					let isRepeating = false;
+					let isRadial = false;
 					let colorspace = "srgb";
-					let degrees = "90deg";
+
+					let linearDegrees = "90deg";
+					let radialDefinition = "circle at 50% 50%";
+
 					const colors = splitList(match[1] || "");
+
+					if (colors[0] === "radial") {
+						colors.shift();
+						isRadial = true;
+					}
 
 					if(colors[0] === "repeating"){
 						colors.shift();
@@ -25,8 +34,21 @@ const textColorExtension: MarkedExtension<(VNode | string)[], VNode | string> = 
 					if(isColorSpace(colors[0]))
 						colorspace = colors.shift()!;
 
-					if (colors[0].match(/(?: ?(?:top|left|right|bottom)){1,2}|(?:-?\d*.?\d+(?:deg|grad|rad|turn))/) !== null) 
-						degrees = colors.shift()!;
+					if (isRadial) {
+						const _match =
+							/ellipse ?((?:(?:-?\d*\.?\d+[^\s]+) ?){1,2})?(?:at )?((?:(?:-?\d*\.?\d+[^\s]+) ?){1,2})?/.exec(colors[0]) ||
+							/circle ?(-?\d*\.?\d+[^\s]+)?(?: at )?((?:(?:-?\d*\.?\d+[^\s]+) ?){1,2})?/.exec(colors[0]);
+
+						if (
+							_match !== null &&
+							(_match[1] ? _match[1].trim().split(" ").reduce((p, c) => p ? isCssLength(c.trim()) || isPercentage(c.trim()) : p, true) : true) &&
+							(_match[2] ? _match[2].trim().split(" ").reduce((p, c) => p ? isCssLength(c.trim()) || isPercentage(c.trim()) : p, true) : true)
+						)
+							radialDefinition = colors.shift()!;
+					} else {
+						if (colors[0].match(/(?: ?(?:top|left|right|bottom)){1,2}|(?:-?\d*.?\d+(?:deg|grad|rad|turn))/) !== null)
+							linearDegrees = colors.shift()!;
+					}
 
 					if(!colors.reduce(
 						(p, c) => {
@@ -46,9 +68,11 @@ const textColorExtension: MarkedExtension<(VNode | string)[], VNode | string> = 
 					const token = {
 						type: "textColorFg",
 						raw: match[0],
+						isRadial,
 						isRepeating,
 						colorspace,
-						degrees,
+						linearDegrees,
+						radialDefinition,
 						colors,
 						text: match[2],
 						tokens: this.lexer.inlineTokens(match[2])
@@ -74,11 +98,12 @@ const textColorExtension: MarkedExtension<(VNode | string)[], VNode | string> = 
 					const cssStyle: Record<string, string> = {
 						"--markdown-text-fg-colorspace": token.colorspace,
 						"--markdown-text-fg-colors": colors.join(", "),
-						"--markdown-text-fg-degrees": directions.includes(token.degrees) ? `to ${token.degrees}` : token.degrees
+						"--markdown-text-fg-degrees": directions.includes(token.linearDegrees) ? `to ${token.linearDegrees}` : token.linearDegrees,
+						"--markdown-text-fg-radial-definition": token.radialDefinition
 					};
 
 					return h("span", {
-						class: [`text-color-fg${colors.length === 1 ? "-one" : ""}`, token.isRepeating ? "repeating" : undefined],
+						class: [`text-color-fg${colors.length === 1 ? "-one" : ""}`, token.isRepeating ? "repeating" : undefined, token.isRadial ? "radial" : undefined],
 						style: cssStyle
 					}, token.tokens && token.tokens.length ? this.parser.parseInline(token.tokens) : token.text);
 				}
