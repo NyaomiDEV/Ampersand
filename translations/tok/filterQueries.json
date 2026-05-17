@@ -1,0 +1,16 @@
+{
+	"header": "nasin alasa",
+	"select": "nasin alasa pi wile sina",
+	"searchPlaceholder": "o alasa e nasin alasa...",
+	"edit": {
+		"header": "ante pi nasin alasa",
+		"headerAdd": "pali pi nasin alasa",
+		"name": "nimi pi nasin alasa",
+		"query": "sijelo pi nasin alasa",
+		"type": "poki pi nasin alasa",
+		"delete": {
+			"title": "weka pi nasin alasa",
+			"confirm": "sina wile ala wile weka e nasin alasa ni?"
+		}
+	}
+}
