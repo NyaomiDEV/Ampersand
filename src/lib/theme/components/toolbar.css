@@ -9,14 +9,10 @@
 	--padding-end: 16px;
 }
 
-html.high-legibility .md ion-toolbar ion-title {
-	font: var(--md3-title-variant-large);
-	letter-spacing: var(--md3-title-variant-large-letter-spacing);
-}
-
 .md ion-toolbar ion-title {
 	font: var(--md3-title-large);
 	letter-spacing: var(--md3-title-large-letter-spacing);
+	font-feature-settings: var(--md3-title-large-font-features);
 	padding-inline: 0;
 
 	h1 {

@@ -109,30 +109,33 @@
 
 	/* Title - Large */
 	--md3-title-large-font-family-name: var(--ampersand-header-font-name);
-	--md3-title-large-font-family-style: normal;
-	--md3-title-large-font-weight: 600;
+	--md3-title-large-font-family-style: var(--ampersand-header-font-style);
+	--md3-title-large-font-weight: var(--ampersand-header-font-weight);
+	--md3-title-large-font-features: var(--ampersand-header-font-features);
 	--md3-title-large-font-size: 1.375rem;
 	--md3-title-large-line-height: 1.75rem;
 	--md3-title-large-letter-spacing: 0;
-	--md3-title-large: normal 600 1.375rem/1.75rem var(--ampersand-header-font-name);
+	--md3-title-large: var(--ampersand-header-font-style) var(--ampersand-header-font-weight) 1.375rem/1.75rem var(--ampersand-header-font-name);
 
 	/* Title - Medium */
 	--md3-title-medium-font-family-name: var(--ampersand-header-font-name);
-	--md3-title-medium-font-family-style: normal;
-	--md3-title-medium-font-weight: 500;
+	--md3-title-medium-font-family-style: var(--ampersand-header-font-style);
+	--md3-title-medium-font-weight: calc(var(--ampersand-header-font-weight) - 100);
+	--md3-title-medium-font-features: var(--ampersand-header-font-features);
 	--md3-title-medium-font-size: 1rem;
 	--md3-title-medium-line-height: 1.5rem;
 	--md3-title-medium-letter-spacing: 0.009375rem;
-	--md3-title-medium: normal 500 1rem/1.5rem var(--ampersand-header-font-name);
+	--md3-title-medium: var(--ampersand-header-font-style) calc(var(--ampersand-header-font-weight) - 100) 1rem/1.5rem var(--ampersand-header-font-name);
 
 	/* Title - Small */
 	--md3-title-small-font-family-name: var(--ampersand-header-font-name);
-	--md3-title-small-font-family-style: normal;
-	--md3-title-small-font-weight: 500;
+	--md3-title-small-font-family-style: var(--ampersand-header-font-style);
+	--md3-title-small-font-weight: calc(var(--ampersand-header-font-weight) - 100);
+	--md3-title-small-font-features: var(--ampersand-header-font-features);
 	--md3-title-small-font-size: 0.875rem;
 	--md3-title-small-line-height: 1.25rem;
 	--md3-title-small-letter-spacing: 0.00625rem;
-	--md3-title-small: normal 500 0.875rem/1.25rem var(--ampersand-header-font-name);
+	--md3-title-small: var(--ampersand-header-font-style) calc(var(--ampersand-header-font-weight) - 100) 0.875rem/1.25rem var(--ampersand-header-font-name);
 
 	/* Title Variant - Large */
 	--md3-title-variant-large-font-family-name: var(--ampersand-body-font-name);

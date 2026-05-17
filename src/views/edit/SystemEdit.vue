@@ -607,6 +607,9 @@
 
 		h3 {
 			font-family: var(--ampersand-header-font-name), var(--ion-font-family);
+			font-style: var(--ampersand-header-font-style);
+			font-weight: var(--ampersand-header-font-weight);
+			font-feature-settings: var(--ampersand-header-font-features);
 		}
 	}
 

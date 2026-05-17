@@ -15,6 +15,13 @@ html {
 	--ion-safe-area-right: var(--device-inset-right, 0px);
 	--ion-safe-area-bottom: var(--device-inset-bottom, 0px);
 
+	--ampersand-header-font-name: 'Urbanist';
+	--ampersand-header-font-style: normal;
+	--ampersand-header-font-weight: 600;
+	--ampersand-header-font-features: normal;
+
+	--ampersand-body-font-name: 'Inter';
+
 	/* For some reason iPhones apply a padding underneath, so force height=viewport-height */
 	height: 100vh;
 }
@@ -24,34 +31,37 @@ ion-toast {
 }
 
 html, html.md {
-	--ampersand-header-font-name: 'Urbanist';
-	--ampersand-body-font-name: 'Inter';
 	--ion-default-font: 'Inter', 'Roboto', sans-serif;
 	--ion-font-family: var(--ampersand-body-font-name), var(--ion-default-font);
 }
 
 html.high-legibility.hl-atkinson {
 	--ampersand-header-font-name: 'Atkinson Hyperlegible';
+	--ampersand-header-font-weight: 400;
 	--ampersand-body-font-name: 'Atkinson Hyperlegible';
 }
 
 html.high-legibility.hl-opendyslexic {
 	--ampersand-header-font-name: 'OpenDyslexic';
+	--ampersand-header-font-weight: 400;
 	--ampersand-body-font-name: 'OpenDyslexic';
 }
 
 html.high-legibility.hl-lexend {
 	--ampersand-header-font-name: 'Lexend';
+	--ampersand-header-font-weight: 400;
 	--ampersand-body-font-name: 'Lexend';
 }
 
 html.high-legibility.hl-comicrelief {
 	--ampersand-header-font-name: 'Comic Relief';
+	--ampersand-header-font-weight: 400;
 	--ampersand-body-font-name: 'Comic Relief';
 }
 
 html.high-legibility.hl-system-font {
 	--ampersand-header-font-name: system-ui;
+	--ampersand-header-font-weight: 400;
 	--ampersand-body-font-name: system-ui;
 	--ion-font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
