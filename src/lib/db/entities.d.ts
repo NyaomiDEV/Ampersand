@@ -61,17 +61,16 @@ export type NameStyle =
 	"cutesy" |
 	"indie" |
 	"deco" |
+	"pop" |
 	"terminal" |
 	"western" |
 	"glitch" |
+	"varsity" |
 	"stripes" |
+	"futuristic" |
 	"drip" |
-	"cracks" |
-	"comic" |
-	"lexend" |
-	"atkinson" |
-	"dyslexic" |
-	"inter";
+	"pineapple" |
+	"cracks";
 
 export interface BoardMessage extends UUIDable {
 	members: UUID[],
