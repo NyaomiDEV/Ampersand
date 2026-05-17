@@ -151,6 +151,7 @@
 		"atkinson": "Atkinson Hyperlegible",
 		"dyslexic": "OpenDyslexic",
 		"inter": "Inter",
-		"noFont": "Brak czcionki"
+		"noFont": "Brak czcionki",
+		"urbanist": "Urbanist"
 	}
 }
