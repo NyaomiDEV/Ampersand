@@ -1,5 +1,5 @@
 import { AccessibilityConfig, AppConfig, SecurityConfig } from "../../config/types";
-import type { BoardMessage, FrontingEntry, JournalPost, Member, System, Asset } from "../entities.d.ts";
+import type { BoardMessage, FrontingEntry, JournalPost, Member, System, Asset, FilterQuery } from "../entities.d.ts";
 
 export interface DatabaseJSON {
 	config: {
@@ -12,15 +12,15 @@ export interface DatabaseJSON {
 		frontingEntries: FrontingEntryJSON[],
 		journalPosts: JournalPostJSON[],
 		members: MemberJSON[],
-		//reminders: Reminder[], we're not doing that yet
+		reminders: Reminder[],
 		systems: SystemJSON[],
 		tags: Tag[],
 		assets: AssetJSON[],
-		customFields: CustomField[]
+		customFields: CustomField[],
+		notes: Notes[],
+		filterQueries: FilterQuery[]
 	}
 }
-
-
 
 export interface BoardMessageJSON extends BoardMessage {
 	date: string // ISO 8601
