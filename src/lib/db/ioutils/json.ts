@@ -23,7 +23,8 @@ export function exportDatabaseToJSON() {
 					const _data = data as unknown as BoardMessage;
 					yield {
 						..._data,
-						date: _data.date.toISOString()
+						date: _data.date.toISOString(),
+						comments: _data.comments?.map(x => ({ ...x, date: x.date.toISOString() }))
 					} as SerializableJson<BoardMessageJSON>;
 					break;
 				}
@@ -37,7 +38,8 @@ export function exportDatabaseToJSON() {
 							? Object.fromEntries(_data.presence.entries()
 									.map(x => [x[0].toISOString(), x[1]])
 								)
-							: undefined
+							: undefined,
+						comments: _data.comments?.map(x => ({ ...x, date: x.date.toISOString() }))
 					}) as SerializableJson<FrontingEntryJSON>;
 					break;
 				}
@@ -47,6 +49,7 @@ export function exportDatabaseToJSON() {
 						..._data,
 						date: _data.date.toISOString(),
 						cover: _data.cover ? await toDataURI(_data.cover) : undefined,
+						comments: _data.comments?.map(x => ({ ...x, date: x.date.toISOString() }))
 					}) as SerializableJson<JournalPostJSON>;
 					break;
 				}
@@ -177,7 +180,8 @@ export function importDatabaseFromJSON() {
 				// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
 				return getTables().boardMessages.add({
 					..._data,
-					date: new Date(_data.date)
+					date: new Date(_data.date),
+					comments: _data.comments?.map(x => ({ ...x, date: new Date(x.date) }))
 				} as BoardMessage, false);
 			}
 			case "frontingEntries": {
@@ -188,7 +192,8 @@ export function importDatabaseFromJSON() {
 					endTime: _data.endTime ? new Date(_data.endTime) : undefined,
 					presence: _data.presence
 						? new Map(Object.entries(_data.presence).map(x => [new Date(x[0]), x[1]]))
-						: undefined
+						: undefined,
+					comments: _data.comments?.map(x => ({ ...x, date: new Date(x.date) }))
 				}, false);
 			}
 			case "journalPosts": {
@@ -197,6 +202,7 @@ export function importDatabaseFromJSON() {
 					..._data,
 					date: new Date(_data.date),
 					cover: _data.cover ? await fromDataURI(_data.cover) : undefined,
+					comments: _data.comments?.map(x => ({ ...x, date: new Date(x.date) }))
 				}, false);
 			}
 			case "members": {
