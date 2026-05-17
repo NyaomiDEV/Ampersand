@@ -259,7 +259,6 @@
 			</IonList>
 
 			<IonFab
-				v-if="!isStandalone"
 				slot="fixed"
 				vertical="bottom"
 				horizontal="end"

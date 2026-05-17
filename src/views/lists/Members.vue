@@ -299,7 +299,6 @@
 			<InfiniteLoader v-if="!iterDone" @infinite="pollMembers" />
 
 			<IonFab
-				v-if="!isStandalone"
 				slot="fixed"
 				vertical="bottom"
 				horizontal="end"
