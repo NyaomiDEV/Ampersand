@@ -133,9 +133,6 @@ export function getScheme(primary?: string, neutral?: string, isDarkMode?: boole
 export function getMaterialColors(primary?: string, secondary?: string, isDarkMode?: boolean){
 	const scheme = getScheme(primary, secondary, isDarkMode);
 
-	console.log(scheme.colors.primary().contrastCurve);
-	console.log(scheme.colors.background().contrastCurve);
-
 	const styleSheet: Map<string, number> = new Map();
 
 	for (const dynamicColor of scheme.colors.allColors)
