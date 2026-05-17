@@ -280,9 +280,9 @@
 			background: transparent;
 		}
 
-		.avatar {
+		.avatar-stack {
 			align-self: flex-start;
-			margin-top: 12px;
+			margin-top: 16px;
 		}
 
 		.flexbox {
