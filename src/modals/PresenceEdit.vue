@@ -11,22 +11,33 @@
 
 	import { formatDate } from "../lib/util/misc";
 	import DatePopupPicker from "../components/DatePopupPicker.vue";
-	import { onBeforeMount } from "vue";
+	import { onBeforeMount, ref, watch } from "vue";
 
 	const props = defineProps<{
 		start: Date,
-		end?: Date
+		end?: Date,
+		modelValue?: {
+			range: number,
+			date: Date
+		}
 	}>();
 
-	const model = defineModel<{
+	const emit = defineEmits<{
+		"update:modelValue": [{
+			range: number,
+			date: Date
+		}]
+	}>();
+
+	const model = ref<{
 		range: number,
 		date: Date
-	}>({
-		default: {
-			range: 0,
-			date: new Date()
-		}
+	}>(props.modelValue || {
+		range: 0,
+		date: new Date()
 	});
+
+	watch(model, () => emit("update:modelValue", model.value));
 
 	onBeforeMount(() => {
 		if(props.end && props.end.valueOf() < model.value.date.valueOf())
