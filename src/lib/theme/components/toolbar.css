@@ -18,18 +18,21 @@
 	h1 {
 		font: var(--md3-display-medium);
 		letter-spacing: var(--md3-display-medium-letter-spacing);
+		font-feature-settings: var(--md3-display-medium-font-features);
 		margin: unset;
 	}
 
 	h2 {
 		font: var(--md3-title-variant-large);
 		letter-spacing: var(--md3-title-variant-large-letter-spacing);
+		font-feature-settings: var(--md3-title-variant-large-font-features);
 		margin: unset;
 	}
 
 	h3 {
 		font: var(--md3-body-large);
 		letter-spacing: var(--md3-body-large-letter-spacing);
+		font-feature-settings: var(--md3-body-large-font-features);
 		margin: unset;
 	}
 
@@ -37,6 +40,7 @@
 		color: rgb(var(--md3-on-surface-variant));
 		font: var(--md3-body-medium);
 		letter-spacing: var(--md3-body-medium-letter-spacing);
+		font-feature-settings: var(--md3-body-medium-font-features);
 		margin: unset;
 	}
 
@@ -44,6 +48,7 @@
 		color: rgb(var(--md3-on-surface-variant));
 		font: var(--md3-body-small);
 		letter-spacing: var(--md3-body-small-letter-spacing);
+		font-feature-settings: var(--md3-body-small-font-features);
 		margin: unset;
 	}
 

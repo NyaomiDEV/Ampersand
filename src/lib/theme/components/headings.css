@@ -6,6 +6,7 @@
 	font-size: var(--md3-display-large-font-size);
 	line-height: var(--md3-display-large-line-height);
 	letter-spacing: var(--md3-display-large-letter-spacing);
+	font-feature-settings: var(--md3-display-large-font-features);
 }
 
 .md h2 {
@@ -15,6 +16,8 @@
 	font-size: var(--md3-display-medium-font-size);
 	line-height: var(--md3-display-medium-line-height);
 	letter-spacing: var(--md3-display-medium-letter-spacing);
+	font-feature-settings: var(--md3-display-medium-font-features);
+
 }
 
 .md h3 {
@@ -24,4 +27,5 @@
 	font-size: var(--md3-display-small-font-size);
 	line-height: var(--md3-display-small-line-height);
 	letter-spacing: var(--md3-display-small-letter-spacing);
+	font-feature-settings: var(--md3-display-small-font-features);
 }

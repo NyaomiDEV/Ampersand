@@ -15,17 +15,20 @@
 	.alert-title {
 		font: var(--md3-headline-small);
 		letter-spacing: var(--md3-headline-small-letter-spacing);
+		font-feature-settings: var(--md3-headline-small-font-features);
 	}
 
 	.alert-sub-title {
 		font: var(--md3-body-large);
 		letter-spacing: var(--md3-body-large-letter-spacing);
+		font-feature-settings: var(--md3-body-large-font-features);
 	}
 
 	.alert-message {
 		padding: 0 24px 24px;
 		font: var(--md3-body-medium);
 		letter-spacing: var(--md3-body-medium-letter-spacing);
+		font-feature-settings: var(--md3-body-medium-font-features);
 		color: rgb(var(--md3-on-surface-variant));
 	}
 

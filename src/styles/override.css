@@ -18,9 +18,14 @@ html {
 	--ampersand-header-font-name: 'Urbanist';
 	--ampersand-header-font-style: normal;
 	--ampersand-header-font-weight: 600;
+	--ampersand-header-font-weight-medium: 500;
 	--ampersand-header-font-features: normal;
 
 	--ampersand-body-font-name: 'Inter';
+	--ampersand-body-font-style: normal;
+	--ampersand-body-font-weight: 400;
+	--ampersand-body-font-weight-medium: 500;
+	--ampersand-body-font-features: normal;
 
 	/* For some reason iPhones apply a padding underneath, so force height=viewport-height */
 	height: 100vh;
