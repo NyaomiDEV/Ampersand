@@ -40,125 +40,6 @@
 		</IonHeader>
 
 		<IonContent>
-
-			<IonList>
-				<IonItem>
-					<IonIcon v-if="accessibilityConfig.theme === 'auto'" slot="start" :icon="autoMD" />
-					<IonIcon v-if="accessibilityConfig.theme === 'light'" slot="start" :icon="lightMD" />
-					<IonIcon v-if="accessibilityConfig.theme === 'dark'" slot="start" :icon="darkMD" />
-					<IonSelect
-						v-model="accessibilityConfig.theme"
-						label-placement="floating"
-						:label="$t('accessibility:uiVariant.title')"
-						:cancel-text="$t('other:alerts.cancel')"
-						interface="action-sheet"
-					>
-						<IonSelectOption value="auto">
-							{{ $t("accessibility:uiVariant.auto") }}
-						</IonSelectOption>
-						<IonSelectOption value="light">
-							{{ $t("accessibility:uiVariant.light") }}
-						</IonSelectOption>
-						<IonSelectOption value="dark">
-							{{ $t("accessibility:uiVariant.dark") }}
-						</IonSelectOption>
-					</IonSelect>
-				</IonItem>
-
-				<IonItem v-if="accessibilityConfig.theme === 'dark' || accessibilityConfig.theme === 'auto'">
-					<IonIcon slot="start" :icon="amoledMD" />
-					<IonToggle v-model="accessibilityConfig.themeIsAmoled">
-						<IonLabel>
-							<h3>{{ $t("accessibility:themeIsAmoled.title") }}</h3>
-							<p>{{ $t("accessibility:themeIsAmoled.desc") }}</p>
-						</IonLabel>
-					</IonToggle>
-				</IonItem>
-
-				<IonItem>
-					<IonIcon v-if="accessibilityConfig.themeScheme === 'tonal-spot'" slot="start" :icon="tonalMD" />
-					<IonIcon v-if="accessibilityConfig.themeScheme === 'neutral'" slot="start" :icon="neutralMD" />
-					<IonIcon v-if="accessibilityConfig.themeScheme === 'vibrant'" slot="start" :icon="vibrantMD" />
-					<IonIcon v-if="accessibilityConfig.themeScheme === 'expressive'" slot="start" :icon="expressiveMD" />
-					<IonSelect
-						v-model="accessibilityConfig.themeScheme"
-						label-placement="floating"
-						:label="$t('accessibility:themeScheme.title')"
-						:cancel-text="$t('other:alerts.cancel')"
-						interface="action-sheet"
-					>
-						<IonSelectOption value="tonal-spot">
-							{{ $t("accessibility:themeScheme.tonalSpot") }}
-						</IonSelectOption>
-						<IonSelectOption value="neutral">
-							{{ $t("accessibility:themeScheme.neutral") }}
-						</IonSelectOption>
-						<IonSelectOption value="vibrant">
-							{{ $t("accessibility:themeScheme.vibrant") }}
-						</IonSelectOption>
-						<IonSelectOption value="expressive">
-							{{ $t("accessibility:themeScheme.expressive") }}
-						</IonSelectOption>
-					</IonSelect>
-				</IonItem>
-
-				<IonItem>
-					<IonIcon v-if="accessibilityConfig.colors === 'app'" slot="start" :icon="appColorMD" />
-					<IonIcon v-if="accessibilityConfig.colors === 'system'" slot="start" :icon="systemColorMD" />
-					<IonIcon v-if="accessibilityConfig.colors === 'custom'" slot="start" :icon="customColorMD" />
-					<IonSelect
-						v-model="accessibilityConfig.colors"
-						label-placement="floating"
-						:label="$t('accessibility:colors.title')"
-						:cancel-text="$t('other:alerts.cancel')"
-						interface="action-sheet"
-					>
-						<IonSelectOption value="app">
-							{{ $t("accessibility:colors.app") }}
-						</IonSelectOption>
-						<IonSelectOption v-if="platform() === 'android'" value="system">
-							{{ $t("accessibility:colors.system") }}
-						</IonSelectOption>
-						<IonSelectOption value="custom">
-							{{ $t("accessibility:colors.custom") }}
-						</IonSelectOption>
-					</IonSelect>
-				</IonItem>
-
-				<IonItem v-if="accessibilityConfig.colors === 'custom'" button :detail="false">
-					<Color v-model="accessibilityConfig.customColors.accentColor">
-						<IonLabel>
-							<h3>{{ $t("accessibility:accentColor.title") }}</h3>
-						</IonLabel>
-					</Color>
-				</IonItem>
-
-				<IonItem v-if="accessibilityConfig.colors === 'custom'" button :detail="false">
-					<Color v-model="accessibilityConfig.customColors.backgroundColor">
-						<IonLabel>
-							<h3>{{ $t("accessibility:backgroundColor.title") }}</h3>
-						</IonLabel>
-					</Color>
-				</IonItem>
-
-				<IonItem>
-					<IonRange
-						v-model="accessibilityConfig.contrastLevel"
-						:label="$t('accessibility:contrastLevel.title')"
-						label-placement="stacked"
-						:min="-1"
-						:max="1"
-						:step="0.05"
-						:snaps="true"
-						:ticks="false"
-						:pin="true"
-						:pin-formatter="(v) => `${Math.floor(v * 100)}%`"
-					>
-						<IonIcon slot="start" :icon="lowContrastMD" />
-						<IonIcon slot="end" :icon="highContrastMD" />
-					</IonRange>
-				</IonItem>
-			</IonList>
 			
 			<IonList>
 				<IonItem button :detail="false">
@@ -289,6 +170,125 @@
 					/>
 				</IonItem>
 				-->
+			</IonList>
+
+			<IonList>
+				<IonItem>
+					<IonIcon v-if="accessibilityConfig.theme === 'auto'" slot="start" :icon="autoMD" />
+					<IonIcon v-if="accessibilityConfig.theme === 'light'" slot="start" :icon="lightMD" />
+					<IonIcon v-if="accessibilityConfig.theme === 'dark'" slot="start" :icon="darkMD" />
+					<IonSelect
+						v-model="accessibilityConfig.theme"
+						label-placement="floating"
+						:label="$t('accessibility:uiVariant.title')"
+						:cancel-text="$t('other:alerts.cancel')"
+						interface="action-sheet"
+					>
+						<IonSelectOption value="auto">
+							{{ $t("accessibility:uiVariant.auto") }}
+						</IonSelectOption>
+						<IonSelectOption value="light">
+							{{ $t("accessibility:uiVariant.light") }}
+						</IonSelectOption>
+						<IonSelectOption value="dark">
+							{{ $t("accessibility:uiVariant.dark") }}
+						</IonSelectOption>
+					</IonSelect>
+				</IonItem>
+
+				<IonItem v-if="accessibilityConfig.theme === 'dark' || accessibilityConfig.theme === 'auto'">
+					<IonIcon slot="start" :icon="amoledMD" />
+					<IonToggle v-model="accessibilityConfig.themeIsAmoled">
+						<IonLabel>
+							<h3>{{ $t("accessibility:themeIsAmoled.title") }}</h3>
+							<p>{{ $t("accessibility:themeIsAmoled.desc") }}</p>
+						</IonLabel>
+					</IonToggle>
+				</IonItem>
+
+				<IonItem>
+					<IonIcon v-if="accessibilityConfig.themeScheme === 'tonal-spot'" slot="start" :icon="tonalMD" />
+					<IonIcon v-if="accessibilityConfig.themeScheme === 'neutral'" slot="start" :icon="neutralMD" />
+					<IonIcon v-if="accessibilityConfig.themeScheme === 'vibrant'" slot="start" :icon="vibrantMD" />
+					<IonIcon v-if="accessibilityConfig.themeScheme === 'expressive'" slot="start" :icon="expressiveMD" />
+					<IonSelect
+						v-model="accessibilityConfig.themeScheme"
+						label-placement="floating"
+						:label="$t('accessibility:themeScheme.title')"
+						:cancel-text="$t('other:alerts.cancel')"
+						interface="action-sheet"
+					>
+						<IonSelectOption value="tonal-spot">
+							{{ $t("accessibility:themeScheme.tonalSpot") }}
+						</IonSelectOption>
+						<IonSelectOption value="neutral">
+							{{ $t("accessibility:themeScheme.neutral") }}
+						</IonSelectOption>
+						<IonSelectOption value="vibrant">
+							{{ $t("accessibility:themeScheme.vibrant") }}
+						</IonSelectOption>
+						<IonSelectOption value="expressive">
+							{{ $t("accessibility:themeScheme.expressive") }}
+						</IonSelectOption>
+					</IonSelect>
+				</IonItem>
+
+				<IonItem>
+					<IonIcon v-if="accessibilityConfig.colors === 'app'" slot="start" :icon="appColorMD" />
+					<IonIcon v-if="accessibilityConfig.colors === 'system'" slot="start" :icon="systemColorMD" />
+					<IonIcon v-if="accessibilityConfig.colors === 'custom'" slot="start" :icon="customColorMD" />
+					<IonSelect
+						v-model="accessibilityConfig.colors"
+						label-placement="floating"
+						:label="$t('accessibility:colors.title')"
+						:cancel-text="$t('other:alerts.cancel')"
+						interface="action-sheet"
+					>
+						<IonSelectOption value="app">
+							{{ $t("accessibility:colors.app") }}
+						</IonSelectOption>
+						<IonSelectOption v-if="platform() === 'android'" value="system">
+							{{ $t("accessibility:colors.system") }}
+						</IonSelectOption>
+						<IonSelectOption value="custom">
+							{{ $t("accessibility:colors.custom") }}
+						</IonSelectOption>
+					</IonSelect>
+				</IonItem>
+
+				<IonItem v-if="accessibilityConfig.colors === 'custom'" button :detail="false">
+					<Color v-model="accessibilityConfig.customColors.accentColor">
+						<IonLabel>
+							<h3>{{ $t("accessibility:accentColor.title") }}</h3>
+						</IonLabel>
+					</Color>
+				</IonItem>
+
+				<IonItem v-if="accessibilityConfig.colors === 'custom'" button :detail="false">
+					<Color v-model="accessibilityConfig.customColors.backgroundColor">
+						<IonLabel>
+							<h3>{{ $t("accessibility:backgroundColor.title") }}</h3>
+						</IonLabel>
+					</Color>
+				</IonItem>
+
+				<IonItem>
+					<IonRange
+						v-model="accessibilityConfig.contrastLevel"
+						:label="$t('accessibility:contrastLevel.title')"
+						label-placement="stacked"
+						:min="-1"
+						:max="1"
+						:step="0.05"
+						:snaps="true"
+						:ticks="false"
+						:pin="true"
+						:pin-formatter="(v) => `${Math.floor(v * 100)}%`"
+					>
+						<IonIcon slot="start" :icon="lowContrastMD" />
+						<IonIcon slot="end" :icon="highContrastMD" />
+					</IonRange>
+				</IonItem>
 			</IonList>
 		</IonContent>
 	</IonPage>
