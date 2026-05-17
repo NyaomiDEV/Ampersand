@@ -142,16 +142,10 @@
 		"stripes": "Paski",
 		"drip": "Kapiący",
 		"cracks": "Popękany",
-		"comic": "Komiks",
 		"pop": "Pop",
 		"sketch": "Szkic",
 		"futuristic": "Futurystyczny",
 		"pineapple": "Ananas",
-		"lexend": "Lexend",
-		"atkinson": "Atkinson Hyperlegible",
-		"dyslexic": "OpenDyslexic",
-		"inter": "Inter",
-		"noFont": "Brak czcionki",
-		"urbanist": "Urbanist"
+		"noFont": "Brak czcionki"
 	}
 }

@@ -404,18 +404,12 @@ export const fontFamilies = {
 	terminal: "Workbench",
 	western: "Rye",
 	glitch: "Rubik Glitch",
-	sketch: "Cabin Sketch",
+	varsity: "Graduate",
 	stripes: "Monoton",
 	futuristic: "Audiowide",
 	drip: "Rubik Wet Paint",
 	pineapple: "Some Time Later",
 	cracks: "Rubik Distressed",
-	comic: "Comic Relief",
-	lexend: "Lexend",
-	atkinson: "Atkinson Hyperlegible",
-	dyslexic: "OpenDyslexic",
-	inter: "Inter",
-	urbanist: "Urbanist"
 };
 
 export function fontFamilyPicker(header: string): Promise<NameStyle | null | undefined> {

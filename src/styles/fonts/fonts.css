@@ -1,5 +1,15 @@
-@import url(inter.css);
 @import url(urbanist.css);
+@import url(inter.css);
+@import url(oswald.css);
+@import url(raleway.css);
+@import url(oxanium.css);
+@import url(recursive.css);
+@import url(outfit.css);
+@import url(quicksand.css);
+@import url(bricolage-grotesque.css);
+@import url(nunito.css);
+@import url(merriweather.css);
+@import url(albert-sans.css);
 
 @import url(atkinson-hyperlegible.css);
 @import url(opendyslexic.css);
@@ -34,5 +44,5 @@
 @import url(monoton.css);
 @import url(some-time-later.css);
 @import url(audiowide.css);
-@import url(cabin-sketch.css);
+@import url(graduate.css);
 @import url(unbounded.css);
