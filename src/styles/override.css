@@ -27,56 +27,58 @@ html {
 	--ampersand-body-font-weight-medium: 500;
 	--ampersand-body-font-features: normal;
 
+	--ion-font-family: var(--ampersand-body-font-name), var(--ion-default-font);
+
 	/* For some reason iPhones apply a padding underneath, so force height=viewport-height */
 	height: 100vh;
 }
 
-ion-toast {
-	--ion-safe-area-bottom: calc(var(--device-inset-bottom, 0px) + 80px);
-}
-
-html, html.md {
-	--ion-default-font: 'Inter', 'Roboto', sans-serif;
-	--ion-font-family: var(--ampersand-body-font-name), var(--ion-default-font);
-}
-
-html.high-legibility.hl-atkinson {
-	--ampersand-header-font-name: 'Atkinson Hyperlegible';
+/* High legibility fonts */
+html.high-legibility {
+	--ampersand-header-font-name: var(--ampersand-body-font-name);
 	--ampersand-header-font-weight: 400;
-	--ampersand-body-font-name: 'Atkinson Hyperlegible';
+
+	&.hl-atkinson {
+		--ampersand-body-font-name: 'Atkinson Hyperlegible';
+	}
+
+	&.hl-opendyslexic {
+		--ampersand-body-font-name: 'OpenDyslexic';
+	}
+
+	&.hl-lexend {
+		--ampersand-body-font-name: 'Lexend';
+	}
+
+	&.hl-comicrelief {
+		--ampersand-body-font-name: 'Comic Relief';
+	}
+
+	&.hl-system-font {
+		--ampersand-body-font-name: system-ui, -apple-system, BlinkMacSystemFont;
+	}
 }
 
-html.high-legibility.hl-opendyslexic {
-	--ampersand-header-font-name: 'OpenDyslexic';
-	--ampersand-header-font-weight: 400;
-	--ampersand-body-font-name: 'OpenDyslexic';
+* {
+	scrollbar-width: thin;
+	scrollbar-color: var(--ion-color-primary) transparent;
 }
 
-html.high-legibility.hl-lexend {
-	--ampersand-header-font-name: 'Lexend';
-	--ampersand-header-font-weight: 400;
-	--ampersand-body-font-name: 'Lexend';
+/* Modifications to Ionic components that we made for our app specifically */
+
+/* macOS transparency */
+html:is(.sys-macos),
+html:is(.sys-macos) body {
+	background-color: transparent;
 }
 
-html.high-legibility.hl-comicrelief {
-	--ampersand-header-font-name: 'Comic Relief';
-	--ampersand-header-font-weight: 400;
-	--ampersand-body-font-name: 'Comic Relief';
-}
-
-html.high-legibility.hl-system-font {
-	--ampersand-header-font-name: system-ui;
-	--ampersand-header-font-weight: 400;
-	--ampersand-body-font-name: system-ui;
-	--ion-font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-}
-
+/* Tab bar scrolling */
 ion-tab-bar {
 	overflow-x: auto;
 	justify-content: unset;
 }
 
-
+/* Tab bar desktop mode */
 html:is(.plt-tablet, .plt-desktop) ion-tabs {
 	flex-direction: row-reverse !important;
 }
@@ -93,11 +95,16 @@ html:is(.plt-tablet, .plt-desktop) ion-tab-bar {
 	overflow-y: auto;
 }
 
-html:is(.sys-macos),
-html:is(.sys-macos) body {
-	background-color: transparent;
+html:is(.plt-tablet, .plt-desktop) ion-tab-button {
+	flex: 0 0;
+	min-height: 80px;
 }
 
+html:is(.plt-tablet, .plt-desktop) ion-tabs :not(ion-tab-bar) {
+	--ion-safe-area-left: 0px;
+}
+
+/* macOS tab bar */
 html:is(.sys-macos) ion-tab-bar {
 	background: rgba(var(--md3-surface-container), 0.85);
 }
@@ -110,19 +117,7 @@ html:is(.sys-macos) ion-tabs ion-header {
 	--ion-safe-area-top: 0px;
 }
 
-html:is(.plt-tablet, .plt-desktop) ion-tab-button {
-	flex: 0 0;
-	min-height: 80px;
-}
-
-html:is(.plt-tablet, .plt-desktop) ion-tabs :not(ion-tab-bar) {
-	--ion-safe-area-left: 0px;
-}
-
-ion-item::part(native) {
-	border-bottom: 0px;
-}
-
+/* Padding fixes for the bottom of lists when a FAB is there and when it isn't */
 ion-tabs ion-content:has(> ion-fab.fab-vertical-bottom[slot="fixed"]:not(:empty)) {
 	--padding-bottom: 88px;
 }
@@ -135,19 +130,33 @@ ion-content:not(ion-tabs *) {
 	}
 }
 
+/* Safe area for ion-datetime put directly inside ion-content */
 ion-content > ion-datetime {
 	padding-right: var(--ion-safe-area-right, 0px);
 	padding-left: var(--ion-safe-area-left, 0px);
 }
 
+/* Make datetime actually take whichever width it wants */
+ion-datetime {
+	max-width: 100%;
+}
+
+/* Safe area for FABs */
 ion-fab:not(html:not(.plt-tablet, .plt-desktop) ion-tabs *) {
 	margin-bottom: var(--ion-safe-area-bottom, 0px);
 }
 
+/* Safe area for ion-toast */
+ion-toast {
+	--ion-safe-area-bottom: calc(var(--device-inset-bottom, 0px) + 80px);
+}
+
+/* Remove top padding on modals */
 ion-modal.modal-sheet ion-header ion-toolbar:first-of-type {
 	--ion-safe-area-top: 0px;
 }
 
+/* Safe area inheritance for modals, this should've been fixed by Ionic but we lack testing */
 ion-modal.modal-sheet {
 	--ion-safe-area-top: inherit;
 	--ion-safe-area-left: inherit;
@@ -155,41 +164,7 @@ ion-modal.modal-sheet {
 	--ion-safe-area-bottom: inherit;
 }
 
-.centered-text {
-	text-align: center;
-	padding: 1em;
-}
-
-p {
-	text-wrap: wrap;
-}
-
-ion-label.nowrap > *:not(div) {
-	text-wrap: nowrap !important;
-	text-overflow: ellipsis !important;
-	overflow: hidden !important;
-}
-
-ion-datetime {
-	max-width: 100%;
-}
-
-ion-range.range-label-placement-stacked::part(label) {
-	transform: none;
-}
-
-input[type="search"]::-webkit-search-decoration,
-input[type="search"]::-webkit-search-cancel-button,
-input[type="search"]::-webkit-search-results-button,
-input[type="search"]::-webkit-search-results-decoration {
-	display: none !important;
-}
-
-* {
-	scrollbar-width: thin;
-	scrollbar-color: var(--ion-color-primary) transparent;
-}
-
+/* Our own ion-item-option styling */
 ion-item-option {
 	border-radius: 28px;
 	width: 56px;
@@ -199,4 +174,35 @@ ion-item-option {
 
 ion-item-option:last-child {
 	margin-right: 16px;
+}
+
+/* Ion Range being too tall when pin is active, and remove having label being weirdly transformed */
+ion-range.range-label-placement-stacked::part(label) {
+	transform: none;
+	margin-bottom: 10px;
+}
+
+/* Prevent ion-label wrapping -- should we still keep this? */
+ion-label.nowrap > *:not(div) {
+	text-wrap: nowrap !important;
+	text-overflow: ellipsis !important;
+	overflow: hidden !important;
+}
+
+/* Remove double cancel on searchbar */
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+	display: none !important;
+}
+
+/* Utilities */
+.centered-text {
+	text-align: center;
+	padding: 1em;
+}
+
+p {
+	text-wrap: wrap;
 }
