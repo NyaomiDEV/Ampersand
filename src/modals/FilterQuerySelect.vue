@@ -115,14 +115,15 @@
 		<IonContent v-else>
 			<TheresNothingHere v-if="!filterQueries.length" />
 			<IonList v-else>
-				<VirtualList :entries="filterQueries" :min-size="56" :gap="2">
+				<VirtualList :entries="filterQueries" :min-size="86" :gap="2">
 					<template #default="{ entry: filterQuery }">
 						<IonItem
 							button
 							@click="check(filterQuery)"
 						>
 							<IonLabel>
-								{{ filterQuery.name }}
+								<h2>{{ filterQuery.name }}</h2>
+								<p>{{ filterQuery.query }}</p>
 							</IonLabel>
 						</IonItem>
 					</template>

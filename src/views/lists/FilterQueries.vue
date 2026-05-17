@@ -195,7 +195,7 @@
 			<template v-else>
 				<TheresNothingHere v-if="!filterQueries.length" sibling-header />
 				<IonList ref="list">
-					<VirtualList :entries="filterQueries" :min-size="56" :gap="2">
+					<VirtualList :entries="filterQueries" :min-size="86" :gap="2">
 						<template #default="{ entry: filterQuery }">
 							<IonItemSliding>
 								<IonItem
@@ -204,7 +204,8 @@
 									@click="showModal(filterQuery)"
 								>
 									<IonLabel>
-										{{ filterQuery.name }}
+										<h2>{{ filterQuery.name }}</h2>
+										<p>{{ filterQuery.query }}</p>
 									</IonLabel>
 								</IonItem>
 								<IonItemOptions>
