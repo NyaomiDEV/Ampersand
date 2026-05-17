@@ -24,6 +24,7 @@
 	import { addMaterialColors, rgbaToArgb, unsetMaterialColors } from "../../lib/theme";
 	import Cover from "../../components/Cover.vue";
 	import SystemItem from "../../components/system/SystemItem.vue";
+	import Loading from "../../modals/Loading.vue";
 
 	const i18next = useTranslation();
 
@@ -47,6 +48,7 @@
 	const parents = shallowRef<System[]>();
 
 	const systemSelectModal = useTemplateRef("systemSelectModal");
+	const loadingModal = useTemplateRef("loadingModal");
 
 	const membersShowed = ref(false);
 	const memberCount = ref(0);
@@ -67,11 +69,17 @@
 		const _system = toRaw(system.value);
 
 		try{
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+			await loadingModal.value?.$el.present();
+
 			if(!uuid){
 				const result = await newSystem({
 					..._system
 				});
 				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+				await loadingModal.value?.$el.dismiss();
 
 				router.back();
 				return;
@@ -80,8 +88,14 @@
 			const result = await updateSystem(_system as System);
 			if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
 
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+			await loadingModal.value?.$el.dismiss();
+
 			isEditing.value = false;
 		}catch(e){
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+			await loadingModal.value?.$el.dismiss();
+
 			await toast((e as Error).message);
 		}
 	}
@@ -115,12 +129,21 @@
 				undefined,
 				i18next.t("systems:edit.delete.confirm")
 			)){
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+				await loadingModal.value?.$el.present();
+
 				const result = await deleteSystem(system.value.uuid!);
 				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+				await loadingModal.value?.$el.dismiss();
 
 				router.back();
 			}
 		}catch(e){
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+			await loadingModal.value?.$el.dismiss();
+
 			await toast((e as Error).message);
 		}
 	}
@@ -497,6 +520,8 @@
 				:systems-to-exclude="parents"
 				@update:model-value="e => { if(e[0]) parentSystem = e[0] }"
 			/>
+
+			<Loading ref="loadingModal" />
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
 				<IonFabButton v-if="canEdit" :disabled="isEditing && !system.name.length" @click="toggleEditing">

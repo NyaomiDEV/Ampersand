@@ -34,6 +34,7 @@
 	import MemberSelect from "../../modals/MemberSelect.vue";
 	import MemberChip from "../../components/member/MemberChip.vue";
 	import PopupPicker from "../../components/PopupPicker.vue";
+	import Loading from "../../modals/Loading.vue";
 
 	const route = useRoute();
 	const router = useIonRouter();
@@ -56,6 +57,7 @@
 
 	const memberSelectModal = useTemplateRef("memberSelectModal");
 	const popupPicker = useTemplateRef("popupPicker");
+	const loadingModal = useTemplateRef("loadingModal");
 
 	async function deleteReminder(){
 		try{
@@ -64,12 +66,21 @@
 				undefined,
 				i18next.t("reminders:edit.delete.confirm")
 			)){
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+				await loadingModal.value?.$el.present();
+
 				const result = await removeReminder(reminder.value.uuid!);
 				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+				await loadingModal.value?.$el.dismiss();
 
 				router.back();
 			}
 		}catch(e){
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+			await loadingModal.value?.$el.dismiss();
+
 			await toast((e as Error).message);
 		}
 	}
@@ -92,6 +103,9 @@
 		_reminder.delay = ((delayMap.value.get("hours") || 0) * 60 * 60 * 1000) + ((delayMap.value.get("minutes") || 0) * 60 * 1000);
 
 		try{
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+			await loadingModal.value?.$el.present();
+
 			if(!uuid) {
 				const result = await newReminder({
 					..._reminder,
@@ -99,6 +113,8 @@
 				});
 				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
 
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+				await loadingModal.value?.$el.dismiss();
 				router.back();
 				return;
 			}
@@ -110,8 +126,14 @@
 			});
 			if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
 
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+			await loadingModal.value?.$el.dismiss();
+			
 			router.back();
 		}catch(e){
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+			await loadingModal.value?.$el.dismiss();
+
 			await toast((e as Error).message);
 		}
 	}
@@ -252,40 +274,42 @@
 					<IonIcon :icon="saveMD" />
 				</IonFabButton>
 			</IonFab>
+
+			<Loading ref="loadingModal" />
+
+			<MemberSelect
+				ref="memberSelectModal"
+				v-model="reminder.members"
+				:custom-title="$t('reminders:edit.members')"
+				:hide-checkboxes="false"
+				:always-emit="true"
+			/>
+
+			<PopupPicker
+				ref="popupPicker"
+				v-model="delayMap"
+				:content="[
+					{
+						name: 'hours',
+						values: [...Array(24).keys().map(x => ({
+							name: x.toString().padStart(2, '0'),
+							value: x,
+							default: x === 0
+						}))],
+						suffix: $t('other:timeSizes.hours.long')
+					},
+					{
+						name: 'minutes',
+						values: [...Array(60).keys().map(x => ({
+							name: x.toString().padStart(2, '0'),
+							value: x,
+							default: x === 0
+						}))],
+						suffix: $t('other:timeSizes.minutes.long')
+					}
+				]"
+			/>
 		</IonContent>
-
-		<MemberSelect
-			ref="memberSelectModal"
-			v-model="reminder.members"
-			:custom-title="$t('reminders:edit.members')"
-			:hide-checkboxes="false"
-			:always-emit="true"
-		/>
-
-		<PopupPicker
-			ref="popupPicker"
-			v-model="delayMap"
-			:content="[
-				{
-					name: 'hours',
-					values: [...Array(24).keys().map(x => ({
-						name: x.toString().padStart(2, '0'),
-						value: x,
-						default: x === 0
-					}))],
-					suffix: $t('other:timeSizes.hours.long')
-				},
-				{
-					name: 'minutes',
-					values: [...Array(60).keys().map(x => ({
-						name: x.toString().padStart(2, '0'),
-						value: x,
-						default: x === 0
-					}))],
-					suffix: $t('other:timeSizes.minutes.long')
-				}
-			]"
-		/>
 	</IonPage>
 </template>
 

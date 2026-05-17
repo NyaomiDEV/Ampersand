@@ -22,13 +22,17 @@
 
 	import { FilterQuery } from "../lib/db/entities";
 	import { deleteFilterQuery, newFilterQuery, updateFilterQuery } from "../lib/db/tables/filterQueries";
-	import { ref, toRaw } from "vue";
+	import { ref, toRaw, useTemplateRef } from "vue";
 
 	import { PartialBy } from "../lib/types";
 	import { useTranslation } from "i18next-vue";
 	import { promptOkCancel, toast } from "../lib/util/misc";
+	import Loading from "./Loading.vue";
 
 	const i18next = useTranslation();
+
+	const loadingModal = useTemplateRef("loadingModal");
+
 
 	const props = defineProps<{
 		filterQuery?: PartialBy<FilterQuery, "uuid">
@@ -47,9 +51,15 @@
 		const _filterQuery = toRaw(filterQuery.value);
 
 		try{
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+			await loadingModal.value?.$el.present();
+
 			if(!uuid) {
 				const result = await newFilterQuery({ ..._filterQuery });
 				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+				await loadingModal.value?.$el.dismiss();
 
 				await modalController.dismiss(null, "added");
 				return;
@@ -58,8 +68,14 @@
 			const result = await updateFilterQuery(_filterQuery as FilterQuery);
 			if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
 	
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+			await loadingModal.value?.$el.dismiss();
+
 			await modalController.dismiss(null, "modified").catch(() => false);
 		}catch(e){
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+			await loadingModal.value?.$el.dismiss();
+
 			await toast((e as Error).message);
 		}
 	}
@@ -71,12 +87,21 @@
 				undefined,
 				i18next.t("filterQueries:edit.delete.confirm")
 			)){
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+				await loadingModal.value?.$el.present();
+
 				const result = await deleteFilterQuery(filterQuery.value.uuid!);
 				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+				await loadingModal.value?.$el.dismiss();
 
 				await modalController.dismiss(undefined, "deleted").catch(() => false);
 			}
 		}catch(e){
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+			await loadingModal.value?.$el.dismiss();
+
 			await toast((e as Error).message);
 		}
 	}
@@ -167,6 +192,8 @@
 					</IonLabel>
 				</IonItem>
 			</IonList>
+
+			<Loading ref="loadingModal" />
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
 				<IonFabButton :disabled="!filterQuery.name.replace(/^[\u200B-\u200F\uFEFF]/, '').trim().length" @click="save">

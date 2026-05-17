@@ -24,6 +24,7 @@
 	import FilterQuerySelect from "../../modals/FilterQuerySelect.vue";
 	import FilterQueryEdit from "../../modals/FilterQueryEdit.vue";
 	import { addModal, removeModal } from "../../lib/modals.ts";
+	import Loading from "../../modals/Loading.vue";
 
 	const route = useRoute();
 
@@ -33,6 +34,7 @@
 
 	const list = useTemplateRef("list");
 	const filterQuerySelect = useTemplateRef("filterQuerySelect");
+	const loadingModal = useTemplateRef("loadingModal");
 
 	const search = ref(route.query.q as string || "");
 	watch(route, () => {
@@ -106,10 +108,19 @@
 				undefined,
 				i18next.t("tagManagement:edit.delete.confirm")
 			)){
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+				await loadingModal.value?.$el.present();
+
 				const result = await removeTag(tag.uuid);
 				if(!result.success) throw new Error(`E: ${result.err as Error}`);
+
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+				await loadingModal.value?.$el.dismiss();
 			}
 		}catch(e){
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+			await loadingModal.value?.$el.dismiss();
+
 			await toast((e as Error).message);
 		}
 		closeSlidingItems();
@@ -225,6 +236,8 @@
 			</template>
 
 			<FilterQuerySelect ref="filterQuerySelect" type="tagManagement" @selected="search = $event.query" />
+
+			<Loading ref="loadingModal" />
 		</IonContent>
 	</IonPage>
 </template>

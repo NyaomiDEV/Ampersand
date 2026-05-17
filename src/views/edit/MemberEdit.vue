@@ -54,6 +54,7 @@
 	import { getSystem } from "../../lib/db/tables/system";
 	import SystemChip from "../../components/system/SystemChip.vue";
 	import SystemItem from "../../components/system/SystemItem.vue";
+	import Loading from "../../modals/Loading.vue";
 
 	const i18next = useTranslation();
 
@@ -77,6 +78,7 @@
 	const tags = shallowRef<Tag[]>([]);
 	const tagSelectionModal = useTemplateRef("tagSelectionModal");
 	const systemSelectModal = useTemplateRef("systemSelectModal");
+	const loadingModal = useTemplateRef("loadingModal");
 
 	const customFields = shallowRef<CustomField[]>([]);
 	const customFieldsToShowInEditMode = shallowRef<CustomField[]>([]);
@@ -108,12 +110,18 @@
 		const _member = toRaw(member.value);
 
 		try{
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+			await loadingModal.value?.$el.present();
+
 			if(!uuid){
 				const result = await newMember({
 					..._member,
 					dateCreated: new Date()
 				});
 				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+				await loadingModal.value?.$el.dismiss();
 
 				router.back();
 				return;
@@ -122,8 +130,14 @@
 			const result = await updateMember(_member as Member);
 			if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
 
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+			await loadingModal.value?.$el.dismiss();
+
 			isEditing.value = false;
 		}catch(e){
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+			await loadingModal.value?.$el.dismiss();
+
 			await toast((e as Error).message);
 		}
 	}
@@ -157,12 +171,21 @@
 				undefined,
 				i18next.t("members:edit.delete.confirm")
 			)){
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+				await loadingModal.value?.$el.present();
+
 				const result = await deleteMember(member.value.uuid!);
 				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+				await loadingModal.value?.$el.dismiss();
 
 				router.back();
 			}
 		}catch(e){
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+			await loadingModal.value?.$el.dismiss();
+
 			await toast((e as Error).message);
 		}
 	}
@@ -563,6 +586,8 @@
 				:hide-checkboxes="false"
 				@update:model-value="e => { if(e[0]) system = e[0] }"
 			/>
+
+			<Loading ref="loadingModal" />
 		</IonContent>
 	</IonPage>
 </template>

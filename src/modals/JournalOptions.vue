@@ -26,12 +26,13 @@
 	import { deleteJournalPost } from "../lib/db/tables/journalPosts";
 
 	import trashMD from "@material-symbols/svg-600/rounded/delete.svg";
-
+	import Loading from "./Loading.vue";
 
 	const i18next = useTranslation();
 	const router = useIonRouter();
 
 	const tagSelectionModal = useTemplateRef("tagSelectionModal");
+	const loadingModal = useTemplateRef("loadingModal");
 
 	const props = defineProps<{
 		post: Ref<PartialBy<JournalPostComplete, "uuid">>
@@ -47,13 +48,22 @@
 				undefined,
 				i18next.t("journal:edit.delete.confirm")
 			)){
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+				await loadingModal.value?.$el.present();
+
 				const result = await deleteJournalPost(post.value.uuid!);
 				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+				await loadingModal.value?.$el.dismiss();
 
 				await modalController.dismiss();
 				router.back();
 			}
 		}catch(e){
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+			await loadingModal.value?.$el.present();
+
 			await toast((e as Error).message);
 		}
 	}
@@ -173,6 +183,7 @@
 				@update:model-value="tags => { post.tags = tags.map(x => x.uuid); }"
 			/>
 
+			<Loading ref="loadingModal" />
 		</IonContent>
 	</IonModal>
 </template>

@@ -29,7 +29,7 @@
 
 	import { getTag, newTag, removeTag, updateTag } from "../../lib/db/tables/tags";
 	import { Member, Tag } from "../../lib/db/entities";
-	import { getCurrentInstance, h, onMounted, ref, watch } from "vue";
+	import { getCurrentInstance, h, onMounted, ref, watch, useTemplateRef } from "vue";
 	import { addMaterialColors, rgbaToArgb, unsetMaterialColors } from "../../lib/theme";
 	import { PartialBy } from "../../lib/types";
 	import { getMembers, updateMember } from "../../lib/db/tables/members";
@@ -42,6 +42,7 @@
 	import { promptOkCancel, toast } from "../../lib/util/misc";
 	import ContentEditable from "../../components/ContentEditable.vue";
 	import { getAssets } from "../../lib/db/tables/assets";
+	import Loading from "../../modals/Loading.vue";
 
 	const loading = ref(false);
 
@@ -58,6 +59,8 @@
 
 	const route = useRoute();
 	const router = useIonRouter();
+
+	const loadingModal = useTemplateRef("loadingModal");
 
 	const count = ref<number>();
 
@@ -110,9 +113,15 @@
 		const _tag = tag.value;
 
 		try{
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+			await loadingModal.value?.$el.present();
+
 			if(!uuid){
 				const result = await newTag(_tag);
 				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+				await loadingModal.value?.$el.dismiss();
 
 				router.back();
 				return;
@@ -121,8 +130,14 @@
 			const result = await updateTag(_tag as Tag);
 			if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
 
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+			await loadingModal.value?.$el.dismiss();
+
 			router.back();
 		}catch(e){
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+			await loadingModal.value?.$el.dismiss();
+
 			await toast((e as Error).message);
 		}
 	}
@@ -134,12 +149,21 @@
 				undefined,
 				i18next.t("tagManagement:edit.delete.confirm")
 			)){
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+				await loadingModal.value?.$el.present();
+
 				const result = await removeTag(tag.value.uuid!);
 				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+				await loadingModal.value?.$el.dismiss();
 
 				router.back();
 			}
 		}catch(e){
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+			await loadingModal.value?.$el.dismiss();
+
 			await toast((e as Error).message);
 		}
 	}
@@ -372,6 +396,8 @@
 					</IonLabel>
 				</IonItem>
 			</IonList>
+
+			<Loading ref="loadingModal" />
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
 				<IonFabButton :disabled="!tag.name.length" @click="save">

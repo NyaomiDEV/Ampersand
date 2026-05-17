@@ -30,6 +30,7 @@
 	import { promptOkCancel, toast } from "../lib/util/misc";
 
 	import ContentEditable from "../components/ContentEditable.vue";
+	import Loading from "./Loading.vue";
 
 
 	const i18next = useTranslation();
@@ -48,15 +49,23 @@
 	const note = ref({ ...(props.note || emptyNote) });
 
 	const memberTagModal = useTemplateRef("memberTagModal");
+	const loadingModal = useTemplateRef("loadingModal");
+
 
 	async function save(){
 		const uuid = note.value?.uuid;
 		const _note = toRaw(note.value);
 
 		try{
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+			await loadingModal.value?.$el.present();
+
 			if(!uuid) {
 				const result = await newNote({ ..._note });
 				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+				await loadingModal.value?.$el.dismiss();
 
 				await modalController.dismiss(null, "added");
 				return;
@@ -65,8 +74,14 @@
 			const result = await updateNote(_note as Note);
 			if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
 	
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+			await loadingModal.value?.$el.dismiss();
+
 			await modalController.dismiss(null, "modified").catch(() => false);
 		}catch(e){
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+			await loadingModal.value?.$el.dismiss();
+
 			await toast((e as Error).message);
 		}
 	}
@@ -78,12 +93,21 @@
 				undefined,
 				i18next.t("notes:edit.delete.confirm")
 			)){
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+				await loadingModal.value?.$el.present();
+
 				const result = await deleteNote(note.value.uuid!);
 				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+				await loadingModal.value?.$el.dismiss();
 
 				await modalController.dismiss(undefined, "deleted").catch(() => false);
 			}
 		}catch(e){
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+			await loadingModal.value?.$el.dismiss();
+
 			await toast((e as Error).message);
 		}
 	}
@@ -163,6 +187,9 @@
 				:model-value="[]"
 				@update:model-value="(e) => { if(e[0]) note.content = `${note.content || ''}@<m:${e[0].uuid}>` }"
 			/>
+
+			<Loading ref="loadingModal" />
+
 		</IonContent>
 	</IonModal>
 </template>

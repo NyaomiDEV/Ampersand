@@ -34,6 +34,7 @@
 	import PresenceRating from "../components/PresenceRating.vue";
 	import MemberItem from "../components/member/MemberItem.vue";
 	import Comments from "./Comments.vue";
+	import Loading from "./Loading.vue";
 
 	const i18next = useTranslation();
 
@@ -57,6 +58,8 @@
 	const memberInfluencingModal = useTemplateRef("memberInfluencingModal");
 	const memberTagModal = useTemplateRef("memberTagModal");
 	const frontingEntryComments = useTemplateRef("frontingEntryComments");
+	const loadingModal = useTemplateRef("loadingModal");
+
 
 	async function save(dismissAfter = true){
 		const uuid = frontingEntry.value?.uuid;
@@ -71,6 +74,9 @@
 			_frontingEntry.isLocked = false;
 
 		try {
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+			await loadingModal.value?.$el.present();
+
 			if(!uuid) {
 				const result = await newFrontingEntry({
 					..._frontingEntry,
@@ -80,6 +86,9 @@
 				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
 
 				void sendFrontingChangedEvent();
+
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+				await loadingModal.value?.$el.dismiss();
 
 				if(dismissAfter)
 					await modalController.dismiss(null, "added");
@@ -96,10 +105,15 @@
 
 			void sendFrontingChangedEvent();
 
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+			await loadingModal.value?.$el.dismiss();
 		
 			if(dismissAfter)
 				await modalController.dismiss(null, "modified").catch(() => false);
 		}catch(e){
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+			await loadingModal.value?.$el.dismiss();
+
 			await toast((e as Error).message);
 		}
 	}
@@ -111,14 +125,23 @@
 				undefined,
 				i18next.t("frontHistory:edit.delete.confirm"),
 			)){
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+				await loadingModal.value?.$el.present();
+
 				const result = await deleteFrontingEntry(frontingEntry.value.uuid!);
 				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
 
 				void sendFrontingChangedEvent();
 			
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+				await loadingModal.value?.$el.dismiss();
+
 				await modalController.dismiss(undefined, "deleted").catch(() => false);
 			}
 		}catch(e){
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+			await loadingModal.value?.$el.dismiss();
+
 			await toast((e as Error).message);
 		}
 	}
@@ -416,6 +439,9 @@
 					});
 				}"
 			/>
+
+			<Loading ref="loadingModal" />
+
 		</IonContent>
 	</IonModal>
 </template>

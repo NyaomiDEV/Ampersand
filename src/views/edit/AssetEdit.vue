@@ -32,6 +32,7 @@
 	import TagChip from "../../components/tag/TagChip.vue";
 	import { getTags } from "../../lib/db/tables/tags";
 	import TagListSelect from "../../modals/TagListSelect.vue";
+	import Loading from "../../modals/Loading.vue";
 
 	const { getObjectURL } = useBlob();
 
@@ -45,6 +46,7 @@
 	const asset = ref({ ...emptyAsset });
 	const tags = shallowRef<Tag[]>([]);
 	const tagSelectionModal = useTemplateRef("tagSelectionModal");
+	const loadingModal = useTemplateRef("loadingModal");
 
 	const route = useRoute();
 	const router = useIonRouter();
@@ -72,9 +74,15 @@
 		if(!_asset.file.size) return;
 
 		try{
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+			await loadingModal.value?.$el.present();
+
 			if(!uuid){
 				const result = await newAsset(_asset);
 				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+				await loadingModal.value?.$el.dismiss();
 				router.back();
 				return;
 			}
@@ -82,8 +90,13 @@
 			const result = await updateAsset(_asset as Asset);
 			if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
 
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+			await loadingModal.value?.$el.dismiss();
 			router.back();
 		}catch(e){
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+			await loadingModal.value?.$el.dismiss();
+
 			await toast((e as Error).message);
 		}
 	}
@@ -95,11 +108,21 @@
 				undefined,
 				i18next.t("assetManager:edit.delete.confirm"),
 			)){
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+				await loadingModal.value?.$el.present();
+
 				const result = await deleteAsset(asset.value.uuid!);
 				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+				await loadingModal.value?.$el.dismiss();
+
 				router.back();
 			}
 		}catch(e){
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+			await loadingModal.value?.$el.dismiss();
+
 			await toast((e as Error).message);
 		}
 	}
@@ -215,6 +238,8 @@
 				:model-value="asset.tags.map(uuid => tags.find(x => x.uuid === uuid)).filter(x => !!x)"
 				@update:model-value="tags => { asset.tags = tags.map(x => x.uuid) }"
 			/>
+
+			<Loading ref="loadingModal" />
 		</IonContent>
 	</IonPage>
 </template>

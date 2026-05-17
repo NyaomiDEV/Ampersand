@@ -32,6 +32,7 @@
 	import { useTranslation } from "i18next-vue";
 	import { formatDate, promptOkCancel, sortName, toast } from "../lib/util/misc";
 	import MemberChip from "../components/member/MemberChip.vue";
+	import Loading from "./Loading.vue";
 
 	const i18next = useTranslation();
 
@@ -53,6 +54,7 @@
 
 	const memberSelectModal = useTemplateRef("memberSelectModal");
 	const memberTagModal = useTemplateRef("memberTagModal");
+	const loadingModal = useTemplateRef("loadingModal");
 
 	async function save(){
 		const uuid = boardMessage.value?.uuid;
@@ -92,6 +94,9 @@
 		const _boardMessage = toRaw(boardMessage.value);
 
 		try{
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+			await loadingModal.value?.$el.present();
+
 			if(!_boardMessage.title.length)
 				_boardMessage.title = formatDate(_boardMessage.date, "collapsed");
 
@@ -101,6 +106,9 @@
 					members: _boardMessage.members.map(x => x.uuid)
 				});
 				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+				await loadingModal.value?.$el.dismiss();
 
 				await modalController.dismiss(null, "added");	
 				return;
@@ -113,8 +121,14 @@
 
 			if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
 
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+			await loadingModal.value?.$el.dismiss();
+
 			await modalController.dismiss(null, "modified").catch(() => false);		
 		}catch(e){
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+			await loadingModal.value?.$el.dismiss();
+
 			await toast((e as Error).message);
 		}
 	}
@@ -126,12 +140,21 @@
 				undefined,
 				i18next.t("messageBoard:edit.delete.confirm")
 			)){
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+				await loadingModal.value?.$el.present();
+
 				const result = await deleteBoardMessage(boardMessage.value.uuid!);
 				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+				await loadingModal.value?.$el.dismiss();
 
 				await modalController.dismiss(null, "deleted").catch(() => false);
 			}
 		}catch(e){
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+			await loadingModal.value?.$el.dismiss();
+
 			await toast((e as Error).message);
 		}
 	}
@@ -343,6 +366,7 @@
 				@update:model-value="(e) => { if(e[0]) boardMessage.body = `${boardMessage.body || ''}@<m:${e[0].uuid}>` }"
 			/>
 
+			<Loading ref="loadingModal" />
 		</IonContent>
 	</IonModal>
 </template>

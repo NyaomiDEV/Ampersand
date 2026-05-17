@@ -46,6 +46,7 @@
 	import { addModal, removeModal } from "../../lib/modals";
 	import MemberChip from "../../components/member/MemberChip.vue";
 	import Comments from "../../modals/Comments.vue";
+	import Loading from "../../modals/Loading.vue";
 
 	const { getObjectURL } = useBlob();
 	const router = useIonRouter();
@@ -57,6 +58,7 @@
 	const memberSelectModal = useTemplateRef("memberSelectModal");
 	const memberTagModal = useTemplateRef("memberTagModal");
 	const postComments = useTemplateRef("postComments");
+	const loadingModal = useTemplateRef("loadingModal");
 
 	const tags = shallowRef<Tag[]>([]);
 
@@ -85,6 +87,9 @@
 		const _post = toRaw(post.value);
 
 		try {
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+			await loadingModal.value?.$el.present();
+
 			if(!_post.title.length)
 				_post.title = formatDate(_post.date, "collapsed");
 
@@ -94,7 +99,9 @@
 					members: _post.members.map(x => x.uuid)
 				});
 				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
-
+				
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+				await loadingModal.value?.$el.dismiss();
 				router.back();
 				return;
 			}
@@ -105,9 +112,15 @@
 			} as JournalPost);
 
 			if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+				
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+			await loadingModal.value?.$el.dismiss();
 
 			isEditing.value = false;
-		}catch(e){
+		}catch(e){		
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+			await loadingModal.value?.$el.dismiss();
+
 			await toast((e as Error).message);
 		}
 	}
@@ -313,6 +326,8 @@
 					}); 
 				}"
 			/>
+
+			<Loading ref="loadingModal" />
 
 		</IonContent>
 
