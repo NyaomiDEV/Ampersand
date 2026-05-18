@@ -2,7 +2,7 @@
 	import { IonContent, IonHeader, IonList, IonPage, IonLabel, IonListHeader, IonTitle, IonToolbar, IonBackButton, IonItem, IonSelect, IonSelectOption, IonInput, IonToggle, IonIcon } from "@ionic/vue";
 	import { onMounted, shallowRef, useTemplateRef, watch } from "vue";
 
-	import { appConfig } from "../../lib/config";
+	import { accessibilityConfig, appConfig } from "../../lib/config";
 	import { getSystem } from "../../lib/db/tables/system";
 	import SystemSelect from "../../modals/SystemSelect.vue";
 	import { System } from "../../lib/db/entities";
@@ -76,7 +76,7 @@
 			</IonListHeader>
 
 			<IonList>
-				<IonItem>
+				<IonItem :disabled="accessibilityConfig.highLegibility">
 					<IonIcon slot="start" :icon="fontMD" />
 					<IonSelect
 						v-model="appConfig.fontStyle"
