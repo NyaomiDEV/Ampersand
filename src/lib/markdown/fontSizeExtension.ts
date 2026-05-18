@@ -1,5 +1,6 @@
 import { h, type VNode } from "vue";
 import { MarkedExtension } from "marked";
+import { splitList } from "./utils";
 
 const fontSizeExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [
@@ -14,7 +15,7 @@ const fontSizeExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 					const token = {
 						type: "font-size",
 						raw: match[0],
-						size: match[1],
+						sizes: splitList(match[1]).map(x => parseFloat(x)),
 						text: match[2],
 						tokens: this.lexer.inlineTokens(match[2])
 					};
@@ -23,7 +24,7 @@ const fontSizeExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 				return;
 			},
 			renderer(token) {
-				const sizes = (token.size as string).split(":").map(x => parseFloat(x));
+				const sizes = (token.sizes as number[]);
 				const cssStyle: Record<string, string> = {};
 				if(sizes.length > 1){
 					cssStyle.display = "inline-block";
