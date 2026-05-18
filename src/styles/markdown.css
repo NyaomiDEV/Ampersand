@@ -510,4 +510,12 @@
 			animation-name: md-ani-beat;
 		}
 	}
+
+	ion-range {
+		pointer-events: none;
+
+		> [slot=label] {
+			pointer-events: all;
+		}
+	}
 }

@@ -37,6 +37,7 @@ import positionExtension from "./positionExtension";
 import rotationExtension from "./rotationExtension";
 import customTableExtension from "./customTableExtension";
 import boxShadowExtension from "./boxShadowExtension";
+import rangeExtension from "./rangeExtension";
 
 export function useMarked(){
 	const marked = new Marked<(VNode | string)[], VNode | string>();
@@ -146,7 +147,8 @@ export function useMarked(){
 		animationExtension,
 		positionExtension,
 		rotationExtension,
-		customTableExtension
+		customTableExtension,
+		rangeExtension
 	);
 
 	return marked;
