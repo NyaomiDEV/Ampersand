@@ -1,21 +1,22 @@
 import { h, type VNode } from "vue";
 import { MarkedExtension } from "marked";
 import { IonRange } from "@ionic/vue";
+import { splitList } from "./utils";
 
 const rangeExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [
 		{
 			name: "range",
 			level: "inline",
-			start(src: string) { return src.match(/\[r/)?.index; },
+			start(src: string) { return src.match(/\[ra/)?.index; },
 			tokenizer(src: string) {
-				const rule = /^\[r=(\d*\.?\d+)%\](.*?)\[\/r\]/;
+				const rule = /^\[ra=(\d*\.?\d+(?::\d*\.?\d+)?)\](.*?)\[\/ra\]/;
 				const match = rule.exec(src);
 				if (match) {
 					const token = {
 						type: "range",
 						raw: match[0],
-						value: match[1],
+						values: splitList(match[1]).map(x => parseFloat(x)),
 						text: match[2],
 						tokens: this.lexer.inlineTokens(match[2])
 					};
@@ -30,7 +31,8 @@ const rangeExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 						labelPlacement: "stacked",
 						min: 0,
 						max: 100,
-						value: parseFloat(token.value)
+						dualKnobs: token.values.length > 1,
+						value: token.values.length > 1 ? { lower: Math.min(...token.values), upper: Math.max(...token.values) } : token.values[0]
 					},
 					token.text.length
 						? h("span", { slot: "label" }, token.tokens && token.tokens.length ? this.parser.parseInline(token.tokens) : token.text)
