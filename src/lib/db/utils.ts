@@ -4,7 +4,7 @@ export function intoStream(fd: FileHandle | string, onRead?: (bytes: number) => 
 export function intoStream(fd: FileHandle | string, onRead?: (bytes: number) => void, toText?: true): ReadableStream<string>;
 export function intoStream(fdOrPath: FileHandle | string, onRead?: (bytes: number) => void, toText?: boolean): ReadableStream<string | Uint8Array<ArrayBuffer>> {
 	const decoder = new TextDecoder();
-	const chunkSize = 512000;
+	const chunkSize = 1024 * 1000;
 
 	let fd: FileHandle;
 
