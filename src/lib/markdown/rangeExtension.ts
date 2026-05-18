@@ -34,7 +34,7 @@ const rangeExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 						dualKnobs: token.values.length > 1,
 						value: token.values.length > 1 ? { lower: Math.min(...token.values), upper: Math.max(...token.values) } : token.values[0]
 					},
-					token.text.length
+					() => token.text.length
 						? h("span", { slot: "label" }, token.tokens && token.tokens.length ? this.parser.parseInline(token.tokens) : token.text)
 						: undefined
 				);
