@@ -28,10 +28,6 @@
 		"title": "AMOLED-i režiim",
 		"desc": "Saad tumedas kujunduses kasutada süsimusta tausta. Võib vähendada ekraani väsimist ja kulumist."
 	},
-	"themeIsVibrant": {
-		"title": "Ergas kujundus",
-		"desc": "Saad kasutajaliidesele lisada värve."
-	},
 	"colorIndicatorPosition": {
 		"title": "Värvinäidiku asukoht",
 		"avatar": "Tunnuspildi piirjooned",
