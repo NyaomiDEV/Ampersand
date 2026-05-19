@@ -1,18 +1,18 @@
 <script setup lang="ts">
-	import { onMounted, onUnmounted, useTemplateRef } from "vue";
+	import { onMounted, onUnmounted, ref, useTemplateRef } from "vue";
 	import Spinner from "./Spinner.vue";
 
 	const emit = defineEmits<{
 		infinite: [() => void]
 	}>();
 
-	let isBusy = false;
+	let isBusy = ref(false);
 	const infinite = useTemplateRef("infinite");
 	const observer = new IntersectionObserver((entries) => {
 		const entry = entries[0];
-		if(entry.isIntersecting && !isBusy){
-			isBusy = true;
-			const cb = () => { isBusy = false; };
+		if(entry.isIntersecting && !isBusy.value){
+			isBusy.value = true;
+			const cb = () => { isBusy.value = false; };
 			emit("infinite", cb);
 		}
 	}, {
@@ -31,7 +31,7 @@
 
 <template>
 	<div ref="infinite" class="infinite">
-		<Spinner />
+		<Spinner v-if="isBusy" />
 	</div>
 </template>
 
