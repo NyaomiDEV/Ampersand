@@ -145,6 +145,8 @@
 		"pop": "Pop",
 		"futuristic": "Futurystyczny",
 		"pineapple": "Ananas",
-		"noFont": "Brak czcionki"
+		"noFont": "Brak czcionki",
+		"comic": "Komiks",
+		"varsity": "Uniwerek"
 	}
 }
