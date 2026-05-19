@@ -7,10 +7,6 @@
 	"genericDeleteDesc": "Nun pùo' turnà arreto!",
 	"addTimestamp": "Mitte data e ora",
 	"memberMention": "Menziona nu socio",
-	"storagePersistence": {
-		"header": "Attenziò",
-		"content": "Ampersand nun pô sarvà 'e date pe' sempe ncopp'ô dispositivo tujo. Si staje ausanno Firefox, pe' piacere rà 'o permesso a Ampersand pe' 'o fà. Si staje ncopp'a nu browser basato ncopp'a Chromium (comm'a Chrome, Edge, Opera GX, Vivaldi, ecc...), pe' piacere nstalla Ampersand comm'a na web app / miettelo ncopp'â schermata 'e casa. Si stu messaggio nun se ne va, vide 'e fà spisso 'o backup d''e date d''a sezzione Mpurtà/Spurtà."
-	},
 	"alerts": {
 		"ok": "Ok",
 		"cancel": "Annulla",

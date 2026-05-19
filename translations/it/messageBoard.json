@@ -24,15 +24,6 @@
 			"abstain": "Astenutə"
 		}
 	},
-	"comments": {
-		"header": "Commenti",
-		"commenter": "Seleziona autorə del commento",
-		"comment": "Corpo del commento",
-		"commentHint": "Commenta...",
-		"commentCount_one": "{{count}} commento",
-		"commentCount_other": "{{count}} commenti",
-		"deleteConfirmation": "Vuoi veramente eliminare questo commento?"
-	},
 	"edit": {
 		"header": "Modifica messaggio",
 		"member": "Modifica autorə del messaggio",
