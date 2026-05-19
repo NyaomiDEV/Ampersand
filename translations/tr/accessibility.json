@@ -35,10 +35,6 @@
 		"title": "AMOLED modu",
 		"desc": "Karanlık modda iken tamamen siyah bir arka plan kullan. Görüntüleme aşınmasını azaltabilir."
 	},
-	"themeIsVibrant": {
-		"title": "Canlı tema",
-		"desc": "Arayüze daha fazla renk ver."
-	},
 	"colorIndicatorPosition": {
 		"title": "Renk belirteçi konumu",
 		"avatar": "Avatar dış çizgisi",
