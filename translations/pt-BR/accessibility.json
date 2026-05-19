@@ -28,10 +28,6 @@
 		"title": "Modo tela AMOLED",
 		"desc": "Use um plano de fundo totalmente preto enquanto no modo escuro. Pode ajudar a diminuir desgaste de tela."
 	},
-	"themeIsVibrant": {
-		"title": "Tema vibrante",
-		"desc": "Traga mais cor à interface de usuário."
-	},
 	"colorIndicatorPosition": {
 		"title": "Posição do indicador de cor",
 		"avatar": "Contorno do avatar",
