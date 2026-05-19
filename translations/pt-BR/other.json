@@ -143,7 +143,10 @@
 		"varsity": "Campus",
 		"futuristic": "Futurístico",
 		"pineapple": "Abacaxi",
-		"noFont": "Sem fonte"
+		"noFont": "Sem fonte",
+		"gothic": "Gótico",
+		"metal": "Metal",
+		"glitch": "Glitch"
 	},
 	"loading": "Ampersand está carregando"
 }
