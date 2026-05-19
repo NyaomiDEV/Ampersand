@@ -64,7 +64,7 @@
 	}
 
 	div.color {
-		border: 2.5px solid var(--ion-text-color-step-400);
+		border: 2.5px solid rgb(var(--md3-outline));
 		border-radius: 50%;
 		width: 36px;
 		aspect-ratio: 1;

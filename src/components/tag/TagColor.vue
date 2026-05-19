@@ -29,5 +29,6 @@
 		height: 75%;
 		border-radius: 100%;
 		aspect-ratio: 1;
+		border: 2px solid rgb(var(--md3-outline));
 	}
 </style>

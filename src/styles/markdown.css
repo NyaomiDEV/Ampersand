@@ -223,6 +223,7 @@
 		margin-inline-end: 0.25em;
 		border-radius: 100%;
 		background-color: var(--color);
+		border: 2px solid rgb(var(--md3-outline));
 		vertical-align: baseline;
 	}
 
