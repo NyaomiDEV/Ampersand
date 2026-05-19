@@ -125,7 +125,26 @@ export function filterFrontingEntry(search: string, frontingEntry: FrontingEntry
 
 	if (parsed.member) 
 		return (frontingEntry.member !== parsed.member.value) !== parsed.member.shouldInclude;
-	
+
+	if (parsed.system) {
+		const systemsToCheck = [parsed.system.value];
+		if (parsed.andChildren) {
+			let parents = [...systemsToCheck];
+			while (parents.length) {
+				const children: string[] = [];
+				for (const system of parents)
+					children.push(...getSystemsIndex().filter(x => x.parent === system).map(x => x.uuid));
+
+				systemsToCheck.push(...children);
+				parents = [...children];
+			}
+		}
+
+		const systemOfMember = getMemberIndex().find(x => x.uuid === frontingEntry.member)?.system;
+
+		if (systemOfMember && (!systemsToCheck.includes(systemOfMember)) === parsed.system.shouldInclude)
+			return false;
+	}
 
 	if (parsed.currentlyFronting) {
 		if (frontingEntry.endTime)
@@ -169,6 +188,26 @@ export function filterBoardMessage(search: string, boardMessage: BoardMessage) {
 			return false;
 
 		if (boardMessage.members.includes(parsed.member?.value) !== parsed.member.shouldInclude)
+			return false;
+	}
+
+	if (parsed.system) {
+		const systemsToCheck = [parsed.system.value];
+		if (parsed.andChildren) {
+			let parents = [...systemsToCheck];
+			while (parents.length) {
+				const children: string[] = [];
+				for (const system of parents)
+					children.push(...getSystemsIndex().filter(x => x.parent === system).map(x => x.uuid));
+
+				systemsToCheck.push(...children);
+				parents = [...children];
+			}
+		}
+
+		const systemsOfMembers = getMemberIndex().filter(x => boardMessage.members.includes(x.uuid)).map(x => x.system);
+
+		if ((!systemsToCheck.reduce((p, c) => p ? systemsOfMembers.includes(c) : p, true)) === parsed.system.shouldInclude)
 			return false;
 	}
 
@@ -255,6 +294,26 @@ export function filterJournalPost(search: string, post: JournalPost) {
 			return false;
 
 		if (post.members.includes(parsed.member?.value) !== parsed.member.shouldInclude)
+			return false;
+	}
+
+	if (parsed.system) {
+		const systemsToCheck = [parsed.system.value];
+		if (parsed.andChildren) {
+			let parents = [...systemsToCheck];
+			while (parents.length) {
+				const children: string[] = [];
+				for (const system of parents)
+					children.push(...getSystemsIndex().filter(x => x.parent === system).map(x => x.uuid));
+
+				systemsToCheck.push(...children);
+				parents = [...children];
+			}
+		}
+
+		const systemsOfMembers = getMemberIndex().filter(x => post.members.includes(x.uuid)).map(x => x.system);
+
+		if ((!systemsToCheck.reduce((p, c) => p ? systemsOfMembers.includes(c) : p, true)) === parsed.system.shouldInclude)
 			return false;
 	}
 

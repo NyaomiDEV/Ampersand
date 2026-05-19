@@ -30,14 +30,18 @@ export type MemberFilterQuery = {
 export type FrontingHistoryFilterQuery = {
 	query: string,
 	currentlyFronting?: boolean,
-	member?: QueryItem
+	member?: QueryItem,
+	system?: QueryItem,
+	andChildren?: boolean,
 };
 
 export type BoardMessageFilterQuery = {
 	query: string,
 	isPinned?: boolean,
 	isArchived?: boolean,
-	member?: QueryItem
+	member?: QueryItem,
+	system?: QueryItem,
+	andChildren?: boolean,
 };
 
 export type AssetFilterQuery = {
@@ -60,7 +64,9 @@ export type NoteFilterQuery = {
 export type JournalPostFilterQuery = {
 	query: string,
 	tags: Map<string, boolean>,
-	member?: QueryItem;
+	member?: QueryItem,
+	system?: QueryItem,
+	andChildren?: boolean,
 };
 
 export type TagFilterQuery = {
@@ -237,6 +243,15 @@ export function parseFrontingHistoryFilterQuery(search: string) {
 					shouldInclude: reduceToValue(shouldInclude)
 				};
 				break;
+			case "system":
+				result.system = {
+					value: getSystemUUIDByName(value) ?? "",
+					shouldInclude: reduceToValue(shouldInclude)
+				};
+				break;
+			case "children":
+				result.andChildren = reduceToValue(shouldInclude);
+				break;
 		}
 		break;
 	}
@@ -264,6 +279,15 @@ export function parseBoardMessageFilterQuery(search: string) {
 					value: getMemberUUIDByName(value) ?? "",
 					shouldInclude: reduceToValue(shouldInclude)
 				};
+				break;
+			case "system":
+				result.system = {
+					value: getSystemUUIDByName(value) ?? "",
+					shouldInclude: reduceToValue(shouldInclude)
+				};
+				break;
+			case "children":
+				result.andChildren = reduceToValue(shouldInclude);
 				break;
 		}
 		break;
@@ -361,6 +385,15 @@ export function parseJournalPostFilterQuery(search: string) {
 					value: getMemberUUIDByName(value) ?? "",
 					shouldInclude: reduceToValue(shouldInclude)
 				};
+				break;
+			case "system":
+				result.system = {
+					value: getSystemUUIDByName(value) ?? "",
+					shouldInclude: reduceToValue(shouldInclude)
+				};
+				break;
+			case "children":
+				result.andChildren = reduceToValue(shouldInclude);
 				break;
 		}
 		break;
