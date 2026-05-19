@@ -83,7 +83,17 @@
 		}
 
 		&.influencing {
-			opacity: .5;
+			> * {
+				opacity: .5;
+			}
+
+			&::part(native) {
+				background-color: color-mix(in srgb, var(--background) 25%, rgb(var(--md3-background)) 75%);
+			}
+
+			&::part(native)::before {
+				opacity: .125;
+			}
 		}
 
 		&.influenced::part(native) {
