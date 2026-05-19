@@ -23,7 +23,8 @@ export interface DatabaseJSON {
 }
 
 export interface CommentJSON extends Comment {
-	date: string; // ISO 8601
+	date: string, // ISO 8601
+	replyTo?: string // ISO 8601
 }
 
 export interface BoardMessageJSON extends BoardMessage {

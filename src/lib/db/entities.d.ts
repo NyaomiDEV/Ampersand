@@ -105,7 +105,8 @@ export interface Vote {
 export interface Comment {
 	member: UUID,
 	comment: string,
-	date: Date
+	date: Date,
+	replyTo?: Date // it's being used as an unique identifier, shoot me later
 }
 
 export interface FrontingEntry extends UUIDable {

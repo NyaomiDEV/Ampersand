@@ -26,6 +26,7 @@
 	import addMD from "@material-symbols/svg-600/rounded/add.svg";
 	import pencilMD from "@material-symbols/svg-600/rounded/edit.svg";
 	import trashMD from "@material-symbols/svg-600/rounded/delete.svg";
+	import replyMD from "@material-symbols/svg-600/rounded/reply.svg";
 
 	import MemberItem from "../components/member/MemberItem.vue";
 	import MemberSelect from "./MemberSelect.vue";
@@ -41,6 +42,7 @@
 	const members = shallowRef<Member[]>();
 
 	const list = useTemplateRef("list");
+	const virtualList = useTemplateRef("virtualList");
 
 	async function getCommentMembers(){
 		const commentMemberUUIDs = comments.value?.map(x => x.member) || [];
@@ -115,7 +117,7 @@
 		});
 	}
 
-	async function addComment(){
+	async function addComment(inReplyTo?: Comment){
 		const commenter = await getCommenter();
 		if(!commenter) return;
 
@@ -125,7 +127,8 @@
 		const comment: Comment = {
 			date: new Date(),
 			comment: commentBody,
-			member: commenter.uuid
+			member: commenter.uuid,
+			replyTo: inReplyTo?.date
 		};
 
 		comments.value = [...comments.value, comment];
@@ -155,6 +158,27 @@
 		];
 	}
 
+	function formatReplyString({ comment }: { comment: Comment }){
+		const repliedTo = comments.value.find(x => x.date.valueOf() === comment.replyTo?.valueOf());
+		if(!repliedTo) return;
+		const repliedToMember = members.value?.find(x => x.uuid === repliedTo.member);
+		if(!repliedToMember) return;
+
+		return [
+			h("span", { class: "author" }, repliedToMember.name),
+			": ",
+			h("span", repliedTo.comment)
+		];
+	}
+
+	function scrollToReplied(comment: Comment){
+		const repliedTo = comments.value.find(x => x.date.valueOf() === comment.replyTo?.valueOf());
+		if(!repliedTo) return;
+
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+		virtualList.value?.scrollToElement(repliedTo, { behavior: "smooth" });
+	}
+
 	onBeforeMount(getCommentMembers);
 	onBeforeUpdate(getCommentMembers);
 </script>
@@ -171,7 +195,13 @@
 		<IonContent v-else>
 			<TheresNothingHere v-if="!comments.length" />
 			<IonList v-else ref="list">
-				<VirtualList :entries="comments.toSorted(sortDateAsc)" :gap="8" :min-size="92">
+				<VirtualList
+					ref="virtualList"
+					:entries="comments.toSorted(sortDateAsc)"
+					:gap="8"
+					:min-size="92"
+					:custom-item-key-fn="(entries, index) => entries[index] ? entries[index].date.valueOf() : index"
+				>
 					<template #default="{ entry: comment }">
 						<IonItemSliding>
 							<MemberItem
@@ -180,10 +210,19 @@
 								:show-role="false"
 								:show-pronouns="false"
 							>
+								<template v-if="comment.replyTo" #before>
+									<p class="reply" @click="scrollToReplied(comment)">
+										<IonIcon :icon="replyMD" />
+										<formatReplyString :comment />
+									</p>
+								</template>
 								<h3 class="comment">{{ comment.comment }}</h3>
 								<p>{{ formatDate(comment.date, "collapsed") }}</p>
 							</MemberItem>
 							<IonItemOptions>
+								<IonItemOption color="secondary" @click="addComment(comment)">
+									<IonIcon slot="icon-only" :icon="replyMD" />
+								</IonItemOption>
 								<IonItemOption color="secondary" @click="modifyComment(comment)">
 									<IonIcon slot="icon-only" :icon="pencilMD" />
 								</IonItemOption>
@@ -197,7 +236,7 @@
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton @click="addComment">
+				<IonFabButton @click="addComment()">
 					<IonIcon :icon="addMD" />
 				</IonFabButton>
 			</IonFab>
@@ -209,6 +248,16 @@
 	.comment {
 		text-wrap: wrap !important;
 		overflow: visible !important;
+	}
+
+	.reply {
+		> ion-icon {
+			margin-inline-end: .5em;
+		}
+
+		> :deep(.author) {
+			color: rgb(var(--md3-on-background));
+		}
 	}
 
 	ion-list {

@@ -6,7 +6,8 @@
 		entries: T[],
 		minSize?: number,
 		gap?: number,
-		overscan?: number
+		overscan?: number,
+		customItemKeyFn?: (entries: T[], index: number) => string | number
 	}>(), {
 		minSize: 64,
 		gap: 2,
@@ -15,12 +16,15 @@
 
 	const scroller = shallowRef<HTMLElement | null>(null);
 	const virtualItemEls = shallowRef<(HTMLElement | null)[]>([]);
+
+	const defaultGetItemKey = (entries: T[], index: number) => (entries[index] && "uuid" in entries[index]) ? entries[index].uuid as string : index;
+
 	const config = ref({
 		count: props.entries.length,
 		gap: props.gap,
 		getScrollElement: () => scroller.value,
 		estimateSize: () => props.minSize,
-		getItemKey: (index: number) => (props.entries[index] && "uuid" in props.entries[index]) ? props.entries[index].uuid as string : index,
+		getItemKey: (index: number) => props.customItemKeyFn?.(props.entries, index) || defaultGetItemKey(props.entries, index),
 		measureElement: (element: HTMLElement): number => {
 			const styles = window.getComputedStyle(element);
 			const margin = parseFloat(styles.marginTop) + parseFloat(styles.marginBottom);
@@ -54,6 +58,18 @@
 
 	onMounted(measure);
 	onUpdated(measure);
+
+	defineExpose({
+		scrollBy: rowVirtualizer.value.scrollBy,
+		scrollToIndex: rowVirtualizer.value.scrollToIndex,
+		scrollToOffset: rowVirtualizer.value.scrollToOffset,
+		scrollToElement: (el: T, options?: ScrollToOptions) => {
+			const index = props.entries.indexOf(el);
+			if(index >= 0)
+				rowVirtualizer.value.scrollToIndex(index, options);
+		},
+		_virtualizer: rowVirtualizer
+	});
 </script>
 
 <template>
