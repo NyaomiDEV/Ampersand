@@ -101,7 +101,7 @@
 		"commentHint": "Comente...",
 		"header": "Comentários",
 		"deleteConfirmation": "Tem certeza que deseja excluir este comentário?",
-		"commenter": "Selecionar comentarista",
+		"commenter": "Selecionar autor do comentário",
 		"comment": "Texto do comentário",
 		"commentCount_one": "{{count}} comentário",
 		"commentCount_many": "{{count}} comentários",
@@ -115,10 +115,35 @@
 		"coveringDays": "Dados pertinentes aos últimos {{count}} dias"
 	},
 	"fonts": {
-		"pixel": "pixel",
+		"pixel": "Pixel",
 		"digital": "Digital",
 		"monospace": "Monoespaçado",
-		"marker": "Marco",
-		"pop": "Estouro!"
-	}
+		"marker": "Marcador",
+		"pop": "Pop",
+		"italian": "Italiano",
+		"terminal": "Terminal",
+		"cursive": "Cursivo",
+		"dots": "Pontos",
+		"handwritten": "Manuscrito",
+		"serif": "Serif",
+		"typewriter": "Máquina de escrever",
+		"playful": "Divertido",
+		"holy": "Sagrado",
+		"bubbly": "Radiante",
+		"stencil": "Estêncil",
+		"mystery": "Mistério",
+		"cutesy": "Fofinho",
+		"indie": "Indie",
+		"deco": "Deco",
+		"western": "Western",
+		"stripes": "Stripes",
+		"drip": "Goteamento",
+		"cracks": "Rachaduras",
+		"comic": "Cômico",
+		"varsity": "Campus",
+		"futuristic": "Futurístico",
+		"pineapple": "Abacaxi",
+		"noFont": "Sem fonte"
+	},
+	"loading": "Ampersand está carregando"
 }

@@ -1,6 +1,6 @@
 {
 	"header": "Membros",
-	"searchPlaceholder": "Procurar por membros...",
+	"searchPlaceholder": "Buscar por membros...",
 	"select": "Selecione um membro",
 	"deletedMember": "Membro excluído",
 	"deletedCustomFront": "Fronte personalizado excluído",
@@ -9,7 +9,7 @@
 		"setMainFronter": "Escolha como fronte principal",
 		"removeFromFront": "Remover do fronte",
 		"unsetMainFronter": "Retirar do fronte principal",
-		"setSoleFronter": "Escolher como fronte"
+		"setSoleFronter": "Definir como fronte"
 	},
 	"edit": {
 		"noDescription": "Sem descrição",
@@ -41,10 +41,11 @@
 		"age": "Idade",
 		"ageDisplay_one": "Idade {{count}}",
 		"ageDisplay_many": "Idades {{count}}",
-		"ageDisplay_other": "Idades {{count}}"
+		"ageDisplay_other": "Idades {{count}}",
+		"nameStyle": "Estilo do nome"
 	},
 	"toasts": {
-		"addToFront": "Adicionar membro ao fronte",
+		"addToFront": "Membro adicionado ao fronte",
 		"setMainFronter": "Membro designado como fronte principal",
 		"unsetMainFronter": "Membro retirado do fronte principal",
 		"setSoleFronter": "Membro designado como fronte único",

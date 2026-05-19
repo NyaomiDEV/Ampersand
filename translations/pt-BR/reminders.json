@@ -20,7 +20,7 @@
 		"triggerOnAllMembers": "Enviar a todos os membros"
 	},
 	"notOnPC": {
-		"header": "Lembretes não estão funcionando no PC",
+		"header": "Lembretes não estão funcionando no computador",
 		"content": "No entanto, já que você pode exportar os dados desse PC e importar em um celular ou Mac, você pode organizar seus lembretes aqui."
 	}
 }

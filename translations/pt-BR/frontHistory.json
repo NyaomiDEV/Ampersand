@@ -1,6 +1,6 @@
 {
 	"header": "Histórico de Fronte",
-	"searchPlaceholder": "Procurar o histórico de fronte...",
+	"searchPlaceholder": "Procurar no histórico de fronte...",
 	"currentlyFronting": "Atualmente no fronte",
 	"wasFronting": "Estava no fronte ainda",
 	"frontedThatDay": "Estava no fronte naquele dia",
@@ -12,7 +12,7 @@
 			"confirmButton": "Confirmar",
 			"date": "Data",
 			"historyTitle": "Histórico de presença",
-			"lastPresence": "Da última vez estava {{presence}} / 5 estrelas",
+			"lastPresence": "Da última vez foi {{presence}} / 5 estrelas",
 			"addTitle": "Quão presente você está, numa escala de 0 a 10?"
 		},
 		"startTime": "Horário de início",
@@ -22,7 +22,7 @@
 			"title": "Excluir entrada de fronte"
 		},
 		"removeFromFront": "Remover do fronte",
-		"member": "Editar membro de fronte",
+		"member": "Editar membro do fronte",
 		"customStatus": "Status personalizado",
 		"influencing": {
 			"select": "Escolha um membro para influenciar",

@@ -16,10 +16,10 @@
 		"octocon": "Sim, Octocon",
 		"startFromScratch": "Não, Irei começar do zero",
 		"pleaseWait": "Por favor espere enquanto importamos seus dados",
-		"error": "Erro ao importar o backup. Por favor escolha outra opção.",
-		"errorSp": "Erro enquanto importava do exporte do Simply Plural. Por favor escolha outra opção.",
-		"errorOc": "Erro enquanto importava de um exporte do Octocon. Por favor escolha outra opção.",
-		"errorPk": "Erro enquanto importava de um exporte do Pluralkit. Por favor escolha outra opção.",
+		"error": "Erro ao importar a cópia de segurança. Por favor escolha outra opção.",
+		"errorSp": "Erro enquanto importava exporte do Simply Plural. Por favor escolha outra opção.",
+		"errorOc": "Erro enquanto importava exporte do Octocon. Por favor escolha outra opção.",
+		"errorPk": "Erro enquanto importava exporte do Pluralkit. Por favor escolha outra opção.",
 		"errorTu": "Erro ao importar de um exporte do Tupperbox. Por favor escolha outra opção."
 	},
 	"memberInfo": {

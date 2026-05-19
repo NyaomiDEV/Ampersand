@@ -1,6 +1,6 @@
 {
 	"title": "O aplicativo está bloqueado",
-	"hint": "Por favor coloque sua senha de aplicativo",
+	"hint": "Por favor coloque sua senha do aplicativo",
 	"biometrics": {
 		"title": "O aplicativo está bloqueado",
 		"reason": "Desbloqueie o app"

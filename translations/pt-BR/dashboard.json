@@ -1,5 +1,5 @@
 {
-	"header": "Painel",
+	"header": "Painel de controle",
 	"header_salute": "Olá!",
 	"header_mainfronter": "Oi, {{fronterName}}!",
 	"systemDescription": "Descrição do sistema",
@@ -7,13 +7,13 @@
 	"fronterInfluencing": "Influenciando {{influencedMember}}",
 	"addToFront": "Adicionar ao fronte",
 	"messageBoard": {
-		"header": "Painel de Mensagens",
+		"header": "Painel de mensagens",
 		"add": "Adicionar ao painel",
 		"view": "Ver mais"
 	},
-	"recentFrontingHistory": "Recentemente substituído",
+	"recentFrontingHistory": "Saiu do fronte recentemente",
 	"journal": {
-		"header": "Postagens recentes",
+		"header": "Anotações recentes",
 		"view": "Ver mais"
 	}
 }

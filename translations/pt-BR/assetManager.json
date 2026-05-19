@@ -1,18 +1,18 @@
 {
-	"header": "Gerenciamento de Arquivos",
-	"searchPlaceholder": "Procurar por arquivos...",
+	"header": "Gestor de Arquivos",
+	"searchPlaceholder": "Buscar por arquivos...",
 	"add": {
 		"header": "Adicionar arquivo",
 		"attachment": "Adicionar anexo"
 	},
 	"edit": {
-		"header": "Editar arquivo",
+		"header": "Mudar arquivo",
 		"friendlyName": "Editar nome",
 		"tags": "Tags",
 		"delete": {
 			"confirm": "Tem certeza que deseja excluir esse arquivo?",
 			"title": "Excluir Arquivo"
 		},
-		"attachment": "Remover anexo"
+		"attachment": "Substituir anexo"
 	}
 }

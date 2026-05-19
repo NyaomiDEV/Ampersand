@@ -10,11 +10,11 @@
 	},
 	"allowRemoteContent": {
 		"title": "Permitir conteúdo remoto",
-		"desc": "Permitir Ampersand para usar a internet para consultar conteúdo remoto, como as imagens em campos Markdown e avatares em importações de terceiros."
+		"desc": "Permitir Ampersand usar a internet para consultar conteúdo remoto, como as imagens em campos Markdown e avatares em importações de terceiros."
 	},
 	"passwordAlert": {
 		"header": "Aviso",
-		"text": "Você tem certeza que quer proceder? Antes que proceda, por favor anote sua senha em algum lugar fora do Ampersand pois você não poderá recuperar seus dados ou resetar sua senha se perdê-la. Tenha certeza de exportar seus dados antes de estabelecer-la!"
+		"text": "Você tem certeza que quer proceder? Antes que proceda, por favor anote sua senha em algum lugar fora do Ampersand pois você não poderá recuperar seus dados ou resetar sua senha se perdê-la. Tenha certeza de exportar seus dados antes de estabelece-la!"
 	},
 	"inputPassword": {
 		"titleAdd": "Digite sua nova senha",
@@ -24,6 +24,6 @@
 		"hint": "Senha",
 		"titleDisable": "Digite sua senha"
 	},
-	"editPassword": "Modificar a senha",
+	"editPassword": "Mudar a senha",
 	"useIPC": "Envie eventos a outros aplicativos"
 }

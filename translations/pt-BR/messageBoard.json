@@ -1,16 +1,16 @@
 {
 	"header": "Painel de Mensagens",
-	"searchPlaceholder": "Procurar por mensagens...",
+	"searchPlaceholder": "Buscar por mensagens...",
 	"polls": {
 		"boardMessageContainsPoll": "Contém enquete",
-		"collapsePoll": "Esconda a enquete",
+		"collapsePoll": "Ocultar enquete",
 		"voteCast": {
 			"voter": "Selecione o votante",
 			"reason": "Diga a razão",
 			"reasonHint": "Razão",
 			"retractConfirmation": "Tem certeza de que quer retirar seu voto?"
 		},
-		"resultsButton": "Mostrar resultados",
+		"resultsButton": "Mostrar resultados da enquete",
 		"defaultPollValues": {
 			"yes": "Sim",
 			"veto": "Veto",

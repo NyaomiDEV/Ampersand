@@ -1,13 +1,13 @@
 {
 	"header": "Campos personalizados",
 	"select": "Selecionar campos personalizados",
-	"searchPlaceholder": "Procurar campos personalizados...",
+	"searchPlaceholder": "Burscar campos personalizados...",
 	"edit": {
 		"header": "Editar campo personalizado",
 		"headerAdd": "Adicionar campo personalizado",
 		"name": "Nome do campo personalizado",
 		"delete": {
-			"confirm": "Tem certeza que quer excluir esse campo customizado?",
+			"confirm": "Tem certeza que quer excluir esse campo personalizado?",
 			"title": "Excluir campo personalizado"
 		},
 		"default": {

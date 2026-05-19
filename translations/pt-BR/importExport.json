@@ -2,7 +2,7 @@
 	"header": "Importar / Exportar",
 	"dbExport": {
 		"title": "Exportar seus dados",
-		"desc": "Salve seus dados atuais para um arquivo que você possa guardar em algum outro lugar"
+		"desc": "Faça uma cópia de segurança para um arquivo que você possa guardar em algum outro lugar"
 	},
 	"dbImportDesc": "Aviso! Isso irá sobrescrever qualquer dado existente",
 	"dbImport": "Importar seus dados",
@@ -14,29 +14,35 @@
 	"thirdPartyHeader": "Integrações com terceiros",
 	"dbImportOld": {
 		"title": "Importe seus dados a partir de uma versão anterior do Ampersand",
-		"desc": "Para arquivos de backup feitos com Ampersand < (abaixo de) 0.2.0",
-		"note": "Versões antigas do Ampersand usavam um formato de arquivo (ampdb) que agora é datado. Se você está mantendo backups antigos, tenha certeza de importar eles agora e re-exportar eles, pois essa opção será removida no futuro."
+		"desc": "Para arquivos de cópia de segurança feitos com Ampersand < (abaixo de) 0.2.0",
+		"note": "Versões antigas do Ampersand usavam um formato de arquivo (ampdb) que agora é datado. Se você está mantendo cópias de segurança antigas, tenha certeza de importar elas agora e re-exportar elas, pois essa opção será removida no futuro."
 	},
 	"ocImport": "Importar seus dados de um exporte do Octocon",
 	"status": {
-		"imported": "O backup foi importado. Por favor reinicie o app.",
+		"imported": "A cópia de segurança foi importada. Por favor reinicie o app.",
 		"importedSp": "O exporte do Simply Plural foi importado. Por favor reinicie o app.",
 		"importedOc": "O exporte do Octocon foi importado. Por favor reinicie o app.",
 		"importedPk": "O exporte do PluralKit foi importado. Por favor reinicie o app.",
 		"importedTu": "O exporte do Tupperbox foi importado. Por favor reinicie o app.",
 		"exportedApp": "O backup foi exportado para a localização que você escolheu.",
-		"exportedAppIos": "O backup foi exportado para a pasta do Ampersand no gerenciador de arquivos.",
-		"errorExport": "Erro enquanto exportava o backup.",
-		"error": "Erro enquanto importava o backup.",
+		"exportedAppIos": "A cópia de seus dados foi exportado para a pasta do Ampersand no gerenciador de arquivos.",
+		"errorExport": "Erro enquanto exportava a cópia de segurança.",
+		"error": "Erro enquanto importava a cópia de segurança.",
 		"errorOc": "Erro ao importar o exporte do Octocon.",
 		"errorSp": "Erro ao importar exporte do Simply Plural.",
 		"errorPk": "Erro ao importar do exporte do PluralKit.",
 		"errorTu": "Erro ao importar do exporte do Tupperbox.",
 		"exportedReport": "O relatório foi salvo no local de sua escolha.",
-		"exportedReportIos": "O relatório foi salvo na pasta do Ampersand no aplicativo de arquivos."
+		"exportedReportIos": "O relatório foi salvo na pasta do Ampersand no aplicativo de arquivos.",
+		"exportedJson": "O JSON exportado foi salvo no local de sua escolha.",
+		"exportedJsonIos": "O exporte JSON foi salvo na pasta do Ampersand no gerenciador de arquivos."
 	},
 	"reportExport": {
 		"title": "Gerar um relatório",
 		"desc": "Salve um relatório sobre seus dados para compartilhar com terapeutas e pessoas queridas"
+	},
+	"jsonExport": {
+		"title": "Exporte seus dados para um arquivo JSON",
+		"desc": "Salve seus dados para um formato que possa ser importado em outros aplicativos e ferramentas"
 	}
 }
