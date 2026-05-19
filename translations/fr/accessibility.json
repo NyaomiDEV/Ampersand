@@ -41,10 +41,6 @@
 		"title": "Mode AMOLED",
 		"desc": "Affiche un fond complètement noir en mode sombre. Peut réduire l’usure de l’écran."
 	},
-	"themeIsVibrant": {
-		"desc": "Rend l’interface utilisateur plus colorée.",
-		"title": "Thème vif"
-	},
 	"colorIndicatorPosition": {
 		"title": "Emplacement de l’indicateur coloré",
 		"avatar": "Bordure de l’image de profil",
