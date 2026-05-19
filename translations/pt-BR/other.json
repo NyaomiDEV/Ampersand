@@ -113,5 +113,11 @@
 		"header": "Relatório Ampersand",
 		"generatedOn": "Gerar em {{date}}",
 		"coveringDays": "Dados pertinentes aos últimos {{count}} dias"
+	},
+	"fonts": {
+		"pixel": "pixel",
+		"digital": "Digital",
+		"monospace": "Monoespaçado",
+		"marker": "Marco"
 	}
 }
