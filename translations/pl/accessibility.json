@@ -41,10 +41,6 @@
 		"title": "Tryb AMOLED",
 		"desc": "Użyj całkowicie czarnego tła w trybie ciemnym. Pomoże to zmniejszyć zużycie wyświetlacza."
 	},
-	"themeIsVibrant": {
-		"title": "Motyw żywych kolorów",
-		"desc": "Wprowadź więcej barw do interfejsu użytkownika."
-	},
 	"colorIndicatorPosition": {
 		"title": "Pozycja wskaźnika koloru",
 		"avatar": "Zarys awatara",
