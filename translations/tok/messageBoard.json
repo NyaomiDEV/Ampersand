@@ -13,8 +13,7 @@
 		"resultsHeader": "sona kulupu",
 		"resultsButton": "sona kulupu",
 		"choice": {
-			"desc_one": "ijo kulupu {{count}} li pilin ni",
-			"desc_other": ""
+			"desc_one": "ijo kulupu {{count}} li pilin ni"
 		},
 		"defaultPollValues": {
 			"yes": "wile",
