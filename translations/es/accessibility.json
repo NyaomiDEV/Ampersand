@@ -21,7 +21,6 @@
 		"desc": "Desactivar animaciones en la aplicación"
 	},
 	"disableCovers": {
-		"desc": "Si es activado, los miembros de la lista principal también se mostrarán de una manera más compacta",
 		"title": "Desactivar portadas"
 	},
 	"contrastLevel": {
@@ -35,10 +34,6 @@
 	"themeIsAmoled": {
 		"title": "Pantallas AMOLED",
 		"desc": "Utiliza un fondo totalmente negro cuando estés en modo oscuro. Esto puede reducir el desgaste de la pantalla."
-	},
-	"themeIsVibrant": {
-		"title": "Tema llamativo",
-		"desc": "Aporta más color a la interfaz de usuario."
 	},
 	"colorIndicatorPosition": {
 		"title": "Posición del indicador de color",
