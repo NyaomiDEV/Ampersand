@@ -103,6 +103,7 @@
 		"comment": "sijelo toki",
 		"commentHint": "toki...",
 		"commentCount_one": "toki pi mute {{count}}",
+		"commentCount_other": "",
 		"deleteConfirmation": "sina wile ala wile weka e toki ni?"
 	},
 	"theresNothingHere": "ala li lon",
@@ -143,7 +144,8 @@
 		"pop": "nasin sitelen Pop",
 		"futuristic": "nasin sitelen pi tenpo kama",
 		"pineapple": "nasin sitelen pi kili jelo nena",
-		"varsity": "nasin sitelen utala pi pona nanpa wan"
+		"varsity": "nasin sitelen utala pi pona nanpa wan",
+		"comic": "nasin sitelen pi lipu musi"
 	},
 	"loading": "ilo Ampersand li pali"
 }
