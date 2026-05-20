@@ -89,7 +89,7 @@
 						label-placement="stacked"
 						:min="0.5"
 						:max="1.5"
-						:step="0.01"
+						:step="0.1"
 						:snaps="true"
 						:ticks="true"
 						:pin="true"
