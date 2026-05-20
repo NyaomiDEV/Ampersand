@@ -224,9 +224,10 @@ export async function member(spExport: SimplyPluralExport, systemInfo: System, s
 			} catch (_e) {
 				// whatever
 			}
-		} else if (spCustomFront.avatarUuid?.length) 
-			member.image = await getAvatarFromUuid(systemUid, spCustomFront.avatarUuid);
-		
+		} else if (spCustomFront.avatarUuid?.length) {
+			const image = await getAvatarFromUuid(systemUid, spCustomFront.avatarUuid);
+			if (image) member.image = await resizeImage(image);
+		}		
 
 		members.push(member);
 		memberMapping.set(spCustomFront._id, member.uuid);
