@@ -24,7 +24,8 @@
 	import dragMD from "@material-symbols/svg-600/rounded/drag_handle.svg";
 	import resetMD from "@material-symbols/svg-600/rounded/restart_alt.svg";
 
-	import { defaultAppConfig, appConfig } from "../lib/config";
+	import { appConfig } from "../lib/config";
+	import { defaultAppConfig } from "../lib/config/defaults";
 	import MessageBoardSettings from "../components/dashboard/settings/MessageBoardSettings.vue";
 	import FrontingHistorySettings from "../components/dashboard/settings/FrontingHistorySettings.vue";
 	import CurrentFrontersSettings from "../components/dashboard/settings/CurrentFrontersSettings.vue";

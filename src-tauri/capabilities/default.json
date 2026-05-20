@@ -9,7 +9,6 @@
     "core:default",
     "core:window:allow-start-dragging",
     "core:window:allow-start-resize-dragging",
-    "store:default",
     "fs:default",
     "dialog:default",
     "opener:default",

@@ -1,102 +1,15 @@
 import { reactive, toRaw, watch } from "vue";
 import type { AccessibilityConfig, AppConfig, SecurityConfig } from "./types";
-import { load } from "@tauri-apps/plugin-store";
-import { appConfigDir, sep } from "@tauri-apps/api/path";
-import { nilUid } from "../util/consts";
-
-const store = await load(`${await appConfigDir() + sep()}appConfig.json`);
-
-// save switch -- means we commit to the underlying store or not
-let shouldSave = true;
-
-export const defaultAppConfig: AppConfig = {
-	locale: {},
-	defaultSystem: nilUid,
-	showMembersApartFromCustomFronts: "after",
-	hideFrontingTimer: false,
-	view: "dashboard",
-	fontStyle: "default",
-	dashboardSettings: {
-		notesAccordion: {
-			active: true,
-			priority: 0,
-		},
-		currentFrontersCarousel: {
-			active: true,
-			priority: 1,
-			settings: {
-				type: "cards"
-			}
-		},
-		messageBoardCarousel: {
-			active: true,
-			priority: 2,
-			settings: {
-				maxDays: 3
-			}
-		},
-		journalPostCarousel: {
-			active: false,
-			priority: 3,
-			settings: {
-				maxDays: 2
-			}
-		},
-		frontingHistoryCarousel: {
-			active: true,
-			priority: 4,
-			settings: {
-				maxDays: 2
-			}
-		}
-	},
-	tabOrder: [
-		"members",
-		"journal",
-		"dashboard"
-	],
-	isDeveloperMode: false,
-	defaultFilterQueries: {
-		members: "@archived:no",
-		messageBoard: "@archived:no",
-		systems: "@archived:no"
-	}
-};
-
-export const defaultAccessibilityConfig: AccessibilityConfig = {
-	highLegibility: false,
-	highLegibilityType: "atkinson",
-	theme: "auto",
-	colorIndicatorPosition: "avatar",
-	themeIsAmoled: false,
-	themeScheme: "tonal-spot",
-	colors: "app",
-	customColors: {
-		accentColor: "#30628C",
-		backgroundColor: "#308C88",
-	},
-	reducedMotion: false,
-	compactLists: false,
-	disableCovers: false,
-	frontingNotification: false,
-	contrastLevel: 0,
-	fontScale: 1,
-	longPressDuration: 750
-};
-
-export const defaultSecurityConfig: SecurityConfig = {
-	password: undefined,
-	useBiometrics: false,
-	useIPC: false,
-	allowRemoteContent: false
-};
+import { debounce, merge } from "./utils";
+import { defaultAccessibilityConfig, defaultAppConfig, defaultSecurityConfig } from "./defaults";
+import { getConfig, saveConfig } from "./store";
+import { deleteOldConfig, readOldConfig } from "./old";
 
 export const appConfig = reactive({}) as AppConfig;
 export const accessibilityConfig = reactive({}) as AccessibilityConfig;
 export const securityConfig = reactive({}) as SecurityConfig;
 
 export async function initConfig(){
-	shouldSave = false;
 	for (const key of Object.keys(appConfig))
 		delete appConfig[key];
 
@@ -106,52 +19,34 @@ export async function initConfig(){
 	for (const key of Object.keys(securityConfig))
 		delete securityConfig[key];
 
-	shouldSave = true;
-	Object.assign(appConfig, merge<AppConfig>(structuredClone(defaultAppConfig), await get("appConfig")));
-	Object.assign(accessibilityConfig, merge<AccessibilityConfig>(structuredClone(defaultAccessibilityConfig), await get("accessibilityConfig")));
-	Object.assign(securityConfig, merge<SecurityConfig>({}, structuredClone(defaultSecurityConfig), await get("securityConfig")));
-}
+	const _config = {
+		appConfig: {},
+		accessibilityConfig: {},
+		securityConfig: {}
+	};
 
-// Utility functions
+	const maybeOldConfig = await readOldConfig();
+	if(maybeOldConfig){
+		await saveConfig("appConfig", maybeOldConfig.appConfig);
+		await saveConfig("accessibilityConfig", maybeOldConfig.accessibilityConfig);
+		await saveConfig("securityConfig", maybeOldConfig.securityConfig);
+		await deleteOldConfig();
 
-export function set(key: string, value: unknown): Promise<void> {
-	return store.set(key, value);
-}
-
-export async function get(key: string): Promise<object | undefined> {
-	try {
-		return await store.get(key);
-	} catch (e) {
-		console.error(e, key);
+		_config.appConfig = maybeOldConfig.appConfig;
+		_config.accessibilityConfig = maybeOldConfig.accessibilityConfig;
+		_config.securityConfig = maybeOldConfig.securityConfig;
+	} else {
+		_config.appConfig = await getConfig<AppConfig>("appConfig") || {};
+		_config.accessibilityConfig = await getConfig<AccessibilityConfig>("accessibilityConfig") || {};
+		_config.securityConfig = await getConfig<SecurityConfig>("securityConfig") || {};
 	}
 
-	return undefined;
-}
-
-function isObject(item: object): item is object {
-	return (item && typeof item === "object" && !Array.isArray(item));
-}
-
-function merge<T>(target: object, ...sources: (object | undefined)[]): T {
-	sources = sources.filter(x => !!x);
-	const source = sources.shift();
-	if (!source) return target as T;
-
-	if (isObject(target) && isObject(source)) {
-		for (const key in source) {
-			if (isObject(source[key])) {
-				if (!target[key]) Object.assign(target, { [key]: {} });
-				merge(target[key], source[key]);
-			} else
-				Object.assign(target, { [key]: source[key] });
-
-		}
-	}
-	return merge(target, ...sources);
+	Object.assign(appConfig, merge<AppConfig>(structuredClone(defaultAppConfig), _config.appConfig));
+	Object.assign(accessibilityConfig, merge<AccessibilityConfig>(structuredClone(defaultAccessibilityConfig), _config.accessibilityConfig));
+	Object.assign(securityConfig, merge<SecurityConfig>({}, structuredClone(defaultSecurityConfig), _config.securityConfig));
 }
 
 export function resetConfig(){
-	shouldSave = false;
 	for(const key of Object.keys(appConfig))
 		delete appConfig[key];
 
@@ -161,7 +56,6 @@ export function resetConfig(){
 	for (const key of Object.keys(securityConfig))
 		delete securityConfig[key];
 
-	shouldSave = true;
 	Object.assign(appConfig, structuredClone(defaultAppConfig));
 	Object.assign(accessibilityConfig, structuredClone(defaultAccessibilityConfig));
 	Object.assign(securityConfig, structuredClone(defaultSecurityConfig));
@@ -170,66 +64,22 @@ export function resetConfig(){
 // init
 await initConfig();
 
+// debounced save delegates
+const timeout = 1000;
+
+const debouncedSaveApp = debounce(async () => {
+	await saveConfig("appConfig", structuredClone(toRaw(appConfig)));
+}, timeout);
+
+const debouncedSaveAccessibility = debounce(async () => {
+	await saveConfig("accessibilityConfig", structuredClone(toRaw(accessibilityConfig)));
+}, timeout);
+
+const debouncedSaveSecurity = debounce(async () => {
+	await saveConfig("securityConfig", structuredClone(toRaw(securityConfig)));
+}, timeout);
+
 // watchers
-watch(appConfig, async () => {
-	if(shouldSave)
-		await set("appConfig", structuredClone(toRaw(appConfig)));
-});
-
-watch(accessibilityConfig, async () => {
-	if(shouldSave)
-		await set("accessibilityConfig", structuredClone(toRaw(accessibilityConfig)));
-});
-
-watch(securityConfig, async () => {
-	if(shouldSave)
-		await set("securityConfig", structuredClone(toRaw(securityConfig)));
-});
-
-// config migration here
-if ((appConfig as Record<string, unknown>).showMembersBeforeCustomFronts){
-	appConfig.showMembersApartFromCustomFronts = "before";
-	(appConfig as Record<string, unknown>).showMembersBeforeCustomFronts = undefined;
-}
-
-if ((accessibilityConfig as Record<string, unknown>).disableMemberCoversInList) {
-	accessibilityConfig.disableCovers = (accessibilityConfig as Record<string, unknown>).disableMemberCoversInList as boolean;
-	(accessibilityConfig as Record<string, unknown>).disableMemberCoversInList = undefined;
-}
-
-if (((appConfig as Record<string, unknown>).locale as Record<string, unknown>).firstWeekOfDayIsSunday)
-	((appConfig as Record<string, unknown>).locale as Record<string, unknown>).firstWeekOfDayIsSunday = undefined;
-
-if (((appConfig as Record<string, unknown>).locale as Record<string, unknown>).twelveHourClock)
-	((appConfig as Record<string, unknown>).locale as Record<string, unknown>).twelveHourClock = undefined;
-
-if ((appConfig as Record<string, unknown>).showSystemDescriptionInDashboard)
-	(appConfig as Record<string, unknown>).showSystemDescriptionInDashboard = undefined;
-
-if ((appConfig as Record<string, unknown>).useIPC) {
-	securityConfig.useIPC = true;
-	(appConfig as Record<string, unknown>).useIPC = undefined;
-}
-
-if((accessibilityConfig as Record<string, unknown>).useAccentColor){
-	delete (accessibilityConfig as Record<string, unknown>).useAccentColor;
-	accessibilityConfig.colors = "custom";
-}
-
-if ((accessibilityConfig as Record<string, unknown>).themeIsVibrant) {
-	delete (accessibilityConfig as Record<string, unknown>).themeIsVibrant;
-	accessibilityConfig.themeScheme = "vibrant";
-}
-
-if ((accessibilityConfig as Record<string, unknown>).accentColor) {
-	accessibilityConfig.customColors.accentColor = (accessibilityConfig as Record<string, unknown>).accentColor as string;
-	accessibilityConfig.customColors.backgroundColor = (accessibilityConfig as Record<string, unknown>).accentColor as string;
-	delete (accessibilityConfig as Record<string, unknown>).accentColor;
-}
-
-if((securityConfig as Record<string, unknown>).usePassword === false){
-	securityConfig.password = undefined;
-	delete (securityConfig as Record<string, unknown>).usePassword;
-}
-// end config migration here
-
+watch(appConfig, debouncedSaveApp);
+watch(accessibilityConfig, debouncedSaveAccessibility);
+watch(securityConfig, debouncedSaveSecurity);

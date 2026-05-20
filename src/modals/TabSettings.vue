@@ -22,7 +22,8 @@
 	import resetMD from "@material-symbols/svg-600/rounded/restart_alt.svg";
 	import HomeMD from "@material-symbols/svg-600/rounded/home.svg";
 
-	import { defaultAppConfig, appConfig } from "../lib/config";
+	import { appConfig } from "../lib/config";
+	import { defaultAppConfig } from "../lib/config/defaults";
 	import { useTranslation } from "i18next-vue";
 
 	const i18next = useTranslation();
