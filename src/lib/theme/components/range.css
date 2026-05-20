@@ -33,11 +33,17 @@
 	&::part(tick-active) {
 		--bar-height: 4px;
 		border-radius: var(--md3-corner-full);
+		transform: translateX(-50%);
+	}
+
+	&::part(tick-active) {
+		background: var(--bar-background);
 	}
 
 	&::part(bar-active) {
 		border-start-end-radius: calc(var(--knob-border-radius) / 2);
 		border-end-end-radius: calc(var(--knob-border-radius) / 2);
+		margin-inline-start: calc(var(--bar-height) / -2);
 		margin-inline-end: 6px;
 	}
 
@@ -68,6 +74,12 @@
 		transform: translateX(calc(var(--knob-size) / -2 - 2px)) scale(0.75, 1);
 	}
 
+	&::part(bar){
+		right: calc(var(--bar-height) / -2);
+		left: calc(var(--bar-height) / -2);
+		width: calc(100% + var(--bar-height));
+	}
+
 	/* Dot at the end */
 	&::part(bar)::after {
 		content: "\A";
@@ -76,8 +88,9 @@
 		right: 0;
 		aspect-ratio: 1;
 
-		height: calc(var(--bar-height) / 2);
-		margin: calc(var(--bar-height) / 4);
+		height: 4px;
+
+		margin: 6px 6px;
 		border-radius: var(--md3-corner-full);
 
 		background-color: var(--bar-background-active);

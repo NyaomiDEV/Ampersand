@@ -61,7 +61,7 @@
 					:max="10"
 					:step="1"
 					:snaps="true"
-					:ticks="false"
+					:ticks="true"
 					:pin="true"
 					:pin-formatter="(v) => `${Math.round(v)}`"
 				/>

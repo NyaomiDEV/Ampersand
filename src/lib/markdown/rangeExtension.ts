@@ -31,6 +31,9 @@ const rangeExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 						labelPlacement: "stacked",
 						min: 0,
 						max: 100,
+						ticks: true,
+						snaps: true,
+						step: 10,
 						dualKnobs: token.values.length > 1,
 						value: token.values.length > 1 ? { lower: Math.min(...token.values), upper: Math.max(...token.values) } : token.values[0]
 					},

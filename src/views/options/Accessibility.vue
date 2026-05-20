@@ -89,9 +89,9 @@
 						label-placement="stacked"
 						:min="0.5"
 						:max="1.5"
-						:step="0.1"
+						:step="0.01"
 						:snaps="true"
-						:ticks="false"
+						:ticks="true"
 						:pin="true"
 						:pin-formatter="(v) => `${v}`"
 					>
@@ -164,7 +164,7 @@
 						:max="1000"
 						:step="50"
 						:snaps="true"
-						:ticks="false"
+						:ticks="true"
 						:pin="true"
 						:pin-formatter="(v) => `${v / 1000}`"
 					/>
@@ -281,7 +281,7 @@
 						:max="1"
 						:step="0.05"
 						:snaps="true"
-						:ticks="false"
+						:ticks="true"
 						:pin="true"
 						:pin-formatter="(v) => `${Math.floor(v * 100)}%`"
 					>

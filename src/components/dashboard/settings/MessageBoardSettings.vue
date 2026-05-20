@@ -11,7 +11,7 @@
 			label-placement="stacked"
 			:min="1"
 			:max="10"
-			:ticks="false"
+			:ticks="true"
 			:snaps="true"
 			:pin="true"
 		/>
