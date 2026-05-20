@@ -26,7 +26,7 @@
 	}
 
 	&:dir(rtl)::part(knob) {
-		transform: translateX(calc(var(--knob-size) / -2 - 2px));
+		transform: translateX(calc(var(--knob-size) / -2 + 2px));
 	}
 
 	&::part(tick),
@@ -34,6 +34,11 @@
 		--bar-height: 4px;
 		border-radius: var(--md3-corner-full);
 		transform: translateX(-50%);
+	}
+
+	&:dir(rtl)::part(tick),
+	&:dir(rtl)::part(tick-active) {
+		transform: translateX(50%);
 	}
 
 	&::part(tick-active) {
@@ -71,7 +76,7 @@
 	}
 
 	&:dir(rtl).range-pressed::part(knob) {
-		transform: translateX(calc(var(--knob-size) / -2 - 2px)) scale(0.75, 1);
+		transform: translateX(calc(var(--knob-size) / -2 + 2px)) scale(0.75, 1);
 	}
 
 	&::part(bar){
