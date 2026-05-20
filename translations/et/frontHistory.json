@@ -13,5 +13,11 @@
 			"select": "Vali mõjutatav liige",
 			"currentlyInfluencing": "Hetkel mõjutamas"
 		}
-	}
+	},
+	"header": "Esiplaanil olemise (frontimine) ajalugu",
+	"searchPlaceholder": "Otsi esiplaanil olemise (frontimise) ajaloost…",
+	"currentlyFronting": "Hetkel esiplaanil",
+	"wasFronting": "Oli ikkagi veel esiplaanil",
+	"frontedThatDay": "Oli sel päeval esiplaanil",
+	"influencing": "Mõjutab liiget {{influencedMember}}"
 }

@@ -17,7 +17,8 @@
 	"time": "Aeg",
 	"timeSizes": {
 		"hours": {
-			"short": "t"
+			"short": "t",
+			"long": "tunnid"
 		},
 		"minutes": {
 			"short": "min",
@@ -35,6 +36,18 @@
 		"seconds": {
 			"long": "sekundit",
 			"short": "sek"
+		},
+		"years": {
+			"long": "aastad",
+			"short": "a"
+		},
+		"months": {
+			"long": "kuud",
+			"short": "k"
+		},
+		"days": {
+			"long": "päevad",
+			"short": "p"
 		}
 	},
 	"shapes": {
@@ -70,6 +83,8 @@
 	},
 	"report": {
 		"header": "Ampersandi aruanne",
-		"generatedOn": "Loodud {{date}}"
-	}
+		"generatedOn": "Loodud {{date}}",
+		"coveringDays": "Andmed viimase {{count}} päeva kohta"
+	},
+	"loading": "Ampersand on käivitumas/laadimas"
 }

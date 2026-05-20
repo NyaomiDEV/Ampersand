@@ -29,7 +29,8 @@
 		"memberID": "Liikme tunnus: {{memberID}}",
 		"dateCreated": "Loomise kuupäev: {{dateCreated}}",
 		"archived": "Arhiveeritud",
-		"age": "Vanus"
+		"age": "Vanus",
+		"nameStyle": "Nime stiil"
 	},
 	"searchPlaceholder": "Otsi liikmeid…",
 	"deletedMember": "Kustutatud liige",

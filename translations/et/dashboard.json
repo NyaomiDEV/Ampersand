@@ -12,5 +12,6 @@
 		"header": "Hiljutised postitused",
 		"view": "Vaata veel"
 	},
-	"addToFront": "Lisa esiplaanile"
+	"addToFront": "Lisa esiplaanile",
+	"nowFronting": "Hetkel esiplaanil"
 }

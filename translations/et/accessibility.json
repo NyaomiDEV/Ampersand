@@ -57,5 +57,12 @@
 	},
 	"backgroundColor": {
 		"title": "Vali tautavärv"
+	},
+	"themeScheme": {
+		"title": "Kujundusvariant",
+		"tonalSpot": "Toonilaik",
+		"neutral": "Neutraalne",
+		"vibrant": "Elav",
+		"expressive": "Väljendusrikas"
 	}
 }

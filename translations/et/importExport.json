@@ -34,11 +34,15 @@
 		"errorTu": "Viga Tupperboxi varukoopia importimisel.",
 		"exportedReport": "Aruanne on salvestatud sinu valitud asukohta.",
 		"exportedReportIos": "Aruanne on salvestatud Ampersandi kausta failirakenduses.",
-		"exportedJsonIos": "Aruanne on salvestatud Ampersandi kausta failirakenduses.",
-		"exportedJson": "Aruanne on salvestatud sinu valitud asukohta."
+		"exportedJsonIos": "JSON-vormingus ekspordifail on salvestatud Ampersandi kausta failirakenduses.",
+		"exportedJson": "JSON-vormingus ekspordifail on salvestatud sinu valitud asukohta."
 	},
 	"reportExport": {
 		"title": "Koosta aruanne",
 		"desc": "Salvesta oma andmete kohta inimloetav aruanne, mida saad jagada oma terapeudi ja/või lähedastega"
+	},
+	"jsonExport": {
+		"title": "Ekspordi oma andmed JSON-failina",
+		"desc": "Varunda oma andmed vormingus, mis saad importida muudesse rakendustesse ja kasutada muude tarvikutega"
 	}
 }
