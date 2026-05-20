@@ -8,6 +8,10 @@
 		"startTime": "Algusaeg",
 		"endTime": "Lõpuaeg",
 		"comment": "Kommentaar",
-		"customStatus": "Kohandatud olek"
+		"customStatus": "Kohandatud olek",
+		"influencing": {
+			"select": "Vali mõjutatav liige",
+			"currentlyInfluencing": "Hetkel mõjutamas"
+		}
 	}
 }
