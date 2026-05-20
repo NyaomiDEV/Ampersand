@@ -15,7 +15,7 @@
 		IonItemOption,
 	} from "@ionic/vue";
 
-	import { h, onBeforeMount, onBeforeUpdate, shallowRef, useTemplateRef } from "vue";
+	import { h, onBeforeMount, onBeforeUpdate, ref, shallowRef, useTemplateRef } from "vue";
 	import SpinnerFullscreen from "../components/SpinnerFullscreen.vue";
 	import type { Member, Comment } from "../lib/db/entities";
 	import { defaultMember, getMember } from "../lib/db/tables/members.ts";
@@ -40,6 +40,8 @@
 	});
 
 	const members = shallowRef<Member[]>();
+
+	const highlighted = ref<Comment[]>([]);
 
 	const list = useTemplateRef("list");
 	const virtualList = useTemplateRef("virtualList");
@@ -177,6 +179,13 @@
 
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 		virtualList.value?.scrollToElement(repliedTo, { behavior: "smooth" });
+
+		highlighted.value.push(repliedTo);
+		setTimeout(() => {
+			const index = highlighted.value.indexOf(repliedTo);
+
+			if(index >= 0) highlighted.value.splice(index, 1);
+		}, 1000);
 	}
 
 	onBeforeMount(getCommentMembers);
@@ -206,6 +215,7 @@
 						<IonItemSliding>
 							<MemberItem
 								:member="members.find(x => comment.member === x.uuid) || defaultMember()"
+								:class="{ highlighted: highlighted.includes(comment) }"
 								:show-cover="false"
 								:show-role="false"
 								:show-pronouns="false"
@@ -282,6 +292,7 @@
 
 	ion-item::part(inner) {
 		background-color: rgb(var(--md3-surface-container));
+		transition: .5s ease background-color;
 		padding: 8px 16px;
 		border-radius: 16px;
 		border-bottom-left-radius: 0;
@@ -300,6 +311,7 @@
 		left: -16px;
 		bottom: 0;
 		background-color: rgb(var(--md3-surface-container));
+		transition: .5s ease background-color;
 		width: 16px;
 		height: 16px;
 		clip-path: path("M16 16H0C8.83656 16 16 8.83656 16 0V16Z");
@@ -309,5 +321,13 @@
 		left: unset;
 		right: -16px;
 		transform: scaleX(-100%);
+	}
+
+	ion-item.highlighted::part(inner){
+		background-color: rgb(var(--md3-surface-container-highest));
+	}
+
+	ion-item.highlighted::part(inner)::before {
+		background-color: rgb(var(--md3-surface-container-highest));
 	}
 </style>
