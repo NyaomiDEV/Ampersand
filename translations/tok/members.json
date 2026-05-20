@@ -47,6 +47,7 @@
 		"imageClip": "sijelo sitelen",
 		"age": "mute tenpo",
 		"ageDisplay_one": "mute {{count}} pi tenpo sike",
+		"ageDisplay_other": "mute {{count}} pi tenpo sike",
 		"nameStyle": "nasin sitelen nimi"
 	},
 	"singular": "ijo kulupu"
