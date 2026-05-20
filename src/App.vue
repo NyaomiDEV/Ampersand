@@ -62,6 +62,6 @@
 		left: 0;
 		height: var(--ion-safe-area-top, 0px);
 		width: 100%;
-		z-index: 1000;
+		z-index: 9000;
 	}
 </style>
