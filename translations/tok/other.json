@@ -103,7 +103,7 @@
 		"comment": "sijelo toki",
 		"commentHint": "toki...",
 		"commentCount_one": "toki pi mute {{count}}",
-		"commentCount_other": "",
+		"commentCount_other": "toki pi mute {{count}}",
 		"deleteConfirmation": "sina wile ala wile weka e toki ni?"
 	},
 	"theresNothingHere": "ala li lon",
