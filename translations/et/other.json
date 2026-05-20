@@ -88,6 +88,8 @@
 	},
 	"loading": "Ampersand on käivitumas/laadimas",
 	"fonts": {
-		"metal": "Metall"
-	}
+		"metal": "Metall",
+		"marker": "Marker"
+	},
+	"count": "Kogus"
 }

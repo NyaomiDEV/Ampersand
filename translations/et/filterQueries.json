@@ -1,1 +1,7 @@
-{}
+{
+	"edit": {
+		"delete": {
+			"confirm": "Kas oled kindel, et soovid selle sildi kustutada?"
+		}
+	}
+}
