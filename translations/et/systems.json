@@ -23,7 +23,8 @@
 		"viewInLists": "Näita loendites",
 		"isPinned": "Tõsta süsteem esile",
 		"systemID": "Süsteemi tunnus: {{systemID}}",
-		"nameStyle": "Nime stiil"
+		"nameStyle": "Nime stiil",
+		"customFrontCountText": "{{totalCustomFrontCount}} kohendatud esiplaanil olemist, {{customFrontCount}} aktiivsena, {{archivedCustomFrontCount}} arhiveerituna"
 	},
 	"searchPlaceholder": "Otsi süsteeme…",
 	"select": "Vali süsteem"
