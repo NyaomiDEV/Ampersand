@@ -28,8 +28,10 @@
 		"showJournalEntries": "Näita päevikupostitusi",
 		"memberID": "Liikme tunnus: {{memberID}}",
 		"dateCreated": "Loomise kuupäev: {{dateCreated}}",
-		"archived": "Arhiveeritud"
+		"archived": "Arhiveeritud",
+		"age": "Vanus"
 	},
 	"searchPlaceholder": "Otsi liikmeid…",
-	"deletedMember": "Kustutatud liige"
+	"deletedMember": "Kustutatud liige",
+	"singular": "Liige"
 }

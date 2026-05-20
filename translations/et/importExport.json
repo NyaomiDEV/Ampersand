@@ -33,7 +33,9 @@
 		"errorPk": "Viga PluralKiti varukoopia importimisel.",
 		"errorTu": "Viga Tupperboxi varukoopia importimisel.",
 		"exportedReport": "Aruanne on salvestatud sinu valitud asukohta.",
-		"exportedReportIos": "Aruanne on salvestatud Ampersandi kausta failirakenduses."
+		"exportedReportIos": "Aruanne on salvestatud Ampersandi kausta failirakenduses.",
+		"exportedJsonIos": "Aruanne on salvestatud Ampersandi kausta failirakenduses.",
+		"exportedJson": "Aruanne on salvestatud sinu valitud asukohta."
 	},
 	"reportExport": {
 		"title": "Koosta aruanne",
