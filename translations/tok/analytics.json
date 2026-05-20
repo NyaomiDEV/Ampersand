@@ -13,9 +13,13 @@
 		"influenced": "ijo kulupu pi ante lawa"
 	},
 	"frontingCount_one": "tenpo pi mute {{count}} la ona li kama lon",
+	"frontingCount_other": "",
 	"cofrontingCount_one": "tenpo pi mute {{count}} la ona li kama lon tu",
+	"cofrontingCount_other": "",
 	"influencingCount_one": "tenpo pi mute {{count}} la ona li lawa e ijo kulupu ante",
+	"influencingCount_other": "",
 	"influencedCount_one": "tenpo pi mute {{count}} la ijo kulupu ante li lawa e ona",
+	"influencedCount_other": "",
 	"total": "ale",
 	"average": "nanpa insa",
 	"max": "nanpa pi suli nanpa wan",
