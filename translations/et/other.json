@@ -86,5 +86,8 @@
 		"generatedOn": "Loodud {{date}}",
 		"coveringDays": "Andmed viimase {{count}} päeva kohta"
 	},
-	"loading": "Ampersand on käivitumas/laadimas"
+	"loading": "Ampersand on käivitumas/laadimas",
+	"fonts": {
+		"metal": "Metall"
+	}
 }
