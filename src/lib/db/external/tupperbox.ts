@@ -4,6 +4,7 @@ import { appConfig, securityConfig } from "../../config";
 import { Member, Tag, System } from "../entities";
 import { clearAllDatabase, getTables } from "..";
 import { fetchImage } from "../../util/fetchImage";
+import { resizeImage } from "../../util/image";
 
 function tag(tuExport: any){
 	const tagMapping = new Map<number, string>();
@@ -46,7 +47,9 @@ async function member(tuExport: any, systemInfo: System, tagMapping: Map<number,
 		if (tuMember.avatar_url && securityConfig.allowRemoteContent) {
 			try {
 				const request = await fetchImage(tuMember.avatar_url);
-				member.image = new File([request.blob], (tuMember.avatar_url as string).split("/").pop()!);
+				if(!request) throw new Error("no image after all");
+				const image = new File([request.blob], (tuMember.avatar_url as string).split("/").pop()!);
+				member.image = await resizeImage(image);
 			} catch (_e) {
 				// whatever, again
 			}
@@ -55,7 +58,9 @@ async function member(tuExport: any, systemInfo: System, tagMapping: Map<number,
 		if (tuMember.banner && securityConfig.allowRemoteContent) {
 			try {
 				const request = await fetchImage(tuMember.banner);
-				member.cover = new File([request.blob], (tuMember.banner as string).split("/").pop()!);
+				if (!request) throw new Error("no image after all");
+				const image = new File([request.blob], (tuMember.banner as string).split("/").pop()!);
+				member.cover = await resizeImage(image, 1024);
 			} catch (_e) {
 				// whatever, again
 			}

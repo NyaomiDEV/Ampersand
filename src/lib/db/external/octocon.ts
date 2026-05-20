@@ -10,12 +10,14 @@ import { fetchImage } from "../../util/fetchImage";
 import { clearAllDatabase, getTables } from "..";
 
 import type { OctoconExport } from "./octocon_types";
+import { resizeImage } from "../../util/image";
 
 async function getImage(url?: string){
 	if(!url || !securityConfig.allowRemoteContent) return undefined;
 	try {
-		const req = (await fetchImage(url)).blob;
-		return new File([req], new URL(url).pathname.split("/").pop()!);
+		const req = await fetchImage(url);
+		if(!req) throw new Error("no image");
+		return new File([req.blob], new URL(url).pathname.split("/").pop()!);
 	}catch(_e){
 		return undefined;
 	}
@@ -123,9 +125,12 @@ async function members(ocExport: OctoconExport, system: System, customFieldMappi
 		}
 
 		const uuid = window.crypto.randomUUID();
+
+		const image = await getImage(alter.avatar_url);
+
 		members.push({
 			uuid,
-			image: await getImage(alter.avatar_url),
+			image: image ? await resizeImage(image) : undefined,
 			name: alter.name || "Unnamed member",
 			pronouns: alter.pronouns,
 			description: alter.description,

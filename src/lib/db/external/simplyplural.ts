@@ -46,8 +46,9 @@ async function getAvatarFromUuid(systemId: string, avatarUuid: string){
 	if (!avatarUuid || !avatarUuid.length || !securityConfig.allowRemoteContent) return undefined;
 	try {
 		const url = `https://spaces.apparyllis.com/avatars/${systemId}/${avatarUuid}`;
-		const req = (await fetchImage(url)).blob;
-		return new File([req], `${avatarUuid}.${req.type.split("/")[1]}`);
+		const imageRequest = await fetchImage(url);
+		if (!imageRequest) throw new Error("no image anyway");
+		return new File([imageRequest.blob], `${avatarUuid}.${imageRequest.blob.type.split("/")[1]}`);
 	}catch(_e){
 		return undefined;
 	}
@@ -68,8 +69,10 @@ async function system(spExport: SimplyPluralExport){
 
 	if (spSystem.avatarUrl?.length && securityConfig.allowRemoteContent) {
 		try {
+			const imageRequest = await fetchImage(spSystem.avatarUrl);
+			if (!imageRequest) throw new Error("no image anyway");
 			const image = new File(
-				[(await fetchImage(spSystem.avatarUrl)).blob],
+				[imageRequest.blob],
 				spSystem.avatarUrl.split("/").pop()!
 			);
 			systemInfo.image = await resizeImage(image);
@@ -172,8 +175,10 @@ export async function member(spExport: SimplyPluralExport, systemInfo: System, s
 
 		if (spMember.avatarUrl?.length && securityConfig.allowRemoteContent) {
 			try {
+				const imageRequest = await fetchImage(spMember.avatarUrl);
+				if(!imageRequest) throw new Error("no image anyway");
 				const image = new File(
-					[(await fetchImage(spMember.avatarUrl)).blob],
+					[imageRequest.blob],
 					spMember.avatarUrl.split("/").pop()!
 				);
 				member.image = await resizeImage(image);
@@ -209,8 +214,10 @@ export async function member(spExport: SimplyPluralExport, systemInfo: System, s
 
 		if (spCustomFront.avatarUrl?.length && securityConfig.allowRemoteContent) {
 			try {
+				const imageRequest = await fetchImage(spCustomFront.avatarUrl);
+				if (!imageRequest) throw new Error("no image anyway");
 				const image = new File(
-					[(await fetchImage(spCustomFront.avatarUrl)).blob],
+					[imageRequest.blob],
 					spCustomFront.avatarUrl.split("/").pop()!
 				);
 				member.image = await resizeImage(image);

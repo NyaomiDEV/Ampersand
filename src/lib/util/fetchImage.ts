@@ -34,6 +34,9 @@ export async function fetchImage(input: URL | string, init?: RequestInit & Clien
 		req.headers.set("User-Agent", provider.ua);
 
 	const res = await fetch(req, init);
+
+	if(res.status !== 200) return;
+
 	const extras: Record<string, string> = {};
 
 	if(provider?.extras){

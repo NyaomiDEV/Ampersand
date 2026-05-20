@@ -40,6 +40,7 @@
 			const result = await importArchive().status;
 			if(!result) throw new Error("errored out");
 		}catch(_e){
+			console.error(_e);
 			resetConfig();
 			await clearAllDatabase();
 			await toast(i18next.t("onboarding:importScreen.error"));
@@ -59,6 +60,7 @@
 			const result = await importSimplyPlural(spExport);
 			if (!result) throw new Error("errored out");
 		}catch(_e){
+			console.error(_e);
 			await clearAllDatabase();
 			await toast(i18next.t("onboarding:importScreen.errorSp"));
 			loading.value = false;
@@ -77,6 +79,7 @@
 			const result = await importOctocon(ocExport);
 			if(!result) throw new Error("errored out");
 		}catch(_e){
+			console.error(_e);
 			await clearAllDatabase();
 			await toast(i18next.t("onboarding:importScreen.errorOc"));
 			loading.value = false;
@@ -95,6 +98,7 @@
 			const result = await importPluralKit(pkExport);
 			if(!result) throw new Error("errored out");
 		}catch(_e){
+			console.error(_e);
 			await clearAllDatabase();
 			await toast(i18next.t("onboarding:importScreen.errorPk"));
 			loading.value = false;
@@ -113,6 +117,7 @@
 			const result = await importTupperBox(tuExport);
 			if(!result) throw new Error("errored out");
 		}catch(_e){
+			console.error(_e);
 			await clearAllDatabase();
 			await toast(i18next.t("onboarding:importScreen.errorTu"));
 			loading.value = false;

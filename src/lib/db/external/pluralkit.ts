@@ -6,6 +6,7 @@ import { clearAllDatabase, getTables } from "..";
 import { fetchImage } from "../../util/fetchImage";
 import { nilUid } from "../../util/consts";
 import { appConfig, securityConfig } from "../../config";
+import { resizeImage } from "../../util/image";
 
 function pkCustomField(): CustomField {
 	return {
@@ -28,7 +29,9 @@ async function system(pkExport: any){
 	if (pkExport.avatar_url && securityConfig.allowRemoteContent) {
 		try {
 			const request = await fetchImage(pkExport.avatar_url);
-			systemInfo.image = new File([request.blob], (pkExport.avatar_url as string).split("/").pop()!);
+			if(!request) throw new Error("no image after all");
+			const image = new File([request.blob], (pkExport.avatar_url as string).split("/").pop()!);
+			systemInfo.image = await resizeImage(image);
 		} catch (_e) {
 			// whatever
 		}
@@ -83,7 +86,9 @@ async function member(pkExport: any, tagMapping: Map<string, string>, systemInfo
 		if (pkMember.avatar_url && securityConfig.allowRemoteContent) {
 			try {
 				const request = await fetchImage(pkMember.avatar_url);
-				member.image = new File([request.blob], pkMember.avatar_url.split("/").pop());
+				if (!request) throw new Error("no image after all");
+				const image = new File([request.blob], pkMember.avatar_url.split("/").pop());
+				member.image = await resizeImage(image);
 			} catch (_e) {
 				// whatever, again
 			}
@@ -91,7 +96,9 @@ async function member(pkExport: any, tagMapping: Map<string, string>, systemInfo
 		if (pkMember.banner && securityConfig.allowRemoteContent) {
 			try {
 				const request = await fetchImage(pkMember.banner);
-				member.cover = new File([request.blob], pkMember.banner.split("/").pop());
+				if (!request) throw new Error("no image after all");
+				const image = new File([request.blob], pkMember.banner.split("/").pop());
+				member.cover = await resizeImage(image, 1024);
 			} catch (_e) {
 				// whatever, again
 			}
