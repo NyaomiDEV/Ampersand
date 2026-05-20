@@ -283,6 +283,7 @@
 			height: 36px;
 			align-self: flex-end;
 			margin-bottom: 1em;
+			flex: 0 0 36px;
 		}
 
 		> :deep(ion-label) {
@@ -296,8 +297,6 @@
 		padding: 8px 16px;
 		border-radius: 16px;
 		border-bottom-left-radius: 0;
-		width: min-content;
-		overflow: visible;
 	}
 
 	:dir(rtl) ion-item::part(inner){
