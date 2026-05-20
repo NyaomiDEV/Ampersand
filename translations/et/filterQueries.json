@@ -1,7 +1,16 @@
 {
 	"edit": {
 		"delete": {
-			"confirm": "Kas oled kindel, et soovid selle sildi kustutada?"
-		}
-	}
+			"confirm": "Kas oled kindel, et soovid selle päringu kustutada?",
+			"title": "Kustuta päring"
+		},
+		"header": "Muuda päringut",
+		"headerAdd": "Lisa päring",
+		"name": "Päringu nimi",
+		"query": "Päringu sisu",
+		"type": "Päringu tüüp"
+	},
+	"header": "Filtripäringud",
+	"select": "Vali filtripäring",
+	"searchPlaceholder": "Otsi filtripäringuid…"
 }

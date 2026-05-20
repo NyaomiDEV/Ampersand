@@ -22,7 +22,8 @@
 		"parent": "Ülemsüsteem",
 		"viewInLists": "Näita loendites",
 		"isPinned": "Tõsta süsteem esile",
-		"systemID": "Süsteemi tunnus: {{systemID}}"
+		"systemID": "Süsteemi tunnus: {{systemID}}",
+		"nameStyle": "Nime stiil"
 	},
 	"searchPlaceholder": "Otsi süsteeme…",
 	"select": "Vali süsteem"

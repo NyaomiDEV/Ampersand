@@ -64,5 +64,8 @@
 		"neutral": "Neutraalne",
 		"vibrant": "Elav",
 		"expressive": "Väljendusrikas"
+	},
+	"frontingNotification": {
+		"title": "Esiplaanil olemise teavitus"
 	}
 }

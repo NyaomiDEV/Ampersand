@@ -3,15 +3,26 @@
 		"presence": {
 			"confirmButton": "Kinnita",
 			"date": "Kuupäev",
-			"addTitle": "Skaalal 0-st 10-ni, kui kohal sa hetkel oled?"
+			"addTitle": "Skaalal 0-st 10-ni, kui kohal sa hetkel oled?",
+			"historyTitle": "Kohaoleku ajalugu",
+			"lastPresence": "Viimati see oli {{presence}} / 5 tärni"
 		},
 		"startTime": "Algusaeg",
 		"endTime": "Lõpuaeg",
-		"comment": "Kommentaar",
+		"comment": "Esiplaanil olija kommentaar",
 		"customStatus": "Kohandatud olek",
 		"influencing": {
 			"select": "Vali mõjutatav liige",
 			"currentlyInfluencing": "Hetkel mõjutamas"
+		},
+		"header": "Muuda esiplaanil olemise ajalugu",
+		"member": "Muuda esiplaanil olevat liiget",
+		"removeFromFront": "Eemalda esiplaanilt",
+		"isMainFronter": "Põhiline esiplaanil olija",
+		"isLocked": "Lukusta esiplaanil olija",
+		"delete": {
+			"title": "Kustuta esiplaanil olev kirje",
+			"confirm": "Kas oled kindel, et soovid selle esiplaanil oleva kirje kustutada?"
 		}
 	},
 	"header": "Esiplaanil olemise (frontimine) ajalugu",

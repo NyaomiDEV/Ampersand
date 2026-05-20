@@ -11,7 +11,7 @@
 		"name": "Sildi nimi",
 		"description": "Sildi kirjeldus",
 		"color": "Sildi värv",
-		"viewInLists": "Vaata loendites",
+		"viewInLists": "Näita loendites",
 		"type": {
 			"header": "Sildi tüüp",
 			"member": "Liige",
@@ -44,7 +44,7 @@
 			"desc_one": "{{count}} vara on märgitud selle sildiga",
 			"desc_other": "{{count}} vara on märgitud selle sildiga"
 		},
-		"isArchived": "Arhibeeri silt",
+		"isArchived": "Arhiveeri silt",
 		"tagID": "Sildi tunnus: {{tagID}}"
 	}
 }

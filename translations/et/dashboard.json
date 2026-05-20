@@ -13,5 +13,7 @@
 		"view": "Vaata veel"
 	},
 	"addToFront": "Lisa esiplaanile",
-	"nowFronting": "Hetkel esiplaanil"
+	"nowFronting": "Hetkel esiplaanil",
+	"fronterInfluencing": "Mõjutab liiget {{influencedMember}}",
+	"recentFrontingHistory": "Hiljuti vahetunud"
 }

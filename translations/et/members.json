@@ -2,7 +2,11 @@
 	"header": "Liikmed",
 	"select": "Vali liige",
 	"actions": {
-		"addToFront": "Lisa esiplaanile"
+		"addToFront": "Lisa esiplaanile",
+		"setMainFronter": "Määra põhiliseks esiplaanil olejaks",
+		"unsetMainFronter": "Eemalda määramine põhiliseks esiplaanil olejaks",
+		"setSoleFronter": "Määra esiplaanile",
+		"removeFromFront": "Eemalda esiplaanilt"
 	},
 	"edit": {
 		"header": "Liige",
@@ -30,9 +34,21 @@
 		"dateCreated": "Loomise kuupäev: {{dateCreated}}",
 		"archived": "Arhiveeritud",
 		"age": "Vanus",
-		"nameStyle": "Nime stiil"
+		"nameStyle": "Nime stiil",
+		"ageDisplay_one": "vanus {{count}}",
+		"ageDisplay_other": "vanus {{count}}",
+		"customFront": "Kohendatud esiplaanil olija",
+		"showFrontingEntries": "Näita esiplaanil olnud kirjeid"
 	},
 	"searchPlaceholder": "Otsi liikmeid…",
 	"deletedMember": "Kustutatud liige",
-	"singular": "Liige"
+	"singular": "Liige",
+	"deletedCustomFront": "Kustutasin sinu loodud esiplaanil oleva liikme",
+	"toasts": {
+		"addToFront": "Liige lisatud esiplaanile",
+		"setMainFronter": "Liige on lisatud põhiliseks esiplaanil olejaks",
+		"unsetMainFronter": "Liige on eemaldatud põhilise esiplaanil olejana",
+		"setSoleFronter": "Liige on lisatud ainsaks esiplaanil olejaks",
+		"removeFromFront": "Liige on eemaldatud esiplaanilt"
+	}
 }

@@ -13,5 +13,20 @@
 	"min": "Vähemalt",
 	"max": "Enim",
 	"average": "Keskmiselt",
-	"total": "Kokku kestusega"
+	"total": "Kokku kestusega",
+	"cofront": "Esiplaanil üheskoos",
+	"subheaders": {
+		"fronting": "Liikmed esiplaanil",
+		"cofronting": "Liikmed üheskoos esiplaanil",
+		"influencing": "Liikmed, mis mõjutavad teisi",
+		"influenced": "Liikmed, mida mõjutavad teisied"
+	},
+	"frontingCount_one": "Oli esiplaanil {{count}} kord",
+	"frontingCount_other": "Oli esiplaanil {{count}} korda",
+	"cofrontingCount_one": "Olnud üheskoos esiplaanil {{count}} kord",
+	"cofrontingCount_other": "Olnud üheskoos esiplaanil {{count}} korda",
+	"influencingCount_one": "Mõjutanud teisi {{count}} kord",
+	"influencingCount_other": "Mõjutanud teisi {{count}} korda",
+	"influencedCount_one": "Oli mõjutatud teiste poolt {{count}} kord",
+	"influencedCount_other": "Oli mõjutatud teiste poolt {{count}} korda"
 }
