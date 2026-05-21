@@ -282,7 +282,7 @@
 			width: 36px;
 			height: 36px;
 			align-self: flex-end;
-			margin-bottom: 1em;
+			margin-bottom: 0.75em;
 			flex: 0 0 36px;
 		}
 
@@ -292,19 +292,28 @@
 	}
 
 	ion-item::part(inner) {
+		margin-inline-start: -8px;
+		padding: 0px;
+	}
+
+	ion-item::part(container) {
+		position: relative;
 		background-color: rgb(var(--md3-surface-container));
 		transition: .5s ease background-color;
 		padding: 8px 16px;
+		margin-inline-start: 16px;
 		border-radius: 16px;
 		border-bottom-left-radius: 0;
+		overflow: visible;
+		width: 100%;
 	}
 
-	:dir(rtl) ion-item::part(inner){
+	:dir(rtl) ion-item::part(container){
 		border-bottom-right-radius: 0;
 		border-bottom-left-radius: 16px;
 	}
 
-	ion-item::part(inner)::before {
+	ion-item::part(container)::before {
 		content: "\A";
 		position: absolute;
 		left: -16px;
@@ -316,17 +325,14 @@
 		clip-path: path("M16 16H0C8.83656 16 16 8.83656 16 0V16Z");
 	}
 
-	:dir(rtl) ion-item::part(inner)::before {
+	:dir(rtl) ion-item::part(container)::before {
 		left: unset;
 		right: -16px;
 		transform: scaleX(-100%);
 	}
 
-	ion-item.highlighted::part(inner){
-		background-color: rgb(var(--md3-surface-container-highest));
-	}
-
-	ion-item.highlighted::part(inner)::before {
-		background-color: rgb(var(--md3-surface-container-highest));
+	ion-item.highlighted::part(container),
+	ion-item.highlighted::part(container)::before {
+		background-color: color-mix(in srgb, rgb(var(--md3-surface-container)) 50%, rgb(var(--md3-primary)) 50%);
 	}
 </style>
