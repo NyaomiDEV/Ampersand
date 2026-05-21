@@ -47,11 +47,11 @@
 
 <template>
 	<IonApp>
-		<div v-if="platform() === 'macos'" data-tauri-drag-region class="window-overlay-drag" />
 		<IonRouterOutlet />
 		<ModalContainer />
 		<AssetFonts />
 	</IonApp>
+	<div v-if="platform() === 'macos'" data-tauri-drag-region class="window-overlay-drag" />
 </template>
 
 <style scoped>
