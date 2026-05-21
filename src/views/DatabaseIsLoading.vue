@@ -10,7 +10,7 @@
 	const route = useRoute();
 
 	watch(init, () => {
-		if(init.value === true)
+		if(init.value)
 			router.replace(route.query.wantedPath || "/");
 	}, { immediate: true });
 </script>

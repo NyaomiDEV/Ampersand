@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { IonApp, IonRouterOutlet, useIonRouter } from "@ionic/vue";
-	import { useRouter } from "vue-router";
+	import { useRoute, useRouter } from "vue-router";
 
 	import { computed, provide, watch } from "vue";
 	import ModalContainer from "./components/ModalContainer.vue";
@@ -20,16 +20,23 @@
 
 	const ionRouter = useIonRouter();
 	const vueRouter = useRouter();
+	const route = useRoute();
 
 	void setRouterCanGoBack(ionRouter.canGoBack());
 	vueRouter.afterEach(() => {
 		setRouterCanGoBack(ionRouter.canGoBack());
 	});
 
-	let timeout = setTimeout(dismissSplash, 3000);
+	let timeout: number | undefined = setTimeout(async () => await dismissSplash(), 3 * 1000);
 
-	watch(init, async () => {
-		if(!init.value) return;
+	watch([init, route], async () => {
+		if(!init.value || route.name === "DatabaseIsLoading") return;
+
+		clearTimeout(timeout);
+		timeout = undefined;
+
+		// dismiss splash
+		await dismissSplash();
 
 		// notifications
 		if(await ensureNotifyPerms(true))
@@ -37,10 +44,6 @@
 
 		// defer fronting changed event to not conflict with other more important UI-level things
 		void sendFrontingChangedEvent(true);
-
-		// dismiss splash
-		clearTimeout(timeout);
-		await dismissSplash();
 	}, { immediate: true });
 </script>
 
