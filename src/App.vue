@@ -2,7 +2,7 @@
 	import { IonApp, IonRouterOutlet, useIonRouter } from "@ionic/vue";
 	import { useRouter } from "vue-router";
 
-	import { computed, onMounted, provide, watch } from "vue";
+	import { computed, provide, watch } from "vue";
 	import ModalContainer from "./components/ModalContainer.vue";
 	import { setRouterCanGoBack } from "./lib/util/backbutton";
 	import { dismissSplash } from "./lib/native/plugin";
@@ -26,23 +26,22 @@
 		setRouterCanGoBack(ionRouter.canGoBack());
 	});
 
-	onMounted(() => {
-		let timeout = setTimeout(dismissSplash, 3000);
-		watch(init, async () => {
-			if(!init.value) return;
+	let timeout = setTimeout(dismissSplash, 3000);
 
-			// notifications
-			if(await ensureNotifyPerms(true))
-				await registerChannels();
+	watch(init, async () => {
+		if(!init.value) return;
 
-			// defer fronting changed event to not conflict with other more important UI-level things
-			void sendFrontingChangedEvent(true);
+		// notifications
+		if(await ensureNotifyPerms(true))
+			await registerChannels();
 
-			// dismiss splash
-			clearTimeout(timeout);
-			await dismissSplash();
-		}, { immediate: true });
-	});
+		// defer fronting changed event to not conflict with other more important UI-level things
+		void sendFrontingChangedEvent(true);
+
+		// dismiss splash
+		clearTimeout(timeout);
+		await dismissSplash();
+	}, { immediate: true });
 </script>
 
 <template>
