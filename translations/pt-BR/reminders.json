@@ -10,8 +10,8 @@
 			"removedFromFront": "Após um membro ter sido removido do fronte"
 		},
 		"delete": {
-			"title": "Excluir lembrete",
-			"confirm": "Tem certeza de que deseja excluir esse lembrete?"
+			"title": "Deletar lembrete",
+			"confirm": "Tem certeza de que deseja deletar esse lembrete?"
 		},
 		"active": "Ativar lembrete",
 		"delay": "Atraso",

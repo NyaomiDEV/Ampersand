@@ -10,8 +10,8 @@
 		"friendlyName": "Editar nome",
 		"tags": "Tags",
 		"delete": {
-			"confirm": "Tem certeza que deseja excluir esse arquivo?",
-			"title": "Excluir Arquivo"
+			"confirm": "Tem certeza que deseja deletar esse arquivo?",
+			"title": "Deletar Arquivo"
 		},
 		"attachment": "Substituir anexo"
 	}

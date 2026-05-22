@@ -25,7 +25,7 @@
 		"parent": "Sistema-pai",
 		"isPinned": "Fixar sistema",
 		"systemID": "ID do sistema: {{systemID}}",
-		"systemIDcopiedToClipboard": "ID do sistema em formato mencionado foi copiado à área de transferência!",
+		"systemIDcopiedToClipboard": "ID do sistema foi copiado à área de transferência!",
 		"nameStyle": "Estilo do Nome"
 	}
 }

@@ -74,13 +74,13 @@
 		"bun": "Pãozinho",
 		"clamshell": "Concha",
 		"gem": "Gema",
-		"ghost-ish": "Fantasmoso",
+		"ghost-ish": "Fantasmagórico",
 		"leaf-clover4": "Trevo de quatro folhas",
 		"leaf-clover8": "Trevo de oito folhas",
 		"oval": "Oval",
 		"pentagon": "Pentágono",
-		"pixel-circle": "Círculo de pixels",
-		"pixel-triangle": "Triângulo de pixels",
+		"pixel-circle": "Círculo pixelado",
+		"pixel-triangle": "Triângulo pixelado",
 		"puffy-diamond": "Diamante inchado",
 		"puffy": "Inchado",
 		"sided-cookie12": "Cookie de doze lados",
@@ -100,9 +100,9 @@
 	"comments": {
 		"commentHint": "Comente...",
 		"header": "Comentários",
-		"deleteConfirmation": "Tem certeza que deseja excluir este comentário?",
+		"deleteConfirmation": "Tem certeza que deseja deletar este comentário?",
 		"commenter": "Selecionar autor do comentário",
-		"comment": "Texto do comentário",
+		"comment": "Corpo do comentário",
 		"commentCount_one": "{{count}} comentário",
 		"commentCount_many": "{{count}} comentários",
 		"commentCount_other": "{{count}} comentários"
@@ -110,7 +110,7 @@
 	"theresNothingHere": "Não há nada aqui",
 	"count": "Conta",
 	"report": {
-		"header": "Relatório Ampersand",
+		"header": "Relatório do Ampersand",
 		"generatedOn": "Gerar em {{date}}",
 		"coveringDays": "Dados pertinentes aos últimos {{count}} dias"
 	},

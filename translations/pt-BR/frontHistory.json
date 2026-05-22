@@ -19,7 +19,7 @@
 		"endTime": "Horário de término",
 		"delete": {
 			"confirm": "Tem certeza que quer deletar essa entrada de front?",
-			"title": "Excluir entrada de fronte"
+			"title": "Deletar entrada de fronte"
 		},
 		"removeFromFront": "Remover do fronte",
 		"member": "Editar membro do fronte",

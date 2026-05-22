@@ -7,8 +7,8 @@
 		"headerAdd": "Adicionar campo personalizado",
 		"name": "Nome do campo personalizado",
 		"delete": {
-			"confirm": "Tem certeza que quer excluir esse campo personalizado?",
-			"title": "Excluir campo personalizado"
+			"confirm": "Tem certeza que quer deletar esse campo personalizado?",
+			"title": "Deletar campo personalizado"
 		},
 		"default": {
 			"title": "Alternar para padrão",

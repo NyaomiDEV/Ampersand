@@ -27,19 +27,19 @@
 	"edit": {
 		"title": "Título",
 		"body": "Corpo da mensagem",
-		"pollIsMultipleChoice": "Permitir múltiplas escolhas",
+		"pollIsMultipleChoice": "Permitir seleção de múltiplas escolhas",
 		"delete": {
-			"confirm": "Tem certeza de que deseja excluir essa mensagem?",
-			"title": "Apagar mensagem do painel"
+			"confirm": "Tem certeza de que deseja deletar essa mensagem?",
+			"title": "Deletar mensagem do painel"
 		},
 		"pollChoice": "Descrição da escolha",
 		"date": "Editar data",
 		"member": "Editar autor da mensagem",
 		"isArchived": "Arquivar mensagem",
-		"attachPoll": "Anexe um enquete a essa mensagem",
-		"deleteAttachedPoll": "Excluir enquete anexada",
+		"attachPoll": "Anexe uma enquete a essa mensagem",
+		"deleteAttachedPoll": "Deletar enquete anexada",
 		"pollAddNewChoice": "Adicionar uma nova escolha à enquete",
-		"pollEditWarning": "Mudar qualquer detalhe da enquete irá resetar os votos!",
+		"pollEditWarning": "Mudar quaisquer detalhes da enquete irá resetar os votos!",
 		"header": "Editar Mensagem",
 		"isPinned": "Fixar Mensagem"
 	}

@@ -16,8 +16,8 @@
 		"isPrivate": "Anotação particular",
 		"contentWarning": "Aviso de conteúdo",
 		"delete": {
-			"confirm": "Tem certeza que quer excluir essa anotação?",
-			"title": "Apagar anotação do diário"
+			"confirm": "Tem certeza que quer deletar essa anotação?",
+			"title": "Deletar anotação do diário"
 		},
 		"headerOptions": "Opções da anotação",
 		"author": "Editar Autor",

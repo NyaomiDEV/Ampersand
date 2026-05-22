@@ -22,8 +22,8 @@
 			"desc": "Nota: Você pode definir o tipo de tag apenas durante sua criação!"
 		},
 		"delete": {
-			"title": "Excluir tag",
-			"confirm": "Tem certeza que quer excluir essa tag?"
+			"title": "Deletar tag",
+			"confirm": "Tem certeza que quer deletar essa tag?"
 		},
 		"description": "Descrição da Tag",
 		"members": {

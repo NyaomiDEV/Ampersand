@@ -20,7 +20,7 @@
 		"errorSp": "Erro enquanto importava exporte do Simply Plural. Por favor escolha outra opção.",
 		"errorOc": "Erro enquanto importava exporte do Octocon. Por favor escolha outra opção.",
 		"errorPk": "Erro enquanto importava exporte do Pluralkit. Por favor escolha outra opção.",
-		"errorTu": "Erro ao importar de um exporte do Tupperbox. Por favor escolha outra opção."
+		"errorTu": "Erro ao importar exporte do Tupperbox. Por favor escolha outra opção."
 	},
 	"memberInfo": {
 		"header": "Nos conte mais sobre você!",
@@ -29,7 +29,7 @@
 	},
 	"systemInfo": {
 		"header": "Nos diga mais sobre o seu sistema!",
-		"name": "Nome coletivo",
+		"name": "Nome do coletivo",
 		"description": "Um pouco sobre todos vocês..."
 	},
 	"endScreen": {
