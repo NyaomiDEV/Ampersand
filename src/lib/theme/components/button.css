@@ -28,6 +28,7 @@
 	font: var(--md3-label-large);
 	letter-spacing: var(--md3-label-large-letter-spacing);
 	font-feature-settings: var(--md3-label-large-font-features);
+	font-variation-settings: var(--md3-label-large-font-variation);
 
 	height: 56px;
 	text-transform: none;
@@ -66,6 +67,7 @@
 	font: var(--md3-label-small);
 	letter-spacing: var(--md3-label-small-letter-spacing);
 	font-feature-settings: var(--md3-label-small-font-features);
+	font-variation-settings: var(--md3-label-small-font-variation);
 
 	--border-width: 1px;
 	--border-radius: 20px;
@@ -77,6 +79,7 @@
 		font: var(--md3-label-large);
 		letter-spacing: var(--md3-label-large-letter-spacing);
 		font-feature-settings: var(--md3-label-large-font-features);
+		font-variation-settings: var(--md3-label-large-font-variation);
 	}
 
 	&.button-full,
@@ -100,6 +103,7 @@
 	font: var(--md3-title-variant-large);
 	letter-spacing: var(--md3-title-variant-large-letter-spacing);
 	font-feature-settings: var(--md3-title-variant-large-font-features);
+	font-variation-settings: var(--md3-title-variant-large-font-variation);
 
 	--border-width: 2px;
 	--border-radius: 48px;

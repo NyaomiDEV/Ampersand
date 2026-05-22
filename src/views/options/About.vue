@@ -129,6 +129,7 @@
 			font-style: var(--ampersand-header-font-style);
 			font-weight: var(--ampersand-header-font-weight);
 			font-feature-settings: var(--ampersand-header-font-features);
+			font-variation-settings: var(--ampersand-header-font-variation);
 		}
 	}
 
@@ -185,6 +186,7 @@
 			font-style: var(--ampersand-header-font-style);
 			font-weight: var(--ampersand-header-font-weight);
 			font-feature-settings: var(--ampersand-header-font-features);
+			font-variation-settings: var(--ampersand-header-font-variation);
 		}
 	}
 

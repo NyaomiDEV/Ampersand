@@ -19,6 +19,7 @@
 	--color: rgb(var(--md3-primary));
 	font: var(--md3-title-variant-medium);
 	font-feature-settings: var(--md3-title-variant-medium-font-features);
+	font-variation-settings: var(--md3-title-variant-medium-font-variation);
 }
 
 .md ion-item {
@@ -42,6 +43,7 @@
 	font: var(--md3-body-large);
 	letter-spacing: var(--md3-body-large-letter-spacing);
 	font-feature-settings: var(--md3-body-large-font-features);
+	font-variation-settings: var(--md3-body-large-font-variation);
 
 	ion-icon[slot="start"] {
 		color: rgb(var(--md3-on-surface-variant));
@@ -59,18 +61,21 @@
 			font: var(--md3-title-variant-large);
 			letter-spacing: var(--md3-title-variant-large-letter-spacing);
 			font-feature-settings: var(--md3-title-variant-large-font-features);
+			font-variation-settings: var(--md3-title-variant-large-font-variation);
 		}
 
 		> h2 {
 			font: var(--md3-title-variant-medium);
 			letter-spacing: var(--md3-title-variant-medium-letter-spacing);
 			font-feature-settings: var(--md3-title-variant-medium-font-features);
+				font-variation-settings: var(--md3-title-variant-medium-font-variation);
 		}
 
 		> h3 {
 			font: var(--md3-body-large);
 			letter-spacing: var(--md3-body-large-letter-spacing);
 			font-feature-settings: var(--md3-body-large-font-features);
+			font-variation-settings: var(--md3-body-large-font-variation);
 		}
 
 		> :not(h1, h2, h3) {
@@ -78,6 +83,7 @@
 			font: var(--md3-body-medium);
 			letter-spacing: var(--md3-body-medium-letter-spacing);
 			font-feature-settings: var(--md3-body-medium-font-features);
+			font-variation-settings: var(--md3-body-medium-font-variation);
 		}
 	}
 }

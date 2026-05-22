@@ -16,12 +16,14 @@
 		font: var(--md3-headline-small);
 		letter-spacing: var(--md3-headline-small-letter-spacing);
 		font-feature-settings: var(--md3-headline-small-font-features);
+		font-variation-settings: var(--md3-headline-small-font-variation);
 	}
 
 	.alert-sub-title {
 		font: var(--md3-body-large);
 		letter-spacing: var(--md3-body-large-letter-spacing);
 		font-feature-settings: var(--md3-body-large-font-features);
+		font-variation-settings: var(--md3-body-large-font-variation);
 	}
 
 	.alert-message {
@@ -29,6 +31,7 @@
 		font: var(--md3-body-medium);
 		letter-spacing: var(--md3-body-medium-letter-spacing);
 		font-feature-settings: var(--md3-body-medium-font-features);
+		font-variation-settings: var(--md3-body-medium-font-variation);
 		color: rgb(var(--md3-on-surface-variant));
 	}
 

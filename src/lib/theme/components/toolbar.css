@@ -13,12 +13,14 @@
 	font: var(--md3-title-large);
 	letter-spacing: var(--md3-title-large-letter-spacing);
 	font-feature-settings: var(--md3-title-large-font-features);
+	font-variation-settings: var(--md3-title-large-font-variation);
 	padding-inline: 0;
 
 	h1 {
 		font: var(--md3-display-medium);
 		letter-spacing: var(--md3-display-medium-letter-spacing);
 		font-feature-settings: var(--md3-display-medium-font-features);
+		font-variation-settings: var(--md3-display-medium-font-variation);
 		margin: unset;
 	}
 
@@ -26,6 +28,7 @@
 		font: var(--md3-title-variant-large);
 		letter-spacing: var(--md3-title-variant-large-letter-spacing);
 		font-feature-settings: var(--md3-title-variant-large-font-features);
+		font-variation-settings: var(--md3-title-variant-large-font-variation);
 		margin: unset;
 	}
 
@@ -33,6 +36,7 @@
 		font: var(--md3-body-large);
 		letter-spacing: var(--md3-body-large-letter-spacing);
 		font-feature-settings: var(--md3-body-large-font-features);
+		font-variation-settings: var(--md3-body-large-font-variation);
 		margin: unset;
 	}
 
@@ -41,6 +45,7 @@
 		font: var(--md3-body-medium);
 		letter-spacing: var(--md3-body-medium-letter-spacing);
 		font-feature-settings: var(--md3-body-medium-font-features);
+		font-variation-settings: var(--md3-body-medium-font-variation);
 		margin: unset;
 	}
 
@@ -49,6 +54,7 @@
 		font: var(--md3-body-small);
 		letter-spacing: var(--md3-body-small-letter-spacing);
 		font-feature-settings: var(--md3-body-small-font-features);
+		font-variation-settings: var(--md3-body-small-font-variation);
 		margin: unset;
 	}
 

@@ -9,6 +9,7 @@
 	font: var(--md3-body-large);
 	letter-spacing: var(--md3-body-large-letter-spacing);
 	font-feature-settings: var(--md3-body-large-font-features);
+	font-variation-settings: var(--md3-body-large-font-variation);
 
 	&::part(button) {
 		text-transform: unset;

@@ -20,12 +20,14 @@ html {
 	--ampersand-header-font-weight: 600;
 	--ampersand-header-font-weight-medium: 500;
 	--ampersand-header-font-features: normal;
+	--ampersand-header-font-variation: normal;
 
 	--ampersand-body-font-name: "Inter";
 	--ampersand-body-font-style: normal;
 	--ampersand-body-font-weight: 400;
 	--ampersand-body-font-weight-medium: 500;
 	--ampersand-body-font-features: normal;
+	--ampersand-body-font-variation: normal;
 
 	--ion-font-family: var(--ampersand-body-font-name), var(--ion-default-font);
 
@@ -65,7 +67,7 @@ html.fs-mystic {
 
 html.fs-classy {
 	--ampersand-header-font-name: "Bodoni Moda";
-	--ampersand-header-font-weight: 600;
+	--ampersand-header-font-weight: 700;
 	--ampersand-body-font-name: "Jost";
 }
 
