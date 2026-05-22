@@ -29,7 +29,7 @@
 
 	let timeout: number | undefined = setTimeout(async () => await dismissSplash(), 3 * 1000);
 
-	watch([init, route], async () => {
+	const watcher = watch([init, route], async () => {
 		if(!init.value || route.name === "DatabaseIsLoading") return;
 
 		clearTimeout(timeout);
@@ -44,6 +44,9 @@
 
 		// defer fronting changed event to not conflict with other more important UI-level things
 		void sendFrontingChangedEvent(true);
+
+		// unregister watcher
+		watcher();
 	}, { immediate: true });
 </script>
 
