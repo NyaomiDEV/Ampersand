@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonList, IonPage, IonLabel, IonListHeader, IonTitle, IonToolbar, IonBackButton, IonItem, IonSelect, IonSelectOption, IonInput, IonToggle, IonIcon } from "@ionic/vue";
-	import { onMounted, shallowRef, useTemplateRef, watch } from "vue";
+	import { inject, onMounted, shallowRef, useTemplateRef, watch } from "vue";
 
 	import { accessibilityConfig, appConfig } from "../../lib/config";
 	import { getSystem } from "../../lib/db/tables/system";
@@ -30,6 +30,8 @@
 	const systemSelectModal = useTemplateRef("systemSelectModal");
 	const dashboardSettingsModal = useTemplateRef("dashboardSettingsModal");
 	const tabSettingsModal = useTemplateRef("tabSettingsModal");
+
+	const isDev = inject<boolean>("isDev");
 
 	watch(defaultSystem, () => {
 		if(defaultSystem.value && appConfig.defaultSystem !== defaultSystem.value.uuid)
@@ -105,6 +107,9 @@
 						</IonSelectOption>
 						<IonSelectOption value="classy">
 							{{ $t("appSettings:fontStyle.classy") }}
+						</IonSelectOption>
+						<IonSelectOption v-if="isDev" value="boring">
+							{{ $t("appSettings:fontStyle.boring") }}
 						</IonSelectOption>
 					</IonSelect>
 				</IonItem>

@@ -4,7 +4,7 @@ export type AppConfig = {
 	locale: {
 		language?: string
 	},
-	fontStyle: "default" | "corporate" | "digital" | "round" | "bold" | "newspaper" | "mystic" | "classy",
+	fontStyle: "default" | "corporate" | "digital" | "round" | "bold" | "newspaper" | "mystic" | "classy" | "boring",
 	view: ViewName,
 	dashboardSettings: DashboardSettings,
 	tabOrder: string[],

@@ -71,6 +71,12 @@ html.fs-classy {
 	--ampersand-body-font-name: "Jost";
 }
 
+html.fs-boring {
+	--ampersand-header-font-name: "Cinzel Decorative";
+	--ampersand-header-font-weight: 700;
+	--ampersand-body-font-name: "Jost";
+}
+
 /* High legibility fonts */
 html.high-legibility {
 	--ampersand-header-font-name: var(--ampersand-body-font-name);
