@@ -9,6 +9,7 @@
 		"delete": {
 			"title": "Deletar nota",
 			"confirm": "Você tem certeza que deseja deletar essa nota?"
-		}
+		},
+		"headerAdd": "Adicionar nota"
 	}
 }
