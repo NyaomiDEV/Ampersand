@@ -1,12 +1,12 @@
 @font-face {
-	font-family: 'Saira Stencil';
+	font-family: "Saira Stencil";
 	font-style: normal;
 	font-weight: 100 900;
 	src: url(../../assets/fonts/saira-stencil/SairaStencil-VariableFont.ttf);
 }
 
 @font-face {
-	font-family: 'Saira Stencil';
+	font-family: "Saira Stencil";
 	font-style: italic;
 	font-weight: 100 900;
 	src: url(../../assets/fonts/saira-stencil/SairaStencil-Italic-VariableFont.ttf);

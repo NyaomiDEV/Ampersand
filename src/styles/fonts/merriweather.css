@@ -1,5 +1,5 @@
 @font-face {
-	font-family: 'Merriweather';
+	font-family: "Merriweather";
 	font-style: normal;
 	font-weight: 200 800;
 	font-feature-settings: "opsz" on;
@@ -7,7 +7,7 @@
 }
 
 @font-face {
-	font-family: 'Merriweather';
+	font-family: "Merriweather";
 	font-style: italic;
 	font-weight: 200 800;
 	font-feature-settings: "opsz" on;

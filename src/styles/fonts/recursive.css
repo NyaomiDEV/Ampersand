@@ -1,12 +1,12 @@
 @font-face {
-	font-family: 'Recursive';
+	font-family: "Recursive";
 	font-style: normal;
 	font-weight: 300 1000;
 	src: url(../../assets/fonts/recursive/Recursive.ttf);
 }
 
 @font-face {
-	font-family: 'Recursive';
+	font-family: "Recursive";
 	font-style: oblique;
 	font-weight: 300 1000;
 	src: url(../../assets/fonts/recursive/Recursive.ttf);
