@@ -2,6 +2,7 @@
 	font-family: 'Inter';
 	font-style: italic;
 	font-weight: 100 900;
+	font-feature-settings: "opsz" on;
 	src: url(../../assets/fonts/inter/Inter-Italic.ttf);
 }
 
@@ -9,5 +10,6 @@
 	font-family: 'Inter';
 	font-style: normal;
 	font-weight: 100 900;
+	font-feature-settings: "opsz" on;
 	src: url(../../assets/fonts/inter/Inter.ttf);
 }

@@ -397,7 +397,7 @@ export const fontFamilies = {
 	mystery: "Mystery Quest",
 	italian: "Playwrite IT Traditional",
 	metal: "Metal Mania",
-	cutesy: "Twinkle Stars",
+	cutesy: "Twinkle Star",
 	indie: "Amatic SC",
 	deco: "Ribeye Marrow",
 	pop: "Unbounded",

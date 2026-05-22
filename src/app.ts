@@ -39,7 +39,7 @@ import "@ionic/vue/css/typography.css";
 import "@ionic/vue/css/palettes/dark.class.css";
 
 // Import fonts
-import "./styles/fonts/fonts.css";
+import "./styles/fonts/_fonts.css";
 
 // Our CSS overrides
 import "./styles/override.css";
