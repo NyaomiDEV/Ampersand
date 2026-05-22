@@ -103,6 +103,9 @@
 						<IonSelectOption value="mystic">
 							{{ $t("appSettings:fontStyle.mystic") }}
 						</IonSelectOption>
+						<IonSelectOption value="classy">
+							{{ $t("appSettings:fontStyle.classy") }}
+						</IonSelectOption>
 					</IonSelect>
 				</IonItem>
 				<IonItem button detail @click="dashboardSettingsModal?.$el.present()">

@@ -15,13 +15,13 @@ html {
 	--ion-safe-area-right: var(--device-inset-right, 0px);
 	--ion-safe-area-bottom: var(--device-inset-bottom, 0px);
 
-	--ampersand-header-font-name: 'Urbanist';
+	--ampersand-header-font-name: "Urbanist";
 	--ampersand-header-font-style: normal;
 	--ampersand-header-font-weight: 600;
 	--ampersand-header-font-weight-medium: 500;
 	--ampersand-header-font-features: normal;
 
-	--ampersand-body-font-name: 'Inter';
+	--ampersand-body-font-name: "Inter";
 	--ampersand-body-font-style: normal;
 	--ampersand-body-font-weight: 400;
 	--ampersand-body-font-weight-medium: 500;
@@ -36,31 +36,37 @@ html {
 html.fs-modern {
 	--ampersand-header-font-name: "Outfit";
 	--ampersand-header-font-weight: 600;
-	--ampersand-body-font-name: 'Montserrat';
+	--ampersand-body-font-name: "Montserrat";
 }
 
 html.fs-digital {
 	--ampersand-header-font-name: "Oxanium";
 	--ampersand-header-font-weight: 600;
-	--ampersand-body-font-name: 'Recursive';
+	--ampersand-body-font-name: "Recursive";
 }
 
 html.fs-bold {
 	--ampersand-header-font-name: "Bricolage Grotesque";
 	--ampersand-header-font-weight: 600;
-	--ampersand-body-font-name: 'Nunito';
+	--ampersand-body-font-name: "Nunito";
 }
 
 html.fs-newspaper {
 	--ampersand-header-font-name: "Merriweather";
 	--ampersand-header-font-weight: 600;
-	--ampersand-body-font-name: 'Albert Sans';
+	--ampersand-body-font-name: "Albert Sans";
 }
 
 html.fs-mystic {
 	--ampersand-header-font-name: "Cinzel Decorative";
 	--ampersand-header-font-weight: 700;
-	--ampersand-body-font-name: 'Amarna';
+	--ampersand-body-font-name: "Amarna";
+}
+
+html.fs-classy {
+	--ampersand-header-font-name: "Bodoni Moda";
+	--ampersand-header-font-weight: 600;
+	--ampersand-body-font-name: "Jost";
 }
 
 /* High legibility fonts */
@@ -69,20 +75,20 @@ html.high-legibility {
 	--ampersand-header-font-weight: 600;
 
 	&.hl-atkinson {
-		--ampersand-body-font-name: 'Atkinson Hyperlegible';
+		--ampersand-body-font-name: "Atkinson Hyperlegible";
 	}
 
 	&.hl-opendyslexic {
-		--ampersand-body-font-name: 'OpenDyslexic';
+		--ampersand-body-font-name: "OpenDyslexic";
 		--ampersand-header-font-weight: 700;
 	}
 
 	&.hl-lexend {
-		--ampersand-body-font-name: 'Lexend';
+		--ampersand-body-font-name: "Lexend";
 	}
 
 	&.hl-comicrelief {
-		--ampersand-body-font-name: 'Comic Relief';
+		--ampersand-body-font-name: "Comic Relief";
 		--ampersand-header-font-weight: 700;
 	}
 
