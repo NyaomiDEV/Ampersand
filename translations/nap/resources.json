@@ -1,1 +1,20 @@
-{}
+{
+	"header": "Risorse",
+	"ampersand": "Ncopp'a Ampersand",
+	"website": {
+		"title": "Sito web",
+		"desc": "Scarica l'urdema versione d'o sito e vide tutte ll'aggiornamenti."
+	},
+	"blog": {
+		"title": "Blog",
+		"desc": "Statte aggiornato ncopp'e ll'urdeme novità e vide che dicimmo ncopp'o sviluppo."
+	},
+	"wiki": {
+		"title": "Wiki",
+		"desc": "Fatte aiutà a ausà l'applicazione."
+	},
+	"repository": {
+		"title": "Repository d'o codice",
+		"desc": "Dacce na mano cu ll'applicazione e facce sapé si ce stanno prubblemme."
+	}
+}
