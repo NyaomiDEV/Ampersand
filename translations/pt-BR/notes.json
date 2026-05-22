@@ -1,4 +1,14 @@
 {
 	"header": "Notas autoadesivas",
-	"searchPlaceholder": "Procurar por notas"
+	"searchPlaceholder": "Procurar por notas...",
+	"edit": {
+		"header": "Editar notas",
+		"title": "Título da nota",
+		"content": "Conteúdo da nota",
+		"isArchived": "Arquivar nota",
+		"delete": {
+			"title": "Deletar nota",
+			"confirm": "Você tem certeza que deseja deletar essa nota?"
+		}
+	}
 }
