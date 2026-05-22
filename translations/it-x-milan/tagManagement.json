@@ -21,7 +21,8 @@
 			"header": "Tipo tag",
 			"member": "Membro",
 			"journal": "Diario",
-			"desc": "Nota: il tipo lo decidi solo all'inizio!"
+			"desc": "Nota: il tipo lo decidi solo all'inizio!",
+			"asset": "Asset"
 		},
 		"members": {
 			"title": "Chi usa questo tag",

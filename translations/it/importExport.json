@@ -23,7 +23,7 @@
 		"desc": "Fai il backup dei tuoi dati in un formato che può essere importato in altre applicazioni e strumenti"
 	},
 	"spImport": "Importa i tuoi dati da un export di Simply Plural",
-	"ocImport": "Importa i tuoi dati da un export di Octocon.",
+	"ocImport": "Importa i tuoi dati da un export di Octocon",
 	"pkImport": "Importa i tuoi dati da un export di PluralKit",
 	"tuImport": "Importa i tuoi dati da un export di Tupperbox",
 	"status": {

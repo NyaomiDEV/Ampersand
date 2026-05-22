@@ -23,7 +23,7 @@
 		"desc": "Fai lu backup dî tò dati nta un furmatu ca pò èssiri mpurtatu nta àutri applicazzioni e strumenti"
 	},
 	"spImport": "Mporta i tò dati d'un export di Simply Plural",
-	"ocImport": "Mporta i tò dati d'un export di Octocon.",
+	"ocImport": "Mporta i tò dati d'un export di Octocon",
 	"pkImport": "Mporta i tò dati d'un export di PluralKit",
 	"tuImport": "Mporta i tò dati d'un export di Tupperbox",
 	"status": {
