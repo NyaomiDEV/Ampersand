@@ -405,7 +405,7 @@ export const fontFamilies = {
 	western: "Rye",
 	glitch: "Rubik Glitch",
 	varsity: "Graduate",
-	stripes: "Monoton",
+	stripes: "Big Shoulders Inline",
 	futuristic: "Audiowide",
 	drip: "Rubik Wet Paint",
 	pineapple: "Some Time Later",
