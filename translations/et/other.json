@@ -64,7 +64,17 @@
 		"sunny": "Päikseline",
 		"very-sunny": "Väga päikseline",
 		"noShape": "Kujundit pole",
-		"triangle": "Kolmnurk"
+		"triangle": "Kolmnurk",
+		"pixel-circle": "Pikseldatud ring",
+		"pixel-triangle": "Pikseldatud kolmnurk",
+		"puffy-diamond": "Pundunud teemant",
+		"sided-cookie12": "12-tahuline küpsis",
+		"sided-cookie4": "4-tahuline küpsis",
+		"sided-cookie6": "6-tahuline küpsis",
+		"sided-cookie7": "7-tahuline küpsis",
+		"sided-cookie9": "9-tahuline küpsis",
+		"slanted": "Vildakil",
+		"puffy": "Pundunud"
 	},
 	"presence": {
 		"absent": "Pole kohal",
