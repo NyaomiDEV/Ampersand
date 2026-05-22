@@ -1,6 +1,18 @@
 {
 	"header": "Recursos",
 	"website": {
-		"title": "Site"
+		"title": "Website",
+		"desc": "Baixar a versão mais recente do app, e seguir nossas atualizações."
+	},
+	"ampersand": "No Ampersand",
+	"blog": {
+		"desc": "Consiga as últimas notícias e siga nosso desenvolvimento."
+	},
+	"wiki": {
+		"desc": "Consiga ajuda sobre como usar o aplicativo."
+	},
+	"repository": {
+		"title": "Repositório do código",
+		"desc": "Contribua ao nosso app e reporte problemas."
 	}
 }
