@@ -52,7 +52,9 @@ export const defaultAppConfig: AppConfig = {
 	defaultFilterQueries: {
 		members: "@archived:no",
 		messageBoard: "@archived:no",
-		systems: "@archived:no"
+		systems: "@archived:no",
+		tags: "@archived:no",
+		notes: "@archived:no"
 	}
 };
 
