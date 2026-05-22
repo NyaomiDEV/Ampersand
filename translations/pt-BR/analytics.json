@@ -1,5 +1,5 @@
 {
-	"header": "Analíticos",
+	"header": "Analíticas",
 	"detail": "Detalhes analíticos",
 	"stats": "Estatísticas",
 	"daytime": "Hora do dia",
@@ -21,5 +21,16 @@
 	"cofrontingCount_other": "Co-frontou {{count}} vezes",
 	"influencingCount_one": "Influenciou outros {{count}} vez",
 	"influencingCount_many": "Influenciou outros {{count}} vezes",
-	"influencingCount_other": "Influenciou outros {{count}} vezes"
+	"influencingCount_other": "Influenciou outros {{count}} vezes",
+	"influencedCount_one": "Foi influenciado por outros {{count}} vez",
+	"influencedCount_many": "Foi influenciado por outros {{count}} vezes",
+	"influencedCount_other": "Foi influenciado por outros {{count}} vezes",
+	"total": "No total",
+	"average": "Na média",
+	"max": "No máximo",
+	"min": "No mínimo",
+	"morning": "Vezes na manhã",
+	"day": "Vezes no dia",
+	"evening": "Vezes à tarde",
+	"night": "Vezes à noite"
 }

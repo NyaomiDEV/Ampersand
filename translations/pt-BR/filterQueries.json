@@ -1,1 +1,16 @@
-{}
+{
+	"header": "Filtrar buscas",
+	"select": "Selecione um filtro de consulta",
+	"searchPlaceholder": "Procurar por filtros de busca...",
+	"edit": {
+		"header": "Editar consulta",
+		"headerAdd": "Adicionar consulta",
+		"name": "Nome da consulta",
+		"query": "Corpo da consulta",
+		"type": "Tipo de consulta",
+		"delete": {
+			"title": "Deletar consulta",
+			"confirm": "Você tem certeza que você deseja deletar essa consulta?"
+		}
+	}
+}

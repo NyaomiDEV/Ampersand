@@ -1,6 +1,6 @@
 {
 	"header": "Painel de Mensagens",
-	"searchPlaceholder": "Buscar por mensagens...",
+	"searchPlaceholder": "Procurar por mensagens...",
 	"polls": {
 		"boardMessageContainsPoll": "Contém enquete",
 		"collapsePoll": "Ocultar enquete",

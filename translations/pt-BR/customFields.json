@@ -1,7 +1,7 @@
 {
 	"header": "Campos personalizados",
 	"select": "Selecionar campos personalizados",
-	"searchPlaceholder": "Burscar campos personalizados...",
+	"searchPlaceholder": "Procurar campos personalizados...",
 	"edit": {
 		"header": "Editar campo personalizado",
 		"headerAdd": "Adicionar campo personalizado",

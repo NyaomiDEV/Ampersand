@@ -1,6 +1,6 @@
 {
 	"header": "Gestor de Arquivos",
-	"searchPlaceholder": "Buscar por arquivos...",
+	"searchPlaceholder": "Procurar por arquivos...",
 	"add": {
 		"header": "Adicionar arquivo",
 		"attachment": "Adicionar anexo"
