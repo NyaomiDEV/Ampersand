@@ -142,7 +142,7 @@ export function getMaterialColors(primary?: string, secondary?: string, isDarkMo
 	styleSheet.set("shadow", scheme.colors.shadow().getArgb(scheme));
 	styleSheet.set("scrim", scheme.colors.scrim().getArgb(scheme));
 	styleSheet.set("surface_tint", scheme.colors.surfaceTint().getArgb(scheme));
-
+	styleSheet.set("surface_variant", scheme.colors.surfaceVariant().getArgb(scheme));
 
 	if (isDarkMode && accessibilityConfig.themeIsAmoled) {
 		styleSheet.set("background", argbFromHex("#000"));
