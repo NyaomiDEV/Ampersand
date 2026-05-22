@@ -6,7 +6,7 @@
 	},
 	"dbImportDesc": "Aviso! Isso irá sobrescrever qualquer dado existente",
 	"dbImport": "Importar seus dados",
-	"pkImport": "Importar seus dados de uma cópia de segurança do Pluralkit",
+	"pkImport": "Importar seus dados de uma exportação do Pluralkit",
 	"tuImport": "Importar seus dados de uma exportação do Tupperbox",
 	"importHeader": "Importar",
 	"exportHeader": "Exportar",
@@ -17,7 +17,7 @@
 		"desc": "Para arquivos de cópia de segurança feitos com Ampersand < (abaixo de) 0.2.0",
 		"note": "Versões antigas do Ampersand usavam um formato de arquivo (ampdb) que agora é datado. Se você está mantendo cópias de segurança antigas, tenha certeza de importar elas agora e re-exportar elas, pois essa opção será removida no futuro."
 	},
-	"ocImport": "Importar seus dados de um exporte do Octocon",
+	"ocImport": "Importar seus dados de uma exportação do Octocon",
 	"status": {
 		"imported": "A cópia de segurança foi importada. Por favor reinicie o app.",
 		"importedSp": "O exporte do Simply Plural foi importado. Por favor reinicie o app.",
@@ -29,7 +29,7 @@
 		"errorExport": "Erro enquanto exportava a cópia de segurança.",
 		"error": "Erro enquanto importava a cópia de segurança.",
 		"errorOc": "Erro ao importar o exporte do Octocon.",
-		"errorSp": "Erro ao importar exporte do Simply Plural.",
+		"errorSp": "Erro ao importar o exporte do Simply Plural.",
 		"errorPk": "Erro ao importar o exporte do PluralKit.",
 		"errorTu": "Erro ao importar o exporte do Tupperbox.",
 		"exportedReport": "O relatório foi salvo no local de sua escolha.",

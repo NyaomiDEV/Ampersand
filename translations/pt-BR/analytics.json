@@ -1,0 +1,25 @@
+{
+	"header": "Analíticos",
+	"detail": "Detalhes analíticos",
+	"stats": "Estatísticas",
+	"daytime": "Hora do dia",
+	"presence": "Presença",
+	"cofront": "Co-fronte",
+	"startDate": "Data de início",
+	"endDate": "Data de término",
+	"subheaders": {
+		"fronting": "Membros no fronte",
+		"cofronting": "Membros no co-fronte",
+		"influencing": "Membros influenciando outros",
+		"influenced": "Membros sendo influenciados por outros"
+	},
+	"frontingCount_one": "Frontou {{count}} vez",
+	"frontingCount_many": "Frontou {{count}} vezes",
+	"frontingCount_other": "Frontou {{count}} vezes",
+	"cofrontingCount_one": "Co-frontou {{count}} vez",
+	"cofrontingCount_many": "Co-frontou {{count}} vezes",
+	"cofrontingCount_other": "Co-frontou {{count}} vezes",
+	"influencingCount_one": "Influenciou outros {{count}} vez",
+	"influencingCount_many": "Influenciou outros {{count}} vezes",
+	"influencingCount_other": "Influenciou outros {{count}} vezes"
+}
