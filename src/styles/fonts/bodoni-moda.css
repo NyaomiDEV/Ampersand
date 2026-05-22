@@ -1,0 +1,15 @@
+@font-face {
+	font-family: "Bodoni Moda";
+	font-weight: 400 900;
+	font-feature-settings: "opsz" on;
+	font-style: normal;
+	src: url(../../assets/fonts/bodoni-moda/BodoniModa.ttf);
+}
+
+@font-face {
+	font-family: "Bodoni Moda";
+	font-weight: 400 900;
+	font-feature-settings: "opsz" on;
+	font-style: italic;
+	src: url(../../assets/fonts/bodoni-moda/BodoniModa-Italic.ttf);
+}

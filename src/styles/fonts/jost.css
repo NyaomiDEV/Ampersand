@@ -1,0 +1,13 @@
+@font-face {
+	font-family: "Jost";
+	font-weight: 100 900;
+	font-style: normal;
+	src: url(../../assets/fonts/jost/Jost.ttf);
+}
+
+@font-face {
+	font-family: "Jost";
+	font-weight: 100 900;
+	font-style: italic;
+	src: url(../../assets/fonts/jost/Jost-Italic.ttf);
+}
