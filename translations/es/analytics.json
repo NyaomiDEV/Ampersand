@@ -1,1 +1,24 @@
-{}
+{
+	"min": "Al menos",
+	"morning": "Horarios por la mañana",
+	"day": "Horas del día",
+	"evening": "Horarios de tarde",
+	"night": "Horarios nocturnos",
+	"header": "Analítica",
+	"detail": "Analítica de datos",
+	"stats": "Estadísticas",
+	"daytime": "Hora del día",
+	"presence": "Presencia",
+	"cofront": "Co-fronting",
+	"startDate": "Fecha de inicio",
+	"endDate": "Fecha de finalización",
+	"max": "Como mucho",
+	"average": "De media",
+	"total": "En total",
+	"influencedCount_one": "Se vio influido por otros {{count}} vez",
+	"influencedCount_many": "Se vio influido por otros {{count}} veces",
+	"influencedCount_other": "Se vio influido por otros {{count}} veces",
+	"influencingCount_one": "Ha influido en otras personas {{count}} vez",
+	"influencingCount_many": "Ha influido en otras personas {{count}} veces",
+	"influencingCount_other": "Ha influido en otras personas {{count}} veces"
+}
