@@ -6,10 +6,12 @@
 	},
 	"ampersand": "No Ampersand",
 	"blog": {
-		"desc": "Consiga as últimas notícias e siga nosso desenvolvimento."
+		"desc": "Consiga as últimas notícias e siga nosso desenvolvimento.",
+		"title": "Blog"
 	},
 	"wiki": {
-		"desc": "Consiga ajuda sobre como usar o aplicativo."
+		"desc": "Consiga ajuda sobre como usar o aplicativo.",
+		"title": "Wiki"
 	},
 	"repository": {
 		"title": "Repositório do código",
