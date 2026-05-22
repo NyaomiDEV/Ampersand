@@ -1,0 +1,13 @@
+@font-face {
+	font-family: "Geom";
+	font-weight: 300 900;
+	font-style: normal;
+	src: url(../../assets/fonts/geom/Geom.ttf);
+}
+
+@font-face {
+	font-family: "Geom";
+	font-weight: 300 900;
+	font-style: italic;
+	src: url(../../assets/fonts/geom/Geom-Italic.ttf);
+}

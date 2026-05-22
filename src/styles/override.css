@@ -44,13 +44,14 @@ html.fs-modern {
 html.fs-digital {
 	--ampersand-header-font-name: "Oxanium";
 	--ampersand-header-font-weight: 600;
-	--ampersand-body-font-name: "Recursive";
+	--ampersand-body-font-name: "Recursive Mono";
 }
 
 html.fs-bold {
-	--ampersand-header-font-name: "Bricolage Grotesque";
-	--ampersand-header-font-weight: 600;
-	--ampersand-body-font-name: "Nunito";
+	--ampersand-header-font-name: "Recursive Casual";
+	--ampersand-header-font-weight: 700;
+	--ampersand-header-font-variation: "CRSV" 1;
+	--ampersand-body-font-name: "Recursive";
 }
 
 html.fs-newspaper {
@@ -68,7 +69,7 @@ html.fs-mystic {
 html.fs-classy {
 	--ampersand-header-font-name: "Bodoni Moda";
 	--ampersand-header-font-weight: 700;
-	--ampersand-body-font-name: "Jost";
+	--ampersand-body-font-name: "Geom";
 }
 
 html.fs-boring {

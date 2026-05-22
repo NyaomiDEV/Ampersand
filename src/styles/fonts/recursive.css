@@ -11,3 +11,35 @@
 	font-weight: 300 1000;
 	src: url(../../assets/fonts/recursive/Recursive.ttf);
 }
+
+@font-face {
+	font-family: "Recursive Casual";
+	font-style: normal;
+	font-weight: 300 1000;
+	font-variation-settings: "CASL" 1;
+	src: url(../../assets/fonts/recursive/Recursive.ttf);
+}
+
+@font-face {
+	font-family: "Recursive Casual";
+	font-style: oblique;
+	font-weight: 300 1000;
+	font-variation-settings: "CASL" 1;
+	src: url(../../assets/fonts/recursive/Recursive.ttf);
+}
+
+@font-face {
+	font-family: "Recursive Mono";
+	font-style: normal;
+	font-weight: 300 1000;
+	font-variation-settings: "MONO" 1;
+	src: url(../../assets/fonts/recursive/Recursive.ttf);
+}
+
+@font-face {
+	font-family: "Recursive Mono";
+	font-style: oblique;
+	font-weight: 300 1000;
+	font-variation-settings: "MONO" 1;
+	src: url(../../assets/fonts/recursive/Recursive.ttf);
+}
