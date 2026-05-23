@@ -20,5 +20,14 @@
 	"influencedCount_other": "Se vio influido por otros {{count}} veces",
 	"influencingCount_one": "Ha influido en otras personas {{count}} vez",
 	"influencingCount_many": "Ha influido en otras personas {{count}} veces",
-	"influencingCount_other": "Ha influido en otras personas {{count}} veces"
+	"influencingCount_other": "Ha influido en otras personas {{count}} veces",
+	"subheaders": {
+		"influenced": "Miembros influenciados por otros"
+	},
+	"frontingCount_one": "Al mando {{count}} vez",
+	"frontingCount_many": "Al mando {{count}} veces",
+	"frontingCount_other": "Al mando {{count}} veces",
+	"cofrontingCount_one": "Colíder {{count}} vez",
+	"cofrontingCount_many": "Colíder {{count}} veces",
+	"cofrontingCount_other": "Colíder {{count}} veces"
 }
