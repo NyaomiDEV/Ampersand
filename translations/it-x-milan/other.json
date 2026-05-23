@@ -143,6 +143,11 @@
 		"varsity": "Campus",
 		"futuristic": "Futuristico",
 		"pineapple": "Ananas",
+		"nature": "Natura",
+		"summer": "Estate",
+		"spotty": "Chiazze",
+		"bone": "Osso",
+		"cow": "Mucca",
 		"noFont": "Nessun font, sbatti"
 	},
 	"developerMode": "Dev Mode",
