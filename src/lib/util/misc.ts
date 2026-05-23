@@ -379,6 +379,39 @@ export function imageClipPicker(header: string): Promise<ImageClip | null | unde
 	});
 }
 
+export const fontQuickNames = {
+	cursive: "Rochester",
+	pixel: "Departure Mono",
+	dots: "Bitcount Single",
+	digital: "Orbitron",
+	handwritten: "Shantell Sans",
+	serif: "EB Garamond",
+	typewriter: "TT2020",
+	monospace: "JetBrains Mono",
+	playful: "Lobster Two",
+	holy: "Cinzel",
+	bubbly: "Gluten",
+	marker: "Permanent Marker",
+	gothic: "KJV1611",
+	stencil: "Saira Stencil",
+	mystery: "Mystery Quest",
+	italian: "Playwrite IT Traditional",
+	metal: "Metal Mania",
+	cutesy: "Twinkle Star",
+	indie: "Amatic SC",
+	deco: "Ribeye Marrow",
+	pop: "Unbounded",
+	terminal: "Workbench",
+	western: "Rye",
+	glitch: "Rubik Glitch",
+	varsity: "Graduate",
+	stripes: "Big Shoulders Inline",
+	futuristic: "Audiowide",
+	drip: "Rubik Wet Paint",
+	pineapple: "Some Time Later",
+	cracks: "Rubik Distressed",
+};
+
 export const fontFamilies = [
 	"Rochester",
 	"Departure Mono",
@@ -414,11 +447,16 @@ export const fontFamilies = [
 	"Recursive"
 ];
 
+function normalizeFontName(x: string){
+	const quickName = Object.entries(fontQuickNames).find(f => f[1] === x);
+	return quickName ? `${i18next.t(`other:fonts.${quickName[0]}`)} (${x})` : x;
+}
+
 export function fontFamilyPicker(header: string): Promise<string | null | undefined> {
 	return new Promise(resolve => {
 		void (async () => {
 			const buttons: ActionSheetButton[] = fontFamilies.map(x => ({
-				text: x,
+				text: normalizeFontName(x),
 				data: { it: x },
 				htmlAttributes: {
 					style: { "font-family": x }

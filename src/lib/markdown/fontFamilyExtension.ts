@@ -1,40 +1,7 @@
 import { h, type VNode } from "vue";
 import { MarkedExtension } from "marked";
 import MarkdownFontFamily from "../../components/MarkdownFontFamily.vue";
-
-// TODO: Remove
-const legacyFontNames = {
-	cursive: "Rochester",
-	pixel: "Departure Mono",
-	dots: "Bitcount Single",
-	digital: "Orbitron",
-	handwritten: "Shantell Sans",
-	serif: "EB Garamond",
-	typewriter: "TT2020",
-	monospace: "JetBrains Mono",
-	playful: "Lobster Two",
-	holy: "Cinzel",
-	bubbly: "Gluten",
-	marker: "Permanent Marker",
-	gothic: "KJV1611",
-	stencil: "Saira Stencil",
-	mystery: "Mystery Quest",
-	italian: "Playwrite IT Traditional",
-	metal: "Metal Mania",
-	cutesy: "Twinkle Star",
-	indie: "Amatic SC",
-	deco: "Ribeye Marrow",
-	pop: "Unbounded",
-	terminal: "Workbench",
-	western: "Rye",
-	glitch: "Rubik Glitch",
-	varsity: "Graduate",
-	stripes: "Big Shoulders Inline",
-	futuristic: "Audiowide",
-	drip: "Rubik Wet Paint",
-	pineapple: "Some Time Later",
-	cracks: "Rubik Distressed",
-};
+import { fontFamilies, fontQuickNames } from "../util/misc";
 
 const fontFamilyExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [
@@ -46,12 +13,18 @@ const fontFamilyExtension: MarkedExtension<(VNode | string)[], VNode | string> =
 				const rule = /^\[ff=(.+?)\](.+?)\[\/ff\]/;
 				const match = rule.exec(src);
 				if (match) {
-					const [family, ..._para] = match[1].split(":");
+					const _para = match[1].split(":");
+					let family = _para.shift();
+					if(!family) return;
+
+					family = family in fontQuickNames ? fontQuickNames[family] as string : family;
 
 					const parameters = _para.map(x => {
 						const parts = x.trim().split(" ");
 						return [parts[0].toUpperCase(), parseFloat(parts[1])];
 					}).filter(x => !!x);
+
+					if(!family.startsWith("@") && !fontFamilies.includes(family)) return;
 
 					const token = {
 						type: "fontFamily",
@@ -67,7 +40,7 @@ const fontFamilyExtension: MarkedExtension<(VNode | string)[], VNode | string> =
 			},
 			renderer(token) {
 				if(token.fontFamily.length){
-					const fontFamily = legacyFontNames[token.fontFamily] || token.fontFamily;
+					const fontFamily = token.fontFamily;
 					const fontVariation = (token.fontVarSettings as [string, number]).map(x => `"${x[0]}" ${x[1]}`).join(", ");
 					return h(MarkdownFontFamily, {
 						fontFamily,
