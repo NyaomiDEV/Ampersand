@@ -304,7 +304,7 @@
 						:style="{
 							fontFamily: system.nameStyle?.family,
 							fontWeight: system.nameStyle?.weight,
-							fontStyle: system.nameStyle?.italic ? 'italic' : 'normal'
+							fontStyle: system.nameStyle?.italic ? 'italic' : undefined
 						}"
 						:class="{
 							'with-font-family': !!system.nameStyle
@@ -655,6 +655,10 @@
 
 		* {
 			margin: 0;
+		}
+
+		h3.with-font-family {
+			line-height: normal;
 		}
 
 		h3:not(.with-font-family) {
