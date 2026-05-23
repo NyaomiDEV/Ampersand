@@ -405,7 +405,6 @@ export const fontQuickNames = {
 	western: "Rye",
 	glitch: "Rubik Glitch",
 	varsity: "Graduate",
-	stripes: "Big Shoulders Inline",
 	futuristic: "Audiowide",
 	drip: "Rubik Wet Paint",
 	pineapple: "Some Time Later",
@@ -423,7 +422,6 @@ export const fontFamilies = [
 	"JetBrains Mono",
 	"Lobster Two",
 	"Cinzel",
-	"Cinzel Decorative",
 	"Gluten",
 	"Permanent Marker",
 	"KJV1611",
@@ -439,13 +437,18 @@ export const fontFamilies = [
 	"Rye",
 	"Rubik Glitch",
 	"Graduate",
-	"Big Shoulders Inline",
 	"Audiowide",
 	"Rubik Wet Paint",
 	"Some Time Later",
 	"Rubik Distressed",
+	"Urbanist",
+	"Outfit",
+	"Montserrat",
 	"Bodoni Moda",
-	"Recursive"
+	"Recursive",
+	"Cinzel Decorative",
+	"Geom",
+	"Jost"
 ];
 
 function normalizeFontName(x: string){
