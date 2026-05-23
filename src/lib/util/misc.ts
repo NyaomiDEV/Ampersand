@@ -423,6 +423,7 @@ export const fontFamilies = [
 	"JetBrains Mono",
 	"Lobster Two",
 	"Cinzel",
+	"Cinzel Decorative",
 	"Gluten",
 	"Permanent Marker",
 	"KJV1611",
