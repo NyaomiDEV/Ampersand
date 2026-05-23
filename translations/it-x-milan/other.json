@@ -20,7 +20,7 @@
 		"comment": "Il succo del discorso",
 		"commentHint": "Dì la tua...",
 		"commentCount_one": "{{count}} commento",
-		"commentCount_many": "",
+		"commentCount_many": "{{count}} commenti",
 		"commentCount_other": "{{count}} commenti",
 		"deleteConfirmation": "Figa, lo vuoi piallare davvero 'sto commento?"
 	},

@@ -20,7 +20,7 @@
 		"comment": "Corpu dû cummentu",
 		"commentHint": "Scrivi un cummentu...",
 		"commentCount_one": "{{count}} cummentu",
-		"commentCount_many": "",
+		"commentCount_many": "{{count}} cummenti",
 		"commentCount_other": "{{count}} cummenti",
 		"deleteConfirmation": "Voi pi daveru scancillari stu cummentu?"
 	},

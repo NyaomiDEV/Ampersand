@@ -20,7 +20,7 @@
 		"comment": "Corpo del commento",
 		"commentHint": "Commenta...",
 		"commentCount_one": "{{count}} commento",
-		"commentCount_many": "",
+		"commentCount_many": "{{count}} commenti",
 		"commentCount_other": "{{count}} commenti",
 		"deleteConfirmation": "Vuoi veramente eliminare questo commento?"
 	},
