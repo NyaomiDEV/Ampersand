@@ -302,6 +302,9 @@
 						:style="{
 							fontFamily: system.nameStyle
 						}"
+						:class="{
+							'with-font-family': !!system.nameStyle
+						}"
 					>
 						{{ system.name }}
 					</h3>
@@ -605,7 +608,7 @@
 			margin: 0;
 		}
 
-		h3 {
+		h3:not(.with-font-family) {
 			font-family: var(--ampersand-header-font-name), var(--ion-font-family);
 			font-style: var(--ampersand-header-font-style);
 			font-weight: var(--ampersand-header-font-weight);
