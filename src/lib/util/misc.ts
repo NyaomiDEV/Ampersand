@@ -399,6 +399,7 @@ export const fontQuickNames = {
 	metal: "Metal Mania",
 	cutesy: "Twinkle Star",
 	indie: "Amatic SC",
+	summer: "Pacifico",
 	deco: "Ribeye Marrow",
 	pop: "Unbounded",
 	terminal: "Workbench",
@@ -406,9 +407,13 @@ export const fontQuickNames = {
 	glitch: "Rubik Glitch",
 	varsity: "Graduate",
 	futuristic: "Audiowide",
+	spotty: "Flavors",
 	drip: "Rubik Wet Paint",
+	bone: "Snowburst One",
+	nature: "Tapestry",
 	pineapple: "Some Time Later",
 	cracks: "Rubik Distressed",
+	cow: "Moo Lah Lah"
 };
 
 export const fontFamilies = [
@@ -431,6 +436,7 @@ export const fontFamilies = [
 	"Metal Mania",
 	"Twinkle Star",
 	"Amatic SC",
+	"Pacifico",
 	"Ribeye Marrow",
 	"Unbounded",
 	"Workbench",
@@ -438,9 +444,13 @@ export const fontFamilies = [
 	"Rubik Glitch",
 	"Graduate",
 	"Audiowide",
+	"Flavors",
 	"Rubik Wet Paint",
+	"Snowburst One",
+	"Tapestry",
 	"Some Time Later",
 	"Rubik Distressed",
+	"Moo Lah Lah",
 	"Urbanist",
 	"Outfit",
 	"Montserrat",

@@ -511,22 +511,6 @@
 							v-if="member.nameStyle"
 							slot="end"
 							shape="round"
-							:fill="member.nameStyle.italic ? 'solid' : 'outline'"
-							size="small"
-							@click="(e) => {
-								e.stopPropagation();
-								member.nameStyle!.italic = !member.nameStyle?.italic;
-							}"
-						>
-							<IonIcon
-								slot="icon-only"
-								:icon="italicMD"
-							/>
-						</IonButton>
-						<IonButton
-							v-if="member.nameStyle"
-							slot="end"
-							shape="round"
 							:fill="member.nameStyle.weight > 400 ? 'solid' : 'outline'"
 							size="small"
 							@click="(e) => {
@@ -537,6 +521,23 @@
 							<IonIcon
 								slot="icon-only"
 								:icon="boldMD"
+							/>
+						</IonButton>
+
+						<IonButton
+							v-if="member.nameStyle"
+							slot="end"
+							shape="round"
+							:fill="member.nameStyle.italic ? 'solid' : 'outline'"
+							size="small"
+							@click="(e) => {
+								e.stopPropagation();
+								member.nameStyle!.italic = !member.nameStyle?.italic;
+							}"
+						>
+							<IonIcon
+								slot="icon-only"
+								:icon="italicMD"
 							/>
 						</IonButton>
 					</IonItem>

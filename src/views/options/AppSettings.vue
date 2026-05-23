@@ -96,8 +96,8 @@
 						<IonSelectOption value="digital">
 							{{ $t("appSettings:fontStyle.digital") }}
 						</IonSelectOption>
-						<IonSelectOption value="bold">
-							{{ $t("appSettings:fontStyle.bold") }}
+						<IonSelectOption value="round">
+							{{ $t("appSettings:fontStyle.round") }}
 						</IonSelectOption>
 						<IonSelectOption value="newspaper">
 							{{ $t("appSettings:fontStyle.newspaper") }}

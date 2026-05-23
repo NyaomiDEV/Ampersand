@@ -48,11 +48,11 @@ html.fs-digital {
 	--ampersand-body-font-variation: "MONO" 1;
 }
 
-html.fs-bold {
+html.fs-round {
 	--ampersand-header-font-name: "Recursive";
 	--ampersand-header-font-weight: 700;
 	--ampersand-header-font-variation: "CASL" 1, "CRSV" 1;
-	--ampersand-body-font-name: "Recursive";
+	--ampersand-body-font-name: "Fredoka";
 }
 
 html.fs-newspaper {

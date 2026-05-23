@@ -471,22 +471,7 @@
 							<h3>{{ $t("systems:edit.nameStyle") }}</h3>
 							<p>{{ system.nameStyle?.family || $t("other:fonts.noFont") }}</p>
 						</IonLabel>
-						<IonButton
-							v-if="system.nameStyle"
-							slot="end"
-							shape="round"
-							:fill="system.nameStyle.italic ? 'solid' : 'outline'"
-							size="small"
-							@click="(e) => {
-								e.stopPropagation();
-								system.nameStyle!.italic = !system.nameStyle?.italic;
-							}"
-						>
-							<IonIcon
-								slot="icon-only"
-								:icon="italicMD"
-							/>
-						</IonButton>
+
 						<IonButton
 							v-if="system.nameStyle"
 							slot="end"
@@ -501,6 +486,23 @@
 							<IonIcon
 								slot="icon-only"
 								:icon="boldMD"
+							/>
+						</IonButton>
+
+						<IonButton
+							v-if="system.nameStyle"
+							slot="end"
+							shape="round"
+							:fill="system.nameStyle.italic ? 'solid' : 'outline'"
+							size="small"
+							@click="(e) => {
+								e.stopPropagation();
+								system.nameStyle!.italic = !system.nameStyle?.italic;
+							}"
+						>
+							<IonIcon
+								slot="icon-only"
+								:icon="italicMD"
 							/>
 						</IonButton>
 					</IonItem>
