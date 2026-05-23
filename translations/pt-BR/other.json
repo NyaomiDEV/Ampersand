@@ -115,37 +115,7 @@
 		"coveringDays": "Dados pertinentes aos últimos {{count}} dias"
 	},
 	"fonts": {
-		"pixel": "Pixel",
-		"digital": "Digital",
-		"monospace": "Monoespaçado",
-		"marker": "Marcador",
-		"pop": "Pop",
-		"italian": "Italiano",
-		"terminal": "Terminal",
-		"cursive": "Cursivo",
-		"dots": "Pontos",
-		"handwritten": "Manuscrito",
-		"serif": "Serif",
-		"typewriter": "Máquina de escrever",
-		"playful": "Divertido",
-		"holy": "Sagrado",
-		"bubbly": "Radiante",
-		"stencil": "Estêncil",
-		"mystery": "Mistério",
-		"cutesy": "Fofinho",
-		"indie": "Indie",
-		"deco": "Deco",
-		"western": "Western",
-		"stripes": "Stripes",
-		"drip": "Goteamento",
-		"cracks": "Rachaduras",
-		"varsity": "Campus",
-		"futuristic": "Futurístico",
-		"pineapple": "Abacaxi",
-		"noFont": "Sem fonte",
-		"gothic": "Gótico",
-		"metal": "Metal",
-		"glitch": "Glitch"
+		"noFont": "Sem fonte"
 	},
 	"loading": "Ampersand está carregando"
 }
