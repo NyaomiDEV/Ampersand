@@ -145,7 +145,10 @@
 		"gothic": "Gótico",
 		"metal": "Metal",
 		"glitch": "Glitch",
-		"spotty": "Manchado"
+		"spotty": "Manchado",
+		"nature": "Natureza",
+		"bone": "Osso",
+		"cow": "Vaca"
 	},
 	"loading": "Ampersand está carregando"
 }
