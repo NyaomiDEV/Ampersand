@@ -411,9 +411,7 @@ export const fontFamilies = [
 	"Some Time Later",
 	"Rubik Distressed",
 	"Bodoni Moda",
-	"Recursive",
-	"Recursive Mono",
-	"Recursive Casual"
+	"Recursive"
 ];
 
 export function fontFamilyPicker(header: string): Promise<string | null | undefined> {

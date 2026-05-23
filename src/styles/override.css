@@ -44,13 +44,14 @@ html.fs-modern {
 html.fs-digital {
 	--ampersand-header-font-name: "Oxanium";
 	--ampersand-header-font-weight: 600;
-	--ampersand-body-font-name: "Recursive Mono";
+	--ampersand-body-font-name: "Recursive";
+	--ampersand-body-font-variation: "MONO" 1;
 }
 
 html.fs-bold {
-	--ampersand-header-font-name: "Recursive Casual";
+	--ampersand-header-font-name: "Recursive";
 	--ampersand-header-font-weight: 700;
-	--ampersand-header-font-variation: "CRSV" 1;
+	--ampersand-header-font-variation: "CASL" 1, "CRSV" 1;
 	--ampersand-body-font-name: "Recursive";
 }
 
