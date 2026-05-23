@@ -122,13 +122,13 @@
 		"pop": "Pop",
 		"italian": "Italiano",
 		"terminal": "Terminal",
-		"cursive": "Cursivo",
+		"cursive": "Cursiva",
 		"dots": "Pontos",
-		"handwritten": "Manuscrito",
+		"handwritten": "Manuscrita",
 		"serif": "Serif",
 		"typewriter": "Máquina de escrever",
-		"playful": "Divertido",
-		"holy": "Sagrado",
+		"playful": "Divertida",
+		"holy": "Sagrada",
 		"bubbly": "Radiante",
 		"stencil": "Estêncil",
 		"mystery": "Mistério",
@@ -144,7 +144,8 @@
 		"noFont": "Sem fonte",
 		"gothic": "Gótico",
 		"metal": "Metal",
-		"glitch": "Glitch"
+		"glitch": "Glitch",
+		"spotty": "Manchado"
 	},
 	"loading": "Ampersand está carregando"
 }
