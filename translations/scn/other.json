@@ -20,6 +20,7 @@
 		"comment": "Corpu dû cummentu",
 		"commentHint": "Scrivi un cummentu...",
 		"commentCount_one": "{{count}} cummentu",
+		"commentCount_many": "",
 		"commentCount_other": "{{count}} cummenti",
 		"deleteConfirmation": "Voi pi daveru scancillari stu cummentu?"
 	},
@@ -136,7 +137,6 @@
 		"terminal": "Terminali",
 		"western": "Western",
 		"glitch": "Glitch",
-		"stripes": "Strisci",
 		"drip": "Goccia",
 		"cracks": "Crepe",
 		"pop": "Pop",

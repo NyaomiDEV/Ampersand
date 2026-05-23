@@ -20,6 +20,7 @@
 		"comment": "Corpo del commento",
 		"commentHint": "Commenta...",
 		"commentCount_one": "{{count}} commento",
+		"commentCount_many": "",
 		"commentCount_other": "{{count}} commenti",
 		"deleteConfirmation": "Vuoi veramente eliminare questo commento?"
 	},
@@ -136,7 +137,6 @@
 		"terminal": "Terminale",
 		"western": "Western",
 		"glitch": "Glitch",
-		"stripes": "Strisce",
 		"drip": "Gocciolante",
 		"cracks": "Crepe",
 		"pop": "Pop",
