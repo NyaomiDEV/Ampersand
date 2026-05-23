@@ -9,7 +9,7 @@ const legacyFontNames = {
 	dots: "Bitcount Single",
 	digital: "Orbitron",
 	handwritten: "Shantell Sans",
-	serif: "Eb Garamond",
+	serif: "EB Garamond",
 	typewriter: "TT2020",
 	monospace: "JetBrains Mono",
 	playful: "Lobster Two",
