@@ -1,7 +1,40 @@
 import { h, type VNode } from "vue";
 import { MarkedExtension } from "marked";
 import MarkdownFontFamily from "../../components/MarkdownFontFamily.vue";
-import { fontFamilies } from "../util/misc";
+
+// TODO: Remove
+const legacyFontNames = {
+	cursive: "Rochester",
+	pixel: "Departure Mono",
+	dots: "Bitcount Single",
+	digital: "Orbitron",
+	handwritten: "Shantell Sans",
+	serif: "Eb Garamond",
+	typewriter: "TT2020",
+	monospace: "JetBrains Mono",
+	playful: "Lobster Two",
+	holy: "Cinzel",
+	bubbly: "Gluten",
+	marker: "Permanent Marker",
+	gothic: "KJV1611",
+	stencil: "Saira Stencil",
+	mystery: "Mystery Quest",
+	italian: "Playwrite IT Traditional",
+	metal: "Metal Mania",
+	cutesy: "Twinkle Star",
+	indie: "Amatic SC",
+	deco: "Ribeye Marrow",
+	pop: "Unbounded",
+	terminal: "Workbench",
+	western: "Rye",
+	glitch: "Rubik Glitch",
+	varsity: "Graduate",
+	stripes: "Big Shoulders Inline",
+	futuristic: "Audiowide",
+	drip: "Rubik Wet Paint",
+	pineapple: "Some Time Later",
+	cracks: "Rubik Distressed",
+};
 
 const fontFamilyExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [
@@ -20,8 +53,6 @@ const fontFamilyExtension: MarkedExtension<(VNode | string)[], VNode | string> =
 						return [parts[0].toUpperCase(), parseFloat(parts[1])];
 					}).filter(x => !!x);
 
-					if(!family.startsWith("@") && !fontFamilies[family]) return;
-
 					const token = {
 						type: "fontFamily",
 						raw: match[0],
@@ -36,7 +67,7 @@ const fontFamilyExtension: MarkedExtension<(VNode | string)[], VNode | string> =
 			},
 			renderer(token) {
 				if(token.fontFamily.length){
-					const fontFamily = fontFamilies[token.fontFamily] || token.fontFamily;
+					const fontFamily = legacyFontNames[token.fontFamily] || token.fontFamily;
 					const fontVariation = (token.fontVarSettings as [string, number]).map(x => `"${x[0]}" ${x[1]}`).join(", ");
 					return h(MarkdownFontFamily, {
 						fontFamily,

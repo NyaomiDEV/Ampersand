@@ -33,7 +33,7 @@
 	import { CustomField, Member, System, Tag } from "../../lib/db/entities";
 	import { newMember, deleteMember, updateMember, defaultMember, getMember } from "../../lib/db/tables/members";
 	import { getTags } from "../../lib/db/tables/tags";
-	import { fontFamilies, fontFamilyPicker, promptOkCancel, sortName, toast, formatDate, imageClipPicker } from "../../lib/util/misc";
+	import { fontFamilyPicker, promptOkCancel, sortName, toast, formatDate, imageClipPicker } from "../../lib/util/misc";
 	import { getResizedImage } from "../../lib/util/image";
 	import { getCurrentInstance, onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
 	import Markdown from "../../components/Markdown.vue";
@@ -316,7 +316,7 @@
 				<div class="member-info">
 					<h3
 						:style="{
-							fontFamily: member.nameStyle ? fontFamilies[member.nameStyle] : undefined
+							fontFamily: member.nameStyle
 						}"
 					>
 						{{ member.name }}
@@ -485,7 +485,7 @@
 					<IonItem button detail @click="fontFamilyPicker($t('members:edit.nameStyle')).then(res => { if(res !== undefined) member.nameStyle = res ?? undefined; })">
 						<IonLabel>
 							<h3>{{ $t("members:edit.nameStyle") }}</h3>
-							<p>{{ member.nameStyle ? $t(`other:fonts.${member.nameStyle}`) : $t("other:fonts.noFont") }}</p>
+							<p>{{ member.nameStyle || $t("other:fonts.noFont") }}</p>
 						</IonLabel>
 					</IonItem>
 					<IonItem button detail @click="imageClipPicker($t('members:edit.imageClip')).then(res => { if(res !== undefined) member.imageClip = res ?? undefined; })">

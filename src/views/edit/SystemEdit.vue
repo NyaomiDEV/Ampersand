@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonButton, IonIcon, IonInput, IonFab, IonFabButton, IonItem, IonLabel, useIonRouter, IonTextarea, IonToggle, IonProgressBar } from "@ionic/vue";
 	import { getCurrentInstance, onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
-	import { promptOkCancel, toast, imageClipPicker, fontFamilies, fontFamilyPicker } from "../../lib/util/misc";
+	import { promptOkCancel, toast, imageClipPicker, fontFamilyPicker } from "../../lib/util/misc";
 	import { getResizedImage } from "../../lib/util/image";
 	import { deleteSystem, getSystem, newSystem, updateSystem, countSystemMembers } from "../../lib/db/tables/system";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
@@ -300,7 +300,7 @@
 				<div class="system-info">
 					<h3
 						:style="{
-							fontFamily: system.nameStyle ? fontFamilies[system.nameStyle] : undefined
+							fontFamily: system.nameStyle
 						}"
 					>
 						{{ system.name }}
@@ -449,7 +449,7 @@
 					<IonItem button detail @click="fontFamilyPicker($t('systems:edit.nameStyle')).then(res => { if(res !== undefined) system.nameStyle = res ?? undefined; })">
 						<IonLabel>
 							<h3>{{ $t("systems:edit.nameStyle") }}</h3>
-							<p>{{ system.nameStyle ? $t(`other:fonts.${system.nameStyle}`) : $t("other:fonts.noFont") }}</p>
+							<p>{{ system.nameStyle || $t("other:fonts.noFont") }}</p>
 						</IonLabel>
 					</IonItem>
 					<IonItem button detail @click="imageClipPicker($t('systems:edit.imageClip')).then(res => { if(res !== undefined) system.imageClip = res ?? undefined; })">

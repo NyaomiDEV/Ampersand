@@ -2,7 +2,7 @@ import { ActionSheetButton, actionSheetController, alertController, createAnimat
 import dayjs from "dayjs";
 import { Ref } from "vue";
 import { appConfig } from "../config";
-import { Asset, BoardMessage, CustomField, FrontingEntry, ImageClip, Member, NameStyle, Note, System } from "../db/entities";
+import { Asset, BoardMessage, CustomField, FrontingEntry, ImageClip, Member, Note, System } from "../db/entities";
 import i18next, { computePercentage, getLocaleInfo } from "../i18n";
 import { open } from "../native/open";
 import { readFile } from "@tauri-apps/plugin-fs";
@@ -379,47 +379,51 @@ export function imageClipPicker(header: string): Promise<ImageClip | null | unde
 	});
 }
 
-export const fontFamilies = {
-	cursive: "Rochester",
-	pixel: "Departure Mono",
-	dots: "Bitcount Single",
-	digital: "Orbitron",
-	handwritten: "Shantell Sans",
-	serif: "Eb Garamond",
-	typewriter: "TT2020",
-	monospace: "JetBrains Mono",
-	playful: "Lobster Two",
-	holy: "Cinzel",
-	bubbly: "Gluten",
-	marker: "Permanent Marker",
-	gothic: "KJV1611",
-	stencil: "Saira Stencil",
-	mystery: "Mystery Quest",
-	italian: "Playwrite IT Traditional",
-	metal: "Metal Mania",
-	cutesy: "Twinkle Star",
-	indie: "Amatic SC",
-	deco: "Ribeye Marrow",
-	pop: "Unbounded",
-	terminal: "Workbench",
-	western: "Rye",
-	glitch: "Rubik Glitch",
-	varsity: "Graduate",
-	stripes: "Big Shoulders Inline",
-	futuristic: "Audiowide",
-	drip: "Rubik Wet Paint",
-	pineapple: "Some Time Later",
-	cracks: "Rubik Distressed",
-};
+export const fontFamilies = [
+	"Rochester",
+	"Departure Mono",
+	"Bitcount Single",
+	"Orbitron",
+	"Shantell Sans",
+	"EB Garamond",
+	"TT2020",
+	"JetBrains Mono",
+	"Lobster Two",
+	"Cinzel",
+	"Gluten",
+	"Permanent Marker",
+	"KJV1611",
+	"Saira Stencil",
+	"Mystery Quest",
+	"Playwrite IT Traditional",
+	"Metal Mania",
+	"Twinkle Star",
+	"Amatic SC",
+	"Ribeye Marrow",
+	"Unbounded",
+	"Workbench",
+	"Rye",
+	"Rubik Glitch",
+	"Graduate",
+	"Big Shoulders Inline",
+	"Audiowide",
+	"Rubik Wet Paint",
+	"Some Time Later",
+	"Rubik Distressed",
+	"Bodoni Moda",
+	"Recursive",
+	"Recursive Mono",
+	"Recursive Casual"
+];
 
-export function fontFamilyPicker(header: string): Promise<NameStyle | null | undefined> {
+export function fontFamilyPicker(header: string): Promise<string | null | undefined> {
 	return new Promise(resolve => {
 		void (async () => {
-			const buttons: ActionSheetButton[] = Object.keys(fontFamilies).map(x => ({
-				text: i18next.t(`other:fonts.${x}`) === fontFamilies[x] ? i18next.t(`other:fonts.${x}`) : `${i18next.t(`other:fonts.${x}`)} (${fontFamilies[x]})`,
+			const buttons: ActionSheetButton[] = fontFamilies.map(x => ({
+				text: x,
 				data: { it: x },
 				htmlAttributes: {
-					style: { "font-family": fontFamilies[x] }
+					style: { "font-family": x }
 				}
 			}));
 
