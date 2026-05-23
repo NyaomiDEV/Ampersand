@@ -123,10 +123,10 @@
 
 	async function populateHighlightedDays(parts?: DatetimeParts) {
 		let startDay = dayjs().startOf("month").startOf("day").toDate();
-		let endDay = dayjs().endOf("month").startOf("day").toDate();
+		let endDay = dayjs().endOf("month").endOf("day").toDate();
 		if(parts){
 			startDay = dayjs().year(parts.year).month(parts.month - 1).startOf("month").startOf("day").toDate();
-			endDay = dayjs().year(parts.year).month(parts.month - 1).endOf("month").startOf("day").toDate();
+			endDay = dayjs().year(parts.year).month(parts.month - 1).endOf("month").endOf("day").toDate();
 		}
 
 		const days = await getFrontingEntriesDays(search.value, startDay, endDay);
