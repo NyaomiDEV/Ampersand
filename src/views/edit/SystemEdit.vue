@@ -13,6 +13,8 @@
 	import pencilMD from "@material-symbols/svg-600/rounded/edit.svg";
 	import saveMD from "@material-symbols/svg-600/rounded/save.svg";
 	import trashMD from "@material-symbols/svg-600/rounded/delete.svg";
+	import italicMD from "@material-symbols/svg-600/rounded/format_italic.svg";
+	import boldMD from "@material-symbols/svg-600/rounded/format_bold.svg";
 
 	import { appConfig } from "../../lib/config";
 	import { useRoute } from "vue-router";
@@ -300,7 +302,9 @@
 				<div class="system-info">
 					<h3
 						:style="{
-							fontFamily: system.nameStyle
+							fontFamily: system.nameStyle?.family,
+							fontWeight: system.nameStyle?.weight,
+							fontStyle: system.nameStyle?.italic ? 'italic' : 'normal'
 						}"
 						:class="{
 							'with-font-family': !!system.nameStyle
@@ -449,11 +453,56 @@
 							/>
 						</IonButton>
 					</IonItem>
-					<IonItem button detail @click="fontFamilyPicker($t('systems:edit.nameStyle')).then(res => { if(res !== undefined) system.nameStyle = res ?? undefined; })">
+					<IonItem
+						button
+						detail
+						@click="fontFamilyPicker($t('systems:edit.nameStyle')).then(res => {
+							if(res !== undefined && res !== null){
+								system.nameStyle = {
+									family: res,
+									italic: system.nameStyle?.italic || false,
+									weight: system.nameStyle?.weight || 400
+								};
+							} else
+								system.nameStyle = undefined;
+						})"
+					>
 						<IonLabel>
 							<h3>{{ $t("systems:edit.nameStyle") }}</h3>
-							<p>{{ system.nameStyle || $t("other:fonts.noFont") }}</p>
+							<p>{{ system.nameStyle?.family || $t("other:fonts.noFont") }}</p>
 						</IonLabel>
+						<IonButton
+							v-if="system.nameStyle"
+							slot="end"
+							shape="round"
+							:fill="system.nameStyle.italic ? 'solid' : 'outline'"
+							size="small"
+							@click="(e) => {
+								e.stopPropagation();
+								system.nameStyle!.italic = !system.nameStyle?.italic;
+							}"
+						>
+							<IonIcon
+								slot="icon-only"
+								:icon="italicMD"
+							/>
+						</IonButton>
+						<IonButton
+							v-if="system.nameStyle"
+							slot="end"
+							shape="round"
+							:fill="system.nameStyle.weight > 400 ? 'solid' : 'outline'"
+							size="small"
+							@click="(e) => {
+								e.stopPropagation();
+								system.nameStyle!.weight = system.nameStyle!.weight > 400 ? 400 : 700;
+							}"
+						>
+							<IonIcon
+								slot="icon-only"
+								:icon="boldMD"
+							/>
+						</IonButton>
 					</IonItem>
 					<IonItem button detail @click="imageClipPicker($t('systems:edit.imageClip')).then(res => { if(res !== undefined) system.imageClip = res ?? undefined; })">
 						<IonLabel>

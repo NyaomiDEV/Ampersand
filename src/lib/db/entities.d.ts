@@ -40,6 +40,12 @@ export type ImageClip =
 	"triangle" |
 	"very-sunny";
 
+export interface NameStyle {
+	family: string,
+	weight: number,
+	italic: boolean
+}
+
 export interface BoardMessage extends UUIDable {
 	members: UUID[],
 	title: string,
@@ -116,7 +122,7 @@ export interface JournalPostComplete extends JournalPost {
 export interface Member extends UUIDable {
 	system: UUID,
 	name: string,
-	nameStyle?: string, // font family name
+	nameStyle?: NameStyle,
 	pronouns?: string,
 	description?: string,
 	role?: string,
@@ -148,7 +154,7 @@ export interface ReminderComplete extends Reminder {
 
 export interface System extends UUIDable {
 	name: string,
-	nameStyle?: string, // font family name
+	nameStyle?: NameStyle,
 	description?: string,
 	cover?: File,
 	image?: File,

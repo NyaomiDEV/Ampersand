@@ -28,6 +28,8 @@
 	import saveMD from "@material-symbols/svg-600/rounded/save.svg";
 	import trashMD from "@material-symbols/svg-600/rounded/delete.svg";
 	import addMD from "@material-symbols/svg-600/rounded/add.svg";
+	import italicMD from "@material-symbols/svg-600/rounded/format_italic.svg";
+	import boldMD from "@material-symbols/svg-600/rounded/format_bold.svg";
 	import accountCircle from "@material-symbols/svg-600/rounded/account_circle-fill.svg";
 
 	import { CustomField, Member, System, Tag } from "../../lib/db/entities";
@@ -316,7 +318,9 @@
 				<div class="member-info">
 					<h3
 						:style="{
-							fontFamily: member.nameStyle
+							fontFamily: member.nameStyle?.family,
+							fontWeight: member.nameStyle?.weight,
+							fontStyle: member.nameStyle?.italic ? 'italic' : 'normal'
 						}"
 						:class="{
 							'with-font-family': !!member.nameStyle
@@ -485,11 +489,56 @@
 							/>
 						</IonButton>
 					</IonItem>
-					<IonItem button detail @click="fontFamilyPicker($t('members:edit.nameStyle')).then(res => { if(res !== undefined) member.nameStyle = res ?? undefined; })">
+					<IonItem
+						button
+						detail
+						@click="fontFamilyPicker($t('members:edit.nameStyle')).then(res => {
+							if(res !== undefined && res !== null){
+								member.nameStyle = {
+									family: res,
+									italic: member.nameStyle?.italic || false,
+									weight: member.nameStyle?.weight || 400
+								};
+							} else
+								member.nameStyle = undefined;
+						})"
+					>
 						<IonLabel>
 							<h3>{{ $t("members:edit.nameStyle") }}</h3>
-							<p>{{ member.nameStyle || $t("other:fonts.noFont") }}</p>
+							<p>{{ member.nameStyle?.family || $t("other:fonts.noFont") }}</p>
 						</IonLabel>
+						<IonButton
+							v-if="member.nameStyle"
+							slot="end"
+							shape="round"
+							:fill="member.nameStyle.italic ? 'solid' : 'outline'"
+							size="small"
+							@click="(e) => {
+								e.stopPropagation();
+								member.nameStyle!.italic = !member.nameStyle?.italic;
+							}"
+						>
+							<IonIcon
+								slot="icon-only"
+								:icon="italicMD"
+							/>
+						</IonButton>
+						<IonButton
+							v-if="member.nameStyle"
+							slot="end"
+							shape="round"
+							:fill="member.nameStyle.weight > 400 ? 'solid' : 'outline'"
+							size="small"
+							@click="(e) => {
+								e.stopPropagation();
+								member.nameStyle!.weight = member.nameStyle!.weight > 400 ? 400 : 700;
+							}"
+						>
+							<IonIcon
+								slot="icon-only"
+								:icon="boldMD"
+							/>
+						</IonButton>
 					</IonItem>
 					<IonItem button detail @click="imageClipPicker($t('members:edit.imageClip')).then(res => { if(res !== undefined) member.imageClip = res ?? undefined; })">
 						<IonLabel>
