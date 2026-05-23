@@ -9,7 +9,8 @@
 		"query": "Contenido de la consulta",
 		"type": "Tipo de consulta",
 		"delete": {
-			"title": "Borrar la consulta"
+			"title": "Borrar la consulta",
+			"confirm": "¿Está seguro de querer eliminar esto?"
 		}
 	}
 }
