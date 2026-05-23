@@ -120,7 +120,7 @@
 		"digital": "nasin sitelen pi ilo sona",
 		"handwritten": "nasin sitelen pi toki luka",
 		"serif": "nasin sitelen pi namako Serif",
-		"typewriter": "nasin sitelen pi ilo Typewriter",
+		"typewriter": "nasin sitelen pi ilo toki lipu",
 		"monospace": "nasin sitelen pi suli sama",
 		"playful": "nasin sitelen musi",
 		"holy": "nasin sitelen sewi",
@@ -128,7 +128,7 @@
 		"marker": "nasin sitelen pi ilo sitelen telo",
 		"gothic": "nasin sitelen suli namako",
 		"stencil": "nasin sitelen pi ilo pali sama",
-		"mystery": "nasin sitelen Mystery",
+		"mystery": "nasin sitelen pi lipu nasa",
 		"italian": "nasin sitelen pi ma Italija",
 		"metal": "nasin sitelen monsuta",
 		"cutesy": "nasin sitelen suwi",
@@ -143,7 +143,12 @@
 		"pop": "nasin sitelen Pop",
 		"futuristic": "nasin sitelen pi tenpo kama",
 		"pineapple": "nasin sitelen pi kili jelo nena",
-		"varsity": "nasin sitelen utala pi pona nanpa wan"
+		"varsity": "nasin sitelen utala pi pona nanpa wan",
+		"nature": "nasin sitelen kasi",
+		"summer": "nasin sitelen pi tenpo seli",
+		"spotty": "nasin sitelen pi namako sike",
+		"bone": "nasin sitelen pi palisa walo",
+		"cow": "nasin sitelen pi sike soweli"
 	},
 	"loading": "ilo Ampersand li pali"
 }
