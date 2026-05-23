@@ -5,5 +5,9 @@
 	src: url(../../assets/fonts/gluten/Gluten.ttf);
 }
 
-
-/* slnt = slant, wght = weight */
+@font-face {
+	font-family: "Gluten";
+	font-style: oblique -13deg 13deg;
+	font-weight: 100 900;
+	src: url(../../assets/fonts/gluten/Gluten.ttf);
+}

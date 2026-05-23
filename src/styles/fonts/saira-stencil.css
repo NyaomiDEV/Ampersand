@@ -2,6 +2,7 @@
 	font-family: "Saira Stencil";
 	font-style: normal;
 	font-weight: 100 900;
+	font-stretch: 100%;
 	src: url(../../assets/fonts/saira-stencil/SairaStencil-VariableFont.ttf);
 }
 
@@ -9,5 +10,6 @@
 	font-family: "Saira Stencil";
 	font-style: italic;
 	font-weight: 100 900;
+	font-stretch: 100%;
 	src: url(../../assets/fonts/saira-stencil/SairaStencil-Italic-VariableFont.ttf);
 }

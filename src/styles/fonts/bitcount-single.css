@@ -7,7 +7,7 @@
 
 @font-face {
 	font-family: "Bitcount Single";
-	font-style: oblique;
+	font-style: oblique -8deg 0deg;
 	font-weight: 100 900;
 	src: url(../../assets/fonts/bitcount-single/BitcountSingle.ttf);
 }

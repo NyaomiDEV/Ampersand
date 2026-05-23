@@ -7,7 +7,7 @@
 
 @font-face {
 	font-family: "Recursive";
-	font-style: oblique;
+	font-style: oblique -15deg 0deg;
 	font-weight: 300 1000;
 	src: url(../../assets/fonts/recursive/Recursive.ttf);
 }
