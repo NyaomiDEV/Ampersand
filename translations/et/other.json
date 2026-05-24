@@ -127,7 +127,12 @@
 		"handwritten": "Käekirjaline",
 		"dots": "Punktidega",
 		"pixel": "Pikseldatud",
-		"cursive": "Kursiivis"
+		"cursive": "Kursiivis",
+		"nature": "Looduslik",
+		"summer": "Suvine",
+		"bone": "Kont",
+		"spotty": "Vinniline",
+		"cow": "Lehm"
 	},
 	"count": "Kogus"
 }
