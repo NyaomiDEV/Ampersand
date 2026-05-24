@@ -3,7 +3,7 @@
 	import { IonContent, IonPage, IonProgressBar, useIonRouter } from "@ionic/vue";
 	import { useRoute } from "vue-router";
 
-	import { init, initProgress } from "../lib/db";
+	import { db, init, initMetrics } from "../lib/db";
 	import Spinner from "../components/Spinner.vue";
 	
 	const router = useIonRouter();
@@ -23,7 +23,7 @@
 					<h2>{{ $t("other:loading") }}</h2>
 					<Spinner size="96px" />
 				</div>
-				<IonProgressBar :value="initProgress" />
+				<IonProgressBar :value="[...initMetrics.keys()].filter(x => x !== '_total').length / Object.keys(db).length" />
 			</div>
 		</IonContent>
 	</IonPage>

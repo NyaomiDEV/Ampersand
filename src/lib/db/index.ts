@@ -1,6 +1,6 @@
 import { FilterQuery, type Asset, type BoardMessage, type CustomField, type FrontingEntry, type JournalPost, type Member, type Note, type Reminder, type System, type Tag } from "./entities";
 import { ShittyTable } from "./impl/shittytable";
-import type { AmpersandTableMapping, Database, SecondaryKey, Table } from "./types";
+import type { AmpersandTableMapping, Database, SecondaryKey } from "./types";
 import { Molise } from "./impl/molise";
 import { ref } from "vue";
 import { appConfig } from "../config";
@@ -20,7 +20,6 @@ export const db: Database = {
 };
 
 export const init = ref(false);
-export const initProgress = ref(0);
 export const initMetrics = ref<Map<string, number>>(new Map());
 
 export function databaseDidInit(){
