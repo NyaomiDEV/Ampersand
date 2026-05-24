@@ -75,7 +75,7 @@
 					ref="datePicker"
 					v-model="model.date"
 					:min="props.start"
-					:max="props.end"
+					:max="props.end || new Date()"
 					show-default-buttons
 					:title="$t('frontHistory:edit.presence.date')"
 				/>
