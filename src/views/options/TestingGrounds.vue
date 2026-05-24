@@ -158,10 +158,14 @@
 			<IonListHeader>Database initialization times</IonListHeader>
 			<IonList>
 				<IonItem>
-					TOTAL
-					<span slot="end">{{ initMetrics.values().reduce((p, c) => p + c, 0) }}ms</span>
+					TOTAL (VIRTUAL)
+					<span slot="end">{{ initMetrics.entries().reduce((p, c) => c[0] !== "_total" ? p + c[1] : p, 0) }}ms</span>
 				</IonItem>
-				<IonItem v-for="metric in initMetrics.entries()" :key="metric[0]">
+				<IonItem>
+					TOTAL (ACTUALLY)
+					<span slot="end">{{ initMetrics.get("_total") || 0 }}ms</span>
+				</IonItem>
+				<IonItem v-for="metric in [...initMetrics.entries().filter(x => x[0] !== '_total')].sort((a, b) => a[0].localeCompare(b[0]))" :key="metric[0]">
 					{{ metric[0] }}
 					<span slot="end">{{ metric[1] }}ms</span>
 				</IonItem>
