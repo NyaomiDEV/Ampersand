@@ -39,8 +39,6 @@ export function getTables() {
 }
 
 export async function initDatabase(){
-	const shittyDb = {} as Record<keyof AmpersandTableMapping, Table<AmpersandTableMapping[keyof AmpersandTableMapping]>>;
-
 	const initTable = async <T extends keyof AmpersandTableMapping>(name: T, secondaryKeys: SecondaryKey<AmpersandTableMapping[T]>[]) => {
 		const date = Date.now();
 		// @ts-expect-error db[name] has to be a name we can assign to, however i don't know how to type it correctly (also because name is already keyof AmpersandTableMapping so idk why)
@@ -65,7 +63,6 @@ export async function initDatabase(){
 	];
 
 	await Promise.all(promises);
-	Object.assign(db, shittyDb);
 
 	const maybeSystem = db.systems.index[0]?.uuid || undefined;
 	if (!db.systems.index.map(x => x.uuid).includes(appConfig.defaultSystem)) {
