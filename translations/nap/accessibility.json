@@ -56,6 +56,9 @@
 	"disableCovers": {
 		"title": "Leva 'e cupertine 'int'ê liste"
 	},
+	"frontingNotification": {
+		"title": "Avviso 'e front"
+	},
 	"contrastLevel": {
 		"title": "Livello 'e cuntrasto"
 	},

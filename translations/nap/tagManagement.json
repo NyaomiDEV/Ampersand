@@ -39,6 +39,7 @@
 			"desc_one": "{{count}} documento ausa stu tag",
 			"desc_other": "{{count}} documenti ausano stu tag"
 		},
+		"isArchived": "Archiviato",
 		"delete": {
 			"title": "Scancella 'o tag",
 			"confirm": "Vuò scancellà overamente stu tag?"

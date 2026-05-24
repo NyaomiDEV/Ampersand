@@ -56,6 +56,9 @@
 	"disableCovers": {
 		"title": "Hide the covers"
 	},
+	"frontingNotification": {
+		"title": "Notification for mates at the helm"
+	},
 	"contrastLevel": {
 		"title": "Contrast level"
 	},

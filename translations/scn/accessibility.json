@@ -56,6 +56,9 @@
 	"disableCovers": {
 		"title": "Disabbìlita i copertini nall'elenchi"
 	},
+	"frontingNotification": {
+		"title": "Notifica dû front"
+	},
 	"contrastLevel": {
 		"title": "Liveḍḍu di cuntrastu"
 	},

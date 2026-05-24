@@ -42,6 +42,7 @@
 			"desc_many": "{{count}} assets ùsanu stu tag",
 			"desc_other": "{{count}} assets ùsanu stu tag"
 		},
+		"isArchived": "Archiviatu",
 		"delete": {
 			"title": "Elimina tag",
 			"confirm": "Voi pi daveru scancillari stu tag?"
