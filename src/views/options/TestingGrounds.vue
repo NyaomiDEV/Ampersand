@@ -24,7 +24,7 @@
 	import exportMD from "@material-symbols/svg-600/rounded/upload.svg";
 	import { onMounted, ref } from "vue";
 	import { importDatabaseFromJSON } from "../../lib/db/ioutils/json";
-	import { getTables } from "../../lib/db";
+	import { getTables, initMetrics } from "../../lib/db";
 	import ConsoleLog from "../../components/ConsoleLog.vue";
 	
 	const i18next = useTranslation();
@@ -153,6 +153,14 @@
 			<IonListHeader>Console output</IonListHeader>
 			<IonList>
 				<ConsoleLog />
+			</IonList>
+
+			<IonListHeader>Database initialization times</IonListHeader>
+			<IonList>
+				<IonItem v-for="metric in initMetrics.entries()" :key="metric[0]">
+					{{ metric[0] }}
+					<span slot="end">{{ metric[1] }}ms</span>
+				</IonItem>
 			</IonList>
 			<IonListHeader>Pay your respects here</IonListHeader>
 			<IonList>

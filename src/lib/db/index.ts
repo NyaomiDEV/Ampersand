@@ -1,6 +1,6 @@
-import { FilterQuery, type Asset, type BoardMessage, type CustomField, type FrontingEntry, type JournalPost, type Member, type Note, type Reminder, type System, type Tag } from "./entities";
-import { makeShittyTable } from "./impl/shittytable";
-import type { Database } from "./types";
+import { FilterQuery, UUIDable, type Asset, type BoardMessage, type CustomField, type FrontingEntry, type JournalPost, type Member, type Note, type Reminder, type System, type Tag } from "./entities";
+import { ShittyTable } from "./impl/shittytable";
+import type { Database, Table } from "./types";
 import { Molise } from "./impl/molise";
 import { ref } from "vue";
 import { appConfig } from "../config";
@@ -21,6 +21,7 @@ export const db: Database = {
 
 export const init = ref(false);
 export const initProgress = ref(0);
+export const initMetrics = ref<Map<string, number>>(new Map());
 
 export function databaseDidInit(){
 	return init.value;
@@ -38,23 +39,33 @@ export function getTables() {
 }
 
 export async function initDatabase(){
-	function thenIncrement<T>(ret: T): typeof ret {
-		initProgress.value += 1 / Object.keys(db).length;
+	let lastCounter: number;
+
+	function thenIncrement<T extends UUIDable>(ret: Table<T>): typeof ret {
+		if(!lastCounter){
+			lastCounter = Date.now();
+			return ret;
+		}
+
+		const delta = Date.now() - lastCounter;
+		initMetrics.value.set(ret.name, delta);
+		lastCounter = Date.now();
+		initProgress.value = initMetrics.value.size / Object.keys(db).length;
 		return ret;
 	};
 
 	const shittyDb = {
-		systems: await makeShittyTable<System>("systems", ["name", "parent", "isPinned", "isArchived", "viewInLists"]).then(thenIncrement),
-		members: await makeShittyTable<Member>("members", ["name", "system", "isPinned", "isArchived", "isCustomFront"]).then(thenIncrement),
-		boardMessages: await makeShittyTable<BoardMessage>("boardMessages", ["members", "date", "isPinned", "isArchived"]).then(thenIncrement),
-		frontingEntries: await makeShittyTable<FrontingEntry>("frontingEntries", ["member", "startTime", "endTime", "isLocked", "isMainFronter"]).then(thenIncrement),
-		journalPosts: await makeShittyTable<JournalPost>("journalPosts", ["members", "date", "isPinned"]).then(thenIncrement),
-		reminders: await makeShittyTable<Reminder>("reminders", ["active"]).then(thenIncrement),
-		tags: await makeShittyTable<Tag>("tags", ["name", "type", "isArchived", "viewInLists"]).then(thenIncrement),
-		assets: await makeShittyTable<Asset>("assets", ["friendlyName"]).then(thenIncrement),
-		customFields: await makeShittyTable<CustomField>("customFields", ["name", "priority"]).then(thenIncrement),
-		notes: await makeShittyTable<Note>("notes", ["title", "priority", "isArchived"]).then(thenIncrement),
-		filterQueries: await makeShittyTable<FilterQuery>("filterQueries", ["name", "type"]).then(thenIncrement)
+		systems: await ShittyTable.new<System>("systems", ["name", "parent", "isPinned", "isArchived", "viewInLists"]).then(thenIncrement),
+		members: await ShittyTable.new<Member>("members", ["name", "system", "isPinned", "isArchived", "isCustomFront"]).then(thenIncrement),
+		boardMessages: await ShittyTable.new<BoardMessage>("boardMessages", ["members", "date", "isPinned", "isArchived"]).then(thenIncrement),
+		frontingEntries: await ShittyTable.new<FrontingEntry>("frontingEntries", ["member", "startTime", "endTime", "isLocked", "isMainFronter"]).then(thenIncrement),
+		journalPosts: await ShittyTable.new<JournalPost>("journalPosts", ["members", "date", "isPinned"]).then(thenIncrement),
+		reminders: await ShittyTable.new<Reminder>("reminders", ["active"]).then(thenIncrement),
+		tags: await ShittyTable.new<Tag>("tags", ["name", "type", "isArchived", "viewInLists"]).then(thenIncrement),
+		assets: await ShittyTable.new<Asset>("assets", ["friendlyName"]).then(thenIncrement),
+		customFields: await ShittyTable.new<CustomField>("customFields", ["name", "priority"]).then(thenIncrement),
+		notes: await ShittyTable.new<Note>("notes", ["title", "priority", "isArchived"]).then(thenIncrement),
+		filterQueries: await ShittyTable.new<FilterQuery>("filterQueries", ["name", "type"]).then(thenIncrement)
 	};
 
 	Object.assign(db, shittyDb);

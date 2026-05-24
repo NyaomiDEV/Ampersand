@@ -51,7 +51,7 @@
 </script>
 
 <template>
-	<IonApp>
+	<IonApp name="Ampersand">
 		<IonRouterOutlet />
 		<ModalContainer />
 		<AssetFonts />

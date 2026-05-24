@@ -11,24 +11,6 @@ import { sha256 } from "../../util/misc";
 import { intoStream } from "../utils";
 
 const appDataDirPath = await appDataDir();
-export async function makeShittyTable<T extends UUIDable>(tableName: string, secondaryKeys: SecondaryKey<T>[]) {
-	const _path = `${appDataDirPath + sep()}database${sep() + tableName}`;
-
-	if(tableName === "systems"){
-		// move old "system" database table in fs to "systems"
-		if (await fs.exists(`${appDataDirPath + sep()}database${sep()}system`))
-			await fs.rename(`${appDataDirPath + sep()}database${sep()}system`, `${appDataDirPath + sep()}database${sep()}systems`);
-	}
-
-	await fs.mkdir(_path, { recursive: true });
-
-	const table = new ShittyTable<T>(tableName, _path, secondaryKeys);
-	await table.initializeHashes();
-	await table.initializeIndex();
-	await table.migrate();
-
-	return table;
-}
 
 export class ShittyTable<T extends UUIDable> implements Table<T> {
 	name: string;
@@ -37,12 +19,31 @@ export class ShittyTable<T extends UUIDable> implements Table<T> {
 	index: IndexEntry<T>[];
 	hashes: Record<UUID, string>;
 
-	constructor(name: string, path: string, secondaryKeys: SecondaryKey<T>[]) {
+	private constructor(name: string, path: string, secondaryKeys: SecondaryKey<T>[]) {
 		this.name = name;
 		this.path = path;
 		this.secondaryKeys = secondaryKeys;
 		this.index = [];
 		this.hashes = {};
+	}
+
+	static async new<T extends UUIDable>(name: string, secondaryKeys: SecondaryKey<T>[]){
+		const _path = `${appDataDirPath + sep()}database${sep() + name}`;
+
+		if (name === "systems") {
+			// move old "system" database table in fs to "systems"
+			if (await fs.exists(`${appDataDirPath + sep()}database${sep()}system`))
+				await fs.rename(`${appDataDirPath + sep()}database${sep()}system`, `${appDataDirPath + sep()}database${sep()}systems`);
+		}
+
+		await fs.mkdir(_path, { recursive: true });
+
+		const table = new ShittyTable<T>(name, _path, secondaryKeys);
+		await table.initializeHashes();
+		await table.initializeIndex();
+		await table.migrate();
+
+		return table;
 	}
 
 	async getIndexFromDisk() {
