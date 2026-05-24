@@ -34,36 +34,36 @@
 
 	/* Headline - Large */
 	--md3-headline-large-font-family-name: var(--ampersand-header-font-name);
-	--md3-headline-large-font-family-style: var(--ampersand-body-font-style);
-	--md3-headline-large-font-weight: var(--ampersand-body-font-weight);
-	--md3-headline-large-font-features: var(--ampersand-body-font-features);
-	--md3-headline-large-font-variation: var(--ampersand-body-font-variation);
+	--md3-headline-large-font-family-style: var(--ampersand-header-font-style);
+	--md3-headline-large-font-weight: var(--ampersand-header-font-weight);
+	--md3-headline-large-font-features: var(--ampersand-header-font-features);
+	--md3-headline-large-font-variation: var(--ampersand-header-font-variation);
 	--md3-headline-large-font-size: 2rem;
 	--md3-headline-large-line-height: 2.5rem;
 	--md3-headline-large-letter-spacing: 0;
-	--md3-headline-large: var(--ampersand-body-font-style) var(--ampersand-body-font-weight) 2rem/2.5rem var(--ampersand-header-font-name);
+	--md3-headline-large: var(--ampersand-header-font-style) var(--ampersand-header-font-weight) 2rem/2.5rem var(--ampersand-header-font-name);
 
 	/* Headline - Medium */
 	--md3-headline-medium-font-family-name: var(--ampersand-header-font-name);
-	--md3-headline-medium-font-family-style: var(--ampersand-body-font-style);
-	--md3-headline-medium-font-weight: var(--ampersand-body-font-weight);
-	--md3-headline-medium-font-features: var(--ampersand-body-font-features);
-	--md3-headline-medium-font-variation: var(--ampersand-body-font-variation);
+	--md3-headline-medium-font-family-style: var(--ampersand-header-font-style);
+	--md3-headline-medium-font-weight: var(--ampersand-header-font-weight);
+	--md3-headline-medium-font-features: var(--ampersand-header-font-features);
+	--md3-headline-medium-font-variation: var(--ampersand-header-font-variation);
 	--md3-headline-medium-font-size: 1.75rem;
 	--md3-headline-medium-line-height: 2.25rem;
 	--md3-headline-medium-letter-spacing: 0;
-	--md3-headline-medium: var(--ampersand-body-font-style) var(--ampersand-body-font-weight) 1.75rem/2.25rem var(--ampersand-header-font-name);
+	--md3-headline-medium: var(--ampersand-header-font-style) var(--ampersand-header-font-weight) 1.75rem/2.25rem var(--ampersand-header-font-name);
 
 	/* Headline - Small */
 	--md3-headline-small-font-family-name: var(--ampersand-header-font-name);
-	--md3-headline-small-font-family-style: var(--ampersand-body-font-style);
-	--md3-headline-small-font-weight: var(--ampersand-body-font-weight);
-	--md3-headline-small-font-features: var(--ampersand-body-font-features);
-	--md3-headline-small-font-variation: var(--ampersand-body-font-variation);
+	--md3-headline-small-font-family-style: var(--ampersand-header-font-style);
+	--md3-headline-small-font-weight: var(--ampersand-header-font-weight);
+	--md3-headline-small-font-features: var(--ampersand-header-font-features);
+	--md3-headline-small-font-variation: var(--ampersand-header-font-variation);
 	--md3-headline-small-font-size: 1.5rem;
 	--md3-headline-small-line-height: 2rem;
 	--md3-headline-small-letter-spacing: 0;
-	--md3-headline-small: var(--ampersand-body-font-style) var(--ampersand-body-font-weight) 1.5rem/2rem var(--ampersand-header-font-name);
+	--md3-headline-small: var(--ampersand-header-font-style) var(--ampersand-header-font-weight) 1.5rem/2rem var(--ampersand-header-font-name);
 
 	/* Body - Large */
 	--md3-body-large-font-family-name: var(--ampersand-body-font-name);
