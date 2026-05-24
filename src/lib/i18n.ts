@@ -43,12 +43,15 @@ function computeLanguageKeys(lng: string){
 	return keys;
 }
 
+export function getLanguageDiff(lang: string) {
+	const enKeys = computeLanguageKeys("en");
+	const lngKeys = computeLanguageKeys(lang);
+	return enKeys.difference(lngKeys);
+}
+
 export function computePercentage(lang: string) {
 	const enKeys = computeLanguageKeys("en");
 	const lngKeys = computeLanguageKeys(lang);
-
-	console.log(enKeys.difference(lngKeys), lang);
-
 	return Math.floor(Math.min(100, 100 * (lngKeys.size / enKeys.size)));
 }
 

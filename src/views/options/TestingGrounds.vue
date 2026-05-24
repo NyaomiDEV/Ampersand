@@ -11,12 +11,11 @@
 		IonIcon,
 		IonLabel,
 		IonListHeader,
-		IonNote,
 		IonItemDivider,
 		IonProgressBar
 	} from "@ionic/vue";
 	import { escapeHatch, reverseEscapeHatch } from "../../lib/db/ioutils/dump";
-	import { toast } from "../../lib/util/misc";
+	import { languagePicker, toast } from "../../lib/util/misc";
 	import { useTranslation } from "i18next-vue";
 	import { sep, documentDir } from "@tauri-apps/api/path";
 
@@ -26,6 +25,7 @@
 	import { importDatabaseFromJSON } from "../../lib/db/ioutils/json";
 	import { getTables, initMetrics } from "../../lib/db";
 	import ConsoleLog from "../../components/ConsoleLog.vue";
+	import { getLanguageDiff } from "../../lib/i18n";
 	
 	const i18next = useTranslation();
 
@@ -33,6 +33,8 @@
 	const barProgress = ref(-1);
 
 	const escapeHatchPath = ref("");
+
+	const lng = ref("en");
 
 	async function refreshAllData(){
 		loading.value = true;
@@ -170,15 +172,25 @@
 					<span slot="end">{{ metric[1] }}ms</span>
 				</IonItem>
 			</IonList>
-			<IonListHeader>Pay your respects here</IonListHeader>
+
+			<IonListHeader>Translations galore</IonListHeader>
 			<IonList>
-				<IonItem button>
-					<IonLabel>Press F</IonLabel>
+				<IonItem button detail @click="languagePicker().then(res => { if(res) lng = res; })">
+					<IonLabel>
+						<h3>Pick a language</h3>
+						<p>{{ $t("other:languageName.local", { lng }) }} ({{ $t("other:languageName.inEnglish", { lng }) }})</p>
+					</IonLabel>
+				</IonItem>
+				<IonItem>
+					<IonLabel>
+						<h2>You miss those keys here</h2>
+						<p v-for="key in getLanguageDiff(lng)" :key="key">
+							{{ key }}
+							<span style="float: right">{{ $t(key, { lng: "en" }) }}</span>
+						</p>
+					</IonLabel>
 				</IonItem>
 			</IonList>
-			<IonNote>
-				If you came here to search for something useful, sorry to disappoint you.
-			</IonNote>
 
 			<IonListHeader>Data consistency</IonListHeader>
 			<IonList>
