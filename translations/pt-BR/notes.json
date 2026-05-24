@@ -2,7 +2,7 @@
 	"header": "Notas autoadesivas",
 	"searchPlaceholder": "Procurar por notas...",
 	"edit": {
-		"header": "Editar notas",
+		"header": "Editar nota",
 		"title": "Título da nota",
 		"content": "Conteúdo da nota",
 		"isArchived": "Arquivar nota",
