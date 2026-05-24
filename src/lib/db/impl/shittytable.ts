@@ -85,16 +85,15 @@ export class ShittyTable<T extends UUIDable> implements Table<T> {
 	}
 
 	async removeIndex(uuid: string) {
-		const _entry = this.index.find(x => uuid === x.uuid);
-		if (!_entry) return;
+		const index = this.index.findIndex(x => uuid === x.uuid);
+		if (index < 0) return;
 
-		this.index = this.index.filter(x => x !== _entry);
+		this.index = this.index.splice(index, 1);
 		await this.saveIndexToDisk();
 	}
 
 	async initializeIndex() {
-		const dir = await this.walkDir();
-		if (!dir) return;
+		const dir = await Array.fromAsync(this.walkDir());
 
 		const diskIndex = await this.getIndexFromDisk();
 
@@ -103,7 +102,9 @@ export class ShittyTable<T extends UUIDable> implements Table<T> {
 
 			for (const entry of this.index) {
 				if (!dir.find(x => x.name === entry.uuid)) {
-					this.index = this.index.filter(x => x.uuid !== entry.uuid);
+					const index = this.index.findIndex(x => entry.uuid === x.uuid);
+					if (index < 0) return;
+					this.index.splice(index, 1);
 					continue;
 				}
 
@@ -114,15 +115,16 @@ export class ShittyTable<T extends UUIDable> implements Table<T> {
 						await this.updateIndexWithData(contents, false);
 					}
 				}
+
+				const _spliceIndex = dir.findIndex(x => x.name === entry.uuid);
+				if(_spliceIndex >= 0) dir.splice(_spliceIndex, 1);
 			}
 		}
 
 		for (const file of dir) {
-			if (!this.index.find(x => x.uuid === file.name)) {
-				const contents = await this.get(file.name);
-				if (!contents) continue;
-				await this.updateIndexWithData(contents, false);
-			}
+			const contents = await this.get(file.name);
+			if (!contents) continue;
+			await this.updateIndexWithData(contents, false);
 		}
 
 		await this.saveIndexToDisk();
@@ -160,7 +162,7 @@ export class ShittyTable<T extends UUIDable> implements Table<T> {
 	}
 
 	async initializeHashes() {
-		const dir = await this.walkDir();
+		const dir = await Array.fromAsync(this.walkDir());
 		if (!dir) return;
 
 		const diskHashes = await this.getHashesFromDisk();
@@ -173,13 +175,15 @@ export class ShittyTable<T extends UUIDable> implements Table<T> {
 					delete this.hashes[fileName];
 					continue;
 				}
+
+				const _spliceIndex = dir.findIndex(x => x.name === fileName);
+				if (_spliceIndex >= 0) dir.splice(_spliceIndex, 1);
 			}
 		}
 
-		for (const file of dir) {
-			if (!this.hashes[file.name]) 
-				await this.updateHashesWithData(file.name, await this.getRaw(file.name), false);
-		}
+		for (const file of dir) 
+			await this.updateHashesWithData(file.name, await this.getRaw(file.name), false);
+		
 
 		await this.saveHashesToDisk();
 	}
@@ -199,11 +203,13 @@ export class ShittyTable<T extends UUIDable> implements Table<T> {
 		return walk(obj as object, revive) as T;
 	}
 
-	async walkDir() {
-		return (await fs.readDir(this.path))
-			.filter(
-				x => ![".index", ".hashes", ".migrations"].includes(x.name)
-			);
+	async* walkDir() {
+		for(const dirent of await fs.readDir(this.path)){
+			if ([".index", ".hashes", ".migrations"].includes(dirent.name))
+				continue;
+
+			yield dirent;
+		}
 	}
 
 	count() {
@@ -314,16 +320,11 @@ export class ShittyTable<T extends UUIDable> implements Table<T> {
 	}
 
 	async clear() {
-		const _dir = await this.walkDir();
-		if (!_dir) throw new Error("no directory to clear");
+		await fs.remove(this.path, { recursive: true });
+		await fs.mkdir(this.path, { recursive: true });
 
-		for (const file of _dir) {
-			await fs.remove(this.path + sep() + file.name);
-			this.index = this.index.filter(x => x.uuid !== file.name);
-		}
-
-		if (await fs.exists(`${this.path + sep()}.migrations`))
-			await fs.remove(`${this.path + sep()}.migrations`);
+		this.index = [];
+		this.hashes = {};
 
 		await this.saveIndexToDisk();
 		await this.saveHashesToDisk();
@@ -351,7 +352,7 @@ export class ShittyTable<T extends UUIDable> implements Table<T> {
 			case "members":
 				version = await members(this as unknown as ShittyTable<Member>, version);
 				break;
-			case "system":
+			case "systems":
 				version = await systems(this as unknown as ShittyTable<System>, version);
 				break;
 			case "boardMessages":
