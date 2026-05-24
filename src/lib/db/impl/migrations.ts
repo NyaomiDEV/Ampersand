@@ -56,17 +56,6 @@ export async function members(table: ShittyTable<Member>, version: number){
 }
 
 export async function systems(table: ShittyTable<System>, version: number){
-	function zeroToOne(){
-		// set default system in app config
-		if(appConfig.defaultSystem === nilUid){
-			const maybeSystem = table.index[0];
-			if(!maybeSystem) return false;
-			appConfig.defaultSystem = maybeSystem.uuid;
-		}
-
-		return true;
-	}
-
 	async function oneToTwo() {
 		for (const systemIndex of table.index) {
 			if (typeof systemIndex.isPinned === "undefined" || typeof systemIndex.isArchived === "undefined") {
@@ -115,9 +104,7 @@ export async function systems(table: ShittyTable<System>, version: number){
 	}
 
 	switch(version){
-		// @ts-expect-error fallthrough
 		case 0:
-			if(!zeroToOne()) return 0;
 		// @ts-expect-error fallthrough
 		case 1:
 			if(!await oneToTwo()) return 1;

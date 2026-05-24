@@ -2,7 +2,7 @@ import { appDataDir, sep } from "@tauri-apps/api/path";
 import * as fs from "@tauri-apps/plugin-fs";
 import type { Asset, JournalPost, Member, System, Tag, UUIDable, UUID, BoardMessage } from "../entities";
 import { decodeAsync, encode } from "@msgpack/msgpack";
-import type { MigrationsMapping, Table } from "../types";
+import type { AmpersandTableMapping, MigrationsMapping, Table } from "../types";
 import { deleteNull, replace, revive, walk, walkAsync } from "../../serialization";
 import { assets, boardMessages, journalPosts, members, systems, tags } from "./migrations";
 import { PartialBy } from "../../types";
@@ -27,7 +27,7 @@ export class ShittyTable<T extends UUIDable> implements Table<T> {
 		this.hashes = {};
 	}
 
-	static async new<T extends UUIDable>(name: string, secondaryKeys: SecondaryKey<T>[]){
+	static async new<T extends keyof AmpersandTableMapping>(name: T, secondaryKeys: SecondaryKey<AmpersandTableMapping[T]>[]): Promise<ShittyTable<AmpersandTableMapping[T]>>{
 		const _path = `${appDataDirPath + sep()}database${sep() + name}`;
 
 		if (name === "systems") {
@@ -38,7 +38,7 @@ export class ShittyTable<T extends UUIDable> implements Table<T> {
 
 		await fs.mkdir(_path, { recursive: true });
 
-		const table = new ShittyTable<T>(name, _path, secondaryKeys);
+		const table = new ShittyTable<AmpersandTableMapping[T]>(name, _path, secondaryKeys);
 		await table.initializeHashes();
 		await table.initializeIndex();
 		await table.migrate();

@@ -1,6 +1,6 @@
-import { FilterQuery, UUIDable, type Asset, type BoardMessage, type CustomField, type FrontingEntry, type JournalPost, type Member, type Note, type Reminder, type System, type Tag } from "./entities";
+import { FilterQuery, type Asset, type BoardMessage, type CustomField, type FrontingEntry, type JournalPost, type Member, type Note, type Reminder, type System, type Tag } from "./entities";
 import { ShittyTable } from "./impl/shittytable";
-import type { Database, Table } from "./types";
+import type { AmpersandTableMapping, Database, SecondaryKey, Table } from "./types";
 import { Molise } from "./impl/molise";
 import { ref } from "vue";
 import { appConfig } from "../config";
@@ -39,30 +39,32 @@ export function getTables() {
 }
 
 export async function initDatabase(){
-	function thenIncrement<T extends UUIDable>(ret: Table<T>): typeof ret {
-		const delta = Date.now() - lastCounter;
-		initMetrics.value.set(ret.name, delta);
-		lastCounter = Date.now();
-		initProgress.value = initMetrics.value.size / Object.keys(db).length;
-		return ret;
+	const shittyDb = {} as Record<keyof AmpersandTableMapping, Table<AmpersandTableMapping[keyof AmpersandTableMapping]>>;
+
+	const initTable = async <T extends keyof AmpersandTableMapping>(name: T, secondaryKeys: SecondaryKey<AmpersandTableMapping[T]>[]) => {
+		const date = Date.now();
+		// @ts-expect-error db[name] has to be a name we can assign to, however i don't know how to type it correctly (also because name is already keyof AmpersandTableMapping so idk why)
+		db[name] = await ShittyTable.new(name, secondaryKeys);
+		initMetrics.value.set(name, Date.now() - date);
 	};
 
-	let lastCounter = Date.now();
+	const initBefore = Date.now();
 
-	const shittyDb = {
-		systems: await ShittyTable.new<System>("systems", ["name", "parent", "isPinned", "isArchived", "viewInLists"]).then(thenIncrement),
-		members: await ShittyTable.new<Member>("members", ["name", "system", "isPinned", "isArchived", "isCustomFront"]).then(thenIncrement),
-		boardMessages: await ShittyTable.new<BoardMessage>("boardMessages", ["members", "date", "isPinned", "isArchived"]).then(thenIncrement),
-		frontingEntries: await ShittyTable.new<FrontingEntry>("frontingEntries", ["member", "startTime", "endTime", "isLocked", "isMainFronter"]).then(thenIncrement),
-		journalPosts: await ShittyTable.new<JournalPost>("journalPosts", ["members", "date", "isPinned"]).then(thenIncrement),
-		reminders: await ShittyTable.new<Reminder>("reminders", ["active"]).then(thenIncrement),
-		tags: await ShittyTable.new<Tag>("tags", ["name", "type", "isArchived", "viewInLists"]).then(thenIncrement),
-		assets: await ShittyTable.new<Asset>("assets", ["friendlyName"]).then(thenIncrement),
-		customFields: await ShittyTable.new<CustomField>("customFields", ["name", "priority"]).then(thenIncrement),
-		notes: await ShittyTable.new<Note>("notes", ["title", "priority", "isArchived"]).then(thenIncrement),
-		filterQueries: await ShittyTable.new<FilterQuery>("filterQueries", ["name", "type"]).then(thenIncrement)
-	};
+	const promises = [
+		initTable("systems", ["name", "parent", "isPinned", "isArchived", "viewInLists"]),
+		initTable("members", ["name", "system", "isPinned", "isArchived", "isCustomFront"]),
+		initTable("boardMessages", ["members", "date", "isPinned", "isArchived"]),
+		initTable("frontingEntries", ["member", "startTime", "endTime", "isLocked", "isMainFronter"]),
+		initTable("journalPosts", ["members", "date", "isPinned"]),
+		initTable("reminders", ["active"]),
+		initTable("tags", ["name", "type", "isArchived", "viewInLists"]),
+		initTable("assets", ["friendlyName"]),
+		initTable("customFields", ["name", "priority"]),
+		initTable("notes", ["title", "priority", "isArchived"]),
+		initTable("filterQueries", ["name", "type"])
+	];
 
+	await Promise.all(promises);
 	Object.assign(db, shittyDb);
 
 	const maybeSystem = db.systems.index[0]?.uuid || undefined;
@@ -71,5 +73,6 @@ export async function initDatabase(){
 			appConfig.defaultSystem = maybeSystem;
 	}
 
+	initMetrics.value.set("_total", Date.now() - initBefore);
 	init.value = true;
 }
