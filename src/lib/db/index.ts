@@ -39,20 +39,15 @@ export function getTables() {
 }
 
 export async function initDatabase(){
-	let lastCounter: number;
-
 	function thenIncrement<T extends UUIDable>(ret: Table<T>): typeof ret {
-		if(!lastCounter){
-			lastCounter = Date.now();
-			return ret;
-		}
-
 		const delta = Date.now() - lastCounter;
 		initMetrics.value.set(ret.name, delta);
 		lastCounter = Date.now();
 		initProgress.value = initMetrics.value.size / Object.keys(db).length;
 		return ret;
 	};
+
+	let lastCounter = Date.now();
 
 	const shittyDb = {
 		systems: await ShittyTable.new<System>("systems", ["name", "parent", "isPinned", "isArchived", "viewInLists"]).then(thenIncrement),

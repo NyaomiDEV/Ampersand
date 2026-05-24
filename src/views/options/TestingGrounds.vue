@@ -157,6 +157,10 @@
 
 			<IonListHeader>Database initialization times</IonListHeader>
 			<IonList>
+				<IonItem>
+					TOTAL
+					<span slot="end">{{ initMetrics.values().reduce((p, c) => p + c, 0) }}ms</span>
+				</IonItem>
 				<IonItem v-for="metric in initMetrics.entries()" :key="metric[0]">
 					{{ metric[0] }}
 					<span slot="end">{{ metric[1] }}ms</span>
