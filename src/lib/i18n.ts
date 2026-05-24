@@ -23,20 +23,31 @@ for(const path of context.keys()){
 	translations.set({ lang, ns }, context(path));
 }
 
-const enTranslationCount = translations
-	.entries()
-	.filter(x => x[0].lang === "en")
-	.map(x => x[1] = Object.values(flattenObject(x[1] as object)).length)
-	.reduce((p, c) => p + c, 0);
+function computeLanguageKeys(lng: string){
+	const _translations = translations.entries().filter(x => x[0].lang === lng);
+
+	const keys: Set<string> = new Set();
+
+	for(const translation of _translations){
+		const flattened = flattenObject(translation[1] as object);
+		for (let key of Object.keys(flattened)) {
+			if (!flattened[key]?.length) continue;
+
+			if (key.endsWith("_one") || key.endsWith("_many") || key.endsWith("_other"))
+				key = key.replace(/_(?:one|many|other)$/, "");
+
+			keys.add(`${translation[0].ns}:${key}`);
+		}
+	}
+
+	return keys;
+}
 
 export function computePercentage(lang: string) {
-	const count = translations
-		.entries()
-		.filter(x => x[0].lang === lang)
-		.map(x => x[1] = Object.values(flattenObject(x[1] as object)).length)
-		.reduce((p, c) => p + c, 0);
+	const enKeys = computeLanguageKeys("en");
+	const lngKeys = computeLanguageKeys(lang);
 
-	return Math.floor(Math.min(100, 100 * (count / enTranslationCount)));
+	return Math.floor(Math.min(100, 100 * (lngKeys.size / enKeys.size)));
 }
 
 export function getSupportedLanguageFromNavigator(){
