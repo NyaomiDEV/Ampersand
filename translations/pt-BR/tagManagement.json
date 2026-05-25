@@ -47,7 +47,7 @@
 		"viewInLists": "Ver nas listas",
 		"isArchived": "Tag de Arquivamento",
 		"tagID": "ID da tag: {{tagID}}",
-		"tagIDCopiedToClipboard": "ID da Tag em formato mencionado foi copiada à área de transferência!",
+		"tagIDCopiedToClipboard": "ID da Tag foi copiada à área de transferência!",
 		"color": "Cor da tag"
 	}
 }

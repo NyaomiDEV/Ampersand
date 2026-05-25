@@ -6,7 +6,7 @@
 		"message": "Mensagem do lembrete",
 		"triggeringEvent": {
 			"title": "Evento de gatilho",
-			"addedToFront": "Depois de que um membro foi adicionado ao fronte",
+			"addedToFront": "Depois de que um membro for adicionado ao fronte",
 			"removedFromFront": "Após um membro ter sido removido do fronte"
 		},
 		"delete": {

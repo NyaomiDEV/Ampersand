@@ -7,7 +7,7 @@
 	"influencing": "Influenciando {{influencedMember}}",
 	"edit": {
 		"header": "Editar entrada de fronte",
-		"comment": "Comentário do Fronte",
+		"comment": "Comentário",
 		"presence": {
 			"confirmButton": "Confirmar",
 			"date": "Data",
@@ -18,7 +18,7 @@
 		"startTime": "Horário de início",
 		"endTime": "Horário de término",
 		"delete": {
-			"confirm": "Tem certeza que quer deletar essa entrada de front?",
+			"confirm": "Tem certeza que quer deletar essa entrada de fronte?",
 			"title": "Deletar entrada de fronte"
 		},
 		"removeFromFront": "Remover do fronte",

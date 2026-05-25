@@ -4,7 +4,7 @@
 		"title": "Exportar seus dados",
 		"desc": "Faça uma cópia de segurança para um arquivo que você possa guardar em algum outro lugar"
 	},
-	"dbImportDesc": "Aviso! Isso irá sobrescrever qualquer dado existente",
+	"dbImportDesc": "Aviso! Isso irá sobrescrever quaisquer dados existente",
 	"dbImport": "Importar seus dados",
 	"pkImport": "Importar seus dados de uma exportação do Pluralkit",
 	"tuImport": "Importar seus dados de uma exportação do Tupperbox",
