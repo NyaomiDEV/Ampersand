@@ -29,7 +29,7 @@ function spawnAsync(cmd, args, cwd){
 }
 
 async function getVersion(){
-	const closestTags = (await spawnAsync("git", ["tag", "--list", "--sort=-creatordate"], import.meta.dirname)).stdout.trim().split("\n").filter(x => x !== "dev" || !x.includes("-"));
+	const closestTags = (await spawnAsync("git", ["tag", "--list", "--sort=-creatordate"], import.meta.dirname)).stdout.trim().split("\n").filter(x => x !== "dev");
 
 	const revcount = parseInt((await spawnAsync("git", ["rev-list", "--count", "HEAD"], import.meta.dirname)).stdout);
 	const deltaRevcount = parseInt((await spawnAsync("git", ["rev-list", "--count", closestTags[0]], import.meta.dirname)).stdout);
