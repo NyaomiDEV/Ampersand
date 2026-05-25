@@ -63,5 +63,8 @@
 	},
 	"backgroundColor": {
 		"title": "Wähle die Hintergrundfarbe"
+	},
+	"frontingNotification": {
+		"title": "Benachrichtigung pinnen"
 	}
 }
