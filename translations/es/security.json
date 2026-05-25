@@ -1,7 +1,7 @@
 {
 	"applock": {
 		"desc": "Bloquea la aplicación con una contraseña",
-		"title": "Bloqueo de aplicaciones"
+		"title": "Bloqueo de aplicación"
 	},
 	"biometrics": {
 		"desc": "Desbloquear mediante tu huella dactilar o cara",

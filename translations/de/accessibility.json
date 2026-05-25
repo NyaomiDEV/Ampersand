@@ -52,7 +52,8 @@
 	"themeScheme": {
 		"title": "Farbschema",
 		"vibrant": "Lebhaft",
-		"neutral": "Neutral"
+		"neutral": "Neutral",
+		"expressive": "Ausdrucksvoll"
 	},
 	"colors": {
 		"app": "App-Farben",
