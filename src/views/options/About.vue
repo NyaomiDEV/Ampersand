@@ -21,7 +21,7 @@
 	const egg = ref(0);
 	const showDeveloperToggle = computed(() => egg.value >= 10);
 	const newVersion = ref<UpdateCheckResponse>();
-	const isUnstableVersion = import.meta.env.AMPERSAND_IS_UNSTABLE_BUILD === "1";
+	const isUnstableVersion = import.meta.env.AMPERSAND_BUILD_TYPE === "unstable";
 
 	const webkitVersion = ref();
 

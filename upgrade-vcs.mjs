@@ -9,6 +9,23 @@ import * as TOML from "smol-toml";
 //
 // UTILITY FUNCTIONS
 //
+function getBuildType(){
+	if(process.env.AMPERSAND_BUILD_TYPE)
+		return process.env.AMPERSAND_BUILD_TYPE;
+
+	if(process.env.GITHUB_REF_NAME) {
+		if (process.env.GITHUB_REF_NAME === "main")
+			return "unstable";
+		else if (process.env.GITHUB_REF_NAME.startsWith("refs/tags/") && process.env.GITHUB_REF_NAME.includes("-"))
+			// 0.2.1-beta1, 0.2.1-pre2, etc.
+			return "prebeta";
+		else
+			return "stable";
+	}
+
+	return "local";
+}
+
 function spawnAsync(cmd, args, cwd){
 	return new Promise(resolve => {
 		const _process = spawn(cmd, args, {stdio: "pipe", cwd});
@@ -28,21 +45,45 @@ function spawnAsync(cmd, args, cwd){
 	})
 }
 
-async function getVersion(){
-	const closestTags = (await spawnAsync("git", ["tag", "--list", "--sort=-creatordate"], import.meta.dirname)).stdout.trim().split("\n").filter(x => x !== "dev");
-
+async function getVersion(buildType){
 	const revcount = parseInt((await spawnAsync("git", ["rev-list", "--count", "HEAD"], import.meta.dirname)).stdout);
-	const deltaRevcount = parseInt((await spawnAsync("git", ["rev-list", "--count", closestTags[0]], import.meta.dirname)).stdout);
+
+	// If we're supplying a version via ENV, reuse it
+	if(process.env.AMPERSAND_VERSION){
+		return {
+			revcount,
+			version: process.env.AMPERSAND_VERSION,
+		}
+	}
+
 	const packageJson = JSON.parse(await readFile(resolve(import.meta.dirname, "package.json"), "utf-8"));
+
+	switch(buildType){
+		case "stable":
+		case "prebeta": {
+			const version = process.env.GITHUB_REF_NAME.replace("refs/tags/", "");
+			return {
+				revcount,
+				version
+			}
+		}
+		case "unstable": {
+			const closestTag = (await spawnAsync("git", ["tag", "--list", "--sort=-creatordate"], import.meta.dirname)).stdout.trim().split("\n").find(x => x !== "dev" && !x.includes("-"));
+			const deltaRevcount = parseInt((await spawnAsync("git", ["rev-list", "--count", closestTag], import.meta.dirname)).stdout);
+			return {
+				revcount,
+				version: packageJson.version + "+" + (revcount - deltaRevcount)
+			}
+		}
+	}
 
 	return {
 		revcount,
-		packageVersion: packageJson.version,
-		version: packageJson.version + "+" + (revcount - deltaRevcount)
+		version: packageJson.version
 	}
 }
 
-async function patchFiles(unstableBuild, buildTarget) {
+async function patchFiles(buildType, version) {
 	// Read manifest files
 	const packageJson = JSON.parse(await readFile(resolve(import.meta.dirname, "package.json"), "utf-8"));
 	const tauriConfJson = JSON.parse(await readFile(resolve(import.meta.dirname, "src-tauri", "tauri.conf.json"), "utf-8"));
@@ -50,17 +91,19 @@ async function patchFiles(unstableBuild, buildTarget) {
 	const tauriPluginCargoToml = TOML.parse(await readFile(resolve(import.meta.dirname, "src-tauri-plugin", "Cargo.toml"), "utf-8"));
 
 	// Modify parsed manifests
-	tauriConfJson.bundle.android.versionCode = revcount;
-	tauriConfJson.bundle.iOS.bundleVersion = `${revcount}`;
-	tauriConfJson.bundle.macOS.bundleVersion = `${revcount}`;
+	tauriConfJson.bundle.android.versionCode = version.revcount;
+	tauriConfJson.bundle.iOS.bundleVersion = `${version.revcount}`;
+	tauriConfJson.bundle.macOS.bundleVersion = `${version.revcount}`;
 
-	// If this is an unstable build, automate it
-	if (unstableBuild) {
+	// If this is a build that is not a local one, modify files
+	// -- This specifically helps us have consistent versions when tagging
+	// -- but we most probably won't need this in local builds
+	if (buildType !== "local") {
 		// Modify parsed manifests
-		packageJson.version = version;
-		tauriConfJson.version = buildTarget === "ios" ? version.split("+")[0] : version;
-		tauriCargoToml.package.version = version;
-		tauriPluginCargoToml.package.version = version;
+		packageJson.version = version.version;
+		tauriConfJson.version = process.env.AMPERSAND_BUILD_TARGET === "ios" ? version.version.split("+")[0].split("-")[0] : version.version;
+		tauriCargoToml.package.version = version.version;
+		tauriPluginCargoToml.package.version = version.version;
 
 		// Write modified manifests
 		await writeFile(resolve(import.meta.dirname, "package.json"), JSON.stringify(packageJson, undefined, 2), "utf-8");
@@ -76,25 +119,21 @@ async function patchFiles(unstableBuild, buildTarget) {
 // MAIN CODE
 //
 
-const { revcount, packageVersion, version } = await getVersion();
-const isUnstableBuild = process.env.GITHUB_REF_NAME === "main";
-const buildTarget = process.env.AMPERSAND_BUILD_TARGET;
+const buildType = getBuildType();
+const version = await getVersion(buildType);
 
-console.log("New version is", isUnstableBuild ? version : packageVersion);
+console.log("New version is", version.version);
 
 // If in CI, export as env
 if (process.env.GITHUB_ENV) {
-	await appendFile(process.env.GITHUB_ENV, `AMPERSAND_VERSION=${isUnstableBuild ? version : packageVersion}\n`, "utf-8");
-	await appendFile(process.env.GITHUB_OUTPUT, `ampersand_version=${isUnstableBuild ? version : packageVersion}\n`, "utf-8");
+	await appendFile(process.env.GITHUB_ENV, `AMPERSAND_VERSION=${version.version}\n`, "utf-8");
+	await appendFile(process.env.GITHUB_OUTPUT, `ampersand_version=${version.version}\n`, "utf-8");
 
-	if (isUnstableBuild) {
-		await appendFile(process.env.GITHUB_ENV, "AMPERSAND_IS_UNSTABLE_BUILD=1\n", "utf-8");
-		await appendFile(process.env.GITHUB_OUTPUT, `ampersand_is_unstable_build=true\n`, "utf-8");
-	} else {
-		await appendFile(process.env.GITHUB_OUTPUT, `ampersand_is_unstable_build=false\n`, "utf-8");
-	}
+	await appendFile(process.env.GITHUB_ENV, `AMPERSAND_BUILD_TYPE=${buildType}\n`, "utf-8");
+	await appendFile(process.env.GITHUB_OUTPUT, `ampersand_build_type=${buildType}\n`, "utf-8");
 }
 
 // If NO_PATCH is not set, patch files
 if(!process.env.NO_PATCH)
-	await patchFiles(isUnstableBuild, buildTarget);
+	await patchFiles(buildType, version);
+ 

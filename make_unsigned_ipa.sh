@@ -1,6 +1,6 @@
 #!/bin/sh
 
-APP_PRODUCT="Ampersand$(if [ "$AMPERSAND_IS_UNSTABLE_BUILD" = "1" ]; then printf " Unstable"; fi)"
+APP_PRODUCT="Ampersand$(if [ "$AMPERSAND_BUILD_TYPE" = "unstable" ]; then printf " Unstable"; fi)"
 
 APP_NAME="ampersand"
 PROJECT_DIR="src-tauri/gen/apple"
@@ -12,7 +12,7 @@ APP_BUNDLE_PATH="$ARCHIVE_PATH/Products/Applications/${APP_PRODUCT}.app"
 IPA_PATH="${IPA_PATH:-Ampersand.ipa}"
 XCCONFIG_FILE="$PROJECT_DIR/xcconfig/Production.xcconfig"
 
-if [ "$AMPERSAND_IS_UNSTABLE_BUILD" = "1" ]; then
+if [ "$AMPERSAND_BUILD_TYPE" = "unstable" ]; then
   XCCONFIG_FILE="$PROJECT_DIR/xcconfig/Unstable.xcconfig"
 fi
 

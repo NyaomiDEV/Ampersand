@@ -3,7 +3,7 @@ import { pluginVue } from "@rsbuild/plugin-vue";
 import { pluginBasicSsl } from "@rsbuild/plugin-basic-ssl";
 
 const host = process.env.TAURI_DEV_HOST;
-const debug = process.env.NODE_ENV === "development" || process.env.AMPERSAND_IS_UNSTABLE_BUILD === "1";
+const debug = process.env.NODE_ENV === "development" || process.env.AMPERSAND_BUILD_TYPE === "unstable";
 
 const { publicVars } = loadEnv({ prefixes: ["TAURI_ENV_", "AMPERSAND_"] });
 

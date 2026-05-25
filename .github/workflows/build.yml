@@ -25,6 +25,7 @@ jobs:
     outputs:
       upload_url: ${{ steps.release.outputs.upload_url }}
       ampersand_version: ${{ steps.vcs.outputs.ampersand_version }}
+      ampersand_build_type: ${{ steps.vcs.outputs.ampersand_build_type }}
     steps:
     - name: Checkout
       uses: actions/checkout@v6
@@ -54,9 +55,9 @@ jobs:
       id: release
       uses: softprops/action-gh-release@v3.0.0
       with:
-        name: ${{ github.ref_name != 'main' && format('Release ({0})', steps.vcs.outputs.ampersand_version) || format('Unstable build ({0})', steps.vcs.outputs.ampersand_version) }}
+        name: ${{ steps.vcs.outputs.ampersand_build_type == 'stable' && format('Release ({0})', steps.vcs.outputs.ampersand_version) || format('Unstable build ({0})', steps.vcs.outputs.ampersand_version) }}
         tag_name: ${{ github.ref_name != 'main' && github.ref_name || 'dev' }}
-        prerelease: ${{ github.ref_name == 'main' && true || false }}
+        prerelease: ${{ steps.vcs.outputs.ampersand_build_type != 'stable' }}
         draft: true
   build-android:
     uses: ./.github/workflows/build-android.yml
@@ -64,6 +65,8 @@ jobs:
     secrets: inherit
     with:
       upload_url: ${{ needs.prepare-build.outputs.upload_url }}
+      ampersand_version: ${{ needs.prepare-build.outputs.ampersand_version }}
+      ampersand_build_type: ${{ needs.prepare-build.outputs.ampersand_build_type }}
     permissions:
       contents: write
   build-ios:
@@ -72,6 +75,8 @@ jobs:
     secrets: inherit
     with:
       upload_url: ${{ needs.prepare-build.outputs.upload_url }}
+      ampersand_version: ${{ needs.prepare-build.outputs.ampersand_version }}
+      ampersand_build_type: ${{ needs.prepare-build.outputs.ampersand_build_type }}
     permissions:
       contents: write
   build-pc:
@@ -80,6 +85,8 @@ jobs:
     secrets: inherit
     with:
       upload_url: ${{ needs.prepare-build.outputs.upload_url }}
+      ampersand_version: ${{ needs.prepare-build.outputs.ampersand_version }}
+      ampersand_build_type: ${{ needs.prepare-build.outputs.ampersand_build_type }}
     permissions:
       contents: write
   release:
@@ -93,6 +100,6 @@ jobs:
       - name: Publish release
         uses: softprops/action-gh-release@v3.0.0
         with:
-          name: ${{ github.ref_name != 'main' && format('Release ({0})', needs.prepare-build.outputs.ampersand_version) || format('Unstable build ({0})', needs.prepare-build.outputs.ampersand_version) }}
+          name: ${{ needs.prepare-build.outputs.ampersand_build_type == 'stable' && format('Release ({0})', needs.prepare-build.outputs.ampersand_version) || format('Unstable build ({0})', needs.prepare-build.outputs.ampersand_version) }}
           tag_name: ${{ github.ref_name != 'main' && github.ref_name || 'dev' }}
           draft: false

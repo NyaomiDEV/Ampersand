@@ -19,7 +19,7 @@ async function getReleases(){
 
 export async function checkUpdates(): Promise<UpdateCheckResponse | undefined> {
 	if(!securityConfig.allowRemoteContent) return undefined;
-	const isUnstableBuild = import.meta.env.AMPERSAND_IS_UNSTABLE_BUILD === "1";
+	const isUnstableBuild = import.meta.env.AMPERSAND_BUILD_TYPE === "unstable";
 	const releases = await getReleases();
 	if(!releases) return undefined;
 

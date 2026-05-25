@@ -7,6 +7,12 @@ on:
       upload_url:
         type: string
         required: true
+      ampersand_version:
+        type: string
+        required: true
+      ampersand_build_type:
+        type: string
+        required: true
     secrets:
       ANDROID_KEY_ALIAS:
         required: true
@@ -16,6 +22,10 @@ on:
         required: true
       ANDROID_STORE_PASSWORD:
         required: true
+
+env:
+  AMPERSAND_VERSION: ${{ inputs.ampersand_version }}
+  AMPERSAND_BUILD_TYPE: ${{ inputs.ampersand_build_type }}
 
 # Sets the GITHUB_TOKEN permissions to allow deployment
 permissions:

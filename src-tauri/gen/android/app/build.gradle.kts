@@ -51,8 +51,8 @@ android {
             manifestPlaceholders["appName"] = "@string/app_name"
             base.archivesName.set("ampersand")
             if(
-                System.getenv("AMPERSAND_IS_UNSTABLE_BUILD") !== null &&
-                System.getenv("AMPERSAND_IS_UNSTABLE_BUILD").equals("1")
+                System.getenv("AMPERSAND_BUILD_TYPE") !== null &&
+                System.getenv("AMPERSAND_BUILD_TYPE").equals("unstable")
             ) {
                 applicationIdSuffix = ".ci"
                 manifestPlaceholders["appName"] = "@string/app_name_ci"
