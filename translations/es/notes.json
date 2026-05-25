@@ -1,5 +1,5 @@
 {
-	"searchPlaceholder": "Buscando notas…",
+	"searchPlaceholder": "Buscar por notas…",
 	"edit": {
 		"headerAdd": "Añadir nota",
 		"title": "Título de la nota",
@@ -11,5 +11,5 @@
 		},
 		"header": "Editar nota"
 	},
-	"header": "Notas rápidas"
+	"header": "Notas adhesivas"
 }

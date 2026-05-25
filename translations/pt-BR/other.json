@@ -111,7 +111,7 @@
 	"count": "Conta",
 	"report": {
 		"header": "Relatório do Ampersand",
-		"generatedOn": "Gerar em {{date}}",
+		"generatedOn": "Gerado em {{date}}",
 		"coveringDays": "Dados pertinentes aos últimos {{count}} dias"
 	},
 	"fonts": {

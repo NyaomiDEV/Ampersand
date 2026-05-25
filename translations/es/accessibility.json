@@ -29,7 +29,7 @@
 	"header": "Accesibilidad",
 	"highLegibilityFont": {
 		"title": "Fuente claramente legible",
-		"desc": "Utiliza una fuente legible en lugar de la fuente predeterminada del dispositivo"
+		"desc": "Utiliza una fuente claramente legible en lugar de la fuente predeterminada del dispositivo"
 	},
 	"themeIsAmoled": {
 		"title": "Pantallas AMOLED",

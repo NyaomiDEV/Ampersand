@@ -1,5 +1,5 @@
 {
-	"header_mainfronter": "Hola, {{fronterName}}!",
+	"header_mainfronter": "¡Hola, {{fronterName}}!",
 	"systemDescription": "Descripción del sistema",
 	"nowFronting": "Al frente ahora",
 	"fronterInfluencing": "Influenciando {{influencedMember}}",

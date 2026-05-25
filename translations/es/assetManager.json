@@ -9,10 +9,10 @@
 		},
 		"tags": "Etiquetas"
 	},
-	"header": "Gestor de activos",
-	"searchPlaceholder": "Buscando elementos...",
+	"header": "Gestor de archivos",
+	"searchPlaceholder": "Buscar archivos...",
 	"add": {
-		"header": "Añadir activo",
+		"header": "Añadir archivo",
 		"attachment": "Añadir archivo adjunto"
 	}
 }
