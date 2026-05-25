@@ -58,7 +58,8 @@
 	"colors": {
 		"app": "App-Farben",
 		"custom": "Benutzerdefinierte Farben",
-		"system": "Systemfarben"
+		"system": "Systemfarben",
+		"title": "Akzent- und Hintergrundfarben"
 	},
 	"backgroundColor": {
 		"title": "Wähle die Hintergrundfarbe"
