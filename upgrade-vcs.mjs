@@ -29,10 +29,10 @@ function spawnAsync(cmd, args, cwd){
 }
 
 async function getVersion(){
-	const closestTags = (await spawnAsync("git", ["tag", "--list", "--sort=-creatordate"], import.meta.dirname)).stdout.trim().split("\n").filter(x => x !== "dev");
+	const closestTags = (await spawnAsync("git", ["tag", "--list", "--sort=-creatordate"], import.meta.dirname)).stdout.trim().split("\n").filter(x => x !== "dev" || !x.includes("-"));
 
-	const revcount = Number((await spawnAsync("git", ["rev-list", "--count", "HEAD"], import.meta.dirname)).stdout);
-	const deltaRevcount = Number((await spawnAsync("git", ["rev-list", "--count", closestTags[0]], import.meta.dirname)).stdout);
+	const revcount = parseInt((await spawnAsync("git", ["rev-list", "--count", "HEAD"], import.meta.dirname)).stdout);
+	const deltaRevcount = parseInt((await spawnAsync("git", ["rev-list", "--count", closestTags[0]], import.meta.dirname)).stdout);
 	const packageJson = JSON.parse(await readFile(resolve(import.meta.dirname, "package.json"), "utf-8"));
 
 	return {
@@ -58,7 +58,7 @@ async function patchFiles(unstableBuild, buildTarget) {
 	if (unstableBuild) {
 		// Modify parsed manifests
 		packageJson.version = version;
-		tauriConfJson.version = buildTarget === "ios" ? packageVersion : version;
+		tauriConfJson.version = buildTarget === "ios" ? version.split("+")[0] : version;
 		tauriCargoToml.package.version = version;
 		tauriPluginCargoToml.package.version = version;
 
