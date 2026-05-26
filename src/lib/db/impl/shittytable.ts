@@ -88,7 +88,7 @@ export class ShittyTable<T extends UUIDable> implements Table<T> {
 		const index = this.index.findIndex(x => uuid === x.uuid);
 		if (index < 0) return;
 
-		this.index = this.index.splice(index, 1);
+		this.index.splice(index, 1);
 		await this.saveIndexToDisk();
 	}
 
