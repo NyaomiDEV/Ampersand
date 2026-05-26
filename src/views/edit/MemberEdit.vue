@@ -34,7 +34,7 @@
 
 	import { CustomField, Member, System, Tag } from "../../lib/db/entities";
 	import { newMember, deleteMember, updateMember, defaultMember, getMember } from "../../lib/db/tables/members";
-	import { getTags } from "../../lib/db/tables/tags";
+	import { getTags, isValidTag } from "../../lib/db/tables/tags";
 	import { fontFamilyPicker, promptOkCancel, sortName, toast, formatDate, imageClipPicker, saveImageFile } from "../../lib/util/misc";
 	import { encodeImageWithMetadata, getImageOrMetadata, getResizedImage } from "../../lib/util/image";
 	import { getCurrentInstance, onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
@@ -47,7 +47,7 @@
 	import Avatar from "../../components/Avatar.vue";
 	import Cover from "../../components/Cover.vue";
 	import SystemSelect from "../../modals/SystemSelect.vue";
-	import { getCustomFields } from "../../lib/db/tables/customFields";
+	import { getCustomFields, isValidCustomField } from "../../lib/db/tables/customFields";
 	import CustomFieldsSelect from "../../modals/CustomFieldsSelect.vue";
 	import { appConfig } from "../../lib/config";
 	import { getSystem } from "../../lib/db/tables/system";
@@ -185,9 +185,19 @@
 
 		member.value.image = image;
 
-		if(typeof (metadata as Member).name === "string") {
+		if(metadata && typeof (metadata as Member).name === "string") {
+			// prepare metadata
+			(metadata as Member).tags = (metadata as Member).tags.filter(x => isValidTag(x));
+
+			if((metadata as Member).customFields)
+				(metadata as Member).customFields = new Map((metadata as Member).customFields!.entries().filter(x => isValidCustomField(x[0])));
+
 			// merge metadata
 			Object.assign(member.value, metadata);
+
+			// refresh custom fields as they won't immediately show
+			customFieldsToShowInEditMode.value = customFields.value.filter(x => x.default || (member.value.customFields?.has(x.uuid) && member.value.customFields?.get(x.uuid)?.length));
+			customFieldsToShowInViewMode.value = customFields.value.filter(x => (member.value.customFields?.has(x.uuid)));
 		}
 
 		loadingBar.value = false;

@@ -50,37 +50,45 @@ export async function getResizedImage(maxWidthHeight = 512){
 	return await resizeImage(new Blob([arrayBuffer]), maxWidthHeight);
 }
 
-export async function getImageOrMetadata(maxWidthHeight = 512): Promise<{ image: File, metadata: object } | undefined>{
+export async function getImageOrMetadata(maxWidthHeight = 512): Promise<{ image: File, metadata?: object } | undefined>{
 	const arrayBuffer = await getImageFile();
 	if (!arrayBuffer) return;
 
-	const ret = {
-		image: new File([], "empty"),
-		metadata: {}
+	const ret: { image: File, metadata?: object; } = {
+		image: new File([], "")
 	};
 
-	const iend = new Uint8Array([0, 0, 0, 0, 0x49, 0x45, 0x4E, 0x44, 0xAE, 0x42, 0x60, 0x82]);
-	const end = arrayBuffer.findLastIndex((_v, i, a) => {
+	const gzipMagic = new Uint8Array([0x1F, 0x8B, 0x08]); // de facto, including DEFLATE flag
+
+	const indices: number[] = arrayBuffer.reduce((indices: number[], _value, index) => {
 		let found = true;
-		for(let j = 0; j < iend.length; j++){
-			if(iend[j] !== a[i + j])
+		for (let j = 0; j < gzipMagic.length; j++) {
+			if (gzipMagic[j] !== arrayBuffer[index + j])
 				found = false;
 		}
+		if (found) indices.push(index);
+		return indices;
+	}, []);
 
-		return found;
-	});
+	let goodIndex = -1;
 
-	if(end < 0){ // no image metadata
+	for(const index of indices){
+		try {
+			// we probably have a gzip stream, let's try to decompress it fully
+			const blob = new Blob([arrayBuffer.slice(index)]);
+			const uncompressed = blob.stream().pipeThrough(new DecompressionStream("gzip"));
+			ret.metadata = walk(await decodeAsync(uncompressed) as object, revive);
+			goodIndex = index;
+			break;
+		} catch (_) {
+			continue;
+		}
+	}
+
+	if(goodIndex < 0){ // no image metadata
 		ret.image = await resizeImage(new Blob([arrayBuffer]), maxWidthHeight);
-		return ret;
 	} else
-		ret.image = await resizeImage(new Blob([arrayBuffer.slice(0, end + iend.length - 1)]), maxWidthHeight);
-
-	// we have meta! decode it
-	const blob = new Blob([arrayBuffer.slice(end + iend.length)]);
-	const uncompressed = blob.stream().pipeThrough(new DecompressionStream("gzip"));
-
-	ret.metadata = walk(await decodeAsync(uncompressed) as object, revive);
+		ret.image = await resizeImage(new Blob([arrayBuffer.slice(0, goodIndex - 1)]), maxWidthHeight);
 
 	return ret;
 }
