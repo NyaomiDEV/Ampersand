@@ -10,11 +10,11 @@ import * as TOML from "smol-toml";
 // UTILITY FUNCTIONS
 //
 function getBuildType(){
-	if(process.env.AMPERSAND_BUILD_TYPE)
+	if(process.env.AMPERSAND_BUILD_TYPE && ["local", "prebeta", "unstable", "stable"].includes(process.env.AMPERSAND_BUILD_TYPE))
 		return process.env.AMPERSAND_BUILD_TYPE;
 
 	if(process.env.GITHUB_REF_NAME) {
-		if (process.env.GITHUB_REF_NAME === "main")
+		if (!process.env.GITHUB_REF_NAME.startsWith("refs/tags/"))
 			return "unstable";
 		else if (process.env.GITHUB_REF_NAME.startsWith("refs/tags/") && process.env.GITHUB_REF_NAME.includes("-"))
 			// 0.2.1-beta1, 0.2.1-pre2, etc.
@@ -47,20 +47,30 @@ function spawnAsync(cmd, args, cwd){
 
 async function getVersion(buildType){
 	const revcount = parseInt((await spawnAsync("git", ["rev-list", "--count", "HEAD"], import.meta.dirname)).stdout);
-
-	// If we're supplying a version via ENV, reuse it
-	if(process.env.AMPERSAND_VERSION){
-		return {
-			revcount,
-			version: process.env.AMPERSAND_VERSION,
-		}
-	}
-
 	const packageJson = JSON.parse(await readFile(resolve(import.meta.dirname, "package.json"), "utf-8"));
 
 	switch(buildType){
+		default:
 		case "stable":
+		case "local": {
+			if (/^\d+\.\d+\.\d+$/.exec(process.env.AMPERSAND_VERSION) !== null)
+				return {
+					revcount,
+					version: process.env.AMPERSAND_VERSION,
+				}
+
+			return {
+				revcount,
+				version: process.env.GITHUB_REF_NAME?.replace("refs/tags/", "") || packageJson.version
+			}
+		}
 		case "prebeta": {
+			if (/^\d+\.\d+\.\d+\-.+$/.exec(process.env.AMPERSAND_VERSION) !== null)
+				return {
+					revcount,
+					version: process.env.AMPERSAND_VERSION,
+				}
+
 			const version = process.env.GITHUB_REF_NAME.replace("refs/tags/", "");
 			return {
 				revcount,
@@ -68,6 +78,12 @@ async function getVersion(buildType){
 			}
 		}
 		case "unstable": {
+			if (/^\d+\.\d+\.\d+\+\d+$/.exec(process.env.AMPERSAND_VERSION) !== null)
+				return {
+					revcount,
+					version: process.env.AMPERSAND_VERSION,
+				}
+
 			const closestTag = (await spawnAsync("git", ["tag", "--list", "--sort=-creatordate"], import.meta.dirname)).stdout.trim().split("\n").find(x => x !== "dev" && !x.includes("-"));
 			const deltaRevcount = parseInt((await spawnAsync("git", ["rev-list", "--count", closestTag], import.meta.dirname)).stdout);
 			return {
@@ -75,11 +91,6 @@ async function getVersion(buildType){
 				version: packageJson.version + "+" + (revcount - deltaRevcount)
 			}
 		}
-	}
-
-	return {
-		revcount,
-		version: packageJson.version
 	}
 }
 
@@ -122,7 +133,7 @@ async function patchFiles(buildType, version) {
 const buildType = getBuildType();
 const version = await getVersion(buildType);
 
-console.log("New version is", version.version);
+console.log("New version is %s (%s) -- Buildtype '%s'", version.version, version.revcount, buildType);
 
 // If in CI, export as env
 if (process.env.GITHUB_ENV) {
