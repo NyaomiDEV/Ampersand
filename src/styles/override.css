@@ -123,7 +123,7 @@ html:is(.sys-macos) body {
 /* Tab bar scrolling */
 ion-tab-bar {
 	overflow-x: auto;
-	justify-content: unset;
+	justify-content: normal;
 }
 
 /* Tab bar desktop mode */
@@ -132,8 +132,6 @@ html:is(.plt-tablet, .plt-desktop) ion-tabs {
 }
 
 html:is(.plt-tablet, .plt-desktop) ion-tab-bar {
-	padding-top: var(--ion-safe-area-top, 0px);
-	padding-bottom: var(--ion-safe-area-bottom, 0px);
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
@@ -147,6 +145,14 @@ html:is(.plt-tablet, .plt-desktop) ion-tab-bar {
 html:is(.plt-tablet, .plt-desktop) ion-tab-button {
 	flex: 0 0;
 	min-height: 80px;
+
+	&:first-child {
+		margin-top: var(--ion-safe-area-top, 0px);
+	}
+
+	&:last-child {
+		margin-bottom: var(--ion-safe-area-bottom, 0px);
+	}
 }
 
 html:is(.plt-tablet, .plt-desktop) ion-tabs :not(ion-tab-bar) {

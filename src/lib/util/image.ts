@@ -72,8 +72,8 @@ export async function getImageOrMetadata(maxWidthHeight = 512): Promise<{ image:
 
 	if(end < 0){ // no image metadata
 		ret.image = await resizeImage(new Blob([arrayBuffer]), maxWidthHeight);
-    	return ret;
-    } else
+		return ret;
+	} else
 		ret.image = await resizeImage(new Blob([arrayBuffer.slice(0, end + iend.length - 1)]), maxWidthHeight);
 
 	// we have meta! decode it
