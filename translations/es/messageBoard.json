@@ -18,7 +18,7 @@
 		},
 		"defaultPollValues": {
 			"abstain": "Abstenerse",
-			"yes": "Sí",
+			"yes": "Si",
 			"no": "No",
 			"veto": "Veto"
 		},

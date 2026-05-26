@@ -15,10 +15,10 @@
 		"postID": "ID de la publicación: {{postID}}",
 		"delete": {
 			"title": "Eliminar publicación del diario",
-			"confirm": "¿Estás seguro de que quieres eliminar este tema?"
+			"confirm": "¿Estás seguro de querer borrar esta publicación?"
 		},
-		"headerAdd": "Añadir nueva publicación",
-		"headerEdit": "Editar el tema",
+		"headerAdd": "Añadir una nueva publicación",
+		"headerEdit": "Editar publicación",
 		"headerOptions": "Opciones del tema",
 		"title": "Título",
 		"subtitle": "Subtítulo",
