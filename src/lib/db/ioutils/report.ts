@@ -158,7 +158,7 @@ function frontingEntryToHtml(entry: FrontingEntry) {
 	].filter(x => !!x).join("");
 }
 
-export function exportReport(systems: UUID[]) {
+export function exportReport(systems: UUID[], includeArchived: boolean, includeCustomFronts: boolean) {
 
 	async function _export() {
 		try {
@@ -196,12 +196,15 @@ export function exportReport(systems: UUID[]) {
 			await fd.write(encoder.encode(intestationToHtml(date)));
 
 			// make progress computations
-			const members = getMemberIndex().filter(x => systems.includes(x.system!)).map(x => x.uuid);
-			const frontingEntries = await Promise.all(
+			const members = getMemberIndex().filter(x => systems.includes(x.system!) && x.isArchived === includeArchived && x.isCustomFront === includeCustomFronts).map(x => x.uuid);
+			const frontingEntries = (await Promise.all(
 				getFrontingEntryIndex()
 					.filter(x => members.includes(x.member!) && x.endTime && Date.now() - x.startTime!.valueOf() < 1000 * 60 * 60 * 24 * maxDays)
 					.map(x => getFrontingEntry(x.uuid))
-			) as (FrontingEntry & { endTime: Date; })[];
+			)).map(x => ({
+				...x,
+				influencing: x.influencing ? members.includes(x.influencing) ? x.influencing : undefined : undefined
+			})) as (FrontingEntry & { endTime: Date; })[];
 			const analytics = getFrontingStatistics(frontingEntries);
 
 			const progressTotal = systems.length + members.length + frontingEntries.length + analytics.frontingCount.size;

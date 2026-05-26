@@ -9,7 +9,10 @@
 	},
 	"reportExport": {
 		"title": "Gènera un rapportu",
-		"desc": "Sarva un rapportu pi spartìrilu cu terapisti e pirsuni vicini"
+		"desc": "Sarva un rapportu pi spartìrilu cu terapisti e pirsuni vicini",
+		"includeHeader": "Scegghia chi mittiri",
+		"includeArchived": "Membri archiviati",
+		"includeCustomFronts": "Front pirsunalizzati"
 	},
 	"dbImportDesc": "Attenzioni! Chistu va a suprascriviri ogni datu esistenti",
 	"dbImport": "Mporta i tò dati",

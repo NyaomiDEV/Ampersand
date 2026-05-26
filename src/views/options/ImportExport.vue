@@ -2,7 +2,7 @@
 	import { IonContent, IonHeader, IonList, IonItem, IonIcon, IonLabel, IonPage, IonTitle, IonToolbar, IonBackButton, IonProgressBar, IonListHeader, IonNote } from "@ionic/vue";
 	import { h, ref } from "vue";
 	import { importDatabaseFromBinary } from "../../lib/db/ioutils/old";
-	import { getDocumentFile, sortName, toast } from "../../lib/util/misc";
+	import { getDocumentFile, promptOptions, sortName, toast } from "../../lib/util/misc";
 	import { useTranslation } from "i18next-vue";
 	import { importPluralKit } from "../../lib/db/external/pluralkit";
 	import { importTupperBox } from "../../lib/db/external/tupperbox";
@@ -91,7 +91,22 @@
 			const systems = (await showSystemSelect())?.map(x => x.uuid);
 			if(!systems) throw new Error("No systems selected");
 
-			const { progress, status } = exportReport(systems);
+			const values = await promptOptions(
+				i18next.t("importExport:reportExport.includeHeader"),
+				[
+					{
+						name: i18next.t("importExport:reportExport.includeArchived"),
+						value: "archived"
+					},
+					{
+						name: i18next.t("importExport:reportExport.includeCustomFronts"),
+						value: "customFronts"
+					}
+				]
+			);
+			if(!values) throw new Error("No options selected");
+
+			const { progress, status } = exportReport(systems, values.includes("archived"), values.includes("customFronts"));
 
 			progress.addEventListener("start", () => {
 				barProgress.value = 0;

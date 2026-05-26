@@ -235,6 +235,41 @@ export async function promptYesNo(header: string, subHeader?: string, message?: 
 	});
 }
 
+export async function promptOptions(header: string, inputs: { name: string, value: string }[], subHeader?: string, message?: string): Promise<void | string[]> {
+	return new Promise((resolve) => {
+		void (async () => {
+			const alert = await alertController.create({
+				header,
+				subHeader,
+				message,
+				inputs: inputs.map(x => ({
+					type: "checkbox",
+					label: x.name,
+					value: x.value
+				})),
+				buttons: [
+					{
+						text: i18next.t("other:alerts.cancel"),
+						role: "cancel",
+					},
+					{
+						text: i18next.t("other:alerts.ok"),
+						role: "confirm",
+					}
+				]
+			});
+			await alert.present();
+			const detail = await alert.onDidDismiss();
+			
+			if(detail.role === "confirm")
+				resolve(detail.data.values);
+			else
+				resolve();
+		})();
+	});
+}
+
+
 export function isPlainObject(value) {
 	if (typeof value !== "object" || value === null) return false;
 

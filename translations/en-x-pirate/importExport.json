@@ -9,7 +9,10 @@
 	},
 	"reportExport": {
 		"title": "Make a scroll o' accounts",
-		"desc": "Stow away a scroll for sharin' with yer healers and mateys"
+		"desc": "Stow away a scroll for sharin' with yer healers and mateys",
+		"includeHeader": "Pick what to haul aboard",
+		"includeArchived": "Mates in Davy Jones' locker",
+		"includeCustomFronts": "Custom fronts"
 	},
 	"dbImportDesc": "Avast! This will sink any existin' charts!",
 	"dbImport": "Bring yer charts aboard",

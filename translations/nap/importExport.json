@@ -9,7 +9,10 @@
 	},
 	"reportExport": {
 		"title": "Faje 'nu report",
-		"desc": "Sanda 'nu report pe' 'o spartere cu 'e terapiste e 'a ggente 'e casa"
+		"desc": "Sanda 'nu report pe' 'o spartere cu 'e terapiste e 'a ggente 'e casa",
+		"includeHeader": "Scegli che bbuò mettere",
+		"includeArchived": "Membrie archiviate",
+		"includeCustomFronts": "Front personalizzate"
 	},
 	"dbImportDesc": "Attenziò! Chisto va a sovrascrivere ogne dato ca già ce sta",
 	"dbImport": "Mpurta 'e date tuoje 'a nu file 'e backup",

@@ -9,7 +9,10 @@
 	},
 	"reportExport": {
 		"title": "Generate a report",
-		"desc": "Save a human-readable report about your data to share with therapists and loved ones"
+		"desc": "Save a human-readable report about your data to share with therapists and loved ones",
+		"includeHeader": "Select what to include",
+		"includeArchived": "Archived members",
+		"includeCustomFronts": "Custom fronts"
 	},
 	"dbImportDesc": "Warning! It will override any existing data",
 	"dbImport": "Import your data",

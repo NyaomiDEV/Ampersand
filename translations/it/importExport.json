@@ -9,7 +9,10 @@
 	},
 	"reportExport": {
 		"title": "Genera un report",
-		"desc": "Salva un report da condividere con terapisti e persone vicine"
+		"desc": "Salva un report da condividere con terapisti e persone vicine",
+		"includeHeader": "Scegli cosa includere",
+		"includeArchived": "Membrɜ archiviatɜ",
+		"includeCustomFronts": "Front personalizzati"
 	},
 	"dbImportDesc": "Attenzione! Questo sovrascriverà ogni dato esistente",
 	"dbImport": "Importa i tuoi dati",

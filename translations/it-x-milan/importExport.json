@@ -9,7 +9,10 @@
 	},
 	"reportExport": {
 		"title": "Tira fuori il report",
-		"desc": "Salva un report da mollare ai terapisti e alla family"
+		"desc": "Salva un report da mollare ai terapisti e alla family",
+		"includeHeader": "Decidi cosa metterci dentro",
+		"includeArchived": "Gente in archivio",
+		"includeCustomFronts": "Front customizzati"
 	},
 	"dbImportDesc": "Occhio! Qui sovrascrivi tutto, non si scherza",
 	"dbImport": "Importa i dati",
