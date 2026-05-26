@@ -109,7 +109,8 @@ export async function encodeImageWithMetadata(image: File | undefined, name: str
 
 	ctx.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
 	const blob = await canvas.convertToBlob({
-		type: "image/png"
+		type: "image/webp",
+		quality: 1
 	});
 
 	// prepare metadata
@@ -119,5 +120,6 @@ export async function encodeImageWithMetadata(image: File | undefined, name: str
 		]).stream().pipeThrough(new CompressionStream("gzip"))
 	).blob();
 
-	return new File([blob, meta], `${name}.png`);
+	const ext = blob.type === "image/webp" ? "webp" : "png";
+	return new File([blob, meta], `${name}.${ext}`);
 }
