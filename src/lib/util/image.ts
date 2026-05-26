@@ -102,16 +102,20 @@ export async function encodeImageWithMetadata(image: File | undefined, name: str
 		], "ampersand_logo.svg");
 	}
 
-	const bitmap = await createImageBitmap(image);
-	const canvas = new OffscreenCanvas(bitmap.width, bitmap.height);
-	const ctx = canvas.getContext("2d");
-	if (!ctx) return;
+	if(image.type.endsWith("svg")){
+		const bitmap = await createImageBitmap(image);
+		const canvas = new OffscreenCanvas(bitmap.width, bitmap.height);
+		const ctx = canvas.getContext("2d");
+		if (!ctx) return;
 
-	ctx.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
-	const blob = await canvas.convertToBlob({
-		type: "image/webp",
-		quality: 1
-	});
+		ctx.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+		const blob = await canvas.convertToBlob({
+			type: "image/webp",
+			quality: 1
+		});
+
+		image = new File([blob], image.name.replace(".svg", blob.type === "image/webp" ? ".webp" : ".png"));
+	}
 
 	// prepare metadata
 	const meta = await new Response(
@@ -120,6 +124,6 @@ export async function encodeImageWithMetadata(image: File | undefined, name: str
 		]).stream().pipeThrough(new CompressionStream("gzip"))
 	).blob();
 
-	const ext = blob.type === "image/webp" ? "webp" : "png";
-	return new File([blob, meta], `${name}.${ext}`);
+	const ext = image.type === "image/webp" ? "webp" : "png";
+	return new File([image, meta], `${name}.${ext}`);
 }
