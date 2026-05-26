@@ -2,7 +2,7 @@
 	"header": "Manejo de etiquetas",
 	"select": "Selecciona algunas etiquetas",
 	"selector": {
-		"member": "Etiquetas del miembro",
+		"member": "Etiquetas de miembros",
 		"journal": "Etiquetas del diario",
 		"asset": "Etiquetas de activos"
 	},
@@ -30,9 +30,9 @@
 		},
 		"showJournal": {
 			"title": "Mostrar publicaciones de diarios con ésta etiqueta",
-			"desc_one": "{{count}} publicación de diario con ésta etiqueta",
-			"desc_many": "{{count}} publicaciones de diarios con ésta etiqueta",
-			"desc_other": "{{count}} publicaciones de diarios con ésta etiqueta"
+			"desc_one": "{{count}} publicación del diario con ésta etiqueta",
+			"desc_many": "{{count}} publicaciones del diario con ésta etiqueta",
+			"desc_other": "{{count}} publicaciones del diario con ésta etiqueta"
 		},
 		"delete": {
 			"title": "Eliminar etiqueta",

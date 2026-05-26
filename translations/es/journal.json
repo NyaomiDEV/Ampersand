@@ -15,15 +15,15 @@
 		"postID": "ID de la publicación: {{postID}}",
 		"delete": {
 			"title": "Eliminar publicación del diario",
-			"confirm": "¿Estás seguro de querer borrar esta publicación?"
+			"confirm": "¿Estás seguro de querer eliminar esta publicación?"
 		},
 		"headerAdd": "Añadir una nueva publicación",
 		"headerEdit": "Editar publicación",
-		"headerOptions": "Opciones del tema",
+		"headerOptions": "Opciones de publicaciones",
 		"title": "Título",
 		"subtitle": "Subtítulo",
 		"tags": "Etiquetas",
 		"isPinned": "Publicación fijada",
-		"postIDcopiedToClipboard": "¡El ID del tema se ha copiado en el portapapeles!"
+		"postIDcopiedToClipboard": "¡El ID de la publicación se ha copiado en el portapapeles!"
 	}
 }

@@ -102,7 +102,7 @@
 		"header": "Comentarios",
 		"commenter": "Seleccionar comentarista",
 		"comment": "Texto del comentario",
-		"commentHint": "Contando…",
+		"commentHint": "Comente…",
 		"commentCount_one": "{{count}} comentario",
 		"commentCount_many": "{{count}} comentarios",
 		"commentCount_other": "{{count}} comentarios",
@@ -151,5 +151,5 @@
 		"bone": "Huesos",
 		"cow": "Vaca"
 	},
-	"loading": "Ampersand se está iniciando"
+	"loading": "Ampersand se está cargando"
 }

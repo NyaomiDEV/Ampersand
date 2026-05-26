@@ -7,7 +7,7 @@
 		"addToFront": "Agregar al frente",
 		"setMainFronter": "Definir como el principial del frente",
 		"removeFromFront": "Remover del frente",
-		"unsetMainFronter": "Definir como el principial del frente",
+		"unsetMainFronter": "Desactivar como el principial del frente",
 		"setSoleFronter": "Establecer como principal"
 	},
 	"toasts": {

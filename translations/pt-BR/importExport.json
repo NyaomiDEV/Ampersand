@@ -39,7 +39,10 @@
 	},
 	"reportExport": {
 		"title": "Gerar um relatório",
-		"desc": "Salve um relatório sobre seus dados para compartilhar com terapeutas e pessoas queridas"
+		"desc": "Salve um relatório sobre seus dados para compartilhar com terapeutas e pessoas queridas",
+		"includeHeader": "Selecione o que incluir",
+		"includeArchived": "Membros arquivados",
+		"includeCustomFronts": "Frontes personalizados"
 	},
 	"jsonExport": {
 		"title": "Exporte seus dados para um arquivo JSON",

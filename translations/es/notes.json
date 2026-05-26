@@ -6,7 +6,7 @@
 		"content": "Contenido de las notas",
 		"isArchived": "Guardar nota",
 		"delete": {
-			"title": "Borrar nota",
+			"title": "Eliminar nota",
 			"confirm": "¿Estás seguro de que quieres eliminar esta nota?"
 		},
 		"header": "Editar nota"
