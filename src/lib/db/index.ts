@@ -52,7 +52,7 @@ export async function initDatabase(){
 		initTable("members", ["name", "system", "isPinned", "isArchived", "isCustomFront"]),
 		initTable("boardMessages", ["members", "date", "isPinned", "isArchived"]),
 		initTable("frontingEntries", ["member", "startTime", "endTime", "isLocked", "isMainFronter"]),
-		initTable("journalPosts", ["members", "date", "isPinned"]),
+		initTable("journalPosts", ["title", "members", "date", "isPinned"]),
 		initTable("reminders", ["active"]),
 		initTable("tags", ["name", "type", "isArchived", "viewInLists"]),
 		initTable("assets", ["friendlyName"]),
