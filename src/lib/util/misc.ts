@@ -4,11 +4,12 @@ import { Ref } from "vue";
 import { appConfig } from "../config";
 import { Asset, BoardMessage, CustomField, FrontingEntry, ImageClip, Member, Note, System } from "../db/entities";
 import i18next, { computePercentage, getLocaleInfo } from "../i18n";
-import { open } from "../native/open";
-import { readFile } from "@tauri-apps/plugin-fs";
-import { basename, sep } from "@tauri-apps/api/path";
+import { open, save } from "../native/open";
+import { mkdir, readFile, writeFile } from "@tauri-apps/plugin-fs";
+import { basename, dirname, pictureDir, sep } from "@tauri-apps/api/path";
 import { findMimeType } from "../mime";
 import type { IndexEntry } from "../db/types";
+import { platform } from "@tauri-apps/plugin-os";
 
 export async function getDocumentFile(extensions?: string[], asFile?: true): Promise<File | undefined>;
 export async function getDocumentFile(extensions?: string[], asFile?: false): Promise<Uint8Array<ArrayBuffer> | undefined>;
@@ -43,6 +44,34 @@ export async function getImageFile() {
 	if (!path) return;
 	const array = await readFile(path);
 	return array;
+}
+
+export async function saveImageFile(image: File){
+	let path: string | undefined = `${await pictureDir()}${sep()}${image.name}`;
+
+	if (platform() !== "ios") {
+		// Use save file dialog outside of iOS
+		const _path = await save({
+			defaultPath: path,
+			filters: [{
+				name: "PNG image",
+				extensions: ["png"]
+			}]
+		});
+		if (_path) path = _path;
+		else path = undefined; // save file got canceled
+	}
+
+	if (!path) throw new Error("no path");
+
+	// Android uses content:// for providing scoped file paths; here we just get the FD from the returned URI
+	if (!path.startsWith("content://")) {
+		// So in all other cases where the path is a real one, be it relative or not, we ensure we have a directory to write to
+		const _dirname = await dirname(path);
+		await mkdir(_dirname, { recursive: true });
+	}
+
+	await writeFile(path, image.stream(), { append: false, create: true });
 }
 
 export function formatDate(date: Date, withDate?: "collapsed" | "expanded" | "only-collapsed" | "only-expanded"){

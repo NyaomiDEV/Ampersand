@@ -35,8 +35,8 @@
 	import { CustomField, Member, System, Tag } from "../../lib/db/entities";
 	import { newMember, deleteMember, updateMember, defaultMember, getMember } from "../../lib/db/tables/members";
 	import { getTags } from "../../lib/db/tables/tags";
-	import { fontFamilyPicker, promptOkCancel, sortName, toast, formatDate, imageClipPicker } from "../../lib/util/misc";
-	import { getResizedImage } from "../../lib/util/image";
+	import { fontFamilyPicker, promptOkCancel, sortName, toast, formatDate, imageClipPicker, saveImageFile } from "../../lib/util/misc";
+	import { encodeImageWithMetadata, getImageOrMetadata, getResizedImage } from "../../lib/util/image";
 	import { getCurrentInstance, onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
 	import Markdown from "../../components/Markdown.vue";
 	import { addMaterialColors, rgbaToArgb, unsetMaterialColors } from "../../lib/theme";
@@ -89,6 +89,8 @@
 	const isEditing = ref(false);
 	const self = getCurrentInstance();
 
+	let eggIncrement = 0;
+
 	async function toggleEditing(){
 		if(!isEditing.value){
 			isEditing.value = true;
@@ -133,6 +135,7 @@
 			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 			await loadingModal.value?.$el.dismiss();
 
+			eggIncrement = 0;
 			isEditing.value = false;
 		}catch(e){
 			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
@@ -142,10 +145,51 @@
 		}
 	}
 
+	function easterEgg(){
+		if(eggIncrement >= 4) {
+			void savePicture();
+			eggIncrement = 0;
+		} else if(isEditing.value)
+			eggIncrement++;
+	}
+
+	async function savePicture(){
+		loadingBar.value = true;
+
+		const memberMetadata: PartialBy<Member, "uuid" | "system" | "dateCreated"> = structuredClone(toRaw(member.value));
+
+		delete memberMetadata.uuid;
+		delete memberMetadata.system;
+		if(memberMetadata.image) delete memberMetadata.image;
+
+		try{
+			const image = await encodeImageWithMetadata(member.value.image, member.value.name.length ? member.value.name : Date.now().toString(), memberMetadata);
+			if(image) await saveImageFile(image);
+		}catch(e){
+			await toast((e as Error).message);
+		}
+
+		loadingBar.value = false;
+	}
+
 	async function modifyPicture(){
 		loadingBar.value = true;
-		const image = await getResizedImage();
-		if(image) member.value.image = image;
+		const maybeImage = await getImageOrMetadata();
+
+		if(!maybeImage){
+			loadingBar.value = false;
+			return;
+		}
+
+		const { image, metadata } = maybeImage;
+
+		member.value.image = image;
+
+		if(typeof (metadata as Member).name === "string") {
+			// merge metadata
+			Object.assign(member.value, metadata);
+		}
+
 		loadingBar.value = false;
 	}
 
@@ -292,6 +336,7 @@
 						:clip-shape="member.imageClip"
 						:color="member.color"
 						:icon="accountCircle"
+						@click="easterEgg"
 					/>
 					<div v-if="isEditing" class="edit-buttons">
 						<IonButton shape="round" size="small" @click="modifyPicture">
