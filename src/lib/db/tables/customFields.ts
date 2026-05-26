@@ -28,6 +28,10 @@ export async function* getCustomFields(maxIter = 10){
 	};
 }
 
+export function getCustomFieldsIndex(){
+	return db.customFields.index;
+}
+
 export async function* getFilteredCustomFields(query: string){
 	for await (const customField of getCustomFields()){
 		if (filterCustomField(query, customField))
@@ -89,4 +93,8 @@ export async function updateCustomField(newContent: UUIDable & Partial<CustomFie
 		console.error(_e);
 		return { success: false, err: _e };
 	}
+}
+
+export function isValidCustomField(customField: CustomField | UUID){
+	return typeof customField === "string" ? !!getCustomFieldsIndex().find(x => x.uuid === customField) : !!getCustomFieldsIndex().find(x => x.uuid === customField.uuid);
 }
