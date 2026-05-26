@@ -133,6 +133,7 @@ html:is(.plt-tablet, .plt-desktop) ion-tabs {
 
 html:is(.plt-tablet, .plt-desktop) ion-tab-bar {
 	padding-top: var(--ion-safe-area-top, 0px);
+	padding-bottom: var(--ion-safe-area-bottom, 0px);
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
@@ -170,7 +171,8 @@ ion-tabs ion-content:has(> ion-fab.fab-vertical-bottom[slot="fixed"]:not(:empty)
 	--padding-bottom: 88px;
 }
 
-ion-content:not(ion-tabs *) {
+ion-content:not(ion-tabs *),
+html:is(.plt-tablet, .plt-desktop) ion-content {
 	--padding-bottom: calc(var(--ion-safe-area-bottom, 0px) + 8px);
 
 	&:has(> ion-fab.fab-vertical-bottom[slot="fixed"]:not(:empty)) {
