@@ -39,7 +39,10 @@
 	"ocImport": "Importa tus datos desde una exportación de Octocon",
 	"reportExport": {
 		"title": "Generar un informe",
-		"desc": "Guarda un informe legible sobre tus datos para compartirlo con terapeutas y seres queridos"
+		"desc": "Guarda un informe legible sobre tus datos para compartirlo con terapeutas y seres queridos",
+		"includeHeader": "Selecciona qué incluir",
+		"includeArchived": "Miembros inactivos",
+		"includeCustomFronts": "Frentes personalizadas"
 	},
 	"jsonExport": {
 		"title": "Exporta tus datos a un archivo JSON",
