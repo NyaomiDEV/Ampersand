@@ -54,8 +54,8 @@ export async function saveImageFile(image: File){
 		const _path = await save({
 			defaultPath: path,
 			filters: [{
-				name: "PNG image",
-				extensions: ["png"]
+				name: image.type === "image/webp" ? "WebP image" : "PNG image",
+				extensions: [image.type === "image/webp" ? "webp" : "png"]
 			}]
 		});
 		if (_path) path = _path;

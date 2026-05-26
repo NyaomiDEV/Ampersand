@@ -40,7 +40,7 @@ export async function resizeImage(image: Blob, maxWidthHeight = 512): Promise<Fi
 	});
 
 	const ext = blob.type === "image/webp" ? "webp" : "png";
-	return new File([blob], `img_${Date.now()}.${ext}`);
+	return new File([blob], `img_${Date.now()}.${ext}`, { type: blob.type });
 }
 
 export async function getResizedImage(maxWidthHeight = 512){
@@ -125,5 +125,5 @@ export async function encodeImageWithMetadata(image: File | undefined, name: str
 	).blob();
 
 	const ext = image.type === "image/webp" ? "webp" : "png";
-	return new File([image, meta], `${name}.${ext}`);
+	return new File([image, meta], `${name}.${ext}`, { type: image.type });
 }
