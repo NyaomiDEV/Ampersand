@@ -24,7 +24,7 @@
 	"subheaders": {
 		"influenced": "Miembros influenciados por otros",
 		"fronting": "Testaferros",
-		"cofronting": "Miembros que comparten el liderazgo",
+		"cofronting": "Miembros que comparten la frente",
 		"influencing": "Influenciadores"
 	},
 	"frontingCount_one": "Al mando {{count}} vez",

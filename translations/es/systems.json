@@ -9,7 +9,7 @@
 		"customFrontCountText": "{{totalCustomFrontCount}} frente(s) personalizado(s), {{customFrontCount}} activo(s), {{archivedCustomFrontCount}} archivado(s)",
 		"tapToShow": "Presiona para mostrar",
 		"delete": {
-			"title": "Borrar el sistema",
+			"title": "Eliminar el sistema",
 			"confirm": "¿Estás seguro de que quieres borrar este sistema?"
 		},
 		"systemID": "ID del sistema: {{systemID}}",

@@ -1,9 +1,9 @@
 {
 	"header": "Filtrar consultas",
 	"select": "Seleccione un filtro de consulta",
-	"searchPlaceholder": "Buscar mediante filtros de búsqueda...",
+	"searchPlaceholder": "Buscar por filtros de consulta...",
 	"edit": {
-		"header": "Modificar la consulta",
+		"header": "Editar la consulta",
 		"headerAdd": "Añadir una consulta",
 		"name": "Nombre de la consulta",
 		"query": "Contenido de la consulta",
