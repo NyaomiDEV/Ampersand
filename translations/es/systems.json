@@ -10,7 +10,7 @@
 		"tapToShow": "Presiona para mostrar",
 		"delete": {
 			"title": "Eliminar el sistema",
-			"confirm": "¿Estás seguro de que quieres borrar este sistema?"
+			"confirm": "¿Estás seguro de que quieres eliminar este sistema?"
 		},
 		"systemID": "ID del sistema: {{systemID}}",
 		"header": "Sistema",
