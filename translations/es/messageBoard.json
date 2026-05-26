@@ -40,7 +40,7 @@
 		},
 		"title": "Título",
 		"header": "Editar mensaje",
-		"date": "Fecha de edición",
+		"date": "Editar fecha",
 		"pollIsMultipleChoice": "Permitir seleccionar varias opciones"
 	}
 }

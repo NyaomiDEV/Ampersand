@@ -14,7 +14,7 @@
 			"confirm": "¿Está seguro de que quiere eliminar el recordatorio?"
 		},
 		"triggerOnAllMembers": "Enviar a todos los miembros",
-		"members": "Miembros seleccionados",
+		"members": "Seleccionar miembros",
 		"headerAdd": "Añadir recordatorio",
 		"active": "Activar recordatorio",
 		"delay": "Retraso"

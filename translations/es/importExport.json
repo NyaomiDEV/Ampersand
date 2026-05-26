@@ -1,6 +1,6 @@
 {
 	"dbExport": {
-		"title": "Exporta tus datos",
+		"title": "Exportar sus datos",
 		"desc": "Respalda tus datos actuales a un archivo que puedes guardar en otro lugar"
 	},
 	"dbImportDesc": "¡Advertencia! Esto sobreescribirá toda información existente",
