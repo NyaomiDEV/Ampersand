@@ -1,10 +1,10 @@
 {
 	"highLegibilityFontType": {
-		"atkinson": "Atkinson hiperlegible",
+		"atkinson": "Atkinson Hyperlegible",
 		"opendyslexic": "OpenDyslexic",
 		"lexend": "Lexend",
 		"system-font": "Fuente del sistema",
-		"title": "Fuente claramente legible",
+		"title": "Familia de fuente claramente legible",
 		"comicrelief": "Comic Relief"
 	},
 	"uiVariant": {

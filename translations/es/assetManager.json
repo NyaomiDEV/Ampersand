@@ -1,11 +1,11 @@
 {
 	"edit": {
 		"friendlyName": "Editar nombre",
-		"header": "Editar elemento",
+		"header": "Editar archivo",
 		"attachment": "Reemplazar archivo adjunto",
 		"delete": {
 			"title": "Eliminar elemento",
-			"confirm": "¿Estás seguro de que quieres eliminar este elemento?"
+			"confirm": "¿Estás seguro de que quieres eliminar este archivo?"
 		},
 		"tags": "Etiquetas"
 	},
