@@ -39,7 +39,10 @@
 	"exportHeader": "pana sona",
 	"reportExport": {
 		"title": "pali pi lipu sona",
-		"desc": "sina ken pali e lipu lon sona pi kulupu sina; ni la sina ken pana e sona sina tawa jan misikeke tawa olin sina"
+		"desc": "sina ken pali e lipu lon sona pi kulupu sina; ni la sina ken pana e sona sina tawa jan misikeke tawa olin sina",
+		"includeHeader": "sina wile e seme lon ijo",
+		"includeArchived": "ijo kulupu len",
+		"includeCustomFronts": "ijo sona"
 	},
 	"jsonExport": {
 		"title": "o kama jo e ijo ilo JSON pi sona sina",
