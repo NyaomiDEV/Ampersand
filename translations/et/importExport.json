@@ -39,7 +39,10 @@
 	},
 	"reportExport": {
 		"title": "Koosta aruanne",
-		"desc": "Salvesta oma andmete kohta inimloetav aruanne, mida saad jagada oma terapeudi ja/või lähedastega"
+		"desc": "Salvesta oma andmete kohta inimloetav aruanne, mida saad jagada oma terapeudi ja/või lähedastega",
+		"includeHeader": "Vali, mida tahad kaasata",
+		"includeArchived": "Arhiveeritud liikmed",
+		"includeCustomFronts": "Kohandatud esiplaanirollid"
 	},
 	"jsonExport": {
 		"title": "Ekspordi oma andmed JSON-failina",
