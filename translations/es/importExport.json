@@ -24,8 +24,8 @@
 		"errorOc": "Se ha producido un error al importar de Octocon.",
 		"exportedReport": "El informe se ha guardado en la ubicación que seleccionaste.",
 		"exportedReportIos": "El informe se ha guardado en la carpeta Ampersand de la aplicación Archivos.",
-		"exportedJson": "El archivo JSON se ha guardado en la ubicación que seleccionaste.",
-		"exportedJsonIos": "Archivo JSON guardado en la carpeta Ampersand de la aplicación Documentos."
+		"exportedJson": "La exportación JSON se ha guardado en la ubicación que seleccionaste.",
+		"exportedJsonIos": "Exportación JSON guardado en la carpeta Ampersand de la aplicación Documentos."
 	},
 	"header": "Importar / Exportar",
 	"importHeader": "Importar",

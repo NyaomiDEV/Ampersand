@@ -36,7 +36,7 @@
 		"pollEditWarning": "¡Cambiar cualquiera de los detalles de la encuesta reiniciará los votos!",
 		"delete": {
 			"title": "Eliminar mensaje en el tablero",
-			"confirm": "¿Estás seguro de que quieres borrar este mensaje?"
+			"confirm": "¿Estás seguro de que quieres eliminar este mensaje?"
 		},
 		"title": "Título",
 		"header": "Editar mensaje",
