@@ -461,7 +461,8 @@
 						button
 						detail
 						@click="fontFamilyPicker($t('systems:edit.nameStyle')).then(res => {
-							if(res !== undefined && res !== null){
+							if(typeof res === 'undefined') return;
+							if(res !== null){
 								system.nameStyle = {
 									family: res,
 									italic: system.nameStyle?.italic || false,
@@ -479,65 +480,64 @@
 						</IonLabel>
 					</IonItem>
 					<IonItem v-if="system.nameStyle">
-						<IonButton
-							shape="round"
-							:fill="system.nameStyle.weight > 400 ? 'solid' : 'outline'"
-							size="small"
-							@click="(e) => {
-								e.stopPropagation();
-								system.nameStyle!.weight = system.nameStyle!.weight > 400 ? 400 : 700;
-							}"
-						>
-							<IonIcon
-								slot="icon-only"
-								:icon="boldMD"
-							/>
-						</IonButton>
-
-						<IonButton
-							shape="round"
-							:fill="system.nameStyle.italic ? 'solid' : 'outline'"
-							size="small"
-							@click="(e) => {
-								e.stopPropagation();
-								system.nameStyle!.italic = !system.nameStyle?.italic;
-							}"
-						>
-							<IonIcon
-								slot="icon-only"
-								:icon="italicMD"
-							/>
-						</IonButton>
-
-						<IonButton
-							shape="round"
-							:fill="system.nameStyle.neon ? 'solid' : 'outline'"
-							size="small"
-							@click="(e) => {
-								e.stopPropagation();
-								system.nameStyle!.neon = !system.nameStyle?.neon;
-							}"
-						>
-							<IonIcon
-								slot="icon-only"
-								:icon="neonMD"
-							/>
-						</IonButton>
-
-						<IonButton
-							shape="round"
-							:fill="system.nameStyle.outline ? 'solid' : 'outline'"
-							size="small"
-							@click="(e) => {
-								e.stopPropagation();
-								system.nameStyle!.outline = !system.nameStyle?.outline;
-							}"
-						>
-							<IonIcon
-								slot="icon-only"
-								:icon="outlineMD"
-							/>
-						</IonButton>
+						<div class="name-style-buttons">
+							<IonButton
+								shape="round"
+								:fill="system.nameStyle.weight > 400 ? 'solid' : 'outline'"
+								size="small"
+								@click="(e) => {
+									e.stopPropagation();
+									system.nameStyle!.weight = system.nameStyle!.weight > 400 ? 400 : 700;
+								}"
+							>
+								<IonIcon
+									slot="icon-only"
+									:icon="boldMD"
+								/>
+							</IonButton>
+							<IonButton
+								shape="round"
+								:fill="system.nameStyle.italic ? 'solid' : 'outline'"
+								size="small"
+								@click="(e) => {
+									e.stopPropagation();
+									system.nameStyle!.italic = !system.nameStyle?.italic;
+								}"
+							>
+								<IonIcon
+									slot="icon-only"
+									:icon="italicMD"
+								/>
+							</IonButton>
+							<IonButton
+								shape="round"
+								:fill="system.nameStyle.neon ? 'solid' : 'outline'"
+								size="small"
+								@click="(e) => {
+									e.stopPropagation();
+									system.nameStyle!.neon = !system.nameStyle?.neon;
+								}"
+							>
+								<IonIcon
+									slot="icon-only"
+									:icon="neonMD"
+								/>
+							</IonButton>
+							<IonButton
+								shape="round"
+								:fill="system.nameStyle.outline ? 'solid' : 'outline'"
+								size="small"
+								@click="(e) => {
+									e.stopPropagation();
+									system.nameStyle!.outline = !system.nameStyle?.outline;
+								}"
+							>
+								<IonIcon
+									slot="icon-only"
+									:icon="outlineMD"
+								/>
+							</IonButton>
+						</div>
 					</IonItem>
 					<IonItem button detail @click="imageClipPicker($t('systems:edit.imageClip')).then(res => { if(res !== undefined) system.imageClip = res ?? undefined; })">
 						<IonLabel>
@@ -723,5 +723,14 @@
 
 	.system-description ion-label {
 		margin: 0;
+	}
+
+
+	div.name-style-buttons {
+		width: 100%;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: center;
 	}
 </style>
