@@ -14,8 +14,8 @@
 		"importedPk": "La exportación de PluralKit ha sido importada. Por favor, reinicia la aplicación.",
 		"importedTu": "La exportación de Tupperbox ha sido importada. Por favor reinicia la aplicación.",
 		"exportedApp": "El respaldo ha sido exportado a la locación que escogiste.",
-		"errorExport": "Error al exportar el respaldo.",
-		"error": "Error al importar el respaldo.",
+		"errorExport": "Error al exportar la copia de seguridad.",
+		"error": "Error al importar la copia de seguridad.",
 		"errorSp": "Error al importar la exportación de Simply Plural.",
 		"errorPk": "Error al importar la exportación de PluralKit.",
 		"errorTu": "Error al importar la exportación de Tupperbox.",
@@ -25,7 +25,7 @@
 		"exportedReport": "El informe se ha guardado en la ubicación que seleccionaste.",
 		"exportedReportIos": "El informe se ha guardado en la carpeta Ampersand de la aplicación Archivos.",
 		"exportedJson": "La exportación JSON se ha guardado en la ubicación que seleccionaste.",
-		"exportedJsonIos": "Exportación JSON guardado en la carpeta Ampersand de la aplicación Documentos."
+		"exportedJsonIos": "La exportación en formato JSON se ha guardado en la carpeta «Ampersand» de la aplicación «Archivos»."
 	},
 	"header": "Importar / Exportar",
 	"importHeader": "Importar",

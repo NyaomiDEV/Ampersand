@@ -33,7 +33,7 @@
 		},
 		"minutes": {
 			"long": "minutos",
-			"short": "m"
+			"short": "min"
 		},
 		"seconds": {
 			"long": "segundos",
@@ -63,8 +63,8 @@
 		"arch": "Arco",
 		"arrow": "Flecha",
 		"boom": "Búm",
-		"bun": "Bollo de pan",
-		"burst": "Reventón",
+		"bun": "Panecillo",
+		"burst": "Explosión",
 		"clamshell": "Concha",
 		"diamond": "Diamante",
 		"fan": "Admiradora",
@@ -120,9 +120,9 @@
 		"dots": "Puntos",
 		"digital": "Digital",
 		"handwritten": "Manuscrita",
-		"serif": "Serif",
+		"serif": "Serif (Serifa)",
 		"typewriter": "Máquina de escribir",
-		"monospace": "Monoespaciado",
+		"monospace": "Monoespaciada",
 		"playful": "Juguetona",
 		"holy": "Holy",
 		"bubbly": "Burbujeante",
@@ -130,8 +130,8 @@
 		"gothic": "Gótica",
 		"stencil": "Plantilla",
 		"mystery": "Misterio",
-		"italian": "Italiano",
-		"metal": "Metal",
+		"italian": "Itálicas",
+		"metal": "Metallica o heavy",
 		"cutesy": "Linda",
 		"indie": "Indie",
 		"deco": "Decoración",
