@@ -52,7 +52,7 @@ import "./lib/theme/style.css";
 import { clearTempDir } from "./lib/native/cache";
 import { slideAnimation } from "./lib/util/misc";
 import { dismissSplash, getWebkitVersion } from "./lib/native/plugin";
-import { platform } from "@tauri-apps/plugin-os";
+import { platform, version } from "@tauri-apps/plugin-os";
 import { onBackButtonPress } from "@tauri-apps/api/app";
 import { maybeExit } from "./lib/util/backbutton";
 
@@ -62,9 +62,66 @@ import { sendFrontingChangedEvent } from "./lib/db/tables/frontingEntries";
 import { unnotify } from "./lib/notifications";
 import { NavigationGuardWithThis } from "vue-router";
 
-const minWebViewVersions = {
-	"android": 139,
+// In case of webview versions tie-in with the OS, as is with iOS,
+// it makes sense to whitelist the OS itself
+const minOsVersions = {
+	"ios": [18,6]
 };
+
+// In all other cases we might get away with more granular, per-webview
+// versioning
+const minWvVersions = {
+	"android": [140],
+	"windows": [140],
+	"macos": [20621,3,11],
+	"linux": [2,50]
+};
+
+async function isWebviewSupported(){
+	const _platform = platform();
+	const _osVer = version().split(".").map(x => parseInt(x, 10));
+	const _wvVer = (await getWebkitVersion()).split(".").map(x => parseInt(x, 10));
+
+	const compareFn = (a: number[], b: number[]) => {
+		for (let i = 0; i < Math.max(a.length, b.length); i++) {
+			if((a[i] || 0) > (b[i] || 0)) return false;
+			if((a[i] || 0) < (b[i] || 0)) return true;
+		}
+		return true;
+	};
+
+	if(_platform in minOsVersions && !compareFn(minOsVersions[_platform], _osVer))
+		return false;
+
+	if (_platform in minWvVersions && !compareFn(minWvVersions[_platform], _wvVer))
+		return false;
+
+	return true;
+}
+
+function getSuggestionsForPeopleWithUnsupportedVersions(){
+	const _platform = platform();
+
+	switch(_platform){
+		case "linux":
+			return "Please update your distro packages, or your distro itself, and try again.";
+		case "macos":
+			return "Please update your macOS version (and all components, especially Safari) by going into System Settings > General > Software Update.";
+		case "ios":
+			return "Please update your iOS version by going into Settings > General > Software Update.";
+		case "freebsd":
+		case "dragonfly":
+		case "netbsd":
+		case "openbsd":
+		case "solaris":
+			return "You do you, nerd.";
+		case "android":
+			return "Please search for 'Android System WebView' on Google Play and update that. It has a Chrome-like icon but grey and blue and it is made by Google, don't be scammed!";
+		case "windows":
+			return "Please update Windows from Windows Update, then also open Microsoft Edge and update that, and finally search for Edge WebView2 and update that also (from the Microsoft website, don't trust third parties!)";
+	}
+}
+
 
 const routerGuard: NavigationGuardWithThis<undefined> = (to) => {
 	// database migration flow
@@ -189,10 +246,30 @@ async function setupAmpersand(){
 
 if (!window.isSecureContext) {
 	console.error("Cannot continue, this is not a safe environment!");
-	document.body.innerHTML = "<h1 style='text-align: center;'>Ampersand cannot run on non-HTTPS environments! We're sorry for the trouble.<br>If you think this is an issue, report it on Codeberg.</h1>";
+
+	const header = document.createElement("h1");
+	header.style.textAlign = "center";
+	header.textContent = "Ampersand cannot run on non-HTTPS environments! We're sorry for the trouble.";
+
+	const subheader = document.createElement("p");
+	subheader.style.textAlign = "center";
+	subheader.textContent = "If you think this is an issue, report it on Codeberg.";
+
+	document.body.appendChild(header);
+	document.body.appendChild(subheader);
 	await dismissSplash();
-} else if (minWebViewVersions[platform()] && (await getWebkitVersion()).split(".").map(x => parseInt(x, 10))[0] < minWebViewVersions[platform()]) {
-	document.body.innerHTML = "<h1 style='text-align: center;'>Ampersand cannot run on this WebKit/WebView version!<br>Please update your phone's OS version and all of your system apps.</h1>";
+} else if (await isWebviewSupported()) {
+	console.error("Cannot continue, this Webview version is not supported!");
+	const header = document.createElement("h1");
+	header.style.textAlign = "center";
+	header.textContent = "Ampersand cannot run on this WebView version!";
+
+	const subheader = document.createElement("p");
+	subheader.style.textAlign = "center";
+	subheader.textContent = getSuggestionsForPeopleWithUnsupportedVersions();
+
+	document.body.appendChild(header);
+	document.body.appendChild(subheader);
 	await dismissSplash();
 } else
 	await setupAmpersand();
