@@ -39,7 +39,7 @@
 				</IonToolbar>
 			</CollapsibleHeaderbar>
 
-			<IonListHeader>
+			<IonListHeader v-if="Object.keys(lists).filter(x => notInTab(x)).length">
 				<IonLabel>{{ $t("options:managementLabel") }}</IonLabel>
 			</IonListHeader>
 
