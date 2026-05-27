@@ -12,16 +12,16 @@
 		},
 		"years": {
 			"long": "años",
-			"short": "a."
+			"short": "Y"
 		},
 		"months": {
 			"long": "meses",
-			"short": "m."
+			"short": "M"
 		},
 		"weekdays": {
 			"monday": "Lunes",
 			"tuesday": "Martes",
-			"wednesday": "Miercoles",
+			"wednesday": "Miércoles",
 			"thursday": "Jueves",
 			"friday": "Viernes",
 			"saturday": "Sábado",
@@ -29,11 +29,11 @@
 		},
 		"hours": {
 			"long": "horas",
-			"short": "h."
+			"short": "h"
 		},
 		"minutes": {
 			"long": "minutos",
-			"short": "min"
+			"short": "m"
 		},
 		"seconds": {
 			"long": "segundos",
