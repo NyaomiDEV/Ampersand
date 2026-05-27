@@ -43,7 +43,9 @@ export type ImageClip =
 export interface NameStyle {
 	family: string,
 	weight: number,
-	italic: boolean
+	italic: boolean,
+	neon: boolean,
+	outline: boolean
 }
 
 export interface BoardMessage extends UUIDable {

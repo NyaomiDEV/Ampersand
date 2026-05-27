@@ -30,6 +30,8 @@
 	import addMD from "@material-symbols/svg-600/rounded/add.svg";
 	import italicMD from "@material-symbols/svg-600/rounded/format_italic.svg";
 	import boldMD from "@material-symbols/svg-600/rounded/format_bold.svg";
+	import neonMD from "@material-symbols/svg-600/rounded/highlight.svg";
+	import outlineMD from "@material-symbols/svg-600/rounded/ink_highlighter.svg";
 	import accountCircle from "@material-symbols/svg-600/rounded/account_circle-fill.svg";
 
 	import { CustomField, Member, System, Tag } from "../../lib/db/entities";
@@ -378,7 +380,9 @@
 							fontStyle: member.nameStyle?.italic ? 'italic' : undefined
 						}"
 						:class="{
-							'with-font-family': !!member.nameStyle
+							'with-font-family': !!member.nameStyle,
+							'neon': member.nameStyle?.neon,
+							'outline': member.nameStyle?.outline
 						}"
 					>
 						{{ member.name }}
@@ -552,7 +556,9 @@
 								member.nameStyle = {
 									family: res,
 									italic: member.nameStyle?.italic || false,
-									weight: member.nameStyle?.weight || 400
+									weight: member.nameStyle?.weight || 400,
+									neon: member.nameStyle?.neon || false,
+									outline: member.nameStyle?.outline || false,
 								};
 							} else
 								member.nameStyle = undefined;
@@ -562,9 +568,9 @@
 							<h3>{{ $t("members:edit.nameStyle") }}</h3>
 							<p>{{ member.nameStyle?.family || $t("other:fonts.noFont") }}</p>
 						</IonLabel>
+					</IonItem>
+					<IonItem v-if="member.nameStyle">
 						<IonButton
-							v-if="member.nameStyle"
-							slot="end"
 							shape="round"
 							:fill="member.nameStyle.weight > 400 ? 'solid' : 'outline'"
 							size="small"
@@ -580,8 +586,6 @@
 						</IonButton>
 
 						<IonButton
-							v-if="member.nameStyle"
-							slot="end"
 							shape="round"
 							:fill="member.nameStyle.italic ? 'solid' : 'outline'"
 							size="small"
@@ -593,6 +597,36 @@
 							<IonIcon
 								slot="icon-only"
 								:icon="italicMD"
+							/>
+						</IonButton>
+
+						<IonButton
+							shape="round"
+							:fill="member.nameStyle.neon ? 'solid' : 'outline'"
+							size="small"
+							@click="(e) => {
+								e.stopPropagation();
+								member.nameStyle!.neon = !member.nameStyle?.neon;
+							}"
+						>
+							<IonIcon
+								slot="icon-only"
+								:icon="neonMD"
+							/>
+						</IonButton>
+
+						<IonButton
+							shape="round"
+							:fill="member.nameStyle.outline ? 'solid' : 'outline'"
+							size="small"
+							@click="(e) => {
+								e.stopPropagation();
+								member.nameStyle!.outline = !member.nameStyle?.outline;
+							}"
+						>
+							<IonIcon
+								slot="icon-only"
+								:icon="outlineMD"
 							/>
 						</IonButton>
 					</IonItem>
@@ -789,6 +823,22 @@
 
 		h3.with-font-family {
 			line-height: normal;
+
+			&.outline {
+				-webkit-text-stroke: 2px v-bind('member.color');
+				paint-order: markers stroke fill;
+			}
+
+			&.neon {
+				color: white;
+				text-shadow:
+					0px 0px 1px currentColor,
+					0px 0px 2px currentColor,
+					0px 0px 4px currentColor,
+					0px 0px 16px v-bind('member.color'),
+					0px 0px 32px v-bind('member.color'),
+					0px 0px 64px v-bind('member.color');
+			}
 		}
 
 		h3:not(.with-font-family) {
