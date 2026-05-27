@@ -63,8 +63,8 @@
 		"arch": "Arch",
 		"arrow": "Flecha",
 		"boom": "Búm",
-		"bun": "Bollo",
-		"burst": "Explosión",
+		"bun": "Bollo de pan",
+		"burst": "Reventón",
 		"clamshell": "Concha",
 		"diamond": "Diamante",
 		"fan": "admiradora",
@@ -93,7 +93,7 @@
 		"soft-burst": "Explosión suave",
 		"square": "Cuadrado",
 		"sunny": "Soleado",
-		"triangle": "Triangulo",
+		"triangle": "Triángulo",
 		"very-sunny": "Muy soleado"
 	},
 	"developerMode": "Modo desarrollador",
@@ -116,7 +116,7 @@
 	"count": "Contar",
 	"fonts": {
 		"cursive": "Cursiva",
-		"pixel": "Pixel",
+		"pixel": "píxel",
 		"dots": "Puntos",
 		"digital": "Digital",
 		"handwritten": "Manuscrita",
@@ -130,7 +130,7 @@
 		"gothic": "Gótica",
 		"stencil": "Plantilla",
 		"mystery": "Misterio",
-		"italian": "Cursiva",
+		"italian": "Italiana",
 		"metal": "Metal",
 		"cutesy": "Linda",
 		"indie": "Indie",
@@ -148,7 +148,7 @@
 		"nature": "Naturaleza",
 		"summer": "Verano",
 		"spotty": "Manchada",
-		"bone": "Huesos",
+		"bone": "Hueso",
 		"cow": "Vaca"
 	},
 	"loading": "Ampersand se está cargando"
