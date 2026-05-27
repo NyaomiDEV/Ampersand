@@ -133,13 +133,19 @@ html:is(.plt-tablet, .plt-desktop) ion-tabs {
 
 html:is(.plt-tablet, .plt-desktop) ion-tab-bar {
 	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	height: 100%;
+	padding-top: var(--ion-safe-area-top, 0px);
+	padding-bottom: var(--ion-safe-area-bottom, 0px);
+	height: calc(100% - var(--ion-safe-area-top, 0px) - var(--ion-safe-area-bottom, 0px));
 	width: 80px;
+	padding-left: var(--ion-safe-area-left, 0px);
 	padding-right: 0;
 	overflow-x: hidden;
 	overflow-y: auto;
+
+	&:dir(rtl) {
+		padding-right: var(--ion-safe-area-right, 0px);
+		padding-left: 0;
+	}
 }
 
 html:is(.plt-tablet, .plt-desktop) ion-tab-button {
@@ -147,11 +153,11 @@ html:is(.plt-tablet, .plt-desktop) ion-tab-button {
 	min-height: 80px;
 
 	&:first-child {
-		margin-top: var(--ion-safe-area-top, 0px);
+		margin-top: auto;
 	}
 
 	&:last-child {
-		margin-bottom: var(--ion-safe-area-bottom, 0px);
+		margin-bottom: auto;
 	}
 }
 
