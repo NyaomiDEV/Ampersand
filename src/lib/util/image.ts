@@ -68,7 +68,7 @@ export async function getImageOrMetadata(maxWidthHeight = 512): Promise<{ image:
 		}
 		if (found) indices.push(index);
 		return indices;
-	}, []);
+	}, []).reverse();
 
 	let goodIndex = -1;
 
@@ -88,7 +88,7 @@ export async function getImageOrMetadata(maxWidthHeight = 512): Promise<{ image:
 	if(goodIndex < 0){ // no image metadata
 		ret.image = await resizeImage(new Blob([arrayBuffer]), maxWidthHeight);
 	} else
-		ret.image = await resizeImage(new Blob([arrayBuffer.slice(0, goodIndex - 1)]), maxWidthHeight);
+		ret.image = await resizeImage(new Blob([arrayBuffer.slice(0, goodIndex)]), maxWidthHeight);
 
 	return ret;
 }
