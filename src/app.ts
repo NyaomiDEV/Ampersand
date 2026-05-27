@@ -258,7 +258,7 @@ if (!window.isSecureContext) {
 	document.body.appendChild(header);
 	document.body.appendChild(subheader);
 	await dismissSplash();
-} else if (await isWebviewSupported()) {
+} else if (!await isWebviewSupported()) {
 	console.error("Cannot continue, this Webview version is not supported!");
 	const header = document.createElement("h1");
 	header.style.textAlign = "center";
