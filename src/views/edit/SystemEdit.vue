@@ -306,7 +306,8 @@
 						:style="{
 							fontFamily: system.nameStyle?.family,
 							fontWeight: system.nameStyle?.weight,
-							fontStyle: system.nameStyle?.italic ? 'italic' : undefined
+							fontStyle: system.nameStyle?.italic ? 'italic' : undefined,
+							'--system-color': system.color
 						}"
 						:class="{
 							'with-font-family': !!system.nameStyle,
@@ -696,7 +697,7 @@
 			line-height: normal;
 
 			&.outline {
-				-webkit-text-stroke: 2px v-bind('system.color');
+				-webkit-text-stroke: 2px var(--system-color, var(--ion-color-primary));
 				paint-order: markers stroke fill;
 			}
 
@@ -706,9 +707,9 @@
 					0px 0px 1px currentColor,
 					0px 0px 2px currentColor,
 					0px 0px 4px currentColor,
-					0px 0px 16px v-bind('system.color'),
-					0px 0px 32px v-bind('system.color'),
-					0px 0px 64px v-bind('system.color');
+					0px 0px 16px var(--system-color, var(--ion-color-primary)),
+					0px 0px 32px var(--system-color, var(--ion-color-primary)),
+					0px 0px 64px var(--system-color, var(--ion-color-primary));
 			}
 		}
 
