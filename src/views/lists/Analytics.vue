@@ -568,8 +568,6 @@
 								}))"
 							/>
 							<IonLabel>
-
-								<p class="right">{{ memberCouple[1].percent.toFixed(2) }}%</p>
 								<h2>{{ memberCouple[0].map(x => x.name).join(" + ") }}</h2>
 								<p>
 									{{ $t("analytics:cofrontingCount", { count: memberCouple[1].count }) }}
