@@ -17,6 +17,8 @@
 	import boldMD from "@material-symbols/svg-600/rounded/format_bold.svg";
 	import neonMD from "@material-symbols/svg-600/rounded/highlight.svg";
 	import outlineMD from "@material-symbols/svg-600/rounded/ink_highlighter.svg";
+	import shadowMD from "@material-symbols/svg-600/rounded/ev_shadow.svg";
+
 
 	import { appConfig } from "../../lib/config";
 	import { useRoute } from "vue-router";
@@ -312,7 +314,8 @@
 						:class="{
 							'with-font-family': !!system.nameStyle,
 							'neon': system.nameStyle?.neon,
-							'outline': system.nameStyle?.outline
+							'outline': system.nameStyle?.outline,
+							'shadow': system.nameStyle?.shadow
 						}"
 					>
 						{{ system.name }}
@@ -470,6 +473,7 @@
 									weight: system.nameStyle?.weight || 400,
 									neon: system.nameStyle?.neon || false,
 									outline: system.nameStyle?.outline || false,
+									shadow: system.nameStyle?.shadow || false
 								};
 							} else
 								system.nameStyle = undefined;
@@ -512,20 +516,6 @@
 							</IonButton>
 							<IonButton
 								shape="round"
-								:fill="system.nameStyle.neon ? 'solid' : 'outline'"
-								size="small"
-								@click="(e) => {
-									e.stopPropagation();
-									system.nameStyle!.neon = !system.nameStyle?.neon;
-								}"
-							>
-								<IonIcon
-									slot="icon-only"
-									:icon="neonMD"
-								/>
-							</IonButton>
-							<IonButton
-								shape="round"
 								:fill="system.nameStyle.outline ? 'solid' : 'outline'"
 								size="small"
 								@click="(e) => {
@@ -536,6 +526,38 @@
 								<IonIcon
 									slot="icon-only"
 									:icon="outlineMD"
+								/>
+							</IonButton>
+							<IonButton
+								shape="round"
+								:fill="system.nameStyle.neon ? 'solid' : 'outline'"
+								size="small"
+								@click="(e) => {
+									e.stopPropagation();
+									system.nameStyle!.neon = !system.nameStyle?.neon;
+									if(system.nameStyle?.neon)
+										system.nameStyle.shadow = false;
+								}"
+							>
+								<IonIcon
+									slot="icon-only"
+									:icon="neonMD"
+								/>
+							</IonButton>
+							<IonButton
+								shape="round"
+								:fill="system.nameStyle.shadow ? 'solid' : 'outline'"
+								size="small"
+								@click="(e) => {
+									e.stopPropagation();
+									system.nameStyle!.shadow = !system.nameStyle?.shadow;
+									if(system.nameStyle?.shadow)
+										system.nameStyle.neon = false;
+								}"
+							>
+								<IonIcon
+									slot="icon-only"
+									:icon="shadowMD"
 								/>
 							</IonButton>
 						</div>
@@ -710,6 +732,16 @@
 					0px 0px 16px var(--system-color, var(--ion-color-primary)),
 					0px 0px 32px var(--system-color, var(--ion-color-primary)),
 					0px 0px 64px var(--system-color, var(--ion-color-primary));
+			}
+
+			&.shadow {
+				text-shadow:
+					1px 1px rgb(var(--md3-primary-container)),
+					2px 2px rgb(var(--md3-primary-container)),
+					3px 3px rgb(var(--md3-primary-container)),
+					4px 4px rgb(var(--md3-primary-container)),
+					5px 5px rgb(var(--md3-primary-container)),
+					6px 6px rgb(var(--md3-primary-container));
 			}
 		}
 

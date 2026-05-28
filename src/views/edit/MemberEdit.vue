@@ -32,6 +32,7 @@
 	import boldMD from "@material-symbols/svg-600/rounded/format_bold.svg";
 	import neonMD from "@material-symbols/svg-600/rounded/highlight.svg";
 	import outlineMD from "@material-symbols/svg-600/rounded/ink_highlighter.svg";
+	import shadowMD from "@material-symbols/svg-600/rounded/ev_shadow.svg";
 	import accountCircle from "@material-symbols/svg-600/rounded/account_circle-fill.svg";
 
 	import { CustomField, Member, System, Tag } from "../../lib/db/entities";
@@ -383,7 +384,8 @@
 						:class="{
 							'with-font-family': !!member.nameStyle,
 							'neon': member.nameStyle?.neon,
-							'outline': member.nameStyle?.outline
+							'outline': member.nameStyle?.outline,
+							'shadow': member.nameStyle?.shadow
 						}"
 					>
 						{{ member.name }}
@@ -562,6 +564,7 @@
 									weight: member.nameStyle?.weight || 400,
 									neon: member.nameStyle?.neon || false,
 									outline: member.nameStyle?.outline || false,
+									shadow: member.nameStyle?.shadow || false,
 								};
 							} else
 								member.nameStyle = undefined;
@@ -604,20 +607,6 @@
 							</IonButton>
 							<IonButton
 								shape="round"
-								:fill="member.nameStyle.neon ? 'solid' : 'outline'"
-								size="small"
-								@click="(e) => {
-									e.stopPropagation();
-									member.nameStyle!.neon = !member.nameStyle?.neon;
-								}"
-							>
-								<IonIcon
-									slot="icon-only"
-									:icon="neonMD"
-								/>
-							</IonButton>
-							<IonButton
-								shape="round"
 								:fill="member.nameStyle.outline ? 'solid' : 'outline'"
 								size="small"
 								@click="(e) => {
@@ -628,6 +617,38 @@
 								<IonIcon
 									slot="icon-only"
 									:icon="outlineMD"
+								/>
+							</IonButton>
+							<IonButton
+								shape="round"
+								:fill="member.nameStyle.neon ? 'solid' : 'outline'"
+								size="small"
+								@click="(e) => {
+									e.stopPropagation();
+									member.nameStyle!.neon = !member.nameStyle?.neon;
+									if(member.nameStyle?.neon)
+										member.nameStyle.shadow = false;
+								}"
+							>
+								<IonIcon
+									slot="icon-only"
+									:icon="neonMD"
+								/>
+							</IonButton>
+							<IonButton
+								shape="round"
+								:fill="member.nameStyle.shadow ? 'solid' : 'outline'"
+								size="small"
+								@click="(e) => {
+									e.stopPropagation();
+									member.nameStyle!.shadow = !member.nameStyle?.shadow;
+									if(member.nameStyle?.shadow)
+										member.nameStyle.neon = false;
+								}"
+							>
+								<IonIcon
+									slot="icon-only"
+									:icon="shadowMD"
 								/>
 							</IonButton>
 						</div>
@@ -827,7 +848,7 @@
 			line-height: normal;
 
 			&.outline {
-				-webkit-text-stroke: 2px var(--member-color, var(--ion-color-primary));
+				-webkit-text-stroke: 0.125rem var(--member-color, var(--ion-color-primary));
 				paint-order: markers stroke fill;
 			}
 
@@ -840,6 +861,16 @@
 					0px 0px 16px var(--member-color, var(--ion-color-primary)),
 					0px 0px 32px var(--member-color, var(--ion-color-primary)),
 					0px 0px 64px var(--member-color, var(--ion-color-primary));
+			}
+
+			&.shadow {
+				text-shadow:
+					1px 1px rgb(var(--md3-primary-container)),
+					2px 2px rgb(var(--md3-primary-container)),
+					3px 3px rgb(var(--md3-primary-container)),
+					4px 4px rgb(var(--md3-primary-container)),
+					5px 5px rgb(var(--md3-primary-container)),
+					6px 6px rgb(var(--md3-primary-container));
 			}
 		}
 

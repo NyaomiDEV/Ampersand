@@ -45,7 +45,8 @@ export interface NameStyle {
 	weight: number,
 	italic: boolean,
 	neon: boolean,
-	outline: boolean
+	outline: boolean,
+	shadow: boolean,
 }
 
 export interface BoardMessage extends UUIDable {
