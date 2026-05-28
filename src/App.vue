@@ -1,10 +1,10 @@
 <script setup lang="ts">
-	import { IonApp, IonRouterOutlet, useIonRouter } from "@ionic/vue";
-	import { useRoute, useRouter } from "vue-router";
+	import { IonApp, IonRouterOutlet } from "@ionic/vue";
+	import { useRoute } from "vue-router";
 
 	import { computed, provide, watch } from "vue";
 	import ModalContainer from "./components/ModalContainer.vue";
-	import { setRouterCanGoBack } from "./lib/util/backbutton";
+	import { useBack } from "./lib/util/backbutton";
 	import { dismissSplash } from "./lib/native/plugin";
 	import { appConfig } from "./lib/config";
 	import AssetFonts from "./components/AssetFonts.vue";
@@ -18,14 +18,7 @@
 	provide("isDevServer", computed(() => import.meta.env.MODE === "development"));
 	provide("isDev", computed(() => import.meta.env.MODE === "development" || appConfig.isDeveloperMode));
 
-	const ionRouter = useIonRouter();
-	const vueRouter = useRouter();
 	const route = useRoute();
-
-	void setRouterCanGoBack(ionRouter.canGoBack());
-	vueRouter.afterEach(() => {
-		setRouterCanGoBack(ionRouter.canGoBack());
-	});
 
 	let timeout: number | undefined = setTimeout(async () => await dismissSplash(), 3 * 1000);
 
@@ -48,6 +41,8 @@
 		// unregister watcher
 		watcher();
 	}, { immediate: true });
+
+	useBack();
 </script>
 
 <template>

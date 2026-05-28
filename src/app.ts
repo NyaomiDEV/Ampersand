@@ -53,8 +53,6 @@ import { clearTempDir } from "./lib/native/cache";
 import { slideAnimation } from "./lib/util/misc";
 import { dismissSplash, getWebkitVersion } from "./lib/native/plugin";
 import { platform, version } from "@tauri-apps/plugin-os";
-import { onBackButtonPress } from "@tauri-apps/api/app";
-import { maybeExit } from "./lib/util/backbutton";
 
 // Back button icon
 import backMD from "@material-symbols/svg-600/rounded/arrow_back.svg";
@@ -195,16 +193,9 @@ async function setupAmpersand(){
 	}).use(router).use(I18NextVue, { i18next: i18n });
 	window.Ionic.config.set("navAnimation", slideAnimation);
 
+	// Update insets
 	await updateInsets();
 	window.addEventListener("orientationchange", () => void updateInsets());
-
-	// if on android, we need to get window insets and set up back button behaviour
-	if (platform() === "android") {
-		await onBackButtonPress(() => {
-			document.dispatchEvent(new Event("backbutton"));
-			void maybeExit();
-		});
-	}
 
 	// now we need to set up the dark mode
 	const darkMode = window.matchMedia("(prefers-color-scheme: dark)");

@@ -1,20 +1,23 @@
+import { useBackButton, useIonRouter } from "@ionic/vue";
+import { onBackButtonPress } from "@tauri-apps/api/app";
+import { platform } from "@tauri-apps/plugin-os";
 import { exit } from "@tauri-apps/plugin-process";
+import { onMounted } from "vue";
 
-let routerCanGoBack = false;
-let modalCanGoBack = false;
-let shouldNotExit = false;
+export function useBack(){
+	const router = useIonRouter();
 
-export function setRouterCanGoBack(value: boolean){
-	routerCanGoBack = value;
-	shouldNotExit = modalCanGoBack || routerCanGoBack;
-}
+	useBackButton(-1, async () => {
+		if(!router.canGoBack())
+			await exit();
+	});
 
-export function setModalCanGoBack(value: boolean) {
-	modalCanGoBack = value;
-	shouldNotExit = modalCanGoBack || routerCanGoBack;
-}
-
-export async function maybeExit(){
-	if(!shouldNotExit)
-		await exit(0);
+	onMounted(async () => {
+		// if on android, set up back button behaviour
+		if (platform() === "android") {
+			await onBackButtonPress(() => {
+				document.dispatchEvent(new Event("backbutton"));
+			});
+		}
+	});
 }

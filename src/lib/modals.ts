@@ -1,11 +1,7 @@
-import { Directive, reactive, VNode, watch } from "vue";
-import { setModalCanGoBack } from "./util/backbutton";
+import { Directive, reactive, VNode } from "vue";
 
 const renderArray = reactive<VNode[]>([]);
 
-watch(renderArray, () => {
-	setModalCanGoBack(renderArray.length > 0);
-});
 export const modalEvents = new EventTarget();
 
 const modalDirective: Directive = {
