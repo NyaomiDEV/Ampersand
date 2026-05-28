@@ -316,6 +316,11 @@
 		text-decoration: var(--markdown-text-decoration);
 	}
 
+	span.text-outline {
+		-webkit-text-stroke: var(--markdown-text-outline-width) var(--markdown-text-outline-color);
+		paint-order: stroke fill;
+	}
+
 	p.center {
 		display: block;
 		text-align: center;

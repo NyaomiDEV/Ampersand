@@ -38,6 +38,7 @@ import rotationExtension from "./rotationExtension";
 import customTableExtension from "./customTableExtension";
 import boxShadowExtension from "./boxShadowExtension";
 import rangeExtension from "./rangeExtension";
+import textOutlineExtension from "./textOutlineExtension.ts";
 
 export function useMarked(){
 	const marked = new Marked<(VNode | string)[], VNode | string>();
@@ -148,7 +149,8 @@ export function useMarked(){
 		positionExtension,
 		rotationExtension,
 		customTableExtension,
-		rangeExtension
+		rangeExtension,
+		textOutlineExtension
 	);
 
 	return marked;
