@@ -595,6 +595,7 @@
 								/>
 							</IonButton>
 							<IonButton
+								class="last-button"
 								shape="round"
 								:fill="member.nameStyle.italic ? 'solid' : 'outline'"
 								size="small"
@@ -624,6 +625,26 @@
 									:icon="outlineMD"
 								/>
 							</IonButton>
+
+							<IonButton
+								class="last-button"
+								shape="round"
+								:fill="member.nameStyle.gradient ? 'solid' : 'outline'"
+								size="small"
+								@click="(e) => {
+									e.stopPropagation();
+									member.nameStyle!.gradient = !member.nameStyle?.gradient;
+									if(member.nameStyle?.gradient){
+										member.nameStyle.outline = false;
+									}
+								}"
+							>
+								<IonIcon
+									slot="icon-only"
+									:icon="gradientMD"
+								/>
+							</IonButton>
+
 							<IonButton
 								shape="round"
 								:fill="member.nameStyle.neon ? 'solid' : 'outline'"
@@ -642,6 +663,7 @@
 								/>
 							</IonButton>
 							<IonButton
+								class="last-button"
 								shape="round"
 								:fill="member.nameStyle.shadow ? 'solid' : 'outline'"
 								size="small"
@@ -656,23 +678,6 @@
 								<IonIcon
 									slot="icon-only"
 									:icon="shadowMD"
-								/>
-							</IonButton>
-							<IonButton
-								shape="round"
-								:fill="member.nameStyle.gradient ? 'solid' : 'outline'"
-								size="small"
-								@click="(e) => {
-									e.stopPropagation();
-									member.nameStyle!.gradient = !member.nameStyle?.gradient;
-									if(member.nameStyle?.gradient){
-										member.nameStyle.outline = false;
-									}
-								}"
-							>
-								<IonIcon
-									slot="icon-only"
-									:icon="gradientMD"
 								/>
 							</IonButton>
 						</div>
@@ -928,6 +933,10 @@
 		flex-wrap: wrap;
 		align-items: center;
 		justify-content: center;
+	}
+
+	ion-button.last-button {
+		margin-inline-end: 1em;
 	}
 
 	.member-field ion-label {
