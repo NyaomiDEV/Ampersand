@@ -47,6 +47,7 @@ export interface NameStyle {
 	neon: boolean,
 	outline: boolean,
 	shadow: boolean,
+	gradient: boolean
 }
 
 export interface BoardMessage extends UUIDable {

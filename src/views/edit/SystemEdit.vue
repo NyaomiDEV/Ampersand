@@ -18,6 +18,7 @@
 	import neonMD from "@material-symbols/svg-600/rounded/highlight.svg";
 	import outlineMD from "@material-symbols/svg-600/rounded/ink_highlighter.svg";
 	import shadowMD from "@material-symbols/svg-600/rounded/ev_shadow.svg";
+	import gradientMD from "@material-symbols/svg-600/rounded/gradient.svg";
 
 
 	import { appConfig } from "../../lib/config";
@@ -315,7 +316,8 @@
 							'with-font-family': !!system.nameStyle,
 							'neon': system.nameStyle?.neon,
 							'outline': system.nameStyle?.outline,
-							'shadow': system.nameStyle?.shadow
+							'shadow': system.nameStyle?.shadow,
+							'gradient': system.nameStyle?.gradient
 						}"
 					>
 						{{ system.name }}
@@ -473,7 +475,8 @@
 									weight: system.nameStyle?.weight || 400,
 									neon: system.nameStyle?.neon || false,
 									outline: system.nameStyle?.outline || false,
-									shadow: system.nameStyle?.shadow || false
+									shadow: system.nameStyle?.shadow || false,
+									gradient: system.nameStyle?.gradient || false
 								};
 							} else
 								system.nameStyle = undefined;
@@ -521,6 +524,8 @@
 								@click="(e) => {
 									e.stopPropagation();
 									system.nameStyle!.outline = !system.nameStyle?.outline;
+									if(system.nameStyle?.outline)
+										system.nameStyle.gradient = false;
 								}"
 							>
 								<IonIcon
@@ -535,8 +540,9 @@
 								@click="(e) => {
 									e.stopPropagation();
 									system.nameStyle!.neon = !system.nameStyle?.neon;
-									if(system.nameStyle?.neon)
+									if(system.nameStyle?.neon){
 										system.nameStyle.shadow = false;
+									}
 								}"
 							>
 								<IonIcon
@@ -551,13 +557,31 @@
 								@click="(e) => {
 									e.stopPropagation();
 									system.nameStyle!.shadow = !system.nameStyle?.shadow;
-									if(system.nameStyle?.shadow)
+									if(system.nameStyle?.shadow){
 										system.nameStyle.neon = false;
+									}
 								}"
 							>
 								<IonIcon
 									slot="icon-only"
 									:icon="shadowMD"
+								/>
+							</IonButton>
+							<IonButton
+								shape="round"
+								:fill="system.nameStyle.gradient ? 'solid' : 'outline'"
+								size="small"
+								@click="(e) => {
+									e.stopPropagation();
+									system.nameStyle!.gradient = !system.nameStyle?.gradient;
+									if(system.nameStyle?.gradient){
+										system.nameStyle.outline = false;
+									}
+								}"
+							>
+								<IonIcon
+									slot="icon-only"
+									:icon="gradientMD"
 								/>
 							</IonButton>
 						</div>
@@ -719,8 +743,8 @@
 			line-height: normal;
 
 			&.outline {
-				-webkit-text-stroke: 2px var(--system-color, var(--ion-color-primary));
-				paint-order: markers stroke fill;
+				-webkit-text-stroke: 0.3rem rgb(var(--md3-primary-container));
+				paint-order: stroke fill markers;
 			}
 
 			&.neon {
@@ -728,20 +752,35 @@
 				text-shadow:
 					0px 0px 1px currentColor,
 					0px 0px 2px currentColor,
-					0px 0px 4px currentColor,
-					0px 0px 16px var(--system-color, var(--ion-color-primary)),
-					0px 0px 32px var(--system-color, var(--ion-color-primary)),
-					0px 0px 64px var(--system-color, var(--ion-color-primary));
+					0px 0px 4px currentColor;
+				filter:
+					drop-shadow(0px 0px 8px var(--system-color, var(--ion-color-primary)))
+					drop-shadow(0px 0px 32px var(--system-color, var(--ion-color-primary)));
+
+				&.outline {
+					-webkit-text-stroke: 0.3rem var(--system-color, var(--ion-color-primary));
+				}
+
+				&.gradient {
+					background-image: linear-gradient(to top, rgb(var(--md3-primary-container)) 0%, rgb(var(--md3-dark-on-surface)) 100%);
+					background-clip: text;
+					color: transparent;
+				}
 			}
 
 			&.shadow {
-				text-shadow:
-					1px 1px rgb(var(--md3-primary-container)),
-					2px 2px rgb(var(--md3-primary-container)),
-					3px 3px rgb(var(--md3-primary-container)),
-					4px 4px rgb(var(--md3-primary-container)),
-					5px 5px rgb(var(--md3-primary-container)),
-					6px 6px rgb(var(--md3-primary-container));
+				filter:
+					drop-shadow(0.5px 0.5px rgb(var(--md3-primary-container)))
+					drop-shadow(1px 1px rgb(var(--md3-primary-container)))
+					drop-shadow(1.5px 1.5px rgb(var(--md3-primary-container)))
+					drop-shadow(2px 2px rgb(var(--md3-primary-container)))
+					drop-shadow(2.5px 2.5px rgb(var(--md3-primary-container)))
+			}
+
+			&.gradient {
+				background-image: linear-gradient(to top, rgb(var(--md3-primary-container)) 0%, rgb(var(--md3-on-surface)) 100%);
+				background-clip: text;
+				color: transparent;
 			}
 		}
 
