@@ -1,6 +1,8 @@
-import { appConfigDir, appDataDir, documentDir, sep } from "@tauri-apps/api/path";
-import { copyFile, exists, mkdir, readDir, remove } from "@tauri-apps/plugin-fs";
+import { appDataDir, documentDir, sep } from "@tauri-apps/api/path";
+import { exists, mkdir, readDir, remove, writeFile } from "@tauri-apps/plugin-fs";
 import { exit } from "@tauri-apps/plugin-process";
+import { getConfigDirectory } from "../../config/store";
+import { intoStream } from "../utils";
 
 async function recursiveCopyDir(src: string, dst: string) {
 	await mkdir(dst, { recursive: true });
@@ -10,8 +12,8 @@ async function recursiveCopyDir(src: string, dst: string) {
 		const newDstPath = dst + sep() + entry.name;
 		if (entry.isDirectory)
 			await recursiveCopyDir(newSrcPath, newDstPath);
-		else
-			await copyFile(newSrcPath, newDstPath);
+		else 
+			await writeFile(newDstPath, intoStream(newSrcPath), { mode: 0o777 });
 	}
 }
 
@@ -21,7 +23,8 @@ export async function escapeHatch() {
 
 	// copy app config
 	await mkdir(`${ourDir + sep()}config`);
-	await copyFile(`${await appConfigDir()}${sep()}appConfig.json`, `${ourDir + sep()}config${sep()}appConfig.json`);
+	const appConfig = await getConfigDirectory();
+	await recursiveCopyDir(appConfig, `${ourDir + sep()}config`);
 
 	// copy database
 	await mkdir(`${ourDir + sep()}database`);
@@ -34,11 +37,14 @@ export async function reverseEscapeHatch() {
 	if (
 		!await exists(ourDir) ||
 		!await exists(`${ourDir + sep()}database`) ||
-		!await exists(`${ourDir + sep()}config${sep()}appConfig.json`)
+		!await exists(`${ourDir + sep()}config`)
 	) throw new Error("NOPE");
 
 	// copy app config
-	await copyFile(`${ourDir + sep()}config${sep()}appConfig.json`, `${await appConfigDir()}${sep()}appConfig.json`);
+	const appConfig = await getConfigDirectory();
+	await remove(appConfig, { recursive: true });
+	await mkdir(appConfig, { recursive: true });
+	await recursiveCopyDir(`${ourDir + sep()}config`, appConfig);
 
 	// copy database
 	const appDatabase = `${await appDataDir() + sep()}database`;

@@ -2,7 +2,7 @@ import { decode, encode } from "@msgpack/msgpack";
 import { appConfigDir, appDataDir, sep } from "@tauri-apps/api/path";
 import { mkdir, readFile, writeFile } from "@tauri-apps/plugin-fs";
 
-async function getConfigDirectory(){
+export async function getConfigDirectory(){
 	const tauriAppConfigDir = await appConfigDir();
 	const tauriAppDataDir = await appDataDir();
 
