@@ -67,5 +67,9 @@
 		"neutral": "Neutro",
 		"vibrant": "Brillante",
 		"expressive": "Expresivo"
+	},
+	"tintWithColor": {
+		"title": "teñir con color",
+		"desc": "teñir algunas partes de la aplicación con colores de miembros, sistemas, etiquetas, etc."
 	}
 }

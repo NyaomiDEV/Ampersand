@@ -67,5 +67,9 @@
 	},
 	"backgroundColor": {
 		"title": "Escolha a cor de fundo"
+	},
+	"tintWithColor": {
+		"title": "Tingir com cor",
+		"desc": "Tingir algumas partes do aplicativo com cores dos membros, sistemas, tags, etc."
 	}
 }
