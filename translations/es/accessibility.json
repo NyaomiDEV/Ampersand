@@ -69,7 +69,7 @@
 		"expressive": "Expresivo"
 	},
 	"tintWithColor": {
-		"title": "teñir con color",
-		"desc": "teñir algunas partes de la aplicación con colores de miembros, sistemas, etiquetas, etc."
+		"title": "Colorear",
+		"desc": "Colorea algunas partes de la aplicación con los colores de los miembros, los sistemas, las etiquetas, etc."
 	}
 }
