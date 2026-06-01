@@ -76,6 +76,7 @@ export type AccessibilityConfig = {
 		accentColor?: string,
 		backgroundColor?: string
 	},
+	tintWithColor: boolean,
 	reducedMotion: boolean,
 	compactLists: boolean,
 	disableCovers: boolean,

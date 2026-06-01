@@ -26,6 +26,7 @@
 	import frontingNotificationMD from "@material-symbols/svg-600/rounded/notifications_unread.svg";
 	import appColorMD from "@material-symbols/svg-600/rounded/colorize.svg";
 	import systemColorMD from "@material-symbols/svg-600/rounded/devices.svg";
+	import tintMD from "@material-symbols/svg-600/rounded/format_paint.svg";
 </script>
 
 <template>
@@ -288,6 +289,16 @@
 						<IonIcon slot="start" :icon="lowContrastMD" />
 						<IonIcon slot="end" :icon="highContrastMD" />
 					</IonRange>
+				</IonItem>
+
+				<IonItem>
+					<IonIcon slot="start" :icon="tintMD" />
+					<IonToggle v-model="accessibilityConfig.tintWithColor">
+						<IonLabel>
+							<h3>{{ $t("accessibility:tintWithColor.title") }}</h3>
+							<p>{{ $t("accessibility:tintWithColor.desc") }}</p>
+						</IonLabel>
+					</IonToggle>
 				</IonItem>
 			</IonList>
 		</IonContent>

@@ -53,7 +53,7 @@
 	import SystemSelect from "../../modals/SystemSelect.vue";
 	import { getCustomFields, isValidCustomField } from "../../lib/db/tables/customFields";
 	import CustomFieldsSelect from "../../modals/CustomFieldsSelect.vue";
-	import { appConfig } from "../../lib/config";
+	import { accessibilityConfig, appConfig } from "../../lib/config";
 	import { getSystem } from "../../lib/db/tables/system";
 	import SystemChip from "../../components/system/SystemChip.vue";
 	import SystemItem from "../../components/system/SystemItem.vue";
@@ -303,6 +303,8 @@
 	}
 
 	function updateColors(){
+		if(!accessibilityConfig.tintWithColor) return;
+
 		if(member.value.color){
 			if(self?.vnode.el) addMaterialColors(rgbaToArgb(member.value.color), rgbaToArgb(member.value.color), self?.vnode.el as HTMLElement);
 		} else 

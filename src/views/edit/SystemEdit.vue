@@ -21,7 +21,7 @@
 	import gradientMD from "@material-symbols/svg-600/rounded/gradient.svg";
 
 
-	import { appConfig } from "../../lib/config";
+	import { accessibilityConfig, appConfig } from "../../lib/config";
 	import { useRoute } from "vue-router";
 	import { PartialBy } from "../../lib/types";
 	import { System } from "../../lib/db/entities";
@@ -203,6 +203,8 @@
 	}
 
 	function updateColors(){
+		if(!accessibilityConfig.tintWithColor) return;
+
 		if(system.value.color){
 			if(self?.vnode.el) addMaterialColors(rgbaToArgb(system.value.color), rgbaToArgb(system.value.color), self?.vnode.el as HTMLElement);
 		} else 

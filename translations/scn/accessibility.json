@@ -46,6 +46,10 @@
 	"backgroundColor": {
 		"title": "Scegghi u culuri di sfunnu"
 	},
+	"tintWithColor": {
+		"title": "Tìngi cu lu culuri",
+		"desc": "Tìngi arcuni parti di l'app cu lu culuri di li membri, li sistemi, li tag, ecc."
+	},
 	"reducedMotion": {
 		"title": "Muvimenti arridutti",
 		"desc": "Disabbìlita l'animazzioni nall'app"

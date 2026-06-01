@@ -46,6 +46,10 @@
 	"backgroundColor": {
 		"title": "Scegli 'o culore 'e funno"
 	},
+	"tintWithColor": {
+		"title": "Tinge cu 'o culore",
+		"desc": "Tinge quacche parte de l'app cu 'o culore de 'e mimbri, sisteme, tag, ecc."
+	},
 	"reducedMotion": {
 		"title": "Muvimiente ridotte",
 		"desc": "Leva 'e animazione 'int'â l'app"

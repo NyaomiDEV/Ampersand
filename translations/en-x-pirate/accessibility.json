@@ -46,6 +46,10 @@
 	"backgroundColor": {
 		"title": "Pick yer background color"
 	},
+	"tintWithColor": {
+		"title": "Tint with color",
+		"desc": "Tint some parts o' the vessel with colors from mates, systems, tags, an' such"
+	},
 	"reducedMotion": {
 		"title": "Calm seas",
 		"desc": "Stop the swayin' animations"

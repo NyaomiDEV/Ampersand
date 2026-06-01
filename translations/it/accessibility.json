@@ -46,6 +46,10 @@
 	"backgroundColor": {
 		"title": "Scegli il colore di sfondo"
 	},
+	"tintWithColor": {
+		"title": "Tingi col colore",
+		"desc": "Tingi alcune parti dell'app con il colore di membri, sistemi, tag, ecc."
+	},
 	"reducedMotion": {
 		"title": "Movimenti ridotti",
 		"desc": "Disabilita le animazioni in app"

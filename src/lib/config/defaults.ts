@@ -70,6 +70,7 @@ export const defaultAccessibilityConfig: AccessibilityConfig = {
 		accentColor: "#30628C",
 		backgroundColor: "#308C88",
 	},
+	tintWithColor: true,
 	reducedMotion: false,
 	compactLists: false,
 	disableCovers: false,

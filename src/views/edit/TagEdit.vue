@@ -42,6 +42,7 @@
 	import { getAssets } from "../../lib/db/tables/assets";
 	import Loading from "../../modals/Loading.vue";
 	import { lists } from "../../router/lists";
+	import { accessibilityConfig } from "../../lib/config/index.ts";
 
 	const loading = ref(false);
 
@@ -211,6 +212,8 @@
 	}
 
 	function updateColors(){
+		if(!accessibilityConfig.tintWithColor) return;
+
 		if(tag.value.color){
 			if(self?.vnode.el) addMaterialColors(rgbaToArgb(tag.value.color), rgbaToArgb(tag.value.color), self?.vnode.el as HTMLElement);
 		} else 

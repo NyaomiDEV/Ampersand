@@ -46,6 +46,10 @@
 	"backgroundColor": {
 		"title": "Choose the background color"
 	},
+	"tintWithColor": {
+		"title": "Tint with color",
+		"desc": "Tint some parts of the app with colors from members, systems, tags, etc."
+	},
 	"reducedMotion": {
 		"title": "Reduced motion",
 		"desc": "Disable in-app animations"
