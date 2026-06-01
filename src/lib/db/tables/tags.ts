@@ -73,8 +73,7 @@ export function getTag(uuid: UUID){
 
 export async function removeTag(uuid: UUID): Promise<TransactionStatus<void>> {
 	try {
-		const tag = await db.tags.get(uuid);
-
+		const tag = db.tags.index.find(x => x.uuid === uuid)!;
 		switch(tag.type){
 			case "member":
 				for await (const member of getMembers()) {
