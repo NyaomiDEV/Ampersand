@@ -236,6 +236,20 @@ export async function getFrontingBetween(start: Date, end?: Date){
 	return (await entries).filter(x => x !== undefined);
 }
 
+export function getFrontingBetweenIndex(start: Date, end?: Date) {
+	if (!end) end = new Date();
+	return db.frontingEntries.index
+		.toSorted(sortFrontingEntries)
+		.filter(x => {
+			const _start = x.startTime!;
+			const _end = x.endTime || new Date(end);
+			if (start.valueOf() <= _end.valueOf() && end.valueOf() >= _start.valueOf())
+				return true;
+
+			return false;
+		});
+}
+
 export function getFrontingStatistics(entries: (FrontingEntry & { endTime: Date })[]){
 	const maps = {
 		frontingCount: new Map<string, number>(),

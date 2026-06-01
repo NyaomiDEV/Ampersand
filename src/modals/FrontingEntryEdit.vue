@@ -21,11 +21,12 @@
 	import trashMD from "@material-symbols/svg-600/rounded/delete.svg";
 
 	import { FrontingEntry, FrontingEntryComplete } from "../lib/db/entities";
-	import { newFrontingEntry, updateFrontingEntry, deleteFrontingEntry, sendFrontingChangedEvent, toFrontingEntryComplete, getFrontingBetween } from "../lib/db/tables/frontingEntries";
+	import { newFrontingEntry, updateFrontingEntry, deleteFrontingEntry, sendFrontingChangedEvent, getFrontingBetweenIndex } from "../lib/db/tables/frontingEntries";
 	import { ref, toRaw, useTemplateRef, watch } from "vue";
 	import { useTranslation } from "i18next-vue";
 	import { PartialBy } from "../lib/types";
 	import { formatDate, promptOkCancel, toast, presencePhrase } from "../lib/util/misc";
+	import { IndexEntry } from "../lib/db/types";
 
 	import MemberSelect from "./MemberSelect.vue";
 	import PresenceHistory from "./PresenceHistory.vue";
@@ -51,7 +52,7 @@
 		isLocked: false
 	};
 	const frontingEntry = ref({ ...(props.frontingEntry || emptyFrontingEntry) });
-	const allFrontingInTimeSpan = ref<FrontingEntryComplete[]>([]);
+	const allFrontingInTimeSpan = ref<IndexEntry<FrontingEntry>[]>([]);
 
 	const presenceHistoryModal = useTemplateRef("presenceHistoryModal");
 	const memberSelectModal = useTemplateRef("memberSelectModal");
@@ -158,9 +159,8 @@
 		return presenceVal.sort((a, b) => a[0].valueOf() - b[0].valueOf()).pop() || [undefined, undefined];
 	}
 
-	watch(frontingEntry.value, async () => {
-		allFrontingInTimeSpan.value = (await toFrontingEntryComplete(await getFrontingBetween(frontingEntry.value.startTime, frontingEntry.value.endTime)))
-			.filter(x => x.uuid !== frontingEntry.value.uuid);
+	watch(frontingEntry.value, () => {
+		allFrontingInTimeSpan.value = getFrontingBetweenIndex(frontingEntry.value.startTime, frontingEntry.value.endTime).filter(x => x.uuid !== frontingEntry.value.uuid);
 	}, { immediate: true });
 </script>
 
@@ -380,19 +380,18 @@
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton :disabled="!frontingEntry.member || !!allFrontingInTimeSpan.find(x => x.member.uuid === frontingEntry.member?.uuid)" @click="save">
+				<IonFabButton :disabled="!frontingEntry.member || !!allFrontingInTimeSpan.find(x => x.member === frontingEntry.member?.uuid)" @click="save">
 					<IonIcon :icon="saveMD" />
 				</IonFabButton>
 			</IonFab>
 			
-
 			<MemberSelect
 				ref="memberSelectModal"
 				:only-one="true"
 				:discard-on-select="true"
 				:hide-checkboxes="true"
 				:model-value="frontingEntry.member ? [frontingEntry.member] : []"
-				:members-to-exclude="allFrontingInTimeSpan?.map(x => x.member)"
+				:members-to-exclude="allFrontingInTimeSpan?.map(x => x.member!)"
 				@update:model-value="(e) => { if(e[0]) frontingEntry.member = e[0]; if(frontingEntry.influencing?.uuid === e[0].uuid) frontingEntry.influencing = undefined }"
 			/>
 
@@ -403,7 +402,7 @@
 				:hide-checkboxes="true"
 				:always-emit="true"
 				:model-value="frontingEntry.influencing ? [frontingEntry.influencing] : []"
-				:members-to-include="allFrontingInTimeSpan?.map(x => x.member)"
+				:members-to-include="allFrontingInTimeSpan?.map(x => x.member!)"
 				:members-to-exclude="frontingEntry.member ? [frontingEntry.member] : []"
 				@update:model-value="(e) => { if(e[0]) frontingEntry.influencing = e[0] }"
 			/>

@@ -34,8 +34,8 @@
 		hideFab?: boolean,
 		modelValue?: Member[],
 		hideCheckboxes?: boolean,
-		membersToExclude?: Member[],
-		membersToInclude?: Member[]
+		membersToExclude?: (Member | string)[],
+		membersToInclude?: (Member | string)[]
 	}>();
 
 	const emit = defineEmits<{
@@ -133,6 +133,16 @@
 		if(onlyOne && props.discardOnSelect)
 			void modalController.dismiss();
 	}
+
+	function isDisabled(member){
+		return (
+			(
+				props.membersToInclude &&
+				!props.membersToInclude.find(x => typeof x === "string" ? x === member : x.uuid === member.uuid)
+			) ||
+			!!props.membersToExclude?.find(x => typeof x === "string" ? x === member : x.uuid === member.uuid)
+		);
+	}
 </script>
 
 <template>
@@ -168,7 +178,7 @@
 							:show-role="!accessibilityConfig.compactLists"
 							:show-pronouns="!accessibilityConfig.compactLists"
 							:smaller-avatar="accessibilityConfig.compactLists"
-							:disabled="(props.membersToInclude && !props.membersToInclude.find(x => x.uuid === member.uuid)) || !!props.membersToExclude?.find(x => x.uuid === member.uuid)"
+							:disabled="isDisabled(member)"
 							has-toggle="checkbox"
 							:toggle-value="member.uuid"
 							:toggle-checked="!!selectedMembers.find(x => x.uuid === member.uuid)"
