@@ -67,5 +67,9 @@
 		"neutral": "kule pi lili mute",
 		"vibrant": "kule pi mute wawa",
 		"expressive": "kule mute"
+	},
+	"tintWithColor": {
+		"title": "pana kule",
+		"desc": "ilo ni li kama kule; kule ni li tan ijo kulupu anu kulupu anu nimi sona anu ante."
 	}
 }
