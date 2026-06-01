@@ -4,6 +4,7 @@ import { UUID, UUIDable, CustomField } from "../entities";
 import { filterCustomField } from "../../search";
 import { TransactionStatus } from "../types";
 import { sortCustomFields } from "../../util/misc";
+import { getMembers, updateMember } from "./members";
 
 export async function* getCustomFields(maxIter = 10){
 	const uuids = db.customFields.index.toSorted(sortCustomFields).map(x => x.uuid);
@@ -60,6 +61,13 @@ export async function newCustomField(customField: Omit<CustomField, keyof UUIDab
 
 export async function deleteCustomField(uuid: UUID): Promise<TransactionStatus<void>> {
 	try {
+		for await (const member of getMembers()) {
+			if (!member.customFields?.has(uuid)) continue;
+
+			const delta = { uuid: member.uuid, customFields: new Map(member.customFields?.entries().filter(x => x[0] !== uuid)) };
+			await updateMember(delta);	
+		}
+
 		await db.customFields.delete(uuid);
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "customFields",
