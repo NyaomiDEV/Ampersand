@@ -115,6 +115,8 @@
 		const uuid = member.value.uuid;
 		const _member = toRaw(member.value);
 
+		_member.customFields = new Map(_member.customFields?.entries().filter(x => isValidCustomField(x[0])));
+
 		try{
 			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 			await loadingModal.value?.$el.present();
