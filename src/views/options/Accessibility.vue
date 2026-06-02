@@ -280,7 +280,7 @@
 						label-placement="stacked"
 						:min="-1"
 						:max="1"
-						:step="0.1"
+						:step="0.25"
 						:snaps="true"
 						:ticks="true"
 						:pin="true"
