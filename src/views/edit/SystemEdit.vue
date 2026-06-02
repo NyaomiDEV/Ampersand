@@ -203,14 +203,20 @@
 	}
 
 	function updateColors(){
-		if(!accessibilityConfig.tintWithColor) return;
-
 		if(system.value.color){
-			if(self?.vnode.el) addMaterialColors(rgbaToArgb(system.value.color), rgbaToArgb(system.value.color), self?.vnode.el as HTMLElement);
-		} else 
-			if(self?.vnode.el) unsetMaterialColors(self?.vnode.el as HTMLElement);
+			if(self?.vnode.el){
+				addMaterialColors(rgbaToArgb(system.value.color), rgbaToArgb(system.value.color), self?.vnode.el as HTMLElement, "system-color");
+				if(accessibilityConfig.tintWithColor)
+					addMaterialColors(rgbaToArgb(system.value.color), rgbaToArgb(system.value.color), self?.vnode.el as HTMLElement);
+			}
+		} else {
+			if(self?.vnode.el){
+				unsetMaterialColors(self?.vnode.el as HTMLElement, "system-color");
+				if(accessibilityConfig.tintWithColor)
+					unsetMaterialColors(self?.vnode.el as HTMLElement);
+			}
+		}
 	}
-
 
 	async function getParents(){
 		const _parents: System[] = [];
@@ -750,8 +756,12 @@
 			line-height: normal;
 
 			&.outline {
-				-webkit-text-stroke: 0.3rem rgb(var(--md3-primary-container));
+				-webkit-text-stroke: 0.3rem rgb(var(--system-color-light-primary-container, var(--md3-light-primary-container)));
 				paint-order: stroke fill markers;
+
+				&:is(html.ion-palette-dark *) {
+					-webkit-text-stroke: 0.3rem rgb(var(--system-color-dark-primary-container, var(--md3-dark-primary-container)));
+				}
 			}
 
 			&.neon {
@@ -761,33 +771,62 @@
 					0px 0px 2px currentColor,
 					0px 0px 4px currentColor;
 				filter:
-					drop-shadow(0px 0px 8px var(--system-color, var(--ion-color-primary)))
-					drop-shadow(0px 0px 32px var(--system-color, var(--ion-color-primary)));
+					drop-shadow(0px 0px 8px var(--system-color, rgb(var(--system-color-light-primary, var(--md3-light-primary)))))
+					drop-shadow(0px 0px 32px var(--system-color, rgb(var(--system-color-light-primary, var(--md3-light-primary)))));
+
+				&:is(html.ion-palette-dark *){
+					filter:
+						drop-shadow(0px 0px 8px var(--system-color, rgb(var(--system-color-dark-primary, var(--md3-dark-primary)))))
+						drop-shadow(0px 0px 32px var(--system-color, rgb(var(--system-color-dark-primary, var(--md3-dark-primary)))));
+				}
 
 				&.outline {
-					-webkit-text-stroke: 0.3rem var(--system-color, var(--ion-color-primary));
+					-webkit-text-stroke: 0.3rem var(--system-color, rgb(var(--system-color-light-primary, var(--md3-light-primary))));
+
+					&:is(html.ion-palette-dark *){
+						-webkit-text-stroke: 0.3rem var(--system-color, rgb(var(--system-color-dark-primary, var(--md3-dark-primary))));
+					}
 				}
 
 				&.gradient {
-					background-image: linear-gradient(to top, rgb(var(--md3-primary-container)) 0%, rgb(var(--md3-dark-on-surface)) 100%);
+					background-image: linear-gradient(to top, rgb(var(--system-color-light-primary-container, var(--md3-light-primary-container))) 0%, rgb(var(--system-color-dark-on-surface, var(--md3-dark-on-surface))) 100%);
 					background-clip: text;
 					color: transparent;
+
+					&:is(html.ion-palette-dark *) {
+						background-image: linear-gradient(to top, rgb(var(--system-color-dark-primary-container, var(--md3-dark-primary-container))) 0%, rgb(var(--system-color-dark-on-surface, var(--md3-dark-on-surface))) 100%);
+						background-clip: text;
+						color: transparent;
+					}
 				}
 			}
 
 			&.shadow {
 				filter:
-					drop-shadow(0.5px 0.5px rgb(var(--md3-primary-container)))
-					drop-shadow(1px 1px rgb(var(--md3-primary-container)))
-					drop-shadow(1.5px 1.5px rgb(var(--md3-primary-container)))
-					drop-shadow(2px 2px rgb(var(--md3-primary-container)))
-					drop-shadow(2.5px 2.5px rgb(var(--md3-primary-container)))
+					drop-shadow(0.5px 0.5px rgb(var(--system-color-light-primary, var(--md3-light-primary))))
+					drop-shadow(1px 1px rgb(var(--system-color-light-primary, var(--md3-light-primary))))
+					drop-shadow(1.5px 1.5px rgb(var(--system-color-light-primary, var(--md3-light-primary))))
+					drop-shadow(2px 2px rgb(var(--system-color-light-primary, var(--md3-light-primary))))
+					drop-shadow(2.5px 2.5px rgb(var(--system-color-light-primary, var(--md3-light-primary))));
+
+				&:is(html.ion-palette-dark *){
+					filter:
+						drop-shadow(0.5px 0.5px rgb(var(--system-color-dark-primary-container, var(--md3-dark-primary-container))))
+						drop-shadow(1px 1px rgb(var(--system-color-dark-primary-container, var(--md3-dark-primary-container))))
+						drop-shadow(1.5px 1.5px rgb(var(--system-color-dark-primary-container, var(--md3-dark-primary-container))))
+						drop-shadow(2px 2px rgb(var(--system-color-dark-primary-container, var(--md3-dark-primary-container))))
+						drop-shadow(2.5px 2.5px rgb(var(--system-color-dark-primary-container, var(--md3-dark-primary-container))));
+				}
 			}
 
 			&.gradient {
-				background-image: linear-gradient(to top, rgb(var(--md3-primary-container)) 0%, rgb(var(--md3-on-surface)) 100%);
+				background-image: linear-gradient(to top, rgb(var(--system-color-light-primary-container, var(--md3-light-primary-container))) 0%, rgb(var(--system-color-light-on-surface, var(--md3-light-on-surface))) 100%);
 				background-clip: text;
 				color: transparent;
+
+				&:is(html.ion-palette-dark *){
+					background-image: linear-gradient(to top, rgb(var(--system-color-dark-primary-container, var(--md3-dark-primary-container))) 0%, rgb(var(--system-color-dark-on-surface, var(--md3-dark-on-surface))) 100%);
+				}
 			}
 		}
 

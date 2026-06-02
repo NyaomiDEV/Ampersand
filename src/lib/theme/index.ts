@@ -92,16 +92,17 @@ export function updateMaterialColors(target?: HTMLElement){
 	return addMaterialColors(undefined, undefined, target);
 }
 
-export function unsetMaterialColors(target?: HTMLElement){
+export function unsetMaterialColors(target?: HTMLElement, customPrefix?: string){
+	const prefix = customPrefix || "md3";
 	// Clean up
 	if(target) {
 		return Array.from(target.style)
-			.filter(x => x.startsWith("--md3"))
+			.filter(x => x.startsWith(`--${prefix}`))
 			.forEach(x => target.style.removeProperty(x));
 	}
 
 	return Array.from(document.documentElement.style)
-		.filter(x => x.startsWith("--md3"))
+		.filter(x => x.startsWith(`--${prefix}`))
 		.forEach(x => document.documentElement.style.removeProperty(x));
 }
 
@@ -163,8 +164,9 @@ export function getPaletteTones(primary?: string, neutral?: string, isDarkMode?:
 	return paletteTones;
 }
 
-export function addMaterialColors(primary?: string, neutral?: string, target?: HTMLElement){
+export function addMaterialColors(primary?: string, neutral?: string, target?: HTMLElement, customPrefix?: string){
 	const styleSheet: Map<string, string> = new Map();
+	const prefix = customPrefix || "md3";
 	for(const uiMode of ["light", "dark"]){
 		const palette = getMaterialColors(primary, neutral, uiMode === "dark");
 		const paletteSuccess = getMaterialColors("#00ff00", undefined, uiMode === "dark");
@@ -172,20 +174,20 @@ export function addMaterialColors(primary?: string, neutral?: string, target?: H
 
 		for (const [key, value] of palette.entries()){
 			styleSheet.set(
-				`--md3-${uiMode}-${key.replaceAll("_", "-")}`,
+				`--${prefix}-${uiMode}-${key.replaceAll("_", "-")}`,
 				rgbFromArgb(value)
 			);
 		}
 
 		for (const key of customColorsWeWant) {
 			styleSheet.set(
-				`--md3-${uiMode}-${key
+				`--${prefix}-${uiMode}-${key
 					.replaceAll("_", "-")
 					.replace("primary", "success")}`,
 				rgbFromArgb(paletteSuccess.get(key)!)
 			);
 			styleSheet.set(
-				`--md3-${uiMode}-${key
+				`--${prefix}-${uiMode}-${key
 					.replaceAll("_", "-")
 					.replace("primary", "warning")}`,
 				rgbFromArgb(paletteWarning.get(key)!)
@@ -197,7 +199,7 @@ export function addMaterialColors(primary?: string, neutral?: string, target?: H
 
 	for (const [i, value] of tones.entries()) {
 		styleSheet.set(
-			`--md3-neutral-palette-tone-${i}`,
+			`--${prefix}-neutral-palette-tone-${i}`,
 			rgbFromArgb(value)
 		);
 	}
