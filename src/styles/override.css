@@ -243,6 +243,14 @@ ion-range.range-label-placement-stacked::part(label) {
 	transform: none;
 	margin-top: 8px;
 	margin-bottom: 8px;
+	max-width: 100%;
+	overflow-x: hidden;
+	text-wrap: wrap;
+}
+
+ion-range.range-label-placement-stacked > [slot="label"] {
+	overflow-x: hidden;
+	text-wrap: wrap;
 }
 
 /* Prevent ion-label wrapping -- should we still keep this? */
