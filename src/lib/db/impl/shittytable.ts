@@ -1,7 +1,7 @@
 import { appDataDir, sep } from "@tauri-apps/api/path";
 import * as fs from "@tauri-apps/plugin-fs";
 import type { Asset, JournalPost, Member, System, Tag, UUIDable, UUID, BoardMessage } from "../entities";
-import { decodeAsync, encode } from "@msgpack/msgpack";
+import { decode, decodeAsync, encode } from "@msgpack/msgpack";
 import type { AmpersandTableMapping, MigrationsMapping, Table } from "../types";
 import { deleteNull, replace, revive, walk, walkAsync } from "../../serialization";
 import { assets, boardMessages, journalPosts, members, systems, tags } from "./migrations";
@@ -15,19 +15,21 @@ const appDataDirPath = await appDataDir();
 export class ShittyTable<T extends UUIDable> implements Table<T> {
 	name: string;
 	path: string;
+	stream: boolean;
 	secondaryKeys: SecondaryKey<T>[];
 	index: IndexEntry<T>[];
 	hashes: Record<UUID, string>;
 
-	private constructor(name: string, path: string, secondaryKeys: SecondaryKey<T>[]) {
+	private constructor(name: string, path: string, secondaryKeys: SecondaryKey<T>[], stream: boolean) {
 		this.name = name;
 		this.path = path;
+		this.stream = stream;
 		this.secondaryKeys = secondaryKeys;
 		this.index = [];
 		this.hashes = {};
 	}
 
-	static async new<T extends keyof AmpersandTableMapping>(name: T, secondaryKeys: SecondaryKey<AmpersandTableMapping[T]>[]): Promise<ShittyTable<AmpersandTableMapping[T]>>{
+	static async new<T extends keyof AmpersandTableMapping>(name: T, secondaryKeys: SecondaryKey<AmpersandTableMapping[T]>[], stream: boolean): Promise<ShittyTable<AmpersandTableMapping[T]>>{
 		const _path = `${appDataDirPath + sep()}database${sep() + name}`;
 
 		if (name === "systems") {
@@ -38,7 +40,7 @@ export class ShittyTable<T extends UUIDable> implements Table<T> {
 
 		await fs.mkdir(_path, { recursive: true });
 
-		const table = new ShittyTable<AmpersandTableMapping[T]>(name, _path, secondaryKeys);
+		const table = new ShittyTable<AmpersandTableMapping[T]>(name, _path, secondaryKeys, stream);
 		await table.initializeHashes();
 		await table.initializeIndex();
 		await table.migrate();
@@ -199,7 +201,10 @@ export class ShittyTable<T extends UUIDable> implements Table<T> {
 	}
 
 	async get(uuid: string) {
-		const obj = await decodeAsync(this.getRawStream(uuid));
+		const obj = this.stream
+			? await decodeAsync(this.getRawStream(uuid))
+			: decode(await this.getRaw(uuid));
+
 		return walk(obj as object, revive) as T;
 	}
 
@@ -333,7 +338,7 @@ export class ShittyTable<T extends UUIDable> implements Table<T> {
 	async getMigrationVersion() {
 		const _path = `${this.path + sep()}.migrations`;
 		try {
-			const migrations = await decodeAsync(intoStream(_path)) as MigrationsMapping;
+			const migrations = decode(await fs.readFile(_path)) as MigrationsMapping;
 			return migrations.version;
 		} catch (e) {
 			console.error(e);

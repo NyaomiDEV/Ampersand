@@ -38,27 +38,27 @@ export function getTables() {
 }
 
 export async function initDatabase(){
-	const initTable = async <T extends keyof AmpersandTableMapping>(name: T, secondaryKeys: SecondaryKey<AmpersandTableMapping[T]>[]) => {
+	const initTable = async <T extends keyof AmpersandTableMapping>(name: T, secondaryKeys: SecondaryKey<AmpersandTableMapping[T]>[], stream: boolean) => {
 		const date = Date.now();
 		// @ts-expect-error db[name] has to be a name we can assign to, however i don't know how to type it correctly (also because name is already keyof AmpersandTableMapping so idk why)
-		db[name] = await ShittyTable.new(name, secondaryKeys);
+		db[name] = await ShittyTable.new(name, secondaryKeys, stream);
 		initMetrics.value.set(name, Date.now() - date);
 	};
 
 	const initBefore = Date.now();
 
 	const promises = [
-		initTable("systems", ["name", "parent", "isPinned", "isArchived", "viewInLists"]),
-		initTable("members", ["name", "system", "isPinned", "isArchived", "isCustomFront"]),
-		initTable("boardMessages", ["members", "date", "isPinned", "isArchived"]),
-		initTable("frontingEntries", ["member", "startTime", "endTime", "isLocked", "isMainFronter"]),
-		initTable("journalPosts", ["title", "members", "date", "isPinned"]),
-		initTable("reminders", ["active"]),
-		initTable("tags", ["name", "type", "isArchived", "viewInLists"]),
-		initTable("assets", ["friendlyName"]),
-		initTable("customFields", ["name", "priority"]),
-		initTable("notes", ["title", "priority", "isArchived"]),
-		initTable("filterQueries", ["name", "type"])
+		initTable("systems", ["name", "parent", "isPinned", "isArchived", "viewInLists"], true),
+		initTable("members", ["name", "system", "isPinned", "isArchived", "isCustomFront"], true),
+		initTable("boardMessages", ["members", "date", "isPinned", "isArchived"], false),
+		initTable("frontingEntries", ["member", "startTime", "endTime", "isLocked", "isMainFronter"], false),
+		initTable("journalPosts", ["title", "members", "date", "isPinned"], true),
+		initTable("reminders", ["active"], false),
+		initTable("tags", ["name", "type", "isArchived", "viewInLists"], false),
+		initTable("assets", ["friendlyName"], true),
+		initTable("customFields", ["name", "priority"], false),
+		initTable("notes", ["title", "priority", "isArchived"], true),
+		initTable("filterQueries", ["name", "type"], false)
 	];
 
 	await Promise.all(promises);
