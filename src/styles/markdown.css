@@ -57,7 +57,7 @@
 				color: var(--markdown-table-fg, unset);
 
 			th {
-				background-color: var(--markdown-th-bg, unset);
+				background: var(--markdown-th-bg, unset);
 				color: var(--markdown-th-fg, unset);
 				border-top: var(--markdown-th-bt-top, var(--border));
 				border-right: var(--markdown-th-bt-right, var(--border));
@@ -67,7 +67,7 @@
 			}
 
 			td {
-				background-color: var(--markdown-td-bg, unset);
+				background: var(--markdown-td-bg, unset);
 				color: var(--markdown-td-fg, unset);
 				border-top: var(--markdown-td-bt-top, var(--border));
 				border-right: var(--markdown-td-bt-right, var(--border));
@@ -76,7 +76,7 @@
 				border-radius: var(--markdown-td-radius, var(--markdown-border-radius));
 
 				&:first-child {
-					background-color: var(--markdown-first-col-bg, var(--markdown-td-bg, unset));
+					background: var(--markdown-first-col-bg, var(--markdown-td-bg, unset));
 					color: var(--markdown-first-col-fg, var(--markdown-td-fg, unset));
 					border-top: var(--markdown-first-col-bt-top, var(--markdown-td-bt-top, var(--border)));
 					border-right: var(--markdown-first-col-bt-right, var(--markdown-td-bt-right, var(--border)));
@@ -86,7 +86,7 @@
 			}
 
 			tr:nth-child(odd) td {
-				background-color: var(--markdown-odd-td-bg, var(--markdown-td-bg, unset));
+				background: var(--markdown-odd-td-bg, var(--markdown-td-bg, unset));
 				color: var(--markdown-odd-td-fg, var(--markdown-td-fg, unset));
 				border-top: var(--markdown-odd-td-bt-top, var(--markdown-td-bt-top, var(--border)));
 				border-right: var(--markdown-odd-td-bt-right, var(--markdown-td-bt-right, var(--border)));
@@ -94,7 +94,7 @@
 				border-left: var(--markdown-odd-td-bt-left, var(--markdown-td-bt-left, var(--border)));
 
 				&:first-child {
-					background-color: var(--markdown-first-col-bg, var(--markdown-odd-td-bg, var(--markdown-td-bg, unset)));
+					background: var(--markdown-first-col-bg, var(--markdown-odd-td-bg, var(--markdown-td-bg, unset)));
 					color: var(--markdown-first-col-fg, var(--markdown-odd-td-fg, var(--markdown-td-fg, unset)));
 					border-top: var(--markdown-first-col-bt-top, var(--markdown-odd-td-bt-top, var(--markdown-td-bt-top, var(--border))));
 					border-right: var(--markdown-first-col-bt-right, var(--markdown-odd-td-bt-right, var(--markdown-td-bt-right, var(--border))));
