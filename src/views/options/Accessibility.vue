@@ -24,9 +24,9 @@
 	import darkMD from "@material-symbols/svg-600/rounded/dark_mode.svg";
 	import autoMD from "@material-symbols/svg-600/rounded/routine.svg";
 	import frontingNotificationMD from "@material-symbols/svg-600/rounded/notifications_unread.svg";
-	import appColorMD from "@material-symbols/svg-600/rounded/colorize.svg";
+	import tintMD from "@material-symbols/svg-600/rounded/colorize.svg";
 	import systemColorMD from "@material-symbols/svg-600/rounded/devices.svg";
-	import tintMD from "@material-symbols/svg-600/rounded/format_paint.svg";
+	import appColorMD from "@material-symbols/svg-600/rounded/format_paint.svg";
 </script>
 
 <template>
