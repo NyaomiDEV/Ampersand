@@ -174,10 +174,6 @@ html:is(.sys-macos) ion-tab-button {
 	background-color: transparent;
 }
 
-html:is(.sys-macos) ion-tabs ion-header {
-	--ion-safe-area-top: 0px;
-}
-
 /* Padding fixes for the bottom of lists when a FAB is there and when it isn't */
 ion-tabs ion-content:has(> ion-fab.fab-vertical-bottom[slot="fixed"]:not(:empty)) {
 	--padding-bottom: 88px;

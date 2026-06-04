@@ -10,10 +10,13 @@
 	import copyMD from "@material-symbols/svg-600/rounded/content_copy.svg";
 	import moreMD from "@material-symbols/svg-600/rounded/more_vert.svg";
 
+	import calendarMD from "@material-symbols/svg-600/rounded/calendar_month.svg";
+	import listMD from "@material-symbols/svg-600/rounded/list.svg";
+
 	import { JournalPost, JournalPostComplete } from "../../lib/db/entities";
 	import dayjs from "dayjs";
 	import { DatabaseEvent, DatabaseEvents } from "../../lib/db/events";
-	import { getJournalPostsDays, getJournalPostsOfDay, toJournalPostComplete } from "../../lib/db/tables/journalPosts";
+	import { getFilteredJournalPosts, getJournalPostsDays, getJournalPostsOfDay, toJournalPostComplete } from "../../lib/db/tables/journalPosts";
 	import { useTranslation } from "i18next-vue";
 	import { promptOkCancel, toast } from "../../lib/util/misc";
 	import DatetimeUtc, { DatetimeParts } from "../../components/DatetimeUtc.vue";
@@ -29,6 +32,8 @@
 	const router = useIonRouter();
 
 	const isStandalone = route.path.startsWith("/lists/");
+
+	const showCalendar = ref(true);
 
 	const i18next = useTranslation();
 
@@ -65,6 +70,10 @@
 		await resetPosts();
 	}, { immediate: true });
 
+	watch(showCalendar, async () => {
+		await resetPosts();
+	});
+
 	onBeforeMount(() => {
 		DatabaseEvents.addEventListener("updated", listener);
 	});
@@ -76,7 +85,11 @@
 	async function resetPosts() {
 		posts.value = undefined;
 		iterDone.value = false;
-		iter.value = getJournalPostsOfDay(date.value, true, search.value);
+		if(showCalendar.value)
+			iter.value = getJournalPostsOfDay(date.value, true, search.value);
+		else
+			iter.value = getFilteredJournalPosts(search.value);
+
 		await pollPosts();
 	}
 
@@ -195,6 +208,11 @@
 					<IonTitle>
 						{{ $t("journal:header") }}
 					</IonTitle>
+					<IonButtons slot="secondary">
+						<IonButton @click="showCalendar = !showCalendar">
+							<IonIcon slot="icon-only" :icon="showCalendar ? listMD : calendarMD" />
+						</IonButton>
+					</IonButtons>
 				</IonToolbar>
 				<IonToolbar>
 					<IonSearchbar
@@ -217,6 +235,7 @@
 				</IonToolbar>
 			</CollapsibleHeaderbar>
 			<DatetimeUtc
+				v-if="showCalendar"
 				v-model="date"
 				presentation="date"
 				:highlighted-dates="postsDays"

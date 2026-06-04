@@ -30,6 +30,13 @@ export async function* getJournalPosts(maxIter = 10){
 	};
 }
 
+export async function* getFilteredJournalPosts(query: string) {
+	for await (const post of getJournalPosts()){
+		if(filterJournalPost(query, post))
+			yield post;
+	}
+}
+
 export async function toJournalPostComplete(journalPosts: JournalPost[]): Promise<JournalPostComplete[]> {
 	const _memberSet = await Promise.all(Array.from(new Set(
 		journalPosts.map(x => x.members).flat(1)
