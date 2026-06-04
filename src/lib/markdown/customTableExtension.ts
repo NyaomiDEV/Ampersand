@@ -1,6 +1,26 @@
 import { h, type VNode } from "vue";
 import { MarkedExtension } from "marked";
-import { splitBlockArguments } from "./utils";
+import { isCssLength, isPercentage, isValidBorder, isValidCssBackground, isValidCssColor, splitBlockArguments } from "./utils";
+
+const commonArgs = {
+	bg: (values: string[]) => values.length === 1 && (isValidCssColor(values[0]) || isValidCssBackground(values[0])),
+	fg: (values: string[]) => values.length === 1 && isValidCssColor(values[0]),
+	bt: (values: string[]) => !!values.length && values.length <= 4 && values.every(x => isValidBorder(x)),
+};
+
+const tableArgs = {
+	...commonArgs,
+	collapse: (values: string[]) => values.length === 1 && (values[0] === "true" || values[0] === "false"),
+	spacing: (values: string[]) => !!values.length && values.length <= 2 && values.every(x => isCssLength(x)),
+	radius: (values: string[]) => !!values.length && values.length <= 4 && values.every(x => isCssLength(x) || isPercentage(x))
+};
+
+const headerAndCellArgs = {
+	...commonArgs,
+	radius: (values: string[]) => !!values.length && values.length <= 4 && values.every(x => isCssLength(x) || isPercentage(x))
+};
+
+const tableParts = { "table": tableArgs, "header": headerAndCellArgs, "cell": headerAndCellArgs, "first-col": commonArgs, "odd-cell": commonArgs };
 
 const customTableExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [
@@ -12,10 +32,21 @@ const customTableExtension: MarkedExtension<(VNode | string)[], VNode | string> 
 				const rule = /^\+\+\+\n(.+?)\n---\n(.+?)\n\+\+\+(?:\n|$)/s;
 				const match = rule.exec(src);
 				if (match) {
+					const tableStyle = splitBlockArguments(match[1]);
+
+					for(const part in tableStyle) {
+						if (!Object.keys(tableParts).includes(part)) return;
+						for(const key in tableStyle[part]){
+							if (!Object.keys(tableParts[part]).includes(key)) return;
+							// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+							if (!tableParts[part][key](tableStyle[part][key])) return;
+						}
+					}
+
 					const token = {
 						type: "custom-table",
 						raw: match[0],
-						tableStyle: match[1],
+						tableStyle,
 						table: match[2],
 						tokens: this.lexer.blockTokens(match[2])
 					};
@@ -24,7 +55,7 @@ const customTableExtension: MarkedExtension<(VNode | string)[], VNode | string> 
 				return;
 			},
 			renderer(token) {
-				const map = splitBlockArguments(token.tableStyle);
+				const map = token.tableStyle;
 				const cssStyle: Record<string, string> = {};
 
 				for(const part in map){

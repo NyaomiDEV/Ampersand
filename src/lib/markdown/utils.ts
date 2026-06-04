@@ -18,6 +18,42 @@ export function isCssLength(maybePercentage: string) {
 	return maybePercentage.match(/^-?\d*\.?\d+(?:r?(?:cap|ch|em|ex|ic|lh)|(?:v|cq)(?:h|w|max|min|b|i)|(?:px|cm|mm|Q|in|pc|pt))$/) !== null;
 }
 
+export function isValidBorderWidth(maybeWidth: string) {
+	return ["hairline", "thin", "medium", "thick"].includes(maybeWidth) || isCssLength(maybeWidth);
+}
+
+export function isValidBorderStyle(maybeBorderStyle: string) {
+	return ["none", "hidden", "dotted", "dashed", "solid", "double", "groove", "ridge", "inset", "outset"].includes(maybeBorderStyle);
+}
+
+export function isValidBorder(maybeBorder: string) {
+	const parts = maybeBorder.split(/\s+?(?![^(]*\))/);
+	if (!parts.length || parts.length > 3) return false;
+
+	let color = false;
+	let style = false;
+	let width = false;
+
+	for (const part of parts) {
+		if (isValidCssColor(part)) {
+			if (color) return false;
+			color = true;
+		}
+
+		else if (isValidBorderStyle(part)) {
+			if (style) return false;
+			style = true;
+		}
+
+		else if (isValidBorderWidth(part)) {
+			if (width) return false;
+			width = true;
+		}
+	}
+
+	return true;
+}
+
 export function isColorSpace(maybeColorSpace: string) {
 	return maybeColorSpace.match(/^(?:xyz(?:-d50|-d65)?|hsl|hwb|(?:ok)?(?:lch|lab)|rec2020|(?:srgb|display-p3)(?:-linear)?|(?:a98|prophoto)-rgb)$/) !== null;
 }
