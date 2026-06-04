@@ -55,6 +55,7 @@ export function toDataURI(file: File): Promise<string>{
 }
 
 export async function fromDataURI(uri: string): Promise<File> {
+	if(!uri.startsWith("data:")) throw new Error("this is not a data URI");
 	const blob = await (await window.fetch(uri)).blob();
 	return new File([blob], `file_${Date.now()}.${getExtension(blob.type)}`, { type: blob.type });
 }
