@@ -2,7 +2,7 @@
 	import { IonDatetime } from "@ionic/vue";
 	import { getLocaleInfo } from "../lib/i18n";
 	import { appConfig } from "../lib/config";
-	import { ComponentPublicInstance, ref, useTemplateRef, watch } from "vue";
+	import { ComponentPublicInstance, useTemplateRef, watch } from "vue";
 	import dayjs from "dayjs";
 
 	// copied from ionic because they dont export it (??)
@@ -33,6 +33,7 @@
 	};
 
 	const props = defineProps<{
+		modelValue: Date,
 		presentation?: DatetimePresentation,
 		showDefaultButtons?: boolean,
 		dayValues?: number | number[] | string,
@@ -40,10 +41,11 @@
 		highlightedDates?: DatetimeHighlight[] | DatetimeHighlightCallback,
 		preferWheel?: boolean,
 		min?: Date,
-		max?: Date
+		max?: Date,
 	}>();
 
 	const emit = defineEmits<{
+		"update:modelValue": [Date]
 		"ref": [Element | ComponentPublicInstance | null]
 		"parts": [DatetimeParts]
 	}>();
@@ -59,9 +61,6 @@
 	const localeInfo = getLocaleInfo();
 
 	const datetime = useTemplateRef("datetime");
-	const model = defineModel<Date>();
-	const innerModel = ref<string | undefined>(dayjs(model.value).local().format());
-	watch(innerModel, () => model.value = dayjs(innerModel.value).utc().toDate());
 
 	watch(datetime, () => {
 		if(datetime.value){
@@ -86,13 +85,13 @@
 		:cancel-text="$t('other:alerts.cancel')"
 		:clear-text="$t('other:alerts.clear')"
 		:done-text="$t('other:alerts.ok')"
-		:min="props.min ? dayjs(props.min).format() : undefined"
-		:max="props.max ? dayjs(props.max).format() : undefined"
+		:min="props.min ? dayjs(props.min).local().format() : undefined"
+		:max="props.max ? dayjs(props.max).local().format() : undefined"
 		:prefer-wheel="props.preferWheel"
 		:day-values="props.dayValues"
 		:disabled="props.disabled"
-		:value="dayjs(model).local().format()"
-		@ion-change="model = dayjs($event.detail.value as string).local().toDate()"
+		:value="dayjs(props.modelValue).local().format()"
+		@ion-change="console.log(emit('update:modelValue', dayjs($event.detail.value as string).local().utc().toDate()))"
 	>
 		<slot />
 	</IonDatetime>

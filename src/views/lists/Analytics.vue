@@ -604,7 +604,12 @@
 			presentation="date"
 			show-default-buttons
 			:max="endDate"
-			@update:model-value="el => { startDate = dayjs(el).startOf('day').toDate() }"
+			@update:model-value="el => {
+				if(endDate.valueOf() - dayjs(el).startOf('day').valueOf() > 120 * 24 * 60 * 60 * 1000)
+					endDate = dayjs(el).endOf('day').add(120, 'days').toDate();
+				
+				startDate = dayjs(el).startOf('day').toDate()
+			}"
 		/>
 
 		<DatePopupPicker
@@ -615,7 +620,12 @@
 			show-default-buttons
 			:min="startDate"
 			:max="new Date()"
-			@update:model-value="el => { endDate = dayjs(el).endOf('day').toDate() }"
+			@update:model-value="el => {
+				if(dayjs(el).endOf('day').valueOf() - startDate.valueOf() > 120 * 24 * 60 * 60 * 1000)
+					startDate = dayjs(el).startOf('day').subtract(120, 'days').toDate();
+
+				endDate = dayjs(el).endOf('day').toDate()
+			}"
 		/>
 	</IonPage>
 </template>

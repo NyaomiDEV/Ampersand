@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { IonButton, IonModal } from "@ionic/vue";
-	import { ref, watch } from "vue";
+	import { ref } from "vue";
 	import DatetimeUtc from "./DatetimeUtc.vue";
 
 	// copied from ionic because they dont export it (??)
@@ -30,16 +30,14 @@
 		title?: string
 	}>();
 
-	const model = defineModel<Date>();
-	const innerModel = ref(model.value);
+	const model = defineModel<Date>({ required: true });
 	const datetime = ref();
-	watch(innerModel, () => model.value = innerModel.value);
 </script>
 
 <template>
 	<IonModal :keep-contents-mounted="true">
 		<DatetimeUtc
-			v-model="innerModel"
+			v-model="model"
 			:presentation="props.presentation"
 			:show-default-buttons="props.showDefaultButtons"
 			:min="props.min"
