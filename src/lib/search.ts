@@ -207,7 +207,7 @@ export function filterBoardMessage(search: string, boardMessage: BoardMessage) {
 
 		const systemsOfMembers = getMemberIndex().filter(x => boardMessage.members.includes(x.uuid)).map(x => x.system);
 
-		if ((!systemsToCheck.reduce((p, c) => p ? systemsOfMembers.includes(c) : p, true)) === parsed.system.shouldInclude)
+		if ((!systemsToCheck.every(x => systemsOfMembers.includes(x))) === parsed.system.shouldInclude)
 			return false;
 	}
 
@@ -313,7 +313,7 @@ export function filterJournalPost(search: string, post: JournalPost) {
 
 		const systemsOfMembers = getMemberIndex().filter(x => post.members.includes(x.uuid)).map(x => x.system);
 
-		if ((!systemsToCheck.reduce((p, c) => p ? systemsOfMembers.includes(c) : p, true)) === parsed.system.shouldInclude)
+		if ((!systemsToCheck.every(x => systemsOfMembers.includes(x))) === parsed.system.shouldInclude)
 			return false;
 	}
 

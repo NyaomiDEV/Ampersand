@@ -41,8 +41,8 @@ const textColorExtension: MarkedExtension<(VNode | string)[], VNode | string> = 
 
 						if (
 							_match !== null &&
-							(_match[1] ? _match[1].trim().split(" ").reduce((p, c) => p ? isCssLength(c.trim()) || isPercentage(c.trim()) : p, true) : true) &&
-							(_match[2] ? _match[2].trim().split(" ").reduce((p, c) => p ? isCssLength(c.trim()) || isPercentage(c.trim()) : p, true) : true)
+							(_match[1] ? _match[1].trim().split(" ").every(x => isCssLength(x.trim()) || isPercentage(x.trim())) : true) &&
+							(_match[2] ? _match[2].trim().split(" ").every(x => isCssLength(x.trim()) || isPercentage(x.trim())) : true)
 						)
 							radialDefinition = colors.shift()!;
 					} else {
@@ -50,18 +50,14 @@ const textColorExtension: MarkedExtension<(VNode | string)[], VNode | string> = 
 							linearDegrees = colors.shift()!;
 					}
 
-					if(!colors.reduce(
-						(p, c) => {
-							if(!p) return p;
-							const parts = c.split(/\s+?(?![^(]*\))/);
+					if (!colors.every(
+						x => {
+							const parts = x.split(/\s+?(?![^(]*\))/);
 							if (!parts.length || parts.length > 3) return false;
 							const color = parts.shift()!;
-							if(!isValidCssColor(color)) return false;
-							const percentagesIsValid = parts.reduce((p, c) => p ? (isCssLength(c) || isPercentage(c)) : p, true);
-							if(!percentagesIsValid) return false;
-							return true;
-						},
-						true
+
+							return isValidCssColor(color) && parts.every(x => isCssLength(x) || isPercentage(x));
+						}
 					))
 						return; // one wasn't a real color
 						

@@ -14,15 +14,13 @@ const boxShadowExtension: MarkedExtension<(VNode | string)[], VNode | string> = 
 				if (match) {
 					const shadows = splitList(match[1]);
 
-					const isValid = shadows.reduce((p, c) => {
-						if(!p) return p;
-						if (c.match(/(?!\(.*?),(?!.*?\))/) !== null) return false;
+					if (!shadows.every(x => {
+						if (x.match(/(?!\(.*?),(?!.*?\))/) !== null) return false;
 
 						const a = document.createElement("div");
-						a.style.boxShadow = c;
+						a.style.boxShadow = x;
 						return a.style.boxShadow.replace(/\s+/g, "").length > 0;
-					}, true);
-					if(!isValid) return;
+					})) return;
 
 					const token = {
 						type: "boxShadow",
