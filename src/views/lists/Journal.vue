@@ -10,7 +10,7 @@
 	import copyMD from "@material-symbols/svg-600/rounded/content_copy.svg";
 	import moreMD from "@material-symbols/svg-600/rounded/more_vert.svg";
 
-	import { JournalPostComplete } from "../../lib/db/entities";
+	import { JournalPost, JournalPostComplete } from "../../lib/db/entities";
 	import dayjs from "dayjs";
 	import { DatabaseEvent, DatabaseEvents } from "../../lib/db/events";
 	import { getJournalPostsDays, getJournalPostsOfDay, toJournalPostComplete } from "../../lib/db/tables/journalPosts";
@@ -23,6 +23,7 @@
 	import { getFilterQueriesIndex } from "../../lib/db/tables/filterQueries.ts";
 	import { addModal, removeModal } from "../../lib/modals.ts";
 	import VirtualList from "../../components/VirtualList.vue";
+	import InfiniteLoader from "../../components/InfiniteLoader.vue";
 
 	const route = useRoute();
 	const router = useIonRouter();
@@ -32,6 +33,8 @@
 	const i18next = useTranslation();
 
 	const posts = shallowRef<JournalPostComplete[]>();
+	const iter = shallowRef<AsyncGenerator<JournalPost>>();
+	const iterDone = ref(false);
 
 	const postsDays = shallowRef<{ date: string, backgroundColor: string; }[]>();
 
@@ -46,7 +49,7 @@
 
 	const listener = (event: Event) => {
 		if (["members", "journalPosts"].includes((event as DatabaseEvent).data.table))
-			void resetEntries().then(() => populateHighlightedDays(parts.value));
+			void resetPosts().then(() => populateHighlightedDays(parts.value));
 	};
 
 	watch(route, () => {
@@ -56,29 +59,47 @@
 
 	watch([search, parts], async () => {
 		await populateHighlightedDays(parts.value);
-	});
-
-	watch([date, search], async () => {
-		await resetEntries();
 	}, { immediate: true });
 
-	onBeforeMount(async () => {
+	watch([date, search], async () => {
+		await resetPosts();
+	}, { immediate: true });
+
+	onBeforeMount(() => {
 		DatabaseEvents.addEventListener("updated", listener);
-		await resetEntries();
-		await populateHighlightedDays(parts.value);
 	});
 
 	onUnmounted(() => {
 		DatabaseEvents.removeEventListener("updated", listener);
 	});
 
-	async function getEntries(_date: Date) {
-		posts.value = await toJournalPostComplete(await Array.fromAsync(getJournalPostsOfDay(_date, true, search.value)));
+	async function resetPosts() {
+		posts.value = undefined;
+		iterDone.value = false;
+		iter.value = getJournalPostsOfDay(date.value, true, search.value);
+		await pollPosts();
 	}
 
-	async function resetEntries() {
-		posts.value = undefined;
-		await getEntries(date.value);
+	async function pollPosts(cb?: () => void){
+		if(!iter.value) return;
+
+		let i = 0;
+		const _posts: JournalPost[] = [];
+		while(true) {
+			const data = await iter.value.next();
+			if(data.value) _posts.push(data.value);
+			i++;
+			if(data.done) iterDone.value = true;
+			if(i >= 20 || data.done) break;
+		}
+
+		if(!posts.value)
+			posts.value = await toJournalPostComplete(_posts);
+		else
+			posts.value = [...posts.value, ...await toJournalPostComplete(_posts)];
+
+		if(cb)
+			cb();
 	}
 
 	async function populateHighlightedDays(parts?: DatetimeParts) {
@@ -204,28 +225,31 @@
 			<div v-if="posts === undefined" class="spinner-container">
 				<Spinner size="72px" />
 			</div>
-			<TheresNothingHere v-else-if="!posts.length" compress-vertical />
-			<IonList v-else ref="list">
-				<VirtualList :entries="posts" :gap="2" :min-size="116">
-					<template #default="{ entry: post }">
-						<IonItemSliding>
-							<JournalPostItem
-								show-tags
-								:post
-								show-date-in-date-time
-								show-effects
-								@click="openPost(post)"
-							/>
-							<IonItemOptions>
-								<IonItemOption color="tertiary" @click="copyID(post)">
-									<IonIcon slot="icon-only" :icon="copyMD" />
-								</IonItemOption>
-							</IonItemOptions>
-						</IonItemSliding>
-					</template>
-				</VirtualList>
+			<template v-else>
+				<TheresNothingHere v-if="!posts.length" compress-vertical />
+				<IonList v-else ref="list">
+					<VirtualList :entries="posts" :gap="2" :min-size="116">
+						<template #default="{ entry: post }">
+							<IonItemSliding>
+								<JournalPostItem
+									show-tags
+									:post
+									show-date-in-date-time
+									show-effects
+									@click="openPost(post)"
+								/>
+								<IonItemOptions>
+									<IonItemOption color="tertiary" @click="copyID(post)">
+										<IonIcon slot="icon-only" :icon="copyMD" />
+									</IonItemOption>
+								</IonItemOptions>
+							</IonItemSliding>
+						</template>
+					</VirtualList>
+				</IonList>
 
-			</IonList>
+				<InfiniteLoader v-if="!iterDone" @infinite="pollPosts" />
+			</template>
 
 			<IonFab
 				slot="fixed"
