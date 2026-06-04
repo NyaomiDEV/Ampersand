@@ -33,7 +33,7 @@ export async function* getJournalPosts(maxIter = 10){
 export async function toJournalPostComplete(journalPosts: JournalPost[]): Promise<JournalPostComplete[]> {
 	const _memberSet = await Promise.all(Array.from(new Set(
 		journalPosts.map(x => x.members).flat(1)
-	)).map(x => getMember(x)));
+	)).map(x => getMember(x).catch(() => defaultMember(x))));
 
 	return journalPosts.map(x => ({
 		...x,
