@@ -53,7 +53,7 @@ const textColorExtension: MarkedExtension<(VNode | string)[], VNode | string> = 
 					if(!colors.reduce(
 						(p, c) => {
 							if(!p) return p;
-							const parts = c.split(/(?!\(.*?)\s+?(?!.*?\))/);
+							const parts = c.split(/\s+?(?![^(]*\))/);
 							if (!parts.length || parts.length > 3) return false;
 							const color = parts.shift()!;
 							if(!isValidCssColor(color)) return false;
