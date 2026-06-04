@@ -64,18 +64,16 @@
 
 	watch([search, parts], async () => {
 		await populateHighlightedDays(parts.value);
-	}, { immediate: true });
+	});
 
-	watch([date, search], async () => {
-		await resetPosts();
-	}, { immediate: true });
-
-	watch(showCalendar, async () => {
+	watch([date, search, showCalendar], async () => {
 		await resetPosts();
 	});
 
-	onBeforeMount(() => {
+	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
+		await resetPosts();
+		await populateHighlightedDays(parts.value);
 	});
 
 	onUnmounted(() => {
