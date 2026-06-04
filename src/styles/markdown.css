@@ -55,6 +55,7 @@
 				border-left: var(--markdown-table-bt-left, var(--border));
 				background: var(--markdown-table-bg, unset);
 				color: var(--markdown-table-fg, unset);
+				empty-cells: var(--markdown-empty-cells, show);
 
 			th {
 				background: var(--markdown-th-bg, unset);

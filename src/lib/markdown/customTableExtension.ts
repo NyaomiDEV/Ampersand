@@ -12,7 +12,8 @@ const tableArgs = {
 	...commonArgs,
 	collapse: (values: string[]) => values.length === 1 && (values[0] === "true" || values[0] === "false"),
 	spacing: (values: string[]) => !!values.length && values.length <= 2 && values.every(x => isLength(x)),
-	radius: (values: string[]) => !!values.length && values.length <= 4 && values.every(x => isLength(x) || isPercentage(x))
+	radius: (values: string[]) => !!values.length && values.length <= 4 && values.every(x => isLength(x) || isPercentage(x)),
+	empty: (values: string[]) => values.length === 1 && (values[0] === "show" || values[0] === "hide")
 };
 
 const headerAndCellArgs = {
@@ -69,6 +70,9 @@ const customTableExtension: MarkedExtension<(VNode | string)[], VNode | string> 
 
 							if(map[part].collapse?.[0] === "false") 
 								cssStyle["--markdown-border-collapse"] = "separate";
+
+							if(map[part].empty?.[0] === "hide") 
+								cssStyle["--markdown-empty-cells"] = "hide";
 
 							if(map[part].spacing?.length)
 								cssStyle["--markdown-border-spacing"] = map[part].spacing[0];
