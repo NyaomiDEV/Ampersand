@@ -1,6 +1,6 @@
 import { h, type VNode } from "vue";
 import { MarkedExtension } from "marked";
-import { splitList } from "./utils";
+import { isValidBorder, splitList } from "./utils";
 
 const textBorderExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [
@@ -13,17 +13,7 @@ const textBorderExtension: MarkedExtension<(VNode | string)[], VNode | string> =
 				const match = rule.exec(src);
 				if (match) {
 					const borders = splitList(match[1] || "");
-
-					const isValid = borders.reduce((p, c) => {
-						if (!p) return p;
-
-						const a = document.createElement("div");
-						a.style.borderTop = c;
-						return a.style.borderTop.replace(/\s+/g, "").length > 0;
-					}, true);
-
-
-					if(!isValid) return;
+					if(!borders.length || borders.length > 4 || !borders.every(x => isValidBorder(x))) return;
 
 					const token = {
 						type: "textBorder",
