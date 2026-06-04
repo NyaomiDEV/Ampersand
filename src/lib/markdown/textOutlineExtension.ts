@@ -1,6 +1,6 @@
 import { h, type VNode } from "vue";
 import { MarkedExtension } from "marked";
-import { splitList, isCssLength, isValidCssColor } from "./utils";
+import { splitList, isLength, isColor } from "./utils";
 
 const textOutlineExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [
@@ -16,7 +16,7 @@ const textOutlineExtension: MarkedExtension<(VNode | string)[], VNode | string> 
 					const outline = splitList(match[1]);
 					if (outline.length !== 2) return;
 					const [width, color] = outline;
-					if (!isCssLength(width) || !isValidCssColor(color)) return;
+					if (!isLength(width) || !isColor(color)) return;
 
 					const token = {
 						type: "text-outline",

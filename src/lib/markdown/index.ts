@@ -25,7 +25,7 @@ import fontSizeExtension from "./fontSizeExtension";
 import calloutExtension from "./calloutExtension";
 import svgExtension from "./svgExtension";
 import mermaidExtension from "./mermaidExtension";
-import textDecorationExtension from "./textDecoration";
+import textDecorationExtension from "./textDecorationExtension.ts";
 import startExtension from "./startExtension";
 import endExtension from "./endExtension";
 import fontFamilyExtension from "./fontFamilyExtension";

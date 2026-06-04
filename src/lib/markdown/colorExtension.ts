@@ -1,6 +1,6 @@
 import { h, type VNode } from "vue";
 import { MarkedExtension } from "marked";
-import { isValidCssColor } from "./utils";
+import { isColor } from "./utils";
 
 const colorExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [
@@ -15,7 +15,7 @@ const colorExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 					const isHex = /(?:[0-9a-fA-F]{2}){3}/.exec(match[1]) !== null;
 					if(isHex) match[1] = `#${match[1]}`;
 
-					if(isValidCssColor(match[1])){
+					if(isColor(match[1])){
 						const token = {
 							type: "color",
 							raw: match[0],

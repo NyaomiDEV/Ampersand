@@ -1,6 +1,6 @@
 import { h, type VNode } from "vue";
 import { MarkedExtension } from "marked";
-import { isColorSpace, isCssLength, isPercentage, isValidCssColor, splitList } from "./utils";
+import { isColorSpace, isLength, isPercentage, isColor, splitList } from "./utils";
 
 const textColorExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [
@@ -41,8 +41,8 @@ const textColorExtension: MarkedExtension<(VNode | string)[], VNode | string> = 
 
 						if (
 							_match !== null &&
-							(_match[1] ? _match[1].trim().split(" ").every(x => isCssLength(x.trim()) || isPercentage(x.trim())) : true) &&
-							(_match[2] ? _match[2].trim().split(" ").every(x => isCssLength(x.trim()) || isPercentage(x.trim())) : true)
+							(_match[1] ? _match[1].trim().split(" ").every(x => isLength(x.trim()) || isPercentage(x.trim())) : true) &&
+							(_match[2] ? _match[2].trim().split(" ").every(x => isLength(x.trim()) || isPercentage(x.trim())) : true)
 						)
 							radialDefinition = colors.shift()!;
 					} else {
@@ -56,7 +56,7 @@ const textColorExtension: MarkedExtension<(VNode | string)[], VNode | string> = 
 							if (!parts.length || parts.length > 3) return false;
 							const color = parts.shift()!;
 
-							return isValidCssColor(color) && parts.every(x => isCssLength(x) || isPercentage(x));
+							return isColor(color) && parts.every(x => isLength(x) || isPercentage(x));
 						}
 					))
 						return; // one wasn't a real color

@@ -1,23 +1,23 @@
 import { h, type VNode } from "vue";
 import { MarkedExtension } from "marked";
-import { isCssLength, isPercentage, isValidBorder, isValidCssBackground, isValidCssColor, splitBlockArguments } from "./utils";
+import { isLength, isPercentage, isBorder, isImage, isColor, splitBlockArguments } from "./utils";
 
 const commonArgs = {
-	bg: (values: string[]) => values.length === 1 && (isValidCssColor(values[0]) || isValidCssBackground(values[0])),
-	fg: (values: string[]) => values.length === 1 && isValidCssColor(values[0]),
-	bt: (values: string[]) => !!values.length && values.length <= 4 && values.every(x => isValidBorder(x)),
+	bg: (values: string[]) => values.length === 1 && (isColor(values[0]) || isImage(values[0])),
+	fg: (values: string[]) => values.length === 1 && isColor(values[0]),
+	bt: (values: string[]) => !!values.length && values.length <= 4 && values.every(x => isBorder(x)),
 };
 
 const tableArgs = {
 	...commonArgs,
 	collapse: (values: string[]) => values.length === 1 && (values[0] === "true" || values[0] === "false"),
-	spacing: (values: string[]) => !!values.length && values.length <= 2 && values.every(x => isCssLength(x)),
-	radius: (values: string[]) => !!values.length && values.length <= 4 && values.every(x => isCssLength(x) || isPercentage(x))
+	spacing: (values: string[]) => !!values.length && values.length <= 2 && values.every(x => isLength(x)),
+	radius: (values: string[]) => !!values.length && values.length <= 4 && values.every(x => isLength(x) || isPercentage(x))
 };
 
 const headerAndCellArgs = {
 	...commonArgs,
-	radius: (values: string[]) => !!values.length && values.length <= 4 && values.every(x => isCssLength(x) || isPercentage(x))
+	radius: (values: string[]) => !!values.length && values.length <= 4 && values.every(x => isLength(x) || isPercentage(x))
 };
 
 const tableParts = { "table": tableArgs, "header": headerAndCellArgs, "cell": headerAndCellArgs, "first-col": commonArgs, "odd-cell": commonArgs };

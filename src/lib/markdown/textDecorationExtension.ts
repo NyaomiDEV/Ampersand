@@ -1,5 +1,6 @@
 import { h, type VNode } from "vue";
 import { MarkedExtension } from "marked";
+import { isTextDecoration } from "./utils";
 
 const textDecorationExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [
@@ -12,9 +13,7 @@ const textDecorationExtension: MarkedExtension<(VNode | string)[], VNode | strin
 				const match = rule.exec(src);
 				if (match) {
 					// validation
-					const a = document.createElement("div");
-					a.style.textDecoration = match[1];
-					if(a.style.textDecoration.replace(/\s+/g, "").length <= 0) return;
+					if(!isTextDecoration(match[1])) return;
 
 					const token = {
 						type: "textDecoration",

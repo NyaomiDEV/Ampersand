@@ -1,10 +1,10 @@
-export function isValidCssColor(color: string){
+export function isColor(color: string){
 	const ele = document.createElement("div");
 	ele.style.color = color;
 	return ele.style.color.replace(/\s+/g, "").length > 0;
 }
 
-export function isValidCssBackground(background: string) {
+export function isImage(background: string) {
 	const ele = document.createElement("div");
 	ele.style.backgroundImage = background;
 	return ele.style.backgroundImage.replace(/\s+/g, "").length > 0;
@@ -14,19 +14,19 @@ export function isPercentage(maybePercentage: string){
 	return maybePercentage.match(/^-?\d*\.?\d+%$/) !== null;
 }
 
-export function isCssLength(maybePercentage: string) {
+export function isLength(maybePercentage: string) {
 	return maybePercentage.match(/^-?\d*\.?\d+(?:r?(?:cap|ch|em|ex|ic|lh)|(?:v|cq)(?:h|w|max|min|b|i)|(?:px|cm|mm|Q|in|pc|pt))$/) !== null;
 }
 
-export function isValidBorderWidth(maybeWidth: string) {
-	return ["hairline", "thin", "medium", "thick"].includes(maybeWidth) || isCssLength(maybeWidth);
+export function isLineWidth(maybeWidth: string) {
+	return ["hairline", "thin", "medium", "thick"].includes(maybeWidth) || isLength(maybeWidth);
 }
 
-export function isValidBorderStyle(maybeBorderStyle: string) {
+export function isBorderStyle(maybeBorderStyle: string) {
 	return ["none", "hidden", "dotted", "dashed", "solid", "double", "groove", "ridge", "inset", "outset"].includes(maybeBorderStyle);
 }
 
-export function isValidBorder(maybeBorder: string) {
+export function isBorder(maybeBorder: string) {
 	const parts = maybeBorder.split(/\s+?(?![^(]*\))/);
 	if (!parts.length || parts.length > 3) return false;
 
@@ -35,20 +35,83 @@ export function isValidBorder(maybeBorder: string) {
 	let width = false;
 
 	for (const part of parts) {
-		if (isValidCssColor(part)) {
+		if (isColor(part)) {
 			if (color) return false;
 			color = true;
 		}
 
-		else if (isValidBorderStyle(part)) {
+		else if (isBorderStyle(part)) {
 			if (style) return false;
 			style = true;
 		}
 
-		else if (isValidBorderWidth(part)) {
+		else if (isLineWidth(part)) {
 			if (width) return false;
 			width = true;
 		}
+
+		else return false;
+	}
+
+	return true;
+}
+
+export function isTextDecorationLine(maybeDecorationLine: string){
+	return ["none", "spelling-error", "grammar-error"].includes(maybeDecorationLine) || maybeDecorationLine.split(" ").every(x => ["underline", "overline", "line-through"].includes(x));
+}
+
+export function isTextDecorationStyle(maybeDecorationStyle: string) {
+	return ["solid", "double", "dotted", "dashed", "wavy"].includes(maybeDecorationStyle);
+}
+
+export function isTextDecorationThickness(maybeDecorationThickness: string) {
+	return ["auto", "from-font"].includes(maybeDecorationThickness) || isLength(maybeDecorationThickness) || isPercentage(maybeDecorationThickness);
+}
+
+export function isTextDecoration(maybeDecoration: string) {
+	const parts = maybeDecoration.split(/\s+?(?![^(]*\))/);
+
+	let color = false;
+	let line = false;
+	let style = false;
+	let thickness = false;
+
+	let lastWasLine = false;
+
+	for (const part of parts) {
+		if (isColor(part)) {
+			if (color) return false;
+			color = true;
+			if(lastWasLine){
+				line = true;
+				lastWasLine = false;
+			}
+		}
+
+		else if (isTextDecorationLine(part)) {
+			if (line) return false;
+			lastWasLine = true;
+		}
+
+		else if (isTextDecorationStyle(part)) {
+			if (style) return false;
+			style = true;
+			if (lastWasLine) {
+				line = true;
+				lastWasLine = false;
+			}
+		}
+
+		else if (isTextDecorationThickness(part)) {
+			if (thickness) return false;
+			thickness = true;
+			if (lastWasLine) {
+				line = true;
+				lastWasLine = false;
+			}
+		}
+
+		else return false;
 	}
 
 	return true;
