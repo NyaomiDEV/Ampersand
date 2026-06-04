@@ -91,7 +91,7 @@
 		:day-values="props.dayValues"
 		:disabled="props.disabled"
 		:value="dayjs(props.modelValue).local().format()"
-		@ion-change="console.log(emit('update:modelValue', dayjs($event.detail.value as string).local().utc().toDate()))"
+		@ion-change="emit('update:modelValue', dayjs($event.detail.value as string).local().utc().toDate())"
 	>
 		<slot />
 	</IonDatetime>
