@@ -20,9 +20,11 @@
 		post: JournalPostComplete,
 		showTags: boolean,
 		showBorderColor?: boolean,
-		showDateInDateTime: boolean
+		showDateInDateTime: boolean,
+		showEffects?: boolean
 	}>(), {
-		showBorderColor: true
+		showBorderColor: true,
+		showEffects: false
 	});
 
 	function shouldShowTags(){
@@ -78,7 +80,8 @@
 		button
 		:style="getStyle()"
 		:class="{
-			'with-border-color': props.showBorderColor && accessibilityConfig.colorIndicatorPosition === 'list-item'
+			'with-border-color': props.showBorderColor && accessibilityConfig.colorIndicatorPosition === 'list-item',
+			'pinned': props.showEffects && props.post.isPinned
 		}"
 	>
 		<AvatarStack
@@ -128,6 +131,10 @@
 	:dir(rtl) ion-item.with-border-color::part(native)::before{
 		right: 0;
 		left: unset;
+	}
+
+	ion-item.pinned {
+		--background: var(--ion-background-color-step-200);
 	}
 
 	img.cover {

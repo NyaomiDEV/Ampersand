@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { IonContent, IonList, IonPage, IonTitle, IonToolbar, IonSearchbar, IonFab, IonFabButton, IonIcon, IonLabel, IonItemDivider, useIonRouter, IonBackButton, IonItemSliding, IonItemOptions, IonItemOption, IonButtons, IonButton } from "@ionic/vue";
+	import { IonContent, IonList, IonPage, IonTitle, IonToolbar, IonSearchbar, IonFab, IonFabButton, IonIcon, useIonRouter, IonBackButton, IonItemSliding, IonItemOptions, IonItemOption, IonButtons, IonButton } from "@ionic/vue";
 	import { h, onBeforeMount, onUnmounted, ref, shallowRef, useTemplateRef, watch } from "vue";
 	import { useRoute } from "vue-router";
 	import CollapsibleHeaderbar from "../../components/CollapsibleHeaderbar.vue";
@@ -22,6 +22,7 @@
 	import FilterQueryEdit from "../../modals/FilterQueryEdit.vue";
 	import { getFilterQueriesIndex } from "../../lib/db/tables/filterQueries.ts";
 	import { addModal, removeModal } from "../../lib/modals.ts";
+	import VirtualList from "../../components/VirtualList.vue";
 
 	const route = useRoute();
 	const router = useIonRouter();
@@ -78,30 +79,6 @@
 	async function resetEntries() {
 		posts.value = undefined;
 		await getEntries(date.value);
-	}
-
-	function getGrouped(entries: JournalPostComplete[]) {
-		const map = new Map<string, JournalPostComplete[]>();
-
-		for(const entry of entries.filter(x => x.isPinned)){
-			const collection = map.get("pinnedPosts");
-			if(!collection)
-				map.set("pinnedPosts", [entry]);
-			else
-				collection.push(entry);
-		}
-
-		for (const entry of entries.filter(x => !x.isPinned)) {
-			const key = dayjs(entry.date).startOf("day").toISOString();
-
-			const collection = map.get(key);
-			if (!collection)
-				map.set(key, [entry]);
-			else
-				collection.push(entry);
-		}
-
-		return [...map.entries()].sort((a, b) => a[0] === "pinnedPosts" ? -1 : dayjs(b[0]).valueOf() - dayjs(a[0]).valueOf());
 	}
 
 	async function populateHighlightedDays(parts?: DatetimeParts) {
@@ -229,33 +206,25 @@
 			</div>
 			<TheresNothingHere v-else-if="!posts.length" compress-vertical />
 			<IonList v-else ref="list">
-				<template v-for="tuple in getGrouped(posts)" :key="tuple[0]">
-					<IonItemDivider sticky>
-						<IonLabel>
-							{{
-								tuple[0] === "pinnedPosts"
-									? $t("journal:pinnedPosts")
-									: dayjs(tuple[0]).format("LL")
-							}}
-						</IonLabel>
-					</IonItemDivider>
-					<IonItemSliding
-						v-for="post in tuple[1]"
-						:key="post.uuid"
-					>
-						<JournalPostItem
-							show-tags
-							:post
-							:show-date-in-date-time="tuple[0] === 'pinnedPosts'"
-							@click="openPost(post)"
-						/>
-						<IonItemOptions>
-							<IonItemOption color="tertiary" @click="copyID(post)">
-								<IonIcon slot="icon-only" :icon="copyMD" />
-							</IonItemOption>
-						</IonItemOptions>
-					</IonItemSliding>
-				</template>
+				<VirtualList :entries="posts" :gap="2" :min-size="116">
+					<template #default="{ entry: post }">
+						<IonItemSliding>
+							<JournalPostItem
+								show-tags
+								:post
+								show-date-in-date-time
+								show-effects
+								@click="openPost(post)"
+							/>
+							<IonItemOptions>
+								<IonItemOption color="tertiary" @click="copyID(post)">
+									<IonIcon slot="icon-only" :icon="copyMD" />
+								</IonItemOption>
+							</IonItemOptions>
+						</IonItemSliding>
+					</template>
+				</VirtualList>
+
 			</IonList>
 
 			<IonFab
