@@ -5,10 +5,10 @@ import { getMember, defaultMember } from "./members";
 import dayjs from "dayjs";
 import { filterJournalPost } from "../../search";
 import { TransactionStatus } from "../types";
-import { isUuid, sortDate } from "../../util/misc";
+import { isUuid, sortJournalPosts } from "../../util/misc";
 
 export async function* getJournalPosts(maxIter = 10){
-	const uuids = db.journalPosts.index.toSorted(sortDate).map(x => x.uuid);
+	const uuids = db.journalPosts.index.toSorted(sortJournalPosts).map(x => x.uuid);
 		
 	const f = (offset: number, maxIter: number) => {
 		const chunk: Promise<JournalPost>[] = [];
@@ -104,7 +104,7 @@ export async function updateJournalPost(newContent: UUIDable & Partial<JournalPo
 export async function getRecentJournalPosts(days: number) {
 	return Promise.all(
 		db.journalPosts.index
-			.toSorted(sortDate)
+			.toSorted(sortJournalPosts)
 			.filter(x => (x.isPinned || dayjs().startOf("day").valueOf() - dayjs(x.date).startOf("day").valueOf() <= days * 24 * 60 * 60 * 1000))
 			.map(x => db.journalPosts.get(x.uuid))
 	);
@@ -113,14 +113,13 @@ export async function getRecentJournalPosts(days: number) {
 export async function* getJournalPostsOfDay(date: Date, includePinned: boolean, query: string) {
 	const _date = dayjs(date).startOf("day");
 
-	for(const entry of db.journalPosts.index.toSorted(sortDate)){
-		if ((includePinned && !entry.isPinned) && dayjs(entry.date).startOf("day").valueOf() !== _date.valueOf())
-			continue;
+	for (const entry of db.journalPosts.index.toSorted(sortJournalPosts)){
+		if ((includePinned && entry.isPinned) || dayjs(entry.date).startOf("day").valueOf() === _date.valueOf()){
+			const post = await db.journalPosts.get(entry.uuid);
 
-		const post = await db.journalPosts.get(entry.uuid);
-
-		if (filterJournalPost(query, post))
-			yield post;
+			if (filterJournalPost(query, post))
+				yield post;
+		}
 	}
 }
 

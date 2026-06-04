@@ -2,7 +2,7 @@ import { ActionSheetButton, actionSheetController, alertController, createAnimat
 import dayjs from "dayjs";
 import { Ref } from "vue";
 import { appConfig } from "../config";
-import { Asset, BoardMessage, CustomField, FrontingEntry, ImageClip, Member, Note, System } from "../db/entities";
+import { Asset, BoardMessage, CustomField, FrontingEntry, ImageClip, JournalPost, Member, Note, System } from "../db/entities";
 import i18next, { computePercentage, getLocaleInfo } from "../i18n";
 import { open, save } from "../native/open";
 import { mkdir, readFile, writeFile } from "@tauri-apps/plugin-fs";
@@ -377,6 +377,12 @@ export function sortFrontingEntries(a: IndexEntry<FrontingEntry>, b: IndexEntry<
 }
 
 export function sortBoardMessages(a: IndexEntry<BoardMessage>, b: IndexEntry<BoardMessage>){
+	if (a.isPinned && !b.isPinned) return -1;
+	if (!a.isPinned && b.isPinned) return 1;
+	return sortDate(a, b);
+}
+
+export function sortJournalPosts(a: IndexEntry<JournalPost>, b: IndexEntry<JournalPost>) {
 	if (a.isPinned && !b.isPinned) return -1;
 	if (!a.isPinned && b.isPinned) return 1;
 	return sortDate(a, b);
