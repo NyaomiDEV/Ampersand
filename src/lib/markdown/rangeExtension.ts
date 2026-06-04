@@ -13,10 +13,13 @@ const rangeExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 				const rule = /^\[ra=(\d*\.?\d+(?::\d*\.?\d+)?)\](.*?)\[\/ra\]/;
 				const match = rule.exec(src);
 				if (match) {
+					const values = splitList(match[1]).map(x => parseFloat(x));
+					if (values.length > 2 || values.find(x => isNaN(x))) return;
+
 					const token = {
 						type: "range",
 						raw: match[0],
-						values: splitList(match[1]).map(x => parseFloat(x)),
+						values,
 						text: match[2],
 						tokens: this.lexer.inlineTokens(match[2])
 					};

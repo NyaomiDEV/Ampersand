@@ -1,5 +1,6 @@
 import { h, type VNode } from "vue";
 import { MarkedExtension } from "marked";
+import { splitList } from "./utils";
 
 const positionExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [
@@ -11,10 +12,13 @@ const positionExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 				const rule = /^\[pos=(-?\d*\.?\d+:-?\d*\.?\d+)\](.+?)\[\/pos\]/;
 				const match = rule.exec(src);
 				if (match) {
+					const position = splitList(match[1]).map(x => parseFloat(x));
+					if (position.length !== 2 || position.find(x => isNaN(x))) return;
+
 					const token = {
 						type: "position",
 						raw: match[0],
-						position: match[1],
+						position,
 						text: match[2],
 						tokens: this.lexer.inlineTokens(match[2])
 					};
@@ -23,12 +27,9 @@ const positionExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 				return;
 			},
 			renderer(token) {
-				const pos = (token.position as string).split(":").map(x => parseFloat(x));
 				const cssStyle: Record<string, string> = {};
-				if(pos.length === 2){
-					cssStyle.display = "inline-block";
-					cssStyle.transform = `translate(${pos[0]}em, ${pos[1]}em)`;
-				}
+				cssStyle.display = "inline-block";
+				cssStyle.transform = `translate(${token.position[0]}em, ${token.position[1]}em)`;
 				
 				return h("span", {
 					style: cssStyle

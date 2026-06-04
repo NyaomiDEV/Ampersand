@@ -12,10 +12,13 @@ const fontSizeExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 				const rule = /^\[fs=(\d*\.?\d+(?::\d*\.?\d+)?)\](.+?)\[\/fs\]/;
 				const match = rule.exec(src);
 				if (match) {
+					const sizes = splitList(match[1]).map(x => parseFloat(x));
+					if(sizes.find(x => isNaN(x))) return;
+
 					const token = {
 						type: "font-size",
 						raw: match[0],
-						sizes: splitList(match[1]).map(x => parseFloat(x)),
+						sizes,
 						text: match[2],
 						tokens: this.lexer.inlineTokens(match[2])
 					};

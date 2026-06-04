@@ -13,10 +13,12 @@ const timestampExtension: MarkedExtension<(VNode | string)[], VNode | string> = 
 				const rule = /^<t:(\d+?):([FfDdMmYyKkGgTtSsR])>/;
 				const match = rule.exec(src);
 				if (match) {
+					const timestamp = parseFloat(match[1]) * 1000;
+					if(isNaN(timestamp)) return;
 					const token = {
 						type: "timestamp",
 						raw: match[0],
-						timestamp: Number(match[1]) * 1000,
+						timestamp,
 						format: match[2],
 						tokens: []
 					};
