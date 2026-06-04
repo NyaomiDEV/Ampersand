@@ -35,7 +35,7 @@
 </script>
 
 <template>
-	<IonModal :keep-contents-mounted="true">
+	<IonModal>
 		<DatetimeUtc
 			v-model="model"
 			:presentation="props.presentation"
