@@ -2,6 +2,10 @@ import { AccessibilityConfig, AppConfig, SecurityConfig } from "../../config/typ
 import type { BoardMessage, FrontingEntry, JournalPost, Member, System, Asset, FilterQuery, Comment, Note } from "../entities.d.ts";
 
 export interface DatabaseJSON {
+	revision: {
+		count: number, // number of commits (git) since app inception
+		humanReadable: string; // marketed version eg. 0.3.0 or for unstable builds 0.2.1+500
+	},
 	config: {
 		appConfig: AppConfig,
 		accessibilityConfig: AccessibilityConfig,

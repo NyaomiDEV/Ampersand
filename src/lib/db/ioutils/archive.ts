@@ -11,8 +11,10 @@ import { AMPERSAND_ARCHIVE_MAGICS, matchMagicNew } from "./magic";
 import dayjs from "dayjs";
 import { platform } from "@tauri-apps/plugin-os";
 import { System, UUIDable } from "../entities";
-import { ArchiveStreamConfig, ArchiveStreamDatabase } from "./archive_types";
+import { ArchiveStreamConfig, ArchiveStreamDatabase, ArchiveStreamRevision } from "./archive_types";
 import { intoStream } from "../utils";
+
+const revision = parseInt(import.meta.env.AMPERSAND_REVCOUNT);
 
 async function encode(data: any){
 	return msgpackEncode(deleteNull(await walkAsync(data, replace)));
@@ -45,7 +47,7 @@ export function exportArchive() {
 
 			if (!path) throw new Error("no path");
 
-			const magic = AMPERSAND_ARCHIVE_MAGICS.get(1)!;
+			const magic = AMPERSAND_ARCHIVE_MAGICS.get(2)!;
 
 			// Android uses content:// for providing scoped file paths; here we just get the FD from the returned URI
 			if (!path.startsWith("content://")) {
@@ -62,6 +64,11 @@ export function exportArchive() {
 			let progressTotal = 0;
 			for (const [_name, table] of Object.entries(getTables()))
 				progressTotal += table.count();
+
+			// Write the revision
+			await fd.write(
+				await encode({ table: "__revision", data: revision })
+			);
 
 			// Write the configuration
 			await fd.write(
@@ -119,43 +126,52 @@ export function importArchive() {
 			const magicVersion = matchMagicNew(magicBytesMaybe);
 			if (!magicVersion) throw new Error("this is not an ampersand archive");
 
-			switch (magicVersion) {
-				case 1: {
-					for (const table of Object.values(getTables()))
-						await table.clear();
+			const stream = intoStream(fd, _progress);
+			const multiStreamDecoder = decodeMultiStream(stream) as AsyncGenerator<{ table: string, data: any; }>;
 
-					const stream = intoStream(fd, _progress);
+			let revisionWasParsed = magicVersion < 2 ? true : false;
 
-					const multiStreamDecoder = decodeMultiStream(stream) as AsyncGenerator<{ table: string, data: any }>;
+			for await (const rawData of multiStreamDecoder){
+				const data: any = reviver(rawData);
+				switch (data.table) {
+					case "__revision": {
+						if (revisionWasParsed) throw new Error("malformed, there should only be one revision fragment");
+						const _data = data as ArchiveStreamRevision;
+						if (revision < _data.data)
+							throw new Error("app too old");
 
-					for await(const rawData of multiStreamDecoder){
-						const data: any = reviver(rawData);
-						switch (data.table) {
-							case "__config": {
-								const _data = data as ArchiveStreamConfig;
-								Object.assign(appConfig, _data.data.appConfig);
-								Object.assign(accessibilityConfig, _data.data.accessibilityConfig);
-								Object.assign(securityConfig, _data.data.securityConfig);
-								await initConfig();
-								break;
-							}
-							// Migrate system (old) to systems (new) upon import
-							case "system": {
-								const _data = data as ArchiveStreamDatabase;
-								const table: Table<System> = getTables().systems;
-								const result = await table.add(_data.data, false);
-								if (!result) throw new Error(`item already exists: ${_data.data.uuid}`);
-								break;
-							}
-							default: {
-								const _data = data as ArchiveStreamDatabase;
-								const table: Table<UUIDable> = getTables()[_data.table];
-								const result = await table.add(_data.data, false);
-								if (!result) throw new Error(`item already exists: ${_data.data.uuid}`);
-							}
-						}
+						revisionWasParsed = true;
+
+						// after parsing revision number we can clear tables
+						for (const table of Object.values(getTables()))
+							await table.clear();
+						break;
 					}
-					break;
+					case "__config": {
+						if (!revisionWasParsed) throw new Error("malformed, revision fragment must be first");
+						const _data = data as ArchiveStreamConfig;
+						Object.assign(appConfig, _data.data.appConfig);
+						Object.assign(accessibilityConfig, _data.data.accessibilityConfig);
+						Object.assign(securityConfig, _data.data.securityConfig);
+						await initConfig();
+						break;
+					}
+					// Migrate system (old) to systems (new) upon import
+					case "system": {
+						if (!revisionWasParsed) throw new Error("malformed, revision fragment must be first");
+						const _data = data as ArchiveStreamDatabase;
+						const table: Table<System> = getTables().systems;
+						const result = await table.add(_data.data, false);
+						if (!result) throw new Error(`item already exists: ${_data.data.uuid}`);
+						break;
+					}
+					default: {
+						if (!revisionWasParsed) throw new Error("malformed, revision fragment must be first");
+						const _data = data as ArchiveStreamDatabase;
+						const table: Table<UUIDable> = getTables()[_data.table];
+						const result = await table.add(_data.data, false);
+						if (!result) throw new Error(`item already exists: ${_data.data.uuid}`);
+					}
 				}
 			}
 

@@ -13,6 +13,11 @@ export interface ArchiveStreamDatabase {
 	data: Serialized<UUIDable>;
 };
 
+export interface ArchiveStreamRevision extends ArchiveStream {
+	table: "__revision",
+	data: number
+}
+
 export interface ArchiveStreamConfig extends ArchiveStream {
 	table: "__config",
 	data: Serialized<{

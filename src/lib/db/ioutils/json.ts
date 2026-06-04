@@ -13,6 +13,9 @@ import { appConfig, accessibilityConfig, securityConfig, initConfig } from "../.
 import { ArrayStream, arrayStream, matchesJsonPathSelector, objectStream, parseJsonStreamWithPaths, SerializableJsonValue, streamToIterable, stringifyJsonStream } from "json-stream-es";
 import { intoStream } from "../utils";
 import { AccessibilityConfig, AppConfig, SecurityConfig } from "../../config/types";
+import { version } from "../../../../package.json";
+
+const revision = parseInt(import.meta.env.AMPERSAND_REVCOUNT);
 
 export function exportDatabaseToJSON() {
 
@@ -134,6 +137,10 @@ export function exportDatabaseToJSON() {
 			const fd = await openFile(path, { create: true, write: true, truncate: true });
 
 			const json = stringifyJsonStream({
+				revision: {
+					count: revision,
+					humanReadable: version
+				},
 				config: {
 					// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
 					appConfig: appConfig as SerializableJson<AppConfig>,
@@ -251,19 +258,26 @@ export function importDatabaseFromJSON() {
 
 			const jsonStream = intoStream(path, undefined, true)
 				.pipeThrough(parseJsonStreamWithPaths((path) => {
-					if(!path[0]) return false;
-					if(path.length === 1 && path[0] === "config") return true;
+					if(path.length === 1 && ["revision", "config"].includes(path[0] as string)) return true;
 					return matchesJsonPathSelector(path, ["database", undefined]);
 				}));
 
 			progress.dispatchEvent(new Event("start"));
 
-			for (const table of Object.values(getTables()))
-				await table.clear();
+			let revisionWasParsed = false;
 
-			for await (const { path, value } of streamToIterable(jsonStream)){				
+			for await (const { path, value } of streamToIterable(jsonStream)){
 				switch(path[0]){
+					case "revision":
+						if (revision < (value as { count: number, humanReadable: string }).count)
+							throw new Error("app too old");
+
+						revisionWasParsed = true;
+						for (const table of Object.values(getTables()))
+							await table.clear();
+						break;
 					case "config":
+						if (!revisionWasParsed) throw new Error("malformed, revision fragment must be first");
 						switch(path[1]){
 							case "appConfig":
 								Object.assign(appConfig, value);
@@ -280,6 +294,7 @@ export function importDatabaseFromJSON() {
 						}
 						break;
 					case "database":
+						if (!revisionWasParsed) throw new Error("malformed, revision fragment must be first");
 						if(typeof path[1] === "string" && value){
 							const result = await putTableData(path[1], value);
 							if (!result) throw new Error(`item already exists: ${JSON.stringify(value)}`);

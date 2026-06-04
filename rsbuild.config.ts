@@ -1,3 +1,5 @@
+import { spawn } from "node:child_process";
+
 import { defineConfig, loadEnv } from "@rsbuild/core";
 import { pluginVue } from "@rsbuild/plugin-vue";
 import { pluginBasicSsl } from "@rsbuild/plugin-basic-ssl";
@@ -5,7 +7,26 @@ import { pluginBasicSsl } from "@rsbuild/plugin-basic-ssl";
 const host = process.env.TAURI_DEV_HOST;
 const debug = process.env.NODE_ENV === "development" || process.env.AMPERSAND_BUILD_TYPE === "unstable";
 
-const { publicVars } = loadEnv({ prefixes: ["TAURI_ENV_", "AMPERSAND_"] });
+const { publicVars } = loadEnv({
+	processEnv: {
+		...process.env,
+		AMPERSAND_REVCOUNT: process.env.AMPERSAND_REVCOUNT || await revcount()
+	},
+	prefixes: ["TAURI_ENV_", "AMPERSAND_"]
+});
+
+function revcount() {
+	return new Promise(resolve => {
+		const _process = spawn("git", ["rev-list", "--count", "HEAD"], { stdio: "pipe" });
+		let stdout = "";
+		_process.stdout.on("data", (chunk) => {
+			stdout += chunk;
+		});
+		_process.on("exit", (code) => {
+			resolve(stdout.trim());
+		});
+	});
+}
 
 export default defineConfig({
 	dev: {
