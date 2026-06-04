@@ -142,7 +142,12 @@
 			comments.value = comments.value.toSpliced(
 				comments.value.indexOf(comment),
 				1
-			);
+			).map(x => {
+				if(x.replyTo === comment.date)
+					delete x.replyTo;
+
+				return x;
+			});
 		}
 	}
 
@@ -220,7 +225,7 @@
 								:show-role="false"
 								:show-pronouns="false"
 							>
-								<template v-if="comment.replyTo" #before>
+								<template v-if="comment.replyTo && comments.find(x => x.date === comment.replyTo)" #before>
 									<p class="reply" @click="scrollToReplied(comment)">
 										<IonIcon :icon="replyMD" />
 										<formatReplyString :comment />
