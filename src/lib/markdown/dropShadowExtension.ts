@@ -2,10 +2,10 @@ import { h, type VNode } from "vue";
 import { MarkedExtension } from "marked";
 import { splitList } from "./utils";
 
-const textShadowExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
+const dropShadowExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [
 		{
-			name: "textShadow",
+			name: "dropShadow",
 			level: "inline",
 			start(src: string) { return src.match(/\[sh=/)?.index; },
 			tokenizer(src: string) {
@@ -15,15 +15,13 @@ const textShadowExtension: MarkedExtension<(VNode | string)[], VNode | string> =
 					const shadows = splitList(match[1] || "");
 
 					if (!shadows.every(x => {
-						if (x.match(/(?!\(.*?),(?!.*?\))/) !== null) return false;
-
 						const a = document.createElement("div");
-						a.style.textShadow = x;
-						return a.style.textShadow.replace(/\s+/g, "").length > 0;
+						a.style.filter = `drop-shadow(${x})`;
+						return a.style.filter.replace(/\s+/g, "").length > 0;
 					})) return;
 
 					const token = {
-						type: "textShadow",
+						type: "dropShadow",
 						raw: match[0],
 						shadows,
 						text: match[2],
@@ -35,10 +33,10 @@ const textShadowExtension: MarkedExtension<(VNode | string)[], VNode | string> =
 			},
 			renderer(token) {
 				if(token.shadows.length){
-					const cssStyle = `--markdown-text-shadow: ${(token.shadows as string[]).join(", ")};`;
+					const cssStyle = `--markdown-drop-shadow: ${(token.shadows as string[]).map(x => `drop-shadow(${x})`).join(" ")};`;
 
 					return h("span", {
-						class: "text-shadow",
+						class: "drop-shadow",
 						style: cssStyle
 					}, token.tokens && token.tokens.length ? this.parser.parseInline(token.tokens) : token.text);
 				}
@@ -49,4 +47,4 @@ const textShadowExtension: MarkedExtension<(VNode | string)[], VNode | string> =
 	]
 };
 
-export default textShadowExtension;
+export default dropShadowExtension;

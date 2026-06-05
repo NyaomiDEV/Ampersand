@@ -17,7 +17,7 @@ import centerExtension from "./centerExtension";
 import linebreakExtension from "./linebreakExtension";
 import textColorFgExtension from "./textColorFgExtension";
 import textColorBgExtension from "./textColorBgExtension";
-import textShadowExtension from "./textShadowExtension";
+
 import textBorderExtension from "./textBorderExtension";
 import blurExtension from "./blurExtension";
 import marqueeExtension from "./marqueeExtension";
@@ -39,6 +39,7 @@ import customTableExtension from "./customTableExtension";
 import boxShadowExtension from "./boxShadowExtension";
 import rangeExtension from "./rangeExtension";
 import textOutlineExtension from "./textOutlineExtension.ts";
+import dropShadowExtension from "./dropShadowExtension.ts";
 
 export function useMarked(){
 	const marked = new Marked<(VNode | string)[], VNode | string>();
@@ -126,8 +127,8 @@ export function useMarked(){
 		colorExtension,
 		textColorFgExtension,
 		textColorBgExtension,
-		textShadowExtension,
 		boxShadowExtension,
+		dropShadowExtension,
 		textBorderExtension,
 		textDecorationExtension,
 		fontSizeExtension,
