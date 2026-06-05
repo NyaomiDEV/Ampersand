@@ -15,7 +15,7 @@ const { publicVars } = loadEnv({
 	prefixes: ["TAURI_ENV_", "AMPERSAND_"]
 });
 
-function revcount() {
+function revcount(): Promise<string> {
 	return new Promise(resolve => {
 		const _process = spawn("git", ["rev-list", "--count", "HEAD"], { stdio: "pipe" });
 		let stdout = "";

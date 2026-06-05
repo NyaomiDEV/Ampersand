@@ -63,7 +63,8 @@ import { NavigationGuardWithThis } from "vue-router";
 // In case of webview versions tie-in with the OS, as is with iOS,
 // it makes sense to whitelist the OS itself
 const minOsVersions = {
-	"ios": [18,6]
+	"ios": [18,7],
+	"macos": [15,7]
 };
 
 // In all other cases we might get away with more granular, per-webview
@@ -71,7 +72,6 @@ const minOsVersions = {
 const minWvVersions = {
 	"android": [140],
 	"windows": [140],
-	"macos": [20621,3,11],
 	"linux": [2,50]
 };
 
