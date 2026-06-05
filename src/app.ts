@@ -59,6 +59,7 @@ import backMD from "@material-symbols/svg-600/rounded/arrow_back.svg";
 import { sendFrontingChangedEvent } from "./lib/db/tables/frontingEntries";
 import { unnotify } from "./lib/notifications";
 import { NavigationGuardWithThis } from "vue-router";
+import { openUrl } from "@tauri-apps/plugin-opener";
 
 // In case of webview versions tie-in with the OS, as is with iOS,
 // it makes sense to whitelist the OS itself
@@ -101,22 +102,48 @@ function getSuggestionsForPeopleWithUnsupportedVersions(){
 	const _platform = platform();
 
 	switch(_platform){
-		case "linux":
-			return "Please update your distro packages, or your distro itself, and try again.";
-		case "macos":
-			return "Please update your macOS version (and all components, especially Safari) by going into System Settings > General > Software Update.";
-		case "ios":
-			return "Please update your iOS version by going into Settings > General > Software Update.";
+		case "linux": {
+			const subheader = document.createElement("p");
+			subheader.textContent = "Please update your distro packages, or your distro itself, and try again.";
+			return [subheader];
+		}
+		case "macos": {
+			const subheader = document.createElement("p");
+			subheader.textContent = "Please update your macOS version by going into System Settings > General > Software Update.";
+			return [subheader];
+		}
+		case "ios": {
+			const subheader = document.createElement("p");
+			subheader.textContent = "Please update your iOS version by going into Settings > General > Software Update.";
+			return [subheader];
+		}
 		case "freebsd":
 		case "dragonfly":
 		case "netbsd":
 		case "openbsd":
-		case "solaris":
-			return "You do you, nerd.";
-		case "android":
-			return "Please search for 'Android System WebView' on Google Play and update that. It has a Chrome-like icon but grey and blue and it is made by Google, don't be scammed!";
-		case "windows":
-			return "Please update Windows from Windows Update, then also open Microsoft Edge and update that, and finally search for Edge WebView2 and update that also (from the Microsoft website, don't trust third parties!)";
+		case "solaris": {
+			const subheader = document.createElement("p");
+			subheader.textContent = "You do you, nerd.";
+			return [subheader];
+		}
+		case "android": {
+			const subheader = document.createElement("p");
+			subheader.textContent = "Please update the 'Android System WebView' component.";
+			const link = document.createElement("button");
+			link.textContent = "Go to Play Store";
+			link.onclick = () => void openUrl("https://play.google.com/store/apps/details?id=com.google.android.webview");
+
+			return [subheader, link];
+		}
+		case "windows": {
+			const subheader = document.createElement("p");
+			subheader.textContent = "Please update the 'Edge WebView2 Runtime' component.";
+			const link = document.createElement("button");
+			link.textContent = "Download from Microsoft";
+			link.onclick = () => void openUrl("https://go.microsoft.com/fwlink/p/?LinkId=2124703");
+
+			return [subheader, link];
+		}
 	}
 }
 
@@ -235,32 +262,39 @@ async function setupAmpersand(){
 	});
 }
 
-if (!window.isSecureContext) {
-	console.error("Cannot continue, this is not a safe environment!");
-
-	const header = document.createElement("h1");
-	header.style.textAlign = "center";
-	header.textContent = "Ampersand cannot run on non-HTTPS environments! We're sorry for the trouble.";
-
-	const subheader = document.createElement("p");
-	subheader.style.textAlign = "center";
-	subheader.textContent = "If you think this is an issue, report it on Codeberg.";
-
-	document.body.appendChild(header);
-	document.body.appendChild(subheader);
-	await dismissSplash();
-} else if (!await isWebviewSupported()) {
-	console.error("Cannot continue, this Webview version is not supported!");
-	const header = document.createElement("h1");
-	header.style.textAlign = "center";
-	header.textContent = "Ampersand cannot run on this WebView version!";
-
-	const subheader = document.createElement("p");
-	subheader.style.textAlign = "center";
-	subheader.textContent = getSuggestionsForPeopleWithUnsupportedVersions();
-
-	document.body.appendChild(header);
-	document.body.appendChild(subheader);
-	await dismissSplash();
-} else
+if(await isWebviewSupported() && window.isSecureContext)
 	await setupAmpersand();
+else {
+	console.error("Cannot continue, this WebView version is not supported!", platform(), version(), await getWebkitVersion());
+
+	document.documentElement.style.backgroundColor = "white";
+
+	const container = document.createElement("section");
+	container.style.fontFamily = "sans-serif";
+	container.style.display = "flex";
+	container.style.flexDirection = "column";
+	container.style.gap = "0.5em";
+	container.style.alignItems = "center";
+	container.style.justifyContent = "center";
+	container.style.textAlign = "center";
+	container.style.width = "100dvw";
+	container.style.height = "100dvh";
+
+	const svg = await (async () => {
+		const parser = new DOMParser();
+		const data = parser.parseFromString((await import("./assets/ampersand_logo.svg?raw")).default, "image/svg+xml");
+		return data.documentElement;
+	})();
+	svg.style.width = "100%";
+	svg.style.maxWidth = "90dvw";
+	container.appendChild(svg);
+
+	const header = document.createElement("h1");
+	header.textContent = "Ampersand cannot run on this WebView version!";
+	container.appendChild(header);
+	
+	container.append(...getSuggestionsForPeopleWithUnsupportedVersions());
+
+	document.body.appendChild(container);
+	await dismissSplash();
+}
