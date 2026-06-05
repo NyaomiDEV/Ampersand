@@ -2,12 +2,12 @@
 	font-family: "Albert Sans";
 	font-style: normal;
 	font-weight: 100 900;
-	src: url(../../assets/fonts/albert-sans/AlbertSans.ttf);
+	src: url(../../assets/fonts/albert-sans/AlbertSans.woff2);
 }
 
 @font-face {
 	font-family: "Albert Sans";
 	font-style: italic;
 	font-weight: 100 900;
-	src: url(../../assets/fonts/albert-sans/AlbertSans-Italic.ttf);
+	src: url(../../assets/fonts/albert-sans/AlbertSans-Italic.woff2);
 }

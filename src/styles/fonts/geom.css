@@ -2,12 +2,12 @@
 	font-family: "Geom";
 	font-weight: 300 900;
 	font-style: normal;
-	src: url(../../assets/fonts/geom/Geom.ttf);
+	src: url(../../assets/fonts/geom/Geom.woff2);
 }
 
 @font-face {
 	font-family: "Geom";
 	font-weight: 300 900;
 	font-style: italic;
-	src: url(../../assets/fonts/geom/Geom-Italic.ttf);
+	src: url(../../assets/fonts/geom/Geom-Italic.woff2);
 }

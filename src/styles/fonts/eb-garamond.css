@@ -2,12 +2,12 @@
 	font-family: "EB Garamond";
 	font-style: normal;
 	font-weight: 400 800;
-	src: url(../../assets/fonts/eb-garamond/EBGaramond.ttf);
+	src: url(../../assets/fonts/eb-garamond/EBGaramond.woff2);
 }
 
 @font-face {
 	font-family: "EB Garamond";
 	font-style: italic;
 	font-weight: 400 800;
-	src: url(../../assets/fonts/eb-garamond/EBGaramond-Italic.ttf);
+	src: url(../../assets/fonts/eb-garamond/EBGaramond-Italic.woff2);
 }

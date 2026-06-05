@@ -2,12 +2,12 @@
 	font-family: "Atkinson Hyperlegible";
 	font-weight: 100 900;
 	font-style: normal;
-	src: url(../../assets/fonts/atkinson-hyperlegible/AtkinsonHyperlegibleNext.ttf);
+	src: url(../../assets/fonts/atkinson-hyperlegible/AtkinsonHyperlegibleNext.woff2);
 }
 
 @font-face {
 	font-family: "Atkinson Hyperlegible";
 	font-weight: 100 900;
 	font-style: italic;
-	src: url(../../assets/fonts/atkinson-hyperlegible/AtkinsonHyperlegibleNext-Italic.ttf);
+	src: url(../../assets/fonts/atkinson-hyperlegible/AtkinsonHyperlegibleNext-Italic.woff2);
 }

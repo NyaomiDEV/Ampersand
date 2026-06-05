@@ -2,19 +2,19 @@
 	font-family: "Cinzel Decorative";
 	font-weight: normal;
 	font-style: normal;
-	src: url(../../assets/fonts/cinzel-decorative/CinzelDecorative-Regular.ttf);
+	src: url(../../assets/fonts/cinzel-decorative/CinzelDecorative-Regular.woff2);
 }
 
 @font-face {
 	font-family: "Cinzel Decorative";
 	font-weight: 700;
 	font-style: normal;
-	src: url(../../assets/fonts/cinzel-decorative/CinzelDecorative-Bold.ttf);
+	src: url(../../assets/fonts/cinzel-decorative/CinzelDecorative-Bold.woff2);
 }
 
 @font-face {
 	font-family: "Cinzel Decorative";
 	font-weight: 900;
 	font-style: normal;
-	src: url(../../assets/fonts/cinzel-decorative/CinzelDecorative-Black.ttf);
+	src: url(../../assets/fonts/cinzel-decorative/CinzelDecorative-Black.woff2);
 }

@@ -2,26 +2,26 @@
 	font-family: "Lobster Two";
 	font-weight: normal;
 	font-style: normal;
-	src: url(../../assets/fonts/lobster/LobsterTwo-Regular.ttf);
+	src: url(../../assets/fonts/lobster/LobsterTwo-Regular.woff2);
 }
 
 @font-face {
 	font-family: "Lobster Two";
 	font-weight: bold;
 	font-style: normal;
-	src: url(../../assets/fonts/lobster/LobsterTwo-Bold.ttf);
+	src: url(../../assets/fonts/lobster/LobsterTwo-Bold.woff2);
 }
 
 @font-face {
 	font-family: "Lobster Two";
 	font-weight: normal;
 	font-style: italic;
-	src: url(../../assets/fonts/lobster/LobsterTwo-Italic.ttf);
+	src: url(../../assets/fonts/lobster/LobsterTwo-Italic.woff2);
 }
 
 @font-face {
 	font-family: "Lobster Two";
 	font-weight: bold;
 	font-style: italic;
-	src: url(../../assets/fonts/lobster/LobsterTwo-BoldItalic.ttf);
+	src: url(../../assets/fonts/lobster/LobsterTwo-BoldItalic.woff2);
 }
