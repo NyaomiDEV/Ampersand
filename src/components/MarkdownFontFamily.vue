@@ -33,7 +33,7 @@
 		class="font-family"
 		:style="{
 			'--markdown-font-variation-settings': fontVariation,
-			'--markdown-font-family': fontFamily
+			'--markdown-font-family': `'${fontFamily}'`
 		}"
 	>
 		<slot />
