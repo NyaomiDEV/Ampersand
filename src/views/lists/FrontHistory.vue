@@ -1,8 +1,8 @@
 <script setup lang="ts">
-	import { IonContent, IonList, IonPage, IonTitle, IonLabel, IonToolbar, IonBackButton, IonItemDivider, IonIcon, IonSearchbar, IonFabButton, IonFab, IonButtons, IonButton } from "@ionic/vue";
+	import { IonContent, IonList, IonPage, IonTitle, IonLabel, IonToolbar, IonBackButton, IonItemDivider, IonIcon, IonSearchbar, IonFabButton, IonFab, IonButtons, IonButton, IonListHeader } from "@ionic/vue";
 	import { h, onBeforeMount, onUnmounted, ref, shallowRef, useTemplateRef, watch } from "vue";
-	import type { FrontingEntryComplete } from "../../lib/db/entities.d.ts";
-	import { getFrontingEntriesOfDay, getFrontingEntriesDays, toFrontingEntryComplete } from "../../lib/db/tables/frontingEntries";
+	import type { FrontingEntry, FrontingEntryComplete } from "../../lib/db/entities.d.ts";
+	import { getFrontingEntriesOfDay, getFrontingEntriesDays, toFrontingEntryComplete, getFilteredFrontingEntries } from "../../lib/db/tables/frontingEntries";
 	import Spinner from "../../components/Spinner.vue";
 	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
 	import dayjs from "dayjs";
@@ -10,6 +10,8 @@
 
 	import addMD from "@material-symbols/svg-600/rounded/add.svg";
 	import moreMD from "@material-symbols/svg-600/rounded/more_vert.svg";
+	import calendarMD from "@material-symbols/svg-600/rounded/calendar_month.svg";
+	import listMD from "@material-symbols/svg-600/rounded/list.svg";
 
 	import { DatabaseEvents, DatabaseEvent } from "../../lib/db/events";
 	import { addModal, removeModal } from "../../lib/modals.ts";
@@ -21,10 +23,14 @@
 	import CollapsibleHeaderbar from "../../components/CollapsibleHeaderbar.vue";
 	import FilterQuerySelect from "../../modals/FilterQuerySelect.vue";
 	import FilterQueryEdit from "../../modals/FilterQueryEdit.vue";
+	import InfiniteLoader from "../../components/InfiniteLoader.vue";
+	import VirtualList from "../../components/VirtualList.vue";
 
 	const route = useRoute();
 	
 	const isStandalone = route.path.startsWith("/lists/");
+
+	const showCalendar = ref(true);
 
 	const i18next = useTranslation();
 
@@ -32,6 +38,8 @@
 	const parts = ref<DatetimeParts>();
 
 	const frontingEntries = shallowRef<FrontingEntryComplete[]>();
+	const iter = shallowRef<AsyncGenerator<FrontingEntry>>();
+	const iterDone = ref(false);
 
 	const frontingEntriesDays = shallowRef<{ date: string, backgroundColor: string }[]>();
 
@@ -53,9 +61,9 @@
 		await populateHighlightedDays(parts.value);
 	});
 
-	watch([date, search], async () => {
+	watch([date, search, showCalendar], async () => {
 		await resetEntries();
-	}, { immediate: true });
+	});
 
 	onBeforeMount(async () => {
 		DatabaseEvents.addEventListener("updated", listener);
@@ -67,13 +75,36 @@
 		DatabaseEvents.removeEventListener("updated", listener);
 	});
 
-	async function getEntries(){
-		frontingEntries.value = await toFrontingEntryComplete(await Array.fromAsync(getFrontingEntriesOfDay(date.value, search.value)));
-	}
-
 	async function resetEntries(){
 		frontingEntries.value = undefined;
-		await getEntries();
+		iterDone.value = false;
+		if(showCalendar.value)
+			iter.value = getFrontingEntriesOfDay(date.value, search.value);
+		else
+			iter.value = getFilteredFrontingEntries(search.value);
+
+		await pollEntries();
+	}
+
+	async function pollEntries(cb?: () => void){
+		if(!iter.value) return;
+
+		let i = 0;
+		const _entrs: FrontingEntry[] = [];
+		while(true) {
+			const data = await iter.value.next();
+			if(data.value) _entrs.push(data.value);
+			i++;
+			if(data.done) iterDone.value = true;
+			if(i >= 20 || data.done) break;
+		}
+
+		if(!frontingEntries.value)
+			frontingEntries.value = await toFrontingEntryComplete(_entrs);
+		else
+			frontingEntries.value = [...frontingEntries.value, ...await toFrontingEntryComplete(_entrs)];
+
+		cb?.();
 	}
 
 	function getGrouped(entries: FrontingEntryComplete[]){
@@ -188,6 +219,11 @@
 					<IonTitle>
 						{{ $t("frontHistory:header") }}
 					</IonTitle>
+					<IonButtons slot="secondary">
+						<IonButton @click="showCalendar = !showCalendar">
+							<IonIcon slot="icon-only" :icon="showCalendar ? listMD : calendarMD" />
+						</IonButton>
+					</IonButtons>
 				</IonToolbar>
 				<IonToolbar>
 					<IonSearchbar
@@ -211,31 +247,72 @@
 			</CollapsibleHeaderbar>
 
 			<DatetimeUtc
+				v-if="showCalendar"
 				v-model="date"
 				presentation="date"
 				:highlighted-dates="frontingEntriesDays"
 				@parts="parts = $event"
 			/>
+
 			<div v-if="frontingEntries === undefined" class="spinner-container">
 				<Spinner size="72px" />
 			</div>
+			
 			<TheresNothingHere v-else-if="!frontingEntries.length" compress-vertical />
-			<IonList v-else>
-				<template v-for="tuple in getGrouped(frontingEntries)" :key="tuple[0]">
-					<IonItemDivider sticky>
-						<IonLabel>{{ getLabel(tuple[0]) }}</IonLabel>
-					</IonItemDivider>
-					<FrontingEntryItem
-						v-for="entry in tuple[1]"
-						:key="entry.uuid"
-						:entry="entry"
-						button
-						:show-date-complete="false"
-						:presence-average="tuple[0] !== 'currentlyFronting'"
-						@click="showModal(entry)"
-					/>
-				</template>
-			</IonList>
+
+			<template v-else-if="!showCalendar">
+				<IonListHeader>
+					{{ $t("frontHistory:currentlyFronting") }}
+				</IonListHeader>
+				<IonList class="currently-fronting">
+					<VirtualList :entries="frontingEntries.filter(x => !x.endTime)" :min-size="86" :gap="2">
+						<template #default="{ entry }">
+							<FrontingEntryItem
+								:entry="entry"
+								button
+								show-date-complete
+								:presence-average="!entry.endTime"
+								@click="showModal(entry)"
+							/>
+						</template>
+					</VirtualList>
+				</IonList>
+				<IonList>
+					<VirtualList :entries="frontingEntries.filter(x => x.endTime)" :min-size="86" :gap="2">
+						<template #default="{ entry }">
+							<FrontingEntryItem
+								:entry="entry"
+								button
+								show-date-complete
+								:presence-average="!entry.endTime"
+								@click="showModal(entry)"
+							/>
+						</template>
+					</VirtualList>
+				</IonList>
+
+				<InfiniteLoader v-if="!iterDone && !showCalendar" @infinite="pollEntries" />
+			</template>
+
+			<template v-else>
+				<IonList>
+					<template v-for="tuple in getGrouped(frontingEntries)" :key="tuple[0]">
+						<IonItemDivider sticky>
+							<IonLabel>{{ getLabel(tuple[0]) }}</IonLabel>
+						</IonItemDivider>
+						<FrontingEntryItem
+							v-for="entry in tuple[1]"
+							:key="entry.uuid"
+							:entry="entry"
+							button
+							:show-date-complete="false"
+							:presence-average="tuple[0] !== 'currentlyFronting'"
+							@click="showModal(entry)"
+						/>
+					</template>
+				</IonList>
+			</template>
+
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
 				<IonFabButton @click="showModal()">
@@ -255,6 +332,10 @@
 		align-items: center;
 		justify-content: center;
 		padding: 16px;
+	}
+
+	.currently-fronting {
+		margin-bottom: 32px;
 	}
 
 	ion-datetime {
