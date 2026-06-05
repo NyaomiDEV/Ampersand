@@ -78,7 +78,6 @@ jobs:
       - name: Build app (APK)
         run: |
           yarn tauri android build --apk --target aarch64 armv7 --split-per-abi --ci
-          yarn tauri android build --apk --target aarch64 armv7 --ci
         env:
           NDK_HOME: ${{ env.ANDROID_HOME }}/ndk/29.0.14206865/
       - name: Build app (AAB)
@@ -101,13 +100,6 @@ jobs:
           archive: false
           path: |
             ./src-tauri/gen/android/app/build/outputs/apk/arm64/release/ampersand*-arm64-release.apk
-      - name: Publish artifact (APK - Universal)
-        uses: actions/upload-artifact@v7
-        with:
-          name: Android App (APK - Universal)
-          archive: false
-          path: |
-            ./src-tauri/gen/android/app/build/outputs/apk/universal/release/ampersand*-universal-release.apk
       - name: Publish artifact (AAB)
         if: startsWith(github.ref, 'refs/tags/')
         uses: actions/upload-artifact@v7
