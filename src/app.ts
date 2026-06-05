@@ -64,8 +64,8 @@ import { openUrl } from "@tauri-apps/plugin-opener";
 // In case of webview versions tie-in with the OS, as is with iOS,
 // it makes sense to whitelist the OS itself
 const minOsVersions = {
-	"ios": [18,7],
-	"macos": [15,7]
+	"ios": [18,6],
+	"macos": [15,6]
 };
 
 // In all other cases we might get away with more granular, per-webview
@@ -292,7 +292,7 @@ else {
 	const header = document.createElement("h1");
 	header.textContent = "Ampersand cannot run on this WebView version!";
 	container.appendChild(header);
-	
+
 	container.append(...getSuggestionsForPeopleWithUnsupportedVersions());
 
 	document.body.appendChild(container);
