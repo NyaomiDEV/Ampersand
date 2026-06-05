@@ -134,13 +134,13 @@
 			void modalController.dismiss();
 	}
 
-	function isDisabled(member){
+	function isDisabled(member: Member){
 		return (
 			(
 				props.membersToInclude &&
-				!props.membersToInclude.find(x => typeof x === "string" ? x === member : x.uuid === member.uuid)
+				!props.membersToInclude.find(x => typeof x === "string" ? x === member.uuid : x.uuid === member.uuid)
 			) ||
-			!!props.membersToExclude?.find(x => typeof x === "string" ? x === member : x.uuid === member.uuid)
+			!!props.membersToExclude?.find(x => typeof x === "string" ? x === member.uuid : x.uuid === member.uuid)
 		);
 	}
 </script>
