@@ -373,6 +373,8 @@ export function sortSystems(a: IndexEntry<System>, b: IndexEntry<System>) {
 }
 
 export function sortFrontingEntries(a: IndexEntry<FrontingEntry>, b: IndexEntry<FrontingEntry>) {
+	if (!a.endTime && b.endTime) return -1;
+	if (a.endTime && !b.endTime) return 1;
 	return b.startTime!.valueOf() - a.startTime!.valueOf();
 }
 

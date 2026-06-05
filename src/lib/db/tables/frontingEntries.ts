@@ -35,6 +35,14 @@ export async function* getFrontingEntries(maxIter = 10){
 	};
 }
 
+export async function* getFilteredFrontingEntries(query: string) {
+	for await (const entry of getFrontingEntries()){
+		if(filterFrontingEntry(query, entry))
+			yield entry;
+	}
+}
+
+
 export function getFrontingEntry(uuid: UUID){
 	return db.frontingEntries.get(uuid);
 }
