@@ -2,12 +2,12 @@
 	font-family: "TT2020";
 	font-weight: normal;
 	font-style: normal;
-	src: url(../../assets/fonts/tt2020/TT2020Base-Regular.ttf);
+	src: url(../../assets/fonts/tt2020/TT2020Base-Regular.woff2);
 }
 
 @font-face {
 	font-family: "TT2020";
 	font-weight: normal;
 	font-style: italic;
-	src: url(../../assets/fonts/tt2020/TT2020Base-Italic.ttf);
+	src: url(../../assets/fonts/tt2020/TT2020Base-Italic.woff2);
 }
