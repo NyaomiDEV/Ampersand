@@ -33,7 +33,7 @@
 
 	const isStandalone = route.path.startsWith("/lists/");
 
-	const showCalendar = ref(true);
+	const showCalendar = ref(false);
 
 	const i18next = useTranslation();
 
@@ -238,6 +238,7 @@
 				:highlighted-dates="postsDays"
 				@parts="parts = $event"
 			/>
+			
 			<div v-if="posts === undefined" class="spinner-container">
 				<Spinner size="72px" />
 			</div>
