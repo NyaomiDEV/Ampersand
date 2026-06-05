@@ -20,7 +20,6 @@
 	import shadowMD from "@material-symbols/svg-600/rounded/ev_shadow.svg";
 	import gradientMD from "@material-symbols/svg-600/rounded/gradient.svg";
 
-
 	import { accessibilityConfig, appConfig } from "../../lib/config";
 	import { useRoute } from "vue-router";
 	import { PartialBy } from "../../lib/types";
@@ -32,6 +31,10 @@
 	import Cover from "../../components/Cover.vue";
 	import SystemItem from "../../components/system/SystemItem.vue";
 	import Loading from "../../modals/Loading.vue";
+	import { getAsset, getAssetsIndex } from "../../lib/db/tables/assets.ts";
+	import { useAssetFonts } from "../../lib/assetFonts.ts";
+
+	const { appendFont, deleteAllFonts } = useAssetFonts();
 
 	const i18next = useTranslation();
 
@@ -218,6 +221,22 @@
 		}
 	}
 
+	async function updateFontFamily(){
+		const fontTypes = [
+			"application/font-woff",
+			"application/octet-stream"
+		];
+
+		if (system.value.nameStyle?.family.startsWith("@")) {
+			const assetIndex = getAssetsIndex().find(x => x.friendlyName === system.value.nameStyle?.family.slice(1));
+			if(!assetIndex) return;
+			const asset = await getAsset(assetIndex.uuid);
+			if(fontTypes.includes(asset.file.type))
+				appendFont(system.value.nameStyle?.family, asset.file);
+		} else 
+			deleteAllFonts();
+	}
+
 	async function getParents(){
 		const _parents: System[] = [];
 
@@ -246,6 +265,7 @@
 		await getParents();
 	});
 
+	watch(() => system.value.nameStyle?.family, updateFontFamily, { immediate: true });
 	watch(route, updateRoute);
 	onBeforeMount(updateRoute);
 </script>
@@ -315,7 +335,7 @@
 				<div class="system-info">
 					<h3
 						:style="{
-							fontFamily: system.nameStyle?.family,
+							fontFamily: system.nameStyle?.family ? `'${system.nameStyle.family}'` : undefined,
 							fontWeight: system.nameStyle?.weight,
 							fontStyle: system.nameStyle?.italic ? 'italic' : undefined,
 							'--system-color': system.color

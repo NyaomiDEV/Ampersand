@@ -59,6 +59,10 @@
 	import SystemItem from "../../components/system/SystemItem.vue";
 	import Loading from "../../modals/Loading.vue";
 	import { lists } from "../../router/lists";
+	import { getAsset, getAssetsIndex } from "../../lib/db/tables/assets.ts";
+	import { useAssetFonts } from "../../lib/assetFonts.ts";
+
+	const { appendFont, deleteAllFonts } = useAssetFonts();
 
 	const i18next = useTranslation();
 
@@ -318,6 +322,23 @@
 		}
 	}
 
+	async function updateFontFamily(){
+		const fontTypes = [
+			"application/font-woff",
+			"application/octet-stream"
+		];
+
+		if (member.value.nameStyle?.family.startsWith("@")) {
+			const assetIndex = getAssetsIndex().find(x => x.friendlyName === member.value.nameStyle?.family.slice(1));
+			if(!assetIndex) return;
+			const asset = await getAsset(assetIndex.uuid);
+			if(fontTypes.includes(asset.file.type))
+				appendFont(member.value.nameStyle?.family, asset.file);
+		} else 
+			deleteAllFonts();
+	}
+
+	watch(() => member.value.nameStyle?.family, updateFontFamily, { immediate: true });
 	watch(route, updateRoute);
 	onBeforeMount(updateRoute);
 </script>
@@ -387,7 +408,7 @@
 				<div class="member-info">
 					<h3
 						:style="{
-							fontFamily: member.nameStyle?.family,
+							fontFamily: member.nameStyle?.family ? `'${member.nameStyle.family}'` : undefined,
 							fontWeight: member.nameStyle?.weight,
 							fontStyle: member.nameStyle?.italic ? 'italic' : undefined,
 							'--member-color': member.color
