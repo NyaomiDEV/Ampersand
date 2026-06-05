@@ -11,9 +11,11 @@
 	import HomeFillMD from "@material-symbols/svg-600/rounded/home-fill.svg";
 	import OptionsFillMD from "@material-symbols/svg-600/rounded/menu-fill.svg";
 	import { lists } from "../router/lists";
+	import { useTranslation } from "i18next-vue";
 
 	const router = useIonRouter();
 	const route = useRoute();
+	const i18next = useTranslation();
 
 	const allPossibleTabs = {
 		dashboard: { icon: HomeMD, iconSelected: HomeFillMD },
@@ -31,6 +33,7 @@
 		}, () => [
 			...props.tabOrder.map(x => h(IonTabButton, {
 				tab: x,
+				ariaLabel: i18next.t(`${x}:header`),
 				href: `/tab/${x}`,
 				onClick: () => clickReplaceHandler(`/tab/${x}`)
 			}, () => [
@@ -40,6 +43,7 @@
 			])),
 			h(IonTabButton, {
 				tab: "options",
+				ariaLabel: i18next.t("options:header"),
 				href: "/tab/options",
 				onClick: () => clickReplaceHandler("/tab/options"),
 			}, () => [
