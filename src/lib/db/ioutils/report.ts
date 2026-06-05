@@ -189,14 +189,16 @@ export function exportReport(systems: UUID[], includeArchived: boolean, includeC
 			}
 
 			const fd = await openFile(path, { create: true, write: true, truncate: true });
-			await fd.write(encoder.encode(`<!DOCTYPE html><html><head><title>Ampersand Report - ${formatDate(date, "collapsed")}</title><style>${getStylesheet()}</style></head><body>`));
+			await fd.write(encoder.encode(`<!DOCTYPE html><html lang="${i18next.language}"><head><meta charset="UTF-8"><title>Ampersand Report - ${formatDate(date, "collapsed")}</title><style>${getStylesheet()}</style></head><body>`));
 			progress.dispatchEvent(new Event("start"));
 
 			// write header
 			await fd.write(encoder.encode(intestationToHtml(date)));
 
 			// make progress computations
-			const members = getMemberIndex().filter(x => systems.includes(x.system!) && x.isArchived === includeArchived && x.isCustomFront === includeCustomFronts).map(x => x.uuid);
+			const members = getMemberIndex()
+				.filter(x => systems.includes(x.system!) && (includeArchived || !x.isArchived) && (includeCustomFronts || !x.isCustomFront))
+				.map(x => x.uuid);
 			const frontingEntries = (await Promise.all(
 				getFrontingEntryIndex()
 					.filter(x => members.includes(x.member!) && x.endTime && Date.now() - x.startTime!.valueOf() < 1000 * 60 * 60 * 24 * maxDays)
