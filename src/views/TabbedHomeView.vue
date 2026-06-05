@@ -32,7 +32,7 @@
 			...props.tabOrder.map(x => h(IonTabButton, {
 				tab: x,
 				href: `/tab/${x}`,
-				_onClick: () => clickReplaceHandler(`/tab/${x}`)
+				onClick: () => clickReplaceHandler(`/tab/${x}`)
 			}, () => [
 				h(IonIcon, {
 					icon: props.currentTab === x ? allPossibleTabs[x].iconSelected : allPossibleTabs[x].icon
@@ -41,7 +41,7 @@
 			h(IonTabButton, {
 				tab: "options",
 				href: "/tab/options",
-				_onClick: () => clickReplaceHandler("/tab/options"),
+				onClick: () => clickReplaceHandler("/tab/options"),
 			}, () => [
 				h(IonIcon, {
 					icon: props.currentTab === "options" ? OptionsFillMD : OptionsMD
@@ -61,11 +61,10 @@
 	// store a value to pass by ref to the cached animation
 	const directionOverride = ref("forward");
 
-	function clickReplaceHandler(location){
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
-		const prevIndex = tabBar.value!.tabVnodes.findIndex(x => x.props?.href === route.path);
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
-		const curIndex = tabBar.value!.tabVnodes.findIndex(x => x.props?.href === location);
+	function clickReplaceHandler(location: string){
+		const children: globalThis.HTMLIonTabButtonElement[] = Array.from(tabBar.value.children);
+		const prevIndex = children.findIndex(x => x.href === route.path);
+		const curIndex = children.findIndex(x => x.href === location);
 
 		// we control the value here so we can update it
 		directionOverride.value = prevIndex > curIndex ? "back" : "forward";
@@ -77,7 +76,6 @@
 				// pass directionOverride here so that we have a ref to a value we can control
 				slideAnimation(el, opts, directionOverride)
 				// and just like this the direction is under our control
-			
 		);
 	}
 </script>
