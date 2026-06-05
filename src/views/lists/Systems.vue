@@ -107,8 +107,7 @@
 		else
 			systems.value = [...systems.value, ..._syss];
 
-		if(cb)
-			cb();
+		cb?.();
 	}
 
 	function closeSlidingItems() {

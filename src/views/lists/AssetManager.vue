@@ -70,8 +70,7 @@
 		else
 			assets.value = [...assets.value, ..._assets];
 
-		if(cb)
-			cb();
+		cb?.();
 	}
 
 	async function saveFilterQuery(){

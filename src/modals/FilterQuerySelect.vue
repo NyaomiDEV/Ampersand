@@ -78,8 +78,7 @@
 		else
 			filterQueries.value = [...filterQueries.value, ..._filterQueries];
 
-		if(cb)
-			cb();
+		cb?.();
 	}
 
 	async function check(filterQuery: FilterQuery){

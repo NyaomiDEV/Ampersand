@@ -93,8 +93,7 @@
 		else
 			tags.value = [...tags.value, ..._tags];
 
-		if(cb)
-			cb();
+		cb?.();
 	}
 
 	function check(tag: Tag, checked: boolean){

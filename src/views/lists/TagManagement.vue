@@ -90,8 +90,7 @@
 		else
 			tags.value = [...tags.value, ..._tags];
 
-		if(cb)
-			cb();
+		cb?.();
 	}
 
 	function closeSlidingItems() {

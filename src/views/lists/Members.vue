@@ -109,8 +109,7 @@
 		else
 			members.value = [...members.value, ..._mems];
 
-		if(cb)
-			cb();
+		cb?.();
 	}
 
 	async function updateFronters() {

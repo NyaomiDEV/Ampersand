@@ -109,8 +109,7 @@
 		else
 			posts.value = [...posts.value, ...await toJournalPostComplete(_posts)];
 
-		if(cb)
-			cb();
+		cb?.();
 	}
 
 	async function populateHighlightedDays(parts?: DatetimeParts) {

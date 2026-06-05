@@ -83,8 +83,7 @@
 		else
 			filterQueries.value = [...filterQueries.value, ..._filterQueries];
 
-		if(cb)
-			cb();
+		cb?.();
 	}
 
 	function closeSlidingItems() {
