@@ -518,6 +518,7 @@
 					<IonItem v-if="system.nameStyle">
 						<div class="name-style-buttons">
 							<IonButton
+								:aria-label="$t('other:fontStyles.bold')"
 								shape="round"
 								:fill="system.nameStyle.weight > 400 ? 'solid' : 'outline'"
 								size="small"
@@ -532,6 +533,7 @@
 								/>
 							</IonButton>
 							<IonButton
+								:aria-label="$t('other:fontStyles.italic')"
 								class="last-button"
 								shape="round"
 								:fill="system.nameStyle.italic ? 'solid' : 'outline'"
@@ -547,6 +549,7 @@
 								/>
 							</IonButton>
 							<IonButton
+								:aria-label="$t('other:fontStyles.outline')"
 								shape="round"
 								:fill="system.nameStyle.outline ? 'solid' : 'outline'"
 								size="small"
@@ -564,6 +567,7 @@
 							</IonButton>
 
 							<IonButton
+								:aria-label="$t('other:fontStyles.gradient')"
 								class="last-button"
 								shape="round"
 								:fill="system.nameStyle.gradient ? 'solid' : 'outline'"
@@ -583,6 +587,7 @@
 							</IonButton>
 
 							<IonButton
+								:aria-label="$t('other:fontStyles.neon')"
 								shape="round"
 								:fill="system.nameStyle.neon ? 'solid' : 'outline'"
 								size="small"
@@ -600,6 +605,7 @@
 								/>
 							</IonButton>
 							<IonButton
+								:aria-label="$t('other:fontStyles.shadow')"
 								class="last-button"
 								shape="round"
 								:fill="system.nameStyle.shadow ? 'solid' : 'outline'"

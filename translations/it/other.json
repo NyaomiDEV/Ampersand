@@ -12,7 +12,8 @@
 		"cancel": "Annulla",
 		"clear": "Cancella",
 		"yes": "Sì",
-		"no": "No"
+		"no": "No",
+		"assetFontPlaceholder": "Nome dell'asset per il carattere"
 	},
 	"comments": {
 		"header": "Commenti",
@@ -148,7 +149,16 @@
 		"spotty": "Chiazze",
 		"bone": "Osso",
 		"cow": "Mucca",
+		"assetFont": "Carattere da asset",
 		"noFont": "Nessun carattere"
+	},
+	"fontStyles": {
+		"bold": "Grassetto",
+		"italic": "Corsivo",
+		"neon": "Neon",
+		"gradient": "Sfumatura",
+		"outline": "Contornato",
+		"shadow": "Ombra"
 	},
 	"developerMode": "Modalità sviluppatore",
 	"theresNothingHere": "Non c'è niente qui"

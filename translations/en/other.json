@@ -12,7 +12,8 @@
 		"cancel": "Cancel",
 		"clear": "Clear",
 		"yes": "Yes",
-		"no": "No"
+		"no": "No",
+		"assetFontPlaceholder": "Asset name for font"
 	},
 	"comments": {
 		"header": "Comments",
@@ -147,7 +148,16 @@
 		"spotty": "Spotty",
 		"bone": "Bone",
 		"cow": "Cow",
+		"assetFont": "Asset font",
 		"noFont": "No font"
+	},
+	"fontStyles": {
+		"bold": "Bold",
+		"italic": "Italic",
+		"neon": "Neon",
+		"gradient": "Gradient",
+		"outline": "Outline",
+		"shadow": "Shadow"
 	},
 	"developerMode": "Developer mode",
 	"theresNothingHere": "There's nothing here"

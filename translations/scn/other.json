@@ -12,7 +12,8 @@
 		"cancel": "Annuḍḍa",
 		"clear": "Scancella",
 		"yes": "Sì",
-		"no": "No"
+		"no": "No",
+		"assetFontPlaceholder": "Nome di l'asset pû carattere"
 	},
 	"comments": {
 		"header": "Cummenti",
@@ -148,7 +149,16 @@
 		"spotty": "Macchiatu",
 		"bone": "Ossu",
 		"cow": "Vacca",
-		"noFont": "Nuddu font"
+		"assetFont": "Carattere 'ntra l'asset",
+		"noFont": "Nuddu carattere"
+	},
+	"fontStyles": {
+		"bold": "Grassettu",
+		"italic": "Cursivu",
+		"neon": "Neon",
+		"gradient": "Sfumatura",
+		"outline": "Cunturnatu",
+		"shadow": "Umbra"
 	},
 	"developerMode": "Mudalità sviluppaturi",
 	"theresNothingHere": "nu n'cc'è nenti ccà"

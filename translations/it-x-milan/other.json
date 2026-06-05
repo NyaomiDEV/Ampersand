@@ -12,7 +12,8 @@
 		"cancel": "Annulla",
 		"clear": "Pulisci",
 		"yes": "Sì",
-		"no": "No"
+		"no": "No",
+		"assetFontPlaceholder": "Nome asset font"
 	},
 	"comments": {
 		"header": "Commenti",
@@ -148,7 +149,16 @@
 		"spotty": "Chiazze",
 		"bone": "Osso",
 		"cow": "Mucca",
+		"assetFont": "Font da asset",
 		"noFont": "Nessun font, sbatti"
+	},
+	"fontStyles": {
+		"bold": "Grassetto",
+		"italic": "Corsivo",
+		"neon": "Neon",
+		"gradient": "Sfumatura",
+		"outline": "Contornato",
+		"shadow": "Ombra"
 	},
 	"developerMode": "Dev Mode",
 	"theresNothingHere": "Figa, ma qua non c'è un cazzo, vah!"

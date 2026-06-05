@@ -269,6 +269,39 @@ export async function promptOptions(header: string, inputs: { name: string, valu
 	});
 }
 
+export async function promptInput(header: string, fields: { name: string, placeholder: string; }[], subHeader?: string, message?: string): Promise<void | Record<string, string>> {
+	return new Promise((resolve) => {
+		void (async () => {
+			const alert = await alertController.create({
+				header,
+				subHeader,
+				message,
+				inputs: fields.map(x => ({
+					type: "text",
+					name: x.name,
+					placeholder: x.placeholder
+				})),
+				buttons: [
+					{
+						text: i18next.t("other:alerts.cancel"),
+						role: "cancel",
+					},
+					{
+						text: i18next.t("other:alerts.ok"),
+						role: "confirm",
+					}
+				]
+			});
+			await alert.present();
+			const detail = await alert.onDidDismiss();
+
+			if (detail.role === "confirm")
+				resolve(detail.data.values);
+			else
+				resolve();
+		})();
+	});
+}
 
 export function isPlainObject(value) {
 	if (typeof value !== "object" || value === null) return false;
@@ -538,9 +571,11 @@ function normalizeFontName(x: string){
 	return quickName ? `${i18next.t(`other:fonts.${quickName[0]}`)} (${x})` : x;
 }
 
-export function fontFamilyPicker(header: string): Promise<string | null | undefined> {
+export function fontFamilyPicker(header: string): Promise<string | null | void> {
 	return new Promise(resolve => {
 		void (async () => {
+			const assetFont = Symbol();
+
 			const buttons: ActionSheetButton[] = fontFamilies.map(x => ({
 				text: normalizeFontName(x),
 				data: { it: x },
@@ -554,6 +589,10 @@ export function fontFamilyPicker(header: string): Promise<string | null | undefi
 				buttons: [
 					...buttons,
 					{
+						text: i18next.t("other:fonts.assetFont"),
+						data: { it: assetFont }
+					},
+					{
 						text: i18next.t("other:fonts.noFont"),
 						data: { it: null }
 					},
@@ -563,10 +602,21 @@ export function fontFamilyPicker(header: string): Promise<string | null | undefi
 					}
 				]
 			});
-
-			controller.addEventListener("willDismiss", (e) => resolve(e.detail.data?.it));
-
 			await controller.present();
+
+			const detail = await controller.onDidDismiss();
+			if(!detail.data.it) return resolve();
+
+			if(detail.data.it === assetFont){
+				const data = (await promptInput(
+					i18next.t("other:fonts.assetFont"),
+					[{ name: "name", placeholder: i18next.t("other:alerts.assetFontPlaceholder") }],
+				))?.name;
+
+				resolve(data || null);
+			}
+
+			resolve(detail.data.it);
 		})();
 	});
 }

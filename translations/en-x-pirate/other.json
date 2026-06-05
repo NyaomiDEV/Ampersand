@@ -12,7 +12,8 @@
 		"cancel": "Belay that",
 		"clear": "Clear",
 		"yes": "Aye",
-		"no": "Nay"
+		"no": "Nay",
+		"assetFontPlaceholder": "Name the loot, get the font"
 	},
 	"comments": {
 		"header": "Tales",
@@ -147,7 +148,16 @@
 		"spotty": "Spotty",
 		"bone": "Bone",
 		"cow": "Cow",
+		"assetFont": "Looted font",
 		"noFont": "No font"
+	},
+	"fontStyles": {
+		"bold": "Bold",
+		"italic": "Italic",
+		"neon": "Neon",
+		"gradient": "Gradient",
+		"outline": "Outline",
+		"shadow": "Shadow"
 	},
 	"developerMode": "Shipwright mode",
 	"theresNothingHere": "There be naught here"

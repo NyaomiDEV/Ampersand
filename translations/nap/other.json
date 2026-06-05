@@ -12,7 +12,8 @@
 		"cancel": "Annulla",
 		"clear": "Scancella",
 		"yes": "Sì",
-		"no": "No"
+		"no": "No",
+		"assetFontPlaceholder": "Nome d' 'o documento p' 'o carattere"
 	},
 	"comments": {
 		"header": "Cummiente",
@@ -147,7 +148,16 @@
 		"spotty": "A chiazze",
 		"bone": "Uosso",
 		"cow": "Vacca",
-		"noFont": "Nisciuno font"
+		"assetFont": "Carattere da documento",
+		"noFont": "Nisciuno carattere"
+	},
+	"fontStyles": {
+		"bold": "Grassetto",
+		"italic": "Corsivo",
+		"neon": "Neon",
+		"gradient": "Sfumatura",
+		"outline": "Contornato",
+		"shadow": "Ombra"
 	},
 	"developerMode": "Modalità sviluppatore",
 	"theresNothingHere": "Nun ce sta niente ccà"
