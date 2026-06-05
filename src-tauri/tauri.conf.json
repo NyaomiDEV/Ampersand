@@ -1,7 +1,7 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
   "productName": "Ampersand",
-  "version": "0.2.1",
+  "version": "../package.json",
   "identifier": "moe.ampersand.app",
   "build": {
     "frontendDist": "../dist",
@@ -56,6 +56,10 @@
     },
     "windows": {
       "allowDowngrades": false,
+      "webviewInstallMode": {
+        "silent": true,
+        "type": "embedBootstrapper"
+      },
       "minimumWebview2Version": "140.0.3415.0"
     },
     "linux": {

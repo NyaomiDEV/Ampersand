@@ -73,7 +73,7 @@ const minOsVersions = {
 const minWvVersions = {
 	"android": [140],
 	"windows": [140],
-	"linux": [2,50]
+	"linux": [2,47,3]
 };
 
 async function isWebviewSupported(){

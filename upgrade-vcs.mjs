@@ -112,7 +112,6 @@ async function patchFiles(buildType, version) {
 	if (buildType !== "local") {
 		// Modify parsed manifests
 		packageJson.version = version.version;
-		tauriConfJson.version = process.env.AMPERSAND_BUILD_TARGET === "ios" ? version.version.split("+")[0].split("-")[0] : version.version;
 		tauriCargoToml.package.version = version.version;
 		tauriPluginCargoToml.package.version = version.version;
 
