@@ -99,7 +99,7 @@
 						color="danger"
 					/>
 					<IonLabel>
-						<h2>{{ $t("other:donationLabel.title") }}</h2>
+						<h3>{{ $t("other:donationLabel.title") }}</h3>
 						<p>{{ $t("other:donationLabel.desc") }}</p>
 					</IonLabel>
 				</IonItem>
