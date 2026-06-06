@@ -131,19 +131,10 @@ export function importDatabaseFromBinary() {
 			progress.dispatchEvent(new Event("start"));
 			const revived = walk(tablesAndConfig, revive) as DatabaseExport;
 
-			const progressTotal = Object.getOwnPropertyNames(revived.database).length + 3;
+			const progressTotal = Object.getOwnPropertyNames(revived.database).length;
 			let progressCurrent = 0;
 
-			Object.assign(appConfig, revived.config.appConfig);
-			progressCurrent++;
-
-			Object.assign(accessibilityConfig, revived.config.accessibilityConfig);
-			progressCurrent++;
-
-			Object.assign(securityConfig, revived.config.securityConfig);
-			progressCurrent++;
-
-			await initConfig();
+			await initConfig(revived.config);
 
 			for (const key of Object.getOwnPropertyNames(revived.database)) {
 				// also mitigate system (old) to systems (new)

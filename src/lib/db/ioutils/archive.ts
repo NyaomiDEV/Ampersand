@@ -150,10 +150,11 @@ export function importArchive() {
 					case "__config": {
 						if (!revisionWasParsed) throw new Error("malformed, revision fragment must be first");
 						const _data = data as ArchiveStreamConfig;
-						Object.assign(appConfig, _data.data.appConfig);
-						Object.assign(accessibilityConfig, _data.data.accessibilityConfig);
-						Object.assign(securityConfig, _data.data.securityConfig);
-						await initConfig();
+						await initConfig({
+							appConfig: _data.data.appConfig,
+							accessibilityConfig: _data.data.accessibilityConfig,
+							securityConfig: _data.data.securityConfig
+						});
 						break;
 					}
 					// Migrate system (old) to systems (new) upon import

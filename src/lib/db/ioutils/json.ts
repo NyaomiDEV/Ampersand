@@ -280,16 +280,19 @@ export function importDatabaseFromJSON() {
 						if (!revisionWasParsed) throw new Error("malformed, revision fragment must be first");
 						switch(path[1]){
 							case "appConfig":
-								Object.assign(appConfig, value);
-								await initConfig();
+								await initConfig({
+									appConfig: value as unknown as AppConfig
+								});
 								break;
 							case "accessibilityConfig":
-								Object.assign(accessibilityConfig, value);
-								await initConfig();
+								await initConfig({
+									accessibilityConfig: value as unknown as AccessibilityConfig
+								});
 								break;
 							case "securityConfig":
-								Object.assign(securityConfig, value);
-								await initConfig();
+								await initConfig({
+									securityConfig: value as unknown as SecurityConfig
+								});
 								break;
 						}
 						break;
