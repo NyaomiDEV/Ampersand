@@ -26,19 +26,10 @@ export const initConfig = (() => {
 			delete securityConfig[key];
 
 		const _config = {
-			appConfig: configOverrides?.appConfig,
-			accessibilityConfig: configOverrides?.accessibilityConfig,
-			securityConfig: configOverrides?.securityConfig
+			appConfig: configOverrides?.appConfig || await getConfig<AppConfig>("appConfig") || {},
+			accessibilityConfig: configOverrides?.accessibilityConfig || await getConfig<AccessibilityConfig>("accessibilityConfig") || {},
+			securityConfig: configOverrides?.securityConfig || await getConfig<SecurityConfig>("securityConfig") || {}
 		};
-
-		if(!_config.appConfig)
-			_config.appConfig = await getConfig<AppConfig>("appConfig") || {};
-
-		if(!_config.accessibilityConfig)
-			_config.accessibilityConfig = await getConfig<AccessibilityConfig>("accessibilityConfig") || {};
-	
-		if(!_config.securityConfig)
-			_config.securityConfig = await getConfig<SecurityConfig>("securityConfig") || {};
 
 		Object.assign(appConfig, merge<AppConfig>(structuredClone(defaultAppConfig), _config.appConfig));
 		Object.assign(accessibilityConfig, merge<AccessibilityConfig>(structuredClone(defaultAccessibilityConfig), _config.accessibilityConfig));
