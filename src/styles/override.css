@@ -126,6 +126,18 @@ ion-tab-bar {
 	justify-content: normal;
 }
 
+ion-tabs ion-tab-button {
+	max-width: unset;
+
+	&:first-child {
+		margin-inline-start: auto;
+	}
+
+	&:last-child {
+		margin-inline-end: auto;
+	}
+}
+
 /* Tab bar desktop mode */
 html:is(.plt-tablet, .plt-desktop) ion-tabs {
 	flex-direction: row-reverse !important;
@@ -148,7 +160,7 @@ html:is(.plt-tablet, .plt-desktop) ion-tab-bar {
 	}
 }
 
-html:is(.plt-tablet, .plt-desktop) ion-tab-button {
+html:is(.plt-tablet, .plt-desktop) ion-tabs ion-tab-button {
 	flex: 0 0;
 	min-height: 80px;
 
