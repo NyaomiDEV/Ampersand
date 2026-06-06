@@ -29,7 +29,7 @@ targets:
     platform: iOS
     sources:
       - path: Sources
-      - path: Assets.xcassets
+      - path: icon.icon
       - path: Externals
       - path: ampersand_iOS
       - path: assets

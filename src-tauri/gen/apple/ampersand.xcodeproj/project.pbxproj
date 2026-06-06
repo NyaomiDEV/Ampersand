@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		032F82D17A5DF04E2D2433A8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 089BB64C3E8AEE05CCAABBA1 /* Assets.xcassets */; };
 		1E155FB4A20E557DE15E6369 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4DCEDDF4199AEDD31A378C06 /* main.mm */; };
 		558A30F0C4BD729BF9DCA88A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD3BF91E47F76AFFF6BA94A6 /* QuartzCore.framework */; };
 		6B8CEEB7FD8B3A328F30C066 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B76C3C93E8711B3C656A869 /* Security.framework */; };
@@ -15,6 +14,7 @@
 		76026F1D13A78B2DA16705EB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D65995C80170BD2473F98695 /* UIKit.framework */; };
 		7654B93224A1D560DBAC8688 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB5B6E478DA30E0CE2C6CCE6 /* LaunchScreen.storyboard */; };
 		77F680B9E0A512769A5568BC /* libapp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D8BA59D16078ACB5DBB73730 /* libapp.a */; };
+		B39EBDE32FD4178D000DF44C /* icon.icon in Resources */ = {isa = PBXBuildFile; fileRef = B39EBDE22FD4178D000DF44C /* icon.icon */; };
 		BB2E3B7D94EC249F1730BE0C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB42534958E176A8E1C00833 /* CoreGraphics.framework */; };
 		BD716FC89C002B1D2DEF3C80 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81AB09FC53F3A9FC57F24019 /* MetalKit.framework */; };
 		C1D941A1E6753EC2BFBCF3E7 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BA042DDF4FD9B6D3CA343E /* WebKit.framework */; };
@@ -22,7 +22,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		089BB64C3E8AEE05CCAABBA1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3B76C3C93E8711B3C656A869 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		427919F7835F4A15CBEC969B /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		4DCEDDF4199AEDD31A378C06 /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
@@ -32,6 +31,7 @@
 		81AB09FC53F3A9FC57F24019 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
 		9883B4376BEBC463F5EC5291 /* Ampersand.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ampersand.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB42534958E176A8E1C00833 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		B39EBDE22FD4178D000DF44C /* icon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = icon.icon; sourceTree = "<group>"; };
 		BF54C165BC7781C891FDB023 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = SOURCE_ROOT; };
 		C163A1CDBC0290B60FEE97FF /* commands.rs */ = {isa = PBXFileReference; lastKnownFileType = text; path = commands.rs; sourceTree = "<group>"; };
 		CB2D9AF8FA80B402B25C1181 /* lib.rs */ = {isa = PBXFileReference; lastKnownFileType = text; path = lib.rs; sourceTree = "<group>"; };
@@ -126,7 +126,7 @@
 			isa = PBXGroup;
 			children = (
 				BF54C165BC7781C891FDB023 /* assets */,
-				089BB64C3E8AEE05CCAABBA1 /* Assets.xcassets */,
+				B39EBDE22FD4178D000DF44C /* icon.icon */,
 				CB5B6E478DA30E0CE2C6CCE6 /* LaunchScreen.storyboard */,
 				6AF5841A1BE843D82C120828 /* ampersand_iOS */,
 				CFBA7B55929BF9E1B42C918C /* Externals */,
@@ -207,7 +207,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				032F82D17A5DF04E2D2433A8 /* Assets.xcassets in Resources */,
+				B39EBDE32FD4178D000DF44C /* icon.icon in Resources */,
 				7654B93224A1D560DBAC8688 /* LaunchScreen.storyboard in Resources */,
 				E2A55F0F3292B51A21277E8E /* assets in Resources */,
 			);
@@ -319,7 +319,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ARCHS = arm64;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = icon;
 				CODE_SIGN_ENTITLEMENTS = ampersand_iOS/ampersand_iOS.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
@@ -419,7 +419,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ARCHS = arm64;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = icon;
 				CODE_SIGN_ENTITLEMENTS = ampersand_iOS/ampersand_iOS.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
