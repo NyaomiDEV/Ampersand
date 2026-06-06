@@ -8,6 +8,7 @@ import * as TOML from "smol-toml";
 
 const buildsThatHappenLocally = [
 	"local",
+	"prebeta",
 	"stable-oldpackage",
 	"stable"
 ]
@@ -16,7 +17,7 @@ const buildsThatHappenLocally = [
 // UTILITY FUNCTIONS
 //
 function getBuildType(){
-	if(process.env.AMPERSAND_BUILD_TYPE && ["local", "prebeta", "unstable", "stable", "stable-sideload", "stable-oldpackage"].includes(process.env.AMPERSAND_BUILD_TYPE))
+	if (process.env.AMPERSAND_BUILD_TYPE && [...buildsThatHappenLocally, "unstable", "prebeta-sideload", "stable-sideload"].includes(process.env.AMPERSAND_BUILD_TYPE))
 		return process.env.AMPERSAND_BUILD_TYPE;
 
 	if(process.env.GITHUB_REF_NAME) {
@@ -24,7 +25,7 @@ function getBuildType(){
 			return "unstable";
 		else if (process.env.GITHUB_REF_NAME.startsWith("refs/tags/") && process.env.GITHUB_REF_NAME.includes("-"))
 			// 0.2.1-beta1, 0.2.1-pre2, etc.
-			return "prebeta";
+			return "prebeta-sideload";
 		else
 			return "stable-sideload";
 	}
@@ -59,6 +60,7 @@ async function getVersion(buildType){
 		default:
 		case "stable":
 		case "stable-sideload":
+		case "stable-oldpackage":
 		case "local": {
 			if (/^\d+\.\d+\.\d+$/.exec(process.env.AMPERSAND_VERSION) !== null)
 				return {
@@ -71,6 +73,7 @@ async function getVersion(buildType){
 				version: process.env.GITHUB_REF_NAME?.replace("refs/tags/", "") || packageJson.version
 			}
 		}
+		case "prebeta-sideload":
 		case "prebeta": {
 			if (/^\d+\.\d+\.\d+\-.+$/.exec(process.env.AMPERSAND_VERSION) !== null)
 				return {

@@ -63,7 +63,7 @@ android {
                     isJniDebuggable = true
                     isMinifyEnabled = false
                 }
-                else if(System.getenv("AMPERSAND_BUILD_TYPE").equals("stable-sideload")) {
+                else if(System.getenv("AMPERSAND_BUILD_TYPE").endsWith("-sideload")) {
                     applicationIdSuffix = ".sideload"
                     base.archivesName.set("ampersand-sideload")
                 }
