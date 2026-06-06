@@ -3,6 +3,10 @@
 		"local": "Nnapulitano",
 		"inEnglish": "Neapolitan"
 	},
+	"donationLabel": {
+		"title": "Supportaci",
+		"desc": "La tua donazione tiene Ampersand in sviluppo e tiene il pane in tavola agli sviluppatori"
+	},
 	"loading": "Ampersand sta caricanno",
 	"genericDeleteDesc": "Nun pùo' turnà arreto!",
 	"addTimestamp": "Mitte data e ora",

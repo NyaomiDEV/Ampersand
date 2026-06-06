@@ -12,7 +12,7 @@ const { publicVars } = loadEnv({
 		...process.env,
 		AMPERSAND_REVCOUNT: process.env.AMPERSAND_REVCOUNT || await revcount()
 	},
-	prefixes: ["TAURI_ENV_", "AMPERSAND_"]
+	prefixes: ["TAURI_", "AMPERSAND_"]
 });
 
 function revcount(): Promise<string> {

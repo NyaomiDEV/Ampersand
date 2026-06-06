@@ -1,6 +1,7 @@
 <script setup lang="ts">
 	import { IonContent, IonFab, IonFabButton, IonList, IonItem, IonListHeader, IonLabel, IonPage, IonTitle, IonToolbar, IonIcon, useIonRouter } from "@ionic/vue";
 	import { inject } from "vue";
+	import { openUrl } from "@tauri-apps/plugin-opener";
 	import CollapsibleHeaderbar from "../components/CollapsibleHeaderbar.vue";
 
 	import LockMD from "@material-symbols/svg-600/rounded/lock.svg";
@@ -10,6 +11,7 @@
 	import ImportExportMD from "@material-symbols/svg-600/rounded/swap_vert.svg";
 	import AboutMD from "@material-symbols/svg-600/rounded/info.svg";
 	import ResourcesMD from "@material-symbols/svg-600/rounded/menu_book.svg";
+	import HeartMD from "@material-symbols/svg-600/rounded/heart_plus-fill.svg";
 
 	import { appConfig, securityConfig } from "../lib/config";
 	import { lock } from "../lib/applock";
@@ -17,6 +19,7 @@
 
 	const router = useIonRouter();
 	const isDev = inject<boolean>("isDev");
+	const isAppStore = import.meta.env.AMPERSAND_GOES_TO_APP_STORE === "1";
 	
 	function lockImmediately(){
 		if(lock())
@@ -86,6 +89,19 @@
 				<IonItem button router-link="/options/resources">
 					<IonIcon slot="start" :icon="ResourcesMD" aria-hidden="true" />
 					<IonLabel>{{ $t("resources:header") }}</IonLabel>
+				</IonItem>
+
+				<IonItem v-if="!isAppStore" button @click="openUrl('https://liberapay.com/Ampersand/donate')">
+					<IonIcon
+						slot="start"
+						:icon="HeartMD"
+						aria-hidden="true"
+						color="danger"
+					/>
+					<IonLabel>
+						<h2>{{ $t("other:donationLabel.title") }}</h2>
+						<p>{{ $t("other:donationLabel.desc") }}</p>
+					</IonLabel>
 				</IonItem>
 
 				<IonItem button router-link="/options/about">

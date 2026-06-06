@@ -3,6 +3,10 @@
 		"local": "Italiano (Imbruttito)",
 		"inEnglish": "Italian (worsened)"
 	},
+	"donationLabel": {
+		"title": "Supportaci",
+		"desc": "Dai che se hai scelto questa lingua sarai o milanese o ricco o entrambe le cose, mentre noi siamo poracci terroni"
+	},
 	"loading": "Ampersand sta caricando",
 	"genericDeleteDesc": "Guarda che non torni indietro!",
 	"addTimestamp": "Metti data e ora",

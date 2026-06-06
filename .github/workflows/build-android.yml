@@ -86,6 +86,7 @@ jobs:
           yarn tauri android build --aab --target aarch64 armv7 --ci
         env:
           NDK_HOME: ${{ env.ANDROID_HOME }}/ndk/29.0.14206865/
+          AMPERSAND_GOES_TO_APP_STORE: 1
       - name: Publish artifact (APK - ARMv7)
         uses: actions/upload-artifact@v7
         with:

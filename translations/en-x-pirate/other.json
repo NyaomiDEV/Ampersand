@@ -3,6 +3,10 @@
 		"local": "English Pirate Speak",
 		"inEnglish": "English Pirate Speak"
 	},
+	"donationLabel": {
+		"title": "Support the Captains",
+		"desc": "A piece of your loot keeps Ampersand in development and the developers afloat"
+	},
 	"loading": "Ampersand be readyin'",
 	"genericDeleteDesc": "Ye won't be able to undo this, matey!",
 	"addTimestamp": "Add a mark o' time",

@@ -3,6 +3,10 @@
 		"local": "English",
 		"inEnglish": "English"
 	},
+	"donationLabel": {
+		"title": "Support us",
+		"desc": "Your donation keeps Ampersand in development and the developers afloat"
+	},
 	"loading": "Ampersand is loading",
 	"genericDeleteDesc": "You won't be able to undo this action!",
 	"addTimestamp": "Add timestamp",

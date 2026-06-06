@@ -3,6 +3,10 @@
 		"local": "Sicilianu",
 		"inEnglish": "Sicilian"
 	},
+	"donationLabel": {
+		"title": "Supportaci",
+		"desc": "A tò dunaziuni teni Ampersand n'sviluppu e teni u pani a tavula di li sviluppaturi"
+	},
 	"loading": "Ampersand sta caricannu",
 	"genericDeleteDesc": "Nun poi annuḍḍari st'azzioni!",
 	"addTimestamp": "Agghiunci data e ura",
