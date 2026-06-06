@@ -1,6 +1,6 @@
 {
   "name": "ampersand",
-  "version": "0.2.1",
+  "version": "0.3.0-rc1",
   "type": "module",
   "license": "AGPL-3.0-only",
   "packageManager": "yarn@1.22.22",

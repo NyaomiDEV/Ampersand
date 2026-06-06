@@ -23,9 +23,9 @@ dist-ssr
 *.sln
 *.sw?
 
-# Self signed certificate
-self-signed.pem
-upload*.jks
+# Self signed certificates
+*.pem
+*.jks
 
 # Testing files
 /test.mts

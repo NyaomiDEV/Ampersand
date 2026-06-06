@@ -8,7 +8,7 @@ import * as TOML from "smol-toml";
 
 const buildsThatHappenLocally = [
 	"local",
-	"prebeta",
+	"rc",
 	"stable-oldpackage",
 	"stable"
 ]
@@ -17,15 +17,16 @@ const buildsThatHappenLocally = [
 // UTILITY FUNCTIONS
 //
 function getBuildType(){
-	if (process.env.AMPERSAND_BUILD_TYPE && [...buildsThatHappenLocally, "unstable", "prebeta-sideload", "stable-sideload"].includes(process.env.AMPERSAND_BUILD_TYPE))
+	if (process.env.AMPERSAND_BUILD_TYPE && [...buildsThatHappenLocally, "unstable", "rc-sideload", "stable-sideload"].includes(process.env.AMPERSAND_BUILD_TYPE))
 		return process.env.AMPERSAND_BUILD_TYPE;
 
-	if(process.env.GITHUB_REF_NAME) {
-		if (!process.env.GITHUB_REF_NAME.startsWith("refs/tags/"))
+	if(process.env.GITHUB_REF) {
+		console.log()
+		if (!process.env.GITHUB_REF.startsWith("refs/tags/"))
 			return "unstable";
-		else if (process.env.GITHUB_REF_NAME.startsWith("refs/tags/") && process.env.GITHUB_REF_NAME.includes("-"))
-			// 0.2.1-beta1, 0.2.1-pre2, etc.
-			return "prebeta-sideload";
+		else if (process.env.GITHUB_REF.startsWith("refs/tags/") && process.env.GITHUB_REF.includes("-rc"))
+			// 0.2.1-rc1, 0.2.1-rc2, etc.
+			return "rc-sideload";
 		else
 			return "stable-sideload";
 	}
@@ -57,49 +58,33 @@ async function getVersion(buildType){
 	const packageJson = JSON.parse(await readFile(resolve(import.meta.dirname, "package.json"), "utf-8"));
 
 	switch(buildType){
-		default:
-		case "stable":
-		case "stable-sideload":
-		case "stable-oldpackage":
-		case "local": {
-			if (/^\d+\.\d+\.\d+$/.exec(process.env.AMPERSAND_VERSION) !== null)
+		default: {
+			if ((buildType.startsWith("rc") ? /^\d+\.\d+\.\d+\-rc\d+$/ : /^\d+\.\d+\.\d+$/).exec(process.env.AMPERSAND_VERSION) !== null){
 				return {
 					revcount,
 					version: process.env.AMPERSAND_VERSION,
-				}
+				};
+			}
 
 			return {
 				revcount,
-				version: process.env.GITHUB_REF_NAME?.replace("refs/tags/", "") || packageJson.version
-			}
-		}
-		case "prebeta-sideload":
-		case "prebeta": {
-			if (/^\d+\.\d+\.\d+\-.+$/.exec(process.env.AMPERSAND_VERSION) !== null)
-				return {
-					revcount,
-					version: process.env.AMPERSAND_VERSION,
-				}
-
-			const version = process.env.GITHUB_REF_NAME.replace("refs/tags/", "");
-			return {
-				revcount,
-				version
-			}
+				version: process.env.GITHUB_REF_NAME || packageJson.version
+			};
 		}
 		case "unstable": {
-			if (/^\d+\.\d+\.\d+\+\d+$/.exec(process.env.AMPERSAND_VERSION) !== null)
+			if (/^\d+\.\d+\.\d+\+\d+$/.exec(process.env.AMPERSAND_VERSION) !== null) {
 				return {
 					revcount,
 					version: process.env.AMPERSAND_VERSION,
-				}
+				};
+			}
 
-			const closestTag = (await spawnAsync("git", ["tag", "--list", "--sort=-creatordate"], import.meta.dirname)).stdout.trim().split("\n").find(x => x !== "dev" && !x.includes("-"));
+			const closestTag = (await spawnAsync("git", ["tag", "--list", "--sort=-creatordate"], import.meta.dirname)).stdout.trim().split("\n").find(x => x !== "dev" && !x.includes("-rc"));
 			const deltaRevcount = parseInt((await spawnAsync("git", ["rev-list", "--count", closestTag], import.meta.dirname)).stdout);
 			return {
 				revcount,
-				version: packageJson.version + "+" + (revcount - deltaRevcount)
-			}
+				version: closestTag + "+" + (revcount - deltaRevcount)
+			};
 		}
 	}
 }
@@ -115,11 +100,11 @@ async function patchFiles(buildType, version) {
 	tauriConfJson.bundle.android.versionCode = version.revcount;
 	tauriConfJson.bundle.iOS.bundleVersion = `${version.revcount}`;
 	tauriConfJson.bundle.macOS.bundleVersion = `${version.revcount}`;
+	tauriConfJson.bundle.windows.wix.version = `${version.version.replace(/(?:\+|\-rc)\d+$/, "")}.${version.revcount % 65535}`;
 
-	// If this is a build that is not a local one, modify files
-	// -- This specifically helps us have consistent versions when tagging
-	// -- but we most probably won't need this in local builds
-	if (!buildsThatHappenLocally.includes(buildType)) {
+	// We need to modify files if this is an RC build (we'd be passing the version through AMPERSAND_VERSION env)
+	// otherwise, for automated builds we always modify the files
+	if (!buildsThatHappenLocally.filter(x => x !== "rc").includes(buildType)) {
 		// Modify parsed manifests
 		packageJson.version = version.version;
 		tauriCargoToml.package.version = version.version;

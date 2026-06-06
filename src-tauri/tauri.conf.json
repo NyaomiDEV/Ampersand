@@ -42,17 +42,17 @@
       "icons/icon.png"
     ],
     "android": {
-      "versionCode": 2227,
+      "versionCode": 2235,
       "minSdkVersion": 29,
       "debugApplicationIdSuffix": ".debug"
     },
     "iOS": {
-      "bundleVersion": "2227",
+      "bundleVersion": "2235",
       "minimumSystemVersion": "18.6"
     },
     "macOS": {
       "entitlements": "./Entitlements.plist",
-      "bundleVersion": "2227",
+      "bundleVersion": "2235",
       "minimumSystemVersion": "15.6"
     },
     "windows": {
@@ -61,7 +61,10 @@
         "silent": true,
         "type": "embedBootstrapper"
       },
-      "minimumWebview2Version": "140.0.3415.0"
+      "minimumWebview2Version": "140.0.3415.0",
+      "wix": {
+        "version": "0.3.0.0"
+      }
     },
     "linux": {
       "appimage": {

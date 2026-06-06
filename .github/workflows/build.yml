@@ -6,6 +6,7 @@ on:
     branches: [main]
     tags:
       - '[0-9]+.[0-9]+.[0-9]+'
+      - '[0-9]+.[0-9]+.[0-9]+-rc[0-9]+'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -23,7 +24,7 @@ jobs:
   prepare-build:
     runs-on: ubuntu-latest
     outputs:
-      upload_url: ${{ steps.release.outputs.upload_url }}
+      upload_url: ${{ steps.release.outputs.upload_url || steps.release_rc.outputs.upload_url || steps.release_unstable.outputs.upload_url }}
       ampersand_version: ${{ steps.vcs.outputs.ampersand_version }}
       ampersand_build_type: ${{ steps.vcs.outputs.ampersand_build_type }}
     steps:
@@ -43,21 +44,40 @@ jobs:
       run: yarn run upgrade-vcs
       env:
         NO_PATCH: 1
-    - name: Remove old prerelease draft and create new dev tag
-      if: ${{ github.ref_name == 'main' }}
+    - name: Ensure tag is clean
       run: |
-        git tag dev
-        git push origin dev
-        gh release delete dev -y || true
+        git tag --delete ${{ env.TAG }} || true
+        git tag ${{ env.TAG }}
+        git push origin --delete ${{ env.TAG }} || true
+        git push origin ${{ env.TAG }}
+        gh release delete ${{ env.TAG }} -y || true
       env:
         GH_TOKEN: ${{ github.token }}
-    - name: Publish release
-      id: release
+        TAG: ${{ github.ref_name != 'main' && github.ref_name || 'dev' }}
+    - name: Prepare release (Unstable)
+      id: release_unstable
+      if: ${{ steps.vcs.outputs.ampersand_build_type == 'unstable' }}
       uses: softprops/action-gh-release@v3.0.0
       with:
-        name: ${{ steps.vcs.outputs.ampersand_build_type == 'stable' && format('Release ({0})', steps.vcs.outputs.ampersand_version) || format('Unstable build ({0})', steps.vcs.outputs.ampersand_version) }}
-        tag_name: ${{ github.ref_name != 'main' && github.ref_name || 'dev' }}
-        prerelease: ${{ steps.vcs.outputs.ampersand_build_type != 'stable' }}
+        name: ${{ format('Unstable build ({0})', steps.vcs.outputs.ampersand_version)}}
+        tag_name: dev
+        prerelease: true
+        draft: true
+    - name: Prepare release (Release candidate)
+      id: release_rc
+      if: ${{ steps.vcs.outputs.ampersand_build_type == 'rc-sideload' }}
+      uses: softprops/action-gh-release@v3.0.0
+      with:
+        name: ${{ format('Release candidate ({0})', steps.vcs.outputs.ampersand_version)}}
+        prerelease: true
+        draft: true
+    - name: Prepare release (Release)
+      id: release
+      if: ${{ steps.vcs.outputs.ampersand_build_type == 'stable-sideload' }}
+      uses: softprops/action-gh-release@v3.0.0
+      with:
+        name: ${{ format('Release ({0})', steps.vcs.outputs.ampersand_version)}}
+        prerelease: false
         draft: true
   build-android:
     uses: ./.github/workflows/build-android.yml
@@ -100,6 +120,5 @@ jobs:
       - name: Publish release
         uses: softprops/action-gh-release@v3.0.0
         with:
-          name: ${{ needs.prepare-build.outputs.ampersand_build_type == 'stable' && format('Release ({0})', needs.prepare-build.outputs.ampersand_version) || format('Unstable build ({0})', needs.prepare-build.outputs.ampersand_version) }}
           tag_name: ${{ github.ref_name != 'main' && github.ref_name || 'dev' }}
           draft: false
