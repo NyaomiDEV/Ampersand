@@ -38,6 +38,7 @@
 					..._system
 				});
 				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+				else appConfig.defaultSystem = result.detail!;
 			} else {
 				const result = await updateSystem(_system as System);
 				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
