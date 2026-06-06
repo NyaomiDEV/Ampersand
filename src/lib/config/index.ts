@@ -87,7 +87,7 @@ const maybeOldConfig = await readOldConfig();
 if(maybeOldConfig){
 	await initConfig(maybeOldConfig);
 	await deleteOldConfig();
-}
+} else await initConfig();
 
 async function saveApp(){
 	await saveConfig("appConfig", structuredClone(toRaw(appConfig)));
