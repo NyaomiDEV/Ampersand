@@ -25,7 +25,7 @@ dist-ssr
 
 # Self signed certificate
 self-signed.pem
-upload.jks
+upload*.jks
 
 # Testing files
 /test.mts

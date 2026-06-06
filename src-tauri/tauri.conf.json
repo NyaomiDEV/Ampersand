@@ -2,7 +2,7 @@
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
   "productName": "Ampersand",
   "version": "../package.json",
-  "identifier": "moe.ampersand.app",
+  "identifier": "moe.ampersand.track",
   "build": {
     "frontendDist": "../dist",
     "devUrl": "http://localhost:5173",
@@ -42,17 +42,17 @@
       "icons/icon.png"
     ],
     "android": {
-      "versionCode": 1613,
+      "versionCode": 2227,
       "minSdkVersion": 29,
       "debugApplicationIdSuffix": ".debug"
     },
     "iOS": {
-      "bundleVersion": "1613",
+      "bundleVersion": "2227",
       "minimumSystemVersion": "18.6"
     },
     "macOS": {
       "entitlements": "./Entitlements.plist",
-      "bundleVersion": "1613",
+      "bundleVersion": "2227",
       "minimumSystemVersion": "15.6"
     },
     "windows": {

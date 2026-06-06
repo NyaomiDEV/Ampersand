@@ -1,6 +1,6 @@
 name: ampersand
 options:
-  bundleIdPrefix: moe.ampersand.app
+  bundleIdPrefix: moe.ampersand.track
   deploymentTarget:
     iOS: 18.6
 fileGroups: [../../src]
@@ -11,7 +11,7 @@ settingGroups:
   app:
     base:
       PRODUCT_NAME: Ampersand
-      PRODUCT_BUNDLE_IDENTIFIER: moe.ampersand.app
+      PRODUCT_BUNDLE_IDENTIFIER: moe.ampersand.track
 targetTemplates:
   app:
     type: application
@@ -71,7 +71,7 @@ targets:
       configs:
         debug:
           PRODUCT_NAME: Ampersand Debug
-          PRODUCT_BUNDLE_IDENTIFIER: moe.ampersand.app.debug
+          PRODUCT_BUNDLE_IDENTIFIER: moe.ampersand.track.debug
       groups: [app]
     dependencies:
       - framework: libapp.a

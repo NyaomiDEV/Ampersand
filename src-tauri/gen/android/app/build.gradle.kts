@@ -22,11 +22,15 @@ val localProperties = Properties().apply {
 
 android {
     compileSdk = 36
-    namespace = "moe.ampersand.app"
+    namespace = "moe.ampersand.track"
     ndkVersion = "29.0.14206865"
     defaultConfig {
         manifestPlaceholders["usesCleartextTraffic"] = "false"
-        applicationId = "moe.ampersand.app"
+        if(System.getenv("AMPERSAND_BUILD_TYPE") !== null && System.getenv("AMPERSAND_BUILD_TYPE").equals("stable-oldpackage")) {
+            applicationId = "moe.ampersand.app"
+        } else {
+            applicationId = "moe.ampersand.track"
+        }
         minSdk = 29
         targetSdk = 36
         versionCode = tauriProperties.getProperty("tauri.android.versionCode", "1").toInt()
@@ -50,16 +54,19 @@ android {
             isMinifyEnabled = true
             manifestPlaceholders["appName"] = "@string/app_name"
             base.archivesName.set("ampersand")
-            if(
-                System.getenv("AMPERSAND_BUILD_TYPE") !== null &&
-                System.getenv("AMPERSAND_BUILD_TYPE").equals("unstable")
-            ) {
-                applicationIdSuffix = ".ci"
-                manifestPlaceholders["appName"] = "@string/app_name_ci"
-                base.archivesName.set("ampersand-unstable")
-                isDebuggable = true
-                isJniDebuggable = true
-                isMinifyEnabled = false
+            if(System.getenv("AMPERSAND_BUILD_TYPE") !== null) {
+                if(System.getenv("AMPERSAND_BUILD_TYPE").equals("unstable")) {
+                    applicationIdSuffix = ".unstable"
+                    manifestPlaceholders["appName"] = "@string/app_name_unstable"
+                    base.archivesName.set("ampersand-unstable")
+                    isDebuggable = true
+                    isJniDebuggable = true
+                    isMinifyEnabled = false
+                }
+                else if(System.getenv("AMPERSAND_BUILD_TYPE").equals("stable-sideload")) {
+                    applicationIdSuffix = ".sideload"
+                    base.archivesName.set("ampersand-sideload")
+                }
             }
             proguardFiles(
                 *fileTree(".") { include("**/*.pro") }

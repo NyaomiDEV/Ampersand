@@ -6,7 +6,7 @@ use tauri::{
 };
 
 #[cfg(target_os = "android")]
-const PLUGIN_IDENTIFIER: &str = "moe.ampersand.app.plugin";
+const PLUGIN_IDENTIFIER: &str = "moe.ampersand.track.tauriplugin";
 
 #[cfg(target_os = "ios")]
 tauri::ios_plugin_binding!(init_plugin_ampersand);

@@ -1,10 +1,10 @@
-package moe.ampersand.app
+package moe.ampersand.track
 
 import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.activity.enableEdgeToEdge
-import moe.ampersand.app.plugin.AmpersandSingleton
+import moe.ampersand.track.tauriplugin.AmpersandSingleton
 
 class MainActivity : TauriActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {

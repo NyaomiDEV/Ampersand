@@ -34,12 +34,17 @@ jobs:
       matrix:
         include:
           - platform: 'macos-26'
+            build_type: 'macos'
             args: '--target universal-apple-darwin'
           - platform: 'ubuntu-latest'
+            build_type: 'linux'
             args: ''
           - platform: 'windows-latest'
+            build_type: 'windows'
             args: ''
     runs-on: ${{ matrix.platform }}
+    env:
+      AMPERSAND_BUILD_TYPE: ${{ matrix.build_type }}
     steps:
       - name: Checkout
         uses: actions/checkout@v6

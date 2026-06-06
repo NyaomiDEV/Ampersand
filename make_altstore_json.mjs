@@ -47,14 +47,14 @@ async function generateAltStoreJson() {
 	if (!altStoreSource) {
 		altStoreSource = {
 			name: title,
-			identifier: "moe.ampersand.app.source",
+			identifier: "moe.ampersand.source",
 			subtitle: shortDescription,
 			description: fullDescription,
 			iconURL: iconUrl,
 			apps: [
 				{
 					name: title,
-					bundleIdentifier: "moe.ampersand.app",
+					bundleIdentifier: "moe.ampersand.track.sideload",
 					developerName: "NyaomiDEV",
 					subtitle: shortDescription,
 					localizedDescription: fullDescription,
@@ -69,7 +69,7 @@ async function generateAltStoreJson() {
 		altStoreSource.subtitle = shortDescription;
 		altStoreSource.description = fullDescription;
 
-		const app = altStoreSource.apps.find(a => a.bundleIdentifier === "moe.ampersand.app");
+		const app = altStoreSource.apps.find(a => a.bundleIdentifier === "moe.ampersand.track.sideload");
 		if (app) {
 			app.name = title;
 			app.subtitle = shortDescription;
@@ -82,7 +82,7 @@ async function generateAltStoreJson() {
 			// This shouldn't happen if the source is ours, but just in case
 			altStoreSource.apps.push({
 				name: title,
-				bundleIdentifier: "moe.ampersand.app",
+				bundleIdentifier: "moe.ampersand.track.sideload",
 				developerName: "NyaomiDEV",
 				subtitle: shortDescription,
 				localizedDescription: fullDescription,

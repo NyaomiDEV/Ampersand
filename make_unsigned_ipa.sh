@@ -14,6 +14,8 @@ XCCONFIG_FILE="$PROJECT_DIR/xcconfig/Production.xcconfig"
 
 if [ "$AMPERSAND_BUILD_TYPE" = "unstable" ]; then
   XCCONFIG_FILE="$PROJECT_DIR/xcconfig/Unstable.xcconfig"
+elif [ "$AMPERSAND_BUILD_TYPE" = "stable-sideload" ]; then
+  XCCONFIG_FILE="$PROJECT_DIR/xcconfig/Sideload.xcconfig"
 fi
 
 IDENTIFIER="$(node -p "require('./src-tauri/tauri.conf.json').identifier")"

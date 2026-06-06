@@ -1,4 +1,4 @@
-package moe.ampersand.app.plugin
+package moe.ampersand.track.tauriplugin
 
 import android.app.Activity
 import android.content.res.AssetManager.ACCESS_BUFFER
@@ -74,7 +74,7 @@ class AmpersandPlugin(private val activity: Activity): Plugin(activity) {
     @Command
     fun broadcastEvent(invoke: Invoke) {
         val args = invoke.parseArgs(BroadcastEventArgs::class.java)
-        val intent = Intent("moe.ampersand.app.EVENT")
+        val intent = Intent("moe.ampersand.track.EVENT")
         intent.putExtra("data", args.payload)
         activity.applicationContext?.sendBroadcast(intent)
         invoke.resolve()

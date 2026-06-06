@@ -1,2 +1,2 @@
-PRODUCT_BUNDLE_IDENTIFIER = moe.ampersand.app.ci
+PRODUCT_BUNDLE_IDENTIFIER = moe.ampersand.track_unstable
 PRODUCT_NAME = Ampersand Unstable

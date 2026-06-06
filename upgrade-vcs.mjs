@@ -6,11 +6,17 @@ import { spawn } from "node:child_process";
 import { resolve } from "node:path";
 import * as TOML from "smol-toml";
 
+const buildsThatHappenLocally = [
+	"local",
+	"stable-oldpackage",
+	"stable"
+]
+
 //
 // UTILITY FUNCTIONS
 //
 function getBuildType(){
-	if(process.env.AMPERSAND_BUILD_TYPE && ["local", "prebeta", "unstable", "stable"].includes(process.env.AMPERSAND_BUILD_TYPE))
+	if(process.env.AMPERSAND_BUILD_TYPE && ["local", "prebeta", "unstable", "stable", "stable-sideload", "stable-oldpackage"].includes(process.env.AMPERSAND_BUILD_TYPE))
 		return process.env.AMPERSAND_BUILD_TYPE;
 
 	if(process.env.GITHUB_REF_NAME) {
@@ -20,7 +26,7 @@ function getBuildType(){
 			// 0.2.1-beta1, 0.2.1-pre2, etc.
 			return "prebeta";
 		else
-			return "stable";
+			return "stable-sideload";
 	}
 
 	return "local";
@@ -52,6 +58,7 @@ async function getVersion(buildType){
 	switch(buildType){
 		default:
 		case "stable":
+		case "stable-sideload":
 		case "local": {
 			if (/^\d+\.\d+\.\d+$/.exec(process.env.AMPERSAND_VERSION) !== null)
 				return {
@@ -109,7 +116,7 @@ async function patchFiles(buildType, version) {
 	// If this is a build that is not a local one, modify files
 	// -- This specifically helps us have consistent versions when tagging
 	// -- but we most probably won't need this in local builds
-	if (buildType !== "local") {
+	if (!buildsThatHappenLocally.includes(buildType)) {
 		// Modify parsed manifests
 		packageJson.version = version.version;
 		tauriCargoToml.package.version = version.version;

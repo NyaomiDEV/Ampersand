@@ -1,4 +1,4 @@
-package moe.ampersand.app.plugin
+package moe.ampersand.track.tauriplugin
 
 import android.view.ViewTreeObserver
 

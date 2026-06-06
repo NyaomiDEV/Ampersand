@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "moe.ampersand.app.plugin"
+    namespace = "moe.ampersand.track.tauriplugin"
     compileSdk = 36
 
     defaultConfig {
