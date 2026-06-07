@@ -34,7 +34,7 @@ dependencies = [
 
 [[package]]
 name = "ampersand"
-version = "0.3.0-rc3"
+version = "0.3.0-rc4"
 dependencies = [
  "log",
  "serde",
@@ -4010,7 +4010,7 @@ dependencies = [
 
 [[package]]
 name = "tauri-plugin-ampersand"
-version = "0.3.0-rc3"
+version = "0.3.0-rc4"
 dependencies = [
  "serde",
  "tauri",

@@ -1,5 +1,5 @@
 pkgname=ampersand-git
-pkgver=0.3.0_rc3
+pkgver=0.3.0_rc4
 pkgrel=1
 pkgdesc="Tracking app for people with complex dissociative disorders"
 url="https://codeberg.org/Ampersand/app"
