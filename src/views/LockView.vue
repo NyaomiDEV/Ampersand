@@ -29,8 +29,7 @@
 <template>
 	<IonPage>
 		<IonContent>
-
-			<div>
+			<div class="container">
 				<IonIcon :icon="LockMD" />
 				<IonLabel>
 					<h1>{{ $t("lock:title") }}</h1>
@@ -56,13 +55,12 @@
 					<IonIcon slot="icon-only" :icon="biometricsMD" />
 				</IonButton>
 			</div>
-
 		</IonContent>
 	</IonPage>
 </template>
 
 <style scoped>
-	div {
+	div.container {
 		display: flex;
 		flex-direction: column;
 		gap: 16px;
