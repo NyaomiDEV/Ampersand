@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { isPlainObject } from "./util/misc";
+import { isPlainObject, sha256 } from "./util/misc";
 
 export type SerializedMap<K, V> = {
 	_meta: { type: "map"; };
@@ -29,7 +29,10 @@ export type Serialized<T> =
 	T extends object ? { [K in keyof T]: Serialized<T[K]> }
 	: T;
 
-export function revive(value: any) {
+
+const fileHashes: Map<string, WeakRef<File>> = new Map();
+
+export async function revive(value: any) {
 	if (typeof value === "object" && value !== null && "_meta" in value) {
 		switch (value._meta.type) {
 			case "map":
@@ -43,22 +46,38 @@ export function revive(value: any) {
 					for (let i = 0; i < value.value.length; i++)
 						array[i] = (value.value as string).charCodeAt(i);
 
-					return new File(
+					const hash = await sha256(array);
+					const maybeDeref = fileHashes.get(hash)?.deref();
+					if(maybeDeref)
+						return maybeDeref;
+
+					const file = new File(
 						[array],
 						value._meta.name,
 						{
 							type: value._meta.mimeType
 						}
 					);
+
+					fileHashes.set(hash, new WeakRef(file));
+					return file;
 				} else {
 					// new way
-					return new File(
+					const hash = await sha256(value.value);
+					const maybeDeref = fileHashes.get(hash)?.deref();
+					if (maybeDeref)
+						return maybeDeref;
+
+					const file = new File(
 						[value.value],
 						value._meta.name,
 						{
 							type: value._meta.mimeType
 						}
 					);
+
+					fileHashes.set(hash, new WeakRef(file));
+					return file;
 				}
 			}
 			case "escaped-meta":

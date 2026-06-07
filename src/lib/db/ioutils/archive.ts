@@ -3,7 +3,7 @@ import { decodeMultiStream, encode as msgpackEncode } from "@msgpack/msgpack";
 import { accessibilityConfig, appConfig, initConfig, securityConfig } from "../../config";
 import { getTables } from "..";
 import type { Table } from "../types";
-import { deleteNull, replace, walk, revive, walkAsync } from "../../serialization";
+import { deleteNull, replace, revive, walkAsync } from "../../serialization";
 import { dirname, documentDir, sep } from "@tauri-apps/api/path";
 import { mkdir, open as openFile } from "@tauri-apps/plugin-fs";
 import { open, save } from "../../native/open";
@@ -21,7 +21,7 @@ async function encode(data: any){
 }
 
 function reviver(data: any){
-	return walk(data, revive);
+	return walkAsync(data, revive);
 }
 
 export function exportArchive() {
@@ -138,7 +138,7 @@ export function importArchive() {
 			}
 
 			for await (const rawData of multiStreamDecoder){
-				const data: any = reviver(rawData);
+				const data: any = await reviver(rawData);
 				switch (data.table) {
 					case "__revision": {
 						if (revisionWasParsed) throw new Error("malformed, there should only be one revision fragment");

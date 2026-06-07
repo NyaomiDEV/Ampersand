@@ -3,7 +3,7 @@ import * as fs from "@tauri-apps/plugin-fs";
 import type { Asset, JournalPost, Member, System, Tag, UUIDable, UUID, BoardMessage } from "../entities";
 import { decode, decodeAsync, encode } from "@msgpack/msgpack";
 import type { AmpersandTableMapping, MigrationsMapping, Table } from "../types";
-import { deleteNull, replace, revive, walk, walkAsync } from "../../serialization";
+import { deleteNull, replace, revive, walkAsync } from "../../serialization";
 import { assets, boardMessages, journalPosts, members, systems, tags } from "./migrations";
 import { PartialBy } from "../../types";
 import type { SecondaryKey, IndexEntry } from "../types";
@@ -54,7 +54,7 @@ export class ShittyTable<T extends UUIDable> implements Table<T> {
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			const obj: any = await decodeAsync(intoStream(_path));
 			if (typeof obj !== "undefined" && obj !== null)
-				return walk(obj, revive) as IndexEntry<T>[];
+				return await walkAsync(obj, revive) as IndexEntry<T>[];
 		} catch (_e) {
 			// nothing
 		}
@@ -205,7 +205,7 @@ export class ShittyTable<T extends UUIDable> implements Table<T> {
 			? await decodeAsync(this.getRawStream(uuid))
 			: decode(await this.getRaw(uuid));
 
-		return walk(obj as object, revive) as T;
+		return await walkAsync(obj as object, revive) as T;
 	}
 
 	async* walkDir() {

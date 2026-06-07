@@ -2,23 +2,23 @@ import { onUnmounted } from "vue";
 import { getExtension } from "../mime";
 
 export function useBlob(){
-	const dataURLs = new Map<string, File>();
+	const dataURLs = new Map<string, WeakRef<File>>();
 
 	onUnmounted(clear);
 
 	function getObjectURL(file: File) {
-		const maybeCachedEntry = dataURLs.entries().find(x => x[1] === file);
+		const maybeCachedEntry = dataURLs.entries().find(x => x[1].deref() === file);
 		if (maybeCachedEntry) return maybeCachedEntry[0];
 
 		const url = URL.createObjectURL(file);
-		dataURLs.set(url, file);
+		dataURLs.set(url, new WeakRef(file));
 		return url;
 	}
 
 	function revokeObjectURL(urlOrFile: string | File){
 		const url = dataURLs.entries().find(x => {
 			if(urlOrFile instanceof File)
-				return x[1] === urlOrFile;
+				return x[1].deref() === urlOrFile;
 			return x[0] === urlOrFile;
 		})?.[0];
 
@@ -29,7 +29,7 @@ export function useBlob(){
 	}
 
 	function getFile(url: string): File | undefined {
-		return Array.from(dataURLs.entries()).find(_obj => _obj[0] === url)?.[1];
+		return Array.from(dataURLs.entries()).find(_obj => _obj[0] === url)?.[1].deref();
 	}
 
 	function clear(){

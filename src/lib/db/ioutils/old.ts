@@ -2,7 +2,7 @@ import { decodeAsync, encode } from "@msgpack/msgpack";
 import { accessibilityConfig, appConfig, initConfig, securityConfig } from "../../config";
 import { getTables } from "..";
 import type { Table } from "../types";
-import { deleteNull, replace, revive, walk, walkAsync } from "../../serialization";
+import { deleteNull, replace, revive, walkAsync } from "../../serialization";
 import { dirname, documentDir, sep } from "@tauri-apps/api/path";
 import { mkdir, open as openFile, SeekMode } from "@tauri-apps/plugin-fs";
 import { open, save } from "../../native/open";
@@ -129,7 +129,7 @@ export function importDatabaseFromBinary() {
 			const tablesAndConfig = await decodeAsync(stream) as SerializedDatabaseExport;
 
 			progress.dispatchEvent(new Event("start"));
-			const revived = walk(tablesAndConfig, revive) as DatabaseExport;
+			const revived = await walkAsync(tablesAndConfig, revive) as DatabaseExport;
 
 			const progressTotal = Object.getOwnPropertyNames(revived.database).length;
 			let progressCurrent = 0;

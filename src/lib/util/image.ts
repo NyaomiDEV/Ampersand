@@ -1,6 +1,6 @@
 import { decodeAsync, encode } from "@msgpack/msgpack";
 import { getImageFile } from "./misc";
-import { deleteNull, replace, revive, walk, walkAsync } from "../serialization";
+import { deleteNull, replace, revive, walkAsync } from "../serialization";
 
 export async function resizeImage(image: Blob, maxWidthHeight = 512): Promise<File> {
 	const bitmap = await createImageBitmap(image);
@@ -77,7 +77,7 @@ export async function getImageOrMetadata(maxWidthHeight = 512): Promise<{ image:
 			// we probably have a gzip stream, let's try to decompress it fully
 			const blob = new Blob([arrayBuffer.slice(index)]);
 			const uncompressed = blob.stream().pipeThrough(new DecompressionStream("gzip"));
-			ret.metadata = walk(await decodeAsync(uncompressed) as object, revive);
+			ret.metadata = await walkAsync(await decodeAsync(uncompressed) as object, revive);
 			goodIndex = index;
 			break;
 		} catch (_) {

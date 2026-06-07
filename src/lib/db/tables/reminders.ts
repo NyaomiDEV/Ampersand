@@ -142,79 +142,82 @@ export async function triggerReminders(fronting: FrontingEntryComplete[]){
 	// scheduled notifications are unsupported on computers
 	if(!["macos", "ios", "android"].includes(platform())) return;
 
-	if(!frontingCache){
-		// cannot trigger anything if we don't know the previous state
-		frontingCache = fronting;
-		return;
-	}
+	if(frontingCache){
+		const reminders = await Array.fromAsync(getActiveReminders());
 
-	const reminders = await Array.fromAsync(getActiveReminders());
-
-	for(const reminder of reminders){
-		switch(reminder.trigger){
-			case "fronting":
-				if(reminder.members){
-					if (
-						!frontingCache.find(x => reminder.members!.includes(x.member.uuid)) &&
-						fronting.find(x => reminder.members!.includes(x.member.uuid))
-					) {
-						await notify(
-							getNativeID(reminder),
-							reminder.title,
-							reminder.message,
-							"reminders",
-							reminder.delay > 0 ? Schedule.at(new Date(Date.now() + reminder.delay), false, true) : undefined
-						);
-					} else if (
-						frontingCache.find(x => reminder.members!.includes(x.member.uuid)) &&
-						!fronting.find(x => reminder.members!.includes(x.member.uuid))
-					)
-						await unnotify(getNativeID(reminder));
-				} else {
-					if (frontingCache.length < fronting.length) {
-						await notify(
-							getNativeID(reminder),
-							reminder.title,
-							reminder.message,
-							"reminders",
-							reminder.delay > 0 ? Schedule.at(new Date(Date.now() + reminder.delay), false, true) : undefined
-						);
+		for (const reminder of reminders) {
+			switch (reminder.trigger) {
+				case "fronting":
+					if (reminder.members) {
+						if (
+							!frontingCache.find(x => reminder.members!.includes(x.member.uuid)) &&
+							fronting.find(x => reminder.members!.includes(x.member.uuid))
+						) {
+							await notify(
+								getNativeID(reminder),
+								reminder.title,
+								reminder.message,
+								"reminders",
+								reminder.delay > 0 ? Schedule.at(new Date(Date.now() + reminder.delay), false, true) : undefined
+							);
+						} else if (
+							frontingCache.find(x => reminder.members!.includes(x.member.uuid)) &&
+							!fronting.find(x => reminder.members!.includes(x.member.uuid))
+						)
+							await unnotify(getNativeID(reminder));
+					} else {
+						if (frontingCache.length < fronting.length) {
+							await notify(
+								getNativeID(reminder),
+								reminder.title,
+								reminder.message,
+								"reminders",
+								reminder.delay > 0 ? Schedule.at(new Date(Date.now() + reminder.delay), false, true) : undefined
+							);
+						}
 					}
-				}
-				break;
-			case "fronted":
-				if(typeof reminder.members !== "undefined"){
-					if (
-						!frontingCache.find(x => reminder.members!.includes(x.member.uuid)) &&
-						fronting.find(x => reminder.members!.includes(x.member.uuid))
-					)
-						await unnotify(getNativeID(reminder));
-					else if (
-						frontingCache.find(x => reminder.members!.includes(x.member.uuid)) &&
-						!fronting.find(x => reminder.members!.includes(x.member.uuid))
-					) {
-						await notify(
-							getNativeID(reminder),
-							reminder.title,
-							reminder.message,
-							"reminders",
-							reminder.delay > 0 ? Schedule.at(new Date(Date.now() + reminder.delay), false, true) : undefined
-						);
+					break;
+				case "fronted":
+					if (typeof reminder.members !== "undefined") {
+						if (
+							!frontingCache.find(x => reminder.members!.includes(x.member.uuid)) &&
+							fronting.find(x => reminder.members!.includes(x.member.uuid))
+						)
+							await unnotify(getNativeID(reminder));
+						else if (
+							frontingCache.find(x => reminder.members!.includes(x.member.uuid)) &&
+							!fronting.find(x => reminder.members!.includes(x.member.uuid))
+						) {
+							await notify(
+								getNativeID(reminder),
+								reminder.title,
+								reminder.message,
+								"reminders",
+								reminder.delay > 0 ? Schedule.at(new Date(Date.now() + reminder.delay), false, true) : undefined
+							);
+						}
+					} else {
+						if (frontingCache.length > fronting.length) {
+							await notify(
+								getNativeID(reminder),
+								reminder.title,
+								reminder.message,
+								"reminders",
+								reminder.delay > 0 ? Schedule.at(new Date(Date.now() + reminder.delay), false, true) : undefined
+							);
+						}
 					}
-				} else {
-					if (frontingCache.length > fronting.length) {
-						await notify(
-							getNativeID(reminder),
-							reminder.title,
-							reminder.message,
-							"reminders",
-							reminder.delay > 0 ? Schedule.at(new Date(Date.now() + reminder.delay), false, true) : undefined
-						);
-					}
-				}
-				break;
+					break;
+			}
 		}
 	}
 
-	frontingCache = fronting;
+	frontingCache = fronting.map(x => ({
+		...x,
+		member: {
+			...x.member,
+			image: undefined,
+			cover: undefined
+		}
+	}));
 }
