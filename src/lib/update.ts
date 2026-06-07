@@ -3,6 +3,8 @@ import type { GitHubRelease, UpdateCheckResponse } from "./types";
 import { version } from "../../package.json";
 import { fetch } from "@tauri-apps/plugin-http";
 
+const buildType: string = import.meta.env.AMPERSAND_BUILD_TYPE;
+
 async function getReleases(){
 	const response = await fetch(
 		"https://api.github.com/repos/NyaomiDEV/Ampersand/releases",
@@ -17,29 +19,40 @@ async function getReleases(){
 	return undefined;
 }
 
-export async function checkUpdates(): Promise<UpdateCheckResponse | undefined> {
-	if(!securityConfig.allowRemoteContent) return undefined;
-	const isUnstableBuild = import.meta.env.AMPERSAND_BUILD_TYPE === "unstable";
-	const releases = await getReleases();
-	if(!releases) return undefined;
+export async function checkUpdates(): Promise<UpdateCheckResponse | void> {
+	if(!securityConfig.allowRemoteContent) return;
 
-	const response: UpdateCheckResponse = {
-		version: "",
-		url: `https://github.com/NyaomiDEV/Ampersand/releases/${isUnstableBuild ? "dev" : "latest"}`,
-	};
+	if(!buildType.endsWith("-sideload") && buildType !== "unstable") return;
 
-	const latestRelease = isUnstableBuild
-		? releases.find(x => x.tag_name === "dev")
-		: releases.toSorted((a, b) => new Date(b.created_at).valueOf() - new Date(a.created_at).valueOf()).find(x => x.prerelease === false && x.draft === false);
+	const releases = (await getReleases())?.toSorted((a, b) => new Date(b.created_at).valueOf() - new Date(a.created_at).valueOf());
+	if(!releases) return;
 
-	if(latestRelease){
-		const versionMatch = latestRelease.name?.match(/\((\d+\.\d+\.\d+(?:\+?\d+))\)/);
-		if(!versionMatch) return undefined;
-		response.version = latestRelease.tag_name === "dev" ? versionMatch[1] : latestRelease.tag_name;
-		response.url = latestRelease.html_url;
+	switch(buildType){
+		case "unstable": {
+			const release = releases.find(x => x.tag_name === "dev" && x.draft === false);
+			if(!release) return;
+			return {
+				version: release.name?.match(/\((\d+\.\d+\.\d+(?:\+?\d+))\)/)?.[1] || release.tag_name,
+				url: release.html_url
+			};
+		}
+		case "rc-sideload": {
+			const release = releases.find(x => x.tag_name.includes("-rc") && x.draft === false);
+			if (!release) return;
+			return {
+				version: release.tag_name,
+				url: release.html_url
+			};
+		}
+		default: {
+			const release = releases.find(x => x.prerelease === false && x.draft === false);
+			if (!release) return;
+			return {
+				version: release.tag_name,
+				url: release.html_url
+			};
+		}
 	}
-
-	return response;
 }
 
 function versionStringToComponents(version: string) {
