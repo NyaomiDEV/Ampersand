@@ -89,8 +89,8 @@ export async function notify(id: number, title: string, body: string, channelId?
 }
 
 export async function unnotify(id: number | number[]) {
-	// canceling notifications is not available on pc
-	if(!["android", "macos", "ios"].includes(platform()))
+	// canceling notifications is not available on linux
+	if(!["android", "macos", "ios", "windows"].includes(platform()))
 		return false;
 
 	try {
@@ -104,8 +104,8 @@ export async function unnotify(id: number | number[]) {
 }
 
 export async function remove(id: number | number[]){
-	// canceling notifications is not available on pc
-	if (!["android", "macos", "ios"].includes(platform()))
+	// canceling notifications is not available on linux
+	if (!["android", "macos", "ios", "windows"].includes(platform()))
 		return false;
 
 	try {

@@ -139,8 +139,8 @@ export function getNativeID(reminder: IndexEntry<Reminder>){
 
 let frontingCache: FrontingEntryComplete[];
 export async function triggerReminders(fronting: FrontingEntryComplete[]){
-	// scheduled notifications are unsupported on computers
-	if(!["macos", "ios", "android"].includes(platform())) return;
+	// scheduled notifications are unsupported on linux
+	if (!["android", "macos", "ios", "windows"].includes(platform())) return;
 
 	if(frontingCache){
 		const reminders = await Array.fromAsync(getActiveReminders());

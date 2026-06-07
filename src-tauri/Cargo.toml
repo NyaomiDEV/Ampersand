@@ -2,46 +2,54 @@
 name = "ampersand"
 version = "0.3.0-rc4"
 description = "Tracking app for people with complex dissociative disorders"
-authors = ["nao"]
+authors = [ "nao" ]
 license = ""
 repository = ""
 edition = "2021"
 rust-version = "1.95.0"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [lib]
 name = "ampersand"
-crate-type = ["staticlib", "cdylib", "rlib"]
+crate-type = [ "staticlib", "cdylib", "rlib" ]
 
 [features]
-debug = ["tauri/devtools"]
+debug = [ "tauri/devtools" ]
 
-[build-dependencies]
-tauri-build = { version = "2.6.2", features = [] }
+[build-dependencies.tauri-build]
+version = "2.6.2"
+features = []
 
 [dependencies]
 serde_json = "1.0"
-serde = { version = "1.0", features = ["derive"] }
 log = "0.4"
-tauri = { version = "2.11.2", features = ["macos-private-api"] }
 tauri-plugin-fs = "2.5.1"
 tauri-plugin-os = "2.3.2"
 tauri-plugin-dialog = "2.7.1"
 tauri-plugin-opener = "2.5.4"
 tauri-plugin-http = "2.5.9"
 tauri-plugin-process = "2.3.1"
-tauri-plugin-notifications = "0.4.6"
-tauri-plugin-ampersand = { path = "../src-tauri-plugin" }
+tauri-plugin-notifications = "0.5.0-rc.3"
 
-[target.'cfg(target_os = "android")'.dependencies]
+[dependencies.serde]
+version = "1.0"
+features = [ "derive" ]
+
+[dependencies.tauri]
+version = "2.11.2"
+features = [ "macos-private-api" ]
+
+[dependencies.tauri-plugin-ampersand]
+path = "../src-tauri-plugin"
+
+[target."cfg(target_os = \"android\")".dependencies]
 tauri-plugin-m3 = "0.3.2"
 
-[target.'cfg(any(target_os = "android", target_os = "ios"))'.dependencies]
+[target."cfg(any(target_os = \"android\", target_os = \"ios\"))".dependencies]
 tauri-plugin-biometric = "2.3.2"
 
-[target.'cfg(not(any(target_os = "android", target_os = "ios")))'.dependencies]
+[target."cfg(not(any(target_os = \"android\", target_os = \"ios\")))".dependencies]
 tauri-plugin-single-instance = "2.4.2"
 
-[target.'cfg(all(not(dev), target_os = "macos"))'.dependencies]
-tauri-plugin-notifications = { version = "0.4.6", default-features = false }
+[target."cfg(all(not(dev), target_os = \"macos\"))".dependencies.tauri-plugin-notifications]
+version = "0.5.0-rc.3"
+default-features = false

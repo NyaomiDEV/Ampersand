@@ -1,7 +1,7 @@
 [package]
 name = "tauri-plugin-ampersand"
 version = "0.3.0-rc4"
-authors = ["nao"]
+authors = [ "nao" ]
 description = "Tauri plugin for Ampersand"
 edition = "2021"
 rust-version = "1.95.0"
@@ -13,5 +13,6 @@ serde = "1"
 thiserror = "2"
 tauri-plugin-opener = "2.5.4"
 
-[build-dependencies]
-tauri-plugin = { version = "2.6.2", features = ["build"] }
+[build-dependencies.tauri-plugin]
+version = "2.6.2"
+features = [ "build" ]

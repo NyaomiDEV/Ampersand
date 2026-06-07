@@ -18,7 +18,7 @@
 
 	const isStandalone = route.path.startsWith("/lists/");
 
-	const isUnsupportedPlatform = !["macos", "ios", "android"].includes(platform());
+	const isUnsupportedPlatform = !["android", "macos", "ios", "windows"].includes(platform());
 
 	const reminders = shallowRef<Reminder[]>();
 
