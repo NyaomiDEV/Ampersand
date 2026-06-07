@@ -107,7 +107,6 @@
 </template>
 
 <style scoped>
-
 	.container {
 		width: 100%;
 		min-height: 100%;
@@ -116,32 +115,33 @@
 		justify-content: center;
 		flex-direction: column;
 		padding: 1em;
-	}
 
-	h1 {
-		text-align: center;
-	}
+		h1 {
+			text-align: center;
+			font-size: 2.25em;
+		}
 
-	div.avatar-container {
-		position: relative;
-		width: fit-content;
-		height: fit-content;
-		display: block;
-		margin-left: auto;
-		margin-right: auto;
-		margin-top: 24px;
-		margin-bottom: 24px;
-	}
+		div.avatar-container {
+			position: relative;
+			width: fit-content;
+			height: fit-content;
+			display: block;
+			margin-left: auto;
+			margin-right: auto;
+			margin-top: 24px;
+			margin-bottom: 24px;
 
-	.avatar {
-		width: 192px;
-		height: 192px;
-	}
+			.avatar {
+				width: 192px;
+				height: 192px;
+			}
 
-	div.avatar-container ion-button {
-		position: absolute;
-		bottom: 8px;
-		right: 8px;
+			ion-button {
+				position: absolute;
+				bottom: 8px;
+				right: 8px;
+			}
+		}
 	}
 </style>
 

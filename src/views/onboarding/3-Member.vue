@@ -141,7 +141,6 @@
 </template>
 
 <style scoped>
-
 	.container {
 		width: 100%;
 		min-height: 100%;
@@ -150,35 +149,39 @@
 		justify-content: center;
 		flex-direction: column;
 		padding: 1em;
-	}
 
-	h1, p {
-		text-align: center;
-	}
+		h1, p {
+			text-align: center;
+		}
 
-	div.avatar-container {
-		position: relative;
-		width: fit-content;
-		height: fit-content;
-		display: block;
-		margin-left: auto;
-		margin-right: auto;
-		margin-top: 24px;
-		margin-bottom: 16px;
-	}
+		h1 {
+			font-size: 2.25em;
+		}
 
-	.avatar {
-		width: 192px;
-		height: 192px;
-		outline-width: 8px !important;
-	}
+		div.avatar-container {
+			position: relative;
+			width: fit-content;
+			height: fit-content;
+			display: block;
+			margin-left: auto;
+			margin-right: auto;
+			margin-top: 24px;
+			margin-bottom: 16px;
 
-	div.avatar-container > div.edit-buttons {
-		position: absolute;
-		bottom: 8px;
-		width: 100%;
-		display: flex;
-		justify-content: space-between;
-		flex-direction: row-reverse;
+			.avatar {
+				width: 192px;
+				height: 192px;
+				outline-width: 8px !important;
+			}
+
+			> div.edit-buttons {
+				position: absolute;
+				bottom: 8px;
+				width: 100%;
+				display: flex;
+				justify-content: space-between;
+				flex-direction: row-reverse;
+			}
+		}
 	}
 </style>

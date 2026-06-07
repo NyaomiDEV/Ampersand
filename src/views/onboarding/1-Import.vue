@@ -186,6 +186,10 @@
 		text-align: center;
 		gap: 16px;
 		padding: 1em;
+
+		h1 {
+			font-size: 2.25em;
+		}
 	}
 
 	.slide-enter-active,

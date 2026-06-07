@@ -31,5 +31,9 @@
 		flex-direction: column;
 		text-align: center;
 		padding: 1em;
+
+		h1 {
+			font-size: 2.25em;
+		}
 	}
 </style>

@@ -49,22 +49,23 @@
 		justify-content: center;
 		flex-direction: column;
 		padding: 1em;
-	}
 
-	.container h1 {
-		text-align: center;
-	}
-	
-	.logo {
-		margin: 14px 0 12px 0;
-		width: 256px;
-		height: 256px;
-		color: var(--ion-color-primary);
-	}
+		h1 {
+			text-align: center;
+			font-size: 2.25em;
+		}
 
-	div.button {
-		margin: 12 auto;
-		display: flex;
-		gap: 16px;
+		.logo {
+			margin: 14px 0 12px 0;
+			width: 256px;
+			height: 256px;
+			color: var(--ion-color-primary);
+		}
+
+		div.button {
+			margin: 12 auto;
+			display: flex;
+			gap: 16px;
+		}
 	}
 </style>
