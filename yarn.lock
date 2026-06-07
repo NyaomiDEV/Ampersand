@@ -89,7 +89,7 @@
   resolved "https://registry.yarnpkg.com/@chevrotain/types/-/types-11.1.2.tgz#e83a1a2704f0c5e49e7592b214031a0f4a34d7e5"
   integrity sha512-U+HFai5+zmJCkK86QsaJtoITlboZHBqrVketcO2ROv865xfCMSFpELQoz1GkX5GzME8pTa+3kbKrZHQtI0gdbw==
 
-"@choochmeque/tauri-plugin-notifications-api@^0.4.6":
+"@choochmeque/tauri-plugin-notifications-api@0.4.6":
   version "0.4.6"
   resolved "https://registry.yarnpkg.com/@choochmeque/tauri-plugin-notifications-api/-/tauri-plugin-notifications-api-0.4.6.tgz#c37d1b344e67f3f994f990841436277d583436e8"
   integrity sha512-GMoym90j4kGJ9ygkW2DYZqg3i3UkgrDHX+najen2mxw+HBdF3DOLlbu1L2Z/QdTHb8PP9g3NP+BlowCY1ifNhw==

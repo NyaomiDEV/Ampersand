@@ -24,15 +24,15 @@ export async function registerChannels(){
 			id: "frontingNotifications",
 			name: t("accessibility:frontingNotification.title"),
 			lights: false,
-			importance: Importance.Min,
-			visibility: Visibility.Private
+			importance: 1 as Importance.Min,
+			visibility: 0 as Visibility.Private
 		},
 		{
 			id: "reminders",
 			name: t("reminders:header"),
 			lights: false,
-			importance: Importance.Default,
-			visibility: Visibility.Private
+			importance: 3 as Importance.Default,
+			visibility: 0 as Visibility.Private
 		},
 	];
 
