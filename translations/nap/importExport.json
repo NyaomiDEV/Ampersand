@@ -19,7 +19,7 @@
 	"dbImportOld": {
 		"title": "Mpurta 'e date tuoje 'a na vecchia verziòne 'e Ampersand",
 		"desc": "Pe' 'e file 'e backup criate cu Ampersand < 0.2.0",
-		"note": " 'E vecchie verziune 'e Ampersand ausàvano nu formato 'e file (ampdb) ca mo è obsoleto. Si tiene ancora 'e vecchie backup, vide 'e mmurtà mo e d'esportà n'ata vota pecché st'opziòne venarrà levata ampressa."
+		"note": "'E vecchie verziune 'e Ampersand ausàvano nu formato 'e file (ampdb) ca mo è obsoleto. Si tiene ancora 'e vecchie backup, vide 'e mmurtà mo e d'esportà n'ata vota pecché st'opziòne venarrà levata ampressa."
 	},
 	"jsonExport": {
 		"title": "Esporta 'e date tuoje dint'a nu file JSON",
