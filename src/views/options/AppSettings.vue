@@ -17,6 +17,7 @@
 	import membersBeforeMD from "@material-symbols/svg-600/rounded/person_text.svg";
 	import homeMD from "@material-symbols/svg-600/rounded/home.svg";
 	import dashboardMD from "@material-symbols/svg-600/rounded/dashboard_customize.svg";
+	import optionsMD from "@material-symbols/svg-600/rounded/menu.svg";
 	import tabsMD from "@material-symbols/svg-600/rounded/bottom_navigation.svg";
 	import fontMD from "@material-symbols/svg-600/rounded/brand_family.svg";
 
@@ -42,6 +43,17 @@
 		const _sys = await getSystem(appConfig.defaultSystem);
 		if(_sys) defaultSystem.value = _sys;
 	});
+
+	function mapToIcon(view: string){
+		switch(view){
+			case "dashboard":
+				return homeMD;
+			case "options":
+				return optionsMD;
+			default:
+				return lists[view].icon;
+		}
+	}
 </script>
 
 <template>
@@ -155,9 +167,7 @@
 				</IonItem>
 
 				<IonItem>
-					<IonIcon v-if="appConfig.view === 'dashboard'" slot="start" :icon="homeMD" />
-					<IonIcon v-if="appConfig.view === 'members'" slot="start" :icon="lists.members.icon" />
-					<IonIcon v-if="appConfig.view === 'journal'" slot="start" :icon="lists.journal.icon" />
+					<IonIcon slot="start" :icon="mapToIcon(appConfig.view)" />
 					<IonSelect
 						v-model="appConfig.view"
 						label-placement="floating"
@@ -165,14 +175,18 @@
 						:cancel-text="$t('other:alerts.cancel')"
 						interface="action-sheet"
 					>
+						<IonSelectOption
+							v-for="[path, route] in Object.entries(lists).filter(x => appConfig.tabOrder.includes(x[0]))"
+							:key="route.name"
+							:value="path"
+						>
+							{{ $t(`${path}:header`) }}
+						</IonSelectOption>
 						<IonSelectOption value="dashboard">
 							{{ $t("dashboard:header") }}
 						</IonSelectOption>
-						<IonSelectOption value="members">
-							{{ $t("members:header") }}
-						</IonSelectOption>
-						<IonSelectOption value="journal">
-							{{ $t("journal:header") }}
+						<IonSelectOption value="options">
+							{{ $t("options:header") }}
 						</IonSelectOption>
 					</IonSelect>
 				</IonItem>

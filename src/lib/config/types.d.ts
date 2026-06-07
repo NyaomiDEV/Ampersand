@@ -5,7 +5,7 @@ export type AppConfig = {
 		language?: string
 	},
 	fontStyle: "default" | "modern" | "digital" | "round" | "newspaper" | "mystic" | "classy" | "boring",
-	view: ViewName,
+	view: string,
 	dashboardSettings: DashboardSettings,
 	tabOrder: string[],
 	defaultSystem: UUID,
@@ -24,8 +24,6 @@ export type AppConfig = {
 		notes?: string
 	}
 };
-
-type ViewName = "members" | "journal" | "dashboard";
 
 export type DashboardSettings = {
 	notesAccordion: DashboardSetting,

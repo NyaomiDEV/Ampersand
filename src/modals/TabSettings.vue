@@ -86,7 +86,11 @@
 							v-if="item !== 'dashboard'"
 							slot="end"
 							checked
-							@ion-change="appConfig.tabOrder.splice(appConfig.tabOrder.indexOf(item), 1)"
+							@ion-change="_e => {
+								if(appConfig.view === item)
+									appConfig.view = 'dashboard';
+								appConfig.tabOrder.splice(appConfig.tabOrder.indexOf(item), 1);
+							}"
 						/>
 						<IonReorder slot="end">
 							<IonIcon :icon="dragMD" />

@@ -182,15 +182,10 @@ const routerGuard: NavigationGuardWithThis<undefined> = (to) => {
 	// app just started???
 	if (to.fullPath === "/") {
 		// route to default view
-		switch (appConfig.view) {
-			case "members":
-				return { path: "/tab/members", replace: true };
-			case "journal":
-				return { path: "/tab/journal", replace: true };
-			case "dashboard":
-			default:
-				return { path: "/tab/dashboard", replace: true };
-		}
+		if(router.getRoutes().find(x => x.path === `/tab/${appConfig.view}`))
+			return { path: `/tab/${appConfig.view}`, replace: true };
+		else
+			return { path: "/tab/dashboard", replace: true };
 	}
 
 	// assume normal navigation
