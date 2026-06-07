@@ -47,8 +47,6 @@ export async function registerChannels(){
 				continue;
 			}
 
-			console.log(existing);
-
 			if (!(
 				channel.name === existing.name &&
 				channel.lights === existing.lights &&

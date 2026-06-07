@@ -286,7 +286,6 @@
 			member.value.customFields = new Map();
 		
 		const _sys = await getSystem(member.value.system);
-		console.log(_sys);
 		if(_sys) system.value = _sys;
 
 		customFieldsToShowInEditMode.value = customFields.value.filter(x => x.default || (member.value.customFields?.has(x.uuid) && member.value.customFields?.get(x.uuid)?.length));
@@ -303,8 +302,6 @@
 
 		// set color
 		updateColors();
-
-		console.log(system);
 
 		loading.value = false;
 	}
