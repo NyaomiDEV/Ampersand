@@ -1,4 +1,4 @@
-import { cancel, channels, createChannel, Importance, isPermissionGranted, Options, removeActive, removeChannel, requestPermission, Schedule, sendNotification, Visibility } from "@choochmeque/tauri-plugin-notifications-api";
+import { cancel, Channel, channels, createChannel, isPermissionGranted, Options, removeActive, removeChannel, requestPermission, Schedule, sendNotification } from "@choochmeque/tauri-plugin-notifications-api";
 import { platform } from "@tauri-apps/plugin-os";
 import { t } from "i18next";
 
@@ -18,41 +18,55 @@ export async function registerChannels(){
 	// channels are only available on android
 	if(platform() !== "android") return;
 
-	const _channels = await channels();
-	const _channelsWeWant = [
-		{
-			id: "frontingNotifications",
-			name: t("accessibility:frontingNotification.title"),
-			lights: false,
-			importance: 1 as Importance.Min,
-			visibility: 0 as Visibility.Private
-		},
-		{
-			id: "reminders",
-			name: t("reminders:header"),
-			lights: false,
-			importance: 3 as Importance.Default,
-			visibility: 0 as Visibility.Private
-		},
-	];
+	try{
+		const _channels = await channels().catch(_e => [] as Channel[]);
+		const _channelsWeWant = [
+			{
+				id: "frontingNotifications",
+				name: t("accessibility:frontingNotification.title"),
+				lights: false,
+				importance: 1, //as Importance.Min,
+				visibility: 0 //as Visibility.Private
+			},
+			{
+				id: "reminders",
+				name: t("reminders:header"),
+				lights: false,
+				importance: 3, //as Importance.Default,
+				visibility: 0 //as Visibility.Private
+			},
+		];
 
-	for(const channel of _channelsWeWant){
-		const existing = _channels.find(x => x.id === channel.id);
+		for (const channel of _channelsWeWant) {
+			const existing = _channels.find(x => x.id === channel.id);
 
-		if(!existing) {
-			await createChannel(channel);
-			continue;
+			if (!existing) {
+				await createChannel(channel).catch(_e => {
+					throw new Error(`Failed to create channel: ${_e.message}`);
+				});
+				continue;
+			}
+
+			console.log(existing);
+
+			if (!(
+				channel.name === existing.name &&
+				channel.lights === existing.lights &&
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
+				channel.importance === existing.importance &&
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
+				channel.visibility === existing.visibility
+			)) {
+				await removeChannel(channel.id).catch(_e => {
+					throw new Error(`Failed to remove channel: ${_e.message}`);
+				});
+				await createChannel(channel).catch(_e => {
+					throw new Error(`Failed to create channel (differential): ${_e.message}`);
+				});
+			}
 		}
-
-		if(!(
-			channel.name === existing.name &&
-			channel.lights === existing.lights &&
-			channel.importance === existing.importance &&
-			channel.visibility === existing.visibility
-		)){
-			await removeChannel(channel.id);
-			await createChannel(channel);
-		}
+	}catch(_e){
+		console.error(_e);
 	}
 }
 
@@ -69,7 +83,7 @@ export async function notify(id: number, title: string, body: string, channelId?
 			...opts
 		});
 	}catch(_e){
-		console.error(_e);
+		console.error("Problem when notifying:", _e);
 		return false;
 	}
 
@@ -84,7 +98,7 @@ export async function unnotify(id: number | number[]) {
 	try {
 		await cancel(typeof id === "number" ? [id] : id);
 	} catch (_e) {
-		console.error(_e);
+		console.error("Problem when canceling notification:", _e);
 		return false;
 	}
 
@@ -103,7 +117,7 @@ export async function remove(id: number | number[]){
 				: id.map(x => ({ id: x }))
 		);
 	} catch (_e) {
-		console.error(_e);
+		console.error("Problem when removing an active notification:", _e);
 		return false;
 	}
 

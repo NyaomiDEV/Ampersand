@@ -38,3 +38,7 @@ target/
 # iOS stuff I may build
 *.xcarchive
 *.ipa
+
+# Ampersand dumps I may do
+*.ampdb
+*.ampar

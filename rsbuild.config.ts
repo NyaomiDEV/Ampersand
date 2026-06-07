@@ -5,7 +5,7 @@ import { pluginVue } from "@rsbuild/plugin-vue";
 import { pluginBasicSsl } from "@rsbuild/plugin-basic-ssl";
 
 const host = process.env.TAURI_DEV_HOST;
-const debug = process.env.NODE_ENV === "development" || process.env.AMPERSAND_BUILD_TYPE === "unstable";
+const debug = process.env.NODE_ENV === "development" || process.env.AMPERSAND_BUILD_TYPE === "unstable" || !!process.env.TAURI_ENV_DEBUG;
 
 const { publicVars } = loadEnv({
 	processEnv: {
@@ -54,13 +54,13 @@ export default defineConfig({
 	},
 	server: {
 		strictPort: true,
-		host: host || undefined,
+		host,
 		port: 5173,
 	},
 	output: {
 		sourceMap: {
 			js: debug ? "cheap-module-source-map" : false,
-			css: debug ? true : false
+			css: debug
 		},
 		distPath: {
 			root: "dist",
