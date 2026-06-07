@@ -131,6 +131,12 @@ export function importArchive() {
 
 			let revisionWasParsed = magicVersion < 2 ? true : false;
 
+			// clear all tables if magic version < 2 -- this is a tradeoff of not thinking things through the first time
+			if(magicVersion < 2){
+				for (const table of Object.values(getTables()))
+					await table.clear();
+			}
+
 			for await (const rawData of multiStreamDecoder){
 				const data: any = reviver(rawData);
 				switch (data.table) {
