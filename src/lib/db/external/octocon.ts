@@ -11,13 +11,14 @@ import { clearAllDatabase, getTables } from "..";
 
 import type { OctoconExport } from "./octocon_types";
 import { resizeImage } from "../../util/image";
+import { newFile } from "../../fileref";
 
 async function getImage(url?: string){
 	if(!url || !securityConfig.allowRemoteContent) return undefined;
 	try {
 		const req = await fetchImage(url);
 		if(!req) throw new Error("no image");
-		return new File([req.blob], new URL(url).pathname.split("/").pop()!);
+		return newFile([req.blob], new URL(url).pathname.split("/").pop()!);
 	}catch(_e){
 		return undefined;
 	}

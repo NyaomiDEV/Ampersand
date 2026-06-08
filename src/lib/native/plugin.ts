@@ -1,6 +1,7 @@
 import { invoke, InvokeArgs, InvokeOptions, addPluginListener } from "@tauri-apps/api/core";
 import { writeToTemp } from "./cache";
 import { replace, walkAsync } from "../serialization";
+import { getFile } from "../util/blob";
 
 function invokePlugin(cmd: string, args?: InvokeArgs, opts?: InvokeOptions): Promise<unknown> {
 	return invoke(`plugin:ampersand|${cmd}`, args, opts);
@@ -17,8 +18,10 @@ export function setCanGoBack(canGoBack: boolean): Promise<void> {
 export async function openFile(file: File | string) {
 	if(typeof file === "string"){
 		if(!file.startsWith("blob:")) throw new Error("File string is not blob URI");
-		const blob = await (await window.fetch(file)).blob();
-		file = new File([blob], `ampersand-tempfile${blob.type.split("/")[1].replace("x-", "")}`);
+
+		const maybeFile = getFile(file);
+		if(!maybeFile) throw new Error("Blob URI is not ours or is stale");
+		file = maybeFile;
 	}
 
 	const path = await writeToTemp(file);

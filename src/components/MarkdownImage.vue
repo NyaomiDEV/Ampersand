@@ -5,6 +5,7 @@
 	import { getAsset, getAssetsIndex } from "../lib/db/tables/assets";
 	import { getExtension } from "../lib/mime";
 	import { fetchImage } from "../lib/util/fetchImage";
+	import { newFile } from "../lib/fileref";
 
 	const { getObjectURL } = useBlob();
 
@@ -34,7 +35,7 @@
 			if (securityConfig.allowRemoteContent) {
 				const res = await fetchImage(props.src);
 				if(!res) return;
-				source.value = getObjectURL(new File([res.blob], `markdownimg_${Date.now()}.${getExtension(res.blob.type)}`));
+				source.value = getObjectURL(await newFile([res.blob], `markdownimg_${Date.now()}.${getExtension(res.blob.type)}`));
 				if(res.extras.alt && !alt.value.length) alt.value = res.extras.alt;
 			}
 		}

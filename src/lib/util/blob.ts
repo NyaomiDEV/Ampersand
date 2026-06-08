@@ -1,5 +1,6 @@
 import { onUnmounted } from "vue";
 import { getExtension } from "../mime";
+import { newFile } from "../fileref";
 
 const globalDataURLs = new Map<string, [File, number]>();
 
@@ -44,20 +45,19 @@ export function useBlob(){
 		}
 	}
 
-	function getFile(url: string): File | undefined {
-		return Array.from(globalDataURLs).find(_obj => _obj[0] === url)?.[1][0];
-	}
-
 	function clear(){
 		usedDataURLs.forEach(x => revokeObjectURL(x));
 	}
 
 	return {
-		getFile,
 		getObjectURL,
 		revokeObjectURL,
 		clear
 	};
+}
+
+export function getFile(url: string): File | undefined {
+	return Array.from(globalDataURLs).find(_obj => _obj[0] === url)?.[1][0];
 }
 
 export function toDataURI(file: File): Promise<string>{
@@ -72,5 +72,5 @@ export function toDataURI(file: File): Promise<string>{
 export async function fromDataURI(uri: string): Promise<File> {
 	if(!uri.startsWith("data:")) throw new Error("this is not a data URI");
 	const blob = await (await window.fetch(uri)).blob();
-	return new File([blob], `file_${Date.now()}.${getExtension(blob.type)}`, { type: blob.type });
+	return newFile([blob], `file_${Date.now()}.${getExtension(blob.type)}`, { type: blob.type });
 }

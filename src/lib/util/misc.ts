@@ -10,6 +10,7 @@ import { basename, dirname, pictureDir, sep } from "@tauri-apps/api/path";
 import { findMimeType } from "../mime";
 import type { IndexEntry } from "../db/types";
 import { platform } from "@tauri-apps/plugin-os";
+import { newFile } from "../fileref";
 
 export async function getDocumentFile(extensions?: string[], asFile?: true): Promise<File | undefined>;
 export async function getDocumentFile(extensions?: string[], asFile?: false): Promise<Uint8Array<ArrayBuffer> | undefined>;
@@ -33,7 +34,7 @@ export async function getDocumentFile(extensions?: string[], asFile?: boolean) {
 	
 	const ext = filename.split(".").pop()!;
 
-	return new File([array], filename, { type: findMimeType(ext !== filename ? ext : "") });
+	return newFile([array], filename, { type: findMimeType(ext !== filename ? ext : "") });
 }
 
 export async function getImageFile() {
@@ -334,11 +335,34 @@ export function flattenObject(obj: object) {
 	return newObj;
 }
 
-export async function sha256(data: string | BufferSource){
-	if(typeof data === "string")
-		data = new TextEncoder().encode(data);
+export async function sha256(data: BlobPart | BlobPart[]){
+	const convert = async (v: BlobPart): Promise<Uint8Array<ArrayBuffer>> => {
+		if(v instanceof Blob)
+			return v.bytes();
+		else if (ArrayBuffer.isView(v))
+			return new Uint8Array(v.buffer, v.byteOffset, v.byteLength);
+		else if (v instanceof ArrayBuffer)
+			return new Uint8Array(v);
 
-	const hash = new Uint8Array(await window.crypto.subtle.digest("SHA-256", data));
+		return new TextEncoder().encode(v);
+	};
+
+	let _data: Uint8Array<ArrayBuffer>;
+	if(Array.isArray(data)){
+		const parts = await Promise.all(data.map(v => convert(v)));
+
+		_data = new Uint8Array(parts.reduce((a, b) => a + b.byteLength, 0));
+
+		let offset = 0;
+		for (const arr of parts) {
+			_data.set(arr, offset);
+			offset += arr.byteLength;
+		}
+	}
+	else
+		_data = await convert(data);
+
+	const hash = new Uint8Array(await window.crypto.subtle.digest("SHA-256", _data));
 
 	let hex = "";
 	hash.forEach(b => hex += b.toString(16).padStart(2, "0"));

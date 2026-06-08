@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { isPlainObject, sha256 } from "./util/misc";
+import { newFile } from "./fileref";
+import { isPlainObject } from "./util/misc";
 
 export type SerializedMap<K, V> = {
 	_meta: { type: "map"; };
@@ -29,13 +30,6 @@ export type Serialized<T> =
 	T extends object ? { [K in keyof T]: Serialized<T[K]> }
 	: T;
 
-
-const fileHashes: Map<string, WeakRef<File>> = new Map();
-const registry = new FinalizationRegistry<string>((key) => {
-	if (!fileHashes.get(key)?.deref())
-		fileHashes.delete(key);
-});
-
 export async function revive(value: any) {
 	if (typeof value === "object" && value !== null && "_meta" in value) {
 		switch (value._meta.type) {
@@ -50,12 +44,7 @@ export async function revive(value: any) {
 					for (let i = 0; i < value.value.length; i++)
 						array[i] = (value.value as string).charCodeAt(i);
 
-					const hash = await sha256(array);
-					const maybeDeref = fileHashes.get(hash)?.deref();
-					if(maybeDeref)
-						return maybeDeref;
-
-					const file = new File(
+					const file = await newFile(
 						[array],
 						value._meta.name,
 						{
@@ -63,17 +52,10 @@ export async function revive(value: any) {
 						}
 					);
 
-					fileHashes.set(hash, new WeakRef(file));
-					registry.register(file, hash);
 					return file;
 				} else {
 					// new way
-					const hash = await sha256(value.value);
-					const maybeDeref = fileHashes.get(hash)?.deref();
-					if (maybeDeref)
-						return maybeDeref;
-
-					const file = new File(
+					const file = newFile(
 						[value.value],
 						value._meta.name,
 						{
@@ -81,8 +63,6 @@ export async function revive(value: any) {
 						}
 					);
 
-					fileHashes.set(hash, new WeakRef(file));
-					registry.register(file, hash);
 					return file;
 				}
 			}

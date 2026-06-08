@@ -38,9 +38,8 @@
 
 	const loading = ref(false);
 
-	const emptyAsset: PartialBy<Asset, "uuid"> = {
+	const emptyAsset: PartialBy<Asset, "uuid" | "file"> = {
 		friendlyName: "",
-		file: new File([], ""),
 		tags: []
 	};
 	const asset = ref({ ...emptyAsset });
@@ -57,8 +56,8 @@
 		if(file) asset.value.file = file;
 	}
 
-	function showBigThumbnail(){
-		switch(asset.value.file.type.split("/")[0]){
+	function showBigThumbnail() {
+		switch(asset.value.file?.type.split("/")[0]){
 			case "image":
 				return true;
 			default:
@@ -71,14 +70,14 @@
 		const uuid = asset.value.uuid;
 		const _asset = asset.value;
 
-		if(!_asset.file.size) return;
+		if(!_asset.file?.size) return;
 
 		try{
 			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 			await loadingModal.value?.$el.present();
 
 			if(!uuid){
-				const result = await newAsset(_asset);
+				const result = await newAsset(_asset as PartialBy<Asset, "uuid">);
 				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
 
 				// eslint-disable-next-line @typescript-eslint/no-unsafe-call
@@ -165,14 +164,14 @@
 		<SpinnerFullscreen v-if="loading" />
 		<IonContent v-else>
 			<img
-				v-if="showBigThumbnail()"
+				v-if="asset.file && showBigThumbnail()"
 				:src="getObjectURL(asset.file)"
 				class="thumbnail"
 			/>
 			<IonList>
 				<AssetItem
-					v-if="asset.file.size"
-					:asset
+					v-if="asset.file?.size"
+					:asset="asset as PartialBy<Asset, 'uuid'>"
 					route-to-open-file
 					:show-filename-and-type="true"
 					:show-thumbnail="!showBigThumbnail()"
@@ -192,7 +191,7 @@
 			<IonList>
 				<IonItem :detail="true" button @click="updateFile">
 					<IonLabel>
-						{{ !asset.file.size ? $t("assetManager:add.attachment") : $t("assetManager:edit.attachment") }}
+						{{ !asset.file?.size ? $t("assetManager:add.attachment") : $t("assetManager:edit.attachment") }}
 					</IonLabel>
 				</IonItem>
 				<IonItem button :detail="true" @click="tagSelectionModal?.$el.present()">
@@ -227,7 +226,7 @@
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton :disabled="!asset.friendlyName.length || !asset.file.name.length" @click="save">
+				<IonFabButton :disabled="!asset.friendlyName.length || !asset.file?.name.length" @click="save">
 					<IonIcon :icon="saveMD" />
 				</IonFabButton>
 			</IonFab>

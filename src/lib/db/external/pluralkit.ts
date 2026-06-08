@@ -7,6 +7,7 @@ import { fetchImage } from "../../util/fetchImage";
 import { nilUid } from "../../util/consts";
 import { appConfig, securityConfig } from "../../config";
 import { resizeImage } from "../../util/image";
+import { newFile } from "../../fileref";
 
 function pkCustomField(): CustomField {
 	return {
@@ -30,7 +31,7 @@ async function system(pkExport: any){
 		try {
 			const request = await fetchImage(pkExport.avatar_url);
 			if(!request) throw new Error("no image after all");
-			const image = new File([request.blob], (pkExport.avatar_url as string).split("/").pop()!);
+			const image = await newFile([request.blob], (pkExport.avatar_url as string).split("/").pop()!);
 			systemInfo.image = await resizeImage(image);
 		} catch (_e) {
 			// whatever
@@ -87,7 +88,7 @@ async function member(pkExport: any, tagMapping: Map<string, string>, systemInfo
 			try {
 				const request = await fetchImage(pkMember.avatar_url);
 				if (!request) throw new Error("no image after all");
-				const image = new File([request.blob], pkMember.avatar_url.split("/").pop());
+				const image = await newFile([request.blob], pkMember.avatar_url.split("/").pop());
 				member.image = await resizeImage(image);
 			} catch (_e) {
 				// whatever, again
@@ -97,7 +98,7 @@ async function member(pkExport: any, tagMapping: Map<string, string>, systemInfo
 			try {
 				const request = await fetchImage(pkMember.banner);
 				if (!request) throw new Error("no image after all");
-				const image = new File([request.blob], pkMember.banner.split("/").pop());
+				const image = await newFile([request.blob], pkMember.banner.split("/").pop());
 				member.cover = await resizeImage(image, 1024);
 			} catch (_e) {
 				// whatever, again

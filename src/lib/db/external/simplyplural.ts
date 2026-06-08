@@ -6,6 +6,7 @@ import { resizeImage } from "../../util/image";
 import { maxUid, nilUid } from "../../util/consts";
 import { appConfig, securityConfig } from "../../config";
 import type { SimplyPluralExport, CustomField as SPCustomField } from "./simplyplural_types";
+import { newFile } from "../../fileref";
 
 function normalizeSPColor(color?: string) {
 	if (!color || !color.length) return undefined;
@@ -38,8 +39,6 @@ function mapCustomFieldType(type: SPCustomField["type"], data: string) {
 		case 7: // month + day
 			return `<t:${Math.round(new Date(data).getTime() / 1000)}:G>`;
 	}
-
-	return "";
 }
 
 async function getAvatarFromUuid(systemId: string, avatarUuid: string){
@@ -48,7 +47,7 @@ async function getAvatarFromUuid(systemId: string, avatarUuid: string){
 		const url = `https://spaces.apparyllis.com/avatars/${systemId}/${avatarUuid}`;
 		const imageRequest = await fetchImage(url);
 		if (!imageRequest) throw new Error("no image anyway");
-		return new File([imageRequest.blob], `${avatarUuid}.${imageRequest.blob.type.split("/")[1]}`);
+		return newFile([imageRequest.blob], `${avatarUuid}.${imageRequest.blob.type.split("/")[1]}`);
 	}catch(_e){
 		return undefined;
 	}
@@ -71,7 +70,7 @@ async function system(spExport: SimplyPluralExport){
 		try {
 			const imageRequest = await fetchImage(spSystem.avatarUrl);
 			if (!imageRequest) throw new Error("no image anyway");
-			const image = new File(
+			const image = await newFile(
 				[imageRequest.blob],
 				spSystem.avatarUrl.split("/").pop()!
 			);
@@ -177,7 +176,7 @@ export async function member(spExport: SimplyPluralExport, systemInfo: System, s
 			try {
 				const imageRequest = await fetchImage(spMember.avatarUrl);
 				if(!imageRequest) throw new Error("no image anyway");
-				const image = new File(
+				const image = await newFile(
 					[imageRequest.blob],
 					spMember.avatarUrl.split("/").pop()!
 				);
@@ -216,7 +215,7 @@ export async function member(spExport: SimplyPluralExport, systemInfo: System, s
 			try {
 				const imageRequest = await fetchImage(spCustomFront.avatarUrl);
 				if (!imageRequest) throw new Error("no image anyway");
-				const image = new File(
+				const image = await newFile(
 					[imageRequest.blob],
 					spCustomFront.avatarUrl.split("/").pop()!
 				);

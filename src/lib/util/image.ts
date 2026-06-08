@@ -1,6 +1,7 @@
 import { decodeAsync, encode } from "@msgpack/msgpack";
 import { getImageFile } from "./misc";
 import { deleteNull, replace, revive, walkAsync } from "../serialization";
+import { newFile } from "../fileref";
 
 export async function resizeImage(image: Blob, maxWidthHeight = 512): Promise<File> {
 	const bitmap = await createImageBitmap(image);
@@ -9,7 +10,7 @@ export async function resizeImage(image: Blob, maxWidthHeight = 512): Promise<Fi
 
 	if(bitmap.width <= maxWidthHeight && bitmap.height <= maxWidthHeight){
 		if (image.type === "image/webp")
-			return new File([image], `img_${Date.now()}.webp`); // we don't really need to do anything here
+			return newFile([image], `img_${Date.now()}.webp`); // we don't really need to do anything here
 
 		// or else we just go through everything just to convert to WEBP
 		width = bitmap.width;
@@ -27,7 +28,7 @@ export async function resizeImage(image: Blob, maxWidthHeight = 512): Promise<Fi
 
 	if (!ctx){
 		const ext = image.type === "image/webp" ? "webp" : "png";
-		return new File([image], `img_${Date.now()}.${ext}`); // as a fallback
+		return newFile([image], `img_${Date.now()}.${ext}`); // as a fallback
 	}
 
 	ctx.imageSmoothingEnabled = true;
@@ -40,7 +41,7 @@ export async function resizeImage(image: Blob, maxWidthHeight = 512): Promise<Fi
 	});
 
 	const ext = blob.type === "image/webp" ? "webp" : "png";
-	return new File([blob], `img_${Date.now()}.${ext}`, { type: blob.type });
+	return newFile([blob], `img_${Date.now()}.${ext}`, { type: blob.type });
 }
 
 export async function getResizedImage(maxWidthHeight = 512){
@@ -50,13 +51,11 @@ export async function getResizedImage(maxWidthHeight = 512){
 	return await resizeImage(new Blob([arrayBuffer]), maxWidthHeight);
 }
 
-export async function getImageOrMetadata(maxWidthHeight = 512): Promise<{ image: File, metadata?: object } | undefined>{
+export async function getImageOrMetadata(maxWidthHeight = 512): Promise<{ image: File, metadata?: object } | void>{
 	const arrayBuffer = await getImageFile();
 	if (!arrayBuffer) return;
 
-	const ret: { image: File, metadata?: object; } = {
-		image: new File([], "")
-	};
+	const ret: { image?: File, metadata?: object; } = {};
 
 	const gzipMagic = new Uint8Array([0x1F, 0x8B, 0x08]); // de facto, including DEFLATE flag
 
@@ -90,7 +89,8 @@ export async function getImageOrMetadata(maxWidthHeight = 512): Promise<{ image:
 	} else
 		ret.image = await resizeImage(new Blob([arrayBuffer.slice(0, goodIndex)]), maxWidthHeight);
 
-	return ret;
+	if(ret.image)
+		return ret as typeof ret & { image: File };
 }
 
 export async function encodeImageWithMetadata(image: File | undefined, name: string, metadata: object){
@@ -125,5 +125,5 @@ export async function encodeImageWithMetadata(image: File | undefined, name: str
 	).blob();
 
 	const ext = image.type === "image/webp" ? "webp" : "png";
-	return new File([image, meta], `${name}.${ext}`, { type: image.type });
+	return newFile([image, meta], `${name}.${ext}`, { type: image.type });
 }

@@ -5,6 +5,7 @@ import { Member, Tag, System } from "../entities";
 import { clearAllDatabase, getTables } from "..";
 import { fetchImage } from "../../util/fetchImage";
 import { resizeImage } from "../../util/image";
+import { newFile } from "../../fileref";
 
 function tag(tuExport: any){
 	const tagMapping = new Map<number, string>();
@@ -48,7 +49,7 @@ async function member(tuExport: any, systemInfo: System, tagMapping: Map<number,
 			try {
 				const request = await fetchImage(tuMember.avatar_url);
 				if(!request) throw new Error("no image after all");
-				const image = new File([request.blob], (tuMember.avatar_url as string).split("/").pop()!);
+				const image = await newFile([request.blob], (tuMember.avatar_url as string).split("/").pop()!);
 				member.image = await resizeImage(image);
 			} catch (_e) {
 				// whatever, again
@@ -59,7 +60,7 @@ async function member(tuExport: any, systemInfo: System, tagMapping: Map<number,
 			try {
 				const request = await fetchImage(tuMember.banner);
 				if (!request) throw new Error("no image after all");
-				const image = new File([request.blob], (tuMember.banner as string).split("/").pop()!);
+				const image = await newFile([request.blob], (tuMember.banner as string).split("/").pop()!);
 				member.cover = await resizeImage(image, 1024);
 			} catch (_e) {
 				// whatever, again
