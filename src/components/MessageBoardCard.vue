@@ -307,7 +307,7 @@
 				}
 
 				p {
-					color: var(--ion-text-color-step-400);
+					color: rgb(var(--md3-on-surface-variant));
 					font-size: .9em;
 				}
 			}
