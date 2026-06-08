@@ -23,10 +23,10 @@ async function tag(tuGroup: Group, tagMapping: Map<number, string>){
 	tagMapping.set(tuGroup.id, result.detail);
 }
 
-async function member(tuMember: Tupper, systemUuid: string){
+async function member(tuMember: Tupper){
 	const result = await newMember({
 		name: tuMember.name,
-		system: systemUuid,
+		system: appConfig.defaultSystem,
 		image: await getImage(tuMember.avatar_url),
 		cover: await getImage(tuMember.banner, 1024),
 		description: tuMember.description || undefined,
@@ -75,8 +75,8 @@ export async function importTupperBox(tuExport: ReadableStream<string>){
 					break;
 				}
 				case "tuppers": {
-					const [uuid, pkTag] = await member(value as unknown as Tupper, appConfig.defaultSystem);
-					memberWantsTags.set(uuid, pkTag);
+					const [uuid, tbTag] = await member(value as unknown as Tupper);
+					memberWantsTags.set(uuid, tbTag);
 					break;
 				}
 			}
