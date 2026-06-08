@@ -543,6 +543,11 @@
 
 	ion-toggle {
 		pointer-events: none;
+		margin: 0.5em 0;
+
+		&::part(label) {
+			margin-block: 0;
+		}
 
 		> * {
 			pointer-events: all
