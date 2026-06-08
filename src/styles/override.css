@@ -44,8 +44,7 @@ html.fs-modern {
 html.fs-digital {
 	--ampersand-header-font-name: "Oxanium";
 	--ampersand-header-font-weight: 600;
-	--ampersand-body-font-name: "Recursive";
-	--ampersand-body-font-variation: "MONO" 1;
+	--ampersand-body-font-name: "Chivo Mono";
 }
 
 html.fs-round {
