@@ -32,7 +32,7 @@
     "dayjs": "^1.11.21",
     "i18next": "^26.3.1",
     "i18next-vue": "^5.4.0",
-    "json-stream-es": "^1.2.1",
+    "json-stream-es": "file:./vendor/json-stream-es",
     "marked": "^18.0.5",
     "mermaid": "^11.15.0",
     "tauri-plugin-m3": "0.3.2",

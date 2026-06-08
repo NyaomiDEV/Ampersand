@@ -1,0 +1,15 @@
+{
+	"name": "json-stream-es",
+	"description": "A streaming JSON parser/stringifier using web streams.",
+	"keywords": ["json", "jsonl", "json-seq", "streams", "web-streams", "whatwg-streams"],
+	"version": "1.2.1",
+	"author": "Candid Dauth <cdauth@cdauth.eu>",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/cdauth/json-stream-es"
+	},
+	"type": "module",
+	"bugs": "https://github.com/cdauth/json-stream-es/issues",
+	"license": "BSD-2-Clause",
+	"main": "./src/index.ts"
+}

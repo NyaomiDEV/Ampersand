@@ -1,0 +1,8 @@
+This version of json-stream-es is downloaded from the tip of this commit: https://github.com/cdauth/json-stream-es/commit/087b6331573e49e895da5c0ef96d29d26409776a
+
+The following changes have been made to it:
+- Removed tests
+- Removed unnecesary bundler / TS config / eslint files
+- Resolved sloppy imports (added ".ts" to every import, at the end)
+- Resolved a bug that prevented the use of the advanced splitters outside of Node.js (abuse of Object.create() -- also was there a reason to use it?)
+- Dropped Node engine restriction
