@@ -99,7 +99,7 @@ const textColorExtension: MarkedExtension<(VNode | string)[], VNode | string> = 
 					};
 
 					return h("span", {
-						class: ["text-color-fg", token.isRepeating ? "repeating" : undefined, token.isRadial ? "radial" : undefined],
+						class: [`text-color-fg${colors.length === 1 ? "-one" : ""}`, token.isRepeating ? "repeating" : undefined, token.isRadial ? "radial" : undefined],
 						style: cssStyle
 					}, token.tokens && token.tokens.length ? this.parser.parseInline(token.tokens) : token.text);
 				}

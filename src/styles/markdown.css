@@ -228,6 +228,10 @@
 		vertical-align: baseline;
 	}
 
+	span.text-color-fg-one {
+		color: var(--markdown-text-fg-colors);
+	}
+
 	span.text-color-fg {
 		background: linear-gradient(in var(--markdown-text-fg-colorspace) var(--markdown-text-fg-degrees), var(--markdown-text-fg-colors));
 		-webkit-background-clip: text;
