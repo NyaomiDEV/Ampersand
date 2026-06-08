@@ -1,5 +1,6 @@
 import { h, type VNode } from "vue";
 import { MarkedExtension } from "marked";
+import { isAngle } from "./utils";
 
 const rotationExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [
@@ -11,10 +12,14 @@ const rotationExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 				const rule = /^\[rot=(-?\d*.?\d+(?:deg|grad|rad|turn))\](.+?)\[\/rot\]/;
 				const match = rule.exec(src);
 				if (match) {
+
+					const rotation = match[1];
+					if (!isAngle(rotation)) return;
+
 					const token = {
 						type: "rotationInline",
 						raw: match[0],
-						rotation: match[1],
+						rotation,
 						text: match[2],
 						tokens: this.lexer.inlineTokens(match[2])
 					};
@@ -41,10 +46,14 @@ const rotationExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 				const rule = /^\[rot=(-?\d*.?\d+(?:deg|grad|rad|turn))\]([\s\S]+?)\[\/rot\]/;
 				const match = rule.exec(src);
 				if (match) {
+
+					const rotation = match[1];
+					if (!isAngle(rotation)) return;
+
 					const token = {
 						type: "rotation",
 						raw: match[0],
-						rotation: match[1],
+						rotation,
 						text: match[2],
 						tokens: this.lexer.blockTokens(match[2])
 					};

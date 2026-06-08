@@ -46,6 +46,14 @@ import toggleExtension from "./toggleExtension.ts";
 import coloredHrExtension from "./coloredHrExtension.ts";
 import textDividerExtension from "./textDividerExtension.ts";
 import opacityExtension from "./opacityExtension.ts";
+import invertExtension from "./invertExtension.ts";
+import grayscaleExtension from "./grayscaleExtension.ts";
+import sepiaExtension from "./sepiaExtension.ts";
+import brightnessExtension from "./brightnessExtension.ts";
+import contrastExtension from "./contrastExtension.ts";
+import saturateExtension from "./saturateExtension.ts";
+import hueExtension from "./hueExtension.ts";
+import blurFilterExtension from "./blurFilterExtension.ts";
 
 export function useMarked(){
 	const marked = new Marked<(VNode | string)[], VNode | string>();
@@ -163,7 +171,15 @@ export function useMarked(){
 		coloredHrExtension,
 		smallTextExtension,
 		textDividerExtension,
-		opacityExtension
+		opacityExtension,
+		invertExtension,
+		grayscaleExtension,
+		sepiaExtension,
+		brightnessExtension,
+		contrastExtension,
+		saturateExtension,
+		hueExtension,
+		blurFilterExtension
 	);
 
 	return marked;

@@ -18,6 +18,10 @@ export function isLength(maybePercentage: string) {
 	return maybePercentage.match(/^-?\d*\.?\d+(?:r?(?:cap|ch|em|ex|ic|lh)|(?:v|cq)(?:h|w|max|min|b|i)|(?:px|cm|mm|Q|in|pc|pt))$/) !== null;
 }
 
+export function isAngle(maybeAngle: string) {
+	return maybeAngle.match(/^-?\d*\.?\d+(?:deg|grad|rad|turn)$/) !== null;
+}
+
 export function isLineWidth(maybeWidth: string) {
 	return ["hairline", "thin", "medium", "thick"].includes(maybeWidth) || isLength(maybeWidth);
 }

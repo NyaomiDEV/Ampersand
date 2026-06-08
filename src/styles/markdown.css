@@ -366,6 +366,40 @@
 		filter: opacity(var(--markdown-filter-opacity));
 	}
 
+	span.filter-invert {
+		filter: invert(var(--markdown-filter-invert));
+	}
+
+	span.filter-grayscale {
+		filter: grayscale(var(--markdown-filter-grayscale));
+	}
+
+	span.filter-sepia {
+		filter: sepia(var(--markdown-filter-sepia));
+	}
+
+	span.filter-contrast {
+		filter: contrast(var(--markdown-filter-contrast));
+	}
+
+	span.filter-brightness {
+		filter: brightness(var(--markdown-filter-brightness));
+	}
+
+	span.filter-saturate {
+		filter: saturate(var(--markdown-filter-saturate));
+	}
+
+	span.filter-hue {
+		filter: hue-rotate(var(--markdown-filter-hue));
+	}
+
+	span.filter-blur {
+		filter: blur(var(--markdown-filter-blur));
+	}
+
+
+
 	ul {
 		padding-inline-start: 1.25em;
 	}
