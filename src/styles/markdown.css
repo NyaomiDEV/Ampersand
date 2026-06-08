@@ -534,4 +534,12 @@
 		height: 8px;
 		margin: 0.5em 0;
 	}
+	
+	ion-toggle {
+		pointer-events: none;
+
+		> * {
+			pointer-events: all
+		}
+	}
 }

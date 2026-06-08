@@ -41,6 +41,7 @@ import rangeExtension from "./rangeExtension";
 import textOutlineExtension from "./textOutlineExtension.ts";
 import dropShadowExtension from "./dropShadowExtension.ts";
 import progressExtension from "./progressExtension.ts";
+import toggleExtension from "./toggleExtension.ts";
 
 export function useMarked(){
 	const marked = new Marked<(VNode | string)[], VNode | string>();
@@ -153,7 +154,8 @@ export function useMarked(){
 		customTableExtension,
 		rangeExtension,
 		textOutlineExtension,
-		progressExtension
+		progressExtension,
+		toggleExtension
 	);
 
 	return marked;
