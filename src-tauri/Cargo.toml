@@ -41,16 +41,15 @@ features = [ "macos-private-api" ]
 [dependencies.tauri-plugin-ampersand]
 path = "../src-tauri-plugin"
 
-[target."cfg(target_os = \"android\")".dependencies]
-tauri-plugin-m3 = "0.3.2"
-
-[target."cfg(any(target_os = \"android\", target_os = \"ios\"))".dependencies]
-tauri-plugin-biometric = "2.3.2"
-
-[target."cfg(not(any(target_os = \"android\", target_os = \"ios\")))".dependencies]
-tauri-plugin-single-instance = "2.4.2"
-
-[target."cfg(all(dev, target_os = \"macos\"))".dependencies.tauri-plugin-notifications]
+[target.'cfg(target_os = "linux")'.dependencies.tauri-plugin-notifications]
 version = "0.5.0-rc.4"
 default-features = true
 
+[target.'cfg(target_os = "android")'.dependencies]
+tauri-plugin-m3 = "0.3.2"
+
+[target.'cfg(any(target_os = "android", target_os = "ios"))'.dependencies]
+tauri-plugin-biometric = "2.3.2"
+
+[target.'cfg(not(any(target_os = "android", target_os = "ios")))'.dependencies]
+tauri-plugin-single-instance = "2.4.2"
