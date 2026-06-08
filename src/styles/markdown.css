@@ -548,4 +548,52 @@
 			pointer-events: all
 		}
 	}
+
+	div.markdown-text-divider {
+		display: flex;
+		align-items: center;
+	
+		&:before, &:after {
+			content: "\A";
+			display: block;
+			height: 4px;
+			width: 100%;
+			background-color: currentcolor;
+			flex: 1 0;
+			border-radius: 2px;
+		}
+	
+		&:before {
+			margin-inline-end: 0.5em;
+		}
+		
+		&:after {
+			margin-inline-start: 0.5em;
+		}
+		
+		&.left {
+			&:before {
+				display: none;
+			}
+			
+			span {
+				text-align: left;
+			}
+		}
+	
+		&.right {
+			&:after {
+				display: none;
+			}
+			
+			span {
+				text-align: right;
+			}
+		}
+	
+		span {
+			text-align: center;
+			max-width: 90%
+		}
+	}
 }
