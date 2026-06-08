@@ -12,40 +12,17 @@
 		"comicrelief": "Comic Relief",
 		"system-font": "Font di sistema"
 	},
-	"uiVariant": {
-		"title": "Variante dell'interfaccia",
-		"auto": "Auto",
-		"light": "Chiara",
-		"dark": "Scura"
-	},
 	"themeIsAmoled": {
 		"title": "Modalità AMOLED",
 		"desc": "Usa uno sfondo totalmente nero in modalità scura. Può ridurre l'usura di alcuni display."
 	},
-	"themeScheme": {
-		"title": "Schema del tema",
-		"tonalSpot": "Punto tonale",
-		"neutral": "Neutro",
-		"vibrant": "Vivace",
-		"expressive": "Espressivo"
-	},
+	
 	"colorIndicatorPosition": {
 		"title": "Posizione dell'indicatore del colore",
 		"avatar": "Contorno dell'avatar",
 		"listItem": "Bordo dell'elemento sulla lista"
 	},
-	"colors": {
-		"title": "Colore primario e di sfondo",
-		"app": "Colori dell'app",
-		"system": "Colori di sistema",
-		"custom": "Colori personalizzati"
-	},
-	"accentColor": {
-		"title": "Scegli il colore primario"
-	},
-	"backgroundColor": {
-		"title": "Scegli il colore di sfondo"
-	},
+	
 	"tintWithColor": {
 		"title": "Tingi col colore",
 		"desc": "Tingi alcune parti dell'app con il colore di membri, sistemi, tag, ecc."

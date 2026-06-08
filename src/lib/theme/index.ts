@@ -1,5 +1,5 @@
 import { argbFromHex, blueFromArgb, DynamicScheme, greenFromArgb, Hct, redFromArgb, TonalPalette, Variant } from "@material/material-color-utilities";
-import { accessibilityConfig } from "../config";
+import { appConfig, accessibilityConfig } from "../config";
 import { M3 } from "tauri-plugin-m3";
 import { platform } from "@tauri-apps/plugin-os";
 import { isDarkMode as calculateDarkMode } from "../mode";
@@ -38,24 +38,24 @@ function rgbFromArgb(argb: number){
 }
 
 function calculatePrimaryColor(){
-	switch(accessibilityConfig.colors){
+	switch(appConfig.colors){
 		case "app":
 			return rgbaToArgb(defaultPrimaryColor);
 		case "system":
 			return rgbaToArgb(systemPrimaryColor || defaultPrimaryColor);
 		case "custom":
-			return rgbaToArgb(accessibilityConfig.customColors.accentColor || defaultPrimaryColor);
+			return rgbaToArgb(appConfig.customColors.accentColor || defaultPrimaryColor);
 	}
 }
 
 function calculateBackgroundColor() {
-	switch (accessibilityConfig.colors) {
+	switch (appConfig.colors) {
 		case "app":
 			return rgbaToArgb(defaultBackgroundColor);
 		case "system":
 			return rgbaToArgb(systemBackgroundColor || defaultBackgroundColor);
 		case "custom":
-			return rgbaToArgb(accessibilityConfig.customColors.backgroundColor || defaultBackgroundColor);
+			return rgbaToArgb(appConfig.customColors.backgroundColor || defaultBackgroundColor);
 	}
 }
 
@@ -64,7 +64,7 @@ function isMonochrome(argb: number){
 }
 
 function schemeFromAccessibilityConfig(){
-	switch(accessibilityConfig.themeScheme){
+	switch(appConfig.themeScheme){
 		case "neutral":
 			return Variant.NEUTRAL;
 		case "tonal-spot":

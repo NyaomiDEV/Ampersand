@@ -4,12 +4,6 @@
 		"title": "Police à haute lisibilité",
 		"desc": "Utilise une police à lisibilité élevée plutôt que la police standard de votre appareil"
 	},
-	"uiVariant": {
-		"auto": "Automatique",
-		"light": "Clair",
-		"dark": "Sombre",
-		"title": "Thème d’affichage"
-	},
 	"fontScale": {
 		"title": "Taille de la police"
 	},
@@ -25,9 +19,6 @@
 	},
 	"longPressDuration": {
 		"title": "Durée de l’appui prolongé"
-	},
-	"accentColor": {
-		"title": "Choix de la couleur d’accent"
 	},
 	"highLegibilityFontType": {
 		"opendyslexic": "OpenDyslexic",

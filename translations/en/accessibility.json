@@ -12,39 +12,15 @@
 		"comicrelief": "Comic Relief",
 		"system-font": "System Font"
 	},
-	"uiVariant": {
-		"title": "UI variant",
-		"auto": "Auto",
-		"light": "Light",
-		"dark": "Dark"
-	},
+
 	"themeIsAmoled": {
 		"title": "AMOLED mode",
 		"desc": "Use a total black background when in dark mode. Can reduce display wear."
-	},
-	"themeScheme": {
-		"title": "Theme scheme",
-		"tonalSpot": "Tonal spot",
-		"neutral": "Neutral",
-		"vibrant": "Vibrant",
-		"expressive": "Expressive"
 	},
 	"colorIndicatorPosition": {
 		"title": "Color indicator position",
 		"avatar": "Avatar outline",
 		"listItem": "List item border"
-	},
-	"colors": {
-		"title": "Accent and background colors",
-		"app": "App colors",
-		"system": "System colors",
-		"custom": "Custom colors"
-	},
-	"accentColor": {
-		"title": "Choose the accent color"
-	},
-	"backgroundColor": {
-		"title": "Choose the background color"
 	},
 	"tintWithColor": {
 		"title": "Tint with color",

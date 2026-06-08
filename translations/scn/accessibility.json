@@ -12,39 +12,14 @@
 		"comicrelief": "Comic Relief",
 		"system-font": "Font di sistema"
 	},
-	"uiVariant": {
-		"title": "Varianti d'interfaccia",
-		"auto": "Auto",
-		"light": "Chiara",
-		"dark": "Scura"
-	},
 	"themeIsAmoled": {
 		"title": "Mudalità AMOLED",
 		"desc": "Usa un sfunnu tutalmenti nìuru 'n mudalità scura. Pò arridùciri l'usura di certi schermi."
-	},
-	"themeScheme": {
-		"title": "Schema dû tema",
-		"tonalSpot": "Puntu tunali",
-		"neutral": "Nìutru",
-		"vibrant": "Vivaci",
-		"expressive": "Esprissivu"
 	},
 	"colorIndicatorPosition": {
 		"title": "Pusizzioni d'indicaturi dû culuri",
 		"avatar": "Cuntornu de l'avatar",
 		"listItem": "Bordu de l'elementu 'n lista"
-	},
-	"colors": {
-		"title": "Culuri primariu e di sfunnu",
-		"app": "Culuri di l'app",
-		"system": "Culuri di sistema",
-		"custom": "Culuri pirsunalizzati"
-	},
-	"accentColor": {
-		"title": "Scegghi u culuri primariu"
-	},
-	"backgroundColor": {
-		"title": "Scegghi u culuri di sfunnu"
 	},
 	"tintWithColor": {
 		"title": "Tìngi cu lu culuri",

@@ -11,12 +11,6 @@
 		"comicrelief": "Comic Relief",
 		"system-font": "Sistem yazı tipi"
 	},
-	"uiVariant": {
-		"title": "Arayüz varyantı",
-		"auto": "Otomatik",
-		"light": "Aydınlık",
-		"dark": "Koyu"
-	},
 	"reducedMotion": {
 		"title": "Azaltılmış hareket",
 		"desc": "Uygulama için animasyonları etkisizleştir"
@@ -26,9 +20,6 @@
 	},
 	"longPressDuration": {
 		"title": "Uzun basma süresi"
-	},
-	"accentColor": {
-		"title": "Vurgu rengini seç"
 	},
 	"header": "Erişilebilirlik",
 	"themeIsAmoled": {

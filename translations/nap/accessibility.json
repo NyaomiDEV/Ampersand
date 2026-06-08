@@ -12,39 +12,14 @@
 		"comicrelief": "Comic Relief",
 		"system-font": "Font 'e sistema"
 	},
-	"uiVariant": {
-		"title": "Variante 'e l'interfaccia",
-		"auto": "Auto",
-		"light": "Chiara",
-		"dark": "Scura"
-	},
 	"themeIsAmoled": {
 		"title": "Modalità AMOLED",
 		"desc": "Usa nu sfunno tutto niro 'int'â modalità scura. Po' ridure l'usura 'e quacche display."
-	},
-	"themeScheme": {
-		"title": "Schema d' 'o tema",
-		"tonalSpot": "Punto tunale",
-		"neutral": "Neutro",
-		"vibrant": "Vivace",
-		"expressive": "Espressivo"
 	},
 	"colorIndicatorPosition": {
 		"title": "Posizione 'e l'indicatore d''o culore",
 		"avatar": "Cuntuorno de l'immaggine",
 		"listItem": "Bordo 'e l'elemento ncopp'â lista"
-	},
-	"colors": {
-		"title": "Culore primario e d'ô funno",
-		"app": "Culore d'â app",
-		"system": "Culore 'e sistema",
-		"custom": "Culore a piacere"
-	},
-	"accentColor": {
-		"title": "Scegli 'o culore primario"
-	},
-	"backgroundColor": {
-		"title": "Scegli 'o culore 'e funno"
 	},
 	"tintWithColor": {
 		"title": "Tinge cu 'o culore",

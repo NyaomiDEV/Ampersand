@@ -3,21 +3,12 @@
 		"title": "Легко читаемый шрифт",
 		"desc": "Использовать легко читаемый шрифт вместо стандартного шрифта устройства"
 	},
-	"uiVariant": {
-		"light": "Светлая",
-		"dark": "Темная",
-		"title": "Вариант интерфейса",
-		"auto": "Авто"
-	},
 	"highLegibilityFontType": {
 		"system-font": "Системный Шрифт",
 		"title": "Семейство легко читаемого шрифта",
 		"atkinson": "Atkinson Hyperlegible",
 		"opendyslexic": "OpenDyslexic",
 		"lexend": "Lexend"
-	},
-	"accentColor": {
-		"title": "Выберите цвет акцента"
 	},
 	"contrastLevel": {
 		"title": "Уровень контраста"

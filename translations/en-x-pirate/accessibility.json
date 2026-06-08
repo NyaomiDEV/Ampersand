@@ -12,39 +12,14 @@
 		"comicrelief": "Comic Relief",
 		"system-font": "Ship's Font"
 	},
-	"uiVariant": {
-		"title": "UI variant",
-		"auto": "As the wind blows",
-		"light": "Daylight",
-		"dark": "Midnight"
-	},
 	"themeIsAmoled": {
 		"title": "Black Hole mode",
 		"desc": "Use a total black background when sailin' at night. Keeps yer glass from wearin' out."
-	},
-	"themeScheme": {
-		"title": "The Map o' Colors",
-		"tonalSpot": "The Mark o' Tones",
-		"neutral": "Calm Seas",
-		"vibrant": "Full Sail",
-		"expressive": "Loud as a Cannon"
 	},
 	"colorIndicatorPosition": {
 		"title": "Color mark position",
 		"avatar": "Avatar outline",
 		"listItem": "List item border"
-	},
-	"colors": {
-		"title": "Accent and background colors",
-		"app": "App colors",
-		"system": "System colors",
-		"custom": "Custom colors"
-	},
-	"accentColor": {
-		"title": "Pick yer accent color"
-	},
-	"backgroundColor": {
-		"title": "Pick yer background color"
 	},
 	"tintWithColor": {
 		"title": "Tint with color",

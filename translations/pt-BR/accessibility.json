@@ -12,12 +12,6 @@
 		"comicrelief": "Comic Relief",
 		"system-font": "Fonte do Sistema"
 	},
-	"uiVariant": {
-		"auto": "Automáticamente",
-		"dark": "Escuro",
-		"light": "Claro",
-		"title": "Variante da Interface de Usuário"
-	},
 	"fontScale": {
 		"title": "Tamanho da fonte"
 	},
@@ -33,9 +27,7 @@
 		"avatar": "Contorno do avatar",
 		"listItem": "Borda do item da lista"
 	},
-	"accentColor": {
-		"title": "Escolha a cor de destaque"
-	},
+
 	"reducedMotion": {
 		"title": "Movimento reduzido",
 		"desc": "Desativar animações no app"
@@ -51,22 +43,6 @@
 	},
 	"frontingNotification": {
 		"title": "Notificação de fronte"
-	},
-	"themeScheme": {
-		"neutral": "Neutro",
-		"title": "Esquema de cores",
-		"tonalSpot": "Foco Tonal",
-		"vibrant": "Vibrante",
-		"expressive": "Expressivo"
-	},
-	"colors": {
-		"custom": "Cores personalizadas",
-		"title": "Cores de fundo e de destaque",
-		"app": "Cores do aplicativo",
-		"system": "Cores do Sistema"
-	},
-	"backgroundColor": {
-		"title": "Escolha a cor de fundo"
 	},
 	"tintWithColor": {
 		"title": "Tingir com cor",

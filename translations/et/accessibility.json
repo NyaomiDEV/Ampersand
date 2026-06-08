@@ -1,11 +1,5 @@
 {
 	"header": "Hõlbustus ja ligipääsetavus",
-	"uiVariant": {
-		"light": "Hele kujundus",
-		"dark": "Tume kujundus",
-		"auto": "Automaatne",
-		"title": "Kasutusliidese variant"
-	},
 	"highLegibilityFontType": {
 		"title": "Üliloetav kirjatüüp",
 		"opendyslexic": "OpenDyslexic",
@@ -33,9 +27,6 @@
 		"avatar": "Tunnuspildi piirjooned",
 		"listItem": "Loendiobjekti äärejooned"
 	},
-	"accentColor": {
-		"title": "Vali aktsentvärv"
-	},
 	"reducedMotion": {
 		"desc": "Lülita rakendusesisesed animatsioonid välja",
 		"title": "Vähem liikumist"
@@ -48,22 +39,6 @@
 	},
 	"contrastLevel": {
 		"title": "Kontrastsus"
-	},
-	"colors": {
-		"title": "Aktsent- ja taustavärv",
-		"app": "Rakenduse värvid",
-		"system": "Süsteemi värvid",
-		"custom": "Kohanadatud värvid"
-	},
-	"backgroundColor": {
-		"title": "Vali tautavärv"
-	},
-	"themeScheme": {
-		"title": "Kujundusvariant",
-		"tonalSpot": "Toonilaik",
-		"neutral": "Neutraalne",
-		"vibrant": "Elav",
-		"expressive": "Väljendusrikas"
 	},
 	"frontingNotification": {
 		"title": "Esiplaanil olemise teavitus"

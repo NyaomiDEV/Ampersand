@@ -6,7 +6,7 @@ import { FrontingEntryComplete } from "./db/entities";
 import i18next from "./i18n";
 
 export function isDarkMode() {
-	switch (accessibilityConfig.theme) {
+	switch (appConfig.theme) {
 		case "dark":
 			return true;
 		case "light":

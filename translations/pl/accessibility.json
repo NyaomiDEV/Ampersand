@@ -12,15 +12,7 @@
 		"system-font": "Czcionka systemowa",
 		"comicrelief": "Comic Relief"
 	},
-	"uiVariant": {
-		"title": "Wariant interfejsu użytkownika",
-		"auto": "Automatyczny",
-		"light": "Jasny",
-		"dark": "Ciemny"
-	},
-	"accentColor": {
-		"title": "Wybierz kolor akcentu"
-	},
+
 	"reducedMotion": {
 		"title": "Zredukowany ruch",
 		"desc": "Wyłącz animacje w aplikacji"
@@ -51,21 +43,5 @@
 	},
 	"frontingNotification": {
 		"title": "Powiadomienie o frontowaniu"
-	},
-	"colors": {
-		"title": "Akcent i kolory tła",
-		"app": "Kolory aplikacji",
-		"system": "Kolory systemu",
-		"custom": "Kolory niestandardowe"
-	},
-	"backgroundColor": {
-		"title": "Wybierz kolor tła"
-	},
-	"themeScheme": {
-		"title": "Schemat motywu",
-		"tonalSpot": "Punkt tonalny",
-		"neutral": "Neutralny",
-		"vibrant": "Żywy",
-		"expressive": "Wyrazisty"
 	}
 }

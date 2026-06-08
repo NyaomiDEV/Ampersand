@@ -12,15 +12,6 @@
 		"title": "nasin sitelen pi wile sina",
 		"comicrelief": "nasin sitelen Comic Relief"
 	},
-	"uiVariant": {
-		"title": "kule ilo",
-		"auto": "kule lon",
-		"light": "walo",
-		"dark": "pimeja"
-	},
-	"accentColor": {
-		"title": "kule namako pi wile sina"
-	},
 	"reducedMotion": {
 		"title": "tawa ala",
 		"desc": "ijo pi ilo ni li tawa ala"
@@ -51,22 +42,6 @@
 	},
 	"frontingNotification": {
 		"title": "pana sin sona pi kama lon"
-	},
-	"colors": {
-		"title": "kule namako poki",
-		"app": "kule ilo",
-		"system": "kule pi ilo sina",
-		"custom": "kule pi wile sina"
-	},
-	"backgroundColor": {
-		"title": "kule poki pi wile sina"
-	},
-	"themeScheme": {
-		"title": "mute kule",
-		"tonalSpot": "kule lili",
-		"neutral": "kule pi lili mute",
-		"vibrant": "kule pi mute wawa",
-		"expressive": "kule mute"
 	},
 	"tintWithColor": {
 		"title": "pana kule",

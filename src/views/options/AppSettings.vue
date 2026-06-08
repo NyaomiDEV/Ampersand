@@ -1,6 +1,7 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonList, IonPage, IonLabel, IonListHeader, IonTitle, IonToolbar, IonBackButton, IonItem, IonSelect, IonSelectOption, IonInput, IonToggle, IonIcon } from "@ionic/vue";
 	import { inject, onMounted, shallowRef, useTemplateRef, watch } from "vue";
+	import { platform } from "@tauri-apps/plugin-os";
 
 	import { accessibilityConfig, appConfig } from "../../lib/config";
 	import { getSystem } from "../../lib/db/tables/system";
@@ -11,6 +12,7 @@
 	import DashboardSettings from "../../modals/DashboardSettings.vue";
 	import TabSettings from "../../modals/TabSettings.vue";
 	import { lists } from "../../router/lists";
+	import Color from "../../components/Color.vue";
 
 	import languageMD from "@material-symbols/svg-600/rounded/language.svg";
 	import timerMD from "@material-symbols/svg-600/rounded/timer_off.svg";
@@ -19,6 +21,19 @@
 	import dashboardMD from "@material-symbols/svg-600/rounded/dashboard_customize.svg";
 	import optionsMD from "@material-symbols/svg-600/rounded/menu.svg";
 	import tabsMD from "@material-symbols/svg-600/rounded/bottom_navigation.svg";
+
+	import lightMD from "@material-symbols/svg-600/rounded/wb_sunny.svg";
+	import darkMD from "@material-symbols/svg-600/rounded/dark_mode.svg";
+	import autoMD from "@material-symbols/svg-600/rounded/routine.svg";
+
+	import tonalMD from "@material-symbols/svg-600/rounded/brightness_5.svg";
+	import neutralMD from "@material-symbols/svg-600/rounded/brightness_empty.svg";
+	import vibrantMD from "@material-symbols/svg-600/rounded/brightness_7.svg";
+	import expressiveMD from "@material-symbols/svg-600/rounded/brightness_6.svg";
+
+	import appColorMD from "@material-symbols/svg-600/rounded/format_paint.svg";
+	import systemColorMD from "@material-symbols/svg-600/rounded/devices.svg";
+	import customColorMD from "@material-symbols/svg-600/rounded/palette.svg";
 	import fontMD from "@material-symbols/svg-600/rounded/brand_family.svg";
 
 	const defaultSystem = shallowRef<System>({
@@ -90,6 +105,95 @@
 			</IonListHeader>
 
 			<IonList>
+				<IonItem>
+					<IonIcon v-if="appConfig.theme === 'auto'" slot="start" :icon="autoMD" />
+					<IonIcon v-if="appConfig.theme === 'light'" slot="start" :icon="lightMD" />
+					<IonIcon v-if="appConfig.theme === 'dark'" slot="start" :icon="darkMD" />
+					<IonSelect
+						v-model="appConfig.theme"
+						label-placement="floating"
+						:label="$t('appSettings:uiVariant.title')"
+						:cancel-text="$t('other:alerts.cancel')"
+						interface="action-sheet"
+					>
+						<IonSelectOption value="auto">
+							{{ $t("appSettings:uiVariant.auto") }}
+						</IonSelectOption>
+						<IonSelectOption value="light">
+							{{ $t("appSettings:uiVariant.light") }}
+						</IonSelectOption>
+						<IonSelectOption value="dark">
+							{{ $t("appSettings:uiVariant.dark") }}
+						</IonSelectOption>
+					</IonSelect>
+				</IonItem>
+
+				<IonItem>
+					<IonIcon v-if="appConfig.themeScheme === 'tonal-spot'" slot="start" :icon="tonalMD" />
+					<IonIcon v-if="appConfig.themeScheme === 'neutral'" slot="start" :icon="neutralMD" />
+					<IonIcon v-if="appConfig.themeScheme === 'vibrant'" slot="start" :icon="vibrantMD" />
+					<IonIcon v-if="appConfig.themeScheme === 'expressive'" slot="start" :icon="expressiveMD" />
+					<IonSelect
+						v-model="appConfig.themeScheme"
+						label-placement="floating"
+						:label="$t('appSettings:themeScheme.title')"
+						:cancel-text="$t('other:alerts.cancel')"
+						interface="action-sheet"
+					>
+						<IonSelectOption value="tonal-spot">
+							{{ $t("appSettings:themeScheme.tonalSpot") }}
+						</IonSelectOption>
+						<IonSelectOption value="neutral">
+							{{ $t("appSettings:themeScheme.neutral") }}
+						</IonSelectOption>
+						<IonSelectOption value="vibrant">
+							{{ $t("appSettings:themeScheme.vibrant") }}
+						</IonSelectOption>
+						<IonSelectOption value="expressive">
+							{{ $t("appSettings:themeScheme.expressive") }}
+						</IonSelectOption>
+					</IonSelect>
+				</IonItem>
+
+				<IonItem>
+					<IonIcon v-if="appConfig.colors === 'app'" slot="start" :icon="appColorMD" />
+					<IonIcon v-if="appConfig.colors === 'system'" slot="start" :icon="systemColorMD" />
+					<IonIcon v-if="appConfig.colors === 'custom'" slot="start" :icon="customColorMD" />
+					<IonSelect
+						v-model="appConfig.colors"
+						label-placement="floating"
+						:label="$t('appSettings:colors.title')"
+						:cancel-text="$t('other:alerts.cancel')"
+						interface="action-sheet"
+					>
+						<IonSelectOption value="app">
+							{{ $t("appSettings:colors.app") }}
+						</IonSelectOption>
+						<IonSelectOption v-if="platform() === 'android'" value="system">
+							{{ $t("appSettings:colors.system") }}
+						</IonSelectOption>
+						<IonSelectOption value="custom">
+							{{ $t("appSettings:colors.custom") }}
+						</IonSelectOption>
+					</IonSelect>
+				</IonItem>
+
+				<IonItem v-if="appConfig.colors === 'custom'" button :detail="false">
+					<Color v-model="appConfig.customColors.accentColor">
+						<IonLabel>
+							<h3>{{ $t("appSettings:accentColor.title") }}</h3>
+						</IonLabel>
+					</Color>
+				</IonItem>
+
+				<IonItem v-if="appConfig.colors === 'custom'" button :detail="false">
+					<Color v-model="appConfig.customColors.backgroundColor">
+						<IonLabel>
+							<h3>{{ $t("appSettings:backgroundColor.title") }}</h3>
+						</IonLabel>
+					</Color>
+				</IonItem>
+
 				<IonItem :disabled="accessibilityConfig.highLegibility">
 					<IonIcon slot="start" :icon="fontMD" />
 					<IonSelect

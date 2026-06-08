@@ -12,15 +12,6 @@
 		"comicrelief": "Comic Relief",
 		"system-font": "System Schriftart"
 	},
-	"uiVariant": {
-		"title": "Benutzeroberflächen-Variante",
-		"auto": "Automatisch",
-		"light": "Hell",
-		"dark": "Dunkel"
-	},
-	"accentColor": {
-		"title": "Akzentfarbe auswählen"
-	},
 	"reducedMotion": {
 		"title": "Reduzierte Bewegung",
 		"desc": "Animationen deaktivieren"
@@ -48,21 +39,6 @@
 	},
 	"compactLists": {
 		"title": "Kompakte Listen"
-	},
-	"themeScheme": {
-		"title": "Farbschema",
-		"vibrant": "Lebhaft",
-		"neutral": "Neutral",
-		"expressive": "Ausdrucksvoll"
-	},
-	"colors": {
-		"app": "App-Farben",
-		"custom": "Benutzerdefinierte Farben",
-		"system": "Systemfarben",
-		"title": "Akzent- und Hintergrundfarben"
-	},
-	"backgroundColor": {
-		"title": "Wähle die Hintergrundfarbe"
 	},
 	"frontingNotification": {
 		"title": "Benachrichtigung pinnen"

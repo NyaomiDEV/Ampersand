@@ -234,20 +234,24 @@ async function setupAmpersand(){
 	updateAccessibility();
 
 	// lastly, we watch for our accessibility configuration as to update some stuff that is dependent to it
-	watch(accessibilityConfig, async () => {
-		await updateDarkMode();
+	watch(accessibilityConfig, () => {
 		updateMaterialColors();
 		updateAccessibility();
 		updateFont();
+	});
 
+	// watch this setting per se as it could spam notifications to many
+	watch(() => accessibilityConfig.frontingNotification, async () => {
 		if(accessibilityConfig.frontingNotification)
 			await sendFrontingChangedEvent();
 		else
 			await unnotify(1);
 	});
 	
-	// watch the appConfig for font changes
-	watch(() => appConfig.fontStyle, () => {
+	// watch the appConfig for changes
+	watch(appConfig, async () => {
+		await updateDarkMode();
+		updateMaterialColors();
 		updateFont();
 	});
 

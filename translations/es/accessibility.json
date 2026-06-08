@@ -7,15 +7,6 @@
 		"title": "Familia de fuente claramente legible",
 		"comicrelief": "Comic Relief"
 	},
-	"uiVariant": {
-		"title": "Variante de la interfaz",
-		"auto": "Automáticamente",
-		"light": "Claro",
-		"dark": "Oscuro"
-	},
-	"accentColor": {
-		"title": "Elige el color acentuado"
-	},
 	"reducedMotion": {
 		"title": "Movimiento reducido",
 		"desc": "Desactivar animaciones en la aplicación"
@@ -51,22 +42,6 @@
 	},
 	"frontingNotification": {
 		"title": "Notificación en primer plano"
-	},
-	"colors": {
-		"title": "Colores de acento y de fondo",
-		"app": "Colores de la aplicación",
-		"system": "Colores del sistema",
-		"custom": "Colores personalizados"
-	},
-	"backgroundColor": {
-		"title": "Elige el color de fondo"
-	},
-	"themeScheme": {
-		"title": "Esquema de colores",
-		"tonalSpot": "Foco tonal",
-		"neutral": "Neutro",
-		"vibrant": "Brillante",
-		"expressive": "Expresivo"
 	},
 	"tintWithColor": {
 		"title": "Colorear",

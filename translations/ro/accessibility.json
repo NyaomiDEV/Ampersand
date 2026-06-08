@@ -10,15 +10,6 @@
 		"opendyslexic": "OpenDyslexic",
 		"lexend": "Lexend"
 	},
-	"uiVariant": {
-		"title": "Variantă interfață",
-		"auto": "Auto",
-		"light": "Deschisă",
-		"dark": "Întunecată"
-	},
-	"accentColor": {
-		"title": "Alegeți culoarea de accent"
-	},
 	"reducedMotion": {
 		"title": "Mișcare redusă",
 		"desc": "Dezactivați animațiile din aplicație"

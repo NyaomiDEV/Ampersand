@@ -4,6 +4,13 @@ export type AppConfig = {
 	locale: {
 		language?: string
 	},
+	theme: "auto" | "dark" | "light",
+	themeScheme: "neutral" | "tonal-spot" | "vibrant" | "expressive",
+	colors: "app" | "system" | "custom",
+	customColors: {
+		accentColor?: string,
+		backgroundColor?: string
+	},
 	fontStyle: "default" | "modern" | "digital" | "round" | "newspaper" | "mystic" | "classy" | "boring",
 	view: string,
 	dashboardSettings: DashboardSettings,
@@ -65,15 +72,8 @@ export interface JournalPostCarouselSettings extends DashboardSetting {
 export type AccessibilityConfig = {
 	highLegibility: boolean,
 	highLegibilityType: "atkinson" | "opendyslexic" | "lexend" | "comicrelief" | "system-font",
-	theme: "auto" | "dark" | "light",
 	colorIndicatorPosition: "avatar" | "list-item",
 	themeIsAmoled: boolean,
-	themeScheme: "neutral" | "tonal-spot" | "vibrant" | "expressive",
-	colors: "app" | "system" | "custom",
-	customColors: {
-		accentColor?: string,
-		backgroundColor?: string
-	},
 	tintWithColor: boolean,
 	reducedMotion: boolean,
 	compactLists: boolean,

@@ -8,6 +8,13 @@ export const defaultAppConfig: AppConfig = {
 	showMembersApartFromCustomFronts: "after",
 	hideFrontingTimer: false,
 	view: "dashboard",
+	theme: "auto",
+	themeScheme: "tonal-spot",
+	colors: "app",
+	customColors: {
+		accentColor: "#30628C",
+		backgroundColor: "#308C88",
+	},
 	fontStyle: "default",
 	dashboardSettings: {
 		notesAccordion: {
@@ -61,15 +68,8 @@ export const defaultAppConfig: AppConfig = {
 export const defaultAccessibilityConfig: AccessibilityConfig = {
 	highLegibility: false,
 	highLegibilityType: "atkinson",
-	theme: "auto",
 	colorIndicatorPosition: "avatar",
 	themeIsAmoled: false,
-	themeScheme: "tonal-spot",
-	colors: "app",
-	customColors: {
-		accentColor: "#30628C",
-		backgroundColor: "#308C88",
-	},
 	tintWithColor: true,
 	reducedMotion: false,
 	compactLists: false,
