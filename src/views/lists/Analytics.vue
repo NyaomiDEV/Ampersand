@@ -7,7 +7,7 @@
 	import dayjs from "dayjs";
 	import MemberItem from "../../components/member/MemberItem.vue";
 	import { FrontingEntry, Member } from "../../lib/db/entities";
-	import { getMember } from "../../lib/db/tables/members";
+	import { defaultMember, getMember } from "../../lib/db/tables/members";
 	import { addModal, removeModal } from "../../lib/modals";
 	import { FrontingCo } from "../../lib/db/types";
 	import { accessibilityConfig } from "../../lib/config";
@@ -57,7 +57,7 @@
 
 		members.value = await Promise.all(Array.from(new Set([
 			...Object.keys(_analytics).map(k => [...(_analytics[k] as Map<string, number>).keys()]),
-		].flat())).map(x => getMember(x)));
+		].flat())).map(x => getMember(x).catch(_ => defaultMember(x))));
 
 		analytics.value = _analytics;
 	}

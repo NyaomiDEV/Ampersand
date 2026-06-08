@@ -42,7 +42,6 @@ export async function* getFilteredFrontingEntries(query: string) {
 	}
 }
 
-
 export function getFrontingEntry(uuid: UUID){
 	return db.frontingEntries.get(uuid);
 }
@@ -54,7 +53,7 @@ export function getFrontingEntryIndex(){
 export async function toFrontingEntryComplete(frontingEntries: FrontingEntry[]): Promise<FrontingEntryComplete[]> {
 	const _memberSet = await Promise.all(Array.from(new Set(
 		frontingEntries.map(x => [x.member, x.influencing].filter((x): x is string => !!x)).flat(1)
-	)).map(x => getMember(x)));
+	)).map(x => getMember(x).catch(_ => defaultMember(x))));
 
 	return frontingEntries.map(x => ({
 		...x,
