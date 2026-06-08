@@ -65,7 +65,7 @@ export async function importTupperBox(tuExport: ReadableStream<string>){
 		appConfig.defaultSystem = systemUuid.detail;
 
 		const jsonStream = tuExport
-			.pipeThrough(parseJsonStreamWithPaths([["groups", "tuppers"], undefined]));
+			.pipeThrough(parseJsonStreamWithPaths([["groups", "tuppers"]]));
 
 		// Add values to database
 		for await (const { path, value } of streamToIterable(jsonStream)){
