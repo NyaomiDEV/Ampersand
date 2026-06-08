@@ -362,6 +362,10 @@
 		cursor: unset;
 	}
 
+	span.filter-opacity {
+		filter: opacity(var(--markdown-filter-opacity));
+	}
+
 	ul {
 		padding-inline-start: 1.25em;
 	}
