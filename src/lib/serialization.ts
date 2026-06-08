@@ -31,13 +31,10 @@ export type Serialized<T> =
 
 
 const fileHashes: Map<string, WeakRef<File>> = new Map();
-
-setInterval(() => {
-	for(const [val, ref] of fileHashes){
-		if(ref.deref() === undefined)
-			fileHashes.delete(val);
-	}
-}, 10 * 1000);
+const registry = new FinalizationRegistry<string>((key) => {
+	if (!fileHashes.get(key)?.deref())
+		fileHashes.delete(key);
+});
 
 export async function revive(value: any) {
 	if (typeof value === "object" && value !== null && "_meta" in value) {
@@ -67,6 +64,7 @@ export async function revive(value: any) {
 					);
 
 					fileHashes.set(hash, new WeakRef(file));
+					registry.register(file, hash);
 					return file;
 				} else {
 					// new way
@@ -84,6 +82,7 @@ export async function revive(value: any) {
 					);
 
 					fileHashes.set(hash, new WeakRef(file));
+					registry.register(file, hash);
 					return file;
 				}
 			}
