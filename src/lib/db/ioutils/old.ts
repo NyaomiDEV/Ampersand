@@ -11,7 +11,7 @@ import { UUIDable } from "../entities";
 import dayjs from "dayjs";
 import { platform } from "@tauri-apps/plugin-os";
 import { DatabaseExport, SerializedDatabaseExport } from "./old_types";
-import { intoStream } from "../utils";
+import { intoStream } from "../../native/fs";
 
 export function exportDatabaseToBinary() {
 

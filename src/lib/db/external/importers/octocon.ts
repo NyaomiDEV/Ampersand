@@ -1,7 +1,6 @@
 import { appConfig } from "../../../config";
 import { nilUid } from "../../../util/consts";
 import { clearAllDatabase } from "../..";
-
 import type { OctoconAlter, OctoconFront, OctoconPoll, OctoconTag, OctoconUser } from "../types/octocon_types";
 import { getImage } from "../utils";
 import { newSystem, updateSystem } from "../../tables/system";
@@ -12,6 +11,8 @@ import { newTag } from "../../tables/tags";
 import { newMember, updateMember } from "../../tables/members";
 import { newFrontingEntry } from "../../tables/frontingEntries";
 import { newBoardMessage } from "../../tables/boardMessages";
+import { open } from "../../../native/open";
+import { intoStream } from "../../../native/fs";
 
 async function system(ocUser: OctoconUser, prefilledUuid: string){
 	const result = await updateSystem({
@@ -199,22 +200,29 @@ async function polls(ocPoll: OctoconPoll, memberMapping: Map<string, number>){
 	return result.detail;
 }
 
-export async function importOctocon(ocExport: ReadableStream<string>){
-	// UUID in our database -> Array of ID in their one and locked status
-	const customFieldMapping = new Map<string, [string, boolean]>();
-	// UUID in our database -> ID in their one
-	const memberMapping = new Map<string, number>();
-	// UUID in our database -> IDs of the alters who have this tag in their one
-	const tagsToAlters = new Map<string, number[]>();
-	// UUID in our database -> Array of k/v where k is their ID and v is the custom field data
-	const membersToFields = new Map<string, string[][]>();
-	
-
-	// We sadly need to cache fronts and polls
-	const _fronts: OctoconFront[] = [];
-	const _polls: OctoconPoll[] = [];
-
+export async function importOctocon(){
 	try {
+		const path = await open({
+			multiple: false,
+			filters: [{ name: "Tupperbox JSON", extensions: ["json"] }],
+			fileAccessMode: "scoped",
+			pickerMode: "document"
+		});
+		if (!path) throw new Error("no path");
+
+		// UUID in our database -> Array of ID in their one and locked status
+		const customFieldMapping = new Map<string, [string, boolean]>();
+		// UUID in our database -> ID in their one
+		const memberMapping = new Map<string, number>();
+		// UUID in our database -> IDs of the alters who have this tag in their one
+		const tagsToAlters = new Map<string, number[]>();
+		// UUID in our database -> Array of k/v where k is their ID and v is the custom field data
+		const membersToFields = new Map<string, string[][]>();
+
+		// We sadly need to cache fronts and polls
+		const _fronts: OctoconFront[] = [];
+		const _polls: OctoconPoll[] = [];
+
 		// WIPE AMPERSAND
 		await clearAllDatabase();
 
@@ -230,7 +238,7 @@ export async function importOctocon(ocExport: ReadableStream<string>){
 		if (!transactionSucceeded(_system)) throw new Error("Could not add a dummy system");
 		appConfig.defaultSystem = _system.detail;
 
-		const jsonStream = ocExport
+		const jsonStream = intoStream(path, undefined, true)
 			.pipeThrough(parseJsonStreamWithPaths([["groups", "tuppers"]]));
 
 		// Add values to database

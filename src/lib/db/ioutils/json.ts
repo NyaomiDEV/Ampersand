@@ -11,7 +11,7 @@ import { AssetJSON, BoardMessageJSON, FrontingEntryJSON, JournalPostJSON, Member
 import { fromDataURI, toDataURI } from "../../util/blob";
 import { appConfig, accessibilityConfig, securityConfig, initConfig } from "../../config";
 import { ArrayStream, arrayStream, matchesJsonPathSelector, objectStream, parseJsonStreamWithPaths, SerializableJsonValue, streamToIterable, stringifyJsonStream } from "json-stream-es";
-import { intoStream } from "../utils";
+import { intoStream } from "../../native/fs";
 import { AccessibilityConfig, AppConfig, SecurityConfig } from "../../config/types";
 import { version } from "../../../../package.json";
 

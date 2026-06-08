@@ -7,6 +7,8 @@ import { parseJsonStreamWithPaths, streamToIterable } from "json-stream-es";
 import { transactionSucceeded } from "../../utils";
 import { TupperboxGroup, TupperboxMember } from "../types/tupperbox_types";
 import { getImage } from "../utils";
+import { open } from "../../../native/open";
+import { intoStream } from "../../../native/fs";
 
 //function deriveHash(discordId: string, imageString: string){
 //	return `https://cdn.tupperbox.app/${discordId}/${imageString}.webp`;
@@ -48,11 +50,19 @@ async function member(tuMember: TupperboxMember){
 	return [result.detail, tuMember.group_id] as [string, number | undefined];
 }
 
-export async function importTupperBox(tuExport: ReadableStream<string>){
-	const tagMapping = new Map<number, string>();
-	const memberWantsTags = new Map<string, number | undefined>();
-
+export async function importTupperBox(){
 	try {
+		const path = await open({
+			multiple: false,
+			filters: [{ name: "Tupperbox JSON", extensions: ["json"] }],
+			fileAccessMode: "scoped",
+			pickerMode: "document"
+		});
+		if (!path) throw new Error("no path");
+
+		const tagMapping = new Map<number, string>();
+		const memberWantsTags = new Map<string, number | undefined>();
+
 		// WIPE AMPERSAND
 		await clearAllDatabase();
 
@@ -68,7 +78,7 @@ export async function importTupperBox(tuExport: ReadableStream<string>){
 		if(!transactionSucceeded(systemUuid)) throw new Error("Could not add a dummy system");
 		appConfig.defaultSystem = systemUuid.detail;
 
-		const jsonStream = tuExport
+		const jsonStream = intoStream(path, undefined, true)
 			.pipeThrough(parseJsonStreamWithPaths([["groups", "tuppers"]]));
 
 		// Add values to database

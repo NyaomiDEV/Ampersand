@@ -2,7 +2,7 @@ import { appDataDir, documentDir, sep } from "@tauri-apps/api/path";
 import { exists, mkdir, readDir, remove, writeFile } from "@tauri-apps/plugin-fs";
 import { exit } from "@tauri-apps/plugin-process";
 import { getConfigDirectory } from "../../config/store";
-import { intoStream } from "../utils";
+import { intoStream } from "../../native/fs";
 
 async function recursiveCopyDir(src: string, dst: string) {
 	await mkdir(dst, { recursive: true });

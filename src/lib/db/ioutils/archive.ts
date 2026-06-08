@@ -12,7 +12,7 @@ import dayjs from "dayjs";
 import { platform } from "@tauri-apps/plugin-os";
 import { System, UUIDable } from "../entities";
 import { ArchiveStreamConfig, ArchiveStreamDatabase, ArchiveStreamRevision } from "./archive_types";
-import { intoStream } from "../utils";
+import { intoStream } from "../../native/fs";
 
 const revision = parseInt(import.meta.env.AMPERSAND_REVCOUNT);
 

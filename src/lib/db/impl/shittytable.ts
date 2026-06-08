@@ -8,7 +8,7 @@ import { assets, boardMessages, journalPosts, members, systems, tags } from "./m
 import { PartialBy } from "../../types";
 import type { SecondaryKey, IndexEntry } from "../types";
 import { sha256 } from "../../util/misc";
-import { intoStream } from "../utils";
+import { intoStream } from "../../native/fs";
 
 const appDataDirPath = await appDataDir();
 
