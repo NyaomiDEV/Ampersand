@@ -12,7 +12,7 @@
     "eslint": "eslint src/"
   },
   "dependencies": {
-    "@choochmeque/tauri-plugin-notifications-api": "0.5.0-rc.3",
+    "@choochmeque/tauri-plugin-notifications-api": "0.5.0-rc.4",
     "@ionic/core": "8.8.9",
     "@ionic/vue": "8.8.9",
     "@ionic/vue-router": "^8.8.9",
