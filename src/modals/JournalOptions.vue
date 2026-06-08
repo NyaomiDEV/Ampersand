@@ -80,7 +80,6 @@
 			}
 		}
 	}
-	
 </script>
 
 <template>
@@ -122,7 +121,7 @@
 				<IonItem button :detail="false">
 					<Color v-model="post.color">
 						<IonLabel>
-							{{ $t("members:edit.color") }}
+							{{ $t("journal:edit.color") }}
 						</IonLabel>
 					</Color>
 					<IonButton
