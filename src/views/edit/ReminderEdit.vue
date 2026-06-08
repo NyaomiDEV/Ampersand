@@ -17,7 +17,8 @@
 		IonPage,
 		IonBackButton,
 		useIonRouter,
-		IonToggle
+		IonToggle,
+		IonTextarea
 	} from "@ionic/vue";
 
 	import saveMD from "@material-symbols/svg-600/rounded/save.svg";
@@ -190,9 +191,10 @@
 				</IonItem>
 
 				<IonItem>
-					<IonInput
+					<IonTextarea
 						v-model="reminder.message"
 						fill="solid"
+						auto-grow
 						label-placement="floating"
 						:label="$t('reminders:edit.message')"
 					/>
