@@ -28,7 +28,7 @@ const customTableExtension: MarkedExtension<(VNode | string)[], VNode | string> 
 		{
 			name: "custom-table",
 			level: "block",
-			start(src: string) { return src.match(/\+\+\+/)?.index; },
+			start(src: string) { return src.match(/^\+\+\+/)?.index; },
 			tokenizer(src: string) {
 				const rule = /^\+\+\+\n(.+?)\n---\n(.+?)\n\+\+\+(?:\n|$)/s;
 				const match = rule.exec(src);

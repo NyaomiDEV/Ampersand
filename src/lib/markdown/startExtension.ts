@@ -6,7 +6,7 @@ const startExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 		{
 			name: "start",
 			level: "block",
-			start(src: string) { return src.match(/<\|/)?.index; },
+			start(src: string) { return src.match(/^<\|/)?.index; },
 			tokenizer(src: string) {
 				const rule = /^<\|([\s\S]+?)<\|/s;
 				const match = rule.exec(src);

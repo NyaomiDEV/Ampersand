@@ -6,7 +6,7 @@ const centerExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 		{
 			name: "center",
 			level: "block",
-			start(src: string) { return src.match(/\|\|>/)?.index; },
+			start(src: string) { return src.match(/^\|\|>/)?.index; },
 			tokenizer(src: string) {
 				const rule = /^\|\|>([\s\S]+?)<\|\|/s;
 				const match = rule.exec(src);

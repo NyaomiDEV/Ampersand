@@ -4,7 +4,7 @@ import { MarkedExtension } from "marked";
 const rotationExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [
 		{
-			name: "rotation",
+			name: "rotationInline",
 			level: "inline",
 			start(src: string) { return src.match(/\[rot=/)?.index; },
 			tokenizer(src: string) {
@@ -12,7 +12,7 @@ const rotationExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 				const match = rule.exec(src);
 				if (match) {
 					const token = {
-						type: "rotation",
+						type: "rotationInline",
 						raw: match[0],
 						rotation: match[1],
 						text: match[2],
@@ -31,6 +31,36 @@ const rotationExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 				return h("span", {
 					style: cssStyle
 				}, token.tokens && token.tokens.length ? this.parser.parseInline(token.tokens) : token.text);
+			}
+		},
+		{
+			name: "rotation",
+			level: "block",
+			start(src: string) { return src.match(/^\[rot=/)?.index; },
+			tokenizer(src: string) {
+				const rule = /^\[rot=(-?\d*.?\d+(?:deg|grad|rad|turn))\]([\s\S]+?)\[\/rot\]/;
+				const match = rule.exec(src);
+				if (match) {
+					const token = {
+						type: "rotation",
+						raw: match[0],
+						rotation: match[1],
+						text: match[2],
+						tokens: this.lexer.blockTokens(match[2])
+					};
+					return token;
+				}
+				return;
+			},
+			renderer(token) {
+				const cssStyle: Record<string, string> = {};
+
+				cssStyle.display = "block";
+				cssStyle.transform = `rotate(${token.rotation})`;
+
+				return h("div", {
+					style: cssStyle
+				}, token.tokens && token.tokens.length ? this.parser.parse(token.tokens) : token.text);
 			}
 		}
 	]

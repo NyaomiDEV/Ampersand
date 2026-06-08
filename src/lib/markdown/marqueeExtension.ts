@@ -8,9 +8,9 @@ const marqueeExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 		{
 			name: "marquee",
 			level: "block",
-			start(src: string) { return src.match(/\[mq=/)?.index; },
+			start(src: string) { return src.match(/^\[mq=/)?.index; },
 			tokenizer(src: string) {
-				const rule = /^\[mq=(.+?)\](.+?)\[\/mq\]/;
+				const rule = /^\[mq=(.+?)\]([\s\S]+?)\[\/mq\]/;
 				const match = rule.exec(src);
 				if (match) {
 					const parts = splitList(match[1] || "");

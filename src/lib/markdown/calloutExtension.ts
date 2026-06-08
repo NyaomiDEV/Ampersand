@@ -7,7 +7,7 @@ const calloutExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 		{
 			name: "callout",
 			level: "block",
-			start(src: string) { return src.match(/:::/)?.index; },
+			start(src: string) { return src.match(/^:::/)?.index; },
 			tokenizer(src: string) {
 				const rule = /^:::(?<closed>-)?(?: \{(?<color>.+?)\})?(?: (?<title>.+?))?\n(?<text>[\S\s]+?)\n:::(?:\n|$)/;
 				const match = rule.exec(src);

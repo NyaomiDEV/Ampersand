@@ -5,7 +5,7 @@ import { splitList, isLength, isColor } from "./utils";
 const textOutlineExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [
 		{
-			name: "text-outline",
+			name: "textOutline",
 			level: "inline",
 			start(src: string) { return src.match(/\[to=/)?.index; },
 			tokenizer(src: string) {
@@ -19,7 +19,7 @@ const textOutlineExtension: MarkedExtension<(VNode | string)[], VNode | string> 
 					if (!isLength(width) || !isColor(color)) return;
 
 					const token = {
-						type: "text-outline",
+						type: "textOutline",
 						raw: match[0],
 						width,
 						color,

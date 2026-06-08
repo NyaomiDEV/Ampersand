@@ -8,7 +8,7 @@ const rangeExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 		{
 			name: "range",
 			level: "block",
-			start(src: string) { return src.match(/\[ra/)?.index; },
+			start(src: string) { return src.match(/^\[ra/)?.index; },
 			tokenizer(src: string) {
 				const rule = /^\[ra=(\d*\.?\d+(?::\d*\.?\d+)?)\]\n?([\S\s]+?)\n?\[\/ra\]/;
 				const match = rule.exec(src);

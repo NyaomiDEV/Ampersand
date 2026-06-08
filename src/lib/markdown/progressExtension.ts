@@ -8,7 +8,7 @@ const progressExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 		{
 			name: "progress",
 			level: "block",
-			start(src: string) { return src.match(/\[pr/)?.index; },
+			start(src: string) { return src.match(/^\[pr/)?.index; },
 			tokenizer(src: string) {
 				const rule = /^\[pr=(-?\d*\.?\d+)(?::(.+?))?\]/;
 				const match = rule.exec(src);
