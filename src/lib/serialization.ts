@@ -32,6 +32,13 @@ export type Serialized<T> =
 
 const fileHashes: Map<string, WeakRef<File>> = new Map();
 
+setInterval(() => {
+	for(const [val, ref] of fileHashes){
+		if(ref.deref() === undefined)
+			fileHashes.delete(val);
+	}
+}, 10 * 1000);
+
 export async function revive(value: any) {
 	if (typeof value === "object" && value !== null && "_meta" in value) {
 		switch (value._meta.type) {
