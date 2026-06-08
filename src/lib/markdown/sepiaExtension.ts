@@ -9,12 +9,10 @@ const sepiaExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 			level: "inline",
 			start(src: string) { return src.match(/\[sepia=/)?.index; },
 			tokenizer(src: string) {
-				const rule = /^\[sepia=(\d+%)\](.+?)\[\/sepia\]/;
+				const rule = /^\[sepia=(.+?)\](.+?)\[\/sepia\]/;
 				const match = rule.exec(src);
 				if (match) {
-
 					const sepia = match[1];
-
 					if (!isPercentage(sepia)) return;
 
 					const token = {

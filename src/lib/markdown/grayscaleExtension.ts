@@ -9,12 +9,10 @@ const grayscaleExtension: MarkedExtension<(VNode | string)[], VNode | string> = 
 			level: "inline",
 			start(src: string) { return src.match(/\[grayscale=/)?.index; },
 			tokenizer(src: string) {
-				const rule = /^\[grayscale=(\d+%)\](.+?)\[\/grayscale\]/;
+				const rule = /^\[grayscale=(.+?)\](.+?)\[\/grayscale\]/;
 				const match = rule.exec(src);
 				if (match) {
-
 					const grayscale = match[1];
-
 					if (!isPercentage(grayscale)) return;
 
 					const token = {

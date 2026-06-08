@@ -234,7 +234,6 @@
 
 	}
 
-
 	/* Text Color [fg], one color */
 	span.text-color-fg-one {
 		color: var(--markdown-text-fg-colors);
@@ -398,7 +397,10 @@
 		filter: blur(var(--markdown-filter-blur));
 	}
 
-
+	span.skew {
+		display: inline-block;
+		transform: skew(var(--markdown-skew-x), var(--markdown-skew-y, 0));
+	}
 
 	ul {
 		padding-inline-start: 1.25em;

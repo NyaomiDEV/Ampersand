@@ -9,12 +9,10 @@ const contrastExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 			level: "inline",
 			start(src: string) { return src.match(/\[contrast=/)?.index; },
 			tokenizer(src: string) {
-				const rule = /^\[contrast=(\d+%)\](.+?)\[\/contrast\]/;
+				const rule = /^\[contrast=(.+?)\](.+?)\[\/contrast\]/;
 				const match = rule.exec(src);
 				if (match) {
-
 					const contrast = match[1];
-
 					if (!isPercentage(contrast)) return;
 
 					const token = {

@@ -54,6 +54,7 @@ import contrastExtension from "./contrastExtension.ts";
 import saturateExtension from "./saturateExtension.ts";
 import hueExtension from "./hueExtension.ts";
 import blurFilterExtension from "./blurFilterExtension.ts";
+import skewExtension from "./skewExtension.ts";
 
 export function useMarked(){
 	const marked = new Marked<(VNode | string)[], VNode | string>();
@@ -179,7 +180,8 @@ export function useMarked(){
 		contrastExtension,
 		saturateExtension,
 		hueExtension,
-		blurFilterExtension
+		blurFilterExtension,
+		skewExtension
 	);
 
 	return marked;

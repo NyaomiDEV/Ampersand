@@ -12,9 +12,7 @@ const blurFilterExtension: MarkedExtension<(VNode | string)[], VNode | string> =
 				const rule = /^\[blur=(.+?)\](.+?)\[\/blur\]/;
 				const match = rule.exec(src);
 				if (match) {
-
 					const blur = match[1];
-
 					if (!isLength(blur)) return;
 
 					const token = {

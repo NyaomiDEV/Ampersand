@@ -9,12 +9,10 @@ const saturateExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 			level: "inline",
 			start(src: string) { return src.match(/\[saturate=/)?.index; },
 			tokenizer(src: string) {
-				const rule = /^\[saturate=(\d+%)\](.+?)\[\/saturate\]/;
+				const rule = /^\[saturate=(.+?)\](.+?)\[\/saturate\]/;
 				const match = rule.exec(src);
 				if (match) {
-
 					const saturate = match[1];
-
 					if (!isPercentage(saturate)) return;
 
 					const token = {

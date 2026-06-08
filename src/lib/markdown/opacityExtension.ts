@@ -9,12 +9,10 @@ const opacityExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 			level: "inline",
 			start(src: string) { return src.match(/\[opacity=/)?.index; },
 			tokenizer(src: string) {
-				const rule = /^\[opacity=(\d+%)\](.+?)\[\/opacity\]/;
+				const rule = /^\[opacity=(.+?)\](.+?)\[\/opacity\]/;
 				const match = rule.exec(src);
 				if (match) {
-
 					const opacity = match[1];
-
 					if (!isPercentage(opacity)) return;
 
 					const token = {

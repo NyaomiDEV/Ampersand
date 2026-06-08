@@ -9,12 +9,10 @@ const invertExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 			level: "inline",
 			start(src: string) { return src.match(/\[invert=/)?.index; },
 			tokenizer(src: string) {
-				const rule = /^\[invert=(\d+%)\](.+?)\[\/invert\]/;
+				const rule = /^\[invert=(.+?)\](.+?)\[\/invert\]/;
 				const match = rule.exec(src);
 				if (match) {
-
 					const invert = match[1];
-
 					if (!isPercentage(invert)) return;
 
 					const token = {

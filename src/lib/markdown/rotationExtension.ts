@@ -9,13 +9,12 @@ const rotationExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 			level: "inline",
 			start(src: string) { return src.match(/\[rot=/)?.index; },
 			tokenizer(src: string) {
-				const rule = /^\[rot=(-?\d*.?\d+(?:deg|grad|rad|turn))\](.+?)\[\/rot\]/;
+				const rule = /^\[rot=(.+?)\](.+?)\[\/rot\]/;
 				const match = rule.exec(src);
 				if (match) {
-
 					const rotation = match[1];
 					if (!isAngle(rotation)) return;
-
+					
 					const token = {
 						type: "rotationInline",
 						raw: match[0],
@@ -43,10 +42,9 @@ const rotationExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 			level: "block",
 			start(src: string) { return src.match(/^\[rot=/)?.index; },
 			tokenizer(src: string) {
-				const rule = /^\[rot=(-?\d*.?\d+(?:deg|grad|rad|turn))\]([\s\S]+?)\[\/rot\]/;
+				const rule = /^\[rot=(.+?)\]([\s\S]+?)\[\/rot\]/;
 				const match = rule.exec(src);
 				if (match) {
-
 					const rotation = match[1];
 					if (!isAngle(rotation)) return;
 
