@@ -61,13 +61,13 @@ export async function newSystem(system: Omit<System, keyof UUIDable>): Promise<T
 		return { success: true, detail: uuid };
 	}catch(_e){
 		console.error(_e);
-		return { success: false, err: _e };
+		return { success: false, err: _e instanceof Error ? _e : new Error(String(_e)) };
 	}
 }
 
 export async function deleteSystem(uuid: UUID): Promise<TransactionStatus<void>> {
-	if (uuid === nilUid) return { success: false };
 	try {
+		if (uuid === nilUid) throw new Error("Cannot delete system with null uuid");
 		await db.systems.delete(uuid);
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "systems",
@@ -78,7 +78,7 @@ export async function deleteSystem(uuid: UUID): Promise<TransactionStatus<void>>
 		return { success: true };
 	} catch (_e) {
 		console.error(_e);
-		return { success: false, err: _e };
+		return { success: false, err: _e instanceof Error ? _e : new Error(String(_e)) };
 	}
 }
 
@@ -97,7 +97,7 @@ export async function updateSystem(newContent: UUIDable & Partial<System>): Prom
 		throw new Error("not updated, did not exist in db");
 	} catch (_e) {
 		console.error(_e);
-		return { success: false, err: _e };
+		return { success: false, err: _e instanceof Error ? _e : new Error(String(_e)) };
 	}
 }
 

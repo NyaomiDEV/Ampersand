@@ -68,11 +68,22 @@ export type DatabaseEventData = {
 	newData?: unknown
 };
 
-export type TransactionStatus<T = unknown, E = unknown> = {
-	success: boolean,
-	err?: E,
-	detail?: T
-};
+export interface TransactionStatusSuccessWithoutDetails {
+	success: true
+}
+export interface TransactionStatusSuccess<T = unknown> {
+	success: true,
+	detail: T
+}
+
+export interface TransactionStatusFailed<E = Error> {
+	success: false,
+	err: E
+}
+
+export type TransactionStatus<T = void, E = Error> = T extends void
+	? (TransactionStatusSuccessWithoutDetails | TransactionStatusFailed<E>)
+	: (TransactionStatusSuccess<T> | TransactionStatusFailed<E>);
 
 export type FrontingCo = {
 	count: number,

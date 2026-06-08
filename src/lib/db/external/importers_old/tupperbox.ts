@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { appConfig, securityConfig } from "../../config";
-import { Member, Tag, System } from "../entities";
-import { clearAllDatabase, getTables } from "..";
-import { fetchImage } from "../../util/fetchImage";
-import { resizeImage } from "../../util/image";
-import { newFile } from "../../fileref";
+import { appConfig, securityConfig } from "../../../config";
+import { Member, Tag, System } from "../../entities";
+import { clearAllDatabase, getTables } from "../..";
+import { fetchImage } from "../../../util/fetchImage";
+import { resizeImage } from "../../../util/image";
+import { newFile } from "../../../fileref";
 
 function tag(tuExport: any){
 	const tagMapping = new Map<number, string>();

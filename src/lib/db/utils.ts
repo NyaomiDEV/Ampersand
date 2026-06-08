@@ -1,4 +1,5 @@
 import { FileHandle, open } from "@tauri-apps/plugin-fs";
+import { TransactionStatus, TransactionStatusSuccess, TransactionStatusSuccessWithoutDetails } from "./types";
 
 export function intoStream(fd: FileHandle | string, onRead?: (bytes: number) => void, toText?: false): ReadableStream<Uint8Array<ArrayBuffer>>;
 export function intoStream(fd: FileHandle | string, onRead?: (bytes: number) => void, toText?: true): ReadableStream<string>;
@@ -37,4 +38,12 @@ export function intoStream(fdOrPath: FileHandle | string, onRead?: (bytes: numbe
 	};
 
 	return new ReadableStream(source, { highWaterMark: 4 });
+}
+
+export function transactionSucceeded(status: TransactionStatus): status is TransactionStatusSuccess | TransactionStatusSuccessWithoutDetails {
+	return status.success;
+}
+
+export function transactionHasDetails(status: TransactionStatusSuccess | TransactionStatusSuccessWithoutDetails): status is TransactionStatusSuccess {
+	return !!(status as TransactionStatusSuccess).detail;
 }

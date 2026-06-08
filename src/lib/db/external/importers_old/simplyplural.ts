@@ -1,12 +1,12 @@
-import { System, Member, FrontingEntry, Tag, BoardMessage, CustomField, JournalPost, Reminder } from "../entities";
-import { clearAllDatabase, getTables } from "..";
+import { System, Member, FrontingEntry, Tag, BoardMessage, CustomField, JournalPost, Reminder } from "../../entities";
+import { clearAllDatabase, getTables } from "../..";
 import { t } from "i18next";
-import { fetchImage } from "../../util/fetchImage";
-import { resizeImage } from "../../util/image";
-import { maxUid, nilUid } from "../../util/consts";
-import { appConfig, securityConfig } from "../../config";
-import type { SimplyPluralExport, CustomField as SPCustomField } from "./simplyplural_types";
-import { newFile } from "../../fileref";
+import { fetchImage } from "../../../util/fetchImage";
+import { resizeImage } from "../../../util/image";
+import { maxUid, nilUid } from "../../../util/consts";
+import { appConfig, securityConfig } from "../../../config";
+import type { SimplyPluralExport, CustomField as SPCustomField } from "../types/simplyplural_types";
+import { newFile } from "../../../fileref";
 
 function normalizeSPColor(color?: string) {
 	if (!color || !color.length) return undefined;

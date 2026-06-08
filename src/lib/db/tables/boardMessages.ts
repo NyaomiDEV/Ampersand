@@ -60,7 +60,7 @@ export async function newBoardMessage(boardMessage: Omit<BoardMessage, keyof UUI
 		return { success: true, detail: uuid };
 	}catch(_e){
 		console.error(_e);
-		return { success: false, err: _e };
+		return { success: false, err: _e instanceof Error ? _e : new Error(String(_e)) };
 	}
 }
 
@@ -76,7 +76,7 @@ export async function deleteBoardMessage(uuid: UUID): Promise<TransactionStatus<
 		return { success: true };
 	} catch (_e) {
 		console.error(_e);
-		return { success: false, err: _e };
+		return { success: false, err: _e instanceof Error ? _e : new Error(String(_e)) };
 	}
 }
 
@@ -97,7 +97,7 @@ export async function updateBoardMessage(newContent: UUIDable & Partial<BoardMes
 		throw new Error("not updated, did not exist in db");
 	}catch(_e){
 		console.error(_e);
-		return { success: false, err: _e };
+		return { success: false, err: _e instanceof Error ? _e : new Error(String(_e)) };
 	}
 }
 

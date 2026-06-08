@@ -63,7 +63,7 @@ export async function newTag(tag: Omit<Tag, keyof UUIDable>): Promise<Transactio
 		return { success: true, detail: uuid };
 	}catch(_e){
 		console.error(_e);
-		return { success: false, err: _e };
+		return { success: false, err: _e instanceof Error ? _e : new Error(String(_e)) };
 	}
 }
 
@@ -112,7 +112,7 @@ export async function removeTag(uuid: UUID): Promise<TransactionStatus<void>> {
 		return { success: true };
 	} catch(_e){
 		console.error(_e);
-		return { success: false, err: _e };
+		return { success: false, err: _e instanceof Error ? _e : new Error(String(_e)) };
 	}
 }
 
@@ -133,7 +133,7 @@ export async function updateTag(newContent: UUIDable & Partial<Tag>): Promise<Tr
 		throw new Error("not updated, did not exist in db");
 	}catch(_e){
 		console.error(_e);
-		return { success: false, err: _e };
+		return { success: false, err: _e instanceof Error ? _e : new Error(String(_e)) };
 	}
 }
 

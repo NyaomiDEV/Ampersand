@@ -55,7 +55,7 @@ export async function newCustomField(customField: Omit<CustomField, keyof UUIDab
 		return { success: true, detail: uuid };
 	}catch(_e){
 		console.error(_e);
-		return { success: false, err: _e };
+		return { success: false, err: _e instanceof Error ? _e : new Error(String(_e)) };
 	}
 }
 
@@ -78,7 +78,7 @@ export async function deleteCustomField(uuid: UUID): Promise<TransactionStatus<v
 		return { success: true };
 	} catch (_e) {
 		console.error(_e);
-		return { success: false, err: _e };
+		return { success: false, err: _e instanceof Error ? _e : new Error(String(_e)) };
 	}
 }
 
@@ -99,7 +99,7 @@ export async function updateCustomField(newContent: UUIDable & Partial<CustomFie
 		throw new Error("not updated, did not exist in db");
 	}catch(_e){
 		console.error(_e);
-		return { success: false, err: _e };
+		return { success: false, err: _e instanceof Error ? _e : new Error(String(_e)) };
 	}
 }
 

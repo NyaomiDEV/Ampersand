@@ -63,7 +63,7 @@ export async function newJournalPost(journalPost: Omit<JournalPost, keyof UUIDab
 		return { success: true, detail: uuid };
 	}catch(_e){
 		console.error(_e);
-		return { success: false, err: _e };
+		return { success: false, err: _e instanceof Error ? _e : new Error(String(_e)) };
 	}
 }
 
@@ -83,7 +83,7 @@ export async function deleteJournalPost(uuid: UUID): Promise<TransactionStatus<v
 		return { success: true };
 	} catch (_e) {
 		console.error(_e);
-		return { success: false, err: _e };
+		return { success: false, err: _e instanceof Error ? _e : new Error(String(_e)) };
 	}
 }
 
@@ -104,7 +104,7 @@ export async function updateJournalPost(newContent: UUIDable & Partial<JournalPo
 		throw new Error("not updated, did not exist in db");
 	}catch(_e){
 		console.error(_e);
-		return { success: false, err: _e };
+		return { success: false, err: _e instanceof Error ? _e : new Error(String(_e)) };
 	}
 }
 

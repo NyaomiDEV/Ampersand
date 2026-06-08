@@ -11,6 +11,7 @@ import { FrontingCo, TransactionStatus } from "../types";
 import { sortFrontingEntries } from "../../util/misc";
 import { updateFrontingNotification } from "../../mode";
 import { triggerReminders } from "./reminders";
+import { transactionSucceeded } from "../utils";
 
 export async function* getFrontingEntries(maxIter = 10){
 	const uuids = db.frontingEntries.index.toSorted(sortFrontingEntries).map(x => x.uuid);
@@ -77,7 +78,7 @@ export async function newFrontingEntry(frontingEntry: Omit<FrontingEntry, keyof 
 		return { success: true, detail: uuid };
 	}catch(_e){
 		console.error(_e);
-		return { success: false, err: _e };
+		return { success: false, err: _e instanceof Error ? _e : new Error(String(_e)) };
 	}
 }
 
@@ -93,7 +94,7 @@ export async function deleteFrontingEntry(uuid: UUID): Promise<TransactionStatus
 		return { success: true };
 	} catch (_e) {
 		console.error(_e);
-		return { success: false, err: _e };
+		return { success: false, err: _e instanceof Error ? _e : new Error(String(_e)) };
 	}
 }
 
@@ -111,8 +112,8 @@ export async function updateFrontingEntry(newContent: UUIDable & Partial<Frontin
 
 				for (const _uuid of toUpdate){
 					const res = await updateFrontingEntry({ uuid: _uuid, isMainFronter: false });
-					if(res.err)
-						throw new Error(`updating non-main-fronter entry failed with error: ${res.err as Error}`);
+					if(!transactionSucceeded(res))
+						throw new Error(`updating non-main-fronter entry failed with error: ${res.err.message}`);
 				}
 
 				shouldDebounce = false;
@@ -133,7 +134,7 @@ export async function updateFrontingEntry(newContent: UUIDable & Partial<Frontin
 		throw new Error("not updated, did not exist in db");
 	}catch(_e){
 		console.error(_e);
-		return { success: false, err: _e };
+		return { success: false, err: _e instanceof Error ? _e : new Error(String(_e)) };
 	}
 }
 
@@ -145,7 +146,7 @@ export async function removeFronter(member: Member) {
 		return updateFrontingEntry({ uuid: f.uuid, endTime: new Date() });
 	}catch(_e){
 		console.error(_e);
-		return { success: false, err: _e };
+		return { success: false, err: _e instanceof Error ? _e : new Error(String(_e)) };
 	}
 }
 
@@ -157,7 +158,7 @@ export async function setMainFronter(member: Member, value: boolean){
 		return updateFrontingEntry({ uuid: f.uuid, isMainFronter: value });
 	}catch (_e) {
 		console.error(_e);
-		return { success: false, err: _e };
+		return { success: false, err: _e instanceof Error ? _e : new Error(String(_e)) };
 	}
 }
 
@@ -171,8 +172,8 @@ export async function setSoleFronter(member: Member) {
 
 		for(const uuid of toUpdate){
 			const res = await updateFrontingEntry({ uuid, endTime });
-			if (res.err)
-				throw new Error(`updating fronter entry failed with error: ${res.err as Error}`);
+			if (!transactionSucceeded(res))
+				throw new Error(`updating fronter entry failed with error: ${res.err.message}`);
 		}
 
 		let uuid: string;
@@ -200,7 +201,7 @@ export async function setSoleFronter(member: Member) {
 		return { success: true, detail: uuid };
 	}catch(_e){
 		console.error(_e);
-		return { success: false, err: _e };
+		return { success: false, err: _e instanceof Error ? _e : new Error(String(_e)) };
 	}
 }
 

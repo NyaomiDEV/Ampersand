@@ -57,7 +57,7 @@ export async function newMember(member: Omit<Member, keyof UUIDable>): Promise<T
 		return { success: true, detail: uuid };
 	}catch(_e){
 		console.error(_e);
-		return { success: false, err: _e };
+		return { success: false, err: _e instanceof Error ? _e : new Error(String(_e)) };
 	}
 }
 
@@ -69,8 +69,8 @@ export async function getMember(uuid: UUID){
 }
 
 export async function deleteMember(uuid: UUID): Promise<TransactionStatus<void>> {
-	if (uuid === nilUid) return { success: false };
 	try {
+		if (uuid === nilUid) throw new Error("Cannot delete member with null uuid");
 		await db.members.delete(uuid);
 		DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
 			table: "members",
@@ -81,13 +81,13 @@ export async function deleteMember(uuid: UUID): Promise<TransactionStatus<void>>
 		return { success: true };
 	} catch (_e) {
 		console.error(_e);
-		return { success: false, err: _e };
+		return { success: false, err: _e instanceof Error ? _e : new Error(String(_e)) };
 	}
 }
 
 export async function updateMember(newContent: UUIDable & Partial<Member>): Promise<TransactionStatus<{ oldData: Member, newData: Member }>> {
-	if (newContent.uuid === nilUid) return { success: false };
 	try{
+		if (newContent.uuid === nilUid) throw new Error("Cannot update member with null uuid");
 		const updated = await db.members.update(newContent);
 		if(updated) {
 			DatabaseEvents.dispatchEvent(new DatabaseEvent("updated", {
@@ -103,7 +103,7 @@ export async function updateMember(newContent: UUIDable & Partial<Member>): Prom
 		throw new Error("not updated, did not exist in db");
 	}catch(_e){
 		console.error(_e);
-		return { success: false, err: _e };
+		return { success: false, err: _e instanceof Error ? _e : new Error(String(_e)) };
 	}
 }
 

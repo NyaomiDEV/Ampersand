@@ -4,10 +4,10 @@
 	import { importDatabaseFromBinary } from "../../lib/db/ioutils/old";
 	import { getDocumentFile, promptOptions, sortName, toast } from "../../lib/util/misc";
 	import { useTranslation } from "i18next-vue";
-	import { importPluralKit } from "../../lib/db/external/pluralkit";
-	import { importTupperBox } from "../../lib/db/external/tupperbox";
-	import { importSimplyPlural } from "../../lib/db/external/simplyplural";
-	import { importOctocon } from "../../lib/db/external/octocon";
+	import { importPluralKit } from "../../lib/db/external/importers_old/pluralkit.ts";
+	import { importTupperBox } from "../../lib/db/external/importers_old/tupperbox.ts";
+	import { importSimplyPlural } from "../../lib/db/external/importers_old/simplyplural.ts";
+	import { importOctocon } from "../../lib/db/external/importers_old/octocon.ts";
 	import { System } from "../../lib/db/entities";
 	import { platform } from "@tauri-apps/plugin-os";
 	import { exportArchive, importArchive } from "../../lib/db/ioutils/archive";

@@ -76,7 +76,7 @@ export async function newFilterQuery(filterQuery: Omit<FilterQuery, keyof UUIDab
 		return { success: true, detail: uuid };
 	}catch(_e){
 		console.error(_e);
-		return { success: false, err: _e };
+		return { success: false, err: _e instanceof Error ? _e : new Error(String(_e)) };
 	}
 }
 
@@ -92,7 +92,7 @@ export async function deleteFilterQuery(uuid: UUID): Promise<TransactionStatus<v
 		return { success: true };
 	} catch (_e) {
 		console.error(_e);
-		return { success: false, err: _e };
+		return { success: false, err: _e instanceof Error ? _e : new Error(String(_e)) };
 	}
 }
 
@@ -113,6 +113,6 @@ export async function updateFilterQuery(newContent: UUIDable & Partial<FilterQue
 		throw new Error("not updated, did not exist in db");
 	}catch(_e){
 		console.error(_e);
-		return { success: false, err: _e };
+		return { success: false, err: _e instanceof Error ? _e : new Error(String(_e)) };
 	}
 }

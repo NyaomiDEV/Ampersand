@@ -3,15 +3,15 @@
 // I hope this will end well
 // Naomi Calabretta, 15 March 2026 10:35 GMT+1
 
-import { appConfig, securityConfig } from "../../config";
-import { nilUid } from "../../util/consts";
-import { BoardMessage, CustomField, FrontingEntry, Member, System, Tag } from "../entities";
-import { fetchImage } from "../../util/fetchImage";
-import { clearAllDatabase, getTables } from "..";
+import { appConfig, securityConfig } from "../../../config";
+import { nilUid } from "../../../util/consts";
+import { BoardMessage, CustomField, FrontingEntry, Member, System, Tag } from "../../entities";
+import { fetchImage } from "../../../util/fetchImage";
+import { clearAllDatabase, getTables } from "../..";
 
-import type { OctoconExport } from "./octocon_types";
-import { resizeImage } from "../../util/image";
-import { newFile } from "../../fileref";
+import type { OctoconExport } from "../types/octocon_types";
+import { resizeImage } from "../../../util/image";
+import { newFile } from "../../../fileref";
 
 async function getImage(url?: string){
 	if(!url || !securityConfig.allowRemoteContent) return undefined;

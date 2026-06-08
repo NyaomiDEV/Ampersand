@@ -59,7 +59,7 @@ export async function newAsset(asset: Omit<Asset, keyof UUIDable>): Promise<Tran
 		console.error(_e);
 		return {
 			success: false,
-			err: _e
+			err: _e instanceof Error ? _e : new Error(String(_e))
 		};
 	}
 }
@@ -82,7 +82,7 @@ export async function deleteAsset(uuid: UUID): Promise<TransactionStatus<void>> 
 		console.error(_e);
 		return {
 			success: false,
-			err: _e
+			err: _e instanceof Error ? _e : new Error(String(_e))
 		};
 	}
 }
@@ -106,7 +106,7 @@ export async function updateAsset(newContent: UUIDable & Partial<Asset>): Promis
 		console.error(_e);
 		return {
 			success: false,
-			err: _e
+			err: _e instanceof Error ? _e : new Error(String(_e))
 		};
 	}
 }
