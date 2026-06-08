@@ -5,10 +5,14 @@ import { newTag } from "../../tables/tags";
 import { newMember, updateMember } from "../../tables/members";
 import { parseJsonStreamWithPaths, streamToIterable } from "json-stream-es";
 import { transactionSucceeded } from "../../utils";
-import { Group, Tupper } from "../types/tupperbox_types";
+import { TupperboxGroup, TupperboxMember } from "../types/tupperbox_types";
 import { getImage } from "../utils";
 
-async function tag(tuGroup: Group, tagMapping: Map<number, string>){
+//function deriveHash(discordId: string, imageString: string){
+//	return `https://cdn.tupperbox.app/${discordId}/${imageString}.webp`;
+//}
+
+async function tag(tuGroup: TupperboxGroup, tagMapping: Map<number, string>){
 	const result = await newTag({
 		name: tuGroup.name,
 		description: tuGroup.description || undefined,
@@ -23,18 +27,18 @@ async function tag(tuGroup: Group, tagMapping: Map<number, string>){
 	tagMapping.set(tuGroup.id, result.detail);
 }
 
-async function member(tuMember: Tupper){
+async function member(tuMember: TupperboxMember){
 	const result = await newMember({
 		name: tuMember.name,
 		system: appConfig.defaultSystem,
-		image: await getImage(tuMember.avatar_url),
-		cover: await getImage(tuMember.banner, 1024),
+		image: await getImage(tuMember.avatar_url), // await getImage(deriveHash(<DISCORD ID GOES HERE>, tuMember.avatar))
+		//cover: await getImage(deriveHash(<DISCORD ID GOES HERE>, tuMember.banner), 1024),
 		description: tuMember.description || undefined,
 		pronouns: tuMember.pronouns || undefined,
 		isArchived: false,
 		isCustomFront: false,
 		isPinned: false,
-		dateCreated: new Date(tuMember.created_at),
+		dateCreated: tuMember.created_at ? new Date(tuMember.created_at) : new Date(),
 		tags: []
 	});
 
@@ -71,11 +75,11 @@ export async function importTupperBox(tuExport: ReadableStream<string>){
 		for await (const { path, value } of streamToIterable(jsonStream)){
 			switch(path[0]){
 				case "groups": {
-					await tag(value as unknown as Group, tagMapping);
+					await tag(value as unknown as TupperboxGroup, tagMapping);
 					break;
 				}
 				case "tuppers": {
-					const [uuid, tbTag] = await member(value as unknown as Tupper);
+					const [uuid, tbTag] = await member(value as unknown as TupperboxMember);
 					memberWantsTags.set(uuid, tbTag);
 					break;
 				}
