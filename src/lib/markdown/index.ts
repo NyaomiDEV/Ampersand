@@ -15,6 +15,7 @@ import underlineExtension from "./underlineExtension";
 import highlightExtension from "./highlightExtension";
 import centerExtension from "./centerExtension";
 import linebreakExtension from "./linebreakExtension";
+import smallTextExtension from "./smallTextExtension.ts";
 import textColorFgExtension from "./textColorFgExtension";
 import textColorBgExtension from "./textColorBgExtension";
 
@@ -157,7 +158,8 @@ export function useMarked(){
 		textOutlineExtension,
 		progressExtension,
 		toggleExtension,
-		coloredHrExtension
+		coloredHrExtension,
+		smallTextExtension
 	);
 
 	return marked;

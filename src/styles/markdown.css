@@ -228,6 +228,13 @@
 		vertical-align: baseline;
 	}
 
+	p.small-text {
+		font-size: 0.85em;
+		color: rgb(var(--md3-on-surface-variant));
+	}
+
+
+	/* Text Color [fg] */
 	span.text-color-fg-one {
 		color: var(--markdown-text-fg-colors);
 	}
@@ -260,6 +267,7 @@
 		}
 	}
 
+	/* Background Color [bg] */
 	span.text-color-bg {
 		border-radius: 4px;
 		padding: 2px 4px;
@@ -286,10 +294,6 @@
 			padding: 0;
 			display: inline-block;
 		}
-	}
-
-	span.text-shadow {
-		text-shadow: var(--markdown-text-shadow);
 	}
 
 	span.box-shadow {
@@ -534,7 +538,7 @@
 		height: 8px;
 		margin: 0.5em 0;
 	}
-	
+
 	ion-toggle {
 		pointer-events: none;
 
