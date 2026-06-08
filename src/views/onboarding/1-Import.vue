@@ -5,9 +5,9 @@
 	import { importArchive } from "../../lib/db/ioutils/archive";
 	import { getDocumentFile, promptYesNo, slideAnimation, toast } from "../../lib/util/misc";
 	import { importPluralKit } from "../../lib/db/external/importers_old/pluralkit.ts";
-	import { importTupperBox } from "../../lib/db/external/importers_old/tupperbox.ts";
+	import { importTupperBox } from "../../lib/db/external/importers/tupperbox.ts";
 	import { importSimplyPlural } from "../../lib/db/external/importers_old/simplyplural.ts";
-	import { importOctocon } from "../../lib/db/external/importers_old/octocon.ts";
+	import { importOctocon } from "../../lib/db/external/importers/octocon.ts";
 	import { useTranslation } from "i18next-vue";
 	import { clearAllDatabase } from "../../lib/db";
 	import { resetConfig, securityConfig } from "../../lib/config";
@@ -72,11 +72,8 @@
 	async function importFromOctocon() {
 		await promptRemoteConnection();
 		try{
-			const file = await getDocumentFile(["json"], false);
-			if (!file) throw new Error("no files specified");
 			loading.value = true;
-			const ocExport = JSON.parse(new TextDecoder("utf-8").decode(file));
-			const result = await importOctocon(ocExport);
+			const result = await importOctocon();
 			if(!result) throw new Error("errored out");
 		}catch(_e){
 			console.error(_e);
@@ -110,11 +107,8 @@
 	async function importFromTupperbox() {
 		await promptRemoteConnection();
 		try{
-			const file = await getDocumentFile(["json"], false);
-			if (!file) throw new Error("no files specified");
 			loading.value = true;
-			const tuExport = JSON.parse(new TextDecoder("utf-8").decode(file));
-			const result = await importTupperBox(tuExport);
+			const result = await importTupperBox();
 			if(!result) throw new Error("errored out");
 		}catch(_e){
 			console.error(_e);

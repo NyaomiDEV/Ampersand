@@ -5,9 +5,9 @@
 	import { getDocumentFile, promptOptions, sortName, toast } from "../../lib/util/misc";
 	import { useTranslation } from "i18next-vue";
 	import { importPluralKit } from "../../lib/db/external/importers_old/pluralkit.ts";
-	import { importTupperBox } from "../../lib/db/external/importers_old/tupperbox.ts";
+	import { importTupperBox } from "../../lib/db/external/importers/tupperbox.ts";
 	import { importSimplyPlural } from "../../lib/db/external/importers_old/simplyplural.ts";
-	import { importOctocon } from "../../lib/db/external/importers_old/octocon.ts";
+	import { importOctocon } from "../../lib/db/external/importers/octocon.ts";
 	import { System } from "../../lib/db/entities";
 	import { platform } from "@tauri-apps/plugin-os";
 	import { exportArchive, importArchive } from "../../lib/db/ioutils/archive";
@@ -59,29 +59,30 @@
 
 	async function exportDb(){
 		loading.value = true;
+		try{
+			const { progress, status } = exportArchive();
 
-		const { progress, status } = exportArchive();
+			progress.addEventListener("start", () => {
+				barProgress.value = 0;
+			});
+			progress.addEventListener("progress", (evt) => {
+				barProgress.value = (evt as CustomEvent).detail.progress;
+			});
+			progress.addEventListener("finish", () => {
+				barProgress.value = -1;
+			});
+				
+			if(!await status) throw new Error("errored out");
 
-		progress.addEventListener("start", () => {
-			barProgress.value = 0;
-		});
-		progress.addEventListener("progress", (evt) => {
-			barProgress.value = (evt as CustomEvent).detail.progress;
-		});
-		progress.addEventListener("finish", () => {
-			barProgress.value = -1;
-		});
-			
-		if(await status){
 			await toast(
 				platform() === "ios"
 					? i18next.t("importExport:status.exportedAppIos")
 					: i18next.t("importExport:status.exportedApp")
 			);
-
-		} else 
+		} catch(_e){
+			console.error(_e);
 			await toast(i18next.t("importExport:status.errorExport"));
-
+		}
 		loading.value = false;
 	}
 
@@ -125,6 +126,7 @@
 					: i18next.t("importExport:status.exportedReport")
 			);
 		}catch(_e){
+			console.error(_e);
 			await toast(i18next.t("importExport:status.errorExport"));
 		}
 		loading.value = false;
@@ -149,6 +151,7 @@
 
 			await toast(i18next.t("importExport:status.imported"));
 		}catch(_e){
+			console.error(_e);
 			await toast(i18next.t("importExport:status.error"));
 		}
 		loading.value = false;
@@ -176,6 +179,7 @@
 
 			await toast(i18next.t("importExport:status.imported"));
 		}catch(_e){
+			console.error(_e);
 			await toast(i18next.t("importExport:status.error"));
 		}
 		loading.value = false;
@@ -205,6 +209,7 @@
 					: i18next.t("importExport:status.exportedJson")
 			);
 		}catch(_e){
+			console.error(_e);
 			await toast(i18next.t("importExport:status.errorExport"));
 		}
 		loading.value = false;
@@ -231,15 +236,12 @@
 	async function importOc() {
 		loading.value = true;
 		try{
-			const file = await getDocumentFile(["json"], false);
-			if (!file) throw new Error("no files specified");
-
-			const ocExport = JSON.parse(new TextDecoder("utf-8").decode(file));
-			const result = await importOctocon(ocExport);
+			const result = await importOctocon();
 			if(!result) throw new Error("errored out");
 
 			await toast(i18next.t("importExport:status.importedOc"));
 		}catch(_e){
+			console.error(_e);
 			await toast(i18next.t("importExport:status.errorOc"));
 		}
 		loading.value = false;
@@ -257,6 +259,7 @@
 
 			await toast(i18next.t("importExport:status.importedPk"));
 		}catch(_e){
+			console.error(_e);
 			await toast(i18next.t("importExport:status.errorPk"));
 		}
 		loading.value = false;
@@ -265,15 +268,12 @@
 	async function importTu() {
 		loading.value = true;
 		try{
-			const file = await getDocumentFile(["json"], false);
-			if (!file) throw new Error("no files specified");
-
-			const tuExport = JSON.parse(new TextDecoder("utf-8").decode(file));
-			const result = await importTupperBox(tuExport);
+			const result = await importTupperBox();
 			if(!result) throw new Error("errored out");
 
 			await toast(i18next.t("importExport:status.importedTu"));
 		}catch(_e) {
+			console.error(_e);
 			await toast(i18next.t("importExport:status.errorTu"));
 		}
 		loading.value = false;
