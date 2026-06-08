@@ -53,6 +53,7 @@
 		h1 {
 			text-align: center;
 			font-size: 2.25em;
+			line-height: normal;
 		}
 
 		.logo {

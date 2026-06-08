@@ -189,6 +189,7 @@
 
 		h1 {
 			font-size: 2.25em;
+			line-height: normal;
 		}
 	}
 
