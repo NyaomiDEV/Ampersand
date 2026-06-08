@@ -229,16 +229,18 @@
 	}
 
 	p.small-text {
-		font-size: 0.85em;
-		color: rgb(var(--md3-on-surface-variant));
+		font-size: .9em;
+		opacity: .8;
+
 	}
 
 
-	/* Text Color [fg] */
+	/* Text Color [fg], one color */
 	span.text-color-fg-one {
 		color: var(--markdown-text-fg-colors);
 	}
 
+	/* Text Color [fg], more colors */
 	span.text-color-fg {
 		background: linear-gradient(in var(--markdown-text-fg-colorspace) var(--markdown-text-fg-degrees), var(--markdown-text-fg-colors));
 		-webkit-background-clip: text;
