@@ -525,4 +525,9 @@
 			pointer-events: all;
 		}
 	}
+
+	ion-progress-bar {
+		height: 8px;
+		margin: 0.5em 0;
+	}
 }
