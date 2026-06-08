@@ -42,6 +42,7 @@ import textOutlineExtension from "./textOutlineExtension.ts";
 import dropShadowExtension from "./dropShadowExtension.ts";
 import progressExtension from "./progressExtension.ts";
 import toggleExtension from "./toggleExtension.ts";
+import coloredHrExtension from "./coloredHrExtension.ts";
 
 export function useMarked(){
 	const marked = new Marked<(VNode | string)[], VNode | string>();
@@ -155,7 +156,8 @@ export function useMarked(){
 		rangeExtension,
 		textOutlineExtension,
 		progressExtension,
-		toggleExtension
+		toggleExtension,
+		coloredHrExtension
 	);
 
 	return marked;
