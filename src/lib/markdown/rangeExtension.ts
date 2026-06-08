@@ -7,10 +7,10 @@ const rangeExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [
 		{
 			name: "range",
-			level: "inline",
+			level: "block",
 			start(src: string) { return src.match(/\[ra/)?.index; },
 			tokenizer(src: string) {
-				const rule = /^\[ra=(\d*\.?\d+(?::\d*\.?\d+)?)\](.*?)\[\/ra\]/;
+				const rule = /^\[ra=(\d*\.?\d+(?::\d*\.?\d+)?)\]\n?([\S\s]+?)\n?\[\/ra\]/;
 				const match = rule.exec(src);
 				if (match) {
 					const values = splitList(match[1]).map(x => parseFloat(x));
@@ -21,7 +21,7 @@ const rangeExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 						raw: match[0],
 						values,
 						text: match[2],
-						tokens: this.lexer.inlineTokens(match[2])
+						tokens: this.lexer.blockTokens(match[2])
 					};
 					return token;
 				}
@@ -41,7 +41,7 @@ const rangeExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 						value: token.values.length > 1 ? { lower: Math.min(...token.values), upper: Math.max(...token.values) } : token.values[0]
 					},
 					() => token.text.length
-						? h("span", { slot: "label" }, token.tokens && token.tokens.length ? this.parser.parseInline(token.tokens) : token.text)
+						? h("div", { slot: "label" }, token.tokens && token.tokens.length ? this.parser.parse(token.tokens) : token.text)
 						: undefined
 				);
 			}

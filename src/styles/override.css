@@ -258,6 +258,7 @@ ion-range.range-label-placement-stacked::part(label) {
 
 ion-range.range-label-placement-stacked > [slot="label"] {
 	overflow-x: hidden;
+	max-width: 100%;
 	text-wrap: wrap;
 }
 
