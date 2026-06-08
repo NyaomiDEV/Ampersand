@@ -98,7 +98,7 @@
 					..._post,
 					members: _post.members.map(x => x.uuid)
 				});
-				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+				if(!result.success) throw new Error(`E: ${result.err || "failed"}`);
 				
 				// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 				await loadingModal.value?.$el.dismiss();
@@ -111,7 +111,7 @@
 				members: _post.members.map(x => x.uuid)
 			} as JournalPost);
 
-			if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+			if(!result.success) throw new Error(`E: ${result.err || "failed"}`);
 				
 			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 			await loadingModal.value?.$el.dismiss();

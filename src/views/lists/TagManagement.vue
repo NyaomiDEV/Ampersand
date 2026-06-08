@@ -111,7 +111,7 @@
 				await loadingModal.value?.$el.present();
 
 				const result = await removeTag(tag.uuid);
-				if(!result.success) throw new Error(`E: ${result.err as Error}`);
+				if(!result.success) throw new Error(`E: ${result.err}`);
 
 				// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 				await loadingModal.value?.$el.dismiss();

@@ -84,7 +84,7 @@
 					member: _frontingEntry.member.uuid,
 					influencing: _frontingEntry.influencing?.uuid
 				});
-				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+				if(!result.success) throw new Error(`E: ${result.err || "failed"}`);
 
 				void sendFrontingChangedEvent();
 
@@ -102,7 +102,7 @@
 				member: _frontingEntry.member.uuid,
 				influencing: _frontingEntry.influencing?.uuid
 			} as FrontingEntry);
-			if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+			if(!result.success) throw new Error(`E: ${result.err || "failed"}`);
 
 			void sendFrontingChangedEvent();
 
@@ -130,7 +130,7 @@
 				await loadingModal.value?.$el.present();
 
 				const result = await deleteFrontingEntry(frontingEntry.value.uuid!);
-				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+				if(!result.success) throw new Error(`E: ${result.err || "failed"}`);
 
 				void sendFrontingChangedEvent();
 			

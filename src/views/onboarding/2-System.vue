@@ -37,11 +37,11 @@
 				const result = await newSystem({
 					..._system
 				});
-				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+				if(!result.success) throw new Error(`E: ${result.err || "failed"}`);
 				else appConfig.defaultSystem = result.detail!;
 			} else {
 				const result = await updateSystem(_system as System);
-				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+				if(!result.success) throw new Error(`E: ${result.err || "failed"}`);
 			}
 			
 			router.replace("/onboarding/member/", slideAnimation);

@@ -130,7 +130,7 @@
 					..._member,
 					dateCreated: new Date()
 				});
-				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+				if(!result.success) throw new Error(`E: ${result.err || "failed"}`);
 
 				// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 				await loadingModal.value?.$el.dismiss();
@@ -140,7 +140,7 @@
 			}
 
 			const result = await updateMember(_member as Member);
-			if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+			if(!result.success) throw new Error(`E: ${result.err || "failed"}`);
 
 			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 			await loadingModal.value?.$el.dismiss();
@@ -239,7 +239,7 @@
 				await loadingModal.value?.$el.present();
 
 				const result = await deleteMember(member.value.uuid!);
-				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+				if(!result.success) throw new Error(`E: ${result.err || "failed"}`);
 
 				// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 				await loadingModal.value?.$el.dismiss();

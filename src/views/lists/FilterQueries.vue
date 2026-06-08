@@ -112,7 +112,7 @@
 				i18next.t("filterQueries:edit.delete.confirm")
 			)){
 				const result = await deleteFilterQuery(filterQuery.uuid);
-				if(!result.success) throw new Error(`E: ${result.err as Error}`);
+				if(!result.success) throw new Error(`E: ${result.err}`);
 			}
 		}catch(e){
 			await toast((e as Error).message);

@@ -105,7 +105,7 @@
 					..._boardMessage,
 					members: _boardMessage.members.map(x => x.uuid)
 				});
-				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+				if(!result.success) throw new Error(`E: ${result.err || "failed"}`);
 
 				// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 				await loadingModal.value?.$el.dismiss();
@@ -119,7 +119,7 @@
 				members: _boardMessage.members.map(x => x.uuid)
 			} as BoardMessage);
 
-			if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+			if(!result.success) throw new Error(`E: ${result.err || "failed"}`);
 
 			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 			await loadingModal.value?.$el.dismiss();
@@ -144,7 +144,7 @@
 				await loadingModal.value?.$el.present();
 
 				const result = await deleteBoardMessage(boardMessage.value.uuid!);
-				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+				if(!result.success) throw new Error(`E: ${result.err || "failed"}`);
 
 				// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 				await loadingModal.value?.$el.dismiss();

@@ -86,7 +86,7 @@
 				const result = await newSystem({
 					..._system
 				});
-				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+				if(!result.success) throw new Error(`E: ${result.err || "failed"}`);
 
 				// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 				await loadingModal.value?.$el.dismiss();
@@ -96,7 +96,7 @@
 			}
 
 			const result = await updateSystem(_system as System);
-			if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+			if(!result.success) throw new Error(`E: ${result.err || "failed"}`);
 
 			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 			await loadingModal.value?.$el.dismiss();
@@ -143,7 +143,7 @@
 				await loadingModal.value?.$el.present();
 
 				const result = await deleteSystem(system.value.uuid!);
-				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+				if(!result.success) throw new Error(`E: ${result.err || "failed"}`);
 
 				// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 				await loadingModal.value?.$el.dismiss();

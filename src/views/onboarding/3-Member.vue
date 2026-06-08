@@ -60,7 +60,7 @@
 				..._member,
 				dateCreated: new Date()
 			});
-			if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+			if(!result.success) throw new Error(`E: ${result.err || "failed"}`);
 			router.replace("/onboarding/end/", slideAnimation);
 		}catch(e){
 			await toast((e as Error).message);

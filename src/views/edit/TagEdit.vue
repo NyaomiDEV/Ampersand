@@ -118,7 +118,7 @@
 
 			if(!uuid){
 				const result = await newTag(_tag);
-				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+				if(!result.success) throw new Error(`E: ${result.err || "failed"}`);
 
 				// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 				await loadingModal.value?.$el.dismiss();
@@ -128,7 +128,7 @@
 			}
 
 			const result = await updateTag(_tag as Tag);
-			if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+			if(!result.success) throw new Error(`E: ${result.err || "failed"}`);
 
 			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 			await loadingModal.value?.$el.dismiss();
@@ -153,7 +153,7 @@
 				await loadingModal.value?.$el.present();
 
 				const result = await removeTag(tag.value.uuid!);
-				if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+				if(!result.success) throw new Error(`E: ${result.err || "failed"}`);
 
 				// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 				await loadingModal.value?.$el.dismiss();

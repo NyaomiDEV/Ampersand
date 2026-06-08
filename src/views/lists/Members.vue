@@ -124,7 +124,7 @@
 				isMainFronter: false,
 				isLocked: false
 			});
-			if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+			if(!result.success) throw new Error(`E: ${result.err || "failed"}`);
 
 			void sendFrontingChangedEvent();
 			await toast(i18next.t("members:toasts.addToFront"));
@@ -138,7 +138,7 @@
 	async function removeFrontingEntry(member: Member) {
 		try{
 			const result = await removeFronter(member);
-			if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+			if(!result.success) throw new Error(`E: ${result.err || "failed"}`);
 
 			void sendFrontingChangedEvent();
 			await toast(i18next.t("members:toasts.removeFromFront"));
@@ -152,7 +152,7 @@
 	async function setMainFrontingEntry(member: Member, value: boolean){
 		try{
 			const result = await setMainFronter(member, value);
-			if(!result.success) throw new Error(`E: ${result.err as Error || "failed"}`);
+			if(!result.success) throw new Error(`E: ${result.err || "failed"}`);
 
 			void sendFrontingChangedEvent();
 			if(value) await toast(i18next.t("members:toasts.setMainFronter"));
