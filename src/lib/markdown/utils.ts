@@ -121,11 +121,13 @@ export function isColorSpace(maybeColorSpace: string) {
 	return maybeColorSpace.match(/^(?:xyz(?:-d50|-d65)?|hsl|hwb|(?:ok)?(?:lch|lab)|rec2020|(?:srgb|display-p3)(?:-linear)?|(?:a98|prophoto)-rgb)$/) !== null;
 }
 
-export function splitList(valueString: string) {
+export function splitList(valueString?: string) {
+	if(!valueString) return [];
 	return valueString.trim().split(":").map(x => x.trim());
 }
 
-export function splitArguments(valueString: string){
+export function splitArguments(valueString?: string){
+	if(!valueString) return {};
 	return Object.fromEntries(valueString.trim().split(" ").map(x => {
 		const pos = x.indexOf("=");
 		return [x.slice(0, pos).trim(), x.slice(pos + 1).trim()];
