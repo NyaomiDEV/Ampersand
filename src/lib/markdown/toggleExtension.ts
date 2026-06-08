@@ -8,9 +8,9 @@ const toggleExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 		{
 			name: "toggle",
 			level: "block",
-			start(src: string) { return src.match(/^\[tog/)?.index; },
+			start(src: string) { return src.match(/^\[toggle/)?.index; },
 			tokenizer(src: string) {
-				const rule = /^\[tog=((?:true|false)(?::start|:end)?)\](.*?)\[\/tog\]/;
+				const rule = /^\[toggle=((?:true|false)(?::start|:end)?)\](.*?)\[\/toggle\]/;
 				const match = rule.exec(src);
 				if (match) {
 					const values = splitList(match[1]);
