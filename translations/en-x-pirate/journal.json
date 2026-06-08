@@ -16,6 +16,7 @@
 		"subtitle": "Subtitle",
 		"body": "Log body",
 		"tags": "Tags",
+		"color": "Log color",
 		"isPinned": "Pinned entry",
 		"isPrivate": "Private entry",
 		"contentWarning": "Content warning",

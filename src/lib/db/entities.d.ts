@@ -116,6 +116,7 @@ export interface JournalPost extends UUIDable {
 	isPinned: boolean,
 	isPrivate: boolean,
 	contentWarning?: string,
+	color?: string,
 	comments?: Comment[]
 }
 

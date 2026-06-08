@@ -16,6 +16,7 @@
 		"subtitle": "Sottotitolo",
 		"body": "Corpo del post",
 		"tags": "Tag",
+		"color": "Colore del post",
 		"isPinned": "Post fissato",
 		"isPrivate": "Post privato",
 		"contentWarning": "Avviso sul contenuto sensibile",

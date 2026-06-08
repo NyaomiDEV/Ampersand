@@ -12,7 +12,8 @@
 		IonModal,
 		IonTextarea,
 		useIonRouter,
-		modalController
+		modalController,
+		IonButton
 	} from "@ionic/vue";
 
 	import { JournalPostComplete, Tag } from "../lib/db/entities";
@@ -24,6 +25,7 @@
 	import { Ref, ShallowRef, useTemplateRef } from "vue";
 	import { promptOkCancel, toast, formatDate, sortName } from "../lib/util/misc";
 	import { deleteJournalPost } from "../lib/db/tables/journalPosts";
+	import Color from "../components/Color.vue";
 
 	import trashMD from "@material-symbols/svg-600/rounded/delete.svg";
 	import Loading from "./Loading.vue";
@@ -78,6 +80,7 @@
 			}
 		}
 	}
+	
 </script>
 
 <template>
@@ -114,6 +117,28 @@
 							/>
 						</div>
 					</IonLabel>
+				</IonItem>
+
+				<IonItem button :detail="false">
+					<Color v-model="post.color">
+						<IonLabel>
+							{{ $t("members:edit.color") }}
+						</IonLabel>
+					</Color>
+					<IonButton
+						v-if="post.color"
+						slot="end"
+						shape="round"
+						fill="outline"
+						size="small"
+						@click="(e) => { e.stopPropagation(); post.color = undefined; }"
+					>
+						<IonIcon
+							slot="icon-only"
+							:icon="trashMD"
+							color="danger"
+						/>
+					</IonButton>
 				</IonItem>
 
 				<IonItem button :detail="false">

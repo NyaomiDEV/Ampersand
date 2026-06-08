@@ -33,7 +33,7 @@
 	import { newJournalPost, updateJournalPost, getJournalPost, toJournalPostComplete } from "../../lib/db/tables/journalPosts";
 	import { formatDate, sortName, toast } from "../../lib/util/misc";
 	import { getResizedImage } from "../../lib/util/image";
-	import { h, onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
+	import { getCurrentInstance, h, onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
 	import Markdown from "../../components/Markdown.vue";
 	import TagChip from "../../components/tag/TagChip.vue";
 	import MemberSelect from "../../modals/MemberSelect.vue";
@@ -47,6 +47,8 @@
 	import MemberChip from "../../components/member/MemberChip.vue";
 	import Comments from "../../modals/Comments.vue";
 	import Loading from "../../modals/Loading.vue";
+	import { accessibilityConfig } from "../../lib/config/index.ts";
+	import { addMaterialColors, rgbaToArgb, unsetMaterialColors } from "../../lib/theme/index.ts";
 
 	const { getObjectURL } = useBlob();
 	const router = useIonRouter();
@@ -61,6 +63,7 @@
 	const loadingModal = useTemplateRef("loadingModal");
 
 	const tags = shallowRef<Tag[]>([]);
+	const self = getCurrentInstance();
 
 	const emptyPost: PartialBy<JournalPostComplete, "uuid"> = {
 		title: "",
@@ -171,10 +174,24 @@
 		// are we editing?
 		isEditing.value = !post.value.uuid;
 
+		// set color
+		updateColors();
+
 		loading.value = false;
 	}
 
+	function updateColors(){
+		if(!accessibilityConfig.tintWithColor) return;
+
+		if(post.value.color){
+			if(self?.vnode.el) addMaterialColors(rgbaToArgb(post.value.color), rgbaToArgb(post.value.color), self?.vnode.el as HTMLElement);
+		} else 
+			if(self?.vnode.el) unsetMaterialColors(self?.vnode.el as HTMLElement);
+		
+	}
+
 	watch(route, updateRoute);
+	watch(() => post.value.color, updateColors);
 	onBeforeMount(updateRoute);
 </script>
 

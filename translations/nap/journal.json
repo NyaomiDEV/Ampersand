@@ -16,6 +16,7 @@
 		"subtitle": "Sottotitolo",
 		"body": "Cuorpo d' 'o post",
 		"tags": "Tag",
+		"color": "Culore d' 'o post",
 		"isPinned": "Post appiccicato",
 		"isPrivate": "Post privato",
 		"contentWarning": "Avviso ncopp'ô cuntenuto sensitivo",

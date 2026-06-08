@@ -16,6 +16,7 @@
 		"subtitle": "Subtitle",
 		"body": "Post body",
 		"tags": "Tags",
+		"color": "Post color",
 		"isPinned": "Pinned post",
 		"isPrivate": "Private post",
 		"contentWarning": "Content warning",
