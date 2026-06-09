@@ -3,7 +3,7 @@
 	import { ref } from "vue";
 	import Spinner from "../../components/Spinner.vue";
 	import { importArchive } from "../../lib/db/ioutils/archive";
-	import { getDocumentFile, promptYesNo, slideAnimation, toast } from "../../lib/util/misc";
+	import { getDocumentFile, promptInput, promptYesNo, slideAnimation, toast } from "../../lib/util/misc";
 	import { importPluralKit } from "../../lib/db/external/importers/pluralkit.ts";
 	import { importTupperBox } from "../../lib/db/external/importers/tupperbox.ts";
 	import { importSimplyPlural } from "../../lib/db/external/importers_old/simplyplural.ts";
@@ -105,7 +105,17 @@
 		await promptRemoteConnection();
 		try{
 			loading.value = true;
-			const result = await importTupperBox();
+			const input = await promptInput(
+				i18next.t("importExport:tuImportDiscordId.header"),
+				[{
+					name: "id",
+					type: "number",
+					placeholder: i18next.t("importExport:tuImportDiscordId.placeholder")
+				}]
+			);
+			if(!input) throw new Error("no inputs");
+
+			const result = await importTupperBox(input.id);
 			if(!result) throw new Error("errored out");
 		}catch(_e){
 			console.error(_e);

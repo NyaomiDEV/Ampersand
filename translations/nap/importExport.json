@@ -29,6 +29,10 @@
 	"ocImport": "Mpurta 'e date tuoje 'a n'esportazziòne 'e Octocon",
 	"pkImport": "Mpurta 'e date tuoje 'a n'esportazziòne 'e PluralKit",
 	"tuImport": "Mpurta 'e date tuoje 'a n'esportazziòne 'e Tupperbox",
+	"tuImportDiscordId": {
+		"header": "Pe' piacere, miette o' tujo ID Discord (numerico)",
+		"placeholder": "ID Discord"
+	},
 	"status": {
 		"imported": "'O backup è stato mpurtato. Pe' piacere, fa' partì n'ata vota l'app.",
 		"importedSp": "L'esportazziòne 'e Simply Plural è stata mpurtata. Pe' piacere, fa' partì n'ata vota l'app.",

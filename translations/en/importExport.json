@@ -28,6 +28,10 @@
 	"pkImport": "Import your data from a PluralKit export",
 	"ocImport": "Import your data from an Octocon export",
 	"tuImport": "Import your data from a Tupperbox export",
+	"tuImportDiscordId": {
+		"header": "Please insert your Discord (numeric) ID",
+		"placeholder": "Discord ID"
+	},
 	"spImport": "Import your data from a Simply Plural export",
 	"status": {
 		"imported": "The backup has been imported. Please restart the app.",

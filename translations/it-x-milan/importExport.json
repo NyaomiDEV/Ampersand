@@ -29,6 +29,10 @@
 	"ocImport": "Importa da Octocon",
 	"pkImport": "Importa da PluralKit",
 	"tuImport": "Importa da Tupperbox",
+	"tuImportDiscordId": {
+		"header": "Inserisci il tuo Discord ID (numerico)",
+		"placeholder": "Discord ID"
+	},
 	"status": {
 		"imported": "Backup importato. Riavvia l'app, dai.",
 		"importedSp": "Simply Plural importato. Riavvia.",

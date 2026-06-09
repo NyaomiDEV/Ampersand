@@ -28,6 +28,10 @@
 	"pkImport": "Bring charts from a PluralKit export",
 	"ocImport": "Bring charts from an Octocon export",
 	"tuImport": "Bring charts from a Tupperbox export",
+	"tuImportDiscordId": {
+		"header": "Insert your Discord (numeric) ID",
+		"placeholder": "Discord ID"
+	},
 	"spImport": "Bring charts from a Simply Plural export",
 	"status": {
 		"imported": "The backup be aboard. Restart the ship!",

@@ -9,15 +9,15 @@ import { getImage } from "../utils";
 import { open } from "../../../native/open";
 import { intoStream } from "../../../native/fs";
 
-function deriveHash(imageString: string | null, discordId?: string){
+function deriveHash(imageString: string | null, discordId?: string, isGroup?: boolean){
 	if(!discordId || !imageString) return;
-	return `https://cdn.tupperbox.app/${discordId}/${imageString}.webp`;
+	return `https://cdn.tupperbox.app/${isGroup ? "group-" : ""}pfp/${discordId}/${imageString}.webp`;
 }
 
 async function subsystems(tuGroup: TupperboxGroup, systemMapping: Map<number, string>, discordId?: string){
 	const result = await newSystem({
 		name: tuGroup.name,
-		image: await getImage(deriveHash(tuGroup.avatar, discordId)),
+		image: await getImage(deriveHash(tuGroup.avatar, discordId, true)),
 		description: tuGroup.description || undefined,
 		viewInLists: true,
 		isArchived: false,
@@ -51,7 +51,7 @@ async function member(tuMember: TupperboxMember, discordId?: string){
 	return [result.detail, tuMember.group_id] as [string, number | undefined];
 }
 
-export async function importTupperBox(){
+export async function importTupperBox(discordId?: string){
 	try {
 		const path = await open({
 			multiple: false,
@@ -88,11 +88,11 @@ export async function importTupperBox(){
 		for await (const { path, value } of streamToIterable(jsonStream)){
 			switch(path[0]){
 				case "groups": {
-					await subsystems(value as unknown as TupperboxGroup, subsystemMapping);
+					await subsystems(value as unknown as TupperboxGroup, subsystemMapping, discordId);
 					break;
 				}
 				case "tuppers": {
-					const [uuid, tbGroup] = await member(value as unknown as TupperboxMember);
+					const [uuid, tbGroup] = await member(value as unknown as TupperboxMember, discordId);
 					memberWantsSubsystem.set(uuid, tbGroup);
 					break;
 				}

@@ -1,4 +1,5 @@
 import { ActionSheetButton, actionSheetController, alertController, createAnimation, getIonPageElement, toastController, TransitionOptions } from "@ionic/vue";
+import type { TextFieldTypes } from "@ionic/core";
 import dayjs from "dayjs";
 import { Ref } from "vue";
 import { appConfig } from "../config";
@@ -270,7 +271,7 @@ export async function promptOptions(header: string, inputs: { name: string, valu
 	});
 }
 
-export async function promptInput(header: string, fields: { name: string, placeholder: string; }[], subHeader?: string, message?: string): Promise<void | Record<string, string>> {
+export async function promptInput(header: string, fields: { name: string, type?: TextFieldTypes, placeholder: string; }[], subHeader?: string, message?: string): Promise<void | Record<string, string>> {
 	return new Promise((resolve) => {
 		void (async () => {
 			const alert = await alertController.create({
@@ -278,7 +279,7 @@ export async function promptInput(header: string, fields: { name: string, placeh
 				subHeader,
 				message,
 				inputs: fields.map(x => ({
-					type: "text",
+					type: x.type || "text",
 					name: x.name,
 					placeholder: x.placeholder
 				})),

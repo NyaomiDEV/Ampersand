@@ -2,7 +2,7 @@
 	import { IonContent, IonHeader, IonList, IonItem, IonIcon, IonLabel, IonPage, IonTitle, IonToolbar, IonBackButton, IonProgressBar, IonListHeader, IonNote } from "@ionic/vue";
 	import { h, ref } from "vue";
 	import { importDatabaseFromBinary } from "../../lib/db/ioutils/old";
-	import { getDocumentFile, promptOptions, sortName, toast } from "../../lib/util/misc";
+	import { getDocumentFile, promptInput, promptOptions, sortName, toast } from "../../lib/util/misc";
 	import { useTranslation } from "i18next-vue";
 	import { importPluralKit } from "../../lib/db/external/importers/pluralkit.ts";
 	import { importTupperBox } from "../../lib/db/external/importers/tupperbox.ts";
@@ -264,7 +264,17 @@
 	async function importTu() {
 		loading.value = true;
 		try{
-			const result = await importTupperBox();
+			const input = await promptInput(
+				i18next.t("importExport:tuImportDiscordId.header"),
+				[{
+					name: "id",
+					type: "number",
+					placeholder: i18next.t("importExport:tuImportDiscordId.placeholder")
+				}]
+			);
+			if(!input) throw new Error("no inputs");
+
+			const result = await importTupperBox(input.id);
 			if(!result) throw new Error("errored out");
 
 			await toast(i18next.t("importExport:status.importedTu"));

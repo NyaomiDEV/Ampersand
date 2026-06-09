@@ -29,6 +29,10 @@
 	"ocImport": "Mporta i tò dati d'un export di Octocon",
 	"pkImport": "Mporta i tò dati d'un export di PluralKit",
 	"tuImport": "Mporta i tò dati d'un export di Tupperbox",
+	"tuImportDiscordId": {
+		"header": "Pi favuri, metti u tò ID Discord (numericu)",
+		"placeholder": "ID Discord"
+	},
 	"status": {
 		"imported": "U backup fu mportatu. Pi favuri fa ripartiri l'app.",
 		"importedSp": "L'export di Simply Plural fu mportatu. Pi favuri fa ripartiri l'app.",
