@@ -249,17 +249,21 @@
 		font-size: 0.9rem;
 	}
 
+	img {
+		border-radius: var(--markdown-border-radius, 0px);
+	}
+
 	/* Highlight */
 	mark {
 		padding: 2px 4px;
-		border-radius: 4px;
+		border-radius: var(--markdown-border-radius, 4px);
 		background-color: rgba(var(--ion-color-primary-rgb), 0.40);
 		color: inherit;
 	}
 
 	/* Spoilers */
 	span.spoiler {
-		border-radius: 4px;
+		border-radius: var(--markdown-border-radius, 4px);
 		padding: 2px 4px;
 		background-color: rgb(var(--md3-surface-container));
 		transition-duration: 250ms;
@@ -306,7 +310,7 @@
 
 	/* Timestamp */
 	span.timestamp {
-		border-radius: 4px;
+		border-radius: var(--markdown-border-radius, 4px);
 		padding: 2px 4px;
 		background-color: rgb(var(--md3-surface-container-high));
 
@@ -318,7 +322,7 @@
 	span.timestamp::before {
 		content: "\A";
 		mask-image: url(../../node_modules/@material-symbols/svg-600/rounded/nest_clock_farsight_analog.svg);
-		background-color: rgb(var(--md3-on-surface-variant));
+		background-color: currentColor;
 		mask-size: contain;
 		mask-repeat: no-repeat;
 		display: inline-block;
@@ -383,7 +387,7 @@
 
 	/* Background Color [bg] */
 	span.text-color-bg {
-		border-radius: 4px;
+		border-radius: var(--markdown-border-radius, 4px);
 		padding: 2px 4px;
 		background: linear-gradient(in var(--markdown-text-bg-colorspace) var(--markdown-text-bg-degrees), var(--markdown-text-bg-colors));
 
@@ -411,7 +415,7 @@
 	}
 
 	span.box-shadow {
-		border-radius: 4px;
+		border-radius: var(--markdown-border-radius, 4px);
 		padding: 2px 4px;
 		box-shadow: var(--markdown-box-shadow);
 		display: inline-block;
@@ -426,7 +430,7 @@
 		border-right: var(--markdown-text-border-right);
 		border-top: var(--markdown-text-border-top);
 		border-bottom: var(--markdown-text-border-bottom);
-		border-radius: 4px;
+		border-radius: var(--markdown-border-radius, 4px);
 		padding: 2px 4px;
 		display: inline-block;
 
@@ -532,7 +536,7 @@
 		background: color-mix(in srgb, var(--markdown-callout-color, var(--ion-color-primary)) 15%, transparent);
 		margin: 8px 0;
 		padding: 8px 12px;
-		border-radius: 12px;
+		border-radius: var(--markdown-border-radius, 12px);
 	}
 
 	.callout summary {
