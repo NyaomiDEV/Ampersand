@@ -238,7 +238,7 @@ export async function importOctocon(){
 		appConfig.defaultSystem = _system.detail;
 
 		const jsonStream = intoStream(path, undefined, true)
-			.pipeThrough(parseJsonStreamWithPaths([["groups", "tuppers"]]));
+			.pipeThrough(parseJsonStreamWithPaths([["user", "tags", "alters", "fronts", "polls"]]));
 
 		// Add values to database
 		for await (const { path, value } of streamToIterable(jsonStream)){
