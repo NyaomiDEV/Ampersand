@@ -24,6 +24,7 @@
 		"subtitle": "Subtítulo",
 		"tags": "Etiquetas",
 		"isPinned": "Publicación fijada",
-		"postIDcopiedToClipboard": "¡El ID de la publicación se ha copiado en el portapapeles!"
+		"postIDcopiedToClipboard": "¡El ID de la publicación se ha copiado en el portapapeles!",
+		"color": "Color del tema"
 	}
 }
