@@ -69,16 +69,16 @@ const customTableExtension: MarkedExtension<(VNode | string)[], VNode | string> 
 								cssStyle["--markdown-table-fg"] = map[part].fg[0];
 
 							if(map[part].collapse?.[0] === "false") 
-								cssStyle["--markdown-border-collapse"] = "separate";
+								cssStyle["--markdown-table-border-collapse"] = "separate";
 
 							if(map[part].empty?.[0] === "hide") 
-								cssStyle["--markdown-empty-cells"] = "hide";
+								cssStyle["--markdown-table-empty-cells"] = "hide";
 
 							if(map[part].spacing?.length)
-								cssStyle["--markdown-border-spacing"] = map[part].spacing[0];
+								cssStyle["--markdown-table-border-spacing"] = map[part].spacing[0];
 
 							if(map[part].radius?.length)
-								cssStyle["--markdown-border-radius"] = map[part].radius[0];
+								cssStyle["--markdown-table-border-radius"] = map[part].radius[0];
 
 							if(map[part].bt) {
 								switch(map[part].bt.length) {
