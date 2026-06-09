@@ -83,6 +83,17 @@
 					border-right: var(--markdown-first-col-bt-right, var(--markdown-td-bt-right, var(--border)));
 					border-bottom: var(--markdown-first-col-bt-bottom, var(--markdown-td-bt-bottom, var(--border)));
 					border-left: var(--markdown-first-col-bt-left, var(--markdown-td-bt-left, var(--border)));
+					border-radius: var(--markdown-first-col-radius, var(--markdown-td-radius, var(--markdown-table-border-radius)));
+				}
+
+				&:last-child {
+					background: var(--markdown-last-col-bg, var(--markdown-td-bg, unset));
+					color: var(--markdown-last-col-fg, var(--markdown-td-fg, unset));
+					border-top: var(--markdown-last-col-bt-top, var(--markdown-td-bt-top, var(--border)));
+					border-right: var(--markdown-last-col-bt-right, var(--markdown-td-bt-right, var(--border)));
+					border-bottom: var(--markdown-last-col-bt-bottom, var(--markdown-td-bt-bottom, var(--border)));
+					border-left: var(--markdown-last-col-bt-left, var(--markdown-td-bt-left, var(--border)));
+					border-radius: var(--markdown-last-col-radius, var(--markdown-td-radius, var(--markdown-table-border-radius)));
 				}
 			}
 
@@ -93,6 +104,7 @@
 				border-right: var(--markdown-odd-td-bt-right, var(--markdown-td-bt-right, var(--border)));
 				border-bottom: var(--markdown-odd-td-bt-bottom, var(--markdown-td-bt-bottom, var(--border)));
 				border-left: var(--markdown-odd-td-bt-left, var(--markdown-td-bt-left, var(--border)));
+				border-radius: var(--markdown-odd-td-radius, var(--markdown-td-radius, var(--markdown-table-border-radius)));
 
 				&:first-child {
 					background: var(--markdown-first-col-bg, var(--markdown-odd-td-bg, var(--markdown-td-bg, unset)));
@@ -101,6 +113,107 @@
 					border-right: var(--markdown-first-col-bt-right, var(--markdown-odd-td-bt-right, var(--markdown-td-bt-right, var(--border))));
 					border-bottom: var(--markdown-first-col-bt-bottom, var(--markdown-odd-td-bt-bottom, var(--markdown-td-bt-bottom, var(--border))));
 					border-left: var(--markdown-first-col-bt-left, var(--markdown-odd-td-bt-left, var(--markdown-td-bt-left, var(--border))));
+					border-radius: var(--markdown-first-col-radius, var(--markdown-odd-td-radius, var(--markdown-td-radius, var(--markdown-table-border-radius))));
+				}
+
+				&:last-child {
+					background: var(--markdown-last-col-bg, var(--markdown-odd-td-bg, var(--markdown-td-bg, unset)));
+					color: var(--markdown-last-col-fg, var(--markdown-odd-td-fg, var(--markdown-td-fg, unset)));
+					border-top: var(--markdown-last-col-bt-top, var(--markdown-odd-td-bt-top, var(--markdown-td-bt-top, var(--border))));
+					border-right: var(--markdown-last-col-bt-right, var(--markdown-odd-td-bt-right, var(--markdown-td-bt-right, var(--border))));
+					border-bottom: var(--markdown-last-col-bt-bottom, var(--markdown-odd-td-bt-bottom, var(--markdown-td-bt-bottom, var(--border))));
+					border-left: var(--markdown-last-col-bt-left, var(--markdown-odd-td-bt-left, var(--markdown-td-bt-left, var(--border))));
+					border-radius: var(--markdown-last-col-radius, var(--markdown-odd-td-radius, var(--markdown-td-radius, var(--markdown-table-border-radius))));
+				}
+			}
+
+			tr:nth-child(2) td {
+				background: var(--markdown-first-row-bg, var(--markdown-td-bg, unset));
+				color: var(--markdown-first-row-fg, var(--markdown-td-fg, unset));
+				border-top: var(--markdown-first-row-bt-top, var(--markdown-td-bt-top, var(--border)));
+				border-right: var(--markdown-first-row-bt-right, var(--markdown-td-bt-right, var(--border)));
+				border-bottom: var(--markdown-first-row-bt-bottom, var(--markdown-td-bt-bottom, var(--border)));
+				border-left: var(--markdown-first-row-bt-left, var(--markdown-td-bt-left, var(--border)));
+				border-radius: var(--markdown-first-row-radius, var(--markdown-td-radius, var(--markdown-table-border-radius)));
+
+				&:first-child {
+					background: var(--markdown-first-col-bg, var(--markdown-first-row-bg, var(--markdown-td-bg, unset)));
+					color: var(--markdown-first-col-fg, var(--markdown-first-row-fg, var(--markdown-td-fg, unset)));
+					border-top: var(--markdown-first-col-bt-top, var(--markdown-first-row-bt-top, var(--markdown-td-bt-top, var(--border))));
+					border-right: var(--markdown-first-col-bt-right, var(--markdown-first-row-bt-right, var(--markdown-td-bt-right, var(--border))));
+					border-bottom: var(--markdown-first-col-bt-bottom, var(--markdown-first-row-bt-bottom, var(--markdown-td-bt-bottom, var(--border))));
+					border-left: var(--markdown-first-col-bt-left, var(--markdown-first-row-bt-left, var(--markdown-td-bt-left, var(--border))));
+					border-radius: var(--markdown-first-col-radius, var(--markdown-first-row-radius, var(--markdown-td-radius, var(--markdown-table-border-radius))));
+				}
+
+				&:last-child {
+					background: var(--markdown-last-col-bg, var(--markdown-first-row-bg, var(--markdown-td-bg, unset)));
+					color: var(--markdown-last-col-fg, var(--markdown-first-row-fg, var(--markdown-td-fg, unset)));
+					border-top: var(--markdown-last-col-bt-top, var(--markdown-first-row-bt-top, var(--markdown-td-bt-top, var(--border))));
+					border-right: var(--markdown-last-col-bt-right, var(--markdown-first-row-bt-right, var(--markdown-td-bt-right, var(--border))));
+					border-bottom: var(--markdown-last-col-bt-bottom, var(--markdown-first-row-bt-bottom, var(--markdown-td-bt-bottom, var(--border))));
+					border-left: var(--markdown-last-col-bt-left, var(--markdown-first-row-bt-left, var(--markdown-td-bt-left, var(--border))));
+					border-radius: var(--markdown-last-col-radius, var(--markdown-first-row-radius, var(--markdown-td-radius, var(--markdown-table-border-radius))));
+				}
+			}
+
+			tr:last-child td {
+				background: var(--markdown-last-row-bg, var(--markdown-td-bg, unset));
+				color: var(--markdown-last-row-fg, var(--markdown-td-fg, unset));
+				border-top: var(--markdown-last-row-bt-top, var(--markdown-td-bt-top, var(--border)));
+				border-right: var(--markdown-last-row-bt-right, var(--markdown-td-bt-right, var(--border)));
+				border-bottom: var(--markdown-last-row-bt-bottom, var(--markdown-td-bt-bottom, var(--border)));
+				border-left: var(--markdown-last-row-bt-left, var(--markdown-td-bt-left, var(--border)));
+				border-radius: var(--markdown-last-row-radius, var(--markdown-td-radius, var(--markdown-table-border-radius)));
+
+				&:first-child {
+					background: var(--markdown-first-col-bg, var(--markdown-last-row-bg, var(--markdown-td-bg, unset)));
+					color: var(--markdown-first-col-fg, var(--markdown-last-row-fg, var(--markdown-td-fg, unset)));
+					border-top: var(--markdown-first-col-bt-top, var(--markdown-last-row-bt-top, var(--markdown-td-bt-top, var(--border))));
+					border-right: var(--markdown-first-col-bt-right, var(--markdown-last-row-bt-right, var(--markdown-td-bt-right, var(--border))));
+					border-bottom: var(--markdown-first-col-bt-bottom, var(--markdown-last-row-bt-bottom, var(--markdown-td-bt-bottom, var(--border))));
+					border-left: var(--markdown-first-col-bt-left, var(--markdown-last-row-bt-left, var(--markdown-td-bt-left, var(--border))));
+					border-radius: var(--markdown-first-col-radius, var(--markdown-last-row-radius, var(--markdown-td-radius, var(--markdown-table-border-radius))));
+				}
+
+				&:last-child {
+					background: var(--markdown-last-col-bg, var(--markdown-last-row-bg, var(--markdown-td-bg, unset)));
+					color: var(--markdown-last-col-fg, var(--markdown-last-row-fg, var(--markdown-td-fg, unset)));
+					border-top: var(--markdown-last-col-bt-top, var(--markdown-last-row-bt-top, var(--markdown-td-bt-top, var(--border))));
+					border-right: var(--markdown-last-col-bt-right, var(--markdown-last-row-bt-right, var(--markdown-td-bt-right, var(--border))));
+					border-bottom: var(--markdown-last-col-bt-bottom, var(--markdown-last-row-bt-bottom, var(--markdown-td-bt-bottom, var(--border))));
+					border-left: var(--markdown-last-col-bt-left, var(--markdown-last-row-bt-left, var(--markdown-td-bt-left, var(--border))));
+					border-radius: var(--markdown-last-col-radius, var(--markdown-last-row-radius, var(--markdown-td-radius, var(--markdown-table-border-radius))));
+				}
+
+				&:is(:nth-child(odd) td) {
+					background: var(--markdown-last-row-bg, var(--markdown-odd-td-bg, var(--markdown-td-bg, unset)));
+					color: var(--markdown-last-row-fg, var(--markdown-odd-td-fg, var(--markdown-td-fg, unset)));
+					border-top: var(--markdown-last-row-bt-top, var(--markdown-odd-td-bt-top, var(--markdown-td-bt-top, var(--border))));
+					border-right: var(--markdown-last-row-bt-right, var(--markdown-odd-td-bt-right, var(--markdown-td-bt-right, var(--border))));
+					border-bottom: var(--markdown-last-row-bt-bottom, var(--markdown-odd-td-bt-bottom, var(--markdown-td-bt-bottom, var(--border))));
+					border-left: var(--markdown-last-row-bt-left, var(--markdown-odd-td-bt-left, var(--markdown-td-bt-left, var(--border))));
+					border-radius: var(--markdown-last-row-radius, var(--markdown-odd-td-radius, var(--markdown-td-radius, var(--markdown-table-border-radius))));
+
+					&:first-child {
+						background: var(--markdown-first-col-bg, var(--markdown-last-row-bg, var(--markdown-td-bg, unset)));
+						color: var(--markdown-first-col-fg, var(--markdown-last-row-fg, var(--markdown-td-fg, unset)));
+						border-top: var(--markdown-first-col-bt-top, var(--markdown-last-row-bt-top, var(--markdown-td-bt-top, var(--border))));
+						border-right: var(--markdown-first-col-bt-right, var(--markdown-last-row-bt-right, var(--markdown-td-bt-right, var(--border))));
+						border-bottom: var(--markdown-first-col-bt-bottom, var(--markdown-last-row-bt-bottom, var(--markdown-td-bt-bottom, var(--border))));
+						border-left: var(--markdown-first-col-bt-left, var(--markdown-last-row-bt-left, var(--markdown-td-bt-left, var(--border))));
+						border-radius: var(--markdown-first-col-radius, var(--markdown-last-row-radius, var(--markdown-td-radius, var(--markdown-table-border-radius))));
+					}
+
+					&:last-child {
+						background: var(--markdown-last-col-bg, var(--markdown-odd-td-bg, var(--markdown-last-row-bg, var(--markdown-td-bg, unset))));
+						color: var(--markdown-last-col-fg, var(--markdown-odd-td-fg, var(--markdown-last-row-fg, var(--markdown-td-fg, unset))));
+						border-top: var(--markdown-last-col-bt-top, var(--markdown-odd-td-bt-top, var(--markdown-last-row-bt-top, var(--markdown-td-bt-top, var(--border)))));
+						border-right: var(--markdown-last-col-bt-right, var(--markdown-odd-td-bt-right, var(--markdown-last-row-bt-right, var(--markdown-td-bt-right, var(--border)))));
+						border-bottom: var(--markdown-last-col-bt-bottom, var(--markdown-odd-td-bt-bottom, var(--markdown-last-row-bt-bottom, var(--markdown-td-bt-bottom, var(--border)))));
+						border-left: var(--markdown-last-col-bt-left, var(--markdown-odd-td-bt-left, var(--markdown-last-row-bt-left, var(--markdown-td-bt-left, var(--border)))));
+						border-radius: var(--markdown-last-col-radius, var(--markdown-odd-td-radius, var(--markdown-last-row-radius, var(--markdown-td-radius, var(--markdown-table-border-radius)))));
+					}
 				}
 			}
 		}

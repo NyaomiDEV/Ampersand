@@ -6,22 +6,17 @@ const commonArgs = {
 	bg: (values: string[]) => values.length === 1 && (isColor(values[0]) || isImage(values[0])),
 	fg: (values: string[]) => values.length === 1 && isColor(values[0]),
 	bt: (values: string[]) => !!values.length && values.length <= 4 && values.every(x => isBorder(x)),
+	radius: (values: string[]) => !!values.length && values.length <= 4 && values.every(x => isLength(x) || isPercentage(x)),
 };
 
 const tableArgs = {
 	...commonArgs,
 	collapse: (values: string[]) => values.length === 1 && (values[0] === "true" || values[0] === "false"),
 	spacing: (values: string[]) => !!values.length && values.length <= 2 && values.every(x => isLength(x)),
-	radius: (values: string[]) => !!values.length && values.length <= 4 && values.every(x => isLength(x) || isPercentage(x)),
 	empty: (values: string[]) => values.length === 1 && (values[0] === "show" || values[0] === "hide")
 };
 
-const headerAndCellArgs = {
-	...commonArgs,
-	radius: (values: string[]) => !!values.length && values.length <= 4 && values.every(x => isLength(x) || isPercentage(x))
-};
-
-const tableParts = { "table": tableArgs, "header": headerAndCellArgs, "cell": headerAndCellArgs, "first-col": commonArgs, "odd-cell": commonArgs };
+const tableParts = { "table": tableArgs, "header": commonArgs, "cell": commonArgs, "first-col": commonArgs, "last-col": commonArgs, "odd-cell": commonArgs, "first-row": commonArgs, "last-row": commonArgs };
 
 const customTableExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [
@@ -193,8 +188,13 @@ const customTableExtension: MarkedExtension<(VNode | string)[], VNode | string> 
 						case "first-col":
 							if(map[part].bg)
 								cssStyle["--markdown-first-col-bg"] = map[part].bg[0];
+
 							if(map[part].fg)
 								cssStyle["--markdown-first-col-fg"] = map[part].fg[0];
+
+							if(map[part].radius?.length)
+								cssStyle["--markdown-first-col-radius"] = map[part].radius[0];
+
 							if(map[part].bt) {
 								switch(map[part].bt.length) {
 									case 1:
@@ -225,11 +225,56 @@ const customTableExtension: MarkedExtension<(VNode | string)[], VNode | string> 
 							} 
 							break;
 
+						case "last-col":
+							if(map[part].bg)
+								cssStyle["--markdown-last-col-bg"] = map[part].bg[0];
+
+							if(map[part].fg)
+								cssStyle["--markdown-last-col-fg"] = map[part].fg[0];
+
+							if(map[part].radius?.length)
+								cssStyle["--markdown-last-col-radius"] = map[part].radius[0];
+
+							if(map[part].bt) {
+								switch(map[part].bt.length) {
+									case 1:
+										cssStyle["--markdown-last-col-bt-left"] = map[part].bt[0];
+										cssStyle["--markdown-last-col-bt-top"] = map[part].bt[0];
+										cssStyle["--markdown-last-col-bt-right"] = map[part].bt[0];
+										cssStyle["--markdown-last-col-bt-bottom"] = map[part].bt[0];
+										break;
+									case 2:
+										cssStyle["--markdown-last-col-bt-left"] = map[part].bt[1];
+										cssStyle["--markdown-last-col-bt-top"] = map[part].bt[0];
+										cssStyle["--markdown-last-col-bt-right"] = map[part].bt[1];
+										cssStyle["--markdown-last-col-bt-bottom"] = map[part].bt[0];
+										break;
+									case 3:
+										cssStyle["--markdown-last-col-bt-left"] = map[part].bt[1];
+										cssStyle["--markdown-last-col-bt-top"] = map[part].bt[0];
+										cssStyle["--markdown-last-col-bt-right"] = map[part].bt[1];
+										cssStyle["--markdown-last-col-bt-bottom"] = map[part].bt[2];
+										break;
+									case 4:
+										cssStyle["--markdown-last-col-bt-top"] = map[part].bt[0];
+										cssStyle["--markdown-last-col-bt-right"] = map[part].bt[1];
+										cssStyle["--markdown-last-col-bt-bottom"] = map[part].bt[2];
+										cssStyle["--markdown-last-col-bt-left"] = map[part].bt[3];
+										break;
+								}
+							} 
+							break;
+
 						case "odd-cell":
 							if(map[part].bg)
 								cssStyle["--markdown-odd-td-bg"] = map[part].bg[0];
+
 							if(map[part].fg)
 								cssStyle["--markdown-odd-td-fg"] = map[part].fg[0];
+
+							if(map[part].radius?.length)
+								cssStyle["--markdown-odd-td-radius"] = map[part].radius[0];
+
 							if(map[part].bt) {
 								switch(map[part].bt.length) {
 									case 1:
@@ -255,6 +300,86 @@ const customTableExtension: MarkedExtension<(VNode | string)[], VNode | string> 
 										cssStyle["--markdown-odd-td-bt-right"] = map[part].bt[1];
 										cssStyle["--markdown-odd-td-bt-bottom"] = map[part].bt[2];
 										cssStyle["--markdown-odd-td-bt-left"] = map[part].bt[3];
+										break;
+								}
+							}
+							break;
+
+						case "first-row":
+							if(map[part].bg)
+								cssStyle["--markdown-first-row-bg"] = map[part].bg[0];
+
+							if(map[part].fg)
+								cssStyle["--markdown-first-row-fg"] = map[part].fg[0];
+
+							if(map[part].radius?.length)
+								cssStyle["--markdown-first-row-radius"] = map[part].radius[0];
+
+							if(map[part].bt) {
+								switch(map[part].bt.length) {
+									case 1:
+										cssStyle["--markdown-first-row-bt-left"] = map[part].bt[0];
+										cssStyle["--markdown-first-row-bt-top"] = map[part].bt[0];
+										cssStyle["--markdown-first-row-bt-right"] = map[part].bt[0];
+										cssStyle["--markdown-first-row-bt-bottom"] = map[part].bt[0];
+										break;
+									case 2:
+										cssStyle["--markdown-first-row-bt-left"] = map[part].bt[1];
+										cssStyle["--markdown-first-row-bt-top"] = map[part].bt[0];
+										cssStyle["--markdown-first-row-bt-right"] = map[part].bt[1];
+										cssStyle["--markdown-first-row-bt-bottom"] = map[part].bt[0];
+										break;
+									case 3:
+										cssStyle["--markdown-first-row-bt-left"] = map[part].bt[1];
+										cssStyle["--markdown-first-row-bt-top"] = map[part].bt[0];
+										cssStyle["--markdown-first-row-bt-right"] = map[part].bt[1];
+										cssStyle["--markdown-first-row-bt-bottom"] = map[part].bt[2];
+										break;
+									case 4:
+										cssStyle["--markdown-first-row-bt-top"] = map[part].bt[0];
+										cssStyle["--markdown-first-row-bt-right"] = map[part].bt[1];
+										cssStyle["--markdown-first-row-bt-bottom"] = map[part].bt[2];
+										cssStyle["--markdown-first-row-bt-left"] = map[part].bt[3];
+										break;
+								}
+							}
+							break;
+
+						case "last-row":
+							if(map[part].bg)
+								cssStyle["--markdown-last-row-bg"] = map[part].bg[0];
+
+							if(map[part].fg)
+								cssStyle["--markdown-last-row-fg"] = map[part].fg[0];
+
+							if(map[part].radius?.length)
+								cssStyle["--markdown-last-row-radius"] = map[part].radius[0];
+
+							if(map[part].bt) {
+								switch(map[part].bt.length) {
+									case 1:
+										cssStyle["--markdown-last-row-bt-left"] = map[part].bt[0];
+										cssStyle["--markdown-last-row-bt-top"] = map[part].bt[0];
+										cssStyle["--markdown-last-row-bt-right"] = map[part].bt[0];
+										cssStyle["--markdown-last-row-bt-bottom"] = map[part].bt[0];
+										break;
+									case 2:
+										cssStyle["--markdown-last-row-bt-left"] = map[part].bt[1];
+										cssStyle["--markdown-last-row-bt-top"] = map[part].bt[0];
+										cssStyle["--markdown-last-row-bt-right"] = map[part].bt[1];
+										cssStyle["--markdown-last-row-bt-bottom"] = map[part].bt[0];
+										break;
+									case 3:
+										cssStyle["--markdown-last-row-bt-left"] = map[part].bt[1];
+										cssStyle["--markdown-last-row-bt-top"] = map[part].bt[0];
+										cssStyle["--markdown-last-row-bt-right"] = map[part].bt[1];
+										cssStyle["--markdown-last-row-bt-bottom"] = map[part].bt[2];
+										break;
+									case 4:
+										cssStyle["--markdown-last-row-bt-top"] = map[part].bt[0];
+										cssStyle["--markdown-last-row-bt-right"] = map[part].bt[1];
+										cssStyle["--markdown-last-row-bt-bottom"] = map[part].bt[2];
+										cssStyle["--markdown-last-row-bt-left"] = map[part].bt[3];
 										break;
 								}
 							}
