@@ -107,9 +107,9 @@ async function members(ocAlter: OctoconAlter){
 	return [ result.detail, ocAlter.id, fields ] as [string, number, string[][]];
 }
 
-async function frontingEntries(ocFront: OctoconFront, memberMapping: Map<string, number>){
+async function frontingEntries(ocFront: OctoconFront, memberMapping: Map<number, string>){
 	const result = await newFrontingEntry({
-		member: memberMapping.entries().find(([_uuid, id]) => ocFront.alter_id === id)?.[0] || nilUid,
+		member: memberMapping.get(ocFront.alter_id) || nilUid,
 		startTime: new Date(ocFront.time_start),
 		endTime: ocFront.time_end ? new Date(ocFront.time_end) : undefined,
 		comment: ocFront.comment,
@@ -123,7 +123,7 @@ async function frontingEntries(ocFront: OctoconFront, memberMapping: Map<string,
 	return result.detail;
 }
 
-async function polls(ocPoll: OctoconPoll, memberMapping: Map<string, number>){
+async function polls(ocPoll: OctoconPoll, memberMapping: Map<number, string>){
 	const poll = {
 		multipleChoice: false,
 		entries:
@@ -134,7 +134,7 @@ async function polls(ocPoll: OctoconPoll, memberMapping: Map<string, number>){
 						votes: ocPoll.data.responses
 							.filter(response => response.vote === "yes")
 							.map(response => ({
-								member: memberMapping.entries().find(([_uuid, id]) => response.alter_id === id)?.[0] || nilUid,
+								member: memberMapping.get(response.alter_id) || nilUid,
 								reason: response.comment
 							}))
 					},
@@ -143,7 +143,7 @@ async function polls(ocPoll: OctoconPoll, memberMapping: Map<string, number>){
 						votes: ocPoll.data.responses
 							.filter(response => response.vote === "no")
 							.map(response => ({
-								member: memberMapping.entries().find(([_uuid, id]) => response.alter_id === id)?.[0] || nilUid,
+								member: memberMapping.get(response.alter_id) || nilUid,
 								reason: response.comment
 							}))
 					},
@@ -152,7 +152,7 @@ async function polls(ocPoll: OctoconPoll, memberMapping: Map<string, number>){
 						votes: ocPoll.data.responses
 							.filter(response => response.vote === "abstain")
 							.map(response => ({
-								member: memberMapping.entries().find(([_uuid, id]) => response.alter_id === id)?.[0] || nilUid,
+								member: memberMapping.get(response.alter_id) || nilUid,
 								reason: response.comment
 							}))
 					}
@@ -163,7 +163,7 @@ async function polls(ocPoll: OctoconPoll, memberMapping: Map<string, number>){
 					votes: ocPoll.data.responses
 						.filter(response => response.choice_id === choice.id)
 						.map(response => ({
-							member: memberMapping.entries().find(([_uuid, id]) => response.alter_id === id)?.[0] || nilUid,
+							member: memberMapping.get(response.alter_id) || nilUid,
 							reason: response.comment
 						}))
 				})) || []
@@ -175,7 +175,7 @@ async function polls(ocPoll: OctoconPoll, memberMapping: Map<string, number>){
 			votes: ocPoll.data.responses
 				.filter(response => response.vote === "veto")
 				.map(response => ({
-					member: memberMapping.entries().find(([_uuid, id]) => response.alter_id === id)?.[0] || nilUid,
+					member: memberMapping.get(response.alter_id) || nilUid,
 					reason: response.comment
 				}))
 		});
@@ -209,8 +209,8 @@ export async function importOctocon(){
 
 		// UUID in our database -> Array of ID in their one and locked status
 		const customFieldMapping = new Map<string, [string, boolean]>();
-		// UUID in our database -> ID in their one
-		const memberMapping = new Map<string, number>();
+		// ID in their database -> UUID in ours
+		const memberMapping = new Map<number, string>();
 		// UUID in our database -> IDs of the alters who have this tag in their one
 		const tagsToAlters = new Map<string, number[]>();
 		// UUID in our database -> Array of k/v where k is their ID and v is the custom field data
@@ -255,7 +255,7 @@ export async function importOctocon(){
 				}
 				case "alters": {
 					const [ uuid, id, fields ] = await members(value as OctoconAlter);
-					memberMapping.set(uuid, id);
+					memberMapping.set(id, uuid);
 					membersToFields.set(uuid, fields);
 					break;
 				}
@@ -280,9 +280,14 @@ export async function importOctocon(){
 		// remap now
 		// membersToFields holds all member UUIDs we set, so we can safely use that as a member index
 		for(const [uuid, fields] of membersToFields){
+			const _memberId = memberMapping.entries().find(x => x[1] === uuid)?.[0];
 			const result = await updateMember({
 				uuid,
-				tags: Array.from(tagsToAlters.entries().filter(x => x[1].includes(memberMapping.get(uuid) || NaN)).map(x => x[0])),
+				tags: Array.from(
+					tagsToAlters.entries()
+						.filter(x => x[1].includes(_memberId || NaN))
+						.map(x => x[0])
+				),
 				customFields: new Map(fields.map(([id, value]) => {
 					const isLocked = customFieldMapping.entries().find(x => x[1][0] === id)?.[1][1] || false;
 					return [uuid, isLocked ? `||${value}||` : value];

@@ -139,10 +139,10 @@ export async function importPluralKit(){
 		let description: string | undefined = undefined;
 		let avatarUrl: string | undefined = undefined;
 
-		// UUID in our database -> ID in their one
+		// ID in their database -> UUID in our one
 		const memberMapping = new Map<string, string>();
 
-		// UUID in our database -> IDs of the alters who have this tag in their one
+		// UUID in our database -> IDs of the members who have this tag in their one
 		const tagsToMembers = new Map<string, string[]>();
 
 		// We sadly need to cache fronts
@@ -212,7 +212,7 @@ export async function importPluralKit(){
 				}
 				case "members": {
 					const [ uuid, id ] = await members(value as PluralKitMember);
-					memberMapping.set(uuid, id);
+					memberMapping.set(id, uuid);
 					break;
 				}
 				case "switches": {
@@ -228,7 +228,7 @@ export async function importPluralKit(){
 
 		// remap now
 		// membersToFields holds all member UUIDs we set, so we can safely use that as a member index
-		for(const [uuid, id] of memberMapping){
+		for(const [id, uuid] of memberMapping){
 			await updateMember({
 				uuid,
 				tags: Array.from(
