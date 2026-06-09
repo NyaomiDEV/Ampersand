@@ -18,7 +18,8 @@
 		"isPrivate": "Privaatne postitus",
 		"postID": "Postituse tunnus: {{postID}}",
 		"postIDcopiedToClipboard": "Mainitud vormingus postituse tunnus on kopeeritud lõikelauale!",
-		"contentWarning": "Sisuhoiatus"
+		"contentWarning": "Sisuhoiatus",
+		"color": "Postituse värv"
 	},
 	"header": "Päevik",
 	"searchPlaceholder": "Otsi päevikut...",

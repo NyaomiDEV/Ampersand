@@ -132,7 +132,20 @@
 		"summer": "Suvine",
 		"bone": "Kont",
 		"spotty": "Vinniline",
-		"cow": "Lehm"
+		"cow": "Lehm",
+		"assetFont": "Aktiva kirjatüüp"
 	},
-	"count": "Kogus"
+	"count": "Kogus",
+	"donationLabel": {
+		"title": "Toeta meid",
+		"desc": "Sinu rahaline toetus aitab Ampersandil areneda ja arendajatel tegutseda"
+	},
+	"fontStyles": {
+		"bold": "Paks kiri",
+		"italic": "Kaldkiri",
+		"neon": "Neoon",
+		"gradient": "Värviüleminekuga",
+		"outline": "Piirjoontega",
+		"shadow": "Varjudega"
+	}
 }
