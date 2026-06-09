@@ -46,7 +46,8 @@
 		"cancel": "Cancelar",
 		"clear": "Limpiar",
 		"yes": "Sí",
-		"no": "No"
+		"no": "No",
+		"assetFontPlaceholder": "Nombre del archivo para la fuente"
 	},
 	"presence": {
 		"absent": "Ausente",
@@ -149,7 +150,20 @@
 		"summer": "Verano",
 		"spotty": "Manchada",
 		"bone": "Hueso",
-		"cow": "Vaca"
+		"cow": "Vaca",
+		"assetFont": "Archivos o recursos de tipografía"
 	},
-	"loading": "Ampersand se está cargando"
+	"loading": "Ampersand se está cargando",
+	"donationLabel": {
+		"title": "Apóyanos",
+		"desc": "Tu donación permite que Ampersand continúe su desarrollo y apoya a los desarrolladores"
+	},
+	"fontStyles": {
+		"bold": "Negrita",
+		"italic": "Itálica o cursiva",
+		"neon": "Neón",
+		"gradient": "Degradado",
+		"outline": "Contorno",
+		"shadow": "Sombra"
+	}
 }
