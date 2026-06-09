@@ -110,5 +110,9 @@
 		"coveringDays": "Daten der letzten {{count}} Tage"
 	},
 	"count": "Anzahl",
-	"theresNothingHere": "Hier gibt es nichts zu sehen"
+	"theresNothingHere": "Hier gibt es nichts zu sehen",
+	"donationLabel": {
+		"title": "Unterstütze uns"
+	},
+	"loading": "Ampersand lädt"
 }
