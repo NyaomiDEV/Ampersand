@@ -2,7 +2,7 @@
 	"header": "முகப்புப்பெட்டி",
 	"header_salute": "வணக்கம்!",
 	"header_mainfronter": "வணக்கம், {{fronterName}}!",
-	"systemDescription": "கணினி விளக்கம்",
+	"systemDescription": "கணினி குறிப்பு",
 	"nowFronting": "இப்போது முன்பக்கம்",
 	"fronterInfluencing": "{{influencedMember}} மீது செல்வாக்கு செலுத்துகிறது",
 	"addToFront": "முன்னால் சேர்க்கவும்",

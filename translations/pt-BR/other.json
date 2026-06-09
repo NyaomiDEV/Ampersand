@@ -11,7 +11,8 @@
 		"clear": "Limpar",
 		"yes": "Sim",
 		"ok": "Ok",
-		"no": "Não"
+		"no": "Não",
+		"assetFontPlaceholder": "Nome de arquivo para fonte"
 	},
 	"presence": {
 		"absent": "Ausente",
@@ -149,7 +150,20 @@
 		"nature": "Natureza",
 		"bone": "Osso",
 		"cow": "Vaca",
-		"summer": "Verão"
+		"summer": "Verão",
+		"assetFont": "Arquivo de fonte"
 	},
-	"loading": "Ampersand está carregando"
+	"loading": "Ampersand está carregando",
+	"donationLabel": {
+		"title": "Apoie-nos",
+		"desc": "Suas doações mantem os desenvolvedores e o desenvolvimento do Ampersand ativos"
+	},
+	"fontStyles": {
+		"bold": "Negrito",
+		"italic": "Itálico",
+		"neon": "Neon",
+		"gradient": "Gradiente",
+		"outline": "Contorno",
+		"shadow": "Sombra"
+	}
 }
