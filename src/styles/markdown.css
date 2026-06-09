@@ -255,7 +255,7 @@
 
 	/* Highlight */
 	mark {
-		padding: 2px 4px;
+		padding: var(--markdown-padding, 2px 4px);
 		border-radius: var(--markdown-border-radius, 4px);
 		background-color: rgba(var(--ion-color-primary-rgb), 0.40);
 		color: inherit;
@@ -264,7 +264,7 @@
 	/* Spoilers */
 	span.spoiler {
 		border-radius: var(--markdown-border-radius, 4px);
-		padding: 2px 4px;
+		padding: var(--markdown-padding, 2px 4px);
 		background-color: rgb(var(--md3-surface-container));
 		transition-duration: 250ms;
 		transition-timing-function: ease-in-out;
@@ -311,7 +311,7 @@
 	/* Timestamp */
 	span.timestamp {
 		border-radius: var(--markdown-border-radius, 4px);
-		padding: 2px 4px;
+		padding: var(--markdown-padding, 2px 4px);
 		background-color: rgb(var(--md3-surface-container-high));
 
 		&:is(ion-item *) {
@@ -388,7 +388,7 @@
 	/* Background Color [bg] */
 	span.text-color-bg {
 		border-radius: var(--markdown-border-radius, 4px);
-		padding: 2px 4px;
+		padding: var(--markdown-padding, 2px 4px);
 		background: linear-gradient(in var(--markdown-text-bg-colorspace) var(--markdown-text-bg-degrees), var(--markdown-text-bg-colors));
 
 		&.repeating {
@@ -416,7 +416,7 @@
 
 	span.box-shadow {
 		border-radius: var(--markdown-border-radius, 4px);
-		padding: 2px 4px;
+		padding: var(--markdown-padding, 2px 4px);
 		box-shadow: var(--markdown-box-shadow);
 		display: inline-block;
 	}
@@ -431,7 +431,7 @@
 		border-top: var(--markdown-text-border-top);
 		border-bottom: var(--markdown-text-border-bottom);
 		border-radius: var(--markdown-border-radius, 4px);
-		padding: 2px 4px;
+		padding: var(--markdown-padding, 2px 4px);
 		display: inline-block;
 
 		&:has(span.box-shadow) {
@@ -535,7 +535,7 @@
 		border: 2px solid color-mix(in srgb, var(--markdown-callout-color, var(--ion-color-primary)) 30%, transparent);
 		background: color-mix(in srgb, var(--markdown-callout-color, var(--ion-color-primary)) 15%, transparent);
 		margin: 8px 0;
-		padding: 8px 12px;
+		padding: var(--markdown-padding, 8px 12px);
 		border-radius: var(--markdown-border-radius, 12px);
 	}
 
