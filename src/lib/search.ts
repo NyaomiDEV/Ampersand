@@ -61,12 +61,12 @@ export function filterMember(search: string, member: Member){
 	}
 
 	if (parsed.pronouns) {
-		if (!member.pronouns || !member.pronouns.toLowerCase().includes(parsed.pronouns.value.toLowerCase()) === parsed.pronouns.shouldInclude)
+		if (!member.pronouns?.toLowerCase().includes(parsed.pronouns.value.toLowerCase()) === parsed.pronouns.shouldInclude)
 			return false;
 	}
 
 	if (parsed.role) {
-		if (!member.role || !member.role.toLowerCase().includes(parsed.role.value.toLowerCase()) === parsed.role.shouldInclude)
+		if (!member.role?.toLowerCase().includes(parsed.role.value.toLowerCase()) === parsed.role.shouldInclude)
 			return false;
 	}
 
