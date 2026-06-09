@@ -2,11 +2,11 @@
 	import { IonContent, IonHeader, IonList, IonItem, IonIcon, IonLabel, IonPage, IonTitle, IonToolbar, IonBackButton, IonProgressBar, IonListHeader, IonNote } from "@ionic/vue";
 	import { h, ref } from "vue";
 	import { importDatabaseFromBinary } from "../../lib/db/ioutils/old";
-	import { getDocumentFile, promptInput, promptOptions, sortName, toast } from "../../lib/util/misc";
+	import { promptInput, promptOptions, sortName, toast } from "../../lib/util/misc";
 	import { useTranslation } from "i18next-vue";
 	import { importPluralKit } from "../../lib/db/external/importers/pluralkit.ts";
 	import { importTupperBox } from "../../lib/db/external/importers/tupperbox.ts";
-	import { importSimplyPlural } from "../../lib/db/external/importers_old/simplyplural.ts";
+	import { importSimplyPlural } from "../../lib/db/external/importers/simplyplural.ts";
 	import { importOctocon } from "../../lib/db/external/importers/octocon.ts";
 	import { System } from "../../lib/db/entities";
 	import { platform } from "@tauri-apps/plugin-os";
@@ -218,11 +218,7 @@
 	async function importSp() {
 		loading.value = true;
 		try{
-			const file = await getDocumentFile(["json"], false);
-			if (!file) throw new Error("no files specified");
-
-			const spExport = JSON.parse(new TextDecoder("utf-8").decode(file));
-			const result = await importSimplyPlural(spExport);
+			const result = await importSimplyPlural();
 			if(!result) throw new Error("errored out");
 
 			await toast(i18next.t("importExport:status.importedSp"));

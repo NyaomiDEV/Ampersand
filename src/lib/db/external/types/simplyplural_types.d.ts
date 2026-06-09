@@ -1,19 +1,19 @@
 export type SimplyPluralExport = {
-	users: User[],
-	groups: Group[],
-	customFields: CustomField[],
-	frontHistory: FrontHistory[],
-	notes: Note[],
-	comments: Comment[],
-	polls: Poll[],
-	members: Member[],
-	frontStatuses: FrontStatus[],
-	boardMessages: BoardMessage[],
-	automatedReminders: AutomatedReminder[],
+	users: SimplyPluralUser[],
+	groups: SimplyPluralGroup[],
+	customFields: SimplyPluralCustomField[],
+	frontHistory: SimplyPluralFrontHistory[],
+	notes: SimplyPluralNote[],
+	comments: SimplyPluralComment[],
+	polls: SimplyPluralPoll[],
+	members: SimplyPluralMember[],
+	frontStatuses: SimplyPluralFrontStatus[],
+	boardMessages: SimplyPluralBoardMessage[],
+	automatedReminders: SimplyPluralAutomatedReminder[],
 	[x: string]: unknown
 };
 
-interface withSystemID {
+interface SPwithSystemID {
 	uid: string
 }
 
@@ -21,7 +21,7 @@ interface MongoDocument {
 	_id: string
 }
 
-export interface CustomField extends withSystemID, MongoDocument {
+export interface SimplyPluralCustomField extends SPwithSystemID, MongoDocument {
 	name: string,
 	order: number,
 	private: boolean,
@@ -40,7 +40,7 @@ interface FrameType {
 	bgEndColor?: string | null
 }
 
-interface User extends withSystemID, MongoDocument {
+interface SimplyPluralUser extends SPwithSystemID, MongoDocument {
 	username: string,
 	isAsystem: boolean,
 	avatarUrl: string,
@@ -55,7 +55,7 @@ interface User extends withSystemID, MongoDocument {
 	patron: boolean
 }
 
-interface Group extends withSystemID, MongoDocument {
+interface SimplyPluralGroup extends SPwithSystemID, MongoDocument {
 	name: string,
 	desc: string,
 	emoji: string,
@@ -69,7 +69,7 @@ interface Group extends withSystemID, MongoDocument {
 	buckets: string[]
 }
 
-interface Note extends withSystemID, MongoDocument {
+interface SimplyPluralNote extends SPwithSystemID, MongoDocument {
 	title: string,
 	note: string,
 	color: string,
@@ -80,7 +80,7 @@ interface Note extends withSystemID, MongoDocument {
 	supportMarkdown?: boolean,
 }
 
-interface FrontHistory extends withSystemID, MongoDocument {
+interface SimplyPluralFrontHistory extends SPwithSystemID, MongoDocument {
 	member?: string, // relates to Member._id
 	startTime?: number,
 	endTime?: number | null,
@@ -101,7 +101,7 @@ interface FrontHistory extends withSystemID, MongoDocument {
 	live?: boolean
 }
 
-interface Comment extends withSystemID, MongoDocument {
+interface SimplyPluralComment extends SPwithSystemID, MongoDocument {
 	time: number,
 	text: string,
 	collection: "frontHistory", // are there other collections?
@@ -110,7 +110,7 @@ interface Comment extends withSystemID, MongoDocument {
 	supportMarkdown?: boolean
 }
 
-interface Poll extends withSystemID, MongoDocument {
+interface SimplyPluralPoll extends SPwithSystemID, MongoDocument {
 	allowAbstain: boolean,
 	allowVeto: boolean,
 	name: string,
@@ -130,7 +130,7 @@ interface Poll extends withSystemID, MongoDocument {
 	}[]
 }
 
-interface Member extends withSystemID, MongoDocument {
+interface SimplyPluralMember extends SPwithSystemID, MongoDocument {
 	id?: string, // it's fun, having it a million times
 	info: Record<string, string>, // custom field values
 	preventsFrontNotifs: boolean,
@@ -157,7 +157,7 @@ interface Member extends withSystemID, MongoDocument {
 	buckets: string[]
 }
 
-interface FrontStatus extends withSystemID, MongoDocument {
+interface SimplyPluralFrontStatus extends SPwithSystemID, MongoDocument {
 	avatarUrl: string,
 	desc: string,
 	name: string,
@@ -173,7 +173,7 @@ interface FrontStatus extends withSystemID, MongoDocument {
 	buckets: string[]
 }
 
-interface BoardMessage extends withSystemID, MongoDocument {
+interface SimplyPluralBoardMessage extends SPwithSystemID, MongoDocument {
 	title: string,
 	message: string,
 	writtenBy: string, // relates to Member._id
@@ -184,7 +184,7 @@ interface BoardMessage extends withSystemID, MongoDocument {
 	lastOperationTime: number
 }
 
-interface AutomatedReminder extends withSystemID, MongoDocument {
+interface SimplyPluralAutomatedReminder extends SPwithSystemID, MongoDocument {
 	name: string,
 	message: string,
 	action: number, // always zero?

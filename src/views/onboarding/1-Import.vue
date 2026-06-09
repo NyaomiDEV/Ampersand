@@ -3,10 +3,10 @@
 	import { ref } from "vue";
 	import Spinner from "../../components/Spinner.vue";
 	import { importArchive } from "../../lib/db/ioutils/archive";
-	import { getDocumentFile, promptInput, promptYesNo, slideAnimation, toast } from "../../lib/util/misc";
+	import { promptInput, promptYesNo, slideAnimation, toast } from "../../lib/util/misc";
 	import { importPluralKit } from "../../lib/db/external/importers/pluralkit.ts";
 	import { importTupperBox } from "../../lib/db/external/importers/tupperbox.ts";
-	import { importSimplyPlural } from "../../lib/db/external/importers_old/simplyplural.ts";
+	import { importSimplyPlural } from "../../lib/db/external/importers/simplyplural.ts";
 	import { importOctocon } from "../../lib/db/external/importers/octocon.ts";
 	import { useTranslation } from "i18next-vue";
 	import { clearAllDatabase } from "../../lib/db";
@@ -53,11 +53,8 @@
 	async function importFromSimplyPlural() {
 		await promptRemoteConnection();
 		try{
-			const file = await getDocumentFile(["json"], false);
-			if (!file) throw new Error("no files specified");
 			loading.value = true;
-			const spExport = JSON.parse(new TextDecoder("utf-8").decode(file));
-			const result = await importSimplyPlural(spExport);
+			const result = await importSimplyPlural();
 			if (!result) throw new Error("errored out");
 		}catch(_e){
 			console.error(_e);

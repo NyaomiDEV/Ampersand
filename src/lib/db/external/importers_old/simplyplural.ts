@@ -5,7 +5,7 @@ import { fetchImage } from "../../../util/fetchImage";
 import { resizeImage } from "../../../util/image";
 import { maxUid, nilUid } from "../../../util/consts";
 import { appConfig, securityConfig } from "../../../config";
-import type { SimplyPluralExport, CustomField as SPCustomField } from "../types/simplyplural_types";
+import type { SimplyPluralExport, SimplyPluralCustomField } from "../types/simplyplural_types";
 import { newFile } from "../../../fileref";
 
 function normalizeSPColor(color?: string) {
@@ -20,7 +20,7 @@ function normalizeSPColor(color?: string) {
 	return `#${color}`;
 }
 
-function mapCustomFieldType(type: SPCustomField["type"], data: string) {
+function mapCustomFieldType(type: SimplyPluralCustomField["type"], data: string) {
 	switch(type){
 		case 0: // text
 			return String(data);
@@ -115,7 +115,7 @@ function tag(spExport: SimplyPluralExport){
 }
 
 function customField(spExport: SimplyPluralExport){
-	const customFieldMapping = new Map<string, [string, SPCustomField["type"]]>();
+	const customFieldMapping = new Map<string, [string, SimplyPluralCustomField["type"]]>();
 	const customFields: CustomField[] = [];
 
 	for (const spCustomField of spExport.customFields) {
@@ -136,7 +136,7 @@ function customField(spExport: SimplyPluralExport){
 	};
 }
 
-export async function member(spExport: SimplyPluralExport, systemInfo: System, systemUid: string, tagMapping: Map<string, string>, customFieldMapping: Map<string, [string, SPCustomField["type"]]>){
+export async function member(spExport: SimplyPluralExport, systemInfo: System, systemUid: string, tagMapping: Map<string, string>, customFieldMapping: Map<string, [string, SimplyPluralCustomField["type"]]>){
 	const memberMapping = new Map<string, string>();
 	const members: Member[] = [];
 
