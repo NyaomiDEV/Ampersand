@@ -68,7 +68,7 @@ export async function importTupperBox(){
 		await clearAllDatabase();
 
 		// Tupperbox doesn't have the concept of a system so we will just add one ourselves
-		const systemUuid = (await newSystem({
+		const _system = (await newSystem({
 			name: "Tupperbox",
 			description: "",
 			isPinned: false,
@@ -76,8 +76,10 @@ export async function importTupperBox(){
 			viewInLists: false
 		}));
 
-		if(!transactionSucceeded(systemUuid)) throw new Error("Could not add a dummy system");
-		appConfig.defaultSystem = systemUuid.detail;
+		if(!transactionSucceeded(_system))
+			throw new Error(`Could not add a dummy system: ${_system.err.message}`);
+
+		appConfig.defaultSystem = _system.detail;
 
 		const jsonStream = intoStream(path, undefined, true)
 			.pipeThrough(parseJsonStreamWithPaths([["groups", "tuppers"]]));

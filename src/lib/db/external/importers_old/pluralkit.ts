@@ -1,124 +1,88 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-import { CustomField, FrontingEntry, Member, System, Tag } from "../../entities";
-import { clearAllDatabase, getTables } from "../..";
-import { fetchImage } from "../../../util/fetchImage";
+import { FrontingEntry } from "../../entities";
+import { clearAllDatabase } from "../..";
 import { nilUid } from "../../../util/consts";
-import { appConfig, securityConfig } from "../../../config";
-import { resizeImage } from "../../../util/image";
-import { newFile } from "../../../fileref";
+import { appConfig } from "../../../config";
+import { getImage } from "../utils";
+import { newSystem, updateSystem } from "../../tables/system";
+import { transactionSucceeded } from "../../utils";
+import { newCustomField } from "../../tables/customFields";
+import { newTag } from "../../tables/tags";
+import { newMember, updateMember } from "../../tables/members";
+import { open } from "../../../native/open";
+import { readTextFile } from "@tauri-apps/plugin-fs";
+import { newFrontingEntry } from "../../tables/frontingEntries";
+import { PartialBy } from "../../../types";
+import { PluralKitExport, PluralKitGroup, PluralKitMember, PluralKitSwitch } from "../types/pluralkit_types";
 
-function pkCustomField(): CustomField {
-	return {
-		uuid: window.crypto.randomUUID(),
-		name: "PluralKit ID",
-		priority: 1,
-		default: false
-	};
-}
-
-async function system(pkExport: any){
-	const systemInfo: System = {
-		name: pkExport.name,
-		description: pkExport.description,
-		uuid: window.crypto.randomUUID(),
+async function system(prefilledUuid: string, name: string, description?: string, avatarUrl?: string){
+	const result = await updateSystem({
+		uuid: prefilledUuid,
+		name,
+		description,
+		image: await getImage(avatarUrl),
 		isPinned: false,
 		isArchived: false,
-		viewInLists: true
-	};
-	if (pkExport.avatar_url && securityConfig.allowRemoteContent) {
-		try {
-			const request = await fetchImage(pkExport.avatar_url);
-			if(!request) throw new Error("no image after all");
-			const image = await newFile([request.blob], (pkExport.avatar_url as string).split("/").pop()!);
-			systemInfo.image = await resizeImage(image);
-		} catch (_e) {
-			// whatever
-		}
-	}
+		viewInLists: false,
+	});
 
-	return systemInfo;
+	if(!transactionSucceeded(result))
+		throw new Error(`Could not update System: ${result.err.message}`);
 }
 
-function tag(pkExport: any){
-	const tagMapping = new Map<string, string>();
-	const tags: Tag[] = [];
+async function customFields() {
+	const result = await newCustomField({
+		name: "PluralKit ID",
+		default: false,
+		priority: 1
+	});
+	if(!transactionSucceeded(result))
+		throw new Error(`Could not add custom field: ${result.err.message}`);
 
-	for (const pkGroup of pkExport.groups) {
-		const tag: Tag = {
-			name: pkGroup.display_name || pkGroup.name,
-			description: pkGroup.description || undefined,
-			color: pkGroup.color ? `#${pkGroup.color}` : undefined,
-			type: "member",
-			isArchived: false,
-			viewInLists: false,
-			uuid: window.crypto.randomUUID()
-		};
-		tags.push(tag);
-		tagMapping.set(pkGroup.id, tag.uuid);
-	}
-
-	return {
-		tags,
-		tagMapping
-	};
+	return result.detail;
 }
 
-async function member(pkExport: any, tagMapping: Map<string, string>, systemInfo: System, pkField: CustomField) {
-	const memberMapping = new Map<string, string>();
-	const members: Member[] = [];
+async function tags(pkGroup: PluralKitGroup){
+	const result = await newTag({
+		name: pkGroup.display_name || pkGroup.name,
+		description: pkGroup.description || undefined,
+		color: pkGroup.color ? `#${pkGroup.color}` : undefined,
+		type: "member",
+		isArchived: false,
+		viewInLists: false
+	});
 
-	for (const pkMember of pkExport.members) {
-		const member: Member = {
-			name: pkMember.display_name || pkMember.name,
-			system: systemInfo.uuid,
-			description: pkMember.description || undefined,
-			pronouns: pkMember.pronouns || undefined,
-			color: pkMember.color ? `#${pkMember.color}` : undefined,
-			isArchived: false,
-			isPinned: false,
-			isCustomFront: false,
-			dateCreated: new Date(pkMember.created),
-			tags: pkExport.groups.filter(x => (x.members as string[]).includes(pkMember.id)).map(x => tagMapping.get(x.id)),
-			customFields: new Map([[pkField.uuid, pkMember.id]]),
-			uuid: window.crypto.randomUUID()
-		};
-		if (pkMember.avatar_url && securityConfig.allowRemoteContent) {
-			try {
-				const request = await fetchImage(pkMember.avatar_url);
-				if (!request) throw new Error("no image after all");
-				const image = await newFile([request.blob], pkMember.avatar_url.split("/").pop());
-				member.image = await resizeImage(image);
-			} catch (_e) {
-				// whatever, again
-			}
-		}
-		if (pkMember.banner && securityConfig.allowRemoteContent) {
-			try {
-				const request = await fetchImage(pkMember.banner);
-				if (!request) throw new Error("no image after all");
-				const image = await newFile([request.blob], pkMember.banner.split("/").pop());
-				member.cover = await resizeImage(image, 1024);
-			} catch (_e) {
-				// whatever, again
-			}
-		}
-		members.push(member);
-		memberMapping.set(pkMember.id, member.uuid);
-	}
+	if (!transactionSucceeded(result))
+		throw new Error(`Could not add tag: ${result.err.message}`);
 
-	return {
-		members,
-		memberMapping
-	};
+	return [result.detail, pkGroup.members] as [string, string[]];
 }
 
-function frontingEntry(pkExport: any, memberMapping: Map<string, string>){
-	const trackedFronting = new Map<string, FrontingEntry>();
-	const frontingEntries: FrontingEntry[] = [];
+async function members(pkMember: PluralKitMember) {
+	const result = await newMember({
+		name: pkMember.display_name || pkMember.name,
+		system: appConfig.defaultSystem,
+		image: await getImage(pkMember.avatar_url),
+		cover: await getImage(pkMember.banner),
+		description: pkMember.description || undefined,
+		pronouns: pkMember.pronouns || undefined,
+		color: pkMember.color ? `#${pkMember.color}` : undefined,
+		isArchived: false,
+		isPinned: false,
+		isCustomFront: false,
+		dateCreated: new Date(pkMember.created),
+		tags: [],
+		customFields: new Map(),
+	});
 
-	for (const pkSwitch of pkExport.switches.toSorted((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime())) {
+	if (!transactionSucceeded(result))
+		throw new Error(`Could not add member: ${result.err.message}`);
+
+	return [result.detail, pkMember.id] as [string, string];
+}
+
+async function frontingEntries(pkSwitches: PluralKitSwitch[], memberMapping: Map<string, string>){
+	const trackedFronting = new Map<string, PartialBy<FrontingEntry, "uuid">>();
+	for (const pkSwitch of pkSwitches.toSorted((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime())) {
 		const date = new Date(pkSwitch.timestamp);
 
 		// check who left
@@ -126,7 +90,12 @@ function frontingEntry(pkExport: any, memberMapping: Map<string, string>){
 			if (!pkSwitch.members.includes(id)) {
 				const frontingEntry = trackedFronting.get(id)!;
 				frontingEntry.endTime = date;
-				frontingEntries.push(frontingEntry);
+
+				const result = await newFrontingEntry(frontingEntry);
+
+				if (!transactionSucceeded(result))
+					throw new Error(`Could not add fronting entry: ${result.err.message}`);
+
 				trackedFronting.delete(id);
 			}
 		}
@@ -134,12 +103,11 @@ function frontingEntry(pkExport: any, memberMapping: Map<string, string>){
 		// check who's new
 		for (const id of pkSwitch.members) {
 			if (!trackedFronting.has(id)) {
-				const frontingEntry: FrontingEntry = {
+				const frontingEntry: PartialBy<FrontingEntry, "uuid"> = {
 					member: memberMapping.get(id) || nilUid,
 					startTime: date,
 					isMainFronter: false,
 					isLocked: false,
-					uuid: window.crypto.randomUUID()
 				};
 				trackedFronting.set(id, frontingEntry);
 			}
@@ -147,31 +115,119 @@ function frontingEntry(pkExport: any, memberMapping: Map<string, string>){
 	}
 
 	// push whatever is still in the tracking map
-	for (const frontingEntry of trackedFronting.values())
-		frontingEntries.push(frontingEntry);
+	for (const frontingEntry of trackedFronting.values()){
+		const result = await newFrontingEntry(frontingEntry);
 
-	return frontingEntries;
+		if (!transactionSucceeded(result))
+			throw new Error(`Could not add fronting entry: ${result.err.message}`);
+	}
 }
 
-export async function importPluralKit(pkExport: any){
-	const field = pkCustomField();
-	const systemInfo = await system(pkExport);
-	const { tags, tagMapping } = tag(pkExport);
-	const { members, memberMapping } = await member(pkExport, tagMapping, systemInfo, field);
-	const frontingEntries = frontingEntry(pkExport, memberMapping);
-
+export async function importPluralKit(){
 	try {
+		const path = await open({
+			multiple: false,
+			filters: [{ name: "PluralKit JSON", extensions: ["json"] }],
+			fileAccessMode: "scoped",
+			pickerMode: "document"
+		});
+		if (!path) throw new Error("no path");
+
+		// System name, description and avatar
+		let name = "PluralKit";
+		let description: string | undefined = undefined;
+		let avatarUrl: string | undefined = undefined;
+
+		// UUID in our database -> ID in their one
+		const memberMapping = new Map<string, string>();
+
+		// UUID in our database -> IDs of the alters who have this tag in their one
+		const tagsToMembers = new Map<string, string[]>();
+
+		// We sadly need to cache fronts
+		const _switches: PluralKitSwitch[] = [];
+
 		// WIPE AMPERSAND
 		await clearAllDatabase();
 
-		// ADD TO DATABASE
-		const tables = getTables();
-		await tables.customFields.bulkAdd([field]);
-		await tables.systems.bulkAdd([systemInfo]);
-		appConfig.defaultSystem = systemInfo.uuid;
-		await tables.tags.bulkAdd(tags);
-		await tables.members.bulkAdd(members);
-		await tables.frontingEntries.bulkAdd(frontingEntries);
+		// Create a dummy system (we will update it later)
+		const _system = await newSystem({
+			name: "PluralKit",
+			description: "",
+			isPinned: false,
+			isArchived: false,
+			viewInLists: false
+		});
+
+		if (!transactionSucceeded(_system))
+			throw new Error(`Could not add a dummy system: ${_system.err.message}`);
+
+		appConfig.defaultSystem = _system.detail;
+
+		// Mock a JSON stream of data because we're poor
+		const jsonStream = Object.entries(JSON.parse(await readTextFile(path)) as PluralKitExport);
+
+		// Add our pluralkit custom field
+		const pkField = await customFields();
+
+		// Add values to database
+		for (const [ path, values ] of jsonStream){
+			switch(path){
+				case "name": {
+					name = values as string;
+					break;
+				}
+				case "description": {
+					description = values as string;
+					break;
+				}
+				case "avatar_url": {
+					avatarUrl = values as string;
+					break;
+				}
+				case "groups": {
+					for(const value of values){
+						const [uuid, members] = await tags(value as PluralKitGroup);
+						tagsToMembers.set(uuid, members);
+					}
+					break;
+				}
+				case "members": {
+					for (const value of values) {
+						const [ uuid, id ] = await members(value as PluralKitMember);
+						memberMapping.set(uuid, id);
+					}
+					break;
+				}
+				case "switches": {
+					for(const value of values)
+						_switches.push(value as PluralKitSwitch);
+					break;
+				}
+			}
+		}
+
+		// add stuff we had to cache ( :( )
+		await system(appConfig.defaultSystem, name, description, avatarUrl);
+		await frontingEntries(_switches, memberMapping);
+
+		// remap now
+		// membersToFields holds all member UUIDs we set, so we can safely use that as a member index
+		for(const [uuid, id] of memberMapping){
+			await updateMember({
+				uuid,
+				tags: Array.from(
+					tagsToMembers.entries()
+						.filter(x => x[1].includes(id))
+						.map(x => x[0])
+				),
+				customFields: new Map([[pkField, id]])
+			});
+		}
+
+		// I KNOW YOU'RE SEEING THIS AND THINKING IT'S CURSED
+		// I WILL SHOW UP AT YOUR DOOR
+
 	} catch (e) {
 		console.error(e);
 		return false;

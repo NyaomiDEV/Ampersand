@@ -14,15 +14,12 @@ import { newBoardMessage } from "../../tables/boardMessages";
 import { open } from "../../../native/open";
 import { intoStream } from "../../../native/fs";
 
-async function system(ocUser: OctoconUser, prefilledUuid: string){
+async function system(prefilledUuid: string, ocUser: OctoconUser){
 	const result = await updateSystem({
 		uuid: prefilledUuid,
 		name: ocUser.username || ocUser.id,
 		description: ocUser.description,
 		image: await getImage(ocUser.avatar_url),
-		isPinned: false,
-		isArchived: false,
-		viewInLists: false
 	});
 
 	if(!transactionSucceeded(result))
@@ -204,7 +201,7 @@ export async function importOctocon(){
 	try {
 		const path = await open({
 			multiple: false,
-			filters: [{ name: "Tupperbox JSON", extensions: ["json"] }],
+			filters: [{ name: "Octocon JSON", extensions: ["json"] }],
 			fileAccessMode: "scoped",
 			pickerMode: "document"
 		});
@@ -235,7 +232,9 @@ export async function importOctocon(){
 			viewInLists: false
 		});
 
-		if (!transactionSucceeded(_system)) throw new Error("Could not add a dummy system");
+		if (!transactionSucceeded(_system))
+			throw new Error(`Could not add a dummy system: ${_system.err.message}`);
+
 		appConfig.defaultSystem = _system.detail;
 
 		const jsonStream = intoStream(path, undefined, true)
@@ -245,7 +244,7 @@ export async function importOctocon(){
 		for await (const { path, value } of streamToIterable(jsonStream)){
 			switch(path[0]){
 				case "user": {
-					await system(value as OctoconUser, appConfig.defaultSystem);
+					await system(appConfig.defaultSystem, value as OctoconUser);
 					await customFields(value as OctoconUser, customFieldMapping);
 					break;
 				}
@@ -281,7 +280,7 @@ export async function importOctocon(){
 		// remap now
 		// membersToFields holds all member UUIDs we set, so we can safely use that as a member index
 		for(const [uuid, fields] of membersToFields){
-			await updateMember({
+			const result = await updateMember({
 				uuid,
 				tags: Array.from(tagsToAlters.entries().filter(x => x[1].includes(memberMapping.get(uuid) || NaN)).map(x => x[0])),
 				customFields: new Map(fields.map(([id, value]) => {
@@ -289,6 +288,8 @@ export async function importOctocon(){
 					return [uuid, isLocked ? `||${value}||` : value];
 				}))
 			});
+			if (!transactionSucceeded(result))
+				throw new Error(`Could not update a member: ${result.err.message}`);
 		}
 
 		// I KNOW YOU'RE SEEING THIS AND THINKING IT'S CURSED
