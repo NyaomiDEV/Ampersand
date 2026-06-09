@@ -22,7 +22,7 @@ function revcount(): Promise<string> {
 		_process.stdout.on("data", (chunk) => {
 			stdout += chunk;
 		});
-		_process.on("exit", (code) => {
+		_process.on("exit", (_code) => {
 			resolve(stdout.trim());
 		});
 	});
@@ -79,7 +79,7 @@ export default defineConfig({
 		polyfill: "usage"
 	},
 	tools: {
-		rspack(config, { addRules }) {
+		rspack(_config, { addRules }) {
 			addRules([
 				{
 					test: /\.md$/,
