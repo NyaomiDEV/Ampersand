@@ -1,0 +1,32 @@
+{
+	"header": "பகுப்பாய்வு",
+	"detail": "பகுப்பாய்வு விவரம்",
+	"stats": "புள்ளிவிவரங்கள்",
+	"daytime": "நாளின் நேரம்",
+	"presence": "இருப்பு",
+	"cofront": "இணை முகப்பு",
+	"startDate": "தொடக்க தேதி",
+	"endDate": "முடிவு தேதி",
+	"subheaders": {
+		"fronting": "உறுப்பினர்கள் முன்னிலை",
+		"cofronting": "உறுப்பினர்கள் இணை முன்னணி",
+		"influencing": "உறுப்பினர்கள் மற்றவர்களை பாதிக்கும்",
+		"influenced": "உறுப்பினர்கள் மற்றவர்களால் பாதிக்கப்படுகின்றனர்"
+	},
+	"frontingCount_one": "முன்பக்க {{count}} முறை",
+	"frontingCount_other": "முன்பக்கம் {{count}} முறை",
+	"cofrontingCount_one": "இணை முன் {{count}} முறை",
+	"cofrontingCount_other": "இணை முன் {{count}} முறைகள்",
+	"influencingCount_one": "{{count}} முறை பிறரைப் பாதித்தது",
+	"influencingCount_other": "மற்றவர்களை {{count}} முறை பாதித்தது",
+	"influencedCount_one": "பிறரால் {{count}} முறை தாக்கப்பட்டது",
+	"influencedCount_other": "பிறரால் {{count}} முறை தாக்கப்பட்டன",
+	"total": "மொத்தத்தில்",
+	"average": "சராசரியாக",
+	"max": "அதிகபட்சம்",
+	"min": "குறைந்தபட்சம்",
+	"morning": "காலை நேரங்கள்",
+	"day": "நாளின் நேரங்கள்",
+	"evening": "மாலை நேரங்கள்",
+	"night": "இரவு நேரங்கள்"
+}

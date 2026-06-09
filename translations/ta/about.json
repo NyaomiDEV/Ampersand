@@ -1,0 +1,9 @@
+{
+	"header": "பற்றி",
+	"version": "பதிப்பு {{version}}",
+	"ciVersion": "நிலையற்ற பதிப்பு",
+	"madein": "இத்தாலியில் அன்புடன் உருவாக்கப்பட்டது",
+	"privacyPolicy": "தனியுரிமைக் கொள்கை",
+	"updateAvailable": "புதுப்பிப்பு உள்ளது: {{newVersion}}",
+	"credits": "வரவு"
+}

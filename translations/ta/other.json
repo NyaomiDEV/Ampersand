@@ -1,0 +1,168 @@
+{
+	"languageName": {
+		"local": "ஆங்கிலம்",
+		"inEnglish": "ஆங்கிலம்"
+	},
+	"donationLabel": {
+		"title": "எங்களை ஆதரிக்கவும்",
+		"desc": "உங்கள் நன்கொடை ஆம்பர்சண்டை மேம்பாட்டில் வைத்திருக்கிறது மற்றும் டெவலப்பர்களை மிதக்க வைக்கிறது"
+	},
+	"loading": "ஆம்பர்சண்ட் ஏற்றப்படுகிறது",
+	"genericDeleteDesc": "இந்தச் செயலைச் செயல்தவிர்க்க முடியாது!",
+	"addTimestamp": "நேர முத்திரையைச் சேர்க்கவும்",
+	"memberMention": "ஒரு உறுப்பினரைக் குறிப்பிடவும்",
+	"alerts": {
+		"ok": "சரி",
+		"cancel": "ரத்துசெய்",
+		"clear": "தெளிவு",
+		"yes": "ஆம்",
+		"no": "இல்லை",
+		"assetFontPlaceholder": "எழுத்துருக்கான சொத்து பெயர்"
+	},
+	"comments": {
+		"header": "கருத்துகள்",
+		"commenter": "கருத்து தெரிவிப்பவரைத் தேர்ந்தெடுக்கவும்",
+		"comment": "கருத்து உடல்",
+		"commentHint": "கருத்து...",
+		"commentCount_one": "{{count}} கருத்து",
+		"commentCount_other": "{{count}} கருத்துகள்",
+		"deleteConfirmation": "இந்தக் கருத்தை நிச்சயமாக நீக்க விரும்புகிறீர்களா?"
+	},
+	"presence": {
+		"header": "இருப்பு",
+		"absent": "இல்லாதது",
+		"heavilyDissociating": "பெரிதும் விலகும்",
+		"dissociating": "விலகுதல்",
+		"zonedOut": "மண்டலப்படுத்தப்பட்டது",
+		"present": "தற்போது",
+		"fullyGrounded": "முழுமையாக அடித்தளமிட்டது"
+	},
+	"report": {
+		"header": "ஆம்பர்சண்ட் அறிக்கை",
+		"generatedOn": "{{date}} அன்று உருவாக்கப்பட்டது",
+		"coveringDays": "கடந்த {{count}} நாட்கள் தொடர்பான தரவு"
+	},
+	"back": "பின்",
+	"time": "நேரம்",
+	"count": "எண்ணுங்கள்",
+	"timeSizes": {
+		"years": {
+			"long": "ஆண்டுகள்",
+			"short": "ஒய்"
+		},
+		"months": {
+			"long": "மாதங்கள்",
+			"short": "எம்"
+		},
+		"days": {
+			"long": "நாட்கள்",
+			"short": "டி"
+		},
+		"weekdays": {
+			"monday": "திங்கட்கிழமை",
+			"tuesday": "செவ்வாய்",
+			"wednesday": "அறிவன்",
+			"thursday": "வியாழன்",
+			"friday": "வெள்ளிக்கிழமை",
+			"saturday": "காரிக்கிழமை",
+			"sunday": "ஞாயிறு"
+		},
+		"hours": {
+			"long": "மணி",
+			"short": "ம"
+		},
+		"minutes": {
+			"long": "நிமிடங்கள்",
+			"short": "மீ"
+		},
+		"seconds": {
+			"long": "நொடிகள்",
+			"short": "கள்"
+		}
+	},
+	"shapes": {
+		"arch": "ஆர்ச்",
+		"arrow": "அம்பு",
+		"boom": "ஏற்றம்",
+		"bun": "பன்",
+		"burst": "வெடிப்பு",
+		"clamshell": "கிளாம்செல்",
+		"diamond": "வைரம்",
+		"fan": "மின்விசிறி",
+		"flower": "மலர்",
+		"gem": "மாணிக்கம்",
+		"ghost-ish": "பேய்-இச்",
+		"heart": "இதயம்",
+		"leaf-clover4": "இலை க்ளோவர் 4",
+		"leaf-clover8": "இலை க்ளோவர் 8",
+		"oval": "ஓவல்",
+		"pentagon": "ஐங்கோணம்",
+		"pill": "மாத்திரை",
+		"pixel-circle": "படப்புள்ளி வட்டம்",
+		"pixel-triangle": "படப்புள்ளி முக்கோணம்",
+		"puffy-diamond": "பருத்த வைரம்",
+		"puffy": "வீங்கிய",
+		"semicircle": "அரைவட்டம்",
+		"sided-cookie12": "12 பக்க குக்கீ",
+		"sided-cookie4": "4 பக்க குக்கீ",
+		"sided-cookie6": "6 பக்க குக்கீ",
+		"sided-cookie7": "7 பக்க குக்கீ",
+		"sided-cookie9": "9 பக்க குக்கீ",
+		"slanted": "சாய்ந்த",
+		"soft-boom": "மென்மையான ஏற்றம்",
+		"soft-burst": "மென்மையான வெடிப்பு",
+		"square": "நாற்கை",
+		"sunny": "சன்னி",
+		"triangle": "முக்கோணம்",
+		"very-sunny": "மிகவும் சன்னி",
+		"noShape": "வடிவம் இல்லை"
+	},
+	"fonts": {
+		"cursive": "கர்சீவ்",
+		"pixel": "படப்புள்ளி",
+		"dots": "புள்ளிகள்",
+		"digital": "டிசிட்டல்",
+		"handwritten": "கையால் எழுதப்பட்டது",
+		"serif": "செரிஃப்",
+		"typewriter": "தட்டச்சுப்பொறி",
+		"monospace": "மினிவேன்",
+		"playful": "விளையாட்டுத்தனமான",
+		"holy": "புனிதமானது",
+		"bubbly": "குமிழி",
+		"marker": "குறிப்பான்",
+		"gothic": "கோதிக்",
+		"stencil": "வரையச்சு",
+		"mystery": "மர்மம்",
+		"italian": "இத்தாலிய",
+		"metal": "மாழை",
+		"cutesy": "அழகா",
+		"indie": "இண்டி",
+		"deco": "டெகோ",
+		"terminal": "முனையத்தில்",
+		"western": "மேற்கு",
+		"glitch": "தடுமாற்றம்",
+		"drip": "சொட்டுநீர்",
+		"cracks": "விரிசல்",
+		"pop": "பாப்",
+		"varsity": "பல்கலைக்கழகம்",
+		"futuristic": "எதிர்காலம் சார்ந்த",
+		"pineapple": "அன்னாசி",
+		"nature": "இயற்கை",
+		"summer": "கோடை",
+		"spotty": "ச்பாட்டி",
+		"bone": "எலும்பு",
+		"cow": "பசு",
+		"assetFont": "சொத்து எழுத்துரு",
+		"noFont": "எழுத்துரு இல்லை"
+	},
+	"fontStyles": {
+		"bold": "தடிமான",
+		"italic": "சாய்வு",
+		"neon": "ஒளிரியம், புத்தொளிரி",
+		"gradient": "சரிவு",
+		"outline": "அவுட்லைன்",
+		"shadow": "நிழல்"
+	},
+	"developerMode": "உருவாக்குபவர் பயன்முறை",
+	"theresNothingHere": "இங்கே எதுவும் இல்லை"
+}

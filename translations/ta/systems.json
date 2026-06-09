@@ -1,0 +1,31 @@
+{
+	"header": "அமைப்புகள்",
+	"searchPlaceholder": "தேடல் அமைப்புகள்...",
+	"select": "ஒரு அமைப்பைத் தேர்ந்தெடுக்கவும்",
+	"edit": {
+		"header": "மண்டலம்",
+		"headerAdd": "அமைப்பைச் சேர்க்கவும்",
+		"headerEdit": "அமைப்பு திருத்தவும்",
+		"name": "அமைப்பின் பெயர்",
+		"description": "கணினி விளக்கம்",
+		"noDescription": "விளக்கம் இல்லை",
+		"color": "நிறம்",
+		"nameStyle": "பெயர் நடை",
+		"imageClip": "அவதார் வடிவம்",
+		"memberCount": "உறுப்பினர் எண்ணிக்கை",
+		"memberCountText": "{{totalMemberCount}} உறுப்பினர்கள்), {{memberCount}} செயலில், {{archivedMemberCount}} காப்பகப்படுத்தப்பட்டது",
+		"customFrontCountText": "{{totalCustomFrontCount}} தனிப்பயன் முன்(கள்), {{customFrontCount}} செயலில், {{archivedCustomFrontCount}} காப்பகப்படுத்தப்பட்டது",
+		"tapToShow": "காட்ட தட்டவும்",
+		"showMembers": "இந்த அமைப்பில் உள்ள உறுப்பினர்களைக் காட்டு",
+		"parent": "பெற்றோர் அமைப்பு",
+		"viewInLists": "பட்டியல்களில் பார்க்கவும்",
+		"isPinned": "பின் அமைப்பு",
+		"archived": "காப்பகப்படுத்தப்பட்டது",
+		"delete": {
+			"title": "அமைப்பை நீக்கு",
+			"confirm": "இந்த அமைப்பை நிச்சயமாக நீக்க விரும்புகிறீர்களா?"
+		},
+		"systemID": "சிச்டம் ஐடி: {{systemID}}",
+		"systemIDcopiedToClipboard": "குறிப்பிடப்பட்ட வடிவமைப்பில் உள்ள சிச்டம் அடையாளம் இடைநிலைப்பலகைக்கு நகலெடுக்கப்பட்டது!"
+	}
+}

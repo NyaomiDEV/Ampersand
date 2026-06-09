@@ -1,0 +1,19 @@
+{
+	"header": "முகப்புப்பெட்டி",
+	"header_salute": "வணக்கம்!",
+	"header_mainfronter": "வணக்கம், {{fronterName}}!",
+	"systemDescription": "கணினி விளக்கம்",
+	"nowFronting": "இப்போது முன்பக்கம்",
+	"fronterInfluencing": "{{influencedMember}} மீது செல்வாக்கு செலுத்துகிறது",
+	"addToFront": "முன்னால் சேர்க்கவும்",
+	"recentFrontingHistory": "அண்மைக் காலத்தில் மாறியது",
+	"messageBoard": {
+		"header": "செய்தி பலகை",
+		"add": "பலகையில் சேர்க்கவும்",
+		"view": "மேலும் காண்க"
+	},
+	"journal": {
+		"header": "அண்மைக் கால இடுகைகள்",
+		"view": "மேலும் காண்க"
+	}
+}
