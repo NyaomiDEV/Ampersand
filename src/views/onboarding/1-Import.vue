@@ -88,11 +88,8 @@
 	async function importFromPluralKit() {
 		await promptRemoteConnection();
 		try{
-			const file = await getDocumentFile(["json"], false);
-			if (!file) throw new Error("no files specified");
 			loading.value = true;
-			const pkExport = JSON.parse(new TextDecoder("utf-8").decode(file));
-			const result = await importPluralKit(pkExport);
+			const result = await importPluralKit();
 			if(!result) throw new Error("errored out");
 		}catch(_e){
 			console.error(_e);

@@ -250,11 +250,7 @@
 	async function importPk() {
 		loading.value = true;
 		try{
-			const file = await getDocumentFile(["json"], false);
-			if (!file) throw new Error("no files specified");
-
-			const pkExport = JSON.parse(new TextDecoder("utf-8").decode(file));
-			const result = await importPluralKit(pkExport);
+			const result = await importPluralKit();
 			if(!result) throw new Error("errored out");
 
 			await toast(i18next.t("importExport:status.importedPk"));
