@@ -4,7 +4,7 @@
 	import Spinner from "../../components/Spinner.vue";
 	import { importArchive } from "../../lib/db/ioutils/archive";
 	import { getDocumentFile, promptYesNo, slideAnimation, toast } from "../../lib/util/misc";
-	import { importPluralKit } from "../../lib/db/external/importers_old/pluralkit.ts";
+	import { importPluralKit } from "../../lib/db/external/importers/pluralkit.ts";
 	import { importTupperBox } from "../../lib/db/external/importers/tupperbox.ts";
 	import { importSimplyPlural } from "../../lib/db/external/importers_old/simplyplural.ts";
 	import { importOctocon } from "../../lib/db/external/importers/octocon.ts";

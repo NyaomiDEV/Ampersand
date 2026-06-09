@@ -4,7 +4,7 @@
 	import { importDatabaseFromBinary } from "../../lib/db/ioutils/old";
 	import { getDocumentFile, promptOptions, sortName, toast } from "../../lib/util/misc";
 	import { useTranslation } from "i18next-vue";
-	import { importPluralKit } from "../../lib/db/external/importers_old/pluralkit.ts";
+	import { importPluralKit } from "../../lib/db/external/importers/pluralkit.ts";
 	import { importTupperBox } from "../../lib/db/external/importers/tupperbox.ts";
 	import { importSimplyPlural } from "../../lib/db/external/importers_old/simplyplural.ts";
 	import { importOctocon } from "../../lib/db/external/importers/octocon.ts";
