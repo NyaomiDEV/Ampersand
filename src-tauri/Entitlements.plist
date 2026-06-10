@@ -3,10 +3,6 @@
 <plist version="1.0">
   <dict>
     <key>com.apple.security.app-sandbox</key>
-    <true/>
-    <key>com.apple.application-identifier</key>
-    <string>westilldonthaveateamid.moe.ampersand.track</string>
-    <key>com.apple.developer.team-identifier</key>
-    <string>westilldonthaveateamid</string>
+    <false/>
   </dict>
 </plist>
