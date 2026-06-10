@@ -1,3 +1,46 @@
+import { recursion } from "regex-recursion";
+
+export function getAmpersandMarkdownRegex(tag: string, paramsRegex?: RegExp) {
+	const _paramsRegex = paramsRegex ? `(?:=(?<params>${paramsRegex.source}))?` : "";
+	// dissecting this because it's hell otherwise
+	// so, uhm
+	// \[tag matches the beginning of our tag verbatim
+	// then we append paramPattern that would be /=(.+?)/ for example and it would match optional parameters
+	// then we close the bracket, \]
+	// then the hell happens, basically the content capturing group (named) starts
+	// and immediately we have a non-capturing group that branches in two parts                     <------ we were here -----
+	// and on the left we have the part that should ensure we're not inside a recursive tag                                  |
+	// so in essence it's (?!\[tag) that would avoid matching the beginning of a nested tag                                  |
+	// and (?!\[/tag\]) that would avoid matching the end of a nested tag                                                    |
+	// but the . at the end would indeed match any single character so we're still in the game                               |
+	// meanwhile on the right of the OR we have just a (?R=20) that means recurse this pattern unto itself 20 times          |
+	// and beyond 20 times, we're just dropping the case                                                                     |
+	// NOTE: we still need to recursively match even if we are not using the nested captures inside                          |
+	// then we're closing the non-capturing group... do you still remember where we were, right? -----------------------------
+	// of course we need to match this zero or more times so drop a * there because even if we wrote a ton this would
+	// still match A SINGLE CHARACTER god how painful regex can be, all of this work for A SINGLE CHARACTER makes you feel lost
+	// and well we can now close the content capturing group (named). FINALLY
+	// then we can just add our end tag with a simple and human regex... \[/tag\]
+	//
+	// now would this have been easier to implement with AI instead of me chugging beers and questioning my sanity?
+	// in this day and age? maybe? thing is, i asked AI and it made so many mistakes that it wasn't even worth it,
+	// I felt like a teacher having to correct the mistakes of a rookie programmer on their first hike with regexes
+	// and this was Copilot mind you - so no, AI is not for me, especially when I can chug alcohol and come up with something
+	// by the end of the day, however one thing that I learned about doing it myself after being fed up by that is that
+	// I have so much untapped brain potential when I just outright get angry at something
+	//
+	// now I know this code will probably be stolen by people and AI alike so at least I ask you two things
+	// the first one is to keep this entire paper of my thoughts intact, and if anything you can add to it
+	// the second is to give me, or ampersand as a whole, some kind of attribution somewhere in the file you end up
+	// copy-pasting the function in, if you REALLY cannot afford to keep the entire paper of comments in.
+	//
+	// Written June 10 2026 by Nao, now please let me die
+	// and let's not forget! This thing *WILL* have bugs, for sure.
+	const pattern = `\\[${tag}${_paramsRegex}\\](?<content>(?:(?!\\[${tag})(?!\\[/${tag}\\]).|(?R=20))*)\\[/${tag}\\]`;
+	const processed = recursion(pattern);
+	return new RegExp(`^${processed.pattern}`, "g");
+}
+
 export function isColor(color: string){
 	const ele = document.createElement("div");
 	ele.style.color = color;
