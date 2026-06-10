@@ -1,6 +1,6 @@
 import { h, type VNode } from "vue";
 import { MarkedExtension } from "marked";
-import { isLength, isPercentage, splitList } from "./utils";
+import { getAmpersandMarkdownRegex, isLength, isPercentage, splitList } from "./utils";
 
 const borderRadiusExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [
@@ -9,7 +9,7 @@ const borderRadiusExtension: MarkedExtension<(VNode | string)[], VNode | string>
 			level: "inline",
 			start(src: string) { return src.match(/\[radius=/)?.index; },
 			tokenizer(src: string) {
-				const rule = /^\[radius=(.+?)\](.+?)\[\/radius\]/;
+				const rule = getAmpersandMarkdownRegex("radius", /.+?/);
 				const match = rule.exec(src);
 				if (match) {
 					const radius = splitList(match[1]);

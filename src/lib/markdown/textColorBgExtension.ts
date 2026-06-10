@@ -1,6 +1,6 @@
 import { h, type VNode } from "vue";
 import { MarkedExtension } from "marked";
-import { isColorSpace, isLength, isPercentage, isColor, splitList } from "./utils";
+import { isColorSpace, isLength, isPercentage, isColor, splitList, getAmpersandMarkdownRegex } from "./utils";
 
 const textColorBgExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [
@@ -9,7 +9,7 @@ const textColorBgExtension: MarkedExtension<(VNode | string)[], VNode | string> 
 			level: "inline",
 			start(src: string) { return src.match(/\[bg=/)?.index; },
 			tokenizer(src: string) {
-				const rule = /^\[bg=(.+?)\](.+?)\[\/bg\]/;
+				const rule = getAmpersandMarkdownRegex("bg", /.+?/);
 				const match = rule.exec(src);
 				if (match) {
 					let isRepeating = false;

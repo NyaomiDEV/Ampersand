@@ -1,6 +1,6 @@
 import { h, type VNode } from "vue";
 import { MarkedExtension } from "marked";
-import { isBorder, splitList } from "./utils";
+import { getAmpersandMarkdownRegex, isBorder, splitList } from "./utils";
 
 const textBorderExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [
@@ -9,7 +9,7 @@ const textBorderExtension: MarkedExtension<(VNode | string)[], VNode | string> =
 			level: "inline",
 			start(src: string) { return src.match(/\[bt=/)?.index; },
 			tokenizer(src: string) {
-				const rule = /^\[bt=(.+?)\](.+?)\[\/bt\]/;
+				const rule = getAmpersandMarkdownRegex("bt", /.+?/);
 				const match = rule.exec(src);
 				if (match) {
 					const borders = splitList(match[1] || "");

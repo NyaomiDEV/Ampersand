@@ -1,6 +1,6 @@
 import { h, type VNode } from "vue";
 import { MarkedExtension } from "marked";
-import { isTextDecoration } from "./utils";
+import { getAmpersandMarkdownRegex, isTextDecoration } from "./utils";
 
 const textDecorationExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [
@@ -9,7 +9,7 @@ const textDecorationExtension: MarkedExtension<(VNode | string)[], VNode | strin
 			level: "inline",
 			start(src: string) { return src.match(/\[td=/)?.index; },
 			tokenizer(src: string) {
-				const rule = /^\[td=(.+?)\](.+?)\[\/td\]/;
+				const rule = getAmpersandMarkdownRegex("td", /.+?/);
 				const match = rule.exec(src);
 				if (match) {
 					// validation

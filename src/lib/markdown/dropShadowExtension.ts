@@ -1,6 +1,6 @@
 import { h, type VNode } from "vue";
 import { MarkedExtension } from "marked";
-import { splitList } from "./utils";
+import { getAmpersandMarkdownRegex, splitList } from "./utils";
 
 const dropShadowExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [
@@ -9,7 +9,7 @@ const dropShadowExtension: MarkedExtension<(VNode | string)[], VNode | string> =
 			level: "inline",
 			start(src: string) { return src.match(/\[sh=/)?.index; },
 			tokenizer(src: string) {
-				const rule = /^\[sh=(.+?)\](.+?)\[\/sh\]/;
+				const rule = getAmpersandMarkdownRegex("sh", /.+?/);
 				const match = rule.exec(src);
 				if (match) {
 					const shadows = splitList(match[1] || "");

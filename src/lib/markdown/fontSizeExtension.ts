@@ -1,6 +1,6 @@
 import { h, type VNode } from "vue";
 import { MarkedExtension } from "marked";
-import { splitList } from "./utils";
+import { getAmpersandMarkdownRegex, splitList } from "./utils";
 
 const fontSizeExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [
@@ -9,7 +9,7 @@ const fontSizeExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 			level: "inline",
 			start(src: string) { return src.match(/\[fs=/)?.index; },
 			tokenizer(src: string) {
-				const rule = /^\[fs=(\d*\.?\d+(?::\d*\.?\d+)?)\](.+?)\[\/fs\]/;
+				const rule = getAmpersandMarkdownRegex("fs", /\d*\.?\d+(?::\d*\.?\d+)?/);
 				const match = rule.exec(src);
 				if (match) {
 					const sizes = splitList(match[1]).map(x => parseFloat(x));

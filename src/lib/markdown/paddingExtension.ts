@@ -1,6 +1,6 @@
 import { h, type VNode } from "vue";
 import { MarkedExtension } from "marked";
-import { isLength, isPercentage, splitList } from "./utils";
+import { getAmpersandMarkdownRegex, isLength, isPercentage, splitList } from "./utils";
 
 const paddingExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [
@@ -9,7 +9,7 @@ const paddingExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 			level: "inline",
 			start(src: string) { return src.match(/\[padding=/)?.index; },
 			tokenizer(src: string) {
-				const rule = /^\[padding=(.+?)\](.+?)\[\/padding\]/;
+				const rule = getAmpersandMarkdownRegex("padding", /.+?/);
 				const match = rule.exec(src);
 				if (match) {
 					const padding = splitList(match[1]);
