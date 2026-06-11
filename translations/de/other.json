@@ -94,7 +94,7 @@
 		"header": "Vorhandensein"
 	},
 	"memberMention": "Mitglied erwähnen",
-	"developerMode": "Entwicklungseinstellungen",
+	"developerMode": "Entwicklermodus",
 	"comments": {
 		"commenter": "Kommentator auswählen",
 		"comment": "Kommentarinhalt",
@@ -114,5 +114,15 @@
 	"donationLabel": {
 		"title": "Unterstütze uns"
 	},
-	"loading": "Ampersand lädt"
+	"loading": "Ampersand lädt",
+	"fontStyles": {
+		"shadow": "Schatten"
+	},
+	"fonts": {
+		"futuristic": "Futuristisch",
+		"noFont": "Keine Schriftart",
+		"deco": "Deko",
+		"dots": "Punkte",
+		"handwritten": "Handgeschrieben"
+	}
 }
