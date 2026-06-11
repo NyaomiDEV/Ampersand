@@ -116,7 +116,11 @@
 	},
 	"loading": "Ampersand lädt",
 	"fontStyles": {
-		"shadow": "Schatten"
+		"shadow": "Schatten",
+		"bold": "Fett",
+		"italic": "Kursiv",
+		"neon": "Neon",
+		"gradient": "Farbverlauf"
 	},
 	"fonts": {
 		"futuristic": "Futuristisch",
@@ -125,6 +129,15 @@
 		"dots": "Punkte",
 		"handwritten": "Handgeschrieben",
 		"pineapple": "Ananas",
-		"western": "Westlich"
+		"western": "Westlich",
+		"nature": "Natur",
+		"summer": "Sommer",
+		"bone": "Knochen",
+		"cow": "Kuh",
+		"gothic": "Gotisch",
+		"italian": "Italienisch",
+		"metal": "Metall",
+		"terminal": "Terminal",
+		"digital": "Digital"
 	}
 }
