@@ -16,7 +16,6 @@ export class Molise<T extends UUIDable> implements Table<T> {
 
 	restoreFromAside(_token: string): Promise<void> {
 		throw new Error("Can't have shit in Molise");
-
 	}
 
 	removeAside(_token: string): Promise<void> {
