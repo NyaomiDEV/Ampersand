@@ -152,7 +152,9 @@
 		"spotty": "nasin sitelen pi namako sike",
 		"bone": "nasin sitelen pi palisa walo",
 		"cow": "nasin sitelen pi sike soweli",
-		"assetFont": "nasin sitelen pi ijo namako"
+		"assetFont": "nasin sitelen pi ijo namako",
+		"elegant": "nasin sitelen pona",
+		"outline": "nasin sitelen selo"
 	},
 	"loading": "ilo Ampersand li pali",
 	"donationLabel": {
