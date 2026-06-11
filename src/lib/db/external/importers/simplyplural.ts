@@ -1,4 +1,4 @@
-import { clearAllDatabase } from "../..";
+import { getTables } from "../..";
 import i18next from "../../../i18n";
 import { maxUid, nilUid } from "../../../util/consts";
 import { appConfig } from "../../../config";
@@ -287,6 +287,8 @@ async function frontingEntry(spFrontHistory: SimplyPluralFrontHistory, memberMap
 }
 
 export async function importSimplyPlural(){
+	const asideToken = `databaseSimplyPluralImport.${Date.now()}`;
+
 	try {
 		const path = await open({
 			multiple: false,
@@ -314,7 +316,8 @@ export async function importSimplyPlural(){
 		const _polls: SimplyPluralPoll[] = [];
 
 		// WIPE AMPERSAND
-		await clearAllDatabase();
+		for (const table of Object.values(getTables()))
+			await table.setAside(asideToken);
 
 		// Create a dummy system (we will update it later)
 		const _system = await newSystem({
@@ -485,11 +488,28 @@ export async function importSimplyPlural(){
 				throw new Error(`Could not update a post: ${result.err.message}`);
 		}
 
+		for (const table of Object.values(getTables())) {
+			try {
+				await table.removeAside(asideToken);
+			} catch (_e) {
+				console.error(`Couldn't remove aside: ${_e as Error}`);
+			}
+		}
+
 		// I KNOW YOU'RE SEEING THIS AND THINKING IT'S CURSED
 		// I WILL SHOW UP AT YOUR DOOR
 
 	} catch (e) {
 		console.error(e);
+
+		for (const table of Object.values(getTables())) {
+			try {
+				await table.restoreFromAside(asideToken);
+			} catch (_e) {
+				console.error(`Couldn't even restore from aside: ${_e as Error}`);
+			}
+		}
+
 		return false;
 	}
 

@@ -1,5 +1,5 @@
 import { appConfig } from "../../../config";
-import { clearAllDatabase } from "../..";
+import { getTables } from "../..";
 import { newSystem } from "../../tables/system";
 import { newMember, updateMember } from "../../tables/members";
 import { parseJsonStreamWithPaths, streamToIterable } from "json-stream-es";
@@ -52,6 +52,8 @@ async function member(tuMember: TupperboxMember, discordId?: string){
 }
 
 export async function importTupperBox(discordId?: string){
+	const asideToken = `databaseTupperboxImport.${Date.now()}`;
+
 	try {
 		const path = await open({
 			multiple: false,
@@ -65,7 +67,8 @@ export async function importTupperBox(discordId?: string){
 		const memberWantsSubsystem = new Map<string, number | undefined>();
 
 		// WIPE AMPERSAND
-		await clearAllDatabase();
+		for (const table of Object.values(getTables()))
+			await table.setAside(asideToken);
 
 		// Tupperbox doesn't have the concept of a system so we will just add one ourselves
 		const _system = (await newSystem({
@@ -113,8 +116,26 @@ export async function importTupperBox(discordId?: string){
 			if (!transactionSucceeded(result))
 				throw new Error(`Could not remap Tupperbox member -> system: ${result.err.message}`);
 		}
+
+		for (const table of Object.values(getTables())) {
+			try {
+				await table.removeAside(asideToken);
+			} catch (_e) {
+				console.error(`Couldn't remove aside: ${_e as Error}`);
+			}
+		}
+
 	}catch(e){
 		console.error(e);
+
+		for (const table of Object.values(getTables())) {
+			try {
+				await table.restoreFromAside(asideToken);
+			} catch (_e) {
+				console.error(`Couldn't even restore from aside: ${_e as Error}`);
+			}
+		}
+
 		return false;
 	}
 

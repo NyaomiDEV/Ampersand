@@ -1,6 +1,6 @@
 import { appConfig } from "../../../config";
 import { nilUid } from "../../../util/consts";
-import { clearAllDatabase } from "../..";
+import { getTables } from "../..";
 import type { OctoconAlter, OctoconFront, OctoconPoll, OctoconTag, OctoconUser } from "../types/octocon_types";
 import { getImage } from "../utils";
 import { newSystem, updateSystem } from "../../tables/system";
@@ -198,6 +198,8 @@ async function polls(ocPoll: OctoconPoll, memberMapping: Map<number, string>){
 }
 
 export async function importOctocon(){
+	const asideToken = `databaseOctoconImport.${Date.now()}`;
+
 	try {
 		const path = await open({
 			multiple: false,
@@ -221,7 +223,8 @@ export async function importOctocon(){
 		const _polls: OctoconPoll[] = [];
 
 		// WIPE AMPERSAND
-		await clearAllDatabase();
+		for (const table of Object.values(getTables()))
+			await table.setAside(asideToken);
 
 		// Create a dummy system (we will update it later)
 		const _system = await newSystem({
@@ -315,11 +318,28 @@ export async function importOctocon(){
 				throw new Error(`Could not update a member: ${result.err.message}`);
 		}
 
+		for (const table of Object.values(getTables())) {
+			try {
+				await table.removeAside(asideToken);
+			} catch (_e) {
+				console.error(`Couldn't remove aside: ${_e as Error}`);
+			}
+		}
+
 		// I KNOW YOU'RE SEEING THIS AND THINKING IT'S CURSED
 		// I WILL SHOW UP AT YOUR DOOR
 
 	} catch (e) {
 		console.error(e);
+
+		for (const table of Object.values(getTables())) {
+			try {
+				await table.restoreFromAside(asideToken);
+			} catch (_e) {
+				console.error(`Couldn't even restore from aside: ${_e as Error}`);
+			}
+		}
+
 		return false;
 	}
 

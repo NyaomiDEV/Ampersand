@@ -1,5 +1,5 @@
 import { FrontingEntry } from "../../entities";
-import { clearAllDatabase } from "../..";
+import { getTables } from "../..";
 import { nilUid } from "../../../util/consts";
 import { appConfig } from "../../../config";
 import { getImage } from "../utils";
@@ -125,6 +125,8 @@ async function frontingEntries(pkSwitches: PluralKitSwitch[], memberMapping: Map
 }
 
 export async function importPluralKit(){
+	const asideToken = `databasePluralKitImport.${Date.now()}`;
+
 	try {
 		const path = await open({
 			multiple: false,
@@ -149,7 +151,8 @@ export async function importPluralKit(){
 		const _switches: PluralKitSwitch[] = [];
 
 		// WIPE AMPERSAND
-		await clearAllDatabase();
+		for (const table of Object.values(getTables()))
+			await table.setAside(asideToken);
 
 		// Create a dummy system (we will update it later)
 		const _system = await newSystem({
@@ -240,11 +243,28 @@ export async function importPluralKit(){
 			});
 		}
 
+		for (const table of Object.values(getTables())) {
+			try {
+				await table.removeAside(asideToken);
+			} catch (_e) {
+				console.error(`Couldn't remove aside: ${_e as Error}`);
+			}
+		}
+
 		// I KNOW YOU'RE SEEING THIS AND THINKING IT'S CURSED
 		// I WILL SHOW UP AT YOUR DOOR
 
 	} catch (e) {
 		console.error(e);
+
+		for (const table of Object.values(getTables())){
+			try{
+				await table.restoreFromAside(asideToken);
+			}catch(_e){
+				console.error(`Couldn't even restore from aside: ${_e as Error}`);
+			}
+		}
+
 		return false;
 	}
 
