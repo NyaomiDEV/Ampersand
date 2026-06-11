@@ -131,8 +131,8 @@ async function member(spMember: SimplyPluralMember) {
 	if (!transactionSucceeded(result))
 		throw new Error(`Could not add member: ${result.err.message}`);
 
-	const fields = Object.entries(spMember.info)
-		.filter(([_, value]) => value.length);
+	const fields = spMember.info ? Object.entries(spMember.info)
+		.filter(([_, value]) => value.length) : [];
 
 	return [ result.detail, spMember._id, fields ] as [string, string, string[][]];
 }
@@ -445,13 +445,14 @@ export async function importSimplyPlural(){
 			}).filter(x => !!x);
 
 			if (
-				!spId &&
+				!spId ||
 				(!member.description || member.description.match(/<###@(\w+)###>/) === null) &&
 				!fields
 			) continue;
 
 			const result = await updateMember({
 				uuid: member.uuid,
+				tags: Array.from(tagsToMembers.entries().filter(x => x[1].includes(spId)).map(x => x[0])),
 				description: member.description?.replace(/<###@(\w+)###>/g, (_, p1) => `@<m:${memberMapping.get(p1) || nilUid}>`),
 				customFields: fields ? new Map(fields) : undefined
 			});

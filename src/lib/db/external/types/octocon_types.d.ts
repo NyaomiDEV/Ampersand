@@ -11,7 +11,7 @@ type OctoconUser = {
 	username?: string,
 	description?: string,
 	avatar_url?: string,
-	fields: OctoconUserField[]
+	fields?: OctoconUserField[]
 };
 
 type OctoconUserField = {

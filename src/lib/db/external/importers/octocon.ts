@@ -5,7 +5,7 @@ import type { OctoconAlter, OctoconFront, OctoconPoll, OctoconTag, OctoconUser }
 import { getImage } from "../utils";
 import { newSystem, updateSystem } from "../../tables/system";
 import { transactionSucceeded } from "../../utils";
-import { parseJsonStreamWithPaths, streamToIterable } from "json-stream-es";
+import { JsonDeserializer, JsonParser, JsonPathDetector, JsonPathSelector, JsonPathSelectorExpression, matchesJsonPathSelector, streamToIterable } from "json-stream-es";
 import { newCustomField } from "../../tables/customFields";
 import { newTag } from "../../tables/tags";
 import { newMember, updateMember } from "../../tables/members";
@@ -27,7 +27,7 @@ async function system(prefilledUuid: string, ocUser: OctoconUser){
 }
 
 async function customFields(ocUser: OctoconUser, customFieldMapping: Map<string, [string, boolean]>){
-	for (const field of ocUser.fields){
+	for (const field of ocUser.fields || []){
 		const result = await newCustomField({
 			name: field.name,
 			default: false,
@@ -238,7 +238,25 @@ export async function importOctocon(){
 		appConfig.defaultSystem = _system.detail;
 
 		const jsonStream = intoStream(path, undefined, true)
-			.pipeThrough(parseJsonStreamWithPaths([["user", "tags", "alters", "fronts", "polls"]]));
+			.pipeThrough(new JsonParser())
+			.pipeThrough(new JsonPathDetector())
+			.pipeThrough(new JsonPathSelector((path) => {
+				const matcher: JsonPathSelectorExpression = [path[0]];
+				switch (path[0]) {
+					case "user":
+						break;
+					case "tags":
+					case "alters":
+					case "fronts":
+					case "polls":
+						matcher.push(undefined);
+						break;
+					default:
+						return false;
+				}
+				return matchesJsonPathSelector(path, matcher);
+			}))
+			.pipeThrough(new JsonDeserializer());
 
 		// Add values to database
 		for await (const { path, value } of streamToIterable(jsonStream)){
