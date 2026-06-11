@@ -32,7 +32,7 @@ const calloutExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 				return;
 			},
 			renderer(token) {				
-				return h(token.tokens?.find(t => t.type === "callout-title") ? "details" : "div", {
+				return h(token.tokens?.find(t => t.type === "calloutTitle") ? "details" : "div", {
 					class: "callout",
 					open: !token.closed,
 					style: token.color ? `--markdown-callout-color: ${token.color}` : "",
