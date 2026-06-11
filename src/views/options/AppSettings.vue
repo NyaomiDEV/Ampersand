@@ -227,6 +227,9 @@
 						<IonSelectOption v-if="isDev" value="boring">
 							{{ $t("appSettings:fontStyle.boring") }}
 						</IonSelectOption>
+						<IonSelectOption v-if="isDev" value="techbro">
+							{{ $t("appSettings:fontStyle.techbro+") }}
+						</IonSelectOption>
 					</IonSelect>
 				</IonItem>
 				<IonItem button detail @click="dashboardSettingsModal?.$el.present()">

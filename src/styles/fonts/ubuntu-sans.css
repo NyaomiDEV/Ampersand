@@ -1,0 +1,13 @@
+@font-face {
+	font-family: "Ubuntu Sans";
+	font-style: normal;
+	font-weight: 100 800;
+	src: url(../../assets/fonts/ubuntu-sans/UbuntuSans.ttf);
+}
+
+@font-face {
+	font-family: "Ubuntu Sans";
+	font-style: italic;
+	font-weight: 100 800;
+	src: url(../../assets/fonts/ubuntu-sans/UbuntuSans-Italic.ttf);
+}
