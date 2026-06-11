@@ -11,7 +11,8 @@
 		"cancel": "awen ala",
 		"yes": "lon",
 		"no": "ala",
-		"clear": "weka"
+		"clear": "weka",
+		"assetFontPlaceholder": "o pana e nimi pi ijo namako tawa nasin sitelen"
 	},
 	"presence": {
 		"absent": "lon ala",
@@ -150,7 +151,20 @@
 		"summer": "nasin sitelen pi tenpo seli",
 		"spotty": "nasin sitelen pi namako sike",
 		"bone": "nasin sitelen pi palisa walo",
-		"cow": "nasin sitelen pi sike soweli"
+		"cow": "nasin sitelen pi sike soweli",
+		"assetFont": "nasin sitelen pi ijo namako"
 	},
-	"loading": "ilo Ampersand li pali"
+	"loading": "ilo Ampersand li pali",
+	"donationLabel": {
+		"title": "o pona e mi",
+		"desc": "sina pana e mani tawa mi la mi ken pali e ilo Ampersand kin la mi li pona"
+	},
+	"fontStyles": {
+		"bold": "suli",
+		"italic": "kama poka",
+		"neon": "suno",
+		"gradient": "kule tu",
+		"outline": "selo",
+		"shadow": "pimeja"
+	}
 }

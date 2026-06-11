@@ -47,5 +47,9 @@
 	"jsonExport": {
 		"title": "o kama jo e ijo ilo JSON pi sona sina",
 		"desc": "sona sina li kama ijo ilo; sina ken pana e ijo ilo ni tawa ilo ante"
+	},
+	"tuImportDiscordId": {
+		"header": "o pana e nimi ilo sina Discord (nanpa)",
+		"placeholder": "nimi ilo Discord"
 	}
 }
