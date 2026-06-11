@@ -599,7 +599,9 @@ export const fontFamilies = [
 	"Jost",
 	"Twinkle Star Variant",
 	"Grandiflora One Decorative",
-	"Pacifico Variant"
+	"Pacifico Variant",
+	"Playwrite IT Modern",
+	"Playwrite IT Trad Decorative"
 ];
 
 function normalizeFontName(x: string){

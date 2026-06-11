@@ -2,5 +2,24 @@
 	font-family: "Playwrite IT Traditional";
 	font-style: normal;
 	font-weight: 100 400;
+	font-feature-settings: "ss05";
+	src: url(../../assets/fonts/playwrite-it-trad/PlaywriteITTrad.woff2);
+}
+
+@font-face {
+	font-family: "Playwrite IT Modern";
+	font-style: normal;
+	font-weight: 100 400;
+	font-feature-settings:
+		"ss03",
+		"ss20";
+	src: url(../../assets/fonts/playwrite-it-trad/PlaywriteITTrad.woff2);
+}
+
+@font-face {
+	font-family: "Playwrite IT Trad Decorative";
+	font-style: normal;
+	font-weight: 100 400;
+	font-feature-settings: "ss20";
 	src: url(../../assets/fonts/playwrite-it-trad/PlaywriteITTrad.woff2);
 }
