@@ -120,6 +120,7 @@
 		"gothic": "Gootilik",
 		"bubbly": "Vahutav",
 		"holy": "Pühalik",
+		"round": "Ümar",
 		"playful": "Mänguline",
 		"monospace": "Fikseeritud tähelaiusega",
 		"typewriter": "Trükimasinalaadne",
@@ -133,6 +134,7 @@
 		"bone": "Kont",
 		"spotty": "Vinniline",
 		"cow": "Lehm",
+		"outline": "Piirjoontega",
 		"assetFont": "Aktiva kirjatüüp"
 	},
 	"count": "Kogus",
