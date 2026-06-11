@@ -47,5 +47,9 @@
 	"jsonExport": {
 		"title": "Exporte seus dados para um arquivo JSON",
 		"desc": "Salve seus dados para um formato que possa ser importado em outros aplicativos e ferramentas"
+	},
+	"tuImportDiscordId": {
+		"header": "Por favor insira seu ID (numérico) do Discord",
+		"placeholder": "ID do Discord"
 	}
 }

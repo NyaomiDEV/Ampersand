@@ -24,6 +24,7 @@
 		"date": "Editar data",
 		"body": "Corpo da anotação",
 		"postID": "ID de anotação: {{postID}}",
-		"postIDcopiedToClipboard": "ID da anotação foi copiado à sua área de transferência!"
+		"postIDcopiedToClipboard": "ID da anotação foi copiado à sua área de transferência!",
+		"color": "Cor da anotação"
 	}
 }
