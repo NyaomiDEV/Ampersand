@@ -5,7 +5,7 @@ import { getAmpersandMarkdownRegex, splitList } from "./utils";
 const fontSizeExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [
 		{
-			name: "font-size",
+			name: "fontSizeInline",
 			level: "inline",
 			start(src: string) { return src.match(/\[fs=/)?.index; },
 			tokenizer(src: string) {
@@ -16,7 +16,7 @@ const fontSizeExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 					if(sizes.find(x => isNaN(x))) return;
 
 					const token = {
-						type: "font-size",
+						type: "fontSizeInline",
 						raw: match[0],
 						sizes,
 						text: match[2],

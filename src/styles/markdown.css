@@ -251,6 +251,7 @@
 
 	img {
 		border-radius: var(--markdown-border-radius, 0px);
+		margin: var(--markdown-margin, inherit);
 	}
 
 	/* Highlight */
