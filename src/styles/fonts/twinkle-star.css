@@ -4,3 +4,11 @@
 	font-style: normal;
 	src: url(../../assets/fonts/twinkle-star/TwinkleStar-Regular.woff2);
 }
+
+@font-face {
+	font-family: "Twinkle Star Variant";
+	font-weight: normal;
+	font-style: normal;
+	font-feature-settings: "salt";
+	src: url(../../assets/fonts/twinkle-star/TwinkleStar-Regular.woff2);
+}

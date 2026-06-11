@@ -2,5 +2,6 @@
 	font-family: "Departure Mono";
 	font-weight: normal;
 	font-style: normal;
+	font-feature-settings: "ss01";
 	src: url(../../assets/fonts/departure-mono/DepartureMono-Regular.woff2);
 }

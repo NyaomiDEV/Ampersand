@@ -3,6 +3,7 @@
 	font-style: normal;
 	font-weight: 100 900;
 	font-stretch: 100%;
+	font-feature-settings: "zero";
 	src: url(../../assets/fonts/saira-stencil/SairaStencil.woff2);
 }
 
@@ -11,5 +12,6 @@
 	font-style: italic;
 	font-weight: 100 900;
 	font-stretch: 100%;
+	font-feature-settings: "zero";
 	src: url(../../assets/fonts/saira-stencil/SairaStencil-Italic.woff2);
 }

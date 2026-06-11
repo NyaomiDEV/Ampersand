@@ -2,6 +2,7 @@
 	font-family: "Bitcount Single";
 	font-style: normal;
 	font-weight: 100 900;
+	font-feature-settings: "zero";
 	src: url(../../assets/fonts/bitcount-single/BitcountSingle.woff2);
 }
 
@@ -9,6 +10,7 @@
 	font-family: "Bitcount Single";
 	font-style: oblique -8deg 0deg;
 	font-weight: 100 900;
+	font-feature-settings: "zero";
 	src: url(../../assets/fonts/bitcount-single/BitcountSingle.woff2);
 }
 

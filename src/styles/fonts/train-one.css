@@ -2,5 +2,6 @@
 	font-family: "Train One";
 	font-weight: normal;
 	font-style: normal;
+	font-feature-settings: "zero";
 	src: url(../../assets/fonts/train-one/TrainOne.ttf);
 }

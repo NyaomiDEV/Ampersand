@@ -2,6 +2,7 @@
 	font-family: "Recursive";
 	font-style: normal;
 	font-weight: 300 1000;
+	font-feature-settings: "zero";
 	src: url(../../assets/fonts/recursive/Recursive.woff2);
 }
 
@@ -9,5 +10,6 @@
 	font-family: "Recursive";
 	font-style: oblique -15deg 0deg;
 	font-weight: 300 1000;
+	font-feature-settings: "zero";
 	src: url(../../assets/fonts/recursive/Recursive.woff2);
 }

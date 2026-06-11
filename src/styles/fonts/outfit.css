@@ -2,5 +2,6 @@
 	font-family: "Outfit";
 	font-style: normal;
 	font-weight: 100 900;
+	font-feature-settings: "ss01";
 	src: url(../../assets/fonts/outfit/Outfit.woff2);
 }

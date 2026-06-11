@@ -4,3 +4,11 @@
 	font-style: normal;
 	src: url(../../assets/fonts/pacifico/Pacifico.woff2);
 }
+
+@font-face {
+	font-family: "Pacifico Variant";
+	font-weight: normal;
+	font-style: normal;
+	font-feature-settings: "ss01";
+	src: url(../../assets/fonts/pacifico/Pacifico.woff2);
+}

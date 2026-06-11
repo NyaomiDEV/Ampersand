@@ -2,6 +2,7 @@
 	font-family: "Chivo Mono";
 	font-style: normal;
 	font-weight: 100 900;
+	font-feature-settings: "zero";
 	src: url(../../assets/fonts/chivo-mono/ChivoMono.ttf);
 }
 
@@ -9,5 +10,6 @@
 	font-family: "Chivo Mono";
 	font-style: italic;
 	font-weight: 100 900;
+	font-feature-settings: "zero";
 	src: url(../../assets/fonts/chivo-mono/ChivoMono-Italic.ttf);
 }

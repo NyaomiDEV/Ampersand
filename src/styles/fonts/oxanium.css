@@ -2,5 +2,6 @@
 	font-family: "Oxanium";
 	font-style: normal;
 	font-weight: 200 800;
+	font-feature-settings: "zero";
 	src: url(../../assets/fonts/oxanium/Oxanium.woff2);
 }

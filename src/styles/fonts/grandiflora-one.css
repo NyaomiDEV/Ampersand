@@ -4,3 +4,19 @@
 	font-style: normal;
 	src: url(../../assets/fonts/grandiflora-one/GrandifloraOne.woff2);
 }
+
+@font-face {
+	font-family: "Grandiflora One Decorative";
+	font-weight: normal;
+	font-style: normal;
+	font-feature-settings: "salt";
+	src: url(../../assets/fonts/grandiflora-one/GrandifloraOne.woff2);
+}
+
+@font-face {
+	font-family: "Grandiflora One Swash";
+	font-weight: normal;
+	font-style: normal;
+	font-feature-settings: "ss01";
+	src: url(../../assets/fonts/grandiflora-one/GrandifloraOne.woff2);
+}

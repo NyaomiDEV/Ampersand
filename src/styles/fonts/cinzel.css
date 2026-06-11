@@ -4,3 +4,11 @@
 	font-weight: 400 900;
 	src: url(../../assets/fonts/cinzel/Cinzel.woff2);
 }
+
+@font-face {
+	font-family: "Cinzel Decorative";
+	font-style: normal;
+	font-weight: 400 900;
+	font-feature-settings: "ss01";
+	src: url(../../assets/fonts/cinzel/Cinzel.woff2);
+}

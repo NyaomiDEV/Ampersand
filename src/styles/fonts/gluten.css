@@ -2,6 +2,7 @@
 	font-family: "Gluten";
 	font-style: normal;
 	font-weight: 100 900;
+	font-feature-settings: "zero";
 	src: url(../../assets/fonts/gluten/Gluten.woff2);
 }
 
@@ -9,5 +10,6 @@
 	font-family: "Gluten";
 	font-style: oblique -13deg 13deg;
 	font-weight: 100 900;
+	font-feature-settings: "zero";
 	src: url(../../assets/fonts/gluten/Gluten.woff2);
 }

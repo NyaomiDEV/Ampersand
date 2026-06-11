@@ -596,7 +596,10 @@ export const fontFamilies = [
 	"Recursive",
 	"Cinzel Decorative",
 	"Geom",
-	"Jost"
+	"Jost",
+	"Twinkle Star Variant",
+	"Grandiflora One Decorative",
+	"Pacifico Variant"
 ];
 
 function normalizeFontName(x: string){

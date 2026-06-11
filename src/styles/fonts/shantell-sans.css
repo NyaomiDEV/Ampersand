@@ -2,6 +2,7 @@
 	font-family: "Shantell Sans";
 	font-style: normal;
 	font-weight: 300 800;
+	font-feature-settings: "zero";
 	src: url(../../assets/fonts/shantell-sans/ShantellSans.woff2);
 }
 
@@ -9,6 +10,7 @@
 	font-family: "Shantell Sans";
 	font-style: italic;
 	font-weight: 300 800;
+	font-feature-settings: "zero";
 	src: url(../../assets/fonts/shantell-sans/ShantellSans-Italic.woff2);
 }
 
