@@ -141,6 +141,7 @@
 		"deco": "Deco",
 		"terminal": "Terminale",
 		"western": "Western",
+		"stripes": "Strisce",
 		"glitch": "Glitch",
 		"drip": "Drip",
 		"cracks": "Cracks",
@@ -153,6 +154,7 @@
 		"spotty": "Chiazze",
 		"bone": "Osso",
 		"cow": "Mucca",
+		"outline": "Contornato",
 		"assetFont": "Font da asset",
 		"noFont": "Nessun font, sbatti"
 	},

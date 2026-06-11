@@ -141,6 +141,7 @@
 		"deco": "Decò",
 		"terminal": "Terminali",
 		"western": "Western",
+		"stripes": "Strisci",
 		"glitch": "Glitch",
 		"drip": "Goccia",
 		"cracks": "Crepe",
@@ -153,6 +154,7 @@
 		"spotty": "Macchiatu",
 		"bone": "Ossu",
 		"cow": "Vacca",
+		"outline": "Cunturnatu",
 		"assetFont": "Carattere 'ntra l'asset",
 		"noFont": "Nuddu carattere"
 	},

@@ -140,6 +140,7 @@
 		"deco": "Deco",
 		"terminal": "Terminal",
 		"western": "Western",
+		"stripes": "Stripes",
 		"glitch": "Glitch",
 		"drip": "Drip",
 		"cracks": "Cracks",
@@ -152,6 +153,7 @@
 		"spotty": "Spotty",
 		"bone": "Bone",
 		"cow": "Cow",
+		"outline": "Outline",
 		"assetFont": "Asset font",
 		"noFont": "No font"
 	},
