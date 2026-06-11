@@ -73,7 +73,7 @@ export async function notify(id: number, title: string, body: string, channelId?
 		await sendNotification({
 			id,
 			title,
-			body,
+			body: platform() === "windows" ? undefined : body,
 			largeBody: body,
 			schedule,
 			channelId,
