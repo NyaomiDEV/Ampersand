@@ -126,7 +126,7 @@
 		"monospace": "Monoespaciada",
 		"playful": "Juguetona",
 		"holy": "Holy",
-		"round": "Redondo",
+		"round": "Redondeada",
 		"bubbly": "Burbujeante",
 		"marker": "Rotulador",
 		"gothic": "Gótica",
@@ -152,8 +152,10 @@
 		"spotty": "Manchada",
 		"bone": "Hueso",
 		"cow": "Vaca",
-		"outline": "Contorno",
-		"assetFont": "Archivos o recursos de tipografía"
+		"outline": "Bosquejo",
+		"assetFont": "Archivos o recursos de tipografía",
+		"elegant": "Elegante",
+		"stripes": "Decorativas"
 	},
 	"loading": "Ampersand se está cargando",
 	"donationLabel": {
