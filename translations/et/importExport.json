@@ -47,5 +47,9 @@
 	"jsonExport": {
 		"title": "Ekspordi oma andmed JSON-failina",
 		"desc": "Varunda oma andmed vormingus, mis saad importida muudesse rakendustesse ja kasutada muude tarvikutega"
+	},
+	"tuImportDiscordId": {
+		"header": "Palun sisesta oma Discordi (numbriline) tunnus",
+		"placeholder": "Discordi tunnus"
 	}
 }
