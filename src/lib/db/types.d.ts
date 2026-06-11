@@ -10,6 +10,9 @@ export type Update<T> = {
 export interface Table<T extends UUIDable> {
 	name: string
 	index: Array<IndexEntry<T>>
+	setAside(token: string): Promise<void>
+	restoreFromAside(token: string): Promise<void>
+	removeAside(token: string): Promise<void>
 	getIndexFromDisk(): Promise<Array<IndexEntry<T>> | undefined>
 	saveIndexToDisk(): Promise<void>
 	updateIndexWithData(data: T, saveAfterwards: boolean): Promise<void>

@@ -48,6 +48,40 @@ export class ShittyTable<T extends UUIDable> implements Table<T> {
 		return table;
 	}
 
+	async setAside(token: string){
+		if (await fs.exists(`${this.path}.old.${token}`)) throw new Error(`aside table with token '${token}' already exists`);
+
+		await fs.rename(this.path, `${this.path}.old.${token}`);
+		await fs.mkdir(this.path, { recursive: true });
+
+		this.index = [];
+		this.hashes = {};
+
+		await this.initializeHashes();
+		await this.initializeIndex();
+		await this.migrate();
+	}
+
+	async restoreFromAside(token: string){
+		if (await fs.exists(`${this.path}.old.${token}`)) throw new Error(`aside table with token '${token}' does not exist`);
+
+		await fs.remove(this.path, { recursive: true });
+		await fs.rename(`${this.path}.old.${token}`, this.path);
+
+		this.index = [];
+		this.hashes = {};
+
+		await this.initializeHashes();
+		await this.initializeIndex();
+		await this.migrate();
+	}
+
+	async removeAside(token: string){
+		if (await fs.exists(`${this.path}.old.${token}`)) throw new Error(`aside table with token '${token}' does not exist`);
+
+		await fs.remove(`${this.path}.old.${token}`, { recursive: true });
+	}
+
 	async getIndexFromDisk() {
 		const _path = `${this.path + sep()}.index`;
 		try {

@@ -100,6 +100,8 @@ export function exportArchive() {
 
 export function importArchive() {
 	async function _import() {
+		const asideToken = `databaseArchiveImport.${Date.now()}`;
+
 		try {
 			const path = await open({
 				multiple: false,
@@ -134,7 +136,7 @@ export function importArchive() {
 			// clear all tables if magic version < 2 -- this is a tradeoff of not thinking things through the first time
 			if(magicVersion < 2){
 				for (const table of Object.values(getTables()))
-					await table.clear();
+					await table.setAside(asideToken);
 			}
 
 			for await (const rawData of multiStreamDecoder){
@@ -150,7 +152,8 @@ export function importArchive() {
 
 						// after parsing revision number we can clear tables
 						for (const table of Object.values(getTables()))
-							await table.clear();
+							await table.setAside(asideToken);
+
 						break;
 					}
 					case "__config": {
@@ -188,10 +191,28 @@ export function importArchive() {
 				await table.migrate(0);
 			}
 
+			for (const table of Object.values(getTables())) {
+				try {
+					await table.removeAside(asideToken);
+				} catch(_e) {
+					console.error(`Couldn't remove aside: ${_e as Error}`);
+				}
+			}
+			
 			progress.dispatchEvent(new Event("finish"));
+
 			return true;
 		} catch (_e) {
 			console.error(_e);
+
+			for (const table of Object.values(getTables())){
+				try{
+					await table.restoreFromAside(asideToken);
+				}catch(_e){
+					console.error(`Couldn't even restore from aside: ${_e as Error}`);
+				}
+			}
+
 			return false;
 		}
 	}

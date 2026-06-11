@@ -90,6 +90,8 @@ export function exportDatabaseToBinary() {
 
 export function importDatabaseFromBinary() {
 	async function _import() {
+		const asideToken = `databaseBackupImport.${Date.now()}`;
+
 		try {
 			const path = await open({
 				multiple: false,
@@ -140,7 +142,7 @@ export function importDatabaseFromBinary() {
 				// also mitigate system (old) to systems (new)
 				const table: Table<UUIDable> = getTables()[key === "system" ? "systems" : key];
 				if (table) {
-					await table.clear();
+					await table.setAside(asideToken);
 					await table.bulkAdd(revived.database[key]);
 					await table.migrate(0);
 				}
@@ -148,10 +150,28 @@ export function importDatabaseFromBinary() {
 				progress.dispatchEvent(new CustomEvent("progress", { detail: { progress: progressCurrent / progressTotal } }));
 			}
 
+			for (const table of Object.values(getTables())) {
+				try {
+					await table.removeAside(asideToken);
+				} catch (_e) {
+					console.error(`Couldn't remove aside: ${_e as Error}`);
+				}
+			}
+
 			progress.dispatchEvent(new Event("finish"));
+
 			return true;
 		} catch (_e) {
 			console.error(_e);
+
+			for (const table of Object.values(getTables())) {
+				try {
+					await table.restoreFromAside(asideToken);
+				} catch (_e) {
+					console.error(`Couldn't even restore from aside: ${_e as Error}`);
+				}
+			}
+
 			return false;
 		}
 	}
