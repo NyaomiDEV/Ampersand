@@ -22,7 +22,7 @@ const calloutExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 					};
 					if(match.groups?.title){
 						token.tokens.unshift({
-							type: "callout-title",
+							type: "calloutTitle",
 							raw: match.groups?.title,
 							tokens: this.lexer.inlineTokens(match.groups.title)
 						});
@@ -43,7 +43,7 @@ const calloutExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 			}
 		},
 		{
-			name: "callout-title",
+			name: "calloutTitle",
 			level: "inline",
 			renderer(token) {
 				return h("summary", { class: "callout-title" },

@@ -4,27 +4,15 @@ import { MarkedExtension } from "marked";
 import emojis from "../../assets/emojis.json";
 const emojiData = import.meta.webpackContext("../../assets/emojis/", { recursive: true, exclude: /LICENSE*/ });
 
-function getAllNames(){
-	return emojis.map(x => x.names).flat(1);
-}
-
-const emojiNames = getAllNames()
-	.map(e => e.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
-	.join("|");
-
-const emojiRegex = new RegExp(`:(${emojiNames}):`);
-const tokenizerRule = new RegExp(`^${emojiRegex.source}`);
-
 const emojiExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [
 		{
 			name: "emoji",
 			level: "inline",
-			start(src) {
-				return src.match(emojiRegex)?.index;
-			},
+			start(src) { return src.match(/:/)?.index; },
 			tokenizer(src: string) {
-				const match = tokenizerRule.exec(src);
+				const rule = /^:(.+?):/;
+				const match = rule.exec(src);
 				if (match) {
 					const name = match[1];
 					const emoji = emojis.find(x => x.names.includes(name));

@@ -21,7 +21,7 @@ const tableParts = { "table": tableArgs, "header": commonArgs, "cell": commonArg
 const customTableExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [
 		{
-			name: "custom-table",
+			name: "customTable",
 			level: "block",
 			start(src: string) { return src.match(/^\+\+\+/)?.index; },
 			tokenizer(src: string) {
@@ -40,7 +40,7 @@ const customTableExtension: MarkedExtension<(VNode | string)[], VNode | string> 
 					}
 
 					const token = {
-						type: "custom-table",
+						type: "customTable",
 						raw: match[0],
 						tableStyle,
 						table: match[2],
