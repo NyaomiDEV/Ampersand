@@ -276,7 +276,7 @@ export function importDatabaseFromJSON() {
 
 						revisionWasParsed = true;
 						for (const table of Object.values(getTables()))
-							await table.clear();
+							await table.setAside(asideToken);
 						break;
 					case "config":
 						if (!revisionWasParsed) throw new Error("malformed, revision fragment must be first");
