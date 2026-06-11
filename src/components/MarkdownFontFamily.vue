@@ -7,6 +7,7 @@
 
 	const props = defineProps<{
 		fontFamily: string,
+		fontFeature: string,
 		fontVariation: string
 	}>();
 
@@ -32,6 +33,7 @@
 	<span
 		class="font-family"
 		:style="{
+			'--markdown-font-feature-settings': fontFeature,
 			'--markdown-font-variation-settings': fontVariation,
 			'--markdown-font-family': `'${fontFamily}'`
 		}"
