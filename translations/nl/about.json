@@ -1,5 +1,6 @@
 {
 	"version": "Versie {{version}}",
 	"header": "Over de app",
-	"madein": "Met liefde gemaakt in Italië"
+	"madein": "Met liefde gemaakt in Italië",
+	"updateAvailable": "Nieuwe versie: {{newVersion}}"
 }

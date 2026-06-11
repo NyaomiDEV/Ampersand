@@ -8,7 +8,9 @@
 		"atkinson": "Atkinson Hyperlegible",
 		"opendyslexic": "OpenDyslexic",
 		"lexend": "Lexend",
-		"title": "Duidelijk leesbaar lettertype-soort"
+		"title": "Duidelijk leesbaar lettertype-soort",
+		"system-font": "Systeemlettertype",
+		"comicrelief": "Comic Relief"
 	},
 	"reducedMotion": {
 		"title": "Verminderde beweging",
