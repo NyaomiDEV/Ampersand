@@ -168,6 +168,10 @@ export function isColorSpace(maybeColorSpace: string) {
 	return maybeColorSpace.match(/^(?:xyz(?:-d50|-d65)?|hsl|hwb|(?:ok)?(?:lch|lab)|rec2020|(?:srgb|display-p3)(?:-linear)?|(?:a98|prophoto)-rgb)$/) !== null;
 }
 
+export function isOpenTypeFontProperty(maybeProperty: string) {
+	return maybeProperty.match(/^[\x20-\x7E]{4}$/) !== null;
+}
+
 export function splitList(valueString?: string) {
 	if(!valueString) return [];
 	return valueString.trim().split(":").map(x => x.trim());
@@ -181,7 +185,7 @@ export function splitArguments(valueString?: string){
 	}));
 }
 
-export function splitBlockArguments(valueString: string) {
+export function splitBlockArguments(valueString: string): Record<string, Record<string, string[]>> {
 	return Object.fromEntries(valueString
 		.trim()
 		.split("\n")

@@ -1,12 +1,12 @@
 import { h, type VNode } from "vue";
 import { MarkedExtension } from "marked";
-import { isLength, isPercentage, isBorder, isImage, isColor, splitBlockArguments } from "./utils";
+import { isLength, isPercentage, isBorder, isImage, isColor, splitBlockArguments, splitList } from "./utils";
 
 const commonArgs = {
 	bg: (values: string[]) => values.length === 1 && (isColor(values[0]) || isImage(values[0])),
 	fg: (values: string[]) => values.length === 1 && isColor(values[0]),
 	bt: (values: string[]) => !!values.length && values.length <= 4 && values.every(x => isBorder(x)),
-	radius: (values: string[]) => !!values.length && values.length <= 4 && values.every(x => isLength(x) || isPercentage(x)),
+	radius: (values: string[]) => !!values.length && values.join(":").split("/").length <= 2 && values.join(":").split("/").every(x => splitList(x).every(y => isLength(y) || isPercentage(y))),
 };
 
 const tableArgs = {
@@ -51,7 +51,7 @@ const customTableExtension: MarkedExtension<(VNode | string)[], VNode | string> 
 				return;
 			},
 			renderer(token) {
-				const map = token.tableStyle;
+				const map = token.tableStyle as Record<string, Record<string, string[]>>;
 				const cssStyle: Record<string, string> = {};
 
 				for(const part in map){
@@ -73,7 +73,7 @@ const customTableExtension: MarkedExtension<(VNode | string)[], VNode | string> 
 								cssStyle["--markdown-table-border-spacing"] = map[part].spacing[0];
 
 							if(map[part].radius?.length)
-								cssStyle["--markdown-table-border-radius"] = map[part].radius[0];
+								cssStyle["--markdown-table-border-radius"] = map[part].radius.join(" ");
 
 							if(map[part].bt) {
 								switch(map[part].bt.length) {
@@ -113,7 +113,7 @@ const customTableExtension: MarkedExtension<(VNode | string)[], VNode | string> 
 								cssStyle["--markdown-th-fg"] = map[part].fg[0];
 
 							if(map[part].radius?.length)
-								cssStyle["--markdown-th-radius"] = map[part].radius[0];
+								cssStyle["--markdown-th-radius"] = map[part].radius.join(" ");
 
 							if(map[part].bt) {
 								switch(map[part].bt.length) {
@@ -153,7 +153,7 @@ const customTableExtension: MarkedExtension<(VNode | string)[], VNode | string> 
 								cssStyle["--markdown-td-fg"] = map[part].fg[0];
 
 							if(map[part].radius?.length)
-								cssStyle["--markdown-td-radius"] = map[part].radius[0];
+								cssStyle["--markdown-td-radius"] = map[part].radius.join(" ");
 
 							if(map[part].bt) {
 								switch(map[part].bt.length) {
@@ -193,7 +193,7 @@ const customTableExtension: MarkedExtension<(VNode | string)[], VNode | string> 
 								cssStyle["--markdown-first-col-fg"] = map[part].fg[0];
 
 							if(map[part].radius?.length)
-								cssStyle["--markdown-first-col-radius"] = map[part].radius[0];
+								cssStyle["--markdown-first-col-radius"] = map[part].radius.join(" ");
 
 							if(map[part].bt) {
 								switch(map[part].bt.length) {
@@ -233,7 +233,7 @@ const customTableExtension: MarkedExtension<(VNode | string)[], VNode | string> 
 								cssStyle["--markdown-last-col-fg"] = map[part].fg[0];
 
 							if(map[part].radius?.length)
-								cssStyle["--markdown-last-col-radius"] = map[part].radius[0];
+								cssStyle["--markdown-last-col-radius"] = map[part].radius.join(" ");
 
 							if(map[part].bt) {
 								switch(map[part].bt.length) {
@@ -273,7 +273,7 @@ const customTableExtension: MarkedExtension<(VNode | string)[], VNode | string> 
 								cssStyle["--markdown-odd-td-fg"] = map[part].fg[0];
 
 							if(map[part].radius?.length)
-								cssStyle["--markdown-odd-td-radius"] = map[part].radius[0];
+								cssStyle["--markdown-odd-td-radius"] = map[part].radius.join(" ");
 
 							if(map[part].bt) {
 								switch(map[part].bt.length) {
@@ -313,7 +313,7 @@ const customTableExtension: MarkedExtension<(VNode | string)[], VNode | string> 
 								cssStyle["--markdown-first-row-fg"] = map[part].fg[0];
 
 							if(map[part].radius?.length)
-								cssStyle["--markdown-first-row-radius"] = map[part].radius[0];
+								cssStyle["--markdown-first-row-radius"] = map[part].radius.join(" ");
 
 							if(map[part].bt) {
 								switch(map[part].bt.length) {
@@ -353,7 +353,7 @@ const customTableExtension: MarkedExtension<(VNode | string)[], VNode | string> 
 								cssStyle["--markdown-last-row-fg"] = map[part].fg[0];
 
 							if(map[part].radius?.length)
-								cssStyle["--markdown-last-row-radius"] = map[part].radius[0];
+								cssStyle["--markdown-last-row-radius"] = map[part].radius.join(" ");
 
 							if(map[part].bt) {
 								switch(map[part].bt.length) {

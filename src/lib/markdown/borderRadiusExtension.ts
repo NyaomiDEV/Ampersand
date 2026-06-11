@@ -12,9 +12,9 @@ const borderRadiusExtension: MarkedExtension<(VNode | string)[], VNode | string>
 				const rule = getAmpersandMarkdownRegex("radius", /.+?/);
 				const match = rule.exec(src);
 				if (match) {
-					const radius = splitList(match[1]);
+					const radius = match[1].split("/").map(x => splitList(x));
 
-					if (!radius.every(x => isLength(x) || isPercentage(x))) return;
+					if (radius.length > 2 || !radius.every(group => group.every(x => isLength(x) || isPercentage(x)))) return;
 
 					const token = {
 						type: "radiusInline",
@@ -28,7 +28,7 @@ const borderRadiusExtension: MarkedExtension<(VNode | string)[], VNode | string>
 				return;
 			},
 			renderer(token) {
-				const cssStyle = `--markdown-border-radius: ${(token.radius as string[]).join(" ")}`;
+				const cssStyle = `--markdown-border-radius: ${(token.radius as string[][]).map(x => x.join(" ")).join(" / ")}`;
 				return h("markdown-predicate", {
 					style: cssStyle
 				}, token.tokens && token.tokens.length ? this.parser.parseInline(token.tokens) : token.text);
@@ -42,9 +42,9 @@ const borderRadiusExtension: MarkedExtension<(VNode | string)[], VNode | string>
 				const rule = /^\[radius=(.+?)\]([\s\S]+?)\[\/radius\]/;
 				const match = rule.exec(src);
 				if (match) {
-					const radius = splitList(match[1]);
+					const radius = match[1].split("/").map(x => splitList(x));
 
-					if (!radius.every(x => isLength(x) || isPercentage(x))) return;
+					if (radius.length > 2 || !radius.every(group => group.every(x => isLength(x) || isPercentage(x)))) return;
 
 					const token = {
 						type: "radius",
@@ -58,7 +58,7 @@ const borderRadiusExtension: MarkedExtension<(VNode | string)[], VNode | string>
 				return;
 			},
 			renderer(token) {
-				const cssStyle = `--markdown-border-radius: ${(token.radius as string[]).join(" ")}`;
+				const cssStyle = `--markdown-border-radius: ${(token.radius as string[][]).map(x => x.join(" ")).join(" / ")}`;
 				return h("markdown-predicate", {
 					style: cssStyle
 				}, token.tokens && token.tokens.length ? this.parser.parse(token.tokens) : token.text);
