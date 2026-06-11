@@ -39,7 +39,7 @@ function customFields(ocExport: OctoconExport){
 	const customFieldMapping = new Map<string, string>();
 	const customFields: CustomField[] = [];
 
-	for(const field of ocExport.user.fields){
+	for(const field of ocExport.user.fields || []){
 		const uuid = window.crypto.randomUUID();
 		customFields.push({
 			uuid,
@@ -109,7 +109,7 @@ async function members(ocExport: OctoconExport, system: System, customFieldMappi
 		const _fields = alter.fields.map(x => {
 			const _uuid = customFieldMapping.get(x.id);
 			if (!_uuid) return undefined;
-			const isLocked = ocExport.user.fields.find(y => y.id === x.id)?.locked || false;
+			const isLocked = ocExport.user.fields?.find(y => y.id === x.id)?.locked || false;
 			return [_uuid, isLocked ? `||${x.value}||` : x.value];
 		}).filter(x => !!x);
 		
