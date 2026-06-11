@@ -10,6 +10,19 @@ export class Molise<T extends UUIDable> implements Table<T> {
 		this.name = name;
 	}
 
+	setAside(_token: string): Promise<void> {
+		throw new Error("Can't have shit in Molise");
+	}
+
+	restoreFromAside(_token: string): Promise<void> {
+		throw new Error("Can't have shit in Molise");
+
+	}
+
+	removeAside(_token: string): Promise<void> {
+		throw new Error("Can't have shit in Molise");
+	}
+
 	getIndexFromDisk(): Promise<IndexEntry<T>[] | undefined> {
 		throw new Error("Can't have shit in Molise");
 	}
