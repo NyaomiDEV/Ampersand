@@ -89,10 +89,10 @@
   resolved "https://registry.yarnpkg.com/@chevrotain/types/-/types-11.1.2.tgz#e83a1a2704f0c5e49e7592b214031a0f4a34d7e5"
   integrity sha512-U+HFai5+zmJCkK86QsaJtoITlboZHBqrVketcO2ROv865xfCMSFpELQoz1GkX5GzME8pTa+3kbKrZHQtI0gdbw==
 
-"@choochmeque/tauri-plugin-notifications-api@0.5.0-rc.4":
-  version "0.5.0-rc.4"
-  resolved "https://registry.yarnpkg.com/@choochmeque/tauri-plugin-notifications-api/-/tauri-plugin-notifications-api-0.5.0-rc.4.tgz#97788159f77b1c73d3ecef5e217313047999a1e9"
-  integrity sha512-/mJ9bHFB+Pu8og5sr3p6Ba+XoxxfgewcCChPaHTFK48nUP5hOB7D+V6AgM1dajImG4geGqQs8h4fdQhrPdNx8Q==
+"@choochmeque/tauri-plugin-notifications-api@0.5.0-rc.7":
+  version "0.5.0-rc.7"
+  resolved "https://registry.yarnpkg.com/@choochmeque/tauri-plugin-notifications-api/-/tauri-plugin-notifications-api-0.5.0-rc.7.tgz#34dcf5391730842ad6e5ea50587ab6c6eea3247e"
+  integrity sha512-UyHBYKcfUqiyaO/uu8hqpJIq+5e/1WZrnoEamBOp5DN+6lU+dhlPtIvlIIX6um1NrU4cFIZDFnPzkBIe1bRA4A==
   dependencies:
     "@tauri-apps/api" "^2.8.0"
 

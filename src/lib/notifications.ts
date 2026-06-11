@@ -77,7 +77,7 @@ export async function notify(id: number, title: string, body: string, channelId?
 			largeBody: body,
 			schedule,
 			channelId,
-			icon: "ic_notify_ampersand",
+			icon: platform() === "android" ? "ic_notify_ampersand" : undefined,
 			...opts
 		});
 	}catch(_e){
