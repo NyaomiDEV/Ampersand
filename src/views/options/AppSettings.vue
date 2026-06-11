@@ -228,7 +228,7 @@
 							{{ $t("appSettings:fontStyle.boring") }}
 						</IonSelectOption>
 						<IonSelectOption v-if="isDev" value="techbro">
-							{{ $t("appSettings:fontStyle.techbro+") }}
+							{{ $t("appSettings:fontStyle.techbro") }}
 						</IonSelectOption>
 					</IonSelect>
 				</IonItem>
