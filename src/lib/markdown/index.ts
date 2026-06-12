@@ -87,9 +87,6 @@ export function useMarked(){
 					};
 				}
 				return;
-			},
-			def(_src: string){
-				return;
 			}
 		},
 		renderer: {
