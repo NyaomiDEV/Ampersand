@@ -153,7 +153,9 @@
 		"cow": "Vaca",
 		"outline": "Contorno",
 		"summer": "Verão",
-		"assetFont": "Arquivo de fonte"
+		"assetFont": "Arquivo de fonte",
+		"elegant": "Elegante",
+		"stripes": "Listras"
 	},
 	"loading": "Ampersand está carregando",
 	"donationLabel": {
