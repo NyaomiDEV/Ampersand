@@ -643,7 +643,7 @@ export function fontFamilyPicker(header: string): Promise<string | null | void> 
 			await controller.present();
 
 			const detail = await controller.onDidDismiss();
-			if(!detail.data.it) return resolve();
+			if(typeof detail.data?.it === "undefined") return resolve();
 
 			if(detail.data.it === assetFont){
 				const data = (await promptInput(
