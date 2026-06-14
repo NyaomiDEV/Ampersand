@@ -40,7 +40,7 @@
 	},
 	"report": {
 		"header": "Ampersand Report",
-		"generatedOn": "Generato il {{data}}",
+		"generatedOn": "Generato il {{date}}",
 		"coveringDays": "Dati riguardanti i {{count}} giorni passati"
 	},
 	"back": "Indietro",

@@ -40,7 +40,7 @@
 	},
 	"report": {
 		"header": "Rapportu di Ampersand",
-		"generatedOn": "Generatu u {{data}}",
+		"generatedOn": "Generatu u {{date}}",
 		"coveringDays": "Dati chi riguàrdanu l'ùrtimi {{count}} jorna"
 	},
 	"back": "Arreri",

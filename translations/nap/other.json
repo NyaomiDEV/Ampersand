@@ -39,7 +39,7 @@
 	},
 	"report": {
 		"header": "Ampersand Report",
-		"generatedOn": "Fatto 'o {{data}}",
+		"generatedOn": "Fatto 'o {{date}}",
 		"coveringDays": "Dati 'e {{count}} juorne passate"
 	},
 	"back": "Arreto",
