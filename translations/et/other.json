@@ -135,7 +135,9 @@
 		"spotty": "Vinniline",
 		"cow": "Lehm",
 		"outline": "Piirjoontega",
-		"assetFont": "Aktiva kirjatüüp"
+		"assetFont": "Aktiva kirjatüüp",
+		"stripes": "Triibuline",
+		"elegant": "Elegantne"
 	},
 	"count": "Kogus",
 	"donationLabel": {
