@@ -15,12 +15,14 @@ import { PluralKitGroup, PluralKitMember, PluralKitSwitch } from "../types/plura
 import { intoStream } from "../../../native/fs";
 import { JsonDeserializer, JsonParser, JsonPathDetector, JsonPathSelector, JsonPathSelectorExpression, matchesJsonPathSelector, streamToIterable } from "json-stream-es";
 
-async function system(prefilledUuid: string, name: string, description?: string, avatarUrl?: string){
+async function system(prefilledUuid: string, name: string, description?: string, avatarUrl?: string, banner?: string, color?: string){
 	const result = await updateSystem({
 		uuid: prefilledUuid,
 		name,
 		description,
 		image: await getImage(avatarUrl),
+		cover: await getImage(banner),
+		color: color ? `#${color}` : undefined,
 		isPinned: false,
 		isArchived: false,
 		viewInLists: false,
@@ -140,6 +142,8 @@ export async function importPluralKit(){
 		let name = "PluralKit";
 		let description: string | undefined = undefined;
 		let avatarUrl: string | undefined = undefined;
+		let banner: string | undefined = undefined;
+		let color: string | undefined = undefined;
 
 		// ID in their database -> UUID in our one
 		const memberMapping = new Map<string, string>();
@@ -177,6 +181,8 @@ export async function importPluralKit(){
 					case "name":
 					case "description":
 					case "avatar_url":
+					case "banner":
+					case "color":
 						break;
 					case "groups":
 					case "members":
@@ -208,6 +214,14 @@ export async function importPluralKit(){
 					avatarUrl = value as string;
 					break;
 				}
+				case "banner": {
+					banner = value as string;
+					break;
+				}
+				case "color": {
+					color = value as string;
+					break;
+				}
 				case "groups": {
 					const [uuid, members] = await tags(value as PluralKitGroup);
 					tagsToMembers.set(uuid, members);
@@ -226,7 +240,7 @@ export async function importPluralKit(){
 		}
 
 		// add stuff we had to cache ( :( )
-		await system(appConfig.defaultSystem, name, description, avatarUrl);
+		await system(appConfig.defaultSystem, name, description, avatarUrl, banner, color);
 		await frontingEntries(_switches, memberMapping);
 
 		// remap now
