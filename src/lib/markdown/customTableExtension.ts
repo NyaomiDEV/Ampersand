@@ -7,6 +7,7 @@ const commonArgs = {
 	fg: (values: string[]) => values.length === 1 && isColor(values[0]),
 	bt: (values: string[]) => !!values.length && values.length <= 4 && values.every(x => isBorder(x)),
 	radius: (values: string[]) => !!values.length && values.join(":").split("/").length <= 2 && values.join(":").split("/").every(x => splitList(x).every(y => isLength(y) || isPercentage(y))),
+	padding: (values: string[]) => !!values.length && values.length <= 4 && values.every(x => isLength(x) || isPercentage(x)),
 };
 
 const tableArgs = {
@@ -17,12 +18,7 @@ const tableArgs = {
 	empty: (values: string[]) => values.length === 1 && (values[0] === "show" || values[0] === "hide")
 };
 
-const headerAndCellArgs = {
-	...commonArgs,
-	padding: (values: string[]) => !!values.length && values.length <= 4 && values.every(x => isLength(x) || isPercentage(x)),
-};
-
-const tableParts = { "table": tableArgs, "header": headerAndCellArgs, "cell": headerAndCellArgs, "first-col": commonArgs, "last-col": commonArgs, "odd-cell": commonArgs, "first-row": commonArgs, "last-row": commonArgs };
+const tableParts = { "table": tableArgs, "header": commonArgs, "cell": commonArgs, "first-col": commonArgs, "last-col": commonArgs, "odd-cell": commonArgs, "first-row": commonArgs, "last-row": commonArgs };
 
 const customTableExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [
@@ -210,6 +206,9 @@ const customTableExtension: MarkedExtension<(VNode | string)[], VNode | string> 
 							if(map[part].radius?.length)
 								cssStyle["--markdown-first-col-radius"] = map[part].radius.join(" ");
 
+							if(map[part].padding?.length)
+								cssStyle["--markdown-first-col-padding"] = map[part].padding.join(" ");
+
 							if(map[part].bt) {
 								switch(map[part].bt.length) {
 									case 1:
@@ -249,6 +248,9 @@ const customTableExtension: MarkedExtension<(VNode | string)[], VNode | string> 
 
 							if(map[part].radius?.length)
 								cssStyle["--markdown-last-col-radius"] = map[part].radius.join(" ");
+
+							if(map[part].padding?.length)
+								cssStyle["--markdown-last-col-padding"] = map[part].padding.join(" ");
 
 							if(map[part].bt) {
 								switch(map[part].bt.length) {
@@ -290,6 +292,9 @@ const customTableExtension: MarkedExtension<(VNode | string)[], VNode | string> 
 							if(map[part].radius?.length)
 								cssStyle["--markdown-odd-td-radius"] = map[part].radius.join(" ");
 
+							if(map[part].padding?.length)
+								cssStyle["--markdown-odd-td-padding"] = map[part].padding.join(" ");
+
 							if(map[part].bt) {
 								switch(map[part].bt.length) {
 									case 1:
@@ -330,6 +335,9 @@ const customTableExtension: MarkedExtension<(VNode | string)[], VNode | string> 
 							if(map[part].radius?.length)
 								cssStyle["--markdown-first-row-radius"] = map[part].radius.join(" ");
 
+							if(map[part].padding?.length)
+								cssStyle["--markdown-first-row-padding"] = map[part].padding.join(" ");
+
 							if(map[part].bt) {
 								switch(map[part].bt.length) {
 									case 1:
@@ -369,6 +377,9 @@ const customTableExtension: MarkedExtension<(VNode | string)[], VNode | string> 
 
 							if(map[part].radius?.length)
 								cssStyle["--markdown-last-row-radius"] = map[part].radius.join(" ");
+
+							if(map[part].padding?.length)
+								cssStyle["--markdown-last-row-padding"] = map[part].padding.join(" ");
 
 							if(map[part].bt) {
 								switch(map[part].bt.length) {
