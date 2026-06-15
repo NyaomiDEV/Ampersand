@@ -11,12 +11,18 @@ const commonArgs = {
 
 const tableArgs = {
 	...commonArgs,
+	padding: (values: string[]) => !!values.length && values.length <= 4 && values.every(x => isLength(x) || isPercentage(x)),
 	collapse: (values: string[]) => values.length === 1 && (values[0] === "true" || values[0] === "false"),
 	spacing: (values: string[]) => !!values.length && values.length <= 2 && values.every(x => isLength(x)),
 	empty: (values: string[]) => values.length === 1 && (values[0] === "show" || values[0] === "hide")
 };
 
-const tableParts = { "table": tableArgs, "header": commonArgs, "cell": commonArgs, "first-col": commonArgs, "last-col": commonArgs, "odd-cell": commonArgs, "first-row": commonArgs, "last-row": commonArgs };
+const headerAndCellArgs = {
+	...commonArgs,
+	padding: (values: string[]) => !!values.length && values.length <= 4 && values.every(x => isLength(x) || isPercentage(x)),
+};
+
+const tableParts = { "table": tableArgs, "header": headerAndCellArgs, "cell": headerAndCellArgs, "first-col": commonArgs, "last-col": commonArgs, "odd-cell": commonArgs, "first-row": commonArgs, "last-row": commonArgs };
 
 const customTableExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [
@@ -75,6 +81,9 @@ const customTableExtension: MarkedExtension<(VNode | string)[], VNode | string> 
 							if(map[part].radius?.length)
 								cssStyle["--markdown-table-border-radius"] = map[part].radius.join(" ");
 
+							if(map[part].padding?.length)
+								cssStyle["--markdown-table-padding"] = map[part].padding.join(" ");
+
 							if(map[part].bt) {
 								switch(map[part].bt.length) {
 									case 1:
@@ -115,6 +124,9 @@ const customTableExtension: MarkedExtension<(VNode | string)[], VNode | string> 
 							if(map[part].radius?.length)
 								cssStyle["--markdown-th-radius"] = map[part].radius.join(" ");
 
+							if(map[part].padding?.length)
+								cssStyle["--markdown-th-padding"] = map[part].padding.join(" ");
+
 							if(map[part].bt) {
 								switch(map[part].bt.length) {
 									case 1:
@@ -154,6 +166,9 @@ const customTableExtension: MarkedExtension<(VNode | string)[], VNode | string> 
 
 							if(map[part].radius?.length)
 								cssStyle["--markdown-td-radius"] = map[part].radius.join(" ");
+
+							if(map[part].padding?.length)
+								cssStyle["--markdown-td-padding"] = map[part].padding.join(" ");
 
 							if(map[part].bt) {
 								switch(map[part].bt.length) {
