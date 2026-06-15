@@ -1,16 +1,16 @@
 import { recursion } from "regex-recursion";
 
 export function getAmpersandMarkdownRegex(tag: string, paramsRegex?: RegExp) {
-	const _paramsRegex = paramsRegex ? `(?:=(?<params>${paramsRegex.source}))?` : "";
+	const _paramsRegex = paramsRegex ? `=(?<params>${paramsRegex.source})` : "";
 	// dissecting this because it's hell otherwise
 	// so, uhm
 	// \[tag matches the beginning of our tag verbatim
-	// then we append paramPattern that would be /=(.+?)/ for example and it would match optional parameters
+	// then we append _paramsRegex that would be /=(.+?)/ for example and it would match optional parameters
 	// then we close the bracket, \]
 	// then the hell happens, basically the content capturing group (named) starts
 	// and immediately we have a non-capturing group that branches in two parts                     <------ we were here -----
 	// and on the left we have the part that should ensure we're not inside a recursive tag                                  |
-	// so in essence it's (?!\[tag\]) (OR (?!\[tag=) if paramsRegex is set)                                                  |
+	// so in essence it's (?!\[tag\]) (OR (?!\[tag=paramsRegex\]) if paramsRegex is set)                                     |
 	// that would avoid matching the beginning of a nested tag                                                               |
 	// and (?!\[/tag\]) that would avoid matching the end of a nested tag                                                    |
 	// but the . at the end would indeed match any single character so we're still in the game                               |
@@ -37,7 +37,7 @@ export function getAmpersandMarkdownRegex(tag: string, paramsRegex?: RegExp) {
 	//
 	// Written June 10 2026 by Nao, now please let me die
 	// and let's not forget! This thing *WILL* have bugs, for sure.
-	const pattern = `\\[${tag}${_paramsRegex}\\](?<content>(?:(?!\\[${tag}${_paramsRegex ? "=" : "\\]"})(?!\\[/${tag}\\]).|(?R=20))*)\\[/${tag}\\]`;
+	const pattern = `\\[${tag}${_paramsRegex}\\](?<content>(?:(?!\\[${tag}${paramsRegex ? `=${paramsRegex.source}` : ""}\\])(?!\\[/${tag}\\]).|(?R=20))*)\\[/${tag}\\]`;
 	const processed = recursion(pattern);
 	return new RegExp(`^${processed.pattern}`, "g");
 }
