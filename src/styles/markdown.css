@@ -198,7 +198,7 @@
 					border-radius: var(--markdown-last-row-radius, var(--markdown-odd-td-radius, var(--markdown-td-radius, var(--markdown-table-border-radius))));
 
 					&:first-child {
-						background: var(--markdown-first-col-bg, var(--markdown-last-row-bg, var(--markdown-td-bg, unset)));
+						background: var(--markdown-first-col-bg, var(--markdown-last-row-bg, var(--markdown-odd-td-bg, var(--markdown-td-bg, unset))));
 						color: var(--markdown-first-col-fg, var(--markdown-last-row-fg, var(--markdown-td-fg, unset)));
 						border-top: var(--markdown-first-col-bt-top, var(--markdown-last-row-bt-top, var(--markdown-td-bt-top, var(--border))));
 						border-right: var(--markdown-first-col-bt-right, var(--markdown-last-row-bt-right, var(--markdown-td-bt-right, var(--border))));
@@ -208,7 +208,7 @@
 					}
 
 					&:last-child {
-						background: var(--markdown-last-col-bg, var(--markdown-odd-td-bg, var(--markdown-last-row-bg, var(--markdown-td-bg, unset))));
+						background: var(--markdown-last-col-bg, var(--markdown-last-row-bg, var(--markdown-odd-td-bg, var(--markdown-td-bg, unset))));
 						color: var(--markdown-last-col-fg, var(--markdown-odd-td-fg, var(--markdown-last-row-fg, var(--markdown-td-fg, unset))));
 						border-top: var(--markdown-last-col-bt-top, var(--markdown-odd-td-bt-top, var(--markdown-last-row-bt-top, var(--markdown-td-bt-top, var(--border)))));
 						border-right: var(--markdown-last-col-bt-right, var(--markdown-odd-td-bt-right, var(--markdown-last-row-bt-right, var(--markdown-td-bt-right, var(--border)))));
