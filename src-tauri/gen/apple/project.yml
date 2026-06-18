@@ -52,7 +52,7 @@ targets:
           - UIInterfaceOrientationLandscapeLeft
           - UIInterfaceOrientationLandscapeRight
         CFBundleShortVersionString: 0.3.0
-        CFBundleVersion: "1613"
+        CFBundleVersion: "2366"
     entitlements:
       path: ampersand_iOS/ampersand_iOS.entitlements
     scheme:

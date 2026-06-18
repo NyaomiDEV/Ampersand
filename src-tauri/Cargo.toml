@@ -1,6 +1,6 @@
 [package]
 name = "ampersand"
-version = "0.3.0-rc4"
+version = "0.3.0-rc5"
 description = "Tracking app for people with complex dissociative disorders"
 authors = [ "nao" ]
 license = ""

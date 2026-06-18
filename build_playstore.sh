@@ -1,7 +1,7 @@
 #!/bin/sh
 
 export AMPERSAND_BUILD_TYPE=rc
-export AMPERSAND_VERSION=0.3.0-rc4
+export AMPERSAND_VERSION=0.3.0-rc5
 export AMPERSAND_GOES_TO_APP_STORE=1
 
 node upgrade-vcs.mjs

@@ -42,17 +42,17 @@
       "icons/icon.png"
     ],
     "android": {
-      "versionCode": 2249,
+      "versionCode": 2366,
       "minSdkVersion": 29,
       "debugApplicationIdSuffix": ".debug"
     },
     "iOS": {
-      "bundleVersion": "2249",
+      "bundleVersion": "2366",
       "minimumSystemVersion": "18.6"
     },
     "macOS": {
       "entitlements": "./Entitlements.plist",
-      "bundleVersion": "2249",
+      "bundleVersion": "2366",
       "minimumSystemVersion": "15.6",
       "signingIdentity": "-"
     },
@@ -64,7 +64,7 @@
       },
       "minimumWebview2Version": "140.0.3415.0",
       "wix": {
-        "version": "0.3.0.2249"
+        "version": "0.3.0.2366"
       }
     },
     "linux": {
