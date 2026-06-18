@@ -87,7 +87,7 @@ async function tag(spGroup: SimplyPluralGroup){
 	return [result.detail, spGroup.members] as [string, string[]];
 }
 
-async function customField(spCustomField: SimplyPluralCustomField, customFieldMapping: Map<string, [string, number]>){
+async function customField(spCustomField: SimplyPluralCustomField){
 	const result = await newCustomField({
 		name: spCustomField.name,
 		default: false,
@@ -97,7 +97,7 @@ async function customField(spCustomField: SimplyPluralCustomField, customFieldMa
 	if (!transactionSucceeded(result))
 		throw new Error(`Could not add custom field: ${result.err.message}`);
 
-	customFieldMapping.set(result.detail, [spCustomField._id, spCustomField.type]);
+	return [result.detail, spCustomField._id, spCustomField.type] as [string, string, typeof spCustomField.type];
 }
 
 async function reminder(spReminder: SimplyPluralAutomatedReminder) {
@@ -298,7 +298,7 @@ export async function importSimplyPlural(){
 		});
 		if (!path) throw new Error("no path");
 
-		// UUID in our database -> Array of ID in their one and custom field type
+		// UUID in their database -> Array of ID in our one and their custom field type
 		const customFieldMapping = new Map<string, [string, number]>();
 		// UUID in their database -> ID in our one
 		const memberMapping = new Map<string, string>();
@@ -361,7 +361,8 @@ export async function importSimplyPlural(){
 					break;
 				}
 				case "customFields": {
-					await customField(value as unknown as SimplyPluralCustomField, customFieldMapping);
+					const [dbId, spId, type] = await customField(value as unknown as SimplyPluralCustomField);
+					customFieldMapping.set(spId, [dbId, type]);
 					break;
 				}
 				case "frontHistory": {
@@ -447,11 +448,7 @@ export async function importSimplyPlural(){
 				] as [string, string];
 			}).filter(x => !!x);
 
-			if (
-				!spId ||
-				(!member.description || member.description.match(/<###@(\w+)###>/) === null) &&
-				!fields
-			) continue;
+			if (!spId || (member.description?.match(/<###@(\w+)###>/) === null && !fields?.length)) continue;
 
 			const result = await updateMember({
 				uuid: member.uuid,
