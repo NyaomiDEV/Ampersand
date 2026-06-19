@@ -477,7 +477,7 @@ export async function importSimplyPlural(){
 			if (post.body.match(/<###@(\w+)###>/) === null) continue;
 
 			const result = await updateJournalPost({
-				uuid: post.body,
+				uuid: post.uuid,
 				body: post.body.replace(/<###@(\w+)###>/g, (_, p1) => `@<m:${memberMapping.get(p1) || nilUid}>`)
 			});
 
