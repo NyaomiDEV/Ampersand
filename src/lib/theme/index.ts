@@ -3,6 +3,7 @@ import { appConfig, accessibilityConfig } from "../config";
 import { M3 } from "tauri-plugin-m3";
 import { platform } from "@tauri-apps/plugin-os";
 import { isDarkMode as calculateDarkMode } from "../mode";
+import { AppConfig } from "../config/types";
 
 const customColorsWeWant = [
 	"primary",
@@ -63,8 +64,8 @@ function isMonochrome(argb: number){
 	return redFromArgb(argb) === greenFromArgb(argb) && greenFromArgb(argb) === blueFromArgb(argb);
 }
 
-function schemeFromAccessibilityConfig(){
-	switch(appConfig.themeScheme){
+function schemeFromString(themeScheme = appConfig.themeScheme){
+	switch (themeScheme){
 		case "neutral":
 			return Variant.NEUTRAL;
 		case "tonal-spot":
@@ -106,7 +107,7 @@ export function unsetMaterialColors(target?: HTMLElement, customPrefix?: string)
 		.forEach(x => document.documentElement.style.removeProperty(x));
 }
 
-export function getScheme(primary?: string, neutral?: string, isDarkMode?: boolean){
+export function getScheme(primary?: string, neutral?: string, isDarkMode?: boolean, scheme?: AppConfig["themeScheme"]){
 	if (!primary) primary = calculatePrimaryColor();
 	if (!neutral) neutral = calculateBackgroundColor();
 	if (!isDarkMode) isDarkMode = calculateDarkMode();
@@ -114,7 +115,7 @@ export function getScheme(primary?: string, neutral?: string, isDarkMode?: boole
 	const primaryColorHct = Hct.fromInt(argbFromHex(primary));
 	const neutralColorHct = Hct.fromInt(argbFromHex(neutral));
 
-	const variant = schemeFromAccessibilityConfig();
+	const variant = schemeFromString(scheme);
 
 	const primaryVariant = isMonochrome(argbFromHex(primary)) ? Variant.NEUTRAL : variant;
 	const neutralVariant = isMonochrome(argbFromHex(neutral)) ? Variant.NEUTRAL : variant;
@@ -131,8 +132,8 @@ export function getScheme(primary?: string, neutral?: string, isDarkMode?: boole
 	});
 }
 
-export function getMaterialColors(primary?: string, secondary?: string, isDarkMode?: boolean){
-	const scheme = getScheme(primary, secondary, isDarkMode);
+export function getMaterialColors(primary?: string, secondary?: string, isDarkMode?: boolean, themeScheme?: AppConfig["themeScheme"]){
+	const scheme = getScheme(primary, secondary, isDarkMode, themeScheme);
 
 	const styleSheet: Map<string, number> = new Map();
 
@@ -164,13 +165,13 @@ export function getPaletteTones(primary?: string, neutral?: string, isDarkMode?:
 	return paletteTones;
 }
 
-export function addMaterialColors(primary?: string, neutral?: string, target?: HTMLElement, customPrefix?: string){
+export function addMaterialColors(primary?: string, neutral?: string, target?: HTMLElement, customPrefix?: string, themeScheme?: AppConfig["themeScheme"]){
 	const styleSheet: Map<string, string> = new Map();
 	const prefix = customPrefix || "md3";
 	for(const uiMode of ["light", "dark"]){
-		const palette = getMaterialColors(primary, neutral, uiMode === "dark");
-		const paletteSuccess = getMaterialColors("#00ff00", undefined, uiMode === "dark");
-		const paletteWarning = getMaterialColors("#ffff00", undefined, uiMode === "dark");
+		const palette = getMaterialColors(primary, neutral, uiMode === "dark", themeScheme);
+		const paletteSuccess = getMaterialColors("#00ff00", undefined, uiMode === "dark", themeScheme);
+		const paletteWarning = getMaterialColors("#ffff00", undefined, uiMode === "dark", themeScheme);
 
 		for (const [key, value] of palette.entries()){
 			styleSheet.set(
