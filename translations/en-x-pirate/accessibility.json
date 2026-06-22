@@ -22,8 +22,7 @@
 		"listItem": "List item border"
 	},
 	"tintWithColor": {
-		"title": "Tint with color",
-		"desc": "Tint some parts o' the vessel with colors from mates, systems, tags, an' such"
+		"title": "Tint with color"
 	},
 	"reducedMotion": {
 		"title": "Calm seas",

@@ -27,7 +27,6 @@
 		"avatar": "Contorno do avatar",
 		"listItem": "Borda do item da lista"
 	},
-
 	"reducedMotion": {
 		"title": "Movimento reduzido",
 		"desc": "Desativar animações no app"
@@ -45,7 +44,6 @@
 		"title": "Notificação de fronte"
 	},
 	"tintWithColor": {
-		"title": "Tingir com cor",
-		"desc": "Tingir algumas partes do aplicativo com cores dos membros, sistemas, tags, etc."
+		"title": "Tingir com cor"
 	}
 }

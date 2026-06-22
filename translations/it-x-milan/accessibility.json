@@ -22,8 +22,7 @@
 		"listItem": "Bordo dell'item in lista"
 	},
 	"tintWithColor": {
-		"title": "Tingi con colore",
-		"desc": "Tingi l'app col colore della gente, del team, ecc."
+		"title": "Tingi con colore"
 	},
 	"reducedMotion": {
 		"title": "Movimenti ridotti",

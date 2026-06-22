@@ -44,7 +44,6 @@
 		"title": "Esiplaanil olemise teavitus"
 	},
 	"tintWithColor": {
-		"title": "Värvidega toonimine",
-		"desc": "Tooni rakenduse mõningaid osi liikmetelt, süsteemidest, siltidest ja mujalt võetud värvidega."
+		"title": "Värvidega toonimine"
 	}
 }

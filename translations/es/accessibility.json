@@ -44,7 +44,6 @@
 		"title": "Notificación en primer plano"
 	},
 	"tintWithColor": {
-		"title": "Colorear",
-		"desc": "Colorea algunas partes de la aplicación con los colores de los miembros, los sistemas, las etiquetas, etc."
+		"title": "Colorear"
 	}
 }
