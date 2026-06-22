@@ -4,6 +4,7 @@ import { Fragment, h, type VNode } from "vue";
 import { Marked } from "marked";
 import vueExtension from "./vue/vue";
 import { IonCheckbox } from "@ionic/vue";
+import { load } from "js-yaml";
 
 import mentionExtension from "./mentionExtension";
 import spoilerExtension from "./spoilerExtension";
@@ -58,6 +59,19 @@ import skewExtension from "./skewExtension.ts";
 import borderRadiusExtension from "./borderRadiusExtension.ts";
 import paddingExtension from "./paddingExtension.ts";
 import marginExtension from "./marginExtension.ts";
+
+export function extractFrontmatter(markdown: string): { body: string, frontmatter?: any } {
+	const regex = /^---([\s\S]+)\n---\n([\s\S]*)$/;
+	const matches = regex.exec(markdown);
+
+	if(matches === null)
+		return { body: markdown };
+
+	return {
+		body: matches[2],
+		frontmatter: load(matches[1])
+	};
+}
 
 export function useMarked(){
 	const marked = new Marked<(VNode | string)[], VNode | string>();
