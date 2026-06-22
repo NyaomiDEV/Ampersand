@@ -25,7 +25,6 @@
 	import { PartialBy } from "../../lib/types";
 	import { System } from "../../lib/db/entities";
 	import { useTranslation } from "i18next-vue";
-	import Markdown from "../../components/Markdown.vue";
 	import Color from "../../components/Color.vue";
 	import { addMaterialColors, rgbaToArgb, unsetMaterialColors } from "../../lib/theme";
 	import Cover from "../../components/Cover.vue";
@@ -33,6 +32,7 @@
 	import Loading from "../../modals/Loading.vue";
 	import { getAsset, getAssetsIndex } from "../../lib/db/tables/assets.ts";
 	import { useAssetFonts } from "../../lib/assetFonts.ts";
+	import MarkdownField from "../../components/MarkdownField.vue";
 
 	const { appendFont, deleteAllFonts } = useAssetFonts();
 
@@ -354,12 +354,11 @@
 				</div>
 
 				<IonList>
-					<IonItem class="system-description">
-						<IonLabel>
-							<h3>{{ $t("systems:edit.description") }}</h3>
-							<Markdown :markdown="system.description || $t('systems:edit.noDescription')" />
-						</IonLabel>
-					</IonItem>
+					<MarkdownField
+						:header="$t('systems:edit.description')"
+						:content="system.description || $t('systems:edit.noDescription')"
+						class="system-description"
+					/>
 				</IonList>
 
 				<IonList class="system-actions">

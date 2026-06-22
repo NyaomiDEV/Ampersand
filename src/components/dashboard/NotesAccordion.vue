@@ -1,12 +1,12 @@
 <script setup lang="ts">
-	import { IonAccordionGroup, IonAccordion, IonItem, IonLabel } from "@ionic/vue";
+	import { IonAccordionGroup } from "@ionic/vue";
 	import { onBeforeMount, shallowRef } from "vue";
 
 	import downMD from "@material-symbols/svg-600/rounded/keyboard_arrow_down.svg";
 
 	import { getNotesToDisplay } from "../../lib/db/tables/notes";
-	import Markdown from "../Markdown.vue";
 	import { Note } from "../../lib/db/entities";
+	import MarkdownAccordion from "../MarkdownAccordion.vue";
 
 	const notes = shallowRef<Note[]>();
 
@@ -17,18 +17,13 @@
 
 <template>
 	<IonAccordionGroup v-if="notes && notes.length" :multiple="true">
-		<IonAccordion
+		<MarkdownAccordion
 			v-for="note in notes"
 			:key="note.uuid"
 			:value="note.uuid"
 			:toggle-icon="downMD"
-		>
-			<IonItem slot="header">
-				<IonLabel>{{ note.title }}</IonLabel>
-			</IonItem>
-			<div slot="content" class="content">
-				<Markdown :markdown="note.content" />
-			</div>
-		</IonAccordion>
+			:header="note.title"
+			:content="note.content"
+		/>
 	</IonAccordionGroup>
 </template>

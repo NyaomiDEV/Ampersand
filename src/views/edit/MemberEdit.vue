@@ -42,7 +42,6 @@
 	import { fontFamilyPicker, promptOkCancel, sortName, toast, formatDate, imageClipPicker, saveImageFile } from "../../lib/util/misc";
 	import { encodeImageWithMetadata, getImageOrMetadata, getResizedImage } from "../../lib/util/image";
 	import { getCurrentInstance, onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
-	import Markdown from "../../components/Markdown.vue";
 	import { addMaterialColors, rgbaToArgb, unsetMaterialColors } from "../../lib/theme";
 	import { PartialBy } from "../../lib/types";
 	import { useRoute } from "vue-router";
@@ -61,6 +60,7 @@
 	import { lists } from "../../router/lists";
 	import { getAsset, getAssetsIndex } from "../../lib/db/tables/assets.ts";
 	import { useAssetFonts } from "../../lib/assetFonts.ts";
+	import MarkdownField from "../../components/MarkdownField.vue";
 
 	const { appendFont, deleteAllFonts } = useAssetFonts();
 
@@ -439,19 +439,17 @@
 				</div>
 
 				<IonList>
-					<IonItem class="member-field member-description">
-						<IonLabel>
-							<h3>{{ $t("members:edit.description") }}</h3>
-							<Markdown :markdown="member.description || $t('members:edit.noDescription')" />
-						</IonLabel>
-					</IonItem>
+					<MarkdownField
+						:header="$t('members:edit.description')"
+						:content="member.description || $t('members:edit.noDescription')"
+						class="member-field member-description"
+					/>
 					<template v-for="customField in customFieldsToShowInViewMode" :key="customField.uuid">
-						<IonItem class="member-field">
-							<IonLabel>
-								<h3>{{ customField.name }}</h3>
-								<Markdown :markdown="member.customFields?.get(customField.uuid)!" />
-							</IonLabel>
-						</IonItem>
+						<MarkdownField
+							:header="customField.name"
+							:content="member.customFields?.get(customField.uuid)!"
+							class="member-field"
+						/>
 					</template>
 				</IonList>
 
