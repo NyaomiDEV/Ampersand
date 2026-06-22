@@ -27,6 +27,9 @@
 		background-color: rgb(var(--md3-surface-container));
 		margin-top: 2px;
 		border-radius: 4px;
+	}
+
+	> [slot=content] {
 		padding: 8px 16px;
 	}
 }
