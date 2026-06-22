@@ -10,7 +10,7 @@
 	import { newFile } from "../lib/fileref.ts";
 	import { getExtension } from "../lib/mime.ts";
 	import { securityConfig } from "../lib/config/index.ts";
-	import { isColor } from "../lib/markdown/utils.ts";
+	import { isBorderStyle, isColor, isLength } from "../lib/markdown/utils.ts";
 	import { useAssetFonts } from "../lib/assetFonts.ts";
 	import { fontQuickNames } from "../lib/util/misc.ts";
 
@@ -123,6 +123,9 @@
 			'--data-header-color': frontmatter.headerColor && isColor(frontmatter.headerColor) ? frontmatter.headerColor : undefined,
 			'--data-header-font': frontmatter.headerFont ? `'${fontQuickNames[frontmatter.headerFont] || frontmatter.headerFont}'` : undefined,
 			'--data-font': frontmatter.font ? `'${fontQuickNames[frontmatter.font] || frontmatter.font}'` : undefined,
+			'--data-border-style': frontmatter.borderStyle && isBorderStyle(frontmatter.borderStyle) ? frontmatter.borderStyle : undefined,
+			'--data-border-color': frontmatter.borderColor && isColor(frontmatter.borderColor) ? frontmatter.borderColor : undefined,
+			'--data-border-width': frontmatter.borderWidth && isLength(frontmatter.borderWidth) ? frontmatter.borderWidth : undefined,
 		}"
 		:class="{
 			'with-background': !!background
@@ -150,6 +153,22 @@
 			color: var(--data-color, inherit) !important;
 			font-family: var(--data-font, inherit) !important;
 		}
+	}
+
+	ion-item:is(ion-list :first-child)::part(native){
+		border-top-left-radius: 16px;
+		border-top-right-radius: 16px;
+	}
+
+	ion-item:is(ion-list :last-child)::part(native){
+		border-bottom-left-radius: 16px;
+		border-bottom-right-radius: 16px;
+	}
+
+	ion-item::part(native) {
+		border-style: var(--data-border-style, inherit);
+		border-color: var(--data-border-color, inherit);
+		border-width: var(--data-border-width, inherit);	
 	}
 
 	ion-item.with-background::part(native)::before {

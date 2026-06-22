@@ -10,7 +10,7 @@
 	import { newFile } from "../lib/fileref.ts";
 	import { getExtension } from "../lib/mime.ts";
 	import { securityConfig } from "../lib/config/index.ts";
-	import { isColor } from "../lib/markdown/utils.ts";
+	import { isBorderStyle, isColor, isLength } from "../lib/markdown/utils.ts";
 	import { useAssetFonts } from "../lib/assetFonts.ts";
 	import { fontQuickNames } from "../lib/util/misc.ts";
 
@@ -122,6 +122,9 @@
 			'--data-header-color': frontmatter.headerColor && isColor(frontmatter.headerColor) ? frontmatter.headerColor : undefined,
 			'--data-header-font': frontmatter.headerFont ? `'${fontQuickNames[frontmatter.headerFont] || frontmatter.headerFont}'` : undefined,
 			'--data-font': frontmatter.font ? `'${fontQuickNames[frontmatter.font] || frontmatter.font}'` : undefined,
+			'--data-border-style': frontmatter.borderStyle && isBorderStyle(frontmatter.borderStyle) ? frontmatter.borderStyle : undefined,
+			'--data-border-color': frontmatter.borderColor && isColor(frontmatter.borderColor) ? frontmatter.borderColor : undefined,
+			'--data-border-width': frontmatter.borderWidth && isLength(frontmatter.borderWidth) ? frontmatter.borderWidth : undefined,
 		}"
 		:class="{
 			'with-background': !!background
@@ -153,6 +156,17 @@
 				font-family: var(--data-header-font, inherit) !important;
 			}
 		}
+	}
+
+	ion-accordion:is(ion-accordion-group :last-child) [slot=content]{
+		border-bottom-left-radius: 12px;
+		border-bottom-right-radius: 12px;
+	}
+
+	ion-accordion [slot=content] {
+		border-style: var(--data-border-style, inherit);
+		border-color: var(--data-border-color, inherit);
+		border-width: var(--data-border-width, inherit);	
 	}
 
 	ion-accordion.with-background::part(content) {
