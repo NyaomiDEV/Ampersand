@@ -24,7 +24,9 @@
 	},
 	"tintWithColor": {
 		"title": "Tint with color",
-		"desc": "Tint some parts of the app with colors from members, systems, tags, etc."
+		"off": "Off",
+		"accent": "Only accent color",
+		"on": "On"
 	},
 	"reducedMotion": {
 		"title": "Reduced motion",

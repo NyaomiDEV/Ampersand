@@ -74,7 +74,7 @@ export type AccessibilityConfig = {
 	highLegibilityType: "atkinson" | "opendyslexic" | "lexend" | "comicrelief" | "system-font",
 	colorIndicatorPosition: "avatar" | "list-item",
 	themeIsAmoled: boolean,
-	tintWithColor: boolean,
+	tintWithColor: "off" | "accent" | "on",
 	reducedMotion: boolean,
 	compactLists: boolean,
 	disableCovers: boolean,

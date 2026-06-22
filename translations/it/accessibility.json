@@ -25,7 +25,9 @@
 	
 	"tintWithColor": {
 		"title": "Tingi col colore",
-		"desc": "Tingi alcune parti dell'app con il colore di membri, sistemi, tag, ecc."
+		"off": "Off",
+		"accent": "Solo col colore primario",
+		"on": "On"
 	},
 	"reducedMotion": {
 		"title": "Movimenti ridotti",

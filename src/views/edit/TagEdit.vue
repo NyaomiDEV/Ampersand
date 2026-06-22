@@ -212,13 +212,12 @@
 	}
 
 	function updateColors(){
-		if(!accessibilityConfig.tintWithColor) return;
+		if(accessibilityConfig.tintWithColor === "off") return;
 
 		if(tag.value.color){
-			if(self?.vnode.el) addMaterialColors(rgbaToArgb(tag.value.color), rgbaToArgb(tag.value.color), self?.vnode.el as HTMLElement);
+			if(self?.vnode.el) addMaterialColors(rgbaToArgb(tag.value.color), accessibilityConfig.tintWithColor === "on" ? rgbaToArgb(tag.value.color) : undefined, self?.vnode.el as HTMLElement);
 		} else 
 			if(self?.vnode.el) unsetMaterialColors(self?.vnode.el as HTMLElement);
-		
 	}
 
 	async function copyIdToClipboard(){

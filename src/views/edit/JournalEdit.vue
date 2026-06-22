@@ -181,13 +181,12 @@
 	}
 
 	function updateColors(){
-		if(!accessibilityConfig.tintWithColor) return;
+		if(accessibilityConfig.tintWithColor === "off") return;
 
 		if(post.value.color){
-			if(self?.vnode.el) addMaterialColors(rgbaToArgb(post.value.color), rgbaToArgb(post.value.color), self?.vnode.el as HTMLElement);
+			if(self?.vnode.el) addMaterialColors(rgbaToArgb(post.value.color), accessibilityConfig.tintWithColor === "on" ? rgbaToArgb(post.value.color) : undefined, self?.vnode.el as HTMLElement);
 		} else 
 			if(self?.vnode.el) unsetMaterialColors(self?.vnode.el as HTMLElement);
-		
 	}
 
 	watch(route, updateRoute);

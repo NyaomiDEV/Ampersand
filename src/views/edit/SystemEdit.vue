@@ -209,13 +209,13 @@
 		if(system.value.color){
 			if(self?.vnode.el){
 				addMaterialColors(rgbaToArgb(system.value.color), rgbaToArgb(system.value.color), self?.vnode.el as HTMLElement, "system-color");
-				if(accessibilityConfig.tintWithColor)
-					addMaterialColors(rgbaToArgb(system.value.color), rgbaToArgb(system.value.color), self?.vnode.el as HTMLElement);
+				if(accessibilityConfig.tintWithColor !== "off")
+					addMaterialColors(rgbaToArgb(system.value.color), accessibilityConfig.tintWithColor === "on" ? rgbaToArgb(system.value.color) : undefined, self?.vnode.el as HTMLElement);
 			}
 		} else {
 			if(self?.vnode.el){
 				unsetMaterialColors(self?.vnode.el as HTMLElement, "system-color");
-				if(accessibilityConfig.tintWithColor)
+				if(accessibilityConfig.tintWithColor !== "off")
 					unsetMaterialColors(self?.vnode.el as HTMLElement);
 			}
 		}

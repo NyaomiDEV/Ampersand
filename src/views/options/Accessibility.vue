@@ -105,12 +105,25 @@
 
 				<IonItem>
 					<IonIcon slot="start" :icon="tintMD" />
-					<IonToggle v-model="accessibilityConfig.tintWithColor">
-						<IonLabel>
-							<h3>{{ $t("accessibility:tintWithColor.title") }}</h3>
-							<p>{{ $t("accessibility:tintWithColor.desc") }}</p>
-						</IonLabel>
-					</IonToggle>
+					<IonSelect
+						v-model="accessibilityConfig.tintWithColor"
+						label-placement="floating"
+						:label="$t('accessibility:tintWithColor.title')"
+						:cancel-text="$t('other:alerts.cancel')"
+						interface="action-sheet"
+					>
+						<IonSelectOption value="off">
+							{{ $t("accessibility:tintWithColor.off") }}
+						</IonSelectOption>
+
+						<IonSelectOption value="accent">
+							{{ $t("accessibility:tintWithColor.accent") }}
+						</IonSelectOption>
+
+						<IonSelectOption value="on">
+							{{ $t("accessibility:tintWithColor.on") }}
+						</IonSelectOption>
+					</IonSelect>
 				</IonItem>
 
 				<IonItem :disabled="appConfig.theme === 'light'">

@@ -70,7 +70,7 @@ export const defaultAccessibilityConfig: AccessibilityConfig = {
 	highLegibilityType: "atkinson",
 	colorIndicatorPosition: "avatar",
 	themeIsAmoled: false,
-	tintWithColor: true,
+	tintWithColor: "on",
 	reducedMotion: false,
 	compactLists: false,
 	disableCovers: false,

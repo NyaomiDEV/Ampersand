@@ -310,13 +310,13 @@
 		if(member.value.color){
 			if(self?.vnode.el){
 				addMaterialColors(rgbaToArgb(member.value.color), rgbaToArgb(member.value.color), self?.vnode.el as HTMLElement, "member-color");
-				if(accessibilityConfig.tintWithColor)
-					addMaterialColors(rgbaToArgb(member.value.color), rgbaToArgb(member.value.color), self?.vnode.el as HTMLElement);
+				if(accessibilityConfig.tintWithColor !== "off")
+					addMaterialColors(rgbaToArgb(member.value.color), accessibilityConfig.tintWithColor === "on" ? rgbaToArgb(member.value.color) : undefined, self?.vnode.el as HTMLElement);
 			}
 		} else {
 			if(self?.vnode.el){
 				unsetMaterialColors(self?.vnode.el as HTMLElement, "member-color");
-				if(accessibilityConfig.tintWithColor)
+				if(accessibilityConfig.tintWithColor !== "off")
 					unsetMaterialColors(self?.vnode.el as HTMLElement);
 			}
 		}
