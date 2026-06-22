@@ -11,12 +11,12 @@
 		fontVariation: string
 	}>();
 
-	const fontTypes = [
-		"application/font-woff",
-		"application/octet-stream"
-	];
-
 	watch(props, async () => {
+		const fontTypes = [
+			"application/font-woff",
+			"application/octet-stream"
+		];
+
 		if (props.fontFamily.startsWith("@")) {
 			const assetIndex = getAssetsIndex().find(x => x.friendlyName === props.fontFamily.slice(1));
 			if(!assetIndex) return;
