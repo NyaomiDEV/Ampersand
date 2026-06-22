@@ -546,7 +546,6 @@ export const fontQuickNames = {
 	nature: "Tapestry",
 	pineapple: "Some Time Later",
 	cracks: "Rubik Distressed",
-	cow: "Moo Lah Lah",
 	outline: "Moirai One",
 };
 
@@ -592,7 +591,6 @@ export const fontFamilies = [
 	"Tapestry",
 	"Some Time Later",
 	"Rubik Distressed",
-	"Moo Lah Lah",
 	"Moirai One",
 	"Urbanist",
 	"Outfit",
