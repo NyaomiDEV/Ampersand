@@ -22,7 +22,10 @@
 		"listItem": "List item border"
 	},
 	"tintWithColor": {
-		"title": "Tint with color"
+		"title": "Tint with color",
+		"off": "Off",
+		"accent": "Only accent color",
+		"on": "On"
 	},
 	"reducedMotion": {
 		"title": "Calm seas",

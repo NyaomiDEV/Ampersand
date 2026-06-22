@@ -22,7 +22,10 @@
 		"listItem": "Bordo 'e l'elemento ncopp'â lista"
 	},
 	"tintWithColor": {
-		"title": "Tinge cu 'o culore"
+		"title": "Tinge cu 'o culore",
+		"off": "Off",
+		"accent": "Sulo cu 'o culore primario",
+		"on": "On"
 	},
 	"reducedMotion": {
 		"title": "Muvimiente ridotte",

@@ -22,7 +22,10 @@
 		"listItem": "Bordo dell'item in lista"
 	},
 	"tintWithColor": {
-		"title": "Tingi con colore"
+		"title": "Tingi con colore",
+		"off": "Off",
+		"accent": "Solo colore primario",
+		"on": "On"
 	},
 	"reducedMotion": {
 		"title": "Movimenti ridotti",

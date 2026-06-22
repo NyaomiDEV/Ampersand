@@ -22,7 +22,10 @@
 		"listItem": "Bordu de l'elementu 'n lista"
 	},
 	"tintWithColor": {
-		"title": "Tìngi cu lu culuri"
+		"title": "Tìngi cu lu culuri",
+		"off": "Off",
+		"accent": "Sulu cu lu culuri primariu",
+		"on": "On"
 	},
 	"reducedMotion": {
 		"title": "Muvimenti arridutti",
