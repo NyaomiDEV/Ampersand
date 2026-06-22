@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { ref, onMounted, nextTick, useTemplateRef } from "vue";
+	import { onMounted, nextTick, useTemplateRef, shallowRef } from "vue";
 	import { IonLabel, IonTextarea } from "@ionic/vue";
 	import Markdown from "./Markdown.vue";
 	
@@ -8,8 +8,9 @@
 		fill?: "solid" | "outline";
 	}>();
 	const model = defineModel<string>({ default: "" });
-	const focused = ref(false);
+	const focused = shallowRef(false);
 	const textarea = useTemplateRef("textarea");
+	const frontmatter = shallowRef();
 
 	onMounted(() => {
 		if(model.value === undefined)
@@ -35,7 +36,15 @@
 				>
 					{{ props.label }}
 				</IonLabel>
-				<Markdown :markdown="model" />
+				<div class="content">
+					<table v-if="frontmatter">
+						<tr v-for="[key, value] in Object.entries(frontmatter)" :key="key">
+							<td>{{ key }}</td>
+							<td>{{ value }}</td>
+						</tr>
+					</table>
+					<Markdown :markdown="model" @frontmatter="(fm) => frontmatter = fm" />
+				</div>
 			</div>
 		</template>
 
@@ -68,9 +77,20 @@
 		flex-direction: column;
 		padding: 0 16px;
 
-		.markdown-content {
+		> .content {
 			margin: 8px 0 0 0;
 			padding: 0 0 8px 0;
+
+			> table {
+				width: 100%;
+				border-bottom: 1px solid rgb(var(--md3-on-surface));
+				margin-bottom: 1em;
+
+				td {
+					padding-inline: .5em;
+					padding-block: .25em;
+				}
+			}
 		}
 
 		&.solid {

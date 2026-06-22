@@ -3,20 +3,13 @@
 	import Markdown from "./Markdown.vue";
 	import { getCurrentInstance, onMounted, shallowRef } from "vue";
 	import { addMaterialColors, rgbaToArgb, unsetMaterialColors } from "../lib/theme/index.ts";
-	import { AppConfig } from "../lib/config/types";
+	import { FieldFrontmatter } from "../lib/markdown/types";
 	import { useBlob } from "../lib/util/blob.ts";
 	import { getAsset, getAssetsIndex } from "../lib/db/tables/assets.ts";
 	import { fetchImage } from "../lib/util/fetchImage.ts";
 	import { newFile } from "../lib/fileref.ts";
 	import { getExtension } from "../lib/mime.ts";
 	import { securityConfig } from "../lib/config/index.ts";
-
-	type FieldFrontmatter = {
-		header: string,
-		color: string,
-		"color-scheme": AppConfig["themeScheme"],
-		background: string
-	};
 
 	const self = getCurrentInstance();
 
@@ -37,8 +30,8 @@
 	}
 
 	function handleColor(){
-		if(frontmatter.value.color){
-			if(self?.vnode.el) addMaterialColors(rgbaToArgb(frontmatter.value.color), rgbaToArgb(frontmatter.value.color), self?.vnode.el as HTMLElement, undefined, frontmatter.value["color-scheme"]);
+		if(frontmatter.value.backgroundColor){
+			if(self?.vnode.el) addMaterialColors(rgbaToArgb(frontmatter.value.backgroundColor), rgbaToArgb(frontmatter.value.backgroundColor), self?.vnode.el as HTMLElement, undefined, frontmatter.value.colorScheme);
 		} else 
 			if(self?.vnode.el) unsetMaterialColors(self?.vnode.el as HTMLElement);
 	}

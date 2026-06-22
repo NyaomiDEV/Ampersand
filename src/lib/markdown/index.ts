@@ -60,16 +60,21 @@ import borderRadiusExtension from "./borderRadiusExtension.ts";
 import paddingExtension from "./paddingExtension.ts";
 import marginExtension from "./marginExtension.ts";
 
-export function extractFrontmatter(markdown: string): { body: string, frontmatter?: any } {
+export function extractFrontmatter(markdown: string): { body: string, frontmatter?: Record<string, unknown> } {
 	const regex = /^---([\s\S]+)\n---\n([\s\S]*)$/;
 	const matches = regex.exec(markdown);
 
 	if(matches === null)
 		return { body: markdown };
 
+	const frontmatter: Record<string, unknown> = {};
+
+	for (const [key, value] of Object.entries(load(matches[1]) as Record<string, unknown>))
+		frontmatter[key.replace(/-(.)/, (_, m: string) => m.toUpperCase())] = value;
+
 	return {
 		body: matches[2],
-		frontmatter: load(matches[1])
+		frontmatter
 	};
 }
 
