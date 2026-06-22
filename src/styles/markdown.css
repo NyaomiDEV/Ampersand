@@ -10,8 +10,8 @@
 
 	/* Horizontal Rules */
 	hr {
-		border-top-width: 1px;
-		color: var(--ion-text-color-step-400);
+		border: none;
+		border-top: 1px solid var(--ion-text-color-step-400);
 	}
 
 	/* Blockquotes */
@@ -737,9 +737,11 @@
 		&:before, &:after {
 			content: "\A";
 			display: block;
-			height: 4px;
+			height: 0;
 			width: 100%;
-			background-color: currentcolor;
+			background-color: none;
+			border: none;
+			border-top: 4px var(--markdown-text-divider-style, solid) currentColor;
 			flex: 1 0;
 			border-radius: 2px;
 		}
@@ -769,6 +771,12 @@
 			
 			span {
 				text-align: right;
+			}
+		}
+
+		&.dotted, &.dashed {
+			&:before, &:after {
+				border-radius: 0;
 			}
 		}
 	

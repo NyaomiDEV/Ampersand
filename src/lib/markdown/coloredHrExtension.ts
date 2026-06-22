@@ -1,6 +1,6 @@
 import { h, type VNode } from "vue";
 import { MarkedExtension } from "marked";
-import { isColor, isLength, isPercentage, splitList } from "./utils";
+import { isBorderStyle, isColor, isLength, isPercentage, splitList } from "./utils";
 
 const coloredHrExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [
@@ -12,11 +12,12 @@ const coloredHrExtension: MarkedExtension<(VNode | string)[], VNode | string> = 
 				const rule = /^--\{(.+?)\}--(?:\n+|$)/;
 				const match = rule.exec(src);
 				if (match) {
-					const [ color, width, height, radius, ...p ] = splitList(match[1]);
+					const [ color, style, width, height, radius, ...p ] = splitList(match[1]);
 					if(p.length) return;
 
 					if (
 						!isColor(color) || 
+						(style && !isBorderStyle(style)) ||
 						(width && !isLength(width) && !isPercentage(width)) ||
 						(height && !isLength(height) && !isPercentage(height)) ||
 						(radius && !isLength(radius) && !isPercentage(radius))
@@ -25,6 +26,7 @@ const coloredHrExtension: MarkedExtension<(VNode | string)[], VNode | string> = 
 					const token = {
 						type: "coloredHr",
 						color,
+						style,
 						width,
 						height,
 						radius,
@@ -37,12 +39,11 @@ const coloredHrExtension: MarkedExtension<(VNode | string)[], VNode | string> = 
 			renderer(token) {
 				return h("hr", {
 					style: {
-						borderColor: token.color,
-						color: token.color,
-						backgroundColor: token.color,
+						borderTopColor: token.color,
+						borderTopStyle: token.style || "solid",
 						width: token.width,
-						height: token.height,
-						borderRadius: token.radius
+						borderRadius: token.radius,
+						borderTopWidth: token.height || "1px",
 					}
 				});
 			}

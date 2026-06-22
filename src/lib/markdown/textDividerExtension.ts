@@ -1,6 +1,6 @@
 import { h, type VNode } from "vue";
 import { MarkedExtension } from "marked";
-import { isColor, splitList } from "./utils";
+import { isBorderStyle, isColor, splitList } from "./utils";
 
 const textDividerExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 	extensions: [
@@ -15,6 +15,7 @@ const textDividerExtension: MarkedExtension<(VNode | string)[], VNode | string> 
 					const values = splitList(match[1]);
 					let color = "currentColor";
 					let alignment = "center";
+					let style = "solid";
 					let textStart = 0;
 
 					if(isColor(values[0])){
@@ -24,6 +25,11 @@ const textDividerExtension: MarkedExtension<(VNode | string)[], VNode | string> 
 
 					if(["left", "center", "right"].includes(values[0])){
 						alignment = values.shift()!;
+						textStart++;
+					}
+
+					if(isBorderStyle(values[0])) {
+						style = values.shift()!;
 						textStart++;
 					}
 
@@ -37,6 +43,7 @@ const textDividerExtension: MarkedExtension<(VNode | string)[], VNode | string> 
 						type: "textDivider",
 						color,
 						alignment,
+						style,
 						text,
 						tokens: this.lexer.inlineTokens(text),
 						raw: match[0]
@@ -47,9 +54,10 @@ const textDividerExtension: MarkedExtension<(VNode | string)[], VNode | string> 
 			},
 			renderer(token) {
 				return h("div", {
-					class: ["markdown-text-divider", token.alignment],
+					class: ["markdown-text-divider", token.alignment, token.style],
 					style: {
 						color: token.color,
+						"--markdown-text-divider-style": token.style
 					}
 				}, h("span", {}, token.tokens && token.tokens.length ? this.parser.parseInline(token.tokens) : token.text));
 			}
