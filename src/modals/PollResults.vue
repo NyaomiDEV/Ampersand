@@ -159,6 +159,7 @@
 
 <style scoped>
 	p.reason {
+		white-space: pre-wrap;
 		text-wrap: wrap !important;
 		overflow: visible !important;
 	}

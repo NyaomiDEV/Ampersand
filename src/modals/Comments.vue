@@ -261,6 +261,7 @@
 
 <style scoped>
 	.comment {
+		white-space: pre-wrap;
 		text-wrap: wrap !important;
 		overflow: visible !important;
 	}
