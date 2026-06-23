@@ -122,9 +122,10 @@
 			'--data-header-color': frontmatter.headerColor && isColor(frontmatter.headerColor) ? frontmatter.headerColor : undefined,
 			'--data-header-font': frontmatter.headerFont ? `'${fontQuickNames[frontmatter.headerFont] || frontmatter.headerFont}'` : undefined,
 			'--data-font': frontmatter.font ? `'${fontQuickNames[frontmatter.font] || frontmatter.font}'` : undefined,
-			'--data-border-style': frontmatter.borderStyle && isBorderStyle(frontmatter.borderStyle) ? frontmatter.borderStyle : undefined,
-			'--data-border-color': frontmatter.borderColor && isColor(frontmatter.borderColor) ? frontmatter.borderColor : undefined,
-			'--data-border-width': frontmatter.borderWidth && isLength(frontmatter.borderWidth) ? frontmatter.borderWidth : undefined,
+			'--data-outline-style': frontmatter.borderStyle && isBorderStyle(frontmatter.borderStyle) ? frontmatter.borderStyle : undefined,
+			'--data-outline-color': frontmatter.borderColor && isColor(frontmatter.borderColor) ? frontmatter.borderColor : undefined,
+			'--data-outline-width': frontmatter.borderWidth && isLength(frontmatter.borderWidth) ? frontmatter.borderWidth : undefined,
+			'--data-outline-offset': frontmatter.borderWidth && isLength(frontmatter.borderWidth) ? `-${frontmatter.borderWidth}` : undefined,
 		}"
 		:class="{
 			'with-background': !!background
@@ -164,9 +165,10 @@
 	}
 
 	ion-accordion [slot=content] {
-		border-style: var(--data-border-style, inherit);
-		border-color: var(--data-border-color, inherit);
-		border-width: var(--data-border-width, inherit);	
+		outline-style: var(--data-outline-style, inherit);
+		outline-color: var(--data-outline-color, inherit);
+		outline-width: var(--data-outline-width, inherit);	
+		outline-offset: var(--data-outline-offset, inherit);
 	}
 
 	ion-accordion.with-background::part(content) {

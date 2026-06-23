@@ -73,7 +73,7 @@ export function extractFrontmatter(markdown: string): { body: string, frontmatte
 		frontmatter[key.replace(/-(.)/, (_, m: string) => m.toUpperCase())] = value;
 
 	return {
-		body: matches[2],
+		body: matches[2] || "",
 		frontmatter
 	};
 }
