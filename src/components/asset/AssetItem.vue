@@ -16,7 +16,7 @@
 	const tags = shallowRef<Tag[]>();
 
 	const props = defineProps<{
-		asset: PartialBy<Asset, "uuid">,
+		asset: PartialBy<Asset, "uuid" | "file">,
 		routeToEditPage?: boolean,
 		routeToOpenFile?: boolean,
 		showFilenameAndType?: boolean,
@@ -46,7 +46,7 @@
 	}
 
 	function canPreview(){
-		if(props.asset.file.size){
+		if(props.asset.file?.size){
 			const file = props.asset.file;
 			switch(file.type){
 				case "image/png":
@@ -63,7 +63,8 @@
 	}
 
 	async function open(){
-		await openFile(props.asset.file);
+		if(props.asset.file)
+			await openFile(props.asset.file);
 	}
 
 	watch(() => props.asset.tags, updateTags);
@@ -79,7 +80,7 @@
 		@click="props.routeToOpenFile ? open() : undefined"
 	>
 		<template v-if="props.showThumbnail">
-			<template v-if="canPreview()">
+			<template v-if="props.asset.file && canPreview()">
 				<IonIcon v-if="props.asset.file.type === 'image/svg+xml'" slot="start" :icon="getObjectURL(props.asset.file)" />		
 				<IonThumbnail v-else slot="start">
 					<img :src="getObjectURL(props.asset.file)" />
@@ -88,9 +89,9 @@
 			<IonIcon v-else slot="start" :icon="documentMD" />
 		</template>
 		<IonLabel class="nowrap">
-			<template v-if="props.showFilenameAndType">
-				<h2>{{ asset.file.name }}</h2>
-				<p>{{ asset.file.type?.split("/")[1]?.replace(/^x-/, '').toUpperCase() }}</p>
+			<template v-if="props.asset.file && props.showFilenameAndType">
+				<h2>{{ props.asset.file.name }}</h2>
+				<p>{{ props.asset.file.type?.split("/")[1]?.replace(/^x-/, '').toUpperCase() }}</p>
 			</template>
 			<template v-else>
 				{{ props.asset.friendlyName }}
