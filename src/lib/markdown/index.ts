@@ -61,7 +61,7 @@ import paddingExtension from "./paddingExtension.ts";
 import marginExtension from "./marginExtension.ts";
 
 export function extractFrontmatter(markdown: string): { body: string, frontmatter?: Record<string, unknown> } {
-	const regex = /^---\n([\s\S]+?)\n---\n?([\s\S]*)$/;
+	const regex = /^---\n([\s\S]+?)\n---(?:\n([\s\S]*)$|\n?$)/;
 	const matches = regex.exec(markdown);
 
 	if(matches === null)
