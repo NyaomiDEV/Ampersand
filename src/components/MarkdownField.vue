@@ -168,7 +168,8 @@
 	ion-item::part(native) {
 		border-style: var(--data-border-style, inherit);
 		border-color: var(--data-border-color, inherit);
-		border-width: var(--data-border-width, inherit);	
+		border-width: var(--data-border-width, inherit);
+		overflow: visible;
 	}
 
 	ion-item.with-background::part(native)::before {
@@ -176,12 +177,13 @@
 		background-image: var(--data-background);
 		background-position: center;
 		background-size: cover;
-		width: 100%;
-		height: 100%;
+		width: calc(100% + (var(--data-border-width, 0px) * 2));
+		height: calc(100% + (var(--data-border-width, 0px) * 2));
 		display: block;
 		position: absolute;
 		z-index: -1;
-		left: 0;
+		left: calc(-1 * var(--data-border-width, 0px));
+		top: calc(-1 * var(--data-border-width, 0px));
 		opacity: 0.2;
 	}
 </style>
