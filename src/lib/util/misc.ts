@@ -600,6 +600,9 @@ export const fontFamilies = [
 	"Recursive",
 	"Geom",
 	"Jost",
+	"RocknRoll One",
+	"Stick",
+	"Reggae One"
 ];
 
 function normalizeFontName(x: string){
