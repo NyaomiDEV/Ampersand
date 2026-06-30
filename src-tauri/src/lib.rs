@@ -11,6 +11,25 @@ use tauri::{
     window::{Effect, Color, EffectState}
 };
 
+#[cfg(desktop)]
+fn migrate_old_data(app: &mut tauri::App) -> Result<(), tauri::Error> {
+    let mut data_dir = app.path().data_dir()?;
+    data_dir.push("moe.ampersand.app");
+
+    let mut config_dir = app.path().config_dir()?;
+    config_dir.push("moe.ampersand.app");
+
+    if std::fs::exists(&data_dir).unwrap_or(false) {
+        let _ = std::fs::rename(data_dir, app.path().app_data_dir()?);
+    }
+
+    if std::fs::exists(&config_dir).unwrap_or(false) {
+        let _ = std::fs::rename(config_dir, app.path().app_config_dir()?);
+    }
+
+    Ok(())
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     let mut builder = tauri::Builder::default();
@@ -50,6 +69,9 @@ pub fn run() {
             commands::get_webkit_version
         ])
         .setup(|app: &mut tauri::App| {
+            #[cfg(desktop)]
+            let _ = migrate_old_data(app);
+
             let win_builder = WebviewWindowBuilder::new(app, "main", WebviewUrl::default())
                 .title("Ampersand");
 
