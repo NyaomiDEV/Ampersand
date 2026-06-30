@@ -36,7 +36,7 @@
 	const i18next = useTranslation();
 
 	const comments = defineModel<Comment[]>({
-		default: []
+		default: (_props) => []
 	});
 
 	const members = shallowRef<Member[]>();
