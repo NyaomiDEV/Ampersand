@@ -41,6 +41,7 @@
 		"customFront": "Front personalizzato",
 		"archived": "Archiviato",
 		"showFrontingEntries": "Famme vedé 'e voci 'e front",
+		"lastFronted": "Utima vota 'o front: {{startTime}} - {{endTime}}",
 		"showBoardEntries": "Famme vedé 'e messaggi ncopp'â bacheca",
 		"showJournalEntries": "Famme vedé 'e paggine ncopp'ô diario",
 		"memberID": "ID d'ô mmembro: {{memberID}}",

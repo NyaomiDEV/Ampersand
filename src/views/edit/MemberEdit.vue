@@ -21,7 +21,6 @@
 	} from "@ionic/vue";
 	import Color from "../../components/Color.vue";
 	import TagChip from "../../components/tag/TagChip.vue";
-
 	import TagListSelect from "../../modals/TagListSelect.vue";
 
 	import pencilMD from "@material-symbols/svg-600/rounded/edit.svg";
@@ -36,10 +35,10 @@
 	import gradientMD from "@material-symbols/svg-600/rounded/gradient.svg";
 	import accountCircle from "@material-symbols/svg-600/rounded/account_circle-fill.svg";
 
-	import { CustomField, Member, System, Tag } from "../../lib/db/entities";
+	import { CustomField, FrontingEntry, Member, System, Tag } from "../../lib/db/entities";
 	import { newMember, deleteMember, updateMember, defaultMember, getMember } from "../../lib/db/tables/members";
 	import { getTags, isValidTag } from "../../lib/db/tables/tags";
-	import { fontFamilyPicker, promptOkCancel, sortName, toast, formatDate, imageClipPicker, saveImageFile } from "../../lib/util/misc";
+	import { fontFamilyPicker, promptOkCancel, sortName, toast, formatDate, imageClipPicker, saveImageFile, sortFrontingEntries } from "../../lib/util/misc";
 	import { encodeImageWithMetadata, getImageOrMetadata, getResizedImage } from "../../lib/util/image";
 	import { getCurrentInstance, onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
 	import { addMaterialColors, rgbaToArgb, unsetMaterialColors } from "../../lib/theme";
@@ -61,6 +60,8 @@
 	import { getAsset, getAssetsIndex } from "../../lib/db/tables/assets.ts";
 	import { useAssetFonts } from "../../lib/assetFonts.ts";
 	import MarkdownField from "../../components/MarkdownField.vue";
+	import { getFrontingEntryIndex } from "../../lib/db/tables/frontingEntries.ts";
+	import { IndexEntry } from "../../lib/db/types";
 
 	const { appendFont, deleteAllFonts } = useAssetFonts();
 
@@ -84,6 +85,7 @@
 
 	const system = ref<System>({ uuid: member.value.system, name: "", isPinned: false, isArchived: false, viewInLists: true });
 	const tags = shallowRef<Tag[]>([]);
+	const lastFrontingEntry = shallowRef<IndexEntry<FrontingEntry>>();
 	const tagSelectionModal = useTemplateRef("tagSelectionModal");
 	const systemSelectModal = useTemplateRef("systemSelectModal");
 	const loadingModal = useTemplateRef("loadingModal");
@@ -265,6 +267,12 @@
 		}
 	}
 
+	function getLastFront() {
+		if(!member.value.uuid) return;
+
+		return getFrontingEntryIndex().filter((x) => x.endTime && x.member === member.value.uuid).sort(sortFrontingEntries).pop();
+	}
+
 	async function updateRoute() {
 		if(route.name !== "MemberEdit") return;
 
@@ -287,6 +295,9 @@
 		
 		const _sys = await getSystem(member.value.system);
 		if(_sys) system.value = _sys;
+
+		const _fr = getLastFront();
+		if(_fr) lastFrontingEntry.value = _fr;
 
 		customFieldsToShowInEditMode.value = customFields.value.filter(x => x.default || (member.value.customFields?.has(x.uuid) && member.value.customFields?.get(x.uuid)?.length));
 		customFieldsToShowInViewMode.value = customFields.value.filter(x => (member.value.customFields?.has(x.uuid)));
@@ -456,7 +467,10 @@
 				<IonList class="member-actions">
 					<IonItem button detail :router-link="`/lists/frontHistory?q=@member:${member.uuid}`">
 						<IonIcon slot="start" :icon="lists.frontHistory.icon" aria-hidden="true" />
-						<IonLabel>{{ $t("members:edit.showFrontingEntries") }}</IonLabel>
+						<IonLabel>
+							<h3>{{ $t("members:edit.showFrontingEntries") }}</h3>
+							<p v-if="lastFrontingEntry?.startTime && lastFrontingEntry?.endTime">{{ $t("members:edit.lastFronted", { startTime: formatDate(lastFrontingEntry.startTime, "collapsed"), endTime: formatDate(lastFrontingEntry.endTime, "collapsed") }) }}</p>
+						</IonLabel>
 					</IonItem>
 					<IonItem button detail :router-link="`/lists/messageBoard?q=@member:${member.uuid}`">
 						<IonIcon slot="start" :icon="lists.messageBoard.icon" aria-hidden="true" />

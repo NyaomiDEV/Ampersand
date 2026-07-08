@@ -41,6 +41,7 @@
 		"customFront": "Front pirsunalizzatu",
 		"archived": "Archiviatu",
 		"showFrontingEntries": "Mustra i vuci di front",
+		"lastFronted": "Ultima vota a front: {{startTime}} - {{endTime}}",
 		"showBoardEntries": "Mustra i missaggi nâ bacheca",
 		"showJournalEntries": "Mustra i pàggini dû diariu",
 		"memberID": "ID dû membru: {{memberID}}",

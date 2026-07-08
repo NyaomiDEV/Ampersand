@@ -41,6 +41,7 @@
 		"customFront": "Custom front",
 		"archived": "In the hold",
 		"showFrontingEntries": "Show helm entries",
+		"lastFronted": "Last time at the helm: {{startTime}} - {{endTime}}",
 		"showBoardEntries": "Show board messages",
 		"showJournalEntries": "Show log entries",
 		"memberID": "Matey ID: {{memberID}}",

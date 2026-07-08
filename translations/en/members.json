@@ -41,6 +41,7 @@
 		"customFront": "Custom front",
 		"archived": "Archived",
 		"showFrontingEntries": "Show fronting entries",
+		"lastFronted": "Last fronted: {{startTime}} - {{endTime}}",
 		"showBoardEntries": "Show board messages",
 		"showJournalEntries": "Show journal posts",
 		"memberID": "Member ID: {{memberID}}",

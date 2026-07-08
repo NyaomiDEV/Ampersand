@@ -41,6 +41,7 @@
 		"customFront": "Front custom",
 		"archived": "Archiviato",
 		"showFrontingEntries": "Mostra voci di front",
+		"lastFronted": "Ultima volta al front: {{startTime}} - {{endTime}}",
 		"showBoardEntries": "Mostra messaggi bacheca",
 		"showJournalEntries": "Mostra pagine diario",
 		"memberID": "ID membro: {{memberID}}",

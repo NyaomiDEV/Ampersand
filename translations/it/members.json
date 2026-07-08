@@ -41,6 +41,7 @@
 		"customFront": "Front personalizzato",
 		"archived": "Archiviatə",
 		"showFrontingEntries": "Mostra le voci di front",
+		"lastFronted": "Ultima volta al front: {{startTime}} - {{endTime}}",
 		"showBoardEntries": "Mostra i messaggi sulla bacheca",
 		"showJournalEntries": "Mostra le pagine sul diario",
 		"memberID": "ID dellə membrə: {{memberID}}",
