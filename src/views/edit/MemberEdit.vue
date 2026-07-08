@@ -270,7 +270,7 @@
 	function getLastFront() {
 		if(!member.value.uuid) return;
 
-		return getFrontingEntryIndex().filter((x) => x.endTime && x.member === member.value.uuid).sort(sortFrontingEntries).pop();
+		return getFrontingEntryIndex().filter((x) => x.endTime && x.member === member.value.uuid).sort(sortFrontingEntries).shift();
 	}
 
 	async function updateRoute() {
