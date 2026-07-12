@@ -46,6 +46,7 @@
 	"tintWithColor": {
 		"title": "Tingir com cor",
 		"off": "Desligado",
-		"on": "Ligado"
+		"on": "Ligado",
+		"accent": "Apenas cor de destaque"
 	}
 }

@@ -42,7 +42,8 @@
 		"ageDisplay_one": "Idade {{count}}",
 		"ageDisplay_many": "Idades {{count}}",
 		"ageDisplay_other": "Idades {{count}}",
-		"nameStyle": "Estilo do nome"
+		"nameStyle": "Estilo do nome",
+		"lastFronted": "Esteve no fronte por último: {{startTime}} - {{endTime}}"
 	},
 	"toasts": {
 		"addToFront": "Membro adicionado ao fronte",
