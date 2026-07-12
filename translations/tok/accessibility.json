@@ -44,6 +44,9 @@
 		"title": "pana sin sona pi kama lon"
 	},
 	"tintWithColor": {
-		"title": "pana kule"
+		"title": "pana kule",
+		"off": "lon ala",
+		"accent": "kule namako taso",
+		"on": "lon"
 	}
 }
