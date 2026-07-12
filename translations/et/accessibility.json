@@ -45,6 +45,7 @@
 	},
 	"tintWithColor": {
 		"title": "Värvidega toonimine",
-		"off": "Väljas"
+		"off": "Pole kasutusel",
+		"accent": "Vaid aktsentvärv"
 	}
 }
