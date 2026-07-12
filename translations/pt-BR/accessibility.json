@@ -45,6 +45,7 @@
 	},
 	"tintWithColor": {
 		"title": "Tingir com cor",
-		"off": "Desligado"
+		"off": "Desligado",
+		"on": "Ligado"
 	}
 }

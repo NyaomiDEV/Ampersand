@@ -46,6 +46,7 @@
 	"tintWithColor": {
 		"off": "Aus",
 		"accent": "Nur Akzentfarbe",
-		"title": "Einfärben"
+		"title": "Einfärben",
+		"on": "Ein"
 	}
 }
