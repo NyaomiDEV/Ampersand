@@ -44,6 +44,8 @@
 		"title": "Benachrichtigung pinnen"
 	},
 	"tintWithColor": {
-		"off": "Aus"
+		"off": "Aus",
+		"accent": "Nur Akzentfarbe",
+		"title": "Einfärben"
 	}
 }
