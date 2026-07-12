@@ -42,5 +42,8 @@
 	},
 	"frontingNotification": {
 		"title": "Benachrichtigung pinnen"
+	},
+	"tintWithColor": {
+		"off": "Aus"
 	}
 }

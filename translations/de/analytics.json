@@ -1,5 +1,7 @@
 {
 	"header": "Analysen",
 	"stats": "Statistiken",
-	"daytime": "Tageszeit"
+	"daytime": "Tageszeit",
+	"startDate": "Startdatum",
+	"endDate": "Enddatum"
 }

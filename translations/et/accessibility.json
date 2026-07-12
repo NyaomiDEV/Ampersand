@@ -44,6 +44,7 @@
 		"title": "Esiplaanil olemise teavitus"
 	},
 	"tintWithColor": {
-		"title": "Värvidega toonimine"
+		"title": "Värvidega toonimine",
+		"off": "Väljas"
 	}
 }

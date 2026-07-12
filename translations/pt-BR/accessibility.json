@@ -44,6 +44,7 @@
 		"title": "Notificação de fronte"
 	},
 	"tintWithColor": {
-		"title": "Tingir com cor"
+		"title": "Tingir com cor",
+		"off": "Desligado"
 	}
 }
