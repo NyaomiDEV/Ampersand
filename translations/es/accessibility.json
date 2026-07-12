@@ -44,6 +44,9 @@
 		"title": "Notificación en primer plano"
 	},
 	"tintWithColor": {
-		"title": "Colorear"
+		"title": "Colorear",
+		"off": "Apagar",
+		"accent": "Solo color del acento",
+		"on": "Encender"
 	}
 }

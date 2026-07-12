@@ -48,7 +48,8 @@
 		"ageDisplay_one": "edad {{count}}",
 		"ageDisplay_many": "edades {{count}}",
 		"ageDisplay_other": "edades {{count}}",
-		"nameStyle": "Estilo del nombre"
+		"nameStyle": "Estilo del nombre",
+		"lastFronted": "Última franja: {{startTime}} - {{endTime}}"
 	},
 	"header": "Miembros",
 	"singular": "Miembro"
