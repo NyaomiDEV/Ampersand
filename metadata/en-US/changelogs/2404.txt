@@ -1,0 +1,5 @@
+Ampersand Beta 0.3.0
+
+Yes we're beta now
+
+Full changelog: https://ampersand.moe/blog/release-0-3-0.html
