@@ -53,17 +53,5 @@ All code must be reviewed by at least one repository owner, and you have to be a
 Before you contribute anything, you have to understand the code you are about to submit, line by line, as you will be held accountable for the entirety of it.
 You need to understand specifically why it does what it does, and you must not rely on anyone else's explaination: you have to form your own thoughts about it.
 
-AI contributions are permissible, even if generally we prefer human-written code.
-
-For AI contributions specifically:
-
-- The Agent(s) used must be disclosed in the PR description and in the commit message(s);
-- Actual AI generated code should be labeled as such via comments detailing where it starts, and where it ends:
-  - Entire files should have a comment at the start saying: "This file was AI-generated with the help of (Agent) and reviewed by (contributor name \<git email\>)"
-  - Files which are modified to have certain AI generated sections should have a comment stating "Start of AI-generated code" at the start, and another comment stating "End of AI-generated code" at the end, plus another comment at the top of the file that recites "This source contains AI-generated snippets made by (Agent) and reviewed by (contributor name \<git email\>)"
-  - On single lines of AI-generated code, a leading comment can be made: "The following line is AI-generated with (Agent)"
-- The human has to thoroughly understand and test all the agent-written code beforehand;
-- There has to be a certain level of human involvement in the code, even if most of it is AI-generated;
-- 100% AI generated PRs with the human only understanding the effects, but not the code, are regarded as "AI Slop" and therefore, rejected;
-- It'd be better for anyone to rewrite and reword the AI generated code to avoid copyright issues, as those agents tend to just copy and paste snippets from who knows where.
-- Everyone should work to replace AI generated code with human-written code, sooner or later, to ensure full accountability can be taken, especially from a copyright perspective.
+Since we're hosted on Codeberg, we need to abide by their Terms of Usage, and as such, AI contributions cannot be made nor merged into the repository.
+We're not anti-AI per se, but we won't move over to another code hoster (such as GitHub, where we already have a mirror) because Codeberg, as a hoster, generally aligns with our political statements and our general location, being Europe.
