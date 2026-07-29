@@ -54,6 +54,13 @@
 		position: relative;
 		z-index: 0;
 
+		> ion-avatar {
+			--border-radius: 50%;
+			
+			--overflow: hidden;
+			overflow: hidden;
+		}
+
 		&:is(ion-chip > *){
 			flex-shrink: 0;
 			width: 24px;
