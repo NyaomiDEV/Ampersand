@@ -1,6 +1,5 @@
 <script setup lang="ts">
 	import { IonItem } from "@ionic/vue";
-
 </script>
 
 <template>
