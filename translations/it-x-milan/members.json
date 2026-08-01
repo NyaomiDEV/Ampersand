@@ -4,7 +4,7 @@
 	"singular": "Membro",
 	"select": "Scegli un membro",
 	"deletedMember": "Membro piallato",
-	"deletedCustomFront": "Front custom piallato",
+	"deletedDissociativeState": "Stato piallato",
 	"actions": {
 		"addToFront": "Metti in front",
 		"setMainFronter": "Imposta come main",
@@ -38,7 +38,7 @@
 		"noDescription": "Nessuna descrizione",
 		"system": "Cambia sistema",
 		"isPinned": "Fissa membro",
-		"customFront": "Front custom",
+		"isDissociativeState": "Stato dissociativo",
 		"archived": "Archiviato",
 		"showFrontingEntries": "Mostra voci di front",
 		"lastFronted": "Ultima volta al front: {{startTime}} - {{endTime}}",

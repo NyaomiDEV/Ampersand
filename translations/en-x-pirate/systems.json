@@ -14,7 +14,7 @@
 		"imageClip": "Avatar shape",
 		"memberCount": "Crew count",
 		"memberCountText": "{{totalMemberCount}} matey(s), {{memberCount}} active, {{archivedMemberCount}} in the hold",
-		"customFrontCountText": "{{totalCustomFrontCount}} custom front(s), {{customFrontCount}} active, {{archivedCustomFrontCount}} in the hold",
+		"dissociativeStateCountText": "{{totalCustomFrontCount}} dissociative state(s), {{customFrontCount}} active, {{archivedCustomFrontCount}} in the hold",
 		"tapToShow": "Tap to show",
 		"showMembers": "Show the crew in this fleet",
 		"parent": "Parent fleet",

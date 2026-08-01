@@ -14,7 +14,7 @@
 		"imageClip": "Forma avatar",
 		"memberCount": "Quanti membri",
 		"memberCountText": "{{totalMemberCount}} totali, {{memberCount}} attivi, {{archivedMemberCount}} in archivio",
-		"customFrontCountText": "{{totalCustomFrontCount}} front custom, {{customFrontCount}} attivi, {{archivedCustomFrontCount}} archiviati",
+		"dissociativeStateCountText": "{{totalCustomFrontCount}} stato/i dissociativo/i, {{customFrontCount}} attivo/i, {{archivedCustomFrontCount}} archiviato/i",
 		"tapToShow": "Clicca e vedi",
 		"showMembers": "Vedi i membri del sistema",
 		"parent": "Sistema parent",

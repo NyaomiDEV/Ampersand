@@ -4,7 +4,7 @@
 	"singular": "Member",
 	"select": "Select a member",
 	"deletedMember": "Deleted member",
-	"deletedCustomFront": "Deleted custom front",
+	"deletedDissociativeState": "Deleted state",
 	"actions": {
 		"addToFront": "Add to front",
 		"setMainFronter": "Set as main fronter",
@@ -38,6 +38,7 @@
 		"noDescription": "No description",
 		"system": "Edit membership system",
 		"isPinned": "Pin member",
+		"isDissociativeState": "Dissociative state",
 		"customFront": "Custom front",
 		"archived": "Archived",
 		"showFrontingEntries": "Show fronting entries",

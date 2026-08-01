@@ -123,7 +123,7 @@ export const defaultMember = (uuid?: UUID): Member => ({
 });
 
 export const defaultCustomFront = (): Member => ({
-	name: t("members:deletedCustomFront"),
+	name: t("members:deletedDissociativeState"),
 	system: nilUid,
 	isArchived: false,
 	isCustomFront: true,

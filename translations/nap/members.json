@@ -4,7 +4,7 @@
 	"singular": "Mmembro",
 	"select": "Scegli nu mmembro",
 	"deletedMember": "Mmembro cancellato",
-	"deletedCustomFront": "Front personalizzato cancellato",
+	"deletedDissociativeState": "Stato eliminato",
 	"actions": {
 		"addToFront": "Aggiungi ô front",
 		"setMainFronter": "Metti comm'a fronter prencepale",
@@ -38,7 +38,7 @@
 		"noDescription": "Nisciuna descrizzione",
 		"system": "Cagna sistema 'e appartenenza",
 		"isPinned": "Fissa mmembro",
-		"customFront": "Front personalizzato",
+		"isDissociativeState": "Stato dissociativo",
 		"archived": "Archiviato",
 		"showFrontingEntries": "Famme vedé 'e voci 'e front",
 		"lastFronted": "Utima vota 'o front: {{startTime}} - {{endTime}}",

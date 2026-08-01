@@ -14,7 +14,7 @@
 		"imageClip": "Forma de l'avatar",
 		"memberCount": "Nùmmuru di membra",
 		"memberCountText": "{{totalMemberCount}} membru/a, {{memberCount}} attivu/i, {{archivedMemberCount}} archiviatu/i",
-		"customFrontCountText": "{{totalCustomFrontCount}} front pirsunalizzatu/i, {{customFrontCount}} attivu/i, {{archivedCustomFrontCount}} archiviatu/i",
+		"dissociativeStateCountText": "{{totalCustomFrontCount}} statu/i dissociativu/i, {{customFrontCount}} attivu/i, {{archivedCustomFrontCount}} archiviatu/i",
 		"tapToShow": "Clicca pi mustrari",
 		"showMembers": "Mustra i membra dintra stu sistema",
 		"parent": "Sistema genituri",

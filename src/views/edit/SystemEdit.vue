@@ -383,7 +383,7 @@
 									archivedMemberCount
 								}) }}
 								<br />
-								{{ $t("systems:edit.customFrontCountText", {
+								{{ $t("systems:edit.dissociativeStateCountText", {
 									totalCustomFrontCount: customFrontCount + archivedCustomFrontCount,
 									customFrontCount,
 									archivedCustomFrontCount

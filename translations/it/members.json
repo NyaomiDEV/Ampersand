@@ -4,7 +4,7 @@
 	"singular": "Membrə",
 	"select": "Seleziona unə membrə",
 	"deletedMember": "Membrə eliminatə",
-	"deletedCustomFront": "Front personalizzato eliminato",
+	"deletedDissociativeState": "Stato eliminato",
 	"actions": {
 		"addToFront": "Aggiungi a front",
 		"setMainFronter": "Imposta come fronter principale",
@@ -38,7 +38,7 @@
 		"noDescription": "Nessuna descrizione",
 		"system": "Modifica sistema di appartenenza",
 		"isPinned": "Fissa membrə",
-		"customFront": "Front personalizzato",
+		"isDissociativeState": "Stato dissociativo",
 		"archived": "Archiviatə",
 		"showFrontingEntries": "Mostra le voci di front",
 		"lastFronted": "Ultima volta al front: {{startTime}} - {{endTime}}",
