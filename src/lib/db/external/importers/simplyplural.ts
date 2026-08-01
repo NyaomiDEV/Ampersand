@@ -16,6 +16,7 @@ import { getJournalPosts, newJournalPost, updateJournalPost } from "../../tables
 import { getBoardMessages, newBoardMessage, updateBoardMessage } from "../../tables/boardMessages";
 import { newFrontingEntry } from "../../tables/frontingEntries";
 import { getMembers, newMember, updateMember } from "../../tables/members";
+import { dump } from "js-yaml";
 
 // -- UTILITY FUNCTIONS
 function normalizeSPColor(color?: string) {
@@ -272,7 +273,7 @@ async function frontingEntry(spFrontHistory: SimplyPluralFrontHistory, memberMap
 		member: memberMapping.get(spFrontHistory.member) || (spFrontHistory.custom ? maxUid : nilUid),
 		startTime: new Date(spFrontHistory.startTime),
 		endTime: spFrontHistory.endTime ? new Date(spFrontHistory.endTime) : (spFrontHistory.live ? undefined : new Date()),
-		customStatus: spFrontHistory.customStatus?.length ? spFrontHistory.customStatus : undefined,
+		comment: spFrontHistory.customStatus?.length ? `---\n${dump({ customStatus: spFrontHistory.customStatus })}---\n` : undefined,
 		isMainFronter: false,
 		isLocked: false,
 		comments: commentMapping.get(spFrontHistory._id)?.map(comment => ({

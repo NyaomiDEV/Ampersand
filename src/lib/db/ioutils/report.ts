@@ -15,6 +15,7 @@ import reportStyle from "./report_style.css?raw";
 import AmpersandLogo from "../../../assets/ampersand_logo.svg?raw";
 import accountCircle from "@material-symbols/svg-600/rounded/account_circle-fill.svg?raw";
 import systemCircle from "@material-symbols/svg-600/rounded/supervised_user_circle.svg?raw";
+import { extractFrontmatter } from "../../markdown";
 
 const encoder = new TextEncoder();
 
@@ -141,6 +142,7 @@ function getFrontingEntryHeader(){
 }
 
 function frontingEntryToHtml(entry: FrontingEntry) {
+	const customStatus = entry.comment ? extractFrontmatter(entry.comment).frontmatter?.customStatus as string : undefined;
 	return [
 		`<div class="fronting-entry${entry.isMainFronter ? " is-main-fronter" : ""}">`,
 		`<span class="member">${
@@ -152,7 +154,7 @@ function frontingEntryToHtml(entry: FrontingEntry) {
 		}</span>`,
 		`<span class="start-date"><date value="${entry.startTime.valueOf()}">${formatDate(entry.startTime, "collapsed")}</date></span>`,
 		entry.endTime && `<span class="end-date"><date value="${entry.endTime.valueOf()}">${formatDate(entry.endTime, "collapsed")}</date></span>`,
-		entry.customStatus && `<span class="custom-status">${escape(entry.customStatus)}</span>`,
+		customStatus && `<span class="custom-status">${escape(customStatus)}</span>`,
 		entry.presence?.size && `<span class="presence">${((entry.presence.values().reduce((p, c) => p + c, 0) / entry.presence.size) / 2).toFixed(1)}</span>`,
 		"</div>"
 	].filter(x => !!x).join("");

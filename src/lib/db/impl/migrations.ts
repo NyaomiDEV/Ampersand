@@ -3,8 +3,10 @@ import { decodeAsync } from "@msgpack/msgpack";
 import type { ShittyTable } from "./shittytable";
 import { appConfig } from "../../config";
 import { nilUid } from "../../util/consts";
-import { Asset, BoardMessage, JournalPost, Member, System, Tag, UUID } from "../entities";
+import { Asset, BoardMessage, FrontingEntry, JournalPost, Member, System, Tag, UUID } from "../entities";
 import { Serialized } from "../../serialization";
+import { extractFrontmatter } from "../../markdown";
+import { dump } from "js-yaml";
 
 export async function members(table: ShittyTable<Member>, version: number){
 	const systemId = appConfig.defaultSystem;
@@ -284,6 +286,47 @@ export async function tags(table: ShittyTable<Tag>, version: number) {
 			try {
 				if(typeof tagIndex.isArchived === "undefined")
 					await table.update({ uuid: tagIndex.uuid, isArchived: false });
+			} catch (_e) {
+				console.error(_e);
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	switch (version) {
+		case 0:
+			if (!await zeroToOne()) return 0;
+	}
+
+	return 1;
+}
+
+export async function frontingEntries(table: ShittyTable<FrontingEntry>, version: number) {
+
+	interface FEZero extends FrontingEntry {
+		customStatus?: string,
+	}
+
+	async function zeroToOne() {
+		// move custom status to fronter's comment frontmatter
+		for (const frontingEntryIndex of table.index) {
+			try {
+				const obj = await table.get(frontingEntryIndex.uuid) as FEZero;
+
+				if (obj.customStatus) {
+					const commentParts = extractFrontmatter(obj.comment || "");
+					if (!commentParts.frontmatter)
+						commentParts.frontmatter = {};
+
+					commentParts.frontmatter.customStatus = obj.customStatus;
+					delete obj.customStatus;
+					await table.write({
+						...obj,
+						comment: `---\n${dump(commentParts.frontmatter)}---\n\n${commentParts.body}`
+					}, true);
+				}
 			} catch (_e) {
 				console.error(_e);
 				return false;

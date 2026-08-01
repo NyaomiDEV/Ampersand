@@ -93,7 +93,6 @@ export interface FrontingEntry extends UUIDable {
 	endTime?: Date,
 	isMainFronter: boolean,
 	isLocked: boolean,
-	customStatus?: string,
 	influencing?: UUID,
 	presence?: Map<Date, number>
 	comment?: string, // this is the AUTHOR's fronting comment

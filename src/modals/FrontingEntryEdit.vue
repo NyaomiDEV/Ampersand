@@ -11,7 +11,6 @@
 		IonFabButton,
 		IonLabel,
 		IonToggle,
-		IonInput,
 		IonItem,
 		modalController,
 		IonModal,
@@ -331,15 +330,6 @@
 			</IonList>
 
 			<IonList class="surface">
-				<IonItem>
-					<IonInput
-						v-model="frontingEntry.customStatus"
-						fill="solid"
-						:label="$t('frontHistory:edit.customStatus')"
-						label-placement="floating"
-					/>
-				</IonItem>
-
 				<IonItem>
 					<ContentEditable v-model="frontingEntry.comment" fill="solid" :label="$t('frontHistory:edit.comment')" />
 				</IonItem>

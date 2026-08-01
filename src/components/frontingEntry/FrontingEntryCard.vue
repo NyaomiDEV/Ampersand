@@ -13,6 +13,7 @@
 	import { hexFromArgb } from "@material/material-color-utilities";
 	import { onBeforeMount, shallowRef } from "vue";
 	import { getSystem } from "../../lib/db/tables/system";
+	import { extractFrontmatter } from "../../lib/markdown";
 
 	const { getObjectURL } = useBlob();
 
@@ -28,13 +29,17 @@
 	});
 
 	const system = shallowRef<System>();
+	const customStatus = shallowRef<string>();
 
 	async function updateMemberSystem(){
 		const _sys = await getSystem(props.entry.member.system);
 		if(_sys) system.value = _sys;
 	}
 
-	onBeforeMount(updateMemberSystem);
+	onBeforeMount(async () => {
+		await updateMemberSystem();
+		customStatus.value = getCustomStatus();
+	});
 
 	function getPresenceAverage(){
 		if(!props.entry.presence) return undefined;
@@ -72,6 +77,13 @@
 		}
 
 		return style;
+	}
+
+	function getCustomStatus(){
+		if (props.entry.comment)
+			return extractFrontmatter(props.entry.comment).frontmatter?.customStatus as string;
+
+		return undefined;
 	}
 </script>
 
@@ -115,8 +127,8 @@
 				<p v-if="props.entry.influencing">
 					{{ $t("dashboard:fronterInfluencing", { influencedMember: props.entry.influencing.name }) }}
 				</p>
-				<p v-if="props.entry.customStatus">
-					{{ props.entry.customStatus }}
+				<p v-if="customStatus">
+					{{ customStatus }}
 				</p>
 				<p v-if="props.entry.presence?.size">
 					<PresenceRating :rating="props.presenceAverage ? getPresenceAverage() ?? 0 : getMostRecentPresence()[1] ?? 0" />
