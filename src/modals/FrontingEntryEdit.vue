@@ -15,12 +15,13 @@
 		IonItem,
 		modalController,
 		IonModal,
+		useIonRouter,
 	} from "@ionic/vue";
 
 	import saveMD from "@material-symbols/svg-600/rounded/save.svg";
 	import trashMD from "@material-symbols/svg-600/rounded/delete.svg";
 
-	import { FrontingEntry, FrontingEntryComplete } from "../lib/db/entities";
+	import { FrontingEntry, FrontingEntryComplete, Member } from "../lib/db/entities";
 	import { newFrontingEntry, updateFrontingEntry, deleteFrontingEntry, sendFrontingChangedEvent, getFrontingBetweenIndex } from "../lib/db/tables/frontingEntries";
 	import { ref, toRaw, useTemplateRef, watch } from "vue";
 	import { useTranslation } from "i18next-vue";
@@ -38,6 +39,7 @@
 	import Loading from "./Loading.vue";
 
 	const i18next = useTranslation();
+	const router = useIonRouter();
 
 	const props = defineProps<{
 		frontingEntry?: PartialBy<FrontingEntryComplete, "uuid" | "member">,
@@ -159,6 +161,11 @@
 		return presenceVal.sort((a, b) => a[0].valueOf() - b[0].valueOf()).pop() || [undefined, undefined];
 	}
 
+	async function routeToMember(member: Member){
+		if(await modalController.dismiss(undefined).catch(() => false))
+			router.push(`/edit/member?uuid=${member.uuid}`);
+	}
+
 	watch(frontingEntry.value, () => {
 		allFrontingInTimeSpan.value = getFrontingBetweenIndex(frontingEntry.value.startTime, frontingEntry.value.endTime).filter(x => x.uuid !== frontingEntry.value.uuid);
 	}, { immediate: true });
@@ -182,6 +189,7 @@
 					:show-pronouns="false"
 					:show-role="false"
 					@click="memberSelectModal?.$el.present()"
+					@avatar-click="routeToMember(frontingEntry.member)"
 				>
 					<p>{{ $t("frontHistory:edit.member") }}</p>
 				</MemberItem>
@@ -286,6 +294,7 @@
 						:show-role="false"
 						:class="{ 'take-row': frontingEntry.influencing }"
 						@click="memberInfluencingModal?.$el.present()"
+						@avatar-click="routeToMember(frontingEntry.influencing)"
 					>
 						<template #before>
 							<p>{{ $t("frontHistory:edit.influencing.currentlyInfluencing") }}</p>
