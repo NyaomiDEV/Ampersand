@@ -29,7 +29,6 @@
 	});
 
 	const system = shallowRef<System>();
-	const customStatus = shallowRef<string>();
 
 	async function updateMemberSystem(){
 		const _sys = await getSystem(props.entry.member.system);
@@ -38,7 +37,6 @@
 
 	onBeforeMount(async () => {
 		await updateMemberSystem();
-		customStatus.value = getCustomStatus();
 	});
 
 	function getPresenceAverage(){
@@ -79,9 +77,9 @@
 		return style;
 	}
 
-	function getCustomStatus(){
-		if (props.entry.comment)
-			return extractFrontmatter(props.entry.comment).frontmatter?.customStatus as string;
+	function getCustomStatus(entry: FrontingEntryComplete){
+		if (entry.comment)
+			return extractFrontmatter(entry.comment).frontmatter?.customStatus as string;
 
 		return undefined;
 	}
@@ -127,8 +125,8 @@
 				<p v-if="props.entry.influencing">
 					{{ $t("dashboard:fronterInfluencing", { influencedMember: props.entry.influencing.name }) }}
 				</p>
-				<p v-if="customStatus">
-					{{ customStatus }}
+				<p v-if="getCustomStatus(entry)">
+					{{ getCustomStatus(entry) }}
 				</p>
 				<p v-if="props.entry.presence?.size">
 					<PresenceRating :rating="props.presenceAverage ? getPresenceAverage() ?? 0 : getMostRecentPresence()[1] ?? 0" />

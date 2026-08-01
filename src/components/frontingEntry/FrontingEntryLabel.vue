@@ -4,7 +4,6 @@
 	import { formatDate } from "../../lib/util/misc";
 	import PresenceRating from "../PresenceRating.vue";
 	import { extractFrontmatter } from "../../lib/markdown";
-	import { onBeforeMount, shallowRef } from "vue";
 
 	const props = defineProps<{
 		entry: FrontingEntryComplete,
@@ -12,13 +11,7 @@
 		showDateComplete: boolean,
 		presenceAverage?: boolean
 	}>();
-
-	const customStatus = shallowRef<string>();
-
-	onBeforeMount(() => {
-		customStatus.value = getCustomStatus();
-	});
-
+	
 	function format(startTime: Date, endTime?: Date){
 		if(!endTime) return formatDate(startTime, "expanded");
 
@@ -45,9 +38,9 @@
 		return presenceVal.sort((a, b) => a[0].valueOf() - b[0].valueOf()).pop() || [undefined, undefined];
 	}
 
-	function getCustomStatus(){
-		if (props.entry.comment)
-			return extractFrontmatter(props.entry.comment).frontmatter?.customStatus as string;
+	function getCustomStatus(entry: FrontingEntryComplete){
+		if (entry.comment)
+			return extractFrontmatter(entry.comment).frontmatter?.customStatus as string;
 
 		return undefined;
 	}
@@ -57,8 +50,8 @@
 	<p v-if="props.entry.influencing" class="influencing" style="color: inherit;">
 		{{ $t("frontHistory:influencing", { influencedMember: props.entry.influencing.name }) }}
 	</p>
-	<p v-if="customStatus" class="custom-status" style="color: inherit;">
-		{{ customStatus }}
+	<p v-if="getCustomStatus(entry)" class="custom-status" style="color: inherit;">
+		{{ getCustomStatus(entry) }}
 	</p>
 	<p v-if="props.entry.presence?.size">
 		<PresenceRating :rating="props.presenceAverage ? getPresenceAverage() ?? 0 : getMostRecentPresence()[1] ?? 0" />
