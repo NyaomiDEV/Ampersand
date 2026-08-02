@@ -39,7 +39,6 @@
 		"system": "Edit membership system",
 		"isPinned": "Pin member",
 		"isDissociativeState": "Dissociative state",
-		"customFront": "Custom front",
 		"archived": "Archived",
 		"showFrontingEntries": "Show fronting entries",
 		"lastFronted": "Last fronted: {{startTime}} - {{endTime}}",

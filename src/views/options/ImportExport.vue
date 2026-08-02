@@ -100,14 +100,14 @@
 						value: "archived"
 					},
 					{
-						name: i18next.t("importExport:reportExport.includeCustomFronts"),
-						value: "customFronts"
+						name: i18next.t("importExport:reportExport.includeDissociativeStates"),
+						value: "dissociativeStates"
 					}
 				]
 			);
 			if(!values) throw new Error("No options selected");
 
-			const { progress, status } = exportReport(systems, values.includes("archived"), values.includes("customFronts"));
+			const { progress, status } = exportReport(systems, values.includes("archived"), values.includes("dissociativeStates"));
 
 			progress.addEventListener("start", () => {
 				barProgress.value = 0;

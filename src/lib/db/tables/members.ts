@@ -122,7 +122,7 @@ export const defaultMember = (uuid?: UUID): Member => ({
 	uuid: uuid || nilUid
 });
 
-export const defaultCustomFront = (): Member => ({
+export const defaultDissociativeState = (): Member => ({
 	name: t("members:deletedDissociativeState"),
 	system: nilUid,
 	isArchived: false,

@@ -5,7 +5,7 @@ import { nilUid } from "../util/consts";
 export const defaultAppConfig: AppConfig = {
 	locale: {},
 	defaultSystem: nilUid,
-	showMembersApartFromCustomFronts: "after",
+	showMembersApartFromDissociativeStates: "after",
 	hideFrontingTimer: false,
 	view: "dashboard",
 	theme: "auto",

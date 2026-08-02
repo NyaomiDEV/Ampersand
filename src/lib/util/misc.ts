@@ -395,7 +395,7 @@ export function presencePhrase(rating: number): string {
 }
 
 export function sortMembers(a: IndexEntry<Member>, b: IndexEntry<Member>) {
-	switch (appConfig.showMembersApartFromCustomFronts) {
+	switch (appConfig.showMembersApartFromDissociativeStates) {
 		case "off":
 			if ((a.isPinned || false) === (b.isPinned || false))
 				return a.name!.localeCompare(b.name!);

@@ -109,14 +109,14 @@ export function countSystemMembers(uuid: UUID){
 	const object = {
 		normal: 0,
 		archived: 0,
-		customFronts: 0,
-		archivedCustomFronts: 0
+		dissociativeStates: 0,
+		archivedDissociativeStates: 0
 	};
 
 	for(const x of db.members.index.filter(x => x.system === uuid)){
 		if (x.isDissociativeState){
-			if(x.isArchived) object.archivedCustomFronts++;
-			else object.customFronts++;
+			if(x.isArchived) object.archivedDissociativeStates++;
+			else object.dissociativeStates++;
 		} else {
 			if (x.isArchived) object.archived++;
 			else object.normal++;

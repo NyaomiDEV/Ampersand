@@ -12,7 +12,7 @@
 		"desc": "Salva un report da condividere con terapisti e persone vicine",
 		"includeHeader": "Scegli cosa includere",
 		"includeArchived": "Membrɜ archiviatɜ",
-		"includeCustomFronts": "Front personalizzati"
+		"includeDissociativeStates": "Stati dissociativi"
 	},
 	"dbImportDesc": "Attenzione! Questo sovrascriverà ogni dato esistente",
 	"dbImport": "Importa i tuoi dati",

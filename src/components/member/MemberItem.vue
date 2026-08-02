@@ -11,7 +11,7 @@
 	import accountCircle from "@material-symbols/svg-600/rounded/account_circle-fill.svg";
 	import systemCircle from "@material-symbols/svg-600/rounded/supervised_user_circle.svg";
 	import pinMD from "@material-symbols/svg-600/rounded/keep.svg";
-	import customFrontMD from "@material-symbols/svg-600/rounded/no_accounts.svg";
+	import dissociativeStateMD from "@material-symbols/svg-600/rounded/no_accounts.svg";
 	import archivedMD from "@material-symbols/svg-600/rounded/archive.svg";
 	import fronterMD from "@material-symbols/svg-600/rounded/person_pin_circle.svg";
 	import mainFronterMD from "@material-symbols/svg-600/rounded/person_pin_circle-fill.svg";
@@ -137,7 +137,7 @@
 			<slot />
 		</MemberLabel>
 		<template v-if="props.showIcons">
-			<IonIcon v-if="member.isDissociativeState" slot="end" :icon="customFrontMD" />
+			<IonIcon v-if="member.isDissociativeState" slot="end" :icon="dissociativeStateMD" />
 			<IonIcon v-if="associatedFrontingEntry?.isMainFronter" slot="end" :icon="mainFronterMD" />
 			<IonIcon v-if="associatedFrontingEntry && !associatedFrontingEntry?.isMainFronter" slot="end" :icon="fronterMD" />
 			<IonIcon v-if="member.isArchived" slot="end" :icon="archivedMD" />

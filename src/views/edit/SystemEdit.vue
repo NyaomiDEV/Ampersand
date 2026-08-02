@@ -63,8 +63,8 @@
 	const membersShowed = ref(false);
 	const memberCount = ref(0);
 	const archivedMemberCount = ref(0);
-	const customFrontCount = ref(0);
-	const archivedCustomFrontCount = ref(0);
+	const dissociativeStateCount = ref(0);
+	const archivedDissociativeStateCount = ref(0);
 
 	const canEdit = ref(true);
 	const isEditing = ref(false);
@@ -184,8 +184,8 @@
 
 			memberCount.value = _count.normal;
 			archivedMemberCount.value = _count.archived;
-			customFrontCount.value = _count.customFronts;
-			archivedCustomFrontCount.value = _count.archivedCustomFronts;
+			dissociativeStateCount.value = _count.dissociativeStates;
+			archivedDissociativeStateCount.value = _count.archivedDissociativeStates;
 		}
 
 		if(system.value.parent)
@@ -384,9 +384,9 @@
 								}) }}
 								<br />
 								{{ $t("systems:edit.dissociativeStateCountText", {
-									totalCustomFrontCount: customFrontCount + archivedCustomFrontCount,
-									customFrontCount,
-									archivedCustomFrontCount
+									totalDissociativeStateCount: dissociativeStateCount + archivedDissociativeStateCount,
+									dissociativeStateCount,
+									archivedDissociativeStateCount
 								}) }}
 							</p>
 						</IonLabel>
@@ -652,7 +652,7 @@
 						</IonToggle>
 					</IonItem>
 					<IonItem
-						v-if="system.uuid && appConfig.defaultSystem !== system.uuid && !memberCount && !archivedMemberCount && !customFrontCount && !archivedCustomFrontCount"
+						v-if="system.uuid && appConfig.defaultSystem !== system.uuid && !memberCount && !archivedMemberCount && !dissociativeStateCount && !archivedDissociativeStateCount"
 						button
 						:detail="false"
 						@click="removeSystem"

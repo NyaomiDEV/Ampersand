@@ -301,20 +301,20 @@
 				<IonItem>
 					<IonIcon slot="start" :icon="membersBeforeMD" />
 					<IonSelect
-						v-model="appConfig.showMembersApartFromCustomFronts"
+						v-model="appConfig.showMembersApartFromDissociativeStates"
 						label-placement="floating"
-						:label="$t('appSettings:showMembersApartFromCustomFronts.title')"
+						:label="$t('appSettings:showMembersApartFromDissociativeStates.title')"
 						:cancel-text="$t('other:alerts.cancel')"
 						interface="action-sheet"
 					>
 						<IonSelectOption value="off">
-							{{ $t("appSettings:showMembersApartFromCustomFronts.off") }}
+							{{ $t("appSettings:showMembersApartFromDissociativeStates.off") }}
 						</IonSelectOption>
 						<IonSelectOption value="before">
-							{{ $t("appSettings:showMembersApartFromCustomFronts.before") }}
+							{{ $t("appSettings:showMembersApartFromDissociativeStates.before") }}
 						</IonSelectOption>
 						<IonSelectOption value="after">
-							{{ $t("appSettings:showMembersApartFromCustomFronts.after") }}
+							{{ $t("appSettings:showMembersApartFromDissociativeStates.after") }}
 						</IonSelectOption>
 					</IonSelect>
 				</IonItem>

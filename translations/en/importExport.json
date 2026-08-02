@@ -12,7 +12,7 @@
 		"desc": "Save a human-readable report about your data to share with therapists and loved ones",
 		"includeHeader": "Select what to include",
 		"includeArchived": "Archived members",
-		"includeCustomFronts": "Custom fronts"
+		"includeDissociativeStates": "Dissociative states"
 	},
 	"dbImportDesc": "Warning! It will override any existing data",
 	"dbImport": "Import your data",

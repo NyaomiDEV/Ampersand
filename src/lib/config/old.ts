@@ -13,7 +13,7 @@ export async function readOldConfig(){
 
 		// migrate old config
 		if (c.appConfig.showMembersBeforeCustomFronts) {
-			c.appConfig.showMembersApartFromCustomFronts = "before";
+			c.appConfig.showMembersApartFromDissociativeStates = "before";
 			delete c.appConfig.showMembersBeforeCustomFronts;
 		}
 

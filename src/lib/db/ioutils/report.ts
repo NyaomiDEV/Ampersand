@@ -68,10 +68,10 @@ async function systemToHtml(system: System) {
 			memberCount: count.normal,
 			archivedMemberCount: count.archived
 		})}</span>`,
-		`<span class="member-count">${i18next.t("systems:edit.customFrontCountText", {
-			totalCustomFrontCount: count.customFronts + count.archivedCustomFronts,
-			customFrontCount: count.customFronts,
-			archivedCustomFrontCount: count.archivedCustomFronts
+		`<span class="member-count">${i18next.t("systems:edit.dissociativeStateCountText", {
+			totalDissociativeStateCount: count.dissociativeStates + count.archivedDissociativeStates,
+			dissociativeStateCount: count.dissociativeStates,
+			archivedDissociativeStateCount: count.archivedDissociativeStates
 		})}</span>`,
 		"</div>",
 		"</div>",
@@ -90,8 +90,8 @@ async function memberToHtml(member: Member){
 		member.role && `<span class="role">${escape(member.role)}</span>`,
 		member.pronouns && `<span class="pronouns">${escape(member.pronouns)}</span>`,
 		member.age && `<span class="age">${member.age}</span>`,
-		member.isArchived && `<span class="custom-front">${i18next.t("members:edit.archived")}</span>`,
-		member.isDissociativeState && `<span class="custom-front">${i18next.t("members:edit.customFront")}</span>`,
+		member.isArchived && `<span class="dissociative-state">${i18next.t("members:edit.archived")}</span>`,
+		member.isDissociativeState && `<span class="dissociative-state">${i18next.t("members:edit.dissociativeState")}</span>`,
 		"</div>",
 		"</div>"
 	].filter(x => !!x).join("");
@@ -160,7 +160,7 @@ function frontingEntryToHtml(entry: FrontingEntry) {
 	].filter(x => !!x).join("");
 }
 
-export function exportReport(systems: UUID[], includeArchived: boolean, includeCustomFronts: boolean) {
+export function exportReport(systems: UUID[], includeArchived: boolean, includeDissociativeStates: boolean) {
 
 	async function _export() {
 		try {
@@ -199,7 +199,7 @@ export function exportReport(systems: UUID[], includeArchived: boolean, includeC
 
 			// make progress computations
 			const members = getMemberIndex()
-				.filter(x => systems.includes(x.system!) && (includeArchived || !x.isArchived) && (includeCustomFronts || !x.isDissociativeState))
+				.filter(x => systems.includes(x.system!) && (includeArchived || !x.isArchived) && (includeDissociativeStates || !x.isDissociativeState))
 				.map(x => x.uuid);
 			const frontingEntries = (await Promise.all(
 				getFrontingEntryIndex()

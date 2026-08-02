@@ -16,7 +16,7 @@ export type AppConfig = {
 	dashboardSettings: DashboardSettings,
 	tabOrder: string[],
 	defaultSystem: UUID,
-	showMembersApartFromCustomFronts: "off" | "before" | "after",
+	showMembersApartFromDissociativeStates: "off" | "before" | "after",
 	hideFrontingTimer: boolean,
 	isDeveloperMode: boolean,
 	defaultFilterQueries: {
