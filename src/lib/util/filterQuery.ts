@@ -43,6 +43,7 @@ export type BoardMessageFilterQuery = {
 	member?: QueryItem,
 	system?: QueryItem,
 	andChildren?: boolean,
+	hasPoll?: boolean
 };
 
 export type AssetFilterQuery = {
@@ -292,6 +293,9 @@ export function parseBoardMessageFilterQuery(search: string) {
 				break;
 			case "children":
 				result.andChildren = reduceToValue(shouldInclude);
+				break;
+			case "poll":
+				result.hasPoll = reduceToValue(shouldInclude);
 				break;
 		}
 		break;

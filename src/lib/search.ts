@@ -217,6 +217,11 @@ export function filterBoardMessage(search: string, boardMessage: BoardMessage) {
 			return false;
 	}
 
+	if(parsed.hasPoll !== undefined) {
+		if(!!boardMessage.poll !== parsed.hasPoll)
+			return false;
+	}
+
 	return true;
 }
 
