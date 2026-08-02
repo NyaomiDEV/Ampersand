@@ -48,8 +48,10 @@
 		"ageDisplay_many": "edades {{count}}",
 		"ageDisplay_other": "edades {{count}}",
 		"nameStyle": "Estilo del nombre",
-		"lastFronted": "Última franja: {{startTime}} - {{endTime}}"
+		"lastFronted": "Última franja: {{startTime}} - {{endTime}}",
+		"isDissociativeState": "Estado disociativo"
 	},
 	"header": "Miembros",
-	"singular": "Miembro"
+	"singular": "Miembro",
+	"deletedDissociativeState": "Estado eliminado"
 }

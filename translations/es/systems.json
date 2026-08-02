@@ -22,7 +22,8 @@
 		"archived": "Archivado",
 		"systemIDcopiedToClipboard": "¡El ID del sistema copiado en el portapapeles!",
 		"viewInLists": "Ver en las listas",
-		"nameStyle": "Estilo del nombre"
+		"nameStyle": "Estilo del nombre",
+		"dissociativeStateCountText": "{{totalCustomFrontCount}} estado(s) disociativo(s), {{customFrontCount}} activo(s), {{archivedCustomFrontCount}} archivado(s)"
 	},
 	"header": "Sistemas",
 	"searchPlaceholder": "Buscar sistemas…",
