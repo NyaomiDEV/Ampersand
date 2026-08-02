@@ -39,7 +39,7 @@ async function member(tuMember: TupperboxMember, discordId?: string){
 		description: tuMember.description || undefined,
 		pronouns: tuMember.pronouns || undefined,
 		isArchived: false,
-		isCustomFront: false,
+		isDissociativeState: false,
 		isPinned: false,
 		dateCreated: tuMember.created_at ? new Date(tuMember.created_at) : new Date(),
 		tags: []

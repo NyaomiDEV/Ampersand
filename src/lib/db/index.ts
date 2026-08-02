@@ -49,7 +49,7 @@ export async function initDatabase(){
 
 	const promises = [
 		initTable("systems", ["name", "parent", "isPinned", "isArchived", "viewInLists"], true),
-		initTable("members", ["name", "system", "isPinned", "isArchived", "isCustomFront"], true),
+		initTable("members", ["name", "system", "isPinned", "isArchived", "isDissociativeState"], true),
 		initTable("boardMessages", ["members", "date", "isPinned", "isArchived"], false),
 		initTable("frontingEntries", ["member", "startTime", "endTime", "isLocked", "isMainFronter"], false),
 		initTable("journalPosts", ["title", "members", "date", "isPinned"], true),

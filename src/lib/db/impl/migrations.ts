@@ -11,6 +11,11 @@ import { dump } from "js-yaml";
 export async function members(table: ShittyTable<Member>, version: number){
 	const systemId = appConfig.defaultSystem;
 
+	interface MThree extends Member {
+		isCustomFront: boolean,
+		isDissociativeState: never
+	}
+
 	async function fromZeroToTwo(){
 		if (systemId === nilUid) return false;
 
@@ -45,16 +50,46 @@ export async function members(table: ShittyTable<Member>, version: number){
 		return true;
 	}
 
+	async function threeToFour() {
+		// isCustomFront -> isDissociativeState
+		const uuids = table.index.map(x => x.uuid);
+
+		for (const uuid of uuids) {
+			try {
+				const obj = await table.get(uuid) as MThree;
+				const dissociativeState = obj.isCustomFront;
+				
+				// @ts-expect-error we're deleting a required argument but it's not required anywhere anymore
+				delete obj.isCustomFront;
+
+				await table.write(
+					{
+						...obj,
+						isDissociativeState: dissociativeState
+					}, true
+				);
+			} catch (_e) {
+				console.error(_e);
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	switch(version){
 		case 0:
 		// @ts-expect-error fallthrough
 		case 1:
 			if (!await fromZeroToTwo()) return 0;
+		// @ts-expect-error fallthrough
 		case 2:
 			if (!await twoToThree()) return 2;
+		case 3:
+			if (!await threeToFour()) return 3;
 	}
 
-	return 3;
+	return 4;
 }
 
 export async function systems(table: ShittyTable<System>, version: number){

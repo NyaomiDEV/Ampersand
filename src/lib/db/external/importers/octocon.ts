@@ -87,7 +87,7 @@ async function members(ocAlter: OctoconAlter){
 		color: ocAlter.color,
 		isArchived: false,
 		isPinned: false,
-		isCustomFront: false,
+		isDissociativeState: false,
 		dateCreated: new Date(),
 		tags: [],
 		customFields: new Map()

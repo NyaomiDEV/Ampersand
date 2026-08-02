@@ -138,7 +138,7 @@ export interface Member extends UUIDable {
 	customFields?: Map<UUID, string>,
 	isPinned: boolean,
 	isArchived: boolean,
-	isCustomFront: boolean,
+	isDissociativeState: boolean,
 	tags: UUID[] // array of UUIDs
 	dateCreated: Date
 }

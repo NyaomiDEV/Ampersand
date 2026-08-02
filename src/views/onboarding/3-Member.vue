@@ -36,7 +36,7 @@
 		name: "",
 		system: appConfig.defaultSystem,
 		isArchived: false,
-		isCustomFront: false,
+		isDissociativeState: false,
 		isPinned: false,
 		tags: []
 	};

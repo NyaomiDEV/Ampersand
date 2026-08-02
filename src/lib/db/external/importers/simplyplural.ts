@@ -124,7 +124,7 @@ async function member(spMember: SimplyPluralMember) {
 		color: normalizeSPColor(spMember.color),
 		isPinned: false,
 		isArchived: spMember.archived || false,
-		isCustomFront: false,
+		isDissociativeState: false,
 		dateCreated: spMember.created ? new Date(spMember.created) : new Date(),
 		tags: []
 	});
@@ -147,7 +147,7 @@ async function customFront(spCustomFront: SimplyPluralFrontStatus) {
 		color: normalizeSPColor(spCustomFront.color),
 		isPinned: false,
 		isArchived: false,
-		isCustomFront: true,
+		isDissociativeState: true,
 		tags: [],
 		dateCreated: spCustomFront.lastUpdate ? new Date(spCustomFront.lastUpdate) : new Date(), // does created exist in this?
 	});

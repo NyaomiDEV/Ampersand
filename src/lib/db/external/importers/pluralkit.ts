@@ -71,7 +71,7 @@ async function members(pkMember: PluralKitMember) {
 		color: pkMember.color ? `#${pkMember.color}` : undefined,
 		isArchived: false,
 		isPinned: false,
-		isCustomFront: false,
+		isDissociativeState: false,
 		dateCreated: new Date(pkMember.created),
 		tags: [],
 		customFields: new Map(),

@@ -77,7 +77,7 @@
 		name: "",
 		system: appConfig.defaultSystem,
 		isArchived: false,
-		isCustomFront: false,
+		isDissociativeState: false,
 		isPinned: false,
 		tags: []
 	};
@@ -436,7 +436,7 @@
 					</h3>
 					<p>{{ member.pronouns }}{{ typeof member.age === "number" ? ` - ${$t("members:edit.ageDisplay", { count: member.age })}` : "" }}</p>
 					<p>{{ member.role }}</p>
-					<p v-if="member.isCustomFront">{{ $t("members:edit.isDissociativeState") }}</p>
+					<p v-if="member.isDissociativeState">{{ $t("members:edit.isDissociativeState") }}</p>
 					<p v-if="member.isArchived">{{ $t("members:edit.archived") }}</p>
 				</div>
 
@@ -745,7 +745,7 @@
 						</IonToggle>
 					</IonItem>
 					<IonItem button :detail="false">
-						<IonToggle v-model="member.isCustomFront">
+						<IonToggle v-model="member.isDissociativeState">
 							<IonLabel>
 								{{ $t("members:edit.isDissociativeState") }}
 							</IonLabel>

@@ -403,18 +403,18 @@ export function sortMembers(a: IndexEntry<Member>, b: IndexEntry<Member>) {
 				return a.isPinned && !b.isPinned ? -1 : 1;
 		case "before":
 			if ((a.isPinned || false) === (b.isPinned || false)) {
-				if ((a.isCustomFront || false) === (b.isCustomFront || false))
+				if ((a.isDissociativeState || false) === (b.isDissociativeState || false))
 					return a.name!.localeCompare(b.name!);
 				else
-					return a.isCustomFront && !b.isCustomFront ? -1 : 1;
+					return a.isDissociativeState && !b.isDissociativeState ? -1 : 1;
 			} else
 				return a.isPinned && !b.isPinned ? -1 : 1;
 		case "after":
 			if ((a.isPinned || false) === (b.isPinned || false)) {
-				if ((a.isCustomFront || false) === (b.isCustomFront || false))
+				if ((a.isDissociativeState || false) === (b.isDissociativeState || false))
 					return a.name!.localeCompare(b.name!);
 				else
-					return a.isCustomFront && !b.isCustomFront ? 1 : -1;
+					return a.isDissociativeState && !b.isDissociativeState ? 1 : -1;
 			} else
 				return a.isPinned && !b.isPinned ? -1 : 1;
 	}

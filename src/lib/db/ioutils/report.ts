@@ -91,7 +91,7 @@ async function memberToHtml(member: Member){
 		member.pronouns && `<span class="pronouns">${escape(member.pronouns)}</span>`,
 		member.age && `<span class="age">${member.age}</span>`,
 		member.isArchived && `<span class="custom-front">${i18next.t("members:edit.archived")}</span>`,
-		member.isCustomFront && `<span class="custom-front">${i18next.t("members:edit.customFront")}</span>`,
+		member.isDissociativeState && `<span class="custom-front">${i18next.t("members:edit.customFront")}</span>`,
 		"</div>",
 		"</div>"
 	].filter(x => !!x).join("");
@@ -199,7 +199,7 @@ export function exportReport(systems: UUID[], includeArchived: boolean, includeC
 
 			// make progress computations
 			const members = getMemberIndex()
-				.filter(x => systems.includes(x.system!) && (includeArchived || !x.isArchived) && (includeCustomFronts || !x.isCustomFront))
+				.filter(x => systems.includes(x.system!) && (includeArchived || !x.isArchived) && (includeCustomFronts || !x.isDissociativeState))
 				.map(x => x.uuid);
 			const frontingEntries = (await Promise.all(
 				getFrontingEntryIndex()

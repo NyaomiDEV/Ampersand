@@ -114,7 +114,7 @@ export function countSystemMembers(uuid: UUID){
 	};
 
 	for(const x of db.members.index.filter(x => x.system === uuid)){
-		if (x.isCustomFront){
+		if (x.isDissociativeState){
 			if(x.isArchived) object.archivedCustomFronts++;
 			else object.customFronts++;
 		} else {

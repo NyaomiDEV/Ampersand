@@ -85,8 +85,8 @@ export function filterMember(search: string, member: Member){
 			return false;
 	}
 
-	if (parsed.isCustomFront !== undefined) {
-		if (member.isCustomFront !== parsed.isCustomFront)
+	if (parsed.isDissociativeState !== undefined) {
+		if (member.isDissociativeState !== parsed.isDissociativeState)
 			return false;
 	}
 

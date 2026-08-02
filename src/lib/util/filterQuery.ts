@@ -21,7 +21,7 @@ export type MemberFilterQuery = {
 	andChildren?: boolean,
 	isPinned?: boolean,
 	isArchived?: boolean,
-	isCustomFront?: boolean,
+	isDissociativeState?: boolean,
 	pronouns?: QueryItem,
 	role?: QueryItem,
 	age?: number,
@@ -199,8 +199,8 @@ export function parseMemberFilterQuery(search: string): MemberFilterQuery {
 			case "archived":
 				result.isArchived = reduceToValue(shouldInclude);
 				break;
-			case "customfront":
-				result.isCustomFront = reduceToValue(shouldInclude);
+			case "dissociativestate":
+				result.isDissociativeState = reduceToValue(shouldInclude);
 				break;
 			case "pinned":
 				result.isPinned = reduceToValue(shouldInclude);

@@ -137,7 +137,7 @@
 			<slot />
 		</MemberLabel>
 		<template v-if="props.showIcons">
-			<IonIcon v-if="member.isCustomFront" slot="end" :icon="customFrontMD" />
+			<IonIcon v-if="member.isDissociativeState" slot="end" :icon="customFrontMD" />
 			<IonIcon v-if="associatedFrontingEntry?.isMainFronter" slot="end" :icon="mainFronterMD" />
 			<IonIcon v-if="associatedFrontingEntry && !associatedFrontingEntry?.isMainFronter" slot="end" :icon="fronterMD" />
 			<IonIcon v-if="member.isArchived" slot="end" :icon="archivedMD" />
