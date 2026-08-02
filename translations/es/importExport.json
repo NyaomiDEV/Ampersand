@@ -41,8 +41,7 @@
 		"title": "Generar un informe",
 		"desc": "Guarda un informe legible sobre tus datos para compartirlo con terapeutas y seres queridos",
 		"includeHeader": "Selecciona qué incluir",
-		"includeArchived": "Miembros inactivos",
-		"includeCustomFronts": "Frentes personalizadas"
+		"includeArchived": "Miembros inactivos"
 	},
 	"jsonExport": {
 		"title": "Exporta tus datos a un archivo JSON",

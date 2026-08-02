@@ -28,7 +28,6 @@
 			"confirm": "Bist du sicher, dass du dieses Mitglied löschen möchtest?"
 		},
 		"system": "Bearbeite Mitgliedersystem",
-		"customFront": "Individuelle Front",
 		"age": "Alter",
 		"ageDisplay_one": "Alter {{count}}",
 		"ageDisplay_other": "Alter {{count}}",

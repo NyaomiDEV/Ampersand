@@ -11,8 +11,7 @@
 		"title": "Make a scroll o' accounts",
 		"desc": "Stow away a scroll for sharin' with yer healers and mateys",
 		"includeHeader": "Pick what to haul aboard",
-		"includeArchived": "Mates in Davy Jones' locker",
-		"includeCustomFronts": "Custom fronts"
+		"includeArchived": "Mates in Davy Jones' locker"
 	},
 	"dbImportDesc": "Avast! This will sink any existin' charts!",
 	"dbImport": "Bring yer charts aboard",

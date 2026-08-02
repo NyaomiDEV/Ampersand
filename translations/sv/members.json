@@ -4,7 +4,6 @@
 	"select": "Välj medlem",
 	"edit": {
 		"noDescription": "Ingen beskrivning",
-		"customFront": "Anpassat front",
 		"memberIDcopiedToClipboard": "Medlem-ID kopierat som omnämnande!",
 		"archived": "Arkiverad"
 	}

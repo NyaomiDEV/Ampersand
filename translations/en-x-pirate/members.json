@@ -37,7 +37,6 @@
 		"noDescription": "No description",
 		"system": "Edit fleet membership",
 		"isPinned": "Pin matey",
-		"customFront": "Custom front",
 		"archived": "In the hold",
 		"showFrontingEntries": "Show helm entries",
 		"lastFronted": "Last time at the helm: {{startTime}} - {{endTime}}",

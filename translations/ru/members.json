@@ -30,7 +30,6 @@
 		"description": "Описание",
 		"noDescription": "Нет описания",
 		"isPinned": "Закрепить участника",
-		"customFront": "Кастомный фронт",
 		"archived": "Архивирован",
 		"showFrontingEntries": "Показать записи фронта",
 		"showBoardEntries": "Показать сообщении на доске",

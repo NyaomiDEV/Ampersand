@@ -37,7 +37,6 @@
 		"nameStyle": "Nime stiil",
 		"ageDisplay_one": "vanus {{count}}",
 		"ageDisplay_other": "vanus {{count}}",
-		"customFront": "Kohendatud esiplaanil olija",
 		"showFrontingEntries": "Näita esiplaanil olnud kirjeid",
 		"lastFronted": "Viimatine esiplaanil olek: {{startTime}} - {{endTime}}"
 	},

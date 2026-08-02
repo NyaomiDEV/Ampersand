@@ -10,7 +10,6 @@
 			"title": "Supprimer le membre"
 		},
 		"role": "Rôle",
-		"customFront": "Front personnalisé",
 		"header": "Membre",
 		"memberID": "ID du membre : {{memberID}}",
 		"dateCreated": "Date de création : {{dateCreated}}",
