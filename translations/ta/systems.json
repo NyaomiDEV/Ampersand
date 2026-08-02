@@ -25,6 +25,7 @@
 			"confirm": "இந்த அமைப்பை நிச்சயமாக நீக்க விரும்புகிறீர்களா?"
 		},
 		"systemID": "சிச்டம் ஐடி: {{systemID}}",
-		"systemIDcopiedToClipboard": "குறிப்பிடப்பட்ட வடிவமைப்பில் உள்ள சிச்டம் அடையாளம் இடைநிலைப்பலகைக்கு நகலெடுக்கப்பட்டது!"
+		"systemIDcopiedToClipboard": "குறிப்பிடப்பட்ட வடிவமைப்பில் உள்ள சிச்டம் அடையாளம் இடைநிலைப்பலகைக்கு நகலெடுக்கப்பட்டது!",
+		"dissociativeStateCountText": "{{totalCustomFrontCount}} பிரிகை நிலை(கள்), {{customFrontCount}} செயலில், {{archivedCustomFrontCount}} காப்பகப்படுத்தப்பட்டது"
 	}
 }

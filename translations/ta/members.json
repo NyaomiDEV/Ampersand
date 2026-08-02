@@ -48,6 +48,9 @@
 		"delete": {
 			"title": "உறுப்பினரை நீக்கு",
 			"confirm": "இந்த உறுப்பினரை நிச்சயமாக நீக்க விரும்புகிறீர்களா?"
-		}
-	}
+		},
+		"isDissociativeState": "பிரிகை நிலை",
+		"lastFronted": "கடைசியாக முன்புறம்: {{startTime}} - {{endTime}}"
+	},
+	"deletedDissociativeState": "நீக்கப்பட்ட நிலை"
 }
