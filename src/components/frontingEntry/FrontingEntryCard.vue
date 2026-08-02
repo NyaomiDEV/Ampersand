@@ -78,8 +78,8 @@
 	}
 
 	function getCustomStatus(entry: FrontingEntryComplete){
-		if (entry.comment)
-			return extractFrontmatter(entry.comment).frontmatter?.customStatus as string;
+		if (entry.summary)
+			return extractFrontmatter(entry.summary).frontmatter?.customStatus as string;
 
 		return undefined;
 	}

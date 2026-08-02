@@ -142,7 +142,7 @@ function getFrontingEntryHeader(){
 }
 
 function frontingEntryToHtml(entry: FrontingEntry) {
-	const customStatus = entry.comment ? extractFrontmatter(entry.comment).frontmatter?.customStatus as string : undefined;
+	const customStatus = entry.summary ? extractFrontmatter(entry.summary).frontmatter?.customStatus as string : undefined;
 	return [
 		`<div class="fronting-entry${entry.isMainFronter ? " is-main-fronter" : ""}">`,
 		`<span class="member">${

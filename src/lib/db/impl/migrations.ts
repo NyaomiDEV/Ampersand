@@ -342,26 +342,40 @@ export async function frontingEntries(table: ShittyTable<FrontingEntry>, version
 
 	interface FEZero extends FrontingEntry {
 		customStatus?: string,
+		comment?: string
 	}
 
 	type FEOne = Omit<FrontingEntry, "influencing"> & { influencing?: string };
 
 	async function zeroToOne() {
-		// move custom status to fronter's comment frontmatter
+		// move custom status to fronter's summary frontmatter
+		// and also migrate comment => summary
 		for (const frontingEntryIndex of table.index) {
 			try {
 				const obj = await table.get(frontingEntryIndex.uuid) as FEZero;
 
-				if (obj.customStatus) {
+				if (obj.customStatus || obj.comment) {
 					const commentParts = extractFrontmatter(obj.comment || "");
 					if (!commentParts.frontmatter)
 						commentParts.frontmatter = {};
 
-					commentParts.frontmatter.customStatus = obj.customStatus;
+					if(obj.customStatus)
+						commentParts.frontmatter.customStatus = obj.customStatus;
+
 					delete obj.customStatus;
+					delete obj.comment;
+
+					let summary = "";
+
+					if(Object.keys(commentParts.frontmatter).length)
+						summary += `---\n${dump(commentParts.frontmatter)}---\n\n`;
+					
+					if(commentParts.body.length)
+						summary += commentParts.body;
+
 					await table.write({
 						...obj,
-						comment: `---\n${dump(commentParts.frontmatter)}---\n\n${commentParts.body}`
+						summary: summary.length ? summary : undefined
 					}, true);
 				}
 			} catch (_e) {

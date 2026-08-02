@@ -318,11 +318,11 @@
 
 			<IonList class="surface">
 				<IonItem>
-					<ContentEditable v-model="frontingEntry.comment" fill="solid" :label="$t('frontHistory:edit.comment')" />
+					<ContentEditable v-model="frontingEntry.summary" fill="solid" :label="$t('frontHistory:edit.comment')" />
 				</IonItem>
 
 				<IonItem>
-					<IonButton fill="clear" @click="frontingEntry.comment = `${frontingEntry.comment || ''}<t:${Math.floor(Date.now() / 1000)}:f>`">
+					<IonButton fill="clear" @click="frontingEntry.summary = `${frontingEntry.summary || ''}<t:${Math.floor(Date.now() / 1000)}:f>`">
 						{{ $t("other:addTimestamp") }}
 					</IonButton>
 					<IonButton fill="clear" @click="memberTagModal?.$el.present()">
@@ -405,7 +405,7 @@
 				:hide-checkboxes="true"
 				:always-emit="true"
 				:model-value="[]"
-				@update:model-value="(e) => { if(e[0]) frontingEntry.comment = `${frontingEntry.comment || ''}@<m:${e[0].uuid}>` }"
+				@update:model-value="(e) => { if(e[0]) frontingEntry.summary = `${frontingEntry.summary || ''}@<m:${e[0].uuid}>` }"
 			/>
 
 			<Comments

@@ -71,7 +71,7 @@
 			:presence-average="props.presenceAverage"
 		/>
 		<template #end>
-			<IonIcon v-if="props.entry.comment?.length" slot="end" :icon="commentMD" />
+			<IonIcon v-if="props.entry.summary?.length" slot="end" :icon="commentMD" />
 		</template>
 	</MemberItem>
 </template>

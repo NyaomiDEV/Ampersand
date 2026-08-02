@@ -95,7 +95,7 @@ export interface FrontingEntry extends UUIDable {
 	isLocked: boolean,
 	influencing?: UUID[],
 	presence?: Map<Date, number>
-	comment?: string, // this is the AUTHOR's fronting comment
+	summary?: string,
 	comments?: Comment[] // This is for comments made by others
 }
 

@@ -112,7 +112,7 @@ async function frontingEntries(ocFront: OctoconFront, memberMapping: Map<number,
 		member: memberMapping.get(ocFront.alter_id) || nilUid,
 		startTime: new Date(ocFront.time_start),
 		endTime: ocFront.time_end ? new Date(ocFront.time_end) : undefined,
-		comment: ocFront.comment,
+		summary: ocFront.comment,
 		isMainFronter: false,
 		isLocked: false
 	});

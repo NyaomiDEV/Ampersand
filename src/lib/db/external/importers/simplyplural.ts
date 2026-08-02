@@ -273,7 +273,7 @@ async function frontingEntry(spFrontHistory: SimplyPluralFrontHistory, memberMap
 		member: memberMapping.get(spFrontHistory.member) || (spFrontHistory.custom ? maxUid : nilUid),
 		startTime: new Date(spFrontHistory.startTime),
 		endTime: spFrontHistory.endTime ? new Date(spFrontHistory.endTime) : (spFrontHistory.live ? undefined : new Date()),
-		comment: spFrontHistory.customStatus?.length ? `---\n${dump({ customStatus: spFrontHistory.customStatus })}---\n` : undefined,
+		summary: spFrontHistory.customStatus?.length ? `---\n${dump({ customStatus: spFrontHistory.customStatus })}---\n` : undefined,
 		isMainFronter: false,
 		isLocked: false,
 		comments: commentMapping.get(spFrontHistory._id)?.map(comment => ({
