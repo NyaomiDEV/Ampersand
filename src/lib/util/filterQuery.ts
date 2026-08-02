@@ -25,7 +25,10 @@ export type MemberFilterQuery = {
 	pronouns?: QueryItem,
 	role?: QueryItem,
 	age?: number,
-	isFronting?: boolean
+	isFronting?: boolean,
+	mainFronter?: boolean,
+	influencing?: QueryItem,
+	influenced?: QueryItem
 };
 
 export type FrontingHistoryFilterQuery = {
@@ -224,6 +227,21 @@ export function parseMemberFilterQuery(search: string): MemberFilterQuery {
 				break;
 			case "fronting":
 				result.isFronting = reduceToValue(shouldInclude);
+				break;
+			case "mainfronter":
+				result.mainFronter = reduceToValue(shouldInclude);
+				break;
+			case "influencing":
+				result.influencing = {
+					value,
+					shouldInclude: reduceToValue(shouldInclude)
+				};
+				break;
+			case "influenced":
+				result.influenced = {
+					value,
+					shouldInclude: reduceToValue(shouldInclude)
+				};
 				break;
 		}
 	}

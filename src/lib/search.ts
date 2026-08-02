@@ -96,6 +96,21 @@ export function filterMember(search: string, member: Member){
 			return false;
 	}
 
+	if (parsed.mainFronter !== undefined) {
+		if (!!getFrontingEntryIndex().find(x => x.member === member.uuid && !x.endTime && x.isMainFronter) !== parsed.isFronting)
+			return false;
+	}
+
+	if (parsed.influencing) {
+		if (!getFrontingEntryIndex().find(x => x.member === member.uuid && !x.endTime && (parsed.influencing?.value !== "" ? x.influencing === parsed.influencing!.value : !!x.influencing)) === parsed.influencing.shouldInclude)
+			return false;
+	}
+
+	if (parsed.influenced) {
+		if (!getFrontingEntryIndex().find(x => x.influencing === member.uuid && !x.endTime && (parsed.influenced?.value !== "" ? x.member === parsed.influenced!.value : true)) === parsed.influenced.shouldInclude)
+			return false;
+	}
+
 	if (parsed.tags.size) {
 		if (!parsed.tags.entries().every(([uuid, include]) => include === member.tags.includes(uuid)))
 			return false;
