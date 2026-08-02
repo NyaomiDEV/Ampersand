@@ -9,7 +9,7 @@
 		"header": "Cagna 'a voce 'e front",
 		"member": "Cagna 'o membru ô front",
 		"customStatus": "Stato perzunale",
-		"comment": "Cummento d' 'o fronter",
+		"summary": "Summario",
 		"presence": {
 			"historyTitle": "Storia d' 'a presenza",
 			"lastPresence": "L'urdema vota steva {{presence}} / 5 stelle",

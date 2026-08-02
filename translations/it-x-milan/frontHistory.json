@@ -9,7 +9,7 @@
 		"header": "Modifica voce front",
 		"member": "Cambia il membro in front",
 		"customStatus": "Status custom",
-		"comment": "Commento del fronter",
+		"summary": "Punto del discorso",
 		"presence": {
 			"historyTitle": "History presenza",
 			"lastPresence": "L'ultima volta era {{presence}} / 5 stelle",
