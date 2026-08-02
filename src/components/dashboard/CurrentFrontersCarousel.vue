@@ -116,7 +116,7 @@
 				show-cover
 				:show-date-complete="false"
 				:show-date="false"
-				:influenced-by="frontingEntries.filter(x => x.influencing?.uuid === entry.member.uuid).map(x => x.member)"
+				:influenced-by="frontingEntries.filter(x => x.influencing?.find(y => y.uuid === entry.member.uuid)).map(x => x.member)"
 				@click="showModal(entry)"
 			/>
 			<IonItemOptions>
@@ -142,7 +142,7 @@
 			v-for="entry in frontingEntries"
 			:key="entry.uuid"
 			:entry
-			:influenced-by="frontingEntries.filter(x => x.influencing?.uuid === entry.member.uuid).map(x => x.member)"
+			:influenced-by="frontingEntries.filter(x => x.influencing?.find(y => y.uuid === entry.member.uuid)).map(x => x.member)"
 			@click="quickDelete ? quickRemoveFronter(entry) : showModal(entry)"
 		/>
 		<IonCard

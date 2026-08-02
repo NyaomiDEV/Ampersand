@@ -123,7 +123,7 @@
 				</p>
 					
 				<p v-if="props.entry.influencing">
-					{{ $t("dashboard:fronterInfluencing", { influencedMember: props.entry.influencing.name }) }}
+					{{ $t("dashboard:fronterInfluencing", { influencedMember: props.entry.influencing.map(x => x.name).join(", ") }) }}
 				</p>
 				<p v-if="getCustomStatus(entry)">
 					{{ getCustomStatus(entry) }}

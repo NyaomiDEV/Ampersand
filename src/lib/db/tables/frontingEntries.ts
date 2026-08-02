@@ -53,13 +53,13 @@ export function getFrontingEntryIndex(){
 
 export async function toFrontingEntryComplete(frontingEntries: FrontingEntry[]): Promise<FrontingEntryComplete[]> {
 	const _memberSet = await Promise.all(Array.from(new Set(
-		frontingEntries.map(x => [x.member, x.influencing].filter((x): x is string => !!x)).flat(1)
+		frontingEntries.map(x => [x.member, ...(x.influencing || [])].filter((x): x is string => !!x)).flat(1)
 	)).map(x => getMember(x).catch(_ => defaultMember(x))));
 
 	return frontingEntries.map(x => ({
 		...x,
 		member: _memberSet.find(y => y.uuid === x.member) || defaultMember(x.member),
-		influencing: x.influencing ? _memberSet.find(y => y.uuid === x.influencing) || defaultMember(x.influencing) : undefined
+		influencing: x.influencing?.map(y => _memberSet.find(z => z.uuid === y) || defaultMember(y))
 	}));
 }
 
@@ -325,22 +325,23 @@ export function getFrontingStatistics(entries: (FrontingEntry & { endTime: Date 
 
 			influencingEntries.push(entry);
 
-			const influencedCount = maps.influencedCount.get(entry.influencing) || 0;
-			const influencedTotalSpan = maps.influencedTotalSpan.get(entry.influencing) || 0;
-			const influencedMinSpan = maps.influencedMinSpan.get(entry.influencing) || 0;
-			const influencedMaxSpan = maps.influencedMaxSpan.get(entry.influencing) || 0;
-			const influencedEntries = maps.influencedEntries.get(entry.influencing) || [];
+			for(const influencing of entry.influencing){
+				const influencedCount = maps.influencedCount.get(influencing) || 0;
+				const influencedTotalSpan = maps.influencedTotalSpan.get(influencing) || 0;
+				const influencedMinSpan = maps.influencedMinSpan.get(influencing) || 0;
+				const influencedMaxSpan = maps.influencedMaxSpan.get(influencing) || 0;
+				const influencedEntries = maps.influencedEntries.get(influencing) || [];
 
-			maps.influencedCount.set(entry.influencing, influencedCount + 1);
-			maps.influencedTotalSpan.set(entry.influencing, influencedTotalSpan + span);
-			maps.influencedMinSpan.set(entry.influencing, influencedMinSpan === 0 ? span : Math.min(influencedMinSpan, span));
-			maps.influencedMaxSpan.set(entry.influencing, Math.max(influencedMaxSpan, span));
+				maps.influencedCount.set(influencing, influencedCount + 1);
+				maps.influencedTotalSpan.set(influencing, influencedTotalSpan + span);
+				maps.influencedMinSpan.set(influencing, influencedMinSpan === 0 ? span : Math.min(influencedMinSpan, span));
+				maps.influencedMaxSpan.set(influencing, Math.max(influencedMaxSpan, span));
 
-			if (!maps.influencedEntries.has(entry.influencing))
-				maps.influencedEntries.set(entry.influencing, influencedEntries);
+				if (!maps.influencedEntries.has(influencing))
+					maps.influencedEntries.set(influencing, influencedEntries);
 
-			influencedEntries.push(entry);
-
+				influencedEntries.push(entry);
+			}
 
 			const hour = entry.startTime.getHours();
 
@@ -348,32 +349,40 @@ export function getFrontingStatistics(entries: (FrontingEntry & { endTime: Date 
 				const influencersCount = maps.nightInfluencers.get(entry.member) || 0;
 				maps.nightInfluencers.set(entry.member, influencersCount + 1);
 
-				const influencedCount = maps.nightInfluenced.get(entry.influencing) || 0;
-				maps.nightInfluenced.set(entry.influencing, influencedCount + 1);
+				for(const influencing of entry.influencing){
+					const influencedCount = maps.nightInfluenced.get(influencing) || 0;
+					maps.nightInfluenced.set(influencing, influencedCount + 1);
+				}
 			}
 
 			if (hour >= 6 && hour < 10) {
 				const influencersCount = maps.morningInfluencers.get(entry.member) || 0;
 				maps.morningInfluencers.set(entry.member, influencersCount + 1);
 
-				const influencedCount = maps.morningInfluenced.get(entry.influencing) || 0;
-				maps.morningInfluenced.set(entry.influencing, influencedCount + 1);
+				for (const influencing of entry.influencing) {
+					const influencedCount = maps.morningInfluenced.get(influencing) || 0;
+					maps.morningInfluenced.set(influencing, influencedCount + 1);
+				}
 			}
 
 			if (hour >= 10 && hour < 17) {
 				const influencersCount = maps.dayInfluencers.get(entry.member) || 0;
 				maps.dayInfluencers.set(entry.member, influencersCount + 1);
 
-				const influencedCount = maps.dayInfluenced.get(entry.influencing) || 0;
-				maps.dayInfluenced.set(entry.influencing, influencedCount + 1);
+				for (const influencing of entry.influencing) {
+					const influencedCount = maps.dayInfluenced.get(influencing) || 0;
+					maps.dayInfluenced.set(influencing, influencedCount + 1);
+				}
 			}
 
 			if (hour >= 17 && hour < 22) {
 				const influencersCount = maps.eveningInfluencers.get(entry.member) || 0;
 				maps.eveningInfluencers.set(entry.member, influencersCount + 1);
 
-				const influencedCount = maps.eveningInfluenced.get(entry.influencing) || 0;
-				maps.eveningInfluenced.set(entry.influencing, influencedCount + 1);
+				for (const influencing of entry.influencing) {
+					const influencedCount = maps.eveningInfluenced.get(influencing) || 0;
+					maps.eveningInfluenced.set(influencing, influencedCount + 1);
+				}
 			}
 
 		} else {

@@ -344,6 +344,8 @@ export async function frontingEntries(table: ShittyTable<FrontingEntry>, version
 		customStatus?: string,
 	}
 
+	type FEOne = Omit<FrontingEntry, "influencing"> & { influencing?: string };
+
 	async function zeroToOne() {
 		// move custom status to fronter's comment frontmatter
 		for (const frontingEntryIndex of table.index) {
@@ -371,10 +373,34 @@ export async function frontingEntries(table: ShittyTable<FrontingEntry>, version
 		return true;
 	}
 
-	switch (version) {
-		case 0:
-			if (!await zeroToOne()) return 0;
+	async function oneToTwo(){
+		// influencing became an array
+		for (const uuid of table.index.map(x => x.uuid)) {
+			try {
+				const obj = await table.get(uuid) as FEOne;
+
+				if (obj.influencing && typeof obj.influencing === "string") {
+					await table.update({
+						uuid,
+						influencing: [obj.influencing]
+					});
+				}
+			} catch (_e) {
+				console.error(_e);
+				return false;
+			}
+		}
+
+		return true;
 	}
 
-	return 1;
+	switch (version) {
+		// @ts-expect-error fallthrough
+		case 0:
+			if (!await zeroToOne()) return 0;
+		case 1:
+			if (!await oneToTwo()) return 1;
+	}
+
+	return 2;
 }

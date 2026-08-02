@@ -36,6 +36,7 @@
 	import MemberItem from "../components/member/MemberItem.vue";
 	import Comments from "./Comments.vue";
 	import Loading from "./Loading.vue";
+	import MemberChip from "../components/member/MemberChip.vue";
 
 	const i18next = useTranslation();
 	const router = useIonRouter();
@@ -83,7 +84,7 @@
 				const result = await newFrontingEntry({
 					..._frontingEntry,
 					member: _frontingEntry.member.uuid,
-					influencing: _frontingEntry.influencing?.uuid
+					influencing: _frontingEntry.influencing?.map(x => x.uuid)
 				});
 				if(!result.success) throw new Error(`E: ${result.err || "failed"}`);
 
@@ -101,7 +102,7 @@
 			const result = await updateFrontingEntry({
 				..._frontingEntry,
 				member: _frontingEntry.member.uuid,
-				influencing: _frontingEntry.influencing?.uuid
+				influencing: _frontingEntry.influencing?.map(x => x.uuid)
 			} as FrontingEntry);
 			if(!result.success) throw new Error(`E: ${result.err || "failed"}`);
 
@@ -284,46 +285,32 @@
 				</IonItem>
 
 				<template v-if="!frontingEntry.isMainFronter">
-					<MemberItem
-						v-if="frontingEntry.influencing"
-						button
-						:member="frontingEntry.influencing"
-						:show-cover="false"
-						:show-pronouns="false"
-						:show-role="false"
-						:class="{ 'take-row': frontingEntry.influencing }"
-						@click="memberInfluencingModal?.$el.present()"
-						@avatar-click="routeToMember(frontingEntry.influencing)"
-					>
-						<template #before>
-							<p>{{ $t("frontHistory:edit.influencing.currentlyInfluencing") }}</p>
-						</template>
-						<template #end>
-							<IonButton
-								v-if="frontingEntry.influencing"
-								slot="end"
-								shape="round"
-								fill="outline"
-								size="small"
-								@click="(e) => { e.stopPropagation(); frontingEntry.influencing = undefined }"
-							>
-								<IonIcon
-									slot="icon-only"
-									:icon="trashMD"
-									color="danger"
-								/>
-							</IonButton>
-						</template>
-					</MemberItem>
 					<IonItem
-						v-else
 						button
+						:detail="!!frontingEntry.influencing"
 						:class="{ 'take-row': frontingEntry.influencing }"
 						@click="memberInfluencingModal?.$el.present()"
 					>
 						<IonLabel>
-							{{ $t("frontHistory:edit.influencing.select") }}
+							<h2 v-if="frontingEntry.influencing">{{ $t("frontHistory:edit.influencing.currentlyInfluencing") }}</h2>
+							<h2 v-else>{{ $t("frontHistory:edit.influencing.select") }}</h2>
+							
+							<MemberChip v-for="member in frontingEntry.influencing" :key="member.uuid" :member />
 						</IonLabel>
+						<IonButton
+							v-if="frontingEntry.influencing"
+							slot="end"
+							shape="round"
+							fill="outline"
+							size="small"
+							@click="(e) => { e.stopPropagation(); frontingEntry.influencing = undefined }"
+						>
+							<IonIcon
+								slot="icon-only"
+								:icon="trashMD"
+								color="danger"
+							/>
+						</IonButton>
 					</IonItem>
 				</template>
 				
@@ -391,19 +378,16 @@
 				:hide-checkboxes="true"
 				:model-value="frontingEntry.member ? [frontingEntry.member] : []"
 				:members-to-exclude="allFrontingInTimeSpan?.map(x => x.member!)"
-				@update:model-value="(e) => { if(e[0]) frontingEntry.member = e[0]; if(frontingEntry.influencing?.uuid === e[0].uuid) frontingEntry.influencing = undefined }"
+				@update:model-value="(e) => { if(e[0]) frontingEntry.member = e[0]; if(frontingEntry.influencing?.find(x => x.uuid === e[0].uuid)) frontingEntry.influencing = frontingEntry.influencing.filter(x => x.uuid !== e[0].uuid) }"
 			/>
 
 			<MemberSelect
 				ref="memberInfluencingModal"
-				:only-one="true"
-				:discard-on-select="true"
-				:hide-checkboxes="true"
 				:always-emit="true"
-				:model-value="frontingEntry.influencing ? [frontingEntry.influencing] : []"
+				:model-value="frontingEntry.influencing"
 				:members-to-include="allFrontingInTimeSpan?.map(x => x.member!)"
 				:members-to-exclude="frontingEntry.member ? [frontingEntry.member] : []"
-				@update:model-value="(e) => { if(e[0]) frontingEntry.influencing = e[0] }"
+				@update:model-value="(e) => { if(e.length) frontingEntry.influencing = e; else frontingEntry.influencing = undefined; }"
 			/>
 
 			<PresenceHistory
@@ -433,7 +417,7 @@
 					updateFrontingEntry({
 						...frontingEntry as FrontingEntryComplete,
 						member: frontingEntry.member?.uuid,
-						influencing: frontingEntry.influencing?.uuid,
+						influencing: frontingEntry.influencing?.map(x => x.uuid),
 					});
 				}"
 			/>

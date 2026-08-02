@@ -149,7 +149,7 @@ function frontingEntryToHtml(entry: FrontingEntry) {
 			getMemberIndex().find(x => x.uuid === entry.member)?.name || entry.member
 		}${entry.influencing ?
 			`<span class="influencing">${
-				i18next.t("frontHistory:influencing", { influencedMember: getMemberIndex().find(x => x.uuid === entry.influencing)?.name || entry.influencing })
+				i18next.t("frontHistory:influencing", { influencedMember: getMemberIndex().filter(x => entry.influencing?.includes(x.uuid)).map(x => x.name).join(", ") || entry.influencing.join(", ") })
 			}</span>` : ""
 		}</span>`,
 		`<span class="start-date"><date value="${entry.startTime.valueOf()}">${formatDate(entry.startTime, "collapsed")}</date></span>`,
@@ -207,7 +207,7 @@ export function exportReport(systems: UUID[], includeArchived: boolean, includeC
 					.map(x => getFrontingEntry(x.uuid))
 			)).map(x => ({
 				...x,
-				influencing: x.influencing ? members.includes(x.influencing) ? x.influencing : undefined : undefined
+				influencing: x.influencing?.filter(y => members.includes(y))
 			})) as (FrontingEntry & { endTime: Date; })[];
 			const analytics = getFrontingStatistics(frontingEntries);
 

@@ -93,7 +93,7 @@ export interface FrontingEntry extends UUIDable {
 	endTime?: Date,
 	isMainFronter: boolean,
 	isLocked: boolean,
-	influencing?: UUID,
+	influencing?: UUID[],
 	presence?: Map<Date, number>
 	comment?: string, // this is the AUTHOR's fronting comment
 	comments?: Comment[] // This is for comments made by others
@@ -101,7 +101,7 @@ export interface FrontingEntry extends UUIDable {
 
 export interface FrontingEntryComplete extends FrontingEntry {
 	member: Member,
-	influencing?: Member
+	influencing?: Member[]
 }
 
 export interface JournalPost extends UUIDable {

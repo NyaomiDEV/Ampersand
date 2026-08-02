@@ -48,7 +48,7 @@
 
 <template>
 	<p v-if="props.entry.influencing" class="influencing" style="color: inherit;">
-		{{ $t("frontHistory:influencing", { influencedMember: props.entry.influencing.name }) }}
+		{{ $t("frontHistory:influencing", { influencedMember: props.entry.influencing.map(x => x.name).join(", ") }) }}
 	</p>
 	<p v-if="getCustomStatus(entry)" class="custom-status" style="color: inherit;">
 		{{ getCustomStatus(entry) }}

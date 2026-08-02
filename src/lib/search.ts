@@ -102,12 +102,12 @@ export function filterMember(search: string, member: Member){
 	}
 
 	if (parsed.influencing) {
-		if (!getFrontingEntryIndex().find(x => x.member === member.uuid && !x.endTime && (parsed.influencing?.value !== "" ? x.influencing === parsed.influencing!.value : !!x.influencing)) === parsed.influencing.shouldInclude)
+		if (!getFrontingEntryIndex().find(x => x.member === member.uuid && !x.endTime && (parsed.influencing?.value !== "" ? x.influencing?.includes(parsed.influencing!.value) : !!x.influencing)) === parsed.influencing.shouldInclude)
 			return false;
 	}
 
 	if (parsed.influenced) {
-		if (!getFrontingEntryIndex().find(x => x.influencing === member.uuid && !x.endTime && (parsed.influenced?.value !== "" ? x.member === parsed.influenced!.value : true)) === parsed.influenced.shouldInclude)
+		if (!getFrontingEntryIndex().find(x => x.influencing?.includes(member.uuid) && !x.endTime && (parsed.influenced?.value !== "" ? x.member === parsed.influenced!.value : true)) === parsed.influenced.shouldInclude)
 			return false;
 	}
 
