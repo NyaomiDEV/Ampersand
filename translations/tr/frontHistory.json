@@ -3,7 +3,6 @@
 	"currentlyFronting": "Şu anda öncü",
 	"edit": {
 		"header": "Öncü kayıdı düzenle",
-		"comment": "Yorum",
 		"startTime": "Başlangıç zamanı",
 		"endTime": "Bitiş zamanı",
 		"removeFromFront": "Önden kaldır",

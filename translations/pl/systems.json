@@ -11,7 +11,6 @@
 		"noDescription": "Brak opisu",
 		"memberCount": "Liczba członków",
 		"memberCountText": "{{totalMemberCount}} członków, z czego {{memberCount}} aktywnych i {{archivedMemberCount}} zarchiwizowanych",
-		"customFrontCountText": "{{totalCustomFrontCount}} frontów niestandardowych, z czego {{customFrontCount}} aktywnych i {{archivedCustomFrontCount}} zarchiwizowanych",
 		"tapToShow": "Naciśnij, aby pokazać",
 		"showMembers": "Pokaż członków w tym systemie",
 		"delete": {

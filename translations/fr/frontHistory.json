@@ -5,7 +5,6 @@
 	"edit": {
 		"member": "Modifier le membre au front",
 		"customStatus": "Statut personnalisé",
-		"comment": "Commentaire",
 		"presence": {
 			"historyTitle": "Historique de présence",
 			"lastPresence": "La dernière fois, c’était {{presence}} / 5 étoiles",

@@ -21,8 +21,7 @@
 		"headerEdit": "System bearbeiten",
 		"name": "Systemname",
 		"description": "Systembeschreibung",
-		"noDescription": "Keine Beschreibung",
-		"customFrontCountText": "{{totalCustomFrontCount}} personalisierte front(s), {{customFrontCount}} aktiv, {{archivedCustomFrontCount}} archiviert"
+		"noDescription": "Keine Beschreibung"
 	},
 	"searchPlaceholder": "Systeme durchsuchen...",
 	"select": "System auswählen",

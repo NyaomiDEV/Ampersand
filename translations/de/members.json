@@ -34,7 +34,6 @@
 		"ageDisplay_other": "Alter {{count}}",
 		"memberIDcopiedToClipboard": "Formatierte Mitgields-ID wurde in die Zwischenablage kopiert!"
 	},
-	"deletedCustomFront": "Benutzerdefinierte Front verwerfen",
 	"actions": {
 		"addToFront": "Zur Front hinzufügen",
 		"setMainFronter": "Als Hauptfronter festlegen",

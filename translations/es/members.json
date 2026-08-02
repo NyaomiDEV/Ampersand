@@ -2,7 +2,6 @@
 	"searchPlaceholder": "Buscar miembros...",
 	"select": "Selecciona un miembro",
 	"deletedMember": "Miembro eliminado",
-	"deletedCustomFront": "Eliminar frente personalizado",
 	"actions": {
 		"addToFront": "Agregar al frente",
 		"setMainFronter": "Definir como el principial del frente",

@@ -3,7 +3,6 @@
 	"searchPlaceholder": "Procurar por membros...",
 	"select": "Selecione um membro",
 	"deletedMember": "Membro deletado",
-	"deletedCustomFront": "Fronte personalizado deletado",
 	"actions": {
 		"addToFront": "Adicionar ao fronte",
 		"setMainFronter": "Escolha como fronte principal",

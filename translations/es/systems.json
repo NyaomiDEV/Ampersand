@@ -6,7 +6,6 @@
 		"description": "Descripción del sistema",
 		"memberCount": "Conteo de miembros",
 		"memberCountText": "{{totalMemberCount}} miembro(s), {{memberCount}} activo(s), {{archivedMemberCount}} archivado(s)",
-		"customFrontCountText": "{{totalCustomFrontCount}} frente(s) personalizado(s), {{customFrontCount}} activo(s), {{archivedCustomFrontCount}} archivado(s)",
 		"tapToShow": "Presiona para mostrar",
 		"delete": {
 			"title": "Eliminar el sistema",

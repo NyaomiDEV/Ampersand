@@ -3,7 +3,6 @@
 	"searchPlaceholder": "Wyszukaj członków…",
 	"select": "Wybierz członka",
 	"deletedMember": "Usunięto członka",
-	"deletedCustomFront": "Usunięto niestandardowy front",
 	"actions": {
 		"addToFront": "Dodaj na front",
 		"setMainFronter": "Ustaw jako główną osobę frontującą",

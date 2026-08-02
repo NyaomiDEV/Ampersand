@@ -7,7 +7,6 @@
 	"influencing": "Influenciando {{influencedMember}}",
 	"edit": {
 		"header": "Editar entrada de fronte",
-		"comment": "Comentário",
 		"presence": {
 			"confirmButton": "Confirmar",
 			"date": "Data",

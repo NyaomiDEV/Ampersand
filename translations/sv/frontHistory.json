@@ -9,7 +9,6 @@
 		"header": "Redigera frontlogg",
 		"member": "Redigera frontare",
 		"customStatus": "Anpassat status",
-		"comment": "Kommentar",
 		"presence": {
 			"historyTitle": "Närvarohistorik",
 			"lastPresence": "Förra gången var det {{presence}} / 5 stjärnor",

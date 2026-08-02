@@ -14,7 +14,6 @@
 		"imageClip": "அவதார் வடிவம்",
 		"memberCount": "உறுப்பினர் எண்ணிக்கை",
 		"memberCountText": "{{totalMemberCount}} உறுப்பினர்கள்), {{memberCount}} செயலில், {{archivedMemberCount}} காப்பகப்படுத்தப்பட்டது",
-		"customFrontCountText": "{{totalCustomFrontCount}} தனிப்பயன் முன்(கள்), {{customFrontCount}} செயலில், {{archivedCustomFrontCount}} காப்பகப்படுத்தப்பட்டது",
 		"tapToShow": "காட்ட தட்டவும்",
 		"showMembers": "இந்த அமைப்பில் உள்ள உறுப்பினர்களைக் காட்டு",
 		"parent": "பெற்றோர் அமைப்பு",

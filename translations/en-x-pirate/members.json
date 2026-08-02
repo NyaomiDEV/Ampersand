@@ -4,7 +4,6 @@
 	"singular": "Matey",
 	"select": "Pick a matey",
 	"deletedMember": "Matey sent to Davy Jones",
-	"deletedCustomFront": "Custom front sent to Davy Jones",
 	"actions": {
 		"addToFront": "Add to the helm",
 		"setMainFronter": "Set as main matey at the helm",

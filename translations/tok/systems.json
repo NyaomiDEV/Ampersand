@@ -10,7 +10,6 @@
 		"noDescription": "sona ala",
 		"memberCount": "mute pi ijo kulupu",
 		"memberCountText": "ijo kulupu {{totalMemberCount}} li lon, ijo kulupu len ala {{memberCount}} li lon, ijo kulupu len {{archivedMemberCount}} li lon",
-		"customFrontCountText": "ijo sona {{totalCustomFrontCount}} li lon, ijo sona len ala {{customFrontCount}} li lon, ijo sona len {{archivedCustomFrontCount}} li lon",
 		"tapToShow": "sina wile lukin la o luka",
 		"delete": {
 			"title": "weka pi kulupu ni",

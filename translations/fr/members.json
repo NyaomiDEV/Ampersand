@@ -38,7 +38,6 @@
 		"unsetMainFronter": "Membre retiré du front principal"
 	},
 	"deletedMember": "Membre supprimé",
-	"deletedCustomFront": "Front personnalisé supprimé",
 	"actions": {
 		"addToFront": "Ajouter au front",
 		"removeFromFront": "Retirer du front",

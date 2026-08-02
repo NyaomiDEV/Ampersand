@@ -3,7 +3,6 @@
 	"searchPlaceholder": "Искать в участниках...",
 	"select": "Выберите участника",
 	"deletedMember": "Удаленный участник",
-	"deletedCustomFront": "Удаленный кастомный фронт",
 	"actions": {
 		"addToFront": "Добавить в фронт",
 		"setMainFronter": "Сделать основным фронтером",

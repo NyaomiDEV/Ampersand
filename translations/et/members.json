@@ -44,7 +44,6 @@
 	"searchPlaceholder": "Otsi liikmeid…",
 	"deletedMember": "Kustutatud liige",
 	"singular": "Liige",
-	"deletedCustomFront": "Kustutasin sinu loodud esiplaanil oleva liikme",
 	"toasts": {
 		"addToFront": "Liige lisatud esiplaanile",
 		"setMainFronter": "Liige on lisatud põhiliseks esiplaanil olejaks",

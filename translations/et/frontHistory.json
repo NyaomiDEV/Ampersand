@@ -9,7 +9,6 @@
 		},
 		"startTime": "Algusaeg",
 		"endTime": "Lõpuaeg",
-		"comment": "Esiplaanil olija kommentaar",
 		"customStatus": "Kohandatud olek",
 		"influencing": {
 			"select": "Vali mõjutatav liige",
