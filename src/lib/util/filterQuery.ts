@@ -25,6 +25,7 @@ export type MemberFilterQuery = {
 	pronouns?: QueryItem,
 	role?: QueryItem,
 	age?: number,
+	isFronting?: boolean
 };
 
 export type FrontingHistoryFilterQuery = {
@@ -219,6 +220,9 @@ export function parseMemberFilterQuery(search: string): MemberFilterQuery {
 				break;
 			case "age":
 				result.age = parseInt(value);
+				break;
+			case "fronting":
+				result.isFronting = reduceToValue(shouldInclude);
 				break;
 		}
 	}

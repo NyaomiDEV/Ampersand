@@ -4,6 +4,7 @@ import { parseAssetFilterQuery, parseBoardMessageFilterQuery, parseCustomFieldFi
 import { appConfig } from "./config";
 import { getMemberIndex } from "./db/tables/members";
 import { getSystemsIndex } from "./db/tables/system";
+import { getFrontingEntryIndex } from "./db/tables/frontingEntries";
 
 export function filterSystem(search: string, system: System) {
 	const parsed = parseSystemFilterQuery(search.length ? search : appConfig.defaultFilterQueries.systems || "");
@@ -87,6 +88,11 @@ export function filterMember(search: string, member: Member){
 
 	if (parsed.isDissociativeState !== undefined) {
 		if (member.isDissociativeState !== parsed.isDissociativeState)
+			return false;
+	}
+
+	if (parsed.isFronting !== undefined) {
+		if(!!getFrontingEntryIndex().find(x => x.member === member.uuid && !x.endTime) !== parsed.isFronting)
 			return false;
 	}
 
