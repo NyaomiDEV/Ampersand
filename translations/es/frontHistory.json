@@ -27,7 +27,8 @@
 		"startTime": "Hora de inicio",
 		"endTime": "Hora de finalización",
 		"isMainFronter": "Frontal",
-		"isLocked": "Contraportada"
+		"isLocked": "Contraportada",
+		"summary": "Resumen"
 	},
 	"searchPlaceholder": "Buscar el historial del frente ..."
 }
