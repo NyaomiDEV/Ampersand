@@ -22,7 +22,8 @@
 		"delete": {
 			"title": "Kustuta esiplaanil olev kirje",
 			"confirm": "Kas oled kindel, et soovid selle esiplaanil oleva kirje kustutada?"
-		}
+		},
+		"summary": "Kokkuvõte"
 	},
 	"header": "Esiplaanil olemise (frontimine) ajalugu",
 	"searchPlaceholder": "Otsi esiplaanil olemise (frontimise) ajaloost…",
