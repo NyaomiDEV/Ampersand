@@ -14,7 +14,7 @@
 		"imageClip": "Avatar shape",
 		"memberCount": "Member count",
 		"memberCountText": "{{totalMemberCount}} member(s), {{memberCount}} active, {{archivedMemberCount}} archived",
-		"dissociativeStateCountText": "{{totalDissociativeStateCount}} dissociative state(s), {{dissociativeStateCount}} active, {{archiveddissociativeStateCount}} archived",
+		"dissociativeStateCountText": "{{totalDissociativeStateCount}} dissociative state(s), {{dissociativeStateCount}} active, {{archivedDissociativeStateCount}} archived",
 		"tapToShow": "Tap to show",
 		"showMembers": "Show members inside this system",
 		"parent": "Parent system",

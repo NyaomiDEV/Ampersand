@@ -14,7 +14,7 @@
 		"imageClip": "Forma avatar",
 		"memberCount": "Quanti membri",
 		"memberCountText": "{{totalMemberCount}} totali, {{memberCount}} attivi, {{archivedMemberCount}} in archivio",
-		"dissociativeStateCountText": "{{totalDissociativeStateCount}} stato/i dissociativo/i, {{dissociativeStateCount}} attivo/i, {{archiveddissociativeStateCount}} archiviato/i",
+		"dissociativeStateCountText": "{{totalDissociativeStateCount}} stato/i dissociativo/i, {{dissociativeStateCount}} attivo/i, {{archivedDissociativeStateCount}} archiviato/i",
 		"tapToShow": "Clicca e vedi",
 		"showMembers": "Vedi i membri del sistema",
 		"parent": "Sistema parent",

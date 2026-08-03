@@ -26,6 +26,6 @@
 		},
 		"systemID": "சிச்டம் ஐடி: {{systemID}}",
 		"systemIDcopiedToClipboard": "குறிப்பிடப்பட்ட வடிவமைப்பில் உள்ள சிச்டம் அடையாளம் இடைநிலைப்பலகைக்கு நகலெடுக்கப்பட்டது!",
-		"dissociativeStateCountText": "{{totalDissociativeStateCount}} பிரிகை நிலை(கள்), {{dissociativeStateCount}} செயலில், {{archiveddissociativeStateCount}} காப்பகப்படுத்தப்பட்டது"
+		"dissociativeStateCountText": "{{totalDissociativeStateCount}} பிரிகை நிலை(கள்), {{dissociativeStateCount}} செயலில், {{archivedDissociativeStateCount}} காப்பகப்படுத்தப்பட்டது"
 	}
 }

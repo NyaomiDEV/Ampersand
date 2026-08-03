@@ -14,7 +14,7 @@
 		"imageClip": "Forma dell'avatar",
 		"memberCount": "Numero di membrɜ",
 		"memberCountText": "{{totalMemberCount}} membrə/ɜ, {{memberCount}} attivə/ɜ, {{archivedMemberCount}} archiviatə/ɜ",
-		"dissociativeStateCountText": "{{totalDissociativeStateCount}} stato/i dissociativo/i, {{dissociativeStateCount}} attivo/i, {{archiveddissociativeStateCount}} archiviato/i",
+		"dissociativeStateCountText": "{{totalDissociativeStateCount}} stato/i dissociativo/i, {{dissociativeStateCount}} attivo/i, {{archivedDissociativeStateCount}} archiviato/i",
 		"tapToShow": "Clicca per mostrare",
 		"showMembers": "Mostra ɜ membrɜ all'interno di questo sistema",
 		"parent": "Sistema genitore",

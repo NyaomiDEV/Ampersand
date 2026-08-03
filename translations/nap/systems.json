@@ -14,7 +14,7 @@
 		"imageClip": "Forma de l'immaggine",
 		"memberCount": "Quante ne so'",
 		"memberCountText": "{{totalMemberCount}} soci, {{memberCount}} attivi, {{archivedMemberCount}} archiviati",
-		"dissociativeStateCountText": "{{totalDissociativeStateCount}} stato/i dissociativo/i, {{dissociativeStateCount}} attivo/i, {{archiveddissociativeStateCount}} archiviato/i",
+		"dissociativeStateCountText": "{{totalDissociativeStateCount}} stato/i dissociativo/i, {{dissociativeStateCount}} attivo/i, {{archivedDissociativeStateCount}} archiviato/i",
 		"tapToShow": "Schiaccia pe' vedé",
 		"showMembers": "Fa' vedé 'e soci 'e stu sistema",
 		"parent": "Sistema pate",
