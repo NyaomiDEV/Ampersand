@@ -45,7 +45,7 @@
 
 	const emit = defineEmits<{
 		"toggleUpdate": [boolean],
-		"avatarClick": []
+		"avatarClick": [PointerEvent]
 	}>();
 
 	const { getObjectURL } = useBlob();
@@ -96,7 +96,7 @@
 			:color="member.color"
 			:icon="accountCircle"
 			:smaller="props.smallerAvatar"
-			@click="(e: Event) => { e.stopPropagation(); emit('avatarClick') }"
+			@click="emit('avatarClick', $event)"
 		>
 			<Avatar
 				v-if="system && system.viewInLists"

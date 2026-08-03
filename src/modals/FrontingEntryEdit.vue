@@ -189,7 +189,7 @@
 					:show-pronouns="false"
 					:show-role="false"
 					@click="memberSelectModal?.$el.present()"
-					@avatar-click="routeToMember(frontingEntry.member)"
+					@avatar-click="(e) => { e.stopImmediatePropagation(); routeToMember(frontingEntry.member!); }"
 				>
 					<p>{{ $t("frontHistory:edit.member") }}</p>
 				</MemberItem>
