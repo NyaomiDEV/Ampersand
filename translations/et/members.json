@@ -38,7 +38,8 @@
 		"ageDisplay_one": "vanus {{count}}",
 		"ageDisplay_other": "vanus {{count}}",
 		"showFrontingEntries": "Näita esiplaanil olnud kirjeid",
-		"lastFronted": "Viimatine esiplaanil olek: {{startTime}} - {{endTime}}"
+		"lastFronted": "Viimatine esiplaanil olek: {{startTime}} - {{endTime}}",
+		"isDissociativeState": "Irdunud olek"
 	},
 	"searchPlaceholder": "Otsi liikmeid…",
 	"deletedMember": "Kustutatud liige",
@@ -49,5 +50,6 @@
 		"unsetMainFronter": "Liige on eemaldatud põhilise esiplaanil olejana",
 		"setSoleFronter": "Liige on lisatud ainsaks esiplaanil olejaks",
 		"removeFromFront": "Liige on eemaldatud esiplaanilt"
-	}
+	},
+	"deletedDissociativeState": "Kustutatud olek"
 }
