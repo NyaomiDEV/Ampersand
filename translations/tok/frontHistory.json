@@ -28,6 +28,7 @@
 		"delete": {
 			"title": "weka pi tenpo lon",
 			"confirm": "sina wile ala wile weka e tenpo lon?"
-		}
+		},
+		"summary": "toki lili"
 	}
 }

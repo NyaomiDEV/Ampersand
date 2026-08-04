@@ -6,7 +6,7 @@
 	"actions": {
 		"addToFront": "pana pi ijo lon sin",
 		"setMainFronter": "ona li lawa lon",
-		"unsetMainFronter": "ona li lawa ala lon",
+		"unsetMainFronter": "ona li lon lawa ala",
 		"setSoleFronter": "ona li lon",
 		"removeFromFront": "ona li lon ala"
 	},
@@ -47,7 +47,9 @@
 		"ageDisplay_one": "mute {{count}} pi tenpo sike",
 		"ageDisplay_other": "mute {{count}} pi tenpo sike",
 		"nameStyle": "nasin sitelen nimi",
-		"lastFronted": "tenpo poka pini lon: {{startTime}} - {{endTime}}"
+		"lastFronted": "tenpo poka pini lon: {{startTime}} - {{endTime}}",
+		"isDissociativeState": "ijo pi lon ala"
 	},
-	"singular": "ijo kulupu"
+	"singular": "ijo kulupu",
+	"deletedDissociativeState": "ijo weka pi lon ala"
 }
