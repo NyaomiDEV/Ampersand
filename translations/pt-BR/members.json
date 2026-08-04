@@ -41,7 +41,8 @@
 		"ageDisplay_many": "Idades {{count}}",
 		"ageDisplay_other": "Idades {{count}}",
 		"nameStyle": "Estilo do nome",
-		"lastFronted": "Esteve no fronte por último: {{startTime}} - {{endTime}}"
+		"lastFronted": "Esteve no fronte por último: {{startTime}} - {{endTime}}",
+		"isDissociativeState": "estupor dissociativo"
 	},
 	"toasts": {
 		"addToFront": "Membro adicionado ao fronte",
@@ -50,5 +51,6 @@
 		"setSoleFronter": "Membro designado como fronte único",
 		"removeFromFront": "Membro removido do fronte"
 	},
-	"singular": "Membro"
+	"singular": "Membro",
+	"deletedDissociativeState": "Estado excluído:"
 }
