@@ -42,7 +42,7 @@
 		"desc": "Salve um relatório sobre seus dados para compartilhar com terapeutas e pessoas queridas",
 		"includeHeader": "Selecione o que incluir",
 		"includeArchived": "Membros arquivados",
-		"includeDissociativeStates": "amnésia dissociativa"
+		"includeDissociativeStates": "Estados dissociativos"
 	},
 	"jsonExport": {
 		"title": "Exporte seus dados para um arquivo JSON",
