@@ -28,6 +28,7 @@
 			"currentlyInfluencing": "Atualmente influenciando"
 		},
 		"isMainFronter": "Fronte principal",
-		"isLocked": "Trave o fronte"
+		"isLocked": "Trave o fronte",
+		"summary": "Resumo"
 	}
 }
