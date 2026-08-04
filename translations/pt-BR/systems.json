@@ -25,6 +25,7 @@
 		"isPinned": "Fixar sistema",
 		"systemID": "ID do sistema: {{systemID}}",
 		"systemIDcopiedToClipboard": "ID do sistema foi copiado à área de transferência!",
-		"nameStyle": "Estilo do Nome"
+		"nameStyle": "Estilo do Nome",
+		"dissociativeStateCountText": "{{totalDissociativeStateCount}} estado(s) dissociativo(s), {{dissociativeStateCount}} ativo(s), {{archivedDissociativeStateCount}} arquivado(s)"
 	}
 }
