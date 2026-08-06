@@ -31,7 +31,8 @@ async function customFields(ocUser: OctoconUser, customFieldMapping: Map<string,
 		const result = await newCustomField({
 			name: field.name,
 			default: false,
-			priority: 1
+			priority: 1,
+			dateCreated: new Date()
 		});
 		if(!transactionSucceeded(result))
 			throw new Error(`Could not add custom field: ${result.err.message}`);
@@ -43,7 +44,8 @@ async function customFields(ocUser: OctoconUser, customFieldMapping: Map<string,
 	const proxyName = await newCustomField({
 		name: "Proxy name",
 		default: false,
-		priority: 2
+		priority: 2,
+		dateCreated: new Date()
 	});
 	if (!transactionSucceeded(proxyName))
 		throw new Error(`Could not add custom field: ${proxyName.err.message}`);
@@ -53,7 +55,8 @@ async function customFields(ocUser: OctoconUser, customFieldMapping: Map<string,
 	const proxyTags = await newCustomField({
 		name: "Proxy tags",
 		default: false,
-		priority: 2
+		priority: 2,
+		dateCreated: new Date()
 	});
 	if (!transactionSucceeded(proxyTags))
 		throw new Error(`Could not add custom field: ${proxyTags.err.message}`);
@@ -68,7 +71,8 @@ async function tags(ocTag: OctoconTag){
 		description: ocTag.description,
 		type: "member",
 		isArchived: false,
-		viewInLists: false
+		viewInLists: false,
+		dateCreated: new Date()
 	});
 
 	if (!transactionSucceeded(result))
@@ -114,7 +118,8 @@ async function frontingEntries(ocFront: OctoconFront, memberMapping: Map<number,
 		endTime: ocFront.time_end ? new Date(ocFront.time_end) : undefined,
 		summary: ocFront.comment,
 		isMainFronter: false,
-		isLocked: false
+		isLocked: false,
+		dateCreated: new Date()
 	});
 
 	if (!transactionSucceeded(result))
@@ -188,7 +193,8 @@ async function polls(ocPoll: OctoconPoll, memberMapping: Map<number, string>){
 		date: new Date(ocPoll.inserted_at),
 		isPinned: false,
 		isArchived: false,
-		poll
+		poll,
+		dateCreated: new Date()
 	});
 
 	if (!transactionSucceeded(result))
@@ -232,7 +238,8 @@ export async function importOctocon(){
 			description: "",
 			isPinned: false,
 			isArchived: false,
-			viewInLists: false
+			viewInLists: false,
+			dateCreated: new Date()
 		});
 
 		if (!transactionSucceeded(_system))

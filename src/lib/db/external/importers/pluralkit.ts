@@ -36,7 +36,8 @@ async function customFields() {
 	const result = await newCustomField({
 		name: "PluralKit ID",
 		default: false,
-		priority: 1
+		priority: 1,
+		dateCreated: new Date()
 	});
 	if(!transactionSucceeded(result))
 		throw new Error(`Could not add custom field: ${result.err.message}`);
@@ -51,7 +52,8 @@ async function tags(pkGroup: PluralKitGroup){
 		color: pkGroup.color ? `#${pkGroup.color}` : undefined,
 		type: "member",
 		isArchived: false,
-		viewInLists: false
+		viewInLists: false,
+		dateCreated: new Date()
 	});
 
 	if (!transactionSucceeded(result))
@@ -111,6 +113,7 @@ async function frontingEntries(pkSwitches: PluralKitSwitch[], memberMapping: Map
 					startTime: date,
 					isMainFronter: false,
 					isLocked: false,
+					dateCreated: new Date()
 				};
 				trackedFronting.set(id, frontingEntry);
 			}
@@ -164,7 +167,8 @@ export async function importPluralKit(){
 			description: "",
 			isPinned: false,
 			isArchived: false,
-			viewInLists: false
+			viewInLists: false,
+			dateCreated: new Date()
 		});
 
 		if (!transactionSucceeded(_system))

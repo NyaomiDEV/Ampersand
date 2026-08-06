@@ -3,10 +3,102 @@ import { decodeAsync } from "@msgpack/msgpack";
 import type { ShittyTable } from "./shittytable";
 import { appConfig } from "../../config";
 import { nilUid } from "../../util/consts";
-import { Asset, BoardMessage, FrontingEntry, JournalPost, Member, System, Tag, UUID } from "../entities";
+import { Asset, BoardMessage, CustomField, FilterQuery, FrontingEntry, JournalPost, Member, Note, Reminder, System, Tag, UUID, UUIDable } from "../entities";
 import { Serialized } from "../../serialization";
 import { extractFrontmatter } from "../../markdown";
 import { dump } from "js-yaml";
+import { stat } from "@tauri-apps/plugin-fs";
+import { sep } from "@tauri-apps/api/path";
+
+async function _addDateCreated(table: ShittyTable<UUIDable>){
+	try{
+		for (const x of table.index) {
+			const obj = await table.get(x.uuid);
+			if (!obj.dateCreated) {
+				const fstat = await stat(table.path + sep() + obj.uuid);
+				await table.update({
+					uuid: obj.uuid,
+					dateCreated: fstat.birthtime || new Date()
+				});
+			}
+		}
+	}catch(_e){
+		console.error(_e);
+		return false;
+	}
+
+	return true;
+}
+
+export async function systems(table: ShittyTable<System>, version: number) {
+	async function oneToTwo() {
+		for (const systemIndex of table.index) {
+			if (typeof systemIndex.isPinned === "undefined" || typeof systemIndex.isArchived === "undefined") {
+				if (!await table.update({
+					uuid: systemIndex.uuid,
+					isArchived: systemIndex.isArchived || false,
+					isPinned: systemIndex.isPinned || false
+				})) return false;
+			}
+		}
+
+		return true;
+	}
+
+	async function twoToThree() {
+		// old serialization -> new serialization
+		const uuids = table.index.map(x => x.uuid);
+
+		for (const uuid of uuids) {
+			try {
+				const decoded = await decodeAsync(table.getRawStream(uuid)) as Serialized<System>;
+				if (typeof decoded.image?.value === "string" || typeof decoded.cover?.value === "string") {
+					await table.refresh();
+					break;
+				}
+			} catch (_e) {
+				console.error(_e);
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	async function threeToFour() {
+		for (const systemIndex of table.index) {
+			if (typeof systemIndex.viewInLists === "undefined") {
+				if (!await table.update({
+					uuid: systemIndex.uuid,
+					viewInLists: systemIndex.uuid !== appConfig.defaultSystem
+				})) return false;
+			}
+		}
+
+		return true;
+	}
+
+	function fourToFive() {
+		return _addDateCreated(table as unknown as ShittyTable<UUIDable>);
+	}
+
+	switch (version) {
+		case 0:
+		// @ts-expect-error fallthrough
+		case 1:
+			if (!await oneToTwo()) return 1;
+		// @ts-expect-error fallthrough
+		case 2:
+			if (!await twoToThree()) return 2;
+		// @ts-expect-error fallthrough
+		case 3:
+			if (!await threeToFour()) return 3;
+		case 4:
+			if (!await fourToFive()) return 4;
+	}
+
+	return 5;
+}
 
 export async function members(table: ShittyTable<Member>, version: number){
 	const systemId = appConfig.defaultSystem;
@@ -77,6 +169,10 @@ export async function members(table: ShittyTable<Member>, version: number){
 		return true;
 	}
 
+	function fourToFive(){
+		return _addDateCreated(table as unknown as ShittyTable<UUIDable>);
+	}
+
 	switch(version){
 		case 0:
 		// @ts-expect-error fallthrough
@@ -85,192 +181,14 @@ export async function members(table: ShittyTable<Member>, version: number){
 		// @ts-expect-error fallthrough
 		case 2:
 			if (!await twoToThree()) return 2;
+		// @ts-expect-error fallthrough
 		case 3:
 			if (!await threeToFour()) return 3;
+		case 4:
+			if (!await fourToFive()) return 4;
 	}
 
-	return 4;
-}
-
-export async function systems(table: ShittyTable<System>, version: number){
-	async function oneToTwo() {
-		for (const systemIndex of table.index) {
-			if (typeof systemIndex.isPinned === "undefined" || typeof systemIndex.isArchived === "undefined") {
-				if(!await table.update({
-					uuid: systemIndex.uuid,
-					isArchived: systemIndex.isArchived || false,
-					isPinned: systemIndex.isPinned || false
-				})) return false;
-			}
-		}
-
-		return true;
-	}
-
-	async function twoToThree(){
-		// old serialization -> new serialization
-		const uuids = table.index.map(x => x.uuid);
-
-		for(const uuid of uuids){
-			try{
-				const decoded = await decodeAsync(table.getRawStream(uuid)) as Serialized<System>;
-				if (typeof decoded.image?.value === "string" || typeof decoded.cover?.value === "string"){
-					await table.refresh();
-					break;
-				}
-			}catch(_e){
-				console.error(_e);
-				return false;				
-			}
-		}
-
-		return true;
-	}
-
-	async function threeToFour() {
-		for (const systemIndex of table.index) {
-			if (typeof systemIndex.viewInLists === "undefined") {
-				if (!await table.update({
-					uuid: systemIndex.uuid,
-					viewInLists: systemIndex.uuid !== appConfig.defaultSystem
-				})) return false;
-			}
-		}
-
-		return true;
-	}
-
-	switch(version){
-		case 0:
-		// @ts-expect-error fallthrough
-		case 1:
-			if(!await oneToTwo()) return 1;
-		// @ts-expect-error fallthrough
-		case 2:
-			if(!await twoToThree()) return 2;
-		case 3:
-			if(!await threeToFour()) return 3;
-	}
-
-	return 4;
-}
-
-export async function assets(table: ShittyTable<Asset>, version: number) {
-	async function zeroToOne() {
-		// old serialization -> new serialization
-		const uuids = table.index.map(x => x.uuid);
-
-		for (const uuid of uuids) {
-			try {
-				const decoded = await decodeAsync(table.getRawStream(uuid)) as Serialized<Asset>;
-				if (typeof decoded.file?.value === "string" || typeof decoded.file?.value === "string") {
-					await table.refresh();
-					break;
-				}
-			} catch (_e) {
-				console.error(_e);
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	async function oneToTwo() {
-		// add tags
-		const index = table.index.map(x => x.uuid);
-
-		for (const uuid of index) {
-			try {
-				// This is slow but I know no other way
-				const asset = await table.get(uuid);
-				if(!asset.tags)
-					await table.update({ uuid, tags: [] }, false);
-			} catch (_e) {
-				console.error(_e);
-				return false;
-			}
-		}
-
-		await table.saveIndexToDisk();
-		await table.saveHashesToDisk();
-
-		return true;
-	}
-
-	switch (version) {
-		// @ts-expect-error fallthrough
-		case 0:
-			if (!await zeroToOne()) return 0;
-		case 1:
-			if (!await oneToTwo()) return 1;
-	}
-
-	return 2;
-}
-
-export async function journalPosts(table: ShittyTable<JournalPost>, version: number) {
-	
-	interface JPOne extends JournalPost {
-		member?: UUID,
-		members: never
-	}
-
-	async function zeroToOne() {
-		// old serialization -> new serialization
-		const uuids = table.index.map(x => x.uuid);
-
-		for (const uuid of uuids) {
-			try {
-				const decoded = await decodeAsync(table.getRawStream(uuid)) as Serialized<JournalPost>;
-				if (typeof decoded.cover?.value === "string" || typeof decoded.cover?.value === "string") {
-					await table.refresh();
-					break;
-				}
-			} catch (_e) {
-				console.error(_e);
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	async function oneToTwo(){
-		// member -> members
-		const uuids = table.index.map(x => x.uuid);
-
-		for (const uuid of uuids) {
-			try {
-				const obj = await table.get(uuid) as JPOne;
-				if(!obj.members){
-					const members = typeof obj.member === "string" ? [obj.member] : [];
-					if (obj.member) delete obj.member;
-					await table.write(
-						{
-							...obj,
-							members
-						}, true
-					);
-				}
-			} catch (_e) {
-				console.error(_e);
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	switch (version) {
-		// @ts-expect-error fallthrough
-		case 0:
-			if (!await zeroToOne()) return 0;
-		case 1:
-			if (!await oneToTwo()) return 1;
-	}
-
-	return 2;
+	return 5;
 }
 
 export async function boardMessages(table: ShittyTable<BoardMessage>, version: number) {
@@ -306,36 +224,19 @@ export async function boardMessages(table: ShittyTable<BoardMessage>, version: n
 		return true;
 	}
 
-	switch (version) {
-		case 0:
-			if (!await zeroToOne()) return 0;
-	}
-
-	return 1;
-}
-
-export async function tags(table: ShittyTable<Tag>, version: number) {
-	async function zeroToOne() {
-		// add isArchived
-		for (const tagIndex of table.index) {
-			try {
-				if(typeof tagIndex.isArchived === "undefined")
-					await table.update({ uuid: tagIndex.uuid, isArchived: false });
-			} catch (_e) {
-				console.error(_e);
-				return false;
-			}
-		}
-
-		return true;
+	function oneToTwo() {
+		return _addDateCreated(table as unknown as ShittyTable<UUIDable>);
 	}
 
 	switch (version) {
+		// @ts-expect-error fallthrough
 		case 0:
 			if (!await zeroToOne()) return 0;
+		case 1:
+			if (!await oneToTwo()) return 1;
 	}
 
-	return 1;
+	return 2;
 }
 
 export async function frontingEntries(table: ShittyTable<FrontingEntry>, version: number) {
@@ -408,6 +309,128 @@ export async function frontingEntries(table: ShittyTable<FrontingEntry>, version
 		return true;
 	}
 
+	function twoToThree() {
+		return _addDateCreated(table as unknown as ShittyTable<UUIDable>);
+	}
+
+	switch (version) {
+		// @ts-expect-error fallthrough
+		case 0:
+			if (!await zeroToOne()) return 0;
+		// @ts-expect-error fallthrough
+		case 1:
+			if (!await oneToTwo()) return 1;
+		case 2:
+			if (!await twoToThree()) return 2;
+	}
+
+	return 3;
+}
+
+export async function journalPosts(table: ShittyTable<JournalPost>, version: number) {
+	
+	interface JPOne extends JournalPost {
+		member?: UUID,
+		members: never
+	}
+
+	async function zeroToOne() {
+		// old serialization -> new serialization
+		const uuids = table.index.map(x => x.uuid);
+
+		for (const uuid of uuids) {
+			try {
+				const decoded = await decodeAsync(table.getRawStream(uuid)) as Serialized<JournalPost>;
+				if (typeof decoded.cover?.value === "string" || typeof decoded.cover?.value === "string") {
+					await table.refresh();
+					break;
+				}
+			} catch (_e) {
+				console.error(_e);
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	async function oneToTwo(){
+		// member -> members
+		const uuids = table.index.map(x => x.uuid);
+
+		for (const uuid of uuids) {
+			try {
+				const obj = await table.get(uuid) as JPOne;
+				if(!obj.members){
+					const members = typeof obj.member === "string" ? [obj.member] : [];
+					if (obj.member) delete obj.member;
+					await table.write(
+						{
+							...obj,
+							members
+						}, true
+					);
+				}
+			} catch (_e) {
+				console.error(_e);
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	function twoToThree() {
+		return _addDateCreated(table as unknown as ShittyTable<UUIDable>);
+	}
+
+	switch (version) {
+		// @ts-expect-error fallthrough
+		case 0:
+			if (!await zeroToOne()) return 0;
+		// @ts-expect-error fallthrough
+		case 1:
+			if (!await oneToTwo()) return 1;
+		case 2:
+			if (!await twoToThree()) return 2;
+	}
+
+	return 3;
+}
+
+export async function reminders(table: ShittyTable<Reminder>, version: number){
+	function zeroToOne(){
+		return _addDateCreated(table as unknown as ShittyTable<UUIDable>);
+	}
+
+	switch(version){
+		case 0:
+			if (!await zeroToOne()) return 0;
+	}
+
+	return 1;
+}
+
+export async function tags(table: ShittyTable<Tag>, version: number) {
+	async function zeroToOne() {
+		// add isArchived
+		for (const tagIndex of table.index) {
+			try {
+				if(typeof tagIndex.isArchived === "undefined")
+					await table.update({ uuid: tagIndex.uuid, isArchived: false });
+			} catch (_e) {
+				console.error(_e);
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	function oneToTwo() {
+		return _addDateCreated(table as unknown as ShittyTable<UUIDable>);
+	}
+
 	switch (version) {
 		// @ts-expect-error fallthrough
 		case 0:
@@ -417,4 +440,104 @@ export async function frontingEntries(table: ShittyTable<FrontingEntry>, version
 	}
 
 	return 2;
+}
+
+export async function assets(table: ShittyTable<Asset>, version: number) {
+	async function zeroToOne() {
+		// old serialization -> new serialization
+		const uuids = table.index.map(x => x.uuid);
+
+		for (const uuid of uuids) {
+			try {
+				const decoded = await decodeAsync(table.getRawStream(uuid)) as Serialized<Asset>;
+				if (typeof decoded.file?.value === "string" || typeof decoded.file?.value === "string") {
+					await table.refresh();
+					break;
+				}
+			} catch (_e) {
+				console.error(_e);
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	async function oneToTwo() {
+		// add tags
+		const index = table.index.map(x => x.uuid);
+
+		for (const uuid of index) {
+			try {
+				// This is slow but I know no other way
+				const asset = await table.get(uuid);
+				if (!asset.tags)
+					await table.update({ uuid, tags: [] }, false);
+			} catch (_e) {
+				console.error(_e);
+				return false;
+			}
+		}
+
+		await table.saveIndexToDisk();
+		await table.saveHashesToDisk();
+
+		return true;
+	}
+
+	function twoToThree() {
+		return _addDateCreated(table as unknown as ShittyTable<UUIDable>);
+	}
+
+	switch (version) {
+		// @ts-expect-error fallthrough
+		case 0:
+			if (!await zeroToOne()) return 0;
+		// @ts-expect-error fallthrough
+		case 1:
+			if (!await oneToTwo()) return 1;
+		case 2:
+			if (!await twoToThree()) return 2;
+	}
+
+	return 3;
+}
+
+export async function customFields(table: ShittyTable<CustomField>, version: number) {
+	function zeroToOne() {
+		return _addDateCreated(table as unknown as ShittyTable<UUIDable>);
+	}
+
+	switch (version) {
+		case 0:
+			if (!await zeroToOne()) return 0;
+	}
+
+	return 1;
+}
+
+export async function notes(table: ShittyTable<Note>, version: number) {
+	function zeroToOne() {
+		return _addDateCreated(table as unknown as ShittyTable<UUIDable>);
+	}
+
+	switch (version) {
+		case 0:
+			if (!await zeroToOne()) return 0;
+	}
+
+	return 1;
+}
+
+export async function filterQueries(table: ShittyTable<FilterQuery>, version: number) {
+	function zeroToOne() {
+		return _addDateCreated(table as unknown as ShittyTable<UUIDable>);
+	}
+
+	switch (version) {
+		case 0:
+			if (!await zeroToOne()) return 0;
+	}
+
+	return 1;
 }

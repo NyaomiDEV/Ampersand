@@ -41,7 +41,8 @@
 		name: "",
 		isArchived: false,
 		isPinned: false,
-		viewInLists: true
+		viewInLists: true,
+		dateCreated: new Date()
 	});
 	const systemSelectModal = useTemplateRef("systemSelectModal");
 	const dashboardSettingsModal = useTemplateRef("dashboardSettingsModal");

@@ -23,7 +23,7 @@
 	import chartMD from "@material-symbols/svg-600/rounded/bar_chart.svg";
 	import trashMD from "@material-symbols/svg-600/rounded/delete.svg";
 
-	import { BoardMessage, BoardMessageComplete } from "../lib/db/entities";
+	import { BoardMessage, BoardMessageComplete, UUIDable } from "../lib/db/entities";
 	import { updateBoardMessage, deleteBoardMessage, newBoardMessage } from "../lib/db/tables/boardMessages";
 	import { ref, toRaw, useTemplateRef } from "vue";
 	import { PartialBy } from "../lib/types";
@@ -37,11 +37,11 @@
 	const i18next = useTranslation();
 
 	const props = defineProps<{
-		boardMessage?: PartialBy<BoardMessageComplete, "uuid">,
+		boardMessage?: PartialBy<BoardMessageComplete, keyof UUIDable>,
 		dateOverride?: Date
 	}>();
 
-	const emptyBoardMessage: PartialBy<BoardMessageComplete, "uuid"> = {
+	const emptyBoardMessage: PartialBy<BoardMessageComplete, keyof UUIDable> = {
 		members: [],
 		title: "",
 		body: "",
@@ -103,7 +103,8 @@
 			if(!uuid){
 				const result = await newBoardMessage({
 					..._boardMessage,
-					members: _boardMessage.members.map(x => x.uuid)
+					members: _boardMessage.members.map(x => x.uuid),
+					dateCreated: new Date()
 				});
 				if(!result.success) throw new Error(`E: ${result.err || "failed"}`);
 

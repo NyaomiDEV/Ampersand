@@ -23,7 +23,7 @@
 	import { accessibilityConfig, appConfig } from "../../lib/config";
 	import { useRoute } from "vue-router";
 	import { PartialBy } from "../../lib/types";
-	import { System } from "../../lib/db/entities";
+	import { System, UUIDable } from "../../lib/db/entities";
 	import { useTranslation } from "i18next-vue";
 	import Color from "../../components/Color.vue";
 	import { addMaterialColors, rgbaToArgb, unsetMaterialColors } from "../../lib/theme";
@@ -46,7 +46,7 @@
 	const loading = ref(false);
 	const loadingBar = ref(false);
 
-	const emptySystem: PartialBy<System, "uuid"> = {
+	const emptySystem: PartialBy<System, keyof UUIDable> = {
 		name: "",
 		isPinned: false,
 		isArchived: false,
@@ -84,7 +84,8 @@
 
 			if(!uuid){
 				const result = await newSystem({
-					..._system
+					..._system,
+					dateCreated: new Date()
 				});
 				if(!result.success) throw new Error(`E: ${result.err || "failed"}`);
 
@@ -240,7 +241,7 @@
 	async function getParents(){
 		const _parents: System[] = [];
 
-		let _system: PartialBy<System, "uuid"> | undefined = structuredClone(toRaw(system.value));
+		let _system: PartialBy<System, keyof UUIDable> | undefined = structuredClone(toRaw(system.value));
 		// for our purpose (disallowing systems to pick themselves or their parents) a system is also its own parent
 		if(_system?.uuid) _parents.push(_system as System);
 

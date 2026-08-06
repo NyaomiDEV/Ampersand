@@ -76,7 +76,7 @@ export async function toReminderComplete(reminders: Reminder[]): Promise<Reminde
 	}));
 }
 
-export async function newReminder(reminder: Omit<Reminder, keyof UUIDable>): Promise<TransactionStatus<string>> {
+export async function newReminder(reminder: Omit<Reminder, keyof Omit<UUIDable, "dateCreated">>): Promise<TransactionStatus<string>> {
 	try{
 		const uuid = await db.reminders.add(reminder);
 
@@ -112,7 +112,7 @@ export async function removeReminder(uuid: UUID): Promise<TransactionStatus<void
 	}
 }
 
-export async function updateReminder(newContent: UUIDable & Partial<Reminder>): Promise<TransactionStatus<{ oldData: Reminder, newData: Reminder }>> {
+export async function updateReminder(newContent: Omit<UUIDable, "dateCreated"> & Partial<Reminder>): Promise<TransactionStatus<{ oldData: Reminder, newData: Reminder }>> {
 	try{
 		const updated = await db.reminders.update(newContent);
 		if(updated) {

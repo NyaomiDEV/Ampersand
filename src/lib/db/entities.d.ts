@@ -1,5 +1,6 @@
 export interface UUIDable {
-	uuid: UUID
+	uuid: UUID,
+	dateCreated: Date
 };
 
 export type UUID = string;
@@ -140,7 +141,6 @@ export interface Member extends UUIDable {
 	isArchived: boolean,
 	isDissociativeState: boolean,
 	tags: UUID[] // array of UUIDs
-	dateCreated: Date
 }
 
 export interface Reminder extends UUIDable {

@@ -122,7 +122,8 @@
 				member: member.uuid,
 				startTime: new Date(),
 				isMainFronter: false,
-				isLocked: false
+				isLocked: false,
+				dateCreated: new Date()
 			});
 			if(!result.success) throw new Error(`E: ${result.err || "failed"}`);
 

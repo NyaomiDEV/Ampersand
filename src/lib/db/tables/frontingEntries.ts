@@ -63,7 +63,7 @@ export async function toFrontingEntryComplete(frontingEntries: FrontingEntry[]):
 	}));
 }
 
-export async function newFrontingEntry(frontingEntry: Omit<FrontingEntry, keyof UUIDable>): Promise<TransactionStatus<string>> {
+export async function newFrontingEntry(frontingEntry: Omit<FrontingEntry, keyof Omit<UUIDable, "dateCreated">>): Promise<TransactionStatus<string>> {
 	try{
 		const uuid = await db.frontingEntries.add(frontingEntry);
 
@@ -100,7 +100,7 @@ export async function deleteFrontingEntry(uuid: UUID): Promise<TransactionStatus
 
 // HACK: Think of a better way
 let shouldDebounce = false;
-export async function updateFrontingEntry(newContent: UUIDable & Partial<FrontingEntry>): Promise<TransactionStatus<{ oldData: FrontingEntry, newData: FrontingEntry }>> {
+export async function updateFrontingEntry(newContent: Omit<UUIDable, "dateCreated"> & Partial<FrontingEntry>): Promise<TransactionStatus<{ oldData: FrontingEntry, newData: FrontingEntry }>> {
 	try{
 		const updated = await db.frontingEntries.update(newContent);
 		if(updated) {
@@ -183,7 +183,8 @@ export async function setSoleFronter(member: Member) {
 				member: member.uuid,
 				startTime: endTime,
 				isMainFronter: true,
-				isLocked: false
+				isLocked: false,
+				dateCreated: new Date()
 			});
 			if(res.success)
 				uuid = res.detail!;

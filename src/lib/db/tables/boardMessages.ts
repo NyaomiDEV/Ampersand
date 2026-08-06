@@ -45,7 +45,7 @@ export async function toBoardMessageComplete(boardMessages: BoardMessage[]): Pro
 	}));
 }
 
-export async function newBoardMessage(boardMessage: Omit<BoardMessage, keyof UUIDable>): Promise<TransactionStatus<string>> {
+export async function newBoardMessage(boardMessage: Omit<BoardMessage, keyof Omit<UUIDable, "dateCreated">>): Promise<TransactionStatus<string>> {
 	try{
 		const uuid = await db.boardMessages.add(boardMessage);
 
@@ -80,7 +80,7 @@ export async function deleteBoardMessage(uuid: UUID): Promise<TransactionStatus<
 	}
 }
 
-export async function updateBoardMessage(newContent: UUIDable & Partial<BoardMessage>): Promise<TransactionStatus<{ oldData: BoardMessage, newData: BoardMessage }>> {
+export async function updateBoardMessage(newContent: Omit<UUIDable, "dateCreated"> & Partial<BoardMessage>): Promise<TransactionStatus<{ oldData: BoardMessage, newData: BoardMessage }>> {
 	try{
 		const updated = await db.boardMessages.update(newContent);
 		if(updated) {

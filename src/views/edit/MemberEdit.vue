@@ -35,7 +35,7 @@
 	import gradientMD from "@material-symbols/svg-600/rounded/gradient.svg";
 	import accountCircle from "@material-symbols/svg-600/rounded/account_circle-fill.svg";
 
-	import { CustomField, FrontingEntry, Member, System, Tag } from "../../lib/db/entities";
+	import { CustomField, FrontingEntry, Member, System, Tag, UUIDable } from "../../lib/db/entities";
 	import { newMember, deleteMember, updateMember, defaultMember, getMember } from "../../lib/db/tables/members";
 	import { getTags, isValidTag } from "../../lib/db/tables/tags";
 	import { fontFamilyPicker, promptOkCancel, sortName, toast, formatDate, imageClipPicker, saveImageFile, sortFrontingEntries } from "../../lib/util/misc";
@@ -73,7 +73,7 @@
 	const loading = ref(false);
 	const loadingBar = ref(false);
 
-	const emptyMember: PartialBy<Member, "uuid" | "dateCreated"> = {
+	const emptyMember: PartialBy<Member, keyof UUIDable> = {
 		name: "",
 		system: appConfig.defaultSystem,
 		isArchived: false,
@@ -83,7 +83,7 @@
 	};
 	const member = ref({ ...emptyMember });
 
-	const system = ref<System>({ uuid: member.value.system, name: "", isPinned: false, isArchived: false, viewInLists: true });
+	const system = ref<System>({ uuid: member.value.system, name: "", isPinned: false, isArchived: false, viewInLists: true, dateCreated: new Date() });
 	const tags = shallowRef<Tag[]>([]);
 	const lastFrontingEntry = shallowRef<IndexEntry<FrontingEntry>>();
 	const tagSelectionModal = useTemplateRef("tagSelectionModal");

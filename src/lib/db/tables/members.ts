@@ -42,7 +42,7 @@ export async function* getFilteredMembers(query: string){
 	}
 }
 
-export async function newMember(member: Omit<Member, keyof UUIDable>): Promise<TransactionStatus<string>> {
+export async function newMember(member: Omit<Member, keyof Omit<UUIDable, "dateCreated">>): Promise<TransactionStatus<string>> {
 	try{
 		const uuid = await db.members.add(member);
 
@@ -85,7 +85,7 @@ export async function deleteMember(uuid: UUID): Promise<TransactionStatus<void>>
 	}
 }
 
-export async function updateMember(newContent: UUIDable & Partial<Member>): Promise<TransactionStatus<{ oldData: Member, newData: Member }>> {
+export async function updateMember(newContent: Omit<UUIDable, "dateCreated"> & Partial<Member>): Promise<TransactionStatus<{ oldData: Member, newData: Member }>> {
 	try{
 		if (newContent.uuid === nilUid) throw new Error("Cannot update member with null uuid");
 		const updated = await db.members.update(newContent);

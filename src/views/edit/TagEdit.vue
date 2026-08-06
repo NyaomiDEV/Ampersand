@@ -26,7 +26,7 @@
 	import assetMD from "@material-symbols/svg-600/rounded/folder_open.svg";
 
 	import { getTag, newTag, removeTag, updateTag } from "../../lib/db/tables/tags";
-	import { Member, Tag } from "../../lib/db/entities";
+	import { Member, Tag, UUIDable } from "../../lib/db/entities";
 	import { getCurrentInstance, h, onMounted, ref, watch, useTemplateRef } from "vue";
 	import { addMaterialColors, rgbaToArgb, unsetMaterialColors } from "../../lib/theme";
 	import { PartialBy } from "../../lib/types";
@@ -49,7 +49,7 @@
 	const i18next = useTranslation();
 	const self = getCurrentInstance();
 
-	const emptyTag: PartialBy<Tag, "uuid"> = {
+	const emptyTag: PartialBy<Tag, keyof UUIDable> = {
 		name: "",
 		type: "member",
 		isArchived: false,
@@ -117,7 +117,10 @@
 			await loadingModal.value?.$el.present();
 
 			if(!uuid){
-				const result = await newTag(_tag);
+				const result = await newTag({
+					..._tag,
+					dateCreated: new Date()
+				});
 				if(!result.success) throw new Error(`E: ${result.err || "failed"}`);
 
 				// eslint-disable-next-line @typescript-eslint/no-unsafe-call

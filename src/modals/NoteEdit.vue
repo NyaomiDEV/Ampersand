@@ -21,7 +21,7 @@
 	import trashMD from "@material-symbols/svg-600/rounded/delete.svg";
 	import MemberSelect from "./MemberSelect.vue";
 
-	import { Note } from "../lib/db/entities";
+	import { Note, UUIDable } from "../lib/db/entities";
 	import { newNote, updateNote, deleteNote } from "../lib/db/tables/notes";
 	import { ref, toRaw, useTemplateRef } from "vue";
 
@@ -36,10 +36,10 @@
 	const i18next = useTranslation();
 
 	const props = defineProps<{
-		note?: PartialBy<Note, "uuid">
+		note?: PartialBy<Note, keyof UUIDable>
 	}>();
 
-	const emptyNote: PartialBy<Note, "uuid"> = {
+	const emptyNote: PartialBy<Note, keyof UUIDable> = {
 		title: "",
 		content: "",
 		priority: 1,
@@ -61,7 +61,10 @@
 			await loadingModal.value?.$el.present();
 
 			if(!uuid) {
-				const result = await newNote({ ..._note });
+				const result = await newNote({
+					..._note,
+					dateCreated: new Date()
+				});
 				if(!result.success) throw new Error(`E: ${result.err || "failed"}`);
 
 				// eslint-disable-next-line @typescript-eslint/no-unsafe-call

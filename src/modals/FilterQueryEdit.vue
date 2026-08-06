@@ -20,7 +20,7 @@
 	import saveMD from "@material-symbols/svg-600/rounded/save.svg";
 	import trashMD from "@material-symbols/svg-600/rounded/delete.svg";
 
-	import { FilterQuery } from "../lib/db/entities";
+	import { FilterQuery, UUIDable } from "../lib/db/entities";
 	import { deleteFilterQuery, newFilterQuery, updateFilterQuery } from "../lib/db/tables/filterQueries";
 	import { ref, toRaw, useTemplateRef } from "vue";
 
@@ -35,10 +35,10 @@
 
 
 	const props = defineProps<{
-		filterQuery?: PartialBy<FilterQuery, "uuid">
+		filterQuery?: PartialBy<FilterQuery, keyof UUIDable>
 	}>();
 
-	const emptyFilterQuery: PartialBy<FilterQuery, "uuid"> = {
+	const emptyFilterQuery: PartialBy<FilterQuery, keyof UUIDable> = {
 		name: "",
 		type: "members",
 		query: ""
@@ -55,7 +55,10 @@
 			await loadingModal.value?.$el.present();
 
 			if(!uuid) {
-				const result = await newFilterQuery({ ..._filterQuery });
+				const result = await newFilterQuery({
+					..._filterQuery,
+					dateCreated: new Date()
+				});
 				if(!result.success) throw new Error(`E: ${result.err || "failed"}`);
 
 				// eslint-disable-next-line @typescript-eslint/no-unsafe-call

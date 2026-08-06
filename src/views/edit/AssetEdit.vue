@@ -20,7 +20,7 @@
 	import trashMD from "@material-symbols/svg-600/rounded/delete.svg";
 
 	import { newAsset, deleteAsset, updateAsset, getAsset } from "../../lib/db/tables/assets";
-	import { Asset, Tag } from "../../lib/db/entities";
+	import { Asset, Tag, UUIDable } from "../../lib/db/entities";
 	import { onBeforeMount, ref, shallowRef, useTemplateRef, watch } from "vue";
 	import { PartialBy } from "../../lib/types";
 	import { useRoute } from "vue-router";
@@ -38,7 +38,7 @@
 
 	const loading = ref(false);
 
-	const emptyAsset: PartialBy<Asset, "uuid" | "file"> = {
+	const emptyAsset: PartialBy<Asset, keyof UUIDable | "file"> = {
 		friendlyName: "",
 		tags: []
 	};
@@ -77,7 +77,11 @@
 			await loadingModal.value?.$el.present();
 
 			if(!uuid){
-				const result = await newAsset(_asset as PartialBy<Asset, "uuid">);
+				const result = await newAsset({
+					..._asset as PartialBy<Asset, keyof UUIDable>,
+					dateCreated: new Date()
+				});
+
 				if(!result.success) throw new Error(`E: ${result.err || "failed"}`);
 
 				// eslint-disable-next-line @typescript-eslint/no-unsafe-call

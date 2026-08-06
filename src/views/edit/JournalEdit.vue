@@ -29,7 +29,7 @@
 	import personAddMD from "@material-symbols/svg-600/rounded/person_add.svg";
 	import clockAddMD from "@material-symbols/svg-600/rounded/more_time.svg";
 
-	import { JournalPost, JournalPostComplete, Tag } from "../../lib/db/entities";
+	import { JournalPost, JournalPostComplete, Tag, UUIDable } from "../../lib/db/entities";
 	import { newJournalPost, updateJournalPost, getJournalPost, toJournalPostComplete } from "../../lib/db/tables/journalPosts";
 	import { formatDate, sortName, toast } from "../../lib/util/misc";
 	import { getResizedImage } from "../../lib/util/image";
@@ -65,7 +65,7 @@
 	const tags = shallowRef<Tag[]>([]);
 	const self = getCurrentInstance();
 
-	const emptyPost: PartialBy<JournalPostComplete, "uuid"> = {
+	const emptyPost: PartialBy<JournalPostComplete, keyof UUIDable> = {
 		title: "",
 		members: [],
 		date: new Date(),
@@ -99,7 +99,8 @@
 			if(!uuid){
 				const result = await newJournalPost({
 					..._post,
-					members: _post.members.map(x => x.uuid)
+					members: _post.members.map(x => x.uuid),
+					dateCreated: new Date()
 				});
 				if(!result.success) throw new Error(`E: ${result.err || "failed"}`);
 				

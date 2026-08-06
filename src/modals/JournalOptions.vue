@@ -16,7 +16,7 @@
 		IonButton
 	} from "@ionic/vue";
 
-	import { JournalPostComplete, Tag } from "../lib/db/entities";
+	import { JournalPostComplete, Tag, UUIDable } from "../lib/db/entities";
 	import { PartialBy } from "../lib/types";
 	import TagListSelect from "./TagListSelect.vue";
 	import DatePopupPicker from "../components/DatePopupPicker.vue";
@@ -37,7 +37,7 @@
 	const loadingModal = useTemplateRef("loadingModal");
 
 	const props = defineProps<{
-		post: Ref<PartialBy<JournalPostComplete, "uuid">>
+		post: Ref<PartialBy<JournalPostComplete, keyof UUIDable>>
 		tags: ShallowRef<Tag[]>
 	}>();
 	const post = props.post;

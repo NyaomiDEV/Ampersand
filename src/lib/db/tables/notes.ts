@@ -58,7 +58,7 @@ export async function* getFilteredNotes(query: string){
 	}
 }
 
-export async function newNote(note: Omit<Note, keyof UUIDable>): Promise<TransactionStatus<string>> {
+export async function newNote(note: Omit<Note, keyof Omit<UUIDable, "dateCreated">>): Promise<TransactionStatus<string>> {
 	try{
 		const uuid = await db.notes.add(note);
 
@@ -93,7 +93,7 @@ export async function deleteNote(uuid: UUID): Promise<TransactionStatus<void>> {
 	}
 }
 
-export async function updateNote(newContent: UUIDable & Partial<Note>): Promise<TransactionStatus<{ oldData: Note, newData: Note }>> {
+export async function updateNote(newContent: Omit<UUIDable, "dateCreated"> & Partial<Note>): Promise<TransactionStatus<{ oldData: Note, newData: Note }>> {
 	try{
 		const updated = await db.notes.update(newContent);
 		if(updated) {

@@ -81,7 +81,8 @@
 					member: members[0].uuid,
 					startTime: new Date(),
 					isMainFronter: false,
-					isLocked: false
+					isLocked: false,
+					dateCreated: new Date()
 				});
 				void sendFrontingChangedEvent();
 			}

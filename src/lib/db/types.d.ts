@@ -32,10 +32,10 @@ export interface Table<T extends UUIDable> {
 	refresh(): Promise<void>
 	write(data: T, saveIndexAfterwards: boolean): Promise<void>
 	exists(uuid: string): boolean
-	add(data: PartialBy<T, keyof UUIDable>, saveIndexAfterwards = true): Promise<false | T["uuid"]>
+	add(data: PartialBy<T, keyof Omit<UUIDable, "dateCreated">>, saveIndexAfterwards = true): Promise<false | T["uuid"]>
 	bulkAdd(contents: T[]): Promise<Array<false | T["uuid"]>>
-	update(newData: UUIDable & Partial<T>, saveIndexAfterwards = true): Promise<false | Update<T>>
-	bulkUpdate(contents: (UUIDable & Partial<T>)[]): Promise<Array<false | Update<T>>>
+	update(newData: Omit<UUIDable, "dateCreated"> & Partial<T>, saveIndexAfterwards = true): Promise<false | Update<T>>
+	bulkUpdate(contents: (Omit<UUIDable, "dateCreated"> & Partial<T>)[]): Promise<Array<false | Update<T>>>
 	delete(uuid: UUID): Promise<void>
 	bulkDelete(uuids: UUID[]): Promise<void>
 	clear(): Promise<void>

@@ -39,7 +39,7 @@ export async function* getFilteredAssets(query: string){
 	}
 }
 
-export async function newAsset(asset: Omit<Asset, keyof UUIDable>): Promise<TransactionStatus<string>> {
+export async function newAsset(asset: Omit<Asset, keyof Omit<UUIDable, "dateCreated">>): Promise<TransactionStatus<string>> {
 	try{
 		const uuid = await db.assets.add(asset);
 
@@ -87,7 +87,7 @@ export async function deleteAsset(uuid: UUID): Promise<TransactionStatus<void>> 
 	}
 }
 
-export async function updateAsset(newContent: UUIDable & Partial<Asset>): Promise<TransactionStatus<{ oldData: Asset, newData: Asset }>> {
+export async function updateAsset(newContent: Omit<UUIDable, "dateCreated"> & Partial<Asset>): Promise<TransactionStatus<{ oldData: Asset, newData: Asset }>> {
 	try{
 		const updated = await db.assets.update(newContent);
 		if(updated) {

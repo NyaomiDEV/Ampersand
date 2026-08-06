@@ -46,7 +46,7 @@ export async function* getFilteredSystems(query: string){
 	}
 }
 
-export async function newSystem(system: Omit<System, keyof UUIDable>): Promise<TransactionStatus<string>> {
+export async function newSystem(system: Omit<System, keyof Omit<UUIDable, "dateCreated">>): Promise<TransactionStatus<string>> {
 	try{
 		const uuid = await db.systems.add(system);
 
@@ -82,7 +82,7 @@ export async function deleteSystem(uuid: UUID): Promise<TransactionStatus<void>>
 	}
 }
 
-export async function updateSystem(newContent: UUIDable & Partial<System>): Promise<TransactionStatus<{ oldData: System, newData: System }>> {
+export async function updateSystem(newContent: Omit<UUIDable, "dateCreated"> & Partial<System>): Promise<TransactionStatus<{ oldData: System, newData: System }>> {
 	try {
 		const updated = await db.systems.update(newContent);
 		if(updated){

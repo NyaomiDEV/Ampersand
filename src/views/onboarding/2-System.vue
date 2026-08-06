@@ -9,7 +9,7 @@
 	import accountCircle from "@material-symbols/svg-600/rounded/supervised_user_circle.svg";
 	import pencilMD from "@material-symbols/svg-600/rounded/edit.svg";
 	import ArrowMD from "@material-symbols/svg-600/rounded/arrow_forward.svg";
-	import { System } from "../../lib/db/entities";
+	import { System, UUIDable } from "../../lib/db/entities";
 	import { PartialBy } from "../../lib/types";
 	import { appConfig } from "../../lib/config";
 	import Spinner from "../../components/Spinner.vue";
@@ -18,8 +18,8 @@
 
 	const router = useIonRouter();
 
-	const emptySystem: PartialBy<System, "uuid"> = { name: "", isArchived: false, isPinned: false, viewInLists: true };
-	const system = ref<PartialBy<System, "uuid">>({ ...emptySystem });
+	const emptySystem: PartialBy<System, keyof UUIDable> = { name: "", isArchived: false, isPinned: false, viewInLists: true };
+	const system = ref<PartialBy<System, keyof UUIDable>>({ ...emptySystem });
 
 	async function modifyPicture(){
 		loadingBar.value = true;
@@ -35,7 +35,8 @@
 		try{
 			if(!uuid){
 				const result = await newSystem({
-					..._system
+					..._system,
+					dateCreated: new Date()
 				});
 				if(!result.success) throw new Error(`E: ${result.err || "failed"}`);
 				else appConfig.defaultSystem = result.detail!;

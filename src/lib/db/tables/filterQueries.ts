@@ -61,7 +61,7 @@ export async function* getFilteredFilterQueries(type: FilterQueryType, query: st
 	}
 }
 
-export async function newFilterQuery(filterQuery: Omit<FilterQuery, keyof UUIDable>): Promise<TransactionStatus<string>> {
+export async function newFilterQuery(filterQuery: Omit<FilterQuery, keyof Omit<UUIDable, "dateCreated">>): Promise<TransactionStatus<string>> {
 	try{
 		const uuid = await db.filterQueries.add(filterQuery);
 
@@ -96,7 +96,7 @@ export async function deleteFilterQuery(uuid: UUID): Promise<TransactionStatus<v
 	}
 }
 
-export async function updateFilterQuery(newContent: UUIDable & Partial<FilterQuery>): Promise<TransactionStatus<{ oldData: FilterQuery, newData: FilterQuery }>> {
+export async function updateFilterQuery(newContent: Omit<UUIDable, "dateCreated"> & Partial<FilterQuery>): Promise<TransactionStatus<{ oldData: FilterQuery, newData: FilterQuery }>> {
 	try{
 		const updated = await db.filterQueries.update(newContent);
 		if(updated) {

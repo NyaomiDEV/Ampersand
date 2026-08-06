@@ -19,7 +19,7 @@
 	import saveMD from "@material-symbols/svg-600/rounded/save.svg";
 	import trashMD from "@material-symbols/svg-600/rounded/delete.svg";
 
-	import { CustomField } from "../lib/db/entities";
+	import { CustomField, UUIDable } from "../lib/db/entities";
 	import { newCustomField, updateCustomField, deleteCustomField } from "../lib/db/tables/customFields";
 	import { ref, toRaw, useTemplateRef } from "vue";
 
@@ -31,10 +31,10 @@
 	const i18next = useTranslation();
 
 	const props = defineProps<{
-		customField?: PartialBy<CustomField, "uuid">
+		customField?: PartialBy<CustomField, keyof UUIDable>
 	}>();
 
-	const emptyCustomField: PartialBy<CustomField, "uuid"> = {
+	const emptyCustomField: PartialBy<CustomField, keyof UUIDable> = {
 		name: "",
 		priority: 1,
 		default: false
@@ -53,7 +53,10 @@
 			await loadingModal.value?.$el.present();
 
 			if(!uuid) {
-				const result = await newCustomField({ ..._customField });
+				const result = await newCustomField({
+					..._customField,
+					dateCreated: new Date()
+				});
 				if(!result.success) throw new Error(`E: ${result.err || "failed"}`);
 
 				// eslint-disable-next-line @typescript-eslint/no-unsafe-call

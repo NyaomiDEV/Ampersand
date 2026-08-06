@@ -20,7 +20,7 @@
 	import saveMD from "@material-symbols/svg-600/rounded/save.svg";
 	import trashMD from "@material-symbols/svg-600/rounded/delete.svg";
 
-	import { FrontingEntry, FrontingEntryComplete, Member } from "../lib/db/entities";
+	import { FrontingEntry, FrontingEntryComplete, Member, UUIDable } from "../lib/db/entities";
 	import { newFrontingEntry, updateFrontingEntry, deleteFrontingEntry, sendFrontingChangedEvent, getFrontingBetweenIndex } from "../lib/db/tables/frontingEntries";
 	import { ref, toRaw, useTemplateRef, watch } from "vue";
 	import { useTranslation } from "i18next-vue";
@@ -42,16 +42,16 @@
 	const router = useIonRouter();
 
 	const props = defineProps<{
-		frontingEntry?: PartialBy<FrontingEntryComplete, "uuid" | "member">,
+		frontingEntry?: PartialBy<FrontingEntryComplete, keyof UUIDable | "member">,
 		overrideStartTime?: Date,
 		overrideEndTime?: Date
 	}>();
 
-	const emptyFrontingEntry: PartialBy<FrontingEntryComplete, "uuid" | "member"> = {
+	const emptyFrontingEntry: PartialBy<FrontingEntryComplete, keyof UUIDable | "member"> = {
 		isMainFronter: false,
 		startTime: props.overrideStartTime || new Date(),
 		endTime: props.overrideEndTime || new Date(),
-		isLocked: false
+		isLocked: false,
 	};
 	const frontingEntry = ref({ ...(props.frontingEntry || emptyFrontingEntry) });
 	const allFrontingInTimeSpan = ref<IndexEntry<FrontingEntry>[]>([]);
@@ -84,7 +84,8 @@
 				const result = await newFrontingEntry({
 					..._frontingEntry,
 					member: _frontingEntry.member.uuid,
-					influencing: _frontingEntry.influencing?.map(x => x.uuid)
+					influencing: _frontingEntry.influencing?.map(x => x.uuid),
+					dateCreated: new Date()
 				});
 				if(!result.success) throw new Error(`E: ${result.err || "failed"}`);
 

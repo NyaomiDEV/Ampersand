@@ -27,7 +27,8 @@ export function exportDatabaseToJSON() {
 					yield {
 						..._data,
 						date: _data.date.toISOString(),
-						comments: _data.comments?.map(x => ({ ...x, date: x.date.toISOString(), replyTo: x.replyTo?.toISOString() }))
+						comments: _data.comments?.map(x => ({ ...x, date: x.date.toISOString(), replyTo: x.replyTo?.toISOString() })),
+						dateCreated: _data.dateCreated.toISOString()
 					} as SerializableJson<BoardMessageJSON>;
 					break;
 				}
@@ -42,7 +43,8 @@ export function exportDatabaseToJSON() {
 									.map(x => [x[0].toISOString(), x[1]])
 								)
 							: undefined,
-						comments: _data.comments?.map(x => ({ ...x, date: x.date.toISOString(), replyTo: x.replyTo?.toISOString() }))
+						comments: _data.comments?.map(x => ({ ...x, date: x.date.toISOString(), replyTo: x.replyTo?.toISOString() })),
+						dateCreated: _data.dateCreated.toISOString()
 					}) as SerializableJson<FrontingEntryJSON>;
 					break;
 				}
@@ -52,7 +54,8 @@ export function exportDatabaseToJSON() {
 						..._data,
 						date: _data.date.toISOString(),
 						cover: _data.cover ? await toDataURI(_data.cover) : undefined,
-						comments: _data.comments?.map(x => ({ ...x, date: x.date.toISOString(), replyTo: x.replyTo?.toISOString() }))
+						comments: _data.comments?.map(x => ({ ...x, date: x.date.toISOString(), replyTo: x.replyTo?.toISOString() })),
+						dateCreated: _data.dateCreated.toISOString()
 					}) as SerializableJson<JournalPostJSON>;
 					break;
 				}
@@ -73,6 +76,7 @@ export function exportDatabaseToJSON() {
 						..._data,
 						image: _data.image ? await toDataURI(_data.image) : undefined,
 						cover: _data.cover ? await toDataURI(_data.cover) : undefined,
+						dateCreated: _data.dateCreated.toISOString()
 					});
 					break;
 				}
@@ -81,11 +85,12 @@ export function exportDatabaseToJSON() {
 					yield deleteNull({
 						..._data,
 						file: _data.file ? await toDataURI(_data.file) : undefined,
+						dateCreated: _data.dateCreated.toISOString()
 					});
 					break;
 				}
 				default:
-					yield deleteNull(data) as SerializableJson<typeof data>;
+					yield deleteNull({ ...data, dateCreated: data.dateCreated.toISOString() }) as SerializableJson<typeof data>;
 					break;
 			}
 		}
@@ -180,7 +185,7 @@ export function exportDatabaseToJSON() {
 }
 
 export function importDatabaseFromJSON() {
-	async function putTableData(tableName: string, data: unknown){
+	async function putTableData(tableName: string, data: object){
 		switch (tableName) {
 			case "boardMessages": {
 				const _data = data as BoardMessageJSON;
@@ -188,7 +193,8 @@ export function importDatabaseFromJSON() {
 				return getTables().boardMessages.add({
 					..._data,
 					date: new Date(_data.date),
-					comments: _data.comments?.map(x => ({ ...x, date: new Date(x.date), replyTo: x.replyTo ? new Date(x.replyTo) : undefined }))
+					comments: _data.comments?.map(x => ({ ...x, date: new Date(x.date), replyTo: x.replyTo ? new Date(x.replyTo) : undefined })),
+					dateCreated: new Date(_data.dateCreated),
 				} as BoardMessage, false);
 			}
 			case "frontingEntries": {
@@ -200,7 +206,8 @@ export function importDatabaseFromJSON() {
 					presence: _data.presence
 						? new Map(Object.entries(_data.presence).map(x => [new Date(x[0]), x[1]]))
 						: undefined,
-					comments: _data.comments?.map(x => ({ ...x, date: new Date(x.date), replyTo: x.replyTo ? new Date(x.replyTo) : undefined }))
+					comments: _data.comments?.map(x => ({ ...x, date: new Date(x.date), replyTo: x.replyTo ? new Date(x.replyTo) : undefined })),
+					dateCreated: new Date(_data.dateCreated)
 				}, false);
 			}
 			case "journalPosts": {
@@ -209,7 +216,8 @@ export function importDatabaseFromJSON() {
 					..._data,
 					date: new Date(_data.date),
 					cover: _data.cover ? await fromDataURI(_data.cover) : undefined,
-					comments: _data.comments?.map(x => ({ ...x, date: new Date(x.date), replyTo: x.replyTo ? new Date(x.replyTo) : undefined }))
+					comments: _data.comments?.map(x => ({ ...x, date: new Date(x.date), replyTo: x.replyTo ? new Date(x.replyTo) : undefined })),
+					dateCreated: new Date(_data.dateCreated)
 				}, false);
 			}
 			case "members": {
@@ -228,6 +236,7 @@ export function importDatabaseFromJSON() {
 					..._data,
 					image: _data.image ? await fromDataURI(_data.image) : undefined,
 					cover: _data.cover ? await fromDataURI(_data.cover) : undefined,
+					dateCreated: new Date(_data.dateCreated)
 				}, false);
 			}
 			case "assets": {
@@ -235,12 +244,13 @@ export function importDatabaseFromJSON() {
 				return getTables().assets.add({
 					..._data,
 					file: _data.file ? await fromDataURI(_data.file) : undefined,
+					dateCreated: new Date(_data.dateCreated)
 				}, false);
 			}
 		}
 		
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call
-		return getTables()[tableName].add(data, false);
+		return getTables()[tableName].add({ ...data, dateCreated: new Date((data as { dateCreated: string }).dateCreated) }, false);
 	}
 
 	async function _import() {
@@ -301,7 +311,7 @@ export function importDatabaseFromJSON() {
 					case "database":
 						if (!revisionWasParsed) throw new Error("malformed, revision fragment must be first");
 						if(typeof path[1] === "string" && value){
-							const result = await putTableData(path[1], value);
+							const result = await putTableData(path[1], value as object);
 							if (!result) throw new Error(`item already exists: ${JSON.stringify(value)}`);
 						}
 						break;

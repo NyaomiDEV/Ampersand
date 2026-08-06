@@ -1,12 +1,12 @@
 /* eslint-disable class-methods-use-this */
 import { PartialBy } from "../../types";
 import { UUID, UUIDable } from "../entities";
-import { IndexEntry, Table, Update } from "../types";
+import { AmpersandTableMapping, IndexEntry, Table, Update } from "../types";
 
 export class Molise<T extends UUIDable> implements Table<T> {
-	name: string;
+	name: keyof AmpersandTableMapping;
 	index: IndexEntry<T>[] = [];
-	constructor(name: string){
+	constructor(name: keyof AmpersandTableMapping){
 		this.name = name;
 	}
 
@@ -70,7 +70,7 @@ export class Molise<T extends UUIDable> implements Table<T> {
 		throw new Error("Can't have shit in Molise");
 	}
 
-	add(_data: PartialBy<T, keyof UUIDable>, _saveIndexAndHashesAfterwards?: boolean): Promise<false | T["uuid"]> {
+	add(_data: PartialBy<T, keyof Omit<UUIDable, "dateCreated">>, _saveIndexAndHashesAfterwards?: boolean): Promise<false | T["uuid"]> {
 		throw new Error("Can't have shit in Molise");
 	}
 
@@ -78,11 +78,11 @@ export class Molise<T extends UUIDable> implements Table<T> {
 		throw new Error("Can't have shit in Molise");
 	}
 
-	update(_newData: UUIDable & Partial<T>, _saveIndexAndHashesAfterwards?: boolean): Promise<false | Update<T>> {
+	update(_newData: Omit<UUIDable, "dateCreated"> & Partial<T>, _saveIndexAndHashesAfterwards?: boolean): Promise<false | Update<T>> {
 		throw new Error("Can't have shit in Molise");
 	}
 
-	bulkUpdate(_contents: (UUIDable & Partial<T>)[]): Promise<(false | Update<T>)[]> {
+	bulkUpdate(_contents: (Omit<UUIDable, "dateCreated"> & Partial<T>)[]): Promise<(false | Update<T>)[]> {
 		throw new Error("Can't have shit in Molise");
 	}
 	

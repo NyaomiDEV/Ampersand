@@ -1,10 +1,10 @@
 import { appDataDir, sep } from "@tauri-apps/api/path";
 import * as fs from "@tauri-apps/plugin-fs";
-import type { Asset, JournalPost, Member, System, Tag, UUIDable, UUID, BoardMessage, FrontingEntry } from "../entities";
+import type { Asset, JournalPost, Member, System, Tag, UUIDable, UUID, BoardMessage, FrontingEntry, Reminder, CustomField, Note, FilterQuery } from "../entities";
 import { decode, decodeAsync, encode } from "@msgpack/msgpack";
 import type { AmpersandTableMapping, MigrationsMapping, Table } from "../types";
 import { deleteNull, replace, revive, walkAsync } from "../../serialization";
-import { assets, boardMessages, frontingEntries, journalPosts, members, systems, tags } from "./migrations";
+import { assets, boardMessages, customFields, filterQueries, frontingEntries, journalPosts, members, notes, reminders, systems, tags } from "./migrations";
 import { PartialBy } from "../../types";
 import type { SecondaryKey, IndexEntry } from "../types";
 import { sha256 } from "../../util/misc";
@@ -13,14 +13,14 @@ import { intoStream } from "../../native/fs";
 const appDataDirPath = await appDataDir();
 
 export class ShittyTable<T extends UUIDable> implements Table<T> {
-	name: string;
+	name: keyof AmpersandTableMapping;
 	path: string;
 	stream: boolean;
 	secondaryKeys: SecondaryKey<T>[];
 	index: IndexEntry<T>[];
 	hashes: Record<UUID, string>;
 
-	private constructor(name: string, path: string, secondaryKeys: SecondaryKey<T>[], stream: boolean) {
+	private constructor(name: keyof AmpersandTableMapping, path: string, secondaryKeys: SecondaryKey<T>[], stream: boolean) {
 		this.name = name;
 		this.path = path;
 		this.stream = stream;
@@ -104,7 +104,7 @@ export class ShittyTable<T extends UUIDable> implements Table<T> {
 	}
 
 	async updateIndexWithData(data: T, saveAfterwards: boolean = true) {
-		const indexEntry: IndexEntry<T> = { uuid: data.uuid } as IndexEntry<T>;
+		const indexEntry: IndexEntry<T> = { uuid: data.uuid, dateCreated: data.dateCreated } as IndexEntry<T>;
 		for (const key of this.secondaryKeys)
 			indexEntry[key] = data[key];
 
@@ -144,7 +144,7 @@ export class ShittyTable<T extends UUIDable> implements Table<T> {
 					continue;
 				}
 
-				for (const key of this.secondaryKeys) {
+				for (const key of [...this.secondaryKeys, "dateCreated"]) {
 					if (!Object.keys(entry).includes(key as string)) {
 						const contents = await this.get(entry.uuid);
 						if (!contents) continue;
@@ -287,7 +287,7 @@ export class ShittyTable<T extends UUIDable> implements Table<T> {
 
 	async refresh() {
 		for (const data of this.index)
-			await this.update({ uuid: data.uuid } as UUIDable & Partial<T>);
+			await this.update({ uuid: data.uuid } as Omit<UUIDable, "dateCreated"> & Partial<T>);
 	}
 
 	async write(data: T, saveIndexAndHashesAfterwards: boolean) {
@@ -303,7 +303,7 @@ export class ShittyTable<T extends UUIDable> implements Table<T> {
 		return !!this.index.find(x => uuid === x.uuid);
 	}
 
-	async add(data: PartialBy<T, keyof UUIDable>, saveIndexAndHashesAfterwards = true) {
+	async add(data: PartialBy<T, keyof Omit<UUIDable, "dateCreated">>, saveIndexAndHashesAfterwards = true) {
 		data.uuid = data.uuid || window.crypto.randomUUID();
 		if (!this.exists(data.uuid)) {
 			await this.write(data as T, saveIndexAndHashesAfterwards);
@@ -323,7 +323,7 @@ export class ShittyTable<T extends UUIDable> implements Table<T> {
 		return returnValues;
 	}
 
-	async update(newData: UUIDable & Partial<T>, saveIndexAndHashesAfterwards = true) {
+	async update(newData: Omit<UUIDable, "dateCreated"> & Partial<T>, saveIndexAndHashesAfterwards = true) {
 		const { uuid } = newData;
 		const oldData = await this.get(uuid);
 
@@ -336,7 +336,7 @@ export class ShittyTable<T extends UUIDable> implements Table<T> {
 		return false;
 	}
 
-	async bulkUpdate(contents: (UUIDable & Partial<T>)[]) {
+	async bulkUpdate(contents: (Omit<UUIDable, "dateCreated"> & Partial<T>)[]) {
 		const returnValues = await Promise.all(
 			contents.map(x => this.update(x, false))
 		);
@@ -388,26 +388,38 @@ export class ShittyTable<T extends UUIDable> implements Table<T> {
 	async migrate(versionOverride?: number) {
 		let version = versionOverride !== undefined ? versionOverride : (await this.getMigrationVersion() || 0);
 		switch (this.name) {
-			case "members":
-				version = await members(this as unknown as ShittyTable<Member>, version);
-				break;
 			case "systems":
 				version = await systems(this as unknown as ShittyTable<System>, version);
+				break;
+			case "members":
+				version = await members(this as unknown as ShittyTable<Member>, version);
 				break;
 			case "boardMessages":
 				version = await boardMessages(this as unknown as ShittyTable<BoardMessage>, version);
 				break;
+			case "frontingEntries":
+				version = await frontingEntries(this as unknown as ShittyTable<FrontingEntry>, version);
+				break;
 			case "journalPosts":
 				version = await journalPosts(this as unknown as ShittyTable<JournalPost>, version);
 				break;
-			case "assets":
-				version = await assets(this as unknown as ShittyTable<Asset>, version);
+			case "reminders":
+				version = await reminders(this as unknown as ShittyTable<Reminder>, version);
 				break;
 			case "tags":
 				version = await tags(this as unknown as ShittyTable<Tag>, version);
 				break;
-			case "frontingEntries":
-				version = await frontingEntries(this as unknown as ShittyTable<FrontingEntry>, version);
+			case "assets":
+				version = await assets(this as unknown as ShittyTable<Asset>, version);
+				break;
+			case "customFields":
+				version = await customFields(this as unknown as ShittyTable<CustomField>, version);
+				break;
+			case "notes":
+				version = await notes(this as unknown as ShittyTable<Note>, version);
+				break;
+			case "filterQueries":
+				version = await filterQueries(this as unknown as ShittyTable<FilterQuery>, version);
 				break;
 		}
 		await this.saveMigrationVersion(version);

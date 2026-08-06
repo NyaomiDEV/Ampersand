@@ -40,7 +40,7 @@ export async function* getFilteredCustomFields(query: string){
 	}
 }
 
-export async function newCustomField(customField: Omit<CustomField, keyof UUIDable>): Promise<TransactionStatus<string>> {
+export async function newCustomField(customField: Omit<CustomField, keyof Omit<UUIDable, "dateCreated">>): Promise<TransactionStatus<string>> {
 	try{
 		const uuid = await db.customFields.add(customField);
 
@@ -82,7 +82,7 @@ export async function deleteCustomField(uuid: UUID): Promise<TransactionStatus<v
 	}
 }
 
-export async function updateCustomField(newContent: UUIDable & Partial<CustomField>): Promise<TransactionStatus<{ oldData: CustomField, newData: CustomField }>> {
+export async function updateCustomField(newContent: Omit<UUIDable, "dateCreated"> & Partial<CustomField>): Promise<TransactionStatus<{ oldData: CustomField, newData: CustomField }>> {
 	try{
 		const updated = await db.customFields.update(newContent);
 		if(updated) {

@@ -48,7 +48,7 @@ export async function toJournalPostComplete(journalPosts: JournalPost[]): Promis
 	}));
 }
 
-export async function newJournalPost(journalPost: Omit<JournalPost, keyof UUIDable>): Promise<TransactionStatus<string>> {
+export async function newJournalPost(journalPost: Omit<JournalPost, keyof Omit<UUIDable, "dateCreated">>): Promise<TransactionStatus<string>> {
 	try{
 		const uuid = await db.journalPosts.add(journalPost);
 
@@ -87,7 +87,7 @@ export async function deleteJournalPost(uuid: UUID): Promise<TransactionStatus<v
 	}
 }
 
-export async function updateJournalPost(newContent: UUIDable & Partial<JournalPost>): Promise<TransactionStatus<{ oldData: JournalPost, newData: JournalPost }>> {
+export async function updateJournalPost(newContent: Omit<UUIDable, "dateCreated"> & Partial<JournalPost>): Promise<TransactionStatus<{ oldData: JournalPost, newData: JournalPost }>> {
 	try{
 		const updated = await db.journalPosts.update(newContent);
 		if(updated) {

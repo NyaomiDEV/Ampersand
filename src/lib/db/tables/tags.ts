@@ -48,7 +48,7 @@ export async function* getFilteredTags(type: Tag["type"], query: string){
 	}
 }
 
-export async function newTag(tag: Omit<Tag, keyof UUIDable>): Promise<TransactionStatus<string>> {
+export async function newTag(tag: Omit<Tag, keyof Omit<UUIDable, "dateCreated">>): Promise<TransactionStatus<string>> {
 	try{
 		const uuid = await db.tags.add(tag);
 
@@ -116,7 +116,7 @@ export async function removeTag(uuid: UUID): Promise<TransactionStatus<void>> {
 	}
 }
 
-export async function updateTag(newContent: UUIDable & Partial<Tag>): Promise<TransactionStatus<{ oldData: Tag, newData: Tag }>> {
+export async function updateTag(newContent: Omit<UUIDable, "dateCreated"> & Partial<Tag>): Promise<TransactionStatus<{ oldData: Tag, newData: Tag }>> {
 	try{
 		const updated = await db.tags.update(newContent);
 		if(updated) {

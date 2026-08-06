@@ -25,7 +25,7 @@
 	import trashMD from "@material-symbols/svg-600/rounded/delete.svg";
 
 	import { onBeforeMount, ref, toRaw, useTemplateRef, watch } from "vue";
-	import { ReminderComplete } from "../../lib/db/entities";
+	import { ReminderComplete, UUIDable } from "../../lib/db/entities";
 	import { getReminder, newReminder, removeReminder, toReminderComplete, updateReminder } from "../../lib/db/tables/reminders";
 	import { PartialBy } from "../../lib/types";
 	import { useRoute } from "vue-router";
@@ -43,14 +43,14 @@
 
 	const loading = ref(false);
 
-	const emptyReminder: PartialBy<ReminderComplete, "uuid"> = {
+	const emptyReminder: PartialBy<ReminderComplete, keyof UUIDable> = {
 		active: false,
 		title: "",
 		message: "",
 		trigger: "fronting",
 		delay: 0
 	};
-	const reminder = ref<PartialBy<ReminderComplete, "uuid">>({ ...emptyReminder });
+	const reminder = ref<PartialBy<ReminderComplete, keyof UUIDable>>({ ...emptyReminder });
 
 	const delayMap = ref(new Map([["hours", 0], ["minutes", 0]]));
 
@@ -110,7 +110,8 @@
 			if(!uuid) {
 				const result = await newReminder({
 					..._reminder,
-					members: _reminder.members ? _reminder.members.map(x => x.uuid) : undefined
+					members: _reminder.members ? _reminder.members.map(x => x.uuid) : undefined,
+					dateCreated: new Date()
 				});
 				if(!result.success) throw new Error(`E: ${result.err || "failed"}`);
 
