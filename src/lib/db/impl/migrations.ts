@@ -19,9 +19,12 @@ async function _addDateCreated(table: ShittyTable<UUIDable>){
 				await table.update({
 					uuid: obj.uuid,
 					dateCreated: fstat.birthtime || new Date()
-				});
+				}, false);
 			}
 		}
+
+		await table.saveIndexToDisk();
+		await table.saveHashesToDisk();
 	}catch(_e){
 		console.error(_e);
 		return false;
@@ -145,9 +148,8 @@ export async function members(table: ShittyTable<Member>, version: number){
 	async function threeToFour() {
 		// isCustomFront -> isDissociativeState
 		const uuids = table.index.map(x => x.uuid);
-
-		for (const uuid of uuids) {
-			try {
+		try {
+			for (const uuid of uuids) {
 				const obj = await table.get(uuid) as MThree;
 				const dissociativeState = obj.isCustomFront;
 				
@@ -158,12 +160,15 @@ export async function members(table: ShittyTable<Member>, version: number){
 					{
 						...obj,
 						isDissociativeState: dissociativeState
-					}, true
+					}, false
 				);
-			} catch (_e) {
-				console.error(_e);
-				return false;
 			}
+
+			await table.saveIndexToDisk();
+			await table.saveHashesToDisk();
+		} catch (_e) {
+			console.error(_e);
+			return false;
 		}
 
 		return true;
@@ -212,9 +217,12 @@ export async function boardMessages(table: ShittyTable<BoardMessage>, version: n
 						{
 							...obj,
 							members
-						}, true
+						}, false
 					);
 				}
+
+				await table.saveIndexToDisk();
+				await table.saveHashesToDisk();
 			} catch (_e) {
 				console.error(_e);
 				return false;
@@ -251,8 +259,9 @@ export async function frontingEntries(table: ShittyTable<FrontingEntry>, version
 	async function zeroToOne() {
 		// move custom status to fronter's summary frontmatter
 		// and also migrate comment => summary
-		for (const frontingEntryIndex of table.index) {
-			try {
+		try {
+			for (const frontingEntryIndex of table.index) {
+			
 				const obj = await table.get(frontingEntryIndex.uuid) as FEZero;
 
 				if (obj.customStatus || obj.comment) {
@@ -277,33 +286,38 @@ export async function frontingEntries(table: ShittyTable<FrontingEntry>, version
 					await table.write({
 						...obj,
 						summary: summary.length ? summary : undefined
-					}, true);
+					}, false);
 				}
-			} catch (_e) {
-				console.error(_e);
-				return false;
 			}
-		}
 
+			await table.saveIndexToDisk();
+			await table.saveHashesToDisk();
+		} catch (_e) {
+			console.error(_e);
+			return false;
+		}
 		return true;
 	}
 
 	async function oneToTwo(){
 		// influencing became an array
-		for (const uuid of table.index.map(x => x.uuid)) {
-			try {
+		try {
+			for (const uuid of table.index.map(x => x.uuid)) {
 				const obj = await table.get(uuid) as FEOne;
 
 				if (obj.influencing && typeof obj.influencing === "string") {
 					await table.update({
 						uuid,
 						influencing: [obj.influencing]
-					});
+					}, false);
 				}
-			} catch (_e) {
-				console.error(_e);
-				return false;
 			}
+
+			await table.saveIndexToDisk();
+			await table.saveHashesToDisk();
+		} catch (_e) {
+			console.error(_e);
+			return false;
 		}
 
 		return true;
@@ -358,8 +372,8 @@ export async function journalPosts(table: ShittyTable<JournalPost>, version: num
 		// member -> members
 		const uuids = table.index.map(x => x.uuid);
 
-		for (const uuid of uuids) {
-			try {
+		try {
+			for (const uuid of uuids) {
 				const obj = await table.get(uuid) as JPOne;
 				if(!obj.members){
 					const members = typeof obj.member === "string" ? [obj.member] : [];
@@ -368,13 +382,16 @@ export async function journalPosts(table: ShittyTable<JournalPost>, version: num
 						{
 							...obj,
 							members
-						}, true
+						}, false
 					);
 				}
-			} catch (_e) {
-				console.error(_e);
-				return false;
 			}
+
+			await table.saveIndexToDisk();
+			await table.saveHashesToDisk();
+		} catch (_e) {
+			console.error(_e);
+			return false;
 		}
 
 		return true;
@@ -414,14 +431,17 @@ export async function reminders(table: ShittyTable<Reminder>, version: number){
 export async function tags(table: ShittyTable<Tag>, version: number) {
 	async function zeroToOne() {
 		// add isArchived
-		for (const tagIndex of table.index) {
-			try {
+		try {
+			for (const tagIndex of table.index) {
 				if(typeof tagIndex.isArchived === "undefined")
-					await table.update({ uuid: tagIndex.uuid, isArchived: false });
-			} catch (_e) {
-				console.error(_e);
-				return false;
+					await table.update({ uuid: tagIndex.uuid, isArchived: false }, false);
 			}
+
+			await table.saveIndexToDisk();
+			await table.saveHashesToDisk();
+		} catch (_e) {
+			console.error(_e);
+			return false;
 		}
 
 		return true;
