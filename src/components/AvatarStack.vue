@@ -2,12 +2,13 @@
 	import Avatar from "./Avatar.vue";
 
 	const props = defineProps<{
-		avatars: InstanceType<typeof Avatar>["$props"][]
+		avatars: InstanceType<typeof Avatar>["$props"][],
+		normalStack?: boolean
 	}>();
 </script>
 
 <template>
-	<div class="avatar-stack">
+	<div :class="{ 'avatar-stack': true, 'normal-stack': props.normalStack }">
 		<Avatar
 			v-if="props.avatars[0]"
 			class="first-avatar"
@@ -28,44 +29,46 @@
 
 <style scoped>
 	div.avatar-stack {
+		--gap: 30px;
 		position: relative;
 		display: flex;
 		align-items: center;
-		width: 56px;
-		transform-origin: 0% 50%;
+
+		&:not(.normal-stack){
+			width: 56px;
+			height: 56px;
+
+			&:has(:nth-child(2)) > * {
+				width: 46px;
+				height: 46px;
+			}
+
+			&:has(:nth-child(3)) > * {
+				width: 38px;
+				height: 38px;
+			}
+		}
 
 		> * {
 			flex-shrink: 0;
-			flex-grow: 1;
-		}
-
-		&:has(:nth-child(2)){
-			transform: scale(0.8235294118);
-		}
-
-		&:has(:nth-child(3)){
-			transform: scale(0.7);
+			flex-grow: 0;
 		}
 	}
 
 	.first-avatar:has(+ .second-avatar) {
 		z-index: 1;
-		margin-inline-end: -40px;
+		margin-inline-end: calc(var(--gap) * -1);
 	}
 
 	.second-avatar {
-		width: 52px;
-		height: 52px;
 		z-index: 0;
 
 		&:has(+ .third-avatar) {
-			margin-inline-end: -36px;
+			margin-inline-end: calc(var(--gap) * -1);
 		}
 	}
 	
 	.third-avatar {
-		width: 48px;
-		height: 48px;
 		z-index: -1;
 	}
 </style>

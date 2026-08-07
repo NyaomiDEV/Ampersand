@@ -28,10 +28,11 @@
 	import settingsMD from "@material-symbols/svg-600/rounded/settings.svg";
 	import personAddMD from "@material-symbols/svg-600/rounded/person_add.svg";
 	import clockAddMD from "@material-symbols/svg-600/rounded/more_time.svg";
+	import accountCircle from "@material-symbols/svg-600/rounded/account_circle-fill.svg";
 
 	import { JournalPost, JournalPostComplete, Tag, UUIDable } from "../../lib/db/entities";
 	import { newJournalPost, updateJournalPost, getJournalPost, toJournalPostComplete } from "../../lib/db/tables/journalPosts";
-	import { formatDate, sortName, toast } from "../../lib/util/misc";
+	import { formatDate, sortDate, sortName, toast } from "../../lib/util/misc";
 	import { getResizedImage } from "../../lib/util/image";
 	import { getCurrentInstance, h, onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
 	import Markdown from "../../components/Markdown.vue";
@@ -47,8 +48,10 @@
 	import MemberChip from "../../components/member/MemberChip.vue";
 	import Comments from "../../modals/Comments.vue";
 	import Loading from "../../modals/Loading.vue";
-	import { accessibilityConfig } from "../../lib/config/index.ts";
-	import { addMaterialColors, rgbaToArgb, unsetMaterialColors } from "../../lib/theme/index.ts";
+	import { accessibilityConfig } from "../../lib/config/index";
+	import { addMaterialColors, rgbaToArgb, unsetMaterialColors } from "../../lib/theme/index";
+	import AvatarStack from "../../components/AvatarStack.vue";
+	import { getMember, defaultMember } from "../../lib/db/tables/members";
 
 	const { getObjectURL } = useBlob();
 	const router = useIonRouter();
@@ -61,6 +64,8 @@
 	const memberTagModal = useTemplateRef("memberTagModal");
 	const postComments = useTemplateRef("postComments");
 	const loadingModal = useTemplateRef("loadingModal");
+
+	const postCommentAvatars = shallowRef<InstanceType<typeof AvatarStack>["$props"]["avatars"]>();
 
 	const tags = shallowRef<Tag[]>([]);
 	const self = getCurrentInstance();
@@ -178,6 +183,9 @@
 		// set color
 		updateColors();
 
+		// get avatars
+		postCommentAvatars.value = await getCommentAvatars();
+
 		loading.value = false;
 	}
 
@@ -188,6 +196,20 @@
 			if(self?.vnode.el) addMaterialColors(rgbaToArgb(post.value.color), accessibilityConfig.tintWithColor === "on" ? rgbaToArgb(post.value.color) : undefined, self?.vnode.el as HTMLElement);
 		} else 
 			if(self?.vnode.el) unsetMaterialColors(self?.vnode.el as HTMLElement);
+	}
+
+	async function getCommentAvatars(){
+		const commentMemberUUIDs = [...new Set(post.value.comments?.toSorted(sortDate).map(x => x.member))];
+		const members = (await Promise.all(
+			commentMemberUUIDs.map(async x => await getMember(x).catch(() => defaultMember(x)))
+		));
+
+		return members.map(x => ({
+			image: x.image,
+			clipShape: x.imageClip,
+			color: x.color,
+			icon: accountCircle
+		}));
 	}
 
 	watch(route, updateRoute);
@@ -256,6 +278,12 @@
 					detail
 					@click="postComments?.$el.present()"
 				>
+					<AvatarStack
+						v-if="postCommentAvatars?.length"
+						slot="start"
+						:avatars="postCommentAvatars"
+						normal-stack
+					/>
 					{{ $t("other:comments.commentCount", { count: post.comments?.length || 0 }) }}
 				</IonItem>
 
@@ -464,6 +492,12 @@
 
 	ion-item.comments {
 		--min-height: 48px;
+
+		.avatar-stack * {
+			width: 36px;
+			height: 36px;
+			--gap: 24px;
+		}
 	}
 
 	ion-buttons {

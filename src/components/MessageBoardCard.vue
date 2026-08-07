@@ -6,11 +6,12 @@
 	import Markdown from "./Markdown.vue";
 	import MemberSelect from "../modals/MemberSelect.vue";
 	import { addModal, removeModal } from "../lib/modals";
-	import { h, ref, toRaw, useTemplateRef } from "vue";
+	import { h, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
 	import { updateBoardMessage } from "../lib/db/tables/boardMessages";
+	import { defaultMember, getMember } from "../lib/db/tables/members";
 	import PollResults from "../modals/PollResults.vue";
 	import { useTranslation } from "i18next-vue";
-	import { formatDate, promptOkCancel, sortName } from "../lib/util/misc";
+	import { formatDate, promptOkCancel, sortDate, sortName } from "../lib/util/misc";
 
 	import accountCircle from "@material-symbols/svg-600/rounded/account_circle-fill.svg";
 	import { accessibilityConfig } from "../lib/config";
@@ -30,6 +31,8 @@
 	});
 
 	const isPollHidden = ref(props.hidePoll);
+
+	const postCommentAvatars = shallowRef<InstanceType<typeof AvatarStack>["$props"]["avatars"]>();
 
 	/* field-sizing would be better than "rows: 4" but the min Safari version is literally 26.2 */
 
@@ -134,6 +137,20 @@
 		return choice.votes.length / allVotes;
 	}
 
+	async function getCommentAvatars(){
+		const commentMemberUUIDs = [...new Set(props.boardMessage.comments?.toSorted(sortDate).map(x => x.member))];
+		const members = (await Promise.all(
+			commentMemberUUIDs.map(async x => await getMember(x).catch(() => defaultMember(x)))
+		));
+
+		return members.map(x => ({
+			image: x.image,
+			clipShape: x.imageClip,
+			color: x.color,
+			icon: accountCircle
+		}));
+	}
+
 	function getStyle(){
 		const style: Record<string, string> = {};
 
@@ -153,6 +170,10 @@
 
 		return style;
 	}
+
+	watch(props.boardMessage, async () => {
+		postCommentAvatars.value = await getCommentAvatars();
+	}, { immediate: true });
 </script>
 
 <template>
@@ -229,6 +250,12 @@
 					fill="clear"
 					@click="(e) => { e.stopPropagation(); boardComments?.$el.present() }"
 				>
+					<AvatarStack
+						v-if="postCommentAvatars?.length"
+						slot="start"
+						:avatars="postCommentAvatars"
+						normal-stack
+					/>
 					{{ $t("other:comments.commentCount", { count: props.boardMessage.comments?.length || 0 }) }}
 				</IonButton>
 			</div>
@@ -280,7 +307,7 @@
 			background: transparent;
 		}
 
-		.avatar-stack {
+		.avatar-stack:not(.comments *) {
 			align-self: flex-start;
 			margin-top: 16px;
 		}
@@ -362,6 +389,20 @@
 			.comments {
 				display: flex;
 				flex-direction: column;
+				
+				ion-button {
+					height: 44px;
+				}
+
+				.avatar-stack {
+					margin-inline-end: 16px;
+
+					* {
+						width: 36px;
+						height: 36px;
+						--gap: 24px;
+					}
+				}
 			}
 		}
 	}

@@ -19,14 +19,16 @@
 
 	import saveMD from "@material-symbols/svg-600/rounded/save.svg";
 	import trashMD from "@material-symbols/svg-600/rounded/delete.svg";
+	import accountCircle from "@material-symbols/svg-600/rounded/account_circle-fill.svg";
 
 	import { FrontingEntry, FrontingEntryComplete, Member, UUIDable } from "../lib/db/entities";
 	import { newFrontingEntry, updateFrontingEntry, deleteFrontingEntry, sendFrontingChangedEvent, getFrontingBetweenIndex } from "../lib/db/tables/frontingEntries";
-	import { ref, toRaw, useTemplateRef, watch } from "vue";
+	import { ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
 	import { useTranslation } from "i18next-vue";
 	import { PartialBy } from "../lib/types";
-	import { formatDate, promptOkCancel, toast, presencePhrase } from "../lib/util/misc";
+	import { formatDate, promptOkCancel, toast, presencePhrase, sortDate } from "../lib/util/misc";
 	import { IndexEntry } from "../lib/db/types";
+	import { defaultMember, getMember } from "../lib/db/tables/members";
 
 	import MemberSelect from "./MemberSelect.vue";
 	import PresenceHistory from "./PresenceHistory.vue";
@@ -37,6 +39,7 @@
 	import Comments from "./Comments.vue";
 	import Loading from "./Loading.vue";
 	import MemberChip from "../components/member/MemberChip.vue";
+	import AvatarStack from "../components/AvatarStack.vue";
 
 	const i18next = useTranslation();
 	const router = useIonRouter();
@@ -63,6 +66,7 @@
 	const frontingEntryComments = useTemplateRef("frontingEntryComments");
 	const loadingModal = useTemplateRef("loadingModal");
 
+	const frontingEntryCommentAvatars = shallowRef<InstanceType<typeof AvatarStack>["$props"]["avatars"]>();
 
 	async function save(dismissAfter = true){
 		const uuid = frontingEntry.value?.uuid;
@@ -167,8 +171,23 @@
 			router.push(`/edit/member?uuid=${member.uuid}`);
 	}
 
-	watch(frontingEntry.value, () => {
+	async function getCommentAvatars(){
+		const commentMemberUUIDs = [...new Set(frontingEntry.value.comments?.toSorted(sortDate).map(x => x.member))];
+		const members = (await Promise.all(
+			commentMemberUUIDs.map(async x => await getMember(x).catch(() => defaultMember(x)))
+		));
+
+		return members.map(x => ({
+			image: x.image,
+			clipShape: x.imageClip,
+			color: x.color,
+			icon: accountCircle
+		}));
+	}
+
+	watch(frontingEntry.value, async () => {
 		allFrontingInTimeSpan.value = getFrontingBetweenIndex(frontingEntry.value.startTime, frontingEntry.value.endTime).filter(x => x.uuid !== frontingEntry.value.uuid);
+		frontingEntryCommentAvatars.value = await getCommentAvatars();
 	}, { immediate: true });
 </script>
 
@@ -334,10 +353,17 @@
 
 			<IonList>
 				<IonItem
+					class="comments"
 					button
 					detail
 					@click="frontingEntryComments?.$el.present()"
 				>
+					<AvatarStack
+						v-if="frontingEntryCommentAvatars?.length"
+						slot="start"
+						:avatars="frontingEntryCommentAvatars"
+						normal-stack
+					/>
 					{{ $t("other:comments.commentCount", { count: frontingEntry.comments?.length || 0 }) }}
 				</IonItem>
 				<IonItem v-if="!frontingEntry.endTime" button :detail="false">
@@ -446,5 +472,11 @@
 
 	.grid-2 ion-item::part(native) {
 		height: 100%;
+	}
+
+	.comments .avatar-stack * {
+		width: 36px;
+		height: 36px;
+		--gap: 24px;
 	}
 </style>
