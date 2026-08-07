@@ -20,6 +20,8 @@
 	import saveMD from "@material-symbols/svg-600/rounded/save.svg";
 	import trashMD from "@material-symbols/svg-600/rounded/delete.svg";
 	import accountCircle from "@material-symbols/svg-600/rounded/account_circle-fill.svg";
+	import startMD from "@material-symbols/svg-600/rounded/line_start_circle.svg";
+	import endMD from "@material-symbols/svg-600/rounded/line_end_circle.svg";
 
 	import { FrontingEntry, FrontingEntryComplete, Member, UUIDable } from "../lib/db/entities";
 	import { newFrontingEntry, updateFrontingEntry, deleteFrontingEntry, sendFrontingChangedEvent, getFrontingBetweenIndex } from "../lib/db/tables/frontingEntries";
@@ -233,13 +235,12 @@
 			<IonList class="grid-2">
 				<IonItem
 					button
-					detail
-					class="take-row"
 					@click="($refs.startTimePicker as any)?.$el.present()"
 				>
+					<IonIcon slot="start" :icon="startMD" :aria-label="$t('frontHistory:edit.startTime')" />
 					<IonLabel>
-						<p>{{ $t("frontHistory:edit.startTime") }}</p>
-						<h2>{{ formatDate(frontingEntry.startTime, "collapsed") }}</h2>
+						<p>{{ formatDate(frontingEntry.startTime, "only-collapsed") }}</p>
+						<h2>{{ formatDate(frontingEntry.startTime) }}</h2>
 					</IonLabel>
 					<DatePopupPicker
 						ref="startTimePicker"
@@ -252,8 +253,6 @@
 				<IonItem
 					v-if="!frontingEntry.endTime"
 					button
-					detail
-					class="take-row"
 					@click="removeFromFront"
 				>
 					<IonLabel>
@@ -263,12 +262,12 @@
 				<IonItem
 					v-else
 					button
-					class="take-row"
 					@click="($refs.endTimePicker as any)?.$el.present()"
 				>
-					<IonLabel>
-						<p>{{ $t("frontHistory:edit.endTime") }}</p>
-						<h2>{{ formatDate(frontingEntry.endTime, "collapsed") }}</h2>
+					<IonIcon slot="end" :icon="endMD" :aria-label="$t('frontHistory:edit.endTime')" />
+					<IonLabel style="text-align: right;">
+						<p>{{ formatDate(frontingEntry.endTime, "only-collapsed") }}</p>
+						<h2>{{ formatDate(frontingEntry.endTime) }}</h2>
 					</IonLabel>
 					<DatePopupPicker
 						ref="endTimePicker"
