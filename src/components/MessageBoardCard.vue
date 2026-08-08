@@ -171,7 +171,7 @@
 		return style;
 	}
 
-	watch(props.boardMessage, async () => {
+	watch(() => props.boardMessage, async () => {
 		postCommentAvatars.value = await getCommentAvatars();
 	}, { immediate: true });
 </script>
