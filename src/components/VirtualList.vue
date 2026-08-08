@@ -38,6 +38,8 @@
 	});
 
 	const rowVirtualizer = useVirtualizer(config);
+	rowVirtualizer.value.shouldAdjustScrollPositionOnItemSizeChange = () => false;
+	
 	const virtualRows = computed(() => rowVirtualizer.value.getVirtualItems());
 	const cssGap = computed(() => `${props.gap}px`);
 	const totalSize = computed(() => `${rowVirtualizer.value.getTotalSize()}px`);
