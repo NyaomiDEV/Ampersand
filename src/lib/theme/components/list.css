@@ -68,7 +68,7 @@
 			font: var(--md3-title-variant-medium);
 			letter-spacing: var(--md3-title-variant-medium-letter-spacing);
 			font-feature-settings: var(--md3-title-variant-medium-font-features);
-				font-variation-settings: var(--md3-title-variant-medium-font-variation);
+			font-variation-settings: var(--md3-title-variant-medium-font-variation);
 		}
 
 		> h3 {
@@ -135,8 +135,18 @@ ion-popover {
 }
 
 /* ion-note */
-.md ion-note {
+.md ion-note:not(ion-item *) {
 	margin: 10px 24px;
 	display: block;
 	--color: rgb(var(--md3-on-surface));
+}
+
+.md ion-item > ion-note {
+	display: inline;
+	padding: 0px;
+	margin: auto;
+	font-size: var(--md3-label-small-font-size);
+	line-height: var(--md3-label-small-line-height);
+	font-weight: var(--md3-label-small-font-weight);
+	letter-spacing: var(--md3-label-small-letter-spacing);
 }

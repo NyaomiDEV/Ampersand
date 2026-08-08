@@ -17,7 +17,8 @@
 		IonBackButton,
 		useIonRouter,
 		IonPage,
-		IonProgressBar
+		IonProgressBar,
+		IonNote
 	} from "@ionic/vue";
 	import Color from "../../components/Color.vue";
 	import TagChip from "../../components/tag/TagChip.vue";
@@ -62,6 +63,8 @@
 	import MarkdownField from "../../components/MarkdownField.vue";
 	import { getFrontingEntryIndex } from "../../lib/db/tables/frontingEntries.ts";
 	import { IndexEntry } from "../../lib/db/types";
+	import { getBoardMessagesIndex } from "../../lib/db/tables/boardMessages.ts";
+	import { getJournalPostsIndex } from "../../lib/db/tables/journalPosts.ts";
 
 	const { appendFont, deleteAllFonts } = useAssetFonts();
 
@@ -471,14 +474,17 @@
 							<h3>{{ $t("members:edit.showFrontingEntries") }}</h3>
 							<p v-if="lastFrontingEntry?.startTime && lastFrontingEntry?.endTime">{{ $t("members:edit.lastFronted", { startTime: formatDate(lastFrontingEntry.startTime, "collapsed"), endTime: formatDate(lastFrontingEntry.endTime, "collapsed") }) }}</p>
 						</IonLabel>
+						<IonNote v-if="member.uuid" slot="end">{{ getFrontingEntryIndex().filter(x => x.member === member.uuid).length }}</IonNote>
 					</IonItem>
 					<IonItem button detail :router-link="`/lists/messageBoard?q=@member:${member.uuid}`">
 						<IonIcon slot="start" :icon="lists.messageBoard.icon" aria-hidden="true" />
 						<IonLabel>{{ $t("members:edit.showBoardEntries") }}</IonLabel>
+						<IonNote v-if="member.uuid" slot="end">{{ getBoardMessagesIndex().filter(x => x.members?.includes(member.uuid!)).length }}</IonNote>
 					</IonItem>
 					<IonItem button detail :router-link="`/lists/journal?q=@member:${member.uuid}`">
 						<IonIcon slot="start" :icon="lists.journal.icon" aria-hidden="true" />
 						<IonLabel>{{ $t("members:edit.showJournalEntries") }}</IonLabel>
+						<IonNote v-if="member.uuid" slot="end">{{ getJournalPostsIndex().filter(x => x.members?.includes(member.uuid!)).length }}</IonNote>
 					</IonItem>
 				</IonList>
 			</template>

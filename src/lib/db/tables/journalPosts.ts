@@ -30,6 +30,10 @@ export async function* getJournalPosts(maxIter = 10){
 	};
 }
 
+export function getJournalPostsIndex(){
+	return db.journalPosts.index;
+}
+
 export async function* getFilteredJournalPosts(query: string) {
 	for await (const post of getJournalPosts()){
 		if(filterJournalPost(query, post))

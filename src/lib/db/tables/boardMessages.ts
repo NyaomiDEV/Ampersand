@@ -34,6 +34,10 @@ export function getBoardMessage(uuid: UUID){
 	return db.boardMessages.get(uuid);
 }
 
+export function getBoardMessagesIndex(){
+	return db.boardMessages.index;
+}
+
 export async function toBoardMessageComplete(boardMessages: BoardMessage[]): Promise<BoardMessageComplete[]> {
 	const _memberSet = await Promise.all(Array.from(new Set(
 		boardMessages.map(x => x.members).flat(1)
