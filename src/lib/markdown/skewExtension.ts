@@ -7,7 +7,7 @@ const skewExtension: MarkedExtension<(VNode | string)[], VNode | string> = {
 		{
 			name: "skew",
 			level: "inline",
-			start(src: string) { return src.match(/\[hue=/)?.index; },
+			start(src: string) { return src.match(/\[skew=/)?.index; },
 			tokenizer(src: string) {
 				const rule = /^\[skew=(.+?)\](.+?)\[\/skew\]/;
 				const match = rule.exec(src);
