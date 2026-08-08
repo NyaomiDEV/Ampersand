@@ -142,7 +142,7 @@ export function importArchive() {
 			const multiStreamDecoder = decodeMultiStream(stream) as AsyncGenerator<{ table: string, data: any; }>;
 
 			let revisionWasParsed = magicVersion < 2 ? true : false;
-			let migrationsData: Record<string, number> = {};
+			const migrationsData: Record<string, number> = {};
 
 			// clear all tables if magic version < 2 -- this is a tradeoff of not thinking things through the first time
 			if(magicVersion < 2){
@@ -169,7 +169,7 @@ export function importArchive() {
 					}
 					case "__migrations": {
 						if (!revisionWasParsed) throw new Error("malformed, revision fragment must be first");
-						migrationsData = data;
+						Object.assign(migrationsData, data);
 						break;
 					}
 					case "__config": {
