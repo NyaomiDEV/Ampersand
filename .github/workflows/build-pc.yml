@@ -53,8 +53,8 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v6
         with:
-          node-version: 24
-          cache: 'yarn'
+          node-version: 26
+          cache: 'pnpm'
       - name: Set up Rust toolchain
         uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
@@ -67,11 +67,11 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
       - name: Install frontend dependencies
-        run: yarn install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
       - name: Update versioning
-        run: yarn run upgrade-vcs
+        run: pnpm run upgrade-vcs
       - name: Build Ampersand
-        run: yarn tauri build --ci ${{ matrix.args }}
+        run: pnpm tauri build --ci ${{ matrix.args }}
       - name: Publish artifacts (Linux - DEB)
         if: matrix.platform == 'ubuntu-latest'
         uses: actions/upload-artifact@v7

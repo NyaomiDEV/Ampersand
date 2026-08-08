@@ -56,7 +56,7 @@ mkdir -p "$PROJECT_DIR/build"
 rm -f "$SERVER_ADDR_FILE"
 
 echo "--- Starting tauri ios build --open ---"
-yarn tauri ios build --open >"$TAURI_OPEN_LOG" 2>&1 &
+pnpm tauri ios build --open >"$TAURI_OPEN_LOG" 2>&1 &
 TAURI_PID="$!"
 
 echo "--- Waiting for Tauri CLI websocket bridge ---"

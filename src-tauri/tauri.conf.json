@@ -6,8 +6,8 @@
   "build": {
     "frontendDist": "../dist",
     "devUrl": "http://localhost:5173",
-    "beforeDevCommand": "yarn rsbuild dev",
-    "beforeBuildCommand": "yarn build:rsbuild"
+    "beforeDevCommand": "pnpm rsbuild dev",
+    "beforeBuildCommand": "pnpm run build:rsbuild"
   },
   "app": {
     "withGlobalTauri": true,

@@ -48,8 +48,8 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v6
         with:
-          node-version: 24
-          cache: 'yarn'
+          node-version: 26
+          cache: 'pnpm'
       - name: Set up Java
         uses: actions/setup-java@v5
         with:
@@ -66,9 +66,9 @@ jobs:
           rust-src-dir: "src-tauri"
           target: "aarch64-linux-android,armv7-linux-androideabi"
       - name: Install frontend dependencies
-        run: yarn install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
       - name: Update versioning
-        run: yarn run upgrade-vcs
+        run: pnpm run upgrade-vcs
       - name: Set up Android signing
         run: |
           cd src-tauri/gen/android
@@ -78,7 +78,7 @@ jobs:
           echo "storeFile=$RUNNER_TEMP/keystore.jks" >> local.properties
       - name: Build app (APK)
         run: |
-          yarn tauri android build --apk --target aarch64 armv7 --split-per-abi --ci
+          pnpm tauri android build --apk --target aarch64 armv7 --split-per-abi --ci
         env:
           NDK_HOME: ${{ env.ANDROID_HOME }}/ndk/29.0.14206865/
       - name: Publish artifact (APK - ARMv7)

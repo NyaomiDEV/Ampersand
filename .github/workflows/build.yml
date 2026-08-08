@@ -35,13 +35,13 @@ jobs:
     - name: Set up Node
       uses: actions/setup-node@v6
       with:
-        node-version: 24
-        cache: 'yarn'
+        node-version: 26
+        cache: 'pnpm'
     - name: Install frontend dependencies
-      run: yarn install --frozen-lockfile
+      run: pnpm install --frozen-lockfile
     - name: Get Ampersand version from upgrade-vcs script
       id: vcs
-      run: yarn run upgrade-vcs
+      run: pnpm run upgrade-vcs
       env:
         NO_PATCH: 1
     - name: Ensure tag is clean

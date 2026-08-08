@@ -39,8 +39,8 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v6
         with:
-          node-version: 24
-          cache: 'yarn'
+          node-version: 26
+          cache: 'pnpm'
       - name: Set up Rust toolchain
         uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
@@ -48,9 +48,9 @@ jobs:
           target: "aarch64-apple-ios"
           cache-bin: false
       - name: Install frontend dependencies
-        run: yarn install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
       - name: Update versioning
-        run: yarn run upgrade-vcs
+        run: pnpm run upgrade-vcs
       - name: Build unsigned IPA
         run: bash ./make_unsigned_ipa.sh
         env:

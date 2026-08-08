@@ -1,0 +1,4 @@
+nodeVersion: 26.0.0
+minimumReleaseAge: 0
+allowBuilds:
+  core-js: true
