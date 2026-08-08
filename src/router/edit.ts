@@ -12,6 +12,11 @@ const edit: RouteRecordRaw[] = [
 		component: () => import("../views/edit/JournalEdit.vue")
 	},
 	{
+		path: "/edit/frontingEntry",
+		name: "FrontingEntryEdit",
+		component: () => import("../views/edit/FrontingEntryEdit.vue")
+	},
+	{
 		path: "/edit/system",
 		name: "SystemEdit",
 		component: () => import("../views/edit/SystemEdit.vue"),

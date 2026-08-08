@@ -4,7 +4,6 @@
 	import type { FrontingEntry, FrontingEntryComplete } from "../../lib/db/entities.d.ts";
 	import { getFrontingEntriesOfDay, getFrontingEntriesDays, toFrontingEntryComplete, getFilteredFrontingEntries } from "../../lib/db/tables/frontingEntries";
 	import Spinner from "../../components/Spinner.vue";
-	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
 	import dayjs from "dayjs";
 	import { getFilterQueriesIndex } from "../../lib/db/tables/filterQueries.ts";
 
@@ -180,19 +179,6 @@
 		});
 	}
 
-	async function showModal(clickedFrontingEntry?: FrontingEntryComplete){
-		const vnode = h(FrontingEntryEdit, {
-			frontingEntry: clickedFrontingEntry,
-			overrideStartTime: date.value,
-			overrideEndTime: date.value,
-			onDidDismiss: () => removeModal(vnode)
-		});
-
-		const modal = await addModal(vnode);
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-explicit-any
-		await (modal.el as any).present();
-	}
-
 	async function saveFilterQuery(){
 		if(!search.value.length) return;
 		const vnode = h(FilterQueryEdit, {
@@ -272,7 +258,7 @@
 								button
 								show-date-complete
 								:presence-average="!entry.endTime"
-								@click="showModal(entry)"
+								:router-link="`/edit/frontingEntry?uuid=${entry.uuid}`"
 							/>
 						</template>
 					</VirtualList>
@@ -285,7 +271,7 @@
 								button
 								show-date-complete
 								:presence-average="!entry.endTime"
-								@click="showModal(entry)"
+								:router-link="`/edit/frontingEntry?uuid=${entry.uuid}`"
 							/>
 						</template>
 					</VirtualList>
@@ -307,7 +293,7 @@
 							button
 							:show-date-complete="false"
 							:presence-average="tuple[0] !== 'currentlyFronting'"
-							@click="showModal(entry)"
+							:router-link="`/edit/frontingEntry?uuid=${entry.uuid}`"
 						/>
 					</template>
 				</IonList>
@@ -315,7 +301,7 @@
 
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton @click="showModal()">
+				<IonFabButton router-link="/edit/frontingEntry">
 					<IonIcon :icon="addMD" />
 				</IonFabButton>
 			</IonFab>

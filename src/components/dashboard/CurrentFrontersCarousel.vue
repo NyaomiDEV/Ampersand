@@ -1,9 +1,8 @@
 <script setup lang="ts">
-	import { IonCard, IonCardContent, IonLabel, IonListHeader, IonIcon, IonButton, IonList, IonItemSliding, IonItemOption, IonItemOptions, IonItem } from "@ionic/vue";
+	import { IonCard, IonCardContent, IonLabel, IonListHeader, IonIcon, IonButton, IonList, IonItemSliding, IonItemOption, IonItemOptions, IonItem, useIonRouter } from "@ionic/vue";
 	import { h, onMounted, onUnmounted, ref, shallowRef } from "vue";
 	import type { FrontingEntryComplete } from "../../lib/db/entities.d.ts";
 	import { getFronting, newFrontingEntry, sendFrontingChangedEvent, toFrontingEntryComplete, updateFrontingEntry } from "../../lib/db/tables/frontingEntries";
-	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
 	import { DatabaseEvents, DatabaseEvent } from "../../lib/db/events";
 	import { addModal, removeModal } from "../../lib/modals.ts";
 	import MemberSelect from "../../modals/MemberSelect.vue";
@@ -13,6 +12,8 @@
 	import FrontingEntryCard from "../frontingEntry/FrontingEntryCard.vue";
 	import { appConfig } from "../../lib/config/index.ts";
 	import FrontingEntryItem from "../frontingEntry/FrontingEntryItem.vue";
+
+	const router = useIonRouter();
 
 	const frontingEntries = shallowRef<FrontingEntryComplete[]>([]);
 	const quickDelete = ref(false);
@@ -42,17 +43,6 @@
 	onUnmounted(() => {
 		DatabaseEvents.removeEventListener("updated", listener);
 	});
-
-	async function showModal(clickedFrontingEntry: FrontingEntryComplete){
-		const vnode = h(FrontingEntryEdit, {
-			frontingEntry: clickedFrontingEntry,
-			onDidDismiss: () => removeModal(vnode)
-		});
-
-		const modal = await addModal(vnode);
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-call
-		await (modal.el as any).present();
-	}
 
 	async function quickRemoveFronter(clickedFrontingEntry: FrontingEntryComplete){
 		await updateFrontingEntry({
@@ -118,7 +108,7 @@
 				:show-date-complete="false"
 				:show-date="false"
 				:influenced-by="frontingEntries.filter(x => x.influencing?.find(y => y.uuid === entry.member.uuid)).map(x => x.member)"
-				@click="showModal(entry)"
+				:router-link="`/edit/frontingEntry?uuid=${entry.uuid}`"
 			/>
 			<IonItemOptions>
 				<IonItemOption color="danger" @click="quickRemoveFronter(entry)">
@@ -144,7 +134,7 @@
 			:key="entry.uuid"
 			:entry
 			:influenced-by="frontingEntries.filter(x => x.influencing?.find(y => y.uuid === entry.member.uuid)).map(x => x.member)"
-			@click="quickDelete ? quickRemoveFronter(entry) : showModal(entry)"
+			@click="quickDelete ? quickRemoveFronter(entry) : router.push(`/edit/frontingEntry?uuid=${entry.uuid}`)"
 		/>
 		<IonCard
 			v-if="!quickDelete"

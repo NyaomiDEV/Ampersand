@@ -1,11 +1,9 @@
 <script setup lang="ts">
 	import { IonList, IonListHeader, IonLabel } from "@ionic/vue";
-	import { h, onBeforeMount, onUnmounted, shallowRef } from "vue";
+	import { onBeforeMount, onUnmounted, shallowRef } from "vue";
 	import type { FrontingEntryComplete } from "../../lib/db/entities.d.ts";
 	import { getRecentlyFronted, toFrontingEntryComplete } from "../../lib/db/tables/frontingEntries";
-	import FrontingEntryEdit from "../../modals/FrontingEntryEdit.vue";
 	import { DatabaseEvents, DatabaseEvent } from "../../lib/db/events";
-	import { addModal, removeModal } from "../../lib/modals.ts";
 
 	import FrontingEntryItem from "../frontingEntry/FrontingEntryItem.vue";
 	import { appConfig } from "../../lib/config/index.ts";
@@ -29,17 +27,6 @@
 	onUnmounted(() => {
 		DatabaseEvents.removeEventListener("updated", listener);
 	});
-
-	async function showModal(clickedFrontingEntry: FrontingEntryComplete){
-		const vnode = h(FrontingEntryEdit, {
-			frontingEntry: clickedFrontingEntry,
-			onDidDismiss: () => removeModal(vnode)
-		});
-
-		const modal = await addModal(vnode);
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-call
-		await (modal.el as any).present();
-	}
 </script>
 
 <template>
@@ -54,7 +41,7 @@
 			button
 			:entry
 			show-date-complete
-			@click="showModal(entry)"
+			:router-link="`/edit/frontingEntry?uuid=${entry.uuid}`"
 		/>
 	</IonList>
 </template>

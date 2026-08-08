@@ -8,13 +8,13 @@
 		IonList,
 		IonFab,
 		IonButton,
+		IonBackButton,
 		IonFabButton,
 		IonLabel,
 		IonToggle,
 		IonItem,
-		modalController,
-		IonModal,
 		useIonRouter,
+		IonPage,
 	} from "@ionic/vue";
 
 	import saveMD from "@material-symbols/svg-600/rounded/save.svg";
@@ -23,42 +23,41 @@
 	import startMD from "@material-symbols/svg-600/rounded/line_start_circle.svg";
 	import endMD from "@material-symbols/svg-600/rounded/line_end_circle.svg";
 
-	import { FrontingEntry, FrontingEntryComplete, Member, UUIDable } from "../lib/db/entities";
-	import { newFrontingEntry, updateFrontingEntry, deleteFrontingEntry, sendFrontingChangedEvent, getFrontingBetweenIndex } from "../lib/db/tables/frontingEntries";
-	import { ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
+	import { FrontingEntry, FrontingEntryComplete, Member, UUIDable } from "../../lib/db/entities";
+	import { newFrontingEntry, updateFrontingEntry, deleteFrontingEntry, sendFrontingChangedEvent, getFrontingBetweenIndex, getFrontingEntry, toFrontingEntryComplete } from "../../lib/db/tables/frontingEntries";
+	import { onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
 	import { useTranslation } from "i18next-vue";
-	import { PartialBy } from "../lib/types";
-	import { formatDate, promptOkCancel, toast, presencePhrase, sortDate } from "../lib/util/misc";
-	import { IndexEntry } from "../lib/db/types";
-	import { defaultMember, getMember } from "../lib/db/tables/members";
+	import { PartialBy } from "../../lib/types";
+	import { formatDate, promptOkCancel, toast, presencePhrase, sortDate } from "../../lib/util/misc";
+	import { IndexEntry } from "../../lib/db/types";
+	import { defaultMember, getMember } from "../../lib/db/tables/members";
+	import { useRoute } from "vue-router";
 
-	import MemberSelect from "./MemberSelect.vue";
-	import PresenceHistory from "./PresenceHistory.vue";
-	import DatePopupPicker from "../components/DatePopupPicker.vue";
-	import ContentEditable from "../components/ContentEditable.vue";
-	import PresenceRating from "../components/PresenceRating.vue";
-	import MemberItem from "../components/member/MemberItem.vue";
-	import Comments from "./Comments.vue";
-	import Loading from "./Loading.vue";
-	import MemberChip from "../components/member/MemberChip.vue";
-	import AvatarStack from "../components/AvatarStack.vue";
+	import MemberSelect from "../../modals/MemberSelect.vue";
+	import PresenceHistory from "../../modals/PresenceHistory.vue";
+	import DatePopupPicker from "../../components/DatePopupPicker.vue";
+	import ContentEditable from "../../components/ContentEditable.vue";
+	import PresenceRating from "../../components/PresenceRating.vue";
+	import MemberItem from "../../components/member/MemberItem.vue";
+	import Comments from "../../modals/Comments.vue";
+	import Loading from "../../modals/Loading.vue";
+	import MemberChip from "../../components/member/MemberChip.vue";
+	import AvatarStack from "../../components/AvatarStack.vue";
+	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 
 	const i18next = useTranslation();
 	const router = useIonRouter();
+	const route = useRoute();
 
-	const props = defineProps<{
-		frontingEntry?: PartialBy<FrontingEntryComplete, keyof UUIDable | "member">,
-		overrideStartTime?: Date,
-		overrideEndTime?: Date
-	}>();
+	const loading = ref(false);
 
 	const emptyFrontingEntry: PartialBy<FrontingEntryComplete, keyof UUIDable | "member"> = {
 		isMainFronter: false,
-		startTime: props.overrideStartTime || new Date(),
-		endTime: props.overrideEndTime || new Date(),
+		startTime: new Date(),
+		endTime: new Date(),
 		isLocked: false,
 	};
-	const frontingEntry = ref({ ...(props.frontingEntry || emptyFrontingEntry) });
+	const frontingEntry = ref({ ...emptyFrontingEntry });
 	const allFrontingInTimeSpan = ref<IndexEntry<FrontingEntry>[]>([]);
 
 	const presenceHistoryModal = useTemplateRef("presenceHistoryModal");
@@ -101,7 +100,7 @@
 				await loadingModal.value?.$el.dismiss();
 
 				if(dismissAfter)
-					await modalController.dismiss(null, "added");
+					router.back();
 
 				return;
 			}
@@ -119,7 +118,7 @@
 			await loadingModal.value?.$el.dismiss();
 		
 			if(dismissAfter)
-				await modalController.dismiss(null, "modified").catch(() => false);
+				router.back();
 		}catch(e){
 			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 			await loadingModal.value?.$el.dismiss();
@@ -146,7 +145,7 @@
 				// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 				await loadingModal.value?.$el.dismiss();
 
-				await modalController.dismiss(undefined, "deleted").catch(() => false);
+				router.back();
 			}
 		}catch(e){
 			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
@@ -168,9 +167,8 @@
 		return presenceVal.sort((a, b) => a[0].valueOf() - b[0].valueOf()).pop() || [undefined, undefined];
 	}
 
-	async function routeToMember(member: Member){
-		if(await modalController.dismiss(undefined).catch(() => false))
-			router.push(`/edit/member?uuid=${member.uuid}`);
+	function routeToMember(member: Member){
+		router.push(`/edit/member?uuid=${member.uuid}`);
 	}
 
 	async function getCommentAvatars(){
@@ -187,21 +185,58 @@
 		}));
 	}
 
+	async function updateRoute() {
+		if(route.name !== "FrontingEntryEdit") return;
+
+		loading.value = true;
+
+		let overrideStartTime: Date | undefined, overrideEndTime: Date | undefined;
+
+		if(route.query.overrideStartTime)
+			overrideStartTime = new Date(route.query.overrideStartTime as string);
+		
+		if(route.query.overrideEndTime)
+			overrideEndTime = new Date(route.query.overrideEndTime as string);
+
+		if(route.query.uuid){
+			try{
+				const _fec = await toFrontingEntryComplete([await getFrontingEntry(route.query.uuid as string)]);
+				if(_fec[0])
+					frontingEntry.value = _fec[0];
+				else
+					throw new Error("no complete fronting entry wtf");
+			} catch (e){
+				console.error(e);
+				frontingEntry.value = { ...emptyFrontingEntry, startTime: overrideStartTime || new Date(), endTime: overrideEndTime || new Date() };
+			}
+		} else frontingEntry.value = { ...emptyFrontingEntry, startTime: overrideStartTime || new Date(), endTime: overrideEndTime || new Date() };
+
+		loading.value = false;
+	}
+
 	watch(frontingEntry.value, async () => {
 		allFrontingInTimeSpan.value = getFrontingBetweenIndex(frontingEntry.value.startTime, frontingEntry.value.endTime).filter(x => x.uuid !== frontingEntry.value.uuid);
 		frontingEntryCommentAvatars.value = await getCommentAvatars();
-	}, { immediate: true });
+	});
+
+	watch(route, updateRoute);
+	onBeforeMount(updateRoute);
 </script>
 
 <template>
-	<IonModal class="fronting-entry-edit-modal" :breakpoints="[0,1]" initial-breakpoint="1">
+	<IonPage>
 		<IonHeader>
 			<IonToolbar>
+				<IonBackButton
+					slot="start"
+					default-href="/"
+				/>
 				<IonTitle>{{ $t("frontHistory:edit.header") }}</IonTitle>
 			</IonToolbar>
 		</IonHeader>
 
-		<IonContent>
+		<SpinnerFullscreen v-if="loading" />
+		<IonContent v-else>
 			<IonList class="grid-2">
 				<MemberItem
 					v-if="frontingEntry.member"
@@ -455,7 +490,7 @@
 			<Loading ref="loadingModal" />
 
 		</IonContent>
-	</IonModal>
+	</IonPage>
 </template>
 
 <style scoped>
