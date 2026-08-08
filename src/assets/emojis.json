@@ -1,6 +1,20 @@
 [
 	{
 		"names": [
+			"biscotto",
+			"biscuit",
+			"orange_cat"
+		],
+		"value": "biscotto.webp"
+	},
+	{
+		"names": [
+			"biscotto_pleading"
+		],
+		"value": "biscotto_pleading.webp"
+	},
+	{
+		"names": [
 			"mia_blep"
 		],
 		"value": "mia_blep.webp"
