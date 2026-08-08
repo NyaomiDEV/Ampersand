@@ -437,6 +437,13 @@
 						<p>{{ $t("other:genericDeleteDesc") }}</p>
 					</IonLabel>
 				</IonItem>
+				<IonItem v-if="frontingEntry.dateCreated" :detail="false">
+					<IonLabel>
+						<p>
+							{{ $t("other:creation.dateCreated", { dateCreated: formatDate(frontingEntry.dateCreated, "expanded") }) }}
+						</p>
+					</IonLabel>
+				</IonItem>
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
