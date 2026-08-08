@@ -21,6 +21,7 @@
 	import dashboardMD from "@material-symbols/svg-600/rounded/dashboard_customize.svg";
 	import optionsMD from "@material-symbols/svg-600/rounded/menu.svg";
 	import tabsMD from "@material-symbols/svg-600/rounded/bottom_navigation.svg";
+	import manageSearchMD from "@material-symbols/svg-600/rounded/manage_search.svg";
 
 	import lightMD from "@material-symbols/svg-600/rounded/wb_sunny.svg";
 	import darkMD from "@material-symbols/svg-600/rounded/dark_mode.svg";
@@ -330,7 +331,7 @@
 				</IonItem>
 
 				<IonItem button :detail="false">
-					<IonIcon slot="start" :icon="timerMD" />
+					<IonIcon slot="start" :icon="manageSearchMD" />
 					<IonToggle v-model="appConfig.memberQuerySearchesExtraFields">
 						<IonLabel>
 							{{ $t("appSettings:memberQuerySearchesExtraFields") }}
