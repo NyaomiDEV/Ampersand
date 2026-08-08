@@ -121,6 +121,9 @@
 			'--data-color': frontmatter.color && isColor(frontmatter.color) ? frontmatter.color : undefined,
 			'--data-header-color': frontmatter.headerColor && isColor(frontmatter.headerColor) ? frontmatter.headerColor : undefined,
 			'--data-header-font': frontmatter.headerFont ? `'${fontQuickNames[frontmatter.headerFont] || frontmatter.headerFont}'` : undefined,
+			'--data-header-weight': frontmatter.headerBold ? 'bold' : 'regular',
+			'--data-header-style': frontmatter.headerItalic ? 'italic' : 'normal',
+			'--data-header-decoration': frontmatter.headerDecoration,
 			'--data-font': frontmatter.font ? `'${fontQuickNames[frontmatter.font] || frontmatter.font}'` : undefined,
 			'--data-border-style': frontmatter.borderStyle && isBorderStyle(frontmatter.borderStyle) ? frontmatter.borderStyle : undefined,
 			'--data-border-color': frontmatter.borderColor && isColor(frontmatter.borderColor) ? frontmatter.borderColor : undefined,
@@ -154,6 +157,9 @@
 
 			> ion-label {
 				font-family: var(--data-header-font, inherit) !important;
+				font-weight: var(--data-header-weight, inherit) !important;
+				font-style: var(--data-header-style, inherit) !important;
+				text-decoration: var(--data-header-decoration, inherit) !important;
 			}
 		}
 	}
