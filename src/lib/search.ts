@@ -37,8 +37,10 @@ export function filterMember(search: string, member: Member){
 	if (parsed.query.length){
 		if (!(
 			member.name.toLowerCase().includes(parsed.query.toLowerCase()) ||
-			member.description?.toLowerCase().includes(parsed.query.toLowerCase()) ||
-			!!member.customFields?.values().find(x => x.toLowerCase().includes(parsed.query.toLowerCase()))
+			(appConfig.memberQuerySearchesExtraFields && (
+				member.description?.toLowerCase().includes(parsed.query.toLowerCase()) ||
+				!!member.customFields?.values().find(x => x.toLowerCase().includes(parsed.query.toLowerCase()))
+			))
 		))
 			return false;
 	}

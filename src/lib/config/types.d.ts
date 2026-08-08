@@ -17,6 +17,7 @@ export type AppConfig = {
 	tabOrder: string[],
 	defaultSystem: UUID,
 	showMembersApartFromDissociativeStates: "off" | "before" | "after",
+	memberQuerySearchesExtraFields: boolean,
 	hideFrontingTimer: boolean,
 	isDeveloperMode: boolean,
 	defaultFilterQueries: {

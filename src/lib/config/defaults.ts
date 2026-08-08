@@ -56,6 +56,7 @@ export const defaultAppConfig: AppConfig = {
 		"dashboard"
 	],
 	isDeveloperMode: false,
+	memberQuerySearchesExtraFields: true,
 	defaultFilterQueries: {
 		members: "@archived:no",
 		messageBoard: "@archived:no",

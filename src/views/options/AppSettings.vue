@@ -329,6 +329,14 @@
 					</IonToggle>
 				</IonItem>
 
+				<IonItem button :detail="false">
+					<IonIcon slot="start" :icon="timerMD" />
+					<IonToggle v-model="appConfig.memberQuerySearchesExtraFields">
+						<IonLabel>
+							{{ $t("appSettings:memberQuerySearchesExtraFields") }}
+						</IonLabel>
+					</IonToggle>
+				</IonItem>
 
 			</IonList>
 
