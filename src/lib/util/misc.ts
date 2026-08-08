@@ -12,6 +12,7 @@ import { findMimeType } from "../mime";
 import type { IndexEntry } from "../db/types";
 import { platform } from "@tauri-apps/plugin-os";
 import { newFile } from "../fileref";
+import { extractFrontmatter } from "../markdown";
 
 export async function getDocumentFile(extensions?: string[], asFile?: true): Promise<File | undefined>;
 export async function getDocumentFile(extensions?: string[], asFile?: false): Promise<Uint8Array<ArrayBuffer> | undefined>;
@@ -608,6 +609,11 @@ export const fontFamilies = [
 function normalizeFontName(x: string){
 	const quickName = Object.entries(fontQuickNames).find(f => f[1] === x);
 	return quickName ? `${i18next.t(`other:fonts.${quickName[0]}`)} (${x})` : x;
+}
+
+export function getCustomName(withNameAndDescription: { name: string, description?: string }) {
+	const _customNameMaybe = extractFrontmatter(withNameAndDescription.description || "").frontmatter?.customName as string | undefined;
+	return _customNameMaybe || withNameAndDescription.name;
 }
 
 export function fontFamilyPicker(header: string): Promise<string | null | void> {

@@ -7,7 +7,7 @@
 	import TagChip from "../tag/TagChip.vue";
 	import { onBeforeMount, shallowRef, watch } from "vue";
 	import { getTag, getTagsIndex } from "../../lib/db/tables/tags";
-	import { sortName } from "../../lib/util/misc";
+	import { getCustomName, sortName } from "../../lib/util/misc";
 
 	const props = withDefaults(defineProps<{
 		member: Member,
@@ -57,7 +57,7 @@
 			{{ props.member.role }}
 		</p>
 		<h2>
-			{{ props.member.name }}
+			{{ getCustomName(props.member) }}
 		</h2>
 		<h3 v-if="props.showPronouns">
 			{{ props.member.pronouns }}

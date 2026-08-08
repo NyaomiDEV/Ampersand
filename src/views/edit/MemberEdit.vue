@@ -38,7 +38,7 @@
 	import { CustomField, FrontingEntry, Member, System, Tag, UUIDable } from "../../lib/db/entities";
 	import { newMember, deleteMember, updateMember, defaultMember, getMember } from "../../lib/db/tables/members";
 	import { getTags, isValidTag } from "../../lib/db/tables/tags";
-	import { fontFamilyPicker, promptOkCancel, sortName, toast, formatDate, imageClipPicker, saveImageFile, sortFrontingEntries } from "../../lib/util/misc";
+	import { fontFamilyPicker, promptOkCancel, sortName, toast, formatDate, imageClipPicker, saveImageFile, sortFrontingEntries, getCustomName } from "../../lib/util/misc";
 	import { encodeImageWithMetadata, getImageOrMetadata, getResizedImage } from "../../lib/util/image";
 	import { getCurrentInstance, onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
 	import { addMaterialColors, rgbaToArgb, unsetMaterialColors } from "../../lib/theme";
@@ -432,7 +432,7 @@
 							'gradient': member.nameStyle?.gradient
 						}"
 					>
-						{{ member.name }}
+						{{ getCustomName(member) }}
 					</h3>
 					<p>{{ member.pronouns }}{{ typeof member.age === "number" ? ` - ${$t("members:edit.ageDisplay", { count: member.age })}` : "" }}</p>
 					<p>{{ member.role }}</p>

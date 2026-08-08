@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { FrontingEntryComplete } from "../../lib/db/entities";
 	import dayjs from "dayjs";
-	import { formatDate } from "../../lib/util/misc";
+	import { formatDate, getCustomName } from "../../lib/util/misc";
 	import PresenceRating from "../PresenceRating.vue";
 	import { extractFrontmatter } from "../../lib/markdown";
 
@@ -48,7 +48,7 @@
 
 <template>
 	<p v-if="props.entry.influencing" class="influencing" style="color: inherit;">
-		{{ $t("frontHistory:influencing", { influencedMember: props.entry.influencing.map(x => x.name).join(", ") }) }}
+		{{ $t("frontHistory:influencing", { influencedMember: props.entry.influencing.map(x => getCustomName(x)).join(", ") }) }}
 	</p>
 	<p v-if="getCustomStatus(entry)" class="custom-status" style="color: inherit;">
 		{{ getCustomStatus(entry) }}

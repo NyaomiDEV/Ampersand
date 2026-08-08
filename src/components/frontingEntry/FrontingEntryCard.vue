@@ -14,6 +14,7 @@
 	import { onBeforeMount, shallowRef } from "vue";
 	import { getSystem } from "../../lib/db/tables/system";
 	import { extractFrontmatter } from "../../lib/markdown";
+	import { getCustomName } from "../../lib/util/misc.ts";
 
 	const { getObjectURL } = useBlob();
 
@@ -114,7 +115,7 @@
 			</Avatar>
 			<IonLabel>
 				<h2>
-					{{ props.entry.member.name }}
+					{{ getCustomName(props.entry.member) }}
 				</h2>
 				<p v-if="!appConfig.hideFrontingTimer" :entry="props.entry">
 					<FrontingEntryInterval v-slot="{ interval }" :entry="props.entry">
@@ -123,7 +124,7 @@
 				</p>
 					
 				<p v-if="props.entry.influencing">
-					{{ $t("dashboard:fronterInfluencing", { influencedMember: props.entry.influencing.map(x => x.name).join(", ") }) }}
+					{{ $t("dashboard:fronterInfluencing", { influencedMember: props.entry.influencing.map(x => getCustomName(x)).join(", ") }) }}
 				</p>
 				<p v-if="getCustomStatus(entry)">
 					{{ getCustomStatus(entry) }}

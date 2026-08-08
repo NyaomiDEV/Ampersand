@@ -13,6 +13,7 @@
 
 	import accountCircle from "@material-symbols/svg-600/rounded/account_circle-fill.svg";
 	import { isValidMember } from "../../lib/db/tables/members";
+	import { getCustomName } from "../../lib/util/misc.ts";
 
 	const router = useIonRouter();
 
@@ -56,7 +57,7 @@
 			:icon="accountCircle"
 		/>
 		<IonLabel class="nowrap">
-			{{ props.member.name }}
+			{{ getCustomName(props.member) }}
 		</IonLabel>
 	</IonChip>
 </template>

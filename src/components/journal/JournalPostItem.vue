@@ -3,7 +3,7 @@
 	import { IonItem, IonLabel } from "@ionic/vue";
 	import TagChip from "../tag/TagChip.vue";
 	import { JournalPostComplete, Tag } from "../../lib/db/entities";
-	import { formatDate, sortName } from "../../lib/util/misc";
+	import { formatDate, getCustomName, sortName } from "../../lib/util/misc";
 	import { onBeforeMount, shallowRef, watch } from "vue";
 	import { getTag, getTagsIndex } from "../../lib/db/tables/tags";
 	import { useBlob } from "../../lib/util/blob";
@@ -96,7 +96,7 @@
 		<IonLabel>
 			<img v-if="props.post.cover" class="cover" :src="getObjectURL(props.post.cover)" />
 
-			<h3 v-if="props.post.members.length">{{ props.post.members.toSorted(sortName).map(x => x.name).join(", ") }}</h3>
+			<h3 v-if="props.post.members.length">{{ props.post.members.toSorted(sortName).map(x => getCustomName(x)).join(", ") }}</h3>
 
 			<h1>{{ props.post.title }}</h1>
 			<h2 v-if="props.post.subtitle?.length">{{ props.post.subtitle }}</h2>

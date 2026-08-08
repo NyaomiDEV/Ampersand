@@ -3,7 +3,7 @@
 	import { getFrontingBetween, getFrontingStatistics } from "../../lib/db/tables/frontingEntries";
 	import { h, onMounted, ref, shallowRef, useTemplateRef, watch } from "vue";
 	import DatePopupPicker from "../../components/DatePopupPicker.vue";
-	import { formatDate, formatWrittenTimeAbsolute, presencePhrase, sortName } from "../../lib/util/misc";
+	import { formatDate, formatWrittenTimeAbsolute, getCustomName, presencePhrase, sortName } from "../../lib/util/misc";
 	import dayjs from "dayjs";
 	import MemberItem from "../../components/member/MemberItem.vue";
 	import { FrontingEntry, Member } from "../../lib/db/entities";
@@ -568,7 +568,7 @@
 								}))"
 							/>
 							<IonLabel>
-								<h2>{{ memberCouple[0].map(x => x.name).join(" + ") }}</h2>
+								<h2>{{ memberCouple[0].map(x => getCustomName(x)).join(" + ") }}</h2>
 								<p>
 									{{ $t("analytics:cofrontingCount", { count: memberCouple[1].count }) }}
 								</p>

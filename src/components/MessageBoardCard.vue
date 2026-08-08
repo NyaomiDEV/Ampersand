@@ -11,7 +11,7 @@
 	import { defaultMember, getMember } from "../lib/db/tables/members";
 	import PollResults from "../modals/PollResults.vue";
 	import { useTranslation } from "i18next-vue";
-	import { formatDate, promptOkCancel, sortDate, sortName } from "../lib/util/misc";
+	import { formatDate, getCustomName, promptOkCancel, sortDate, sortName } from "../lib/util/misc";
 
 	import accountCircle from "@material-symbols/svg-600/rounded/account_circle-fill.svg";
 	import { accessibilityConfig } from "../lib/config";
@@ -200,7 +200,7 @@
 				<p v-if="formatDate(props.boardMessage.date, props.showDateInDateTime ? 'collapsed' : undefined) !== props.boardMessage.title">
 					{{ formatDate(props.boardMessage.date, props.showDateInDateTime ? 'collapsed' : undefined) }}
 				</p>
-				<span v-if="props.boardMessage.members.length">{{ props.boardMessage.members.toSorted(sortName).map(x => x.name).join(", ") }}</span>
+				<span v-if="props.boardMessage.members.length">{{ props.boardMessage.members.toSorted(sortName).map(x => getCustomName(x)).join(", ") }}</span>
 			</div>
 			<div class="contents">
 				<h1>{{ props.boardMessage.title }}</h1>

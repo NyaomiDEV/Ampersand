@@ -15,6 +15,7 @@
 	import { appConfig, securityConfig } from "../../lib/config/index.ts";
 	import { lock } from "../../lib/applock.ts";
 	import CollapsibleHeaderbar from "../../components/CollapsibleHeaderbar.vue";
+	import { getCustomName } from "../../lib/util/misc.ts";
 
 	const mainFronter = shallowRef<Member>();
 	const router = useIonRouter();
@@ -62,7 +63,7 @@
 					<IonTitle>
 						{{ 
 							mainFronter
-								? $t("dashboard:header_mainfronter", { fronterName: mainFronter.name })
+								? $t("dashboard:header_mainfronter", { fronterName: getCustomName(mainFronter) })
 								: $t("dashboard:header_salute") }}
 					</IonTitle>
 				</IonToolbar>

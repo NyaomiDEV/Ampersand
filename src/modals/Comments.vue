@@ -20,7 +20,7 @@
 	import type { Member, Comment } from "../lib/db/entities";
 	import { defaultMember, getMember } from "../lib/db/tables/members.ts";
 	import { addModal, removeModal } from "../lib/modals.ts";
-	import { formatDate, promptOkCancel, sortDateAsc } from "../lib/util/misc.ts";
+	import { formatDate, getCustomName, promptOkCancel, sortDateAsc } from "../lib/util/misc.ts";
 	import { useTranslation } from "i18next-vue";
 
 	import addMD from "@material-symbols/svg-600/rounded/add.svg";
@@ -172,7 +172,7 @@
 		if(!repliedToMember) return;
 
 		return [
-			h("span", { class: "author" }, repliedToMember.name),
+			h("span", { class: "author" }, getCustomName(repliedToMember)),
 			": ",
 			h("span", repliedTo.comment)
 		];
