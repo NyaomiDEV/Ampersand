@@ -327,6 +327,30 @@ export async function frontingEntries(table: ShittyTable<FrontingEntry>, version
 		return _addDateCreated(table as unknown as ShittyTable<UUIDable>);
 	}
 
+	async function threeToFour(){
+		// with recent changes, we need to make absolutely sure that there aren't spurious locked entries in the past
+		try {
+			for (const uuid of table.index.map(x => x.uuid)) {
+				const obj = await table.get(uuid);
+
+				if (obj.endTime && obj.isLocked) {
+					await table.update({
+						uuid,
+						isLocked: false
+					}, false);
+				}
+			}
+
+			await table.saveIndexToDisk();
+			await table.saveHashesToDisk();
+		} catch (_e) {
+			console.error(_e);
+			return false;
+		}
+
+		return true;
+	}
+
 	switch (version) {
 		// @ts-expect-error fallthrough
 		case 0:
@@ -334,11 +358,14 @@ export async function frontingEntries(table: ShittyTable<FrontingEntry>, version
 		// @ts-expect-error fallthrough
 		case 1:
 			if (!await oneToTwo()) return 1;
+		// @ts-expect-error fallthrough
 		case 2:
 			if (!await twoToThree()) return 2;
+		case 3:
+			if (!await threeToFour()) return 3;
 	}
 
-	return 3;
+	return 4;
 }
 
 export async function journalPosts(table: ShittyTable<JournalPost>, version: number) {
