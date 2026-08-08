@@ -179,16 +179,27 @@ export function filterFrontingEntry(search: string, frontingEntry: FrontingEntry
 			return false;
 	}
 
-	if (parsed.influencing !== undefined){
-		if(!!frontingEntry.influencing !== parsed.influencing)
-			return false;
+	if (parsed.influencing) {
+		if(parsed.influencing.value !== ""){
+			if(frontingEntry.influencing?.includes(parsed.influencing.value) !== parsed.influencing.shouldInclude)
+				return false;
+		} else {
+			if(!!frontingEntry.influencing !== parsed.influencing.shouldInclude)
+				return false;
+		}
 	}
 
-	if(parsed.influenced !== undefined){
-		const influencedBy = getFrontingBetweenIndex(frontingEntry.startTime, frontingEntry.endTime).filter(x => x.influencing?.includes(frontingEntry.member));
-		if(influencedBy.length) console.log(influencedBy);
-		if(!!influencedBy.length !== parsed.influenced)
-			return false;
+	if (parsed.influenced) {
+		const influencedBy = getFrontingBetweenIndex(frontingEntry.startTime, frontingEntry.endTime)
+			.filter(x => x.influencing?.includes(frontingEntry.member));
+
+		if(parsed.influenced.value !== ""){
+			if(!!influencedBy.find(x => x.member === parsed.influenced!.value) !== parsed.influenced.shouldInclude)
+				return false;
+		} else {
+			if(!!influencedBy.length !== parsed.influenced.shouldInclude)
+				return false;
+		}
 	}
 
 	return true;

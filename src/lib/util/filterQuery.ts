@@ -38,8 +38,8 @@ export type FrontingHistoryFilterQuery = {
 	system?: QueryItem,
 	andChildren?: boolean,
 	mainFronter?: boolean,
-	influencing?: boolean,
-	influenced?: boolean
+	influencing?: QueryItem,
+	influenced?: QueryItem
 };
 
 export type BoardMessageFilterQuery = {
@@ -282,10 +282,16 @@ export function parseFrontingHistoryFilterQuery(search: string) {
 				result.mainFronter = reduceToValue(shouldInclude);
 				break;
 			case "influencing":
-				result.influencing = reduceToValue(shouldInclude);;
+				result.influencing = {
+					value,
+					shouldInclude: reduceToValue(shouldInclude)
+				};
 				break;
 			case "influenced":
-				result.influenced = reduceToValue(shouldInclude);;
+				result.influenced = {
+					value,
+					shouldInclude: reduceToValue(shouldInclude)
+				};
 				break;
 		}
 		break;
