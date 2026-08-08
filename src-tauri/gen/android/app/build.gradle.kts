@@ -79,8 +79,9 @@ android {
             manifestPlaceholders["usesCleartextTraffic"] = "true"
             manifestPlaceholders["appName"] = "@string/app_name_debug"
             if(
-                System.getenv("npm_config_argv") !== null &&
-                System.getenv("npm_config_argv").contains("[\"tauri\",\"android\",\"dev\"]")
+                System.getenv("npm_command") !== null &&
+                System.getenv("npm_command").contains("exec") ||
+                System.getenv("npm_command").contains("run-script")
             ) {
                 base.archivesName.set("app")
             }
