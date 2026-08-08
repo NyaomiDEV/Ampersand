@@ -4,6 +4,7 @@
 	} from "@ionic/vue";
 
 	import { System } from "../../lib/db/entities";
+	import { getCustomName } from "../../lib/util/misc";
 
 	const props = defineProps<{
 		system: System
@@ -14,7 +15,7 @@
 	<IonLabel class="nowrap">
 		<slot name="before" />
 		<h2>
-			{{ props.system.name }}
+			{{ getCustomName(props.system) }}
 		</h2>
 		<slot />
 	</IonLabel>

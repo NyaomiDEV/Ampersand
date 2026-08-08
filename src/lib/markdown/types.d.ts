@@ -26,7 +26,7 @@ export type FrontmatterEncased = {
 
 export type FieldFrontmatter = Frontmatter & FrontmatterHeader & FrontmatterEncased;
 
-export type FrontmatterMemberDescription = FieldFrontmatter & {
+export type FrontmatterSystemOrMemberDescription = FieldFrontmatter & {
 	customName?: string;
 };
 

@@ -10,6 +10,7 @@
 
 	import Avatar from "../Avatar.vue";
 	import accountCircle from "@material-symbols/svg-600/rounded/supervised_user_circle.svg";
+	import { getCustomName } from "../../lib/util/misc.ts";
 
 	const router = useIonRouter();
 
@@ -52,7 +53,7 @@
 			:icon="accountCircle"
 		/>
 		<IonLabel class="nowrap">
-			{{ props.system.name }}
+			{{ getCustomName(props.system) }}
 		</IonLabel>
 	</IonChip>
 </template>

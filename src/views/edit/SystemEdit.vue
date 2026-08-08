@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonButton, IonIcon, IonInput, IonFab, IonFabButton, IonItem, IonLabel, useIonRouter, IonTextarea, IonToggle, IonProgressBar } from "@ionic/vue";
 	import { getCurrentInstance, onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
-	import { promptOkCancel, toast, imageClipPicker, fontFamilyPicker } from "../../lib/util/misc";
+	import { promptOkCancel, toast, imageClipPicker, fontFamilyPicker, getCustomName } from "../../lib/util/misc";
 	import { getResizedImage } from "../../lib/util/image";
 	import { deleteSystem, getSystem, newSystem, updateSystem, countSystemMembers } from "../../lib/db/tables/system";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
@@ -349,7 +349,7 @@
 							'gradient': system.nameStyle?.gradient
 						}"
 					>
-						{{ system.name }}
+						{{ getCustomName(system) }}
 					</h3>
 					<p v-if="system.isArchived">{{ $t("systems:edit.archived") }}</p>
 				</div>
