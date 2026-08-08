@@ -66,5 +66,12 @@
       "version": "^26.0.0",
       "onFail": "download"
     }
+  },
+  "engines": {
+    "runtime": {
+      "name": "node",
+      "version": "^26.0.0",
+      "onFail": "download"
+    }
   }
 }

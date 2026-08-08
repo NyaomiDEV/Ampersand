@@ -80,6 +80,9 @@ importers:
       mermaid:
         specifier: ^11.16.1
         version: 11.16.1
+      node:
+        specifier: runtime:^26.0.0
+        version: runtime:26.7.0
       regex-recursion:
         specifier: ^6.0.2
         version: 6.0.2
@@ -129,9 +132,6 @@ importers:
       globals:
         specifier: ^17.9.0
         version: 17.9.0
-      node:
-        specifier: runtime:^26.0.0
-        version: runtime:26.7.0
       smol-toml:
         specifier: ^1.7.1
         version: 1.7.1
