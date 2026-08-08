@@ -4,7 +4,7 @@ import { parseAssetFilterQuery, parseBoardMessageFilterQuery, parseCustomFieldFi
 import { appConfig } from "./config";
 import { getMemberIndex } from "./db/tables/members";
 import { getSystemsIndex } from "./db/tables/system";
-import { getFrontingEntryIndex } from "./db/tables/frontingEntries";
+import { getFrontingBetweenIndex, getFrontingEntryIndex } from "./db/tables/frontingEntries";
 
 export function filterSystem(search: string, system: System) {
 	const parsed = parseSystemFilterQuery(search.length ? search : appConfig.defaultFilterQueries.systems || "");
@@ -171,6 +171,23 @@ export function filterFrontingEntry(search: string, frontingEntry: FrontingEntry
 
 	if (parsed.currentlyFronting) {
 		if (frontingEntry.endTime)
+			return false;
+	}
+
+	if (parsed.mainFronter !== undefined){
+		if(frontingEntry.isMainFronter !== parsed.mainFronter)
+			return false;
+	}
+
+	if (parsed.influencing !== undefined){
+		if(!!frontingEntry.influencing !== parsed.influencing)
+			return false;
+	}
+
+	if(parsed.influenced !== undefined){
+		const influencedBy = getFrontingBetweenIndex(frontingEntry.startTime, frontingEntry.endTime).filter(x => x.influencing?.includes(frontingEntry.member));
+		if(influencedBy.length) console.log(influencedBy);
+		if(!!influencedBy.length !== parsed.influenced)
 			return false;
 	}
 

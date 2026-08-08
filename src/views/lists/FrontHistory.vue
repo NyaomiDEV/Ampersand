@@ -247,22 +247,24 @@
 			<TheresNothingHere v-else-if="!frontingEntries.length" compress-vertical />
 
 			<template v-else-if="!showCalendar">
-				<IonListHeader>
-					{{ $t("frontHistory:currentlyFronting") }}
-				</IonListHeader>
-				<IonList class="currently-fronting">
-					<VirtualList :entries="frontingEntries.filter(x => !x.endTime)" :min-size="86" :gap="2">
-						<template #default="{ entry }">
-							<FrontingEntryItem
-								:entry="entry"
-								button
-								show-date-complete
-								:presence-average="!entry.endTime"
-								:router-link="`/edit/frontingEntry?uuid=${entry.uuid}`"
-							/>
-						</template>
-					</VirtualList>
-				</IonList>
+				<template v-if="frontingEntries.filter(x => !x.endTime).length">
+					<IonListHeader>
+						{{ $t("frontHistory:currentlyFronting") }}
+					</IonListHeader>
+					<IonList class="currently-fronting">
+						<VirtualList :entries="frontingEntries.filter(x => !x.endTime)" :min-size="86" :gap="2">
+							<template #default="{ entry }">
+								<FrontingEntryItem
+									:entry="entry"
+									button
+									show-date-complete
+									:presence-average="!entry.endTime"
+									:router-link="`/edit/frontingEntry?uuid=${entry.uuid}`"
+								/>
+							</template>
+						</VirtualList>
+					</IonList>
+				</template>
 				<IonList>
 					<VirtualList :entries="frontingEntries.filter(x => x.endTime)" :min-size="86" :gap="2">
 						<template #default="{ entry }">

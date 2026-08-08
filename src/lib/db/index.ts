@@ -51,7 +51,7 @@ export async function initDatabase(){
 		initTable("systems", ["name", "parent", "isPinned", "isArchived", "viewInLists"], true),
 		initTable("members", ["name", "system", "isPinned", "isArchived", "isDissociativeState"], true),
 		initTable("boardMessages", ["members", "date", "isPinned", "isArchived"], false),
-		initTable("frontingEntries", ["member", "startTime", "endTime", "isLocked", "isMainFronter"], false),
+		initTable("frontingEntries", ["member", "startTime", "endTime", "isLocked", "isMainFronter", "influencing"], false),
 		initTable("journalPosts", ["title", "members", "date", "isPinned"], true),
 		initTable("reminders", ["active"], false),
 		initTable("tags", ["name", "type", "isArchived", "viewInLists"], false),
