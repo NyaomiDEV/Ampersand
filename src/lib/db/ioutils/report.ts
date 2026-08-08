@@ -91,7 +91,7 @@ async function memberToHtml(member: Member){
 		member.pronouns && `<span class="pronouns">${escape(member.pronouns)}</span>`,
 		member.age && `<span class="age">${member.age}</span>`,
 		member.isArchived && `<span class="dissociative-state">${i18next.t("members:edit.archived")}</span>`,
-		member.isDissociativeState && `<span class="dissociative-state">${i18next.t("members:edit.dissociativeState")}</span>`,
+		member.isDissociativeState && `<span class="dissociative-state">${i18next.t("members:edit.isDissociativeState")}</span>`,
 		"</div>",
 		"</div>"
 	].filter(x => !!x).join("");
