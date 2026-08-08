@@ -47,7 +47,8 @@
 	async function quickRemoveFronter(clickedFrontingEntry: FrontingEntryComplete){
 		await updateFrontingEntry({
 			uuid: clickedFrontingEntry.uuid,
-			endTime: new Date()
+			endTime: new Date(),
+			isLocked: false
 		});
 
 		if(!frontingEntries.value.length)
@@ -110,7 +111,7 @@
 				:router-link="`/edit/frontingEntry?uuid=${entry.uuid}`"
 			/>
 			<IonItemOptions>
-				<IonItemOption color="danger" @click="quickRemoveFronter(entry)">
+				<IonItemOption v-if="!entry.isLocked" color="danger" @click="quickRemoveFronter(entry)">
 					<IonIcon slot="icon-only" :icon="removeFromFrontMD" />
 				</IonItemOption>
 			</IonItemOptions>
@@ -133,6 +134,7 @@
 			:key="entry.uuid"
 			:entry
 			:influenced-by="frontingEntries.filter(x => x.influencing?.find(y => y.uuid === entry.member.uuid)).map(x => x.member)"
+			:disabled="quickDelete && entry.isLocked"
 			@click="quickDelete ? quickRemoveFronter(entry) : router.push(`/edit/frontingEntry?uuid=${entry.uuid}`)"
 		/>
 		<IonCard

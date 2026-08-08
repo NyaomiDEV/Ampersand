@@ -156,6 +156,7 @@
 
 	function removeFromFront() {
 		frontingEntry.value.endTime = new Date();
+		frontingEntry.value.isLocked = false;
 	}
 
 	function getMostRecentPresence(){
@@ -292,6 +293,7 @@
 				<IonItem
 					v-if="!frontingEntry.endTime"
 					button
+					:disabled="frontingEntry.isLocked"
 					@click="removeFromFront"
 				>
 					<IonLabel>

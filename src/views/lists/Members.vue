@@ -277,7 +277,7 @@
 								<IonItemOption v-if="!feGet(member) && frontingEntries.length !== 0" @click="addFrontingEntry(member)">
 									<IonIcon slot="icon-only" :icon="addToFrontMD" />
 								</IonItemOption>
-								<IonItemOption v-if="feGet(member)" color="danger" @click="removeFrontingEntry(member)">
+								<IonItemOption v-if="feGet(member) && !feGet(member)?.isLocked" color="danger" @click="removeFrontingEntry(member)">
 									<IonIcon slot="icon-only" :icon="removeFromFrontMD" />
 								</IonItemOption>
 								<IonItemOption v-if="feGet(member) && !feGet(member)?.isMainFronter" color="secondary" @click="setMainFrontingEntry(member, true)">

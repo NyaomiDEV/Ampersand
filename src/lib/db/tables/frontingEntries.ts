@@ -144,7 +144,7 @@ export async function removeFronter(member: Member) {
 		const f = await getCurrentFrontEntryForMember(member);
 		if(!f) throw new Error("no fronting entry for said member");
 
-		return updateFrontingEntry({ uuid: f.uuid, endTime: new Date() });
+		return updateFrontingEntry({ uuid: f.uuid, endTime: new Date(), isLocked: false });
 	}catch(_e){
 		console.error(_e);
 		return { success: false, err: _e instanceof Error ? _e : new Error(String(_e)) };
@@ -172,7 +172,7 @@ export async function setSoleFronter(member: Member) {
 		const endTime = new Date();
 
 		for(const uuid of toUpdate){
-			const res = await updateFrontingEntry({ uuid, endTime });
+			const res = await updateFrontingEntry({ uuid, endTime, isLocked: false });
 			if (!transactionSucceeded(res))
 				throw new Error(`updating fronter entry failed with error: ${res.err.message}`);
 		}
