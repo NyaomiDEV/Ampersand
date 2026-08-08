@@ -7,6 +7,7 @@ import { IndexEntry } from "../types";
 import { notify, unnotify } from "../../notifications";
 import { platform } from "@tauri-apps/plugin-os";
 import { Schedule } from "@choochmeque/tauri-plugin-notifications-api";
+import { PartialBy } from "../../types";
 
 export async function* getReminders(maxIter = 10){
 	const uuids = db.reminders.index.map(x => x.uuid);
@@ -76,7 +77,7 @@ export async function toReminderComplete(reminders: Reminder[]): Promise<Reminde
 	}));
 }
 
-export async function newReminder(reminder: Omit<Reminder, keyof Omit<UUIDable, "dateCreated">>): Promise<TransactionStatus<string>> {
+export async function newReminder(reminder: PartialBy<Reminder, keyof UUIDable>): Promise<TransactionStatus<string>> {
 	try{
 		const uuid = await db.reminders.add(reminder);
 

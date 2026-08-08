@@ -43,7 +43,6 @@
 		"showBoardEntries": "Show board messages",
 		"showJournalEntries": "Show log entries",
 		"memberID": "Matey ID: {{memberID}}",
-		"dateCreated": "Date they joined: {{dateCreated}}",
 		"memberIDcopiedToClipboard": "Matey ID copied to the clipboard!",
 		"delete": {
 			"title": "Walk the plank",

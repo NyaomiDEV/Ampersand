@@ -12,6 +12,7 @@ import { sortFrontingEntries } from "../../util/misc";
 import { updateFrontingNotification } from "../../mode";
 import { triggerReminders } from "./reminders";
 import { transactionSucceeded } from "../utils";
+import { PartialBy } from "../../types";
 
 export async function* getFrontingEntries(maxIter = 10){
 	const uuids = db.frontingEntries.index.toSorted(sortFrontingEntries).map(x => x.uuid);
@@ -63,7 +64,7 @@ export async function toFrontingEntryComplete(frontingEntries: FrontingEntry[]):
 	}));
 }
 
-export async function newFrontingEntry(frontingEntry: Omit<FrontingEntry, keyof Omit<UUIDable, "dateCreated">>): Promise<TransactionStatus<string>> {
+export async function newFrontingEntry(frontingEntry: PartialBy<FrontingEntry, keyof UUIDable>): Promise<TransactionStatus<string>> {
 	try{
 		const uuid = await db.frontingEntries.add(frontingEntry);
 
@@ -183,8 +184,7 @@ export async function setSoleFronter(member: Member) {
 				member: member.uuid,
 				startTime: endTime,
 				isMainFronter: true,
-				isLocked: false,
-				dateCreated: new Date()
+				isLocked: false
 			});
 			if(res.success)
 				uuid = res.detail!;
@@ -231,20 +231,6 @@ export async function getFronting() {
 	return (await entries).filter(x => x !== undefined);
 }
 
-export async function getFrontingBetween(start: Date, end?: Date){
-	if(!end) end = new Date();
-	const entries = Promise.all(db.frontingEntries.index.toSorted(sortFrontingEntries).map(x => {
-		const _start = x.startTime!;
-		const _end = x.endTime || new Date(end);
-		if(start.valueOf() <= _end.valueOf() && end.valueOf() >= _start.valueOf())
-			return db.frontingEntries.get(x.uuid);
-
-		return Promise.resolve(); // undefined
-	}));
-
-	return (await entries).filter(x => x !== undefined);
-}
-
 export function getFrontingBetweenIndex(start: Date, end?: Date) {
 	if (!end) end = new Date();
 	return db.frontingEntries.index
@@ -257,6 +243,27 @@ export function getFrontingBetweenIndex(start: Date, end?: Date) {
 
 			return false;
 		});
+}
+
+export async function getFrontingBetween(start: Date, end?: Date){
+	return Promise.all(getFrontingBetweenIndex(start, end).map(x => db.frontingEntries.get(x.uuid)));
+}
+
+export function getFrontingAtIndex(date: Date){
+	return db.frontingEntries.index
+		.toSorted(sortFrontingEntries)
+		.filter(x => {
+			const _start = x.startTime!;
+			const _end = x.endTime || new Date();
+			if (date.valueOf() <= _end.valueOf() && date.valueOf() >= _start.valueOf())
+				return true;
+
+			return false;
+		});
+}
+
+export async function getFrontingAt(date: Date) {
+	return Promise.all(getFrontingAtIndex(date).map(x => db.frontingEntries.get(x.uuid)));
 }
 
 export function getFrontingStatistics(entries: (FrontingEntry & { endTime: Date })[]){

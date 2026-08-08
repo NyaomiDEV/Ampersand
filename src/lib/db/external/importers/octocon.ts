@@ -31,8 +31,7 @@ async function customFields(ocUser: OctoconUser, customFieldMapping: Map<string,
 		const result = await newCustomField({
 			name: field.name,
 			default: false,
-			priority: 1,
-			dateCreated: new Date()
+			priority: 1
 		});
 		if(!transactionSucceeded(result))
 			throw new Error(`Could not add custom field: ${result.err.message}`);
@@ -44,8 +43,7 @@ async function customFields(ocUser: OctoconUser, customFieldMapping: Map<string,
 	const proxyName = await newCustomField({
 		name: "Proxy name",
 		default: false,
-		priority: 2,
-		dateCreated: new Date()
+		priority: 2
 	});
 	if (!transactionSucceeded(proxyName))
 		throw new Error(`Could not add custom field: ${proxyName.err.message}`);
@@ -55,8 +53,7 @@ async function customFields(ocUser: OctoconUser, customFieldMapping: Map<string,
 	const proxyTags = await newCustomField({
 		name: "Proxy tags",
 		default: false,
-		priority: 2,
-		dateCreated: new Date()
+		priority: 2
 	});
 	if (!transactionSucceeded(proxyTags))
 		throw new Error(`Could not add custom field: ${proxyTags.err.message}`);
@@ -71,8 +68,7 @@ async function tags(ocTag: OctoconTag){
 		description: ocTag.description,
 		type: "member",
 		isArchived: false,
-		viewInLists: false,
-		dateCreated: new Date()
+		viewInLists: false
 	});
 
 	if (!transactionSucceeded(result))
@@ -92,7 +88,6 @@ async function members(ocAlter: OctoconAlter){
 		isArchived: false,
 		isPinned: false,
 		isDissociativeState: false,
-		dateCreated: new Date(),
 		tags: [],
 		customFields: new Map()
 	});
@@ -118,8 +113,7 @@ async function frontingEntries(ocFront: OctoconFront, memberMapping: Map<number,
 		endTime: ocFront.time_end ? new Date(ocFront.time_end) : undefined,
 		summary: ocFront.comment,
 		isMainFronter: false,
-		isLocked: false,
-		dateCreated: new Date()
+		isLocked: false
 	});
 
 	if (!transactionSucceeded(result))
@@ -193,8 +187,7 @@ async function polls(ocPoll: OctoconPoll, memberMapping: Map<number, string>){
 		date: new Date(ocPoll.inserted_at),
 		isPinned: false,
 		isArchived: false,
-		poll,
-		dateCreated: new Date()
+		poll
 	});
 
 	if (!transactionSucceeded(result))
@@ -238,8 +231,7 @@ export async function importOctocon(){
 			description: "",
 			isPinned: false,
 			isArchived: false,
-			viewInLists: false,
-			dateCreated: new Date()
+			viewInLists: false
 		});
 
 		if (!transactionSucceeded(_system))

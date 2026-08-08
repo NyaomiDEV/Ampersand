@@ -41,6 +41,9 @@
 		}
 	},
 	"addTimestamp": "Añadir marca de tiempo",
+	"creation": {
+		"dateCreated": "Fecha de creación: {{dateCreated}}"
+	},
 	"alerts": {
 		"ok": "De acuerdo",
 		"cancel": "Cancelar",

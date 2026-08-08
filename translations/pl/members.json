@@ -29,7 +29,6 @@
 		"showBoardEntries": "Pokaż wiadomości na tablicy",
 		"showJournalEntries": "Pokaż wpisy w dzienniku",
 		"memberID": "ID członka: {{memberID}}",
-		"dateCreated": "Data utworzenia: {{dateCreated}}",
 		"memberIDcopiedToClipboard": "ID członka w formacie wzmianki zostało skopiowane do schowka!",
 		"delete": {
 			"title": "Usuń członka",

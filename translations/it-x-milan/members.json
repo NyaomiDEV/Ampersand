@@ -45,7 +45,6 @@
 		"showBoardEntries": "Mostra messaggi bacheca",
 		"showJournalEntries": "Mostra pagine diario",
 		"memberID": "ID membro: {{memberID}}",
-		"dateCreated": "Creato il: {{dateCreated}}",
 		"memberIDcopiedToClipboard": "ID membro copiato!",
 		"delete": {
 			"title": "Elimina membro",

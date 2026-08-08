@@ -12,6 +12,10 @@
 	"genericDeleteDesc": "Ye won't be able to undo this, matey!",
 	"addTimestamp": "Add a mark o' time",
 	"memberMention": "Mention a matey",
+	"creation": {
+		"dateCreated": "Date created: {{dateCreated}}",
+		"frontingAtCreationDate": "At the helm when this was created: {{frontingAtCreationDate}}"
+	},
 	"alerts": {
 		"ok": "Aye",
 		"cancel": "Belay that",

@@ -12,6 +12,10 @@
 	"genericDeleteDesc": "Nun poi annuḍḍari st'azzioni!",
 	"addTimestamp": "Agghiunci data e ura",
 	"memberMention": "Menziona un membru",
+	"creation": {
+		"dateCreated": "Data di criazzioni: {{dateCreated}}",
+		"frontingAtCreationDate": "Ô front quannu vinni criatu: {{frontingAtCreationDate}}"
+	},
 	"alerts": {
 		"ok": "Ok",
 		"cancel": "Annuḍḍa",

@@ -7,6 +7,7 @@ import { maxUid, nilUid } from "../../util/consts";
 import { filterMember } from "../../search";
 import { isUuid, sortMembers } from "../../util/misc";
 import { TransactionStatus } from "../types";
+import { PartialBy } from "../../types";
 
 export async function* getMembers(maxIter = 10){
 	const uuids = db.members.index.toSorted(sortMembers).map(x => x.uuid);
@@ -42,7 +43,7 @@ export async function* getFilteredMembers(query: string){
 	}
 }
 
-export async function newMember(member: Omit<Member, keyof Omit<UUIDable, "dateCreated">>): Promise<TransactionStatus<string>> {
+export async function newMember(member: PartialBy<Member, keyof UUIDable>): Promise<TransactionStatus<string>> {
 	try{
 		const uuid = await db.members.add(member);
 

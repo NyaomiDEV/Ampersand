@@ -79,8 +79,7 @@ async function tag(spGroup: SimplyPluralGroup){
 		color: normalizeSPColor(spGroup.color),
 		type: "member",
 		isArchived: false,
-		viewInLists: false,
-		dateCreated: new Date()
+		viewInLists: false
 	});
 
 	if (!transactionSucceeded(result))
@@ -93,8 +92,7 @@ async function customField(spCustomField: SimplyPluralCustomField){
 	const result = await newCustomField({
 		name: spCustomField.name,
 		default: false,
-		priority: 1,
-		dateCreated: new Date()
+		priority: 1
 	});
 
 	if (!transactionSucceeded(result))
@@ -109,8 +107,7 @@ async function reminder(spReminder: SimplyPluralAutomatedReminder) {
 		active: true,
 		message: spReminder.message,
 		trigger: "fronting",
-		delay: spReminder.delayInHours * 60 * 60 * 1000,
-		dateCreated: new Date()
+		delay: spReminder.delayInHours * 60 * 60 * 1000
 	});
 
 	if (!transactionSucceeded(result))
@@ -171,8 +168,7 @@ async function journalPost(spNote: SimplyPluralNote, memberMapping: Map<string, 
 		tags: [],
 		isPrivate: false,
 		isPinned: false,
-		date: new Date(spNote.date || spNote.lastOperationTime || Date.now()),
-		dateCreated: new Date()
+		date: new Date(spNote.date || spNote.lastOperationTime || Date.now())
 	});
 		
 	if (!transactionSucceeded(result))
@@ -189,8 +185,7 @@ async function boardMessage(spBoardMessage: SimplyPluralBoardMessage, memberMapp
 		body: `${writtenFor ? `@<m:${writtenFor}>\n\n` : ""}${spBoardMessage.message?.length ? spBoardMessage.message : ""}`,
 		date: spBoardMessage.writtenAt ? new Date(spBoardMessage.writtenAt) : new Date(),
 		isArchived: false,
-		isPinned: false,
-		dateCreated: new Date()
+		isPinned: false
 	});
 
 	if (!transactionSucceeded(result))
@@ -286,8 +281,7 @@ async function frontingEntry(spFrontHistory: SimplyPluralFrontHistory, memberMap
 			member: memberMapping.get(spFrontHistory.member!) || (spFrontHistory.custom ? maxUid : nilUid),
 			date: comment[0],
 			comment: comment[1]
-		})),
-		dateCreated: new Date()
+		}))
 	});
 
 	if (!transactionSucceeded(result))
@@ -333,8 +327,7 @@ export async function importSimplyPlural(){
 			description: "",
 			isPinned: false,
 			isArchived: false,
-			viewInLists: false,
-			dateCreated: new Date()
+			viewInLists: false
 		});
 
 		if (!transactionSucceeded(_system))

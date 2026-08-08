@@ -160,6 +160,9 @@
 		"title": "Toeta meid",
 		"desc": "Sinu rahaline toetus aitab Ampersandil areneda ja arendajatel tegutseda"
 	},
+	"creation": {
+		"dateCreated": "Loomise kuupäev: {{dateCreated}}"
+	},
 	"fontStyles": {
 		"bold": "Paks kiri",
 		"italic": "Kaldkiri",

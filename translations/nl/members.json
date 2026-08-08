@@ -26,7 +26,6 @@
 		"showBoardEntries": "Laat berichten op het prikbord zien",
 		"showJournalEntries": "Laat dagboek-posts zien",
 		"memberID": "Lid ID: {{memberID}}",
-		"dateCreated": "Datum gecreëerd: {{dateCreated}}",
 		"memberIDcopiedToClipboard": "Lid ID in vermelden-formaat gekopieërd naar klembord!",
 		"delete": {
 			"confirm": "Weet je zeker dat je dit lid wilt verwijderen?",

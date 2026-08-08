@@ -36,7 +36,6 @@
 		"showBoardEntries": "toki pi poki toki",
 		"showJournalEntries": "toki lipu",
 		"memberID": "nimi ilo pi ijo kulupu ni: {{memberID}}",
-		"dateCreated": "tenpo pi pali lipu: {{dateCreated}}",
 		"memberIDcopiedToClipboard": "sina kama jo e nimi ilo pi ijo kulupu ni!",
 		"delete": {
 			"title": "weka pi ijo kulupu",

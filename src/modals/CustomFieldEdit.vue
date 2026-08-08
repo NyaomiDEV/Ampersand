@@ -21,12 +21,14 @@
 
 	import { CustomField, UUIDable } from "../lib/db/entities";
 	import { newCustomField, updateCustomField, deleteCustomField } from "../lib/db/tables/customFields";
-	import { ref, toRaw, useTemplateRef } from "vue";
+	import { onMounted, ref, toRaw, useTemplateRef } from "vue";
 
 	import { PartialBy } from "../lib/types";
 	import { useTranslation } from "i18next-vue";
-	import { promptOkCancel, toast } from "../lib/util/misc";
+	import { formatDate, getCustomName, promptOkCancel, toast } from "../lib/util/misc";
 	import Loading from "./Loading.vue";
+	import { getFrontingAtIndex } from "../lib/db/tables/frontingEntries.ts";
+	import { defaultMember, getMember } from "../lib/db/tables/members.ts";
 
 	const i18next = useTranslation();
 
@@ -42,6 +44,8 @@
 
 	const customField = ref({ ...(props.customField || emptyCustomField) });
 
+	const frontingAtCreationDate = ref<string>();
+
 	const loadingModal = useTemplateRef("loadingModal");
 
 	async function save(){
@@ -54,8 +58,7 @@
 
 			if(!uuid) {
 				const result = await newCustomField({
-					..._customField,
-					dateCreated: new Date()
+					..._customField
 				});
 				if(!result.success) throw new Error(`E: ${result.err || "failed"}`);
 
@@ -106,6 +109,22 @@
 			await toast((e as Error).message);
 		}
 	}
+
+	async function getPeopleFrontingAtCreation(){
+		if(!customField.value?.dateCreated) return;
+
+		const frontingIndex = getFrontingAtIndex(customField.value.dateCreated);
+		const memberUUIDs = new Set(frontingIndex.map(x => x.member!));
+
+		frontingAtCreationDate.value = (await Promise.all(
+			memberUUIDs.values()
+				.map(x => getMember(x).catch(_ => defaultMember(x)))
+		))
+			.map(x => getCustomName(x))
+			.join(", ");
+	}
+
+	onMounted(getPeopleFrontingAtCreation);
 </script>
 
 <template>
@@ -151,6 +170,16 @@
 					<IonLabel color="danger">
 						<h3>{{ $t("customFields:edit.delete.title") }}</h3>
 						<p>{{ $t("other:genericDeleteDesc") }}</p>
+					</IonLabel>
+				</IonItem>
+				<IonItem v-if="customField.dateCreated" :detail="false">
+					<IonLabel>
+						<p>
+							{{ $t("other:creation.dateCreated", { dateCreated: formatDate(customField.dateCreated, "expanded") }) }}
+						</p>
+						<p v-if="frontingAtCreationDate?.length">
+							{{ $t("other:creation.frontingAtCreationDate", { frontingAtCreationDate }) }}
+						</p>
 					</IonLabel>
 				</IonItem>
 			</IonList>

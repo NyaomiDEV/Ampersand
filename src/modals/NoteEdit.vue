@@ -23,15 +23,16 @@
 
 	import { Note, UUIDable } from "../lib/db/entities";
 	import { newNote, updateNote, deleteNote } from "../lib/db/tables/notes";
-	import { ref, toRaw, useTemplateRef } from "vue";
+	import { onMounted, ref, toRaw, useTemplateRef } from "vue";
 
 	import { PartialBy } from "../lib/types";
 	import { useTranslation } from "i18next-vue";
-	import { promptOkCancel, toast } from "../lib/util/misc";
+	import { formatDate, getCustomName, promptOkCancel, toast } from "../lib/util/misc";
 
 	import ContentEditable from "../components/ContentEditable.vue";
 	import Loading from "./Loading.vue";
-
+	import { getFrontingAtIndex } from "../lib/db/tables/frontingEntries.ts";
+	import { defaultMember, getMember } from "../lib/db/tables/members.ts";
 
 	const i18next = useTranslation();
 
@@ -51,6 +52,7 @@
 	const memberTagModal = useTemplateRef("memberTagModal");
 	const loadingModal = useTemplateRef("loadingModal");
 
+	const frontingAtCreationDate = ref<string>();
 
 	async function save(){
 		const uuid = note.value?.uuid;
@@ -62,8 +64,7 @@
 
 			if(!uuid) {
 				const result = await newNote({
-					..._note,
-					dateCreated: new Date()
+					..._note
 				});
 				if(!result.success) throw new Error(`E: ${result.err || "failed"}`);
 
@@ -114,6 +115,22 @@
 			await toast((e as Error).message);
 		}
 	}
+
+	async function getPeopleFrontingAtCreation(){
+		if(!note.value?.dateCreated) return;
+
+		const frontingIndex = getFrontingAtIndex(note.value.dateCreated);
+		const memberUUIDs = new Set(frontingIndex.map(x => x.member!));
+
+		frontingAtCreationDate.value = (await Promise.all(
+			memberUUIDs.values()
+				.map(x => getMember(x).catch(_ => defaultMember(x)))
+		))
+			.map(x => getCustomName(x))
+			.join(", ");
+	}
+
+	onMounted(getPeopleFrontingAtCreation);
 </script>
 
 <template>
@@ -171,6 +188,16 @@
 					<IonLabel color="danger">
 						<h3>{{ $t("notes:edit.delete.title") }}</h3>
 						<p>{{ $t("other:genericDeleteDesc") }}</p>
+					</IonLabel>
+				</IonItem>
+				<IonItem v-if="note.dateCreated" :detail="false">
+					<IonLabel>
+						<p>
+							{{ $t("other:creation.dateCreated", { dateCreated: formatDate(note.dateCreated, "expanded") }) }}
+						</p>
+						<p v-if="frontingAtCreationDate?.length">
+							{{ $t("other:creation.frontingAtCreationDate", { frontingAtCreationDate }) }}
+						</p>
 					</IonLabel>
 				</IonItem>
 			</IonList>

@@ -12,6 +12,10 @@
 	"genericDeleteDesc": "Non potrai annullare questa azione!",
 	"addTimestamp": "Aggiungi data e ora",
 	"memberMention": "Menziona unə membrə",
+	"creation": {
+		"dateCreated": "Data di creazione: {{dateCreated}}",
+		"frontingAtCreationDate": "Al front alla data di creazione: {{frontingAtCreationDate}}"
+	},
 	"alerts": {
 		"ok": "Ok",
 		"cancel": "Annulla",

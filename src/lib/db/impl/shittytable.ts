@@ -303,8 +303,9 @@ export class ShittyTable<T extends UUIDable> implements Table<T> {
 		return !!this.index.find(x => uuid === x.uuid);
 	}
 
-	async add(data: PartialBy<T, keyof Omit<UUIDable, "dateCreated">>, saveIndexAndHashesAfterwards = true) {
+	async add(data: PartialBy<T, keyof UUIDable>, saveIndexAndHashesAfterwards = true) {
 		data.uuid = data.uuid || window.crypto.randomUUID();
+		data.dateCreated = data.dateCreated || new Date();
 		if (!this.exists(data.uuid)) {
 			await this.write(data as T, saveIndexAndHashesAfterwards);
 			return data.uuid;

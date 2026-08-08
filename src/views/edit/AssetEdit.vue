@@ -25,7 +25,7 @@
 	import { PartialBy } from "../../lib/types";
 	import { useRoute } from "vue-router";
 	import { useTranslation } from "i18next-vue";
-	import { getDocumentFile, promptOkCancel, sortName, toast } from "../../lib/util/misc";
+	import { formatDate, getCustomName, getDocumentFile, promptOkCancel, sortName, toast } from "../../lib/util/misc";
 	import { useBlob } from "../../lib/util/blob";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import AssetItem from "../../components/asset/AssetItem.vue";
@@ -33,6 +33,8 @@
 	import { getTags } from "../../lib/db/tables/tags";
 	import TagListSelect from "../../modals/TagListSelect.vue";
 	import Loading from "../../modals/Loading.vue";
+	import { getFrontingAtIndex } from "../../lib/db/tables/frontingEntries.ts";
+	import { defaultMember, getMember } from "../../lib/db/tables/members.ts";
 
 	const { getObjectURL } = useBlob();
 
@@ -50,6 +52,8 @@
 	const route = useRoute();
 	const router = useIonRouter();
 	const i18next = useTranslation();
+
+	const frontingAtCreationDate = ref<string>();
 
 	async function updateFile() {
 		const file = await getDocumentFile(undefined, true);
@@ -78,8 +82,7 @@
 
 			if(!uuid){
 				const result = await newAsset({
-					..._asset as PartialBy<Asset, keyof UUIDable>,
-					dateCreated: new Date()
+					..._asset as PartialBy<Asset, keyof UUIDable>
 				});
 
 				if(!result.success) throw new Error(`E: ${result.err || "failed"}`);
@@ -130,6 +133,20 @@
 		}
 	}
 
+	async function getPeopleFrontingAtCreation(){
+		if(!asset.value?.dateCreated) return;
+
+		const frontingIndex = getFrontingAtIndex(asset.value.dateCreated);
+		const memberUUIDs = new Set(frontingIndex.map(x => x.member!));
+
+		frontingAtCreationDate.value = (await Promise.all(
+			memberUUIDs.values()
+				.map(x => getMember(x).catch(_ => defaultMember(x)))
+		))
+			.map(x => getCustomName(x))
+			.join(", ");
+	}
+
 	async function updateRoute(){
 		if(route.name !== "AssetEdit") return;
 
@@ -143,6 +160,8 @@
 				asset.value = _asset;
 			else asset.value = { ...emptyAsset };
 		} else asset.value = { ...emptyAsset };
+
+		await getPeopleFrontingAtCreation();
 
 		loading.value = false;
 	}
@@ -225,6 +244,16 @@
 					<IonLabel color="danger">
 						<h3>{{ $t("assetManager:edit.delete.title") }}</h3>
 						<p>{{ $t("other:genericDeleteDesc") }}</p>
+					</IonLabel>
+				</IonItem>
+				<IonItem v-if="asset.dateCreated" :detail="false">
+					<IonLabel>
+						<p>
+							{{ $t("other:creation.dateCreated", { dateCreated: formatDate(asset.dateCreated, "expanded") }) }}
+						</p>
+						<p v-if="frontingAtCreationDate?.length">
+							{{ $t("other:creation.frontingAtCreationDate", { frontingAtCreationDate }) }}
+						</p>
 					</IonLabel>
 				</IonItem>
 			</IonList>

@@ -4,6 +4,7 @@ import { UUID, UUIDable, Note } from "../entities";
 import { filterNote } from "../../search";
 import { TransactionStatus } from "../types";
 import { sortNotes } from "../../util/misc";
+import { PartialBy } from "../../types";
 
 export async function* getNotes(maxIter = 10){
 	const uuids = db.notes.index.toSorted(sortNotes).map(x => x.uuid);
@@ -58,7 +59,7 @@ export async function* getFilteredNotes(query: string){
 	}
 }
 
-export async function newNote(note: Omit<Note, keyof Omit<UUIDable, "dateCreated">>): Promise<TransactionStatus<string>> {
+export async function newNote(note: PartialBy<Note, keyof UUIDable>): Promise<TransactionStatus<string>> {
 	try{
 		const uuid = await db.notes.add(note);
 

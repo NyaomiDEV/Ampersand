@@ -4,6 +4,7 @@ import { UUID, UUIDable, Asset } from "../entities";
 import { filterAsset } from "../../search";
 import { TransactionStatus } from "../types";
 import { sortAssets } from "../../util/misc";
+import { PartialBy } from "../../types";
 
 export async function* getAssets(maxIter = 10){
 	const uuids = db.assets.index.toSorted(sortAssets).map(x => x.uuid);
@@ -39,7 +40,7 @@ export async function* getFilteredAssets(query: string){
 	}
 }
 
-export async function newAsset(asset: Omit<Asset, keyof Omit<UUIDable, "dateCreated">>): Promise<TransactionStatus<string>> {
+export async function newAsset(asset: PartialBy<Asset, keyof UUIDable>): Promise<TransactionStatus<string>> {
 	try{
 		const uuid = await db.assets.add(asset);
 

@@ -11,6 +11,9 @@
 	"genericDeleteDesc": "இந்தச் செயலைச் செயல்தவிர்க்க முடியாது!",
 	"addTimestamp": "நேர முத்திரையைச் சேர்க்கவும்",
 	"memberMention": "ஒரு உறுப்பினரைக் குறிப்பிடவும்",
+	"creation": {
+		"dateCreated": "உருவாக்கப்பட்ட தேதி: {{dateCreated}}"
+	},
 	"alerts": {
 		"ok": "சரி",
 		"cancel": "ரத்துசெய்",

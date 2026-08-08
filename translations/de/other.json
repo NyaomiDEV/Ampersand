@@ -4,6 +4,9 @@
 		"inEnglish": "German"
 	},
 	"genericDeleteDesc": "Du kannst diese Aktion nicht rückgängig machen!",
+	"creation": {
+		"dateCreated": "Erstellungsdatum: {{dateCreated}}"
+	},
 	"alerts": {
 		"ok": "Ok",
 		"cancel": "Abbrechen",

@@ -5,6 +5,7 @@ import { filterCustomField } from "../../search";
 import { TransactionStatus } from "../types";
 import { sortCustomFields } from "../../util/misc";
 import { getMembers, updateMember } from "./members";
+import { PartialBy } from "../../types";
 
 export async function* getCustomFields(maxIter = 10){
 	const uuids = db.customFields.index.toSorted(sortCustomFields).map(x => x.uuid);
@@ -40,7 +41,7 @@ export async function* getFilteredCustomFields(query: string){
 	}
 }
 
-export async function newCustomField(customField: Omit<CustomField, keyof Omit<UUIDable, "dateCreated">>): Promise<TransactionStatus<string>> {
+export async function newCustomField(customField: PartialBy<CustomField, keyof UUIDable>): Promise<TransactionStatus<string>> {
 	try{
 		const uuid = await db.customFields.add(customField);
 

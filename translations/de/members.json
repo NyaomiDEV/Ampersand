@@ -22,7 +22,6 @@
 		"imageClip": "Profilbild-Form",
 		"tags": "Tags bearbeiten",
 		"showFrontingEntries": "Front-Einträge anzeigen",
-		"dateCreated": "Erstellungsdatum: {{dateCreated}}",
 		"delete": {
 			"title": "Mitglied verwerfen",
 			"confirm": "Bist du sicher, dass du dieses Mitglied löschen möchtest?"

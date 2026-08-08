@@ -12,7 +12,6 @@
 		"role": "Rôle",
 		"header": "Membre",
 		"memberID": "ID du membre : {{memberID}}",
-		"dateCreated": "Date de création : {{dateCreated}}",
 		"memberIDcopiedToClipboard": "L'ID du membre a été copié dans le presse-papier !",
 		"description": "Description",
 		"isPinned": "Épingler le membre",

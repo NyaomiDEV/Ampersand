@@ -22,13 +22,15 @@
 	import DatePopupPicker from "../components/DatePopupPicker.vue";
 	import TagChip from "../components/tag/TagChip.vue";
 	import { useTranslation } from "i18next-vue";
-	import { Ref, ShallowRef, useTemplateRef } from "vue";
-	import { promptOkCancel, toast, formatDate, sortName } from "../lib/util/misc";
+	import { onMounted, ref, Ref, ShallowRef, useTemplateRef } from "vue";
+	import { promptOkCancel, toast, formatDate, sortName, getCustomName } from "../lib/util/misc";
 	import { deleteJournalPost } from "../lib/db/tables/journalPosts";
 	import Color from "../components/Color.vue";
 
 	import trashMD from "@material-symbols/svg-600/rounded/delete.svg";
 	import Loading from "./Loading.vue";
+	import { getFrontingAtIndex } from "../lib/db/tables/frontingEntries.ts";
+	import { defaultMember, getMember } from "../lib/db/tables/members.ts";
 
 	const i18next = useTranslation();
 	const router = useIonRouter();
@@ -42,6 +44,8 @@
 	}>();
 	const post = props.post;
 	const tags = props.tags;
+
+	const frontingAtCreationDate = ref<string>();
 
 	async function removePost() {
 		try{
@@ -80,6 +84,22 @@
 			}
 		}
 	}
+
+	async function getPeopleFrontingAtCreation(){
+		if(!post.value?.dateCreated) return;
+
+		const frontingIndex = getFrontingAtIndex(post.value.dateCreated);
+		const memberUUIDs = new Set(frontingIndex.map(x => x.member!));
+
+		frontingAtCreationDate.value = (await Promise.all(
+			memberUUIDs.values()
+				.map(x => getMember(x).catch(_ => defaultMember(x)))
+		))
+			.map(x => getCustomName(x))
+			.join(", ");
+	}
+
+	onMounted(getPeopleFrontingAtCreation);
 </script>
 
 <template>
@@ -196,6 +216,17 @@
 				>
 					<IonLabel>
 						<p>{{ $t("journal:edit.postID", { postID: post.uuid }) }}</p>
+					</IonLabel>
+				</IonItem>
+
+				<IonItem v-if="post.dateCreated" :detail="false">
+					<IonLabel>
+						<p>
+							{{ $t("other:creation.dateCreated", { dateCreated: formatDate(post.dateCreated, "expanded") }) }}
+						</p>
+						<p v-if="frontingAtCreationDate?.length">
+							{{ $t("other:creation.frontingAtCreationDate", { frontingAtCreationDate }) }}
+						</p>
 					</IonLabel>
 				</IonItem>
 			</IonList>

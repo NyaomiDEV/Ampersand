@@ -45,7 +45,6 @@
 		"showBoardEntries": "Mostra i messaggi sulla bacheca",
 		"showJournalEntries": "Mostra le pagine sul diario",
 		"memberID": "ID dellə membrə: {{memberID}}",
-		"dateCreated": "Data di creazione: {{dateCreated}}",
 		"memberIDcopiedToClipboard": "ID dellə membrə in formato menzione copiato negli appunti!",
 		"delete": {
 			"title": "Elimina membrə",

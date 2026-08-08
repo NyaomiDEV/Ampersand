@@ -27,7 +27,6 @@
 		"showBoardEntries": "Mostrar mensajes del tablero",
 		"showJournalEntries": "Mostrar publicaciones del diario",
 		"memberID": "ID del miembro: {{memberID}}",
-		"dateCreated": "Fecha de creación: {{dateCreated}}",
 		"delete": {
 			"title": "Eliminar miembro",
 			"confirm": "¿Estás seguro de que quieres eliminar este miembro?"

@@ -12,6 +12,10 @@
 	"genericDeleteDesc": "Nun pùo' turnà arreto!",
 	"addTimestamp": "Mitte data e ora",
 	"memberMention": "Menziona nu socio",
+	"creation": {
+		"dateCreated": "Data 'e creazione: {{dateCreated}}",
+		"frontingAtCreationDate": "Ô front 'a data 'e creazione: {{frontingAtCreationDate}}"
+	},
 	"alerts": {
 		"ok": "Ok",
 		"cancel": "Annulla",

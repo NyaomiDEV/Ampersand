@@ -6,6 +6,9 @@
 	"genericDeleteDesc": "Tej czynności nie będzie można już cofnąć!",
 	"addTimestamp": "Dodaj znacznik czasu",
 	"memberMention": "Wspomnij członka systemu",
+	"creation": {
+		"dateCreated": "Data utworzenia: {{dateCreated}}"
+	},
 	"alerts": {
 		"ok": "OK",
 		"cancel": "Anuluj",

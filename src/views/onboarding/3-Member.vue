@@ -57,8 +57,7 @@
 		try{
 			const _member = toRaw(member.value);
 			const result = await newMember({
-				..._member,
-				dateCreated: new Date()
+				..._member
 			});
 			if(!result.success) throw new Error(`E: ${result.err || "failed"}`);
 			router.replace("/onboarding/end/", slideAnimation);

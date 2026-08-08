@@ -61,7 +61,7 @@
 	import { getAsset, getAssetsIndex } from "../../lib/db/tables/assets.ts";
 	import { useAssetFonts } from "../../lib/assetFonts.ts";
 	import MarkdownField from "../../components/MarkdownField.vue";
-	import { getFrontingEntryIndex } from "../../lib/db/tables/frontingEntries.ts";
+	import { getFrontingAtIndex, getFrontingEntryIndex } from "../../lib/db/tables/frontingEntries.ts";
 	import { IndexEntry } from "../../lib/db/types";
 	import { getBoardMessagesIndex } from "../../lib/db/tables/boardMessages.ts";
 	import { getJournalPostsIndex } from "../../lib/db/tables/journalPosts.ts";
@@ -98,6 +98,8 @@
 	const customFieldsToShowInViewMode = shallowRef<CustomField[]>([]);
 	const customFieldsSelectionModal = useTemplateRef("customFieldsSelectionModal");
 
+	const frontingAtCreationDate = ref<string>();
+
 	const canEdit = ref(true);
 	const isEditing = ref(false);
 	const self = getCurrentInstance();
@@ -132,8 +134,7 @@
 
 			if(!uuid){
 				const result = await newMember({
-					..._member,
-					dateCreated: new Date()
+					..._member
 				});
 				if(!result.success) throw new Error(`E: ${result.err || "failed"}`);
 
@@ -276,6 +277,20 @@
 		return getFrontingEntryIndex().filter((x) => x.endTime && x.member === member.value.uuid).sort(sortFrontingEntries).shift();
 	}
 
+	async function getPeopleFrontingAtCreation(){
+		if(!member.value?.dateCreated) return;
+
+		const frontingIndex = getFrontingAtIndex(member.value.dateCreated);
+		const memberUUIDs = new Set(frontingIndex.map(x => x.member!));
+
+		frontingAtCreationDate.value = (await Promise.all(
+			memberUUIDs.values()
+				.map(x => getMember(x).catch(_ => defaultMember(x)))
+		))
+			.map(x => getCustomName(x))
+			.join(", ");
+	}
+
 	async function updateRoute() {
 		if(route.name !== "MemberEdit") return;
 
@@ -316,6 +331,8 @@
 
 		// set color
 		updateColors();
+
+		await getPeopleFrontingAtCreation();
 
 		loading.value = false;
 	}
@@ -795,7 +812,10 @@
 					<IonItem v-if="member.dateCreated" :detail="false">
 						<IonLabel>
 							<p>
-								{{ $t("members:edit.dateCreated", { dateCreated: formatDate(member.dateCreated, "expanded") }) }}
+								{{ $t("other:creation.dateCreated", { dateCreated: formatDate(member.dateCreated, "expanded") }) }}
+							</p>
+							<p v-if="frontingAtCreationDate?.length">
+								{{ $t("other:creation.frontingAtCreationDate", { frontingAtCreationDate }) }}
 							</p>
 						</IonLabel>
 					</IonItem>

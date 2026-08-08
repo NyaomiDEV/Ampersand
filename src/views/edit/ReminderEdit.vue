@@ -31,11 +31,13 @@
 	import { useRoute } from "vue-router";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import { useTranslation } from "i18next-vue";
-	import { promptOkCancel, sortName, toast } from "../../lib/util/misc";
+	import { formatDate, getCustomName, promptOkCancel, sortName, toast } from "../../lib/util/misc";
 	import MemberSelect from "../../modals/MemberSelect.vue";
 	import MemberChip from "../../components/member/MemberChip.vue";
 	import PopupPicker from "../../components/PopupPicker.vue";
 	import Loading from "../../modals/Loading.vue";
+	import { getFrontingAtIndex } from "../../lib/db/tables/frontingEntries.ts";
+	import { defaultMember, getMember } from "../../lib/db/tables/members.ts";
 
 	const route = useRoute();
 	const router = useIonRouter();
@@ -59,6 +61,8 @@
 	const memberSelectModal = useTemplateRef("memberSelectModal");
 	const popupPicker = useTemplateRef("popupPicker");
 	const loadingModal = useTemplateRef("loadingModal");
+
+	const frontingAtCreationDate = ref<string>();
 
 	async function deleteReminder(){
 		try{
@@ -110,8 +114,7 @@
 			if(!uuid) {
 				const result = await newReminder({
 					..._reminder,
-					members: _reminder.members ? _reminder.members.map(x => x.uuid) : undefined,
-					dateCreated: new Date()
+					members: _reminder.members ? _reminder.members.map(x => x.uuid) : undefined
 				});
 				if(!result.success) throw new Error(`E: ${result.err || "failed"}`);
 
@@ -140,6 +143,20 @@
 		}
 	}
 
+	async function getPeopleFrontingAtCreation(){
+		if(!reminder.value?.dateCreated) return;
+
+		const frontingIndex = getFrontingAtIndex(reminder.value.dateCreated);
+		const memberUUIDs = new Set(frontingIndex.map(x => x.member!));
+
+		frontingAtCreationDate.value = (await Promise.all(
+			memberUUIDs.values()
+				.map(x => getMember(x).catch(_ => defaultMember(x)))
+		))
+			.map(x => getCustomName(x))
+			.join(", ");
+	}
+
 	async function updateRoute(){
 		if(route.name !== "ReminderEdit") return;
 
@@ -151,6 +168,8 @@
 
 		allMembers.value = !reminder.value.members;
 		syncDelayMap();
+
+		await getPeopleFrontingAtCreation();
 	}
 
 	watch(route, updateRoute);
@@ -268,6 +287,16 @@
 					<IonLabel color="danger">
 						<h3>{{ $t("reminders:edit.delete.title") }}</h3>
 						<p>{{ $t("other:genericDeleteDesc") }}</p>
+					</IonLabel>
+				</IonItem>
+				<IonItem v-if="reminder.dateCreated" :detail="false">
+					<IonLabel>
+						<p>
+							{{ $t("other:creation.dateCreated", { dateCreated: formatDate(reminder.dateCreated, "expanded") }) }}
+						</p>
+						<p v-if="frontingAtCreationDate?.length">
+							{{ $t("other:creation.frontingAtCreationDate", { frontingAtCreationDate }) }}
+						</p>
 					</IonLabel>
 				</IonItem>
 			</IonList>

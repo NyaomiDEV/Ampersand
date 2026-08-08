@@ -12,6 +12,10 @@
 	"genericDeleteDesc": "Guarda che non torni indietro!",
 	"addTimestamp": "Metti data e ora",
 	"memberMention": "Menziona membro",
+	"creation": {
+		"dateCreated": "Sfornato il: {{dateCreated}}",
+		"frontingAtCreationDate": "Team in carica quando è stato sfornato: {{frontingAtCreationDate}}"
+	},
 	"alerts": {
 		"ok": "Ok",
 		"cancel": "Annulla",

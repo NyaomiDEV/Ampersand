@@ -39,6 +39,9 @@
 			"short": "s"
 		}
 	},
+	"creation": {
+		"dateCreated": "Datum gecreëerd: {{dateCreated}}"
+	},
 	"alerts": {
 		"ok": "Oké",
 		"cancel": "Annuleren"

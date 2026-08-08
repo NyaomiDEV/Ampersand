@@ -3,6 +3,7 @@ import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUID, UUIDable, FilterQuery, FilterQueryType } from "../entities";
 import { TransactionStatus } from "../types";
 import { sortName } from "../../util/misc";
+import { PartialBy } from "../../types";
 
 export async function* getFilterQueries(maxIter = 10){
 	const uuids = db.filterQueries.index.toSorted(sortName).map(x => x.uuid);
@@ -61,7 +62,7 @@ export async function* getFilteredFilterQueries(type: FilterQueryType, query: st
 	}
 }
 
-export async function newFilterQuery(filterQuery: Omit<FilterQuery, keyof Omit<UUIDable, "dateCreated">>): Promise<TransactionStatus<string>> {
+export async function newFilterQuery(filterQuery: PartialBy<FilterQuery, keyof UUIDable>): Promise<TransactionStatus<string>> {
 	try{
 		const uuid = await db.filterQueries.add(filterQuery);
 

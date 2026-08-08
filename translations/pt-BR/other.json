@@ -6,6 +6,9 @@
 	"genericDeleteDesc": "Você não poderá desfazer essa ação!",
 	"addTimestamp": "Adicionar carimbo de tempo",
 	"memberMention": "Mencione um membro",
+	"creation": {
+		"dateCreated": "Data criada: {{dateCreated}}"
+	},
 	"alerts": {
 		"cancel": "Cancelar",
 		"clear": "Limpar",

@@ -25,14 +25,16 @@
 
 	import { BoardMessage, BoardMessageComplete, UUIDable } from "../lib/db/entities";
 	import { updateBoardMessage, deleteBoardMessage, newBoardMessage } from "../lib/db/tables/boardMessages";
-	import { ref, toRaw, useTemplateRef } from "vue";
+	import { onMounted, ref, toRaw, useTemplateRef } from "vue";
 	import { PartialBy } from "../lib/types";
 	import MemberSelect from "./MemberSelect.vue";
 	import DatePopupPicker from "../components/DatePopupPicker.vue";
 	import { useTranslation } from "i18next-vue";
-	import { formatDate, promptOkCancel, sortName, toast } from "../lib/util/misc";
+	import { formatDate, getCustomName, promptOkCancel, sortName, toast } from "../lib/util/misc";
 	import MemberChip from "../components/member/MemberChip.vue";
 	import Loading from "./Loading.vue";
+	import { getFrontingAtIndex } from "../lib/db/tables/frontingEntries.ts";
+	import { defaultMember, getMember } from "../lib/db/tables/members.ts";
 
 	const i18next = useTranslation();
 
@@ -55,6 +57,8 @@
 	const memberSelectModal = useTemplateRef("memberSelectModal");
 	const memberTagModal = useTemplateRef("memberTagModal");
 	const loadingModal = useTemplateRef("loadingModal");
+
+	const frontingAtCreationDate = ref<string>();
 
 	async function save(){
 		const uuid = boardMessage.value?.uuid;
@@ -103,8 +107,7 @@
 			if(!uuid){
 				const result = await newBoardMessage({
 					..._boardMessage,
-					members: _boardMessage.members.map(x => x.uuid),
-					dateCreated: new Date()
+					members: _boardMessage.members.map(x => x.uuid)
 				});
 				if(!result.success) throw new Error(`E: ${result.err || "failed"}`);
 
@@ -159,6 +162,22 @@
 			await toast((e as Error).message);
 		}
 	}
+
+	async function getPeopleFrontingAtCreation(){
+		if(!boardMessage.value?.dateCreated) return;
+
+		const frontingIndex = getFrontingAtIndex(boardMessage.value.dateCreated);
+		const memberUUIDs = new Set(frontingIndex.map(x => x.member!));
+
+		frontingAtCreationDate.value = (await Promise.all(
+			memberUUIDs.values()
+				.map(x => getMember(x).catch(_ => defaultMember(x)))
+		))
+			.map(x => getCustomName(x))
+			.join(", ");
+	}
+
+	onMounted(getPeopleFrontingAtCreation);
 </script>
 
 <template>
@@ -324,7 +343,6 @@
 				</IonList>
 			</template>
 			<IonList>
-
 				<IonItem
 					v-if="boardMessage.uuid"
 					button
@@ -340,6 +358,16 @@
 					<IonLabel color="danger">
 						<h3>{{ $t("messageBoard:edit.delete.title") }}</h3>
 						<p>{{ $t("other:genericDeleteDesc") }}</p>
+					</IonLabel>
+				</IonItem>
+				<IonItem v-if="boardMessage.dateCreated" :detail="false">
+					<IonLabel>
+						<p>
+							{{ $t("other:creation.dateCreated", { dateCreated: formatDate(boardMessage.dateCreated, "expanded") }) }}
+						</p>
+						<p v-if="frontingAtCreationDate?.length">
+							{{ $t("other:creation.frontingAtCreationDate", { frontingAtCreationDate }) }}
+						</p>
 					</IonLabel>
 				</IonItem>
 			</IonList>

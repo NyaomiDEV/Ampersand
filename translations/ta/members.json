@@ -42,7 +42,6 @@
 		"showBoardEntries": "பலகை செய்திகளைக் காட்டு",
 		"showJournalEntries": "செய்தித் தாள் இடுகைகளைக் காட்டு",
 		"memberID": "உறுப்பினர் ஐடி: {{memberID}}",
-		"dateCreated": "உருவாக்கப்பட்ட தேதி: {{dateCreated}}",
 		"memberIDcopiedToClipboard": "குறிப்பு வடிவத்தில் உறுப்பினர் அடையாளம் இடைநிலைப்பலகைக்கு நகலெடுக்கப்பட்டது!",
 		"delete": {
 			"title": "உறுப்பினரை நீக்கு",

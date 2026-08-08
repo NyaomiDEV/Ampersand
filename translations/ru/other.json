@@ -6,6 +6,9 @@
 	"genericDeleteDesc": "Вы не сможете отменить это действие!",
 	"addTimestamp": "Добавить метку времени",
 	"memberMention": "Упомянуть участника",
+	"creation": {
+		"dateCreated": "Дата создания: {{dateCreated}}"
+	},
 	"alerts": {
 		"ok": "Окей",
 		"cancel": "Отмена",

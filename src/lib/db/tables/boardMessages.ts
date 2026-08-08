@@ -6,6 +6,7 @@ import dayjs from "dayjs";
 import { filterBoardMessage } from "../../search";
 import { TransactionStatus } from "../types";
 import { sortBoardMessages } from "../../util/misc";
+import { PartialBy } from "../../types";
 
 export async function* getBoardMessages(maxIter = 10){
 	const uuids = db.boardMessages.index.toSorted(sortBoardMessages).map(x => x.uuid);
@@ -49,7 +50,7 @@ export async function toBoardMessageComplete(boardMessages: BoardMessage[]): Pro
 	}));
 }
 
-export async function newBoardMessage(boardMessage: Omit<BoardMessage, keyof Omit<UUIDable, "dateCreated">>): Promise<TransactionStatus<string>> {
+export async function newBoardMessage(boardMessage: PartialBy<BoardMessage, keyof UUIDable>): Promise<TransactionStatus<string>> {
 	try{
 		const uuid = await db.boardMessages.add(boardMessage);
 

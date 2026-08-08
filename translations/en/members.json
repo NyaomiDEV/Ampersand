@@ -45,7 +45,6 @@
 		"showBoardEntries": "Show board messages",
 		"showJournalEntries": "Show journal posts",
 		"memberID": "Member ID: {{memberID}}",
-		"dateCreated": "Date created: {{dateCreated}}",
 		"memberIDcopiedToClipboard": "Member ID in mention format copied to clipboard!",
 		"delete": {
 			"title": "Delete member",

@@ -6,6 +6,7 @@ import { filterSystem } from "../../search";
 import { isUuid } from "../../util/misc";
 import { TransactionStatus } from "../types";
 import { sortSystems } from "../../util/misc";
+import { PartialBy } from "../../types";
 
 export async function* getSystems(maxIter = 10){
 	const uuids = db.systems.index.toSorted(sortSystems).map(x => x.uuid);
@@ -46,7 +47,7 @@ export async function* getFilteredSystems(query: string){
 	}
 }
 
-export async function newSystem(system: Omit<System, keyof Omit<UUIDable, "dateCreated">>): Promise<TransactionStatus<string>> {
+export async function newSystem(system: PartialBy<System, keyof UUIDable>): Promise<TransactionStatus<string>> {
 	try{
 		const uuid = await db.systems.add(system);
 

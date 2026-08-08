@@ -12,6 +12,10 @@
 	"genericDeleteDesc": "You won't be able to undo this action!",
 	"addTimestamp": "Add timestamp",
 	"memberMention": "Mention a member",
+	"creation": {
+		"dateCreated": "Date created: {{dateCreated}}",
+		"frontingAtCreationDate": "Fronting at creation date: {{frontingAtCreationDate}}"
+	},
 	"alerts": {
 		"ok": "Ok",
 		"cancel": "Cancel",

@@ -4,6 +4,9 @@
 		"inEnglish": "Turkish"
 	},
 	"genericDeleteDesc": "Bu eylemi geri alamayacaksınız!",
+	"creation": {
+		"dateCreated": "Yaratılma tarihi: {{dateCreated}}"
+	},
 	"alerts": {
 		"ok": "Tamam",
 		"cancel": "İptal",

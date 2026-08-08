@@ -70,7 +70,7 @@ export class Molise<T extends UUIDable> implements Table<T> {
 		throw new Error("Can't have shit in Molise");
 	}
 
-	add(_data: PartialBy<T, keyof Omit<UUIDable, "dateCreated">>, _saveIndexAndHashesAfterwards?: boolean): Promise<false | T["uuid"]> {
+	add(_data: PartialBy<T, keyof UUIDable>, _saveIndexAndHashesAfterwards?: boolean): Promise<false | T["uuid"]> {
 		throw new Error("Can't have shit in Molise");
 	}
 

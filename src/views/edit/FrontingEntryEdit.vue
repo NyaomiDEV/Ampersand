@@ -89,8 +89,7 @@
 				const result = await newFrontingEntry({
 					..._frontingEntry,
 					member: _frontingEntry.member.uuid,
-					influencing: _frontingEntry.influencing?.map(x => x.uuid),
-					dateCreated: new Date()
+					influencing: _frontingEntry.influencing?.map(x => x.uuid)
 				});
 				if(!result.success) throw new Error(`E: ${result.err || "failed"}`);
 

@@ -26,7 +26,6 @@
 		"showBoardEntries": "Pano mesajlarını göster",
 		"showJournalEntries": "Günlük iletilerini göster",
 		"memberID": "Üye No: {{memberID}}",
-		"dateCreated": "Yaratılma tarihi: {{dateCreated}}",
 		"memberIDcopiedToClipboard": "Belirilen biçimdeki Üye No geçici taşıma panosuna kopyalandı!",
 		"delete": {
 			"title": "Üye sil",

@@ -6,6 +6,7 @@ import dayjs from "dayjs";
 import { filterJournalPost } from "../../search";
 import { TransactionStatus } from "../types";
 import { isUuid, sortJournalPosts } from "../../util/misc";
+import { PartialBy } from "../../types";
 
 export async function* getJournalPosts(maxIter = 10){
 	const uuids = db.journalPosts.index.toSorted(sortJournalPosts).map(x => x.uuid);
@@ -52,7 +53,7 @@ export async function toJournalPostComplete(journalPosts: JournalPost[]): Promis
 	}));
 }
 
-export async function newJournalPost(journalPost: Omit<JournalPost, keyof Omit<UUIDable, "dateCreated">>): Promise<TransactionStatus<string>> {
+export async function newJournalPost(journalPost: PartialBy<JournalPost, keyof UUIDable>): Promise<TransactionStatus<string>> {
 	try{
 		const uuid = await db.journalPosts.add(journalPost);
 

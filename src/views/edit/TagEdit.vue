@@ -30,19 +30,20 @@
 	import { getCurrentInstance, h, onMounted, ref, watch, useTemplateRef } from "vue";
 	import { addMaterialColors, rgbaToArgb, unsetMaterialColors } from "../../lib/theme";
 	import { PartialBy } from "../../lib/types";
-	import { getMembers, updateMember } from "../../lib/db/tables/members";
+	import { defaultMember, getMember, getMembers, updateMember } from "../../lib/db/tables/members";
 	import { getJournalPosts } from "../../lib/db/tables/journalPosts";
 	import { useTranslation } from "i18next-vue";
 	import { useRoute } from "vue-router";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import { addModal, removeModal } from "../../lib/modals";
 	import MemberSelect from "../../modals/MemberSelect.vue";
-	import { promptOkCancel, toast } from "../../lib/util/misc";
+	import { formatDate, getCustomName, promptOkCancel, toast } from "../../lib/util/misc";
 	import ContentEditable from "../../components/ContentEditable.vue";
 	import { getAssets } from "../../lib/db/tables/assets";
 	import Loading from "../../modals/Loading.vue";
 	import { lists } from "../../router/lists";
 	import { accessibilityConfig } from "../../lib/config/index.ts";
+	import { getFrontingAtIndex } from "../../lib/db/tables/frontingEntries.ts";
 
 	const loading = ref(false);
 
@@ -63,6 +64,7 @@
 	const loadingModal = useTemplateRef("loadingModal");
 
 	const count = ref<number>();
+	const frontingAtCreationDate = ref<string>();
 
 	async function tagMembers() {
 		const allMembers = await Array.fromAsync(getMembers());
@@ -118,8 +120,7 @@
 
 			if(!uuid){
 				const result = await newTag({
-					..._tag,
-					dateCreated: new Date()
+					..._tag
 				});
 				if(!result.success) throw new Error(`E: ${result.err || "failed"}`);
 
@@ -171,6 +172,20 @@
 		}
 	}
 
+	async function getPeopleFrontingAtCreation(){
+		if(!tag.value?.dateCreated) return;
+
+		const frontingIndex = getFrontingAtIndex(tag.value.dateCreated);
+		const memberUUIDs = new Set(frontingIndex.map(x => x.member!));
+
+		frontingAtCreationDate.value = (await Promise.all(
+			memberUUIDs.values()
+				.map(x => getMember(x).catch(_ => defaultMember(x)))
+		))
+			.map(x => getCustomName(x))
+			.join(", ");
+	}
+
 	async function updateRoute(){
 		if(route.name !== "TagEdit") return;
 
@@ -210,6 +225,8 @@
 		} else tag.value = { ...emptyTag };
 
 		updateColors();
+
+		await getPeopleFrontingAtCreation();
 
 		loading.value = false;
 	}
@@ -397,6 +414,16 @@
 				>
 					<IonLabel>
 						<p>{{ $t("tagManagement:edit.tagID", { tagID: tag.uuid }) }}</p>
+					</IonLabel>
+				</IonItem>
+				<IonItem v-if="tag.dateCreated" :detail="false">
+					<IonLabel>
+						<p>
+							{{ $t("other:creation.dateCreated", { dateCreated: formatDate(tag.dateCreated, "expanded") }) }}
+						</p>
+						<p v-if="frontingAtCreationDate?.length">
+							{{ $t("other:creation.frontingAtCreationDate", { frontingAtCreationDate }) }}
+						</p>
 					</IonLabel>
 				</IonItem>
 			</IonList>

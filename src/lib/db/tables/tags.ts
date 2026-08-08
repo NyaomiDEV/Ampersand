@@ -7,6 +7,7 @@ import { getJournalPosts, updateJournalPost } from "./journalPosts";
 import { TransactionStatus } from "../types";
 import { isUuid, sortName } from "../../util/misc";
 import { getAssets, updateAsset } from "./assets";
+import { PartialBy } from "../../types";
 
 export async function* getTags(type: Tag["type"], maxIter = 10){
 	const uuids = db.tags.index.filter(x => x.type === type).sort(sortName).map(x => x.uuid);
@@ -48,7 +49,7 @@ export async function* getFilteredTags(type: Tag["type"], query: string){
 	}
 }
 
-export async function newTag(tag: Omit<Tag, keyof Omit<UUIDable, "dateCreated">>): Promise<TransactionStatus<string>> {
+export async function newTag(tag: PartialBy<Tag, keyof UUIDable>): Promise<TransactionStatus<string>> {
 	try{
 		const uuid = await db.tags.add(tag);
 

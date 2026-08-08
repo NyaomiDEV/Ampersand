@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonButton, IonIcon, IonInput, IonFab, IonFabButton, IonItem, IonLabel, useIonRouter, IonTextarea, IonToggle, IonProgressBar } from "@ionic/vue";
 	import { getCurrentInstance, onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
-	import { promptOkCancel, toast, imageClipPicker, fontFamilyPicker, getCustomName } from "../../lib/util/misc";
+	import { promptOkCancel, toast, imageClipPicker, fontFamilyPicker, getCustomName, formatDate } from "../../lib/util/misc";
 	import { getResizedImage } from "../../lib/util/image";
 	import { deleteSystem, getSystem, newSystem, updateSystem, countSystemMembers } from "../../lib/db/tables/system";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
@@ -33,6 +33,8 @@
 	import { getAsset, getAssetsIndex } from "../../lib/db/tables/assets.ts";
 	import { useAssetFonts } from "../../lib/assetFonts.ts";
 	import MarkdownField from "../../components/MarkdownField.vue";
+	import { getFrontingAtIndex } from "../../lib/db/tables/frontingEntries.ts";
+	import { defaultMember, getMember } from "../../lib/db/tables/members.ts";
 
 	const { appendFont, deleteAllFonts } = useAssetFonts();
 
@@ -69,6 +71,8 @@
 	const canEdit = ref(true);
 	const isEditing = ref(false);
 
+	const frontingAtCreationDate = ref<string>();
+
 	async function toggleEditing(){
 		if(!isEditing.value){
 			isEditing.value = true;
@@ -84,8 +88,7 @@
 
 			if(!uuid){
 				const result = await newSystem({
-					..._system,
-					dateCreated: new Date()
+					..._system
 				});
 				if(!result.success) throw new Error(`E: ${result.err || "failed"}`);
 
@@ -203,6 +206,8 @@
 		// set color
 		updateColors();
 
+		await getPeopleFrontingAtCreation();
+
 		loading.value = false;
 	}
 
@@ -257,6 +262,20 @@
 		}
 
 		parents.value = _parents;
+	}
+
+	async function getPeopleFrontingAtCreation(){
+		if(!system.value?.dateCreated) return;
+
+		const frontingIndex = getFrontingAtIndex(system.value.dateCreated);
+		const memberUUIDs = new Set(frontingIndex.map(x => x.member!));
+
+		frontingAtCreationDate.value = (await Promise.all(
+			memberUUIDs.values()
+				.map(x => getMember(x).catch(_ => defaultMember(x)))
+		))
+			.map(x => getCustomName(x))
+			.join(", ");
 	}
 
 	watch(parentSystem, async () => {
@@ -678,6 +697,16 @@
 					>
 						<IonLabel>
 							<p>{{ $t("systems:edit.systemID", { systemID: system.uuid }) }}</p>
+						</IonLabel>
+					</IonItem>
+					<IonItem v-if="system.dateCreated" :detail="false">
+						<IonLabel>
+							<p>
+								{{ $t("other:creation.dateCreated", { dateCreated: formatDate(system.dateCreated, "expanded") }) }}
+							</p>
+							<p v-if="frontingAtCreationDate?.length">
+								{{ $t("other:creation.frontingAtCreationDate", { frontingAtCreationDate }) }}
+							</p>
 						</IonLabel>
 					</IonItem>
 				</IonList>

@@ -35,8 +35,7 @@
 		try{
 			if(!uuid){
 				const result = await newSystem({
-					..._system,
-					dateCreated: new Date()
+					..._system
 				});
 				if(!result.success) throw new Error(`E: ${result.err || "failed"}`);
 				else appConfig.defaultSystem = result.detail!;

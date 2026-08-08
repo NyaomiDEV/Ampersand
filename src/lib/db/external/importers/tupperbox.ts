@@ -21,8 +21,7 @@ async function subsystems(tuGroup: TupperboxGroup, systemMapping: Map<number, st
 		description: tuGroup.description || undefined,
 		viewInLists: true,
 		isArchived: false,
-		isPinned: false,
-		dateCreated: new Date()
+		isPinned: false
 	});
 
 	if(!transactionSucceeded(result))
@@ -77,8 +76,7 @@ export async function importTupperBox(discordId?: string){
 			description: "",
 			isPinned: false,
 			isArchived: false,
-			viewInLists: false,
-			dateCreated: new Date()
+			viewInLists: false
 		}));
 
 		if(!transactionSucceeded(_system))

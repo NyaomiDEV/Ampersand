@@ -35,7 +35,6 @@
 		"showBoardEntries": "Показать сообщении на доске",
 		"showJournalEntries": "Показать записи в журнале",
 		"memberID": "Идентификатор участника: {{memberID}}",
-		"dateCreated": "Дата создания: {{dateCreated}}",
 		"memberIDcopiedToClipboard": "Идентификатор участника в формате упоминания скопирован в буфер обмена!",
 		"delete": {
 			"title": "Удалить участника",

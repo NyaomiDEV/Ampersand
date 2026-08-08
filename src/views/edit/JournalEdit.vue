@@ -104,8 +104,7 @@
 			if(!uuid){
 				const result = await newJournalPost({
 					..._post,
-					members: _post.members.map(x => x.uuid),
-					dateCreated: new Date()
+					members: _post.members.map(x => x.uuid)
 				});
 				if(!result.success) throw new Error(`E: ${result.err || "failed"}`);
 				

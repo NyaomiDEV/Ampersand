@@ -36,8 +36,7 @@ async function customFields() {
 	const result = await newCustomField({
 		name: "PluralKit ID",
 		default: false,
-		priority: 1,
-		dateCreated: new Date()
+		priority: 1
 	});
 	if(!transactionSucceeded(result))
 		throw new Error(`Could not add custom field: ${result.err.message}`);
@@ -52,8 +51,7 @@ async function tags(pkGroup: PluralKitGroup){
 		color: pkGroup.color ? `#${pkGroup.color}` : undefined,
 		type: "member",
 		isArchived: false,
-		viewInLists: false,
-		dateCreated: new Date()
+		viewInLists: false
 	});
 
 	if (!transactionSucceeded(result))
@@ -167,8 +165,7 @@ export async function importPluralKit(){
 			description: "",
 			isPinned: false,
 			isArchived: false,
-			viewInLists: false,
-			dateCreated: new Date()
+			viewInLists: false
 		});
 
 		if (!transactionSucceeded(_system))
