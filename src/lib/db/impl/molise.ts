@@ -6,6 +6,8 @@ import { AmpersandTableMapping, IndexEntry, Table, Update } from "../types";
 export class Molise<T extends UUIDable> implements Table<T> {
 	name: keyof AmpersandTableMapping;
 	index: IndexEntry<T>[] = [];
+	migrationVersion: number = 0;
+	
 	constructor(name: keyof AmpersandTableMapping){
 		this.name = name;
 	}

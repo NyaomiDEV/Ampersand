@@ -75,6 +75,16 @@ export function exportArchive() {
 				await encode({ table: "__config", data: { appConfig, accessibilityConfig, securityConfig } })
 			);
 
+			// Write migrations version
+			await fd.write(
+				await encode({
+					table: "__migrations",
+					data: Object.fromEntries(Object.entries(getTables()).map(
+						([name, table]) => [name, table.migrationVersion]
+					))
+				})
+			);
+
 			let progressCurrent = 0;
 			for (const [name, table] of Object.entries(getTables())) {
 				for await (const data of table.iterate(10)) {
@@ -132,6 +142,7 @@ export function importArchive() {
 			const multiStreamDecoder = decodeMultiStream(stream) as AsyncGenerator<{ table: string, data: any; }>;
 
 			let revisionWasParsed = magicVersion < 2 ? true : false;
+			let migrationsData: Record<string, number> = {};
 
 			// clear all tables if magic version < 2 -- this is a tradeoff of not thinking things through the first time
 			if(magicVersion < 2){
@@ -154,6 +165,11 @@ export function importArchive() {
 						for (const table of Object.values(getTables()))
 							await table.setAside(asideToken);
 
+						break;
+					}
+					case "__migrations": {
+						if (!revisionWasParsed) throw new Error("malformed, revision fragment must be first");
+						migrationsData = data;
 						break;
 					}
 					case "__config": {
@@ -185,10 +201,10 @@ export function importArchive() {
 				}
 			}
 
-			for (const table of Object.values(getTables())){
+			for (const [name, table] of Object.entries(getTables())){
 				await table.saveIndexToDisk();
 				await table.saveHashesToDisk?.();
-				await table.migrate(0);
+				await table.migrate(migrationsData[name] || 0);
 			}
 
 			for (const table of Object.values(getTables())) {

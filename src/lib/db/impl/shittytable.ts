@@ -19,6 +19,7 @@ export class ShittyTable<T extends UUIDable> implements Table<T> {
 	secondaryKeys: SecondaryKey<T>[];
 	index: IndexEntry<T>[];
 	hashes: Record<UUID, string>;
+	migrationVersion: number = 0;
 
 	private constructor(name: keyof AmpersandTableMapping, path: string, secondaryKeys: SecondaryKey<T>[], stream: boolean) {
 		this.name = name;
@@ -423,6 +424,8 @@ export class ShittyTable<T extends UUIDable> implements Table<T> {
 				version = await filterQueries(this as unknown as ShittyTable<FilterQuery>, version);
 				break;
 		}
-		await this.saveMigrationVersion(version);
+		
+		this.migrationVersion = version;
+		await this.saveMigrationVersion(this.migrationVersion);
 	}
 }
