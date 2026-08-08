@@ -272,7 +272,12 @@
 					button
 					@click="($refs.startTimePicker as any)?.$el.present()"
 				>
-					<IonIcon slot="start" :icon="startMD" :aria-label="$t('frontHistory:edit.startTime')" />
+					<IonIcon
+						slot="start"
+						:icon="startMD"
+						:aria-label="$t('frontHistory:edit.startTime')"
+						flip-rtl
+					/>
 					<IonLabel>
 						<p>{{ formatDate(frontingEntry.startTime, "only-collapsed") }}</p>
 						<h2>{{ formatDate(frontingEntry.startTime) }}</h2>
@@ -299,7 +304,12 @@
 					button
 					@click="($refs.endTimePicker as any)?.$el.present()"
 				>
-					<IonIcon slot="end" :icon="endMD" :aria-label="$t('frontHistory:edit.endTime')" />
+					<IonIcon
+						slot="end"
+						:icon="endMD"
+						:aria-label="$t('frontHistory:edit.endTime')"
+						flip-rtl
+					/>
 					<IonLabel style="text-align: right;">
 						<p>{{ formatDate(frontingEntry.endTime, "only-collapsed") }}</p>
 						<h2>{{ formatDate(frontingEntry.endTime) }}</h2>
