@@ -1,0 +1,16 @@
+[toolchain]
+channel = "1.95.0"
+profile = "minimal"
+components = [
+  "cargo",
+  "clippy",
+  "rustc",
+  "rust-src",
+  "rustfmt",
+]
+targets = [
+    "aarch64-linux-android",
+    "armv7-linux-androideabi",
+    "aarch64-apple-ios",
+    "aarch64-apple-ios-sim",
+]

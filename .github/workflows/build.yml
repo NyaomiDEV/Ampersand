@@ -57,7 +57,7 @@ jobs:
     - name: Prepare release (Unstable)
       id: release_unstable
       if: ${{ steps.vcs.outputs.ampersand_build_type == 'unstable' }}
-      uses: softprops/action-gh-release@v3.0.0
+      uses: softprops/action-gh-release@v3
       with:
         name: ${{ format('Unstable build ({0})', steps.vcs.outputs.ampersand_version)}}
         tag_name: dev
@@ -66,7 +66,7 @@ jobs:
     - name: Prepare release (Release candidate)
       id: release_rc
       if: ${{ steps.vcs.outputs.ampersand_build_type == 'rc-sideload' }}
-      uses: softprops/action-gh-release@v3.0.0
+      uses: softprops/action-gh-release@v3
       with:
         name: ${{ format('Release candidate ({0})', steps.vcs.outputs.ampersand_version)}}
         prerelease: true
@@ -74,7 +74,7 @@ jobs:
     - name: Prepare release (Release)
       id: release
       if: ${{ steps.vcs.outputs.ampersand_build_type == 'stable-sideload' }}
-      uses: softprops/action-gh-release@v3.0.0
+      uses: softprops/action-gh-release@v3
       with:
         name: ${{ format('Release ({0})', steps.vcs.outputs.ampersand_version)}}
         prerelease: false
@@ -118,7 +118,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Publish release
-        uses: softprops/action-gh-release@v3.0.0
+        uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ github.ref_name != 'main' && github.ref_name || 'dev' }}
           draft: false

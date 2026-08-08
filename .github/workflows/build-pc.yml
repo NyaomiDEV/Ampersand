@@ -56,7 +56,7 @@ jobs:
           node-version: 24
           cache: 'yarn'
       - name: Set up Rust toolchain
-        uses: actions-rust-lang/setup-rust-toolchain@v1.16.0
+        uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
           rust-src-dir: "src-tauri"
           target: ${{ matrix.platform == 'macos-26' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}

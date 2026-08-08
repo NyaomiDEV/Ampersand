@@ -25,11 +25,11 @@ serde_json = "1.0"
 log = "0.4"
 tauri-plugin-fs = "2.5.1"
 tauri-plugin-os = "2.3.2"
-tauri-plugin-dialog = "2.7.1"
+tauri-plugin-dialog = "2.7.2"
 tauri-plugin-opener = "2.5.4"
 tauri-plugin-http = "2.5.9"
 tauri-plugin-process = "2.3.1"
-tauri-plugin-notifications = { version = "0.5.0-rc.10", default-features = false }
+tauri-plugin-notifications = { git = "https://github.com/NyaomiDEV/tauri-plugin-notifications", default-features = false }
 
 [dependencies.serde]
 version = "1.0"
@@ -43,7 +43,7 @@ features = [ "macos-private-api" ]
 path = "../src-tauri-plugin"
 
 [target.'cfg(target_os = "linux")'.dependencies.tauri-plugin-notifications]
-version = "0.5.0-rc.10"
+git = "https://github.com/NyaomiDEV/tauri-plugin-notifications"
 default-features = true
 
 [target.'cfg(target_os = "android")'.dependencies]

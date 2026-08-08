@@ -61,7 +61,7 @@ jobs:
           cmdline-tools-version: 12266719
           packages: "platform-tools ndk;29.0.14206865"
       - name: Set up Rust toolchain
-        uses: actions-rust-lang/setup-rust-toolchain@v1.16.0
+        uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
           rust-src-dir: "src-tauri"
           target: "aarch64-linux-android,armv7-linux-androideabi"
