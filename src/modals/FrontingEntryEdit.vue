@@ -275,20 +275,24 @@
 						show-default-buttons
 						:title="$t('frontHistory:edit.endTime')"
 						:min="frontingEntry.startTime"
-					/>
-					<IonButton
-						slot="end"
-						shape="round"
-						fill="outline"
-						size="small"
-						@click="(e) => { e.stopPropagation(); frontingEntry.endTime = undefined }"
 					>
-						<IonIcon
-							slot="icon-only"
-							:icon="trashMD"
-							color="danger"
-						/>
-					</IonButton>
+						<template #buttons-before>
+							<IonButton
+								shape="round"
+								fill="outline"
+								size="small"
+								color="danger"
+								class="with-large-text"
+								@click="(e) => { e.stopPropagation(); frontingEntry.endTime = undefined }"
+							>
+								<IonIcon
+									slot="start"
+									:icon="trashMD"
+								/>
+								{{ $t("other:delete") }}
+							</IonButton>
+						</template>
+					</DatePopupPicker>
 				</IonItem>
 
 				<IonItem

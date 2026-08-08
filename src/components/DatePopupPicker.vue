@@ -48,6 +48,7 @@
 			<span v-if="props.title" slot="title">{{ props.title }}</span>
 			<span slot="time-label">{{ $t("other:time") }}</span>
 			<div slot="buttons">
+				<slot name="buttons-before" />
 				<IonButton
 					fill="outline"
 					shape="round"
@@ -66,6 +67,7 @@
 				>
 					{{ $t("other:alerts.ok") }}
 				</IonButton>
+				<slot name="buttons-after" />
 			</div>
 		</DatetimeUtc>
 	</IonModal>
