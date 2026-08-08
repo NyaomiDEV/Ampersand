@@ -272,6 +272,10 @@
 		margin: var(--markdown-margin, inherit);
 	}
 
+	figure > img {
+		margin: unset;
+	}
+
 	/* Highlight */
 	mark {
 		padding: var(--markdown-padding, 2px 4px);

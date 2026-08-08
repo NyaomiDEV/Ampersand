@@ -59,6 +59,7 @@ import skewExtension from "./skewExtension.ts";
 import borderRadiusExtension from "./borderRadiusExtension.ts";
 import paddingExtension from "./paddingExtension.ts";
 import marginExtension from "./marginExtension.ts";
+import figureExtension from "./figureExtension.ts";
 
 export function extractFrontmatter(markdown: string): { body: string, frontmatter?: Record<string, unknown> } {
 	const regex = /^---\n([\s\S]+?)\n---(?:\n([\s\S]*)$|\n?$)/;
@@ -206,7 +207,8 @@ export function useMarked(){
 		skewExtension,
 		borderRadiusExtension,
 		paddingExtension,
-		marginExtension
+		marginExtension,
+		figureExtension
 	);
 
 	return marked;
