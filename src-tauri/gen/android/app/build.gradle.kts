@@ -78,11 +78,7 @@ android {
             applicationIdSuffix = ".debug"
             manifestPlaceholders["usesCleartextTraffic"] = "true"
             manifestPlaceholders["appName"] = "@string/app_name_debug"
-            if(
-                System.getenv("npm_command") !== null &&
-                System.getenv("npm_command").contains("exec") ||
-                System.getenv("npm_command").contains("run-script")
-            ) {
+            if(System.getenv("AMPERSAND_BUILD_TYPE") === null) {
                 base.archivesName.set("app")
             }
             isDebuggable = true
