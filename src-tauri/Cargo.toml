@@ -36,7 +36,7 @@ version = "1.0"
 features = [ "derive" ]
 
 [dependencies.tauri]
-version = "2.11.3"
+version = "2.11.5"
 features = [ "macos-private-api" ]
 
 [dependencies.tauri-plugin-ampersand]
@@ -53,4 +53,4 @@ tauri-plugin-m3 = "0.3.2"
 tauri-plugin-biometric = "2.3.2"
 
 [target.'cfg(not(any(target_os = "android", target_os = "ios")))'.dependencies]
-tauri-plugin-single-instance = "2.4.2"
+tauri-plugin-single-instance = "2.4.3"
