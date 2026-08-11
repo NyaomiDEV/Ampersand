@@ -211,13 +211,11 @@
 			}
 		} else frontingEntry.value = { ...emptyFrontingEntry, startTime: overrideStartTime || new Date(), endTime: overrideEndTime || new Date() };
 
-		loading.value = false;
-	}
-
-	watch(frontingEntry.value, async () => {
 		allFrontingInTimeSpan.value = getFrontingBetweenIndex(frontingEntry.value.startTime, frontingEntry.value.endTime).filter(x => x.uuid !== frontingEntry.value.uuid);
 		frontingEntryCommentAvatars.value = await getCommentAvatars();
-	});
+
+		loading.value = false;
+	}
 
 	watch(route, updateRoute);
 	onBeforeMount(updateRoute);
