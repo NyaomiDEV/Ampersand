@@ -72,7 +72,7 @@ export interface JournalPostCarouselSettings extends DashboardSetting {
 
 export type AccessibilityConfig = {
 	highLegibility: boolean,
-	highLegibilityType: "atkinson" | "opendyslexic" | "lexend" | "comicrelief" | "system-font",
+	highLegibilityType: "atkinson" | "lexend" | "comicrelief" | "system-font",
 	colorIndicatorPosition: "avatar" | "list-item",
 	themeIsAmoled: boolean,
 	tintWithColor: "off" | "accent" | "on",

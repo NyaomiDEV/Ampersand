@@ -6,7 +6,6 @@
 	},
 	"highLegibilityFontType": {
 		"atkinson": "Atkinson Hyperlegible",
-		"opendyslexic": "OpenDyslexic",
 		"lexend": "Lexend",
 		"title": "Duidelijk leesbaar lettertype-soort",
 		"system-font": "Systeemlettertype",

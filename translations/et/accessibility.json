@@ -2,7 +2,6 @@
 	"header": "Hõlbustus ja ligipääsetavus",
 	"highLegibilityFontType": {
 		"title": "Üliloetav kirjatüüp",
-		"opendyslexic": "OpenDyslexic",
 		"lexend": "Lexend",
 		"comicrelief": "Comic Relief",
 		"system-font": "Süsteemi kirjatüüp",

@@ -21,7 +21,6 @@
 		"title": "Durée de l’appui prolongé"
 	},
 	"highLegibilityFontType": {
-		"opendyslexic": "OpenDyslexic",
 		"lexend": "Lexend",
 		"atkinson": "Atkinson Hyperlegible",
 		"system-font": "Police du système",

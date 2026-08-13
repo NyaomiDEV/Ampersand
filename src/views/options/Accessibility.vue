@@ -55,10 +55,6 @@
 							{{ $t("accessibility:highLegibilityFontType.atkinson") }}
 						</IonSelectOption>
 
-						<IonSelectOption value="opendyslexic" class="hl-opendyslexic">
-							{{ $t("accessibility:highLegibilityFontType.opendyslexic") }}
-						</IonSelectOption>
-
 						<IonSelectOption value="lexend" class="hl-lexend">
 							{{ $t("accessibility:highLegibilityFontType.lexend") }}
 						</IonSelectOption>
@@ -222,10 +218,6 @@
 <style>
 	button.action-sheet-button.hl-atkinson {
 		font-family: 'Atkinson Hyperlegible', var(--ion-font-family);
-	}
-	
-	button.action-sheet-button.hl-opendyslexic {
-		font-family: 'OpenDyslexic', var(--ion-font-family);
 	}
 	
 	button.action-sheet-button.hl-lexend {

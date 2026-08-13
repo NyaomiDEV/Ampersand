@@ -7,7 +7,6 @@
 	"highLegibilityFontType": {
 		"title": "Lesbare Schriftart",
 		"atkinson": "Atkinson Hyperlegible",
-		"opendyslexic": "OpenDyslexic",
 		"lexend": "Lexend",
 		"comicrelief": "Comic Relief",
 		"system-font": "System Schriftart"

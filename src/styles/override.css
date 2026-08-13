@@ -93,11 +93,6 @@ html.high-legibility {
 		--ampersand-body-font-name: "Atkinson Hyperlegible";
 	}
 
-	&.hl-opendyslexic {
-		--ampersand-body-font-name: "OpenDyslexic";
-		--ampersand-header-font-weight: 700;
-	}
-
 	&.hl-lexend {
 		--ampersand-body-font-name: "Lexend";
 	}

@@ -7,7 +7,6 @@
 	"highLegibilityFontType": {
 		"title": "Familia fontului cu legibilitate crescută",
 		"atkinson": "Atkinson Hyperlegible",
-		"opendyslexic": "OpenDyslexic",
 		"lexend": "Lexend"
 	},
 	"reducedMotion": {
