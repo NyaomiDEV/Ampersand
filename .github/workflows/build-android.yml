@@ -39,7 +39,7 @@ concurrency:
 jobs:
   # Single deploy job since we're just deploying
   deploy-android:
-    runs-on: ubuntu-slim
+    runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
       - name: Checkout

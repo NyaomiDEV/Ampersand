@@ -37,7 +37,7 @@ jobs:
           - platform: 'macos-26'
             build_type: 'macos'
             args: '--target universal-apple-darwin'
-          - platform: 'ubuntu-slim'
+          - platform: 'ubuntu-latest'
             build_type: 'linux'
             args: ''
           - platform: 'windows-latest'
@@ -52,7 +52,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Install dependencies (Ubuntu only)
-        if: matrix.platform == 'ubuntu-slim'
+        if: startsWith(matrix.platform, 'ubuntu')
         run: |
           sudo apt-get update
           sudo apt-get install -y build-essential curl wget file libxdo-dev libssl-dev libayatana-appindicator3-dev libwebkit2gtk-4.1-dev librsvg2-dev patchelf xdg-utils
@@ -78,7 +78,7 @@ jobs:
         env:
           RUST_BACKTRACE: full
       - name: Publish artifacts (Linux - DEB)
-        if: matrix.platform == 'ubuntu-slim'
+        if: startsWith(matrix.platform, 'ubuntu')
         uses: actions/upload-artifact@v7
         with:
           name: PC build for Linux (DEB)
@@ -86,7 +86,7 @@ jobs:
           path: |
             ./src-tauri/target/release/bundle/deb/Ampersand_*.deb
       - name: Publish artifacts (Linux - RPM)
-        if: matrix.platform == 'ubuntu-slim'
+        if: startsWith(matrix.platform, 'ubuntu')
         uses: actions/upload-artifact@v7
         with:
           name: PC build for Linux (RPM)
@@ -94,7 +94,7 @@ jobs:
           path: |
             ./src-tauri/target/release/bundle/rpm/Ampersand-*.rpm
       - name: Publish artifacts (Linux - AppImage)
-        if: matrix.platform == 'ubuntu-slim'
+        if: startsWith(matrix.platform, 'ubuntu')
         uses: actions/upload-artifact@v7
         with:
           name: PC build for Linux (AppImage)
@@ -118,19 +118,19 @@ jobs:
           path: |
             ./src-tauri/target/release/bundle/msi/Ampersand*.msi
       - name: Publish to release (Linux DEB)
-        if: matrix.platform == 'ubuntu-slim'
+        if: startsWith(matrix.platform, 'ubuntu')
         uses: shogo82148/actions-upload-release-asset@v1
         with:
           upload_url: ${{ inputs.upload_url }}
           asset_path: ./src-tauri/target/release/bundle/deb/Ampersand_*.deb
       - name: Publish to release (Linux RPM)
-        if: matrix.platform == 'ubuntu-slim'
+        if: startsWith(matrix.platform, 'ubuntu')
         uses: shogo82148/actions-upload-release-asset@v1
         with:
           upload_url: ${{ inputs.upload_url }}
           asset_path: ./src-tauri/target/release/bundle/rpm/Ampersand-*.rpm
       - name: Publish to release (Linux AppImage)
-        if: matrix.platform == 'ubuntu-slim'
+        if: startsWith(matrix.platform, 'ubuntu')
         uses: shogo82148/actions-upload-release-asset@v1
         with:
           upload_url: ${{ inputs.upload_url }}
