@@ -40,6 +40,7 @@ jobs:
   # Single deploy job since we're just deploying
   deploy-android:
     runs-on: ubuntu-slim
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -66,11 +67,13 @@ jobs:
           packages: "build-tools;35.0.0 ndk;29.0.14206865 platform-tools platforms;android-36.1 sources;android-36.1"
       - name: Get Rust toolchain version
         id: rust_toml_parse
-        run: echo ver=$(cat src-tauri/rust-toolchain.toml | grep -oe "channel = \"[0-9.]*\"" | grep -oe "[0-9.]*") >> $GITHUB_OUTPUT
+        run: pnpm run get-rust-version
       - name: Set up Rust toolchain
         uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
-          toolchain: ${{ steps.rust_toml_parse.outputs.ver }}
+          toolchain: ${{ steps.rust_toml_parse.outputs.rust_toolchain_version }}
+          components: ${{ steps.rust_toml_parse.outputs.rust_toolchain_components }}
+          target: ${{ steps.rust_toml_parse.outputs.rust_toolchain_targets }}
           rust-src-dir: "src-tauri"
       - name: Install frontend dependencies
         run: pnpm install --frozen-lockfile

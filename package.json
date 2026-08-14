@@ -8,6 +8,7 @@
     "build": "tauri build",
     "build:rsbuild": "vue-tsc && pnpm rsbuild build",
     "upgrade-vcs": "node upgrade-vcs.mjs",
+    "get-rust-version": "node get-rust-version.mjs",
     "eslint": "eslint src/"
   },
   "dependencies": {
