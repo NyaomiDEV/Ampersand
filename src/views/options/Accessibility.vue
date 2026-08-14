@@ -62,6 +62,10 @@
 							{{ $t("accessibility:highLegibilityFontType.lexend") }}
 						</IonSelectOption>
 
+						<IonSelectOption value="luciole" class="hl-luciole">
+							{{ $t("accessibility:highLegibilityFontType.luciole") }}
+						</IonSelectOption>
+
 						<IonSelectOption value="comicrelief" class="hl-comicrelief">
 							{{ $t("accessibility:highLegibilityFontType.comicrelief") }}
 						</IonSelectOption>
@@ -243,6 +247,10 @@
 	
 	button.action-sheet-button.hl-lexend {
 		font-family: 'Lexend', var(--ion-font-family);
+	}
+
+	button.action-sheet-button.hl-luciole {
+		font-family: 'Luciole', var(--ion-font-family);
 	}
 
 	button.action-sheet-button.hl-comicrelief {

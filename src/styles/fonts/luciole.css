@@ -1,0 +1,27 @@
+@font-face {
+	font-family: "Luciole";
+	font-weight: normal;
+	font-style: normal;
+	src: url(../../assets/fonts/luciole/Luciole-Regular.woff2);
+}
+
+@font-face {
+	font-family: "Luciole";
+	font-weight: bold;
+	font-style: normal;
+	src: url(../../assets/fonts/luciole/Luciole-Bold.woff2);
+}
+
+@font-face {
+	font-family: "Luciole";
+	font-weight: normal;
+	font-style: italic;
+	src: url(../../assets/fonts/luciole/Luciole-Italic.woff2);
+}
+
+@font-face {
+	font-family: "Luciole";
+	font-weight: bold;
+	font-style: italic;
+	src: url(../../assets/fonts/luciole/Luciole-BoldItalic.woff2);
+}

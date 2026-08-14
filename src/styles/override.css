@@ -105,6 +105,11 @@ html.high-legibility {
 		--ampersand-body-font-name: "Lexend";
 	}
 
+	&.hl-luciole {
+		--ampersand-body-font-name: "Luciole";
+		--ampersand-header-font-weight: 700;
+	}
+
 	&.hl-comicrelief {
 		--ampersand-body-font-name: "Comic Relief";
 		--ampersand-header-font-weight: 700;

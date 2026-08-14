@@ -7,6 +7,7 @@
 	"highLegibilityFontType": {
 		"atkinson": "Atkinson Hyperlegible",
 		"lexend": "Lexend",
+		"luciole": "Luciole",
 		"title": "Duidelijk leesbaar lettertype-soort",
 		"system-font": "Systeemlettertype",
 		"comicrelief": "Comic Relief"
