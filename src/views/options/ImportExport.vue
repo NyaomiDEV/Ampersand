@@ -1,6 +1,6 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonList, IonItem, IonIcon, IonLabel, IonPage, IonTitle, IonToolbar, IonBackButton, IonProgressBar, IonListHeader, IonNote } from "@ionic/vue";
-	import { h, ref } from "vue";
+	import { IonContent, IonHeader, IonList, IonItem, IonIcon, IonLabel, IonPage, IonTitle, IonToolbar, IonBackButton, IonProgressBar, IonListHeader, IonNote, useBackButton } from "@ionic/vue";
+	import { h, ref, watch } from "vue";
 	import { importDatabaseFromBinary } from "../../lib/db/ioutils/old";
 	import { promptInput, promptOptions, sortName, toast } from "../../lib/util/misc";
 	import { useTranslation } from "i18next-vue";
@@ -280,6 +280,19 @@
 		}
 		loading.value = false;
 	}
+
+	// block android back button if we're loading (exporting or importing)
+	useBackButton(200, (processNextHandler) => {
+		if(!loading.value)
+			processNextHandler();
+	});
+
+	// block swipe-to-go-back depending on loading state, on iOS
+	if(platform() === "ios"){
+		watch(loading, () => {
+			window.Ionic.config.set("swipeBackEnabled", !loading.value);
+		});
+	}
 </script>
 
 <template>
@@ -289,6 +302,7 @@
 				<IonBackButton
 					slot="start"
 					default-href="/tab/options/"
+					:disabled="loading"
 				/>
 				<IonTitle>{{ $t("importExport:header") }}</IonTitle>
 				<IonProgressBar v-if="loading" :type="barProgress < 0 ? 'indeterminate' : 'determinate'" :value="barProgress > 0 ? barProgress : 0" />
