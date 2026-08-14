@@ -42,7 +42,8 @@
 	},
 	"addTimestamp": "Añadir marca de tiempo",
 	"creation": {
-		"dateCreated": "Fecha de creación: {{dateCreated}}"
+		"dateCreated": "Fecha de creación: {{dateCreated}}",
+		"frontingAtCreationDate": "Miembro al frente al crearse: {{frontingAtCreationDate}}"
 	},
 	"alerts": {
 		"ok": "De acuerdo",
@@ -171,5 +172,6 @@
 		"gradient": "Degradado",
 		"outline": "Contorno",
 		"shadow": "Sombra"
-	}
+	},
+	"delete": "Borrar"
 }
