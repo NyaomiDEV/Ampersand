@@ -172,12 +172,12 @@
 	},
 	"image": {
 		"delete": "Scancella foto",
-		"edit": "Modifica foto",
+		"edit": "Cagna foto",
 		"save": "Salva foto"
 	},
 	"cover": {
 		"delete": "Scancella copertina",
-		"edit": "Modifica copertina",
+		"edit": "Cagna copertina",
 		"save": "Salva copertina"
 	},
 	"developerMode": "Modalità sviluppatore",

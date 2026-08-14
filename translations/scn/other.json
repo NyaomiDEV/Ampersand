@@ -173,12 +173,12 @@
 	},
 	"image": {
 		"delete": "Scancella foto",
-		"edit": "Scangia foto",
+		"edit": "Mudìfica foto",
 		"save": "Savva foto"
 	},
 	"cover": {
 		"delete": "Scancella cupirtina",
-		"edit": "Scangia cupirtina",
+		"edit": "Mudìfica cupirtina",
 		"save": "Savva cupirtina"
 	},
 	"developerMode": "Mudalità sviluppaturi",

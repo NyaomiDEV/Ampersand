@@ -1,5 +1,6 @@
 {
 	"header": "Gestore degli asset",
+	"select": "Seleziona asset",
 	"searchPlaceholder": "Cerca tra gli asset...",
 	"add": {
 		"header": "Aggiungi asset",

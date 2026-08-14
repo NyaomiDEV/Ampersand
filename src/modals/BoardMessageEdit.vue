@@ -27,7 +27,7 @@
 	import personAddMD from "@material-symbols/svg-600/rounded/person_add.svg";
 	import clockAddMD from "@material-symbols/svg-600/rounded/more_time.svg";
 
-	import { BoardMessage, BoardMessageComplete, Member, UUIDable } from "../lib/db/entities";
+	import { Asset, BoardMessage, BoardMessageComplete, Member, UUIDable } from "../lib/db/entities";
 	import { updateBoardMessage, deleteBoardMessage, newBoardMessage } from "../lib/db/tables/boardMessages";
 	import { onMounted, ref, toRaw, useTemplateRef } from "vue";
 	import { PartialBy } from "../lib/types";
@@ -40,6 +40,10 @@
 	import { getFrontingAtIndex } from "../lib/db/tables/frontingEntries.ts";
 	import { defaultMember, getMember } from "../lib/db/tables/members.ts";
 	import { quickAddAsset } from "../lib/db/tables/assets.ts";
+	import { lists } from "../router/lists.ts";
+	import AssetSelect from "./AssetSelect.vue";
+
+	const assetMD = lists.assetManager.icon;
 
 	const i18next = useTranslation();
 
@@ -61,6 +65,7 @@
 
 	const memberSelectModal = useTemplateRef("memberSelectModal");
 	const memberTagModal = useTemplateRef("memberTagModal");
+	const assetSelectModal = useTemplateRef("assetSelectModal");
 	const loadingModal = useTemplateRef("loadingModal");
 
 	const bodyTextarea = useTemplateRef("bodyTextarea");
@@ -175,8 +180,12 @@
 			const htmlEl = bodyTextarea.value?.$el as globalThis.HTMLIonTextareaElement;
 			const input = await htmlEl.getInputElement();
 
-			const start = input.selectionStart;
-			const end = input.selectionEnd;
+			let start = input.selectionStart, end = input.selectionEnd;
+
+			if(start === 0 && start === end){
+				start = input.textLength;
+				end = start;
+			}
 
 			const before = boardMessage.value.body.slice(0, start);
 			const after = boardMessage.value.body.slice(end);
@@ -192,8 +201,12 @@
 			const htmlEl = bodyTextarea.value?.$el as globalThis.HTMLIonTextareaElement;
 			const input = await htmlEl.getInputElement();
 
-			const start = input.selectionStart;
-			const end = input.selectionEnd;
+			let start = input.selectionStart, end = input.selectionEnd;
+
+			if(start === 0 && start === end){
+				start = input.textLength;
+				end = start;
+			}
 
 			const before = boardMessage.value.body.slice(0, start);
 			const after = boardMessage.value.body.slice(end);
@@ -204,12 +217,46 @@
 		}
 	}
 
-	async function addAssetInBody(type: "image" | "file"){
+	async function addAssetInBody(asset: Asset){
+		try {
+			const htmlEl = bodyTextarea.value?.$el as globalThis.HTMLIonTextareaElement;
+			const input = await htmlEl.getInputElement();
+
+			let start = input.selectionStart, end = input.selectionEnd;
+
+			if(start === 0 && start === end){
+				start = input.textLength;
+				end = start;
+			}
+
+			const before = boardMessage.value.body?.slice(0, start) || "";
+			const after = boardMessage.value.body?.slice(end) || "";
+
+			boardMessage.value.body = `${before}${asset.file.type.includes("image") ? "!" : ""}[](@${asset.friendlyName})${after}`;
+		}catch(e){
+			await toast((e as Error).message);
+		}
+	}
+
+	async function addAssetInBodyQuick(type: "image" | "file"){
 		try {
 			const asset = await quickAddAsset(type);
 			if(!asset.success) throw new Error(`E: ${asset.err || "failed"}`);
 
-			boardMessage.value.body += `${type === "image" ? "!" : ""}[](@${asset.detail.friendlyName})`;
+			const htmlEl = bodyTextarea.value?.$el as globalThis.HTMLIonTextareaElement;
+			const input = await htmlEl.getInputElement();
+
+			let start = input.selectionStart, end = input.selectionEnd;
+
+			if(start === 0 && start === end){
+				start = input.textLength;
+				end = start;
+			}
+
+			const before = boardMessage.value.body?.slice(0, start) || "";
+			const after = boardMessage.value.body?.slice(end) || "";
+
+			boardMessage.value.body = `${before}${type === "image" ? "!" : ""}[](@${asset.detail.friendlyName})${after}`;
 		}catch(e){
 			await toast((e as Error).message);
 		}
@@ -296,11 +343,14 @@
 					<IonButton fill="clear" :aria-label="$t('other:memberMention')" @click="memberTagModal?.$el.present()">
 						<IonIcon slot="icon-only" :icon="personAddMD" />
 					</IonButton>
-					<IonButton fill="clear" @click="addAssetInBody('file')">
+					<IonButton fill="clear" @click="addAssetInBodyQuick('file')">
 						<IonIcon slot="icon-only" :icon="fileMD" />
 					</IonButton>
-					<IonButton fill="clear" @click="addAssetInBody('image')">
+					<IonButton fill="clear" @click="addAssetInBodyQuick('image')">
 						<IonIcon slot="icon-only" :icon="imageMD" />
+					</IonButton>
+					<IonButton fill="clear" @click="assetSelectModal?.$el.present()">
+						<IonIcon slot="icon-only" :icon="assetMD" />
 					</IonButton>
 				</IonItem>
 			</IonList>
@@ -452,6 +502,16 @@
 				:always-emit="true"
 				:model-value="[]"
 				@update:model-value="(e) => { if(e[0]) void tagMemberInBody(e[0]) }"
+			/>
+
+			<AssetSelect
+				ref="assetSelectModal"
+				:only-one="true"
+				:discard-on-select="true"
+				:hide-checkboxes="true"
+				:always-emit="true"
+				:model-value="[]"
+				@update:model-value="(e) => { if(e[0]) void addAssetInBody(e[0]) }"
 			/>
 
 			<Loading ref="loadingModal" />

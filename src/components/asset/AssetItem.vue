@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { IonThumbnail, IonLabel, IonItem, IonIcon } from "@ionic/vue";
+	import { IonThumbnail, IonLabel, IonItem, IonIcon, IonCheckbox } from "@ionic/vue";
 	import { Asset, Tag } from "../../lib/db/entities";
 	import { useBlob } from "../../lib/util/blob";
 	import { PartialBy } from "../../lib/types";
@@ -22,7 +22,15 @@
 		showFilenameAndType?: boolean,
 		showThumbnail?: boolean,
 		showTags?: boolean,
-		detail?: boolean
+		detail?: boolean,
+		hasToggle?: "checkbox",
+		toggleValue?: string,
+		toggleChecked?: boolean,
+	}>();
+
+	const emit = defineEmits<{
+		"toggleUpdate": [boolean],
+		"thumbnailClick": [PointerEvent]
 	}>();
 
 	function shouldShowTags(){
@@ -81,14 +89,48 @@
 	>
 		<template v-if="props.showThumbnail">
 			<template v-if="props.asset.file && canPreview()">
-				<IonIcon v-if="props.asset.file.type === 'image/svg+xml'" slot="start" :icon="getObjectURL(props.asset.file)" />		
+				<IonIcon
+					v-if="props.asset.file.type === 'image/svg+xml'"
+					slot="start"
+					:icon="getObjectURL(props.asset.file)"
+					@click="emit('thumbnailClick', $event)"
+				/>		
 				<IonThumbnail v-else slot="start">
-					<img :src="getObjectURL(props.asset.file)" />
+					<img :src="getObjectURL(props.asset.file)" @click="emit('thumbnailClick', $event)" />
 				</IonThumbnail>
 			</template>
-			<IonIcon v-else slot="start" :icon="documentMD" />
+			<IonIcon
+				v-else
+				slot="start"
+				:icon="documentMD"
+				@click="emit('thumbnailClick', $event)"
+			/>
 		</template>
-		<IonLabel class="nowrap">
+		<IonCheckbox
+			v-if="props.hasToggle === 'checkbox'"
+			:value="props.toggleValue"
+			:checked="props.toggleChecked"
+			@update:model-value="value => emit('toggleUpdate', value as boolean)"
+		>
+			<IonLabel class="nowrap">
+				<template v-if="props.asset.file && props.showFilenameAndType">
+					<h2>{{ props.asset.file.name }}</h2>
+					<p>{{ props.asset.file.type?.split("/")[1]?.replace(/^x-/, '').toUpperCase() }}</p>
+				</template>
+				<template v-else>
+					{{ props.asset.friendlyName }}
+				</template>
+				<div
+					v-if="shouldShowTags()"
+					class="tags"
+					@pointerdown="(e) => e.stopPropagation()"
+					@touchstart="(e) => e.stopPropagation()"
+				>
+					<TagChip v-for="tag in tags" :key="tag.uuid" :tag="tag" />
+				</div>
+			</IonLabel>
+		</IonCheckbox>
+		<IonLabel v-else class="nowrap">
 			<template v-if="props.asset.file && props.showFilenameAndType">
 				<h2>{{ props.asset.file.name }}</h2>
 				<p>{{ props.asset.file.type?.split("/")[1]?.replace(/^x-/, '').toUpperCase() }}</p>

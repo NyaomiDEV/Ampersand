@@ -1,5 +1,6 @@
 {
 	"header": "Loot manager",
+	"select": "Select loot",
 	"searchPlaceholder": "Search the loot...",
 	"add": {
 		"header": "Add loot",

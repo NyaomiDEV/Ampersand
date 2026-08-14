@@ -26,7 +26,7 @@
 
 	import MemberSelect from "./MemberSelect.vue";
 
-	import { Member, Note, UUIDable } from "../lib/db/entities";
+	import { Asset, Member, Note, UUIDable } from "../lib/db/entities";
 	import { newNote, updateNote, deleteNote } from "../lib/db/tables/notes";
 	import { onMounted, ref, toRaw, useTemplateRef } from "vue";
 
@@ -39,6 +39,10 @@
 	import { getFrontingAtIndex } from "../lib/db/tables/frontingEntries.ts";
 	import { defaultMember, getMember } from "../lib/db/tables/members.ts";
 	import { quickAddAsset } from "../lib/db/tables/assets.ts";
+	import { lists } from "../router/lists.ts";
+	import AssetSelect from "./AssetSelect.vue";
+
+	const assetMD = lists.assetManager.icon;
 
 	const i18next = useTranslation();
 
@@ -56,6 +60,7 @@
 	const note = ref({ ...(props.note || emptyNote) });
 
 	const memberTagModal = useTemplateRef("memberTagModal");
+	const assetSelectModal = useTemplateRef("assetSelectModal");
 	const loadingModal = useTemplateRef("loadingModal");
 
 	const contentTextarea = useTemplateRef("contentTextarea");
@@ -129,8 +134,12 @@
 			const htmlEl = contentTextarea.value?.textarea?.$el as globalThis.HTMLIonTextareaElement;
 			const input = await htmlEl.getInputElement();
 
-			const start = input.selectionStart;
-			const end = input.selectionEnd;
+			let start = input.selectionStart, end = input.selectionEnd;
+
+			if(start === 0 && start === end){
+				start = input.textLength;
+				end = start;
+			}
 
 			const before = note.value.content?.slice(0, start) || "";
 			const after = note.value.content?.slice(end) || "";
@@ -146,8 +155,12 @@
 			const htmlEl = contentTextarea.value?.textarea?.$el as globalThis.HTMLIonTextareaElement;
 			const input = await htmlEl.getInputElement();
 
-			const start = input.selectionStart;
-			const end = input.selectionEnd;
+			let start = input.selectionStart, end = input.selectionEnd;
+
+			if(start === 0 && start === end){
+				start = input.textLength;
+				end = start;
+			}
 
 			const before = note.value.content?.slice(0, start) || "";
 			const after = note.value.content?.slice(end) || "";
@@ -158,7 +171,28 @@
 		}
 	}
 
-	async function addAssetInContent(type: "image" | "file"){
+	async function addAssetInContent(asset: Asset){
+		try {
+			const htmlEl = contentTextarea.value?.textarea?.$el as globalThis.HTMLIonTextareaElement;
+			const input = await htmlEl.getInputElement();
+
+			let start = input.selectionStart, end = input.selectionEnd;
+
+			if(start === 0 && start === end){
+				start = input.textLength;
+				end = start;
+			}
+
+			const before = note.value.content?.slice(0, start) || "";
+			const after = note.value.content?.slice(end) || "";
+
+			note.value.content = `${before}${asset.file.type.includes("image") ? "!" : ""}[](@${asset.friendlyName})${after}`;
+		}catch(e){
+			await toast((e as Error).message);
+		}
+	}
+
+	async function addAssetInContentQuick(type: "image" | "file"){
 		try {
 			const asset = await quickAddAsset(type);
 			if(!asset.success) throw new Error(`E: ${asset.err || "failed"}`);
@@ -166,8 +200,12 @@
 			const htmlEl = contentTextarea.value?.textarea?.$el as globalThis.HTMLIonTextareaElement;
 			const input = await htmlEl.getInputElement();
 
-			const start = input.selectionStart;
-			const end = input.selectionEnd;
+			let start = input.selectionStart, end = input.selectionEnd;
+
+			if(start === 0 && start === end){
+				start = input.textLength;
+				end = start;
+			}
 
 			const before = note.value.content?.slice(0, start) || "";
 			const after = note.value.content?.slice(end) || "";
@@ -230,11 +268,14 @@
 					<IonButton fill="clear" :aria-label="$t('other:memberMention')" @click="memberTagModal?.$el.present()">
 						<IonIcon slot="icon-only" :icon="personAddMD" />
 					</IonButton>
-					<IonButton fill="clear" @click="addAssetInContent('file')">
+					<IonButton fill="clear" @click="addAssetInContentQuick('file')">
 						<IonIcon slot="icon-only" :icon="fileMD" />
 					</IonButton>
-					<IonButton fill="clear" @click="addAssetInContent('image')">
+					<IonButton fill="clear" @click="addAssetInContentQuick('image')">
 						<IonIcon slot="icon-only" :icon="imageMD" />
+					</IonButton>
+					<IonButton fill="clear" @click="assetSelectModal?.$el.present()">
+						<IonIcon slot="icon-only" :icon="assetMD" />
 					</IonButton>
 				</IonItem>
 			</IonList>
@@ -291,6 +332,15 @@
 				@update:model-value="(e) => { if(e[0]) void tagMemberInContent(e[0]) }"
 			/>
 
+			<AssetSelect
+				ref="assetSelectModal"
+				:only-one="true"
+				:discard-on-select="true"
+				:hide-checkboxes="true"
+				:always-emit="true"
+				:model-value="[]"
+				@update:model-value="(e) => { if(e[0]) void addAssetInContent(e[0]) }"
+			/>
 			<Loading ref="loadingModal" />
 
 		</IonContent>

@@ -27,7 +27,7 @@
 	import fileMD from "@material-symbols/svg-600/rounded/attach_file_add.svg";
 	import imageMD from "@material-symbols/svg-600/rounded/add_photo_alternate.svg";
 
-	import { FrontingEntry, FrontingEntryComplete, Member, UUIDable } from "../../lib/db/entities";
+	import { Asset, FrontingEntry, FrontingEntryComplete, Member, UUIDable } from "../../lib/db/entities";
 	import { newFrontingEntry, updateFrontingEntry, deleteFrontingEntry, sendFrontingChangedEvent, getFrontingBetweenIndex, getFrontingEntry, toFrontingEntryComplete } from "../../lib/db/tables/frontingEntries";
 	import { onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
 	import { useTranslation } from "i18next-vue";
@@ -49,6 +49,10 @@
 	import AvatarStack from "../../components/AvatarStack.vue";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import { quickAddAsset } from "../../lib/db/tables/assets.ts";
+	import AssetSelect from "../../modals/AssetSelect.vue";
+	import { lists } from "../../router/lists.ts";
+
+	const assetMD = lists.assetManager.icon;
 
 	const i18next = useTranslation();
 	const router = useIonRouter();
@@ -69,6 +73,7 @@
 	const memberSelectModal = useTemplateRef("memberSelectModal");
 	const memberInfluencingModal = useTemplateRef("memberInfluencingModal");
 	const memberTagModal = useTemplateRef("memberTagModal");
+	const assetSelectModal = useTemplateRef("assetSelectModal");
 	const frontingEntryComments = useTemplateRef("frontingEntryComments");
 	const loadingModal = useTemplateRef("loadingModal");
 
@@ -197,8 +202,12 @@
 			const htmlEl = summaryTextarea.value?.textarea?.$el as globalThis.HTMLIonTextareaElement;
 			const input = await htmlEl.getInputElement();
 
-			const start = input.selectionStart;
-			const end = input.selectionEnd;
+			let start = input.selectionStart, end = input.selectionEnd;
+
+			if(start === 0 && start === end){
+				start = input.textLength;
+				end = start;
+			}
 
 			const before = frontingEntry.value.summary?.slice(0, start) || "";
 			const after = frontingEntry.value.summary?.slice(end) || "";
@@ -214,8 +223,12 @@
 			const htmlEl = summaryTextarea.value?.textarea?.$el as globalThis.HTMLIonTextareaElement;
 			const input = await htmlEl.getInputElement();
 
-			const start = input.selectionStart;
-			const end = input.selectionEnd;
+			let start = input.selectionStart, end = input.selectionEnd;
+
+			if(start === 0 && start === end){
+				start = input.textLength;
+				end = start;
+			}
 
 			const before = frontingEntry.value.summary?.slice(0, start) || "";
 			const after = frontingEntry.value.summary?.slice(end) || "";
@@ -226,7 +239,28 @@
 		}
 	}
 
-	async function addAssetInSummary(type: "image" | "file"){
+	async function addAssetInSummary(asset: Asset){
+		try {
+			const htmlEl = summaryTextarea.value?.textarea?.$el as globalThis.HTMLIonTextareaElement;
+			const input = await htmlEl.getInputElement();
+
+			let start = input.selectionStart, end = input.selectionEnd;
+
+			if(start === 0 && start === end){
+				start = input.textLength;
+				end = start;
+			}
+
+			const before = frontingEntry.value.summary?.slice(0, start) || "";
+			const after = frontingEntry.value.summary?.slice(end) || "";
+
+			frontingEntry.value.summary = `${before}${asset.file.type.includes("image") ? "!" : ""}[](@${asset.friendlyName})${after}`;
+		}catch(e){
+			await toast((e as Error).message);
+		}
+	}
+
+	async function addAssetInSummaryQuick(type: "image" | "file"){
 		try {
 			const asset = await quickAddAsset(type);
 			if(!asset.success) throw new Error(`E: ${asset.err || "failed"}`);
@@ -234,8 +268,12 @@
 			const htmlEl = summaryTextarea.value?.textarea?.$el as globalThis.HTMLIonTextareaElement;
 			const input = await htmlEl.getInputElement();
 
-			const start = input.selectionStart;
-			const end = input.selectionEnd;
+			let start = input.selectionStart, end = input.selectionEnd;
+
+			if(start === 0 && start === end){
+				start = input.textLength;
+				end = start;
+			}
 
 			const before = frontingEntry.value.summary?.slice(0, start) || "";
 			const after = frontingEntry.value.summary?.slice(end) || "";
@@ -461,11 +499,14 @@
 					<IonButton fill="clear" :aria-label="$t('other:memberMention')" @click="memberTagModal?.$el.present()">
 						<IonIcon slot="icon-only" :icon="personAddMD" />
 					</IonButton>
-					<IonButton fill="clear" @click="addAssetInSummary('file')">
+					<IonButton fill="clear" @click="addAssetInSummaryQuick('file')">
 						<IonIcon slot="icon-only" :icon="fileMD" />
 					</IonButton>
-					<IonButton fill="clear" @click="addAssetInSummary('image')">
+					<IonButton fill="clear" @click="addAssetInSummaryQuick('image')">
 						<IonIcon slot="icon-only" :icon="imageMD" />
+					</IonButton>
+					<IonButton fill="clear" @click="assetSelectModal?.$el.present()">
+						<IonIcon slot="icon-only" :icon="assetMD" />
 					</IonButton>
 				</IonItem>
 			</IonList>
@@ -559,6 +600,16 @@
 				:always-emit="true"
 				:model-value="[]"
 				@update:model-value="(e) => { if(e[0]) void tagMemberInSummary(e[0]) }"
+			/>
+
+			<AssetSelect
+				ref="assetSelectModal"
+				:only-one="true"
+				:discard-on-select="true"
+				:hide-checkboxes="true"
+				:always-emit="true"
+				:model-value="[]"
+				@update:model-value="(e) => { if(e[0]) void addAssetInSummary(e[0]) }"
 			/>
 
 			<Comments

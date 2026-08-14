@@ -1,5 +1,6 @@
 {
 	"header": "Asset manager",
+	"select": "Select asset",
 	"searchPlaceholder": "Search assets...",
 	"add": {
 		"header": "Add asset",

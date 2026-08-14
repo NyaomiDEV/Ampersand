@@ -34,7 +34,7 @@
 	import imageMD from "@material-symbols/svg-600/rounded/add_photo_alternate.svg";
 	import accountCircle from "@material-symbols/svg-600/rounded/account_circle-fill.svg";
 
-	import { JournalPost, JournalPostComplete, Member, Tag, UUIDable } from "../../lib/db/entities";
+	import { Asset, JournalPost, JournalPostComplete, Member, Tag, UUIDable } from "../../lib/db/entities";
 	import { newJournalPost, updateJournalPost, getJournalPost, toJournalPostComplete } from "../../lib/db/tables/journalPosts";
 	import { formatDate, saveImageFile, sortDate, sortName, toast } from "../../lib/util/misc";
 	import { getResizedImage } from "../../lib/util/image";
@@ -58,6 +58,8 @@
 	import { getMember, defaultMember } from "../../lib/db/tables/members";
 	import { useTranslation } from "i18next-vue";
 	import { quickAddAsset } from "../../lib/db/tables/assets.ts";
+	import AssetSelect from "../../modals/AssetSelect.vue";
+	import { lists } from "../../router/lists.ts";
 
 	const { getObjectURL } = useBlob();
 	const router = useIonRouter();
@@ -69,10 +71,13 @@
 
 	const memberSelectModal = useTemplateRef("memberSelectModal");
 	const memberTagModal = useTemplateRef("memberTagModal");
+	const assetSelectModal = useTemplateRef("assetSelectModal");
 	const postComments = useTemplateRef("postComments");
 	const loadingModal = useTemplateRef("loadingModal");
 
 	const bodyTextarea = useTemplateRef("bodyTextarea");
+
+	const assetMD = lists.assetManager.icon;
 
 	const postCommentAvatars = shallowRef<InstanceType<typeof AvatarStack>["$props"]["avatars"]>();
 
@@ -270,8 +275,12 @@
 			const htmlEl = bodyTextarea.value?.$el as globalThis.HTMLIonTextareaElement;
 			const input = await htmlEl.getInputElement();
 
-			const start = input.selectionStart;
-			const end = input.selectionEnd;
+			let start = input.selectionStart, end = input.selectionEnd;
+
+			if(start === 0 && start === end){
+				start = input.textLength;
+				end = start;
+			}
 
 			const before = post.value.body.slice(0, start);
 			const after = post.value.body.slice(end);
@@ -287,8 +296,12 @@
 			const htmlEl = bodyTextarea.value?.$el as globalThis.HTMLIonTextareaElement;
 			const input = await htmlEl.getInputElement();
 
-			const start = input.selectionStart;
-			const end = input.selectionEnd;
+			let start = input.selectionStart, end = input.selectionEnd;
+
+			if(start === 0 && start === end){
+				start = input.textLength;
+				end = start;
+			}
 
 			const before = post.value.body.slice(0, start);
 			const after = post.value.body.slice(end);
@@ -299,7 +312,28 @@
 		}
 	}
 
-	async function addAssetInBody(type: "image" | "file"){
+	async function addAssetInBody(asset: Asset){
+		try {
+			const htmlEl = bodyTextarea.value?.$el as globalThis.HTMLIonTextareaElement;
+			const input = await htmlEl.getInputElement();
+
+			let start = input.selectionStart, end = input.selectionEnd;
+
+			if(start === 0 && start === end){
+				start = input.textLength;
+				end = start;
+			}
+
+			const before = post.value.body.slice(0, start);
+			const after = post.value.body.slice(end);
+
+			post.value.body = `${before}${asset.file.type.includes("image") ? "!" : ""}[](@${asset.friendlyName})${after}`;
+		}catch(e){
+			await toast((e as Error).message);
+		}
+	}
+
+	async function addAssetInBodyQuick(type: "image" | "file"){
 		try {
 			const asset = await quickAddAsset(type);
 			if(!asset.success) throw new Error(`E: ${asset.err || "failed"}`);
@@ -307,8 +341,12 @@
 			const htmlEl = bodyTextarea.value?.$el as globalThis.HTMLIonTextareaElement;
 			const input = await htmlEl.getInputElement();
 
-			const start = input.selectionStart;
-			const end = input.selectionEnd;
+			let start = input.selectionStart, end = input.selectionEnd;
+
+			if(start === 0 && start === end){
+				start = input.textLength;
+				end = start;
+			}
 
 			const before = post.value.body.slice(0, start);
 			const after = post.value.body.slice(end);
@@ -461,6 +499,16 @@
 				@update:model-value="(e) => { if(e[0]) void tagMemberInBody(e[0]) }"
 			/>
 
+			<AssetSelect
+				ref="assetSelectModal"
+				:only-one="true"
+				:discard-on-select="true"
+				:hide-checkboxes="true"
+				:always-emit="true"
+				:model-value="[]"
+				@update:model-value="(e) => { if(e[0]) void addAssetInBody(e[0]) }"
+			/>
+
 			<Comments
 				v-if="post.uuid"
 				ref="postComments"
@@ -487,11 +535,14 @@
 					<IonButton @click="memberTagModal?.$el.present()">
 						<IonIcon slot="icon-only" :icon="personAddMD" />
 					</IonButton>
-					<IonButton fill="clear" @click="addAssetInBody('file')">
+					<IonButton fill="clear" @click="addAssetInBodyQuick('file')">
 						<IonIcon slot="icon-only" :icon="fileMD" />
 					</IonButton>
-					<IonButton fill="clear" @click="addAssetInBody('image')">
+					<IonButton fill="clear" @click="addAssetInBodyQuick('image')">
 						<IonIcon slot="icon-only" :icon="imageMD" />
+					</IonButton>
+					<IonButton fill="clear" @click="assetSelectModal?.$el.present()">
+						<IonIcon slot="icon-only" :icon="assetMD" />
 					</IonButton>
 					<IonButton @click="showJournalOptions">
 						<IonIcon slot="icon-only" :icon="settingsMD" />
