@@ -48,7 +48,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential curl wget file libxdo-dev libssl-dev libayatana-appindicator3-dev libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
+          sudo apt-get install -y build-essential curl wget file libxdo-dev libssl-dev libayatana-appindicator3-dev libwebkit2gtk-4.1-dev librsvg2-dev patchelf
       - name: Set up package manager
         uses: pnpm/setup@v2
         with:
@@ -85,6 +85,7 @@ jobs:
           pnpm tauri android build --apk --target aarch64 armv7 --split-per-abi --ci
         env:
           NDK_HOME: ${{ env.ANDROID_HOME }}/ndk/29.0.14206865/
+          RUST_BACKTRACE: full
       - name: Publish artifact (APK - ARMv7)
         uses: actions/upload-artifact@v7
         with:
