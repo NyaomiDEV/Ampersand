@@ -261,7 +261,7 @@
 					/>
 				</IonItem>
 
-				<IonItem>
+				<IonItem class="center-items">
 					<IonButton fill="clear" :aria-label="$t('other:addTimestamp')" @click="addTimestampInContent">
 						<IonIcon slot="icon-only" :icon="clockAddMD" />
 					</IonButton>
@@ -346,3 +346,11 @@
 		</IonContent>
 	</IonModal>
 </template>
+
+<style scoped>
+	ion-item.center-items::part(container) {
+		align-items: center;
+		justify-content: center;
+		flex-wrap: wrap;
+	}
+</style>

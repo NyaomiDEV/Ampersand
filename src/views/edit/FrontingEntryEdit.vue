@@ -492,7 +492,7 @@
 					/>
 				</IonItem>
 
-				<IonItem>
+				<IonItem class="center-items">
 					<IonButton fill="clear" :aria-label="$t('other:addTimestamp')" @click="addTimestampInSummary">
 						<IonIcon slot="icon-only" :icon="clockAddMD" />
 					</IonButton>
@@ -655,5 +655,11 @@
 		width: 36px;
 		height: 36px;
 		--gap: 24px;
+	}
+
+	ion-item.center-items::part(container) {
+		align-items: center;
+		justify-content: center;
+		flex-wrap: wrap;
 	}
 </style>
