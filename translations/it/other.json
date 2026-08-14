@@ -11,7 +11,7 @@
 	"delete": "Elimina",
 	"genericDeleteDesc": "Non potrai annullare questa azione!",
 	"addTimestamp": "Aggiungi data e ora",
-	"memberMention": "Menziona unə membro",
+	"memberMention": "Menziona un membro",
 	"creation": {
 		"dateCreated": "Data di creazione: {{dateCreated}}",
 		"frontingAtCreationDate": "Al front alla data di creazione: {{frontingAtCreationDate}}"
@@ -26,7 +26,7 @@
 	},
 	"comments": {
 		"header": "Commenti",
-		"commenter": "Seleziona autorə del commento",
+		"commenter": "Seleziona autore del commento",
 		"comment": "Corpo del commento",
 		"commentHint": "Commenta...",
 		"commentCount_one": "{{count}} commento",

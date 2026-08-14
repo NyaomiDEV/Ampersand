@@ -2,7 +2,7 @@
 	"header": "Membri",
 	"searchPlaceholder": "Cerca tra i membri...",
 	"singular": "Membro",
-	"select": "Seleziona unə membro",
+	"select": "Seleziona un membro",
 	"deletedMember": "Membro eliminato",
 	"deletedDissociativeState": "Stato eliminato",
 	"actions": {
@@ -44,8 +44,8 @@
 		"lastFronted": "Ultima volta al front: {{startTime}} - {{endTime}}",
 		"showBoardEntries": "Mostra i messaggi sulla bacheca",
 		"showJournalEntries": "Mostra le pagine sul diario",
-		"memberID": "ID dellə membro: {{memberID}}",
-		"memberIDcopiedToClipboard": "ID dellə membro in formato menzione copiato negli appunti!",
+		"memberID": "ID del membro: {{memberID}}",
+		"memberIDcopiedToClipboard": "ID del membro in formato menzione copiato negli appunti!",
 		"delete": {
 			"title": "Elimina membro",
 			"confirm": "Vuoi davvero eliminare questo membro?"
