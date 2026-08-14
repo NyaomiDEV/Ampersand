@@ -1,5 +1,5 @@
 import { dirname, documentDir, sep } from "@tauri-apps/api/path";
-import { mkdir, open as openFile } from "@tauri-apps/plugin-fs";
+import { mkdir, open as openFile, remove } from "@tauri-apps/plugin-fs";
 import { save } from "../../native/open";
 import dayjs from "dayjs";
 import { platform } from "@tauri-apps/plugin-os";
@@ -163,10 +163,11 @@ function frontingEntryToHtml(entry: FrontingEntry) {
 export function exportReport(systems: UUID[], includeArchived: boolean, includeDissociativeStates: boolean) {
 
 	async function _export() {
+		let path: string | undefined;
 		try {
 			const date = new Date();
 			const fileName = `ampersand-report-${dayjs(date).format("YYYY-MM-DD")}.html`;
-			let path: string | undefined = `${await documentDir()}${sep()}${fileName}`;
+			path = `${await documentDir()}${sep()}${fileName}`;
 
 			if (platform() !== "ios") {
 				// Use save file dialog outside of iOS
@@ -261,6 +262,8 @@ export function exportReport(systems: UUID[], includeArchived: boolean, includeD
 			return true;
 		} catch (_e) {
 			console.error(_e);
+			if (path)
+				await remove(path).catch(e => { console.error(e); });
 			return false;
 		}
 	}

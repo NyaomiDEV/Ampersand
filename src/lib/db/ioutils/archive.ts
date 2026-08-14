@@ -5,7 +5,7 @@ import { getTables } from "..";
 import type { Table } from "../types";
 import { deleteNull, replace, revive, walkAsync } from "../../serialization";
 import { dirname, documentDir, sep } from "@tauri-apps/api/path";
-import { mkdir, open as openFile } from "@tauri-apps/plugin-fs";
+import { mkdir, open as openFile, remove } from "@tauri-apps/plugin-fs";
 import { open, save } from "../../native/open";
 import { AMPERSAND_ARCHIVE_MAGICS, matchMagicNew } from "./magic";
 import dayjs from "dayjs";
@@ -27,10 +27,11 @@ function reviver(data: any){
 export function exportArchive() {
 
 	async function _export() {
+		let path: string | undefined;
 		try {
 			const date = dayjs().format("YYYY-MM-DD");
 			const fileName = `ampersand-archive-${date}.ampar`;
-			let path: string | undefined = `${await documentDir()}${sep()}${fileName}`;
+			path = `${await documentDir()}${sep()}${fileName}`;
 
 			if (platform() !== "ios") {
 				// Use save file dialog outside of iOS
@@ -99,6 +100,8 @@ export function exportArchive() {
 			return true;
 		} catch (_e) {
 			console.error(_e);
+			if(path)
+				await remove(path).catch(e => { console.error(e); });
 			return false;
 		}
 	}
