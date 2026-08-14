@@ -45,14 +45,14 @@ export async function resizeImage(image: Blob, maxWidthHeight = 512): Promise<Fi
 }
 
 export async function getResizedImage(maxWidthHeight = 512){
-	const arrayBuffer = await getImageFile();
+	const arrayBuffer = await getImageFile(undefined, false);
 	if(!arrayBuffer) return;
 
 	return await resizeImage(new Blob([arrayBuffer]), maxWidthHeight);
 }
 
 export async function getImageOrMetadata(maxWidthHeight = 512): Promise<{ image: File, metadata?: object } | void>{
-	const arrayBuffer = await getImageFile();
+	const arrayBuffer = await getImageFile(undefined, false);
 	if (!arrayBuffer) return;
 
 	const ret: { image?: File, metadata?: object; } = {};

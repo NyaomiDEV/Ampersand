@@ -17,6 +17,10 @@
 			model.value = "";
 	});
 
+	defineExpose({
+		textarea
+	});
+
 	async function clickHandler() {
 		focused.value = true;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-return

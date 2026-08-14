@@ -19,9 +19,12 @@
 
 	import saveMD from "@material-symbols/svg-600/rounded/save.svg";
 	import trashMD from "@material-symbols/svg-600/rounded/delete.svg";
+	import fileMD from "@material-symbols/svg-600/rounded/attachment.svg";
+	import imageMD from "@material-symbols/svg-600/rounded/image.svg";
+
 	import MemberSelect from "./MemberSelect.vue";
 
-	import { Note, UUIDable } from "../lib/db/entities";
+	import { Member, Note, UUIDable } from "../lib/db/entities";
 	import { newNote, updateNote, deleteNote } from "../lib/db/tables/notes";
 	import { onMounted, ref, toRaw, useTemplateRef } from "vue";
 
@@ -33,6 +36,7 @@
 	import Loading from "./Loading.vue";
 	import { getFrontingAtIndex } from "../lib/db/tables/frontingEntries.ts";
 	import { defaultMember, getMember } from "../lib/db/tables/members.ts";
+	import { quickAddAsset } from "../lib/db/tables/assets.ts";
 
 	const i18next = useTranslation();
 
@@ -51,6 +55,8 @@
 
 	const memberTagModal = useTemplateRef("memberTagModal");
 	const loadingModal = useTemplateRef("loadingModal");
+
+	const contentTextarea = useTemplateRef("contentTextarea");
 
 	const frontingAtCreationDate = ref<string>();
 
@@ -116,6 +122,60 @@
 		}
 	}
 
+	async function addTimestampInContent(){
+		try {
+			const htmlEl = contentTextarea.value?.textarea?.$el as globalThis.HTMLIonTextareaElement;
+			const input = await htmlEl.getInputElement();
+
+			const start = input.selectionStart;
+			const end = input.selectionEnd;
+
+			const before = note.value.content?.slice(0, start) || "";
+			const after = note.value.content?.slice(end) || "";
+
+			note.value.content = `${before}<t:${Math.floor(Date.now() / 1000)}:f>${after}`;
+		}catch(e){
+			await toast((e as Error).message);
+		}
+	}
+
+	async function tagMemberInContent(member: Member){
+		try {
+			const htmlEl = contentTextarea.value?.textarea?.$el as globalThis.HTMLIonTextareaElement;
+			const input = await htmlEl.getInputElement();
+
+			const start = input.selectionStart;
+			const end = input.selectionEnd;
+
+			const before = note.value.content?.slice(0, start) || "";
+			const after = note.value.content?.slice(end) || "";
+
+			note.value.content = `${before}@<m:${member.uuid}>${after}`;
+		}catch(e){
+			await toast((e as Error).message);
+		}
+	}
+
+	async function addAssetInContent(type: "image" | "file"){
+		try {
+			const asset = await quickAddAsset(type);
+			if(!asset.success) throw new Error(`E: ${asset.err || "failed"}`);
+
+			const htmlEl = contentTextarea.value?.textarea?.$el as globalThis.HTMLIonTextareaElement;
+			const input = await htmlEl.getInputElement();
+
+			const start = input.selectionStart;
+			const end = input.selectionEnd;
+
+			const before = note.value.content?.slice(0, start) || "";
+			const after = note.value.content?.slice(end) || "";
+
+			note.value.content = `${before}${type === "image" ? "!" : ""}[](@${asset.detail.friendlyName})${after}`;
+		}catch(e){
+			await toast((e as Error).message);
+		}
+	}
+
 	async function getPeopleFrontingAtCreation(){
 		if(!note.value?.dateCreated) return;
 
@@ -153,15 +213,26 @@
 				</IonItem>
 
 				<IonItem>
-					<ContentEditable v-model="note.content" fill="solid" :label="$t('notes:edit.content')" />
+					<ContentEditable
+						ref="contentTextarea"
+						v-model="note.content"
+						fill="solid"
+						:label="$t('notes:edit.content')"
+					/>
 				</IonItem>
 
 				<IonItem>
-					<IonButton fill="clear" @click="note.content = `${note.content || ''}<t:${Math.floor(Date.now() / 1000)}:f>`">
+					<IonButton fill="clear" @click="addTimestampInContent">
 						{{ $t("other:addTimestamp") }}
 					</IonButton>
 					<IonButton fill="clear" @click="memberTagModal?.$el.present()">
 						{{ $t("other:memberMention") }}
+					</IonButton>
+					<IonButton fill="clear" @click="addAssetInContent('file')">
+						<IonIcon slot="icon-only" :icon="fileMD" />
+					</IonButton>
+					<IonButton fill="clear" @click="addAssetInContent('image')">
+						<IonIcon slot="icon-only" :icon="imageMD" />
 					</IonButton>
 				</IonItem>
 			</IonList>
@@ -215,7 +286,7 @@
 				:hide-checkboxes="true"
 				:always-emit="true"
 				:model-value="[]"
-				@update:model-value="(e) => { if(e[0]) note.content = `${note.content || ''}@<m:${e[0].uuid}>` }"
+				@update:model-value="(e) => { if(e[0]) void tagMemberInContent(e[0]) }"
 			/>
 
 			<Loading ref="loadingModal" />

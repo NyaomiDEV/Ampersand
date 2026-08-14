@@ -22,6 +22,8 @@
 	import accountCircle from "@material-symbols/svg-600/rounded/account_circle-fill.svg";
 	import startMD from "@material-symbols/svg-600/rounded/line_start_circle.svg";
 	import endMD from "@material-symbols/svg-600/rounded/line_end_circle.svg";
+	import fileMD from "@material-symbols/svg-600/rounded/attachment.svg";
+	import imageMD from "@material-symbols/svg-600/rounded/image.svg";
 
 	import { FrontingEntry, FrontingEntryComplete, Member, UUIDable } from "../../lib/db/entities";
 	import { newFrontingEntry, updateFrontingEntry, deleteFrontingEntry, sendFrontingChangedEvent, getFrontingBetweenIndex, getFrontingEntry, toFrontingEntryComplete } from "../../lib/db/tables/frontingEntries";
@@ -44,6 +46,7 @@
 	import MemberChip from "../../components/member/MemberChip.vue";
 	import AvatarStack from "../../components/AvatarStack.vue";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
+	import { quickAddAsset } from "../../lib/db/tables/assets.ts";
 
 	const i18next = useTranslation();
 	const router = useIonRouter();
@@ -66,6 +69,8 @@
 	const memberTagModal = useTemplateRef("memberTagModal");
 	const frontingEntryComments = useTemplateRef("frontingEntryComments");
 	const loadingModal = useTemplateRef("loadingModal");
+
+	const summaryTextarea = useTemplateRef("summaryTextarea");
 
 	const frontingEntryCommentAvatars = shallowRef<InstanceType<typeof AvatarStack>["$props"]["avatars"]>();
 
@@ -183,6 +188,60 @@
 			color: x.color,
 			icon: accountCircle
 		}));
+	}
+
+	async function addTimestampInSummary(){
+		try {
+			const htmlEl = summaryTextarea.value?.textarea?.$el as globalThis.HTMLIonTextareaElement;
+			const input = await htmlEl.getInputElement();
+
+			const start = input.selectionStart;
+			const end = input.selectionEnd;
+
+			const before = frontingEntry.value.summary?.slice(0, start) || "";
+			const after = frontingEntry.value.summary?.slice(end) || "";
+
+			frontingEntry.value.summary = `${before}<t:${Math.floor(Date.now() / 1000)}:f>${after}`;
+		}catch(e){
+			await toast((e as Error).message);
+		}
+	}
+
+	async function tagMemberInSummary(member: Member){
+		try {
+			const htmlEl = summaryTextarea.value?.textarea?.$el as globalThis.HTMLIonTextareaElement;
+			const input = await htmlEl.getInputElement();
+
+			const start = input.selectionStart;
+			const end = input.selectionEnd;
+
+			const before = frontingEntry.value.summary?.slice(0, start) || "";
+			const after = frontingEntry.value.summary?.slice(end) || "";
+
+			frontingEntry.value.summary = `${before}@<m:${member.uuid}>${after}`;
+		}catch(e){
+			await toast((e as Error).message);
+		}
+	}
+
+	async function addAssetInSummary(type: "image" | "file"){
+		try {
+			const asset = await quickAddAsset(type);
+			if(!asset.success) throw new Error(`E: ${asset.err || "failed"}`);
+
+			const htmlEl = summaryTextarea.value?.textarea?.$el as globalThis.HTMLIonTextareaElement;
+			const input = await htmlEl.getInputElement();
+
+			const start = input.selectionStart;
+			const end = input.selectionEnd;
+
+			const before = frontingEntry.value.summary?.slice(0, start) || "";
+			const after = frontingEntry.value.summary?.slice(end) || "";
+
+			frontingEntry.value.summary = `${before}${type === "image" ? "!" : ""}[](@${asset.detail.friendlyName})${after}`;
+		}catch(e){
+			await toast((e as Error).message);
+		}
 	}
 
 	async function updateRoute() {
@@ -385,15 +444,26 @@
 
 			<IonList class="surface">
 				<IonItem>
-					<ContentEditable v-model="frontingEntry.summary" fill="solid" :label="$t('frontHistory:edit.summary')" />
+					<ContentEditable
+						ref="summaryTextarea"
+						v-model="frontingEntry.summary"
+						fill="solid"
+						:label="$t('frontHistory:edit.summary')"
+					/>
 				</IonItem>
 
 				<IonItem>
-					<IonButton fill="clear" @click="frontingEntry.summary = `${frontingEntry.summary || ''}<t:${Math.floor(Date.now() / 1000)}:f>`">
+					<IonButton fill="clear" @click="addTimestampInSummary">
 						{{ $t("other:addTimestamp") }}
 					</IonButton>
 					<IonButton fill="clear" @click="memberTagModal?.$el.present()">
 						{{ $t("other:memberMention") }}
+					</IonButton>
+					<IonButton fill="clear" @click="addAssetInSummary('file')">
+						<IonIcon slot="icon-only" :icon="fileMD" />
+					</IonButton>
+					<IonButton fill="clear" @click="addAssetInSummary('image')">
+						<IonIcon slot="icon-only" :icon="imageMD" />
 					</IonButton>
 				</IonItem>
 			</IonList>
@@ -486,7 +556,7 @@
 				:hide-checkboxes="true"
 				:always-emit="true"
 				:model-value="[]"
-				@update:model-value="(e) => { if(e[0]) frontingEntry.summary = `${frontingEntry.summary || ''}@<m:${e[0].uuid}>` }"
+				@update:model-value="(e) => { if(e[0]) void tagMemberInSummary(e[0]) }"
 			/>
 
 			<Comments

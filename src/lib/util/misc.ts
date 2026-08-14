@@ -63,14 +63,28 @@ export async function saveDocumentFile(file: File) {
 	await writeFile(path, file.stream(), { append: false, create: true });
 }
 
-export async function getImageFile() {
+export async function getImageFile(extensions?: string[], asFile?: true): Promise<File | undefined>;
+export async function getImageFile(extensions?: string[], asFile?: false): Promise<Uint8Array<ArrayBuffer> | undefined>;
+export async function getImageFile(extensions?: string[], asFile?: boolean) {
 	const path = await open({
 		multiple: false,
+		filters: extensions ? [{ name: "Image", extensions }] : [],
 		pickerMode: "image"
 	});
 	if (!path) return;
 	const array = await readFile(path);
-	return array;
+	if (!asFile)
+		return array;
+
+	let filename = path.split(sep()).pop() || `file_${Date.now()}`;
+
+	// use Tauri Path API to get basename from Android content:// URIs
+	if (path.startsWith("content://"))
+		filename = await basename(path);
+
+	const ext = filename.split(".").pop()!;
+
+	return newFile([array], filename, { type: findMimeType(ext !== filename ? ext : "") });
 }
 
 export async function saveImageFile(image: File){

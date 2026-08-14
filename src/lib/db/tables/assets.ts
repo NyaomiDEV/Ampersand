@@ -3,7 +3,7 @@ import { DatabaseEvents, DatabaseEvent } from "../events";
 import { UUID, UUIDable, Asset } from "../entities";
 import { filterAsset } from "../../search";
 import { TransactionStatus } from "../types";
-import { sortAssets } from "../../util/misc";
+import { getDocumentFile, getImageFile, promptInput, sortAssets } from "../../util/misc";
 import { PartialBy } from "../../types";
 
 export async function* getAssets(maxIter = 10){
@@ -104,6 +104,46 @@ export async function updateAsset(newContent: Omit<UUIDable, "dateCreated"> & Pa
 		}
 		throw new Error("not updated, did not exist in db");
 	}catch(_e){
+		console.error(_e);
+		return {
+			success: false,
+			err: _e instanceof Error ? _e : new Error(String(_e))
+		};
+	}
+}
+
+export async function quickAddAsset(type: "file" | "image"): Promise<TransactionStatus<{ uuid: string, friendlyName: string }>> {
+	try {
+		const functionToBeCalled = type === "file" ? getDocumentFile : getImageFile;
+		const file = await functionToBeCalled([], true);
+		if(!file) throw new Error("no file selected");
+
+		// dynamic import as to not have complications down the line with circular references and whatnot
+		const i18next = (await import("../../i18n.ts")).default;
+
+		const input = await promptInput(
+			i18next.t("assetManager:edit.friendlyName"),
+			[{ name: "name", placeholder: i18next.t("assetManager:edit.friendlyName") }],
+		);
+
+		if (!input || !input.name?.length) throw new Error("no friendly name inputted");
+
+		const assetUUID = await newAsset({
+			tags: [],
+			file,
+			friendlyName: input.name
+		});
+		if(!assetUUID.success)
+			return assetUUID;
+
+		return {
+			success: true,
+			detail: {
+				uuid: assetUUID.detail,
+				friendlyName: input.name
+			}
+		};
+	} catch(_e){
 		console.error(_e);
 		return {
 			success: false,

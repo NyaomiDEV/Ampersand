@@ -31,9 +31,10 @@
 	import personAddMD from "@material-symbols/svg-600/rounded/person_add.svg";
 	import clockAddMD from "@material-symbols/svg-600/rounded/more_time.svg";
 	import exportMD from "@material-symbols/svg-600/rounded/file_export.svg";
+	import fileMD from "@material-symbols/svg-600/rounded/attachment.svg";
 	import accountCircle from "@material-symbols/svg-600/rounded/account_circle-fill.svg";
 
-	import { JournalPost, JournalPostComplete, Tag, UUIDable } from "../../lib/db/entities";
+	import { JournalPost, JournalPostComplete, Member, Tag, UUIDable } from "../../lib/db/entities";
 	import { newJournalPost, updateJournalPost, getJournalPost, toJournalPostComplete } from "../../lib/db/tables/journalPosts";
 	import { formatDate, saveImageFile, sortDate, sortName, toast } from "../../lib/util/misc";
 	import { getResizedImage } from "../../lib/util/image";
@@ -56,6 +57,7 @@
 	import AvatarStack from "../../components/AvatarStack.vue";
 	import { getMember, defaultMember } from "../../lib/db/tables/members";
 	import { useTranslation } from "i18next-vue";
+	import { quickAddAsset } from "../../lib/db/tables/assets.ts";
 
 	const { getObjectURL } = useBlob();
 	const router = useIonRouter();
@@ -69,6 +71,8 @@
 	const memberTagModal = useTemplateRef("memberTagModal");
 	const postComments = useTemplateRef("postComments");
 	const loadingModal = useTemplateRef("loadingModal");
+
+	const bodyTextarea = useTemplateRef("bodyTextarea");
 
 	const postCommentAvatars = shallowRef<InstanceType<typeof AvatarStack>["$props"]["avatars"]>();
 
@@ -261,6 +265,60 @@
 		}));
 	}
 
+	async function addTimestampInBody(){
+		try {
+			const htmlEl = bodyTextarea.value?.$el as globalThis.HTMLIonTextareaElement;
+			const input = await htmlEl.getInputElement();
+
+			const start = input.selectionStart;
+			const end = input.selectionEnd;
+
+			const before = post.value.body.slice(0, start);
+			const after = post.value.body.slice(end);
+
+			post.value.body = `${before}<t:${Math.floor(Date.now() / 1000)}:f>${after}`;
+		}catch(e){
+			await toast((e as Error).message);
+		}
+	}
+
+	async function tagMemberInBody(member: Member){
+		try {
+			const htmlEl = bodyTextarea.value?.$el as globalThis.HTMLIonTextareaElement;
+			const input = await htmlEl.getInputElement();
+
+			const start = input.selectionStart;
+			const end = input.selectionEnd;
+
+			const before = post.value.body.slice(0, start);
+			const after = post.value.body.slice(end);
+
+			post.value.body = `${before}@<m:${member.uuid}>${after}`;
+		}catch(e){
+			await toast((e as Error).message);
+		}
+	}
+
+	async function addAssetInBody(type: "image" | "file"){
+		try {
+			const asset = await quickAddAsset(type);
+			if(!asset.success) throw new Error(`E: ${asset.err || "failed"}`);
+
+			const htmlEl = bodyTextarea.value?.$el as globalThis.HTMLIonTextareaElement;
+			const input = await htmlEl.getInputElement();
+
+			const start = input.selectionStart;
+			const end = input.selectionEnd;
+
+			const before = post.value.body.slice(0, start);
+			const after = post.value.body.slice(end);
+
+			post.value.body = `${before}${type === "image" ? "!" : ""}[](@${asset.detail.friendlyName})${after}`;
+		}catch(e){
+			await toast((e as Error).message);
+		}
+	}
+
 	watch(route, updateRoute);
 	watch(() => post.value.color, updateColors);
 	onBeforeMount(updateRoute);
@@ -370,7 +428,12 @@
 					</IonItem>
 
 					<IonItem class="edit-body">
-						<IonTextarea v-model="post.body" auto-grow :placeholder="$t('journal:edit.body')" />
+						<IonTextarea
+							ref="bodyTextarea"
+							v-model="post.body"
+							auto-grow
+							:placeholder="$t('journal:edit.body')"
+						/>
 					</IonItem>
 
 				</IonList>
@@ -395,7 +458,7 @@
 				:hide-checkboxes="true"
 				:always-emit="true"
 				:model-value="[]"
-				@update:model-value="(e) => { if(e[0]) post.body = `${post.body || ''}@<m:${e[0].uuid}>` }"
+				@update:model-value="(e) => { if(e[0]) void tagMemberInBody(e[0]) }"
 			/>
 
 			<Comments
@@ -418,11 +481,17 @@
 		<IonFooter v-if="isEditing">
 			<IonToolbar>
 				<IonButtons>
-					<IonButton @click="post.body = `${post.body}<t:${Math.floor(Date.now() / 1000)}:f>`">
+					<IonButton @click="addTimestampInBody">
 						<IonIcon slot="icon-only" :icon="clockAddMD" />
 					</IonButton>
 					<IonButton @click="memberTagModal?.$el.present()">
 						<IonIcon slot="icon-only" :icon="personAddMD" />
+					</IonButton>
+					<IonButton fill="clear" @click="addAssetInBody('file')">
+						<IonIcon slot="icon-only" :icon="fileMD" />
+					</IonButton>
+					<IonButton fill="clear" @click="addAssetInBody('image')">
+						<IonIcon slot="icon-only" :icon="imageMD" />
 					</IonButton>
 					<IonButton @click="showJournalOptions">
 						<IonIcon slot="icon-only" :icon="settingsMD" />
