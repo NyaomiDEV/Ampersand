@@ -54,12 +54,19 @@ jobs:
         uses: pnpm/setup@v2
         with:
           cache: true
+      - name: Get Rust toolchain version (*nix)
+        if: ${{ matrix.platform == 'macos-26' || matrix.platform == 'ubuntu-slim' }}
+        id: rust_toml_parse
+        run: echo ver=$(cat src-tauri/rust-toolchain.toml | grep -oe "channel = \"[0-9.]*\"" | grep -oe "[0-9.]*") >> $GITHUB_OUTPUT
       - name: Set up Rust toolchain
         uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
+          toolchain: ${{ (matrix.platform == 'macos-26' || matrix.platform == 'ubuntu-slim') && steps.rust_toml_parse.outputs.ver || 'stable' }}
           rust-src-dir: "src-tauri"
-          target: ${{ matrix.platform == 'macos-26' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
+          target: ${{ matrix.platform == 'macos-26' && 'x86_64-apple-darwin' || '' }}
           cache-bin: ${{ matrix.platform != 'macos-26' }}
+      - name: Set only installed Rust toolchain as default
+        run: rustup default $(rustup toolchain list -q | head -n 1)
       - name: Install dependencies (Ubuntu only)
         if: matrix.platform == 'ubuntu-slim'
         run: |

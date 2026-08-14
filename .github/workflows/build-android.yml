@@ -57,18 +57,21 @@ jobs:
         uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
-          java-version: '21.0.12+8'
+          java-version: '21.0.12+8.0.LTS'
       - name: Set up Android SDK
         uses: android-actions/setup-android@v4
         with:
           log-accepted-android-sdk-licenses: false
           cmdline-tools-version: 14742923
           packages: "build-tools;35.0.0 ndk;29.0.14206865 platform-tools platforms;android-36.1 sources;android-36.1"
+      - name: Get Rust toolchain version
+        id: rust_toml_parse
+        run: echo ver=$(cat src-tauri/rust-toolchain.toml | grep -oe "channel = \"[0-9.]*\"" | grep -oe "[0-9.]*") >> $GITHUB_OUTPUT
       - name: Set up Rust toolchain
         uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
+          toolchain: ${{ steps.rust_toml_parse.outputs.ver }}
           rust-src-dir: "src-tauri"
-          target: "aarch64-linux-android,armv7-linux-androideabi"
       - name: Install frontend dependencies
         run: pnpm install --frozen-lockfile
       - name: Update versioning
