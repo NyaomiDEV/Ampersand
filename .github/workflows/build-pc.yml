@@ -70,8 +70,6 @@ jobs:
           rust-src-dir: "src-tauri"
           target: ${{ matrix.platform == 'macos-26' && 'x86_64-apple-darwin' || '' }}
           cache-bin: ${{ matrix.platform != 'macos-26' }}
-      - name: Set only installed Rust toolchain as default
-        run: rustup default $(rustup toolchain list -q | head -n 1)
       - name: Update versioning
         run: pnpm run upgrade-vcs
       - name: Build Ampersand
