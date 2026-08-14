@@ -7,7 +7,8 @@
 	"addTimestamp": "Adicionar carimbo de tempo",
 	"memberMention": "Mencione um membro",
 	"creation": {
-		"dateCreated": "Data criada: {{dateCreated}}"
+		"dateCreated": "Data criada: {{dateCreated}}",
+		"frontingAtCreationDate": "Fronte na data de criação: {{frontingAtCreationDate}}"
 	},
 	"alerts": {
 		"cancel": "Cancelar",
