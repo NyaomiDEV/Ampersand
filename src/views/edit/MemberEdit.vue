@@ -18,7 +18,9 @@
 		useIonRouter,
 		IonPage,
 		IonProgressBar,
-		IonNote
+		IonNote,
+		actionSheetController,
+		ActionSheetButton
 	} from "@ionic/vue";
 	import Color from "../../components/Color.vue";
 	import TagChip from "../../components/tag/TagChip.vue";
@@ -34,6 +36,7 @@
 	import outlineMD from "@material-symbols/svg-600/rounded/ink_highlighter.svg";
 	import shadowMD from "@material-symbols/svg-600/rounded/ev_shadow.svg";
 	import gradientMD from "@material-symbols/svg-600/rounded/gradient.svg";
+	import exportMD from "@material-symbols/svg-600/rounded/file_export.svg";
 	import accountCircle from "@material-symbols/svg-600/rounded/account_circle-fill.svg";
 
 	import { CustomField, FrontingEntry, Member, System, Tag, UUIDable } from "../../lib/db/entities";
@@ -163,13 +166,13 @@
 
 	function easterEgg(){
 		if(eggIncrement >= 4) {
-			void savePicture();
+			void easterEggSave();
 			eggIncrement = 0;
 		} else if(isEditing.value)
 			eggIncrement++;
 	}
 
-	async function savePicture(){
+	async function easterEggSave(){
 		loadingBar.value = true;
 
 		const memberMetadata: PartialBy<Member, "uuid" | "system" | "dateCreated"> = structuredClone(toRaw(member.value));
@@ -186,6 +189,33 @@
 		}
 
 		loadingBar.value = false;
+	}
+
+	async function pictureActionSheet(){
+		const buttons: ActionSheetButton[] = [{
+			text: i18next.t("other:image.edit"),
+			icon: pencilMD,
+			handler: modifyPicture
+		}];
+
+		if(member.value.image){
+			buttons.unshift(
+				{
+					text: i18next.t("other:image.delete"),
+					role: "destructive",
+					icon: trashMD,
+					handler: deletePicture
+				},
+				{
+					text: i18next.t("other:image.save"),
+					icon: exportMD,
+					handler: exportPicture
+				}
+			);
+		}
+
+		const actionSheet = await actionSheetController.create({ buttons });
+		await actionSheet.present();
 	}
 
 	async function modifyPicture(){
@@ -223,6 +253,47 @@
 		member.value.image = undefined;
 	}
 
+	async function exportPicture() {
+		if(!member.value.image) return;
+
+		loadingBar.value = true;
+
+		try{
+			await saveImageFile(member.value.image);
+		}catch(e){
+			await toast((e as Error).message);
+		}
+
+		loadingBar.value = false;
+	}
+
+	async function coverActionSheet(){
+		const buttons: ActionSheetButton[] = [{
+			text: i18next.t("other:cover.edit"),
+			icon: pencilMD,
+			handler: modifyCover
+		}];
+
+		if(member.value.cover){
+			buttons.unshift(
+				{
+					text: i18next.t("other:cover.delete"),
+					role: "destructive",
+					icon: trashMD,
+					handler: deleteCover
+				},
+				{
+					text: i18next.t("other:cover.save"),
+					icon: exportMD,
+					handler: exportCover
+				}
+			);
+		}
+
+		const actionSheet = await actionSheetController.create({ buttons });
+		await actionSheet.present();
+	}
+
 	async function modifyCover(){
 		loadingBar.value = true;
 		const image = await getResizedImage(1024);
@@ -232,6 +303,20 @@
 
 	function deleteCover(){
 		member.value.cover = undefined;
+	}
+
+	async function exportCover() {
+		if(!member.value.cover) return;
+
+		loadingBar.value = true;
+
+		try{
+			await saveImageFile(member.value.cover);
+		}catch(e){
+			await toast((e as Error).message);
+		}
+
+		loadingBar.value = false;
 	}
 
 	async function removeMember() {
@@ -392,17 +477,8 @@
 			<div class="cover-container">
 				<Cover class="cover" :cover="member.cover" />
 				<div v-if="isEditing" class="edit-buttons">
-					<IonButton shape="round" size="small" @click="modifyCover">
+					<IonButton shape="round" size="small" @click="coverActionSheet">
 						<IonIcon slot="icon-only" :icon="pencilMD" />
-					</IonButton>
-					<IonButton
-						v-if="member.cover"
-						shape="round"
-						color="danger"
-						size="small"
-						@click="deleteCover"
-					>
-						<IonIcon slot="icon-only" :icon="trashMD" />
 					</IonButton>
 				</div>
 
@@ -415,17 +491,8 @@
 						@click="easterEgg"
 					/>
 					<div v-if="isEditing" class="edit-buttons">
-						<IonButton shape="round" size="small" @click="modifyPicture">
+						<IonButton shape="round" size="small" @click="pictureActionSheet">
 							<IonIcon slot="icon-only" :icon="pencilMD" />
-						</IonButton>
-						<IonButton
-							v-if="member.image"
-							shape="round"
-							color="danger"
-							size="small"
-							@click="deletePicture"
-						>
-							<IonIcon slot="icon-only" :icon="trashMD" />
 						</IonButton>
 					</div>
 				</div>

@@ -172,6 +172,16 @@
 		"outline": "Contornato",
 		"shadow": "Ombra"
 	},
+	"image": {
+		"delete": "Pialla immagine",
+		"edit": "Edita immagine",
+		"save": "Esporta immagine"
+	},
+	"cover": {
+		"delete": "Pialla cover",
+		"edit": "Edita cover",
+		"save": "Esporta cover"
+	},
 	"developerMode": "Dev Mode",
 	"theresNothingHere": "Figa, ma qua non c'è un cazzo, vah!"
 }

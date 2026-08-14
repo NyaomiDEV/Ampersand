@@ -12,5 +12,13 @@
 
 	button {
 		border-radius: var(--md3-corner-small);
+
+		&.action-sheet-destructive, &.action-sheet-destructive ion-icon {
+			color: rgb(var(--md3-error));
+
+			&:hover {
+				color: rgb(var(--md3-error)) !important;
+			}
+		}
 	}
 }

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonButton, IonIcon, IonInput, IonFab, IonFabButton, IonItem, IonLabel, useIonRouter, IonTextarea, IonToggle, IonProgressBar } from "@ionic/vue";
+	import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, IonBackButton, IonButton, IonIcon, IonInput, IonFab, IonFabButton, IonItem, IonLabel, useIonRouter, IonTextarea, IonToggle, IonProgressBar, actionSheetController, ActionSheetButton } from "@ionic/vue";
 	import { getCurrentInstance, onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
-	import { promptOkCancel, toast, imageClipPicker, fontFamilyPicker, getCustomName, formatDate } from "../../lib/util/misc";
+	import { promptOkCancel, toast, imageClipPicker, fontFamilyPicker, getCustomName, formatDate, saveImageFile } from "../../lib/util/misc";
 	import { getResizedImage } from "../../lib/util/image";
 	import { deleteSystem, getSystem, newSystem, updateSystem, countSystemMembers } from "../../lib/db/tables/system";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
@@ -18,6 +18,7 @@
 	import neonMD from "@material-symbols/svg-600/rounded/highlight.svg";
 	import outlineMD from "@material-symbols/svg-600/rounded/ink_highlighter.svg";
 	import shadowMD from "@material-symbols/svg-600/rounded/ev_shadow.svg";
+	import exportMD from "@material-symbols/svg-600/rounded/file_export.svg";
 	import gradientMD from "@material-symbols/svg-600/rounded/gradient.svg";
 
 	import { accessibilityConfig, appConfig } from "../../lib/config";
@@ -114,6 +115,33 @@
 		}
 	}
 
+	async function pictureActionSheet(){
+		const buttons: ActionSheetButton[] = [{
+			text: i18next.t("other:image.edit"),
+			icon: pencilMD,
+			handler: modifyPicture
+		}];
+
+		if(system.value.image){
+			buttons.unshift(
+				{
+					text: i18next.t("other:image.delete"),
+					role: "destructive",
+					icon: trashMD,
+					handler: deletePicture
+				},
+				{
+					text: i18next.t("other:image.save"),
+					icon: exportMD,
+					handler: exportPicture
+				}
+			);
+		}
+
+		const actionSheet = await actionSheetController.create({ buttons });
+		await actionSheet.present();
+	}
+
 	async function modifyPicture(){
 		loadingBar.value = true;
 		const image = await getResizedImage();
@@ -125,6 +153,47 @@
 		system.value.image = undefined;
 	}
 
+	async function exportPicture() {
+		if(!system.value.image) return;
+
+		loadingBar.value = true;
+
+		try{
+			await saveImageFile(system.value.image);
+		}catch(e){
+			await toast((e as Error).message);
+		}
+
+		loadingBar.value = false;
+	}
+
+	async function coverActionSheet(){
+		const buttons: ActionSheetButton[] = [{
+			text: i18next.t("other:cover.edit"),
+			icon: pencilMD,
+			handler: modifyCover
+		}];
+
+		if(system.value.cover){
+			buttons.unshift(
+				{
+					text: i18next.t("other:cover.delete"),
+					role: "destructive",
+					icon: trashMD,
+					handler: deleteCover
+				},
+				{
+					text: i18next.t("other:cover.save"),
+					icon: exportMD,
+					handler: exportCover
+				}
+			);
+		}
+
+		const actionSheet = await actionSheetController.create({ buttons });
+		await actionSheet.present();
+	}
+
 	async function modifyCover(){
 		loadingBar.value = true;
 		const image = await getResizedImage(1024);
@@ -134,6 +203,20 @@
 
 	function deleteCover(){
 		system.value.cover = undefined;
+	}
+
+	async function exportCover() {
+		if(!system.value.cover) return;
+
+		loadingBar.value = true;
+
+		try{
+			await saveImageFile(system.value.cover);
+		}catch(e){
+			await toast((e as Error).message);
+		}
+
+		loadingBar.value = false;
 	}
 
 	async function removeSystem() {
@@ -313,17 +396,8 @@
 			<div class="cover-container">
 				<Cover class="cover" :cover="system.cover" />
 				<div v-if="isEditing" class="edit-buttons">
-					<IonButton shape="round" size="small" @click="modifyCover">
+					<IonButton shape="round" size="small" @click="coverActionSheet">
 						<IonIcon slot="icon-only" :icon="pencilMD" />
-					</IonButton>
-					<IonButton
-						v-if="system.cover"
-						shape="round"
-						color="danger"
-						size="small"
-						@click="deleteCover"
-					>
-						<IonIcon slot="icon-only" :icon="trashMD" />
 					</IonButton>
 				</div>
 
@@ -336,16 +410,8 @@
 					/>
 					
 					<div v-if="isEditing" class="edit-buttons">
-						<IonButton shape="round" size="small" @click="modifyPicture">
+						<IonButton shape="round" size="small" @click="pictureActionSheet">
 							<IonIcon slot="icon-only" :icon="pencilMD" />
-						</IonButton>
-						<IonButton
-							shape="round"
-							size="small"
-							color="danger"
-							@click="deletePicture"
-						>
-							<IonIcon slot="icon-only" :icon="trashMD" />
 						</IonButton>
 					</div>
 				</div>

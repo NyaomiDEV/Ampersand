@@ -172,6 +172,16 @@
 		"outline": "Contornato",
 		"shadow": "Ombra"
 	},
+	"image": {
+		"delete": "Elimina immagine",
+		"edit": "Modifica immagine",
+		"save": "Salva immagine"
+	},
+	"cover": {
+		"delete": "Elimina copertina",
+		"edit": "Modifica copertina",
+		"save": "Salva copertina"
+	},
 	"developerMode": "Modalità sviluppatore",
 	"theresNothingHere": "Non c'è niente qui"
 }

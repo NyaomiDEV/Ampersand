@@ -170,6 +170,16 @@
 		"outline": "Contornato",
 		"shadow": "Ombra"
 	},
+	"image": {
+		"delete": "Scancella foto",
+		"edit": "Modifica foto",
+		"save": "Salva foto"
+	},
+	"cover": {
+		"delete": "Scancella copertina",
+		"edit": "Modifica copertina",
+		"save": "Salva copertina"
+	},
 	"developerMode": "Modalità sviluppatore",
 	"theresNothingHere": "Nun ce sta niente ccà"
 }

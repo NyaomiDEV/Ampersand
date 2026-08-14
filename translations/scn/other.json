@@ -171,6 +171,16 @@
 		"outline": "Cunturnatu",
 		"shadow": "Umbra"
 	},
+	"image": {
+		"delete": "Scancella foto",
+		"edit": "Scangia foto",
+		"save": "Savva foto"
+	},
+	"cover": {
+		"delete": "Scancella cupirtina",
+		"edit": "Scangia cupirtina",
+		"save": "Savva cupirtina"
+	},
 	"developerMode": "Mudalità sviluppaturi",
 	"theresNothingHere": "nu n'cc'è nenti ccà"
 }

@@ -171,6 +171,16 @@
 		"outline": "Outline",
 		"shadow": "Shadow"
 	},
+	"image": {
+		"delete": "Delete image",
+		"edit": "Edit image",
+		"save": "Save image"
+	},
+	"cover": {
+		"delete": "Delete cover",
+		"edit": "Edit cover",
+		"save": "Save cover"
+	},
 	"developerMode": "Developer mode",
 	"theresNothingHere": "There's nothing here"
 }
