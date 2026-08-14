@@ -20,7 +20,7 @@
 	import exportMD from "@material-symbols/svg-600/rounded/file_save.svg";
 	import trashMD from "@material-symbols/svg-600/rounded/delete.svg";
 
-	import { newAsset, deleteAsset, updateAsset, getAsset } from "../../lib/db/tables/assets";
+	import { newAsset, deleteAsset, updateAsset, getAsset, getAssetsIndex } from "../../lib/db/tables/assets";
 	import { Asset, Tag, UUIDable } from "../../lib/db/entities";
 	import { onBeforeMount, ref, shallowRef, useTemplateRef, watch } from "vue";
 	import { PartialBy } from "../../lib/types";
@@ -287,7 +287,7 @@
 			</IonList>
 
 			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton :disabled="!asset.friendlyName.length || !asset.file?.name.length" @click="save">
+				<IonFabButton :disabled="!asset.friendlyName.length || !asset.file?.name.length || !!getAssetsIndex().find(x => x.uuid !== asset.uuid && x.friendlyName === asset.friendlyName)" @click="save">
 					<IonIcon :icon="saveMD" />
 				</IonFabButton>
 			</IonFab>

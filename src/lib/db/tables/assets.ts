@@ -128,6 +128,9 @@ export async function quickAddAsset(type: "file" | "image"): Promise<Transaction
 
 		if (!input || !input.name?.length) throw new Error("no friendly name inputted");
 
+		if(getAssetsIndex().find(x => x.friendlyName === input.name))
+			throw new Error("cannot have two assets with same name");
+
 		const assetUUID = await newAsset({
 			tags: [],
 			file,
