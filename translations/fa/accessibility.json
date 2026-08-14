@@ -35,5 +35,8 @@
 	},
 	"frontingNotification": {
 		"title": "اعلان فرانت"
+	},
+	"fontScale": {
+		"title": "اندازه فونت"
 	}
 }
