@@ -19,6 +19,8 @@
 		IonItem,
 		IonFooter,
 		IonProgressBar,
+		ActionSheetButton,
+		actionSheetController,
 	} from "@ionic/vue";
 
 	import pencilMD from "@material-symbols/svg-600/rounded/edit.svg";
@@ -28,11 +30,12 @@
 	import settingsMD from "@material-symbols/svg-600/rounded/settings.svg";
 	import personAddMD from "@material-symbols/svg-600/rounded/person_add.svg";
 	import clockAddMD from "@material-symbols/svg-600/rounded/more_time.svg";
+	import exportMD from "@material-symbols/svg-600/rounded/file_export.svg";
 	import accountCircle from "@material-symbols/svg-600/rounded/account_circle-fill.svg";
 
 	import { JournalPost, JournalPostComplete, Tag, UUIDable } from "../../lib/db/entities";
 	import { newJournalPost, updateJournalPost, getJournalPost, toJournalPostComplete } from "../../lib/db/tables/journalPosts";
-	import { formatDate, sortDate, sortName, toast } from "../../lib/util/misc";
+	import { formatDate, saveImageFile, sortDate, sortName, toast } from "../../lib/util/misc";
 	import { getResizedImage } from "../../lib/util/image";
 	import { getCurrentInstance, h, onBeforeMount, ref, shallowRef, toRaw, useTemplateRef, watch } from "vue";
 	import Markdown from "../../components/Markdown.vue";
@@ -52,10 +55,12 @@
 	import { addMaterialColors, rgbaToArgb, unsetMaterialColors } from "../../lib/theme/index";
 	import AvatarStack from "../../components/AvatarStack.vue";
 	import { getMember, defaultMember } from "../../lib/db/tables/members";
+	import { useTranslation } from "i18next-vue";
 
 	const { getObjectURL } = useBlob();
 	const router = useIonRouter();
 	const route = useRoute();
+	const i18next = useTranslation();
 
 	const loading = ref(false);
 	const loadingBar = ref(false);
@@ -133,10 +138,55 @@
 		}
 	}
 
+	async function coverActionSheet(){
+		const buttons: ActionSheetButton[] = [{
+			text: i18next.t("other:cover.edit"),
+			icon: pencilMD,
+			handler: modifyCover
+		}];
+
+		if(post.value.cover){
+			buttons.unshift(
+				{
+					text: i18next.t("other:cover.delete"),
+					role: "destructive",
+					icon: trashMD,
+					handler: deleteCover
+				},
+				{
+					text: i18next.t("other:cover.save"),
+					icon: exportMD,
+					handler: exportCover
+				}
+			);
+		}
+
+		const actionSheet = await actionSheetController.create({ buttons });
+		await actionSheet.present();
+	}
+
 	async function modifyCover(){
 		loadingBar.value = true;
 		const image = await getResizedImage(1024);
 		if(image) post.value.cover = image;
+		loadingBar.value = false;
+	}
+
+	function deleteCover(){
+		post.value.cover = undefined;
+	}
+
+	async function exportCover() {
+		if(!post.value.cover) return;
+
+		loadingBar.value = true;
+
+		try{
+			await saveImageFile(post.value.cover);
+		}catch(e){
+			await toast((e as Error).message);
+		}
+
 		loadingBar.value = false;
 	}
 
@@ -244,19 +294,9 @@
 					v-if="isEditing"
 					shape="round"
 					size="small"
-					@click="modifyCover"
+					@click="coverActionSheet"
 				>
 					<IonIcon slot="icon-only" :icon="pencilMD" />
-				</IonButton>
-				<IonButton
-					v-if="isEditing && post.cover"
-					class="delete"
-					shape="round"
-					color="danger"
-					size="small"
-					@click="post.cover = undefined"
-				>
-					<IonIcon slot="icon-only" :icon="trashMD" />
 				</IonButton>
 			</div>
 
