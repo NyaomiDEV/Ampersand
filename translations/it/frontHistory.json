@@ -7,7 +7,7 @@
 	"influencing": "Influenza {{influencedMember}}",
 	"edit": {
 		"header": "Modifica voce di front",
-		"member": "Modifica lə membrə a front",
+		"member": "Modifica il membro a front",
 		"customStatus": "Status personalizzato",
 		"summary": "Sommario",
 		"presence": {
@@ -18,7 +18,7 @@
 			"date": "Data"
 		},
 		"influencing": {
-			"select": "Seleziona unə membrə da influenzare",
+			"select": "Seleziona un membro da influenzare",
 			"currentlyInfluencing": "Sta influenzando"
 		},
 		"startTime": "Data d'inizio",

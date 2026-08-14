@@ -11,7 +11,7 @@
 	"delete": "Elimina",
 	"genericDeleteDesc": "Non potrai annullare questa azione!",
 	"addTimestamp": "Aggiungi data e ora",
-	"memberMention": "Menziona unə membrə",
+	"memberMention": "Menziona unə membro",
 	"creation": {
 		"dateCreated": "Data di creazione: {{dateCreated}}",
 		"frontingAtCreationDate": "Al front alla data di creazione: {{frontingAtCreationDate}}"
@@ -38,10 +38,10 @@
 		"header": "Presenza",
 		"absent": "Assente",
 		"heavilyDissociating": "Dissociando pesantemente",
-		"dissociating": "Dissociatə",
-		"zonedOut": "Spaesatə",
+		"dissociating": "Dissociato",
+		"zonedOut": "Spaesato",
 		"present": "Presente",
-		"fullyGrounded": "Ancoratə alla realtà"
+		"fullyGrounded": "Ancorato alla realtà"
 	},
 	"report": {
 		"header": "Ampersand Report",

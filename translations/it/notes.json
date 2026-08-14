@@ -9,7 +9,7 @@
         "isArchived": "Archivia la nota",
         "delete": {
             "title": "Elimina nota",
-            "confirm": "Sei sicurə di voler eliminare questa nota?"
+            "confirm": "Vuoi davvero eliminare questa nota?"
         }
     }
 }

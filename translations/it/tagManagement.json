@@ -3,13 +3,13 @@
 	"searchPlaceholder": "Cerca tra i tag...",
 	"select": "Seleziona alcuni tag",
 	"selector": {
-		"member": "Tag deɜ membrɜ",
+		"member": "Tag dei membri",
 		"journal": "Tag del diario",
 		"asset": "Tag dell'asset"
 	},
 	"edit": {
 		"header": {
-			"member": "Modifica tag deɜ membrɜ",
+			"member": "Modifica tag dei membri",
 			"journal": "Modifica tag del diario",
 			"asset": "Modifica tag dell'asset"
 		},
@@ -19,16 +19,16 @@
 		"viewInLists": "Mostra nelle liste",
 		"type": {
 			"header": "Tipo del tag",
-			"member": "Membrə",
+			"member": "Membro",
 			"journal": "Diario",
 			"asset": "Asset",
 			"desc": "Nota: puoi definire il tipo del tag solo al momento della creazione!"
 		},
 		"members": {
-			"title": "Scegli lɜ membrɜ che usano questo tag",
-			"desc_one": "{{count}} membrə usa questo tag",
-			"desc_many": "{{count}} membrɜ usano questo tag",
-			"desc_other": "{{count}} membrɜ usano questo tag"
+			"title": "Scegli i membri che usano questo tag",
+			"desc_one": "{{count}} membro usa questo tag",
+			"desc_many": "{{count}} membri usano questo tag",
+			"desc_other": "{{count}} membri usano questo tag"
 		},
 		"showJournal": {
 			"title": "Mostra le pagine del diario che usano questo tag",

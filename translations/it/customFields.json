@@ -8,7 +8,7 @@
 		"name": "Nome del campo personalizzato",
 		"default": {
 			"title": "Rendi predefinito",
-			"desc": "I campi personalizzati predefiniti appariranno sempre sulla schermata di modifica del membrə"
+			"desc": "I campi personalizzati predefiniti appariranno sempre sulla schermata di modifica del membro"
 		},
 		"delete": {
 			"title": "Elimina campo personalizzato",

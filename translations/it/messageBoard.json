@@ -5,7 +5,7 @@
 		"boardMessageContainsPoll": "Contiene un sondaggio",
 		"collapsePoll": "Nascondi sondaggio",
 		"voteCast": {
-			"voter": "Seleziona lə votantə",
+			"voter": "Seleziona il votante",
 			"reason": "Dai la ragione",
 			"reasonHint": "Ragione",
 			"retractConfirmation": "Vuoi veramente rescindere il voto?"
@@ -13,20 +13,20 @@
 		"resultsHeader": "Risultati dei voti",
 		"resultsButton": "Mostra i risultati del sondaggio",
 		"choice": {
-			"desc_one": "{{count}} votantə",
-			"desc_many": "{{count}} votantɜ",
-			"desc_other": "{{count}} votantɜ"
+			"desc_one": "{{count}} votante",
+			"desc_many": "{{count}} votanti",
+			"desc_other": "{{count}} votanti"
 		},
 		"defaultPollValues": {
 			"yes": "Sì",
 			"no": "No",
 			"veto": "Veto",
-			"abstain": "Astenutə"
+			"abstain": "Astenuto"
 		}
 	},
 	"edit": {
 		"header": "Modifica messaggio",
-		"member": "Modifica autorə del messaggio",
+		"member": "Modifica autore del messaggio",
 		"date": "Modifica data",
 		"title": "Titolo",
 		"body": "Corpo del messaggio",

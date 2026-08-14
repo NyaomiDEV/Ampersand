@@ -11,12 +11,12 @@
 		"title": "Titolo del promemoria",
 		"message": "Messaggio del promemoria",
 		"delay": "Ritardo",
-		"members": "Seleziona membrɜ",
-		"triggerOnAllMembers": "Manda per tuttɜ ɜ membrɜ",
+		"members": "Seleziona membri",
+		"triggerOnAllMembers": "Manda per tuttɜ i membri",
 		"triggeringEvent": {
 			"title": "Evento scatenante",
-			"addedToFront": "Dopo che unə membrə è statə aggiuntə al front",
-			"removedFromFront": "Dopo che unə membrə è statə rimossə dal front"
+			"addedToFront": "Dopo che unə membro è statə aggiunto al front",
+			"removedFromFront": "Dopo che unə membro è statə rimosso dal front"
 		},
 		"delete": {
 			"title": "Elimina promemoria",

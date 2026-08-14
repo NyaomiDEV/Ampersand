@@ -11,7 +11,7 @@
 		"title": "Genera un report",
 		"desc": "Salva un report da condividere con terapisti e persone vicine",
 		"includeHeader": "Scegli cosa includere",
-		"includeArchived": "Membrɜ archiviatɜ",
+		"includeArchived": "Membri archiviati",
 		"includeDissociativeStates": "Stati dissociativi"
 	},
 	"dbImportDesc": "Attenzione! Questo sovrascriverà ogni dato esistente",
@@ -30,8 +30,8 @@
 	"pkImport": "Importa i tuoi dati da un export di PluralKit",
 	"tuImport": "Importa i tuoi dati da un export di Tupperbox",
 	"tuImportDiscordId": {
-		"header": "Per favore, inserisci il tuo ID Discord (numerico)",
-		"placeholder": "ID Discord"
+		"header": "Per favore, inserisci il tuo ID di Discord (numerico)",
+		"placeholder": "ID di Discord"
 	},
 	"status": {
 		"imported": "Il backup è stato importato. Si prega di far ripartire l'app.",

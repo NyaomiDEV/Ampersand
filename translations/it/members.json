@@ -1,9 +1,9 @@
 {
-	"header": "Membrɜ",
-	"searchPlaceholder": "Cerca tra ɜ membrɜ...",
-	"singular": "Membrə",
-	"select": "Seleziona unə membrə",
-	"deletedMember": "Membrə eliminatə",
+	"header": "Membri",
+	"searchPlaceholder": "Cerca tra i membri...",
+	"singular": "Membro",
+	"select": "Seleziona unə membro",
+	"deletedMember": "Membro eliminato",
 	"deletedDissociativeState": "Stato eliminato",
 	"actions": {
 		"addToFront": "Aggiungi a front",
@@ -13,16 +13,16 @@
 		"removeFromFront": "Rimuovi dal front"
 	},
 	"toasts": {
-		"addToFront": "Membrə aggiuntə a front",
-		"setMainFronter": "Membrə impostatə come fronter principale",
-		"unsetMainFronter": "Membrə toltə dal front principale",
-		"setSoleFronter": "Membrə impostatə come solo front",
-		"removeFromFront": "Membrə rimossə dal front"
+		"addToFront": "Membro aggiunto a front",
+		"setMainFronter": "Membro impostato come fronter principale",
+		"unsetMainFronter": "Membro tolto dal front principale",
+		"setSoleFronter": "Membro impostato come solo front",
+		"removeFromFront": "Membro rimosso dal front"
 	},
 	"edit": {
-		"header": "Membrə",
-		"headerAdd": "Aggiungi membrə",
-		"headerEdit": "Modifica membrə",
+		"header": "Membro",
+		"headerAdd": "Aggiungi membro",
+		"headerEdit": "Modifica membro",
 		"name": "Nome",
 		"pronouns": "Pronomi",
 		"role": "Ruolo",
@@ -37,18 +37,18 @@
 		"description": "Descrizione",
 		"noDescription": "Nessuna descrizione",
 		"system": "Modifica sistema di appartenenza",
-		"isPinned": "Fissa membrə",
+		"isPinned": "Fissa membro",
 		"isDissociativeState": "Stato dissociativo",
-		"archived": "Archiviatə",
+		"archived": "Archiviato",
 		"showFrontingEntries": "Mostra le voci di front",
 		"lastFronted": "Ultima volta al front: {{startTime}} - {{endTime}}",
 		"showBoardEntries": "Mostra i messaggi sulla bacheca",
 		"showJournalEntries": "Mostra le pagine sul diario",
-		"memberID": "ID dellə membrə: {{memberID}}",
-		"memberIDcopiedToClipboard": "ID dellə membrə in formato menzione copiato negli appunti!",
+		"memberID": "ID dellə membro: {{memberID}}",
+		"memberIDcopiedToClipboard": "ID dellə membro in formato menzione copiato negli appunti!",
 		"delete": {
-			"title": "Elimina membrə",
-			"confirm": "Vuoi davvero eliminare questə membrə?"
+			"title": "Elimina membro",
+			"confirm": "Vuoi davvero eliminare questo membro?"
 		}
 	}
 }
