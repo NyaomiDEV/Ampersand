@@ -1,1 +1,10 @@
-{}
+{
+	"stats": "İstatistikler",
+	"presence": "Varlık",
+	"cofront": "Yan öncü",
+	"startDate": "Başlangıç tarihi",
+	"endDate": "Bitiş tarihi",
+	"subheaders": {
+		"influenced": "Öbürlerinden etkilenen üyeler"
+	}
+}

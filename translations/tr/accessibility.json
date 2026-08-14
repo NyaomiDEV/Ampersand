@@ -35,5 +35,16 @@
 	},
 	"disableCovers": {
 		"title": "Kapakları gizle"
+	},
+	"tintWithColor": {
+		"off": "Kapalı",
+		"accent": "Sadece ara renk",
+		"on": "Açık"
+	},
+	"compactLists": {
+		"title": "Kompakt listeler"
+	},
+	"frontingNotification": {
+		"title": "Öncü bildirimi"
 	}
 }

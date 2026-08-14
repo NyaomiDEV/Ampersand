@@ -5,5 +5,5 @@
 	"privacyPolicy": "Gizlilik İlkesi",
 	"updateAvailable": "Güncelleme Mevcut: {{newVersion}}",
 	"credits": "Katkıda Bulunanlar",
-	"ciVersion": "SE versiyonu"
+	"ciVersion": "Stabil olmayan sürüm"
 }
