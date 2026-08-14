@@ -18,7 +18,7 @@
 	import neonMD from "@material-symbols/svg-600/rounded/highlight.svg";
 	import outlineMD from "@material-symbols/svg-600/rounded/ink_highlighter.svg";
 	import shadowMD from "@material-symbols/svg-600/rounded/ev_shadow.svg";
-	import exportMD from "@material-symbols/svg-600/rounded/file_export.svg";
+	import exportMD from "@material-symbols/svg-600/rounded/file_save.svg";
 	import gradientMD from "@material-symbols/svg-600/rounded/gradient.svg";
 
 	import { accessibilityConfig, appConfig } from "../../lib/config";

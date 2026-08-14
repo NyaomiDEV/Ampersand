@@ -17,7 +17,7 @@
 	} from "@ionic/vue";
 
 	import saveMD from "@material-symbols/svg-600/rounded/save.svg";
-	import exportMD from "@material-symbols/svg-600/rounded/file_export.svg";
+	import exportMD from "@material-symbols/svg-600/rounded/file_save.svg";
 	import trashMD from "@material-symbols/svg-600/rounded/delete.svg";
 
 	import { newAsset, deleteAsset, updateAsset, getAsset } from "../../lib/db/tables/assets";

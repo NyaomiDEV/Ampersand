@@ -36,7 +36,7 @@
 	import outlineMD from "@material-symbols/svg-600/rounded/ink_highlighter.svg";
 	import shadowMD from "@material-symbols/svg-600/rounded/ev_shadow.svg";
 	import gradientMD from "@material-symbols/svg-600/rounded/gradient.svg";
-	import exportMD from "@material-symbols/svg-600/rounded/file_export.svg";
+	import exportMD from "@material-symbols/svg-600/rounded/file_save.svg";
 	import accountCircle from "@material-symbols/svg-600/rounded/account_circle-fill.svg";
 
 	import { CustomField, FrontingEntry, Member, System, Tag, UUIDable } from "../../lib/db/entities";
