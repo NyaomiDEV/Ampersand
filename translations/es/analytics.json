@@ -23,8 +23,8 @@
 	"influencingCount_other": "Ha influido en otras personas {{count}} veces",
 	"subheaders": {
 		"influenced": "Miembros influenciados por otros",
-		"fronting": "Testaferros",
-		"cofronting": "Miembros que comparten la frente",
+		"fronting": "Integrantes principales",
+		"cofronting": "Colíder",
 		"influencing": "Influenciadores"
 	},
 	"frontingCount_one": "Al mando {{count}} vez",
