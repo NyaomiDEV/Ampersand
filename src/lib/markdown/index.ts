@@ -70,8 +70,14 @@ export function extractFrontmatter(markdown: string): { body: string, frontmatte
 
 	const frontmatter: Record<string, unknown> = {};
 
-	for (const [key, value] of Object.entries(load(matches[1]) as Record<string, unknown>))
-		frontmatter[key.replace(/-(.)/, (_, m: string) => m.toUpperCase())] = value;
+	try{
+		for (const [key, value] of Object.entries(load(matches[1]) as Record<string, unknown>))
+			frontmatter[key.replace(/-(.)/, (_, m: string) => m.toUpperCase())] = value;
+	}catch(e){
+		console.error(e);
+		if(e instanceof Error)
+			frontmatter.ERROR = e.message;
+	}
 
 	return {
 		body: matches[2] || "",
