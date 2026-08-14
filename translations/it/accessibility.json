@@ -47,6 +47,9 @@
 	"fontScale": {
 		"title": "Dimensione del testo"
 	},
+	"wordSpacing": {
+		"title": "Spazio fra le parole"
+	},
 	"longPressDuration": {
 		"title": "Durata della premuta"
 	}

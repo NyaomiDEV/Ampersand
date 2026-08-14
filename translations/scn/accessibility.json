@@ -45,6 +45,9 @@
 	"fontScale": {
 		"title": "Diminsioni dû testu"
 	},
+	"wordSpacing": {
+		"title": "Spaziu tra i paroli"
+	},
 	"longPressDuration": {
 		"title": "Durata dâ prissioni"
 	}

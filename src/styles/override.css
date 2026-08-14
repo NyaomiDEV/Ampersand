@@ -35,6 +35,14 @@ html {
 	height: 100vh;
 }
 
+html.accessibility-word-spacing,
+html.accessibility-word-spacing *,
+html.accessibility-word-spacing ion-button::part(native),
+html.accessibility-word-spacing ion-item::part(inner) {
+	word-spacing: var(--ampersand-accessibility-word-spacing, unset) !important;
+	letter-spacing: calc(var(--ampersand-accessibility-word-spacing, unset) * 0.0825) !important;
+}
+
 html.fs-modern {
 	--ampersand-header-font-name: "Outfit";
 	--ampersand-header-font-weight: 600;

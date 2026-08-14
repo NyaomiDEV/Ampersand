@@ -82,6 +82,7 @@ export type AccessibilityConfig = {
 	frontingNotification: boolean,
 	contrastLevel: number,
 	fontScale: number,
+	wordSpacing: number,
 	longPressDuration: number
 };
 

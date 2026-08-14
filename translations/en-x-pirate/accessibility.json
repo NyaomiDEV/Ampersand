@@ -45,6 +45,9 @@
 	"fontScale": {
 		"title": "Size o' the scrawl"
 	},
+	"wordSpacing": {
+		"title": "Spacing o' the words"
+	},
 	"longPressDuration": {
 		"title": "Long press duration"
 	}

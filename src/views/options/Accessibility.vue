@@ -15,6 +15,9 @@
 	import motionMD from "@material-symbols/svg-600/rounded/masked_transitions.svg";
 	import frontingNotificationMD from "@material-symbols/svg-600/rounded/notifications_unread.svg";
 	import tintMD from "@material-symbols/svg-600/rounded/colorize.svg";
+	import narrowMD from "@material-symbols/svg-600/rounded/format_letter_spacing_standard.svg";
+	import wideMD from "@material-symbols/svg-600/rounded/format_letter_spacing_wider.svg";
+
 	
 	
 </script>
@@ -84,6 +87,24 @@
 					>
 						<IonIcon slot="start" :icon="smallTextMD" />
 						<IonIcon slot="end" :icon="bigTextMD" />
+					</IonRange>
+				</IonItem>
+
+				<IonItem>
+					<IonRange
+						v-model="accessibilityConfig.wordSpacing"
+						:label="$t('accessibility:wordSpacing.title')"
+						label-placement="stacked"
+						:min="0"
+						:max="1"
+						:step="0.1"
+						:snaps="true"
+						:ticks="true"
+						:pin="true"
+						:pin-formatter="(v) => `${v}`"
+					>
+						<IonIcon slot="start" :icon="narrowMD" />
+						<IonIcon slot="end" :icon="wideMD" />
 					</IonRange>
 				</IonItem>
 			</IonList>

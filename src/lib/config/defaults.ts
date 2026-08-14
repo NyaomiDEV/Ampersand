@@ -78,6 +78,7 @@ export const defaultAccessibilityConfig: AccessibilityConfig = {
 	frontingNotification: false,
 	contrastLevel: 0,
 	fontScale: 1,
+	wordSpacing: 0,
 	longPressDuration: 750
 };
 

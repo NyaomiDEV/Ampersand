@@ -49,6 +49,15 @@ export function updateAccessibility() {
 		document.documentElement.style.setProperty("font-size", `${fontScale}em`);
 	else
 		document.documentElement.style.removeProperty("font-size");
+
+	const wordSpacing = accessibilityConfig.wordSpacing;
+	if (wordSpacing > 0){
+		document.documentElement.classList.add("accessibility-word-spacing");
+		document.documentElement.style.setProperty("--ampersand-accessibility-word-spacing", `${wordSpacing}rem`);
+	} else {
+		document.documentElement.classList.remove("accessibility-word-spacing");
+		document.documentElement.style.removeProperty("--ampersand-accessibility-word-spacing");
+	}
 }
 
 export function updateFont() {

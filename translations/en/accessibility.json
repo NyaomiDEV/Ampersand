@@ -11,7 +11,6 @@
 		"comicrelief": "Comic Relief",
 		"system-font": "System Font"
 	},
-
 	"themeIsAmoled": {
 		"title": "AMOLED mode",
 		"desc": "Use a total black background when in dark mode. Can reduce display wear."
@@ -45,6 +44,9 @@
 	},
 	"fontScale": {
 		"title": "Font size"
+	},
+	"wordSpacing": {
+		"title": "Word spacing"
 	},
 	"longPressDuration": {
 		"title": "Long press duration"
