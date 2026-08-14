@@ -141,5 +141,6 @@
 		"metal": "Metall",
 		"terminal": "Terminal",
 		"digital": "Digital"
-	}
+	},
+	"delete": "Löschen"
 }
