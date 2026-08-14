@@ -36,7 +36,7 @@ jobs:
           - platform: 'macos-26'
             build_type: 'macos'
             args: '--target universal-apple-darwin'
-          - platform: 'ubuntu-latest'
+          - platform: 'ubuntu-slim'
             build_type: 'linux'
             args: ''
           - platform: 'windows-latest'
@@ -61,7 +61,7 @@ jobs:
           target: ${{ matrix.platform == 'macos-26' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
           cache-bin: ${{ matrix.platform != 'macos-26' }}
       - name: Install dependencies (Ubuntu only)
-        if: matrix.platform == 'ubuntu-latest'
+        if: matrix.platform == 'ubuntu-slim'
         run: |
           sudo apt-get update
           sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
@@ -70,7 +70,7 @@ jobs:
       - name: Build Ampersand
         run: pnpm tauri build --ci ${{ matrix.args }}
       - name: Publish artifacts (Linux - DEB)
-        if: matrix.platform == 'ubuntu-latest'
+        if: matrix.platform == 'ubuntu-slim'
         uses: actions/upload-artifact@v7
         with:
           name: PC build for Linux (DEB)
@@ -78,7 +78,7 @@ jobs:
           path: |
             ./src-tauri/target/release/bundle/deb/Ampersand_*.deb
       - name: Publish artifacts (Linux - RPM)
-        if: matrix.platform == 'ubuntu-latest'
+        if: matrix.platform == 'ubuntu-slim'
         uses: actions/upload-artifact@v7
         with:
           name: PC build for Linux (RPM)
@@ -86,7 +86,7 @@ jobs:
           path: |
             ./src-tauri/target/release/bundle/rpm/Ampersand-*.rpm
       - name: Publish artifacts (Linux - AppImage)
-        if: matrix.platform == 'ubuntu-latest'
+        if: matrix.platform == 'ubuntu-slim'
         uses: actions/upload-artifact@v7
         with:
           name: PC build for Linux (AppImage)
@@ -110,19 +110,19 @@ jobs:
           path: |
             ./src-tauri/target/release/bundle/msi/Ampersand*.msi
       - name: Publish to release (Linux DEB)
-        if: matrix.platform == 'ubuntu-latest'
+        if: matrix.platform == 'ubuntu-slim'
         uses: shogo82148/actions-upload-release-asset@v1
         with:
           upload_url: ${{ inputs.upload_url }}
           asset_path: ./src-tauri/target/release/bundle/deb/Ampersand_*.deb
       - name: Publish to release (Linux RPM)
-        if: matrix.platform == 'ubuntu-latest'
+        if: matrix.platform == 'ubuntu-slim'
         uses: shogo82148/actions-upload-release-asset@v1
         with:
           upload_url: ${{ inputs.upload_url }}
           asset_path: ./src-tauri/target/release/bundle/rpm/Ampersand-*.rpm
       - name: Publish to release (Linux AppImage)
-        if: matrix.platform == 'ubuntu-latest'
+        if: matrix.platform == 'ubuntu-slim'
         uses: shogo82148/actions-upload-release-asset@v1
         with:
           upload_url: ${{ inputs.upload_url }}

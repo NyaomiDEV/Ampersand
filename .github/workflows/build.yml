@@ -22,7 +22,7 @@ concurrency:
 
 jobs:
   prepare-build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     outputs:
       upload_url: ${{ steps.release.outputs.upload_url || steps.release_rc.outputs.upload_url || steps.release_unstable.outputs.upload_url }}
       ampersand_version: ${{ steps.vcs.outputs.ampersand_version }}
@@ -108,7 +108,7 @@ jobs:
       contents: write
   release:
     needs: [prepare-build, build-android, build-ios, build-pc]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     steps:
       - name: Checkout
         uses: actions/checkout@v6
