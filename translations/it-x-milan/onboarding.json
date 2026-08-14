@@ -6,21 +6,10 @@
 	"importScreen": {
 		"header": "Importiamo qualcosa?",
 		"prevInstall": "Sì, roba vecchia",
-		"simplyPlural": "Sì, Simply Plural",
-		"octocon": "Sì, Octocon",
-		"pluralKit": "Sì, PluralKit",
-		"tupperbox": "Sì, Tupperbox",
 		"startFromScratch": "No, parto da zero",
+		"thirdPartyHint": "Puoi anche importare da servizi di terze parti via Opzioni > Importa / Esporta dopo aver concluso l'onboarding.",
 		"pleaseWait": "Un attimo che importiamo tutto...",
-		"error": "Errore import backup. Cambia opzione.",
-		"errorSp": "Errore Simply Plural. Cambia opzione.",
-		"errorOc": "Errore Octocon. Cambia opzione.",
-		"errorPk": "Errore PluralKit. Cambia opzione.",
-		"errorTu": "Errore Tupperbox. Cambia opzione.",
-		"allowRemoteContent": {
-			"header": "Ci connettiamo?",
-			"desc": "Ampersand è offline, ma per gli avatar serve internet. Ci dai l'OK? Poi lo stacchi nelle opzioni."
-		}
+		"error": "Errore import backup. Cambia opzione."
 	},
 	"systemInfo": {
 		"header": "Parlaci del sistema",

@@ -6,21 +6,10 @@
 	"importScreen": {
 		"header": "Voi mportari i tò dati?",
 		"prevInstall": "Sì, installazzioni pricidenti",
-		"simplyPlural": "Sì, Simply Plural",
-		"octocon": "Sì, Octocon",
-		"pluralKit": "Sì, PluralKit",
-		"tupperbox": "Sì, Tupperbox",
 		"startFromScratch": "No, accuminciu di zeru",
+		"thirdPartyHint": "Poi macari mportari da servizi 'i terzi parti via Opzioni > Mporta / Esporta dopu ca finisti l'onboarding.",
 		"pleaseWait": "Attendi mentri mportamu i tò dati",
-		"error": "Erruri duranti l'importazzioni dû backup. Pi favuri scegghi n'autra opzioni.",
-		"errorSp": "Erruri duranti l'importazzioni de l'export di Simply Plural. Pi favuri scegghi n'autra opzioni.",
-		"errorOc": "Erruri duranti l'importazzioni de l'export di Octocon. Pi favuri scegghi n'autra opzioni.",
-		"errorPk": "Erruri duranti l'importazzioni de l'export di PluralKit. Pi favuri scegghi n'autra opzioni.",
-		"errorTu": "Erruri duranti l'importazzioni de l'export di Tupperbox. Pi favuri scegghi n'autra opzioni.",
-		"allowRemoteContent": {
-			"header": "Permetti a cunnessioni a Internet?",
-			"desc": "Ampersand è n'app chi funziona principarmenti offline, quindi havi bisognu dû tò cunsensu pi cunnettisi a Internet. Ntra stu mumentu si vulissi cunnetti pi scaricari l'avatar e i banner de' membra di mportari. Quannu finisci, poi disattivari sta funziunalità ntra Opzioni > Sicurezza > Permetti cuntinuti rimoti."
-		}
+		"error": "Erruri duranti l'importazzioni dû backup. Pi favuri scegghi n'autra opzioni."
 	},
 	"systemInfo": {
 		"header": "Cùntaci dû tò sistema!",

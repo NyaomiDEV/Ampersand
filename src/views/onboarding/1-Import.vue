@@ -3,36 +3,17 @@
 	import { ref } from "vue";
 	import Spinner from "../../components/Spinner.vue";
 	import { importArchive } from "../../lib/db/ioutils/archive";
-	import { promptInput, promptYesNo, slideAnimation, toast } from "../../lib/util/misc";
-	import { importPluralKit } from "../../lib/db/external/importers/pluralkit.ts";
-	import { importTupperBox } from "../../lib/db/external/importers/tupperbox.ts";
-	import { importSimplyPlural } from "../../lib/db/external/importers/simplyplural.ts";
-	import { importOctocon } from "../../lib/db/external/importers/octocon.ts";
+	import { slideAnimation, toast } from "../../lib/util/misc";
 	import { useTranslation } from "i18next-vue";
 	import { clearAllDatabase } from "../../lib/db";
-	import { resetConfig, securityConfig } from "../../lib/config";
+	import { resetConfig } from "../../lib/config";
 
 	import importMD from "@material-symbols/svg-600/rounded/download.svg";
-	import octoMD from "@material-symbols/svg-600/rounded/neurology.svg";
-	import spMD from "@material-symbols/svg-600/rounded/spa.svg";
-	import tupMD from "@material-symbols/svg-600/rounded/package_2.svg";
-	import pkMD from "@material-symbols/svg-600/rounded/pet_supplies.svg";
 
 	const loading = ref(false);
 
 	const i18next = useTranslation();
 	const router = useIonRouter();
-
-	async function promptRemoteConnection(){
-		if(await promptYesNo(
-			i18next.t("onboarding:importScreen.allowRemoteContent.header"),
-			undefined,
-			i18next.t("onboarding:importScreen.allowRemoteContent.desc"),
-		))
-			securityConfig.allowRemoteContent = true;
-		else
-			securityConfig.allowRemoteContent = false;
-	}
 
 	async function importFromPreviousInstallation() {
 		try{
@@ -44,80 +25,6 @@
 			resetConfig();
 			await clearAllDatabase();
 			await toast(i18next.t("onboarding:importScreen.error"));
-			loading.value = false;
-			return;
-		}
-		router.replace("/onboarding/end/", slideAnimation);
-	}
-
-	async function importFromSimplyPlural() {
-		await promptRemoteConnection();
-		try{
-			loading.value = true;
-			const result = await importSimplyPlural();
-			if (!result) throw new Error("errored out");
-		}catch(_e){
-			console.error(_e);
-			await clearAllDatabase();
-			await toast(i18next.t("onboarding:importScreen.errorSp"));
-			loading.value = false;
-			return;
-		}
-		router.replace("/onboarding/end/", slideAnimation);
-	}
-
-	async function importFromOctocon() {
-		await promptRemoteConnection();
-		try{
-			loading.value = true;
-			const result = await importOctocon();
-			if(!result) throw new Error("errored out");
-		}catch(_e){
-			console.error(_e);
-			await clearAllDatabase();
-			await toast(i18next.t("onboarding:importScreen.errorOc"));
-			loading.value = false;
-			return;
-		}
-		router.replace("/onboarding/end/", slideAnimation);
-	}
-
-	async function importFromPluralKit() {
-		await promptRemoteConnection();
-		try{
-			loading.value = true;
-			const result = await importPluralKit();
-			if(!result) throw new Error("errored out");
-		}catch(_e){
-			console.error(_e);
-			await clearAllDatabase();
-			await toast(i18next.t("onboarding:importScreen.errorPk"));
-			loading.value = false;
-			return;
-		}
-		router.replace("/onboarding/end/", slideAnimation);
-	}
-
-	async function importFromTupperbox() {
-		await promptRemoteConnection();
-		try{
-			loading.value = true;
-			const input = await promptInput(
-				i18next.t("importExport:tuImportDiscordId.header"),
-				[{
-					name: "id",
-					type: "number",
-					placeholder: i18next.t("importExport:tuImportDiscordId.placeholder")
-				}]
-			);
-			if(!input) throw new Error("no inputs");
-
-			const result = await importTupperBox(input.id);
-			if(!result) throw new Error("errored out");
-		}catch(_e){
-			console.error(_e);
-			await clearAllDatabase();
-			await toast(i18next.t("onboarding:importScreen.errorTu"));
 			loading.value = false;
 			return;
 		}
@@ -136,30 +43,12 @@
 						<IonIcon slot="start" :icon="importMD" />
 						{{ $t("onboarding:importScreen.prevInstall") }}
 					</IonButton>
-
-					<IonButton class="tonal" @click="importFromSimplyPlural">
-						<IonIcon slot="start" :icon="spMD" />
-						{{ $t("onboarding:importScreen.simplyPlural") }}
-					</IonButton>
-
-					<IonButton class="tonal" @click="importFromOctocon">
-						<IonIcon slot="start" :icon="octoMD" />
-						{{ $t("onboarding:importScreen.octocon") }}
-					</IonButton>
-
-					<IonButton class="tonal" @click="importFromPluralKit">
-						<IonIcon slot="start" :icon="pkMD" />
-						{{ $t("onboarding:importScreen.pluralKit") }}
-					</IonButton>
-
-					<IonButton class="tonal" @click="importFromTupperbox">
-						<IonIcon slot="start" :icon="tupMD" />
-						{{ $t("onboarding:importScreen.tupperbox") }}
-					</IonButton>
 		
 					<IonButton fill="clear" @click="router.replace('/onboarding/system/', slideAnimation)">
 						{{ $t("onboarding:importScreen.startFromScratch") }}
 					</IonButton>
+
+					<p>{{ $t("onboarding:importScreen.thirdPartyHint") }}</p>
 				</div>
 			</Transition>
 			<Transition name="slide">

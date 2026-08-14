@@ -6,21 +6,10 @@
 	"importScreen": {
 		"header": "Would you want to import your data?",
 		"prevInstall": "Yes, previous installation",
-		"simplyPlural": "Yes, Simply Plural",
-		"octocon": "Yes, Octocon",
-		"pluralKit": "Yes, PluralKit",
-		"tupperbox": "Yes, Tupperbox",
 		"startFromScratch": "No, I'll start from scratch",
+		"thirdPartyHint": "You can also import from third party services via Options > Import / Export after the onboarding is complete.",
 		"pleaseWait": "Please wait while we import your data",
-		"error": "Error while importing the backup. Please select another option.",
-		"errorSp": "Error while importing the Simply Plural export. Please select another option.",
-		"errorOc": "Error while importing the Octocon export. Please select another option.",
-		"errorPk": "Error while importing the PluralKit export. Please select another option.",
-		"errorTu": "Error while importing the Tupperbox export. Please select another option.",
-		"allowRemoteContent": {
-			"header": "Allow Internet connection?",
-			"desc": "Ampersand is an offline-first application, and as such it needs your consent to connect to the Internet. It would connect to the internet to download your member's avatars and banners at this stage. You can turn this feature off in Options > Security > Allow remote content when you're done."
-		}
+		"error": "Error while importing the backup. Please select another option."
 	},
 	"systemInfo": {
 		"header": "Tell us about your system!",
