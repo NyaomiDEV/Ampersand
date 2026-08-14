@@ -11,7 +11,7 @@ export type AppConfig = {
 		accentColor?: string,
 		backgroundColor?: string
 	},
-	fontStyle: "default" | "modern" | "digital" | "round" | "newspaper" | "mystic" | "classy" | "boring" | "techbro",
+	fontStyle: "default" | "modern" | "digital" | "round" | "newspaper" | "mystic" | "classy"
 	view: string,
 	dashboardSettings: DashboardSettings,
 	tabOrder: string[],
