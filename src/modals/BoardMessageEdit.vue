@@ -22,8 +22,10 @@
 	import saveMD from "@material-symbols/svg-600/rounded/save.svg";
 	import chartMD from "@material-symbols/svg-600/rounded/bar_chart.svg";
 	import trashMD from "@material-symbols/svg-600/rounded/delete.svg";
-	import fileMD from "@material-symbols/svg-600/rounded/attachment.svg";
-	import imageMD from "@material-symbols/svg-600/rounded/image.svg";
+	import fileMD from "@material-symbols/svg-600/rounded/attach_file_add.svg";
+	import imageMD from "@material-symbols/svg-600/rounded/add_photo_alternate.svg";
+	import personAddMD from "@material-symbols/svg-600/rounded/person_add.svg";
+	import clockAddMD from "@material-symbols/svg-600/rounded/more_time.svg";
 
 	import { BoardMessage, BoardMessageComplete, Member, UUIDable } from "../lib/db/entities";
 	import { updateBoardMessage, deleteBoardMessage, newBoardMessage } from "../lib/db/tables/boardMessages";
@@ -288,11 +290,11 @@
 				</IonItem>
 
 				<IonItem>
-					<IonButton fill="clear" @click="addTimestampInBody">
-						{{ $t("other:addTimestamp") }}
+					<IonButton fill="clear" :aria-label="$t('other:addTimestamp')" @click="addTimestampInBody">
+						<IonIcon slot="icon-only" :icon="clockAddMD" />
 					</IonButton>
-					<IonButton fill="clear" @click="memberTagModal?.$el.present()">
-						{{ $t("other:memberMention") }}
+					<IonButton fill="clear" :aria-label="$t('other:memberMention')" @click="memberTagModal?.$el.present()">
+						<IonIcon slot="icon-only" :icon="personAddMD" />
 					</IonButton>
 					<IonButton fill="clear" @click="addAssetInBody('file')">
 						<IonIcon slot="icon-only" :icon="fileMD" />

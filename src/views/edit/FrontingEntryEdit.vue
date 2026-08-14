@@ -22,8 +22,10 @@
 	import accountCircle from "@material-symbols/svg-600/rounded/account_circle-fill.svg";
 	import startMD from "@material-symbols/svg-600/rounded/line_start_circle.svg";
 	import endMD from "@material-symbols/svg-600/rounded/line_end_circle.svg";
-	import fileMD from "@material-symbols/svg-600/rounded/attachment.svg";
-	import imageMD from "@material-symbols/svg-600/rounded/image.svg";
+	import personAddMD from "@material-symbols/svg-600/rounded/person_add.svg";
+	import clockAddMD from "@material-symbols/svg-600/rounded/more_time.svg";
+	import fileMD from "@material-symbols/svg-600/rounded/attach_file_add.svg";
+	import imageMD from "@material-symbols/svg-600/rounded/add_photo_alternate.svg";
 
 	import { FrontingEntry, FrontingEntryComplete, Member, UUIDable } from "../../lib/db/entities";
 	import { newFrontingEntry, updateFrontingEntry, deleteFrontingEntry, sendFrontingChangedEvent, getFrontingBetweenIndex, getFrontingEntry, toFrontingEntryComplete } from "../../lib/db/tables/frontingEntries";
@@ -453,11 +455,11 @@
 				</IonItem>
 
 				<IonItem>
-					<IonButton fill="clear" @click="addTimestampInSummary">
-						{{ $t("other:addTimestamp") }}
+					<IonButton fill="clear" :aria-label="$t('other:addTimestamp')" @click="addTimestampInSummary">
+						<IonIcon slot="icon-only" :icon="clockAddMD" />
 					</IonButton>
-					<IonButton fill="clear" @click="memberTagModal?.$el.present()">
-						{{ $t("other:memberMention") }}
+					<IonButton fill="clear" :aria-label="$t('other:memberMention')" @click="memberTagModal?.$el.present()">
+						<IonIcon slot="icon-only" :icon="personAddMD" />
 					</IonButton>
 					<IonButton fill="clear" @click="addAssetInSummary('file')">
 						<IonIcon slot="icon-only" :icon="fileMD" />

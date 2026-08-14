@@ -19,8 +19,10 @@
 
 	import saveMD from "@material-symbols/svg-600/rounded/save.svg";
 	import trashMD from "@material-symbols/svg-600/rounded/delete.svg";
-	import fileMD from "@material-symbols/svg-600/rounded/attachment.svg";
-	import imageMD from "@material-symbols/svg-600/rounded/image.svg";
+	import personAddMD from "@material-symbols/svg-600/rounded/person_add.svg";
+	import clockAddMD from "@material-symbols/svg-600/rounded/more_time.svg";
+	import fileMD from "@material-symbols/svg-600/rounded/attach_file_add.svg";
+	import imageMD from "@material-symbols/svg-600/rounded/add_photo_alternate.svg";
 
 	import MemberSelect from "./MemberSelect.vue";
 
@@ -222,11 +224,11 @@
 				</IonItem>
 
 				<IonItem>
-					<IonButton fill="clear" @click="addTimestampInContent">
-						{{ $t("other:addTimestamp") }}
+					<IonButton fill="clear" :aria-label="$t('other:addTimestamp')" @click="addTimestampInContent">
+						<IonIcon slot="icon-only" :icon="clockAddMD" />
 					</IonButton>
-					<IonButton fill="clear" @click="memberTagModal?.$el.present()">
-						{{ $t("other:memberMention") }}
+					<IonButton fill="clear" :aria-label="$t('other:memberMention')" @click="memberTagModal?.$el.present()">
+						<IonIcon slot="icon-only" :icon="personAddMD" />
 					</IonButton>
 					<IonButton fill="clear" @click="addAssetInContent('file')">
 						<IonIcon slot="icon-only" :icon="fileMD" />

@@ -25,13 +25,13 @@
 
 	import pencilMD from "@material-symbols/svg-600/rounded/edit.svg";
 	import saveMD from "@material-symbols/svg-600/rounded/save.svg";
-	import imageMD from "@material-symbols/svg-600/rounded/image.svg";
 	import trashMD from "@material-symbols/svg-600/rounded/delete.svg";
 	import settingsMD from "@material-symbols/svg-600/rounded/settings.svg";
 	import personAddMD from "@material-symbols/svg-600/rounded/person_add.svg";
 	import clockAddMD from "@material-symbols/svg-600/rounded/more_time.svg";
 	import exportMD from "@material-symbols/svg-600/rounded/file_export.svg";
-	import fileMD from "@material-symbols/svg-600/rounded/attachment.svg";
+	import fileMD from "@material-symbols/svg-600/rounded/attach_file_add.svg";
+	import imageMD from "@material-symbols/svg-600/rounded/add_photo_alternate.svg";
 	import accountCircle from "@material-symbols/svg-600/rounded/account_circle-fill.svg";
 
 	import { JournalPost, JournalPostComplete, Member, Tag, UUIDable } from "../../lib/db/entities";
