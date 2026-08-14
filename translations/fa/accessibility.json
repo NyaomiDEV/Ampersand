@@ -1,0 +1,39 @@
+{
+	"header": "دسترس پذیری",
+	"highLegibilityFont": {
+		"title": "فونت با خوانایی بالا",
+		"desc": "به جای فونت پیش‌فرض دستگاه، از یک فونت با خوانایی بالا استفاده کنید."
+	},
+	"highLegibilityFontType": {
+		"title": "خانواده فونت خوانا",
+		"system-font": "فونت دستگاه"
+	},
+	"themeIsAmoled": {
+		"title": "AMOLED",
+		"desc": "در هنگام استفاده از حالت تاریک، از پس‌زمینهٔ کاملاً مشکی استفاده کنید. این کار می‌تواند فرسودگی نمایشگر را کاهش دهد."
+	},
+	"colorIndicatorPosition": {
+		"title": "موقعیت نشانگر رنگ",
+		"avatar": "حاشیه اواتار",
+		"listItem": "حاشیه ایتم لیست"
+	},
+	"tintWithColor": {
+		"title": "رنگی کردن",
+		"off": "خاموش",
+		"accent": "فقط رنگ تاکیدی",
+		"on": "روشن"
+	},
+	"reducedMotion": {
+		"title": "حرکت کمتر",
+		"desc": "انیمیشن‌های داخل برنامه را خاموش کن"
+	},
+	"compactLists": {
+		"title": "لیست‌های فشرده"
+	},
+	"disableCovers": {
+		"title": "کاور ها را خاموش کن"
+	},
+	"frontingNotification": {
+		"title": "اعلان فرانت"
+	}
+}

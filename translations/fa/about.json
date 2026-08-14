@@ -1,0 +1,9 @@
+{
+	"header": "درباره",
+	"version": "نسخه {{version}}",
+	"ciVersion": "نسخه ناپایدار",
+	"madein": "ساخته شده با عشق در ایتالیا",
+	"privacyPolicy": "قوانین حریم خصوصی",
+	"updateAvailable": "نسخهٔ جدید موجود است: {{newVersion}}",
+	"credits": "عوامل"
+}
