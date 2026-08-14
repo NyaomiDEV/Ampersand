@@ -7,7 +7,7 @@
 	"addTimestamp": "nimi sin pi sona tenpo",
 	"memberMention": "nimi sin pi ijo kulupu",
 	"creation": {
-		"dateCreated": "tenpo pi pali lipu: {{dateCreated}}"
+		"dateCreated": "tenpo pali: {{dateCreated}}"
 	},
 	"alerts": {
 		"ok": "pona",
