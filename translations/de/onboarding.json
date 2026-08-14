@@ -5,22 +5,10 @@
 	},
 	"importScreen": {
 		"header": "Möchtest du deine Daten importieren?",
-		"simplyPlural": "Ja, Simply Plural",
-		"pluralKit": "Ja, PluralKit",
-		"tupperbox": "Ja, Tupperbox",
 		"startFromScratch": "Nein, ich starte neu",
 		"pleaseWait": "Bitte warte, während wir deine Daten importieren",
 		"prevInstall": "Ja, von der vorherigen Installation",
-		"error": "Beim Importieren der Sicherheitskopie ist ein Fehler aufgetreten. Bitte wähle eine andere Option.",
-		"octocon": "Ja, Octocon",
-		"errorSp": "Beim Importieren der Simply Plural-Kopie ist ein Fehler aufgetreten. Bitte wähle eine andere Option.",
-		"errorOc": "Beim Importieren der Octocon-Kopie ist ein Fehler aufgetreten. Bitte wähle eine andere Option.",
-		"errorPk": "Beim Importieren der PluralKit-Kopie ist ein Fehler aufgetreten. Bitte wähle eine andere Option.",
-		"errorTu": "Beim Importieren der Tupperbox-Kopie ist ein Fehler aufgetreten. Bitte wähle eine andere Option.",
-		"allowRemoteContent": {
-			"header": "Internet-Verbindung erlauben?",
-			"desc": "Ampersand ist hauptsächlich eine Offline-App, also bräuchte sie deine Erlaubnis um auf das Internet zuzugreifen. Die App würde sich mit dem Internet verbinden, um die Profilbilder und Banner deiner Mitglieder herunterzuladen. Wenn du fertig bist, kannst du diese Funktion in 'Einstellungen > Sicherheit > Remote-Inhalte zulassen' abstellen."
-		}
+		"error": "Beim Importieren der Sicherheitskopie ist ein Fehler aufgetreten. Bitte wähle eine andere Option."
 	},
 	"memberInfo": {
 		"header": "Erzähle uns mehr über dich!",

@@ -6,21 +6,9 @@
 	"importScreen": {
 		"header": "Você gostaria de importar os seus dados?",
 		"prevInstall": "Sim, instalação anterior",
-		"simplyPlural": "Sim, Simply Plural",
-		"pluralKit": "Sim, PluralKit",
-		"tupperbox": "Sim, Tupperbox",
-		"allowRemoteContent": {
-			"header": "Permitir conexão à internet?",
-			"desc": "Ampersand é uma aplicação designada para funcionar primariamente offline, e como tal ela pode necessitar do seu consentimento para conectar na internet. Ela então conectará à internet para baixar os avatares e banners dos seus membros. Você pode desativar esta função indo em [Opções > Segurança > Permitir conteúdo remoto] quando você tiver terminado."
-		},
-		"octocon": "Sim, Octocon",
 		"startFromScratch": "Não, Irei começar do zero",
 		"pleaseWait": "Por favor espere enquanto importamos seus dados",
-		"error": "Erro ao importar a cópia de segurança. Por favor escolha outra opção.",
-		"errorSp": "Erro enquanto importava exporte do Simply Plural. Por favor escolha outra opção.",
-		"errorOc": "Erro enquanto importava exporte do Octocon. Por favor escolha outra opção.",
-		"errorPk": "Erro enquanto importava exporte do Pluralkit. Por favor escolha outra opção.",
-		"errorTu": "Erro ao importar exporte do Tupperbox. Por favor escolha outra opção."
+		"error": "Erro ao importar a cópia de segurança. Por favor escolha outra opção."
 	},
 	"memberInfo": {
 		"header": "Nos conte mais sobre você!",
