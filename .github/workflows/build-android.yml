@@ -39,12 +39,16 @@ concurrency:
 jobs:
   # Single deploy job since we're just deploying
   deploy-android:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     steps:
       - name: Checkout
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential curl wget file libxdo-dev libssl-dev libayatana-appindicator3-dev libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
       - name: Set up package manager
         uses: pnpm/setup@v2
         with:
@@ -53,12 +57,13 @@ jobs:
         uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
-          java-version: '17.0.20+8'
+          java-version: '21.0.12+8'
       - name: Set up Android SDK
         uses: android-actions/setup-android@v4
         with:
-          cmdline-tools-version: 12266719
-          packages: "platform-tools ndk;29.0.14206865"
+          log-accepted-android-sdk-licenses: false
+          cmdline-tools-version: 14742923
+          packages: "build-tools;35.0.0 ndk;29.0.14206865 platform-tools platforms;android-36.1 sources;android-36.1"
       - name: Set up Rust toolchain
         uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
