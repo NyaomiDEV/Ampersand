@@ -41,7 +41,8 @@
 		"title": "Koosta aruanne",
 		"desc": "Salvesta oma andmete kohta inimloetav aruanne, mida saad jagada oma terapeudi ja/või lähedastega",
 		"includeHeader": "Vali, mida tahad kaasata",
-		"includeArchived": "Arhiveeritud liikmed"
+		"includeArchived": "Arhiveeritud liikmed",
+		"includeDissociativeStates": "Irdunud olekud"
 	},
 	"jsonExport": {
 		"title": "Ekspordi oma andmed JSON-failina",

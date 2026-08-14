@@ -161,7 +161,8 @@
 		"desc": "Sinu rahaline toetus aitab Ampersandil areneda ja arendajatel tegutseda"
 	},
 	"creation": {
-		"dateCreated": "Loomise kuupäev: {{dateCreated}}"
+		"dateCreated": "Loomise kuupäev: {{dateCreated}}",
+		"frontingAtCreationDate": "Esiplaaniroll loomise ajal: {{frontingAtCreationDate}}"
 	},
 	"fontStyles": {
 		"bold": "Paks kiri",
