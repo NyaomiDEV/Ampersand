@@ -75,8 +75,6 @@ jobs:
           components: ${{ steps.rust_toml_parse.outputs.rust_toolchain_components }}
           target: ${{ steps.rust_toml_parse.outputs.rust_toolchain_targets }}
           rust-src-dir: "src-tauri"
-      - name: Install frontend dependencies
-        run: pnpm install --frozen-lockfile
       - name: Update versioning
         run: pnpm run upgrade-vcs
       - name: Set up Android signing
