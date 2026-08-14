@@ -44,8 +44,8 @@
 	},
 	"tintWithColor": {
 		"title": "Colorear",
-		"off": "Apagar",
+		"off": "Apagado",
 		"accent": "Solo color del acento",
-		"on": "Encender"
+		"on": "Encendido"
 	}
 }
