@@ -66,10 +66,6 @@
 							{{ $t("accessibility:highLegibilityFontType.luciole") }}
 						</IonSelectOption>
 
-						<IonSelectOption value="comicrelief" class="hl-comicrelief">
-							{{ $t("accessibility:highLegibilityFontType.comicrelief") }}
-						</IonSelectOption>
-
 						<IonSelectOption value="system-font" class="hl-system-font">
 							{{ $t("accessibility:highLegibilityFontType.system-font") }}
 						</IonSelectOption>
@@ -251,9 +247,5 @@
 
 	button.action-sheet-button.hl-luciole {
 		font-family: 'Luciole', var(--ion-font-family);
-	}
-
-	button.action-sheet-button.hl-comicrelief {
-		font-family: 'Comic Relief', var(--ion-font-family);
 	}
 </style>

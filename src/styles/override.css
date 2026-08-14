@@ -45,39 +45,38 @@ html.accessibility-word-spacing ion-item::part(inner) {
 
 html.fs-modern {
 	--ampersand-header-font-name: "Outfit";
-	--ampersand-header-font-weight: 600;
 	--ampersand-body-font-name: "Montserrat";
 }
 
 html.fs-digital {
 	--ampersand-header-font-name: "Oxanium";
-	--ampersand-header-font-weight: 600;
 	--ampersand-body-font-name: "Chivo Mono";
 }
 
 html.fs-round {
 	--ampersand-header-font-name: "Recursive";
-	--ampersand-header-font-weight: 700;
 	--ampersand-header-font-variation: "CASL" 1, "CRSV" 1;
 	--ampersand-body-font-name: "Fredoka";
 }
 
 html.fs-newspaper {
 	--ampersand-header-font-name: "Merriweather";
-	--ampersand-header-font-weight: 600;
 	--ampersand-body-font-name: "Albert Sans";
 }
 
 html.fs-mystic {
 	--ampersand-header-font-name: "Cinzel Decorative";
-	--ampersand-header-font-weight: 700;
 	--ampersand-body-font-name: "Amarna";
 }
 
 html.fs-classy {
 	--ampersand-header-font-name: "Bodoni Moda";
-	--ampersand-header-font-weight: 700;
 	--ampersand-body-font-name: "Geom";
+}
+
+html.fs-comic {
+	--ampersand-header-font-name: "Shantell Sans";
+	--ampersand-body-font-name: "Comic Relief";
 }
 
 /* High legibility fonts */
@@ -95,11 +94,6 @@ html.high-legibility {
 
 	&.hl-luciole {
 		--ampersand-body-font-name: "Luciole";
-		--ampersand-header-font-weight: 700;
-	}
-
-	&.hl-comicrelief {
-		--ampersand-body-font-name: "Comic Relief";
 		--ampersand-header-font-weight: 700;
 	}
 
