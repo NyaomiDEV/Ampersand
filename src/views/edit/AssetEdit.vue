@@ -17,6 +17,7 @@
 	} from "@ionic/vue";
 
 	import saveMD from "@material-symbols/svg-600/rounded/save.svg";
+	import exportMD from "@material-symbols/svg-600/rounded/file_export.svg";
 	import trashMD from "@material-symbols/svg-600/rounded/delete.svg";
 
 	import { newAsset, deleteAsset, updateAsset, getAsset } from "../../lib/db/tables/assets";
@@ -25,7 +26,7 @@
 	import { PartialBy } from "../../lib/types";
 	import { useRoute } from "vue-router";
 	import { useTranslation } from "i18next-vue";
-	import { formatDate, getCustomName, getDocumentFile, promptOkCancel, sortName, toast } from "../../lib/util/misc";
+	import { formatDate, getCustomName, getDocumentFile, promptOkCancel, saveDocumentFile, saveImageFile, sortName, toast } from "../../lib/util/misc";
 	import { useBlob } from "../../lib/util/blob";
 	import SpinnerFullscreen from "../../components/SpinnerFullscreen.vue";
 	import AssetItem from "../../components/asset/AssetItem.vue";
@@ -60,7 +61,19 @@
 		if(file) asset.value.file = file;
 	}
 
-	function showBigThumbnail() {
+	async function exportFile(){
+		if(!asset.value.file) return;
+
+		const functionToBeCalled = isImage() ? saveImageFile : saveDocumentFile;
+
+		try{
+			await functionToBeCalled(asset.value.file);
+		}catch(e){
+			await toast((e as Error).message);
+		}
+	}
+
+	function isImage() {
 		switch(asset.value.file?.type.split("/")[0]){
 			case "image":
 				return true;
@@ -187,7 +200,7 @@
 		<SpinnerFullscreen v-if="loading" />
 		<IonContent v-else>
 			<img
-				v-if="asset.file && showBigThumbnail()"
+				v-if="asset.file && isImage()"
 				:src="getObjectURL(asset.file)"
 				class="thumbnail"
 			/>
@@ -197,7 +210,7 @@
 					:asset="asset as PartialBy<Asset, 'uuid'>"
 					route-to-open-file
 					:show-filename-and-type="true"
-					:show-thumbnail="!showBigThumbnail()"
+					:show-thumbnail="!isImage()"
 					:detail="true"
 				/>
 			</IonList>
@@ -227,6 +240,21 @@
 								:tag
 							/>
 						</div>
+					</IonLabel>
+				</IonItem>
+				<IonItem
+					v-if="asset.file"
+					button
+					:detail="false"
+					@click="exportFile"
+				>
+					<IonIcon
+						slot="start"
+						:icon="exportMD"
+						aria-hidden="true"
+					/>
+					<IonLabel>
+						{{ $t("assetManager:edit.export") }}
 					</IonLabel>
 				</IonItem>
 				<IonItem

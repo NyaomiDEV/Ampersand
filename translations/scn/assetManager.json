@@ -10,6 +10,7 @@
 		"friendlyName": "Mudìfica u nomi",
 		"attachment": "Rimpiazza allegatu",
 		"tags": "Tag",
+		"export": "Savva llegatu",
 		"delete": {
 			"title": "Elimina asset",
 			"confirm": "Voi pi daveru scancillari st'asset?"

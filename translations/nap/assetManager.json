@@ -10,6 +10,7 @@
 		"friendlyName": "Cagna 'o nomme",
 		"attachment": "Cagna l'allegato",
 		"tags": "Tag",
+		"export": "Salva l'allegato",
 		"delete": {
 			"title": "Scancella 'o documento",
 			"confirm": "Vuò scancellà overo 'sto documento?"

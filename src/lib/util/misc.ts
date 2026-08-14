@@ -7,7 +7,7 @@ import { Asset, BoardMessage, CustomField, FrontingEntry, ImageClip, JournalPost
 import i18next, { computePercentage, getLocaleInfo } from "../i18n";
 import { open, save } from "../native/open";
 import { mkdir, readFile, writeFile } from "@tauri-apps/plugin-fs";
-import { basename, dirname, pictureDir, sep } from "@tauri-apps/api/path";
+import { basename, dirname, documentDir, pictureDir, sep } from "@tauri-apps/api/path";
 import { findMimeType } from "../mime";
 import type { IndexEntry } from "../db/types";
 import { platform } from "@tauri-apps/plugin-os";
@@ -37,6 +37,30 @@ export async function getDocumentFile(extensions?: string[], asFile?: boolean) {
 	const ext = filename.split(".").pop()!;
 
 	return newFile([array], filename, { type: findMimeType(ext !== filename ? ext : "") });
+}
+
+export async function saveDocumentFile(file: File) {
+	let path: string | undefined = `${await documentDir()}${sep()}${file.name}`;
+
+	if (platform() !== "ios") {
+		// Use save file dialog outside of iOS
+		const _path = await save({
+			defaultPath: path
+		});
+		if (_path) path = _path;
+		else path = undefined; // save file got canceled
+	}
+
+	if (!path) throw new Error("no path");
+
+	// Android uses content:// for providing scoped file paths; here we just get the FD from the returned URI
+	if (!path.startsWith("content://")) {
+		// So in all other cases where the path is a real one, be it relative or not, we ensure we have a directory to write to
+		const _dirname = await dirname(path);
+		await mkdir(_dirname, { recursive: true });
+	}
+
+	await writeFile(path, file.stream(), { append: false, create: true });
 }
 
 export async function getImageFile() {

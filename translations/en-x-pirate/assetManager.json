@@ -10,6 +10,7 @@
 		"friendlyName": "Change the name",
 		"attachment": "Swap the attachment",
 		"tags": "Tags",
+		"export": "Save attachment",
 		"delete": {
 			"title": "Toss loot overboard",
 			"confirm": "Are ye sure ye want to toss this loot?"

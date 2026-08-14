@@ -10,6 +10,7 @@
 		"friendlyName": "Cambia nome",
 		"attachment": "Sostituisci allegato",
 		"tags": "Tag",
+		"export": "Salva allegato",
 		"delete": {
 			"title": "Elimina asset",
 			"confirm": "Vuoi davvero piallare questo asset?"
