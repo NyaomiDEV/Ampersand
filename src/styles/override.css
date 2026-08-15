@@ -110,8 +110,8 @@ html.high-legibility {
 /* Modifications to Ionic components that we made for our app specifically */
 
 /* macOS transparency */
-html:is(.sys-macos),
-html:is(.sys-macos) body {
+html:is(.sys-macos, .sys-windows),
+html:is(.sys-macos, .sys-windows) body {
 	background-color: transparent;
 }
 
@@ -177,8 +177,18 @@ html:is(.sys-macos) ion-tab-bar {
 	background: rgba(var(--md3-surface-container), 0.85);
 }
 
-html:is(.sys-macos) ion-tab-button {
+/* Windows tab bar */
+html:is(.sys-windows) ion-tab-bar {
+	background: transparent;
+}
+
+html:is(.sys-macos, .sys-windows) ion-tab-button {
 	background-color: transparent;
+}
+
+html:is(.sys-windows) ion-tabs > ion-router-outlet {
+	border-start-start-radius: 16px;
+	overflow: auto;
 }
 
 /* Padding fixes for the bottom of lists when a FAB is there and when it isn't */

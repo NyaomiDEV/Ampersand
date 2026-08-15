@@ -5,11 +5,14 @@ use tauri::{WebviewWindowBuilder, WebviewUrl};
 #[cfg(desktop)]
 use tauri::Manager;
 
-#[cfg(target_os = "macos")]
+#[cfg(any(target_os = "macos", target_os = "windows"))]
 use tauri::{
     utils::config::WindowEffectsConfig,
-    window::{Effect, Color, EffectState}
+    window::{Effect, Color}
 };
+
+#[cfg(target_os = "macos")]
+use tauri::window::EffectState;
 
 #[cfg(desktop)]
 fn migrate_old_data(app: &mut tauri::App) -> Result<(), tauri::Error> {
@@ -91,15 +94,29 @@ pub fn run() {
                     color: None,
                     radius: None,
                     state: Some(EffectState::FollowsWindowActiveState)
-                });
-
-            #[cfg(target_os = "macos")]
-            let win_builder = win_builder
+                })
                 .title_bar_style(tauri::TitleBarStyle::Overlay)
                 .hidden_title(true);
 
+            #[cfg(target_os = "windows")]
+            let win_builder = win_builder
+                .background_color(Color(0, 0, 0, 0))
+                .transparent(true)
+                .effects(WindowEffectsConfig {
+                    effects: Vec::from([
+                        Effect::Mica
+                    ]),
+                    color: None,
+                    radius: None,
+                    state: None
+                })
+                .decorations(false);
+
             let _window = win_builder.build()
                 .expect("cannot build window");
+
+            #[cfg(target_os = "windows")]
+            _window.set_decorations(true).expect("cannot set decoration in window");
 
             Ok(())
         })
