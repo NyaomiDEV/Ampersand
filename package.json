@@ -5,8 +5,9 @@
   "license": "AGPL-3.0-only",
   "scripts": {
     "dev": "tauri dev",
+    "dev:rsbuild": "rsbuild dev",
     "build": "tauri build",
-    "build:rsbuild": "vue-tsc && pnpm rsbuild build",
+    "build:rsbuild": "vue-tsc && rsbuild build",
     "upgrade-vcs": "node upgrade-vcs.mjs",
     "get-rust-version": "node get-rust-version.mjs",
     "eslint": "eslint src/"

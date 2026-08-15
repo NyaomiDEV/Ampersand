@@ -6,8 +6,8 @@
   "build": {
     "frontendDist": "../dist",
     "devUrl": "http://localhost:5173",
-    "beforeDevCommand": "pnpm rsbuild dev",
-    "beforeBuildCommand": "pnpm run build:rsbuild"
+    "beforeDevCommand": "corepack pnpm run dev:rsbuild",
+    "beforeBuildCommand": "corepack pnpm run build:rsbuild"
   },
   "app": {
     "withGlobalTauri": true,
