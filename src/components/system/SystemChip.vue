@@ -6,7 +6,7 @@
 	} from "@ionic/vue";
 
 	import { System } from "../../lib/db/entities";
-	import { accessibilityConfig } from "../../lib/config";
+	import { appConfig } from "../../lib/config";
 
 	import Avatar from "../Avatar.vue";
 	import accountCircle from "@material-symbols/svg-600/rounded/supervised_user_circle.svg";
@@ -41,7 +41,7 @@
 <template>
 	<IonChip
 		:class="{
-			'with-border-color': props.showBorderColor && accessibilityConfig.colorIndicatorPosition === 'list-item'
+			'with-border-color': props.showBorderColor && appConfig.colorIndicatorPosition === 'list-item'
 		}"
 		:style="getStyle()"
 		@click="click"

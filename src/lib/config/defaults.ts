@@ -15,6 +15,7 @@ export const defaultAppConfig: AppConfig = {
 		accentColor: "#30628C",
 		backgroundColor: "#308C88",
 	},
+	colorIndicatorPosition: "avatar",
 	fontStyle: "default",
 	dashboardSettings: {
 		notesAccordion: {
@@ -69,7 +70,6 @@ export const defaultAppConfig: AppConfig = {
 export const defaultAccessibilityConfig: AccessibilityConfig = {
 	highLegibility: false,
 	highLegibilityType: "atkinson",
-	colorIndicatorPosition: "avatar",
 	themeIsAmoled: false,
 	tintWithColor: "on",
 	reducedMotion: false,

@@ -4,7 +4,7 @@
 		IonIcon,
 	} from "@ionic/vue";
 
-	import { accessibilityConfig } from "../lib/config";
+	import { appConfig } from "../lib/config";
 	import { ImageClip } from "../lib/db/entities";
 	import { useBlob } from "../lib/util/blob";
 
@@ -32,7 +32,7 @@
 		:class="[
 			'avatar',
 			{ 'smaller': !!props.smaller },
-			{ 'with-outline': props.withOutline && accessibilityConfig.colorIndicatorPosition === 'avatar' },
+			{ 'with-outline': props.withOutline && appConfig.colorIndicatorPosition === 'avatar' },
 			{ 'with-shape': !!props.clipShape },
 			{ [`shape-${props.clipShape}`]: !!props.clipShape },
 		]"

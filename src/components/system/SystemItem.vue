@@ -54,7 +54,7 @@
 		:class="{
 			archived: props.showEffects && props.system.isArchived,
 			'with-cover': props.showCover && !accessibilityConfig.disableCovers,
-			'with-border-color': props.showBorderColor && accessibilityConfig.colorIndicatorPosition === 'list-item',
+			'with-border-color': props.showBorderColor && appConfig.colorIndicatorPosition === 'list-item',
 			'default-system': props.showEffects && system.uuid === appConfig.defaultSystem
 		}"
 		:style="getStyle()"

@@ -14,7 +14,7 @@
 	import { formatDate, getCustomName, promptOkCancel, sortDate, sortName } from "../lib/util/misc";
 
 	import accountCircle from "@material-symbols/svg-600/rounded/account_circle-fill.svg";
-	import { accessibilityConfig } from "../lib/config";
+	import { appConfig } from "../lib/config";
 	import Comments from "../modals/Comments.vue";
 
 	const i18next = useTranslation();
@@ -183,7 +183,7 @@
 		:class="{
 			filled: props.boardMessage.isPinned,
 			archived: props.boardMessage.isArchived,
-			'with-border-color': props.showBorderColor && accessibilityConfig.colorIndicatorPosition === 'list-item'
+			'with-border-color': props.showBorderColor && appConfig.colorIndicatorPosition === 'list-item'
 		}"
 	>
 		<AvatarStack

@@ -10,7 +10,7 @@
 	import { defaultMember, getMember } from "../../lib/db/tables/members";
 	import { addModal, removeModal } from "../../lib/modals";
 	import { FrontingCo } from "../../lib/db/types";
-	import { accessibilityConfig } from "../../lib/config";
+	import { appConfig } from "../../lib/config";
 	import { useRoute } from "vue-router";
 
 	import AnalyticsDetail from "../../modals/AnalyticsDetail.vue";
@@ -554,7 +554,7 @@
 							v-for="memberCouple in flattenFrontingCo(analytics)"
 							:key="memberCouple[0].join(':')"
 							button
-							:class="{ 'with-border-color': accessibilityConfig.colorIndicatorPosition === 'list-item' }"
+							:class="{ 'with-border-color': appConfig.colorIndicatorPosition === 'list-item' }"
 							:style="getStyle(memberCouple[0])"
 							@click="showModal(memberCouple[1].entries)"
 						>

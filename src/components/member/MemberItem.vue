@@ -4,7 +4,7 @@
 	import MemberLabel from "./MemberLabel.vue";
 	import { FrontingEntryComplete, Member, System } from "../../lib/db/entities";
 	import { useBlob } from "../../lib/util/blob";
-	import { accessibilityConfig } from "../../lib/config";
+	import { accessibilityConfig, appConfig } from "../../lib/config";
 	import { getSystem } from "../../lib/db/tables/system";
 	import { onBeforeMount, shallowRef, watch } from "vue";
 
@@ -85,7 +85,7 @@
 		:class="{
 			archived: props.showArchived && props.member.isArchived,
 			'with-cover': props.showCover && !accessibilityConfig.disableCovers,
-			'with-border-color': props.showBorderColor && accessibilityConfig.colorIndicatorPosition === 'list-item'
+			'with-border-color': props.showBorderColor && appConfig.colorIndicatorPosition === 'list-item'
 		}"
 		:style="getStyle()"
 	>

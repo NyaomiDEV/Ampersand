@@ -94,7 +94,7 @@
 			outlined: !props.entry.isMainFronter,
 			influencing: !!props.entry.influencing,
 			compact: !props.showCover || accessibilityConfig.disableCovers,
-			'with-border-color': props.showBorderColor && accessibilityConfig.colorIndicatorPosition === 'list-item'
+			'with-border-color': props.showBorderColor && appConfig.colorIndicatorPosition === 'list-item'
 		}"
 		:style="getStyle()"
 	>

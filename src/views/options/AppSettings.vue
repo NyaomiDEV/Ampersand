@@ -234,10 +234,10 @@
 				</IonItem>
 
 				<IonItem>
-					<IonIcon v-if="accessibilityConfig.colorIndicatorPosition === 'avatar'" slot="start" :icon="colorsMD" />
-					<IonIcon v-if="accessibilityConfig.colorIndicatorPosition === 'list-item'" slot="start" :icon="borderMD" />
+					<IonIcon v-if="appConfig.colorIndicatorPosition === 'avatar'" slot="start" :icon="colorsMD" />
+					<IonIcon v-if="appConfig.colorIndicatorPosition === 'list-item'" slot="start" :icon="borderMD" />
 					<IonSelect
-						v-model="accessibilityConfig.colorIndicatorPosition"
+						v-model="appConfig.colorIndicatorPosition"
 						label-placement="floating"
 						:label="$t('appSettings:colorIndicatorPosition.title')"
 						:cancel-text="$t('other:alerts.cancel')"

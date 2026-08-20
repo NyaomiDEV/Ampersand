@@ -7,7 +7,7 @@
 	import { onBeforeMount, shallowRef, watch } from "vue";
 	import { getTag, getTagsIndex } from "../../lib/db/tables/tags";
 	import { useBlob } from "../../lib/util/blob";
-	import { accessibilityConfig } from "../../lib/config";
+	import { appConfig } from "../../lib/config";
 
 	const { getObjectURL } = useBlob();
 
@@ -80,7 +80,7 @@
 		button
 		:style="getStyle()"
 		:class="{
-			'with-border-color': props.showBorderColor && accessibilityConfig.colorIndicatorPosition === 'list-item',
+			'with-border-color': props.showBorderColor && appConfig.colorIndicatorPosition === 'list-item',
 			'pinned': props.showEffects && props.post.isPinned
 		}"
 	>
