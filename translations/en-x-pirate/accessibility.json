@@ -16,11 +16,6 @@
 		"title": "Black Hole mode",
 		"desc": "Use a total black background when sailin' at night. Keeps yer glass from wearin' out."
 	},
-	"colorIndicatorPosition": {
-		"title": "Color mark position",
-		"avatar": "Avatar outline",
-		"listItem": "List item border"
-	},
 	"tintWithColor": {
 		"title": "Tint with color",
 		"off": "Off",

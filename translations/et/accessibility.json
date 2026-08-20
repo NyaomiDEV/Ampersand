@@ -21,11 +21,6 @@
 		"title": "AMOLED-i režiim",
 		"desc": "Saad tumedas kujunduses kasutada süsimusta tausta. Võib vähendada ekraani väsimist ja kulumist."
 	},
-	"colorIndicatorPosition": {
-		"title": "Värvinäidiku asukoht",
-		"avatar": "Tunnuspildi piirjooned",
-		"listItem": "Loendiobjekti äärejooned"
-	},
 	"reducedMotion": {
 		"desc": "Lülita rakendusesisesed animatsioonid välja",
 		"title": "Vähem liikumist"

@@ -31,11 +31,6 @@
 		"title": "AMOLED-Modus",
 		"desc": "Verwende einen vollständig schwarzen Hintergrund, wenn der Dunkelmodus aktiv ist. Kann Display-Abnutzung reduzieren."
 	},
-	"colorIndicatorPosition": {
-		"title": "Position des Farbindikators",
-		"avatar": "Avatar-Umriss",
-		"listItem": "Listenelement-Grenze"
-	},
 	"compactLists": {
 		"title": "Kompakte Listen"
 	},

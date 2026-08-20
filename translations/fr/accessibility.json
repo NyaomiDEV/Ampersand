@@ -31,10 +31,5 @@
 	"themeIsAmoled": {
 		"title": "Mode AMOLED",
 		"desc": "Affiche un fond complètement noir en mode sombre. Peut réduire l’usure de l’écran."
-	},
-	"colorIndicatorPosition": {
-		"title": "Emplacement de l’indicateur coloré",
-		"avatar": "Bordure de l’image de profil",
-		"listItem": "Bordure de la liste des membres"
 	}
 }

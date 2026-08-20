@@ -37,6 +37,9 @@
 	import customColorMD from "@material-symbols/svg-600/rounded/palette.svg";
 	import fontMD from "@material-symbols/svg-600/rounded/brand_family.svg";
 
+	import colorsMD from "@material-symbols/svg-600/rounded/colors.svg";
+	import borderMD from "@material-symbols/svg-600/rounded/border_color.svg";
+
 	const defaultSystem = shallowRef<System>({
 		uuid: appConfig.defaultSystem,
 		name: "",
@@ -229,6 +232,26 @@
 						</IonSelectOption>
 					</IonSelect>
 				</IonItem>
+
+				<IonItem>
+					<IonIcon v-if="accessibilityConfig.colorIndicatorPosition === 'avatar'" slot="start" :icon="colorsMD" />
+					<IonIcon v-if="accessibilityConfig.colorIndicatorPosition === 'list-item'" slot="start" :icon="borderMD" />
+					<IonSelect
+						v-model="accessibilityConfig.colorIndicatorPosition"
+						label-placement="floating"
+						:label="$t('accessibility:colorIndicatorPosition.title')"
+						:cancel-text="$t('other:alerts.cancel')"
+						interface="action-sheet"
+					>
+						<IonSelectOption value="avatar">
+							{{ $t("accessibility:colorIndicatorPosition.avatar") }}
+						</IonSelectOption>
+						<IonSelectOption value="list-item">
+							{{ $t("accessibility:colorIndicatorPosition.listItem") }}
+						</IonSelectOption>
+					</IonSelect>
+				</IonItem>
+
 				<IonItem button detail @click="dashboardSettingsModal?.$el.present()">
 					<IonIcon slot="start" :icon="dashboardMD" />
 					<IonLabel>{{ $t("appSettings:dashboard.title") }}</IonLabel>

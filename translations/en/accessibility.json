@@ -15,11 +15,6 @@
 		"title": "AMOLED mode",
 		"desc": "Use a total black background when in dark mode. Can reduce display wear."
 	},
-	"colorIndicatorPosition": {
-		"title": "Color indicator position",
-		"avatar": "Avatar outline",
-		"listItem": "List item border"
-	},
 	"tintWithColor": {
 		"title": "Tint with color",
 		"off": "Off",

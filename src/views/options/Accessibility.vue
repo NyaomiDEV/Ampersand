@@ -8,8 +8,6 @@
 	import fontMD from "@material-symbols/svg-600/rounded/format_size.svg";
 	import smallTextMD from "@material-symbols/svg-600/rounded/text_decrease.svg";
 	import bigTextMD from "@material-symbols/svg-600/rounded/text_increase.svg";
-	import colorsMD from "@material-symbols/svg-600/rounded/colors.svg";
-	import borderMD from "@material-symbols/svg-600/rounded/border_color.svg";
 	import compactMD from "@material-symbols/svg-600/rounded/list_alt.svg";
 	import hideCoverMD from "@material-symbols/svg-600/rounded/hide_image.svg";
 	import motionMD from "@material-symbols/svg-600/rounded/masked_transitions.svg";
@@ -211,25 +209,6 @@
 					<IonToggle v-model="accessibilityConfig.compactLists">
 						<IonLabel> {{ $t("accessibility:compactLists.title") }} </IonLabel>
 					</IonToggle>
-				</IonItem>
-
-				<IonItem>
-					<IonIcon v-if="accessibilityConfig.colorIndicatorPosition === 'avatar'" slot="start" :icon="colorsMD" />
-					<IonIcon v-if="accessibilityConfig.colorIndicatorPosition === 'list-item'" slot="start" :icon="borderMD" />
-					<IonSelect
-						v-model="accessibilityConfig.colorIndicatorPosition"
-						label-placement="floating"
-						:label="$t('accessibility:colorIndicatorPosition.title')"
-						:cancel-text="$t('other:alerts.cancel')"
-						interface="action-sheet"
-					>
-						<IonSelectOption value="avatar">
-							{{ $t("accessibility:colorIndicatorPosition.avatar") }}
-						</IonSelectOption>
-						<IonSelectOption value="list-item">
-							{{ $t("accessibility:colorIndicatorPosition.listItem") }}
-						</IonSelectOption>
-					</IonSelect>
 				</IonItem>
 			</IonList>
 		</IonContent>

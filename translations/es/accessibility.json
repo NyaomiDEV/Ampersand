@@ -25,11 +25,6 @@
 		"title": "Pantallas AMOLED",
 		"desc": "Utiliza un fondo totalmente negro cuando estés en modo oscuro. Esto puede reducir el desgaste de la pantalla."
 	},
-	"colorIndicatorPosition": {
-		"title": "Posición del indicador de color",
-		"avatar": "Contorno del avatar",
-		"listItem": "Borde del elemento de la lista"
-	},
 	"fontScale": {
 		"title": "Tamaño de la letra"
 	},

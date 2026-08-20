@@ -16,13 +16,6 @@
 		"title": "Modalità AMOLED",
 		"desc": "Usa uno sfondo totalmente nero in modalità scura. Può ridurre l'usura di alcuni display."
 	},
-	
-	"colorIndicatorPosition": {
-		"title": "Posizione dell'indicatore del colore",
-		"avatar": "Contorno dell'avatar",
-		"listItem": "Bordo dell'elemento sulla lista"
-	},
-	
 	"tintWithColor": {
 		"title": "Tingi col colore",
 		"off": "Off",

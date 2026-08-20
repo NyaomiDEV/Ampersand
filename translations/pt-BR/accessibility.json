@@ -22,11 +22,6 @@
 		"title": "Modo AMOLED",
 		"desc": "Use um plano de fundo totalmente preto enquanto no modo escuro. Pode ajudar a diminuir desgaste de tela."
 	},
-	"colorIndicatorPosition": {
-		"title": "Posição do indicador de cor",
-		"avatar": "Contorno do avatar",
-		"listItem": "Borda do item da lista"
-	},
 	"reducedMotion": {
 		"title": "Movimento reduzido",
 		"desc": "Desativar animações no app"

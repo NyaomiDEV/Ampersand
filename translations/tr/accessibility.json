@@ -26,11 +26,6 @@
 		"title": "AMOLED modu",
 		"desc": "Karanlık modda iken tamamen siyah bir arka plan kullan. Görüntüleme aşınmasını azaltabilir."
 	},
-	"colorIndicatorPosition": {
-		"title": "Renk belirteçi konumu",
-		"avatar": "Avatar dış çizgisi",
-		"listItem": "Liste öğesi çerçevesi"
-	},
 	"contrastLevel": {
 		"title": "Kontrast seviyesi"
 	},
