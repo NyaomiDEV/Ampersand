@@ -239,15 +239,15 @@
 					<IonSelect
 						v-model="accessibilityConfig.colorIndicatorPosition"
 						label-placement="floating"
-						:label="$t('accessibility:colorIndicatorPosition.title')"
+						:label="$t('appSettings:colorIndicatorPosition.title')"
 						:cancel-text="$t('other:alerts.cancel')"
 						interface="action-sheet"
 					>
 						<IonSelectOption value="avatar">
-							{{ $t("accessibility:colorIndicatorPosition.avatar") }}
+							{{ $t("appSettings:colorIndicatorPosition.avatar") }}
 						</IonSelectOption>
 						<IonSelectOption value="list-item">
-							{{ $t("accessibility:colorIndicatorPosition.listItem") }}
+							{{ $t("appSettings:colorIndicatorPosition.listItem") }}
 						</IonSelectOption>
 					</IonSelect>
 				</IonItem>
