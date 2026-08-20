@@ -10,7 +10,7 @@
 	import { newFile } from "../lib/fileref.ts";
 	import { getExtension } from "../lib/mime.ts";
 	import { securityConfig } from "../lib/config/index.ts";
-	import { isBorderStyle, isColor, isLength } from "../lib/markdown/utils.ts";
+	import { isBorderStyle, isColor, isLength, isTextDecorationLine, isTextDecorationStyle, isTextDecorationThickness } from "../lib/markdown/utils.ts";
 	import { useAssetFonts } from "../lib/assetFonts.ts";
 	import { fontQuickNames } from "../lib/util/misc.ts";
 
@@ -123,7 +123,10 @@
 			'--data-header-font': frontmatter.headerFont ? `'${fontQuickNames[frontmatter.headerFont] || frontmatter.headerFont}'` : undefined,
 			'--data-header-weight': frontmatter.headerBold ? 'bold' : 'regular',
 			'--data-header-style': frontmatter.headerItalic ? 'italic' : 'normal',
-			'--data-header-decoration': frontmatter.headerDecoration,
+			'--data-header-decoration-line': frontmatter.headerDecorationLine && isTextDecorationLine(frontmatter.headerDecorationLine) ? frontmatter.headerDecorationLine : undefined,
+			'--data-header-decoration-color': frontmatter.headerDecorationColor && isColor(frontmatter.headerDecorationColor) ? frontmatter.headerDecorationColor : undefined,
+			'--data-header-decoration-style': frontmatter.headerDecorationStyle && isTextDecorationStyle(frontmatter.headerDecorationStyle) ? frontmatter.headerDecorationStyle : undefined,
+			'--data-header-decoration-thickness' : frontmatter.headerDecorationThickness && isTextDecorationThickness(frontmatter.headerDecorationThickness) ? frontmatter.headerDecorationThickness : undefined,
 			'--data-font': frontmatter.font ? `'${fontQuickNames[frontmatter.font] || frontmatter.font}'` : undefined,
 			'--data-border-style': frontmatter.borderStyle && isBorderStyle(frontmatter.borderStyle) ? frontmatter.borderStyle : undefined,
 			'--data-border-color': frontmatter.borderColor && isColor(frontmatter.borderColor) ? frontmatter.borderColor : undefined,
@@ -159,7 +162,10 @@
 				font-family: var(--data-header-font, inherit) !important;
 				font-weight: var(--data-header-weight, inherit) !important;
 				font-style: var(--data-header-style, inherit) !important;
-				text-decoration: var(--data-header-decoration, inherit) !important;
+				text-decoration-line: var(--data-header-decoration-line, inherit) !important;
+				text-decoration-style: var(--data-header-decoration-style, inherit) !important;
+				text-decoration-color: var(--data-header-decoration-color, inherit) !important;
+				text-decoration-thickness: var(--data-header-decoration-thickness, inherit) !important;
 			}
 		}
 	}

@@ -11,7 +11,10 @@ export type FrontmatterHeader = {
 	headerFont?: string,
 	headerBold?: boolean,
 	headerItalic?: boolean,
-	headerDecoration?: string
+	headerDecorationLine?: string
+	headerDecorationColor?: string
+	headerDecorationStyle?: string
+	headerDecorationThickness?: string
 };
 
 export type FrontmatterEncased = {
