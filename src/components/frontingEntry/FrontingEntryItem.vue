@@ -3,7 +3,8 @@
 	import { FrontingEntryComplete, Member } from "../../lib/db/entities";
 	import { appConfig } from "../../lib/config";
 	import MemberItem from "../member/MemberItem.vue";
-	import commentMD from "@material-symbols/svg-600/rounded/contract.svg";
+	import summaryMD from "@material-symbols/svg-600/rounded/contract.svg";
+	import commentsMD from "@material-symbols/svg-600/rounded/comment.svg";
 	import FrontingEntryLabel from "./FrontingEntryLabel.vue";
 	import FrontingEntryInterval from "./FrontingEntryInterval.vue";
 	import { hexFromArgb } from "@material/material-color-utilities";
@@ -69,7 +70,8 @@
 			:presence-average="props.presenceAverage"
 		/>
 		<template #end>
-			<IonIcon v-if="props.entry.summary?.length" slot="end" :icon="commentMD" />
+			<IonIcon v-if="props.entry.summary?.length" slot="end" :icon="summaryMD" />
+			<IonIcon v-if="props.entry.comments?.length" slot="end" :icon="commentsMD" />
 		</template>
 	</MemberItem>
 </template>
