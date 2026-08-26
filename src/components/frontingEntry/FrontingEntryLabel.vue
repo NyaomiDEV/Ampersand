@@ -13,7 +13,7 @@
 	}>();
 	
 	function format(startTime: Date, endTime?: Date){
-		if(!endTime) return formatDate(startTime, "expanded");
+		if(!endTime) return formatDate(startTime, "collapsed");
 
 		const start = dayjs(startTime);
 		const end = dayjs(endTime);
@@ -21,7 +21,7 @@
 		if(end.valueOf() - start.endOf("day").valueOf() <= 0 && !props.showDateComplete) // same day
 			return `${formatDate(startTime)}~${formatDate(endTime)}`;
 		
-		return `${formatDate(startTime, "expanded")} - ${formatDate(endTime, "expanded")}`;
+		return `${formatDate(startTime, "collapsed")} - ${formatDate(endTime, "collapsed")}`;
 	}
 
 	function getPresenceAverage(){

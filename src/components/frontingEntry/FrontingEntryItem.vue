@@ -3,7 +3,7 @@
 	import { FrontingEntryComplete, Member } from "../../lib/db/entities";
 	import { appConfig } from "../../lib/config";
 	import MemberItem from "../member/MemberItem.vue";
-	import commentMD from "@material-symbols/svg-600/rounded/comment.svg";
+	import commentMD from "@material-symbols/svg-600/rounded/contract.svg";
 	import FrontingEntryLabel from "./FrontingEntryLabel.vue";
 	import FrontingEntryInterval from "./FrontingEntryInterval.vue";
 	import { hexFromArgb } from "@material/material-color-utilities";
@@ -57,13 +57,11 @@
 		}"
 		:style="getStyle()"
 	>
-		<template #before>
-			<h3 v-if="!appConfig.hideFrontingTimer" :entry="props.entry" style="float: right">
-				<FrontingEntryInterval v-slot="{ interval }" :entry="props.entry">
-					{{ interval }}
-				</FrontingEntryInterval>
-			</h3>
-		</template>
+		<p v-if="!appConfig.hideFrontingTimer">
+			<FrontingEntryInterval v-slot="{ interval }" :entry="props.entry">
+				{{ interval }}
+			</FrontingEntryInterval>
+		</p>
 		<FrontingEntryLabel
 			:entry="props.entry"
 			:show-date="props.showDate"
