@@ -104,6 +104,13 @@ jobs:
           archive: false
           path: |
             ./src-tauri/gen/android/app/build/outputs/apk/arm64/release/ampersand*-arm64-release.apk
+      - name: Publish artifact (Dist folder for crosschecking)
+        uses: actions/upload-artifact@v7
+        with:
+          name: Dist folder
+          archive: true
+          path: |
+            ./dist
       - name: Publish to release (APK)
         uses: shogo82148/actions-upload-release-asset@v1
         with:
