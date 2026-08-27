@@ -65,9 +65,9 @@ export default defineConfig({
 		distPath: {
 			root: "dist",
 			assets: "static/assets",
-			font: "static/assets",
+			font: "static/fonts",
 			image: "static/images",
-			svg: "static/images",
+			svg: "static/icons",
 			media: "static/media",
 			js: "js",
 			css: "styles",
@@ -76,7 +76,28 @@ export default defineConfig({
 			wasm: "wasm"
 		},
 		minify: true,
-		polyfill: "usage"
+		polyfill: "usage",
+		inlineScripts: false,
+		inlineStyles: false,
+		dataUriLimit: {
+			svg: 0,
+			font: 0,
+			image: 0,
+			media: 0,
+			assets: 0,
+		},
+		filename: {
+			html: "[name].html",
+			js: "[contenthash:10].js",
+			css: "[contenthash:10].css",
+			svg: "[contenthash:10].svg",
+			font: "[contenthash:10][ext]",
+			wasm: "[contenthash:10].wasm",
+			image: "[contenthash:10][ext]",
+			media: "[contenthash:10][ext]",
+			assets: "[contenthash:10][ext]",
+		},
+		legalComments: "inline"
 	},
 	tools: {
 		rspack(_config, { addRules }) {
