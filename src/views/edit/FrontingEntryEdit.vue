@@ -513,6 +513,7 @@
 
 			<IonList>
 				<IonItem
+					v-if="frontingEntry.uuid"
 					class="comments"
 					button
 					detail
