@@ -74,7 +74,6 @@
 
 	div.preview {
 		width: 100%;
-		min-height: 2.5em;
 		line-height: normal;
 		color: rgb(var(--md3-on-surface-variant));
 		display: flex;
@@ -82,8 +81,8 @@
 		padding: 0 16px;
 
 		> .content {
-			margin: 8px 0 0 0;
 			padding: 0 0 8px 0;
+			min-height: 3.5em;
 
 			> table {
 				width: 100%;

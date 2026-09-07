@@ -23,6 +23,7 @@
 	import tupMD from "@material-symbols/svg-600/rounded/package_2.svg";
 	import pkMD from "@material-symbols/svg-600/rounded/pet_supplies.svg";
 	import jsonMD from "@material-symbols/svg-600/rounded/data_object.svg";
+	import { isSwipeGestureInhibited } from "../../lib/util/back.ts";
 
 	const loading = ref(false);
 	const barProgress = ref(-1);
@@ -290,7 +291,7 @@
 	// block swipe-to-go-back depending on loading state, on iOS
 	if(platform() === "ios"){
 		watch(loading, () => {
-			window.Ionic.config.set("swipeBackEnabled", !loading.value);
+			isSwipeGestureInhibited.value = loading.value;
 		});
 	}
 </script>

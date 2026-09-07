@@ -4,7 +4,7 @@
 
 	import { computed, provide, watch } from "vue";
 	import ModalContainer from "./components/ModalContainer.vue";
-	import { useBack } from "./lib/util/backbutton";
+	import { isSwipeGestureInhibited, useBack } from "./lib/util/back.ts";
 	import { dismissSplash } from "./lib/native/plugin";
 	import { appConfig } from "./lib/config";
 	import AssetFonts from "./components/AssetFonts.vue";
@@ -47,7 +47,7 @@
 
 <template>
 	<IonApp name="Ampersand">
-		<IonRouterOutlet />
+		<IonRouterOutlet :swipe-gesture="!isSwipeGestureInhibited && platform() === 'ios'" />
 		<ModalContainer />
 		<AssetFonts />
 	</IonApp>

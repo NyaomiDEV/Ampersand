@@ -4,7 +4,7 @@
 	--highlight-color-invalid: rgb(var(--md3-error));
 	--highlight-color-focused: rgb(var(--md3-primary));
 
-	&::part(inner) {
+	&::part(control) {
 		justify-content: space-between;
 		width: 100%;
 	}
