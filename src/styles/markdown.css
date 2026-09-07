@@ -56,7 +56,7 @@
 				border-left: var(--markdown-table-bt-left, var(--border));
 				background: var(--markdown-table-bg, unset);
 				color: var(--markdown-table-fg, unset);
-				empty-cells: var(--markdown-empty-cells, show);
+				empty-cells: var(--markdown-table-empty-cells, show);
 
 			th {
 				background: var(--markdown-th-bg, unset);
@@ -216,7 +216,7 @@
 						color: var(--markdown-first-col-fg, var(--markdown-last-row-fg, var(--markdown-odd-td-fg, var(--markdown-td-fg, unset))));
 						border-top: var(--markdown-first-col-bt-top, var(--markdown-last-row-bt-top, var(--markdown-odd-td-bt-top, var(--markdown-td-bt-top, var(--border)))));
 						border-right: var(--markdown-first-col-bt-right, var(--markdown-last-row-bt-right, var(--markdown-odd-td-bt-right, var(--markdown-td-bt-right, var(--border)))));
-						border-bottom: var(--markdown-first-col-bt-bottom, var(--markdown-last-row-bt-bottom, var(--markdown-odd-td-bt-bottom, var(-markdown-td-bt-bottom, var(--border)))));
+						border-bottom: var(--markdown-first-col-bt-bottom, var(--markdown-last-row-bt-bottom, var(--markdown-odd-td-bt-bottom, var(--markdown-td-bt-bottom, var(--border)))));
 						border-left: var(--markdown-first-col-bt-left, var(--markdown-last-row-bt-left, var(--markdown-odd-td-bt-left, var(--markdown-td-bt-left, var(--border)))));
 						border-radius: var(--markdown-first-col-radius, var(--markdown-last-row-radius, var(--markdown-odd-td-radius, var(--markdown-td-radius, var(--markdown-table-border-radius)))));
 						padding: var(--markdown-first-col-padding, var(--markdown-last-row-padding, var(--markdown-odd-td-padding, var(--markdown-td-padding, var(--markdown-table-padding, var(--padding))))));
@@ -230,7 +230,7 @@
 						border-bottom: var(--markdown-last-col-bt-bottom, var(--markdown-last-row-bt-bottom, var(--markdown-odd-td-bt-bottom, var(--markdown-td-bt-bottom, var(--border)))));
 						border-left: var(--markdown-last-col-bt-left, var(--markdown-last-row-bt-left, var(--markdown-odd-td-bt-left, var(--markdown-td-bt-left, var(--border)))));
 						border-radius: var(--markdown-last-col-radius, var(--markdown-last-row-radius, var(--markdown-odd-td-radius, var(--markdown-td-radius, var(--markdown-table-border-radius)))));
-						padding: var(--markdown-last-col-padding, var(--markdown-last-row-padding, var(--markdown-odd-td-padding, var(--markdown-td-padding, var(--markdown-table-paddin, var(--padding))))));
+						padding: var(--markdown-last-col-padding, var(--markdown-last-row-padding, var(--markdown-odd-td-padding, var(--markdown-td-padding, var(--markdown-table-padding, var(--padding))))));
 					}
 				}
 			}
