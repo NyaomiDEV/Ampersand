@@ -2,7 +2,7 @@
 import { decodeMultiStream, encode as msgpackEncode } from "@msgpack/msgpack";
 import { accessibilityConfig, appConfig, initConfig, securityConfig } from "../../config";
 import { getTables } from "..";
-import type { Table } from "../types";
+import type { AmpersandTableMapping, Table } from "../types";
 import { deleteNull, replace, revive, walkAsync } from "../../serialization";
 import { dirname, documentDir, sep } from "@tauri-apps/api/path";
 import { mkdir, open as openFile, remove } from "@tauri-apps/plugin-fs";
@@ -11,7 +11,7 @@ import { AMPERSAND_ARCHIVE_MAGICS, matchMagicNew } from "./magic";
 import dayjs from "dayjs";
 import { platform } from "@tauri-apps/plugin-os";
 import { System, UUIDable } from "../entities";
-import { ArchiveStreamConfig, ArchiveStreamDatabase, ArchiveStreamRevision } from "./archive_types";
+import { ArchiveStreamConfig, ArchiveStreamDatabase, ArchiveStreamMigrations, ArchiveStreamRevision } from "./archive_types";
 import { intoStream } from "../../native/fs";
 
 const revision = parseInt(import.meta.env.AMPERSAND_REVCOUNT);
@@ -145,7 +145,19 @@ export function importArchive() {
 			const multiStreamDecoder = decodeMultiStream(stream) as AsyncGenerator<{ table: string, data: any; }>;
 
 			let revisionWasParsed = magicVersion < 2 ? true : false;
-			const migrationsData: Record<string, number> = {};
+			const migrationsData: Record<keyof AmpersandTableMapping, number> = {
+				boardMessages: 0,
+				frontingEntries: 0,
+				journalPosts: 0,
+				members: 0,
+				reminders: 0,
+				systems: 0,
+				tags: 0,
+				assets: 0,
+				customFields: 0,
+				notes: 0,
+				filterQueries: 0
+			};
 
 			// clear all tables if magic version < 2 -- this is a tradeoff of not thinking things through the first time
 			if(magicVersion < 2){
@@ -172,7 +184,8 @@ export function importArchive() {
 					}
 					case "__migrations": {
 						if (!revisionWasParsed) throw new Error("malformed, revision fragment must be first");
-						Object.assign(migrationsData, data);
+						const _data = data as ArchiveStreamMigrations;
+						Object.assign(migrationsData, _data.data);
 						break;
 					}
 					case "__config": {

@@ -2,6 +2,7 @@ import { System } from "typescript";
 import { AccessibilityConfig, AppConfig, SecurityConfig } from "../../config/types";
 import type { Serialized } from "../../serialization";
 import { Asset, BoardMessage, CustomField, FrontingEntry, JournalPost, Member, Tag, UUIDable } from "../entities";
+import { AmpersandTableMapping } from "../types";
 
 export interface ArchiveStream {
 	table: string,
@@ -16,6 +17,11 @@ export interface ArchiveStreamDatabase {
 export interface ArchiveStreamRevision extends ArchiveStream {
 	table: "__revision",
 	data: number
+}
+
+export interface ArchiveStreamMigrations extends ArchiveStream {
+	table: "__migrations",
+	data: Record<keyof AmpersandTableMapping, number>
 }
 
 export interface ArchiveStreamConfig extends ArchiveStream {

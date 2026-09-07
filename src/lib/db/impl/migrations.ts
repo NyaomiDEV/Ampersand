@@ -151,17 +151,20 @@ export async function members(table: ShittyTable<Member>, version: number){
 		try {
 			for (const uuid of uuids) {
 				const obj = await table.get(uuid) as MThree;
-				const dissociativeState = obj.isCustomFront;
-				
-				// @ts-expect-error we're deleting a required argument but it's not required anywhere anymore
-				delete obj.isCustomFront;
 
-				await table.write(
-					{
-						...obj,
-						isDissociativeState: dissociativeState
-					}, false
-				);
+				if(obj.isCustomFront !== undefined){
+					const dissociativeState = obj.isCustomFront;
+
+					// @ts-expect-error we're deleting a required argument but it's not required anywhere anymore
+					delete obj.isCustomFront;
+
+					await table.write(
+						{
+							...obj,
+							isDissociativeState: dissociativeState
+						}, false
+					);
+				}
 			}
 
 			await table.saveIndexToDisk();
