@@ -4,7 +4,8 @@
 		"prevInstall": "Si, instalación previa",
 		"startFromScratch": "No, iniciaré desde cero",
 		"pleaseWait": "Por favor espera mientras importamos tus datos",
-		"error": "Error al importar el respaldo. Por favor selecciona otra opción."
+		"error": "Error al importar el respaldo. Por favor selecciona otra opción.",
+		"thirdPartyHint": "También puedes importar desde servicios externos en Opciones > Importar / Exportar una vez finalizada la configuración inicial."
 	},
 	"systemInfo": {
 		"header": "¡Dinos sobre tu sistema!",

@@ -173,5 +173,15 @@
 		"outline": "Contorno",
 		"shadow": "Sombra"
 	},
-	"delete": "Borrar"
+	"delete": "Borrar",
+	"image": {
+		"delete": "Eliminar imagen",
+		"edit": "Esitar imagen",
+		"save": "Guardar imagen"
+	},
+	"cover": {
+		"delete": "Eliminar la portada",
+		"edit": "Editar la portada",
+		"save": "Guardar la portada"
+	}
 }

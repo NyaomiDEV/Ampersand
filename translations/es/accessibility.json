@@ -42,5 +42,8 @@
 		"off": "Apagado",
 		"accent": "Solo color del acento",
 		"on": "Encendido"
+	},
+	"wordSpacing": {
+		"title": "separación entre palabras"
 	}
 }
