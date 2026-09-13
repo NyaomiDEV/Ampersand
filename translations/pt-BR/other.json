@@ -179,7 +179,8 @@
 	"delete": "Remover",
 	"image": {
 		"delete": "Deletar imagem",
-		"edit": "Modificar Imagem"
+		"edit": "Modificar Imagem",
+		"save": "Salvar imagem"
 	},
 	"cover": {
 		"delete": "Deletar capa",

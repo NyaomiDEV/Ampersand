@@ -15,5 +15,6 @@
 		"export": "Salvesta manus"
 	},
 	"header": "Varade haldus",
-	"searchPlaceholder": "Otsi varasid…"
+	"searchPlaceholder": "Otsi varasid…",
+	"select": "Vali süsteem"
 }
