@@ -4,7 +4,8 @@
 		"prevInstall": "Jah, eelmine paigaldus",
 		"startFromScratch": "Ei, ma alustan nullist",
 		"pleaseWait": "Palun oota, kuni me impordime andmeid",
-		"error": "Viga varukoopia importimisel. Palun vali midagi muud."
+		"error": "Viga varukoopia importimisel. Palun vali midagi muud.",
+		"thirdPartyHint": "Peale sissejuhatuse lõpetamist võid sa andmeid importida ka menüüst „Valikud“ → „Import/eksport“."
 	},
 	"memberInfo": {
 		"header": "Räägi meile endast lähemalt!",

@@ -5,7 +5,8 @@
 		"lexend": "Lexend",
 		"comicrelief": "Comic Relief",
 		"system-font": "Süsteemi kirjatüüp",
-		"atkinson": "Atkinson Hyperlegible"
+		"atkinson": "Atkinson Hyperlegible",
+		"luciole": "Luciole"
 	},
 	"fontScale": {
 		"title": "Kirjatüübi suurus"
@@ -42,5 +43,8 @@
 		"off": "Pole kasutusel",
 		"accent": "Vaid aktsentvärv",
 		"on": "Kasutusel"
+	},
+	"wordSpacing": {
+		"title": "Sõnavahed"
 	}
 }

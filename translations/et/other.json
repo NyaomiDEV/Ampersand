@@ -172,5 +172,14 @@
 		"outline": "Piirjoontega",
 		"shadow": "Varjudega"
 	},
-	"delete": "Kustuta"
+	"delete": "Kustuta",
+	"image": {
+		"delete": "Kustuta pilt",
+		"edit": "Muuda pilti"
+	},
+	"cover": {
+		"delete": "Kustuta kaanepilt",
+		"edit": "Muuda kaanepilti",
+		"save": "Salvesta kaanepilt"
+	}
 }
