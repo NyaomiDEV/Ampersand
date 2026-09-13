@@ -13,5 +13,9 @@
 	"total": "Insgesamt",
 	"average": "Durchschnittlich",
 	"max": "Maximal",
-	"min": "Mindestens"
+	"min": "Mindestens",
+	"influencingCount_one": "Hat andere einmal beeinflusst",
+	"influencingCount_other": "Hat andere {{count}}-mal beeinflusst",
+	"influencedCount_one": "Wurde von anderen einmal beeinflusst",
+	"influencedCount_other": "Wurde von anderen {{count}}-mal beeinflusst"
 }
