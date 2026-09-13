@@ -3,5 +3,13 @@
 	"stats": "Statistiken",
 	"daytime": "Tageszeit",
 	"startDate": "Startdatum",
-	"endDate": "Enddatum"
+	"endDate": "Enddatum",
+	"detail": "Analysedetail",
+	"presence": "Anwesenheit",
+	"subheaders": {
+		"influencing": "Mitglieder, die andere beeinflussen",
+		"influenced": "Mitglieder, die von anderen beeinflusst werden"
+	},
+	"total": "Insgesamt",
+	"average": "Durchschnittlich"
 }

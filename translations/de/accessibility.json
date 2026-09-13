@@ -42,5 +42,8 @@
 		"accent": "Nur Akzentfarbe",
 		"title": "Einfärben",
 		"on": "Ein"
+	},
+	"wordSpacing": {
+		"title": "Wortabstand"
 	}
 }
