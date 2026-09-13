@@ -173,5 +173,8 @@
 		"outline": "Contorno",
 		"shadow": "Sombra"
 	},
-	"delete": "Remover"
+	"delete": "Remover",
+	"image": {
+		"delete": "Excluir imagem"
+	}
 }

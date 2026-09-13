@@ -175,7 +175,8 @@
 	"delete": "Kustuta",
 	"image": {
 		"delete": "Kustuta pilt",
-		"edit": "Muuda pilti"
+		"edit": "Muuda pilti",
+		"save": "Salvesta pilt"
 	},
 	"cover": {
 		"delete": "Kustuta kaanepilt",
