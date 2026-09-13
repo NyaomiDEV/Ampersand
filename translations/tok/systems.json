@@ -24,7 +24,8 @@
 		"color": "kule",
 		"imageClip": "sijelo sitelen",
 		"viewInLists": "ni li lon lipu pi ijo kulupu",
-		"nameStyle": "nasin sitelen nimi"
+		"nameStyle": "nasin sitelen nimi",
+		"dissociativeStateCountText": "ijo {{totalDissociativeStateCount}} pi lon ala li lon, ijo {{dissociativeStateCount}} pi lon ala li len ala, ijo {{archivedDissociativeStateCount}} pi lon ala li len"
 	},
 	"select": "kulupu pi wile sina"
 }

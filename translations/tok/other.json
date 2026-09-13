@@ -7,7 +7,8 @@
 	"addTimestamp": "nimi sin pi sona tenpo",
 	"memberMention": "nimi sin pi ijo kulupu",
 	"creation": {
-		"dateCreated": "tenpo pali: {{dateCreated}}"
+		"dateCreated": "tenpo pali: {{dateCreated}}",
+		"frontingAtCreationDate": "tenpo pali la ijo kulupu ni li lon: {{frontingAtCreationDate}}"
 	},
 	"alerts": {
 		"ok": "pona",
@@ -156,7 +157,10 @@
 		"bone": "nasin sitelen pi palisa walo",
 		"assetFont": "nasin sitelen pi ijo namako",
 		"elegant": "nasin sitelen pona",
-		"outline": "nasin sitelen selo"
+		"outline": "nasin sitelen selo",
+		"rock": "nasin sitelen kiwen",
+		"reggae": "nasin sitelen Reggae",
+		"stick": "nasin sitelen palisa"
 	},
 	"loading": "ilo Ampersand li pali",
 	"donationLabel": {
@@ -171,5 +175,15 @@
 		"outline": "selo",
 		"shadow": "pimeja"
 	},
-	"delete": "o weka"
+	"delete": "o weka",
+	"image": {
+		"delete": "weka sitelen",
+		"edit": "ante sitelen",
+		"save": "kama jo sitelen"
+	},
+	"cover": {
+		"delete": "weka selo",
+		"edit": "ante selo",
+		"save": "kama jo selo"
+	}
 }

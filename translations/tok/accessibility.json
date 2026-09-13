@@ -42,5 +42,8 @@
 		"off": "lon ala",
 		"accent": "kule namako taso",
 		"on": "lon"
+	},
+	"wordSpacing": {
+		"title": "mute ala pi nimi poka"
 	}
 }

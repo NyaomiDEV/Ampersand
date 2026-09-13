@@ -8,7 +8,8 @@
 		"prevInstall": "mi wile, mi pana e sona mi tan ilo ni pi tenpo pini",
 		"startFromScratch": "ala, mi pali e sona",
 		"pleaseWait": "o awen, ilo li kama jo e sona sina",
-		"error": "ijo ilo pi sona sina li alasa kama tawa ilo ni, taso pakala li kama. o ante e nasin pi wile sina."
+		"error": "ijo ilo pi sona sina li alasa kama tawa ilo ni, taso pakala li kama. o ante e nasin pi wile sina.",
+		"thirdPartyHint": "sina ken pana e sona sina tan ijo ilo kepeken lupa lon tenpo kama kin. lupa ni li lupa pi ken ante. ni la sina o tawa lupa ni; pana sona anu kama pi jo sona."
 	},
 	"systemInfo": {
 		"header": "o toki lon kulupu sina!",

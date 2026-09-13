@@ -13,6 +13,8 @@
 			"title": "weka pi ijo ni",
 			"confirm": "sina wile ala wile weka e ijo namako ni?"
 		},
-		"tags": "nimi sona"
-	}
+		"tags": "nimi sona",
+		"export": "kama jo pi ijo namako"
+	},
+	"select": "ijo namako pi wile sina"
 }
