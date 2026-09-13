@@ -2,5 +2,15 @@
 	"header": "Tillgänglighet",
 	"highLegibilityFont": {
 		"title": "Lättläst typsnitt"
+	},
+	"themeIsAmoled": {
+		"title": "AMOLED-läge"
+	},
+	"tintWithColor": {
+		"off": "Av",
+		"on": "På"
+	},
+	"contrastLevel": {
+		"title": "Kontrastnivå"
 	}
 }
