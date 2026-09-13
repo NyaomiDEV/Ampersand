@@ -9,10 +9,8 @@
 		"atkinson": "Atkinson Hyperlegible",
 		"lexend": "Lexend",
 		"luciole": "Luciole",
-		"system-font": "Czcionka systemowa",
-		"comicrelief": "Comic Relief"
+		"system-font": "Czcionka systemowa"
 	},
-
 	"reducedMotion": {
 		"title": "Zredukowany ruch",
 		"desc": "Wyłącz animacje w aplikacji"
