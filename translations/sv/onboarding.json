@@ -8,7 +8,8 @@
 		"prevInstall": "Ja, tidigare installation",
 		"startFromScratch": "Nej, jag ska börja från noll",
 		"pleaseWait": "Vänligen vänta medan vi importerar din data",
-		"error": "Något gick fel vid import av säkerhetskopian. Vänligen välj en annan alternativ."
+		"error": "Något gick fel vid import av säkerhetskopian. Vänligen välj en annan alternativ.",
+		"thirdPartyHint": "Du kan även importera från tredjepartstjänster via Alternativ > Importera/exportera när introduktionen är klar."
 	},
 	"systemInfo": {
 		"header": "Berätta om ditt system!",

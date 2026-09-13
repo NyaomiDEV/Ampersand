@@ -1,3 +1,32 @@
 {
-	"stats": "Statistik"
+	"stats": "Statistik",
+	"header": "Analys",
+	"detail": "Analysdetaljer",
+	"daytime": "Tid på dagen",
+	"presence": "Närvaro",
+	"cofront": "Samfrontning",
+	"startDate": "Startdatum",
+	"endDate": "Slutdatum",
+	"subheaders": {
+		"fronting": "Medlemmar som frontar",
+		"cofronting": "Medlemmar som samfrontar",
+		"influencing": "Medlemmar som påverkar andra",
+		"influenced": "Medlemmar som påverkas av andra"
+	},
+	"frontingCount_one": "Frontade {{count}} gång",
+	"frontingCount_other": "Frontade {{count}} gånger",
+	"cofrontingCount_one": "Samfrontade {{count}} gång",
+	"cofrontingCount_other": "Samfrontade {{count}} gånger",
+	"influencingCount_one": "Påverkade andra {{count}} gång",
+	"influencingCount_other": "Påverkade andra {{count}} gånger",
+	"influencedCount_one": "Påverkades av andra {{count}} gång",
+	"influencedCount_other": "Påverkades av andra {{count}} gånger",
+	"total": "Totalt",
+	"average": "I genomsnitt",
+	"max": "Som mest",
+	"min": "Som minst",
+	"morning": "Antal gånger på morgonen",
+	"day": "Antal gånger under dagen",
+	"evening": "Antal gånger på kvällen",
+	"night": "Antal gånger på natten"
 }

@@ -4,12 +4,52 @@
 		"title": "Exportera din data",
 		"desc": "Säkerhetskopiera din nuvarande data till en fil som du kan spara på en annan plats"
 	},
-	"dbImport": "Importera din data från en säkerhetskopia",
+	"dbImport": "Importera dina data",
 	"status": {
 		"imported": "Säkerhetskopian har importerats. Vänligen starta om appen.",
 		"exportedApp": "Säkerhetskopian har exporterats till den valda platsen.",
 		"exportedAppIos": "Säkerhetskopian har exporterats till mappen Ampersand i din filhanterare.",
 		"errorExport": "Något gick fel när säkerhetskopian exporterades.",
-		"error": "Något gick fel när säkerhetskopian importerades."
+		"error": "Något gick fel när säkerhetskopian importerades.",
+		"importedSp": "Simply Plural-exporten har importerats. Starta om appen.",
+		"importedPk": "PluralKit-exporten har importerats. Starta om appen.",
+		"importedTu": "Tupperbox-exporten har importerats. Starta om appen.",
+		"errorSp": "Fel vid import av Simply Plural-exporten.",
+		"errorPk": "Fel vid import av PluralKit-exporten.",
+		"errorTu": "Fel vid import av Tupperbox-exporten.",
+		"importedOc": "Octocon-exporten har importerats. Starta om appen.",
+		"errorOc": "Fel vid import av Octocon-exporten.",
+		"exportedReport": "Rapporten har sparats på den plats du valde.",
+		"exportedReportIos": "Rapporten har sparats i Ampersand-mappen i appen Filer.",
+		"exportedJson": "JSON-exporten har sparats på den plats du valde.",
+		"exportedJsonIos": "JSON-exporten har sparats i Ampersand-mappen i appen Filer."
+	},
+	"dbImportDesc": "Varning! Befintliga data kommer att skrivas över",
+	"pkImport": "Importera dina data från en PluralKit-export",
+	"tuImport": "Importera dina data från en Tupperbox-export",
+	"spImport": "Importera dina data från en Simply Plural-export",
+	"ocImport": "Importera dina data från en Octocon-export",
+	"importHeader": "Importera",
+	"thirdPartyHeader": "Integrationer från tredje part",
+	"exportHeader": "Exportera",
+	"dbImportOld": {
+		"title": "Importera dina data från en äldre version av Ampersand",
+		"desc": "För säkerhetskopior skapade med Ampersand < 0.2.0",
+		"note": "Äldre versioner av Ampersand använde ett filformat (ampdb) som nu är föråldrat. Om du behåller gamla säkerhetskopior bör du importera dem nu och exportera dem på nytt, eftersom alternativet kommer att tas bort inom några versioner."
+	},
+	"reportExport": {
+		"title": "Skapa en rapport",
+		"desc": "Spara en läsbar rapport om dina data som du kan dela med terapeuter och närstående",
+		"includeHeader": "Välj vad som ska inkluderas",
+		"includeArchived": "Arkiverade medlemmar",
+		"includeDissociativeStates": "Dissociativa tillstånd"
+	},
+	"jsonExport": {
+		"title": "Exportera dina data till en JSON-fil",
+		"desc": "Säkerhetskopiera dina data i ett format som kan importeras till andra appar och verktyg"
+	},
+	"tuImportDiscordId": {
+		"header": "Ange ditt numeriska Discord-ID",
+		"placeholder": "Discord-ID"
 	}
 }

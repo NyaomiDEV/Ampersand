@@ -1,3 +1,26 @@
 {
-	"header": "Påminnelser"
+	"header": "Påminnelser",
+	"edit": {
+		"header": "Redigera påminnelse",
+		"title": "Påminnelsens rubrik",
+		"message": "Påminnelsemeddelande",
+		"delete": {
+			"title": "Ta bort påminnelse",
+			"confirm": "Vill du verkligen ta bort den här påminnelsen?"
+		},
+		"headerAdd": "Lägg till påminnelse",
+		"active": "Aktivera påminnelse",
+		"delay": "Fördröjning",
+		"members": "Välj medlemmar",
+		"triggeringEvent": {
+			"title": "Utlösande händelse",
+			"addedToFront": "När en medlem har lagts till i fronten",
+			"removedFromFront": "När en medlem har tagits bort från fronten"
+		},
+		"triggerOnAllMembers": "Skicka för alla medlemmar"
+	},
+	"notOnPC": {
+		"header": "Påminnelser fungerar inte på datorer",
+		"content": "Du kan dock exportera data från den här datorn till en telefon eller Mac, så du kan organisera påminnelserna här."
+	}
 }

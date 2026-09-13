@@ -1,1 +1,20 @@
-{}
+{
+	"header": "Resurser",
+	"ampersand": "På Ampersand",
+	"website": {
+		"title": "Webbplats",
+		"desc": "Ladda ner den senaste appversionen och följ våra uppdateringar."
+	},
+	"blog": {
+		"title": "Blogg",
+		"desc": "Ta del av de senaste nyheterna och följ våra utvecklingsfunderingar."
+	},
+	"wiki": {
+		"title": "Wiki",
+		"desc": "Få hjälp med att använda appen."
+	},
+	"repository": {
+		"title": "Kodförråd",
+		"desc": "Bidra till appen och rapportera problem."
+	}
+}

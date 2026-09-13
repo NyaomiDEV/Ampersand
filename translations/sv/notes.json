@@ -1,1 +1,15 @@
-{}
+{
+	"header": "Fästanteckningar",
+	"searchPlaceholder": "Sök efter anteckningar…",
+	"edit": {
+		"header": "Redigera anteckning",
+		"headerAdd": "Lägg till anteckning",
+		"title": "Anteckningens titel",
+		"content": "Anteckningens innehåll",
+		"isArchived": "Arkivera anteckning",
+		"delete": {
+			"title": "Ta bort anteckning",
+			"confirm": "Är du säker på att du vill ta bort den här anteckningen?"
+		}
+	}
+}

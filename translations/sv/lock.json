@@ -1,8 +1,8 @@
 {
 	"title": "Appen är låst",
-	"hint": "Vänligen ange ditt applösenord",
+	"hint": "Ange appens lösenord",
 	"biometrics": {
 		"title": "Appen är låst",
-		"reason": "Låsa upp appen"
+		"reason": "Lås upp appen"
 	}
 }

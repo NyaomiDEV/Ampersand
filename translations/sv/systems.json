@@ -21,6 +21,11 @@
 		"systemIDcopiedToClipboard": "System-id kopierat som omnämnande!",
 		"parent": "Överordnat system",
 		"isPinned": "Fäst system",
-		"archived": "Arkiverad"
+		"archived": "Arkiverad",
+		"color": "Färg",
+		"imageClip": "Avatarform",
+		"viewInLists": "Visa i listor",
+		"nameStyle": "Namnformat",
+		"dissociativeStateCountText": "{{totalDissociativeStateCount}} dissociativa tillstånd, {{dissociativeStateCount}} aktiva, {{archivedDissociativeStateCount}} arkiverade"
 	}
 }

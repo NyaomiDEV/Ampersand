@@ -2,9 +2,40 @@
 	"header": "Anslagstavla",
 	"searchPlaceholder": "Sök meddelanden...",
 	"polls": {
-		"boardMessageContainsPoll": "Innehåller omröstning"
+		"boardMessageContainsPoll": "Innehåller omröstning",
+		"collapsePoll": "Dölj omröstning",
+		"voteCast": {
+			"voter": "Välj röstande",
+			"reason": "Ange skäl",
+			"reasonHint": "Skäl",
+			"retractConfirmation": "Vill du verkligen återkalla din röst?"
+		},
+		"resultsHeader": "Omröstningsresultat",
+		"resultsButton": "Visa omröstningsresultat",
+		"defaultPollValues": {
+			"yes": "Ja",
+			"no": "Nej",
+			"veto": "Veto",
+			"abstain": "Avstå"
+		}
 	},
 	"edit": {
-		"title": "Rubrik"
+		"title": "Rubrik",
+		"header": "Redigera meddelande",
+		"member": "Redigera meddelandeförfattare",
+		"body": "Meddelandetext",
+		"isPinned": "Fäst meddelande",
+		"isArchived": "Arkivera meddelande",
+		"attachPoll": "Bifoga en omröstning till detta meddelande",
+		"deleteAttachedPoll": "Ta bort bifogad omröstning",
+		"pollIsMultipleChoice": "Tillåt val av flera alternativ",
+		"pollAddNewChoice": "Lägg till ett nytt alternativ i omröstningen",
+		"pollChoice": "Beskrivning av alternativ",
+		"pollEditWarning": "Om du ändrar någon omröstningsuppgift återställs rösterna!",
+		"delete": {
+			"title": "Ta bort meddelande från anslagstavlan",
+			"confirm": "Vill du verkligen ta bort det här meddelandet?"
+		},
+		"date": "Redigera datum"
 	}
 }

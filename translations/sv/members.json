@@ -5,6 +5,50 @@
 	"edit": {
 		"noDescription": "Ingen beskrivning",
 		"memberIDcopiedToClipboard": "Medlem-ID kopierat som omnämnande!",
-		"archived": "Arkiverad"
-	}
+		"archived": "Arkiverad",
+		"header": "Medlem",
+		"headerAdd": "Lägg till medlem",
+		"headerEdit": "Redigera medlem",
+		"name": "Namn",
+		"pronouns": "Pronomen",
+		"role": "Roll",
+		"color": "Föredragen färg",
+		"customFieldsAdd": "Lägg till anpassade fält",
+		"tags": "Redigera taggar",
+		"description": "Beskrivning",
+		"system": "Redigera medlemskapssystem",
+		"isPinned": "Fäst medlem",
+		"showFrontingEntries": "Visa frontningsposter",
+		"showBoardEntries": "Visa anslagstavlemeddelanden",
+		"showJournalEntries": "Visa journalinlägg",
+		"memberID": "Medlems-ID: {{memberID}}",
+		"delete": {
+			"title": "Ta bort medlem",
+			"confirm": "Är du säker på att du vill ta bort denna medlem?"
+		},
+		"imageClip": "Avatarform",
+		"age": "Ålder",
+		"ageDisplay_one": "ålder {{count}}",
+		"ageDisplay_other": "ålder {{count}}",
+		"nameStyle": "Namnformat",
+		"lastFronted": "Frontade senast: {{startTime}}–{{endTime}}",
+		"isDissociativeState": "Dissociativt tillstånd"
+	},
+	"deletedMember": "Borttagen medlem",
+	"actions": {
+		"addToFront": "Lägg till i front",
+		"setMainFronter": "Ange som huvudfrontare",
+		"unsetMainFronter": "Ta bort som huvudfrontare",
+		"setSoleFronter": "Ange som frontare",
+		"removeFromFront": "Ta bort från fronten"
+	},
+	"toasts": {
+		"addToFront": "Medlem har lagts till i fronten",
+		"setMainFronter": "Medlem har angetts som huvudfrontare",
+		"unsetMainFronter": "Medlem har tagits bort som huvudfrontare",
+		"setSoleFronter": "Medlem har angetts som enda frontare",
+		"removeFromFront": "Medlem har tagits bort från fronten"
+	},
+	"singular": "Medlem",
+	"deletedDissociativeState": "Borttaget tillstånd"
 }

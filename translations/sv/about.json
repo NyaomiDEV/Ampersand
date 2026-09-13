@@ -2,5 +2,8 @@
 	"header": "Om",
 	"version": "Version {{version}}",
 	"madein": "Skapad med kärlek i Italien",
-	"privacyPolicy": "Integritetspolicy"
+	"privacyPolicy": "Integritetspolicy",
+	"updateAvailable": "Uppdatering tillgänglig: {{newVersion}}",
+	"ciVersion": "Instabil version",
+	"credits": "Tack till"
 }

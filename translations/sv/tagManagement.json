@@ -1,4 +1,50 @@
 {
 	"header": "Tagghantering",
-	"searchPlaceholder": "Sök taggar..."
+	"searchPlaceholder": "Sök taggar...",
+	"select": "Välj några taggar",
+	"selector": {
+		"member": "Medlemstaggar",
+		"journal": "Journaltaggar",
+		"asset": "Resurstaggar"
+	},
+	"edit": {
+		"header": {
+			"member": "Redigera medlemstagg",
+			"journal": "Redigera journaltagg",
+			"asset": "Redigera resursetikett"
+		},
+		"name": "Taggnamn",
+		"description": "Taggbeskrivning",
+		"color": "Taggfärg",
+		"viewInLists": "Visa i listor",
+		"type": {
+			"header": "Taggtyp",
+			"member": "Medlem",
+			"journal": "Journal",
+			"desc": "Obs: du kan bara ange taggtypen när taggen skapas!",
+			"asset": "Resurs"
+		},
+		"members": {
+			"title": "Välj medlemmar som använder denna tagg",
+			"desc_one": "{{count}} medlem använder denna tagg",
+			"desc_other": "{{count}} medlemmar använder denna tagg"
+		},
+		"showJournal": {
+			"title": "Visa journalinlägg med denna tagg",
+			"desc_one": "{{count}} journalinlägg har denna tagg",
+			"desc_other": "{{count}} journalinlägg har denna tagg"
+		},
+		"delete": {
+			"title": "Ta bort tagg",
+			"confirm": "Är du säker på att du vill ta bort denna tagg?"
+		},
+		"tagID": "Tagg-ID: {{tagID}}",
+		"tagIDCopiedToClipboard": "Tagg-ID i omnämnandeformat har kopierats till urklipp!",
+		"isArchived": "Arkivera tagg",
+		"showAssets": {
+			"title": "Visa resurser med denna tagg",
+			"desc_one": "{{count}} resurs har denna tagg",
+			"desc_other": "{{count}} resurser har denna tagg"
+		}
+	}
 }

@@ -1,16 +1,49 @@
 {
 	"header": "Tillgänglighet",
 	"highLegibilityFont": {
-		"title": "Lättläst typsnitt"
+		"title": "Lättläst typsnitt",
+		"desc": "Använd ett lättläst typsnitt i stället för enhetens standardtypsnitt"
 	},
 	"themeIsAmoled": {
-		"title": "AMOLED-läge"
+		"title": "AMOLED-läge",
+		"desc": "Använd helt svart bakgrund i mörkt läge. Kan minska skärmens slitage."
 	},
 	"tintWithColor": {
 		"off": "Av",
-		"on": "På"
+		"on": "På",
+		"title": "Färga med kulör",
+		"accent": "Endast accentfärg"
 	},
 	"contrastLevel": {
 		"title": "Kontrastnivå"
+	},
+	"highLegibilityFontType": {
+		"title": "Typsnittsfamilj med hög läsbarhet",
+		"atkinson": "Atkinson Hyperlegible",
+		"lexend": "Lexend",
+		"system-font": "Systemtypsnitt",
+		"luciole": "Luciole"
+	},
+	"reducedMotion": {
+		"title": "Minskad rörelse",
+		"desc": "Inaktivera animationer i appen"
+	},
+	"fontScale": {
+		"title": "Teckenstorlek"
+	},
+	"longPressDuration": {
+		"title": "Långtryckstid"
+	},
+	"disableCovers": {
+		"title": "Inaktivera omslagsbilder"
+	},
+	"compactLists": {
+		"title": "Kompakta listor"
+	},
+	"frontingNotification": {
+		"title": "Notifiering om frontning"
+	},
+	"wordSpacing": {
+		"title": "Ordavstånd"
 	}
 }

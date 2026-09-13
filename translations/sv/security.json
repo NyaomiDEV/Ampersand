@@ -1,9 +1,29 @@
 {
 	"header": "Säkerhet",
 	"applock": {
-		"title": "Applås"
+		"title": "Applås",
+		"desc": "Lås appen med ett lösenord"
 	},
 	"allowRemoteContent": {
-		"title": "Tillåt externt innehåll"
-	}
+		"title": "Tillåt externt innehåll",
+		"desc": "Tillåt Ampersand att använda internet för att hämta externt innehåll, såsom bilder i Markdown-fält och avatarer i importer från tredje part."
+	},
+	"biometrics": {
+		"title": "Använd biometri",
+		"desc": "Lås upp med fingeravtryck eller ansikte"
+	},
+	"passwordAlert": {
+		"header": "Varning",
+		"text": "Är du säker på att du vill fortsätta? Innan du fortsätter bör du anteckna lösenordet någonstans utanför Ampersand, eftersom du inte kan återställa dina data eller återställa lösenordet om du förlorar det. Se till att exportera dina data innan du anger ett!"
+	},
+	"editPassword": "Ändra lösenord",
+	"inputPassword": {
+		"titleAdd": "Ange ditt nya lösenord",
+		"titleReenter": "Ange lösenordet igen",
+		"titleModifyOld": "Ange ditt gamla lösenord",
+		"titleModifyNew": "Ange ditt nya lösenord",
+		"titleDisable": "Ange ditt lösenord",
+		"hint": "Lösenord"
+	},
+	"useIPC": "Skicka händelser till andra appar"
 }

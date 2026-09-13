@@ -6,13 +6,14 @@
 	"nowFronting": "Frontar nu",
 	"fronterInfluencing": "Påverkar {{influencedMember}}",
 	"addToFront": "Lägg till i front",
-	"recentFrontingHistory": "Bytte nyss ut",
+	"recentFrontingHistory": "Nyligen utbytt",
 	"messageBoard": {
 		"header": "Anslagstavla",
-		"add": "Lägg till anslagstavla",
+		"add": "Lägg till på anslagstavlan",
 		"view": "Visa fler"
 	},
 	"journal": {
-		"view": "Visa fler"
+		"view": "Visa fler",
+		"header": "Senaste inlägg"
 	}
 }

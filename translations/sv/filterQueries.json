@@ -1,1 +1,16 @@
-{}
+{
+	"header": "Filterfrågor",
+	"select": "Välj en filterfråga",
+	"searchPlaceholder": "Sök efter filterfrågor…",
+	"edit": {
+		"header": "Redigera fråga",
+		"headerAdd": "Lägg till fråga",
+		"name": "Frågans namn",
+		"query": "Frågans innehåll",
+		"type": "Frågetyp",
+		"delete": {
+			"title": "Ta bort fråga",
+			"confirm": "Är du säker på att du vill ta bort den här frågan?"
+		}
+	}
+}

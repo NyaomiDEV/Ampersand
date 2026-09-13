@@ -24,6 +24,7 @@
 		"delete": {
 			"title": "Radera dagbokinlägg",
 			"confirm": "Vill du verkligen radera detta inlägg?"
-		}
+		},
+		"color": "Inläggets färg"
 	}
 }

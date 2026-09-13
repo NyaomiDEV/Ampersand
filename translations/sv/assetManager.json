@@ -12,6 +12,9 @@
 		"delete": {
 			"title": "Radera resurs",
 			"confirm": "Vill du verkligen radera denna resurs?"
-		}
-	}
+		},
+		"tags": "Taggar",
+		"export": "Spara bilaga"
+	},
+	"select": "Välj resurs"
 }

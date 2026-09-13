@@ -13,7 +13,7 @@
 			"historyTitle": "Närvarohistorik",
 			"lastPresence": "Förra gången var det {{presence}} / 5 stjärnor",
 			"addTitle": "Hur närvarande är du på en skala från 0 till 10?",
-			"confirmButton": "Lägg till i historiken",
+			"confirmButton": "Bekräfta",
 			"date": "Datum"
 		},
 		"influencing": {
@@ -28,6 +28,7 @@
 		"delete": {
 			"title": "Radera frontlogg",
 			"confirm": "Vill du verkligen radera denna frontlogg?"
-		}
+		},
+		"summary": "Sammanfattning"
 	}
 }
