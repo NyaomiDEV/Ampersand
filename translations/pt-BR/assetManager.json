@@ -13,6 +13,7 @@
 			"confirm": "Tem certeza que deseja deletar esse arquivo?",
 			"title": "Deletar Arquivo"
 		},
-		"attachment": "Substituir anexo"
+		"attachment": "Substituir anexo",
+		"export": "Salvar anexo"
 	}
 }

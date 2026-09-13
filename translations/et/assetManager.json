@@ -11,7 +11,8 @@
 		"delete": {
 			"title": "Kustuta vara",
 			"confirm": "Kas oled kindel, et soovid selle vara kustutada?"
-		}
+		},
+		"export": "Salvesta manus"
 	},
 	"header": "Varade haldus",
 	"searchPlaceholder": "Otsi varasid…"
