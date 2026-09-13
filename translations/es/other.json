@@ -158,7 +158,10 @@
 		"outline": "Bosquejo",
 		"assetFont": "Archivos o recursos de tipografía",
 		"elegant": "Elegante",
-		"stripes": "Decorativas"
+		"stripes": "Decorativas",
+		"rock": "Estilo rock",
+		"reggae": "Fuente de Reggae",
+		"stick": "Stick"
 	},
 	"loading": "Ampersand se está cargando",
 	"donationLabel": {

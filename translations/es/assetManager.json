@@ -15,5 +15,6 @@
 	"add": {
 		"header": "Añadir archivo",
 		"attachment": "Añadir archivo adjunto"
-	}
+	},
+	"select": "Gestionar activos"
 }
