@@ -1,0 +1,49 @@
+{
+	"header": "ການຊ່ວຍເຂົ້າເຖິງ",
+	"highLegibilityFont": {
+		"title": "ຕົວໜັງສືທີ່ອ່ານງ່າຍ",
+		"desc": "ໃຊ້ຕົວໜັງສືທີ່ອ່ານງ່າຍ ແທນຕົວໜັງສືມາດຕະຖານຂອງອຸປະກອນ"
+	},
+	"highLegibilityFontType": {
+		"title": "ຕະກູນຕົວໜັງສືທີ່ອ່ານງ່າຍ",
+		"atkinson": "Atkinson Hyperlegible",
+		"lexend": "Lexend",
+		"luciole": "Luciole",
+		"system-font": "ຕົວໜັງສືລະບົບ"
+	},
+	"themeIsAmoled": {
+		"title": "ໂໝດ AMOLED",
+		"desc": "ໃຊ້ພື້ນຫຼັງສີດໍາສະນິດ ເມື່ອຢູ່ໃນໂໝດມືດ. ສາມາດຫຼຸດຜ່ອນການເສື່ອມສະພາບຂອງໜ້າຈໍ."
+	},
+	"tintWithColor": {
+		"title": "ຍ້ອມດ້ວຍສີ",
+		"off": "ປິດ",
+		"accent": "ສະເພາະສີເນັ້ນ",
+		"on": "ເປີດ"
+	},
+	"reducedMotion": {
+		"title": "ຫຼຸດຜ່ອນການເຄື່ອນໄຫວ",
+		"desc": "ປິດການເຄື່ອນໄຫວພາຍໃນແອັບ"
+	},
+	"compactLists": {
+		"title": "ລາຍການແບບກະທັດຮັດ"
+	},
+	"disableCovers": {
+		"title": "ປິດຮູບໜ້າປົກ"
+	},
+	"frontingNotification": {
+		"title": "ການແຈ້ງເຕືອນຢູ່ດ້ານໜ້າ"
+	},
+	"contrastLevel": {
+		"title": "ລະດັບຄວາມຄົມຊັດ"
+	},
+	"fontScale": {
+		"title": "ຂະໜາດຕົວໜັງສື"
+	},
+	"wordSpacing": {
+		"title": "ໄລຍະຫ່າງລະຫວ່າງຄຳ"
+	},
+	"longPressDuration": {
+		"title": "ໄລຍະເວລາການກົດຄ້າງ"
+	}
+}

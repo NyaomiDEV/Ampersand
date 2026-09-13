@@ -1,0 +1,53 @@
+{
+	"header": "ສະມາຊິກ",
+	"searchPlaceholder": "ຄົ້ນຫາສະມາຊິກ...",
+	"singular": "ສະມາຊິກ",
+	"select": "ເລືອກສະມາຊິກ",
+	"deletedMember": "ສະມາຊິກທີ່ຖືກລົບແລ້ວ",
+	"deletedDissociativeState": "ສະຖານະທີ່ຖືກລົບແລ້ວ",
+	"actions": {
+		"addToFront": "ເພີ່ມເຂົ້າໃນລາຍຊື່ຜູ່ຢູ່ໜ້າ",
+		"setMainFronter": "ຕັ້ງເປັນຜູ່ຢູ່ໜ້າຫຼັກ",
+		"unsetMainFronter": "ຍົກເລີກການເປັນຜູ່ຢູ່ໜ້າຫຼັກ",
+		"setSoleFronter": "ຕັ້ງເປັນຜູ່ຢູ່ໜ້າ",
+		"removeFromFront": "ເອົາອອກຈາກລາຍຊື່ຜູ່ຢູ່ໜ້າ"
+	},
+	"toasts": {
+		"addToFront": "ເພີ່ມສະມາຊິກເຂົ້າໃນລາຍຊື່ຜູ່ຢູ່ໜ້າແລ້ວ",
+		"setMainFronter": "ຕັ້ງສະມາຊິກເປັນຜູ່ຢູ່ໜ້າຫຼັກແລ້ວ",
+		"unsetMainFronter": "ຍົກເລີກການເປັນສະມາຊິກຜູ່ຢູ່ໜ້າຫຼັກແລ້ວ",
+		"setSoleFronter": "ຕັ້ງສະມາຊິກເປັນຜູ່ຢູ່ໜ້າພຽງຜູ່ດຽວແລ້ວ",
+		"removeFromFront": "ເອົາສະມາຊິກອອກຈາກລາຍຊື່ຜູ່ຢູ່ໜ້າແລ້ວ"
+	},
+	"edit": {
+		"header": "ສະມາຊິກ",
+		"headerAdd": "ເພີ່ມສະມາຊິກ",
+		"headerEdit": "ແກ້ໄຂສະມາຊິກ",
+		"name": "ຊື່",
+		"pronouns": "ສັບພະນາມ",
+		"role": "ພາລະບົດບາດ",
+		"age": "ອາຍຸ",
+		"ageDisplay_other": "ອາຍຸ {{count}} ປີ",
+		"color": "ສີທີ່ມັກ",
+		"nameStyle": "ຮູບແບບຊື່",
+		"imageClip": "ຮູບຮ່າງຂອງຮູບແທນໂຕ",
+		"customFieldsAdd": "ເພີ່ມຊ່ອງຂໍ້ມູນກຳນົດເອງ",
+		"tags": "ແກ້ໄຂແທັກ",
+		"description": "ຄຳອະທິບາຍ",
+		"noDescription": "ບໍ່ມີຄຳອະທິບາຍ",
+		"system": "ແກ້ໄຂລະບົບສະມາຊິກ",
+		"isPinned": "ປັກໝຸດສະມາຊິກ",
+		"isDissociativeState": "ສະຖານະແຍກຕົວ",
+		"archived": "ເກັບຖາວອນ",
+		"showFrontingEntries": "ສະແດງລາຍການການຢູ່ໜ້າ",
+		"lastFronted": "ຢູ່ໜ້າຄັ້ງຫຼ້າສຸດ: {{startTime}} - {{endTime}}",
+		"showBoardEntries": "ສະແດງຂໍ້ຄວາມກະດານ",
+		"showJournalEntries": "ສະແດງໂພສບັນທຶກ",
+		"memberID": "ໄອດີສະມາຊິກ: {{memberID}}",
+		"memberIDcopiedToClipboard": "ຄັດລອກໄອດີສະມາຊິກໃນຮູບແບບອ້າງອີງໄປຍັງຄລິບບອດແລ້ວ!",
+		"delete": {
+			"title": "ລົບສະມາຊິກ",
+			"confirm": "ທ່ານແນ່ໃຈບໍວ່າຕ້ອງການລົບສະມາຊິກນີ້?"
+		}
+	}
+}

@@ -1,0 +1,188 @@
+{
+	"languageName": {
+		"local": "ລາວ",
+		"inEnglish": "Lao"
+	},
+	"donationLabel": {
+		"title": "ສະໜັບສະໜູນພວກເຮົາ",
+		"desc": "ການບໍລິຈາກຂອງທ່ານຊ່ວຍໃຫ້ Ampersand ໄດ້ຮັບການພັດທະນາຕໍ່ໄປ ແລະ ຊ່ວຍໃຫ້ນັກພັດທະນາສາມາດດຳເນີນງານໄດ້"
+	},
+	"loading": "Ampersand ກຳລັງໂຫຼດ",
+	"delete": "ລຶບ",
+	"genericDeleteDesc": "ເຈົ້າຈະບໍ່ສາມາດກັບຄືນການກະທຳນີ້ໄດ້!",
+	"addTimestamp": "ເພີ່ມການລະບຸເວລາ",
+	"memberMention": "ອ້າງເຖິງສະມາຊິກ",
+	"creation": {
+		"dateCreated": "ວັນທີສ້າງ: {{dateCreated}}",
+		"frontingAtCreationDate": "ການສະແດງຕົວໃນວັນທີສ້າງ: {{frontingAtCreationDate}}"
+	},
+	"alerts": {
+		"ok": "ຕົກລົງ",
+		"cancel": "ຍົກເລີກ",
+		"clear": "ລ້າງອອກ",
+		"yes": "ແມ່ນ",
+		"no": "ບໍ່",
+		"assetFontPlaceholder": "ຊື່ໄຟລ໌ຊັບພະຍາກອນຟອນ"
+	},
+	"comments": {
+		"header": "ຄວາມຄິດເຫັນ",
+		"commenter": "ເລືອກຜູ້ສະແດງຄວາມຄິດເຫັນ",
+		"comment": "ເນື້ອໃນຄວາມຄິດເຫັນ",
+		"commentHint": "ສະແດງຄວາມຄິດເຫັນ...",
+		"commentCount_other": "{{count}} ຄວາມຄິດເຫັນ",
+		"deleteConfirmation": "ເຈົ້າມັ້ນໃຈບໍ່ວ່າຕ້ອງການລຶບຄວາມຄິດເຫັນນີ້?"
+	},
+	"presence": {
+		"header": "ການປະກົດຕົວ",
+		"absent": "ບໍ່ຢູ່",
+		"heavilyDissociating": "ມີອາການປ່ຽນສະພາວະຈິດຢ່າງຮຸນແຮງ",
+		"dissociating": "ມີອາການປ່ຽນສະພາວະຈິດ",
+		"zonedOut": "ເໝໍ່ລອຍ",
+		"present": "ຢູ່",
+		"fullyGrounded": "ມີສະຕິສົມບູນ"
+	},
+	"report": {
+		"header": "ລາຍງານ Ampersand",
+		"generatedOn": "ສ້າງຂຶ້ນເມື່ອ {{date}}",
+		"coveringDays": "ຂໍ້ມູນກ່ຽວກັບ {{count}} ມື້ຜ່ານມາ"
+	},
+	"back": "ກັບຄືນ",
+	"time": "ເວລາ",
+	"count": "ຈຳນວນ",
+	"timeSizes": {
+		"years": {
+			"long": "ປີ",
+			"short": "ປ"
+		},
+		"months": {
+			"long": "ເດືອນ",
+			"short": "ດ"
+		},
+		"days": {
+			"long": "ມື້",
+			"short": "ມ"
+		},
+		"weekdays": {
+			"monday": "ວັນຈັນ",
+			"tuesday": "ວັນອັງຄານ",
+			"wednesday": "ວັນພຸດ",
+			"thursday": "ວັນພະຫັດ",
+			"friday": "ວັນສຸກ",
+			"saturday": "ວັນເສົາ",
+			"sunday": "ວັນອາທິດ"
+		},
+		"hours": {
+			"long": "ຊົ່ວໂມງ",
+			"short": "ຊມ"
+		},
+		"minutes": {
+			"long": "ນາທີ",
+			"short": "ນ"
+		},
+		"seconds": {
+			"long": "ວິນາທີ",
+			"short": "ວ"
+		}
+	},
+	"shapes": {
+		"arch": "ປະຕູໂຄ້ງ",
+		"arrow": "ລູກສອນ",
+		"boom": "ລະເບີດ",
+		"bun": "ກ້ອນ",
+		"burst": "ແຕກກະຈາຍ",
+		"clamshell": "ຝາຫອຍ",
+		"diamond": "ຮູບເພັດ",
+		"fan": "ພັດ",
+		"flower": "ດອກໄມ້",
+		"gem": "ອັນຍະມະນີ",
+		"ghost-ish": "ຄ້າຍຄືຜີ",
+		"heart": "ຫົວໃຈ",
+		"leaf-clover4": "ໃບໂຄຼເວີ 4 ແສກ",
+		"leaf-clover8": "ໃບໂຄຼເວີ 8 ແສກ",
+		"oval": "ຮູບວົງລີ",
+		"pentagon": "ຮູບຫ້າລ່ຽມ",
+		"pill": "ຮູບຊົງຢາແຄັບຊູນ",
+		"pixel-circle": "ວົງມົນພິກເຊວ",
+		"pixel-triangle": "ສາມລ່ຽມພິກເຊວ",
+		"puffy-diamond": "ຮູບເພັດແບບມົນ",
+		"puffy": "ແບບນຸ້ມຟູ",
+		"semicircle": "ເຄິ່ງວົງມົນ",
+		"sided-cookie12": "ຄຸກກີ້ 12 ຫຼ່ຽມ",
+		"sided-cookie4": "ຄຸກກີ້ 4 ຫຼ່ຽມ",
+		"sided-cookie6": "ຄຸກກີ້ 6 ຫຼ່ຽມ",
+		"sided-cookie7": "ຄຸກກີ້ 7 ຫຼ່ຽມ",
+		"sided-cookie9": "ຄຸກກີ້ 9 ຫຼ່ຽມ",
+		"slanted": "ແບບລຳອຽງ",
+		"soft-boom": "ລະເບີດແບບນຸ້ມ",
+		"soft-burst": "ແຕກກະຈາຍແບບນຸ້ມ",
+		"square": "ຮູບຈັດຕຸລັດ",
+		"sunny": "ແສງແດດ",
+		"triangle": "ຮູບສາມລ່ຽມ",
+		"very-sunny": "ແສງແດດຈັດ",
+		"noShape": "ບໍ່ມີຮູບຊົງ"
+	},
+	"fonts": {
+		"cursive": "ຕົວຂຽນ",
+		"pixel": "ພິກເຊວ",
+		"dots": "ຈ້ຳເມັດ",
+		"digital": "ດີຈິຕອນ",
+		"handwritten": "ລາຍມື",
+		"serif": "ຟອນມີຫາງ",
+		"typewriter": "ເຄື່ອງພິມດີດ",
+		"monospace": "ຄວາມກວ້າງຄົງທີ່",
+		"playful": "ສົນຸກສນານ",
+		"holy": "ສັກສິດ",
+		"round": "ມົນ",
+		"bubbly": "ຟອງສະບູ່",
+		"marker": "ປາກກາມາກເກີ",
+		"gothic": "ກໍທິກ",
+		"stencil": "ສະເຕນຊິລ",
+		"mystery": "ລຶກລັບ",
+		"italian": "ອິຕາລີ",
+		"rock": "ຣັອກ",
+		"metal": "ເມທັນ",
+		"cutesy": "ໜ້າຮັກ",
+		"elegant": "ສະຫງ່າງາມ",
+		"indie": "ອິນດີ້",
+		"reggae": "ເຣກເກ",
+		"deco": "ເດັກໂກ",
+		"terminal": "ເທີມິນໍ",
+		"western": "ຕາເວັນຕົກ",
+		"stripes": "ລາຍທາງ",
+		"glitch": "ກຣິດ",
+		"drip": "ຢອດໄຫຼ",
+		"cracks": "ຮອຍແຕກ",
+		"pop": "ປັອບ",
+		"varsity": "ວາຊິຕີ້",
+		"futuristic": "ແຫ່ງອະນາຄົດ",
+		"pineapple": "ໝາກນັດ",
+		"nature": "ທຳມະຊາດ",
+		"summer": "ລະດູຮ້ອນ",
+		"spotty": "ລາຍຈຸດ",
+		"bone": "ກະດູກ",
+		"stick": "ໄມ້",
+		"outline": "ເສັ້ນຂອບ",
+		"assetFont": "ຟອນຈາກໄຟລ໌ຊັບພະຍາກອນ",
+		"noFont": "ບໍ່ມີຟອນ"
+	},
+	"fontStyles": {
+		"bold": "ຕົວເຂັ້ມ",
+		"italic": "ຕົວອຽງ",
+		"neon": "ນີອອນ",
+		"gradient": "ໄລ່ສີ",
+		"outline": "ເສັ້ນຂອບ",
+		"shadow": "ເງົາ"
+	},
+	"image": {
+		"delete": "ລຶບຮູບພາບ",
+		"edit": "ແກ້ໄຂຮູບພາບ",
+		"save": "ບັນທຶກຮູບພາບ"
+	},
+	"cover": {
+		"delete": "ລຶບໜ້າປົກ",
+		"edit": "ແກ້ໄຂໜ້າປົກ",
+		"save": "ບັນທຶກໜ້າປົກ"
+	},
+	"developerMode": "ໂໝດນັກພັດທະນາ",
+	"theresNothingHere": "ບໍ່ມີຫຍັງຢູ່ທີ່ນີ້"
+}

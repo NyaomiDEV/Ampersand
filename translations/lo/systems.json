@@ -1,0 +1,31 @@
+{
+	"header": "ລະບົບ",
+	"searchPlaceholder": "ຄົ້ນຫາລະບົບ...",
+	"select": "ເລືອກລະບົບ",
+	"edit": {
+		"header": "ລະບົບ",
+		"headerAdd": "ເພີ່ມລະບົບ",
+		"headerEdit": "ແກ້ໄຂລະບົບ",
+		"name": "ຊື່ລະບົບ",
+		"description": "ຄຳອະທິບາຍລະບົບ",
+		"noDescription": "ບໍ່ມີຄຳອະທິບາຍ",
+		"color": "ສີ",
+		"nameStyle": "ຮູບແບບຊື່",
+		"imageClip": "ຮູບຮ່າງຮູບແທນຕົວ",
+		"memberCount": "ຈຳນວນສະມາຊິກ",
+		"memberCountText": "{{totalMemberCount}} ສະມາຊິກ, {{memberCount}} ກຳລັງໃຊ້ງານ, {{archivedMemberCount}} ເກັບຖາວອນ",
+		"dissociativeStateCountText": "{{totalDissociativeStateCount}} ສະພາວະແຍກຕົວ, {{dissociativeStateCount}} ກຳລັງໃຊ້ງານ, {{archivedDissociativeStateCount}} ເກັບຖາວອນ",
+		"tapToShow": "ແຕະເພື່ອສະແດງ",
+		"showMembers": "ສະແດງສະມາຊິກພາຍໃນລະບົບນີ້",
+		"parent": "ລະບົບຫຼັກ",
+		"viewInLists": "ເບິ່ງໃນລາຍການ",
+		"isPinned": "ປັກໝຸດລະບົບ",
+		"archived": "ເກັບຖາວອນ",
+		"delete": {
+			"title": "ລຶບລະບົບ",
+			"confirm": "ເຈົ້າມັ້ນໃຈບໍ່ວ່າຕ້ອງການລຶບລະບົບນີ້?"
+		},
+		"systemID": "ໄອດີລະບົບ: {{systemID}}",
+		"systemIDcopiedToClipboard": "ຄັດລອກໄອດີລະບົບໃນຮູບແບບອ້າງອີງໃສ່ຄລິບບອດແລ້ວ!"
+	}
+}
