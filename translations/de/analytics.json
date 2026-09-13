@@ -11,5 +11,7 @@
 		"influenced": "Mitglieder, die von anderen beeinflusst werden"
 	},
 	"total": "Insgesamt",
-	"average": "Durchschnittlich"
+	"average": "Durchschnittlich",
+	"max": "Maximal",
+	"min": "Mindestens"
 }
