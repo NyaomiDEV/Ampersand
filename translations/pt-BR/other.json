@@ -158,7 +158,10 @@
 		"summer": "Verão",
 		"assetFont": "Arquivo de fonte",
 		"elegant": "Elegante",
-		"stripes": "Listras"
+		"stripes": "Listras",
+		"rock": "Rock",
+		"stick": "Stick",
+		"reggae": "Reggae"
 	},
 	"loading": "Ampersand está carregando",
 	"donationLabel": {
@@ -175,6 +178,12 @@
 	},
 	"delete": "Remover",
 	"image": {
-		"delete": "Excluir imagem"
+		"delete": "Deletar imagem",
+		"edit": "Modificar Imagem"
+	},
+	"cover": {
+		"delete": "Deletar capa",
+		"edit": "Modificar capa",
+		"save": "Salvar capa"
 	}
 }

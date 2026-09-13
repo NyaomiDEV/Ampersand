@@ -8,7 +8,8 @@
 		"prevInstall": "Sim, instalação anterior",
 		"startFromScratch": "Não, Irei começar do zero",
 		"pleaseWait": "Por favor espere enquanto importamos seus dados",
-		"error": "Erro ao importar a cópia de segurança. Por favor escolha outra opção."
+		"error": "Erro ao importar a cópia de segurança. Por favor escolha outra opção.",
+		"thirdPartyHint": "Você também pode importar desde de serviços de terceiros através de Opções > Importar / Exportar depois de completar o processo de registro."
 	},
 	"memberInfo": {
 		"header": "Nos conte mais sobre você!",

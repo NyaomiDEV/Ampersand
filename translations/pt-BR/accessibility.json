@@ -42,5 +42,8 @@
 		"off": "Desligado",
 		"on": "Ligado",
 		"accent": "Apenas cor de destaque"
+	},
+	"wordSpacing": {
+		"title": "Espaçamento entre palavras"
 	}
 }

@@ -15,5 +15,6 @@
 		},
 		"attachment": "Substituir anexo",
 		"export": "Salvar anexo"
-	}
+	},
+	"select": "Selecionar arquivo"
 }
