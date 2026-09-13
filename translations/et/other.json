@@ -154,7 +154,9 @@
 		"assetFont": "Aktiva/vara kirjatüüp",
 		"stripes": "Triibuline",
 		"elegant": "Elegantne",
-		"rock": "Kaljurahn"
+		"rock": "Kaljurahn",
+		"reggae": "Reggae",
+		"stick": "Stick"
 	},
 	"count": "Kogus",
 	"donationLabel": {
