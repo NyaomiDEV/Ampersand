@@ -13,7 +13,8 @@
 			"title": "Asset verwerfen",
 			"confirm": "Bist du dir sicher, dass du dieses Asset verwerfen möchtest?"
 		},
-		"tags": "Tags"
+		"tags": "Tags",
+		"export": "Anhang speichern"
 	},
 	"select": "Asset auswählen"
 }
