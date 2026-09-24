@@ -17,6 +17,10 @@
 			"no": "Nej",
 			"veto": "Veto",
 			"abstain": "Avstå"
+		},
+		"choice": {
+			"desc_one": "{{count}} röstare",
+			"desc_other": "{{count}} röstare"
 		}
 	},
 	"edit": {
