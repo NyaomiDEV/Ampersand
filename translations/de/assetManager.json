@@ -14,5 +14,6 @@
 			"confirm": "Bist du dir sicher, dass du dieses Asset verwerfen möchtest?"
 		},
 		"tags": "Tags"
-	}
+	},
+	"select": "Asset auswählen"
 }
