@@ -29,7 +29,7 @@ tauri-plugin-dialog = "2.8.1"
 tauri-plugin-opener = "2.7.0"
 tauri-plugin-http = "2.8.0"
 tauri-plugin-process = "2.4.0"
-tauri-plugin-notifications = { version = "0.5.0-rc.14", default-features = false }
+tauri-plugin-notifications = { git = "https://github.com/NyaomiDEV/tauri-plugin-notifications", default-features = false }
 
 [dependencies.serde]
 version = "1.0"
@@ -43,7 +43,7 @@ features = [ "macos-private-api" ]
 path = "../src-tauri-plugin"
 
 [target.'cfg(target_os = "linux")'.dependencies.tauri-plugin-notifications]
-version = "0.5.0-rc.14"
+git = "https://github.com/NyaomiDEV/tauri-plugin-notifications"
 default-features = true
 
 [target.'cfg(target_os = "android")'.dependencies]
