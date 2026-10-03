@@ -93,7 +93,8 @@ pub fn run() {
                     ]),
                     color: None,
                     radius: None,
-                    state: Some(EffectState::FollowsWindowActiveState)
+                    state: Some(EffectState::FollowsWindowActiveState),
+                    interactive: true
                 })
                 .title_bar_style(tauri::TitleBarStyle::Overlay)
                 .hidden_title(true);
@@ -108,7 +109,8 @@ pub fn run() {
                     ]),
                     color: None,
                     radius: None,
-                    state: None
+                    state: None,
+                    interactive: false
                 })
                 .decorations(false);
 

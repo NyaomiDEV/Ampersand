@@ -17,40 +17,40 @@ debug = [ "tauri/devtools" ]
 dev_mac = [ "tauri-plugin-notifications/notify-rust" ]
 
 [build-dependencies.tauri-build]
-version = "2.6.3"
+version = "2.7.1"
 features = []
 
 [dependencies]
 serde_json = "1.0"
 log = "0.4"
-tauri-plugin-fs = "2.5.2"
-tauri-plugin-os = "2.3.2"
-tauri-plugin-dialog = "2.7.3"
-tauri-plugin-opener = "2.5.5"
-tauri-plugin-http = "2.6.0"
-tauri-plugin-process = "2.3.1"
-tauri-plugin-notifications = { git = "https://github.com/NyaomiDEV/tauri-plugin-notifications", default-features = false }
+tauri-plugin-fs = "2.6.0"
+tauri-plugin-os = "2.4.0"
+tauri-plugin-dialog = "2.8.1"
+tauri-plugin-opener = "2.7.0"
+tauri-plugin-http = "2.8.0"
+tauri-plugin-process = "2.4.0"
+tauri-plugin-notifications = { version = "0.5.0-rc.14", default-features = false }
 
 [dependencies.serde]
 version = "1.0"
 features = [ "derive" ]
 
 [dependencies.tauri]
-version = "2.11.5"
+version = "2.12.1"
 features = [ "macos-private-api" ]
 
 [dependencies.tauri-plugin-ampersand]
 path = "../src-tauri-plugin"
 
 [target.'cfg(target_os = "linux")'.dependencies.tauri-plugin-notifications]
-git = "https://github.com/NyaomiDEV/tauri-plugin-notifications"
+version = "0.5.0-rc.14"
 default-features = true
 
 [target.'cfg(target_os = "android")'.dependencies]
 tauri-plugin-m3 = "0.3.2"
 
 [target.'cfg(any(target_os = "android", target_os = "ios"))'.dependencies]
-tauri-plugin-biometric = "2.3.3"
+tauri-plugin-biometric = "2.4.1"
 
 [target.'cfg(not(any(target_os = "android", target_os = "ios")))'.dependencies]
-tauri-plugin-single-instance = "2.4.3"
+tauri-plugin-single-instance = "2.5.2"
