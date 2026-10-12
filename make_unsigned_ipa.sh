@@ -18,9 +18,8 @@ elif [ "$AMPERSAND_BUILD_TYPE" = "stable-sideload" ] || [ "$AMPERSAND_BUILD_TYPE
   XCCONFIG_FILE="$PROJECT_DIR/xcconfig/Sideload.xcconfig"
 fi
 
-IDENTIFIER="$(node -p "require('./src-tauri/tauri.conf.json').identifier")"
 TMP_DIR="$(node -p "require('os').tmpdir()")"
-SERVER_ADDR_FILE="$TMP_DIR/${IDENTIFIER}-server-addr"
+SERVER_ADDR_FILE="$PROJECT_DIR/.tauri/cli-options-server.json"
 TAURI_OPEN_LOG="${TAURI_OPEN_LOG:-$TMP_DIR/${APP_NAME}-ios-build-open.log}"
 TAURI_PID=""
 
@@ -56,7 +55,7 @@ mkdir -p "$PROJECT_DIR/build"
 rm -f "$SERVER_ADDR_FILE"
 
 echo "--- Starting tauri ios build --open ---"
-pnpm tauri ios build --open >"$TAURI_OPEN_LOG" 2>&1 &
+corepack pnpm tauri ios build --open >"$TAURI_OPEN_LOG" 2>&1 &
 TAURI_PID="$!"
 
 echo "--- Waiting for Tauri CLI websocket bridge ---"
