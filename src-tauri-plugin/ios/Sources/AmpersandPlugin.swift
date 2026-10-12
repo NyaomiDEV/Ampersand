@@ -53,6 +53,6 @@ class PreviewControllerDelegate: NSObject, UIDocumentInteractionControllerDelega
 }
 
 @_cdecl("init_plugin_ampersand")
-func initPlugin() -> Plugin {
+public func initPlugin() -> Plugin {
     return AmpersandPlugin()
 }
