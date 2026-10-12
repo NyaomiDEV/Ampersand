@@ -1,0 +1,13 @@
+@font-face {
+	font-family: "Aleo";
+	font-style: normal;
+	font-weight: 100 900;
+	src: url(../../assets/fonts/aleo/Aleo.woff2);
+}
+
+@font-face {
+	font-family: "Aleo";
+	font-style: italic;
+	font-weight: 100 900;
+	src: url(../../assets/fonts/aleo/Aleo-Italic.woff2);
+}

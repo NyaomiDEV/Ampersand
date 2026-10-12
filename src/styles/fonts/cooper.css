@@ -1,0 +1,14 @@
+@font-face {
+	font-family: "Cooper";
+	font-style: normal;
+	font-weight: 400 900;
+	src: url(../../assets/fonts/cooper/Cooper.woff2);
+}
+
+@font-face {
+	font-family: "Cooper Swashes";
+	font-style: normal;
+	font-weight: 400 900;
+	font-feature-settings: "swsh";
+	src: url(../../assets/fonts/cooper/Cooper.woff2);
+}

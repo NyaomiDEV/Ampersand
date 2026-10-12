@@ -1,0 +1,29 @@
+@font-face {
+	font-family: "Marauder";
+	font-style: normal;
+	font-weight: 400 900;
+	src: url(../../assets/fonts/marauder/Marauder.woff2);
+}
+
+@font-face {
+	font-family: "Marauder";
+	font-style: italic;
+	font-weight: 400 900;
+	src: url(../../assets/fonts/marauder/Marauder-Italic.woff2);
+}
+
+@font-face {
+	font-family: "Marauder SC";
+	font-style: normal;
+	font-weight: 400 900;
+	font-feature-settings: "smcp";
+	src: url(../../assets/fonts/marauder/Marauder.woff2);
+}
+
+@font-face {
+	font-family: "Marauder SC";
+	font-style: italic;
+	font-weight: 400 900;
+	font-feature-settings: "smcp";
+	src: url(../../assets/fonts/marauder/Marauder-Italic.woff2);
+}

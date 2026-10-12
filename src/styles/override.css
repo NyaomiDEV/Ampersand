@@ -44,34 +44,28 @@ html.accessibility-word-spacing ion-item::part(inner) {
 }
 
 html.fs-modern {
-	--ampersand-header-font-name: "Outfit";
+	--ampersand-header-font-name: "Outfit Alternate";
 	--ampersand-body-font-name: "Montserrat";
 }
 
 html.fs-digital {
-	--ampersand-header-font-name: "Oxanium";
-	--ampersand-body-font-name: "Chivo Mono";
+	--ampersand-header-font-name: "Montserrat Alternate";
+	--ampersand-body-font-name: "Cascadia Code";
 }
 
 html.fs-round {
-	--ampersand-header-font-name: "Recursive";
-	--ampersand-header-font-variation: "CASL" 1, "CRSV" 1;
-	--ampersand-body-font-name: "Fredoka";
+	--ampersand-header-font-name: "Cooper Swashes";
+	--ampersand-body-font-name: "Outfit";
 }
 
 html.fs-newspaper {
-	--ampersand-header-font-name: "Merriweather";
-	--ampersand-body-font-name: "Albert Sans";
-}
-
-html.fs-mystic {
-	--ampersand-header-font-name: "Cinzel Decorative";
-	--ampersand-body-font-name: "Amarna";
+	--ampersand-header-font-name: "Cinzel";
+	--ampersand-body-font-name: "Cooper";
 }
 
 html.fs-classy {
 	--ampersand-header-font-name: "Bodoni Moda";
-	--ampersand-body-font-name: "Geom";
+	--ampersand-body-font-name: "Urbanist";
 }
 
 html.fs-comic {

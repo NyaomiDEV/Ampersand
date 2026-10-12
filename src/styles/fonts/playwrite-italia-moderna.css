@@ -1,0 +1,17 @@
+@font-face {
+	font-family: "Playwrite Italia Moderna";
+	font-style: normal;
+	font-weight: 100 400;
+	src: url(../../assets/fonts/playwrite-it-moderna/PlaywriteITModerna.woff2);
+}
+
+@font-face {
+	font-family: "Playwrite Italia Tradizionale";
+	font-style: normal;
+	font-weight: 100 400;
+	font-feature-settings: 
+		"ss03",
+		"ss05",
+		"ss19";
+	src: url(../../assets/fonts/playwrite-it-moderna/PlaywriteITModerna.woff2);
+}
