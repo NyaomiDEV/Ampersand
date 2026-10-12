@@ -1,7 +1,6 @@
 import { ActionSheetButton, actionSheetController, alertController, createAnimation, getIonPageElement, toastController, TransitionOptions } from "@ionic/vue";
 import type { TextFieldTypes } from "@ionic/core";
 import dayjs from "dayjs";
-import { Ref } from "vue";
 import { appConfig } from "../config";
 import { Asset, BoardMessage, CustomField, FrontingEntry, ImageClip, JournalPost, Member, Note, System } from "../db/entities";
 import i18next, { computePercentage, getLocaleInfo } from "../i18n";
@@ -143,9 +142,9 @@ export function formatWrittenTimeAbsolute(durationMs: number) {
 	return duration.format("Y[y] M[M] D[d] H[h] m[m] s[s]").replace(/^(?:(?<![1-9])0[yMdhm]\s?)+/g, "");
 }
 
-export function slideAnimation(_: HTMLElement, opts: TransitionOptions, directionOverride?: Ref<string>) {
+export function slideAnimation(_: HTMLElement, opts: TransitionOptions) {
 	const OFFSET = 40;
-	const backwards = (directionOverride?.value || opts.direction) === "back";
+	const backwards = opts.direction === "back";
 	const transition = createAnimation()
 		.duration(200)
 		.easing(backwards ? "cubic-bezier(0.47,0,0.745,0.715)" : "cubic-bezier(0.36,0.66,0.04,1)");

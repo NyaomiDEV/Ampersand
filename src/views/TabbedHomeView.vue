@@ -35,7 +35,7 @@
 				tab: x,
 				ariaLabel: i18next.t(`${x}:header`),
 				href: `/tab/${x}`,
-				onClick: () => clickReplaceHandler(`/tab/${x}`)
+				onClick: () => navigateTo(`/tab/${x}`)
 			}, () => [
 				h(IonIcon, {
 					icon: props.currentTab === x ? allPossibleTabs[x].iconSelected : allPossibleTabs[x].icon
@@ -45,7 +45,7 @@
 				tab: "options",
 				ariaLabel: i18next.t("options:header"),
 				href: "/tab/options",
-				onClick: () => clickReplaceHandler("/tab/options"),
+				onClick: () => navigateTo("/tab/options"),
 			}, () => [
 				h(IonIcon, {
 					icon: props.currentTab === "options" ? OptionsFillMD : OptionsMD
@@ -62,25 +62,12 @@
 		}
 	};
 
-	// store a value to pass by ref to the cached animation
-	const directionOverride = ref("forward");
-
-	function clickReplaceHandler(location: string){
+	function navigateTo(location: string){
 		const children: globalThis.HTMLIonTabButtonElement[] = Array.from(tabBar.value.children);
 		const prevIndex = children.findIndex(x => x.href === route.path);
 		const curIndex = children.findIndex(x => x.href === location);
 
-		// we control the value here so we can update it
-		directionOverride.value = prevIndex > curIndex ? "back" : "forward";
-
-		router.replace(
-			location,
-			// THIS ARROW FUNCTION GETS CACHED!
-			(el, opts) => 
-				// pass directionOverride here so that we have a ref to a value we can control
-				slideAnimation(el, opts, directionOverride)
-				// and just like this the direction is under our control
-		);
+		return router.navigate(location, prevIndex > curIndex ? "back" : "forward", "replace", slideAnimation);
 	}
 </script>
 
