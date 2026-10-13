@@ -126,21 +126,8 @@
 		"gradient": "Farbverlauf"
 	},
 	"fonts": {
-		"futuristic": "Futuristisch",
 		"noFont": "Keine Schriftart",
-		"deco": "Deko",
-		"dots": "Punkte",
-		"handwritten": "Handgeschrieben",
-		"pineapple": "Ananas",
-		"western": "Westlich",
-		"nature": "Natur",
-		"summer": "Sommer",
-		"bone": "Knochen",
-		"gothic": "Gotisch",
-		"italian": "Italienisch",
-		"metal": "Metall",
-		"terminal": "Terminal",
-		"digital": "Digital"
+		"handwritten": "Handgeschrieben"
 	},
 	"delete": "Löschen"
 }
