@@ -5,6 +5,7 @@
 @import url(cascadia-code.css);
 @import url(cooper.css);
 @import url(cinzel.css);
+@import url(noto-serif.css);
 @import url(bodoni-moda.css);
 @import url(shantell-sans.css);
 @import url(comic-relief.css);
@@ -13,9 +14,6 @@
 @import url(lexend.css);
 @import url(luciole.css);
 
-@import url(marauder.css);
-@import url(eb-garamond.css);
-@import url(aleo.css);
 @import url(kjv1611.css);
 @import url(departure-mono.css);
 @import url(tt2020.css);

@@ -206,28 +206,25 @@
 						:cancel-text="$t('other:alerts.cancel')"
 						interface="action-sheet"
 					>
-						<IonSelectOption value="default">
+						<IonSelectOption value="default" class="fs-default">
 							{{ $t("appSettings:fontStyle.default") }} 
 						</IonSelectOption>
-						<IonSelectOption value="modern">
+						<IonSelectOption value="modern" class="fs-modern">
 							{{ $t("appSettings:fontStyle.modern") }}
 						</IonSelectOption>
-						<IonSelectOption value="digital">
+						<IonSelectOption value="digital" class="fs-digital">
 							{{ $t("appSettings:fontStyle.digital") }}
 						</IonSelectOption>
-						<IonSelectOption value="round">
+						<IonSelectOption value="round" class="fs-round">
 							{{ $t("appSettings:fontStyle.round") }}
 						</IonSelectOption>
-						<IonSelectOption value="newspaper">
+						<IonSelectOption value="newspaper" class="fs-newspaper">
 							{{ $t("appSettings:fontStyle.newspaper") }}
 						</IonSelectOption>
-						<IonSelectOption value="mystic">
-							{{ $t("appSettings:fontStyle.mystic") }}
-						</IonSelectOption>
-						<IonSelectOption value="classy">
+						<IonSelectOption value="classy" class="fs-classy">
 							{{ $t("appSettings:fontStyle.classy") }}
 						</IonSelectOption>
-						<IonSelectOption value="comic">
+						<IonSelectOption value="comic" class="fs-comic">
 							{{ $t("appSettings:fontStyle.comic") }}
 						</IonSelectOption>
 					</IonSelect>
@@ -460,3 +457,29 @@
 		</IonContent>
 	</IonPage>
 </template>
+
+<style>
+	button.action-sheet-button.fs-default {
+		font-family: 'Inter', var(--ion-font-family);
+	}
+	
+	button.action-sheet-button.fs-modern {
+		font-family: 'Montserrat', var(--ion-font-family);
+	}
+
+	button.action-sheet-button.fs-digital {
+		font-family: 'Cascadia Code', var(--ion-font-family);
+	}
+
+	button.action-sheet-button.fs-round {
+		font-family: 'Outfit', var(--ion-font-family);
+	}
+
+	button.action-sheet-button.fs-classy {
+		font-family: 'Urbanist', var(--ion-font-family);
+	}
+
+	button.action-sheet-button.fs-comic {
+		font-family: 'Comic Relief', var(--ion-font-family);
+	}
+</style>

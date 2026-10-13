@@ -1,0 +1,45 @@
+@font-face {
+	font-family: "Noto Serif";
+	font-style: normal;
+	font-weight: 100 900;
+	font-stretch: 100%;
+	font-feature-settings:
+		"ss03"
+		"zero";
+	src: url(../../assets/fonts/noto-serif/NotoSerif.woff2);
+}
+
+@font-face {
+	font-family: "Noto Serif";
+	font-style: italic;
+	font-weight: 100 900;
+	font-stretch: 100%;
+	font-feature-settings:
+		"ss03",
+		"zero";
+	src: url(../../assets/fonts/noto-serif/NotoSerif-Italic.woff2);
+}
+
+@font-face {
+	font-family: "Noto Serif SC";
+	font-style: normal;
+	font-weight: 100 900;
+	font-stretch: 100%;
+	font-feature-settings:
+		"smcp",
+		"ss03",
+		"zero";
+	src: url(../../assets/fonts/noto-serif/NotoSerif.woff2);
+}
+
+@font-face {
+	font-family: "Noto Serif SC";
+	font-style: italic;
+	font-weight: 100 900;
+	font-stretch: 100%;
+	font-feature-settings:
+		"smcp"
+		"ss03" 
+		"zero";
+	src: url(../../assets/fonts/noto-serif/NotoSerif-Italic.woff2);
+}

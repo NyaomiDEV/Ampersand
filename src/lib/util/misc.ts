@@ -548,36 +548,34 @@ export function imageClipPicker(header: string): Promise<ImageClip | null | unde
 }
 
 export const fontQuickNames = {
-	serif: "EB Garamond",
-	sans_serif: "Inter",
-	slab: "Aleo",
+	serif: "Noto Serif",
+	serifSC: "Noto Serif SC",
+	sansserif: "Inter",
 	geometric: "Outfit",
-	geometric_alt: "Outfit Alternate",
+	geometricAlt: "Outfit Alternate",
 	roman: "Cinzel",
-	roman_swashes: "Cinzel Decorative",
+	romanSwashes: "Cinzel Decorative",
 	monospace: "Cascadia Code",
 	cursive: "Playwrite Italia Moderna",
-	cursive_alt: "Playwrite Italia Tradizionale",
+	cursiveTrad: "Playwrite Italia Tradizionale",
 	handwritten: "Shantell Sans",
 	blackletter: "KJV1611",
 	typewriter: "TT2020",
 	classic: "Bodoni Moda",
 	modern: "Montserrat",
-	modern_alt: "Montserrat Alternate",
+	modernAlt: "Montserrat Alternate",
 	round: "Cooper",
-	round_swashes: "Cooper Swashes",
+	roundSwashes: "Cooper Swashes",
 	comic: "Comic Relief",
 	pixel: "Departure Mono",
 	pop: "Unbounded",
 	urban: "Urbanist",
-	bookworm: "Marauder",
-	bookworm_sc: "Marauder SC",
 };
 
 export const fontFamilies = [
-	"EB Garamond",
+	"Noto Serif",
+	"Noto Serif SC",
 	"Inter",
-	"Aleo",
 	"Outfit",
 	"Outfit Alternate",
 	"Cinzel",
@@ -597,8 +595,6 @@ export const fontFamilies = [
 	"Departure Mono",
 	"Unbounded",
 	"Urbanist",
-	"Marauder",
-	"Marauder SC",
 	
 ];
 

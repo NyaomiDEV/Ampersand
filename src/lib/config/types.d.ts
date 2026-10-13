@@ -12,7 +12,7 @@ export type AppConfig = {
 		backgroundColor?: string
 	},
 	colorIndicatorPosition: "avatar" | "list-item",
-	fontStyle: "default" | "modern" | "digital" | "round" | "newspaper" | "mystic" | "classy" | "comic",
+	fontStyle: "default" | "modern" | "digital" | "round" | "newspaper" | "classy" | "comic",
 	view: string,
 	dashboardSettings: DashboardSettings,
 	tabOrder: string[],
