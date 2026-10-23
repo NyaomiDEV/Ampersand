@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { IonCard, IonCardContent, IonLabel, IonListHeader, IonIcon, IonButton, IonList, IonItemSliding, IonItemOption, IonItemOptions, IonItem, useIonRouter } from "@ionic/vue";
-	import { h, onMounted, onUnmounted, ref, shallowRef } from "vue";
+	import { h, onMounted, onUnmounted, ref, shallowRef, watchEffect } from "vue";
 	import type { FrontingEntryComplete } from "../../lib/db/entities.d.ts";
 	import { getFronting, newFrontingEntry, sendFrontingChangedEvent, toFrontingEntryComplete, updateFrontingEntry } from "../../lib/db/tables/frontingEntries";
 	import { DatabaseEvents, DatabaseEvent } from "../../lib/db/events";
@@ -44,15 +44,18 @@
 		DatabaseEvents.removeEventListener("updated", listener);
 	});
 
+	watchEffect(() => {
+		if (!frontingEntries.value.length) {
+			quickDelete.value = false
+		}
+	})
+
 	async function quickRemoveFronter(clickedFrontingEntry: FrontingEntryComplete){
 		await updateFrontingEntry({
 			uuid: clickedFrontingEntry.uuid,
 			endTime: new Date(),
 			isLocked: false
 		});
-
-		if(!frontingEntries.value.length)
-			quickDelete.value = false;
 
 		void sendFrontingChangedEvent();
 	}
